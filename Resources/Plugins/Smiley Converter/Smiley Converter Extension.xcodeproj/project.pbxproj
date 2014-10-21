@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C0271F616FFBD4800717900 /* TPISmileyConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0271F516FFBD4800717900 /* TPISmileyConverter.m */; };
+		4C16081D19F701730054897D /* conversionTable2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C16081C19F701730054897D /* conversionTable2.plist */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
 		4C670F1E194A7DED002DD735 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C670F1D194A7DED002DD735 /* BasicLanguage.strings */; };
 		4C670F21194A7DF1002DD735 /* TPISmileyConverter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C670F1F194A7DF1002DD735 /* TPISmileyConverter.xib */; };
@@ -18,6 +19,7 @@
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C0271F416FFBD4800717900 /* TPISmileyConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISmileyConverter.h; sourceTree = "<group>"; };
 		4C0271F516FFBD4800717900 /* TPISmileyConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISmileyConverter.m; sourceTree = "<group>"; };
+		4C16081C19F701730054897D /* conversionTable2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable2.plist; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C670F1D194A7DED002DD735 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = SOURCE_ROOT; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				4C67617B16FFB63D00C82300 /* conversionTable.plist */,
+				4C16081C19F701730054897D /* conversionTable2.plist */,
 				8D576317048677EA00EA77CD /* Info.plist */,
 			);
 			name = "Property Lists";
@@ -178,6 +181,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C16081D19F701730054897D /* conversionTable2.plist in Resources */,
 				4C67617C16FFB63D00C82300 /* conversionTable.plist in Resources */,
 				4C670F1E194A7DED002DD735 /* BasicLanguage.strings in Resources */,
 				4C670F21194A7DF1002DD735 /* TPISmileyConverter.xib in Resources */,

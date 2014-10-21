@@ -65,6 +65,9 @@
 
 - (void)buildConversionTable
 {
+	NSMutableDictionary *converstionTable = [NSMutableDictionary dictionary];
+
+	/* Load primary table. */
 	/* Find ourselves. */
 	NSURL *tablePath = [TPIBundleFromClass() URLForResource:@"conversionTable" withExtension:@"plist"];
 	
@@ -74,10 +77,27 @@
 	if (NSObjectIsEmpty(tableData)) {
 		NSAssert(NO, @"Failed to find conversion table.");
 	}
+
+	[converstionTable addEntriesFromDictionary:tableData];
+
+	/* Maybe load extras. */
+	if ([RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Extra Emoticons"]) {
+		/* Find ourselves. */
+		NSURL *tablePath2 = [TPIBundleFromClass() URLForResource:@"conversionTable2" withExtension:@"plist"];
+
+		/* Load dictionary. */
+		NSDictionary *tableData2 = [NSDictionary dictionaryWithContentsOfURL:tablePath2];
+
+		if (NSObjectIsEmpty(tableData)) {
+			NSAssert(NO, @"Failed to find conversion table.");
+		}
+
+		[converstionTable addEntriesFromDictionary:tableData2];
+	}
 	
 	/* Save dictionary contents. */
-	self.conversionTable	=  tableData;
-	self.sortedSmileyList	= [tableData sortedDictionaryReversedKeys];
+	self.conversionTable	=  converstionTable;
+	self.sortedSmileyList	= [converstionTable sortedDictionaryReversedKeys];
 }
 
 - (void)destroyConversionTable
@@ -91,13 +111,9 @@
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
 	
 	if (serviceEnabled == NO) {
-		if (self.conversionTable) {
-			[self destroyConversionTable];
-		}
+		[self destroyConversionTable];
 	} else {
-		if (self.conversionTable == nil) {
-			[self buildConversionTable];
-		}
+		[self buildConversionTable];
 	}
 }
 
