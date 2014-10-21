@@ -50,15 +50,13 @@ InlineImageLiveResize = {
 	previousX: null,
 	previousY: null,
 
-	shiftState: false,
-
 	previousMouseActionWasForResizing: false,
 
 	/* When the mouse down event is triggered on an element we set the target and record X,Y cordinates.
 	 using preventDefault we halt the default actions taken by the browser, the user can use the shift
 	 key to override InlineImageLiveResize behavior. */
 	onMouseDown: function(e) {
-		if (InlineImageLiveResize.shiftState == false) {
+		if (window.event.shiftKey === false) {
 			/* Record element. */
 			InlineImageLiveResize.dragElement = e.target;
 			
@@ -158,22 +156,6 @@ InlineImageLiveResize = {
 		}
 	},
 };
-
-/* Bind the key down event for the shift key and
- set a global variable should it be triggered. */
-document.addEventListener("keydown", function(e) {
-	if (event.keyCode === 16 || event.charCode === 16) {
-		InlineImageLiveResize.shiftState = true;
-	}
-}, false);
-
-/* Bind the key up event for the shift key and
-	set a global variable should it be triggered. */
-document.addEventListener("keyup", function(e) {
-	if (event.keyCode === 16 || event.charCode === 16){
-		InlineImageLiveResize.shiftState = false;
-	}
-}, false);
 
 document.addEventListener("mousedown", InlineImageLiveResize.onMouseDownGeneric, false);
 document.addEventListener("mousemove", InlineImageLiveResize.onMouseMove, false);
