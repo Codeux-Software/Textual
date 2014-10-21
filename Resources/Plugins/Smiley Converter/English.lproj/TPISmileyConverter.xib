@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="14A343f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
+        <deployment version="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPISmileyConverter">
@@ -20,7 +20,7 @@
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="Wmf-ec-NvO">
-                    <rect key="frame" x="60" y="200" width="447" height="46"/>
+                    <rect key="frame" x="60" y="241" width="447" height="46"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4Ss-Jq-da1">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -58,7 +58,7 @@
                     </scroller>
                 </scrollView>
                 <button id="64">
-                    <rect key="frame" x="201" y="158" width="165" height="18"/>
+                    <rect key="frame" x="66" y="192" width="165" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Enable smiley converter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -69,6 +69,28 @@
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Smiley Converter Extension -&gt; Enable Service" id="nMn-Gw-nyC"/>
                     </connections>
                 </button>
+                <button id="d4p-fS-sg0">
+                    <rect key="frame" x="66" y="166" width="165" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Enable extra emoticons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nlC-dQ-P7M">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferenceChanged:" target="-2" id="IRd-n3-a4p"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Smiley Converter Extension -&gt; Enable Extra Emoticons" id="SVW-eg-NWr"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="VVb-gg-jxO">
+                    <rect key="frame" x="83" y="118" width="418" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="gKd-Kk-6FE">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">By default, the Smiley Converter only converts a small number of emoticons to allow for an acceptable level of performance. By enabling extra emoticons, an additional 800 emoticons are added that can be converted.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="412.5" y="445"/>
         </customView>
