@@ -80,6 +80,7 @@
 @property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
+@property (nonatomic, nweak) IBOutlet NSView *mountainLionDeprecationWarningView;
 @property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 

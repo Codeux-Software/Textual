@@ -228,6 +228,8 @@
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		[[self mountainLionDeprecationWarningView] setHidden:YES];
+
 		[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 	}
 	
