@@ -100,6 +100,9 @@
 	
 	if (_awakeFromNibCalled == NO) {
 		_awakeFromNibCalled = YES;
+
+		/* Register defaults. */
+		[TPCPreferences initPreferences];
 	
 		/* We wait until -awakeFromNib to wake the window so that the menu
 		 controller created by the main nib has time to load. */
@@ -113,8 +116,6 @@
 
 - (void)performAwakeningBeforeMainWindowDidLoad
 {
-	[TPCPreferences initPreferences];
-	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
