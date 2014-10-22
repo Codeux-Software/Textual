@@ -88,19 +88,19 @@
 	/* Check cache before requesting a new identifier */
 	NSString *currentSerial = [self serialNumberCharacters];
 
-	id cachedValue = [RZStandardUserDefaults() objectForKey:_userDefaultsModelCacheKey];
+	id cachedValue = [RZUserDefaults() objectForKey:_userDefaultsModelCacheKey];
 
 	if (cachedValue) {
-		id cachedSerialNumber = [RZStandardUserDefaults() objectForKey:_userDefaultsSerialCacheKey];
+		id cachedSerialNumber = [RZUserDefaults() objectForKey:_userDefaultsSerialCacheKey];
 
 		if (cachedSerialNumber) {
 			if ([cachedSerialNumber isEqual:currentSerial]) {
 				return; // Matching serial numbers…
 			} else {
 				/* Invalidate cache. */
-				[RZStandardUserDefaults() removeObjectForKey:_userDefaultsModelCacheKey];
+				[RZUserDefaults() removeObjectForKey:_userDefaultsModelCacheKey];
 
-				[RZStandardUserDefaults() removeObjectForKey:_userDefaultsSerialCacheKey];
+				[RZUserDefaults() removeObjectForKey:_userDefaultsSerialCacheKey];
 			}
 		}
 	}
@@ -114,7 +114,7 @@
 
 - (NSString *)cachedIdentifier
 {
-	return [RZStandardUserDefaults() objectForKey:_userDefaultsModelCacheKey];
+	return [RZUserDefaults() objectForKey:_userDefaultsModelCacheKey];
 }
 
 - (void)tearDownInternalObject
@@ -286,9 +286,9 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
 	if ([elementName isEqualToString:@"configCode"]) {
-		[RZStandardUserDefaults() setObject:[self xmlParsedTemporaryStore] forKey:_userDefaultsModelCacheKey];
+		[RZUserDefaults() setObject:[self xmlParsedTemporaryStore] forKey:_userDefaultsModelCacheKey];
 
-		[RZStandardUserDefaults() setObject:[self serialNumberValue] forKey:_userDefaultsSerialCacheKey];
+		[RZUserDefaults() setObject:[self serialNumberValue] forKey:_userDefaultsSerialCacheKey];
 
 		[self setXmlParserIsOnTargetElement:NO];
 	}

@@ -39,7 +39,7 @@
 
 #import "BuildConfig.h"
 
-#define _userDefaults			[NSUserDefaults standardUserDefaults]
+#define _userDefaults			[TPCPreferencesUserDefaults sharedLocalContainerUserDefaults]
 
 #define _groupDefaults			[TPCPreferencesUserDefaults sharedGroupContainerUserDefaults]
 
@@ -74,6 +74,19 @@
 	return sharedSelf;
 }
 
++ (NSUserDefaults *)sharedLocalContainerUserDefaults
+{
+	static id sharedSelf = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		sharedSelf = [NSUserDefaults new];
+	});
+
+	return sharedSelf;
+}
+
 - (NSDictionary *)dictionaryRepresentation
 {
 	/* Group container will take priority. */
@@ -88,7 +101,7 @@
 	}
 	
 	/* Default back to self. */
-	NSDictionary *localGroup = [super dictionaryRepresentation];
+	NSDictionary *localGroup = [_userDefaults dictionaryRepresentation];
 	
 	for (NSString *key in localGroup) {
 		if (settings[key] == nil) {
@@ -153,15 +166,17 @@
 {
 	/* Group container will take priority. */
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		 id objectValue = [_groupDefaults objectForKey:defaultName];
-		
-		if (objectValue) {
-			return objectValue;
+		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:defaultName] == NO) {
+			 id objectValue = [_groupDefaults objectForKey:defaultName];
+
+			if (objectValue) {
+				return objectValue;
+			}
 		}
 	}
 	
 	/* Default back to self. */
-	return [super objectForKey:defaultName];
+	return [_userDefaults objectForKey:defaultName];
 }
 
 - (NSString *)stringForKey:(NSString *)defaultName
@@ -294,7 +309,8 @@
 	[RZUserDefaultsValueProxy() didChangeValueForKey:defaultName];
 }
 
-- (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key
+/* Keys that shall never be included in the group container. */
++ (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key
 {
 	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
 		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
@@ -319,6 +335,8 @@
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
 
+		[key hasPrefix:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"] ||					/* Textual owned prefix. */
+		[key hasPrefix:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"] ||						/* Textual owned prefix. */
 		[key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
 	{
 		return YES;
@@ -329,9 +347,11 @@
 	}
 }
 
-- (BOOL)keyIsSpecial:(NSString *)key
+/* Returns YES if a key should not be migrated to the group container by -migrateValuesToGroupContainer */
++ (BOOL)keyIsSpecial:(NSString *)key
 {
-	if ([key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])
+	if ([key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"] ||
+		[key hasPrefix:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"])
 	{
 		return YES;
 	}
@@ -341,6 +361,7 @@
 	}
 }
 
+/* Performs a one time migration of sandbox level keys to the group container. */
 - (void)migrateValuesToGroupContainer
 {
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
@@ -351,7 +372,9 @@
 				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
 				
 				for (NSString *dictKey in localDictionary) {
-					if ([self keyIsExcludedFromGroupContainer:dictKey] == NO && [self keyIsSpecial:dictKey] == NO) {
+					if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:dictKey] == NO &&
+						[TPCPreferencesUserDefaults keyIsSpecial:dictKey] == NO)
+					{
 						if ([_groupDefaults objectForKey:dictKey] == nil) {
 							[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
 						}
@@ -366,14 +389,25 @@
 	}
 }
 
+/* Does a traversal of the group container looking for keys that do not belong there
+ and remove those so that the incorrect value is not maintained. */
+- (void)purgeKeysThatDontBelongInGroupContainer
+{
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		NSDictionary *groupDictionary = [_groupDefaults dictionaryRepresentation];
+
+		for (NSString *dictKey in groupDictionary) {
+			if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:dictKey]) {
+				[_groupDefaults removeObjectForKey:dictKey];
+			}
+		}
+	}
+}
+
 @end
 
 #pragma mark -
 #pragma mark Object KVO Proxying
-
-@interface TPCPreferencesUserDefaultsObjectProxy ()
-@property (nonatomic, assign) BOOL writesToGroupContainer;
-@end
 
 @implementation TPCPreferencesUserDefaultsObjectProxy
 
@@ -384,9 +418,7 @@
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		 sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
-		
-		[sharedSelf setWritesToGroupContainer:YES];
+		sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
 	});
 	
 	return sharedSelf;
@@ -394,23 +426,13 @@
 
 + (id)localDefaultValues
 {
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		 sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
-		
-		[sharedSelf setWritesToGroupContainer:NO];
-	});
-	
-	return sharedSelf;
+	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
 }
 
 - (id)valueForKey:(NSString *)key
 {
-	if ([self writesToGroupContainer]) {
-		return [RZUserDefaults() objectForKey:key];
+	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
+		return [_groupDefaults objectForKey:key];
 	} else {
 		return [_userDefaults objectForKey:key];
 	}
@@ -420,7 +442,7 @@
 {
 	[self willChangeValueForKey:key];
 	
-	if ([self writesToGroupContainer]) {
+	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
 		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
 			[_groupDefaults setObject:value forKey:key];
 		} else {

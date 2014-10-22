@@ -2616,9 +2616,9 @@
 
 				LogToConsole(@"%@", BLS(1176));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
-				[RZStandardUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
-				[RZStandardUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+				[RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
 			} else {
 				[self printDebugInformation:uncutInput];
 			}

@@ -260,7 +260,7 @@
 /* Conditional for matching whether we want a key in the exported dictionary. */
 + (BOOL)isKeyNameSupposedToBeIgnored:(NSString *)key
 {
-	if ([RZUserDefaults() keyIsExcludedFromGroupContainer:key] ||
+	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] ||
 		
 		[key hasPrefix:@"File Transfers -> File Transfer Download Folder Bookmark"]		||		/* Textual owned prefix. */
 
