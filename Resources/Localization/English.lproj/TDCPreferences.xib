@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -44,6 +44,7 @@
                 <outlet property="installedScriptsTable" destination="rGf-Ih-C97" id="v8k-0K-zxF"/>
                 <outlet property="keywordsTable" destination="nIO-jH-FEm" id="Kk5-Be-I9z"/>
                 <outlet property="matchKeywordsArrayController" destination="4310" id="7392"/>
+                <outlet property="mountainLionDeprecationWarningView" destination="Ltl-F2-Hb2" id="6ZG-dw-l2T"/>
                 <outlet property="navigationOutlineview" destination="55F-OG-plu" id="xRb-H0-wGA"/>
                 <outlet property="syncPreferencesToTheCloudButton" destination="dqH-Sc-1ei" id="B0E-Ct-lY6"/>
                 <outlet property="themeSelectionButton" destination="A1z-X7-AQ9" id="1O7-ff-1LW"/>
