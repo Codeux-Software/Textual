@@ -93,8 +93,18 @@
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
-		
-		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 7;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6);
+		}
 	}
 	
 	return cachedValue;
@@ -108,8 +118,18 @@
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
-		
-		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 8;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_7);
+		}
 	}
 	
 	return cachedValue;
@@ -123,8 +143,18 @@
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
-		
-		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 9;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_8);
+		}
 	}
 	
 	return cachedValue;
@@ -138,8 +168,18 @@
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
-		
-		cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 10;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9);
+		}
 	}
 	
 	return cachedValue;
