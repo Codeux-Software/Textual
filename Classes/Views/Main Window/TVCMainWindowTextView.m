@@ -72,7 +72,7 @@
 {
 	/* Observe certain keys. */
 	for (NSString *key in _KeyObservingArray) {
-		[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
+		[RZUserDefaultsValueProxy() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 	}
 }
 
@@ -80,7 +80,7 @@
 {
 	/* Stop observing keys. */
 	for (NSString *key in _KeyObservingArray) {
-		[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] removeObserver:self forKeyPath:key];
+		[RZUserDefaultsValueProxy() removeObserver:self forKeyPath:key];
 	}
 }
 

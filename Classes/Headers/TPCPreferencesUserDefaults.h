@@ -45,10 +45,6 @@
 /* See comments below for proxy. */
 #define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy userDefaultValues]
 
-/* Write to the standard user defaults to write directly to the application container.
- Certain state information such as saved frames should be saved there. */
-#define RZStandardUserDefaults()				[NSUserDefaults standardUserDefaults]
-
 /* The user info dictionary of this notification contains the changed key. */
 #define TPCPreferencesUserDefaultsDidChangeNotification			@"TPCPreferencesUserDefaultsDidChangeNotification"
 
@@ -56,6 +52,9 @@
 /* Our reading object will read from our own application container
  and the shared group container defined for Textual. */
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
+
++ (NSUserDefaults *)sharedGroupContainerUserDefaults;
++ (NSUserDefaults *)sharedLocalContainerUserDefaults;
 
 /* This class proxies these methods. */
 /* Depending on whether we are on Mavericks or later, these methods
@@ -90,8 +89,9 @@
 - (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary;
 
 - (void)migrateValuesToGroupContainer;
+- (void)purgeKeysThatDontBelongInGroupContainer;
 
-- (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key;
++ (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key;
 @end
 
 @interface TPCPreferencesUserDefaultsObjectProxy : NSObject
@@ -101,5 +101,5 @@
 
 /* -localDefaultValues only reads and writes to the application container.
  It exists to allow certain preferences to be written there only. */
-+ (id)localDefaultValues;
++ (id)localDefaultValues TEXTUAL_DEPRECATED("Use +localDefaultValues intead");
 @end

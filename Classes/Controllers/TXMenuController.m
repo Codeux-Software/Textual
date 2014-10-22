@@ -488,7 +488,7 @@
 		}
         case 54092: // Developer Mode
         {
-            if ([RZStandardUserDefaults() boolForKey:TXDeveloperEnvironmentToken] == YES) {
+            if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken] == YES) {
                 [item setState:NSOnState];
             } else {  
                 [item setState:NSOffState];
@@ -656,7 +656,7 @@
 
 - (id)localDefaultValues
 {
-	return [TPCPreferencesUserDefaultsObjectProxy localDefaultValues];
+	return RZUserDefaultsValueProxy();
 }
 
 #pragma mark -
@@ -2668,11 +2668,11 @@
 - (void)toggleDeveloperMode:(id)sender
 {
     if ([sender state] == NSOnState) {
-        [RZStandardUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+        [RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
         
         [sender setState:NSOffState];
     } else {
-        [RZStandardUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+        [RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
         
         [sender setState:NSOnState];
     }
@@ -2684,7 +2684,7 @@
 
 	for (NSString *key in allSettings) {
 		if ([key hasPrefix:TLOPopupPromptSuppressionPrefix]) {
-			[RZStandardUserDefaults() setBool:NO forKey:key];
+			[RZUserDefaults() setBool:NO forKey:key];
 		}
 	}
 }

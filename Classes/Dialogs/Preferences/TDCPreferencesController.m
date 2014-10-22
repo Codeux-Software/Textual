@@ -228,7 +228,7 @@
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
-		[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] setValue:@(YES) forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+		[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 	}
 	
 	[RZNotificationCenter() addObserver:self
@@ -260,7 +260,7 @@
 
 - (id)localDefaultValues
 {
-	return [TPCPreferencesUserDefaultsObjectProxy localDefaultValues];
+	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
 }
 
 - (NSArray *)keywordsArrayControllerDataSource
@@ -866,7 +866,7 @@
 
 - (void)onHideMountainLionDeprecationWarning:(id)sender
 {
-	[[TPCPreferencesUserDefaultsObjectProxy localDefaultValues] setValue:@(YES) forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+	[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 }
 
 - (void)onChangedHighlightType:(id)sender
