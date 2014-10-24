@@ -388,7 +388,6 @@
 		NSString *osname = [TPI_SP_SysInfo operatingSystemName];
 
 		_new = TPILocalizedString(@"BasicLanguage[1012]",
-					  [CSFWSystemInformation systemOperatingSystemName],
 					  [CSFWSystemInformation systemStandardVersion], osname,
 					  [CSFWSystemInformation systemBuildVersion]);
 
