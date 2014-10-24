@@ -58,7 +58,7 @@
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];
 		
-		[self setMaxConcurrentOperationCount:4];
+		[self setMaxConcurrentOperationCount:6];
 
 		return self;
 	}
@@ -182,19 +182,23 @@
 
 - (void)main
 {
-	/* Perform block. */
+	/* Perform task. */
 	self.executionBlock(self);
 
+	/* Dereference everything associated with this operation. */
+	[self setController:nil];
+	[self setExecutionBlock:nil];
+
 	/* Kill existing dependency. */
-	/* Discussion: Normally NSOperationQueue removes all strong references to 
-	 dependencies once all operations have completed. As this operation queue 
+	/* Discussion: Normally NSOperationQueue removes all strong references to
+	 dependencies once all operations have completed. As this operation queue
 	 can have thousands of operations chained together, this is not a desired
-	 behavior as a pseudo infinite loop can be created. Therefore, once we 
+	 behavior as a pseudo infinite loop can be created. Therefore, once we
 	 have executed the block we wanted, we release any dependency assigned. */
 	NSArray *operations = [self dependencies];
 
-	if ([operations count] > 0) {
-		[self removeDependency:operations[0]];
+	for (id operation in operations) {
+		[self removeDependency:operation];
 	}
 }
 
@@ -207,6 +211,15 @@
 	} else {
 		return  [super isReady];
 	}
+}
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+	if ([key isEqualToString:@"isReady"]) {
+		return YES;
+	}
+
+	return [super automaticallyNotifiesObserversForKey:key];
 }
 
 @end
