@@ -666,7 +666,7 @@
 		} else {
 			[self reloadHistoryCompletionBlock:nil];
 		}
-	 } for:self];
+	 } for:self isStandalone:YES];
 }
 
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
@@ -701,7 +701,7 @@
 		} else {
 			[self reloadThemeCompletionBlock:nil];
 		}
-	} for:self];
+	} for:self isStandalone:YES];
 }
 
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
