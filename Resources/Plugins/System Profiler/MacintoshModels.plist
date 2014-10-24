@@ -80,6 +80,12 @@
 	<string>MacBook Pro (15-inch Retina Mid-2012)</string>
 	<key>MacBookPro10,2</key>
 	<string>MacBook Pro (13-inch Retina Mid-2012)</string>
+	<key>MacBookPro11,1</key>
+	<string>MacBook Pro (13-inch Retina Late-2013)</string>
+	<key>MacBookPro11,2</key>
+	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<key>MacBookPro11,3</key>
+	<string>MacBook Pro (15-inch Retina Late-2013)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2.1</key>
@@ -108,6 +114,8 @@
 	<string>Mac Mini (Late 2012)</string>
 	<key>Macmini6,2</key>
 	<string>Mac Mini (Late 2012)</string>
+	<key>Macmini7,1</key>
+	<string>Mac Mini (Late 2014)</string>
 	<key>Xserve1,1</key>
 	<string>Xserve (Original)</string>
 	<key>Xserve2,1</key>
@@ -132,10 +140,16 @@
 	<string>iMac (21.5-inch Late 2012)</string>
 	<key>iMac13,2</key>
 	<string>iMac (27-inch Late 2012)</string>
-	<key>iMac14,2</key>
-	<string>iMac (27-inch Late 2013)</string>
 	<key>iMac14,1</key>
 	<string>iMac (21.5-inch Late 2013)</string>
+	<key>iMac14,2</key>
+	<string>iMac (27-inch Late 2013)</string>
+	<key>iMac14,3</key>
+	<string>iMac (21.5-inch Late 2013)</string>
+	<key>iMac14,4</key>
+	<string>iMac (21.5-inch Late 2014)</string>
+	<key>iMac15,1</key>
+	<string>iMac (27-inch Retina Late 2014)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
@@ -154,13 +168,7 @@
 	<string>iMac (Early 2009)</string>
 	<key>VMware</key>
 	<string>VMware Fusion Virtual Machine</string>
-	<key>MacBookPro11,3</key>
-	<string>MacBook Pro (15-inch Retina Late-2013)</string>
-	<key>MacBookPro11,1</key>
-	<string>MacBook Pro (13-inch Retina Late-2013)</string>
-	<key>MacBookPro11,2</key>
-	<string>MacBook Pro (15-inch Retina Late-2013)</string>
 	<key>MacPro6,1</key>
-	<string>Mac Pro (Late 2013)</string>	
+	<string>Mac Pro (Late 2013)</string>
 </dict>
 </plist>
