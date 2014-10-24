@@ -43,9 +43,6 @@
 @interface TVCLogControllerOperationItem : NSOperation
 @property (nonatomic, nweak) TVCLogController *controller;
 @property (nonatomic, copy) TVCLogControllerOperationBlock executionBlock;
-@property (nonatomic, assign) BOOL isStandalone;
-
-- (NSInteger)dependencyCount;
 @end
 
 #pragma mark -
@@ -57,8 +54,11 @@
 {
 	if (self = [super init]) {
 		[self setName:@"TVCLogControllerOperationQueue"];
-		
-		[self setMaxConcurrentOperationCount:4];
+
+		// Everything is a dependency of the line above it so
+		// in theory our queue is never concurrent so limit
+		// our thread count to match that
+		[self setMaxConcurrentOperationCount:1];
 
 		return self;
 	}
@@ -71,11 +71,6 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender
 {
-	[self enqueueMessageBlock:callbackBlock for:sender isStandalone:NO];
-}
-
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone
-{
 	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(callbackBlock);
 		PointerIsEmptyAssert(sender);
@@ -83,14 +78,7 @@
 		/* Create operation. */
 		TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem new];
 
-		TVCLogControllerOperationItem *lastOp = (id)[self dependencyOfLastQueueItem:sender];
-
-		if (lastOp) {
-			[operation addDependency:lastOp];
-		}
-
 		[operation setController:sender];
-		[operation setIsStandalone:isStandalone];
 		[operation setExecutionBlock:callbackBlock];
 
 		/* Add the operations. */
@@ -130,42 +118,17 @@
 	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(controller);
 
-		/* Mark all objects part of this controller
-		 that are not cancelled and have no dependencies
-		 as ready or maybe is ready. */
 		for (id operation in [self operations]) {
 			if ([operation controller] == controller) {
-				NSInteger depCount = [operation dependencyCount];
-
 				if ([operation isCancelled] == NO) {
-					if (depCount <= 0) {
-						[operation willChangeValueForKey:@"isReady"];
-						[operation didChangeValueForKey:@"isReady"];
-					}
+					[operation willChangeValueForKey:@"isReady"];
+					[operation didChangeValueForKey:@"isReady"];
+
+					return; // This queue is serial so we only need to isReady top-most
 				}
 			}
 		}
 	}];
-}
-
-#pragma mark -
-#pragma mark Dependency
-
-- (NSOperation *)dependencyOfLastQueueItem:(TVCLogController *)controller
-{
-	/* This is called internally already from a method that is running on the
-	 main queue so we will not wrap this in it. */
-	for (id operation in [[self operations] reverseObjectEnumerator]) {
-		if ([operation controller] == controller) {
-			if ([operation isCancelled] == NO) {
-				if ([operation isStandalone] == NO) {
-					return operation;
-				}
-			}
-		}
-	}
-
-	return nil;
 }
 
 @end
@@ -175,38 +138,14 @@
 
 @implementation TVCLogControllerOperationItem
 
-- (NSInteger)dependencyCount
-{
-	return [[self dependencies] count];
-}
-
 - (void)main
 {
-	/* Perform block. */
 	self.executionBlock(self);
-
-	/* Kill existing dependency. */
-	/* Discussion: Normally NSOperationQueue removes all strong references to 
-	 dependencies once all operations have completed. As this operation queue 
-	 can have thousands of operations chained together, this is not a desired
-	 behavior as a pseudo infinite loop can be created. Therefore, once we 
-	 have executed the block we wanted, we release any dependency assigned. */
-	NSArray *operations = [self dependencies];
-
-	if ([operations count] > 0) {
-		[self removeDependency:operations[0]];
-	}
 }
 
 - (BOOL)isReady
 {
-	NSInteger depCount = [self dependencyCount];
-
-	if (depCount < 1 || [self isStandalone]) {
-		return ([super isReady] && [[self controller] isLoaded]);
-	} else {
-		return  [super isReady];
-	}
+	return ([super isReady] && [[self controller] isLoaded]);
 }
 
 @end
