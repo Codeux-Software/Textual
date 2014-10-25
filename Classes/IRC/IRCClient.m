@@ -523,7 +523,7 @@
 																	 @"TDCNickSheet",
 																	 @"TDCInviteSheet",
 																	 @"TDCHighlightSheetList"]];
-	
+
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
 			[windowObject cancel:nil];
@@ -2582,7 +2582,7 @@
 				}
 
 				if (selChannel) {
-					[cmd setChannelID:[selChannel treeUUID]];
+					[cmd setChannelID:[selChannel uniqueIdentifier]];
 				} else {
 					[cmd setChannelID:nil];
 				}
