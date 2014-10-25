@@ -1243,7 +1243,7 @@
 	TDCNickSheet *nickSheet = [TDCNickSheet new];
 
 	[nickSheet setDelegate:self];
-	[nickSheet setClientID:[u treeUUID]];
+	[nickSheet setClientID:[u uniqueIdentifier]];
 	[nickSheet setWindow:mainWindow()];
 	
 	[nickSheet start:[u localNickname]];
@@ -1377,7 +1377,7 @@
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
 	
-	[d setClientID:[u treeUUID]];
+	[d setClientID:[u uniqueIdentifier]];
 	[d setConfig:[u copyOfStoredConfig]];
 	
 	[d start:viewType withContext:context];
@@ -1514,8 +1514,8 @@
 	[t setDelegate:self];
 	[t setWindow:mainWindow()];
 	
-	[t setClientID:[u treeUUID]];
-	[t setChannelID:[c treeUUID]];
+	[t setClientID:[u uniqueIdentifier]];
+	[t setChannelID:[c uniqueIdentifier]];
 
 	[t start:[c topic]];
 
@@ -1564,8 +1564,8 @@
 	[m setDelegate:self];
 	[m setWindow:mainWindow()];
 	
-	[m setClientID:[u treeUUID]];
-	[m setChannelID:[c treeUUID]];
+	[m setClientID:[u uniqueIdentifier]];
+	[m setChannelID:[c uniqueIdentifier]];
 	
 	[m setMode:[c modeInfo]];
 
@@ -1617,7 +1617,7 @@
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
 	
-	[d setClientID:[u treeUUID]];
+	[d setClientID:[u uniqueIdentifier]];
 	[d setChannelID:nil];
 	
 	[d setConfig:[IRCChannelConfig new]];
@@ -1673,8 +1673,8 @@
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
 	
-	[d setClientID:[u treeUUID]];
-	[d setChannelID:[c treeUUID]];
+	[d setClientID:[u uniqueIdentifier]];
+	[d setChannelID:[c uniqueIdentifier]];
 	
 	[d setConfig:_channelConfig];
 
@@ -1902,7 +1902,7 @@
 	[inviteSheet setWindow:mainWindow()];
 	
 	[inviteSheet setNicknames:nicknames];
-	[inviteSheet setClientID:[u treeUUID]];
+	[inviteSheet setClientID:[u uniqueIdentifier]];
 
 	[inviteSheet startWithChannels:channels];
 
