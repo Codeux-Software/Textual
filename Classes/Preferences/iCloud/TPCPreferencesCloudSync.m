@@ -367,11 +367,15 @@
 			}
 		}
 
-		/* Include clients being synced. */
-		NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
+		/* If one of the values changed is our world controller, then we intercept
+		 that key and replace it with a few special values. */
+		if (NSDissimilarObjects(changedValues[IRCWorldControllerDefaultsStorageKey], nil)) {
+			[changedValues removeObjectForKey:IRCWorldControllerDefaultsStorageKey];
 
-		/* Combine these two… */
-		[changedValues addEntriesFromDictionary:clientDict];
+			NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
+
+			[changedValues addEntriesFromDictionary:clientDict];
+		}
 
 		/* Remove keys to sync even if we are syncing all. */
 		[[self unsavedLocalKeys] removeAllObjects];
