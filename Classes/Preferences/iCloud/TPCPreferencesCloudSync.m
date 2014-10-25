@@ -366,7 +366,13 @@
 				}
 			}
 		}
-		
+
+		/* Include clients being synced. */
+		NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
+
+		/* Combine these two… */
+		[changedValues addEntriesFromDictionary:clientDict];
+
 		/* Remove keys to sync even if we are syncing all. */
 		[[self unsavedLocalKeys] removeAllObjects];
 
