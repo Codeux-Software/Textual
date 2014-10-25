@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -385,7 +385,7 @@ DQ
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content"> algorithm is used by default to provide greatest compatibility with legacy IRC clients.
+                                        <string key="content"> mode of operation is used by default to provide greatest compatibility with legacy IRC clients.
 
 However, if backwards compatibility is not a concern, then it is highly recommended to use the </string>
                                         <attributes>
@@ -402,7 +402,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" algorithm.">
+                                    <fragment content=" instead.">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
