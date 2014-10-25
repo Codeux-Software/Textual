@@ -116,7 +116,7 @@
 			 the new time= format over the old. */
 			NSString *timeObject = valueMatrix[@"time"];
 			
-			NSDate *date;
+			NSDate *date = nil;
 			
 			if (timeObject == nil) {
 				/* time= does not exist so now we try t= */
