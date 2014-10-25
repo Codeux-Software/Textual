@@ -480,7 +480,7 @@
 			
 			if (objectValue && keyname) {
 				/* Block stuff from syncing that we did not want. */
-				if ([self keyIsNotPermittedFromCloud:keyname] == NO) {
+				if ([self keyIsNotPermittedFromCloud:keyname]) {
 					continue; // Do not continue operation…
 				}
 				
