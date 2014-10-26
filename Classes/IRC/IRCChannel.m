@@ -344,6 +344,8 @@
 			[windowObject cancel:nil];
 		}
 	}
+
+	[[TXSharedApplication sharedInputHistoryManager] destroy:self];
 	
 	[self.viewController prepareForPermanentDestruction];
 }
