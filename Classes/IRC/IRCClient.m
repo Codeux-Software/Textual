@@ -398,6 +398,9 @@
 	/* Reset stored channel list now that we are done. */
 	[self updateStoredChannelList];
 
+	/* Update navigation list. */
+	[menuController() populateNavgiationChannelList];
+
 	/* We also write all passwords to Keychain here. */
 	[self.config writeKeychainItemsToDisk];
 	
@@ -507,6 +510,8 @@
 			[c prepareForPermanentDestruction];
 		}
 	}
+
+	[[TXSharedApplication sharedInputHistoryManager] destroy:self];
 	
 	[self.viewController prepareForPermanentDestruction];
 }

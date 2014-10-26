@@ -568,6 +568,8 @@
 	}
 
 	[mainWindow() reloadLoadingScreen];
+
+	[menuController() populateNavgiationChannelList];
 	
 	return c;
 }
@@ -612,14 +614,14 @@
 
 		[mainWindowServerList() addItemToList:index inParent:client];
 	}
-	
-	/* Update selection. */
-	if (adjust) {
-		[mainWindow() adjustSelection];
-	}
 
-	/* Populate channel list. */
-	[menuController() populateNavgiationChannelList];
+	if (adjust) {
+	/* Update selection. */
+		[mainWindow() adjustSelection];
+
+		/* Populate channel list. */
+		[menuController() populateNavgiationChannelList];
+	}
 	
 	return c;
 }
@@ -745,8 +747,6 @@
 	
 	id selectedItem = [mainWindow() selectedItem];
 	
-	[[TXSharedApplication sharedInputHistoryManager] destroy:u];
-	
 	if (selectedItem && [selectedItem associatedClient] == u) {
 		[self selectOtherAndDestroy:u];
 	} else {
@@ -760,6 +760,8 @@
 	}
 
 	[mainWindow() reloadLoadingScreen];
+
+	[menuController() populateNavgiationChannelList];
 }
 
 - (void)destroyChannel:(IRCChannel *)c
