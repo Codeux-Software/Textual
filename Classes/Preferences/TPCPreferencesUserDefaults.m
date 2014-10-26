@@ -431,8 +431,12 @@
 
 - (id)valueForKey:(NSString *)key
 {
-	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
-		return [_groupDefaults objectForKey:key];
+	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
+			return [_groupDefaults objectForKey:key];
+		} else {
+			return [_userDefaults objectForKey:key];
+		}
 	} else {
 		return [_userDefaults objectForKey:key];
 	}
