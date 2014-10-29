@@ -24,9 +24,9 @@ The latest version of Textual requires two things to be built. One is a valid (d
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
-Once you have your code signing identity, modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file define the name of the certificate which will be used for code signing. 
+Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file define the name of the certificate which will be used for code signing.
 
-After defining your code signing identity, build Textual using the "Standard Release" build scheme.
+After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
 
 ## Original Limechat License
 
