@@ -2191,7 +2191,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="596.5" y="-252"/>
+            <point key="canvasLocation" x="292.5" y="-90"/>
         </customView>
         <customView id="kTM-XW-Yb5" userLabel="Channel Management">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
