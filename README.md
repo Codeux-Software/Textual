@@ -4,11 +4,11 @@ Textual is a highly modified version of the open source project known as [LimeCh
 
 ## Supporting Textual
 
-It is asked out of kindness that those with the power to build Textual do not abuse it to freely distribute it to hundreds of users. Textual exists as an open source project for two reasons: The first reason is to allow the open source community as a whole to contribute. The second reason is to assist other Objective-C developers by showing certain solutions to tasks they may face. A lot of work has been put into the project by the original authors as well as those who have contributed. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked above, is asked out of respect so that the project can continue to thrive.
+Please do not abuse the power to build Textual in order to freely distribute it to hundreds of users. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked, is asked out of respect so that the project can continue to thrive.
 
 ## Note Regarding Support
 
-Please be aware while it is within your right to compile Textual and redistribute it unlimited times; **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, general support for easy to answer questions related to the actual use of the application is still available at any time.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, general support for easy to answer questions related to the actual use of the application is still available at any time.
 
 ## Note Regarding Code Signing
 
@@ -24,7 +24,9 @@ The latest version of Textual requires two things to be built. One is a valid (d
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
 
-As long as a self-signed certificate or an Apple Developer issued certificate is available with its name containing "Mac Developer", then the only thing required to build Textual is to open it and build it using the "Standard Release" build scheme. There are no other special instructions. 
+Once you have your code signing identity, modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file define the name of the certificate which will be used for code signing. 
+
+After defining your code signing identity, build Textual using the "Standard Release" build scheme.
 
 ## Original Limechat License
 
