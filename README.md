@@ -1,6 +1,6 @@
 ## Introduction to Textual
 
-Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/wiki/Writing-Plugins.wiki) written in Objective-C and [scripts](http://www.codeux.com/textual/wiki/Writing-Scripts.wiki) made with AppleScript (and other languages) are also supported.
+Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](http://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
 
 ## Supporting Textual
 
@@ -8,21 +8,21 @@ Please do not abuse the power to build Textual in order to freely distribute it 
 
 ## Note Regarding Support
 
-Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, general support for easy to answer questions related to the actual use of the application is still available at any time.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](http://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available at any time.
 
 ## Note Regarding Code Signing
 
 **It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment. 
 
-For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. This is done using the code signing identity. Therefore, certain features such as logging to disk will never work without code signing because Textual wont be able to save the bookmark to the specified logging location.
+For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. The kernel makes its judgements using identity defined by the certificate used for code signing. Therefore, if disabled, certain features such as logging to disk will never work because Textual wont be able to save the bookmark to the specified logging location.
 
-Another example is that Textual may have difficulties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by code signing identities. 
+Another example is that Textual may have difficulties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by process of code signing.
 
 ## Building Textual
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be trusted) code signing certificate. The second is an installation of Xcode with a copy of the OS X Yosemite SDK.
+The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode with a copy of the OS X Yosemite SDK.
 
-If you are an Apple registered developer, then obtaining a signing certificate is not very hard. However, if you are not, a self-signed certificate for "code signing" will do just as well. The steps to produce one of these is very simple so Google is the best destination to check for the steps on making one of these.
+If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will do fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
 
 Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file define the name of the certificate which will be used for code signing.
 
