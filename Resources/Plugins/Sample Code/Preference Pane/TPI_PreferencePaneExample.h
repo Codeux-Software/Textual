@@ -1,9 +1,9 @@
-/* *********************************************************************
-       _____        _               _    ___ ____   ____
-      |_   _|___  _| |_ _   _  __ _| |  |_ _|  _ \ / ___|
-       | |/ _ \ \/ / __| | | |/ _` | |   | || |_) | |
-       | |  __/>  <| |_| |_| | (_| | |   | ||  _ <| |___
-       |_|\___/_/\_\\__|\__,_|\__,_|_|  |___|_| \_\\____|
+/* ********************************************************************* 
+				  _____         _               _
+				 |_   _|____  _| |_ _   _  __ _| |
+				   | |/ _ \ \/ / __| | | |/ _` | |
+				   | |  __/>  <| |_| |_| | (_| | |
+				   |_|\___/_/\_\\__|\__,_|\__,_|_|
 
  Copyright (c) 2010 — 2014 Codeux Software & respective contributors.
      Please see Acknowledgements.pdf for additional information.
@@ -17,9 +17,9 @@
     * Redistributions in binary form must reproduce the above copyright
       notice, this list of conditions and the following disclaimer in the
       documentation and/or other materials provided with the distribution.
-    * Neither the name of the Textual IRC Client & Codeux Software nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+    * Neither the name of Textual and/or Codeux Software, nor the names of 
+      its contributors may be used to endorse or promote products derived 
+      from this software without specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
