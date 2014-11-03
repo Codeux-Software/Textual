@@ -2042,7 +2042,9 @@
 			NSObjectIsEmptyAssert(targetChannelName);
 			
 			NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
-			
+
+			NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
+
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 
 			while ([s length] > 0)
@@ -2050,11 +2052,17 @@
 				for (__strong NSString *channelName in targets) {
 					for (NSString *prefixMode in userModePrefixes) {
 						NSString *symbol = userModePrefixes[prefixMode];
-						
+
 						if ([channelName hasPrefix:symbol]) {
-							destinationPrefix = symbol;
+							NSString *nch = [channelName stringCharacterAtIndex:1];
+
+							if ([validTargetPrefixes contains:nch]) {
+								destinationPrefix = symbol;
+
+								channelName = [channelName substringFromIndex:1];
+							}
 							
-							channelName = [channelName substringFromIndex:1];
+							break;
 						}
 					}
 
@@ -4161,13 +4169,33 @@
 	BOOL isEncrypted = NO;
 
 	/* Operator message? */
-	NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
-	
-	for (NSString *prefixMode in userModePrefixes) {
-		NSString *symbol = userModePrefixes[prefixMode];
-		
-		if ([target hasPrefix:symbol]) {
-			target = [target substringFromIndex:1];
+	if ([target length] > 1) {
+		/* This logic has to deal with use cases where different symbols would
+		 be used for channels instead of being confused about the channel named
+		 "+channel" and thinking it is being addressed to all users in the channel
+		 named "channel" with a +, we must take this into account. */
+		NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
+
+		for (NSString *prefixMode in userModePrefixes) {
+			NSString *symbol = userModePrefixes[prefixMode];
+
+			if ([target hasPrefix:symbol]) {
+				/* We detected a possible prefix match. At this point, we scan ahead
+				 and see the next character in our sequence. If the next character is a
+				 known channel name prefix, then we count this mode prefix as valid. */
+				/* As we are always checking for a prefix, the next character is index 1 */
+				NSString *nch = [target stringCharacterAtIndex:1];
+
+				NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
+
+				if ([validTargetPrefixes contains:nch]) {
+					/* The match is valid, remove prefix character. */
+
+					target = [target substringFromIndex:1];
+				}
+
+				break;
+			}
 		}
 	}
 
