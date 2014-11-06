@@ -1809,7 +1809,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">The location in which log files are stored cannot be shared with Cloud. This is a limitation of OS X that Textual cannot circumvent.</string>
+                        <string key="title">The location in which log files are stored cannot be shared with iCloud. This is a limitation of OS X that Textual cannot circumvent.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
