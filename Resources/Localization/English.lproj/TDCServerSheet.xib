@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="5100" identifier="xcode"/>
@@ -18,7 +18,6 @@
                 <outlet property="autoDisconnectOnSleepCheck" destination="2250" id="2253"/>
                 <outlet property="autoReconnectCheck" destination="1532" id="1936"/>
                 <outlet property="autojoinContentView" destination="1738" id="MOk-ic-gF9"/>
-                <outlet property="autojoinWaitsForNickServCheck" destination="a4L-Oa-l85" id="BQx-bM-sZs"/>
                 <outlet property="awayNicknameField" destination="2335" id="2343"/>
                 <outlet property="cancelButton" destination="1456" id="1463"/>
                 <outlet property="channelTable" destination="1805" id="1952"/>
@@ -401,11 +400,11 @@ Gw
             <point key="canvasLocation" x="234.5" y="157.5"/>
         </customView>
         <customView id="1563" userLabel="Identity View">
-            <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
+            <rect key="frame" x="0.0" y="1" width="529" height="368"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="1595" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="225" y="253" width="187" height="22"/>
+                    <rect key="frame" x="228" y="314" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" usesSingleLineMode="YES" id="1619" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -420,7 +419,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1596">
-                    <rect key="frame" x="128" y="255" width="92" height="17"/>
+                    <rect key="frame" x="128" y="316" width="92" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="1618">
                         <font key="font" metaFont="system"/>
@@ -429,7 +428,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1597" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="224" y="102" width="188" height="22"/>
+                    <rect key="frame" x="228" y="168" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="textual" usesSingleLineMode="YES" id="1617" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -441,7 +440,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1598">
-                    <rect key="frame" x="145" y="104" width="75" height="17"/>
+                    <rect key="frame" x="145" y="170" width="75" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1616">
                         <font key="font" metaFont="system"/>
@@ -450,7 +449,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1599" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="224" y="68" width="188" height="22"/>
+                    <rect key="frame" x="228" y="134" width="188" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Textual User" usesSingleLineMode="YES" id="1615" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -462,7 +461,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1600">
-                    <rect key="frame" x="141" y="70" width="80" height="17"/>
+                    <rect key="frame" x="141" y="136" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="1614">
                         <font key="font" metaFont="system"/>
@@ -471,7 +470,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1602">
-                    <rect key="frame" x="225" y="185" width="187" height="22"/>
+                    <rect key="frame" x="228" y="246" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest_ Guest__ Guest___" drawsBackground="YES" usesSingleLineMode="YES" id="1612">
                         <font key="font" metaFont="system"/>
@@ -480,7 +479,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1603">
-                    <rect key="frame" x="115" y="187" width="107" height="17"/>
+                    <rect key="frame" x="115" y="248" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Alternatives:" id="1611">
                         <font key="font" metaFont="system"/>
@@ -489,7 +488,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1604">
-                    <rect key="frame" x="264" y="168" width="150" height="13"/>
+                    <rect key="frame" x="278" y="229" width="150" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This field is space separated" id="1610">
                         <font key="font" metaFont="system" size="10"/>
@@ -497,15 +496,8 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="1607">
-                    <rect key="frame" x="117" y="152" width="295" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <textField verticalHuggingPriority="750" id="1606">
-                    <rect key="frame" x="174" y="214" width="48" height="11"/>
+                    <rect key="frame" x="174" y="275" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="1608">
                         <font key="font" metaFont="miniSystem"/>
@@ -514,7 +506,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2335" customClass="TVCTextFieldWithValueValidation">
-                    <rect key="frame" x="225" y="219" width="187" height="22"/>
+                    <rect key="frame" x="228" y="280" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest[away]" usesSingleLineMode="YES" id="2342" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
@@ -526,7 +518,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="2336">
-                    <rect key="frame" x="115" y="224" width="107" height="17"/>
+                    <rect key="frame" x="115" y="285" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="2341">
                         <font key="font" metaFont="system"/>
@@ -535,7 +527,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="wi3-vs-sHb">
-                    <rect key="frame" x="174" y="177" width="48" height="11"/>
+                    <rect key="frame" x="174" y="238" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="rx2-Ws-W3v">
                         <font key="font" metaFont="miniSystem"/>
@@ -543,8 +535,15 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="A3c-XH-Q30">
+                    <rect key="frame" x="117" y="208" width="295" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
                 <textField verticalHuggingPriority="750" id="1601" customClass="NSSecureTextField">
-                    <rect key="frame" x="224" y="34" width="188" height="22"/>
+                    <rect key="frame" x="228" y="71" width="187" height="22"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="NickServ or SASL Password" drawsBackground="YES" id="1613">
                         <font key="font" metaFont="system"/>
@@ -553,16 +552,16 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="1623">
-                    <rect key="frame" x="86" y="39" width="135" height="17"/>
+                    <rect key="frame" x="87" y="59" width="134" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title=" Personal Password:" id="1626">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Personal Password:" id="1626">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="v00-vi-7jl">
-                    <rect key="frame" x="174" y="29" width="48" height="11"/>
+                    <rect key="frame" x="174" y="66" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="H2d-Kp-L4O">
                         <font key="font" metaFont="miniSystem"/>
@@ -570,8 +569,23 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="2Zg-jJ-evU">
+                    <rect key="frame" x="117" y="111" width="295" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <button id="B1u-e0-30u">
+                    <rect key="frame" x="79" y="29" width="370" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8B6-j5-4cs">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="382.5" y="297.5"/>
+            <point key="canvasLocation" x="382.5" y="327"/>
         </customView>
         <customView id="1627" userLabel="Messages View">
             <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
@@ -771,11 +785,53 @@ Gw
             <point key="canvasLocation" x="264.5" y="307.5"/>
         </customView>
         <customView id="1738" userLabel="Autojoin View">
-            <rect key="frame" x="0.0" y="6" width="529" height="363"/>
+            <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <button verticalHuggingPriority="750" id="1794">
+                    <rect key="frame" x="54" y="24" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1801">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="addChannel:" target="-2" id="1815"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="1795">
+                    <rect key="frame" x="420" y="24" width="55" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1800">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="editChannel:" target="-2" id="1816"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" id="1796">
+                    <rect key="frame" x="76" y="24" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1799">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deleteChannel:" target="-2" id="1814"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="1797">
+                    <rect key="frame" x="51" y="270" width="207" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Automatically join the channels:" id="1798">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="1793">
-                    <rect key="frame" x="54" y="108" width="421" height="208"/>
+                    <rect key="frame" x="53" y="54" width="421" height="208"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
@@ -840,7 +896,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1804">
-                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
+                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -848,63 +904,6 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" id="1794">
-                    <rect key="frame" x="54" y="78" width="23" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1801">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="addChannel:" target="-2" id="1815"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="1795">
-                    <rect key="frame" x="420" y="78" width="55" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1800">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="editChannel:" target="-2" id="1816"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="1796">
-                    <rect key="frame" x="76" y="78" width="23" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1799">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="deleteChannel:" target="-2" id="1814"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" id="1797">
-                    <rect key="frame" x="51" y="324" width="207" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Automatically join the channels:" id="1798">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button id="a4L-Oa-l85">
-                    <rect key="frame" x="85" y="20" width="370" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Wait for NickServ identification before joining channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oYm-kz-Qfs">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="y6V-rf-YgE">
-                    <rect key="frame" x="117" y="55" width="295" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
             </subviews>
             <point key="canvasLocation" x="389.5" y="43.5"/>
         </customView>
@@ -979,7 +978,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2453">
-                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
+                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1130,7 +1129,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1849">
-                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="293.77800000000002" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
