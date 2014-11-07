@@ -104,9 +104,13 @@
 	NSColor *defaultColor = [self messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		return [defaultColor colorWithAlphaComponent:0.55];
+		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
+			return  defaultColor;
+		} else {
+			return [defaultColor colorWithAlphaComponent:0.7];
+		}
 	} else {
-		return  defaultColor;
+		return defaultColor;
 	}
 }
 
