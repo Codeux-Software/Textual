@@ -930,6 +930,17 @@
 	[self onChangedUserListModeColor:sender];
 }
 
+- (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
+{
+	TVCServerList *serverList = mainWindowServerList();
+
+	NSColor *highlightColor = [[serverList userInterfaceObjects] messageCountHighlightedBadgeBackgroundColor_Default];
+
+	[RZUserDefaults() setColor:highlightColor forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+
+	[self onChangedServerListUnreadBadgeColor:sender];
+}
+
 - (void)onChangedInputHistoryScheme:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
@@ -977,6 +988,11 @@
 - (void)onChangedUserListModeSortOrder:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
+}
+
+- (IBAction)onChangedServerListUnreadBadgeColor:(id)sender
+{
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListUnreadBadgesAction];
 }
 
 - (void)onOpenPathToCloudFolder:(id)sender
