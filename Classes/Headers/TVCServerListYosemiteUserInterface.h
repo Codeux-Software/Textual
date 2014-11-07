@@ -57,8 +57,8 @@
 @property (readonly, copy) NSColor *channelCellErroneousItemTextColorForActiveWindow;
 @property (readonly, copy) NSColor *channelCellErroneousItemTextColorForInactiveWindow;
 
-@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForActiveWindow;
-@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForInactiveWindow;
+@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForActiveWindow; // inherits from -messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection
+@property (readonly, copy) NSColor *channelCellHighlightedItemTextColorForInactiveWindow; // inherits from -messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection
 
 @property (readonly, copy) NSColor *channelCellSelectedTextColorForActiveWindow;
 @property (readonly, copy) NSColor *channelCellSelectedTextColorForInactiveWindow;
@@ -75,8 +75,6 @@
 @property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForInactiveWindow;
 
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
-
 @property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;;
 @property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForInactiveWindow;
 
@@ -85,9 +83,6 @@
 
 @property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountSelectedBadgeBackgroundColorForInactiveWindow;
-
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForActiveWindow;
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
 
 @property (readonly, copy) NSFont *messageCountBadgeFont;
 

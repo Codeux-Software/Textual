@@ -85,12 +85,12 @@
 
 - (NSColor *)channelCellHighlightedItemTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
+	return [self messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection];
 }
 
 - (NSColor *)channelCellHighlightedItemTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
+	return [self messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection];
 }
 
 - (NSColor *)channelCellErroneousItemTextColorForActiveWindow
@@ -188,11 +188,6 @@
 	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
-- (NSColor *)messageCountHighlightedBadgeTextColor
-{
-	return [NSColor whiteColor];
-}
-
 - (NSColor *)messageCountNormalBadgeBackgroundColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:0.7];
@@ -211,16 +206,6 @@
 - (NSColor *)messageCountSelectedBadgeBackgroundColorForInactiveWindow
 {
 	return [NSColor whiteColor];
-}
-
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:0.7];
-}
-
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:0.7];
 }
 
 - (NSColor *)rowSelectionColorForActiveWindow

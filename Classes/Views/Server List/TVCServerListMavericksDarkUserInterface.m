@@ -119,16 +119,6 @@
 	return 3.0;
 }
 
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
-}
-
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
-}
-
 - (NSColor *)messageCountBadgeAquaBackgroundColor
 {
 	return [NSColor colorWithCalibratedRed:0.187 green:0.187 blue:0.187 alpha:1.0];
@@ -160,11 +150,6 @@
 }
 
 - (NSColor *)messageCountNormalBadgeTextColorForInactiveWindow
-{
-	return [NSColor whiteColor];
-}
-
-- (NSColor *)messageCountHighlightedBadgeTextColor
 {
 	return [NSColor whiteColor];
 }

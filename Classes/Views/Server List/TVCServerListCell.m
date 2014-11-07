@@ -612,11 +612,7 @@
 	NSColor *backgroundColor = nil;
 	
 	if (isHighlight) {
-		if ([mainWindow() isActiveForDrawing]) {
-			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
-		} else {
-			backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
-		}
+		backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColor];
 	} else {
 		if (isSelected) {
 			if ([mainWindow() isActiveForDrawing]) {
