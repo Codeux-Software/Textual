@@ -45,11 +45,7 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode;
 
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
-
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColor_Default;
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColor;
-@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection;
+@property (readonly, copy) NSColor *userConfiguredMessageCountHighlightedBadgeBackgroundColor;
 @end
 
 @interface TVCServerListMavericksUserInterfaceBackground : NSBox

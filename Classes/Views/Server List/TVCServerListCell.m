@@ -390,11 +390,17 @@
 		if (isGroupItem == NO) {
 			if (isActive) {
 				if (isHighlight) {
-					if (isWindowActive == NO) {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForInactiveWindow] range:stringLengthRange];
-					} else {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForActiveWindow] range:stringLengthRange];
+					NSColor *customColor = [interfaceObject userConfiguredMessageCountHighlightedBadgeBackgroundColor];
+
+					if (customColor == nil || [customColor isEqual:[NSColor clearColor]]) {
+						if (isWindowActive == NO) {
+							customColor = [interfaceObject channelCellHighlightedItemTextColorForInactiveWindow];
+						} else {
+							customColor = [interfaceObject channelCellHighlightedItemTextColorForActiveWindow];
+						}
 					}
+
+					[mutableStringValue addAttribute:NSForegroundColorAttributeName value:customColor range:stringLengthRange];
 				} else {
 					if (isWindowActive == NO) {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
@@ -603,7 +609,17 @@
 	NSColor *backgroundColor = nil;
 	
 	if (isHighlight) {
-		backgroundColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColor];
+		NSColor *customColor = [interfaceObjects userConfiguredMessageCountHighlightedBadgeBackgroundColor];
+
+		if (customColor == nil || [customColor isEqual:[NSColor clearColor]]) {
+			if ([mainWindow() isActiveForDrawing] == NO) {
+				customColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForInactiveWindow];
+			} else {
+				customColor = [interfaceObjects messageCountHighlightedBadgeBackgroundColorForActiveWindow];
+			}
+		}
+
+		backgroundColor = customColor;
 	} else {
 		if (isSelected) {
 			if ([mainWindow() isActiveForDrawing]) {

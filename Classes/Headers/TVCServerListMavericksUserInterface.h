@@ -64,8 +64,13 @@
 @property (readonly, copy) NSColor *messageCountBadgeAquaBackgroundColor;
 @property (readonly, copy) NSColor *messageCountBadgeGraphtieBackgroundColor;
 
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForActiveWindow;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorForInactiveWindow;
+
 @property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountNormalBadgeTextColorForInactiveWindow;
+
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
 
 @property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForActiveWindow;
 @property (readonly, copy) NSColor *messageCountSelectedBadgeTextColorForInactiveWindow;

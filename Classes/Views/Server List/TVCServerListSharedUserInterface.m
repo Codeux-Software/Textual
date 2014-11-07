@@ -89,34 +89,9 @@
 	}
 }
 
-- (NSColor *)messageCountHighlightedBadgeBackgroundColor_Default
-{
-	return [NSColor colorWithCalibratedRed:0.0 green:0.414 blue:0.117 alpha:1.0];
-}
-
-- (NSColor *)messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection
+- (NSColor *)userConfiguredMessageCountHighlightedBadgeBackgroundColor
 {
 	return [RZUserDefaults() colorForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
-}
-
-- (NSColor *)messageCountHighlightedBadgeBackgroundColor
-{
-	NSColor *defaultColor = [self messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection];
-	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
-			return  defaultColor;
-		} else {
-			return [defaultColor colorWithAlphaComponent:0.7];
-		}
-	} else {
-		return defaultColor;
-	}
-}
-
-- (NSColor *)messageCountHighlightedBadgeTextColor
-{
-	return [NSColor whiteColor];
 }
 
 @end

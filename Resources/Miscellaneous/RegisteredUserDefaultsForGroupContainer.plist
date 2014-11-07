@@ -121,7 +121,7 @@
 	<key>ReplyUnignoredExternalCTCPRequests</key>
 	<true/>
 	<key>Server List Unread Message Count Badge Colors -&gt; Highlight</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAIPP99M+g7Kd7z0Bhg==</data>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgAAhg==</data>
 	<key>ScrollbackMaximumLineCount</key>
 	<integer>300</integer>
 	<key>SwipeMinimumLength</key>
