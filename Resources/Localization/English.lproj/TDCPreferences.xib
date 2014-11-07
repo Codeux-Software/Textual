@@ -306,8 +306,20 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
                     </connections>
                 </button>
+                <button id="HaP-NM-tlL">
+                    <rect key="frame" x="50" y="112" width="357" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="O00-23-p8T">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedUserListModeSortOrder:" target="-2" id="Zct-7i-Vxo"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListRetainsQueriesBetweenRestarts" id="AM9-b3-hlz"/>
+                    </connections>
+                </button>
                 <button id="zMu-H1-M7w">
-                    <rect key="frame" x="50" y="112" width="260" height="18"/>
+                    <rect key="frame" x="50" y="84" width="260" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SAT-ip-owc">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3052,7 +3064,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             </userGuides>
             <subviews>
                 <button id="g7g-wa-Lin">
-                    <rect key="frame" x="81" y="254" width="357" height="18"/>
+                    <rect key="frame" x="81" y="239" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3064,7 +3076,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="nZc-E3-Yfg">
-                    <rect key="frame" x="81" y="282" width="201" height="18"/>
+                    <rect key="frame" x="81" y="267" width="201" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="eXm-bv-mly">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3077,14 +3089,14 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ZWs-Sg-lWH">
-                    <rect key="frame" x="62" y="314" width="442" height="5"/>
+                    <rect key="frame" x="62" y="299" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button id="CbH-Wp-1Uz">
-                    <rect key="frame" x="81" y="226" width="357" height="18"/>
+                    <rect key="frame" x="81" y="211" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3Ge-78-jOo">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3095,64 +3107,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListSortFavorsServerStaff" id="oWy-3A-yhG"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="24e-Sn-hc0">
-                    <rect key="frame" x="81" y="120" width="134" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="p9v-sF-fnd">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <slider verticalHuggingPriority="750" id="dL3-1Y-d6c">
-                    <rect key="frame" x="248" y="119" width="197" height="15"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="rOl-dP-bbN"/>
-                    <connections>
-                        <accessibilityConnection property="title" destination="24e-Sn-hc0" id="xBd-sf-xwL"/>
-                        <action selector="onChangedTransparency:" target="-2" id="K5z-OY-yfc"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MainWindowTransparencyLevel" id="baK-7R-E7T"/>
-                    </connections>
-                </slider>
-                <textField verticalHuggingPriority="750" id="ty6-SS-X7V">
-                    <rect key="frame" x="220" y="121" width="25" height="11"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="5cm-qm-cnK">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" id="WVk-ba-eef">
-                    <rect key="frame" x="451" y="121" width="23" height="11"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="mEC-bF-yWk">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="HoJ-30-vS3">
-                    <rect key="frame" x="63" y="151" width="441" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <button id="FKV-vg-lhM">
-                    <rect key="frame" x="81" y="170" width="357" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xe6-MU-fhd">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onChangedUserListModeSortOrder:" target="-2" id="JKj-hU-Kti"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListRetainsQueriesBetweenRestarts" id="kvo-BJ-klt"/>
-                    </connections>
-                </button>
                 <button id="Lod-ox-r5n">
-                    <rect key="frame" x="81" y="198" width="294" height="18"/>
+                    <rect key="frame" x="81" y="183" width="294" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZfD-HJ-RMG">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3162,8 +3118,79 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListUpdatesUserInfoPopoverOnScroll" id="cOL-ws-W6g"/>
                     </connections>
                 </button>
+                <button id="ZwK-yE-OaM">
+                    <rect key="frame" x="81" y="318" width="250" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="24e-Sn-hc0">
+                    <rect key="frame" x="81" y="133" width="134" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="p9v-sF-fnd">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" id="dL3-1Y-d6c">
+                    <rect key="frame" x="248" y="132" width="197" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="rOl-dP-bbN"/>
+                    <connections>
+                        <accessibilityConnection property="title" destination="24e-Sn-hc0" id="xBd-sf-xwL"/>
+                        <action selector="onChangedTransparency:" target="-2" id="K5z-OY-yfc"/>
+                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MainWindowTransparencyLevel" id="baK-7R-E7T"/>
+                    </connections>
+                </slider>
+                <textField verticalHuggingPriority="750" id="ty6-SS-X7V">
+                    <rect key="frame" x="220" y="134" width="25" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="5cm-qm-cnK">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="WVk-ba-eef">
+                    <rect key="frame" x="451" y="134" width="23" height="11"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0%" id="mEC-bF-yWk">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="HoJ-30-vS3">
+                    <rect key="frame" x="63" y="164" width="441" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
+                    <rect key="frame" x="77" y="74" width="292" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Background color for unread badge with highlight:" id="aWZ-r5-sxZ">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ILa-Ff-zee">
+                    <rect key="frame" x="62" y="110" width="442" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
                 <colorWell id="6fr-8l-HKL">
-                    <rect key="frame" x="275" y="57" width="44" height="23"/>
+                    <rect key="frame" x="375" y="71" width="44" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
@@ -3175,42 +3202,15 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         </binding>
                     </connections>
                 </colorWell>
-                <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
-                    <rect key="frame" x="79" y="61" width="190" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Server list highlight badge color:" id="aWZ-r5-sxZ">
-                        <font key="font" metaFont="titleBar" size="12"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" id="alf-eT-4K4">
-                    <rect key="frame" x="321" y="51" width="158" height="32"/>
+                    <rect key="frame" x="421" y="65" width="73" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Reset to Default" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ksN-o7-AtZ">
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ksN-o7-AtZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
                         <action selector="onResetServerListUnreadBadgeColorsToDefault:" target="-2" id="0iI-VU-0gz"/>
-                    </connections>
-                </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ILa-Ff-zee">
-                    <rect key="frame" x="62" y="97" width="442" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <button id="ZwK-yE-OaM">
-                    <rect key="frame" x="81" y="333" width="250" height="18"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="teD-cX-ebj">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
                     </connections>
                 </button>
             </subviews>
