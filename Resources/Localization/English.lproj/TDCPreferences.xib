@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="5100" identifier="xcode"/>
+        <development version="6000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
@@ -2338,9 +2338,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     </fragment>
                                     <fragment content=".css">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystemBold"/>
+                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2353,9 +2353,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     </fragment>
                                     <fragment content=".js">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystemBold"/>
+                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -2368,9 +2368,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     </fragment>
                                     <fragment content="styleSettings.plist">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystemBold"/>
+                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
