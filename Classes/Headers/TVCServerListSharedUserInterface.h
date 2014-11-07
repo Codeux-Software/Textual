@@ -44,6 +44,12 @@
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode;
+
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeTextColor;
+
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColor_Default;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColor;
+@property (readonly, copy) NSColor *messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection;
 @end
 
 @interface TVCServerListMavericksUserInterfaceBackground : NSBox
