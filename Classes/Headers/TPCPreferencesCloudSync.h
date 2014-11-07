@@ -54,6 +54,7 @@
 
 - (void)setValue:(id)value forKey:(NSString *)key;
 - (void)removeObjectForKey:(NSString *)key;
+- (void)removeObjectForKeyNextUpstreamSync:(NSString *)key;
 
 - (void)synchronizeToCloud; /* Manually sync. Not recommended to call. */
 - (void)synchronizeFromCloud; /* Manually sync. Not recommended to call. */

@@ -918,6 +918,15 @@
 	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +h"];
 	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +v"];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +y"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +q"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +a"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +o"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +h"];
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +v"];
+#endif
+
 	[self onChangedUserListModeColor:sender];
 }
 
@@ -925,6 +934,10 @@
 {
 	[RZUserDefaults() removeObjectForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
+#endif
+	
 	[self onChangedServerListUnreadBadgeColor:sender];
 }
 
