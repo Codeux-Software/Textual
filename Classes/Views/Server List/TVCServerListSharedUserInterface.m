@@ -104,7 +104,7 @@
 	NSColor *defaultColor = [self messageCountHighlightedBadgeBackgroundColorWithoutAlphaCorrection];
 	
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		return [defaultColor colorWithAlphaComponent:0.7];
+		return [defaultColor colorWithAlphaComponent:0.55];
 	} else {
 		return  defaultColor;
 	}

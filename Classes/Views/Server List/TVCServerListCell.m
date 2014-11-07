@@ -392,7 +392,7 @@
 			if (isActive) {
 				if (isHighlight) {
 					if (isWindowActive == NO) {
-						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
+						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForInactiveWindow] range:stringLengthRange];
 					} else {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForActiveWindow] range:stringLengthRange];
 					}
@@ -406,11 +406,7 @@
 			} else {
 				if (isErroneous) {
 					if (isWindowActive == NO) {
-						if (isVibrantDark) {
-							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellDisabledItemTextColorForInactiveWindow] range:stringLengthRange];
-						} else {
-							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellErroneousItemTextColorForInactiveWindow] range:stringLengthRange];
-						}
+						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellErroneousItemTextColorForInactiveWindow] range:stringLengthRange];
 					} else {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellErroneousItemTextColorForActiveWindow] range:stringLengthRange];
 					}
