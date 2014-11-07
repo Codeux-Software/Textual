@@ -61,6 +61,7 @@
 
 /* Drawing. */
 - (void)reloadAllDrawings;
+- (void)reloadAllUnreadMessageCountBadges;
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;

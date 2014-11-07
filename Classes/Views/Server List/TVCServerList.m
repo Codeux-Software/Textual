@@ -97,6 +97,11 @@
 	[self reloadAllDrawings:NO];
 }
 
+- (void)reloadAllUnreadMessageCountBadges
+{
+	[self reloadAllUnreadMessageCountBadges:NO];
+}
+
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem
 {
 	[self updateDrawingForItem:cellItem skipOcclusionCheck:NO];
@@ -121,6 +126,13 @@
 {
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
 		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
+	}
+}
+
+- (void)reloadAllUnreadMessageCountBadges:(BOOL)skipOcclusionCheck
+{
+	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+		[self updateMessageCountForRow:i skipOcclusionCheck:skipOcclusionCheck];
 	}
 }
 
