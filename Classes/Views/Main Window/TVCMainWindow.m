@@ -153,6 +153,8 @@
 	
 	[self.inputTextField updateBackgroundColor];
 
+	[self.contentSplitView setNeedsDisplay:YES];
+
 	[self.contentView setNeedsDisplay:YES];
 }
 

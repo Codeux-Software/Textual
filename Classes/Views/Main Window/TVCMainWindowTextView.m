@@ -104,6 +104,10 @@
 		} else {
 			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
+
+		[self.contentView setNeedsDisplay:YES];
+
+		[self.backgroundView setNeedsDisplay:YES];
 	}
 #endif
 
@@ -954,6 +958,11 @@
 - (BOOL)allowsVibrancy
 {
 	return NO;
+}
+
+- (BOOL)isOpaque
+{
+	return YES;
 }
 
 @end
