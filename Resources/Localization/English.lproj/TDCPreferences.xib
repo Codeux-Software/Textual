@@ -93,7 +93,7 @@
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="8aT-T0-2u1" id="55F-OG-plu" customClass="TVCAnimatedContentNavigationOutlineView">
+                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="8aT-T0-2u1" id="55F-OG-plu" customClass="TVCAnimatedContentNavigationOutlineView">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="2" height="3"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -224,7 +224,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1835" y="626"/>
+            <point key="canvasLocation" x="1673" y="413"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
