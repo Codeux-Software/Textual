@@ -911,32 +911,19 @@
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
-	TVCMemberList *memberList = mainWindowMemberList();
-
-	NSColor *modeycolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_YDefault];
-	NSColor *modeqcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_QDefault];
-	NSColor *modeacolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ADefault];
-	NSColor *modeocolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_ODefault];
-	NSColor *modehcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_HDefault];
-	NSColor *modevcolor = [[memberList userInterfaceObjects] userMarkBadgeBackgroundColor_VDefault];
-
-	[RZUserDefaults() setColor:modeycolor forKey:@"User List Mode Badge Colors —> +y"];
-	[RZUserDefaults() setColor:modeqcolor forKey:@"User List Mode Badge Colors —> +q"];
-	[RZUserDefaults() setColor:modeacolor forKey:@"User List Mode Badge Colors —> +a"];
-	[RZUserDefaults() setColor:modeocolor forKey:@"User List Mode Badge Colors —> +o"];
-	[RZUserDefaults() setColor:modehcolor forKey:@"User List Mode Badge Colors —> +h"];
-	[RZUserDefaults() setColor:modevcolor forKey:@"User List Mode Badge Colors —> +v"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +y"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +q"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +a"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +o"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +h"];
+	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +v"];
 
 	[self onChangedUserListModeColor:sender];
 }
 
 - (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
-	TVCServerList *serverList = mainWindowServerList();
-
-	NSColor *highlightColor = [[serverList userInterfaceObjects] messageCountHighlightedBadgeBackgroundColor_Default];
-
-	[RZUserDefaults() setColor:highlightColor forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+	[RZUserDefaults() removeObjectForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
 	[self onChangedServerListUnreadBadgeColor:sender];
 }
