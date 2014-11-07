@@ -228,8 +228,10 @@
 	
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
 		[[self mountainLionDeprecationWarningView] setHidden:YES];
+	} else {
+		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 
-		[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+		[[self mountainLionDeprecationWarningView] setHidden:warningViewHidden];
 	}
 	
 	[RZNotificationCenter() addObserver:self
@@ -867,6 +869,8 @@
 
 - (void)onHideMountainLionDeprecationWarning:(id)sender
 {
+	[[self mountainLionDeprecationWarningView] setHidden:YES];
+
 	[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 }
 
