@@ -143,6 +143,8 @@
 		} else {
 			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
+
+		[self.contentSplitView setNeedsDisplay:YES];
 	}
 #else
 	self.usingVibrantDarkAppearance = NO;
@@ -152,8 +154,6 @@
 	[self.serverList updateBackgroundColor];
 	
 	[self.inputTextField updateBackgroundColor];
-
-	[self.contentSplitView setNeedsDisplay:YES];
 
 	[self.contentView setNeedsDisplay:YES];
 }
