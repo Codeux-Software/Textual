@@ -3163,9 +3163,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
-                    <rect key="frame" x="77" y="91" width="292" height="16"/>
+                    <rect key="frame" x="60" y="91" width="309" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Background color for unread badge with highlight:" id="aWZ-r5-sxZ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background color for unread badge with highlight:" id="aWZ-r5-sxZ">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
