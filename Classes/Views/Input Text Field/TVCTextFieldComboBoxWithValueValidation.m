@@ -41,6 +41,7 @@
 /* Maintain cached value so that the drawing does not call
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
+@property (nonatomic, assign) BOOL lastOperationWasPredefinedSelection;
 @end
 
 @interface TVCTextFieldComboBoxWithValueValidationCell ()
@@ -54,17 +55,25 @@
 
 - (void)awakeFromNib
 {
+	[self setCachedValidValue:NO];
+
+	[self setLastOperationWasPredefinedSelection:NO];
+
 	[self setDelegate:self];
 }
 
 - (NSString *)actualValue
 {
-	NSString *selectedObject = [self objectValueOfSelectedItem];
-	
-	if (selectedObject) {
-		return selectedObject;
-	} else {
+	if (self.lastOperationWasPredefinedSelection == NO) {
 		return [self stringValue];
+	} else {
+		NSInteger selectedItemIndex = [self indexOfSelectedItem];
+
+		if (selectedItemIndex > -1) {
+			return [self itemObjectValueAtIndex:selectedItemIndex];
+		} else {
+			return NSStringEmptyPlaceholder;
+		}
 	}
 }
 
@@ -120,6 +129,8 @@
 - (void)comboBoxSelectionDidChange:(NSNotification *)notification
 {
 	/* Validate new value. */
+	[self setLastOperationWasPredefinedSelection:YES];
+	
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
@@ -130,6 +141,8 @@
 - (void)textDidChange:(NSNotification *)notification
 {
 	/* Validate new value. */
+	[self setLastOperationWasPredefinedSelection:NO];
+
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
@@ -143,6 +156,8 @@
 	[super setStringValue:aString];
 	
 	/* Validate new value. */
+	[self setLastOperationWasPredefinedSelection:NO];
+
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];

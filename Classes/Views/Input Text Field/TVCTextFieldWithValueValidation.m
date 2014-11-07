@@ -52,6 +52,11 @@
 #pragma mark -
 #pragma mark Public API (Normal Text Field)
 
+- (void)awakeFromNib
+{
+	[self setCachedValidValue:NO];
+}
+
 - (NSString *)value
 {
 	NSString *stringValue = nil;
