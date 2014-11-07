@@ -355,7 +355,6 @@
 {
 	/* Gather basic context information. */
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
-	BOOL isVibrantDark = [drawingContext boolForKey:@"isVibrantDark"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
