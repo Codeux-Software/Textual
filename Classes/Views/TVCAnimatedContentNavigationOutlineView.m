@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TVCAnimatedContentNavigationOutlineView ()
+@property (nonatomic, nweak) id lastSelectionWeakRef;
+@end
+
 /* This outline view used to be animated. See git history. */
 @implementation TVCAnimatedContentNavigationOutlineView
 
@@ -52,6 +56,22 @@
 - (void)startAtSelectionIndex:(NSInteger)startingSelection
 {
 	[self selectItemAtIndex:startingSelection];
+}
+
+#pragma mark -
+#pragma mark Collapse/Expand Logic
+
+- (id)parentOfSelectedItem
+{
+	if (self.lastSelectionWeakRef) {
+		id parentItem = [self parentForItem:self.lastSelectionWeakRef];
+
+		if (parentItem) {
+			return parentItem;
+		}
+	}
+
+	return nil;
 }
 
 #pragma mark -
@@ -85,6 +105,23 @@
 	return [item containsKey:@"children"];
 }
 
+- (void)outlineViewItemDidExpand:(NSNotification *)notification
+{
+	id itemCrushed = [notification userInfo][@"NSObject"];
+
+	id parentItem = [self parentOfSelectedItem];
+
+	if (itemCrushed == parentItem) {
+		if ([self isItemExpanded:parentItem]) {
+			NSInteger childIndex = [self rowForItem:self.lastSelectionWeakRef];
+
+			if (childIndex > -1) {
+				[self selectItemAtIndex:childIndex];
+			}
+		}
+	}
+}
+
 - (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(NSDictionary *)item
 {
 	return item[@"name"];
@@ -107,8 +144,12 @@
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
 	NSInteger selectedRow = [self selectedRow];
-	
+
+	NSAssertReturn(selectedRow > -1);
+
 	NSDictionary *navItem = [self itemAtRow:selectedRow];
+
+	[self setLastSelectionWeakRef:navItem];
 
 	[self presentView:navItem[@"view"]];
 	

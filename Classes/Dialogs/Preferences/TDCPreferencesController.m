@@ -118,7 +118,6 @@
 	   }];
 
 	[navigationTreeMatrix addObject:@{
-	   @"blockCollapse" : @(YES),
 	   @"name" : TXTLS(@"TDCPreferencesController[1017][1]"),
 	   @"children" : @[
 			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][2]"),	@"view" : self.contentViewGeneral},

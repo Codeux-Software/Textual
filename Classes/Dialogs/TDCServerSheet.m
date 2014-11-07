@@ -374,7 +374,6 @@
 	NSMutableArray *navigationTreeMatrix = [NSMutableArray array];
 	
 	[navigationTreeMatrix addObject:@{
-		@"blockCollapse" : @(YES),
 		@"name" : TXTLS(@"TDCServerSheet[1007][15]"),
 		@"children" : @[
 			@{@"name" : TXTLS(@"TDCServerSheet[1007][07]"),	@"view" : self.addressBookContentView},
