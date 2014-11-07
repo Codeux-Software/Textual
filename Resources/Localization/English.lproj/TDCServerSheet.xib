@@ -876,7 +876,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1804">
-                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
+                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -908,11 +908,11 @@ Gw
             <point key="canvasLocation" x="389.5" y="43.5"/>
         </customView>
         <customView id="2445" userLabel="Highlights View">
-            <rect key="frame" x="0.0" y="2" width="529" height="307"/>
+            <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="gHY-s9-5qN">
-                    <rect key="frame" x="52" y="249" width="371" height="33"/>
+                    <rect key="frame" x="52" y="251" width="371" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="10Y-OD-vqh">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -961,7 +961,7 @@ Gw
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" id="2449">
-                    <rect key="frame" x="56" y="19" width="23" height="23"/>
+                    <rect key="frame" x="56" y="21" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2461">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -972,7 +972,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="2448">
-                    <rect key="frame" x="422" y="19" width="55" height="23"/>
+                    <rect key="frame" x="422" y="21" width="55" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2462">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -983,7 +983,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="2447">
-                    <rect key="frame" x="78" y="19" width="23" height="23"/>
+                    <rect key="frame" x="78" y="21" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2463">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -994,7 +994,7 @@ Gw
                     </connections>
                 </button>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="2450">
-                    <rect key="frame" x="56" y="49" width="421" height="192"/>
+                    <rect key="frame" x="56" y="51" width="421" height="192"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="17" width="419" height="171"/>
@@ -1060,7 +1060,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="2453">
-                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
+                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1129,7 +1129,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1849">
-                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="293.77800000000002" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
@@ -1568,7 +1568,7 @@ Gw
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="This option requires a reconnect to apply." id="YVk-Bd-2RC">
                         <font key="font" metaFont="system" size="10"/>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.13050300728573222" green="0.16511158649999999" blue="0.14268847375538038" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
