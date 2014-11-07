@@ -58,6 +58,7 @@
 @property (nonatomic, copy) NSURL *ubiquitousContainerURL;
 @property (nonatomic, strong) NSMetadataQuery *cloudContainerNotificationQuery;
 @property (nonatomic, strong) NSMutableArray *unsavedLocalKeys;
+@property (nonatomic, strong) NSMutableArray *keysToRemoveNextSync;
 @property (nonatomic, copy) NSArray *remoteKeysBeingSynced;
 @end
 
@@ -125,6 +126,27 @@
 	/* Umm, I just copy and paste these things. */
 	[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
 }
+
+- (void)removeObjectForKeyNextUpstreamSync:(NSString *)key
+{
+	/* Do not perform any actions during termination. */
+	if ([self applicationIsTerminating]) {
+		return; // Do not continue operation…
+	}
+
+	/* We don't even want to sync if user doesn't want to. */
+	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
+		return; // Do not continue operation…
+	}
+
+	/* Add key to removal array. */
+	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+		@synchronized([self keysToRemoveNextSync]) {
+			[[self keysToRemoveNextSync] addObject:key];
+		}
+	});
+}
+
 
 #pragma mark -
 #pragma mark URL Management
@@ -296,6 +318,44 @@
 				  [key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix]);
 }
 
+- (NSString *)unhashedKeyFromHashedKey:(NSString *)key
+{
+	/* This method only lists specific keys that we need to know which cannot
+	 be viewed directly by asking for the key-value entry in iCloud. */
+	/* It was at the point that I wrote this method that I realized how
+	 fucking stupid Textual's implementation of iCloud is. */
+
+	static NSDictionary *_keypair = nil;
+
+	if (_keypair == nil) {
+		_keypair = @{
+			@"6a7c4f02d4665f20eb951265fa8660bd" : @"User List Mode Badge Colors —> +y",
+			@"9714e2693d89e87b5fbcca377bd02148" : @"User List Mode Badge Colors —> +q",
+			@"dec5d9211265f26885a8e97c683f1634" : @"User List Mode Badge Colors —> +a",
+			@"bfce0a9671b013a91509ea1fbe1866ec" : @"User List Mode Badge Colors —> +o",
+			@"ea082def5090ff85a20f726ceee819af" : @"User List Mode Badge Colors —> +h",
+			@"9b5c85ae92222e96eb01ba6a734b24ee" : @"User List Mode Badge Colors —> +v",
+			@"051baac72009cc4914d1815916e1ed49" : @"Server List Unread Message Count Badge Colors -> Highlight"
+		};
+	}
+
+	return _keypair[key];
+}
+
+- (BOOL)keyIsPermittedToBeRemovedThroughCloud:(NSString *)key
+{
+	/* List of keys that when synced downstream are allowed to be removed
+	 from NSUserDefaults if they no longer exist in the cloud. */
+
+	return ([key isEqualToString:@"User List Mode Badge Colors —> +y"] ||
+			[key isEqualToString:@"User List Mode Badge Colors —> +q"] ||
+			[key isEqualToString:@"User List Mode Badge Colors —> +a"] ||
+			[key isEqualToString:@"User List Mode Badge Colors —> +o"] ||
+			[key isEqualToString:@"User List Mode Badge Colors —> +h"] ||
+			[key isEqualToString:@"User List Mode Badge Colors —> +v"] ||
+			[key isEqualToString:@"Server List Unread Message Count Badge Colors -> Highlight"]);
+}
+
 - (void)syncPreferencesToCloud
 {
 	/* Do not perform any actions during termination. */
@@ -311,7 +371,10 @@
 	/* Begin work. */
 	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Only perform sync under strict conditions. */
-		if ([[self unsavedLocalKeys] count] == 0 && [self pushAllLocalKeysNextSync] == NO) {
+		if ([[self unsavedLocalKeys] count] == 0 &&
+			[[self keysToRemoveNextSync] count] == 0 &&
+			[self pushAllLocalKeysNextSync] == NO)
+		{
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
 			
 			return; // Cancel this operation;
@@ -380,6 +443,23 @@
 		/* Remove keys to sync even if we are syncing all. */
 		[[self unsavedLocalKeys] removeAllObjects];
 
+		/* Remove any keys that were marked for removal */
+		@synchronized([self keysToRemoveNextSync]) {
+			if ([[self keysToRemoveNextSync] count] > 0) {
+				[[self keysToRemoveNextSync] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+					DebugLogToConsole(@"Key (%@) is being removed from iCloud as it was marked to be.", obj);
+
+					[self removeObjectForKey:obj];
+
+					if ( changedValues[obj]) {
+						[changedValues removeObjectForKey:obj];
+					}
+				}];
+
+				[[self keysToRemoveNextSync] removeAllObjects];
+			}
+		}
+
 		/* Get a copy of our defaults. */
 		NSDictionary *defaults = [TPCPreferences defaultPreferences];
 		
@@ -437,7 +517,7 @@
 				[self setValue:obj forKey:key];
 			}
 		}];
-		
+
 		/* Sync changes. */
 		[RZUbiquitousKeyValueStore() synchronize];
 
@@ -482,13 +562,33 @@
 		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
 		NSMutableArray *actualChangedKeys = [NSMutableArray array];
 		NSMutableArray *importedClients = [NSMutableArray array];
+		NSMutableArray *valuesToRemove = [NSMutableArray array];
 		
 		for (id hashedKey in [self remoteKeysBeingSynced]) {
 			id keyname = nil;
 			
 			id  objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
-			
-			if (objectValue && keyname) {
+
+			if (objectValue == nil || keyname == nil) {
+				/* Maybe remove certain keys from the local defaults store depending
+				 on whether we are able to determine its actual name and whether it
+				 is allowed to be removed at all. */
+				NSString *unhashedKey = [self unhashedKeyFromHashedKey:hashedKey];
+
+				DebugLogToConsole(@"Hashed key (%@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
+
+				if (unhashedKey) {
+					DebugLogToConsole(@"Asking for permission to remove key (%@) from local defaults store.", unhashedKey);
+
+					if ([self keyIsNotPermittedFromCloud:unhashedKey] == NO) {
+						if ([self keyIsPermittedToBeRemovedThroughCloud:unhashedKey]) {
+							[valuesToRemove addObject:unhashedKey];
+
+							[actualChangedKeys addObject:unhashedKey];
+						}
+					}
+				}
+			} else {
 				/* Block stuff from syncing that we did not want. */
 				if ([self keyIsNotPermittedFromCloud:keyname]) {
 					continue; // Do not continue operation…
@@ -538,6 +638,12 @@
 
 		/* Perform reload. */
 		[self performBlockOnMainThread:^{
+			if ([valuesToRemove count] > 0) {
+				for (NSString *key in valuesToRemove) {
+					[RZUserDefaults() removeObjectForKey:key];
+				}
+			}
+
 			if ([actualChangedKeys count] > 0) {
 				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
 			}
@@ -591,11 +697,13 @@
 
 - (void)resetDataToSync
 {
-	[self setPushAllLocalKeysNextSync:NO];
-	
-	@synchronized([self unsavedLocalKeys]) {
-		[[self unsavedLocalKeys] removeAllObjects];
-	}
+	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+		[self setPushAllLocalKeysNextSync:NO];
+		
+		@synchronized([self unsavedLocalKeys]) {
+			[[self unsavedLocalKeys] removeAllObjects];
+		}
+	});
 }
 
 - (void)syncEverythingNextSync
@@ -631,6 +739,12 @@
 
 			@synchronized([self unsavedLocalKeys]) {
 				[[self unsavedLocalKeys] addObject:changedKey];
+			}
+
+			@synchronized([self keysToRemoveNextSync]) {
+				if ([[self keysToRemoveNextSync] containsObject:changedKey]) {
+					[[self keysToRemoveNextSync] removeObject:changedKey];
+				}
 			}
 		}
 	});
@@ -988,6 +1102,7 @@
 		[self setupUbiquitousContainerURLPath:YES];
 		
 		[self setUnsavedLocalKeys:[NSMutableArray new]];
+		[self setKeysToRemoveNextSync:[NSMutableArray new]];
 		
 		/* Notification for when a local value through NSUserDefaults is changed. */
 		[RZNotificationCenter() addObserver:self
