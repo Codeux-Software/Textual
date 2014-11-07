@@ -56,11 +56,22 @@
 	[self performBlockOnMainThread:^{
 		[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
 	}];
+
+	[self maybeBuildConversionTable];
 }
 
 - (id)userDefaultsValues
 {
 	return RZUserDefaultsValueProxy();
+}
+
+- (void)maybeBuildConversionTable
+{
+	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
+
+	if (serviceEnabled) {
+		[self buildConversionTable];
+	}
 }
 
 - (void)buildConversionTable
@@ -106,20 +117,11 @@
 	self.sortedSmileyList = nil;
 }
 
-- (void)updateConversionTable
-{
-	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];
-	
-	if (serviceEnabled == NO) {
-		[self destroyConversionTable];
-	} else {
-		[self buildConversionTable];
-	}
-}
-
 - (IBAction)preferenceChanged:(id)sender
 {
-	[self updateConversionTable];
+	[self destroyConversionTable];
+
+	[self maybeBuildConversionTable];
 }
 
 - (NSView *)pluginPreferencesPaneView
@@ -143,8 +145,6 @@
 	if (lineType == TVCLogLineActionType ||
 		lineType == TVCLogLinePrivateMessageType)
 	{
-		[self updateConversionTable];
-		
 		return [self convertStringToEmoji:newMessage];
 	} else {
 		return newMessage;
