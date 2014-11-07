@@ -392,11 +392,7 @@
 			if (isActive) {
 				if (isHighlight) {
 					if (isWindowActive == NO) {
-						if (isVibrantDark) {
-							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
-						} else {
-							[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForInactiveWindow] range:stringLengthRange];
-						}
+						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellNormalItemTextColorForInactiveWindow] range:stringLengthRange];
 					} else {
 						[mutableStringValue addAttribute:NSForegroundColorAttributeName value:[interfaceObject channelCellHighlightedItemTextColorForActiveWindow] range:stringLengthRange];
 					}
