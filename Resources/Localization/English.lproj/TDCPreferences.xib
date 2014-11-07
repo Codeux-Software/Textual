@@ -215,9 +215,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </textField>
                         </subviews>
                         <animations/>
-                        <connections>
-                            <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="YGU-pt-RhN"/>
-                        </connections>
                     </customView>
                 </subviews>
             </view>
