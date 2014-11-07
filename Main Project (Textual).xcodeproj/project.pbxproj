@@ -1830,12 +1830,6 @@
 		4CDFA5F01996EB81007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
 		4CDFA5F11996EB81007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CDFA5F21996EB81007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CDFA5F31996EB81007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
-		4CDFA5F41996EB81007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
-		4CDFA6141996EC78007EA46E /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425516C5AF730005A59E /* AutoHyperlinks.framework */; };
-		4CDFA6161996EC78007EA46E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68425616C5AF730005A59E /* BlowfishEncryption.framework */; };
-		4CDFA6181996EC78007EA46E /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
-		4CDFA61A1996EC78007EA46E /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CDFA61C1996EC78007EA46E /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C78926716C6259D0081E859 /* SystemInformation.framework */; };
 		4CDFA61E1996EC78007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
 		4CDFA6301996ECB3007EA46E /* TCMPortMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C85D196187EC18900860129 /* TCMPortMapper.framework */; };
@@ -2768,18 +2762,12 @@
 				4CDFA5F11996EB81007EA46E /* Growl.framework in Frameworks */,
 				4CDFA5F21996EB81007EA46E /* HockeySDK.framework in Frameworks */,
 				4CDFA61E1996EC78007EA46E /* TCMPortMapper.framework in Frameworks */,
-				4CDFA6161996EC78007EA46E /* BlowfishEncryption.framework in Frameworks */,
 				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
 				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
-				4CDFA6141996EC78007EA46E /* AutoHyperlinks.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
-				4CDFA6181996EC78007EA46E /* Growl.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
-				4CDFA5F31996EB81007EA46E /* SystemInformation.framework in Frameworks */,
-				4CDFA5F41996EB81007EA46E /* TCMPortMapper.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
-				4CDFA61A1996EC78007EA46E /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6478,6 +6466,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
