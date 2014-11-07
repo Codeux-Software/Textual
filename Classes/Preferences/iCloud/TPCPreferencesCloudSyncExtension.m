@@ -141,6 +141,11 @@
 		reloadActions |= TPCPreferencesKeyReloadMemberListAction;
 		reloadActions |= TPCPreferencesKeyReloadMemberListUserBadgesAction;
 	}
+
+	/* Server list unread count badge colors. */
+	if ([prefKeys containsObject:@"Server List Unread Message Count Badge Colors -> Highlight"]) {
+		reloadActions |= TPCPreferencesKeyReloadServerListUnreadBadgesAction;
+	}
 	
 	/* After this is all complete; we call preferencesChanged just to take care
 	 of everything else that does not need specific reloads. */
@@ -200,6 +205,17 @@
 			[mainWindowServerList() updateBackgroundColor];
 			
 			[mainWindowServerList() reloadAllDrawings];
+		}
+	} else if ((reloadAction & TPCPreferencesKeyReloadServerListUnreadBadgesAction) == TPCPreferencesKeyReloadServerListUnreadBadgesAction) {
+		if (didReloadUserInterface == NO) {
+			/* The color used for unread badges on Yosemite also apply to the text color
+			 so we must reload all drawings instead of only the badges themselves. */
+
+			if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+				[mainWindowServerList() reloadAllDrawings];
+			} else {
+				[mainWindowServerList() reloadAllUnreadMessageCountBadges];
+			}
 		}
 	}
 	
