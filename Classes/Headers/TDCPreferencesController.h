@@ -112,6 +112,7 @@
 - (IBAction)onChangedTransparency:(id)sender;
 - (IBAction)onChangedUserListModeColor:(id)sender;
 - (IBAction)onChangedUserListModeSortOrder:(id)sender;
+- (IBAction)onChangedServerListUnreadBadgeColor:(id)sender;
 
 - (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
 
@@ -121,6 +122,7 @@
 - (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
 
 - (IBAction)onResetUserListModeColorsToDefaults:(id)sender;
+- (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender;
 
 - (IBAction)onOpenPathToScripts:(id)sender;
 - (IBAction)onOpenPathToThemes:(id)sender;
