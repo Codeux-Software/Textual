@@ -294,18 +294,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
-                    <rect key="frame" x="364" y="256" width="157" height="28"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Manage iCloud" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EEt-NX-Vln">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
-                    </connections>
-                </button>
                 <button id="HaP-NM-tlL">
                     <rect key="frame" x="49" y="126" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -327,6 +315,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="wTj-0c-qtW"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" tag="13" id="dqH-Sc-1ei">
+                    <rect key="frame" x="367" y="260" width="157" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Manage iCloud" bezelStyle="texturedRounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EEt-NX-Vln">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
                     </connections>
                 </button>
             </subviews>
@@ -465,6 +465,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
         <customView id="Jdv-gk-kj9" userLabel="Highlights">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <userGuides>
+                <userLayoutGuide location="256" affinity="minY"/>
+            </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" id="DPo-1x-FIa">
                     <rect key="frame" x="46" y="254" width="114" height="16"/>
@@ -562,19 +565,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <accessibility description="New highlight word"/>
                     <connections>
                         <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="G7B-Kp-Af8">
-                    <rect key="frame" x="72" y="68" width="23" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pYZ-UH-gZy">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                    </buttonCell>
-                    <accessibility description="Remove highlight word"/>
-                    <connections>
-                        <action selector="remove:" target="4310" id="itS-hv-Fdw"/>
-                        <binding destination="4310" name="enabled" keyPath="canRemove" id="P3L-bL-EfP"/>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="dIx-e4-L5V">
@@ -680,7 +670,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="jN5-O0-8cZ">
-                    <rect key="frame" x="287" y="257" width="100" height="14"/>
+                    <rect key="frame" x="288" y="256" width="100" height="14"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Exclude words:" id="oKh-Ma-cAV">
                         <font key="font" metaFont="cellTitle"/>
@@ -698,6 +688,19 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
+                <button verticalHuggingPriority="750" id="G7B-Kp-Af8">
+                    <rect key="frame" x="71" y="68" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pYZ-UH-gZy">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <accessibility description="Remove highlight word"/>
+                    <connections>
+                        <action selector="remove:" target="4310" id="itS-hv-Fdw"/>
+                        <binding destination="4310" name="enabled" keyPath="canRemove" id="P3L-bL-EfP"/>
+                    </connections>
+                </button>
             </subviews>
         </customView>
         <customView id="09H-hp-iIC" userLabel="Alerts">
@@ -3043,18 +3046,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button verticalHuggingPriority="750" id="ba4-Mk-VLc">
-                    <rect key="frame" x="204" y="41" width="158" height="32"/>
+                    <rect key="frame" x="204" y="47" width="158" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Reset to Defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cBl-rZ-MyX">
+                    <buttonCell key="cell" type="roundTextured" title="Reset to Defaults" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cBl-rZ-MyX">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="onResetUserListModeColorsToDefaults:" target="-2" id="OBB-9d-bcM"/>
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="704.5" y="415"/>
+            <point key="canvasLocation" x="1142.5" y="312"/>
         </customView>
         <customView id="u96-CK-dYE" userLabel="Interface">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3162,15 +3165,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListUpdatesUserInfoPopoverOnScroll" id="cOL-ws-W6g"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
-                    <rect key="frame" x="60" y="91" width="309" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background color for unread badge with highlight:" id="aWZ-r5-sxZ">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ILa-Ff-zee">
                     <rect key="frame" x="62" y="127" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -3189,8 +3183,17 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
+                    <rect key="frame" x="55" y="90" width="309" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Background color for unread badge with highlight:" id="aWZ-r5-sxZ">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <colorWell id="6fr-8l-HKL">
-                    <rect key="frame" x="375" y="88" width="44" height="23"/>
+                    <rect key="frame" x="370" y="86" width="44" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
@@ -3203,18 +3206,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </colorWell>
                 <button verticalHuggingPriority="750" id="alf-eT-4K4">
-                    <rect key="frame" x="421" y="82" width="73" height="32"/>
+                    <rect key="frame" x="422" y="85" width="75" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ksN-o7-AtZ">
+                    <buttonCell key="cell" type="roundTextured" title="Reset" bezelStyle="texturedRounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ksN-o7-AtZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
                         <action selector="onResetServerListUnreadBadgeColorsToDefault:" target="-2" id="0iI-VU-0gz"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="SpE-Je-ur9">
-                    <rect key="frame" x="77" y="55" width="333" height="28"/>
+                    <rect key="frame" x="73" y="54" width="333" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="A clear color (black, zero alpha) value is an indicator to Textual that there is no interest in using a custom color." id="95L-l6-QPu">
                         <font key="font" metaFont="smallSystem"/>
