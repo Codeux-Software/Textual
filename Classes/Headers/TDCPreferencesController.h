@@ -82,6 +82,7 @@
 @property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
 @property (nonatomic, nweak) IBOutlet NSView *mountainLionDeprecationWarningView;
 @property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
+@property (nonatomic, nweak) IBOutlet NSScrollView *navigationOutlineviewScrollbar;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
