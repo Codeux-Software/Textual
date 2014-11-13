@@ -229,14 +229,14 @@
 	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
 		[[self mountainLionDeprecationWarningView] setHidden:YES];
 
-		[ [self navigationOutlineview]				setHidden:NO];
+		[ [self navigationOutlineviewScrollbar]		setHidden:NO];
 		[[[self navigationOutlineview] contentView] setHidden:NO];
 	} else {
 		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
 
 		[[self mountainLionDeprecationWarningView] setHidden:warningViewHidden];
 
-		[ [self navigationOutlineview]				setHidden:(warningViewHidden == NO)];
+		[ [self navigationOutlineviewScrollbar]		setHidden:(warningViewHidden == NO)];
 		[[[self navigationOutlineview] contentView] setHidden:(warningViewHidden == NO)];
 	}
 	
@@ -877,7 +877,7 @@
 {
 	[[self mountainLionDeprecationWarningView] setHidden:YES];
 
-	[ [self navigationOutlineview]				setHidden:NO];
+	[ [self navigationOutlineviewScrollbar]		setHidden:NO];
 	[[[self navigationOutlineview] contentView] setHidden:NO];
 
 	[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
