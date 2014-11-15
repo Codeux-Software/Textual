@@ -40,8 +40,9 @@
 
 #define IRCConnectionDefaultServerPort		6667
 
-#define IRCClientConfigFloodControlDefaultDelayTimer       2
-#define IRCClientConfigFloodControlDefaultMessageCount     6
+#define IRCClientConfigFloodControlDefaultDelayTimer					2
+#define IRCClientConfigFloodControlDefaultMessageCount					6
+#define IRCClientConfigFloodControlDefaultMessageCountForFreenode		2 // freenode gets a special case 'cause they are strict about flood control
 
 typedef enum TXConnectionProxyType : NSInteger {
 	IRCConnectionSocketNoProxyType = 0,

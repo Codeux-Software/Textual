@@ -74,7 +74,10 @@
 
 - (void)open
 {
+	[self fudgeFloodControlMaximumMessageCountForFreenode];
+
 	[self startTimer];
+
 	[self openSocket];
 }
 
@@ -89,6 +92,7 @@
 	[self.sendQueue removeAllObjects];
 	
 	[self stopTimer];
+	
 	[self closeSocket];
 }
 
@@ -107,6 +111,21 @@
 
 #pragma mark -
 #pragma mark Send Data
+
+- (void)fudgeFloodControlMaximumMessageCountForFreenode
+{
+	/* This code is very deceitful because the user is not aware of this logic in reality.
+	 When a connection is targeting a freenode server, we inteintially override the flood 
+	 control maximum line count if it is set to the defined default value. freenode is
+	 very strict about flood control so this is a tempoary, extremely ugly solution 
+	 to the problem until a permanent one is developed. */
+
+	if ([self.serverAddress hasSuffix:@"freenode.net"]) {
+		if (self.floodControlMaximumMessageCount == IRCClientConfigFloodControlDefaultMessageCount) {
+			self.floodControlMaximumMessageCount  = IRCClientConfigFloodControlDefaultMessageCountForFreenode;
+		}
+	}
+}
 
 - (void)sendLine:(NSString *)line
 {
