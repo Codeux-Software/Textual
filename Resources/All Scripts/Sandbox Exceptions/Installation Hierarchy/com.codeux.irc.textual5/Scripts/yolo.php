@@ -2,10 +2,10 @@
 <?php
 
 	/*
-		 Portions of this PHP Script may incorporate work from 3rd
-		 parties. These portions of code are noted. All other work is
-		 Copyright © 2010 — 2013 Codeux Software. See README
-		 for full license information.
+		 Portions of this AppleScript may incorporate work from 3rd 
+		 parties. These portions of code are noted. All other work is 
+		 Copyright © 2010 — 2014 Codeux Software, LLC. See 
+		 Acknowledgements.pdf for full license information. 
 	 */
 
 	/* There is no real reason this in PHP other than to
