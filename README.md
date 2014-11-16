@@ -8,7 +8,7 @@ Please do not abuse the power to build Textual in order to freely distribute it 
 
 ## Note Regarding Support
 
-Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](http://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available at any time.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](http://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available.
 
 ## Note Regarding Code Signing
 
