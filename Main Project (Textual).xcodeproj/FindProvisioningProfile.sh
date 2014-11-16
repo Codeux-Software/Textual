@@ -4,9 +4,10 @@ cd "${PROJECT_DIR}/Resources/"
 
 BUNDLE_IDENTIFIER=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleIdentifier\"" Info.plist)
 
-DESIRED_NAME="Mac Team Provisioning Profile: ${BUNDLE_IDENTIFIER}"
+DESIRED_NAME_1="Mac Team Provisioning Profile: ${BUNDLE_IDENTIFIER}"
+DESIRED_NAME_2="MacTeam Provisioning Profile: ${BUNDLE_IDENTIFIER}"
 
-echo "Starting search for profile with name: ${DESIRED_NAME}"
+echo "Starting search for profile with name: ${DESIRED_NAME_1} and ${DESIRED_NAME_2}"
 
 DESTINATION_CONFIGURATION_FILE="${PROJECT_DIR}/Resources/Build Configurations/Provisioning Profile.xcconfig"
 
@@ -44,7 +45,7 @@ for PROFILE in $PROFILES; do
 	echo "	Found name: ${NAME_VALUE}";
 	echo "	Found UUID: ${UUID_VALUE}"; 
 	
-	if [ "${NAME_VALUE}" == "${DESIRED_NAME}" ]; then
+	if [ "${NAME_VALUE}" == "${DESIRED_NAME_1}" ] || [ "${NAME_VALUE}" == "${DESIRED_NAME_2}" ]; then
 		echo "	Found desired profile.";
 		
 		touch "${DESTINATION_CONFIGURATION_FILE}"
