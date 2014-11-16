@@ -16,7 +16,7 @@ Please be aware that while it is within your right to compile Textual, **we will
 
 For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. The kernel makes its judgements using identity defined by the certificate used for code signing. Therefore, if disabled, certain features such as logging to disk will never work because Textual wont be able to save the bookmark to the specified logging location.
 
-Another example is that Textual may have difficulties accessing and assigning passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by process of code signing.
+Another example is that Textual may have difficulties accessing passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by process of code signing.
 
 ## Building Textual
 
