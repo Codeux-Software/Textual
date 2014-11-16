@@ -20,7 +20,7 @@ Another example is that Textual may have difficulties accessing passwords when n
 
 ## Building Textual
 
-The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode with a copy of the OS X Yosemite SDK.
+The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 6.1 or newer on OS X Yosemite. **Building on OS X Mavericks and earlier is not possible.**
 
 If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will do fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
 
