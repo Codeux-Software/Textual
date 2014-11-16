@@ -110,7 +110,7 @@
 		4C7FC88216C05C7A00B912A5 /* BlowfishBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlowfishBase.h; sourceTree = "<group>"; };
 		4C7FC88316C05C7A00B912A5 /* BlowfishBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlowfishBase.m; sourceTree = "<group>"; };
 		4C86B0181748B94D0028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
-		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; };
+		4CCE47E716C0EEF800915F60 /* Base64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Encoding.h; sourceTree = "<group>"; usesTabs = 0; };
 		4CCE47E816C0EEF800915F60 /* Base64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Encoding.m; sourceTree = "<group>"; };
 		4CE8EAE619802FC000DE9846 /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHelper.h; sourceTree = "<group>"; };
 		4CE8EAE719802FC000DE9846 /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHelper.m; sourceTree = "<group>"; };
