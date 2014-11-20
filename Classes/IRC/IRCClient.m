@@ -1817,9 +1817,7 @@
 	switch ([IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES]) {
 		case 5101: // Command: AUTOJOIN
 		{
-			if (self.autojoinInProgress == NO && self.isAutojoined == NO) {
-				[self performAutoJoin:YES];
-			}
+			[self performAutoJoin:YES];
 
 			break;
 		}
@@ -7379,20 +7377,20 @@
 
 - (void)performAutoJoin:(BOOL)userInitialized
 {
-	/* Ignore previous invocations of this method. */
-	if (self.autojoinInProgress || self.isAutojoined) {
-		return;
-	}
-
-	/* Ignore autojoin based on ZNC preferences. */
-	if (self.isZNCBouncerConnection && self.config.zncIgnoreConfiguredAutojoin) {
-		self.isAutojoined = YES;
-		
-		return;
-	}
-	
-	/* Do nothing unless certain conditions are met. */
 	if (userInitialized == NO) {
+		/* Ignore previous invocations of this method. */
+		if (self.autojoinInProgress || self.isAutojoined) {
+			return;
+		}
+
+		/* Ignore autojoin based on ZNC preferences. */
+		if (self.isZNCBouncerConnection && self.config.zncIgnoreConfiguredAutojoin) {
+			self.isAutojoined = YES;
+		
+			return;
+		}
+
+		/* Do nothing unless certain conditions are met. */
 		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] == NO) {
 			if (self.config.autojoinWaitsForNickServ) {
 				if (self.serverHasNickServ && self.isIdentifiedWithNickServ == NO) {
@@ -7430,6 +7428,8 @@
 		[self quickJoin:ary];
 		
 		/* Update status later. */
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
+
 		[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
 	}
 }
