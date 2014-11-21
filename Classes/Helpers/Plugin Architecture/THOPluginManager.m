@@ -221,7 +221,40 @@
 
 - (NSArray *)reservedCommandNamesForExtrasInstaller
 {
-	return @[@"apps", @"hermes", @"instacast", @"itunes", @"music", @"np", @"page", @"qt", @"radium", @"rdio", @"spotify", @"uuid", @"vlc", @"yolo"];
+	/* List of scripts that are available as downloadable
+	 content from the codeux.com website. */
+
+	static NSArray *_reservedNames = nil;
+
+	if (_reservedNames == nil) {
+		_reservedNames = @[
+		   @"apps",
+		   @"banhammer",
+		   @"ffuu",
+		   @"flip",
+		   @"hermes",
+		   @"instacast",
+		   @"itunes",
+		   @"music",
+		   @"np",
+		   @"o_p",
+		   @"page",
+		   @"qt",
+		   @"radium",
+		   @"rdio",
+		   @"reverse",
+		   @"sealion",
+		   @"shell",
+		   @"slap",
+		   @"spam",
+		   @"spotify",
+		   @"uuid",
+		   @"vlc",
+		   @"yolo",
+		];
+	}
+
+	return _reservedNames;
 }
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension

@@ -117,7 +117,7 @@
 {
 	return @[@"sysinfo", @"memory", @"uptime", @"netstats", 
 	@"msgcount", @"diskspace", @"style", @"screens",
-	@"runcount", @"loadavg", @"sysmem", @"sfont"];
+	@"runcount", @"sysmem"];
 }
 
 - (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
@@ -152,12 +152,8 @@
 			[self sendMessage:[TPI_SP_CompiledOutput systemDisplayInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"RUNCOUNT"]) {
 			[self sendMessage:[TPI_SP_CompiledOutput applicationRuntimeStatistics] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"LOADAVG"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput systemCPULoadInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"SYSMEM"]) {
 			[self sendMessage:[TPI_SP_CompiledOutput systemMemoryInformation] onClient:client toChannel:channel];
-		} else if ([commandString isEqualToString:@"SFONT"]) {
-			[self sendMessage:[TPI_SP_CompiledOutput applicationConfiguredFontInformation] onClient:client toChannel:channel];
 		}
 	}
 }

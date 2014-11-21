@@ -97,9 +97,7 @@
 "BasicLanguage[1043]" = " (HiDPI Mode)";
 
 /* Misc., one line commands. */
-"BasicLanguage[1044]" = "\002Configured Font:\002 %1$@ — \002Size:\002 %2$.1f";
 "BasicLanguage[1045]" = "System Uptime: %1$@ - Textual Uptime: %2$@";
 "BasicLanguage[1046]" = "\002System Memory:\002 Free: %1$@; Used: %2$@; Total: %3$@; — [%4$@]";
 "BasicLanguage[1047]" = "Textual has been opened \002%1$@\002 times with a total runtime of %2$@";
-"BasicLanguage[1048]" = "\002Current Load:\002 %@%%";
 "BasicLanguage[1049]" = "Textual has sent \002%1$@\002 messages since startup with a total of \002%2$@\002 messages received. The last message received on this connection occured %3$@ ago. This all equals roughly \002%4$@ in\002 and \002%5$@ out\002 worth of bandwidth.";
