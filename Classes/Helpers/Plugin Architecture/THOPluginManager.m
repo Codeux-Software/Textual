@@ -204,15 +204,7 @@
 			}
 		}
 	}
-	
-	if (returnPathInfo == NO) {
-		NSArray *reservedNames = [self reservedCommandNamesForExtrasInstaller];
-		
-		for (NSString *script in reservedNames) {
-			[returnData addObjectWithoutDuplication:script];
-		}
-	}
-	
+
 	return returnData;
 }
 
