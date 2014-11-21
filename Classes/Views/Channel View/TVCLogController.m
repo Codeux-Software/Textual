@@ -177,11 +177,6 @@
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
 	
-	/* Change the font size to the one of others for new views. */
-	NSInteger math = [worldController() textSizeMultiplier];
-	
-	[self.webView setTextSizeMultiplier:math];
-	
 	/* Playback history. */
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
 	
@@ -1473,6 +1468,11 @@
 	[self setUpScroller];
 
 	[[self printingQueue] updateReadinessState:self];
+
+	/* Change the font size to the one of others for new views. */
+	NSInteger math = [worldController() textSizeMultiplier];
+
+	[self.webView setTextSizeMultiplier:math];
 }
 
 - (void)postViwLoadedJavaScript
