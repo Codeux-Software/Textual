@@ -96,6 +96,54 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/banhammer.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>420</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/ffuu.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/flip.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
 															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/hermes.scpt</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
@@ -160,6 +208,22 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/o_o.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
 															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/page.scpt</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
@@ -213,6 +277,86 @@
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
 															<integer>420</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/reverse.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/sealion.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>420</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/shell.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/slap.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>3</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+														<dict>
+															<key>CHILDREN</key>
+															<array/>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/spam.scpt</string>
+															<key>PATH_TYPE</key>
+															<integer>1</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
 															<key>TYPE</key>
 															<integer>3</integer>
 															<key>UID</key>
@@ -741,7 +885,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>1.1</string>
 			</dict>
 			<key>UUID</key>
 			<string>23651F27-6601-4F49-9BE2-8EFF3E4D7A21</string>
@@ -2395,7 +2539,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>1.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2455,7 +2599,7 @@
 										<key>LANGUAGE</key>
 										<string>English</string>
 										<key>VALUE</key>
-										<string>This package installs all custom scripts that are exempt from the sandbox. What's included: apps, hermes, instacast, music, np, page, qt, spotify, rdio, vlc, and yolo. </string>
+										<string>This package installs all custom scripts that are not bundled with Textual out-of-the-box. What's included: apps, banhammer, ffuu, flip, hermes, instacast, itunes, music, np, o_p, page, qt, radium, rdio, reverse, sealion, shell, slap, spam, spotify, uuid, vlc, yolo</string>
 									</dict>
 								</array>
 								<key>OPTIONS</key>
@@ -2488,7 +2632,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>This 3rd party extension created by Tobias Pollmann allows greater control of now playing information for iTunes. It also allows for playing, pausing, and skipping right from Textual.</string>
+												<string>This 3rd party extension created by Tobias Pollmann allows greater control of now playing information for iTunes. It also allows for playing, pausing, skipping, and much more from within Textual.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
@@ -2562,7 +2706,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>Wiki-style link parser to automatically replace [[&lt;title&gt;]] text blocks with the actual link. The parser can be configured on a per-channel basis from its included preference pane.</string>
+												<string>Wiki-style link parser to automatically replace [[&lt;title&gt;]] text blocks with the actual link that they represent. The parser can be configured on a per-channel basis from its included preference pane.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>

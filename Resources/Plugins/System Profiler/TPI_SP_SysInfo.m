@@ -44,13 +44,6 @@
 
 @implementation TPI_SP_CompiledOutput
 
-+ (NSString *)applicationConfiguredFontInformation
-{
-	NSFont *thefont = [TPCPreferences themeChannelViewFont];
-
-	return TPILocalizedString(@"BasicLanguage[1044]", [thefont displayName], [thefont pointSize]);
-}
-
 + (NSString *)applicationActiveStyle
 {
 	NSMutableString *resultString = [NSMutableString string];
@@ -137,13 +130,6 @@
 	return TPILocalizedString(@"BasicLanguage[1047]",
 				  TXFormattedNumber([TPCApplicationInfo applicationRunCount]),
 				  TXHumanReadableTimeInterval(runtime, NO, 0));
-}
-
-+ (NSString *)systemCPULoadInformation
-{
-	NSUInteger _cpu_count_v	= [TPI_SP_SysInfo processorVirtualCoreCount];
-	
-	return TPILocalizedString(@"BasicLanguage[1048]", [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v]);
 }
 
 + (NSString *)systemDiskspaceInformation

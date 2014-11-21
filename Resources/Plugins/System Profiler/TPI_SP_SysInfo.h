@@ -43,8 +43,6 @@
 + (NSString *)applicationBandwidthStatistics;
 + (NSString *)applicationMemoryUsage;
 + (NSString *)applicationRuntimeStatistics;
-+ (NSString *)applicationConfiguredFontInformation;
-+ (NSString *)systemCPULoadInformation;
 + (NSString *)systemDiskspaceInformation;
 + (NSString *)systemDisplayInformation;
 + (NSString *)systemInformation;
