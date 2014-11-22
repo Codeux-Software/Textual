@@ -6,8 +6,10 @@ ZIPPED_BUNDLES="/Library/Caches/com.codeux.irc.textual5/._private-455CE157-E3B7-
 /Library/Caches/com.codeux.irc.textual5/._private-35769194-123E-41A6-AE37-BD20C85F21F9/
 /Library/Caches/com.codeux.irc.textual5/._private-73146A9A-04B9-41A1-8A3F-96277831DCE9/"
 
-mkdir -p "${USER_BUNDLE_PATH}"
-		
+if [ ! -f "${USER_BUNDLE_PATH}" ]; then
+	mkdir -p "${USER_BUNDLE_PATH}"
+fi 
+
 for ZIPPED_PATH in $ZIPPED_BUNDLES; do	
 	cd "${ZIPPED_PATH}"
 
@@ -20,14 +22,16 @@ for ZIPPED_PATH in $ZIPPED_BUNDLES; do
 		
 		DESTINATION="${USER_BUNDLE_PATH}${BUNDLENAME}.bundle"
 	
-		rm -rf "${DESTINATION}"
+		if [ -f "${DESTINATION}" ]; then
+			rm -rf "${DESTINATION}"
+		fi
 
 		gunzip -c "${BUNDLE}" | tar xopf -
 		
-		mv "./${BUNDLENAME}.bundle" "${DESTINATION}"
-		
-		rm -f "${BUNDLE}"
+		cp -R "./${BUNDLENAME}.bundle" "${DESTINATION}"
 	done
+
+	rm -Rf “${ZIPPED_PATH}”
 done
 
 exit
