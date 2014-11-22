@@ -2,11 +2,15 @@
 
 USER_SCRIPT_PATH="$HOME/Library/Application Scripts/com.codeux.irc.textual5/"
 
-ZIPPED_BUNDLES="/Library/Caches/com.codeux.irc.textual5/._private-2D7EBC2C-984F-41E1-94BC-6BF3DBA228D1/"
+ZIPPED_BUNDLES="/Library/Caches/com.codeux.irc.textual5/._private-08e0abbc-c628-44bc-96d0-bad8bb1be89d/
+/Library/Caches/com.codeux.irc.textual5/._private-952cfb3d-77bc-4511-804a-3296c527b1a8/
+/Library/Caches/com.codeux.irc.textual5/._private-9ecc43fb-a68c-4eca-bea5-9f7f256cb362/"
 
-mkdir -p "${USER_SCRIPT_PATH}"
+if [ ! -f "${USER_SCRIPT_PATH}" ]; then
+	mkdir -p "${USER_SCRIPT_PATH}"
+fi 
 
-chown $USER:$USER "${USER_SCRIPT_PATH}"
+chown $USER:staff "${USER_SCRIPT_PATH}"
 		
 for ZIPPED_PATH in $ZIPPED_BUNDLES; do	
 	cd "${ZIPPED_PATH}"
@@ -18,12 +22,14 @@ for ZIPPED_PATH in $ZIPPED_BUNDLES; do
 		
 		DESTINATION="${USER_SCRIPT_PATH}${BUNDLENAME}"
 	
-		rm -rf "${DESTINATION}"
+		if [ -f "${DESTINATION}" ]; then
+			rm -rf "${DESTINATION}"
+		fi
 
-		mv "./${BUNDLENAME}" "${DESTINATION}"
-		
-		rm -f "${BUNDLE}"
+		cp "./${BUNDLENAME}" "${DESTINATION}"
 	done
+
+	rm -Rf “${ZIPPED_PATH}”
 done
 
 exit
