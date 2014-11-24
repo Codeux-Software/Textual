@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface NSPasteboard (TXPasteboardHelper)
-- (void)maybeConvertURLDataToStringContent;
+- (void)maybeConvertURLDataToStringContent TEXTUAL_DEPRECATED("This method is unsafe");
 
 @property (copy) NSString *stringContent;
 @end
