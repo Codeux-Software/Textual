@@ -3707,7 +3707,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>Installs several commands that output generally useless, interesting information. What's included: apps, banhammer, ffuu, o_o, page, sealion, slap, spam, yolo</string>
+												<string>Installs several commands that output generally useless information. What's included: apps, banhammer, ffuu, o_o, page, sealion, slap, spam, yolo</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
@@ -3744,8 +3744,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>Installs several utility-like commands that accomplish very specific tasks.
-What's included: flip, reverse, shell, uuid</string>
+												<string>Installs several utility-like commands that accomplish very specific tasks. What's included: flip, reverse, shell, uuid</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
