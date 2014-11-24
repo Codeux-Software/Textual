@@ -1860,7 +1860,7 @@
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isNickname] && [nick isChannelName:self] == NO) {
+				if ([nick isHostmaskNickname] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -2568,7 +2568,7 @@
 			NSString *nickname = [s getTokenAsString];
 
 			if (NSObjectIsNotEmpty(nickname)) {
-				if ([nickname isChannelName:self] == NO && [nickname isNickname]) {
+				if ([nickname isChannelName:self] == NO && [nickname isHostmaskNickname]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[mainWindow() select:channel];
@@ -8738,7 +8738,7 @@
 		if ([g notifyJoins]) {
 			NSString *lname = [g trackingNickname];
 
-			if ([lname isNickname]) {
+			if ([lname isHostmaskNickname]) {
 				/* Check if we have a value that already exists. */
 				if (populatingForFirstTime == NO) {
 					if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {

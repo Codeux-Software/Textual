@@ -197,7 +197,7 @@
 		[self.awayNicknameField setStringValueUsesOnlyFirstToken:YES];
 		
 		[self.awayNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
-			return [currentValue isNickname];
+			return [currentValue isHostmaskNickname];
 		}];
 		
 		/* Nickname. */
@@ -210,7 +210,7 @@
 		[self.nicknameField setStringValueUsesOnlyFirstToken:YES];
 		
 		[self.nicknameField setValidationBlock:^BOOL(NSString *currentValue) {
-			return [currentValue isNickname];
+			return [currentValue isHostmaskNickname];
 		}];
 		
 		/* Username. */
