@@ -71,7 +71,7 @@
 	[self.userTrackingEntryNicknameField setTextDidChangeCallback:self];
 
 	[self.userTrackingEntryNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
-		return [currentValue isNickname];
+		return [currentValue isHostmaskNickname];
 	}];
 }
 

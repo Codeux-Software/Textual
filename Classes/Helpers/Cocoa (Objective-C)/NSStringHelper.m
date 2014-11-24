@@ -369,7 +369,7 @@
 	NSString *addressInt = [self substringAfterIndex:bang2pos];
 	
 	/* Perform basic validation. */
-	NSAssertReturnR([nicknameInt isNickname], NO);
+	NSAssertReturnR([nicknameInt isHostmaskNickname], NO);
 	NSAssertReturnR([usernameInt isHostmaskUsername], NO);
 	NSAssertReturnR([nicknameInt isHostmaskAddress], NO);
 
@@ -420,13 +420,18 @@
 	return ([bob length] <= TXMaximumIRCUsernameLength);
 }
 
-- (BOOL)isNickname
+- (BOOL)isHostmaskNickname
 {
 	return ([self isNotEqualTo:@"*"] &&
 			[self length] > 0 &&
 			[self length] <= TXMaximumIRCNicknameLength &&
-			[self containsCharacters:@".!@"] == NO &&
+			[self containsCharacters:@"!@"] == NO &&
 			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
+}
+
+- (BOOL)isNickname
+{
+	return [self isHostmaskNickname];
 }
 
 - (BOOL)isChannelName:(IRCClient *)client

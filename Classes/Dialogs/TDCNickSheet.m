@@ -60,7 +60,7 @@
 	[self.tnewNicknameField setTextDidChangeCallback:self];
 	
 	[self.tnewNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
-		return [currentValue isNickname];
+		return [currentValue isHostmaskNickname];
 	}];
 	
 	[self.tnewNicknameField setStringValue:nickname];

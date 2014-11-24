@@ -145,8 +145,9 @@
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address;
 
-@property (getter=isNickname, readonly) BOOL nickname;
+@property (getter=isNickname, readonly) BOOL nickname TEXTUAL_DEPRECATED("Use -isHostmaskNickname instead");
 
+@property (getter=isHostmaskNickname, readonly) BOOL hostmaskNickname;
 @property (getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
 @property (getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
 
