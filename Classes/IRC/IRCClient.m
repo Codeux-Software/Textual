@@ -5652,9 +5652,12 @@
 {
 	/* If we have certificate, we will use the fingerprint from that 
 	 for identification if the user configured that. */
-	if (self.socket.isConnectedWithClientSideCertificate) {
-		if (self.config.sendAuthenticationRequestsToUserServ) {
+	if (self.config.saslAuthenticationUsesExternalMechanism) {
+		if (self.socket.isConnectedWithClientSideCertificate) {
 			return IRCClientIdentificationWithSASLExternalMechanism;
+		} else {
+			LogToConsole(@"Client wants to use SASL EXTERNAL but is not connected with a client side certificate.");
+			LogToConsole(@"Client will fall back to SASL PLAIN in absence of a client side certificate.");
 		}
 	}
 
