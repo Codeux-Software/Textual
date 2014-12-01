@@ -3106,9 +3106,9 @@
 			BOOL applyToAll = NSObjectsAreEqual(section2, @"-a");
 
 			NSDictionary *providedKeys = @{
-				@"Send Authentication Requests to UserServ"				: @"setHideNetworkUnavailabilityNotices:",
-				@"Hide Network Unavailability Notices on Reconnect"		: @"setSaslAuthenticationUsesExternalMechanism:",
-				@"SASL Authentication Uses External Mechanism"			: @"setSendAuthenticationRequestsToUserServ:",
+				@"Send Authentication Requests to UserServ"				: @"setSendAuthenticationRequestsToUserServ:",
+				@"Hide Network Unavailability Notices on Reconnect"		: @"setHideNetworkUnavailabilityNotices:",
+				@"SASL Authentication Uses External Mechanism"			: @"setSaslAuthenticationUsesExternalMechanism:",
 				@"Send WHO Command Requests to Channels"				: @"setSendWhoCommandRequestsToChannels:",
 			};
 			
