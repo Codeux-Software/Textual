@@ -3063,29 +3063,27 @@
 		case 5099: // Command: GOTO
 		{
 			NSObjectIsEmptyAssertLoopBreak(uncutInput);
-			
-			NSMutableArray *results = [NSMutableArray array];
-			
+
+			IRCTreeItem *bestMatch = [mainWindow() selectedItem];
+
+			CGFloat bestScore = 0.0;
+
 			for (IRCClient *client in [worldController() clientList]) {
 				for (IRCChannel *channel in [client channelList]) {
-					NSString *name = [[channel name] channelNameTokenByTrimmingAllPrefixes:self];
-					
-					NSInteger score = [uncutInput compareWithWord:name matchGain:10 missingCost:1];
-					
-					[results addObject:@{@"score" : @(score), @"item" : channel}];
+					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet];
+
+					CGFloat score = [name compareWithWord:uncutInput lengthPenaltyWeight:0.1];
+
+					if (score > bestScore) {
+						bestMatch = channel;
+						
+						bestScore = score;
+					}
 				}
 			}
-			
-			NSObjectIsEmptyAssertLoopBreak(results);
 
-			[results sortUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) {
-				return [obj1[@"score"] compare:obj2[@"score"]];
-			}];
-			
-			NSDictionary *topResult = (id)results[0];
-			
-			[mainWindow() select:topResult[@"item"]];
-			
+			[mainWindow() select:bestMatch];
+
 			break;
 		}
 		case 5092: // Command: DEFAULTS
