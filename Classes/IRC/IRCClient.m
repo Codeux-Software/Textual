@@ -4065,30 +4065,42 @@
 
 - (NSArray *)nickServSupportedNeedIdentificationTokens
 {
-    return @[
-        @"nickname is owned",
-        @"nickname is registered",
-        @"owned by someone else",
-        @"nick belongs to another user",
-        @"if you do not change your nickname",
-        @"authentication required",
-        @"authenticate yourself",
-        @"identify yourself",
-		@"type /msg NickServ IDENTIFY password"
-    ];
+	static NSArray *__reservedData = nil;
+
+	if (__reservedData == nil) {
+		__reservedData = @[
+		   @"nickname is owned",
+		   @"nickname is registered",
+		   @"owned by someone else",
+		   @"nick belongs to another user",
+		   @"if you do not change your nickname",
+		   @"authentication required",
+		   @"authenticate yourself",
+		   @"identify yourself",
+		   @"type /msg NickServ IDENTIFY password"
+		];
+	}
+
+	return __reservedData;
 }
 
 - (NSArray *)nickServSupportedSuccessfulIdentificationTokens
 {
-    return @[
-            @"now recognized",
-			@"automatically identified",
-            @"already identified",
-            @"successfully identified",
-            @"you are already logged in",
-            @"you are now identified",
-            @"password accepted"
-        ];
+	static NSArray *__reservedData = nil;
+
+	if (__reservedData == nil) {
+		__reservedData = @[
+		   @"now recognized",
+		   @"automatically identified",
+		   @"already identified",
+		   @"successfully identified",
+		   @"you are already logged in",
+		   @"you are now identified",
+		   @"password accepted"
+		];
+	}
+
+	return __reservedData;
 }
 
 #pragma mark -
