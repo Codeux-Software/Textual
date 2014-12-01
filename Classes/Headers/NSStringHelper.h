@@ -96,7 +96,7 @@
 
 @property (readonly, copy) NSString *cleanedServerHostmask;
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSUInteger)gain missingCost:(NSUInteger)cost;
+- (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
 

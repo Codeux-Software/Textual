@@ -40,17 +40,6 @@
 // This source file contains work that originated
 // from the following authors:
 //
-//  Modified by Michael Bianco on 12/2/11.
-//	<http://mabblog.com>
-//
-//  Created by Rick Bourner on Sat Aug 09 2003.
-//  rick@bourner.com
-//
-// In reference to the source code for the call -compareWithWord:matchGain:missingCost:
-// Originating URL: <https://gist.github.com/iloveitaly/1515464>
-//
-// =======================================================
-//
 // Created by Saurabh Sharma on May 3, 2011
 //
 // In reference to the source code for the call -sha1
@@ -264,57 +253,50 @@
 	return (prefixRange.location == 0 && prefixRange.length > 0);
 }
 
-- (NSInteger)compareWithWord:(NSString *)stringB matchGain:(NSUInteger)gain missingCost:(NSUInteger)cost
+- (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
-	// normalize strings
 	NSString *stringA = [NSString stringWithString:self];
-	
-	stringA = [[stringA trim] lowercaseString];
-	stringB = [[stringB trim] lowercaseString];
-	
-	// Step 1
-	NSInteger change, *d, distance;
 
-	NSUInteger k, i, j;
-	NSUInteger n = [stringA length];
-	NSUInteger m = [stringB length];
-	
-	if (NSDissimilarObjects(n++, 0) &&
-		NSDissimilarObjects(m++, 0))
-	{
-		d = malloc(sizeof(NSInteger) * m * n );
-		
-		for (k = 0; k < n; k++) {
-			d[k] = k;
-		}
-		
-		for (k = 0; k < m; k++) {
-			d[ k * n ] = k;
-		}
-		
-		for (i = 1; i < n; i++) {
-			for (j = 1; j < m; j++) {
-				if ([stringA characterAtIndex:(i - 1)] == [stringB characterAtIndex:(j - 1)]) {
-					change = -(gain);
-				} else {
-					change = cost;
+	NSAssertReturnR(([stringB length] > 0), 0.0);
+	NSAssertReturnR(([stringB length] <= [stringA length]), 0.0);
+
+	stringA = [stringA lowercaseString];
+	stringB = [stringB lowercaseString];
+
+	NSInteger commonCharacterCount = 0;
+	NSInteger startPosition = 0;
+
+	CGFloat distancePenalty = 0;
+
+	for (NSInteger i = 0; i < [stringB length]; i++) {
+		BOOL matchFound = NO;
+
+		for (NSInteger j = startPosition; j < [stringA length]; j++) {
+			if ([stringB characterAtIndex:i] == [stringA characterAtIndex:j]) {
+				NSInteger distance = (j - startPosition);
+
+				if (distance > 0) {
+					distancePenalty += ((distance - 1.0) / distance);
 				}
-				
-				// Step 6
-				d[ (j * n + i) ] = MIN( (d[ ((j - 1) * n + i) ] + 1),
-								   MIN( (d[  (j * n + i - 1) ] +  1),
-									    (d[ ((j - 1) * n + i -1) ] + change)));
+
+				commonCharacterCount++;
+
+				startPosition = (j + 1);
+
+				matchFound = YES;
+
+				break;
 			}
 		}
-		
-		distance = d[ (n * m - 1) ];
-		
-		free(d);
-		
-		return distance;
+
+		if (matchFound == NO) {
+			return 0.0;
+		}
 	}
-	
-	return 0;
+
+	CGFloat lengthPenalty = (1.0 - (CGFloat)[stringB length] / [stringA length]);
+
+	return (commonCharacterCount - distancePenalty - weight*lengthPenalty);
 }
 
 - (NSInteger)stringPosition:(NSString *)needle
