@@ -263,7 +263,7 @@
 		if ([path hasPrefix:@"/"] && [path length] == 13) {
 			NSString *s = [path substringFromIndex:1];
 
-			if ([s onlyContainsCharacters:TXWesternAlphabetIncludingUnderscoreDashCharacaterSet]) {
+			if ([s onlyContainsCharacters:TXWesternAlphabetIncludingUnderscoreDashCharacterSet]) {
 				/* This site does both http and https. */
 
 				return [NSString stringWithFormat:@"https://cdn.mediacru.sh/%@.jpg", s];
