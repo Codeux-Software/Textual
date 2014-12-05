@@ -40,7 +40,7 @@
 #define _imageLoaderMaxRequestTime			30
 
 /* We shouldn't want to load anything larger than this. */
-#define _imageMaximumImageWidth				5000
+#define _imageMaximumImageWidth				7200
 
 /* Private stuff. =) */
 @interface TVCImageURLoader ()
