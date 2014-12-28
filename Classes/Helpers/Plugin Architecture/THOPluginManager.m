@@ -235,14 +235,11 @@
 		   @"radium",
 		   @"rdio",
 		   @"reverse",
-		   @"sealion",
 		   @"shell",
 		   @"slap",
-		   @"spam",
 		   @"spotify",
 		   @"uuid",
 		   @"vlc",
-		   @"yolo",
 		];
 	}
 
