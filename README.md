@@ -67,7 +67,7 @@ Textual has indirectly incorporated work from several open source projects. Ackn
 Work that originated from the authors of Textual and were not contributed by other open source projects or from Limechat itself fall under the following license:
 
 <pre>
-Copyright (c) 2010 — 2014 Codeux Software, LLC & respective contributors.
+Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
       Please see Acknowledgements.pdf for additional information.
 
 Redistribution and use in source and binary forms, with or without

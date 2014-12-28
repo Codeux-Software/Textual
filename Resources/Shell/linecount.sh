@@ -3,7 +3,7 @@
 #
 # Portions of this AppleScript may incorporate work from 3rd 
 # parties. These portions of code are noted. All other work is 
-# Copyright © 2010 — 2014 Codeux Software, LLC. See 
+# Copyright © 2010 - 2015 Codeux Software, LLC. See 
 # Acknowledgements.pdf for full license information. 
 #
 
