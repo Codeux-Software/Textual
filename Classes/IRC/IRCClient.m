@@ -4328,20 +4328,22 @@
 				return;
 			}
 
-			/* Detect privmsg module messages */
-			BOOL isZNCprivmsg = NO;
+			/* If the self-message CAP is not enabled, we still check if we are on a ZNC
+			 based connections because older versions of ZNC combined with the privmsg
+			 module need the correct behavior which the self-message CAP evolved into. */
+			BOOL isSelfMessage = NO;
 
-			if (self.isZNCBouncerConnection == YES) {
+			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacitySelfMessage] || self.isZNCBouncerConnection == YES) {
 				if ([sender isEqualToString:[self localNickname]]) {
-					isZNCprivmsg = YES;
+					isSelfMessage = YES;
 				}
 			}
 
 			/* Does the query for the sender already exist?… */
 			IRCChannel *c = nil;
 
-			if (isZNCprivmsg == YES) {
-				c = [self findChannel:target];
+			if (isSelfMessage == YES) {
+				c = [self findChannel:target]; // Look for a query related to target, rather than sender
 			} else {
 				c = [self findChannel:sender];
 			}
@@ -4463,7 +4465,9 @@
 					}
 					
 					if (createNewWindow) {
-						if (isZNCprivmsg) {
+						/* Create a private message depending on who the message targetted. */
+
+						if (isSelfMessage) {
 							if (NSObjectIsEmpty(target) == NO) {
 								c = [worldController() createPrivateMessage:target client:self];
 							}
@@ -4490,7 +4494,7 @@
 						 [self setUnreadState:c];
 						 
 						 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-							 if (isZNCprivmsg == NO) {
+							 if (isSelfMessage == NO) { // Do not notify for self
 								 [self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nickname:sender text:text];
 							 }
 						 }
@@ -4498,7 +4502,9 @@
 			} else {
 				/* Post regular message and inform Growl. */
 				if (c == nil) {
-					if (isZNCprivmsg) {
+					/* Create a private message depending on who the message targetted. */
+
+					if (isSelfMessage) {
 						if (NSObjectIsEmpty(target) == NO) {
 							c = [worldController() createPrivateMessage:target client:self];
 						}
@@ -4522,7 +4528,7 @@
 					 completionBlock:^(BOOL isHighlight)
 					{
 					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-						 if (isZNCprivmsg == NO) {
+						 if (isSelfMessage == NO) { // Do not notify for self
 							 BOOL postevent = NO;
 							 
 							 if (isHighlight) {
@@ -4551,7 +4557,7 @@
 							 [self setUnreadState:c isHighlight:isHighlight];
 						 }
 					 } else {
-						 if (isZNCprivmsg == NO) {
+						 if (isSelfMessage == NO) { // Do not notify for self
 							 if (isHighlight) {
 								 [self setKeywordState:c];
 							 }
