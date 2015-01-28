@@ -5471,6 +5471,12 @@
 			
 			break;
 		}
+		case ClientIRCv3SupportedCapacitySelfMessage:
+		{
+			stringValue = @"self-message";
+
+			break;
+		}
 		default:
 		{
 			break;
@@ -5502,6 +5508,7 @@
 	appendValue(ClientIRCv3SupportedCapacityServerTime);
 	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
 	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
+	appendValue(ClientIRCv3SupportedCapacitySelfMessage);
 	
 	NSString *stringValue = [enabledCaps componentsJoinedByString:@", "];
 	
@@ -5542,6 +5549,7 @@
 		_rony(ClientIRCv3SupportedCapacityZNCPlaybackModule)
 		_rony(ClientIRCv3SupportedCapacityZNCServerTime)
 		_rony(ClientIRCv3SupportedCapacityZNCServerTimeISO)
+		_rony(ClientIRCv3SupportedCapacitySelfMessage)
 	}
 	
 #undef _rony
@@ -5570,6 +5578,7 @@
 					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
 					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
 					   [cap isEqualIgnoringCase:@"server-time"]				||
+					   [cap isEqualIgnoringCase:@"self-message"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/playback"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
@@ -5599,6 +5608,8 @@
 		return ClientIRCv3SupportedCapacityAwayNotify;
 	} else if ([stringValue isEqualIgnoringCase:@"server-time"]) {
 		return ClientIRCv3SupportedCapacityServerTime;
+	} else if ([stringValue isEqualIgnoringCase:@"self-message"]) {
+		return ClientIRCv3SupportedCapacitySelfMessage;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time"]) {
 		return ClientIRCv3SupportedCapacityZNCServerTime;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
