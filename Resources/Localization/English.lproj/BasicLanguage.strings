@@ -251,7 +251,7 @@
 "BasicLanguage[1019]" = "Force Reload Style";
 
 /* DCC request console error. */
-"BasicLanguage[1020]" = "Textual has received a DCC request that could not be processed.";
+"BasicLanguage[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
 
 /* A few defaults. */
 "BasicLanguage[1021]" = "Textual IRC Client: www.textualapp.com";

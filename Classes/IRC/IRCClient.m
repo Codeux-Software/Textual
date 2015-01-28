@@ -8532,7 +8532,7 @@
 	}
 	
 	// Report an error.
-	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:BLS(1020) command:TVCLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:BLS(1020, nickname) command:TVCLogLineDefaultRawCommandValue];
 }
 
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
