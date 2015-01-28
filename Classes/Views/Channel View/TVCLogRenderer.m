@@ -297,6 +297,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
 				templateTokens[@"fragmentBackgroundColor"] = @(colorCode);
+
+				/* If a background color is set, but a foreground one is not, we supply a value
+				 of -1 for the foreground color to trigger the template to add appropriate 
+				 HTML for defining color elements. */
+				if ((attrArray & _rendererTextColorAttribute) == NO) {
+					templateTokens[@"fragmentTextColorIsSet"] = @(YES);
+					templateTokens[@"fragmentTextColor"] = @(-1);
+				}
 			}
 
 			/* Escape spaces that are prefix and suffix characters. */
@@ -405,7 +413,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					
 					if ((i + 1) < length) {
 						c = source[(i + 1)];
-						
+
 						if (TXStringIsBase10Numeric(c)) {
 							++i;
 							
@@ -422,36 +430,39 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 								
 								if ((i + 1) < length) {
 									c = source[(i + 1)];
-									
-									if (c == ',') {
-										++i;
-										
-										if ((i + 1) < length) {
-											c = source[(i + 1)];
-											
-											if (TXStringIsBase10Numeric(c)) {
-												++i;
-												
-												backgroundColor = (c - '0');
-												
-												if ((i + 1) < length) {
-													c = source[(i + 1)];
-													
-													if (TXStringIsBase10Numeric(c)) {
-														++i;
-														
-														backgroundColor = (backgroundColor * 10 + c - '0');
-													}
-												}
-											} else {
-												i--;
-											}
-										}
-									}
 								}
 							}
 						}
 						
+						/* It's possible for an IRC client to send formatting with only a comma
+						 and the background color digit. Therefore, this logic is independent
+						 of the logic shown above for the foreground color. */
+						if (c == ',') {
+							++i;
+
+							if ((i + 1) < length) {
+								c = source[(i + 1)];
+
+								if (TXStringIsBase10Numeric(c)) {
+									++i;
+
+									backgroundColor = (c - '0');
+
+									if ((i + 1) < length) {
+										c = source[(i + 1)];
+
+										if (TXStringIsBase10Numeric(c)) {
+											++i;
+
+											backgroundColor = (backgroundColor * 10 + c - '0');
+										}
+									}
+								} else {
+									i--;
+								}
+							}
+						}
+
 						currentAttr &= ~(_rendererTextColorAttribute | _rendererBackgroundColorAttribute | 0xFF);
 						
 						if (backgroundColor >= 0) {
@@ -472,6 +483,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							currentAttr &= ~(_rendererTextColorAttribute | _textColorMask);
 						}
 					}
+					
 					continue;
 				}
 				case 0x0F:
