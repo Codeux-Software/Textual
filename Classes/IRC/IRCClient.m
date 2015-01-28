@@ -4333,7 +4333,7 @@
 			 module need the correct behavior which the self-message CAP evolved into. */
 			BOOL isSelfMessage = NO;
 
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacitySelfMessage] || self.isZNCBouncerConnection == YES) {
+			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] || self.isZNCBouncerConnection == YES) {
 				if ([sender isEqualToString:[self localNickname]]) {
 					isSelfMessage = YES;
 				}
@@ -5477,9 +5477,9 @@
 			
 			break;
 		}
-		case ClientIRCv3SupportedCapacitySelfMessage:
+		case ClientIRCv3SupportedCapacityZNCSelfMessage:
 		{
-			stringValue = @"self-message";
+			stringValue = @"znc.in/self-message";
 
 			break;
 		}
@@ -5514,7 +5514,7 @@
 	appendValue(ClientIRCv3SupportedCapacityServerTime);
 	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
 	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
-	appendValue(ClientIRCv3SupportedCapacitySelfMessage);
+	appendValue(ClientIRCv3SupportedCapacityZNCSelfMessage);
 	
 	NSString *stringValue = [enabledCaps componentsJoinedByString:@", "];
 	
@@ -5555,7 +5555,7 @@
 		_rony(ClientIRCv3SupportedCapacityZNCPlaybackModule)
 		_rony(ClientIRCv3SupportedCapacityZNCServerTime)
 		_rony(ClientIRCv3SupportedCapacityZNCServerTimeISO)
-		_rony(ClientIRCv3SupportedCapacitySelfMessage)
+		_rony(ClientIRCv3SupportedCapacityZNCSelfMessage)
 	}
 	
 #undef _rony
@@ -5584,7 +5584,7 @@
 					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
 					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
 					   [cap isEqualIgnoringCase:@"server-time"]				||
-					   [cap isEqualIgnoringCase:@"self-message"]			||
+					   [cap isEqualIgnoringCase:@"znc.in/self-message"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/playback"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
@@ -5614,8 +5614,8 @@
 		return ClientIRCv3SupportedCapacityAwayNotify;
 	} else if ([stringValue isEqualIgnoringCase:@"server-time"]) {
 		return ClientIRCv3SupportedCapacityServerTime;
-	} else if ([stringValue isEqualIgnoringCase:@"self-message"]) {
-		return ClientIRCv3SupportedCapacitySelfMessage;
+	} else if ([stringValue isEqualIgnoringCase:@"znc.in/self-message"]) {
+		return ClientIRCv3SupportedCapacityZNCSelfMessage;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time"]) {
 		return ClientIRCv3SupportedCapacityZNCServerTime;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time-iso"]) {

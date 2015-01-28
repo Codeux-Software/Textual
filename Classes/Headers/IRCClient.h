@@ -88,7 +88,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 12, // YES if SASL external CAP is supported.
 	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 13, // YES if in SASL CAP authentication request, else NO.
 	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 14, // YES if SASL authentication was successful, else NO.
-	ClientIRCv3SupportedCapacitySelfMessage				= 1 << 15, // YES if self-message CAP supported.
+	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 15, // YES if the ZNC vendor specific CAP supported.
 } ClientIRCv3SupportedCapacities;
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
