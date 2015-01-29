@@ -1178,6 +1178,7 @@
 		NSString *time = [line formattedTimestamp];
 
 		if (time) {
+			attributes[@"timestamp"] = @([[line receivedAt] timeIntervalSince1970]);
 			attributes[@"formattedTimestamp"] = time;
 		}
 	}
