@@ -450,6 +450,8 @@
 					[(id)topicBar setInnerHTML:body];
 
 					[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
+
+					[self redrawFrame];
 				}
 			}
 		}];
@@ -671,6 +673,8 @@
 
 		[self performBlockOnMainThread:^{
 			[self moveToBottom];
+
+			[self maybeRedrawFrame];
 		}];
 	}
 
@@ -706,6 +710,8 @@
 
 		[self performBlockOnMainThread:^{
 			[self moveToBottom];
+
+			[self maybeRedrawFrame];
 		}];
 	}
 
@@ -955,6 +961,25 @@
 #pragma mark -
 #pragma mark Print
 
+- (void)redrawFrame
+{
+	[self.webViewAutoScroller forceFrameRedraw];
+}
+
+- (void)maybeRedrawFrame
+{
+	/* The WebView is layer backed which means it is not redrawn unless it is told to do so. 
+	 TVCWebViewAutoScroll automatically tells it to do so if it scrolled programmatically or
+	 by the end user. When there is not enough content to scroll, the WebView is not redrawn
+	 because there is never a scroll event triggered. Therefore, this call exists to tell 
+	 TVCWebViewAutoScroll that we are interested in a redraw and it will then take appropriate
+	 actions depending on whether one is necessary or not. */
+
+	if ([self.webViewAutoScroller canScroll] == NO) {
+		[self.webViewAutoScroller forceFrameRedraw];
+	}
+}
+
 - (NSString *)uniquePrintIdentifier
 {
 	NSString *randomUUID = [NSString stringWithUUID]; // Example: 68753A44-4D6F-1226-9C60-0050E4C00067
@@ -1051,6 +1076,9 @@
 				} else {
 					[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
 				}
+
+				/* Maybe redraw our frame. */
+				[self maybeRedrawFrame];
 
 				/* Finish up. */
 				PointerIsEmptyAssert(completionBlock);

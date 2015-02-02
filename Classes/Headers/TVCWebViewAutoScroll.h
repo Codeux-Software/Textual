@@ -6,4 +6,8 @@
 @property (nonatomic, assign) NSRect lastFrame;
 @property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, nweak) WebFrameView *webFrame;
+
+- (BOOL)canScroll;
+
+- (void)forceFrameRedraw;
 @end
