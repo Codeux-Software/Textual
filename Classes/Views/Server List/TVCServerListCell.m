@@ -111,7 +111,9 @@
 	NSDictionary *drawingContext = [self drawingContext];
 	
 	BOOL isActive = [drawingContext boolForKey:@"isActive"];
+	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
+	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
 	
 	if (isGroupItem == NO) {
 		/* Maybe update icon image. */
@@ -122,31 +124,52 @@
 		NSImageView *imageView = [self imageView];
 		
 		NSImage *icon = nil;
+
+		BOOL iconIsTemplate = (isVibrantDark == NO);
 		
 		if ([cellItem isPrivateMessage]) {
 			NSString *queryIcon = [interfaceObject privateMessageStatusIconFilename:isActive];
 			
 			icon = [NSImage imageNamed:queryIcon];
 		} else {
-			if (isActive) {
-				if (isVibrantDark) {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
-				} else {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
+			/* When the window is not in focus, when this item is selected, and when we are not
+			 using vibrant dark mode; the outline view does not turn our icon to a light variant
+			 like it would do if the window was in focus and used as a template. To workaround
+			 this oddity that Apple does, we fudge the icon by using another variant of it. */
+			if (isWindowActive == NO) {
+				if (isVibrantDark == NO) {
+					if (isSelected) {
+						iconIsTemplate = NO;
+
+						if (isActive) {
+							icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
+						} else {
+							icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
+						}
+					}
 				}
-			} else {
-				if (isVibrantDark) {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
+			}
+
+			/* Normal icon processing. */
+			if (icon == nil) {
+				if (isActive) {
+					if (isVibrantDark) {
+						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkActive"];
+					} else {
+						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightActive"];
+					}
 				} else {
-					icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
+					if (isVibrantDark) {
+						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteDarkInactive"];
+					} else {
+						icon = [NSImage imageNamed:@"channelRoomStatusIconYosemiteLightInactive"];
+					}
 				}
 			}
 		}
 		
-		if (isVibrantDark) {
-			[icon setTemplate:NO];
-		} else {
-			[icon setTemplate:YES];
+		if (NSDissimilarObjects([icon isTemplate], iconIsTemplate)) {
+			[icon setTemplate:iconIsTemplate];
 		}
 		
 		[imageView setImage:icon];
