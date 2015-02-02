@@ -105,12 +105,12 @@
 
 - (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 - (NSColor *)serverCellDisabledItemTextColorForActiveWindow
@@ -135,12 +135,12 @@
 
 - (NSColor *)serverCellSelectedTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 - (NSFont *)messageCountBadgeFont
