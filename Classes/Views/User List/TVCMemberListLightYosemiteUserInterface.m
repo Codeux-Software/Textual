@@ -71,12 +71,12 @@
 
 - (NSColor *)selectedCellTextColorForActiveWindow
 {
-	return [NSColor whiteColor];
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
 }
 
 - (NSColor *)selectedCellTextColorForInactiveWindow
 {
-	return [NSColor whiteColor];
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
 }
 
 - (NSColor *)userMarkBadgeNormalTextColor
