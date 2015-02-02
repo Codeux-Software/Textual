@@ -62,7 +62,12 @@
 		[self maybeReopen];
 
 		if ( self.fileHandle) {
-			[self.fileHandle writeData:jsondata];
+			@try {
+				[self.fileHandle writeData:jsondata];
+			}
+			@catch (NSException *exception) {
+				LogToConsole(@"An exception happened to a non-critical component of Textual.");
+			}
 		} else {
 			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
 		}
@@ -83,8 +88,13 @@
 		[self maybeReopen];
 
 		if ( self.fileHandle) {
-			[self.fileHandle writeData:jsondata];
-			[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+			@try {
+				[self.fileHandle writeData:jsondata];
+				[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+			}
+			@catch (NSException *exception) {
+				LogToConsole(@"An exception happened to a non-critical component of Textual.");
+			}
 		} else {
 			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
 		}
