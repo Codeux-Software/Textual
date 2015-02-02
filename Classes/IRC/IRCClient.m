@@ -474,7 +474,7 @@
 	self.isTerminating = YES;
 
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
-		if ([TPCPreferences logToDiskIsEnabled]) {
+		if ([TPCPreferences reloadScrollbackOnLaunch]) {
 			if (self.lastMessageServerTime > 0) {
 				self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
 			}
@@ -631,7 +631,7 @@
 
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue
 {
-	if ([TPCPreferences logToDiskIsEnabled]) {
+	if ([TPCPreferences reloadScrollbackOnLaunch]) {
 		if (fabs(self.lastMessageServerTime) == 0) {
 			double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 
