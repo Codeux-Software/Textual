@@ -49,7 +49,7 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
-	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kSSLProtocolUnknown);
+	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLPeerName] = (id)controller.serverAddress;
