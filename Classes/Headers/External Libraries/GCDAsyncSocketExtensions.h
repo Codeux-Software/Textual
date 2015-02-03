@@ -47,8 +47,6 @@
 + (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
 
 - (SecTrustRef)sslCertificateTrustInformation;
-
-- (SSLProtocol)sslNegotiatedProtocol;
 @end
 
 @interface AsyncSocket (RLMAsyncSocketExtensions)

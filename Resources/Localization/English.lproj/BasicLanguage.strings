@@ -686,16 +686,14 @@
 
 /* Certificate conext command dialog. */
 "BasicLanguage[1247][1]" = "Certificate Information";
-"BasicLanguage[1247][2]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.\n\nConnection protocol negotiated using this certificate: %@";
+"BasicLanguage[1247][2]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.";
+"BasicLanguage[1247][3]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.\n\nConnected using %@";
 
-/* Localized connection protocol names. */
-"BasicLanguage[1248][1]" = "Secure Sockets Layer (SSL), version 3.0";
-"BasicLanguage[1248][2]" = "Secure Sockets Layer (SSL), version 2.0";
-"BasicLanguage[1248][3]" = "Secure Sockets Layer (SSL), version 1.0";
-"BasicLanguage[1248][4]" = "Transport Layer Security (TLS), version 1.0";
-"BasicLanguage[1248][5]" = "Transport Layer Security (TLS), version 1.1";
-"BasicLanguage[1248][6]" = "Transport Layer Security (TLS), version 1.2";
-"BasicLanguage[1248][7]" = "Unknown";
+/* Connection protocol and cipher suite. */
+"BasicLanguage[1248]" = "\0034\002%1$@\002\003 with the cipher suite: \0034\002%2$@\002\003";
+
+
+
 
 
 

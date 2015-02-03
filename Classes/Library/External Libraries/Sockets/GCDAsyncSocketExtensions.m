@@ -134,21 +134,6 @@
 	return trust;
 }
 
-- (SSLProtocol)sslNegotiatedProtocol
-{
-	__block SSLProtocol protocol;
-
-	dispatch_block_t block = ^{
-		OSStatus status = SSLGetNegotiatedProtocolVersion(self.sslContext, &protocol);
-
-#pragma unused(status)
-	};
-
-	[self performBlock:block];
-
-	return protocol;
-}
-
 @end
 
 @implementation AsyncSocket (RLMAsyncSocketExtensions)
@@ -177,7 +162,6 @@
 {
 	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
 
-    // Check to see if there _is_ a system SOCKS proxy set.
 	CFNumberRef isEnabledRef = CFDictionaryGetValue(settings, (id)kSCPropNetProxiesSOCKSEnable);
 
 	if (isEnabledRef && CFGetTypeID(isEnabledRef) == CFNumberGetTypeID()) {
@@ -201,22 +185,6 @@
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
 	switch (version) {
-		case IRCConnectionSocketHTTPProxyType:
-		case IRCConnectionSocketHTTPSProxyType:
-		{
-			if (version == IRCConnectionSocketHTTPProxyType) {
-				settings[(id)kCFStreamPropertyHTTPProxyHost] = address;
-				settings[(id)kCFStreamPropertyHTTPProxyPort] = @(port);
-			} else {
-				settings[(id)kCFStreamPropertyHTTPSProxyHost] = address;
-				settings[(id)kCFStreamPropertyHTTPSProxyPort] = @(port);
-			}
-			
-			CFReadStreamSetProperty(theReadStream, kCFStreamPropertyHTTPProxy, (__bridge CFTypeRef)(settings));
-			CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertyHTTPProxy, (__bridge CFTypeRef)(settings));
-			
-			break;
-		}
 		case IRCConnectionSocketSocks4ProxyType:
 		case IRCConnectionSocketSocks5ProxyType:
 		{

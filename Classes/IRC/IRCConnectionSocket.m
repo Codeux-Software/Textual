@@ -392,33 +392,11 @@
 - (NSString *)localizedSecureConnectionProtocolString
 {
 	if ([self useNewSocketEngine]) {
-		SSLProtocol protocol = [self.socketConnection sslNegotiatedProtocol];
+		NSString *protocol = [self.socketConnection sslNegotiatedProtocolString];
 
-		NSString *protocolString = nil;
+		NSString *cipher = [self.socketConnection sslNegotiatedCipherSuiteString];
 
-#define _defineCase(c, k)		case (c):										\
-								{												\
-										protocolString = TXTLS((k));			\
-																				\
-										break;									\
-								}
-
-		switch (protocol) {
-				_defineCase(kSSLProtocol2, @"BasicLanguage[1248][2]")
-				_defineCase(kSSLProtocol3, @"BasicLanguage[1248][1]")
-				_defineCase(kTLSProtocol1, @"BasicLanguage[1248][4]")
-				_defineCase(kTLSProtocol11, @"BasicLanguage[1248][5]")
-				_defineCase(kTLSProtocol12, @"BasicLanguage[1248][6]")
-
-			default:
-			{
-				break;
-			}
-		}
-
-#undef _defineCase
-
-		return protocolString;
+		return BLS(1248, protocol, cipher);
 	} else {
 		return nil;
 	}
@@ -433,16 +411,16 @@
 
 		NSString *protocolString = [self localizedSecureConnectionProtocolString];
 
-		if (protocolString == nil) {
-			protocolString = TXTLS(@"BasicLanguage[1248][7]");
-		}
-
 		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
 		[panel setDefaultButtonTitle:BLS(1011)];
 		[panel setAlternateButtonTitle:nil];
 
-		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", protocolString)];
+		if (protocolString == nil) {
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]")];
+		} else {
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", protocolString)];
+		}
 
 		[panel beginSheetForWindow:[NSApp mainWindow]
 					 modalDelegate:nil
