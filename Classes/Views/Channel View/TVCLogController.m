@@ -963,7 +963,9 @@
 
 - (void)redrawFrame
 {
-	[self.webViewAutoScroller forceFrameRedraw];
+	if ([mainWindow() selectedViewController] == self) {
+		[self.webViewAutoScroller forceFrameRedraw];
+	}
 }
 
 - (void)maybeRedrawFrame
@@ -975,8 +977,10 @@
 	 TVCWebViewAutoScroll that we are interested in a redraw and it will then take appropriate
 	 actions depending on whether one is necessary or not. */
 
-	if ([self.webViewAutoScroller canScroll] == NO) {
-		[self.webViewAutoScroller forceFrameRedraw];
+	if ([mainWindow() selectedViewController] == self) {
+		if ([self.webViewAutoScroller canScroll] == NO) {
+			[self.webViewAutoScroller forceFrameRedraw];
+		}
 	}
 }
 
