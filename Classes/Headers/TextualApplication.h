@@ -240,6 +240,7 @@
 	#import "DDInvocation.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
+	#import "GCDAsyncSocketCipherNames.h"
 	#import "GRMustacheAvailabilityMacros.h"
 	#import "GRMustache.h"
 	#import "GRMustacheConfiguration.h"

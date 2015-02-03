@@ -1385,6 +1385,10 @@
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CCF2EEB15804790006FFE21 /* IRCNetworks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */; };
 		4CCF2F9915804BC9006FFE21 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CCF2F5315804888006FFE21 /* core.js */; };
+		4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD344721A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD4165B184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD4165C184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
@@ -1901,6 +1905,10 @@
 		4CFC40E01969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CFC40E21969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */; };
 		4CFC40E31969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */; };
+		4CFEAF001A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */; };
+		4CFEAF011A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */; };
+		4CFEAF021A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */; };
+		4CFEAF031A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */; };
 		5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		5D4846CA171F0ACD0015F2B0 /* OELReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5D4846C9171F0ACD0015F2B0 /* OELReachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2698,6 +2706,7 @@
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCNetworks.plist; path = Resources/Miscellaneous/IRCNetworks.plist; sourceTree = SOURCE_ROOT; };
 		4CCF2F5315804888006FFE21 /* core.js */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = core.js; path = Resources/Javascript/API/core.js; sourceTree = SOURCE_ROOT; };
+		4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocketCipherNames.h; path = ../GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
@@ -2714,6 +2723,7 @@
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorldCloudExtension.m; path = IRC/IRCWorldCloudExtension.m; sourceTree = "<group>"; };
+		4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketCipherNames.m; sourceTree = "<group>"; };
 		5D4846C2171F0AC00015F2B0 /* OELReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OELReachability.m; sourceTree = "<group>"; };
 		5D4846C9171F0ACD0015F2B0 /* OELReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OELReachability.h; sourceTree = "<group>"; };
 		5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = BuildFrameworks.sh; path = "Main Project (Textual).xcodeproj/BuildFrameworks.sh"; sourceTree = SOURCE_ROOT; };
@@ -3414,6 +3424,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5D5158E99520026668C /* GCDAsyncSocket.m */,
+				4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */,
 				4C8AF5D6158E99520026668C /* GCDAsyncSocketExtensions.m */,
 				5D4846C2171F0AC00015F2B0 /* OELReachability.m */,
 				4C8AF5D7158E99520026668C /* RLMAsyncSocket.m */,
@@ -3532,6 +3543,7 @@
 				4C8AF740158EB6CA0026668C /* DDExtensions.h */,
 				4C8AF741158EB6CA0026668C /* DDInvocation.h */,
 				4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */,
+				4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */,
 				4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */,
 				4C8AF745158EB6CA0026668C /* GTMDefines.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
@@ -4150,6 +4162,7 @@
 				4C0BA61B1990798800857343 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C0BA61C1990798800857343 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C0BA61D1990798800857343 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
@@ -4330,6 +4343,7 @@
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
 				4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
+				4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF2D1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C0C720E1742C444000F82C4 /* NSByteCountFormatterHelper.h in Headers */,
@@ -4506,6 +4520,7 @@
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF2C1992614500E8A7B8 /* NSValueHelper.h in Headers */,
 				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
@@ -4686,6 +4701,7 @@
 				4CEC551D19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4CDFA52C1996EAB2007EA46E /* NSValueHelper.h in Headers */,
 				4CDFA52D1996EAB2007EA46E /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4CD344721A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4CDFA52E1996EAB2007EA46E /* NSObjectHelper.h in Headers */,
 				4CDFA52F1996EAB2007EA46E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4CDFA5301996EAB2007EA46E /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -5564,6 +5580,7 @@
 				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
 				4C77FF291992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
+				4CFEAF011A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
 				4CEC552519BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0445A216F1603B00EBB665 /* IRCConnection.m in Sources */,
@@ -5722,6 +5739,7 @@
 				4C0BA6721990798800857343 /* IRCClientConfig.m in Sources */,
 				4C77FF2A1992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C0BA6731990798800857343 /* IRCConnection.m in Sources */,
+				4CFEAF001A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C0BA6741990798800857343 /* IRCExtras.m in Sources */,
 				4CEC552419BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0BA6751990798800857343 /* IRCISupportInfo.m in Sources */,
@@ -5880,6 +5898,7 @@
 				4C8AF6A8158E99520026668C /* IRCClientConfig.m in Sources */,
 				4C77FF281992613100E8A7B8 /* NSValueHelper.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
+				4CFEAF021A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
 				4CEC552619BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
@@ -6038,6 +6057,7 @@
 				4CDFA5851996EAB2007EA46E /* IRCClientConfig.m in Sources */,
 				4CDFA5861996EAB2007EA46E /* NSValueHelper.m in Sources */,
 				4CDFA5871996EAB2007EA46E /* IRCConnection.m in Sources */,
+				4CFEAF031A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4CDFA5881996EAB2007EA46E /* IRCExtras.m in Sources */,
 				4CEC552719BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
 				4CDFA5891996EAB2007EA46E /* IRCISupportInfo.m in Sources */,
