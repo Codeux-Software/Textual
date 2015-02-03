@@ -691,6 +691,7 @@
 
 /* Connection protocol and cipher suite. */
 "BasicLanguage[1248]" = "\0034\002%1$@\002\003 with the cipher suite: \0034\002%2$@\002\003";
+"BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
 
 

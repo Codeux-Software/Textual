@@ -3760,7 +3760,7 @@
 
 - (void)ircConnectionDidSecureConnection
 {
-	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString];
+	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString:NO];
 
 	if (sslProtocolString) {
 		[self printDebugInformationToConsole:BLS(1249, sslProtocolString)];
