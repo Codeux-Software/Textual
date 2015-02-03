@@ -391,12 +391,21 @@
 
 - (NSString *)localizedSecureConnectionProtocolString
 {
+	return [self localizedSecureConnectionProtocolString:YES];
+}
+
+- (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText
+{
 	if ([self useNewSocketEngine]) {
 		NSString *protocol = [self.socketConnection sslNegotiatedProtocolString];
 
 		NSString *cipher = [self.socketConnection sslNegotiatedCipherSuiteString];
 
-		return BLS(1248, protocol, cipher);
+		if (plainText) {
+			return BLS(1250, protocol, cipher);
+		} else {
+			return BLS(1248, protocol, cipher);
+		}
 	} else {
 		return nil;
 	}
@@ -409,7 +418,7 @@
 
 		PointerIsEmptyAssert(trust);
 
-		NSString *protocolString = [self localizedSecureConnectionProtocolString];
+		NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
 
 		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 

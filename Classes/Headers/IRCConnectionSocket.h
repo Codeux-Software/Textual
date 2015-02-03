@@ -44,6 +44,8 @@
 
 @property (readonly, copy) NSString *localizedSecureConnectionProtocolString;
 
+- (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText;
+
 @property (readonly, copy) NSString *connectedAddress;
 
 - (void)write:(NSData *)data;
