@@ -981,7 +981,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <textField verticalHuggingPriority="750" id="kyL-8P-YHU">
                     <rect key="frame" x="55" y="224" width="299" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit images shown inline to a maxium file size of " id="Ve9-42-YiN">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Limit images shown inline to a maximum file size of " id="Ve9-42-YiN">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
