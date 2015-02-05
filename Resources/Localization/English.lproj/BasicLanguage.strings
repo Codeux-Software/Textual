@@ -690,7 +690,7 @@
 "BasicLanguage[1247][3]" = "Click the \"Show Certificate\" button to reveal the certificate used for this connection. If desired, modify the trust of the certificate using the provided user interface controls attached to the certificate.\n\nConnected using %@";
 
 /* Connection protocol and cipher suite. */
-"BasicLanguage[1248]" = "\0034\002%1$@\002\003 with the cipher suite: \0034\002%2$@\002\003";
+"BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
 
