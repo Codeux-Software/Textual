@@ -646,7 +646,11 @@
 
 - (BOOL)connectionIsSecured
 {
-	return self.config.connectionUsesSSL;
+	if (self.socket) {
+		return self.socket.connectionUsesSSL;
+	} else {
+		return NO;
+	}
 }
 
 #pragma mark -
