@@ -521,11 +521,8 @@
 
 	if (diskInfo) {
 		TXUnsignedLongLong totalSpace = [diskInfo longLongForKey:NSFileSystemSize];
-		TXUnsignedLongLong freeSpace  = [diskInfo longLongForKey:NSFileSystemFreeSize];
 
-		return TPILocalizedString(@"BasicLanguage[1007]",
-					  [self formattedDiskSize:totalSpace],
-					  [self formattedDiskSize:freeSpace]);
+		return [self formattedDiskSize:totalSpace];
 	} else {
 		return nil;
 	}
