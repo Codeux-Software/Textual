@@ -35,16 +35,16 @@
 
  *********************************************************************** */
 
-typedef enum CSFWBlowfishEncryptionAlgorithm : NSInteger {
-	CSFWBlowfishEncryptionNoneAlgorithm		= -1,				// Does nothing, just returns original
-	CSFWBlowfishEncryptionDefaultAlgorithm	= 0,				// Defualt goes to ECB
-	CSFWBlowfishEncryptionECBAlgorithm		= 1,
-	CSFWBlowfishEncryptionCBCAlgorithm		= 2
-} CSFWBlowfishEncryptionAlgorithm;
+typedef enum CSFWBlowfishEncryptionModeOfOperation : NSInteger {
+	CSFWBlowfishEncryptionNoneModeOfOperation		= -1,				// Does nothing, just returns original
+	CSFWBlowfishEncryptionDefaultModeOfOperation	= 0,				// Defualt goes to ECB
+	CSFWBlowfishEncryptionECBModeOfOperation		= 1,
+	CSFWBlowfishEncryptionCBCModeOfOperation		= 2
+} CSFWBlowfishEncryptionModeOfOperation;
 
 @interface CSFWBlowfish : NSObject
-+ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionAlgorithm)algorithm thatFitsWithinBounds:(NSInteger)maximumLength;
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionModeOfOperation)mode thatFitsWithinBounds:(NSInteger)maximumLength;
 
-+ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local;
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
++ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local;
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
 @end

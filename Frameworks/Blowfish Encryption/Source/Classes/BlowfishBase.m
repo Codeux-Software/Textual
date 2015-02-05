@@ -65,18 +65,18 @@ static const signed char fish_unbase64[256] = {
 
 @implementation BlowfishBase
 
-+ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding
++ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding
 {
-	if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
 		return [self ecb_encrypt:rawInput key:secretKey encoding:dataEncoding];
 	} else {
 		return [self cbc_encrypt:rawInput key:secretKey encoding:dataEncoding];
 	}
 }
 
-+ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
++ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
 {
-	if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
 		return [self ecb_decrypt:rawInput key:secretKey encoding:dataEncoding badBytes:badByteCount];
 	} else {
 		return [self cbc_decrypt:rawInput key:secretKey encoding:dataEncoding badBytes:badByteCount];
@@ -107,7 +107,7 @@ static const signed char fish_unbase64[256] = {
 	return base64Length;
 }
 
-+ (BOOL)walkBlowfishCypherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData **)outputHandler
++ (BOOL)walkBlowfishCipherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData **)outputHandler
 {
 	/* Define basic context. */
 	size_t _bytesLeft = inputSize;
@@ -231,7 +231,7 @@ static const signed char fish_unbase64[256] = {
 	NSMutableData *outputHandler = [NSMutableData data];
 	
 	/* Perform encryption. */
-	BOOL result = [BlowfishBase walkBlowfishCypherForCBC:&context inputStream:inputStream inputSize:bufferSize outputHandler:&outputHandler];
+	BOOL result = [BlowfishBase walkBlowfishCipherForCBC:&context inputStream:inputStream inputSize:bufferSize outputHandler:&outputHandler];
 	
 	EVP_CIPHER_CTX_cleanup(&context);
 
@@ -315,7 +315,7 @@ static const signed char fish_unbase64[256] = {
 	NSMutableData *outputHandler = [NSMutableData data];
 	
 	/* Perform encryption. */
-	BOOL result = [BlowfishBase walkBlowfishCypherForCBC:&context inputStream:message inputSize:msglen outputHandler:&outputHandler];
+	BOOL result = [BlowfishBase walkBlowfishCipherForCBC:&context inputStream:message inputSize:msglen outputHandler:&outputHandler];
 	
 	EVP_CIPHER_CTX_cleanup(&context);
 	
@@ -336,9 +336,9 @@ static const signed char fish_unbase64[256] = {
 				finalData =  outputHandler;
 			}
 			
-			NSString *cypher = [[NSString alloc] initWithData:finalData encoding:dataEncoding];
+			NSString *cipher = [[NSString alloc] initWithData:finalData encoding:dataEncoding];
 
-			return cypher;
+			return cipher;
 		} else {
 			LogToConsole(@"outputHandler returned a result with a length less or equal to 8.");
 			
@@ -493,17 +493,17 @@ static const signed char fish_unbase64[256] = {
 
 	/* =============================================== */
 
-	NSString *cypher = [NSString stringWithCString:encrypted encoding:dataEncoding];
+	NSString *cipher = [NSString stringWithCString:encrypted encoding:dataEncoding];
 
 	free(encrypted);
 
 	/* =============================================== */
 
-	if ([cypher length] <= 0) {
+	if ([cipher length] <= 0) {
 		return nil;
 	}
 	
-    return cypher;
+    return cipher;
 }
 
 #pragma mark -
@@ -604,17 +604,17 @@ static const signed char fish_unbase64[256] = {
 		*badByteCount = 0;
 	}
 	
-	NSString *cypher = [[NSString alloc] initWithData:rawData encoding:dataEncoding];
+	NSString *cipher = [[NSString alloc] initWithData:rawData encoding:dataEncoding];
 
 	free(decrypted);
 
 	// ========================================== //
 
-	if ([cypher length] <= 0) {
+	if ([cipher length] <= 0) {
 		return nil;
 	}
 	
-    return cypher;
+    return cipher;
 }
 
 @end

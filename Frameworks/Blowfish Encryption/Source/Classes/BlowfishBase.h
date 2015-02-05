@@ -23,8 +23,8 @@
 #import "Encryption.h"
 
 @interface BlowfishBase : NSObject
-+ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding;
-+ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount;
++ (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding;
++ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount;
 
 + (NSInteger)estimatedLengthForECBEncryptedLength:(NSInteger)length;
 + (NSInteger)estimatedLengthForCBCEncryptedLength:(NSInteger)length;

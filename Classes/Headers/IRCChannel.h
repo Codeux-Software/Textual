@@ -93,7 +93,7 @@ typedef enum IRCChannelStatus : NSInteger {
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
 @property (nonatomic, copy) NSString *encryptionKey;
-@property (nonatomic, assign) CSFWBlowfishEncryptionAlgorithm encryptionAlgorithm;
+@property (nonatomic, assign) CSFWBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (BOOL)memberExists:(NSString *)nickname;
 

@@ -991,7 +991,7 @@
 		NSString *encryptionKey = channel.config.encryptionKey;
 		
 		if (encryptionKey) {
-			NSString *newstr = [CSFWBlowfish encodeData:message key:encryptionKey algorithm:channel.encryptionAlgorithm encoding:self.config.primaryEncoding];
+			NSString *newstr = [CSFWBlowfish encodeData:message key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding];
 
 			if ([newstr length] < 5) {
 				[self printDebugInformation:BLS(1001) channel:channel];
@@ -1018,7 +1018,7 @@
 		if (encryptionKey) {
 			NSInteger badCharCount = 0;
 			
-			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey algorithm:channel.encryptionAlgorithm encoding:self.config.primaryEncoding badBytes:&badCharCount];
+			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding badBytes:&badCharCount];
 
 			if (badCharCount > 0) {
 				[self printDebugInformation:BLS(1245, badCharCount) channel:channel];
