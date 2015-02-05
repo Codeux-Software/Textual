@@ -46,7 +46,6 @@
 "BasicLanguage[1004]" = " \002Memory:\002 %@ \002•\002";
 "BasicLanguage[1005]" = " \002Uptime:\002 %@ \002•\002";
 "BasicLanguage[1006]" = " \002Disk Space:\002 %@ \002•\002";
-"BasicLanguage[1007]" = "Total: %@; Free: %@";
 "BasicLanguage[1008]" = " \002Graphics:\002 %@ \002•\002";
 "BasicLanguage[1009]" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
 "BasicLanguage[1010]" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
