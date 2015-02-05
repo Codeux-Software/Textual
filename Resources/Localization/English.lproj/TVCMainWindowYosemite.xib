@@ -1562,11 +1562,11 @@ There are no other limits. What you see, is what you get.</string>
             <rect key="frame" x="0.0" y="0.0" width="42" height="23"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS">
-                    <rect key="frame" x="18" y="5" width="19" height="16"/>
-                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSLockLockedTemplate" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="HaN-Sj-wDl">
+                <button toolTip="This connection is secured." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS">
+                    <rect key="frame" x="20" y="3" width="19" height="18"/>
+                    <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSLockLockedTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HaN-Sj-wDl">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
                     </buttonCell>
                     <connections>
                         <action selector="presentCertificateTrustInformation:" target="21" id="8TR-Cg-bdo"/>
@@ -1580,6 +1580,15 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="view" destination="asp-kn-ubA" id="6kH-ZT-LxG"/>
             </connections>
         </viewController>
+        <button verticalHuggingPriority="750" id="qfE-xE-HxR">
+            <rect key="frame" x="0.0" y="0.0" width="116" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="recessed" title="Recessed Button" bezelStyle="recessed" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MG7-bg-18p">
+                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                <font key="font" metaFont="systemBold" size="12"/>
+            </buttonCell>
+            <point key="canvasLocation" x="4265" y="743"/>
+        </button>
     </objects>
     <resources>
         <image name="FormattingColor_0" width="16" height="16"/>
