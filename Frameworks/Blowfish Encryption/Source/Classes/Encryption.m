@@ -40,9 +40,9 @@
 
 @implementation CSFWBlowfish
 
-+ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionAlgorithm)algorithm thatFitsWithinBounds:(NSInteger)maximumLength;
++ (NSUInteger)estimatedLengthOfStringEncryptedUsing:(CSFWBlowfishEncryptionModeOfOperation)mode thatFitsWithinBounds:(NSInteger)maximumLength;
 {
-	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionNoneModeOfOperation) {
 		return maximumLength;
 	}
 
@@ -51,7 +51,7 @@
 	for (NSInteger i = 0; i <= maximumLength; i++) {
 		NSInteger sizeForLength = 0;
 		
-		if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+		if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
 			sizeForLength = [BlowfishBase estimatedLengthForECBEncryptedLength:i];
 		} else {
 			sizeForLength = [BlowfishBase estimatedLengthForCBCEncryptedLength:i];
@@ -67,9 +67,9 @@
 	return lastEstimatedSize;
 }
 
-+ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local
++ (NSString *)encodeData:(NSString *)input key:(NSString *)phrase mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local
 {
-	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionNoneModeOfOperation) {
 		return input;
 	}
 	
@@ -79,22 +79,22 @@
 		phrase = [phrase substringToIndex:56];
 	}
 
-	NSString *result = [BlowfishBase encrypt:input key:phrase algorithm:algorithm encoding:local];
+	NSString *result = [BlowfishBase encrypt:input key:phrase mode:mode encoding:local];
 
 	if ([result length] <= 0) {
 		return nil;
 	}
 
-	if (algorithm == CSFWBlowfishEncryptionCBCAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionCBCModeOfOperation) {
 		return [@"+OK *" stringByAppendingString:result];
 	} else {
 		return [@"+OK " stringByAppendingString:result];
 	}
 }
 
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase algorithm:(CSFWBlowfishEncryptionAlgorithm)algorithm encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(CSFWBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
 {
-	if (algorithm == CSFWBlowfishEncryptionNoneAlgorithm) {
+	if (mode == CSFWBlowfishEncryptionNoneModeOfOperation) {
 		return input;
 	}
 
@@ -123,9 +123,9 @@
 	if ([input hasPrefix:@"*"]) {
 		input = [input substringFromIndex:1];
 		
-		algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+		mode = CSFWBlowfishEncryptionCBCModeOfOperation;
 	} else {
-		algorithm = CSFWBlowfishEncryptionECBAlgorithm;
+		mode = CSFWBlowfishEncryptionECBModeOfOperation;
 	}
 	
 	if ([phrase length] > 56) {
@@ -134,7 +134,7 @@
 		phrase = [phrase substringToIndex:56];
 	}
 
-	NSString *result = [BlowfishBase decrypt:input key:phrase algorithm:algorithm encoding:local badBytes:badByteCount];
+	NSString *result = [BlowfishBase decrypt:input key:phrase mode:mode encoding:local badBytes:badByteCount];
 
 	if ([result length] <= 0) {
 		return nil;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -19,8 +19,8 @@
                 <outlet property="defaultsView" destination="243" id="344"/>
                 <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
                 <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
-                <outlet property="encryptionAlgorithmPopup" destination="wJA-xE-WhN" id="ZPF-9f-b2o"/>
                 <outlet property="encryptionKeyField" destination="151" id="347"/>
+                <outlet property="encryptionModeOfOperationPopup" destination="wJA-xE-WhN" id="Vjw-u8-MFp"/>
                 <outlet property="encryptionView" destination="147" id="348"/>
                 <outlet property="generalView" destination="109" id="346"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
@@ -36,7 +36,7 @@
         <window title="Channel Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="780" y="583" width="325" height="393"/>
+            <rect key="contentRect" x="1103" y="493" width="325" height="393"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="6">
@@ -99,7 +99,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
             </connections>
-            <point key="canvasLocation" x="379.5" y="720.5"/>
+            <point key="canvasLocation" x="374.5" y="655.5"/>
         </window>
         <view id="109" userLabel="View">
             <rect key="frame" x="0.0" y="0.0" width="325" height="286"/>
@@ -394,7 +394,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="Cypher-block Chaining (CBC)">
+                                    <fragment content="Cipher-block Chaining (CBC)">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -426,24 +426,6 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
-                    <rect key="frame" x="91" y="159" width="231" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Electronic Codebook (ECB)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="0bV-6Q-M7g" id="l5W-tg-6hY">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="bwJ-HS-537">
-                            <items>
-                                <menuItem title="Default" id="xj8-qa-tOq">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
-                                <menuItem title="Electronic Codebook (ECB)" state="on" tag="1" id="0bV-6Q-M7g"/>
-                                <menuItem title="Cypher-block Chaining (CBC)" tag="2" id="zgR-Ea-XR7"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
                     <rect key="frame" x="20" y="196" width="303" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -451,15 +433,6 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
-                    <rect key="frame" x="19" y="162" width="68" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Strength:" id="oEt-hm-1i1">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
                     <rect key="frame" x="37" y="12" width="267" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -514,8 +487,35 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
+                    <rect key="frame" x="78" y="158" width="243" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l5W-tg-6hY">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="bwJ-HS-537">
+                            <items>
+                                <menuItem title="Default" id="xj8-qa-tOq">
+                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                </menuItem>
+                                <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
+                                <menuItem title="Electronic Codebook (ECB)" tag="1" id="0bV-6Q-M7g"/>
+                                <menuItem title="Cipher-block Chaining (CBC)" tag="2" id="zgR-Ea-XR7"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
+                    <rect key="frame" x="22" y="161" width="52" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Mode:" id="oEt-hm-1i1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="524.5" y="549.5"/>
+            <point key="canvasLocation" x="162.5" y="447"/>
         </view>
     </objects>
 </document>

@@ -168,9 +168,9 @@
 	return self.config.encryptionKey;
 }
 
-- (CSFWBlowfishEncryptionAlgorithm)encryptionAlgorithm
+- (CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation;
 {
-	return self.config.encryptionAlgorithm;
+	return self.config.encryptionModeOfOperation;
 }
 
 - (BOOL)isChannel
@@ -229,9 +229,9 @@
     [self.viewController setTopic:topic];
 }
 
-- (void)setEncryptionAlgorithm:(CSFWBlowfishEncryptionAlgorithm)encryptionAlgorithm
+- (void)setEncryptionModeOfOperation:(CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
 {
-	self.config.encryptionAlgorithm = encryptionAlgorithm;
+	self.config.encryptionModeOfOperation = encryptionModeOfOperation;
 }
 
 - (void)setEncryptionKey:(NSString *)encryptionKey

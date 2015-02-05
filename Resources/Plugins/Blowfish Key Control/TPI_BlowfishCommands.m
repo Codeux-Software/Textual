@@ -161,11 +161,11 @@
 				}
 			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
 				if ([_messageString isEqualIgnoringCase:@"CBC"]) {
-					[c setEncryptionAlgorithm:CSFWBlowfishEncryptionCBCAlgorithm];
+					[c setEncryptionModeOfOperation:CSFWBlowfishEncryptionCBCModeOfOperation];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") channel:c];
 				} else {
-					[c setEncryptionAlgorithm:CSFWBlowfishEncryptionECBAlgorithm];
+					[c setEncryptionModeOfOperation:CSFWBlowfishEncryptionECBModeOfOperation];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1021]") channel:c];
 				}
@@ -252,7 +252,7 @@
         return;
     }
 	
-	CSFWBlowfishEncryptionAlgorithm algorithm = CSFWBlowfishEncryptionDefaultAlgorithm;
+	CSFWBlowfishEncryptionModeOfOperation mode = CSFWBlowfishEncryptionDefaultModeOfOperation;
 
 	NSString *requestData = nil;
 	
@@ -264,7 +264,7 @@
 		requestData = parts[0];
 		
 		if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
-			algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+			mode = CSFWBlowfishEncryptionCBCModeOfOperation;
 		}
 	} else {
 		requestData =  requestDataRaw;
@@ -308,12 +308,12 @@
 			
 			[channel setEncryptionKey:theSecret];
 			
-			[channel setEncryptionAlgorithm:algorithm];
+			[channel setEncryptionModeOfOperation:mode];
 
 			/* Finish up. */
 			NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
 			
-			if (algorithm == CSFWBlowfishEncryptionCBCAlgorithm) {
+			if (mode == CSFWBlowfishEncryptionCBCModeOfOperation) {
 				requestMsg = [requestMsg stringByAppendingString:@" CBC"];
 			}
 
@@ -327,7 +327,7 @@
 			
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
 			
-			if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+			if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
 			} else {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
@@ -346,7 +346,7 @@
 	if (exchangeData) {
 		NSString *responseData = nil;
 		
-		CSFWBlowfishEncryptionAlgorithm algorithm = CSFWBlowfishEncryptionDefaultAlgorithm;
+		CSFWBlowfishEncryptionModeOfOperation mode = CSFWBlowfishEncryptionDefaultModeOfOperation;
 
 		if ([responseDataRaw length] > [TXExchangeResponsePrefix length]) {
 			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
@@ -356,7 +356,7 @@
 			responseData = parts[0];
 			
 			if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
-				algorithm = CSFWBlowfishEncryptionCBCAlgorithm;
+				mode = CSFWBlowfishEncryptionCBCModeOfOperation;
 			}
 		} else {
 			responseData =  responseDataRaw;
@@ -396,13 +396,13 @@
 			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 			
 			[channel setEncryptionKey:theSecret];
-			
-			[channel setEncryptionAlgorithm:algorithm];
+
+			[channel setEncryptionModeOfOperation:mode];
 			
 			/* Finish up. */
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
 			
-			if (algorithm == CSFWBlowfishEncryptionDefaultAlgorithm || algorithm == CSFWBlowfishEncryptionECBAlgorithm) {
+			if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
 			} else {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
