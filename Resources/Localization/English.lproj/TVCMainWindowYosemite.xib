@@ -589,8 +589,9 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="mainMenuProxy" destination="U6M-jc-NbT" id="QeA-Xy-1ah"/>
                 <outlet property="memberList" destination="wUC-XW-0WV" id="kW1-Mr-P02"/>
                 <outlet property="serverList" destination="MLD-Aa-PLM" id="SZb-p4-bEc"/>
+                <outlet property="titlebarAccessoryViewController" destination="Yr8-XA-FFO" id="3cU-yb-0Yx"/>
             </connections>
-            <point key="canvasLocation" x="4124" y="835.5"/>
+            <point key="canvasLocation" x="3837" y="1088.5"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="407" height="134"/>
@@ -1557,6 +1558,28 @@ There are no other limits. What you see, is what you get.</string>
             </connections>
         </customObject>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
+        <customView id="asp-kn-ubA">
+            <rect key="frame" x="0.0" y="0.0" width="42" height="23"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS">
+                    <rect key="frame" x="18" y="5" width="19" height="16"/>
+                    <buttonCell key="cell" type="squareTextured" bezelStyle="texturedSquare" image="NSLockLockedTemplate" imagePosition="overlaps" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="HaN-Sj-wDl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="presentCertificateTrustInformation:" target="21" id="8TR-Cg-bdo"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="4129" y="624.5"/>
+        </customView>
+        <viewController id="Yr8-XA-FFO" customClass="NSTitlebarAccessoryViewController">
+            <connections>
+                <outlet property="view" destination="asp-kn-ubA" id="6kH-ZT-LxG"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="FormattingColor_0" width="16" height="16"/>
@@ -1580,6 +1603,7 @@ There are no other limits. What you see, is what you get.</string>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSLockLockedTemplate" width="10" height="14"/>
         <image name="applicationIconYosemite" width="512" height="512"/>
     </resources>
 </document>

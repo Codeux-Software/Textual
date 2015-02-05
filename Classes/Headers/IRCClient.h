@@ -135,6 +135,8 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 @property (nonatomic, copy) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 
+@property (readonly) BOOL connectionIsSecured;
+
 // seed can be either an NSDictionary representation of an IRCClientConfig instance or an IRCClientConfig instance itself.
 // Supplying an empty NSDictionary will result in the client using default values.
 - (void)setup:(id)seed;
@@ -257,6 +259,8 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 - (void)createChanBanListDialog;
 - (void)createChanBanExceptionListDialog;
 - (void)createChanInviteExceptionListDialog;
+
+- (void)presentCertificateTrustInformation;
 
 // Creating a channel will require Textual to create a new WebView
 // Invoking this method on anything other than the main thread will
