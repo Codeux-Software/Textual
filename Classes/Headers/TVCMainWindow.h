@@ -63,6 +63,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, nweak) IBOutlet NSTitlebarAccessoryViewController *titlebarAccessoryViewController;
 @property (nonatomic, strong) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
 @property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
 @property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
@@ -120,6 +121,8 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 - (void)textEntered;
 
 - (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
+
+- (IBAction)presentCertificateTrustInformation:(id)sender;
 
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;

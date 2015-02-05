@@ -644,6 +644,11 @@
 	return self.lastMessageServerTime;
 }
 
+- (BOOL)connectionIsSecured
+{
+	return self.config.connectionUsesSSL;
+}
+
 #pragma mark -
 #pragma mark Highlights
 
@@ -3042,10 +3047,8 @@
 		}
 		case 5066: // Command: SSLCONTEXT
 		{
-			if ( self.socket.connectionUsesSSL && self.socket.isConnected) {
-				[self.socket openSSLCertificateTrustDialog];
-			}
-			
+			[self presentCertificateTrustInformation];
+
 			break;
 		}
 		case 5087: // Command: FAKERAWDATA
@@ -8336,6 +8339,14 @@
 	}
 }
 
+- (void)presentCertificateTrustInformation
+{
+	if (	 self.socket.isConnected) {
+		if ( self.socket.connectionUsesSSL) {
+			[self.socket openSSLCertificateTrustDialog];
+		}
+	}
+}
 
 #pragma mark -
 #pragma mark File Transfers

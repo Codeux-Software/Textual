@@ -83,6 +83,8 @@
 		[self makeKeyAndOrderFront:nil];
 		
 		[self loadWindowState];
+
+		[self addAccessoryViewsToTitlebar];
 		
 		[themeController() load];
 		
@@ -1054,6 +1056,24 @@
 #pragma mark -
 #pragma mark Window Extras
 
+- (void)presentCertificateTrustInformation:(id)sender
+{
+	IRCClient *u = self.selectedClient;
+
+	if ( u) {
+		[u presentCertificateTrustInformation];
+	}
+}
+
+- (void)addAccessoryViewsToTitlebar
+{
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		[self.titlebarAccessoryViewController setLayoutAttribute:NSLayoutAttributeRight];
+
+		[self addTitlebarAccessoryViewController:self.titlebarAccessoryViewController];
+	}
+}
+
 - (void)updateTitleFor:(IRCTreeItem *)item
 {
 	if (self.selectedItem == item) {
@@ -1066,12 +1086,19 @@
 	/* Establish base pair. */
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
-	
+
+	/* Update accessory view. */
+	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if (u) {
+			[[self.titlebarAccessoryViewController view] setHidden:([u connectionIsSecured] == NO)];
+		} else {
+			[[self.titlebarAccessoryViewController view] setHidden:YES];
+		}
+	}
+
 	/* Set default window title if there is none. */
 	if (u == nil && c == nil) {
 		[self setTitle:[TPCApplicationInfo applicationName]];
-		
-		[self setRepresentedURL:nil]; // Hide lock.
 		
 		return;
 	}
@@ -1125,15 +1152,6 @@
 	
 	/* Set final title. */
 	[self setTitle:title];
-	
-	[self setRepresentedURL:[RZMainBundle() bundleURL]];
-	
-	/* We also show a lock icon in title depending on whether SSL is in use or not. */
-	if ([[u config] connectionUsesSSL]) {
-		[[self standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
-	} else {
-		[[self standardWindowButton:NSWindowDocumentIconButton] setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
-	}
 }
 
 #pragma mark -
