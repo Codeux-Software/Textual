@@ -2,7 +2,7 @@
 
 CURRENT_DIRECTORY=`pwd`
 
-OPENSSL_VERSION="1.0.0m"
+OPENSSL_VERSION="1.0.2"
 
 cd /tmp
 
