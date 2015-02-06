@@ -39,4 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TPI_ZNCAdditions : NSObject <THOPluginProtocol>
+- (BOOL)validateMenuItem:(NSMenuItem *)item;
+- (IBAction)attachChannel:(id)sender;
+- (IBAction)detachChannel:(id)sender;
 @end

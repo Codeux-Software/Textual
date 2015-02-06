@@ -42,6 +42,100 @@
 #pragma mark -
 #pragma mark Plugin API
 
+- (void)pluginLoadedIntoMemory {
+	[self performBlockOnMainThread:^{
+		// Channel menu
+		NSMenuItem* attachMenuItem = [[NSMenuItem alloc] initWithTitle:@"Attach Channel (ZNC)" action:@selector(attachChannel:) keyEquivalent:@""];
+		[attachMenuItem setTarget:self];
+		NSMenuItem* detachMenuItem = [[NSMenuItem alloc] initWithTitle:@"Detach Channel (ZNC)" action:@selector(detachChannel:) keyEquivalent:@""];
+		[detachMenuItem setTarget:self];
+		
+		NSMenu *channelMenu = [[[[self masterController] menuController] channelMenuItem] submenu];
+		// insert the attach menu item after the Join Channel menu item (601 per TXMenuController.h )
+		[channelMenu insertItem:attachMenuItem atIndex:[channelMenu indexOfItemWithTag:601]+1];
+		// insert the detach menu item after the Leave Channel menu item (602 per TXMenuController.h )
+		[channelMenu insertItem:detachMenuItem atIndex:[channelMenu indexOfItemWithTag:602]+1];
+		
+		
+		// Channel View menu
+		attachMenuItem = [[NSMenuItem alloc] initWithTitle:@"Attach Channel (ZNC)" action:@selector(attachChannel:) keyEquivalent:@""];
+		[attachMenuItem setTarget:self];
+		detachMenuItem = [[NSMenuItem alloc] initWithTitle:@"Detach Channel (ZNC)" action:@selector(detachChannel:) keyEquivalent:@""];
+		[detachMenuItem setTarget:self];
+		// get the Channel submenu (5422 per TXMenuController.h )
+		NSMenu *channelViewMenuChannelSubmenu = [[[[[self masterController] menuController] channelViewMenu] itemWithTag:5422] submenu];
+		// insert the attach menu item after the Join Channel menu item (601 per TXMenuController.h )
+		[channelViewMenuChannelSubmenu insertItem:attachMenuItem atIndex:[channelViewMenuChannelSubmenu indexOfItemWithTag:601]+1];
+		// insert the detach menu item after the Leave Channel menu item (602 per TXMenuController.h )
+		[channelViewMenuChannelSubmenu insertItem:detachMenuItem atIndex:[channelViewMenuChannelSubmenu indexOfItemWithTag:602]+1];
+	}];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item; {
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+	if ([u isZNCBouncerConnection] == NO || c == nil || u == nil) {
+		[item setHidden:YES];
+		return NO;
+	}
+	// the rest is very similar to the case 601 and 602 validation in TXMenuController
+	if ([item action] == @selector(attachChannel:)) {
+		if ([c isPrivateMessage] == YES && [c isChannel] == NO && [c isClient] == NO) {
+			[item setHidden:YES];
+			return NO;
+		} else {
+			BOOL condition = (([u isConnected] && [u isLoggedIn]) && ([c isActive] == NO) && ([c isPrivateMessage] == NO && [c isChannel] == YES && [c isClient] == NO));
+			if ([u isConnected] && [u isLoggedIn]) {
+				[item setHidden:(condition == NO)];
+			} else {
+				[item setHidden:NO];
+			}
+			return YES;
+		}
+	} else if ([item action] == @selector(detachChannel:)) {
+		if ([c isPrivateMessage] == YES && [c isChannel] == NO && [c isClient] == NO) {
+			[item setHidden:YES];
+			return NO;
+		} else {
+			[item setHidden:([c isActive] == NO)];
+			return YES;
+		}
+	}
+	return NO;
+}
+
+- (IBAction)attachChannel:(id)sender {
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+	//conditions are very similar to joinChannel: in TXMenuController.m
+	if ((u == nil || c == nil) || ([c isPrivateMessage] == YES || [c isClient] == YES) || ([c isActive]) || ([u isConnected] == NO && [u isLoggedIn] == NO) || ([u isZNCBouncerConnection] == NO)) {
+		return;
+	}
+	[self performBlockOnMainThread:^{
+		[u sendCommand:@"ATTACH"];
+	}];
+	return;
+}
+
+- (IBAction)detachChannel:(id)sender {
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+	// conditions are very similar to leaveChannel: in TXMenuController.m
+	if ((u == nil || c == nil) || ([c isActive] == NO) || ([u isConnected] == NO && [u isLoggedIn] == NO) || ([u isZNCBouncerConnection] == NO)) {
+		return;
+	}
+	if ([c isPrivateMessage] == NO && [c isChannel] == YES && [c isClient] == NO) {
+		[self performBlockOnMainThread:^{
+			[u sendCommand:@"DETACH"];
+			return;
+		}];
+	} else {
+		// not sure how we even got here, since c is not a channel
+		NSLog(@"tried to detach something that is not a channel");
+		return;
+	}
+	return;
+}
 - (void)didReceiveServerInputOnClient:(IRCClient *)client
 					senderInformation:(NSDictionary *)senderDict
 				   messageInformation:(NSDictionary *)messageDict
