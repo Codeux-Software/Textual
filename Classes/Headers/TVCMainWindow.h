@@ -63,6 +63,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 @property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, nweak) IBOutlet NSView *titlebarAccessoryView;
 @property (nonatomic, nweak) IBOutlet NSTitlebarAccessoryViewController *titlebarAccessoryViewController;
 @property (nonatomic, strong) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
 @property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
