@@ -49,7 +49,7 @@
 		[attachMenuItem setTarget:self];
 		NSMenuItem* detachMenuItem = [[NSMenuItem alloc] initWithTitle:@"Detach Channel (ZNC)" action:@selector(detachChannel:) keyEquivalent:@""];
 		[detachMenuItem setTarget:self];
-		
+		// get the main channel menu
 		NSMenu *channelMenu = [[[[self masterController] menuController] channelMenuItem] submenu];
 		// insert the attach menu item after the Join Channel menu item (601 per TXMenuController.h )
 		[channelMenu insertItem:attachMenuItem atIndex:[channelMenu indexOfItemWithTag:601]+1];
@@ -68,6 +68,18 @@
 		[channelViewMenuChannelSubmenu insertItem:attachMenuItem atIndex:[channelViewMenuChannelSubmenu indexOfItemWithTag:601]+1];
 		// insert the detach menu item after the Leave Channel menu item (602 per TXMenuController.h )
 		[channelViewMenuChannelSubmenu insertItem:detachMenuItem atIndex:[channelViewMenuChannelSubmenu indexOfItemWithTag:602]+1];
+	}];
+}
+
+- (void)pluginWillBeUnloadedFromMemory {
+	[self performBlockOnMainThread:^{
+		NSMenu *channelMenu = [[[[self masterController] menuController] channelMenuItem] submenu];
+		[channelMenu removeItemAtIndex:[channelMenu indexOfItemWithTarget:self andAction:@selector(attachChannel:)]];
+		[channelMenu removeItemAtIndex:[channelMenu indexOfItemWithTarget:self andAction:@selector(detachChannel:)]];
+		
+		NSMenu *channelViewMenuChannelSubmenu = [[[[[self masterController] menuController] channelViewMenu] itemWithTag:5422] submenu];
+		[channelViewMenuChannelSubmenu removeItemAtIndex:[channelViewMenuChannelSubmenu indexOfItemWithTarget:self andAction:@selector(attachChannel:)]];
+		[channelViewMenuChannelSubmenu removeItemAtIndex:[channelViewMenuChannelSubmenu indexOfItemWithTarget:self andAction:@selector(detachChannel:)]];
 	}];
 }
 
