@@ -1068,9 +1068,37 @@
 - (void)addAccessoryViewsToTitlebar
 {
 	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		[self.titlebarAccessoryViewController setLayoutAttribute:NSLayoutAttributeRight];
+		NSTitlebarAccessoryViewController *accessoryView = [self titlebarAccessoryViewController];
 
-		[self addTitlebarAccessoryViewController:self.titlebarAccessoryViewController];
+		[accessoryView setLayoutAttribute:NSLayoutAttributeRight];
+
+		[self addTitlebarAccessoryViewController:accessoryView];
+	} else {
+		NSView *themeFrame = [[self contentView] superview];
+
+		NSView *accessoryView = [self titlebarAccessoryView];
+
+		[themeFrame addSubview:accessoryView];
+
+		NSLayoutConstraint *topConstraint =
+		[NSLayoutConstraint constraintWithItem:accessoryView
+									 attribute:NSLayoutAttributeTop
+									 relatedBy:NSLayoutRelationEqual
+										toItem:themeFrame
+									 attribute:NSLayoutAttributeTop
+									multiplier:1
+									  constant:0];
+
+		NSLayoutConstraint *rightConstraint =
+		[NSLayoutConstraint constraintWithItem:accessoryView
+									 attribute:NSLayoutAttributeTrailing
+									 relatedBy:NSLayoutRelationEqual
+										toItem:themeFrame
+									 attribute:NSLayoutAttributeTrailing
+									multiplier:1
+									  constant:0];
+
+		[themeFrame addConstraints:@[topConstraint, rightConstraint]];
 	}
 }
 
@@ -1088,12 +1116,10 @@
 	IRCChannel *c = self.selectedChannel;
 
 	/* Update accessory view. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-		if (u) {
-			[[self.titlebarAccessoryViewController view] setHidden:([u connectionIsSecured] == NO)];
-		} else {
-			[[self.titlebarAccessoryViewController view] setHidden:YES];
-		}
+	if (u) {
+		[self.titlebarAccessoryView setHidden:([u connectionIsSecured] == NO)];
+	} else {
+		[self.titlebarAccessoryView setHidden:YES];
 	}
 
 	/* Set default window title if there is none. */
