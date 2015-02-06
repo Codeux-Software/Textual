@@ -17,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <rect key="contentRect" x="957" y="539" width="800" height="477"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
             <view key="contentView" wantsLayer="YES" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="477"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -589,9 +589,10 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="mainMenuProxy" destination="U6M-jc-NbT" id="QeA-Xy-1ah"/>
                 <outlet property="memberList" destination="wUC-XW-0WV" id="kW1-Mr-P02"/>
                 <outlet property="serverList" destination="MLD-Aa-PLM" id="SZb-p4-bEc"/>
+                <outlet property="titlebarAccessoryView" destination="asp-kn-ubA" id="M0x-e3-Mna"/>
                 <outlet property="titlebarAccessoryViewController" destination="Yr8-XA-FFO" id="3cU-yb-0Yx"/>
             </connections>
-            <point key="canvasLocation" x="3837" y="1088.5"/>
+            <point key="canvasLocation" x="4356" y="1054.5"/>
         </window>
         <customView id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="407" height="134"/>
@@ -1558,12 +1559,11 @@ There are no other limits. What you see, is what you get.</string>
             </connections>
         </customObject>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
-        <customView id="asp-kn-ubA">
-            <rect key="frame" x="0.0" y="0.0" width="42" height="23"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="asp-kn-ubA">
+            <rect key="frame" x="0.0" y="0.0" width="103" height="20"/>
             <subviews>
-                <button toolTip="This connection is secured." verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS">
-                    <rect key="frame" x="20" y="3" width="19" height="18"/>
+                <button toolTip="This connection is secured." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS">
+                    <rect key="frame" x="80" y="-1" width="20" height="19"/>
                     <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSLockLockedTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HaN-Sj-wDl">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -1573,22 +1573,17 @@ There are no other limits. What you see, is what you get.</string>
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="4129" y="624.5"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="eFh-15-nxS" secondAttribute="trailing" constant="3" id="LYG-z7-Hwn"/>
+                <constraint firstItem="eFh-15-nxS" firstAttribute="top" secondItem="asp-kn-ubA" secondAttribute="top" constant="2" id="MbB-ck-7Wh"/>
+            </constraints>
+            <point key="canvasLocation" x="3889.5" y="1156"/>
         </customView>
         <viewController id="Yr8-XA-FFO" customClass="NSTitlebarAccessoryViewController">
             <connections>
                 <outlet property="view" destination="asp-kn-ubA" id="6kH-ZT-LxG"/>
             </connections>
         </viewController>
-        <button verticalHuggingPriority="750" id="qfE-xE-HxR">
-            <rect key="frame" x="0.0" y="0.0" width="116" height="17"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <buttonCell key="cell" type="recessed" title="Recessed Button" bezelStyle="recessed" alignment="center" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MG7-bg-18p">
-                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
-                <font key="font" metaFont="systemBold" size="12"/>
-            </buttonCell>
-            <point key="canvasLocation" x="4265" y="743"/>
-        </button>
     </objects>
     <resources>
         <image name="FormattingColor_0" width="16" height="16"/>
