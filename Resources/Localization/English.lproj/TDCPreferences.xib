@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
@@ -317,7 +317,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1505.5" y="352"/>
+            <point key="canvasLocation" x="1642.5" y="353"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -447,7 +447,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="833.5" y="-546"/>
+            <point key="canvasLocation" x="746.5" y="-435"/>
         </customView>
         <customView id="Jdv-gk-kj9" userLabel="Highlights">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -689,6 +689,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
+            <point key="canvasLocation" x="360.5" y="-181"/>
         </customView>
         <customView id="09H-hp-iIC" userLabel="Alerts">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -926,9 +927,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button id="aBI-aO-f4v">
-                    <rect key="frame" x="56" y="307" width="186" height="18"/>
+                    <rect key="frame" x="56" y="307" width="227" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Show linked images inline" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hAr-eA-GcX">
+                    <buttonCell key="cell" type="check" title="Show linked images inline with chat" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="hAr-eA-GcX">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -1181,7 +1182,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="977.5" y="-533"/>
+            <point key="canvasLocation" x="936.5" y="-565"/>
         </customView>
         <customView id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -1334,7 +1335,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1424,7 +1425,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1786,7 +1787,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </tabViewItems>
                 </tabView>
             </subviews>
-            <point key="canvasLocation" x="133.5" y="-1369"/>
+            <point key="canvasLocation" x="178.5" y="-1081"/>
         </customView>
         <customView id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -1932,7 +1933,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="428.5" y="-895"/>
+            <point key="canvasLocation" x="314.5" y="-626"/>
         </customView>
         <customView id="Pkr-Na-yb0" userLabel="IRCop Messages">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2023,7 +2024,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="403.5" y="-794"/>
+            <point key="canvasLocation" x="241.5" y="-575"/>
         </customView>
         <customView id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2217,15 +2218,15 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <popUpButton verticalHuggingPriority="750" id="doe-fL-WAB">
                     <rect key="frame" x="190" y="253" width="242" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="*!*@hostmask" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pb2-SP-miv" id="wVg-8i-HY5">
+                    <popUpButtonCell key="cell" type="push" title="nickname!username@address" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="qeE-pR-c4L" id="wVg-8i-HY5">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                         <menu key="menu" title="OtherViews" id="UJE-9X-azF">
                             <items>
-                                <menuItem title="*!*@hostmask" state="on" id="pb2-SP-miv"/>
-                                <menuItem title="*!ident@hostmask" id="Xfr-mW-SrH"/>
-                                <menuItem title="nickname!*@hostmask" id="Gbn-5e-b0B"/>
-                                <menuItem title="nickname!username@hostmask" id="qeE-pR-c4L"/>
+                                <menuItem title="*!*@address" id="pb2-SP-miv"/>
+                                <menuItem title="*!ident@address" id="Xfr-mW-SrH"/>
+                                <menuItem title="nickname!*@address" id="Gbn-5e-b0B"/>
+                                <menuItem title="nickname!username@address" state="on" id="qeE-pR-c4L"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -2235,9 +2236,9 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="kWh-2T-Yta">
-                    <rect key="frame" x="68" y="221" width="357" height="26"/>
+                    <rect key="frame" x="68" y="219" width="357" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When used in the context of a hostmask, an asterisk (*) represents a wildcard character that is matched by any possible value. " id="lyl-DA-xkL">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2259,6 +2260,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="634.5" y="-2971"/>
         </customView>
         <customView id="e8Q-5b-yYH" userLabel="Experimtnal Settings">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -2343,7 +2345,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" They are presented here because enough feedback has yet to be received about them to make them an official features.">
+                                    <fragment content=" They are presented here because enough feedback has yet to be received about them to make them an official feature.">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -2572,7 +2574,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <textField verticalHuggingPriority="750" id="lQy-BU-bub">
                     <rect key="frame" x="73" y="51" width="423" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the command key (⌘) during selection disables option temporarily" id="RLT-k4-fiT">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Holding the option key (⌥) during selection disables option temporarily" id="RLT-k4-fiT">
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -2622,7 +2624,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="761.5" y="-2550"/>
+            <point key="canvasLocation" x="584.5" y="-2668"/>
         </customView>
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
             <rect key="frame" x="0.0" y="1" width="567" height="476"/>
@@ -3044,7 +3046,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="1142.5" y="312"/>
+            <point key="canvasLocation" x="1014.5" y="273"/>
         </customView>
         <customView id="u96-CK-dYE" userLabel="Interface">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3708,7 +3710,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="365.5" y="-4054"/>
+            <point key="canvasLocation" x="367.5" y="-4152"/>
         </customView>
         <customView id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3931,7 +3933,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </subviews>
                 </customView>
             </subviews>
-            <point key="canvasLocation" x="427.5" y="-4552"/>
+            <point key="canvasLocation" x="333.5" y="-4425"/>
         </customView>
         <customView id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3971,7 +3973,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="268.5" y="-4621"/>
+            <point key="canvasLocation" x="386.5" y="-4396"/>
         </customView>
     </objects>
     <resources>

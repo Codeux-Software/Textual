@@ -157,7 +157,7 @@
 
 "TDCPreferencesController[1018][1]" = "Defaults";
 "TDCPreferencesController[1018][2]" = "Identity";
-"TDCPreferencesController[1018][3]" = "IRCop Messages";
+"TDCPreferencesController[1018][3]" = "IRC Operator";
 
 "TDCPreferencesController[1019][1]" = "Input Controls";
 "TDCPreferencesController[1019][2]" = "Keyboard & Mouse";
