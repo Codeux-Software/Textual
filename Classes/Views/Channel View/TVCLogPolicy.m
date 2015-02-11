@@ -53,8 +53,12 @@
 	NSAssertReturn([TPCPreferences copyOnSelect]);
 	
 	NSEvent *currentEvent = [NSApp currentEvent];
-	
-	if (([currentEvent modifierFlags] & NSCommandKeyMask) == NSCommandKeyMask) {
+
+	NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+	if (flags == NSAlternateKeyMask ||
+		flags == NSCommandKeyMask)
+	{
 		return;
 	}
 	
