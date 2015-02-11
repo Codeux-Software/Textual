@@ -240,7 +240,7 @@
 		
 		[self.normalLeavingCommentField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.normalLeavingCommentField setStringValueIsInvalidOnEmpty:YES];
+		[self.normalLeavingCommentField setStringValueIsInvalidOnEmpty:NO];
 		[self.normalLeavingCommentField setStringValueIsTrimmed:YES];
 		[self.normalLeavingCommentField setStringValueUsesOnlyFirstToken:NO];
 		
@@ -257,7 +257,7 @@
 		
 		[self.sleepModeQuitMessageField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.sleepModeQuitMessageField setStringValueIsInvalidOnEmpty:YES];
+		[self.sleepModeQuitMessageField setStringValueIsInvalidOnEmpty:NO];
 		[self.sleepModeQuitMessageField setStringValueIsTrimmed:YES];
 		[self.sleepModeQuitMessageField setStringValueUsesOnlyFirstToken:NO];
 		
