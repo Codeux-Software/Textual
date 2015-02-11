@@ -232,7 +232,9 @@
 
 			BOOL prefersIPv6 = [_serverCurrentConfig connectionPrefersIPv6];
 
-			if ([NSEvent modifierFlags] & NSShiftKeyMask) {
+			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+			if (flags == NSAlternateKeyMask) {
 				if (prefersIPv6) {
 					prefersIPv6 = NO;
 
