@@ -46,6 +46,8 @@
 // Originating URL: <http://www.makebetterthings.com/iphone/how-to-get-md5-and-sha1-in-objective-c-ios-sdk/>
 //
 
+#define _useStrictHostmaskUsernameTypeChecking		0
+
 #import "TextualApplication.h"
 
 #import <CommonCrypto/CommonDigest.h>
@@ -335,20 +337,24 @@
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address
 {
 	/* Gather basic information. */
-	NSInteger bang1pos = [self stringPosition:@"!"];
-	NSInteger bang2pos = [self stringPosition:@"@"];
 
-	NSAssertReturnR((bang1pos >= 0), NO);
-	NSAssertReturnR((bang2pos >= 0), NO);
-	NSAssertReturnR((bang2pos > bang1pos), NO);
+	/* Find first ! starting from left side of string. */
+	NSRange bang1pos = [self rangeOfString:@"!" options:0];
+
+	/* Find first @ starting from the right side of string. */
+	NSRange bang2pos = [self rangeOfString:@"@" options:NSBackwardsSearch];
+
+	NSAssertReturnR((bang1pos.location >= 0), NO);
+	NSAssertReturnR((bang2pos.location >= 0), NO);
+	NSAssertReturnR((bang2pos.location > bang1pos.location), NO);
 
 	/* Bind sections of the host. */
-	NSString *nicknameInt = [self substringToIndex:bang1pos];
+	NSString *nicknameInt = [self substringToIndex:bang1pos.location];
 
-	NSString *usernameInt = [self substringWithRange:NSMakeRange((bang1pos + 1),
-																 (bang2pos - (bang1pos + 1)))];
+	NSString *usernameInt = [self substringWithRange:NSMakeRange((bang1pos.location + 1),
+																 (bang2pos.location - (bang1pos.location + 1)))];
 
-	NSString *addressInt = [self substringAfterIndex:bang2pos];
+	NSString *addressInt = [self substringAfterIndex:bang2pos.location];
 	
 	/* Perform basic validation. */
 	NSAssertReturnR([nicknameInt isHostmaskNickname], NO);
@@ -385,21 +391,37 @@
 
 - (BOOL)isHostmaskUsername
 {
+#if _useStrictHostmaskUsernameTypeChecking == 1
 	NSString *bob = self;
 
 	if ([bob hasPrefix:@"~"]) {
 		bob = [bob substringFromIndex:1];
 	}
 
-	if ([bob containsCharacters:@"!@"]) {
-		return NO;
+	static NSCharacterSet *_badChars = nil;
+
+	if (_badChars == nil) {
+		NSMutableCharacterSet *characters = [NSMutableCharacterSet characterSetWithRange:NSMakeRange(1, 127)];
+
+		[characters removeCharactersInRange:NSMakeRange(32, 1)]; // Remove SPACE
+		[characters removeCharactersInRange:NSMakeRange(13, 1)]; // Remove CR
+		[characters removeCharactersInRange:NSMakeRange(10, 1)]; // Remove LF
+		
+		[characters invert];
+
+		_badChars = [characters copy];
 	}
 
-	if ([bob containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]) {
+	NSRange rr = [bob rangeOfCharacterFromSet:_badChars];
+
+	if (NSDissimilarObjects(rr.location, NSNotFound)) {
 		return NO;
 	}
-
-	return ([bob length] <= TXMaximumIRCUsernameLength);
+#else
+	return ([self length] > 0 &&
+			[self length] <= TXMaximumIRCUsernameLength &&
+			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
+#endif
 }
 
 - (BOOL)isHostmaskNickname
