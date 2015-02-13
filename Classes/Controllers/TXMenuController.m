@@ -105,46 +105,38 @@
 	[self.fileTransferController clearCachedIPAddress];
 }
 
-- (void)validateChannelMenuSubmenus:(NSMenuItem *)item
-{
-	IRCChannel *c = [mainWindow() selectedChannel];
-
-#define _channelMenuSeparatorGlobalMenuTag			937
-#define _channelMenuSeparatorContextMenuTag			936
-#define _channelSubmenuMenuTag						5422
-#define _channelSubmenuLogsMenuTag					542
-	
-	NSMenuItem *separator1 = [[item menu] itemWithTag:_channelMenuSeparatorContextMenuTag];
-	NSMenuItem *separator2 = [[item menu] itemWithTag:_channelMenuSeparatorGlobalMenuTag];
-	NSMenuItem *channelMenu = [[item menu] itemWithTag:_channelSubmenuMenuTag];
-
-	NSMenuItem *logMenuItem = [[channelMenu submenu] itemWithTag:_channelSubmenuLogsMenuTag];
-
-	if (_isChannel) {
-		[separator1 setHidden:NO];
-		[separator2 setHidden:NO];
-		
-		[channelMenu setHidden:NO];
-	} else {
-		[separator1 setHidden:(c.isPrivateMessage == NO)];
-		[separator2 setHidden:(c.isPrivateMessage == NO)];
-		
-		[channelMenu setHidden:YES];
-	}
-
-	[logMenuItem setEnabled:[TPCPreferences logToDiskIsEnabled]];
-	
-#undef _channelMenuSeparatorGlobalMenuTag
-#undef _channelMenuSeparatorContextMenuTag
-#undef _channelSubmenuMenuTag
-#undef _channelSubmenuLogsMenuTag
-}
-
 - (BOOL)changeConditionInSheet:(BOOL)condition
 {
 	TVCMainWindowNegateActionWithAttachedSheetR(NO);
 
 	return condition;
+}
+
+- (void)mainWindowSelectionDidChange
+{
+	[self forceAllChildrenElementsOfMenuToValidate:[self.channelMenuItem menu] recursively:NO];
+}
+
+- (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
+{
+	[self forceAllChildrenElementsOfMenuToValidate:menu recursively:YES];
+}
+
+- (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu recursively:(BOOL)recursively
+{
+	for (NSMenuItem *item in [menu itemArray]) {
+		if ([item target]) {
+			if ([[item target] respondsToSelector:@selector(validateMenuItem:)]) {
+				[[item target] performSelector:@selector(validateMenuItem:) withObject:item];
+			}
+		}
+
+		if (recursively) {
+			if ([item hasSubmenu]) {
+				[self forceAllChildrenElementsOfMenuToValidate:[item submenu]];
+			}
+		}
+	}
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
@@ -182,7 +174,6 @@
 		case 50012: // "Move Forward"
 		case 50013: // "Move Backward"
 		case 521: // "Add Server…"
-		case 542: // "Logs"
 		case 5675: // "Connect to Help Channel"
 		case 5676: // "Connect to Testing Channel"
 		case 6666: // "Disable All Notification Sounds"
@@ -214,14 +205,41 @@
 		}
 		case 331: // "Search on Google"
 		{
-			[self validateChannelMenuSubmenus:item];
-			
 			TVCLogView *web = [self currentWebView];
 
 			PointerIsEmptyAssertReturn(web, NO);
 			
 			return _disableInSheet([web hasSelection]);
 			
+			break;
+		}
+		case 542: // "Logs"
+		{
+			BOOL condition = [TPCPreferences logToDiskIsEnabled];
+
+			return condition;
+
+			break;
+		}
+		case 5422: // "Channel Properties"
+		{
+			BOOL condition = _isChannel;
+
+			[item setHidden:(condition == NO)];
+
+			return _disableInSheet(condition);
+
+			break;
+		}
+		case 937: // --
+		case 936: // --
+		{
+			BOOL condition = _isClient;
+
+			[item setHidden:condition];
+
+			return YES;
+
 			break;
 		}
 		case 501: // "Connect"
@@ -312,8 +330,6 @@
 		}
 		case 601: // "Join Channel"
 		{
-			[self validateChannelMenuSubmenus:item];
-			
 			if (_isQuery) {
 				[item setHidden:YES];
 				
@@ -1048,6 +1064,11 @@
 
 #pragma mark -
 #pragma mark Menu Item Actions
+
+- (void)emptyAction:(id)sender
+{
+	;
+}
 
 - (void)paste:(id)sender
 {

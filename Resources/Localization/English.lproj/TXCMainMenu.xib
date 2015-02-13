@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -350,6 +350,9 @@ CA
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="937" id="307">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                <connections>
+                                    <action selector="emptyAction:" target="267" id="qlB-jA-6W9"/>
+                                </connections>
                             </menuItem>
                             <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1515">
                                 <connections>
@@ -432,6 +435,9 @@ CA
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <action selector="emptyAction:" target="267" id="CGk-8u-95l"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
@@ -919,7 +925,7 @@ CQ
         <customObject id="267" userLabel="MenuController" customClass="TXMenuController">
             <connections>
                 <outlet property="addServerMenu" destination="367" id="4ov-28-L9b"/>
-                <outlet property="channelMenuItem" destination="276" id="RJQ-1j-gAs"/>
+                <outlet property="channelMenuItem" destination="276" id="Gol-do-8ta"/>
                 <outlet property="channelViewMenu" destination="374" id="gt4-AW-DbM"/>
                 <outlet property="closeWindowMenuItem" destination="1770" id="fJx-2N-mHr"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
@@ -1204,7 +1210,7 @@ CA
                             </menuItem>
                             <menuItem title="Channel Properties" tag="5422" id="1885">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Channel Properties" autoenablesItems="NO" id="1886">
+                                <menu key="submenu" title="Channel Properties" id="1886">
                                     <items>
                                         <menuItem title="Logs" tag="542" keyEquivalent="L" id="1892">
                                             <connections>
@@ -1278,9 +1284,15 @@ CA
                                         </menuItem>
                                     </items>
                                 </menu>
+                                <connections>
+                                    <action selector="emptyAction:" target="267" id="m0u-Pa-HS6"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
+                    <connections>
+                        <action selector="emptyAction:" target="267" id="7El-Wq-eNG"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1492">
                     <connections>
@@ -1288,7 +1300,7 @@ CA
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="754.5" y="325.5"/>
+            <point key="canvasLocation" x="196.5" y="628.5"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>
