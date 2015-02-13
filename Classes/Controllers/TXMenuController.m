@@ -300,7 +300,7 @@
 		case 590: // "Address Book"
 		case 591: // "Ignore List"
 		{
-			return _disableInSheet(PointerIsNotEmpty(u));
+			return _disableInSheet(_noClient == NO);
 			
 			break;
 		}
@@ -355,7 +355,7 @@
 			} else {
 				[item setHidden:NO];
 				
-				return _disableInSheet(PointerIsNotEmpty(u));
+				return _disableInSheet(_noClient == NO);
 			}
 			
 			break;
@@ -376,7 +376,7 @@
 		}
 		case 691: // "Add Channel…" — Server Menu
 		{
-			return _disableInSheet(PointerIsNotEmpty(u));
+			return _disableInSheet(_noClient == NO);
 			
 			break;
 		}
