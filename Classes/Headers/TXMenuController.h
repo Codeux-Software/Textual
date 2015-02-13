@@ -193,6 +193,7 @@
 - (void)closeWindow:(id)sender;
 - (void)copyLogAsHtml:(id)sender;
 
+- (void)mainWindowSelectionDidChange;
 - (void)populateNavgiationChannelList;
 
 - (IBAction)toggleMainWindowAppearance:(id)sender;
@@ -314,6 +315,8 @@
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
 
 - (IBAction)simulateCrash:(id)sender;
+
+- (IBAction)emptyAction:(id)sender TEXTUAL_DEPRECATED("Do not target this method");
 @end
 
 @interface TXMenuControllerMainWindowProxy : NSObject

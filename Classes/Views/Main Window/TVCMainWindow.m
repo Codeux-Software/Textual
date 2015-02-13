@@ -1669,6 +1669,8 @@
 	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
 	
 	/* Finish up. */
+	[menuController() mainWindowSelectionDidChange];
+	
 	[TVCDockIcon updateDockIcon];
 	
 	[self updateTitle];
