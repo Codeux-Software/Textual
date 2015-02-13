@@ -226,6 +226,10 @@
 		}
 		case 501: // "Connect"
 		{
+			if (_noClient) {
+				return NO;
+			}
+
 			BOOL condition = (_connected || [u isConnecting]);
 			
 			[item setHidden:condition];
