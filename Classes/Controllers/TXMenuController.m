@@ -192,6 +192,8 @@
 		case 51065: // "Toggle Visbility of Server List"
 		case 64611: // "Channel List…"
 		case 52694: // "Send file…"
+		case 504910 ... 504912: // User, right click menu, + mode changes
+		case 504810 ... 504812: // User, right click menu, - mode changes
 		{
 			return _disableInSheet(YES);
 
@@ -234,9 +236,9 @@
 		case 937: // --
 		case 936: // --
 		{
-			BOOL condition = _isClient;
+			BOOL condition = (_isChannel || _isQuery);
 
-			[item setHidden:condition];
+			[item setHidden:(condition == NO)];
 
 			return YES;
 
@@ -520,8 +522,13 @@
 			
 			break;
         }
-		case 504910 ... 504912: // User, right click menu, + mode changes
-		case 504810 ... 504812: // User, right click menu, - mode changes
+		case 504813: // "All Modes Given"
+		{
+			return NO;
+
+			break;
+		}
+		case 504913: // "All Modes Taken"
 		{
 #define _userControlsMenuAllModesTakenMenuTag		504813
 #define _userControlsMenuAllModesGivenMenuTag		504913
@@ -533,91 +540,51 @@
 #define _userControlsMenuTakeModeOMenuTag			504810
 #define _userControlsMenuTakeModeHMenuTag			504811
 #define _userControlsMenuTakeModeVMenuTag			504812
-			
-			NSMenuItem *allModesTaken = [[item menu] itemWithTag:_userControlsMenuAllModesTakenMenuTag];
-			NSMenuItem *allModesGiven = [[item menu] itemWithTag:_userControlsMenuAllModesGivenMenuTag];
-			
+
+#define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
+
 			NSArray *nicknames = [self selectedMembers:nil];
-			
-			if (NSObjectIsEmpty(nicknames) || [nicknames count] > 1) {
-				[item setHidden:NO];
-				
-				[allModesGiven setHidden:YES];
-				[allModesTaken setHidden:YES];
-				
-				return _disableInSheet(YES);
-			} else {
+
+			if ([nicknames count] == 1) {
 				IRCUser *m = nicknames[0];
-				
-				switch (tag) {
-					case _userControlsMenuGiveModeOMenuTag:
-					{
-						[item setHidden:[m o]];
-						
-						break;
-					}
-					case _userControlsMenuGiveModeHMenuTag:
-					{
-						[item setHidden:[m h]];
-						
-						break;
-					}
-					case _userControlsMenuGiveModeVMenuTag:
-					{
-						[item setHidden:[m v]];
-						
-						break;
-					}
-					case _userControlsMenuTakeModeOMenuTag:
-					{
-						[item setHidden:([m o] == NO)];
-						
-						break;
-					}
-					case _userControlsMenuTakeModeHMenuTag:
-					{
-						[item setHidden:([m h] == NO)];
-						
-						break;
-					}
-					case _userControlsMenuTakeModeVMenuTag:
-					{
-						[item setHidden:([m v] == NO)];
-						
-						break;
-					}
-					default:
-					{
-						break;
-					}
-				}
+
+				_ui(_userControlsMenuGiveModeOMenuTag, [m o])
+				_ui(_userControlsMenuGiveModeVMenuTag, [m v])
+				_ui(_userControlsMenuTakeModeOMenuTag, ([m o] == NO))
+				_ui(_userControlsMenuTakeModeVMenuTag, ([m v] == NO))
 
 				BOOL halfOpModeSupported = [[u supportInfo] modeIsSupportedUserPrefix:@"h"];
 
-				if (tag == _userControlsMenuTakeModeHMenuTag ||
-					tag == _userControlsMenuGiveModeHMenuTag)
-				{
-					/* Do not provide halfop as option on servers that do not use it. */
-
-					if (halfOpModeSupported == NO) {
-						[item setHidden:YES];
-					}
+				if (halfOpModeSupported == NO) {
+					_ui(_userControlsMenuGiveModeHMenuTag, YES)
+					_ui(_userControlsMenuTakeModeHMenuTag, YES)
+				} else {
+					_ui(_userControlsMenuGiveModeHMenuTag,  [m h])
+					_ui(_userControlsMenuTakeModeHMenuTag, ([m h] == NO))
 				}
 				
 				BOOL hideTakeSepItem = ([m o] == NO  || [m h] == NO  || [m v] == NO);
 				BOOL hideGiveSepItem = ([m o] == YES || [m h] == YES || [m v] == YES);
-				
-				[allModesGiven setHidden:hideTakeSepItem];
-				[allModesTaken setHidden:hideGiveSepItem];
 
-				if (tag == _userControlsMenuAllModesGivenMenuTag ||
-					tag == _userControlsMenuAllModesTakenMenuTag)
-				{
-					return NO;
-				}
-				
-				return _disableInSheet(YES);
+				_ui(_userControlsMenuAllModesTakenMenuTag, hideGiveSepItem)
+				_ui(_userControlsMenuAllModesGivenMenuTag, hideTakeSepItem)
 			}
+			else
+			{
+				_ui(_userControlsMenuAllModesTakenMenuTag, YES)
+				_ui(_userControlsMenuAllModesGivenMenuTag, YES)
+
+				_ui(_userControlsMenuGiveModeOMenuTag, NO)
+				_ui(_userControlsMenuGiveModeHMenuTag, NO)
+				_ui(_userControlsMenuGiveModeVMenuTag, NO)
+				_ui(_userControlsMenuTakeModeOMenuTag, NO)
+				_ui(_userControlsMenuTakeModeHMenuTag, NO)
+				_ui(_userControlsMenuTakeModeVMenuTag, NO)
+			}
+
+			return NO;
+
+#undef _ui
 
 #undef _userControlsMenuAllModesTakenMenuTag
 #undef _userControlsMenuAllModesGivenMenuTag
@@ -629,6 +596,7 @@
 #undef _userControlsMenuTakeModeOMenuTag
 #undef _userControlsMenuTakeModeHMenuTag
 #undef _userControlsMenuTakeModeVMenuTag
+			
 			break;
 		}
 		case 990002: // "Next Highlight"
