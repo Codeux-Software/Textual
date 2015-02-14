@@ -983,6 +983,9 @@ CQ
                 </menuItem>
                 <menuItem title="All Modes Given" tag="504913" id="2553">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="emptyAction:" target="267" id="SAa-JW-Qdf"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="1315">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
@@ -1004,6 +1007,9 @@ CQ
                 </menuItem>
                 <menuItem title="All Modes Taken" tag="504813" id="2552">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="emptyAction:" target="267" id="CSP-dV-Wbc"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="2295">
                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
