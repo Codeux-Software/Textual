@@ -233,6 +233,7 @@
 
 			break;
 		}
+		case 935: // --
 		case 937: // --
 		case 936: // --
 		{
@@ -418,25 +419,16 @@
 		}
 		case 5421: // "Query Logs"
 		{
-#define _channelMenuUpperSeparatorTag		935
-
-			NSMenuItem *separator1 = [[item menu] itemWithTag:_channelMenuUpperSeparatorTag];
-			
 			if (_isQuery) {
 				[item setHidden:NO];
-				
-				[separator1 setHidden:YES]; 
 				
 				return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
 			} else {
 				[item setHidden:YES];
 				
-				[separator1 setHidden:NO];
-				
 				return NO;
 			}
-
-#undef _channelSubmenuLogsMenuTag
+			
 			break;
 		}
 		case 9631: // "Close Window"
