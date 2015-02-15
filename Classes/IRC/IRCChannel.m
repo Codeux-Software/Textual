@@ -306,7 +306,7 @@
 		[self addMember:m2];
 	}
 
-	self.channelJoinTime = [NSDate epochTime];
+	self.channelJoinTime = [NSDate unixTime];
 }
 
 - (void)deactivate
@@ -462,7 +462,7 @@
 			IRCUser *matchedUser = self.memberListStandardSortedContainer[crmi];
 			
 			/* Maybe remove from tree view. */
-			TXPerformBlockSynchronouslyOnMainQueue(^{
+			XRPerformBlockSynchronouslyOnMainQueue(^{
 				[self _removeMemberFromTreeView:matchedUser];
 			});
 			
@@ -492,11 +492,11 @@
 	
 	__block NSInteger insertedIndex = -1;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		insertedIndex = [self _sortedInsert:user];
 	});
-	
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		/* Update the actual member list view. */
 		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 		
@@ -511,11 +511,11 @@
 {
 	NSObjectIsEmptyAssert(nickname);
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		[self _removeMemberWithNickname:nickname];
 	});
 	
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		if (self.isChannel) {
 			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
 		}
@@ -530,7 +530,7 @@
 	/* Find user. */
 	__block NSInteger insertedIndex = -1;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		IRCUser *user = [self findMember:fromNickname options:NSCaseInsensitiveSearch];
 	
 		if (user) {
@@ -546,7 +546,7 @@
 	});
 	
 	/* Update the actual member list view. */
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 	});
 }
@@ -641,7 +641,7 @@
 	__block NSInteger insertedIndex = -1;
 
 	if ([self memberRequiresRedraw:user comparedTo:newUser]) {
-		TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+		XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 			/* Remove existing user from user list. */
 			[self _removeMember:user];
 			
@@ -653,7 +653,7 @@
 		});
 		
 		/* Update the actual member list view. */
-		TXPerformBlockSynchronouslyOnMainQueue(^{
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 		});
 	}
@@ -663,7 +663,7 @@
 
 - (void)clearMembers
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer removeAllObjects];
 		}
@@ -678,7 +678,7 @@
 {
 	__block NSUInteger memberCount = 0;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			memberCount = [self.memberListStandardSortedContainer count];
 		}
@@ -691,7 +691,7 @@
 {
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			for (IRCUser *user in self.memberListStandardSortedContainer) {
 				[mutlist addObject:user];
@@ -706,7 +706,7 @@
 {
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListLengthSortedContainer) {
 			for (IRCUser *user in self.memberListLengthSortedContainer) {
 				[mutlist addObject:user];
@@ -734,7 +734,7 @@
 {
 	__block BOOL foundUser;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 			
@@ -758,7 +758,7 @@
 {
 	__block IRCUser *foundUser;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 			
@@ -777,7 +777,7 @@
 {
 	__block IRCUser *foundUser;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			foundUser = (self.memberListStandardSortedContainer)[index];
 		}
@@ -809,7 +809,7 @@
 
 - (void)reloadDataForTableViewBySortingMembers
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.memberListStandardSortedContainer) {
 			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
 			

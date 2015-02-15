@@ -196,7 +196,7 @@
 
 - (void)insertBoldCharIntoTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -211,7 +211,7 @@
 
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -226,7 +226,7 @@
 
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -241,7 +241,7 @@
 
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -341,7 +341,7 @@
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -433,7 +433,7 @@
 
 - (void)removeBoldCharFromTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -448,7 +448,7 @@
 
 - (void)removeItalicCharFromTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -463,7 +463,7 @@
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -478,7 +478,7 @@
 
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange
@@ -493,7 +493,7 @@
 
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
-	TXPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
 		NSRange selectedTextRange = [self.textField selectedRange];
 		
 		_returnMethodOnBadRange	

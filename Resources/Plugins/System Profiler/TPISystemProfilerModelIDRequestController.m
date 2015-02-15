@@ -163,7 +163,7 @@
 
 - (void)tearDownInternalObject
 {
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[[TPISystemProfilerModelIDRequestController sharedController] tearDownInternalObject];
 	});
 }

@@ -144,7 +144,7 @@
 {
 	if ((self = [super init])) {
 		/* Load our views. */
-		[RZMainBundle() loadCustomNibNamed:@"TDCServerSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCServerSheet" owner:self topLevelObjects:nil];
 		
 		/* Load the list of available IRC networks. */
 		NSString *slp = [RZMainBundle() pathForResource:@"IRCNetworks" ofType:@"plist"];

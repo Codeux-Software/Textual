@@ -1,5 +1,0 @@
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-
-	#define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-#endif

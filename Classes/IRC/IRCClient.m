@@ -36,6 +36,9 @@
 
  *********************************************************************** */
 
+/* A portion of this source file contains copyrighted work derived from one or more
+ 3rd party, open source projects. The use of this work is hereby acknowledged. */
+
 /* This source file contains work that originated from the Chat Core 
  framework of the Colloquy project. The source in question is in relation
  to the handling of SASL authentication requests. The license of the 
@@ -677,7 +680,7 @@
 		}
 		
 		/* Create entry. */
-		NSArray *entry = @[channel.name, @([NSDate epochTime]), [messageBody attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
+		NSArray *entry = @[channel.name, @([NSDate unixTime]), [messageBody attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
 		
 		/* We insert at head so that latest is always on top. */
 		NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
@@ -723,7 +726,7 @@
 {
 	__block NSInteger channelCount = 0;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			channelCount = [self.channels count];
 		}
@@ -734,7 +737,7 @@
 
 - (void)addChannel:(IRCChannel *)channel
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			if ([channel isChannel] == NO) {
 				[self.channels addObjectWithoutDuplication:channel];
@@ -767,7 +770,7 @@
 
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels insertObject:channel atIndex:pos];
 			
@@ -778,7 +781,7 @@
 
 - (void)removeChannel:(IRCChannel *)channel
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels removeObjectIdenticalTo:channel];
 			
@@ -791,7 +794,7 @@
 {
 	__block NSInteger i = 0;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			i = [self.channels indexOfObject:channel];
 		}
@@ -802,7 +805,7 @@
 
 - (void)selectFirstChannelInChannelList
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			if ([self.channels count] > 0) {
 				[mainWindow() select:self.channels[0]];
@@ -815,7 +818,7 @@
 {
 	__block NSArray *channelList = nil;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			channelList = [NSArray arrayWithArray:self.channels];
 		}
@@ -826,7 +829,7 @@
 
 - (void)setChannelList:(NSArray *)channelList
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.channels) {
 			[self.channels removeAllObjects];
 			
@@ -957,7 +960,7 @@
 	for (NSArray *ruleData in rules) {
 		NSString *ruleRegex = ruleData[0];
 
-		if ([TLORegularExpression string:raw isMatchedByRegex:ruleRegex]) {
+		if ([XRRegularExpression string:raw isMatchedByRegex:ruleRegex]) {
 			BOOL console = [ruleData boolAtIndex:0];
 			BOOL channel = [ruleData boolAtIndex:1];
 			BOOL queries = [ruleData boolAtIndex:2];
@@ -1778,7 +1781,7 @@
 {
 	[self sendCTCPQuery:target
 				command:IRCPrivateCommandIndex("ctcp_ping")
-				   text:[NSString stringWithFormat:@"%f", [NSDate epochTime]]];
+				   text:[NSString stringWithFormat:@"%f", [NSDate unixTime]]];
 }
 
 #pragma mark -
@@ -2609,7 +2612,7 @@
 				
 				[cmd setRawInput:[s string]];
 				
-				[cmd setTimerInterval:([NSDate epochTime] + interval)];
+				[cmd setTimerInterval:([NSDate unixTime] + interval)];
 
 				[self addCommandToCommandQueue:cmd];
 			} else {
@@ -2901,7 +2904,7 @@
 		case 5084: // Command: LAGCHECK
 		case 5045: // Command: MYLAG
 		{
-			self.lastLagCheck = [NSDate epochTime];
+			self.lastLagCheck = [NSDate unixTime];
 
 			if ([uppercaseCommand isEqualIgnoringCase:IRCPublicCommandIndex("mylag")]) {
 				self.lagCheckDestinationChannel = [mainWindow() selectedChannelOn:self];
@@ -3077,7 +3080,7 @@
 
 			for (IRCClient *client in [worldController() clientList]) {
 				for (IRCChannel *channel in [client channelList]) {
-					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:TXWesternAlphabetIncludingUnderscoreDashCharacterSet];
+					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:CSCEF_WesternAlphabetIncludingUnderscoreDashCharacterSet];
 
 					CGFloat score = [name compareWithWord:uncutInput lengthPenaltyWeight:0.1];
 
@@ -3837,7 +3840,7 @@
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError
 {
 	if ([self isTerminating] == NO) {
-		TXPerformBlockAsynchronouslyOnMainQueue(^{
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[self _disconnect];
 			
 			if (self.disconnectCallback) {
@@ -3870,7 +3873,7 @@
 
 	NSString *s = data;
 
-	self.lastMessageReceived = [NSDate epochTime];
+	self.lastMessageReceived = [NSDate unixTime];
 
 	NSObjectIsEmptyAssert(s);
 
@@ -4672,7 +4675,7 @@
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:sendern command:command text:BLS(1118)];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
-			double time = [NSDate epochTime];
+			double time = [NSDate unixTime];
 
 			if (time > self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:[self localNickname]]) {
 				double delta = (time -		self.lastLagCheck);
@@ -4730,7 +4733,7 @@
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
-		double delta = ([NSDate epochTime] - [s doubleValue]);
+		double delta = ([NSDate unixTime] - [s doubleValue]);
 		
 		text = BLS(1146, sendern, command, delta);
 	} else {
@@ -5006,7 +5009,7 @@
 		/* Crude regular expression for matching netsplits. */
 		static NSString *nsrgx = @"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$";
 		
-		if ([TLORegularExpression string:comment isMatchedByRegex:nsrgx]) {
+		if ([XRRegularExpression string:comment isMatchedByRegex:nsrgx]) {
 			comment = BLS(1149, comment);
 		}
 
@@ -7708,7 +7711,7 @@
 
 - (void)executeTextualCmdScript:(NSDictionary *)details
 {
-	TXPerformBlockAsynchronouslyOnQueue([sharedPluginManager() dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([sharedPluginManager() dispatchQueue], ^{
 		[self internalExecuteTextualCmdScript:details];
 	});
 }
@@ -8647,7 +8650,7 @@
 
 - (void)processCommandsInCommandQueue
 {
-	NSTimeInterval now = [NSDate epochTime];
+	NSTimeInterval now = [NSDate unixTime];
 
 	@synchronized(self.commandQueue) {
 		while ([self.commandQueue count]) {
@@ -8673,7 +8676,7 @@
 		if ([self.commandQueue count]) {
 			TLOTimerCommand *m = self.commandQueue[0];
 
-			NSTimeInterval delta = ([m timerInterval] - [NSDate epochTime]);
+			NSTimeInterval delta = ([m timerInterval] - [NSDate unixTime]);
 
 			[self.commandQueueTimer start:delta];
 		} else {

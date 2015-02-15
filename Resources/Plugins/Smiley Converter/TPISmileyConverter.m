@@ -54,7 +54,7 @@
 {
 	/* Load Interface. */
 	[self performBlockOnMainThread:^{
-		[TPIBundleFromClass() loadCustomNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
+		[TPIBundleFromClass() loadNibNamed:@"TPISmileyConverter" owner:self topLevelObjects:nil];
 	}];
 
 	[self maybeBuildConversionTable];

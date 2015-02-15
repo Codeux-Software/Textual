@@ -140,7 +140,7 @@
 	}
 
 	/* Add key to removal array. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		@synchronized([self keysToRemoveNextSync]) {
 			[[self keysToRemoveNextSync] addObject:key];
 		}
@@ -153,7 +153,7 @@
 
 - (void)setupUbiquitousContainerURLPath:(BOOL)isCalledFromInit
 {
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Apple very clearly states not to do call this on the main thread
 		 since it does a lot of work, so we wont… */
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
@@ -220,7 +220,7 @@
 	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
 	
 	/* Perform actual maintenance tasks. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Compare fonts. */
 		BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 		
@@ -262,7 +262,7 @@
 	[self synchronizeToCloud];
 	
 	/* Perform actual maintenance tasks. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Have a theme in the temporary store? */
 		BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 		
@@ -369,7 +369,7 @@
 	}
 	
 	/* Begin work. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Only perform sync under strict conditions. */
 		if ([[self unsavedLocalKeys] count] == 0 &&
 			[[self keysToRemoveNextSync] count] == 0 &&
@@ -542,7 +542,7 @@
 	}
 	
 	/* Perform operation. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
@@ -697,7 +697,7 @@
 
 - (void)resetDataToSync
 {
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		[self setPushAllLocalKeysNextSync:NO];
 		
 		@synchronized([self unsavedLocalKeys]) {
@@ -725,7 +725,7 @@
 
 	/* Downstream syncing will fire this notification so we
 	 check whether the key exists before adding it to our list. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		NSString *changedKey = [[aNote userInfo] objectForKey:@"changedKey"];
 		
 		if (changedKey) {
@@ -799,7 +799,7 @@
 	
 	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
 	
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Do not accept updates during work. */
 		[[self cloudContainerNotificationQuery] disableUpdates];
 		
@@ -1153,7 +1153,7 @@
 	}
 
 	/* Perform work. */
-	TXPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Sync latest changes from disc for the dictionary. */
 		[RZUbiquitousKeyValueStore() synchronize];
 

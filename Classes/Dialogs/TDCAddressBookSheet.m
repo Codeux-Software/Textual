@@ -42,7 +42,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
 
 		[self buildTextFieldValidationBlocks];
 	}

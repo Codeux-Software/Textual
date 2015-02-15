@@ -1295,7 +1295,7 @@
 
 	NSString *newLinenNumber = [self uniquePrintIdentifier];
 	
-	NSString *lineRenderTime = [NSString stringWithDouble:[NSDate epochTime]];
+	NSString *lineRenderTime = [NSString stringWithDouble:[NSDate unixTime]];
 
 	attributes[@"lineNumber"] = newLinenNumber;
 	attributes[@"lineRenderTime"] = lineRenderTime;

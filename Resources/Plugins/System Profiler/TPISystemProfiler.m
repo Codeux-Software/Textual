@@ -65,7 +65,7 @@
 		
 		[RZUserDefaults() registerDefaults:defaults];
 		
-		[TPIBundleFromClass() loadCustomNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
+		[TPIBundleFromClass() loadNibNamed:@"TPISystemProfiler" owner:self topLevelObjects:nil];
 
 		[self maybeRequestModelIDFromApple];
 	}];

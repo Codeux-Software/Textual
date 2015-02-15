@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */; };
+		4CBE7B4B1A91471A008FB230 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B491A91471A008FB230 /* BlowfishEncryption.framework */; };
+		4CBE7B4C1A91471A008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */; };
 		4CD4027016C8CE5700FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4026916C8CC5800FEA686 /* BasicLanguage.strings */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CEE0E8912E09A9800C5096E /* TPI_BlowfishCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE0E8812E09A9800C5096E /* TPI_BlowfishCommands.m */; };
@@ -19,6 +20,8 @@
 		4C68426C16C5B3E10005A59E /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ../../../.tmp/SharedBuildProducts/BlowfishEncryption.framework; sourceTree = "<group>"; };
 		4C69187E16E3275700BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C86B0131748B8A60028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
+		4CBE7B491A91471A008FB230 /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/BlowfishEncryption.framework"; sourceTree = "<group>"; };
+		4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CD4026916C8CC5800FEA686 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CEE0E8712E09A9800C5096E /* TPI_BlowfishCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_BlowfishCommands.h; sourceTree = "<group>"; };
@@ -32,8 +35,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CBE7B4B1A91471A008FB230 /* BlowfishEncryption.framework in Frameworks */,
+				4CBE7B4C1A91471A008FB230 /* CocoaExtensions.framework in Frameworks */,
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
-				4C68426D16C5B3E10005A59E /* BlowfishEncryption.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +58,8 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CBE7B491A91471A008FB230 /* BlowfishEncryption.framework */,
+				4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */,
 				4CD8861E16C09BA60000CF8D /* External Frameworks */,
 				4CD8861D16C09BA00000CF8D /* System Frameworks */,
 			);
@@ -158,7 +164,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Blowfish Key Control Extension" */;
 			compatibilityVersion = "Xcode 3.2";

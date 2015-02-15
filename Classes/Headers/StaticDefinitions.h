@@ -48,15 +48,6 @@
 	#endif
 #endif
 
-/* SDK specific defines. */
-#ifndef NS_DESIGNATED_INITIALIZER
-	#if __has_attribute(objc_designated_initializer)
-		#define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
-	#else
-		#define NS_DESIGNATED_INITIALIZER
-	#endif
-#endif
-
 /* Shortcut defines. */
 #define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
 #define RZAppearaneCurrentController()			[NSAppearance currentAppearance]
@@ -80,53 +71,6 @@
 #define RZUserNotificationCenter()				[NSUserNotificationCenter defaultUserNotificationCenter]
 #define RZWorkspace()							[NSWorkspace sharedWorkspace]
 #define RZWorkspaceNotificationCenter()			[RZWorkspace() notificationCenter]
-
-/* Lazy-man defines. */
-#define PointerIsEmpty(s)						((s) == NULL || (s) == nil)
-#define PointerIsNotEmpty(s)					((s) != NULL && (s) != nil)
-
-#define NSDissimilarObjects(o,n)				((o) != (n))
-
-#define CFSafeRelease(s)						if ((s) != NULL) { CFRelease((s)); }
-
-/* We don't want to always throw an exception, but we still want a way to validate
- input and break a method if it is bad. */
-#define NSAssertReturn(c)						if ((c) == NO) { return; }
-#define NSAssertReturnR(c, r)					if ((c) == NO) { return (r); }
-#define NSAssertReturnLoopContinue(c)			if ((c) == NO) { continue; }
-#define NSAssertReturnLoopBreak(c)				if ((c) == NO) { break; }
-
-/* NSObjectIsEmpty will return YES if the object supplied replies to the method calls
- -length or -count. If it does, then it uses those to determine if they are "empty"
- If an object does not reply to these methods, then they are checked for nil. */
-#define NSObjectIsEmptyAssert(o)				if (NSObjectIsEmpty(o)) { return; }
-#define NSObjectIsEmptyAssertReturn(o, r)		if (NSObjectIsEmpty(o)) { return (r); }
-#define NSObjectIsEmptyAssertLoopContinue(o)	if (NSObjectIsEmpty(o)) { continue; }
-#define NSObjectIsEmptyAssertLoopBreak(o)		if (NSObjectIsEmpty(o)) { break; }
-
-#define NSObjectIsNotEmptyAssert(o)					if (NSObjectIsNotEmpty(o)) { return; }
-#define NSObjectIsNotEmptyAssertReturn(o, r)		if (NSObjectIsNotEmpty(o)) { return (r); }
-#define NSObjectIsNotEmptyAssertLoopContinue(o)		if (NSObjectIsNotEmpty(o)) { continue; }
-#define NSObjectIsNotEmptyAssertLoopBreak(o)		if (NSObjectIsNotEmpty(o)) { break; }
-
-/* PointerIsEmpty will return YES if an object is nil and under no other condititions.
- This call should be used above NSObjectIsEmpty when the nilness of an object is wanted,
- but the actual content is not needed. */
-#define PointerIsEmptyAssert(o)					if (PointerIsEmpty(o)) { return; }
-#define PointerIsEmptyAssertReturn(o, r)		if (PointerIsEmpty(o)) { return (r); }
-#define PointerIsEmptyAssertLoopContinue(o)		if (PointerIsEmpty(o)) { continue; }
-#define PointerIsEmptyAssertLoopBreak(o)		if (PointerIsEmpty(o)) { break; }
-
-#define PointerIsNotEmptyAssert(o)					if (PointerIsNotEmpty(o)) { return; }
-#define PointerIsNotEmptyAssertReturn(o, r)			if (PointerIsNotEmpty(o)) { return (r); }
-#define PointerIsNotEmptyAssertLoopContinue(o)		if (PointerIsNotEmpty(o)) { continue; }
-#define PointerIsNotEmptyAssertLoopBreak(o)			if (PointerIsNotEmpty(o)) { break; }
-
-/* We aren't always sure of the content… */
-#define NSObjectIsKindOfClassAssert(o,c)				if ([(o) isKindOfClass:[c class]] == NO) { return; }
-#define NSObjectIsKindOfClassAssertReturn(o, c, r)		if ([(o) isKindOfClass:[c class]] == NO) { return (r); }
-#define NSObjectIsKindOfClassAssertContinue(o, c)		if ([(o) isKindOfClass:[c class]] == NO) { continue; }
-#define NSObjectIsKindOfClassAssertBreak(o,c)			if ([(o) isKindOfClass:[c class]] == NO) { break; }
 
 /* Misc. */
 #define NSInvertedComparisonResult(c)			((c) * (-1))
@@ -174,8 +118,6 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 /* Standard out logging. */
 /* It is recommended to always use these calls above plain-ol' NSLog. */
-#define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
-
 #ifdef DEBUG
 	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
 #else

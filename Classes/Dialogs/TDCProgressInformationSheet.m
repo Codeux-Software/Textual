@@ -42,7 +42,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCProgressInformationSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCProgressInformationSheet" owner:self topLevelObjects:nil];
 	}
 	
 	return self;

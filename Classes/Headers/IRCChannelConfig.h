@@ -72,11 +72,13 @@ typedef enum IRCChannelType : NSInteger {
 - (void)writeSecretKeyKeychainItemToDisk;
 - (void)writeEncryptionKeyKeychainItemToDisk;
 
+#if 0
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)migrateKeychainItemsToCloud;
 - (void)migrateKeychainItemsFromCloud;
 
 - (void)destroyKeychainsThatExistOnCloud;
+#endif
 #endif
 
 @property (readonly, copy) NSString *temporarySecretKey;

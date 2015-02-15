@@ -59,7 +59,7 @@
 	if (self = [super init]) {
 		self.fileTransfers = [NSMutableArray array];
 		
-		[RZMainBundle() loadCustomNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
 		
 		self.maintenanceTimer = [TLOTimer new];
 		

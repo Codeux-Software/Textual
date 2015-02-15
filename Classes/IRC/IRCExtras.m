@@ -50,7 +50,7 @@
 	NSObjectIsEmptyAssert(location);
 
 	/* Basic input clean up. */
-    location = [location decodeURIFragement];
+	location = [location decodeURIFragment];
 	location = [location trim];
 
 	/* We will scan our input to look for each slash in it.
@@ -61,7 +61,7 @@
 	 is more than three, then our input is already invalid and
 	 we do not want to go any further with it. */
 
-	NSArray *slashMatches = [TLORegularExpression matchesInString:location withRegex:@"([/])"];
+	NSArray *slashMatches = [XRRegularExpression matchesInString:location withRegex:@"([/])"];
 
 	if (NSNumberInRange([slashMatches count], 2, 3) == NO) {
 		return;
@@ -352,7 +352,7 @@
 
 		/* Make sure the port number matches a valid format. If it does,
 		 then we are all good, and done with the port. */
-        if ([TLORegularExpression string:tempStore isMatchedByRegex:@"^([0-9]{1,6})$"]) {
+        if ([XRRegularExpression string:tempStore isMatchedByRegex:@"^([0-9]{1,6})$"]) {
             serverPort = [tempStore integerValue];
         }
     } else {
@@ -361,7 +361,7 @@
         if (NSObjectIsNotEmpty(base)) {
             tempStore = [base getToken];
 
-            if ([TLORegularExpression string:tempStore isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
+            if ([XRRegularExpression string:tempStore isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
                 if ([tempStore hasPrefix:@"+"]) {
                     tempStore = [tempStore substringFromIndex:1];
 

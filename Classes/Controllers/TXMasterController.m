@@ -107,9 +107,9 @@
 		/* We wait until -awakeFromNib to wake the window so that the menu
 		 controller created by the main nib has time to load. */
 		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
-			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
+			[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
 		} else {
-			[RZMainBundle() loadCustomNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
+			[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
 		}
 	}
 }
@@ -283,7 +283,7 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	if ([self queryTerminate]) {
-		TXPerformBlockAsynchronouslyOnMainQueue(^{
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[self performApplicationTerminationStepOne];
 		});
 		

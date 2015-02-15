@@ -73,7 +73,7 @@
 
 - (void)presentNextQueuedEntry
 {
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		/* Gather information. */
 		/* The oldest entry will be at index 0. */
 		NSArray *contextInfo = self.queuedEntries[0];

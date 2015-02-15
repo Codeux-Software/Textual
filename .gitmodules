@@ -1,3 +1,15 @@
 [submodule "Resources/Plugins/Sample Code/Swift Bot"]
 	path = Resources/Plugins/Sample Code/Swift Bot
 	url = https://github.com/Codeux/Textual-Swift-Plugin.git
+[submodule "Frameworks/Auto Hyperlinks"]
+	path = Frameworks/Auto Hyperlinks
+	url = https://github.com/Codeux-Software/Auto-Hyperlinks.git
+[submodule "Frameworks/System Information"]
+	path = Frameworks/System Information
+	url = https://github.com/Codeux-Software/System-Information.git
+[submodule "Frameworks/Cocoa Extensions"]
+	path = Frameworks/Cocoa Extensions
+	url = https://github.com/Codeux-Software/Cocoa-Extensions.git
+[submodule "Frameworks/Blowfish Encryption"]
+	path = Frameworks/Blowfish Encryption
+	url = https://github.com/Codeux-Software/Blowfish-Encryption.git

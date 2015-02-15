@@ -70,7 +70,7 @@
 
 - (NSString *)encryptionKey
 {
-	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
+	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
 													  withItemKind:@"application password"
 													   forUsername:nil
 													   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
@@ -80,7 +80,7 @@
 
 - (NSString *)secretKey
 {
-	NSString *kcPassword = [AGKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
+	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
 													  withItemKind:@"application password"
 													   forUsername:nil
 													   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
@@ -135,7 +135,7 @@
 - (void)writeSecretKeyKeychainItemToDisk
 {
 	if (_secretKey) {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
+		[XRKeychain modifyOrAddKeychainItem:@"Textual (Channel JOIN Key)"
 							   withItemKind:@"application password"
 								forUsername:nil
 							withNewPassword:_secretKey
@@ -148,7 +148,7 @@
 - (void)writeEncryptionKeyKeychainItemToDisk
 {
 	if (_encryptionKey) {
-		[AGKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
+		[XRKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
 							   withItemKind:@"application password"
 								forUsername:nil
 							withNewPassword:_encryptionKey
@@ -158,15 +158,16 @@
 	_encryptionKey = nil;
 }
 
+#if 0
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)migrateKeychainItemsToCloud
 {
-	[AGKeychain migrateKeychainItemToCloud:@"Textual (Blowfish Encryption)"
+	[XRKeychain migrateKeychainItemToCloud:@"Textual (Blowfish Encryption)"
 							  withItemKind:@"application password"
 							   forUsername:nil
 							   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 	
-	[AGKeychain migrateKeychainItemToCloud:@"Textual (Channel JOIN Key)"
+	[XRKeychain migrateKeychainItemToCloud:@"Textual (Channel JOIN Key)"
 							  withItemKind:@"application password"
 							   forUsername:nil
 							   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
@@ -174,12 +175,12 @@
 
 - (void)migrateKeychainItemsFromCloud
 {
-	[AGKeychain migrateKeychainItemFromCloud:@"Textual (Blowfish Encryption)"
+	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Blowfish Encryption)"
 								withItemKind:@"application password"
 								 forUsername:nil
 								 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 	
-	[AGKeychain migrateKeychainItemFromCloud:@"Textual (Channel JOIN Key)"
+	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Channel JOIN Key)"
 								withItemKind:@"application password"
 								 forUsername:nil
 								 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
@@ -187,28 +188,29 @@
 
 - (void)destroyKeychainsThatExistOnCloud
 {
-	[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+	[XRKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]
 						 fromCloud:YES];
 	
-	[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]
 						 fromCloud:YES];
 }
 #endif
+#endif
 
 - (void)destroyKeychains
 {
-	[AGKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
+	[XRKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
 	
-	[AGKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
+	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
 					  withItemKind:@"application password"
 					   forUsername:nil
 					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];

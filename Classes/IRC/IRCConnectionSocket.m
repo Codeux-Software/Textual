@@ -322,7 +322,7 @@
 			break;
 		}
 
-		TXPerformBlockSynchronouslyOnMainQueue(^{
+		XRPerformBlockSynchronouslyOnMainQueue(^{
 			[self tcpClientDidReceiveData:sdata];
 		});
 	}
@@ -335,7 +335,7 @@
 		 time consuming we chose to perform all read actions on a dispatch queue. */
 		/* This behavior is inherited automatically when using the new socket
 		 engine which is pretty much anytime a proxy is not enabled. */
-		TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+		XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 			[self completeReadForData:data];
 		});
 	} else {
@@ -360,7 +360,7 @@
 
 - (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocketWillConnect:sock];
 
 		[self onSocket:sock didConnectToHost:ahost port:aport];
@@ -369,7 +369,7 @@
 
 - (void)socketDidDisconnect:(id)sock withError:(NSError *)err
 {
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocket:sock willDisconnectWithError:err];
 	});
 }
@@ -381,7 +381,7 @@
 
 - (void)socket:(id)sock didWriteDataWithTag:(long)tag
 {
-	TXPerformBlockSynchronouslyOnMainQueue(^{
+	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self onSocket:sock didWriteDataWithTag:tag];
 	});
 }

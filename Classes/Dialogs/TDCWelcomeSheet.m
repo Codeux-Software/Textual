@@ -57,7 +57,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];
 		
 		self.channelList = [NSMutableArray new];
 

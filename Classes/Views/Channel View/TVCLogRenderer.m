@@ -60,6 +60,8 @@ typedef uint32_t attr_t;
 									_rendererBackgroundColorAttribute			\
 								)
 
+#define TXDirtyCGFloatMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
+
 static void resetRange(attr_t *attrBuf, NSInteger start, NSInteger len)
 {
 	attr_t *target = (attrBuf + start);
@@ -414,7 +416,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					if ((i + 1) < length) {
 						c = source[(i + 1)];
 
-						if (TXStringIsBase10Numeric(c)) {
+						if (CSCEF_StringIsBase10Numeric(c)) {
 							++i;
 							
 							foregoundColor = (c - '0');
@@ -422,7 +424,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if ((i + 1) < length) {
 								c = source[(i + 1)];
 								
-								if (TXStringIsBase10Numeric(c)) {
+								if (CSCEF_StringIsBase10Numeric(c)) {
 									++i;
 									
 									foregoundColor = (foregoundColor * 10 + c - '0');
@@ -443,7 +445,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if ((i + 1) < length) {
 								c = source[(i + 1)];
 
-								if (TXStringIsBase10Numeric(c)) {
+								if (CSCEF_StringIsBase10Numeric(c)) {
 									++i;
 
 									backgroundColor = (c - '0');
@@ -451,7 +453,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 									if ((i + 1) < length) {
 										c = source[(i + 1)];
 
-										if (TXStringIsBase10Numeric(c)) {
+										if (CSCEF_StringIsBase10Numeric(c)) {
 											++i;
 
 											backgroundColor = (backgroundColor * 10 + c - '0');
@@ -552,7 +554,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			{
 				NSString *replacementCharacter = [NSString stringWithFormat:@"%C", 0xfffd];
 					
-				body = [TLORegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
+				body = [XRRegularExpression string:body replacedByRegex:@"\\p{InCombining_Diacritical_Marks}" withString:replacementCharacter];
 			}
 		}
 			
@@ -650,7 +652,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if (regexWordMatching) {
 				/* Regular expression keyword matching. */
 				for (NSString *keyword in highlightWords) {
-					NSRange matchRange = [TLORegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
+					NSRange matchRange = [XRRegularExpression string:body rangeOfRegex:keyword withoutCase:YES];
 					
 					if (matchRange.location == NSNotFound) {
 						continue;
@@ -706,13 +708,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if (enabled) {
 								UniChar c = [body characterAtIndex:r.location];
 
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 									NSInteger prev = (r.location - 1);
 
 									if (0 <= prev && prev < length) {
 										UniChar c = [body characterAtIndex:prev];
 
-										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -722,13 +724,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 							if (enabled) {
 								UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 									NSInteger next = NSMaxRange(r);
 
 									if (next < length) {
 										UniChar c = [body characterAtIndex:next];
 
-										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+										if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 											enabled = NO;
 										}
 									}
@@ -775,7 +777,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (0 <= prev && prev < length) {
 					UniChar c = [body characterAtIndex:prev];
 					
-					if (TXStringIsWordLetter(c)) {
+					if (CSCEF_StringIsWordLetter(c)) {
 						break;
 					}
 				}
@@ -785,7 +787,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (next < length) {
 					UniChar c = [body characterAtIndex:next];
 					
-					if (TXStringIsWordLetter(c)) {
+					if (CSCEF_StringIsWordLetter(c)) {
 						break;
 					}
 				}
@@ -824,13 +826,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 						UniChar c = [body characterAtIndex:r.location];
 
-						if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+						if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 							NSInteger prev = (r.location - 1);
 
 							if (0 <= prev && prev < length) {
 								UniChar c = [body characterAtIndex:prev];
 
-								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+								if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 									cleanMatch = NO;
 								}
 							}
@@ -839,13 +841,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						if (cleanMatch) {
 							UniChar c = [body characterAtIndex:(NSMaxRange(r) - 1)];
 
-							if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+							if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 								NSInteger next = NSMaxRange(r);
 
 								if (next < length) {
 									UniChar c = [body characterAtIndex:next];
 
-									if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || TXStringIsBase10Numeric(c)) {
+									if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
 										cleanMatch = NO;
 									}
 								}

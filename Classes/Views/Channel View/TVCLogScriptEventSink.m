@@ -100,7 +100,7 @@
 	
 	BOOL res = NO;
 	
-	NSTimeInterval now = [NSDate epochTime];
+	NSTimeInterval now = [NSDate unixTime];
 	
 	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
 		(self.y - dr) <= cy && cy <= (self.y + dr))

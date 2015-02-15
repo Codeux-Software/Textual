@@ -48,7 +48,7 @@
 - (instancetype)init
 {
     if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightListSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCHighlightListSheet" owner:self topLevelObjects:nil];
     }
     
     return self;

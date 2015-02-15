@@ -238,7 +238,7 @@
 		} else {
 			/* We keep track of the last subview redraw so that we do
 			 not draw too often. Current maximum is 1.0 second. */
-			NSTimeInterval timeDifference = ([NSDate epochTime] - [self lastKeyWindowStateChange]);
+			NSTimeInterval timeDifference = ([NSDate unixTime] - [self lastKeyWindowStateChange]);
 			
 			if (timeDifference > 1.0f) {
 				[self reloadSubviewDrawings];
@@ -249,7 +249,7 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	self.lastKeyWindowStateChange = [NSDate epochTime];
+	self.lastKeyWindowStateChange = [NSDate unixTime];
 	
 	[self resetSelectedItemState];
 
@@ -262,7 +262,7 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-	self.lastKeyWindowStateChange = [NSDate epochTime];
+	self.lastKeyWindowStateChange = [NSDate unixTime];
 
 	[self reloadSubviewDrawings];
 
