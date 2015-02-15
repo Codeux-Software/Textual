@@ -37,14 +37,6 @@
 
 #import "TextualApplication.h"
 
-/* Highest level objects implemented by Textual. */
-
-/* Object state. */
-TEXTUAL_EXTERN BOOL NSObjectIsEmpty(id obj);
-TEXTUAL_EXTERN BOOL NSObjectIsNotEmpty(id obj);
-
-TEXTUAL_EXTERN BOOL NSObjectsAreEqual(id obj1, id obj2);
-
 /* Localization. */
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 TEXTUAL_EXTERN NSString *BLS(NSInteger key, ...);
@@ -59,39 +51,8 @@ TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOO
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
-/* Performance testing. */
-/* Given a block, the block is executed. The time that was required to perform
- that work is then printed to system console. */
-TEXTUAL_EXTERN void TXMeasurePerformanceOfBlock(NSString *description, TXEmtpyBlockDataType block);
-
 /* Grand Central Dispatch. */
-typedef enum TXPerformBlockOnDispatchQueueOperationType	: NSInteger {
-	TXPerformBlockOnDispatchQueueBarrierAsyncOperationType,
-	TXPerformBlockOnDispatchQueueBarrierSyncOperationType,
-	TXPerformBlockOnDispatchQueueAsyncOperationType,
-	TXPerformBlockOnDispatchQueueSyncOperationType,
-} TXPerformBlockOnDispatchQueueOperationType;
-
-TEXTUAL_EXTERN void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
-
-TEXTUAL_EXTERN void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block); // Uses default priority on queue.
-TEXTUAL_EXTERN void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
-
-TEXTUAL_EXTERN void TXPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSInteger seconds);
-TEXTUAL_EXTERN void TXPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSInteger seconds);
-
-TEXTUAL_EXTERN void TXPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSInteger seconds);
-
-TEXTUAL_EXTERN void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block);
-TEXTUAL_EXTERN void TXPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block);
-
-TEXTUAL_EXTERN void TXPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block);
-TEXTUAL_EXTERN void TXPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block);
-
-TEXTUAL_EXTERN void TXPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
-TEXTUAL_EXTERN void TXPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
-
-TEXTUAL_EXTERN void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType);
+TEXTUAL_EXTERN void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
 
 /* Everything else. */
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);

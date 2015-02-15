@@ -43,7 +43,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCNickSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCNickSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;

@@ -421,8 +421,8 @@
 					
 					CGFloat defaultWhite = [defaultColor whiteComponent];
 					CGFloat compareWhite = [compareColor whiteComponent];
-					
-					if (TXDirtyCGFloatMatch(defaultWhite, compareWhite)) {
+
+					if ([NSNumber compareCGFloat:defaultWhite toFloat:compareWhite]) {
 						return NO;
 					}
 					

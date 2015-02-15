@@ -71,7 +71,7 @@
 
 - (void)loadPlugins
 {
-	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSObjectIsNotEmptyAssert(self.allLoadedBundles);
 
 		// ---- //
@@ -139,7 +139,7 @@
 
 - (void)unloadPlugins
 {
-	TXPerformBlockSynchronouslyOnQueue(self.dispatchQueue, ^{
+	XRPerformBlockSynchronouslyOnQueue(self.dispatchQueue, ^{
 		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			[plugin sendDealloc];
 		}
@@ -387,7 +387,7 @@
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
-	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdu = [command uppercaseString];
 		NSString *cmdl = [command lowercaseString];
 		
@@ -410,7 +410,7 @@
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
-	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdl = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
@@ -512,7 +512,7 @@
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
-	TXPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ( [plugin supportsNewMessagePostedEventNotifications]) {

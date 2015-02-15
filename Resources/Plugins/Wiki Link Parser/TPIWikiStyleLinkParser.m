@@ -67,7 +67,7 @@
 
 - (void)pluginLoadedIntoMemory
 {
-	[TPIBundleFromClass() loadCustomNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
+	[TPIBundleFromClass() loadNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
 	
 	[self updateRemoveConditionButton];
 }
@@ -95,7 +95,7 @@
 		
 		while (1 == 1) {
 			/* Get the range of next match. */
-			NSRange linkRange = [TLORegularExpression string:muteString rangeOfRegex:_linkMatchRegex];
+			NSRange linkRange = [XRRegularExpression string:muteString rangeOfRegex:_linkMatchRegex];
 			
 			/* No match found? Break our loop. */
 			if (linkRange.location == NSNotFound) {

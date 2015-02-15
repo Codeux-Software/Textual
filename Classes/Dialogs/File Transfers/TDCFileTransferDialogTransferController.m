@@ -608,8 +608,8 @@
 {
 	NSAssertReturn((self.transferStatus == TDCFileTransferDialogTransferReceivingStatus) ||
 				   (self.transferStatus == TDCFileTransferDialogTransferSendingStatus));
-	
-	TXPerformBlockSynchronouslyOnQueue(self.serverDispatchQueue, ^{
+
+	XRPerformBlockSynchronouslyOnQueue(self.serverDispatchQueue, ^{
 		/* Update record. */
 		@synchronized(self.speedRecords) {
 			[self.speedRecords addObject:@(self.currentRecord)];

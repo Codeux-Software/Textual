@@ -38,41 +38,8 @@
 #import "TextualApplication.h"
 
 #import <objc/objc-runtime.h>
+
 #import <time.h>
-
-#pragma mark -
-#pragma mark Validity.
-
-BOOL NSObjectIsEmpty(id obj)
-{
-	/* Check for common string length. */
-	if ([obj respondsToSelector:@selector(length)]) {
-		return ((NSInteger)objc_msgSend(obj, @selector(length)) < 1);
-	}
-	
-	/* Check for common array types. */
-	if ([obj respondsToSelector:@selector(count)]) {
-		return ((NSInteger)objc_msgSend(obj, @selector(count)) < 1);
-	}
-	
-	/* Check for singleton. */
-	if ([obj isKindOfClass:[NSNull class]]) {
-		return YES;
-	}
-	
-	/* Check everything else. */
-	return (obj == nil || obj == NULL);
-}
-
-BOOL NSObjectIsNotEmpty(id obj)
-{
-	return (NSObjectIsEmpty(obj) == NO);
-}
-
-BOOL NSObjectsAreEqual(id obj1, id obj2)
-{
-	return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
-}
 
 #pragma mark -
 #pragma mark Time.
@@ -275,29 +242,9 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 }
 
 #pragma mark -
-#pragma mark Performance 
-
-void TXMeasurePerformanceOfBlock(NSString *description, TXEmtpyBlockDataType block)
-{
-	if (block) {
-		CFAbsoluteTime _startTime = CFAbsoluteTimeGetCurrent();
-	
-		block();
-		
-		CFAbsoluteTime _endTime =  CFAbsoluteTimeGetCurrent();
-		
-		if (description) {
-			LogToConsole(@"Performed block (\"%@\") with measurement of %f seconds.", description, (_endTime - _startTime));
-		} else {
-			LogToConsole(@"Performed block with measurement of %f seconds.", (_endTime - _startTime));
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark Grand Central Dispatch
 
-void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
+void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
 {
 	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
 	
@@ -306,117 +253,8 @@ void TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 	if (dispatch_get_specific((__bridge const void *)(workerQueue))) {
 		block();
 	} else {
-		TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
+		XRPerformBlockOnDispatchQueue(workerQueue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
 	}
-}
-
-void TXPerformBlockOnGlobalDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	TXPerformBlockOnDispatchQueue(workerQueue, block, operationType);
-}
-
-void TXPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
-}
-
-void TXPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	TXPerformBlockOnDispatchQueue(workerQueue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
-}
-
-void TXPerformBlockOnMainDispatchQueue(TXPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
-{
-	if (operationType == TXPerformBlockOnDispatchQueueSyncOperationType) {
-		TXPerformBlockSynchronouslyOnMainQueue(block);
-	} else {
-		TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
-	}
-}
-
-void TXPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
-{
-	/* Check thread we are on. */
-	/* If we are already on the main thread and performing a synchronous action,
-	 then all we have to do is invoke the block supplied to us. */
-	if (NSIsCurrentThreadMain()) {
-		block(); // Perform block.
-			
-		return; // Kill rest of function.
-	}
-	
-	/* Perform normal dispatch operation. */
-	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueSyncOperationType);
-}
-
-void TXPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
-{
-	TXPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, TXPerformBlockOnDispatchQueueAsyncOperationType);
-}
-
-void TXPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
-{
-	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueSyncOperationType);
-}
-
-void TXPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
-{
-	TXPerformBlockOnDispatchQueue(queue, block, TXPerformBlockOnDispatchQueueAsyncOperationType);
-}
-
-void TXPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSInteger seconds)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	TXPerformDelayedBlockOnQueue(workerQueue, block, seconds);
-}
-
-void TXPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSInteger seconds)
-{
-	TXPerformDelayedBlockOnQueue(dispatch_get_main_queue(), block, seconds);
-}
-
-void TXPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, TXPerformBlockOnDispatchQueueOperationType operationType)
-{
-	switch (operationType) {
-		case TXPerformBlockOnDispatchQueueAsyncOperationType:
-		{
-			dispatch_async(queue, block);
-			
-			break;
-		}
-		case TXPerformBlockOnDispatchQueueSyncOperationType:
-		{
-			dispatch_sync(queue, block);
-			
-			break;
-		}
-		case TXPerformBlockOnDispatchQueueBarrierAsyncOperationType:
-		{
-			dispatch_barrier_async(queue, block);
-			
-			break;
-		}
-		case TXPerformBlockOnDispatchQueueBarrierSyncOperationType:
-		{
-			dispatch_barrier_sync(queue, block);
-			
-			break;
-		}
-	}
-}
-
-void TXPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSInteger seconds)
-{
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
-
-	dispatch_after(popTime, queue, block);
 }
 
 #pragma mark -

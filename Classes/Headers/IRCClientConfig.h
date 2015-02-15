@@ -128,10 +128,12 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (void)writeServerPasswordKeychainItemToDisk;
 - (void)writeNicknamePasswordKeychainItemToDisk;
 
+#if 0
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)migrateKeychainItemsToCloud;
 - (void)migrateKeychainItemsFromCloud;
 
 - (void)destroyKeychainsThatExistOnCloud;
+#endif
 #endif
 @end

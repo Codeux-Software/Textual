@@ -37,22 +37,24 @@
 
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
-	#import <WebKit/WebKit.h>
-	#import <Security/Security.h>
-	#import <QuartzCore/QuartzCore.h>
 	#import <CoreServices/CoreServices.h>
 	#import <SystemConfiguration/SystemConfiguration.h>
 
+	#import <WebKit/WebKit.h>
+
+	#import <QuartzCore/QuartzCore.h>
+
+	#import <Security/Security.h>
 	#import <SecurityInterface/SFCertificatePanel.h>
 	#import <SecurityInterface/SFCertificateTrustPanel.h>
 	#import <SecurityInterface/SFChooseIdentityPanel.h>
 
-	#import <BlowfishEncryption/BlowfishEncryption.h>
-	#import <SystemInformation/SystemInformation.h>
 	#import <AutoHyperlinks/AutoHyperlinks.h>
+	#import <BlowfishEncryption/BlowfishEncryption.h>
+	#import <CocoaExtensions/CocoaExtensions.h>
+	#import <SystemInformation/SystemInformation.h>
 
 	/* Class Forwarders. */
-
 	@class IRCAddressBookEntry;
 	@class IRCChannel;
 	@class IRCChannelConfig;
@@ -108,7 +110,6 @@
 	@class TLONicknameCompletionStatus;
 	@class TLOpenLink;
 	@class TLOPopupPrompts;
-	@class TLORegularExpression;
 	@class TLOSoundPlayer;
 	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
@@ -196,33 +197,7 @@
 	@class TXSharedApplication;
 	@class TXUserInterface;
 
-
-	/* Protocol forwarders. */
-	@protocol IRCConnectionDelegate;
-	@protocol TDCAboutPanelDelegate;
-	@protocol TDCAddressBookSheetDelegate;
-	@protocol TDCFileTransferDialogRemoteAddressDelegate;
-	@protocol TDChanBanExceptionSheetDelegate;
-	@protocol TDChanBanSheetDelegate;
-	@protocol TDChanInviteExceptionSheetDelegate;
-	@protocol TDChannelSheetDelegate;
-	@protocol TDCHighlightEntrySheetDelegate;
-	@protocol TDCHighlightListSheetDelegate;
-	@protocol TDCInviteSheetDelegate;
-	@protocol TDCListDialogDelegate;
-	@protocol TDCModeSheetDelegate;
-	@protocol TDCNickSheetDelegate;
-	@protocol TDCPreferencesControllerDelegate;
-	@protocol TDCServerSheetDelegate;
-	@protocol TDCTopicSheetDelegate;
-	@protocol TDCWelcomeSheetDelegate;
-	@protocol THOPluginProtocol;
-	@protocol TVCLogViewDelegate;
-	@protocol TVCMemberListDelegate;
-	@protocol TVCServerListDelegate;
-
 	/* Static Defeinitions. */
-
 	#import "StaticDefinitions.h"
 
 	/* Import frameworks based on defines. */
@@ -234,10 +209,6 @@
 	#import "TDCSharedProtocolDefinitions.h"
 
 	/* 3rd Party Extensions. */
-
-	#import "AGKeychain.h"
-	#import "DDExtensions.h"
-	#import "DDInvocation.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
 	#import "GCDAsyncSocketCipherNames.h"
@@ -264,7 +235,6 @@
 	#import "RLMAsyncSocket.h"
 
 	/* IRC Controllers — Core. */
-
 	#import "IRC.h"
 	#import "IRCAddressBook.h"
 	#import "IRCChannel.h"
@@ -288,33 +258,11 @@
 	#import "IRCWorldCloudExtension.h"
 
 	/* Framework Extensions (Helpers). */
-
-	#import "NSArrayHelper.h"
-	#import "NSBundleHelper.h"
-	#import "NSByteCountFormatterHelper.h"
 	#import "NSColorHelper.h"
-	#import "NSDataHelper.h"
-	#import "NSDateHelper.h"
-	#import "NSDictionaryHelper.h"
-	#import "NSFileManagerHelper.h"
-	#import "NSFontHelper.h"
-	#import "NSImageHelper.h"
-	#import "NSMenuHelper.h"
-	#import "NSNumberHelper.h"
-	#import "NSValueHelper.h"
 	#import "NSObjectHelper.h"
-	#import "NSOutlineViewHelper.h"
-	#import "NSPasteboardHelper.h"
-	#import "NSRangeHelper.h"
-	#import "NSRectHelper.h"
-	#import "NSScreenHelper.h"
-	#import "NSSplitViewHelper.h"
 	#import "NSStringHelper.h"
-	#import "NSTextFieldHelper.h"
-	#import "NSWindowHelper.h"
 
 	/* Dialogs. */
-
 	#import "TDCSheetBase.h"
 	#import "TDCAboutPanel.h"
 	#import "TDCAddressBookSheet.h"
@@ -340,14 +288,12 @@
 	#import "TDChannelSheet.h"
 
 	/* Helpers. */
-
 	#import "THOPluginItem.h"
 	#import "THOPluginManager.h"
 	#import "THOPluginProtocol.h"
 	#import "THOUnicodeHelper.h"
 
 	/* Library. */
-
 	#import "TLOFileLogger.h"
 	#import "TLOGrowlController.h"
 	#import "TLOInputHistory.h"
@@ -356,7 +302,6 @@
 	#import "TLOLinkParser.h"
 	#import "TLONicknameCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
-	#import "TLORegularExpression.h"
 	#import "TLOSoundPlayer.h"
 	#import "TLOSpeechSynthesizer.h"
 	#import "TLOTimer.h"
@@ -364,7 +309,6 @@
 	#import "TLOpenLink.h"
 
 	/* Preferences. */
-
 	#import "TPCApplicationInfo.h"
 	#import "TPCPathInfo.h"
 	#import "TPCPreferences.h"
@@ -377,7 +321,6 @@
 	#import "TPCThemeSettings.h"
 
 	/* View Controllers. */
-
 	#import "TVCAnimatedContentNavigationOutlineView.h"
 	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
@@ -419,7 +362,6 @@
 	#import "TVCWebViewAutoScroll.h"
 
 	/* Master Controllers — Root. */
-
 	#import "TXGlobalModels.h"
 	#import "TXMasterController.h"
 	#import "TXMenuController.h"

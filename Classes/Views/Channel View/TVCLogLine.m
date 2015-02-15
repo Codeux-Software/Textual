@@ -255,7 +255,7 @@
 {
 	if ((self = [self init])) {;
 		/* If any key does not exist, then its value is inherited from the -init method. */
-		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate epochTime]];
+		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate unixTime]];
 		
 		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 		

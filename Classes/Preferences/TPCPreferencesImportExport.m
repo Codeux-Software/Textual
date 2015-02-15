@@ -87,7 +87,7 @@
 
 + (void)importPostflight:(NSURL *)pathURL
 {
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		/* The loading screen is a generic way to show something during import. */
 		[mainWindowLoadingScreen() hideAll:NO];
 		[mainWindowLoadingScreen() popLoadingConfigurationView];

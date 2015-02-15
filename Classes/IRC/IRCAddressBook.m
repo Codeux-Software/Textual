@@ -70,7 +70,7 @@
 - (BOOL)checkIgnore:(NSString *)thehost
 {
 	if (self.hostmaskRegex && thehost) {
-        return [TLORegularExpression string:thehost isMatchedByRegex:self.hostmaskRegex withoutCase:YES];
+        return [XRRegularExpression string:thehost isMatchedByRegex:self.hostmaskRegex withoutCase:YES];
 	}
 
 	return NO;

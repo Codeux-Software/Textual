@@ -43,7 +43,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
 	
 		[self.matchKeywordTextField setOnlyShowStatusIfErrorOccurs:YES];
 		[self.matchKeywordTextField setStringValueUsesOnlyFirstToken:NO];

@@ -69,7 +69,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadCustomNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
 		
 		IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 		

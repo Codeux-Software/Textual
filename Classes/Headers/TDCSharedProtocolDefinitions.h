@@ -37,11 +37,6 @@
 
 #import "TextualApplication.h"
 
-/* Why? Because compiler warnings about not being able to find 
- the defenition of forwarded protocols and because I could not
- find for the love of God how to disable that particular warning
- so here we are. */
-
 @protocol TDCAboutPanelDelegate <NSObject>
 @required
 

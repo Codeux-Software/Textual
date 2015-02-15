@@ -136,7 +136,7 @@
 {
 	__block NSArray *clientList = nil;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			clientList = [NSArray arrayWithArray:self.clients];
 		}
@@ -147,7 +147,7 @@
 
 - (void)setClientList:(NSArray *)clientList
 {
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			[self.clients removeAllObjects];
 			
@@ -160,7 +160,7 @@
 {
 	__block NSInteger clientCount = 0;
 	
-	TXPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
+	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
 		@synchronized(self.clients) {
 			clientCount = [self.clients count];
 		}

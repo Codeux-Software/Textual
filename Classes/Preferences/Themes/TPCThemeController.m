@@ -895,14 +895,14 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	/* -cancelOperation is called on the main queue in an async fashion so that
 	 the reference to self (the copy operation) can be set to nil from within it. */
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self invalidateOperation];
 	});
 }
 
 - (void)cancelOperationAndReportError:(NSError *)error
 {
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self invalidateOperation];
 		
 		[NSApp presentError:error];
@@ -912,7 +912,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 - (void)completeOperation
 {
 	/* Maybe open new path of theme. */
-	TXPerformBlockAsynchronouslyOnMainQueue(^{
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		if ([self openPathToNewThemeWhenCopied]) {
 			[RZWorkspace() openFile:[self pathBeingCopiedTo]];
 		}

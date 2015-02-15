@@ -336,7 +336,7 @@
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
 {
-	NSTimeInterval now = [NSDate epochTime];
+	NSTimeInterval now = [NSDate unixTime];
 	
 	if ((now - self.lastClickedTime) < _clickInterval) {
 		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {

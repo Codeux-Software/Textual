@@ -39,8 +39,6 @@
 #import "TextualApplication.h"
 
 @interface NSColor (TXColorHelper)
-- (NSColor *)invertColor;
-
 + (NSColor *)formatterWhiteColor;
 + (NSColor *)formatterBlackColor;
 + (NSColor *)formatterNavyBlueColor;
@@ -60,18 +58,12 @@
 
 + (NSArray *)possibleFormatterColors;
 
-+ (NSColor *)fromCSS:(NSString *)str;
-
 + (NSColor *)sourceListBackgroundColor;
 
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
-
-+ (NSColor *)internalCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end
 
 @interface NSGradient (TXGradientHelper)
-+ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor;
-
 + (NSGradient *)sourceListBackgroundGradientColor;
 @end
