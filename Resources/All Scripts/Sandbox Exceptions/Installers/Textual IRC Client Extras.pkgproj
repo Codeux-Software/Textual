@@ -3092,55 +3092,7 @@
 															<key>GID</key>
 															<integer>0</integer>
 															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/sealion.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
 															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/slap.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/spam.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/yolo.php</string>
 															<key>PATH_TYPE</key>
 															<integer>1</integer>
 															<key>PERMISSIONS</key>
@@ -3707,7 +3659,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>Installs several commands that output generally useless information. What's included: apps, banhammer, ffuu, o_o, page, sealion, slap, spam, yolo</string>
+												<string>Installs several commands that output generally useless information. What's included: apps, banhammer, ffuu, o_o, page, slap</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
