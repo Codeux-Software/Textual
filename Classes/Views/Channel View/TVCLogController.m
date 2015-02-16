@@ -1397,7 +1397,7 @@
 	
 	// ---- //
 	
-	templateTokens[@"operatingSystemVersion"] = [CSFWSystemInformation systemStandardVersion];
+	templateTokens[@"operatingSystemVersion"] = [XRSystemInformation systemStandardVersion];
 	
 	// ---- //
 

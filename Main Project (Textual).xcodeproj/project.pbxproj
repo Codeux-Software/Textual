@@ -899,7 +899,6 @@
 		4C7E0FD219AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7E0FD319AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7E0FD419AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7E4DAC1A9116CE00EBE11B /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; };
 		4C7E4DB51A9116FA00EBE11B /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7E4DB71A9116FA00EBE11B /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
@@ -910,8 +909,6 @@
 		4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7E4DBD1A9116FA00EBE11B /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C7E4DBF1A9116FA00EBE11B /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; };
-		4C7E4DC01A9116FA00EBE11B /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -1203,7 +1200,6 @@
 		4CBE7B671A9148BD008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CBE7B681A9148BD008FB230 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CBE7B691A9148BD008FB230 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
-		4CBE7B6A1A9148BD008FB230 /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; };
 		4CBE7B6C1A9148BD008FB230 /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
 		4CBE7B6D1A9148BD008FB230 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
 		4CBE7B6E1A9148BD008FB230 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
@@ -1683,7 +1679,6 @@
 		4CF76A3F1A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
 		4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
 		4CF76A451A91153A0088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
-		4CF76A471A91153A0088BF9A /* SystemInformation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; };
 		4CF76A5A1A9115670088BF9A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CF76A661A91157B0088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1693,13 +1688,11 @@
 		4CF76A6C1A91157B0088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CF76A6E1A91157B0088BF9A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A701A91157B0088BF9A /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A751A9115910088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A771A9115910088BF9A /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A791A9115910088BF9A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A7B1A9115910088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A7D1A9115910088BF9A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A7F1A9115910088BF9A /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A831A9116510088BF9A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A861A9116510088BF9A /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1708,7 +1701,6 @@
 		4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A8B1A9116510088BF9A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CF76A8C1A9116510088BF9A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A8E1A9116510088BF9A /* SystemInformation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CFC40DF1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CFC40E01969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CFC40E21969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */; };
@@ -1925,7 +1917,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C7E4DC01A9116FA00EBE11B /* SystemInformation.framework in Embed Frameworks */,
 				4C7E4DBA1A9116FA00EBE11B /* CocoaExtensions.framework in Embed Frameworks */,
 				4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */,
@@ -2005,7 +1996,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CF76A701A91157B0088BF9A /* SystemInformation.framework in Embed Frameworks */,
 				4CF76A6A1A91157B0088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
 				4CF76A661A91157B0088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A6C1A91157B0088BF9A /* Growl.framework in Embed Frameworks */,
@@ -2021,7 +2011,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CF76A7F1A9115910088BF9A /* SystemInformation.framework in Embed Frameworks */,
 				4CF76A791A9115910088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
 				4CF76A751A9115910088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A7B1A9115910088BF9A /* Growl.framework in Embed Frameworks */,
@@ -2037,7 +2026,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4CF76A8E1A9116510088BF9A /* SystemInformation.framework in Embed Frameworks */,
 				4CF76A881A9116510088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
 				4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */,
@@ -2483,7 +2471,6 @@
 		4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = ".tmp/SharedBuildResults-Frameworks/AutoHyperlinks.framework"; sourceTree = "<group>"; };
 		4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ".tmp/SharedBuildResults-Frameworks/BlowfishEncryption.framework"; sourceTree = "<group>"; };
 		4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = ".tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
-		4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemInformation.framework; path = ".tmp/SharedBuildResults-Frameworks/SystemInformation.framework"; sourceTree = "<group>"; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorldCloudExtension.m; path = IRC/IRCWorldCloudExtension.m; sourceTree = "<group>"; };
 		4CFEAEFF1A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocketCipherNames.m; sourceTree = "<group>"; };
@@ -2515,7 +2502,6 @@
 				4C0BA62D1990798800857343 /* Security.framework in Frameworks */,
 				4C0BA62E1990798800857343 /* SecurityInterface.framework in Frameworks */,
 				4C0BA62F1990798800857343 /* SystemConfiguration.framework in Frameworks */,
-				4CF76A471A91153A0088BF9A /* SystemInformation.framework in Frameworks */,
 				4C0BA6321990798800857343 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2539,7 +2525,6 @@
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
-				4C7E4DAC1A9116CE00EBE11B /* SystemInformation.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2563,7 +2548,6 @@
 				4CBE7B731A9148BD008FB230 /* Security.framework in Frameworks */,
 				4CBE7B741A9148BD008FB230 /* SecurityInterface.framework in Frameworks */,
 				4CBE7B751A9148BD008FB230 /* SystemConfiguration.framework in Frameworks */,
-				4CBE7B6A1A9148BD008FB230 /* SystemInformation.framework in Frameworks */,
 				4CBE7B761A9148BD008FB230 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2587,7 +2571,6 @@
 				4CDFA53F1996EAB2007EA46E /* Security.framework in Frameworks */,
 				4CDFA5401996EAB2007EA46E /* SecurityInterface.framework in Frameworks */,
 				4CDFA5411996EAB2007EA46E /* SystemConfiguration.framework in Frameworks */,
-				4C7E4DBF1A9116FA00EBE11B /* SystemInformation.framework in Frameworks */,
 				4CDFA5441996EAB2007EA46E /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2818,7 +2801,6 @@
 				4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 				4CDB24A018CAB914007EF6DE /* HockeySDK.framework */,
-				4CF76A3A1A91153A0088BF9A /* SystemInformation.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";

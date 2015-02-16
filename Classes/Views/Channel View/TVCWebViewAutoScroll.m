@@ -53,7 +53,7 @@
 	 However, there are some issues related to this change which results in position
 	 fixed elements flickering while scrolling. This has been filed as radar #18211024
 	 but in the meantime, we redraw the WebView on scroll to workaround this issue. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[[self.webFrame documentView] setNeedsDisplay:YES];
 	}
 }

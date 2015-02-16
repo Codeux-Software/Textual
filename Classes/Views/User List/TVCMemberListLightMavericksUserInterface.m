@@ -46,7 +46,7 @@
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
 #ifdef TXSystemIsMacOSYosemiteOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
 	} else {
 		NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
@@ -146,7 +146,7 @@
 {
 	NSColor *defaultColor = [RZUserDefaults() colorForKey:defaultsKey];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		return [defaultColor colorWithAlphaComponent:0.7];
 	} else {
 		return  defaultColor;

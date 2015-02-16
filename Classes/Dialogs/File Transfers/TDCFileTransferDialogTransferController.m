@@ -152,7 +152,7 @@
 
 - (void)beginPreventingSystemSleep
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		self.transferProgressHandler = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiated reason:@"Transferring file"];
 	}
 }

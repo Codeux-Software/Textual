@@ -207,7 +207,7 @@
 {
 	Class newObjects = nil;
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 	{
 		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
 			newObjects = [TVCServerListLightYosemiteUserInterface class];
@@ -266,13 +266,13 @@
 	
 	[self deselectAll:nil];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[self updateVibrancy];
 	}
 	
 	[self reloadUserInterfaceObjects];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		if ([TPCPreferences invertSidebarColors]) {
 			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleLight];
 		} else {
@@ -294,7 +294,7 @@
 
 - (void)windowDidChangeKeyState
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		[[self backgroundView] setNeedsDisplay:YES];
 	}
 

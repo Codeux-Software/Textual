@@ -120,7 +120,7 @@
 		
 		self.normalLeavingComment		= BLS(1021);
 		
-		NSString *modelName = [CSFWSystemInformation systemModelName];
+		NSString *modelName = [XRSystemInformation systemModelName];
 		
 		if (modelName == nil) { // Value can be nil in virtual machine.
 			self.sleepModeLeavingComment = BLS(1235);

@@ -137,7 +137,7 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSInteger badgeTextFrameCorrection = 0;
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		badgeTextFrameCorrection = 2;
 		
 		badgeTextAttrs = @{
@@ -167,7 +167,7 @@ static NSInteger _cachedHighlightCount = -1;
 	NSImage *greenBadgeCenter;
 	NSImage *greenBadgeRight;
 
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];
 		redBadgeCenter = [NSImage imageNamed:@"DIRedBadgeCenterYosemite.png"];
 		redBadgeRight  = [NSImage imageNamed:@"DIRedBadgeRightYosemite.png"];
@@ -195,7 +195,7 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	[appIcon lockFocus];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		/* Red Badge Size. */
 		redBadgeRightFrame.size.height	= 53;
 		redBadgeCenterFrame.size.height = 53;

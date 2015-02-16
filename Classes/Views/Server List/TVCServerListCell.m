@@ -51,7 +51,7 @@
 	 leading constraint on our group item resulting in the text field hugging the 
 	 disclosure triangle of the group view. This is a dirty hack that fixes this 
 	 by updating our leading constraint. */
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks] == NO) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
 		if ( self.groupItemTextFieldLeadingConstraint) {
 			[self.groupItemTextFieldLeadingConstraint setConstant:_groupItemLeadingConstraintQuirkCorrectedConstraint];
 		}
@@ -82,7 +82,7 @@
 {
 	[self updateTextFieldValue];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[self updateDrawingForYosemite:interfaceObject];
 	} else {
 		[self updateDrawingForMavericks:interfaceObject];
@@ -508,7 +508,7 @@
 	BOOL isHighlight = (nicknameHighlightCount > 0);
 	
 	if (channelPointer.config.showTreeBadgeCount == NO) {
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
 		} else {
 			if (isHighlight) {
@@ -606,7 +606,7 @@
 - (void)drawMessageCountBadge:(NSAttributedString *)mcstring inCell:(NSRect)badgeFrame isHighlighgt:(BOOL)isHighlight isSelected:(BOOL)isSelected
 {
 	/* Begin drawing badge. */
-	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
+	BOOL isDrawingForMavericks = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
 	
 	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
 
@@ -766,7 +766,7 @@
 	[theButton setAlternateImage:alterna];
 
 	/* Update style of button. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[theButton setHighlightsBy:NSNoCellMask];
 	} else {
 		if (isSelected) {
@@ -837,7 +837,7 @@
 {
 	if ([self isSelected])
 	{
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
 			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
@@ -900,7 +900,7 @@
 	{
 		id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
 		
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
 			NSColor *selectionColor;
 			

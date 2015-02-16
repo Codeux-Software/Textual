@@ -21,9 +21,3 @@ xcodebuild -alltargets -configuration "Release" CODE_SIGN_IDENTITY="${CODE_SIGN_
 cp -R "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/Release/CocoaExtensions.framework" "${BUILD_DESTINATION_FOLDER}"
 rm -rf "${PROJECT_DIR}/Frameworks/Cocoa Extensions/Build Results/"
 rm -rf "${PROJECT_DIR}/Frameworks/Cocoa Extensions/.tmp/"
-
-cd "${PROJECT_DIR}/Frameworks/System Information/"
-xcodebuild -alltargets -configuration "Release" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}"
-cp -R "${PROJECT_DIR}/Frameworks/System Information/Build Results/Release/SystemInformation.framework" "${BUILD_DESTINATION_FOLDER}"
-rm -rf "${PROJECT_DIR}/Frameworks/System Information/Build Results/"
-rm -rf "${PROJECT_DIR}/Frameworks/System Information/.tmp/"
