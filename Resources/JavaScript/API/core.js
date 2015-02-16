@@ -74,7 +74,7 @@ Textual.viewPositionMovedToHistoryIndicator 	= function() {};
 Textual.viewPositionMovedToLine 				= function(lineNumber) {};
 Textual.viewPositionMovedToTop 					= function() {};
 
-/* This function is not called by Textual itself but by WebKit. It is appended
+/* This function is not called by Textual itself, but by WebKit. It is appended
    to <body> as the function to call during onload phase. It is used by the newer
    templates to replace viewDidFinishLoading as the function responsible for
    fading out the loading screen. It is defined here so style's that do not
@@ -87,8 +87,8 @@ Textual.viewBodyDidLoad						= function() {};
 
 /* A style can retrieve the value of preferences using the retrievePreferencesWithMethodName() function.
    The key supplied to this function corresponds to the Objective-C method name defined in the TPCPreferences.h
-   header file located at the path Textual 5.app/Contents/Headers — calling a particular method name instead of
-   the raw key name was picked because it was a more uniform approach and the header clearly defines the names. */
+   header file located at the path "Textual 5.app/Contents/Headers" — calling a particular method name instead of
+   the raw key name was picked because it was a more uniform approach. */
 // app.retrievePreferencesWithMethodName(name)		— Retrieve particular value from preferences
 
 /* No key is supplied to preferencesDidChange() because it is preferred that the style maintain a cached state
@@ -148,10 +148,10 @@ Textual.handleEvent                            = function(eventToken) {};
 	renamed, removed, or replaced.
 
 	To opt-in to using a key-value store, add a string value to the styleSettings.plist file
-	of a style with the name of it being "Key-value Store Name" — the value of this additional
-	key should be whatever the name the key-value stored should be saved under. Preferably,
-	it would be named whatever the style is, but a different one can be picked so that multiple
-	variants of a style can share the same values.
+	of a style with the name of it being "Key-value Store Name" — the value of this key should
+    be whatever the name the key-value stored should be saved under. Preferably, it would be
+	named whatever the style is, but a different one can be picked so that multiple variants
+	of a style can share the same values.
 
 	When setting a value of undefined or null, the specified key is removed from the store.
 	Any other value is automatically converted by WebKit to match the following data types:
@@ -185,8 +185,8 @@ Textual.styleSettingDidChange                       = function(changedKey) {};
 /*						Owning Channel/Server Status					   */
 /* *********************************************************************** */
 
-// app.serverIsConnected()          - Boolean if associated server is connected.
-// app.channelIsJoined()            — Boolean if associated channel is joined.
+// app.serverIsConnected()          - true if associated server is connected.
+// app.channelIsJoined()            — true if associated channel is joined.
 // app.channelMemberCount()         — Number of members on the channel associated with this view.
 
 // app.serverChannelCount()         — Number of channels part of the server associated with this view.
@@ -210,7 +210,7 @@ Textual.styleSettingDidChange                       = function(changedKey) {};
 /*						Print Debug Messages							   */
 /* *********************************************************************** */
 
-// app.logToConsole(<input>)						- Log a message to the Mac OS console.
+// app.logToConsole(<input>)						- Log a message to the OS X system-wide console.
 
 /* The app.printDebugInformation* calls documented below also call newMessagePostedToView() which means calling
    them from within newMessagePostedToView() will create an infinite loop. If needed inside newMessagePostedToView(),

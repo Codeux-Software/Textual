@@ -326,11 +326,13 @@
 		
 		[key hasPrefix:@"TextField"] ||										/* Textual owned prefix. */
 		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
+		[key hasPrefix:@"System ->"] ||										/* Textual owned prefix. */
 		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
 		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
 		[key hasPrefix:@"Private Extension Store -> "] ||					/* Textual owned prefix. */
 		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
 		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
+		[key hasPrefix:@"Saved Window State —> Internal (v3) -> "] ||		/* Textual owned prefix. */
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */

@@ -277,8 +277,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServices:" target="-2" id="EWm-sP-reg"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" id="PXH-d9-h7P"/>
                         <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="VDg-HO-mwB"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="f72-cf-gRu"/>
                     </connections>
                 </button>
                 <button id="HaP-NM-tlL">
@@ -313,7 +313,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onManageiCloudButtonClicked:" target="-2" id="1fB-rJ-kxy"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System —&gt; Built with iCloud Support" id="48w-li-BcB"/>
+                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" id="vAu-3X-Wg3"/>
                     </connections>
                 </button>
             </subviews>
@@ -1335,7 +1335,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1425,7 +1425,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -3922,12 +3922,12 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="cellTitle"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="9MI-94-Kt0"/>
-                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System —&gt; Running Mac OS Mavericks Or Newer" id="85W-iT-7DR">
+                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System -&gt; Running Mac OS Mavericks Or Newer" id="Qsj-xH-z8T">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="9MI-94-Kt0"/>
                             </connections>
                         </button>
                     </subviews>
