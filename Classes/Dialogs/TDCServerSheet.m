@@ -245,7 +245,7 @@
 		[self.normalLeavingCommentField setStringValueUsesOnlyFirstToken:NO];
 		
 		[self.normalLeavingCommentField setValidationBlock:^BOOL(NSString *currentValue) {
-			if ([currentValue contains:NSStringNewlinePlaceholder]) {
+			if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 				return NO;
 			}
 			
@@ -262,7 +262,7 @@
 		[self.sleepModeQuitMessageField setStringValueUsesOnlyFirstToken:NO];
 		
 		[self.sleepModeQuitMessageField setValidationBlock:^BOOL(NSString *currentValue) {
-			if ([currentValue contains:NSStringNewlinePlaceholder]) {
+			if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 				return NO;
 			}
 			
