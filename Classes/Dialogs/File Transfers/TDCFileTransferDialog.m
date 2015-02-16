@@ -38,8 +38,6 @@
 
 #import "TextualApplication.h"
 
-#import <TCMPortMapper/TCMPortMapper.h>
-
 /* Refuse to have more than X number of items incoming at any given time. */
 #define _addReceiverHardLimit			100
 
@@ -155,8 +153,6 @@
 	
 	@synchronized(self.fileTransfers) {
 		if ([self.fileTransfers count] > 0) {
-			[[TCMPortMapper sharedInstance] stopBlocking];
-			
 			for (id e in self.fileTransfers) {
 				[e prepareForDestruction];
 			}
@@ -455,12 +451,12 @@
 				[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
 			{
 				if ([e isSender]) {
-					[e open];
+					[(TDCFileTransferDialogTransferController *)e open];
 				} else {
 					if ([e path] == nil) {
 						[incomingTransfers addObject:e];
 					} else {
-						[e open];
+						[(TDCFileTransferDialogTransferController *)e open];
 					}
 				}
 			}
