@@ -450,7 +450,7 @@
 	
 	[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:NO];
 	
-	BOOL includeAdvancedEncodings = [RZUserDefaults() boolForKey:@"Server Properties Window Sheet —> Include Advanced Encodings"];
+	BOOL includeAdvancedEncodings = [RZUserDefaults() boolForKey:@"Server Properties Window Sheet -> Include Advanced Encodings"];
 	
 	if (includeAdvancedEncodings) {
 		[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:YES];

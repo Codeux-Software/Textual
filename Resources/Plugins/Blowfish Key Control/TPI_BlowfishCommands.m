@@ -44,7 +44,7 @@
 
 @interface TPI_BlowfishCommands ()
 /* 
-	  key format:	STRING("<client UUID> —> <remote nickname>")
+	  key format:	STRING("<channel UUID> –> <remote nickname>")
 	value format:	 ARRAY("<pointer to CFDH1080>", "<pointer to IRCChannel>")
  
 	-keyExchangeDictionaryKey: can be used to generate key.

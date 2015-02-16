@@ -319,26 +319,6 @@ typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 #pragma mark -
 
 /* ------ */
-/* Printing to the WebView for each channel/server in Textual is actually very complicated and
- over the years there have been a lot of design changes. The current design works like the 
- following:
- 
- 1. print… method is called with all associated information. 
- 2. Once called, the code behind it parses the input and places all relevant information inside
- a copy of TVCLogLine which is then passed around. 
- 3. Once the instance of TVCLogLine is created, it is handed down to the associated TVCLogController
- for either the server console or the actual channel view. TVCLogController will then attach the 
- copy of TVCLogLine to a background concurrent operation queue. Each server is assigned its very 
- own concurrent queue. On the queue, each print operation occurs. This is done to allow all work 
- to be processed in the background without locking up the main thread. It is also designed so 
- incoming spam on one server does not interfere with the operations of another server. Each 
- printing operation is handled on a first come, first served basis. 
- 4. When an individual print operation is fired, the renderring of each message to HTML occurs. 
- This is the heaviest part of the printing operation as it requires extensive text based analysis
- of the actual incoming message. Once completed, the actual HTML is handed off back to the main
- thread where WebKit handles all the drawing operations. At that point it is out of the hands of
- Textual and will be displayed to the user as soon as WebKit renders it. */
-/* All print calls point to this single one: */
 - (void)printToWebView:(id)channel													// An IRCChannel or nil for the console.
 				  type:(TVCLogLineType)type											// The time the message was received at for the timestamp.
 			   command:(NSString *)command											// The line type. See TVCLogLine.h

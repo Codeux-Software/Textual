@@ -493,12 +493,11 @@
 /* Raw mode messages. */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the OS X \"Console\" application. To disable, execute \"/debug raw off\"";
-"BasicLanguage[1176]" = "————————————— End Raw Mode Session —————————————";
-"BasicLanguage[1177]" = "————————————— Begin Raw Mode Session —————————————";
-
+"BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
+"BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
 /* Log file session headers. */
-"BasicLanguage[1178]" = "————————————— Begin Session —————————————";
-"BasicLanguage[1179]" = "————————————— End Session —————————————";
+"BasicLanguage[1178]" = "------------- Begin Session -------------";
+"BasicLanguage[1179]" = "------------- End Session -------------";
 
 /* Preferences file import/export. */
 "BasicLanguage[1180]" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
