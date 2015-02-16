@@ -407,8 +407,10 @@
 
 	[RZNotificationCenter() removeObserver:self name:XRPortMapperDidChangedNotification object:self.portMapping];
 
-	[self.portMapping close];
-	 self.portMapping = nil;
+	[self performBlockOnMainThread:^{
+		[self.portMapping close];
+		 self.portMapping = nil;
+	}];
 }
 
 - (void)localIPAddressWasDetermined
