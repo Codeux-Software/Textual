@@ -553,21 +553,26 @@
                 continue;
             }
 
-            const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
+			const void *model = CFDictionaryGetValue(serviceDictionary, @"model");
+			const void *class = CFDictionaryGetValue(serviceDictionary, @"class-code");
 
-            if (PointerIsNotEmpty(model)) {
-                if (CFGetTypeID(model) == CFDataGetTypeID() && CFDataGetLength(model) > 1) {
-					NSString *s = nil;
+			if (PointerIsEmpty(model) || PointerIsEmpty(class)) {
+				continue;
+			}
 
-					s = [NSString stringWithBytes:[(__bridge NSData *)model bytes]
-										   length:CFDataGetLength(model)
-										 encoding:NSASCIIStringEncoding];
+			if (CFGetTypeID(class) == CFDataGetTypeID() && CFDataGetLength(class) > 1) {
+				if ((*(UInt32 *)CFDataGetBytePtr(class) == 0x30000) == NO) {
+					continue;
+				}
+			}
 
-					s = [s stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
+			if (CFGetTypeID(model) == CFDataGetTypeID() && CFDataGetLength(model) > 1) {
+				NSString *s = [NSString stringWithBytes:[(__bridge NSData *)model bytes] length:CFDataGetLength(model) encoding:NSASCIIStringEncoding];
 
-                    [gpuList addObject:s];
-                }
-            }
+				s = [s stringByReplacingOccurrencesOfString:@"\0" withString:NSStringEmptyPlaceholder];
+
+				[gpuList addObject:s];
+			}
 
             CFRelease(serviceDictionary);
         }
