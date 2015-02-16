@@ -381,17 +381,17 @@ Gw
                     </buttonCell>
                     <connections>
                         <action selector="toggleCloudSyncExclusion:" target="-2" id="LNF-gc-rmb"/>
+                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="i5T-lV-0oc">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                         <binding destination="-2" name="hidden2" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" previousBinding="i5T-lV-0oc" id="sct-5F-GkA">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                 <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                 <integer key="NSNullPlaceholder" value="-1"/>
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="i5T-lV-0oc">
-                            <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
@@ -880,7 +880,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1804">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -1006,7 +1006,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1078,7 +1078,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1849">
-                        <rect key="frame" x="294.27800000000002" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
@@ -1336,7 +1336,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="8Hx-ai-LFR">
-                    <rect key="frame" x="45" y="30" width="438" height="40"/>
+                    <rect key="frame" x="45" y="20" width="438" height="50"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9E5-Gd-QjD">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -1347,7 +1347,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="438" height="40"/>
+                                <size key="minSize" width="438" height="50"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Warning: ">
@@ -1383,7 +1383,7 @@ Gw
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="438" height="40"/>
+                                <size key="minSize" width="438" height="50"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                             </textView>
                         </subviews>
@@ -1671,7 +1671,7 @@ Gw
                 <button verticalHuggingPriority="750" id="l36-PJ-JBU">
                     <rect key="frame" x="251" y="19" width="155" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Set Certificate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uH8-BL-itx">
+                    <buttonCell key="cell" type="push" title="Select Certificate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uH8-BL-itx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -1817,7 +1817,7 @@ Gw
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="532.5" y="136.5"/>
+            <point key="canvasLocation" x="301.5" y="-67.5"/>
         </customView>
         <menu id="yYJ-qd-Dm2">
             <items>
