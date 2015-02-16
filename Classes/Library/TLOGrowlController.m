@@ -218,7 +218,7 @@
 		}
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
-		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 			/* These are the only event types we want to support for now. */
 
 			if (eventType == TXNotificationNewPrivateMessageType ||
@@ -259,7 +259,7 @@
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
 #ifdef TXSystemIsMacOSMavericksOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 

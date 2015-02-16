@@ -42,7 +42,7 @@
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
 #ifdef TXSystemIsMacOSYosemiteOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
 	} else {
 		NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];

@@ -870,15 +870,15 @@ static NSMutableArray *excludeKeywords = nil;
 
 	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]							forKey:@"Security -> Sandbox Enabled"];
 
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXLion]				forKey:@"System —> Running Mac OS Lion Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXMountainLion]		forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXMavericks]		forKey:@"System —> Running Mac OS Mavericks Or Newer"];
-	[RZUserDefaults() setBool:[CSFWSystemInformation featureAvailableToOSXYosemite]			forKey:@"System —> Running Mac OS Yosemite Or Newer"];
-	
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXLionOrLater]				forKey:@"System —> Running Mac OS Lion Or Newer"];
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System —> Running Mac OS Mountain Lion Or Newer"];
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System —> Running Mac OS Mavericks Or Newer"];
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System —> Running Mac OS Yosemite Or Newer"];
+
 #ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];
 #else
-	if ([CSFWSystemInformation featureAvailableToOSXMountainLion]) {
+	if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
 		[RZUserDefaults() setBool:YES forKey:@"System —> Built with iCloud Support"];
 	} else {
 		[RZUserDefaults() setBool:NO forKey:@"System —> Built with iCloud Support"];

@@ -84,7 +84,7 @@
 	
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		NSAttributedString *newValue = [self attributedTextFieldValueForYosemite:userInterfaceObjects inContext:drawingContext];
 		
 		[textField setAttributedStringValue:newValue];
@@ -327,7 +327,7 @@
 
 	IRCUser *assosicatedUser = [self memberPointer];
 	
-	BOOL isDrawingForMavericks = ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO);
+	BOOL isDrawingForMavericks = ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO);
 	
 	NSString *mcstring = [assosicatedUser mark];
 	
@@ -633,7 +633,7 @@
 {
 	if ([self isSelected])
 	{
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
 			if ([TVCMemberListSharedUserInterface yosemiteIsUsingVibrantDarkMode]) {
 				[self setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleRegular];
@@ -675,7 +675,7 @@
 	{
 		id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
 		
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite])
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
 			NSColor *selectionColor;
 			

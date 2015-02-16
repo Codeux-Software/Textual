@@ -211,7 +211,7 @@
 			/* The color used for unread badges on Yosemite also apply to the text color
 			 so we must reload all drawings instead of only the badges themselves. */
 
-			if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+			if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 				[mainWindowServerList() reloadAllDrawings];
 			} else {
 				[mainWindowServerList() reloadAllUnreadMessageCountBadges];

@@ -199,7 +199,7 @@
 	[d setNameFieldStringValue:[url lastPathComponent]];
 	
 #ifdef TXSystemIsMacOSMavericksOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[d setShowsTagField:NO];
 	}
 #endif

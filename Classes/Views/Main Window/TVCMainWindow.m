@@ -137,7 +137,7 @@
 - (void)updateBackgroundColor
 {
 #ifdef TXSystemIsMacOSYosemiteOrNewer
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
 		if ([TPCPreferences invertSidebarColors]) {
@@ -981,7 +981,7 @@
 
 - (BOOL)isOccluded
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		return (([self occlusionState] & NSWindowOcclusionStateVisible) == 0);
 	} else {
 		return NO;
@@ -1067,7 +1067,7 @@
 
 - (void)addAccessoryViewsToTitlebar
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		NSTitlebarAccessoryViewController *accessoryView = [self titlebarAccessoryViewController];
 
 		[accessoryView setLayoutAttribute:NSLayoutAttributeRight];

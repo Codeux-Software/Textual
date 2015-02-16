@@ -72,7 +72,7 @@
 		[resultString appendString:TPILocalizedString(@"BasicLanguage[1038]")];
 	}
 
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([TXUserInterface systemWideDarkModeEnabledInYosemite]) {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]")];
 		} else {
@@ -292,7 +292,7 @@
 			if ([_model hasPrefix:@"VMware"]) {
 				_exact_model = _all_models[@"VMware"];
 			} else {
-				_exact_model = [CSFWSystemInformation systemModelName];
+				_exact_model = [XRSystemInformation systemModelName];
 
 				if ([_all_models containsKey:_model]) {
 					_exact_model = _all_models[_model];
@@ -374,8 +374,8 @@
 		NSString *osname = [TPI_SP_SysInfo operatingSystemName];
 
 		_new = TPILocalizedString(@"BasicLanguage[1012]",
-					  [CSFWSystemInformation systemStandardVersion], osname,
-					  [CSFWSystemInformation systemBuildVersion]);
+					  [XRSystemInformation systemStandardVersion], osname,
+					  [XRSystemInformation systemBuildVersion]);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
 	}
@@ -697,7 +697,7 @@
 
 + (NSString *)operatingSystemName
 {
-	NSString *productVersion = [CSFWSystemInformation systemStandardVersion];
+	NSString *productVersion = [XRSystemInformation systemStandardVersion];
 	
 	if ([productVersion hasPrefix:@"10.7"]) {
 		return TPILocalizedString(@"BasicLanguage[1015]");

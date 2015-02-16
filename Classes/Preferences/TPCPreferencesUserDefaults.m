@@ -92,7 +92,7 @@
 	/* Group container will take priority. */
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		NSDictionary *groupDict = [_groupDefaults dictionaryRepresentation];
 		
 		for (NSString *key in groupDict) {
@@ -120,7 +120,7 @@
 
 - (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[_groupDefaults registerDefaults:registrationDictionary];
 	} else {
 		[_userDefaults registerDefaults:registrationDictionary];
@@ -165,7 +165,7 @@
 - (id)objectForKey:(NSString *)defaultName
 {
 	/* Group container will take priority. */
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:defaultName] == NO) {
 			 id objectValue = [_groupDefaults objectForKey:defaultName];
 
@@ -364,7 +364,7 @@
 /* Performs a one time migration of sandbox level keys to the group container. */
 - (void)migrateValuesToGroupContainer
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		id usesGroupContainer = [_userDefaults objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 		
 		if (usesGroupContainer) { // make sure the key even exists (non-nil)
@@ -393,7 +393,7 @@
  and remove those so that the incorrect value is not maintained. */
 - (void)purgeKeysThatDontBelongInGroupContainer
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		NSDictionary *groupDictionary = [_groupDefaults dictionaryRepresentation];
 
 		for (NSString *dictKey in groupDictionary) {
@@ -431,7 +431,7 @@
 
 - (id)valueForKey:(NSString *)key
 {
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
 			return [_groupDefaults objectForKey:key];
 		} else {
@@ -447,7 +447,7 @@
 	[self willChangeValueForKey:key];
 	
 	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
-		if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 			[_groupDefaults setObject:value forKey:key];
 		} else {
 			[_userDefaults setObject:value forKey:key];

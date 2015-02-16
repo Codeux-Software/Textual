@@ -226,7 +226,7 @@
 	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 	
-	if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[[self mountainLionDeprecationWarningView] setHidden:YES];
 
 		[ [self navigationOutlineviewScrollbar]		setHidden:NO];

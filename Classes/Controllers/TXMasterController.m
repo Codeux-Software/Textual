@@ -61,7 +61,7 @@
 		// ---- //
 		
 #ifndef TXSystemIsMacOSYosemiteOrNewer
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]){
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]){
 			NSAssert(NO, @"This copy of Textual cannot be used on Yosemite. Please rebuild against the Yosemite SDK.");
 		}
 #endif
@@ -106,7 +106,7 @@
 	
 		/* We wait until -awakeFromNib to wake the window so that the menu
 		 controller created by the main nib has time to load. */
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
 		} else {
 			[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];

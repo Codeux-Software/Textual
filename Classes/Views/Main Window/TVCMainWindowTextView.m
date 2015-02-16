@@ -97,7 +97,7 @@
 {
 #ifdef TXSystemIsMacOSYosemiteOrNewer
 	/* Set background appearance. */
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		/* Update button appearance. */
 		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
@@ -228,7 +228,7 @@
 
 - (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if (attributedStringValue) {
 			NSMutableAttributedString *mutableCopy = [attributedStringValue mutableCopy];
 			
@@ -282,7 +282,7 @@
 
 - (void)maybeUpdateInsertionPointColor
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		BOOL usesWriterProsColors = [RZUserDefaults() boolForKey:@"TVCMainWindowTextViewUsesCustomInsertionPointColors"];
 		
 		if (usesWriterProsColors) {
@@ -425,7 +425,7 @@
 	/* Content border padding. */
 	NSInteger contentBorderPadding = 0;
 	
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		contentBorderPadding = _WindowContentBorderTotalPaddingYosemite;
 	} else {
 		contentBorderPadding = _WindowContentBorderTotalPaddingMavericks;
@@ -451,7 +451,7 @@
 	
 	[self.textFieldHeightConstraint setConstant:backgroundHeight];
 
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite] == NO) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 	}
 
@@ -803,7 +803,7 @@
 
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor];
 		} else {
@@ -816,7 +816,7 @@
 
 - (NSColor *)systemSpecificPlaceholderTextFontColor
 {
-	if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
 			return [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor];
 		} else {
@@ -840,7 +840,7 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
 	if ([self needsToDrawRect:dirtyRect]) {
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			[self drawControllerForYosemite];
 		} else {
 			[self drawControllerForMavericks];

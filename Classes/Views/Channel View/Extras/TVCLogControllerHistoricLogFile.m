@@ -189,7 +189,7 @@
 {
 #if _usesBackgroundActivityTask == 1
 	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			if (self.truncationTimerScheduled) {
 				[self.backgroundTimer invalidate];
 				 self.backgroundTimer = nil;
@@ -222,7 +222,7 @@
 
 #if _usesBackgroundActivityTask == 1
 	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		if ([CSFWSystemInformation featureAvailableToOSXYosemite]) {
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			@autoreleasepool {
 				NSString *taskID = [self backgroundActivityIdentifier];
 

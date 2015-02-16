@@ -895,7 +895,7 @@
 				
 				BOOL isDownloaded = NO;
 				
-				if ([CSFWSystemInformation featureAvailableToOSXMavericks]) {
+				if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 					NSString *_isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
 				
 					isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSMetadataUbiquitousItemDownloadingStatusCurrent) ||
