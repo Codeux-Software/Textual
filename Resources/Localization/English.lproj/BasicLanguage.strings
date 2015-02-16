@@ -78,7 +78,7 @@
 "TDCServerSheet[1010][02]" = "Away Nickname value is misconfigured. See Identity section.";
 "TDCServerSheet[1010][03]" = "Username value is not configured correctly. See Identity section.";
 "TDCServerSheet[1010][04]" = "Real Name value is not configured correctly. See Identity section.";
-"TDCServerSheet[1010][05]" = "Server Name value is not configured correctly. See General section.";
+"TDCServerSheet[1010][05]" = "Connection Name value is not configured correctly. See General section.";
 "TDCServerSheet[1010][06]" = "Server Address value is not configured correctly. See General section.";
 "TDCServerSheet[1010][07]" = "Server Port value is not configured correctly. See General section.";
 "TDCServerSheet[1010][08]" = "Proxy Server Address value is not configured correctly. See Proxy Server section.";
@@ -622,7 +622,7 @@
 
 /* Bad certificate prompt. */
 "BasicLanguage[1229][1]" = "Untrusted Connection";
-"BasicLanguage[1229][2]" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button shown below for the option to disable the checking of this particular certificate.";
+"BasicLanguage[1229][2]" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button seen below for more information.";
 
 /* Ban list */
 "BasicLanguage[1230][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
@@ -658,13 +658,13 @@
 
 /* Configuration updated for client. */
 "BasicLanguage[1240][1]" = "Underlying Configuration Changed";
-"BasicLanguage[1240][2]" = "The configuration options for the connection \"%@\" have changed as a result of outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Server Properties window with the latest version of the configuration options for this connection?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
+"BasicLanguage[1240][2]" = "The configuration options for the connection \"%@\" have changed as a result of an outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Server Properties dialog with the latest version of the configuration options for this connection?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
 "BasicLanguage[1240][3]" = "Load New Configuration";
 "BasicLanguage[1240][4]" = "Cancel";
 
 /* Configuration updated for channel. */
 "BasicLanguage[1241][1]" = "Underlying Configuration Changed";
-"BasicLanguage[1241][2]" = "The configuration options for the channel \"%@\" have changed as a result of outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Channel Properties window with the latest version of the configuration options for this channel?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
+"BasicLanguage[1241][2]" = "The configuration options for the channel \"%@\" have changed as a result of an outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Channel Properties dialog with the latest version of the configuration options for this channel?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
 "BasicLanguage[1241][3]" = "Load New Configuration";
 "BasicLanguage[1241][4]" = "Cancel";
 
