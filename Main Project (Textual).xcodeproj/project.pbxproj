@@ -708,9 +708,6 @@
 		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C66970619A65C3300E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
-		4C66970719A65C4300E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
-		4C66970819A65C4F00E5B97B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C71CEDE199081110038C23D /* TDCAboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEB2199081110038C23D /* TDCAboutPanel.xib */; };
 		4C71CEDF199081110038C23D /* TDCAboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEB2199081110038C23D /* TDCAboutPanel.xib */; };
@@ -1204,7 +1201,6 @@
 		4CBE7B6D1A9148BD008FB230 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
 		4CBE7B6E1A9148BD008FB230 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4CBE7B6F1A9148BD008FB230 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
-		4CBE7B701A9148BD008FB230 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C38DB8919A57C39005C98E8 /* CoreServices.framework */; };
 		4CBE7B711A9148BD008FB230 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
 		4CBE7B721A9148BD008FB230 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */; };
 		4CBE7B731A9148BD008FB230 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC01580469E00846B64 /* Security.framework */; };
@@ -2068,7 +2064,6 @@
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
 		4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSharedProtocolDefinitions.h; sourceTree = "<group>"; };
-		4C38DB8919A57C39005C98E8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		4C3E69861789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
 		4C3E69871789A31E00B1CB6B /* TVCLogControllerOperationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerOperationQueue.m; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
@@ -2493,7 +2488,6 @@
 				4CF76A3F1A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
 				4C0BA6271990798800857343 /* Cocoa.framework in Frameworks */,
 				4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */,
-				4C66970819A65C4F00E5B97B /* CoreServices.framework in Frameworks */,
 				4C0BA6281990798800857343 /* Foundation.framework in Frameworks */,
 				4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */,
 				4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */,
@@ -2516,7 +2510,6 @@
 				4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
 				4CF76A451A91153A0088BF9A /* CocoaExtensions.framework in Frameworks */,
-				4C66970619A65C3300E5B97B /* CoreServices.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
 				4CF76A891A9116510088BF9A /* Growl.framework in Frameworks */,
 				4CF76A8B1A9116510088BF9A /* HockeySDK.framework in Frameworks */,
@@ -2539,7 +2532,6 @@
 				4CBE7B661A9148BD008FB230 /* BlowfishEncryption.framework in Frameworks */,
 				4CBE7B6F1A9148BD008FB230 /* Cocoa.framework in Frameworks */,
 				4CBE7B671A9148BD008FB230 /* CocoaExtensions.framework in Frameworks */,
-				4CBE7B701A9148BD008FB230 /* CoreServices.framework in Frameworks */,
 				4CBE7B711A9148BD008FB230 /* Foundation.framework in Frameworks */,
 				4CBE7B681A9148BD008FB230 /* Growl.framework in Frameworks */,
 				4CBE7B691A9148BD008FB230 /* HockeySDK.framework in Frameworks */,
@@ -2562,7 +2554,6 @@
 				4C7E4DB71A9116FA00EBE11B /* BlowfishEncryption.framework in Frameworks */,
 				4CDFA5391996EAB2007EA46E /* Cocoa.framework in Frameworks */,
 				4C7E4DB91A9116FA00EBE11B /* CocoaExtensions.framework in Frameworks */,
-				4C66970719A65C4300E5B97B /* CoreServices.framework in Frameworks */,
 				4C7E4DBD1A9116FA00EBE11B /* HockeySDK.framework in Frameworks */,
 				4CDFA53A1996EAB2007EA46E /* Foundation.framework in Frameworks */,
 				4C7E4DBB1A9116FA00EBE11B /* Growl.framework in Frameworks */,
@@ -2782,7 +2773,6 @@
 				4C46CCBB1580469E00846B64 /* AppKit.framework */,
 				4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */,
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
-				4C38DB8919A57C39005C98E8 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,

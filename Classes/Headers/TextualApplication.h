@@ -37,10 +37,6 @@
 
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
-	#import <CoreServices/CoreServices.h>
-	#import <SystemConfiguration/SystemConfiguration.h>
-
-	#import <WebKit/WebKit.h>
 
 	#import <QuartzCore/QuartzCore.h>
 
@@ -48,6 +44,10 @@
 	#import <SecurityInterface/SFCertificatePanel.h>
 	#import <SecurityInterface/SFCertificateTrustPanel.h>
 	#import <SecurityInterface/SFChooseIdentityPanel.h>
+
+	#import <SystemConfiguration/SystemConfiguration.h>
+
+	#import <WebKit/WebKit.h>
 
 	#import <AutoHyperlinks/AutoHyperlinks.h>
 	#import <BlowfishEncryption/BlowfishEncryption.h>
