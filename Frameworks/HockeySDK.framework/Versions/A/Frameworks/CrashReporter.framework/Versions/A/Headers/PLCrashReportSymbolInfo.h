@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausible.coop>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2012-2013 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,36 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+@interface PLCrashReportSymbolInfo : NSObject {
+@private
+    /** The symbol name. */
+    NSString *_symbolName;
+    
+    /** The symbol start address. */
+    uint64_t _startAddress;
+    
+    /** The symbol end address, if explicitly defined. Will be 0 if unknown. */
+    uint64_t _endAddress;
+}
 
-/**
- The internal superclass for all component managers
- 
+- (id) initWithSymbolName: (NSString *) symbolName
+             startAddress: (uint64_t) startAddress
+               endAddress: (uint64_t) endAddress;
+
+/** The symbol name. */
+@property(nonatomic, readonly) NSString *symbolName;
+
+/** The symbol start address. */
+@property(nonatomic, readonly) uint64_t startAddress;
+
+/* The symbol end address, if explicitly defined. This will only be included if the end address is
+ * explicitly defined (eg, by DWARF debugging information), will not be derived by best-guess
+ * heuristics.
+ *
+ * If unknown, the address will be 0.
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
-
-/**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
- */
-@property (nonatomic, strong) NSString *serverURL;
-
+@property(nonatomic, readonly) uint64_t endAddress;
 
 @end

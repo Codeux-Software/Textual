@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausible.coop>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2008-2013 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,27 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+@interface PLCrashReportRegisterInfo : NSObject {
+@private
+    /** Register name */
+    NSString *_registerName;
+    
+    /** Register value */
+    uint64_t _registerValue;
+}
+
+- (id) initWithRegisterName: (NSString *) registerName registerValue: (uint64_t) registerValue;
 
 /**
- The internal superclass for all component managers
- 
+ * Register name.
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@property(nonatomic, readonly) NSString *registerName;
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ * Register value.
  */
-@property (nonatomic, strong) NSString *serverURL;
-
+@property(nonatomic, readonly) uint64_t registerValue;
 
 @end

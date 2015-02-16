@@ -26,29 +26,32 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
 
 /**
- The internal superclass for all component managers
- 
+ *  This class provides properties that can be attached to a crash report via a custom alert view flow
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@interface BITCrashMetaData : NSObject
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ *  User provided description that should be attached to the crash report as plain text
  */
-@property (nonatomic, strong) NSString *serverURL;
+@property (nonatomic, copy) NSString *userDescription;
 
+/**
+ *  User name that should be attached to the crash report
+ */
+@property (nonatomic, copy) NSString *userName;
+
+/**
+ *  User email that should be attached to the crash report
+ */
+@property (nonatomic, copy) NSString *userEmail;
+
+/**
+ *  User ID that should be attached to the crash report
+ */
+@property (nonatomic, copy) NSString *userID;
 
 @end

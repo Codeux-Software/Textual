@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausiblelabs.com>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2008-2009 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,28 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+@interface PLCrashReportApplicationInfo : NSObject {
+@private
+    /** Application identifier */
+    NSString *_applicationIdentifier;
+    
+    /** Application version */
+    NSString *_applicationVersion;
+}
+
+- (id) initWithApplicationIdentifier: (NSString *) applicationIdentifier 
+                  applicationVersion: (NSString *) applicationVersion;
 
 /**
- The internal superclass for all component managers
- 
+ * The application identifier. This is usually the application's CFBundleIdentifier value.
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@property(nonatomic, readonly) NSString *applicationIdentifier;
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ * The application version. This is usually the application's CFBundleVersion value.
  */
-@property (nonatomic, strong) NSString *serverURL;
-
+@property(nonatomic, readonly) NSString *applicationVersion;
 
 @end

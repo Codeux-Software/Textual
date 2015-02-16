@@ -53,27 +53,7 @@
  @warning You should **NOT** change any module configuration after calling `startManager`!
  
  */
-@interface BITHockeyManager : NSObject {
-@private
-  NSString *_appIdentifier;
-  NSString *_serverURL;
-  
-  BOOL _validAppIdentifier;
-  
-  BOOL _startManagerIsInvoked;
-  
-  BITCrashManager *_crashManager;
-  id <BITHockeyManagerDelegate> _delegate;
-  BOOL _disableCrashManager;
-  
-  BITFeedbackManager *_feedbackManager;
-  BOOL _disableFeedbackManager;
-  
-  BOOL _debugLogEnabled;
-
-  NSInteger         _statusCode;
-  NSURLConnection   *_urlConnection;
-}
+@interface BITHockeyManager : NSObject
 
 #pragma mark - Public Methods
 

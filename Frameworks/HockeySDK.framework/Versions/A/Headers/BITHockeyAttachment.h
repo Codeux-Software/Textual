@@ -1,7 +1,7 @@
 /*
  * Author: Andreas Linde <mail@andreaslinde.de>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2014 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,41 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+/**
+ Provides support to add binary attachments to crash reports
+ 
+ This is used by `[BITCrashManagerDelegate attachmentForCrashManager:]`
+ */
+@interface BITHockeyAttachment : NSObject<NSCoding>
 
 /**
- The internal superclass for all component managers
- 
+ The filename the attachment should get
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@property (nonatomic, readonly, strong) NSString *filename;
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ The attachment data as NSData object
  */
-@property (nonatomic, strong) NSString *serverURL;
+@property (nonatomic, readonly, strong) NSData *hockeyAttachmentData;
 
+/**
+ The content type of your data as MIME type
+ */
+@property (nonatomic, readonly, strong) NSString *contentType;
+
+/**
+ Create an BITHockeyAttachment instance with a given filename and NSData object
+ 
+ @param filename             The filename the attachment should get. If nil will get a automatically generated filename
+ @param hockeyAttachmentData The attachment data as NSData. The instance will be ignore if this is set to nil!
+ @param contentType          The content type of your data as MIME type. If nil will be set to "application/octet-stream"
+ 
+ @return An instsance of BITHockeyAttachment
+ */
+- (instancetype)initWithFilename:(NSString *)filename
+            hockeyAttachmentData:(NSData *)hockeyAttachmentData
+                     contentType:(NSString *)contentType;
 
 @end
