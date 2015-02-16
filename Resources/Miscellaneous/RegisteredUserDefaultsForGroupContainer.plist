@@ -39,9 +39,9 @@
 	<key>File Transfers -&gt; File Transfer IP Address Detection Method</key>
 	<integer>1</integer>
 	<key>File Transfers -&gt; File Transfer Port Range End</key>
-	<integer>1115</integer>
+	<integer>1130</integer>
 	<key>File Transfers -&gt; File Transfer Port Range Start</key>
-	<integer>1096</integer>
+	<integer>1115</integer>
 	<key>File Transfers -&gt; File Transfer Request Reply Action</key>
 	<integer>2</integer>
 	<key>File Transfers -&gt; Idle System Sleep Prevented During File Transfer</key>

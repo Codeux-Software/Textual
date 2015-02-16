@@ -59,7 +59,7 @@
 @property (nonatomic, assign) TXUnsignedLongLong currentRecord;
 @property (nonatomic, strong) NSMutableArray *speedRecords;
 @property (nonatomic, assign) TDCFileTransferDialogTransferStatus transferStatus;
-@property (nonatomic, strong) id portMapping;
+@property (nonatomic, strong) XRPortMapper *portMapping;
 @property (nonatomic, assign) NSInteger sendQueueSize;
 @property (nonatomic, strong) dispatch_queue_t serverDispatchQueue;
 @property (nonatomic, strong) dispatch_queue_t serverSocketQueue;

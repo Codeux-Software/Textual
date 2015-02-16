@@ -61,8 +61,6 @@
 
 #import "TextualApplication.h"
 
-#import <TCMPortMapper/TCMPortMapper.h>
-
 @implementation TDCFileTransferDialogTransferController
 
 #pragma mark -
@@ -276,17 +274,21 @@
 	/* Are we listening on the port? */
 	if (isActive) {
 		/* Try to map the port. */
-		TCMPortMapper *pm = [TCMPortMapper sharedInstance];
+		self.portMapping = [[XRPortMapper alloc] initWithPort:self.transferPort];
 
-		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidStartWork:) name:TCMPortMapperDidStartWorkNotification object:pm];
-		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidFinishWork:) name:TCMPortMapperDidFinishWorkNotification object:pm];
+		[self.portMapping setMapTCP:YES];
+		[self.portMapping setMapUDP:NO];
+		[self.portMapping setDesiredPublicPort:self.transferPort];
 
-		[pm addPortMapping:[TCMPortMapping portMappingWithLocalPort:(int)_transferPort
-												desiredExternalPort:(int)_transferPort
-												  transportProtocol:TCMPortMappingTransportProtocolTCP
-														   userInfo:nil]];
+		[RZNotificationCenter() addObserver:self selector:@selector(portMapperDidFinishWork:) name:XRPortMapperDidChangedNotification object:self.portMapping];
 
-		[pm start];
+		self.transferStatus = TDCFileTransferDialogTransferMappingListeningPortStatus;
+
+		[self reloadStatusInformation];
+
+		if ([self.portMapping open] == NO) {
+			[self portMapperDidFinishWork:nil];
+		}
 
 		return YES;
 	}
@@ -333,51 +335,27 @@
 	return nil;
 }
 
-- (void)portMapperDidStartWork:(NSNotification *)aNotification
-{
-	PointerIsNotEmptyAssert(self.portMapping);
-
-	TCMPortMapping *e = [self portMappingForSelf];
-
-	PointerIsEmpty(e);
-
-	self.portMapping = e;
-
-	self.transferStatus = TDCFileTransferDialogTransferMappingListeningPortStatus;
-
-	[self reloadStatusInformation];
-}
-
 - (void)portMapperDidFinishWork:(NSNotification *)aNotification
 {
 	NSAssertReturn(self.transferStatus == TDCFileTransferDialogTransferMappingListeningPortStatus);
 
-	TCMPortMapping *e = self.portMapping;
+	if ([self.portMapping isMapped]) {
+		[self requestLocalIPAddress];
 
-	PointerIsEmptyAssert(e);
+		LogToConsole(@"Successful port mapping on port %i", self.transferPort);
+	} else {
+		if ([self isReversed]) {
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
+		} else {
+			/* If mapping fails, we silently fail. */
+			/* We tried and it was successful, then that is good, but if we
+			 did not, still start listening just incase other conditions allow
+			 the transfer to still take place. */
 
-	if ([e desiredExternalPort] == self.transferPort) {
-		if ([e mappingStatus] == TCMPortMappingStatusTrying)
-		{
-			; // Other mappings may be doing work.
+			[self requestLocalIPAddress];
 		}
-		else
-		{
-			if ([self isReversed]) {
-				if ([e mappingStatus] == TCMPortMappingStatusUnmapped) {
-					[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
-				} else {
-					[self requestLocalIPAddress];
-				}
-			} else {
-				/* If mapping fails, we silently fail. */
-				/* We tried and it was successful, then that is good, but if we
-				 did not, still start listening just incase other conditions allow
-				 the transfer to still take place. */
 
-				[self requestLocalIPAddress];
-			}
-		}
+		LogToConsole(@"Port mapping failed with error code: %i", [self.portMapping error]);
 	}
 }
 
@@ -394,12 +372,14 @@
 
 	/* Important check. */
 	if (cachedIPAddress == nil && usesManualDetection == NO) {
-		NSString *external = [[TCMPortMapper sharedInstance] externalIPAddress];
+		if (self.portMapping) {
+			NSString *external = [self.portMapping publicAddress];
 
-		if ([external isIPAddress]) {
-			[self.transferDialog setCachedIPAddress:external];
+			if ([external isIPAddress]) {
+				[self.transferDialog setCachedIPAddress:external];
 
-			cachedIPAddress = external;
+				cachedIPAddress = external;
+			}
 		}
 	}
 
@@ -423,34 +403,12 @@
 
 - (void)closePortMapping
 {
-	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
-	
-	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidStartWorkNotification object:pm];
-	[RZNotificationCenter() removeObserver:self name:TCMPortMapperDidFinishWorkNotification object:pm];
-	
 	PointerIsEmptyAssert(self.portMapping);
 
-	[pm removePortMapping:self.portMapping];
+	[RZNotificationCenter() removeObserver:self name:XRPortMapperDidChangedNotification object:self.portMapping];
 
-	self.portMapping = nil;
-}
-
-- (TCMPortMapping *)portMappingForSelf
-{
-	TCMPortMapper *pm = [TCMPortMapper sharedInstance];
-
-	/* Enumrate all mappings to find our own. */
-	NSArray *allMappings = [[pm portMappings] allObjects];
-
-	for (TCMPortMapping *e in allMappings) {
-		/* Return the mapping matching our transfer port. */
-
-		if ([e desiredExternalPort] == self.transferPort) {
-			return e;
-		}
-	}
-
-	return nil;
+	[self.portMapping close];
+	 self.portMapping = nil;
 }
 
 - (void)localIPAddressWasDetermined
