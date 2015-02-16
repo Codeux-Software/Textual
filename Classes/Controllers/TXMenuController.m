@@ -150,6 +150,9 @@
 	IRCChannel *c = [mainWindow() selectedChannel];
 
 	switch (tag) {
+		case 935: // --
+		case 937: // --
+		case 936: // --
 		case 2433: // "Sort Channel List"
 		case 32345: // "Mark Scrollback"
 		case 32346: // "Scrollback Marker"
@@ -233,13 +236,20 @@
 
 			break;
 		}
-		case 935: // --
-		case 937: // --
-		case 936: // --
+		case 5423: // "Channel" (submenu) (main menu)
+		case 5424: // "Channel" (submenu) (webkit)
 		{
-			BOOL condition = (_isChannel || _isQuery);
+			if (tag == 5424) {
+				[item setHidden:(_isChannel == NO)];
+			}
 
-			[item setHidden:(condition == NO)];
+			BOOL condition2 =  _isQuery;
+			BOOL condition1 = (condition2 || _isChannel);
+
+			[[[item submenu] itemWithTag:935] setHidden:condition2];
+
+			[[[item submenu] itemWithTag:936] setHidden:(condition1 == NO)];
+			[[[item submenu] itemWithTag:937] setHidden:(condition1 == NO)];
 
 			return YES;
 

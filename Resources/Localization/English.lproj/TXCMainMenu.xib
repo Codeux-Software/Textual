@@ -317,7 +317,7 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Channel" id="276">
+                <menuItem title="Channel" tag="5423" id="276">
                     <menu key="submenu" title="Channel" id="277">
                         <items>
                             <menuItem title="Join Channel" tag="601" id="290">
@@ -332,9 +332,6 @@ CA
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="935" id="292">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="1q8-Qs-wEU"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Add Channel…" tag="651" keyEquivalent="+" id="305">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
@@ -353,9 +350,6 @@ CA
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="937" id="307">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="qlB-jA-6W9"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1515">
                                 <connections>
@@ -444,6 +438,9 @@ CA
                             </menuItem>
                         </items>
                     </menu>
+                    <connections>
+                        <action selector="emptyAction:" target="267" id="xcw-D5-3ZG"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Navigation" id="1542">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -1177,7 +1174,7 @@ CQ
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" tag="936" id="1397"/>
-                <menuItem title="Channel" tag="5422" id="1471">
+                <menuItem title="Channel" tag="5424" id="1471">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Channel" id="1484">
                         <items>
@@ -1193,9 +1190,6 @@ CQ
                             </menuItem>
                             <menuItem isSeparatorItem="YES" tag="935" id="1880">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                <connections>
-                                    <action selector="emptyAction:" target="267" id="FRW-l6-gzr"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Add Channel…" tag="651" keyEquivalent="+" id="1881">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
@@ -1312,7 +1306,7 @@ CA
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="196.5" y="628.5"/>
+            <point key="canvasLocation" x="111.5" y="315.5"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
             <items>

@@ -99,7 +99,9 @@
 	54092: "Enable Developer Mode"
 	541: "Server Properties…"
 	5421: "Query Logs"
-	5422: "Channel" (Submenu)
+	5422: "Channel Properties" (Submenu)
+	5423: "Channel" (Submenu) (menu bar)
+	5424: "Channel" (Submenu) (webkit)
 	542: "Logs"
 	549: "Copy"
 	5675: "Connect to Help Channel"
