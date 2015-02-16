@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausiblelabs.com>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2008-2009 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,35 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+@interface PLCrashReportSignalInfo : NSObject {
+@private
+    /** Signal name */
+    NSString *_name;
+    
+    /** Signal code */
+    NSString *_code;
+
+    /** Fauling instruction or address */
+    uint64_t _address;
+}
+
+- (id) initWithSignalName: (NSString *) name code: (NSString *) code address: (uint64_t) address;
 
 /**
- The internal superclass for all component managers
- 
+ * The signal name.
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@property(nonatomic, readonly) NSString *name;
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ * The signal code.
  */
-@property (nonatomic, strong) NSString *serverURL;
+@property(nonatomic, readonly) NSString *code;
 
+/**
+ * The faulting instruction or address.
+ */
+@property(nonatomic, readonly) uint64_t address;
 
 @end

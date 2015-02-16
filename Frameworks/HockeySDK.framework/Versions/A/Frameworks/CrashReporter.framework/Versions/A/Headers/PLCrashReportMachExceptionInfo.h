@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausiblelabs.com>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2013 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,23 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+@interface PLCrashReportMachExceptionInfo : NSObject {
+@private
+    /** The Mach exception type. */
+    uint64_t _type;
+    
+    /** The Mach exception codes, represented as an ordered array of NSNumber instances. */
+    NSArray *_codes;
+}
 
-/**
- The internal superclass for all component managers
- 
- */
+- (id) initWithType: (uint64_t) type codes: (NSArray *) codes;
 
-@interface BITHockeyBaseManager : NSObject
+/** The Mach exception type. */
+@property(nonatomic, readonly) uint64_t type;
 
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
-
-/**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
- */
-@property (nonatomic, strong) NSString *serverURL;
-
+/** The Mach exception codes, represented as an ordered array of 64-bit unsigned NSNumber instances. */
+@property(nonatomic, readonly) NSArray *codes;
 
 @end

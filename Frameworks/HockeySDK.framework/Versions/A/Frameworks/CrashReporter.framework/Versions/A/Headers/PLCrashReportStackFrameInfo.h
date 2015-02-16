@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausible.coop>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2008-2013 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,27 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
+#import "PLCrashReportSymbolInfo.h"
 
+@interface PLCrashReportStackFrameInfo : NSObject {
+@private
+    /** Frame instruction pointer. */
+    uint64_t _instructionPointer;
+
+    /** Symbol information, if available. Otherwise, will be nil. */
+    PLCrashReportSymbolInfo *_symbolInfo;
+}
+
+- (id) initWithInstructionPointer: (uint64_t) instructionPointer symbolInfo: (PLCrashReportSymbolInfo *) symbolInfo;
 
 /**
- The internal superclass for all component managers
- 
+ * Frame's instruction pointer.
  */
+@property(nonatomic, readonly) uint64_t instructionPointer;
 
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
-
-/**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
- */
-@property (nonatomic, strong) NSString *serverURL;
-
+/** Symbol information for this frame.
+ * This may be unavailable, and this property will be nil. */
+@property(nonatomic, readonly) PLCrashReportSymbolInfo *symbolInfo;
 
 @end

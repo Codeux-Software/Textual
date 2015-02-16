@@ -1,7 +1,7 @@
 /*
- * Author: Andreas Linde <mail@andreaslinde.de>
+ * Author: Landon Fuller <landonf@plausiblelabs.com>
  *
- * Copyright (c) 2012-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2008-2013 Plausible Labs Cooperative, Inc.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -26,29 +26,26 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
 
+#import "PLCrashReport.h"
 
 /**
- The internal superclass for all component managers
- 
+ * A crash report formatter accepts a PLCrashReport instance, formats it according to implementation-specified rules,
+ * (such as implementing text output support), and returns the result.
  */
-
-@interface BITHockeyBaseManager : NSObject
-
-///-----------------------------------------------------------------------------
-/// @name Modules
-///-----------------------------------------------------------------------------
-
+@protocol PLCrashReportFormatter
 
 /**
- Defines the server URL to send data to or request data from
- 
- By default this is set to the HockeyApp servers and there rarely should be a
- need to modify that.
+ * Format the provided @a report.
+ *
+ * @param report Report to be formatted.
+ * @param outError A pointer to an NSError object variable. If an error occurs, this pointer will contain an error
+ * object indicating why the pending crash report could not be formatted. If no error occurs, this parameter will
+ * be left unmodified. You may specify nil for this parameter, and no error information will be provided.
+ *
+ * @return Returns the formatted report data on success, or nil on failure.
  */
-@property (nonatomic, strong) NSString *serverURL;
-
+- (NSData *) formatReport: (PLCrashReport *) report error: (NSError **) outError;
 
 @end
