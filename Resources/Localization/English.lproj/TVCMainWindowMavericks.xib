@@ -406,49 +406,6 @@
                                         <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="PiS-1p-E5q"/>
                                     </connections>
                                 </menuItem>
-                                <menuItem title=" Random" onStateImage="FormattingColor_Random" offStateImage="FormattingColor_Random" mixedStateImage="FormattingColor_Random" tag="199" id="CsR-vt-Gem">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content=" R">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="0.050980392156862744" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="an">
-                                            <attributes>
-                                                <color key="NSColor" red="0.5490196078431373" green="0.0" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="d">
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="1" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="o">
-                                            <attributes>
-                                                <color key="NSColor" red="0.070588235294117646" green="0.0" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="m">
-                                            <attributes>
-                                                <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                    <connections>
-                                        <action selector="insertForegroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="2pY-5g-aKs"/>
-                                    </connections>
-                                </menuItem>
                             </items>
                         </menu>
                     </menuItem>
@@ -745,49 +702,6 @@
                                     <modifierMask key="keyEquivalentModifierMask"/>
                                     <connections>
                                         <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="XOt-xw-lR0"/>
-                                    </connections>
-                                </menuItem>
-                                <menuItem title=" Random" onStateImage="FormattingColor_Random" offStateImage="FormattingColor_Random" mixedStateImage="FormattingColor_Random" tag="199" id="QbV-Ta-nV9">
-                                    <attributedString key="attributedTitle">
-                                        <fragment content=" R">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="0.050980392156862744" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="an">
-                                            <attributes>
-                                                <color key="NSColor" red="0.5490196078431373" green="0.0" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="d">
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="1" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="o">
-                                            <attributes>
-                                                <color key="NSColor" red="0.070588235294117646" green="0.0" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="m">
-                                            <attributes>
-                                                <color key="NSColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                    <connections>
-                                        <action selector="insertBackgroundColorCharIntoTextBox:" target="yyd-f5-aHb" id="aOu-QZ-yvv"/>
                                     </connections>
                                 </menuItem>
                             </items>
@@ -1643,7 +1557,6 @@ There are no other limits. What you see, is what you get.</string>
         <image name="FormattingColor_8" width="16" height="16"/>
         <image name="FormattingColor_9" width="16" height="16"/>
         <image name="FormattingColor_Rainbow" width="8" height="8"/>
-        <image name="FormattingColor_Random" width="16" height="16"/>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>

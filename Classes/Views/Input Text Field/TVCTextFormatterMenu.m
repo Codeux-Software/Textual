@@ -45,7 +45,6 @@
 #define _formattingMenuForegroundColorDisabledTag		95004
 #define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
-#define _formattingMenuRandomColorMenuItemTag			199
 
 #define _returnMethodOnBadRange			if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) {		\
 											return;																				\
@@ -298,36 +297,6 @@
 				rainbowArrayIndex += 1;
 			}
 		}
-		else if ([sender tag] == _formattingMenuRandomColorMenuItemTag)
-		{
-			if (selectedTextRange.length > IRCTextFormatterMaximumRainbowTextFormattingLength) {
-				selectedTextRange.length = IRCTextFormatterMaximumRainbowTextFormattingLength;
-			}
-			
-			NSRange charRange;
-			
-			NSUInteger charCountIndex = 0;
-			
-			while (1 == 1) {
-				/* Break when we reach the length of the selected range. */
-				if (charCountIndex >= selectedTextRange.length) {
-					break;
-				}
-				
-				/* Range of replacement. */
-				charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-				
-				/* Apply color. */
-				NSInteger colorChar = TXRandomNumber(15);
-				
-				[self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												   value:@(colorChar)
-												   range:charRange];
-				
-				/* Bump numbers. */
-				charCountIndex += 1;
-			}
-		}
 		else
 		{
 			[self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
@@ -385,36 +354,6 @@
 				charCountIndex += 1;
 				
 				rainbowArrayIndex += 1;
-			}
-		}
-		else if ([sender tag] == _formattingMenuRandomColorMenuItemTag)
-		{
-			if (selectedTextRange.length > IRCTextFormatterMaximumRainbowTextFormattingLength) {
-				selectedTextRange.length = IRCTextFormatterMaximumRainbowTextFormattingLength;
-			}
-			
-			NSRange charRange;
-			
-			NSUInteger charCountIndex = 0;
-
-			while (1 == 1) {
-				/* Break when we reach the length of the selected range. */
-				if (charCountIndex >= selectedTextRange.length) {
-					break;
-				}
-				
-				/* Range of replacement. */
-				charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-				
-				/* Apply color. */
-				NSInteger colorChar = TXRandomNumber(15);
-				
-				[self.textField setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-												   value:@(colorChar)
-												   range:charRange];
-				
-				/* Bump numbers. */
-				charCountIndex += 1;
 			}
 		}
 		else
