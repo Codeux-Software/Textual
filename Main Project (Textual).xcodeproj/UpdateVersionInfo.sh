@@ -26,7 +26,6 @@ bundleVersion=`/bin/date -r "${gitDateOfLastCommit}" "+%y%m%d.%H"`
 # header. This header file gives various section of the code base version
 # information so it does not need to constantly access the Info.plist file.
 
-bundleVersionForComparisons=$(/usr/libexec/PlistBuddy -c "Print \"TXMinimumBundleVersionForLoadingExtensions\"" Info.plist)
 bundleVersionShort=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleShortVersionString\"" Info.plist)
 bundleName=$(/usr/libexec/PlistBuddy -c "Print \"CFBundleName\"" Info.plist)
 
