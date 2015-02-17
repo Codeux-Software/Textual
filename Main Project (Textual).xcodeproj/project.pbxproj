@@ -195,7 +195,6 @@
 		4C0BA5441990798800857343 /* applicationIconYosemite.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F4E01943A6B9004CA8BA /* applicationIconYosemite.icns */; };
 		4C0BA5451990798800857343 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229071978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif */; };
 		4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229081978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif */; };
-		4C0BA5471990798800857343 /* FormattingColor_Random.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */; };
 		4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3EC1943A654004CA8BA /* FormattingColor_5.png */; };
 		4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
 		4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2290D1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif */; };
@@ -204,7 +203,6 @@
 		4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FF1978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif */; };
 		4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C77662E1978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif */; };
 		4C0BA5511990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */; };
-		4C0BA5521990798800857343 /* FormattingColor_Random@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */; };
 		4C0BA5541990798800857343 /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DF1943A654004CA8BA /* encryptionLockIconLight@2x.tif */; };
 		4C0BA5551990798800857343 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766311978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif */; };
 		4C0BA5571990798800857343 /* DIGreenBadgeRightMavericks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164A01943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png */; };
@@ -515,10 +513,6 @@
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
-		4C2645CD1989EAC40025FADF /* FormattingColor_Random.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */; };
-		4C2645CE1989EAC40025FADF /* FormattingColor_Random.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */; };
-		4C2645CF1989EAC40025FADF /* FormattingColor_Random@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */; };
-		4C2645D01989EAC40025FADF /* FormattingColor_Random@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C31D90E197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
 		4C31D90F197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
@@ -1329,7 +1323,6 @@
 		4CDFA44E1996EAB2007EA46E /* TDCInviteSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEC4199081110038C23D /* TDCInviteSheet.xib */; };
 		4CDFA44F1996EAB2007EA46E /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229071978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif */; };
 		4CDFA4501996EAB2007EA46E /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229081978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif */; };
-		4CDFA4511996EAB2007EA46E /* FormattingColor_Random.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */; };
 		4CDFA4521996EAB2007EA46E /* FormattingColor_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3EC1943A654004CA8BA /* FormattingColor_5.png */; };
 		4CDFA4531996EAB2007EA46E /* TDChanBanExceptionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEB8199081110038C23D /* TDChanBanExceptionSheet.xib */; };
 		4CDFA4541996EAB2007EA46E /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB229001978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif */; };
@@ -1343,7 +1336,6 @@
 		4CDFA45C1996EAB2007EA46E /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C77662E1978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif */; };
 		4CDFA45D1996EAB2007EA46E /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */; };
 		4CDFA45E1996EAB2007EA46E /* TDCAboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEB2199081110038C23D /* TDCAboutPanel.xib */; };
-		4CDFA45F1996EAB2007EA46E /* FormattingColor_Random@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */; };
 		4CDFA4601996EAB2007EA46E /* TVCMainWindowYosemite.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CEDA199081110038C23D /* TVCMainWindowYosemite.xib */; };
 		4CDFA4611996EAB2007EA46E /* encryptionLockIconLight@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DF1943A654004CA8BA /* encryptionLockIconLight@2x.tif */; };
 		4CDFA4621996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766311978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif */; };
@@ -2054,8 +2046,6 @@
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
-		4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = FormattingColor_Random.tif; sourceTree = "<group>"; };
-		4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "FormattingColor_Random@2x.tif"; sourceTree = "<group>"; };
 		4C2991AA19BB9CC800B4E0E0 /* Provisioning Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Provisioning Profile.xcconfig"; path = "Resources/Build Configurations/Provisioning Profile.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForApplicationContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForApplicationContainer.plist; sourceTree = SOURCE_ROOT; };
@@ -2858,8 +2848,6 @@
 				4C46F3F01943A654004CA8BA /* FormattingColor_9.png */,
 				4C46F3F11943A654004CA8BA /* FormattingColor_Rainbow.tif */,
 				4C46F3F21943A654004CA8BA /* FormattingColor_Rainbow@2x.tif */,
-				4C2645CB1989EAC40025FADF /* FormattingColor_Random.tif */,
-				4C2645CC1989EAC40025FADF /* FormattingColor_Random@2x.tif */,
 			);
 			path = "IRC Formatting Colors";
 			sourceTree = "<group>";
@@ -4589,7 +4577,6 @@
 				4C71CEFB199081110038C23D /* TDCInviteSheet.xib in Resources */,
 				4C0BA5451990798800857343 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C0BA5471990798800857343 /* FormattingColor_Random.tif in Resources */,
 				4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */,
 				4C71CEE9199081110038C23D /* TDChanBanExceptionSheet.xib in Resources */,
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4603,7 +4590,6 @@
 				4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C0BA5511990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4C71CEE0199081110038C23D /* TDCAboutPanel.xib in Resources */,
-				4C0BA5521990798800857343 /* FormattingColor_Random@2x.tif in Resources */,
 				4C71CF1C199081110038C23D /* TVCMainWindowYosemite.xib in Resources */,
 				4C0BA5541990798800857343 /* encryptionLockIconLight@2x.tif in Resources */,
 				4C0BA5551990798800857343 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
@@ -4708,7 +4694,6 @@
 				4C71CEF9199081110038C23D /* TDCInviteSheet.xib in Resources */,
 				4CB229421978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C2645CD1989EAC40025FADF /* FormattingColor_Random.tif in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4C71CEE7199081110038C23D /* TDChanBanExceptionSheet.xib in Resources */,
 				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4722,7 +4707,6 @@
 				4C7766421978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C7A21951979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4C71CEDE199081110038C23D /* TDCAboutPanel.xib in Resources */,
-				4C2645CF1989EAC40025FADF /* FormattingColor_Random@2x.tif in Resources */,
 				4C71CF1A199081110038C23D /* TVCMainWindowYosemite.xib in Resources */,
 				4C46F4551943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C7766481978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
@@ -4827,7 +4811,6 @@
 				4C71CEFA199081110038C23D /* TDCInviteSheet.xib in Resources */,
 				4CB229431978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229451978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C2645CE1989EAC40025FADF /* FormattingColor_Random.tif in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4C71CEE8199081110038C23D /* TDChanBanExceptionSheet.xib in Resources */,
 				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4841,7 +4824,6 @@
 				4C7766431978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C7A21961979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4C71CEDF199081110038C23D /* TDCAboutPanel.xib in Resources */,
-				4C2645D01989EAC40025FADF /* FormattingColor_Random@2x.tif in Resources */,
 				4C71CF1B199081110038C23D /* TVCMainWindowYosemite.xib in Resources */,
 				4C46F4561943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C7766491978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
@@ -4946,7 +4928,6 @@
 				4CDFA44E1996EAB2007EA46E /* TDCInviteSheet.xib in Resources */,
 				4CDFA44F1996EAB2007EA46E /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CDFA4501996EAB2007EA46E /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4CDFA4511996EAB2007EA46E /* FormattingColor_Random.tif in Resources */,
 				4CDFA4521996EAB2007EA46E /* FormattingColor_5.png in Resources */,
 				4CDFA4531996EAB2007EA46E /* TDChanBanExceptionSheet.xib in Resources */,
 				4CDFA4541996EAB2007EA46E /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4960,7 +4941,6 @@
 				4CDFA45C1996EAB2007EA46E /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4CDFA45D1996EAB2007EA46E /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CDFA45E1996EAB2007EA46E /* TDCAboutPanel.xib in Resources */,
-				4CDFA45F1996EAB2007EA46E /* FormattingColor_Random@2x.tif in Resources */,
 				4CDFA4601996EAB2007EA46E /* TVCMainWindowYosemite.xib in Resources */,
 				4CDFA4611996EAB2007EA46E /* encryptionLockIconLight@2x.tif in Resources */,
 				4CDFA4621996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
