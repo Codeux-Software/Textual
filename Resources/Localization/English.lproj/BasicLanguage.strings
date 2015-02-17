@@ -668,16 +668,6 @@
 "BasicLanguage[1241][3]" = "Load New Configuration";
 "BasicLanguage[1241][4]" = "Cancel";
 
-/* Beta warning dialog. */
-"BasicLanguage[1242][1]" = "Thank you for beta testing Textual";
-"BasicLanguage[1242][2]" = "This copy of Textual will expire in %@. Once expired, it can no longer be used.";
-"BasicLanguage[1242][3]" = "OK";
-
-/* Beta warning dialog. */
-"BasicLanguage[1243][1]" = "Thank you for beta testing Textual";
-"BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
-"BasicLanguage[1243][3]" = "OK";
-
 /* Incompatible style warning dialog. */
 "BasicLanguage[1246][1]" = "Incompatible Style";
 "BasicLanguage[1246][2]" = "The style named \"%1$@\" is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";

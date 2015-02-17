@@ -38,16 +38,10 @@
 
 #import "TextualApplication.h"
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
-#import "BuildConfig.h"
-
-#define _betaTesterMaxApplicationLifespan			5184000 // 60 days
-#endif 
-
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
-#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	#define _hockeyAppApplicationIdentifier			@"93d6d315ace023a30793e8c52a02f920"
 #endif
 
@@ -166,47 +160,12 @@
 	}
 }
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
-- (void)presentBetaTesterDialog
-{
-	NSTimeInterval currentTime = [NSDate epochTime];
-	
-	NSTimeInterval buildTime = [TXBundleBuildDate integerValue];
-	
-	NSTimeInterval timeSpent = (currentTime - buildTime);
-	NSTimeInterval timeleft = (_betaTesterMaxApplicationLifespan - timeSpent);
-	
-	if (timeSpent > _betaTesterMaxApplicationLifespan) {
-		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1243][2]")
-												  title:TXTLS(@"BasicLanguage[1243][1]")
-										  defaultButton:TXTLS(@"BasicLanguage[1243][3]")
-								  alternateButton:nil
-								   suppressionKey:nil
-								  suppressionText:nil];
-		
-		self.skipTerminateSave = YES;
-		self.applicationIsTerminating = YES;
-		
-		[RZSharedApplication() terminate:nil];
-	} else {
-		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
-		
-		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
-												  title:TXTLS(@"BasicLanguage[1242][1]")
-										  defaultButton:TXTLS(@"BasicLanguage[1242][3]")
-								  alternateButton:nil
-								   suppressionKey:nil
-								  suppressionText:nil];
-	}
-}
-#endif
-
 #pragma mark -
 #pragma mark NSApplication Delegate
 
 - (void)awakeHockeyApp
 {
-#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:_hockeyAppApplicationIdentifier delegate:self];
 	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
@@ -216,12 +175,6 @@
 {
 #ifndef DEBUG
 	[self checkForOtherCopiesOfTextualRunning];
-#endif
-
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
-	[self presentBetaTesterDialog];
-
-	[mainWindow() makeKeyAndOrderFront:nil];
 #endif
 
 	[self awakeHockeyApp];

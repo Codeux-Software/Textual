@@ -41,6 +41,8 @@
 
 @implementation THOPluginItem
 
+#define TXBundleMininumBundleVersionForLoadingExtensions			@"5.0.0"
+
 #define OINE(o)					 NSObjectIsNotEmpty(o)
 
 #define VOCT(o, t)				 [o isKindOfClass:[t class]]
@@ -66,13 +68,13 @@
 		LogToConsole(@"For example, to support this version and later, add the value:");
 		LogToConsole(@"  ");
 		LogToConsole(@"     <key>MinimumTextualVersion</key>");
-		LogToConsole(@"     <string>%@</string>", TXBundleBuildVersionForComparisons);
+		LogToConsole(@"     <string>%@</string>", TXBundleMininumBundleVersionForLoadingExtensions);
 		LogToConsole(@"  ");
 		LogToConsole(@"Failure to provide a minimum version is currently only a warning, but in the future, Textual will");
 		LogToConsole(@"refuse to load bundles that do not specify a minimum version to load within.");
 		LogToConsole(@"-------------- WARNING -------------- ");
 	} else {
-		NSComparisonResult comparisonResult = [comparisonVersion compare:TXBundleBuildVersionForComparisons options:NSNumericSearch];
+		NSComparisonResult comparisonResult = [comparisonVersion compare:TXBundleMininumBundleVersionForLoadingExtensions options:NSNumericSearch];
 		
 		if (comparisonResult == NSOrderedDescending) {
 			LogToConsole(@"-------------- ERROR -------------- ");
@@ -81,7 +83,7 @@
 			LogToConsole(@"   Bundle Path: %@", [bundle bundlePath]);
 			LogToConsole(@"  ");
 			LogToConsole(@"   Minimum version specified by bundle: %@", comparisonVersion);
-			LogToConsole(@"   Version used by Textual for comparison: %@", TXBundleBuildVersionForComparisons);
+			LogToConsole(@"   Version used by Textual for comparison: %@", TXBundleMininumBundleVersionForLoadingExtensions);
 			LogToConsole(@"  ");
 			LogToConsole(@"-------------- ERROR -------------- ");
 			

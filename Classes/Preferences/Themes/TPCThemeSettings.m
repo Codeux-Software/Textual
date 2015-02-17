@@ -308,7 +308,7 @@
 		NSDictionary *templateVersions = [self dictionaryForKeys:@"Template Engine Versions" fromDictionary:styleSettings];
 
 		if (templateVersions) {
-			NSInteger targetVersion = [templateVersions integerForKey:TXBundleBuildVersionForComparisons];
+			NSInteger targetVersion = [templateVersions integerForKey:[TPCApplicationInfo applicationVersionShort]];
 
 			if (NSNumberInRange(targetVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
 				templateEngineVersion = targetVersion;

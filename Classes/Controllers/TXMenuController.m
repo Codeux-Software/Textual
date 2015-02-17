@@ -2812,7 +2812,7 @@
 
 - (IBAction)simulateCrash:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[[[BITHockeyManager sharedHockeyManager] crashManager] generateTestCrash];
 #endif
 }

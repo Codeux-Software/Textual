@@ -200,8 +200,12 @@
 	#import "StaticDefinitions.h"
 
 	/* Import frameworks based on defines. */
-	#ifdef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
+	#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 		#import <HockeySDK/HockeySDK.h>
+	#endif
+
+	#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+		#import <Sparkle/Sparkle.h>
 	#endif
 
 	/* Protocol defenitions. (see file) */
