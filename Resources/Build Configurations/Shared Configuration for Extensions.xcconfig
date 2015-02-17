@@ -1,4 +1,4 @@
-#include "Shared Developer ID Release Configuration.xcconfig"
+#include "Base Configuration.xcconfig"
 
 // This configuration is designed for the Plugins folder of
 // Textual and assumes that the paths are relative to that

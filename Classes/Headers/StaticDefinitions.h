@@ -133,9 +133,6 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define TEXTUAL_DEPRECATED_ASSERT_C				NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
-/* Include a forced lifespan for beta builds. */
-// #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
-
 /* Defines for script support instead of importing the
  entire Carbon framework for three items. */
 #ifndef kASAppleScriptSuite

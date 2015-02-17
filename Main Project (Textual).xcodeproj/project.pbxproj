@@ -513,6 +513,11 @@
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
+		4C24DC761A93C9CE0098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
+		4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
+		4C24DC7D1A93C9E80098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
+		4C24DC7E1A93C9E80098D1BE /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C24DC801A93C9EC0098D1BE /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C31D90E197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
 		4C31D90F197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
@@ -1906,6 +1911,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4C7E4DBA1A9116FA00EBE11B /* CocoaExtensions.framework in Embed Frameworks */,
+				4C24DC801A93C9EC0098D1BE /* Sparkle.framework in Embed Frameworks */,
 				4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */,
 				4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */,
@@ -2015,6 +2021,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4CF76A881A9116510088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
+				4C24DC7E1A93C9E80098D1BE /* Sparkle.framework in Embed Frameworks */,
 				4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A8C1A9116510088BF9A /* HockeySDK.framework in Embed Frameworks */,
@@ -2046,7 +2053,15 @@
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
-		4C2991AA19BB9CC800B4E0E0 /* Provisioning Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Provisioning Profile.xcconfig"; path = "Resources/Build Configurations/Provisioning Profile.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC831A93CC340098D1BE /* Provisioning Profile.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Provisioning Profile.xcconfig"; path = "Resources/Build Configurations/Provisioning Profile.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Configuration for Extensions.xcconfig"; path = "Resources/Build Configurations/Shared Configuration for Extensions.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4C24DC881A93CC340098D1BE /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForApplicationContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForApplicationContainer.plist; sourceTree = SOURCE_ROOT; };
 		4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForGroupContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForGroupContainer.plist; sourceTree = SOURCE_ROOT; };
@@ -2148,7 +2163,6 @@
 		4C7766331978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "MavericksDarkServerListViewDisclosureUpSelected@2x.tif"; sourceTree = "<group>"; };
 		4C7766341978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif; sourceTree = "<group>"; };
 		4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif; sourceTree = "<group>"; };
-		4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
 		4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconActive.tif; sourceTree = "<group>"; };
@@ -2170,11 +2184,6 @@
 		4C7E0F9619AC25900084173D /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
 		4C7E0F9719AC25900084173D /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		4C7E0F9819AC25900084173D /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
-		4C86B00E1748B7B60028C7AE /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Extension Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Extension Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Developer ID Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Developer ID Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C86B0121748B7B60028C7AE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
@@ -2495,6 +2504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
+				4C24DC7D1A93C9E80098D1BE /* Sparkle.framework in Frameworks */,
 				4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */,
 				4CF76A831A9116510088BF9A /* AutoHyperlinks.framework in Frameworks */,
 				4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
@@ -2507,6 +2517,7 @@
 				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
+				4C24DC761A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
@@ -2551,8 +2562,10 @@
 				4CDFA53E1996EAB2007EA46E /* QuartzCore.framework in Frameworks */,
 				4CDFA53F1996EAB2007EA46E /* Security.framework in Frameworks */,
 				4CDFA5401996EAB2007EA46E /* SecurityInterface.framework in Frameworks */,
+				4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 				4CDFA5411996EAB2007EA46E /* SystemConfiguration.framework in Frameworks */,
 				4CDFA5441996EAB2007EA46E /* WebKit.framework in Frameworks */,
+				4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2781,6 +2794,7 @@
 				4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 				4CDB24A018CAB914007EF6DE /* HockeySDK.framework */,
+				4C24DC751A93C9CE0098D1BE /* Sparkle.framework */,
 			);
 			name = "External Frameworks";
 			sourceTree = "<group>";
@@ -3593,13 +3607,14 @@
 		4CD6202E16E31EE600D780D6 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				4C86B0121748B7B60028C7AE /* Code Signing Identity.xcconfig */,
-				4C2991AA19BB9CC800B4E0E0 /* Provisioning Profile.xcconfig */,
-				4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */,
-				4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */,
-				4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */,
-				4C86B00E1748B7B60028C7AE /* Shared Extension Configuration.xcconfig */,
-				4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */,
+				4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */,
+				4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */,
+				4C24DC831A93CC340098D1BE /* Provisioning Profile.xcconfig */,
+				4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */,
+				4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */,
+				4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */,
+				4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */,
+				4C24DC881A93CC340098D1BE /* Shared Trial Release Configuration.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -5940,11 +5955,10 @@
 		};
 		4C1DC56E1580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C86B0101748B7B60028C7AE /* Shared Debug Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
-				ONLY_ACTIVE_ARCH = YES;
+				INFOPLIST_FILE = .tmp/Info.plist;
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -5957,10 +5971,10 @@
 		};
 		4C1DC56F1580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C86B00F1748B7B60028C7AE /* Shared Developer ID Release Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = .tmp/Info.plist;
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -6013,10 +6027,10 @@
 		};
 		4C77A3251748BCDC00D9BD05 /* Release (Trial) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C77A31F1748BCCF00D9BD05 /* Shared Trial Release Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC881A93CC340098D1BE /* Shared Trial Release Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = .tmp/Info.plist;
 				PRODUCT_NAME = "Textual Trial";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
@@ -6073,10 +6087,10 @@
 		};
 		4CCF2F9015804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C86B0111748B7B60028C7AE /* Shared App Store Release Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = .tmp/Info.plist;
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";

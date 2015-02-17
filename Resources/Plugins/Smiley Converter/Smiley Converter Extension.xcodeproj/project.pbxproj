@@ -21,13 +21,13 @@
 		4C0271F416FFBD4800717900 /* TPISmileyConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISmileyConverter.h; sourceTree = "<group>"; };
 		4C0271F516FFBD4800717900 /* TPISmileyConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISmileyConverter.m; sourceTree = "<group>"; };
 		4C16081C19F701730054897D /* conversionTable2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable2.plist; sourceTree = "<group>"; };
+		4C24DC911A93CDA60098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base Configuration.xcconfig"; sourceTree = "<group>"; };
+		4C24DC921A93CDA60098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
 		4C670F1D194A7DED002DD735 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = SOURCE_ROOT; };
 		4C670F20194A7DF1002DD735 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TPISmileyConverter.xib; sourceTree = "<group>"; };
 		4C67617B16FFB63D00C82300 /* conversionTable.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = conversionTable.plist; sourceTree = "<group>"; };
-		4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Extension Configuration.xcconfig"; sourceTree = "<group>"; };
-		4C6A0CDE182616FB00222CDB /* Shared Developer ID Release Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Shared Developer ID Release Configuration.xcconfig"; sourceTree = "<group>"; };
 		4CBE7B511A9147F8008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* SmileyConverter.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmileyConverter.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,8 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				4C588BAE16E34BF1007EFF6D /* Code Signing Identity.xcconfig */,
-				4C6A0CDE182616FB00222CDB /* Shared Developer ID Release Configuration.xcconfig */,
-				4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */,
+				4C24DC911A93CDA60098D1BE /* Base Configuration.xcconfig */,
+				4C24DC921A93CDA60098D1BE /* Shared Configuration for Extensions.xcconfig */,
 			);
 			name = "Build Configurations";
 			path = "../../Build Configurations";
@@ -233,7 +233,7 @@
 		};
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC921A93CDA60098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = SmileyConverter;
@@ -242,7 +242,7 @@
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C69189916E3276C00BDE3A8 /* Shared Extension Configuration.xcconfig */;
+			baseConfigurationReference = 4C24DC921A93CDA60098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = SmileyConverter;
