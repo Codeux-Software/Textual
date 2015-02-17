@@ -2817,6 +2817,16 @@
 #endif
 }
 
+#pragma mark -
+#pragma mark Sparkle Framework
+
+- (IBAction)checkForUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	[[SUUpdater sharedUpdater] checkForUpdates:sender];
+#endif
+}
+
 @end
 
 @implementation TXMenuControllerMainWindowProxy

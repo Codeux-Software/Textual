@@ -30,6 +30,17 @@
                                     <action selector="showPreferencesDialog:" target="267" id="2588"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Check for updates…" id="SKm-yR-9hI">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="267" id="Khl-F9-d2t"/>
+                                    <binding destination="267" name="hidden" keyPath="self.localDefaultValues.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="saL-AU-VX0">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="143">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -871,6 +882,15 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
+                                                <binding destination="267" name="hidden2" keyPath="System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework" previousBinding="fWR-Tg-jcs" id="dX3-Bu-wsD">
+                                                    <dictionary key="options">
+                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
                                                 <binding destination="267" name="hidden" keyPath="self.localDefaultValues.TextualDeveloperEnvironment" id="fWR-Tg-jcs">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>

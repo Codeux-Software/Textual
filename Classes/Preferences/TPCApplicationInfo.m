@@ -96,9 +96,9 @@
 	return TXBundleBuildReference;
 }
 
-+ (NSString *)gitCommitCount
++ (NSString *)applicationBuildScheme
 {
-	return TXBundleBuildCommitCount;
+	return TXBundleBuildScheme;
 }
 
 + (BOOL)sandboxEnabled
