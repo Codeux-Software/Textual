@@ -316,7 +316,11 @@
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
 
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 - (IBAction)simulateCrash:(id)sender;
+#endif
+
+- (IBAction)checkForUpdates:(id)sender;
 
 - (IBAction)emptyAction:(id)sender TEXTUAL_DEPRECATED("Do not target this method");
 @end

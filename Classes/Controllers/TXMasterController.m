@@ -41,10 +41,6 @@
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	#define _hockeyAppApplicationIdentifier			@"93d6d315ace023a30793e8c52a02f920"
-#endif
-
 @implementation TXMasterController
 
 - (instancetype)init
@@ -55,7 +51,7 @@
 		// ---- //
 		
 #ifndef TXSystemIsMacOSYosemiteOrNewer
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]){
+		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			NSAssert(NO, @"This copy of Textual cannot be used on Yosemite. Please rebuild against the Yosemite SDK.");
 		}
 #endif
@@ -121,6 +117,10 @@
 
 - (void)performAwakeningAfterMainWindowDidLoad
 {
+#ifndef DEBUG
+	[self checkForOtherCopiesOfTextualRunning];
+#endif
+
 	[[TXSharedApplication sharedNetworkReachabilityObject] startNotifier];
 	
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
@@ -132,8 +132,12 @@
 	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
 	[sharedPluginManager() loadPlugins];
-	
-	[TPCResourceManager copyResourcesToCustomAddonsFolder];
+
+	[self performBlockOnGlobalQueue:^{
+		[TPCResourceManager copyResourcesToCustomAddonsFolder];
+	}];
+
+	[self prepareThirdPartyServices];
 	
 	[self applicationDidFinishLaunching];
 }
@@ -163,22 +167,49 @@
 #pragma mark -
 #pragma mark NSApplication Delegate
 
-- (void)awakeHockeyApp
+- (void)prepareThirdPartyServices
 {
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1 || TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	NSDictionary *resourcesDict = [[RZMainBundle() infoDictionary] dictionaryForKey:@"3rd-party Definitions"];
+#endif
+
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:_hockeyAppApplicationIdentifier delegate:self];
+	NSDictionary *hockeyAppData = [resourcesDict dictionaryForKey:@"HockeyApp Framework"];
+
+	DebugLogToConsole(@"HockeyApp application identifier: %@", hockeyAppData);
+
+	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:hockeyAppData[@"Application Identifier"] delegate:self];
 	[[BITHockeyManager sharedHockeyManager] startManager];
+#endif
+
+	// ---
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	NSDictionary *sparkleData = [resourcesDict dictionaryForKey:@"Sparkle Framework"];
+
+	NSDictionary *feeds = [sparkleData dictionaryForKey:@"SUFeedURL"];
+
+	NSString *feedURL = [feeds objectForKey:[TPCApplicationInfo applicationBuildScheme]];
+
+	DebugLogToConsole(@"Sparkle Framework feed URL: %@", feedURL);
+
+	if (feedURL) {
+		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:feedURL]];
+
+		[[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
+		[[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:[sparkleData boolForKey:@"SUAllowsAutomaticUpdates"]];
+
+		[[SUUpdater sharedUpdater] setSendsSystemProfile:[sparkleData boolForKey:@"SUEnableSystemProfiling"]];
+
+		[[SUUpdater sharedUpdater] setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+
+		[[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+	}
 #endif
 }
 
 - (void)applicationDidFinishLaunching
 {
-#ifndef DEBUG
-	[self checkForOtherCopiesOfTextualRunning];
-#endif
-
-	[self awakeHockeyApp];
-	
 	if ([worldController() clientCount] < 1) {
 		[mainWindowLoadingScreen() hideAll:NO];
 		[mainWindowLoadingScreen() popWelcomeAddServerView];

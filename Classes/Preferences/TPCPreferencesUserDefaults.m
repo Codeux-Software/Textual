@@ -68,7 +68,7 @@
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
-		sharedSelf = [[NSUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupIdentifier];
+		sharedSelf = [[NSUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
 	});
 	
 	return sharedSelf;

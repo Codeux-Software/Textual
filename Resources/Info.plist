@@ -2,8 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>3rd-party Definitions</key>
+	<dict>
+		<key>Sparkle Framework</key>
+		<dict>
+			<key>SUFeedURL</key>
+			<dict>
+				<key>trial</key>
+				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-one.sparkle</string>
+				<key>devid</key>
+				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-two.sparkle</string>
+			</dict>
+			<key>SUAllowsAutomaticUpdates</key>
+			<false/>
+			<key>SUBundleName</key>
+			<string>Textual</string>
+			<key>SUEnableAutomaticChecks</key>
+			<true/>
+			<key>SUEnableSystemProfiling</key>
+			<false/>
+			<key>SUScheduledCheckInterval</key>
+			<string>1728000</string>
+			<key>SUShowReleaseNotes</key>
+			<true/>
+		</dict>
+		<key>HockeyApp Framework</key>
+		<dict>
+			<key>Application Identifier</key>
+			<string>93d6d315ace023a30793e8c52a02f920</string>
+		</dict>
+	</dict>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.social-networking</string>
+	<key>CFBundleSignature</key>
+	<string>TXTL</string>
 	<key>CFBundleDisplayName</key>
 	<string>Textual IRC Client</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.codeux.irc.textual5</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleVersion</key>
+	<string>5.0.4</string>
+	<key>CFBundleShortVersionString</key>
+	<string>5.0.4</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010 - 2015 Codeux Software, LLC. All rights reserved.</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -43,18 +89,28 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
 	<string>applicationIconYosemite.icns</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.codeux.irc.textual5</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>${PRODUCT_NAME}</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>5.0.4</string>
-	<key>CFBundleSignature</key>
-	<string>TXTL</string>
+	<key>NSMainNibFile</key>
+	<string>TXCMainMenu</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.8.3</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.com.codeux.irc.textual5</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>Textual IRC Client</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -72,31 +128,5 @@
 			</array>
 		</dict>
 	</array>
-	<key>CFBundleVersion</key>
-	<string>5.0.4</string>
-	<key>LSApplicationCategoryType</key>
-	<string>public.app-category.social-networking</string>
-	<key>LSMinimumSystemVersion</key>
-	<string>10.8.3</string>
-	<key>NSAppleScriptEnabled</key>
-	<true/>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2010 - 2015 Codeux Software, LLC. All rights reserved.</string>
-	<key>NSMainNibFile</key>
-	<string>TXCMainMenu</string>
-	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
-	<key>NSUbiquitousContainers</key>
-	<dict>
-		<key>iCloud.com.codeux.irc.textual5</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>Textual IRC Client</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>Any</string>
-		</dict>
-	</dict>
 </dict>
 </plist>

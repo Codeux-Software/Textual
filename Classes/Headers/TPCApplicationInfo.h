@@ -57,12 +57,12 @@
 
 + (NSString *)applicationBundleIdentifier;
 
++ (NSString *)applicationBuildScheme;
 + (NSDate *)applicationBuildDate;
 
 + (NSInteger)applicationProcessID;
 
 + (NSString *)gitBuildReference;
-+ (NSString *)gitCommitCount;
 
 + (NSDictionary *)applicationInfoPlist;
 
