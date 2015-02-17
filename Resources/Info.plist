@@ -9,9 +9,9 @@
 			<key>SUFeedURL</key>
 			<dict>
 				<key>trial</key>
-				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-one.sparkle</string>
+				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-one.xml</string>
 				<key>devid</key>
-				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-two.sparkle</string>
+				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/feed-two.xml</string>
 			</dict>
 			<key>SUAllowsAutomaticUpdates</key>
 			<false/>
