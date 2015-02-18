@@ -262,52 +262,6 @@
 #pragma mark -
 #pragma mark KVC Properties
 
-- (id)userDefaultsValues
-{
-	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
-}
-
-- (id)localDefaultValues
-{
-	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
-}
-
-- (NSArray *)keywordsArrayControllerDataSource
-{
-	NSArray *values = [RZUserDefaultsValueProxy() valueForKey:@"Highlight List -> Primary Matches"];
-	
-	NSMutableArray *returnedValues = [NSMutableArray array];
-	
-	for (id object in values) {
-		[returnedValues addObject:[object mutableCopy]];
-	}
-	
-	return returnedValues;
-}
-
-- (NSArray *)excludeWordsArrayControllerDataSource
-{
-	NSArray *values = [RZUserDefaultsValueProxy() valueForKey:@"Highlight List -> Excluded Matches"];
-	
-	NSMutableArray *returnedValues = [NSMutableArray array];
-	
-	for (id object in values) {
-		[returnedValues addObject:[object mutableCopy]];
-	}
-	
-	return returnedValues;
-}
-
-- (void)setKeywordsArrayControllerDataSource:(id)value
-{
-	[RZUserDefaultsValueProxy() setValue:value forKey:@"Highlight List -> Primary Matches"];
-}
-
-- (void)setExcludeWordsArrayControllerDataSource:(id)value
-{
-	[RZUserDefaultsValueProxy() setValue:value forKey:@"Highlight List -> Excluded Matches"];
-}
-
 - (NSString *)maxLogLines
 {
 	return [NSString stringWithInteger:[TPCPreferences scrollbackLimit]];

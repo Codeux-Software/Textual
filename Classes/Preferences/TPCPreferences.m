@@ -52,7 +52,7 @@
 
 	NSString *nickname = [NSString stringWithFormat:@"%@%lu", TXDefaultIdentityNicknamePrefix, TXRandomNumber(100)];
 
-	[RZUserDefaults() registerDefaultsForGroupContainer:@{@"DefaultIdentity -> Nickname" : nickname}];
+	[RZUserDefaults() registerDefaults:@{@"DefaultIdentity -> Nickname" : nickname}];
 }
 
 + (NSString *)defaultNickname
@@ -831,11 +831,11 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
-	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForGroupContainer" ofType:@"plist"];
+	NSString *defaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaults" ofType:@"plist"];
 
-	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
+	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
 
-	return groupDefaults;
+	return localDefaults;
 }
 
 + (void)initPreferences
@@ -843,23 +843,15 @@ static NSMutableArray *excludeKeywords = nil;
 	[TPCApplicationInfo updateApplicationRunCount];
 
 	// ====================================================== //
-	
-	NSString *groupDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForGroupContainer" ofType:@"plist"];
-	NSString *localDefaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsForApplicationContainer" ofType:@"plist"];
-	
-	NSDictionary *groupDefaults = [NSDictionary dictionaryWithContentsOfFile:groupDefaultsPath];
-	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:localDefaultsPath];
 
-	[RZUserDefaults() migrateValuesToGroupContainer];
-	[RZUserDefaults() purgeKeysThatDontBelongInGroupContainer];
-	
-	[RZUserDefaults() registerDefaultsForGroupContainer:groupDefaults];
-	[RZUserDefaults() registerDefaultsForApplicationContainer:localDefaults];
+	[TPCPreferencesUserDefaults migrateValuesToGroupContainer];
+
+	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
 
 	[TPCPreferences populateDefaultNickname];
 
-	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
-	[RZUserDefaultsValueProxy() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
 	[TPCPreferences loadMatchKeywords];
 	[TPCPreferences loadExcludeKeywords];

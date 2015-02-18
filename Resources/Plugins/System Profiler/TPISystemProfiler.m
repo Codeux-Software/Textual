@@ -71,11 +71,6 @@
 	}];
 }
 
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
 #pragma mark -
 #pragma mark Preference Pane
 

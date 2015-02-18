@@ -461,7 +461,11 @@
 		}
 
 		/* Get a copy of our defaults. */
-		NSDictionary *defaults = [TPCPreferences defaultPreferences];
+		static NSDictionary *defaults = nil;
+
+		if (defaults == nil) {
+			defaults = [TPCPreferences defaultPreferences];
+		}
 		
 		NSArray *defaultskeys = [defaults allKeys];
 		

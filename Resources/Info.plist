@@ -18,8 +18,6 @@
 			<false/>
 			<key>SUScheduledCheckInterval</key>
 			<string>1728000</string>
-			<key>SUShowReleaseNotes</key>
-			<true/>
 		</dict>
 		<key>HockeyApp Framework</key>
 		<dict>

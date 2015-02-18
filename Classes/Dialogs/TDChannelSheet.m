@@ -153,14 +153,6 @@
 }
 
 #pragma mark -
-#pragma mark KVC Properties
-
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
-#pragma mark -
 #pragma mark Initalization Handler
 
 - (void)start

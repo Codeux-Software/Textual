@@ -60,11 +60,6 @@
 	[self maybeBuildConversionTable];
 }
 
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
 - (void)maybeBuildConversionTable
 {
 	BOOL serviceEnabled = [RZUserDefaults() boolForKey:@"Smiley Converter Extension -> Enable Service"];

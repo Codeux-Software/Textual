@@ -157,7 +157,7 @@
 		4C0BA5101990798800857343 /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E11943A654004CA8BA /* FormattingColor_0.png */; };
 		4C0BA5111990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766341978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif */; };
 		4C0BA5121990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2291C1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif */; };
-		4C0BA5131990798800857343 /* RegisteredUserDefaultsForGroupContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */; };
+		4C0BA5131990798800857343 /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
 		4C0BA5141990798800857343 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4C0BA5171990798800857343 /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
 		4C0BA5181990798800857343 /* FormattingColor_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3ED1943A654004CA8BA /* FormattingColor_6.png */; };
@@ -172,7 +172,6 @@
 		4C0BA5241990798800857343 /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E81943A654004CA8BA /* FormattingColor_15.png */; };
 		4C0BA5251990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766321978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif */; };
 		4C0BA5261990798800857343 /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E71943A654004CA8BA /* FormattingColor_14.png */; };
-		4C0BA5281990798800857343 /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
 		4C0BA5291990798800857343 /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DE1943A654004CA8BA /* encryptionLockIconLight.tif */; };
 		4C0BA52C1990798800857343 /* MavericksDarkChannelCellSelection.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766281978CECA00759774 /* MavericksDarkChannelCellSelection.tif */; };
 		4C0BA52D1990798800857343 /* channelRoomStatusIconMavericksLightActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FD1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif */; };
@@ -513,16 +512,9 @@
 		4C1ED4A116CEA081006DD0CA /* IRCConnectionSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
-		4C24DC761A93C9CE0098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
-		4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
-		4C24DC7D1A93C9E80098D1BE /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
-		4C24DC7E1A93C9E80098D1BE /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C24DC801A93C9EC0098D1BE /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
-		4C31D90E197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
-		4C31D90F197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
-		4C31D910197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */; };
-		4C31D911197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */; };
+		4C31D910197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
+		4C31D911197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
 		4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C36091D18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */; };
@@ -777,6 +769,7 @@
 		4C71CF271990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
 		4C71CF281990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
 		4C71CF291990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
+		4C72E19F1A950196007DB81E /* TextualWithoutCloud.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 4C72E19E1A950196007DB81E /* TextualWithoutCloud.entitlements */; };
 		4C77660D19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660C19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m */; };
 		4C77660E19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660C19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m */; };
 		4C77661019789F4200759774 /* TVCServerListMavericksLightUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660F19789F4200759774 /* TVCServerListMavericksLightUserInterface.m */; };
@@ -1283,7 +1276,7 @@
 		4CDFA4211996EAB2007EA46E /* FormattingColor_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E11943A654004CA8BA /* FormattingColor_0.png */; };
 		4CDFA4221996EAB2007EA46E /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766341978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif */; };
 		4CDFA4231996EAB2007EA46E /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2291C1978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif */; };
-		4CDFA4241996EAB2007EA46E /* RegisteredUserDefaultsForGroupContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */; };
+		4CDFA4241996EAB2007EA46E /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
 		4CDFA4251996EAB2007EA46E /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4CDFA4261996EAB2007EA46E /* IRCCommandIndexPrivateValues.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */; };
 		4CDFA4271996EAB2007EA46E /* FormattingColor_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3ED1943A654004CA8BA /* FormattingColor_6.png */; };
@@ -1298,7 +1291,6 @@
 		4CDFA4301996EAB2007EA46E /* FormattingColor_15.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E81943A654004CA8BA /* FormattingColor_15.png */; };
 		4CDFA4311996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766321978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif */; };
 		4CDFA4321996EAB2007EA46E /* FormattingColor_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3E71943A654004CA8BA /* FormattingColor_14.png */; };
-		4CDFA4331996EAB2007EA46E /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */; };
 		4CDFA4341996EAB2007EA46E /* encryptionLockIconLight.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C46F3DE1943A654004CA8BA /* encryptionLockIconLight.tif */; };
 		4CDFA4351996EAB2007EA46E /* MavericksDarkChannelCellSelection.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7766281978CECA00759774 /* MavericksDarkChannelCellSelection.tif */; };
 		4CDFA4361996EAB2007EA46E /* channelRoomStatusIconMavericksLightActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228FD1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif */; };
@@ -1911,7 +1903,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4C7E4DBA1A9116FA00EBE11B /* CocoaExtensions.framework in Embed Frameworks */,
-				4C24DC801A93C9EC0098D1BE /* Sparkle.framework in Embed Frameworks */,
 				4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */,
 				4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */,
@@ -2021,7 +2012,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4CF76A881A9116510088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
-				4C24DC7E1A93C9E80098D1BE /* Sparkle.framework in Embed Frameworks */,
 				4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A8C1A9116510088BF9A /* HockeySDK.framework in Embed Frameworks */,
@@ -2063,8 +2053,7 @@
 		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC881A93CC340098D1BE /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
-		4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForApplicationContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForApplicationContainer.plist; sourceTree = SOURCE_ROOT; };
-		4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaultsForGroupContainer.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsForGroupContainer.plist; sourceTree = SOURCE_ROOT; };
+		4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = Resources/Miscellaneous/RegisteredUserDefaults.plist; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
@@ -2141,6 +2130,7 @@
 		4C71CEDB199081110038C23D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TVCMainWindowYosemite.xib; sourceTree = SOURCE_ROOT; };
 		4C71CEDD199081110038C23D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/Localization/English.lproj/TXCMainMenu.xib; sourceTree = SOURCE_ROOT; };
 		4C71CF261990811D0038C23D /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/Localization/English.lproj/BasicLanguage.strings; sourceTree = SOURCE_ROOT; };
+		4C72E19E1A950196007DB81E /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
 		4C77660C19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListMavericksDarkUserInterface.m; sourceTree = "<group>"; };
 		4C77660F19789F4200759774 /* TVCServerListMavericksLightUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListMavericksLightUserInterface.m; sourceTree = "<group>"; };
 		4C77661519789F6300759774 /* TVCServerListYosemiteLightUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCServerListYosemiteLightUserInterface.m; sourceTree = "<group>"; };
@@ -2353,7 +2343,7 @@
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4C994BAC181FB3E0002FECA6 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Exceptions/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
+		4C994BAC181FB3E0002FECA6 /* TextualWithCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithCloud.entitlements; sourceTree = SOURCE_ROOT; };
 		4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = ".tmp/SharedBuildProducts-Extensions/BlowfishCommandLine.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = ".tmp/SharedBuildProducts-Extensions/BragSpam.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
@@ -2503,7 +2493,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
-				4C24DC7D1A93C9E80098D1BE /* Sparkle.framework in Frameworks */,
 				4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */,
 				4CF76A831A9116510088BF9A /* AutoHyperlinks.framework in Frameworks */,
 				4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
@@ -2516,7 +2505,6 @@
 				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
-				4C24DC761A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
@@ -2561,10 +2549,8 @@
 				4CDFA53E1996EAB2007EA46E /* QuartzCore.framework in Frameworks */,
 				4CDFA53F1996EAB2007EA46E /* Security.framework in Frameworks */,
 				4CDFA5401996EAB2007EA46E /* SecurityInterface.framework in Frameworks */,
-				4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 				4CDFA5411996EAB2007EA46E /* SystemConfiguration.framework in Frameworks */,
 				4CDFA5441996EAB2007EA46E /* WebKit.framework in Frameworks */,
-				4C24DC771A93C9CE0098D1BE /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2707,8 +2693,7 @@
 		4C46CCA31580437B00846B64 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
-				4C31D90C197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist */,
-				4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist */,
+				4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */,
 				4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */,
 				4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */,
 				4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */,
@@ -2907,7 +2892,8 @@
 			isa = PBXGroup;
 			children = (
 				4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */,
-				4C994BAC181FB3E0002FECA6 /* TextualWithSandbox.entitlements */,
+				4C994BAC181FB3E0002FECA6 /* TextualWithCloud.entitlements */,
+				4C72E19E1A950196007DB81E /* TextualWithoutCloud.entitlements */,
 			);
 			name = Entitlements;
 			sourceTree = "<group>";
@@ -4545,7 +4531,7 @@
 				4C0BA5101990798800857343 /* FormattingColor_0.png in Resources */,
 				4C0BA5111990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4C0BA5121990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
-				4C0BA5131990798800857343 /* RegisteredUserDefaultsForGroupContainer.plist in Resources */,
+				4C0BA5131990798800857343 /* RegisteredUserDefaults.plist in Resources */,
 				4C0BA5141990798800857343 /* Scripts in Resources */,
 				4C0BA5171990798800857343 /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4C0BA5181990798800857343 /* FormattingColor_6.png in Resources */,
@@ -4560,7 +4546,6 @@
 				4C0BA5241990798800857343 /* FormattingColor_15.png in Resources */,
 				4C0BA5251990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C0BA5261990798800857343 /* FormattingColor_14.png in Resources */,
-				4C0BA5281990798800857343 /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */,
 				4C0BA5291990798800857343 /* encryptionLockIconLight.tif in Resources */,
 				4C0BA52C1990798800857343 /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4C0BA52D1990798800857343 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
@@ -4592,6 +4577,7 @@
 				4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */,
 				4C71CEE9199081110038C23D /* TDChanBanExceptionSheet.xib in Resources */,
+				4C72E19F1A950196007DB81E /* TextualWithoutCloud.entitlements in Resources */,
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4C71CEEC199081110038C23D /* TDChanBanSheet.xib in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
@@ -4662,7 +4648,7 @@
 				4C46F4571943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C77664E1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4CB229621978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
-				4C31D910197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist in Resources */,
+				4C31D910197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
 				4CB26C6319528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4C46F46F1943A654004CA8BA /* FormattingColor_6.png in Resources */,
@@ -4677,7 +4663,6 @@
 				4C46F4651943A654004CA8BA /* FormattingColor_15.png in Resources */,
 				4C77664A1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C46F4631943A654004CA8BA /* FormattingColor_14.png in Resources */,
-				4C31D90E197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */,
 				4C46F4531943A654004CA8BA /* encryptionLockIconLight.tif in Resources */,
 				4C7766361978CECA00759774 /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4CB2292E1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
@@ -4779,7 +4764,7 @@
 				4C46F4581943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C77664F1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4CB229631978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
-				4C31D911197CB2F5000CA4CC /* RegisteredUserDefaultsForGroupContainer.plist in Resources */,
+				4C31D911197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */,
 				4C5BA38D16F1302F00A96CA2 /* Scripts in Resources */,
 				4CB26C6419528FA5005F927C /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4C46F4701943A654004CA8BA /* FormattingColor_6.png in Resources */,
@@ -4794,7 +4779,6 @@
 				4C46F4661943A654004CA8BA /* FormattingColor_15.png in Resources */,
 				4C77664B1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C46F4641943A654004CA8BA /* FormattingColor_14.png in Resources */,
-				4C31D90F197CB2F5000CA4CC /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */,
 				4C46F4541943A654004CA8BA /* encryptionLockIconLight.tif in Resources */,
 				4C7766371978CECA00759774 /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4CB2292F1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
@@ -4896,7 +4880,7 @@
 				4CDFA4211996EAB2007EA46E /* FormattingColor_0.png in Resources */,
 				4CDFA4221996EAB2007EA46E /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4CDFA4231996EAB2007EA46E /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
-				4CDFA4241996EAB2007EA46E /* RegisteredUserDefaultsForGroupContainer.plist in Resources */,
+				4CDFA4241996EAB2007EA46E /* RegisteredUserDefaults.plist in Resources */,
 				4CDFA4251996EAB2007EA46E /* Scripts in Resources */,
 				4CDFA4261996EAB2007EA46E /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4CDFA4271996EAB2007EA46E /* FormattingColor_6.png in Resources */,
@@ -4911,7 +4895,6 @@
 				4CDFA4301996EAB2007EA46E /* FormattingColor_15.png in Resources */,
 				4CDFA4311996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4CDFA4321996EAB2007EA46E /* FormattingColor_14.png in Resources */,
-				4CDFA4331996EAB2007EA46E /* RegisteredUserDefaultsForApplicationContainer.plist in Resources */,
 				4CDFA4341996EAB2007EA46E /* encryptionLockIconLight.tif in Resources */,
 				4CDFA4351996EAB2007EA46E /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4CDFA4361996EAB2007EA46E /* channelRoomStatusIconMavericksLightActive.tif in Resources */,

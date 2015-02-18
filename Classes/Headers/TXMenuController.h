@@ -202,7 +202,6 @@
 
 - (IBAction)toggleDeveloperMode:(id)sender;
 - (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
-- (IBAction)openDefaultIRCClientDialog:(id)sender;
 
 - (IBAction)showHighlightSheet:(id)sender;
 

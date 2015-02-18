@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <deployment version="1080" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPISmileyConverter">
@@ -66,7 +66,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferenceChanged:" target="-2" id="hl1-Tp-jqb"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Smiley Converter Extension -&gt; Enable Service" id="nMn-Gw-nyC"/>
+                        <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="2bD-6F-V3R"/>
                     </connections>
                 </button>
                 <button id="d4p-fS-sg0">
@@ -78,7 +78,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="preferenceChanged:" target="-2" id="IRd-n3-a4p"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Smiley Converter Extension -&gt; Enable Extra Emoticons" id="SVW-eg-NWr"/>
+                        <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="4nr-r9-zrW"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="VVb-gg-jxO">
@@ -94,5 +94,6 @@
             </subviews>
             <point key="canvasLocation" x="412.5" y="445"/>
         </customView>
+        <userDefaultsController id="LeY-as-hAW" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
 </document>

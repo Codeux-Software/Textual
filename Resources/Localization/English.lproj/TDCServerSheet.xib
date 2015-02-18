@@ -381,12 +381,12 @@ Gw
                     </buttonCell>
                     <connections>
                         <action selector="toggleCloudSyncExclusion:" target="-2" id="LNF-gc-rmb"/>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="i5T-lV-0oc">
+                        <binding destination="iuc-Sg-eeB" name="hidden" keyPath="values.SyncPreferencesToTheCloud" id="n3y-63-lzE">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="-2" name="hidden2" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" previousBinding="i5T-lV-0oc" id="sct-5F-GkA">
+                        <binding destination="iuc-Sg-eeB" name="hidden2" keyPath="values.System -&gt; Built with iCloud Support" previousBinding="n3y-63-lzE" id="phe-S6-jQH">
                             <dictionary key="options">
                                 <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                 <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -676,7 +676,7 @@ Gw
                     </buttonCell>
                     <connections>
                         <action selector="toggleAdvancedEncodings:" target="-2" id="2319"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Server Properties Window Sheet -&gt; Include Advanced Encodings" id="Mfq-Vd-bAr"/>
+                        <binding destination="iuc-Sg-eeB" name="value" keyPath="values.Server Properties Window Sheet -&gt; Include Advanced Encodings" id="lpH-1O-kyB"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="1686">
@@ -1836,6 +1836,7 @@ Gw
             </items>
             <point key="canvasLocation" x="328.5" y="557.5"/>
         </menu>
+        <userDefaultsController id="iuc-Sg-eeB" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
     <resources>
         <image name="ErroneousTextFieldValueIndicator" width="80" height="80"/>
