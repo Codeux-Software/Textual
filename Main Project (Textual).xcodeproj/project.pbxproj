@@ -1239,6 +1239,10 @@
 		4CC164C31943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AC1943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png */; };
 		4CC164C41943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */; };
 		4CC164C51943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */; };
+		4CC3139D1A9509E800A9F036 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
+		4CC3139E1A9509EE00A9F036 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CC3139F1A9509F400A9F036 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CC313A01A9509F800A9F036 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4CC6F51C1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC6F51B1778AB2E00930E6E /* TVCLogControllerOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CC6F51D1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC6F51B1778AB2E00930E6E /* TVCLogControllerOperationQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
@@ -1906,6 +1910,7 @@
 				4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */,
 				4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */,
+				4CC3139E1A9509EE00A9F036 /* Sparkle.framework in Embed Frameworks */,
 				4C7E4DB81A9116FA00EBE11B /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2015,6 +2020,7 @@
 				4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A8C1A9116510088BF9A /* HockeySDK.framework in Embed Frameworks */,
+				4CC3139F1A9509F400A9F036 /* Sparkle.framework in Embed Frameworks */,
 				4CF76A861A9116510088BF9A /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -2505,6 +2511,7 @@
 				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
 				4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */,
+				4CC313A01A9509F800A9F036 /* Sparkle.framework in Frameworks */,
 				4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */,
 				4C46CCCB1580469E00846B64 /* WebKit.framework in Frameworks */,
 			);
@@ -2549,6 +2556,7 @@
 				4CDFA53E1996EAB2007EA46E /* QuartzCore.framework in Frameworks */,
 				4CDFA53F1996EAB2007EA46E /* Security.framework in Frameworks */,
 				4CDFA5401996EAB2007EA46E /* SecurityInterface.framework in Frameworks */,
+				4CC3139D1A9509E800A9F036 /* Sparkle.framework in Frameworks */,
 				4CDFA5411996EAB2007EA46E /* SystemConfiguration.framework in Frameworks */,
 				4CDFA5441996EAB2007EA46E /* WebKit.framework in Frameworks */,
 			);
@@ -5970,6 +5978,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -5978,6 +5990,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -6026,6 +6042,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -6086,6 +6106,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -6118,6 +6142,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -6126,6 +6154,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -6134,6 +6166,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -6142,6 +6178,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
