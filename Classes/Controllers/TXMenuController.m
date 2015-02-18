@@ -639,19 +639,6 @@
 }
 
 #pragma mark -
-#pragma mark KVC Properties
-
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
-- (id)localDefaultValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
-#pragma mark -
 #pragma mark Navigation Channel List
 
 - (void)populateNavgiationChannelList
@@ -2686,15 +2673,10 @@
 	}
 }
 
-- (void)openDefaultIRCClientDialog:(id)sender
-{
-	[TPCApplicationInfo defaultIRCClientPrompt:YES];
-}
-
 - (void)onNextHighlight:(id)sender
 {
 	id treeItem = [mainWindow() selectedViewController];
-	
+
 	if ( treeItem) {
 		[treeItem nextHighlight];
 	}

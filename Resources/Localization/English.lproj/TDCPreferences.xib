@@ -59,7 +59,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="keywordsArrayControllerDataSource" id="aaH-D6-KhW">
+                <binding destination="G2Q-fc-ddg" name="contentArray" keyPath="values.Highlight List -&gt; Primary Matches" id="htt-qo-C7C">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -71,7 +71,7 @@
                 <string>string</string>
             </declaredKeys>
             <connections>
-                <binding destination="-2" name="contentArray" keyPath="excludeWordsArrayControllerDataSource" id="1lL-vc-qgd">
+                <binding destination="G2Q-fc-ddg" name="contentArray" keyPath="values.Highlight List -&gt; Excluded Matches" id="0BN-r4-aR7">
                     <dictionary key="options">
                         <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
                     </dictionary>
@@ -172,7 +172,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="Nze-Wj-Sne"/>
+                                    <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="QcD-e5-1Xe"/>
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" id="1lK-zg-SNQ">
@@ -184,7 +184,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 </buttonCell>
                                 <connections>
                                     <action selector="onHideMountainLionDeprecationWarning:" target="-2" id="TaG-BD-PlK"/>
-                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="s59-br-lht"/>
+                                    <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="5c3-Nx-xmc"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="EH5-Mo-ANo">
@@ -196,7 +196,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <binding destination="-2" name="hidden" keyPath="self.localDefaultValues.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="qGu-nw-aXy"/>
+                                    <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.TDCPreferencesControllerDidShowMountainLionDeprecationWarning" id="MBQ-bx-9ml"/>
                                 </connections>
                             </textField>
                         </subviews>
@@ -229,7 +229,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedCloudSyncingServices:" target="-2" id="J4y-sh-fhj"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="kSy-7j-RhB"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloud" id="kSy-7j-RhB"/>
                             </connections>
                         </button>
                         <button id="bFO-EK-2kp">
@@ -241,7 +241,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedUserListModeSortOrder:" target="-2" id="TiT-QL-Fc8"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListRetainsQueriesBetweenRestarts" id="IwQ-zr-5hm"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="IwQ-zr-5hm"/>
                             </connections>
                         </button>
                         <button id="TAe-ck-Xr4">
@@ -252,7 +252,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayServerMessageOfTheDayOnConnect" id="bvA-P8-BBg"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayServerMessageOfTheDayOnConnect" id="bvA-P8-BBg"/>
                             </connections>
                         </button>
                         <button id="Nc0-Xr-uzy">
@@ -263,7 +263,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.RejoinChannelOnLocalKick" id="m0f-aS-7Sp"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="m0f-aS-7Sp"/>
                             </connections>
                         </button>
                         <button id="uso-J8-aAb">
@@ -274,7 +274,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ConfirmApplicationQuit" id="U5G-hv-Db5"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConfirmApplicationQuit" id="U5G-hv-Db5"/>
                             </connections>
                         </button>
                         <button id="GWk-Pv-NpP">
@@ -285,7 +285,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinChannelOnInvite" id="3a3-ig-MVf"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="3a3-ig-MVf"/>
                             </connections>
                         </button>
                         <button id="wa5-YH-sSf">
@@ -296,7 +296,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="bSA-CE-koo"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="bSA-CE-koo"/>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" tag="13" id="KWG-6t-Hi7">
@@ -319,7 +319,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         </box>
                     </subviews>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" id="I5j-eF-4fb">
+                        <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="I5j-eF-4fb">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -338,7 +338,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ConfirmApplicationQuit" id="7qt-KC-fvc"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConfirmApplicationQuit" id="7qt-KC-fvc"/>
                             </connections>
                         </button>
                         <button id="NyR-pk-ZY5">
@@ -350,7 +350,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </buttonCell>
                             <connections>
                                 <action selector="onChangedUserListModeSortOrder:" target="-2" id="qbE-6i-GYr"/>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListRetainsQueriesBetweenRestarts" id="38l-G9-wCG"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="38l-G9-wCG"/>
                             </connections>
                         </button>
                         <button id="L7h-OA-1ef">
@@ -361,7 +361,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayServerMessageOfTheDayOnConnect" id="imL-zF-W1c"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayServerMessageOfTheDayOnConnect" id="imL-zF-W1c"/>
                             </connections>
                         </button>
                         <button id="O4M-nX-5pq">
@@ -372,7 +372,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.RejoinChannelOnLocalKick" id="I5X-wb-XYT"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="I5X-wb-XYT"/>
                             </connections>
                         </button>
                         <button id="tNb-Om-CfB">
@@ -383,7 +383,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinChannelOnInvite" id="qLn-I2-Au3"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="qLn-I2-Au3"/>
                             </connections>
                         </button>
                         <button id="eIX-KJ-OOv">
@@ -394,7 +394,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="titleBar" size="12"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SetAwayOnScreenSleep" id="sJ1-Vy-o6S"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="sJ1-Vy-o6S"/>
                             </connections>
                         </button>
                         <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="rg4-eL-Xiq">
@@ -406,11 +406,11 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         </box>
                     </subviews>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System -&gt; Built with iCloud Support" id="NwR-Ct-4ae"/>
+                        <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="NwR-Ct-4ae"/>
                     </connections>
                 </customView>
             </subviews>
-            <point key="canvasLocation" x="1285.5" y="36"/>
+            <point key="canvasLocation" x="832.5" y="223"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -426,7 +426,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="cC6-1A-pvW" id="szV-0W-TVZ"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Nickname" id="vRR-yU-P0i">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DefaultIdentity -&gt; Nickname" id="vRR-yU-P0i">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -452,7 +452,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="uNQ-s8-bAv" id="3WD-Po-m9P"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Username" id="ylC-KH-WAj">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DefaultIdentity -&gt; Username" id="ylC-KH-WAj">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -478,7 +478,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="11g-Me-msX" id="RbB-ds-oUj"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; Realname" id="HJw-qZ-Nzd">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DefaultIdentity -&gt; Realname" id="HJw-qZ-Nzd">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -505,7 +505,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="xt6-0d-74R" id="y7d-fg-drs"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DefaultIdentity -&gt; AwayNickname" id="75t-or-LHz">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DefaultIdentity -&gt; AwayNickname" id="75t-or-LHz">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -566,7 +566,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TrackNicknameHighlightsOfLocalUser" id="7TX-Na-5NF"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TrackNicknameHighlightsOfLocalUser" id="7TX-Na-5NF"/>
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" id="8oP-r2-z2R">
@@ -585,7 +585,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </popUpButtonCell>
                     <connections>
                         <action selector="onChangedHighlightType:" target="-2" id="IuQ-DS-Bb1"/>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.NicknameHighlightMatchingType" id="oS6-Kq-Pds"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.NicknameHighlightMatchingType" id="oS6-Kq-Pds"/>
                     </connections>
                 </popUpButton>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="dtR-hL-16n">
@@ -635,18 +635,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button verticalHuggingPriority="750" id="Nqu-81-VCV">
-                    <rect key="frame" x="49" y="68" width="23" height="23"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zrw-3F-rh2">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                    </buttonCell>
-                    <accessibility description="New highlight word"/>
-                    <connections>
-                        <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
-                    </connections>
-                </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="dIx-e4-L5V">
                     <rect key="frame" x="290" y="94" width="229" height="154"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -680,7 +668,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 </tableColumns>
                                 <connections>
                                     <accessibilityConnection property="title" destination="jN5-O0-8cZ" id="TSz-IV-aGD"/>
-                                    <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.NicknameHighlightMatchingType" id="MM5-lS-5vC">
+                                    <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="MM5-lS-5vC">
                                         <dictionary key="options">
                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                         </dictionary>
@@ -700,7 +688,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" id="KgU-fm-1CL">
-                    <rect key="frame" x="291" y="68" width="23" height="23"/>
+                    <rect key="frame" x="290" y="68" width="23" height="23"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9PI-h7-aCh">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -709,7 +697,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <accessibility description="New exclude word"/>
                     <connections>
                         <action selector="onAddExcludeKeyword:" target="-2" id="grA-d2-jxL"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.NicknameHighlightMatchingType" id="wq6-zN-RSs">
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="wq6-zN-RSs">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -746,7 +734,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedHighlightLogging:" target="-2" id="ojZ-Hz-fZH"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.LogHighlights" id="b05-J5-F0K"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogHighlights" id="b05-J5-F0K"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="jN5-O0-8cZ">
@@ -758,7 +746,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.NicknameHighlightMatchingType" id="E0J-R4-TJF"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="E0J-R4-TJF"/>
                     </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="faY-0p-PJo">
@@ -781,6 +769,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="4310" name="enabled" keyPath="canRemove" id="P3L-bL-EfP"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" id="Nqu-81-VCV">
+                    <rect key="frame" x="50" y="68" width="23" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zrw-3F-rh2">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="miniSystem"/>
+                    </buttonCell>
+                    <accessibility description="New highlight word"/>
+                    <connections>
+                        <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="360.5" y="-181"/>
         </customView>
@@ -799,7 +799,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayDockBadges" id="0bv-32-LW0"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayDockBadges" id="0bv-32-LW0"/>
                     </connections>
                 </button>
                 <button id="aAm-Wb-rMO">
@@ -810,7 +810,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayPublicMessageCountInDockBadge" id="ccG-2N-KP9"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayPublicMessageCountInDockBadge" id="ccG-2N-KP9"/>
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" id="WuE-Q5-q8G">
@@ -1009,7 +1009,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.PostNotificationsWhileInFocus" id="otB-pz-AGc"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.PostNotificationsWhileInFocus" id="otB-pz-AGc"/>
                     </connections>
                 </button>
             </subviews>
@@ -1028,7 +1028,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedStyle:" target="-2" id="idg-Og-BZg"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Inline Media" id="tle-kk-evH"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="tle-kk-evH"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="uLI-Lc-c9B">
@@ -1069,7 +1069,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         </menu>
                     </popUpButtonCell>
                     <connections>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.inlineImageMaxFilesize" id="o3Y-CM-Ayi"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.inlineImageMaxFilesize" id="o3Y-CM-Ayi"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="kyL-8P-YHU">
@@ -1324,7 +1324,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.RemoveIRCTextFormatting" id="dXX-qi-jX7"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RemoveIRCTextFormatting" id="dXX-qi-jX7"/>
                                         </connections>
                                     </button>
                                     <button id="tZw-P7-ONv">
@@ -1335,7 +1335,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyAddScrollbackMarker" id="TKZ-sG-MaV"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyAddScrollbackMarker" id="TKZ-sG-MaV"/>
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="LgG-lh-My4">
@@ -1371,7 +1371,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         <connections>
                                             <accessibilityConnection property="title" destination="v0E-Cj-gWa" id="TNS-x3-ZSh"/>
                                             <action selector="onSelectNewFont:" target="-2" id="Wci-q8-KSQ"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Channel Font Preference Enabled" id="ZvK-gj-818"/>
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Channel Font Preference Enabled" id="ZvK-gj-818"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" id="Ge6-Rs-zwN">
@@ -1393,7 +1393,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Join, Part, Quit" id="Z7b-er-M6D"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Join, Part, Quit" id="Z7b-er-M6D"/>
                                         </connections>
                                     </button>
                                     <button id="NK3-r5-TmU">
@@ -1404,7 +1404,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ReloadScrollbackOnLaunch" id="hkv-0m-Nhv"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="hkv-0m-Nhv"/>
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ohg-AA-uhq">
@@ -1542,7 +1542,6 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                         <connections>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Channel Font Preference Enabled" id="Jzc-cO-xbZ"/>
                                             <binding destination="-2" name="displayPatternValue1" keyPath="themeChannelViewFontName" id="Qft-L6-K97">
                                                 <dictionary key="options">
                                                     <string key="NSDisplayPattern">%{value1}@ %{value2}@pt.</string>
@@ -1553,6 +1552,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                     <string key="NSDisplayPattern">%{value1}@ %{value2}@pt.</string>
                                                 </dictionary>
                                             </binding>
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Channel Font Preference Enabled" id="Jzc-cO-xbZ"/>
                                         </connections>
                                     </textField>
                                 </subviews>
@@ -1586,7 +1586,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedStyle:" target="-2" id="0PX-FP-Auq"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.RightToLeftTextFormatting" id="Yzf-fn-gfg"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RightToLeftTextFormatting" id="Yzf-fn-gfg"/>
                                         </connections>
                                     </button>
                                     <comboBox verticalHuggingPriority="750" id="7Rl-VM-RXh">
@@ -1608,8 +1608,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         <connections>
                                             <accessibilityConnection property="title" destination="rQW-NA-Y3y" id="zaq-5d-HKN"/>
                                             <action selector="onChangedStyle:" target="-2" id="nwV-2b-DJc"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format" id="nqF-f6-abA"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Nickname Format Preference Enabled" id="kPD-JU-hkN">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Nickname Format" id="nqF-f6-abA"/>
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Nickname Format Preference Enabled" id="kPD-JU-hkN">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
@@ -1633,8 +1633,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         <connections>
                                             <accessibilityConnection property="title" destination="0GD-DG-0a4" id="C2e-uU-ppE"/>
                                             <action selector="onChangedStyle:" target="-2" id="xyM-gW-VOW"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format" id="zdU-kq-jyG"/>
-                                            <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Timestamp Format Preference Enabled" id="1oy-sy-gxF">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Timestamp Format" id="zdU-kq-jyG"/>
+                                            <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Timestamp Format Preference Enabled" id="1oy-sy-gxF">
                                                 <dictionary key="options">
                                                     <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
                                                 </dictionary>
@@ -1650,7 +1650,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </buttonCell>
                                         <connections>
                                             <action selector="onChangedStyle:" target="-2" id="xRG-ci-U6n"/>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisableRemoteNicknameColorHashing" id="FHL-Iy-BIw"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableRemoteNicknameColorHashing" id="FHL-Iy-BIw"/>
                                         </connections>
                                     </button>
                                     <comboBox verticalHuggingPriority="750" id="k2v-Db-KwP">
@@ -1724,7 +1724,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ConversationTrackingIncludesUserModeSymbol" id="npM-bR-a20"/>
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConversationTrackingIncludesUserModeSymbol" id="npM-bR-a20"/>
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="pQ3-6x-EMl">
@@ -1894,7 +1894,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.LogTranscript" id="uqm-Rw-J1g"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogTranscript" id="uqm-Rw-J1g"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ZeM-Wr-wwc">
@@ -1922,7 +1922,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <menuItem title="Select Destination…" tag="2" id="v2f-9c-gsp"/>
                                 <menuItem title="Clear Destination" tag="3" id="l8l-ff-FHu">
                                     <connections>
-                                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.LogTranscriptDestinationSecurityBookmark_5" id="u9S-Eb-PHq">
+                                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.LogTranscriptDestinationSecurityBookmark_5" id="u9S-Eb-PHq">
                                             <dictionary key="options">
                                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                                             </dictionary>
@@ -1934,7 +1934,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </popUpButtonCell>
                     <connections>
                         <action selector="onChangedTranscriptFolder:" target="-2" id="LYi-hQ-pgj"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.LogTranscript" id="nTX-GF-Bpv"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.LogTranscript" id="nTX-GF-Bpv"/>
                     </connections>
                 </popUpButton>
             </subviews>
@@ -2069,7 +2069,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="9GL-Fm-FRS" id="VKP-nM-yWT"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Kill Reason" id="qK9-GI-Duh"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRCopDefaultLocalizaiton -&gt; Kill Reason" id="qK9-GI-Duh"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ckK-Ko-G8O">
@@ -2082,7 +2082,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="qig-yp-6aY" id="aX5-BO-Vy4"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; G:Line Reason" id="jC4-to-p72"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRCopDefaultLocalizaiton -&gt; G:Line Reason" id="jC4-to-p72"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="qg5-rl-Ov0">
@@ -2095,7 +2095,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="9Fb-qx-dGB" id="brb-gf-mNK"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.IRCopDefaultLocalizaiton -&gt; Shun Reason" id="aMW-2e-qdQ"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.IRCopDefaultLocalizaiton -&gt; Shun Reason" id="aMW-2e-qdQ"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="b4u-EN-XAj">
@@ -2138,7 +2138,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" minValue="1" maxValue="20" doubleValue="1" tickMarkPosition="below" numberOfTickMarks="20" allowsTickMarkValuesOnly="YES" sliderType="linear" id="ROR-5N-lPB"/>
                     <connections>
                         <accessibilityConnection property="title" destination="MpU-MJ-P1S" id="1Mi-if-3qT"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutojoinMaximumChannelJoinCount" id="AkV-XD-wn9"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinMaximumChannelJoinCount" id="AkV-XD-wn9"/>
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" id="Vi1-qf-oHg">
@@ -2226,7 +2226,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" doubleValue="120" tickMarkPosition="below" numberOfTickMarks="51" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.TrackUserAwayStatusMaximumChannelSize" id="R7b-3V-IUf"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TrackUserAwayStatusMaximumChannelSize" id="R7b-3V-IUf"/>
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" id="cIi-Pq-WPZ">
@@ -2325,7 +2325,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </popUpButtonCell>
                     <connections>
                         <accessibilityConnection property="title" destination="Ttq-5L-YOn" id="2d5-On-agN"/>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DefaultBanCommandHostmaskFormat" id="hq6-rd-I3T"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.DefaultBanCommandHostmaskFormat" id="QKp-yp-xBH"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="kWh-2T-Yta">
@@ -2345,7 +2345,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <connections>
-                            <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ChannelOperatorDefaultLocalization -&gt; Kick Reason" id="bIe-Po-b7V"/>
+                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ChannelOperatorDefaultLocalization -&gt; Kick Reason" id="bIe-Po-b7V"/>
                         </connections>
                     </textFieldCell>
                     <connections>
@@ -2380,7 +2380,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
                     </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="OhO-2g-Ujx">
@@ -2405,7 +2405,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyReloadCustomThemesWhenTheyChange" id="FmB-cV-bEi"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyReloadCustomThemesWhenTheyChange" id="FmB-cV-bEi"/>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="JVk-Lv-4dl">
@@ -2563,7 +2563,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickConnectServer" id="cmg-qy-HRt">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListDoubleClickConnectServer" id="cmg-qy-HRt">
                             <dictionary key="options">
                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                             </dictionary>
@@ -2578,7 +2578,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickLeaveChannel" id="Oqz-uL-CHQ"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListDoubleClickLeaveChannel" id="Oqz-uL-CHQ"/>
                     </connections>
                 </button>
                 <button id="oEq-yQ-bhN">
@@ -2589,7 +2589,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickDisconnectServer" id="ceL-aZ-sDf"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListDoubleClickDisconnectServer" id="ceL-aZ-sDf"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="pym-29-wtE">
@@ -2618,7 +2618,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <connections>
                         <accessibilityConnection property="title" destination="pym-29-wtE" id="IIh-kK-685"/>
                         <accessibilityConnection property="title" destination="pym-29-wtE" id="vRx-gs-k0X"/>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.UserListDoubleClickAction" id="0ZO-hY-GuY"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.UserListDoubleClickAction" id="0ZO-hY-GuY"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="dfk-Ny-wKr">
@@ -2650,7 +2650,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <connections>
                         <accessibilityConnection property="title" destination="dfk-Ny-wKr" id="Nh8-MC-kOg"/>
                         <accessibilityConnection property="title" destination="dfk-Ny-wKr" id="mxn-tf-M15"/>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.Keyboard -&gt; Command+W Action" id="e5G-Hs-Zdt"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.Keyboard -&gt; Command+W Action" id="6bG-w8-zbs"/>
                     </connections>
                 </popUpButton>
                 <button id="uO3-nq-aL8">
@@ -2661,7 +2661,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.CopyTextSelectionOnMouseUp" id="j6E-EF-8AJ"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.CopyTextSelectionOnMouseUp" id="j6E-EF-8AJ"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="lQy-BU-bub">
@@ -2702,7 +2702,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ChannelNavigationIsServerSpecific" id="QtN-X0-Uza"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ChannelNavigationIsServerSpecific" id="QtN-X0-Uza"/>
                     </connections>
                 </button>
                 <button id="fFh-vJ-6zs">
@@ -2713,11 +2713,11 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ServerListDoubleClickJoinChannel" id="Urj-Gb-DAh"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListDoubleClickJoinChannel" id="Urj-Gb-DAh"/>
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="584.5" y="-2668"/>
+            <point key="canvasLocation" x="530.5" y="-2743"/>
         </customView>
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
             <rect key="frame" x="0.0" y="1" width="567" height="476"/>
@@ -2734,7 +2734,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticSpellCheck" id="yh4-bF-9qw"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TextFieldAutomaticSpellCheck" id="Jrx-3V-ibU"/>
                     </connections>
                 </button>
                 <button id="Max-AW-9Fo">
@@ -2745,7 +2745,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticSpellCorrection" id="gTn-2X-jmh"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TextFieldAutomaticSpellCorrection" id="59b-W7-lhu"/>
                     </connections>
                 </button>
                 <button id="WRe-tM-8Xc">
@@ -2757,7 +2757,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedInputHistoryScheme:" target="-2" id="lZa-oe-AJF"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SaveInputHistoryPerSelection" id="v5L-pB-gKx"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SaveInputHistoryPerSelection" id="v5L-pB-gKx"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="e5F-EX-B4Z">
@@ -2783,7 +2783,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedInputHistoryScheme:" target="-2" id="akE-RR-jck"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.CommandReturnSendsMessageAsAction" id="2YF-7t-hnk"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.CommandReturnSendsMessageAsAction" id="2YF-7t-hnk"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="nw2-BH-7zb">
@@ -2820,7 +2820,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </popUpButtonCell>
                     <connections>
                         <action selector="onChangedMainInputTextFieldFontSize:" target="-2" id="73G-4X-Zek"/>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Main Input Text Field -&gt; Font Size" id="sbc-cO-Cmn"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Main Input Text Field -&gt; Font Size" id="sbc-cO-Cmn"/>
                     </connections>
                 </popUpButton>
                 <button id="aSq-7e-M6q">
@@ -2832,7 +2832,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedInputHistoryScheme:" target="-2" id="R0a-0W-7fy"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ControlEnterSendsMessage" id="15G-FK-eCA"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ControlEnterSendsMessage" id="15G-FK-eCA"/>
                     </connections>
                 </button>
                 <button id="GxI-If-1nB">
@@ -2844,7 +2844,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedMainWindowSegmentedController:" target="-2" id="yRu-v4-2r6"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisableMainWindowSegmentedController" id="Qhw-Z3-IeF"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableMainWindowSegmentedController" id="Qhw-Z3-IeF"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="yVv-LX-TOX">
@@ -2880,7 +2880,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </popUpButtonCell>
                     <connections>
                         <accessibilityConnection property="title" destination="uq6-r6-RGd" id="dEN-5J-qT9"/>
-                        <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Action" id="JNa-f9-x9m"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Keyboard -&gt; Tab Key Action" id="JNa-f9-x9m"/>
                     </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" id="Zos-pv-UQf">
@@ -2901,7 +2901,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
-                        <binding destination="-2" name="displayPatternValue1" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Completion Suffix" id="F6z-cO-bDE">
+                        <binding destination="G2Q-fc-ddg" name="displayPatternValue1" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="yCp-JN-M1t">
                             <dictionary key="options">
                                 <string key="NSDisplayPattern">"JohnDoe%{value1}@…"</string>
                             </dictionary>
@@ -2947,7 +2947,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <accessibilityConnection property="title" destination="Zos-pv-UQf" id="Jf5-eR-ltz"/>
                         <accessibilityConnection property="title" destination="Zos-pv-UQf" id="kyY-D8-RRm"/>
                         <accessibilityConnection property="title" destination="Zos-pv-UQf" id="n9r-7F-OCi"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Keyboard -&gt; Tab Key Completion Suffix" id="Ctn-rI-Ugg">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Keyboard -&gt; Tab Key Completion Suffix" id="Ctn-rI-Ugg">
                             <dictionary key="options">
                                 <bool key="NSContinuouslyUpdatesValue" value="YES"/>
                             </dictionary>
@@ -2962,7 +2962,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.localDefaultValues.TextFieldAutomaticGrammarCheck" id="yzX-6W-qer"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TextFieldAutomaticGrammarCheck" id="ymg-aq-SK9"/>
                     </connections>
                 </button>
             </subviews>
@@ -2978,7 +2978,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="Ibj-Cq-lCy"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +y" id="7Zx-Zw-WtN">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +y" id="7Zx-Zw-WtN">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3000,7 +3000,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="WkG-qo-i5p"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +q" id="Uxh-6P-4gU">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +q" id="Uxh-6P-4gU">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3022,7 +3022,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="Y5Z-Kd-2Cb"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +a" id="3UD-2t-aUZ">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +a" id="3UD-2t-aUZ">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3044,7 +3044,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="xLO-ji-y3m"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +o" id="qf1-GW-whf">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +o" id="qf1-GW-whf">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3066,7 +3066,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="kSl-qH-hBN"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +h" id="bvh-dL-ugw">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +h" id="bvh-dL-ugw">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3088,7 +3088,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="PGl-mq-CHv"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.User List Mode Badge Colors —&gt; +v" id="Z7V-wI-tfr">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +v" id="Z7V-wI-tfr">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3157,7 +3157,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedUserListModeColor:" target="-2" id="Jf5-Lv-tY5"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.DisplayUserListNoModeSymbol" id="ktp-rd-Ijp"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayUserListNoModeSymbol" id="ktp-rd-Ijp"/>
                     </connections>
                 </button>
                 <button id="nZc-E3-Yfg">
@@ -3169,8 +3169,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedSidebarColorInversion:" target="-2" id="hOG-8T-L69"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.InvertSidebarColors" id="owU-B6-Bzt"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="ZGV-NS-YAj"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.InvertSidebarColors" id="owU-B6-Bzt"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="ZGV-NS-YAj"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ZWs-Sg-lWH">
@@ -3189,7 +3189,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedUserListModeSortOrder:" target="-2" id="X3p-uk-gSm"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListSortFavorsServerStaff" id="oWy-3A-yhG"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListSortFavorsServerStaff" id="oWy-3A-yhG"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="24e-Sn-hc0">
@@ -3208,7 +3208,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <connections>
                         <accessibilityConnection property="title" destination="24e-Sn-hc0" id="xBd-sf-xwL"/>
                         <action selector="onChangedTransparency:" target="-2" id="K5z-OY-yfc"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MainWindowTransparencyLevel" id="baK-7R-E7T"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MainWindowTransparencyLevel" id="baK-7R-E7T"/>
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" id="ty6-SS-X7V">
@@ -3244,7 +3244,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.MemberListUpdatesUserInfoPopoverOnScroll" id="cOL-ws-W6g"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListUpdatesUserInfoPopoverOnScroll" id="cOL-ws-W6g"/>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="ILa-Ff-zee">
@@ -3262,7 +3262,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OpenClickedLinksInBackgroundBrowser" id="dsW-G1-gR1"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="0qX-vf-TFu">
@@ -3280,7 +3280,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="onChangedServerListUnreadBadgeColor:" target="-2" id="Kaa-OF-12S"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Server List Unread Message Count Badge Colors -&gt; Highlight" id="qw0-Pa-M7O">
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Server List Unread Message Count Badge Colors -&gt; Highlight" id="qw0-Pa-M7O">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                             </dictionary>
@@ -3325,7 +3325,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; amsg" id="FVC-R6-AOL"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; amsg" id="0Yq-6N-mMv"/>
                     </connections>
                 </button>
                 <button id="Y4Q-Ki-gfe">
@@ -3336,7 +3336,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; nick" id="pON-XZ-8rv"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; nick" id="pON-XZ-8rv"/>
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="jpk-VZ-jWK">
@@ -3393,7 +3393,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="xEg-Db-K0K">
@@ -3501,7 +3501,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; away" id="nwM-MG-Zu5"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; away" id="TCq-6o-7SS"/>
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="Sfr-Eg-Gsq">
@@ -3558,7 +3558,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ApplyCommandToAllConnections -&gt; clearall" id="bKs-W3-GMH"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; clearall" id="bKs-W3-GMH"/>
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="USP-zA-6Oz">
@@ -3695,11 +3695,11 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </cells>
                     <connections>
                         <accessibilityConnection property="title" destination="xEg-Db-K0K" id="bBh-oz-2Sv"/>
-                        <binding destination="-2" name="selectedIndex" keyPath="self.userDefaultsValues.DestinationOfNonserverNotices" id="Fa3-zV-c8n"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.DestinationOfNonserverNotices" id="Go7-JY-fnA"/>
                     </connections>
                 </matrix>
             </subviews>
-            <point key="canvasLocation" x="283.5" y="-3978"/>
+            <point key="canvasLocation" x="457.5" y="-4197"/>
         </customView>
         <customView wantsLayer="YES" id="UpX-LQ-mM5" userLabel="iCloud">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -3714,8 +3714,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </buttonCell>
                     <connections>
                         <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="wmj-jD-pAW"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloud" id="zWO-Dl-ZGt"/>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.SyncPreferencesToTheCloudLimitedToServers" id="rU8-cQ-R4j"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.SyncPreferencesToTheCloud" id="0C8-aI-zXU"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloudLimitedToServers" id="4tg-3t-Ceh"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="S1T-hH-yI7">
@@ -3837,7 +3837,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 </menu>
                             </popUpButtonCell>
                             <connections>
-                                <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Request Reply Action" id="01J-Rj-Xuh"/>
+                                <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer Request Reply Action" id="boH-zZ-XKD"/>
                             </connections>
                         </popUpButton>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xfW-xE-1x8">
@@ -3864,7 +3864,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             </popUpButtonCell>
                             <connections>
                                 <action selector="onFileTransferIPAddressDetectionMethodChanged:" target="-2" id="ELQ-ht-YMe"/>
-                                <binding destination="-2" name="selectedTag" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer IP Address Detection Method" id="y2M-Gf-aeM"/>
+                                <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer IP Address Detection Method" id="Qxb-We-dJt"/>
                             </connections>
                         </popUpButton>
                         <textField verticalHuggingPriority="750" id="hRh-he-Eij">
@@ -3876,7 +3876,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Manually Entered IP Address" id="xDc-CM-NPj"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Manually Entered IP Address" id="gmC-TZ-7UZ"/>
                             </connections>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2EM-ea-xHg">
@@ -3972,7 +3972,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         <menuItem title="Select Destination…" tag="2" id="by0-Py-StW"/>
                                         <menuItem title="Clear Destination" tag="3" id="bDO-Qh-8a5">
                                             <connections>
-                                                <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Download Folder Bookmark" id="SdQ-Aw-18e">
+                                                <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.File Transfers -&gt; File Transfer Download Folder Bookmark" id="SdQ-Aw-18e">
                                                     <dictionary key="options">
                                                         <string key="NSValueTransformerName">NSIsNotNil</string>
                                                     </dictionary>
@@ -3994,7 +3994,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="cellTitle"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="Ezy-PC-a1l"/>
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="SVe-g2-fLe"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ceD-QY-fwv">
@@ -4015,8 +4015,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                 <font key="font" metaFont="cellTitle"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="value" keyPath="self.userDefaultsValues.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="9MI-94-Kt0"/>
-                                <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.System -&gt; Running Mac OS Mavericks Or Newer" id="Qsj-xH-z8T">
+                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="Waj-cR-RfP"/>
+                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Running Mac OS Mavericks Or Newer" id="ai9-To-44g">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                     </dictionary>
@@ -4040,7 +4040,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyDetectHighlightSpam" id="b9K-al-nZM"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyDetectHighlightSpam" id="Frv-8s-0eY"/>
                     </connections>
                 </button>
                 <button id="bX7-BN-4lf">
@@ -4051,7 +4051,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.AutomaticallyFilterUnicodeTextSpam" id="exa-I5-Qba"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyFilterUnicodeTextSpam" id="IgK-Hi-sMY"/>
                     </connections>
                 </button>
                 <button id="qfG-DF-6ev">
@@ -4062,12 +4062,13 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.ReplyUnignoredExternalCTCPRequests" id="xRo-mw-RdN"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReplyUnignoredExternalCTCPRequests" id="F3h-Qb-l6T"/>
                     </connections>
                 </button>
             </subviews>
             <point key="canvasLocation" x="386.5" y="-4396"/>
         </customView>
+        <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

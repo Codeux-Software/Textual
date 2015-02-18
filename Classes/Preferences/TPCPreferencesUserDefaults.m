@@ -37,124 +37,57 @@
 
 #import "TextualApplication.h"
 
-#include <objc/message.h>
-
 #import "BuildConfig.h"
-
-#define _userDefaults			[TPCPreferencesUserDefaults sharedLocalContainerUserDefaults]
-
-#define _groupDefaults			[TPCPreferencesUserDefaults sharedGroupContainerUserDefaults]
 
 #pragma mark -
 #pragma mark Reading & Writing
 
 @implementation TPCPreferencesUserDefaults
 
+static id _TPCPreferencesUserDefaults = nil;
+
 + (TPCPreferencesUserDefaults *)sharedUserDefaults
 {
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TPCPreferencesUserDefaults new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (NSUserDefaults *)sharedGroupContainerUserDefaults
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-		sharedSelf = [[NSUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
-#else
-		/* This is a significant abuse of Apple's private APIs, but this code will never
-		 touch the store so the worst we have to worry about is the API being changed
-		 from underneath us. In that case, we try to see if that happens. */
-		/* By abusing this API, non-sandboxed versions of Textual have access to the 
-		 preferences stored in the Group Container folder by the sandboxed copies. */
-
-		NSUserDefaults *blankInstance = [NSUserDefaults alloc];
-
-		if ([blankInstance respondsToSelector:@selector(_initWithSuiteName:container:)]) {
-			NSString *containerPath = [TPCPathInfo applicationGroupContainerPath];
-
-			blankInstance = [blankInstance performSelector:@selector(_initWithSuiteName:container:)
-												withObject:TXBundleBuildGroupContainerIdentifier
-												withObject:[NSURL fileURLWithPath:containerPath isDirectory:YES]];
-		} else {
-			blankInstance = [blankInstance init];
+	@synchronized([TPCPreferencesUserDefaults class]) {
+		if (_TPCPreferencesUserDefaults == nil) {
+			if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+				(void)[[TPCPreferencesUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+			} else {
+				(void)[[TPCPreferencesUserDefaults alloc] init];
+			}
 		}
 
-		sharedSelf = blankInstance;
-#endif
-	});
-	
-	return sharedSelf;
-}
-
-+ (NSUserDefaults *)sharedLocalContainerUserDefaults
-{
-	static id sharedSelf = nil;
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [NSUserDefaults new];
-	});
-
-	return sharedSelf;
-}
-
-- (NSDictionary *)dictionaryRepresentation
-{
-	/* Group container will take priority. */
-	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-	
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		NSDictionary *groupDict = [_groupDefaults dictionaryRepresentation];
-		
-		for (NSString *key in groupDict) {
-			settings[key] = groupDict[key];
-		}
+		return _TPCPreferencesUserDefaults;
 	}
-	
-	/* Default back to self. */
-	NSDictionary *localGroup = [_userDefaults dictionaryRepresentation];
-	
-	for (NSString *key in localGroup) {
-		if (settings[key] == nil) {
-			settings[key] = localGroup[key];
+}
+
++ (id)alloc
+{
+	@synchronized([TPCPreferencesUserDefaults class]) {
+		if (_TPCPreferencesUserDefaults == nil) {
+			_TPCPreferencesUserDefaults = [super alloc];
 		}
+
+		return _TPCPreferencesUserDefaults;
 	}
-	
-	/* Return value. */
-	return settings;
 }
 
-- (void)registerDefaultsForApplicationContainer:(NSDictionary *)registrationDictionary
++ (id)allocWithZone:(struct _NSZone *)zone
 {
-	[_userDefaults registerDefaults:registrationDictionary];
-}
+	@synchronized([TPCPreferencesUserDefaults class]) {
+		if (_TPCPreferencesUserDefaults == nil) {
+			_TPCPreferencesUserDefaults = [super allocWithZone:zone];
+		}
 
-- (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		[_groupDefaults registerDefaults:registrationDictionary];
-	} else {
-		[_userDefaults registerDefaults:registrationDictionary];
+		return _TPCPreferencesUserDefaults;
 	}
 }
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
-	[RZUserDefaultsValueProxy() setValue:value forKey:defaultName];
+	[super setObject:value forKey:defaultName];
+
+	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
@@ -187,155 +120,25 @@
 	[self setObject:[NSArchiver archivedDataWithRootObject:color] forKey:defaultName];
 }
 
-- (id)objectForKey:(NSString *)defaultName
-{
-	/* Group container will take priority. */
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:defaultName] == NO) {
-			 id objectValue = [_groupDefaults objectForKey:defaultName];
-
-			if (objectValue) {
-				return objectValue;
-			}
-		}
-	}
-	
-	/* Default back to self. */
-	return [_userDefaults objectForKey:defaultName];
-}
-
-- (NSString *)stringForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
-}
-
-- (NSArray *)arrayForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
-}
-
-- (NSDictionary *)dictionaryForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
-}
-
-- (NSData *)dataForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
-}
-
-- (NSArray *)stringArrayForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
-}
-
 - (NSColor *)colorForKey:(NSString *)defaultName
 {
 	id objectValue = [self objectForKey:defaultName];
-	
+
 	if (objectValue == nil) {
 		return nil;
 	}
-	
+
 	return [NSUnarchiver unarchiveObjectWithData:objectValue];
-}
-
-- (NSInteger)integerForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return 0;
-	}
-	
-	return [objectValue integerValue];
-}
-
-- (float)floatForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return 0.0f;
-	}
-	
-	return [objectValue floatValue];
-}
-
-- (double)doubleForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return 0.0;
-	}
-	
-	return [objectValue doubleValue];
-}
-
-- (BOOL)boolForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return NO;
-	}
-	
-	return [objectValue boolValue];
-}
-
-- (NSURL *)URLForKey:(NSString *)defaultName
-{
-	id objectValue = [self objectForKey:defaultName];
-	
-	if (objectValue == nil) {
-		return nil;
-	}
-	
-	return objectValue;
 }
 
 - (void)removeObjectForKey:(NSString *)defaultName
 {
-	[RZUserDefaultsValueProxy() willChangeValueForKey:defaultName];
-	
 	[super removeObjectForKey:defaultName];
-	
-	[RZUserDefaultsValueProxy() didChangeValueForKey:defaultName];
+
+	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
 }
 
-/* Keys that shall never be included in the group container. */
-+ (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key
++ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
 {
 	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
 		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
@@ -346,8 +149,8 @@
 		
 		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
 		
-		[key hasPrefix:@"TXRunCount"] ||									/* Textual owned prefix. */
-		[key hasPrefix:@"TXRunTime"] ||										/* Textual owned prefix. */
+		[key isEqualToString:@"TXRunCount"] ||								/* Textual owned prefix. */
+		[key isEqualToString:@"TXRunTime"] ||								/* Textual owned prefix. */
 		
 		[key hasPrefix:@"TextField"] ||										/* Textual owned prefix. */
 		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
@@ -362,9 +165,9 @@
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
 
-		[key hasPrefix:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"] ||					/* Textual owned prefix. */
-		[key hasPrefix:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"] ||						/* Textual owned prefix. */
-		[key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
+		[key isEqualToString:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"] ||					/* Textual owned prefix. */
+		[key isEqualToString:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"] ||						/* Textual owned prefix. */
+		[key isEqualToString:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
 	{
 		return YES;
 	}
@@ -374,61 +177,34 @@
 	}
 }
 
-/* Returns YES if a key should not be migrated to the group container by -migrateValuesToGroupContainer */
-+ (BOOL)keyIsSpecial:(NSString *)key
+/* Performs a one time migration of sandbox level keys to the group container
+ if they were previously used on a system that did not have a group container. */
++ (void)migrateValuesToGroupContainer
 {
-	if ([key hasPrefix:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"] ||
-		[key hasPrefix:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"])
-	{
-		return YES;
-	}
-	else
-	{
-		return NO;
-	}
-}
+	//  _userDefaults = object that controls non-group container level values
+#define _userDefaults			[NSUserDefaults standardUserDefaults]
 
-/* Performs a one time migration of sandbox level keys to the group container. */
-- (void)migrateValuesToGroupContainer
-{
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		id usesGroupContainer = [_userDefaults objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
-		
+
 		if (usesGroupContainer) { // make sure the key even exists (non-nil)
 			if ([usesGroupContainer boolValue] == NO) {
 				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
-				
+
 				for (NSString *dictKey in localDictionary) {
-					if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:dictKey] == NO &&
-						[TPCPreferencesUserDefaults keyIsSpecial:dictKey] == NO)
-					{
-						if ([_groupDefaults objectForKey:dictKey] == nil) {
-							[_groupDefaults setObject:localDictionary[dictKey] forKey:dictKey];
-						}
+					if ([_userDefaults objectForKey:dictKey] == nil) {
+						[_userDefaults setObject:localDictionary[dictKey] forKey:dictKey];
 					}
 				}
 			}
 		}
-		
+
 		[_userDefaults setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 	} else {
 		[_userDefaults setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 	}
-}
 
-/* Does a traversal of the group container looking for keys that do not belong there
- and remove those so that the incorrect value is not maintained. */
-- (void)purgeKeysThatDontBelongInGroupContainer
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		NSDictionary *groupDictionary = [_groupDefaults dictionaryRepresentation];
-
-		for (NSString *dictKey in groupDictionary) {
-			if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:dictKey]) {
-				[_groupDefaults removeObjectForKey:dictKey];
-			}
-		}
-	}
+#undef _userDefaults
 }
 
 @end
@@ -436,56 +212,74 @@
 #pragma mark -
 #pragma mark Object KVO Proxying
 
-@implementation TPCPreferencesUserDefaultsObjectProxy
+@implementation TPCPreferencesUserDefaultsController
 
-+ (id)userDefaultValues
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TPCPreferencesUserDefaultsObjectProxy new];
-	});
-	
-	return sharedSelf;
-}
+static id _TPCPreferencesUserDefaultsController = nil;
 
-+ (id)localDefaultValues
++ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController
 {
-	return [TPCPreferencesUserDefaultsObjectProxy userDefaultValues];
-}
-
-- (id)valueForKey:(NSString *)key
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
-			return [_groupDefaults objectForKey:key];
-		} else {
-			return [_userDefaults objectForKey:key];
+	@synchronized([TPCPreferencesUserDefaultsController class]) {
+		if (_TPCPreferencesUserDefaultsController == nil) {
+			(void)[[TPCPreferencesUserDefaultsController alloc] initWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
 		}
-	} else {
-		return [_userDefaults objectForKey:key];
+
+		return _TPCPreferencesUserDefaultsController;
+	}
+}
+
++ (id)alloc
+{
+	@synchronized([TPCPreferencesUserDefaultsController class]) {
+		if (_TPCPreferencesUserDefaultsController == nil) {
+			_TPCPreferencesUserDefaultsController = [super alloc];
+		}
+
+		return _TPCPreferencesUserDefaultsController;
+	}
+}
+
++ (id)allocWithZone:(struct _NSZone *)zone
+{
+	@synchronized([TPCPreferencesUserDefaultsController class]) {
+		if (_TPCPreferencesUserDefaultsController == nil) {
+			_TPCPreferencesUserDefaultsController = [super allocWithZone:zone];
+		}
+
+		return _TPCPreferencesUserDefaultsController;
 	}
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key
 {
-	[self willChangeValueForKey:key];
-	
-	if ([TPCPreferencesUserDefaults keyIsExcludedFromGroupContainer:key] == NO) {
-		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-			[_groupDefaults setObject:value forKey:key];
-		} else {
-			[_userDefaults setObject:value forKey:key];
-		}
-	} else {
-		[_userDefaults setObject:value forKey:key];
-	}
-	
-	[self didChangeValueForKey:key];
-	
+	[super setValue:value forKeyPath:key];
+
 	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : key}];
+}
+
+@end
+
+#pragma mark -
+
+@implementation TPCPreferencesUserDefaultsObjectProxy
+
++ (id)userDefaultValues
+{
+	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] values];
+}
+
++ (id)localDefaultValues
+{
+	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] values];
+}
+
+- (id)valueForKey:(NSString *)key
+{
+	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] valueForKey:key];
+}
+
+- (void)setValue:(id)value forKey:(NSString *)key
+{
+	[[TPCPreferencesUserDefaultsController sharedUserDefaultsController] setValue:value forKey:key];
 }
 
 @end

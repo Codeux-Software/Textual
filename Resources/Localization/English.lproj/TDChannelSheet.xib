@@ -167,7 +167,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Inline Media" id="87o-QZ-oFH">
+                        <binding destination="nwg-0t-IZ6" name="hidden" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="Xat-24-Xpi">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
@@ -182,7 +182,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="hidden" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Inline Media" id="RQt-Bq-Twh"/>
+                        <binding destination="nwg-0t-IZ6" name="hidden" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="hta-DL-5Yo"/>
                     </connections>
                 </button>
                 <button id="281">
@@ -193,7 +193,7 @@ DQ
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.DisplayEventInLogView -&gt; Join, Part, Quit" id="3tw-lA-VFe"/>
+                        <binding destination="nwg-0t-IZ6" name="enabled" keyPath="values.DisplayEventInLogView -&gt; Join, Part, Quit" id="N9c-1s-IKF"/>
                     </connections>
                 </button>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="312">
@@ -517,5 +517,6 @@ However, if backwards compatibility is not a concern, then it is highly recommen
             </subviews>
             <point key="canvasLocation" x="297.5" y="567"/>
         </view>
+        <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
 </document>

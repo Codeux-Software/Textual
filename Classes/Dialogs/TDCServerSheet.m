@@ -924,11 +924,6 @@
 	/* @end */
 }
 
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
 	[self updateConnectionPage];

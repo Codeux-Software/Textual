@@ -37,69 +37,40 @@
 
 #import "TextualApplication.h"
 
-/* Invoke RZUserDefaults() for writing directly to either the group container or
- the application container. Depending on the OS in use, it will automatically
- handle all the nasty bits of deciding where to write data. */
 #define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-
-/* See comments below for proxy. */
-#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy userDefaultValues]
+#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
 
 /* The user info dictionary of this notification contains the changed key. */
 #define TPCPreferencesUserDefaultsDidChangeNotification			@"TPCPreferencesUserDefaultsDidChangeNotification"
 
+/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
+ notifications for changed keys on a per-key basis so that the iCloud controller can
+ know what keys change instead of having to sync every single key, every time that it
+ performs an upstream sync. */
 @interface TPCPreferencesUserDefaults : NSUserDefaults
-/* Our reading object will read from our own application container
- and the shared group container defined for Textual. */
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
 
-+ (NSUserDefaults *)sharedGroupContainerUserDefaults;
-+ (NSUserDefaults *)sharedLocalContainerUserDefaults;
-
-/* This class proxies these methods. */
-/* Depending on whether we are on Mavericks or later, these methods
- will either write to our group container or application container. */
-- (id)objectForKey:(NSString *)defaultName;
-
-- (NSString *)stringForKey:(NSString *)defaultName;
-- (NSArray *)arrayForKey:(NSString *)defaultName;
-- (NSDictionary *)dictionaryForKey:(NSString *)defaultName;
-- (NSData *)dataForKey:(NSString *)defaultName;
-- (NSArray *)stringArrayForKey:(NSString *)defaultName;
-- (NSColor *)colorForKey:(NSString *)defaultName;
-- (NSInteger)integerForKey:(NSString *)defaultName;
-- (float)floatForKey:(NSString *)defaultName;
-- (double)doubleForKey:(NSString *)defaultName;
-- (BOOL)boolForKey:(NSString *)defaultName;
-- (NSURL *)URLForKey:(NSString *)defaultName;
-
-- (void)setObject:(id)value forKey:(NSString *)defaultName;
-- (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName;
-- (void)setFloat:(float)value forKey:(NSString *)defaultName;
-- (void)setDouble:(double)value forKey:(NSString *)defaultName;
-- (void)setBool:(BOOL)value forKey:(NSString *)defaultName;
-- (void)setURL:(NSURL *)url forKey:(NSString *)defaultName;
 - (void)setColor:(NSColor *)color forKey:(NSString *)defaultName;
 
-- (void)removeObjectForKey:(NSString *)defaultName;
+- (NSColor *)colorForKey:(NSString *)defaultName;
 
-- (NSDictionary *)dictionaryRepresentation;
++ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
 
-- (void)registerDefaultsForApplicationContainer:(NSDictionary *)registrationDictionary;
-- (void)registerDefaultsForGroupContainer:(NSDictionary *)registrationDictionary;
-
-- (void)migrateValuesToGroupContainer;
-- (void)purgeKeysThatDontBelongInGroupContainer;
-
-+ (BOOL)keyIsExcludedFromGroupContainer:(NSString *)key;
+/* Do not call the following method from a plugin. */
++ (void)migrateValuesToGroupContainer;
 @end
 
-@interface TPCPreferencesUserDefaultsObjectProxy : NSObject
-/* Use -userDefaultValues for KVO writing from Interface Builder when 
- access to the group container is wanted. That means, bascially always. */
-+ (id)userDefaultValues;
+/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
+ return the value of +sharedUserDefaultsController */
+@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
++ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
+@end
 
-/* -localDefaultValues only reads and writes to the application container.
- It exists to allow certain preferences to be written there only. */
-+ (id)localDefaultValues TEXTUAL_DEPRECATED("Use +localDefaultValues intead");
+/* The following class is no longer used and is considered dangerous to use. */
+#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy userDefaultValues]
+
+TEXTUAL_DEPRECATED("Use NSUserDefaultsController instead")
+@interface TPCPreferencesUserDefaultsObjectProxy : NSObject
++ (id)userDefaultValues;
++ (id)localDefaultValues;
 @end

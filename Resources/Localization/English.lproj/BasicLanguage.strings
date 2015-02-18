@@ -612,10 +612,6 @@
 /* /tage/ command. */
 "BasicLanguage[1226]" = "\002Time Since First Commit:\002 %@";
 
-/* Default IRC client prompt. */
-"BasicLanguage[1227][1]" = "Default IRC Client";
-"BasicLanguage[1227][2]" = "Textual is not set as the default IRC client for this copy of OS X. Set it?";
-
 /* Set user cloak prompt. */
 "BasicLanguage[1228][1]" = "Set User vHost";
 "BasicLanguage[1228][2]" = "Please enter desired vHost. (e.g. apple.vhost)";

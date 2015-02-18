@@ -65,8 +65,4 @@
 + (NSString *)gitBuildReference;
 
 + (NSDictionary *)applicationInfoPlist;
-
-+ (BOOL)isDefaultIRCClient;
-
-+ (void)defaultIRCClientPrompt:(BOOL)forced;
 @end
