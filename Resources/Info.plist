@@ -7,12 +7,7 @@
 		<key>Sparkle Framework</key>
 		<dict>
 			<key>SUFeedURL</key>
-			<dict>
-				<key>trial</key>
-				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
-				<key>devid</key>
-				<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-two.xml</string>
-			</dict>
+			<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
 			<key>SUAllowsAutomaticUpdates</key>
 			<false/>
 			<key>SUBundleName</key>
