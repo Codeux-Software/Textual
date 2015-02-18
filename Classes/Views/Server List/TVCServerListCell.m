@@ -1032,6 +1032,7 @@
 	
 	CGContextSetShouldAntialias(ctx, true);
 	CGContextSetShouldSmoothFonts(ctx, true);
+	CGContextSetShouldSubpixelPositionFonts(ctx, true);
 	
 	[[self attributedStringValue] drawInRect:cellFrame];
 	

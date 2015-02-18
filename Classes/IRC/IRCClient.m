@@ -3225,8 +3225,14 @@
 			
 			BOOL pluginFound = NO;
 			BOOL scriptFound = NO;
+
+			BOOL commandIsReserved = NO;
 			
-			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand scriptPath:&scriptPath isScript:&scriptFound isExtension:&pluginFound];
+			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand scriptPath:&scriptPath isReserved:&commandIsReserved isScript:&scriptFound isExtension:&pluginFound];
+
+			if (commandIsReserved) {
+				[sharedPluginManager() maybeOpenExtrasInstallerDownloadURLForCommand:lowercaseCommand];
+			}
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
