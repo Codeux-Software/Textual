@@ -187,13 +187,11 @@
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	NSDictionary *sparkleData = [resourcesDict dictionaryForKey:@"Sparkle Framework"];
 
-	NSDictionary *feeds = [sparkleData dictionaryForKey:@"SUFeedURL"];
-
-	NSString *feedURL = [feeds objectForKey:[TPCApplicationInfo applicationBuildScheme]];
-
-	DebugLogToConsole(@"Sparkle Framework feed URL: %@", feedURL);
+	NSString *feedURL = [sparkleData objectForKey:@"SUFeedURL"];
 
 	if (feedURL) {
+		DebugLogToConsole(@"Sparkle Framework feed URL: %@", feedURL);
+
 		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:feedURL]];
 
 		[[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
