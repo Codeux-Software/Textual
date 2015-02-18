@@ -50,11 +50,7 @@ static id _TPCPreferencesUserDefaults = nil;
 {
 	@synchronized([TPCPreferencesUserDefaults class]) {
 		if (_TPCPreferencesUserDefaults == nil) {
-			if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-				(void)[[TPCPreferencesUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
-			} else {
-				(void)[[TPCPreferencesUserDefaults alloc] init];
-			}
+			(void)[self alloc];
 		}
 
 		return _TPCPreferencesUserDefaults;
@@ -65,7 +61,7 @@ static id _TPCPreferencesUserDefaults = nil;
 {
 	@synchronized([TPCPreferencesUserDefaults class]) {
 		if (_TPCPreferencesUserDefaults == nil) {
-			_TPCPreferencesUserDefaults = [super alloc];
+			(void)[self allocWithZone:NSDefaultMallocZone()];
 		}
 
 		return _TPCPreferencesUserDefaults;
@@ -76,7 +72,11 @@ static id _TPCPreferencesUserDefaults = nil;
 {
 	@synchronized([TPCPreferencesUserDefaults class]) {
 		if (_TPCPreferencesUserDefaults == nil) {
-			_TPCPreferencesUserDefaults = [super allocWithZone:zone];
+			if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+				_TPCPreferencesUserDefaults = [[super allocWithZone:zone] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+			} else {
+				_TPCPreferencesUserDefaults = [[super allocWithZone:zone] init];
+			}
 		}
 
 		return _TPCPreferencesUserDefaults;
@@ -220,7 +220,7 @@ static id _TPCPreferencesUserDefaultsController = nil;
 {
 	@synchronized([TPCPreferencesUserDefaultsController class]) {
 		if (_TPCPreferencesUserDefaultsController == nil) {
-			(void)[[TPCPreferencesUserDefaultsController alloc] initWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
+			(void)[self alloc];
 		}
 
 		return _TPCPreferencesUserDefaultsController;
@@ -231,7 +231,7 @@ static id _TPCPreferencesUserDefaultsController = nil;
 {
 	@synchronized([TPCPreferencesUserDefaultsController class]) {
 		if (_TPCPreferencesUserDefaultsController == nil) {
-			_TPCPreferencesUserDefaultsController = [super alloc];
+			(void)[self allocWithZone:NSDefaultMallocZone()];
 		}
 
 		return _TPCPreferencesUserDefaultsController;
@@ -242,18 +242,18 @@ static id _TPCPreferencesUserDefaultsController = nil;
 {
 	@synchronized([TPCPreferencesUserDefaultsController class]) {
 		if (_TPCPreferencesUserDefaultsController == nil) {
-			_TPCPreferencesUserDefaultsController = [super allocWithZone:zone];
+			_TPCPreferencesUserDefaultsController = [[super allocWithZone:zone] initWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
+
+			[_TPCPreferencesUserDefaultsController setAppliesImmediately:YES];
 		}
 
 		return _TPCPreferencesUserDefaultsController;
 	}
 }
 
-- (void)setValue:(id)value forKey:(NSString *)key
+- (id)defaults
 {
-	[super setValue:value forKeyPath:key];
-
-	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : key}];
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
 @end

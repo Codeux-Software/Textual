@@ -872,7 +872,7 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
-                                                <binding destination="267" name="hidden2" keyPath="System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework" previousBinding="7Og-fT-eNz" id="OUZ-1S-ZAm">
+                                                <binding destination="TlT-Ik-3QP" name="hidden2" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with HockeyApp Framework" previousBinding="7Og-fT-eNz" id="sM0-K5-2WZ">
                                                     <dictionary key="options">
                                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
