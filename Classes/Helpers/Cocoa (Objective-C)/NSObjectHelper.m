@@ -44,13 +44,19 @@
 - (id)performSelector:(SEL)aSelector withArguments:(NSArray *)arguments returnsPrimitives:(BOOL)returnsPrimitives usesTypeChecking:(BOOL)usesTypeChecking error:(NSArray **)errorMessages
 {
 	/* Define context. */
-	NSMutableArray *errorMessageBuffer = [NSMutableArray array];
+	NSMutableArray *errorMessageBuffer = nil;
 	
 	id finalResult = nil;
 	
 	BOOL safeToPerform = YES;
 
-#define _insertError(isWarning, errorMessage)			[errorMessageBuffer addObject:@{@"isWarning" : @((isWarning)), @"errorMessage" : (errorMessage)}];
+#define _insertError(_isWarning, _errorMessage)			if (errorMessages) {																							\
+															if (errorMessageBuffer == nil) {																			\
+																errorMessageBuffer = [NSMutableArray array];															\
+															}																											\
+																																										\
+															[errorMessageBuffer addObject:@{@"isWarning" : @((_isWarning)), @"errorMessage" : (_errorMessage)}];		\
+														}
 	
 	/* Make sure we even have a selector to perform. */
 	if (aSelector == NULL) {
@@ -188,7 +194,9 @@
 	
 	/* Copy any errors over. */
 	if ( errorMessages) {
-		*errorMessages = [errorMessageBuffer copy];
+		if (errorMessageBuffer) {
+			*errorMessages = [errorMessageBuffer copy];
+		}
 	}
 
 	/* Return default value. */

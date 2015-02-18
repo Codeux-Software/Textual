@@ -169,7 +169,7 @@
 							nil];
 	
 	/* Begin scanning folders. */
-	id returnData;
+	id returnData = nil;
 
 	if (returnPathInfo) {
 		returnData = [NSMutableDictionary dictionary];
@@ -246,7 +246,11 @@
 	return _reservedNames;
 }
 
-- (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension
+- (void)findHandlerForOutgoingCommand:(NSString *)command
+						   scriptPath:(NSString **)scriptPath
+						   isReserved:(BOOL *)isReserved
+							 isScript:(BOOL *)isScript
+						  isExtension:(BOOL *)isExtension
 {
 	/* Find any script patching this command. */
 	NSDictionary *scriptPaths = [sharedPluginManager() supportedAppleScriptCommands:YES];
@@ -265,6 +269,8 @@
 		*scriptPath = _scriptPath;
 		
 		*isScript = YES;
+		*isReserved = NO;
+		*isExtension = NO;
 		
 		return; // We have something so shutdown…
 	} else {
@@ -285,26 +291,33 @@
 		NSArray *reservedNames = [self reservedCommandNamesForExtrasInstaller];
 		
 		if ([reservedNames containsObject:command]) {
-			BOOL download = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1236][2]", command)
-																title:TXTLS(@"BasicLanguage[1236][1]")
-														defaultButton:TXTLS(@"BasicLanguage[1236][3]")
-													  alternateButton:BLS(1009)
-													   suppressionKey:@"plugin_manager_reserved_command_dialog"
-													  suppressionText:nil];
-			
-			if (download) {
-				[self openExtrasInstallerDownloadURL];
-			}
+			*isReserved = YES;
+		} else {
+			*isReserved = NO;
 		}
+	}
+}
+
+- (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command
+{
+	BOOL download = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1236][2]", command)
+														title:TXTLS(@"BasicLanguage[1236][1]")
+												defaultButton:TXTLS(@"BasicLanguage[1236][3]")
+											  alternateButton:BLS(1009)
+											   suppressionKey:@"plugin_manager_reserved_command_dialog"
+											  suppressionText:nil];
+
+	if (download) {
+		[self openExtrasInstallerDownloadURL];
 	}
 }
 
 - (void)openExtrasInstallerDownloadURL
 {
 	NSString *currentVersion = [TPCApplicationInfo applicationVersion];
-	
+
 	NSString *urlToOpen = [NSString stringWithFormat:@"http://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
-	
+
 	[RZWorkspace() openURL:[NSURL URLWithString:urlToOpen]];
 }
 

@@ -59,9 +59,14 @@
 
 - (NSArray *)outputRulesForCommand:(NSString *)command;
 
-- (void)findHandlerForOutgoingCommand:(NSString *)command scriptPath:(NSString **)scriptPath isScript:(BOOL *)isScript isExtension:(BOOL *)isExtension;
+- (void)findHandlerForOutgoingCommand:(NSString *)command
+						   scriptPath:(NSString **)scriptPath
+						   isReserved:(BOOL *)isReserved
+							 isScript:(BOOL *)isScript
+						  isExtension:(BOOL *)isExtension;
 
 /* Installer */
+- (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command;
 - (void)openExtrasInstallerDownloadURL;
 
 /* Talk to plugins. */
