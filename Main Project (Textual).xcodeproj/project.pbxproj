@@ -2353,8 +2353,7 @@
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Exceptions/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4C994BAC181FB3E0002FECA6 /* Textual.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Textual.entitlements; path = Resources/Sandbox/Exceptions/Textual.entitlements; sourceTree = SOURCE_ROOT; };
-		4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Exceptions/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
+		4C994BAC181FB3E0002FECA6 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Exceptions/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C9A1D901836E6A100C14835 /* BlowfishCommandLine.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BlowfishCommandLine.bundle; path = ".tmp/SharedBuildProducts-Extensions/BlowfishCommandLine.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = ".tmp/SharedBuildProducts-Extensions/BragSpam.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
@@ -2908,8 +2907,7 @@
 			isa = PBXGroup;
 			children = (
 				4C994BAB181FB3E0002FECA6 /* Auxiliary.entitlements */,
-				4C994BAC181FB3E0002FECA6 /* Textual.entitlements */,
-				4C994BAD181FB3E0002FECA6 /* TextualWithoutCloud.entitlements */,
+				4C994BAC181FB3E0002FECA6 /* TextualWithSandbox.entitlements */,
 			);
 			name = Entitlements;
 			sourceTree = "<group>";

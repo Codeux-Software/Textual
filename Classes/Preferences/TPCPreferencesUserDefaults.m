@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#include <objc/message.h>
+
 #import "BuildConfig.h"
 
 #define _userDefaults			[TPCPreferencesUserDefaults sharedLocalContainerUserDefaults]
@@ -68,7 +70,30 @@
 	static dispatch_once_t onceToken;
 	
 	dispatch_once(&onceToken, ^{
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		sharedSelf = [[NSUserDefaults alloc] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+#else
+		/* This is a significant abuse of Apple's private APIs, but this code will never
+		 touch the store so the worst we have to worry about is the API being changed
+		 from underneath us. In that case, we try to see if that happens. */
+		/* By abusing this API, non-sandboxed versions of Textual have access to the 
+		 preferences stored in the Group Container folder by the sandboxed copies. */
+
+		NSUserDefaults *blankInstance = [NSUserDefaults alloc];
+
+		if ([blankInstance respondsToSelector:@selector(_initWithSuiteName:container:)]) {
+			NSString *containerPath = [TPCPathInfo applicationGroupContainerPath];
+
+			blankInstance = [blankInstance performSelector:@selector(_initWithSuiteName:container:)
+												withObject:TXBundleBuildGroupContainerIdentifier
+												withObject:[NSURL fileURLWithPath:containerPath isDirectory:YES]];
+		} else {
+			blankInstance = [blankInstance init];
+		}
+
+		sharedSelf = blankInstance;
+#endif
 	});
 	
 	return sharedSelf;

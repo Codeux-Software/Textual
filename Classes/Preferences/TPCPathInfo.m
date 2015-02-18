@@ -72,11 +72,36 @@
 	return nil;
 }
 
-+ (NSString *)applicationSupportFolderPath
++ (NSString *)applicationGroupContainerPath
 {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
 
-	NSString *dest = [url relativePath];
+	return [url relativePath];
+#else
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
+
+		NSString *dest = [searchArray[0] stringByAppendingString:endPath];
+
+		if (dest) {
+			if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+				[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+			}
+
+			return dest;
+		}
+	}
+#endif
+	
+	return nil;
+}
+
++ (NSString *)applicationSupportFolderPath
+{
+	NSString *dest = [TPCPathInfo applicationGroupContainerPath];
 	
 	if (dest) {
 		dest = [dest stringByAppendingPathComponent:@"/Library/Application Support/Textual/"];
@@ -218,7 +243,6 @@
 	
 	return @(pw->pw_dir);
 }
-
 
 #pragma mark -
 #pragma mark Factory
