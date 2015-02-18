@@ -48,6 +48,7 @@
 + (NSString *)applicationTemporaryFolderPath;
 + (NSString *)applicationCachesFolderPath;
 + (NSString *)applicationResourcesFolderPath;
++ (NSString *)applicationGroupContainerPath;
 
 + (NSString *)localUserDiagnosticReportsFolderPath;
 + (NSString *)systemDiagnosticReportsFolderPath;
