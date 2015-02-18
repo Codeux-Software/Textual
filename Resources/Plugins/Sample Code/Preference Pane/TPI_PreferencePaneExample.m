@@ -78,17 +78,4 @@
 	[self doSomethingWithPreferences];
 }
 
-- (id)userDefaultsValues
-{
-	/* Returns key used by interface builder to retrieve key-values. */
-	/* Textual maintains its own version of NSUserDefaultsController which is
-	 maintained by the RZUserDefaultsValuesProxy() define. Writing and reading
-	 to this object from the user interface will inline plugin preferences with
-	 Textual's own. For that reason, use a TPI prefix or other variant in your
-	 preferences keys. Another option is to use your own implementation of
-	 NSUserDefaults to manage your preferences. */
-	
-	return RZUserDefaultsValueProxy();
-}
-
 @end

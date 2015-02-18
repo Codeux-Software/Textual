@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6185.7" systemVersion="14A283o" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1070" defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.7"/>
+        <deployment version="1070" identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikipediaLinkParser">
@@ -19,7 +19,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -102,7 +102,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <binding destination="-2" name="value" keyPath="self.userDefaultsValues.Wiki-style Link Parser Extension -&gt; Service Enabled" id="edx-A7-nQQ"/>
+                        <binding destination="ak5-9U-7uX" name="value" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="EcC-nM-5pe"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="68">
@@ -122,7 +122,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="492" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="491.5" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,7 +141,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="link" editable="NO" width="359.84393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
+                                    <tableColumn identifier="link" editable="NO" width="360.34393310546875" minWidth="10" maxWidth="3.4028234663852886e+38" id="282">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Link Prefix">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -156,7 +156,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
-                                    <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Wiki-style Link Parser Extension -&gt; Service Enabled" id="rg0-TM-dUA"/>
+                                    <binding destination="ak5-9U-7uX" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="TbJ-2e-ZVP"/>
                                     <outlet property="dataSource" destination="-2" id="289"/>
                                     <outlet property="delegate" destination="-2" id="290"/>
                                 </connections>
@@ -186,7 +186,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </buttonCell>
                     <connections>
                         <action selector="addCondition:" target="-2" id="291"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Wiki-style Link Parser Extension -&gt; Service Enabled" id="nSk-QS-ndC"/>
+                        <binding destination="ak5-9U-7uX" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="ExP-nb-61m"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" id="286">
@@ -198,7 +198,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </buttonCell>
                     <connections>
                         <action selector="removeCondition:" target="-2" id="292"/>
-                        <binding destination="-2" name="enabled" keyPath="self.userDefaultsValues.Wiki-style Link Parser Extension -&gt; Service Enabled" id="dEB-tM-f9w"/>
+                        <binding destination="ak5-9U-7uX" name="enabled" keyPath="values.Wiki-style Link Parser Extension -&gt; Service Enabled" id="8iU-1p-dSO"/>
                     </connections>
                 </button>
             </subviews>
@@ -287,6 +287,7 @@ Gw
                 </subviews>
             </view>
         </window>
+        <userDefaultsController id="ak5-9U-7uX" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

@@ -133,11 +133,6 @@
 #pragma mark -
 #pragma mark Preference Pane.
 
-- (id)userDefaultsValues
-{
-	return RZUserDefaultsValueProxy();
-}
-
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
     return TPILocalizedString(@"BasicLanguage[1000]");
