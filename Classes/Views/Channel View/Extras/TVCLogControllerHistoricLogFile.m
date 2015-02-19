@@ -37,9 +37,13 @@
 
 #import "TextualApplication.h"
 
+#warning FIXME: This file requires a significant overhaul.
+
 #define _usesBackgroundActivityTask			0
 
 #define _maximumRowCountPerClient			1000
+
+#define _newlineDataObject		[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]
 
 @interface TVCLogControllerHistoricLogFile ()
 #if _usesBackgroundActivityTask == 1
@@ -55,61 +59,43 @@
 #pragma mark -
 #pragma mark Public API
 
+- (NSData *)newline
+{
+	static NSData *_newline = nil;
+
+	if (_newline == nil) {
+		_newline = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
+	}
+
+	return _newline;
+}
+
 - (void)writeNewEntryWithRawData:(NSData *)jsondata
 {
-	if (self.fileHandle) {
-		/* Write to file. */
-		[self maybeReopen];
+	if (self.fileHandle == nil) {
+		[self open];
+	}
 
-		if ( self.fileHandle) {
-			@try {
-				[self.fileHandle writeData:jsondata];
-			}
-			@catch (NSException *exception) {
-				LogToConsole(@"An exception happened to a non-critical component of Textual.");
-			}
-		} else {
-			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
+	if (self.fileHandle) {
+		@try {
+			[self.fileHandle writeData:jsondata];
+
+			[self scheduleNextRandomFileTruncationEvent];
 		}
-		
-		[self scheduleNextRandomFileTruncationEvent];
-	} else {
-		LogToConsole(@"Unable to perform write operation because of missing file handle.");
+		@catch (NSException *exception) {
+			[self close];
+
+			LogToConsole(@"An exception happened to a non-critical component of Textual.");
+		}
 	}
 }
 
 - (void)writeNewEntryForLogLine:(TVCLogLine *)logLine
 {
-	if (self.fileHandle) {
-		/* Get a dictionary representation and append a new line to it. */
-		NSData *jsondata = [logLine jsonDictionaryRepresentation];
+	NSData *jsondata = [logLine jsonDictionaryRepresentation];
 
-		/* Write to file. */
-		[self maybeReopen];
-
-		if ( self.fileHandle) {
-			@try {
-				[self.fileHandle writeData:jsondata];
-				[self.fileHandle writeData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
-			}
-			@catch (NSException *exception) {
-				LogToConsole(@"An exception happened to a non-critical component of Textual.");
-			}
-		} else {
-			LogToConsole(@"An error occured that resulted in the file handle being unable to be re-opened.");
-		}
-		
-		[self scheduleNextRandomFileTruncationEvent];
-	} else {
-		LogToConsole(@"Unable to perform write operation because of missing file handle.");
-	}
-}
-
-- (void)maybeReopen
-{
-	if ([RZFileManager() fileExistsAtPath:[self writePath]] == NO) {
-		[self open];
-	}
+	[self writeNewEntryWithRawData:jsondata];
+	[self writeNewEntryWithRawData:[self newline]];
 }
 
 - (void)open
@@ -167,6 +153,7 @@
 - (void)close
 {
 	if ( self.fileHandle) {
+		[self.fileHandle synchronizeFile];
 		[self.fileHandle closeFile];
 		 self.fileHandle = nil;
 	}
@@ -187,32 +174,11 @@
 
 - (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
-#if _usesBackgroundActivityTask == 1
-	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			if (self.truncationTimerScheduled) {
-				[self.backgroundTimer invalidate];
-				 self.backgroundTimer = nil;
-	 
-				self.truncationTimerScheduled = NO;
-			}
-		} else {
-	#endif
-#endif
-		
-		if (self.truncationTimerScheduled) {
-			[NSObject cancelPreviousPerformRequestsWithTarget:self
-													 selector:@selector(truncateFileToMatchDefinedMaximumLineCount)
-													   object:nil];
+	if (self.truncationTimerScheduled) {
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];
 
-			self.truncationTimerScheduled = NO;
-		}
-
-#if _usesBackgroundActivityTask == 1
-	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		}
-	#endif
-#endif
+		self.truncationTimerScheduled = NO;
+	}
 }
 
 - (void)scheduleNextRandomFileTruncationEvent
@@ -220,53 +186,15 @@
 	/* File truncation events are scheduled to happen at random 
 	 intervals so they are all not running at one time. */
 
-#if _usesBackgroundActivityTask == 1
-	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			@autoreleasepool {
-				NSString *taskID = [self backgroundActivityIdentifier];
+	if (self.truncationTimerScheduled == NO) {
+		NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
 
-				NSBackgroundActivityScheduler *scheduler = [[NSBackgroundActivityScheduler alloc] initWithIdentifier:[taskID copy]];
+		[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
+				   withObject:nil
+				   afterDelay:timeInterval];
 
-				[scheduler setRepeats:YES];
-				[scheduler setInterval:(15 * 60)];
-				[scheduler setTolerance:(5 * 60)];
-				
-				[scheduler setQualityOfService:NSQualityOfServiceBackground];
-				
-				__weak TVCLogControllerHistoricLogFile *weakSelf = self;
-				
-				[scheduler scheduleWithBlock:^(NSBackgroundActivityCompletionHandler completionHandler) {
-					if ( weakSelf) {
-						[weakSelf truncateFileToMatchDefinedMaximumLineCount];
-					}
-					
-					completionHandler(NSBackgroundActivityResultFinished);
-				}];
-				
-				self.backgroundTimer = scheduler;
-			
-				self.truncationTimerScheduled = YES;
-			}
-		} else {
-	#endif
-#endif
-
-		if (self.truncationTimerScheduled == NO) {
-			NSInteger timeInterval = ((arc4random() % 951) + 950); // ~15 minutes
-
-			[self performSelector:@selector(truncateFileToMatchDefinedMaximumLineCount)
-					   withObject:nil
-					   afterDelay:timeInterval];
-
-			self.truncationTimerScheduled = YES;
-		}
-
-#if _usesBackgroundActivityTask == 1
-	#ifdef TXSystemIsMacOSYosemiteOrNewer
-		}
-	#endif
-#endif
+		self.truncationTimerScheduled = YES;
+	}
 }
 
 - (void)truncateFileToMatchDefinedMaximumLineCount
@@ -274,74 +202,72 @@
 	DebugLogToConsole(@"Performing truncation on file to meet maximum line count of %i.", _maximumRowCountPerClient);
 
 	if (self.fileHandle) {
-		/* Force file to write to disk. */
-		[self.fileHandle synchronizeFile];
+		@autoreleasepool {
+			/* Close the open file handle. */
+			[self close];
 
-		/* Read contents of file. */
-		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:0 error:NULL];
+			/* Read contents of file. */
+			NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
 
-		NSObjectIsEmptyAssert(rawdata);
+			NSObjectIsEmptyAssert(rawdata);
 
-		/* Discussion: Yes, I could simply convert this NSData chunk to 
-		 an NSString, split it, and be done with it… BUT, NSJSONSerialization
-		 which the data will ultimately be fed to only accepts NSData so
-		 the workload of converting this to NSString then converting the
-		 individual chunks back to NSData is a lot of overhead. That is
-		 why I implement such a messy while loop that gets the range of
-		 every newline and breaks it apart into smaller data. */
-		/* The same idea applies to the code for reading entries which
-		 is inherited from this codebase. */
-		/* Seek each newline, truncate to that, insert into array, then
-		 find the next one and repeat process until there are no more. */
-		NSMutableArray *alllines = [NSMutableArray array];
+			/* Discussion: Yes, I could simply convert this NSData chunk to 
+			 an NSString, split it, and be done with it… BUT, NSJSONSerialization
+			 which the data will ultimately be fed to only accepts NSData so
+			 the workload of converting this to NSString then converting the
+			 individual chunks back to NSData is a lot of overhead. That is
+			 why I implement such a messy while loop that gets the range of
+			 every newline and breaks it apart into smaller data. */
+			/* The same idea applies to the code for reading entries which
+			 is inherited from this codebase. */
+			/* Seek each newline, truncate to that, insert into array, then
+			 find the next one and repeat process until there are no more. */
+			NSMutableArray *alllines = [NSMutableArray array];
 
-		NSMutableData *mutdata = [rawdata mutableCopy];
+			NSMutableData *mutdata = [rawdata mutableCopy];
 
-		NSData *newlinedata = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
+			NSInteger startIndex = 0;
 
-		NSInteger startIndex = 0;
+			while (1 == 1) {
+				/* Our scan range is the range from last newline. */
+				NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
 
-		while (1 == 1) {
-			/* Our scan range is the range from last newline. */
-			NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
+				NSRange nlrang = [mutdata rangeOfData:[self newline] options:0 range:scanrange];
 
-			NSRange nlrang = [mutdata rangeOfData:newlinedata options:0 range:scanrange];
+				/* If no more newlines are found, then there is nothing to do. */
+				if (nlrang.location == NSNotFound) {
+					break; // No newline was found.
+				} else {
+					[alllines addObject:@(nlrang.location)];
 
-			NSUInteger spaceLocation = nlrang.location;
+					startIndex = (nlrang.location + 1);
+				}
+			}
 
-			/* If no more newlines are found, then there is nothing to do. */
-			if (spaceLocation == NSNotFound) {
-				break; // No newline was found.
-			} else {
-				[alllines addObject:@(spaceLocation)];
+			/* Now that we have all lines, limit them based on fetch count. */
+			if ([alllines count] > _maximumRowCountPerClient) {
+				/* The last possible index is the line which will be truncated to. This line
+				 is calculated by taking the maximum number of clients and subtracting the
+				 file number of lines from it. That will give us a negative number, so we
+				 times it by -1. After that, we minus one so the only rows remaining are the
+				 number that we have defined as maximum. */
+				NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
 
-				startIndex = (spaceLocation + 1);
+				/* Add 1 to not have first line a newline. */
+				NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
+
+				NSRange cutRange = NSMakeRange(lastBytePos, ([rawdata length] - lastBytePos));
+
+				NSData *finalData = [rawdata subdataWithRange:cutRange];
+
+				/* We completely clear out file, write the new data, then save it. */
+				NSError *writeError = nil;
+
+				if ([finalData writeToFile:[self writePath] options:NSDataWritingAtomic error:&writeError] == NO) {
+					LogToConsole(@"Failed to write file to disk.");
+				}
 			}
 		}
-
-		/* Now that we have all lines, limit them based on fetch count. */
-		if ([alllines count] > _maximumRowCountPerClient) {
-			/* The last possible index is the line which will be truncated to. This line
-			 is calculated by taking the maximum number of clients and subtracting the
-			 file number of lines from it. That will give us a negative number, so we
-			 times it by -1. After that, we minus one so the only rows remaining are the
-			 number that we have defined as maximum. */
-			NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
-
-			/* Add 1 to not have first line a newline. */
-			NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
-
-			NSRange cutRange = NSMakeRange(lastBytePos, ([rawdata length] - lastBytePos));
-
-			NSData *finalData = [rawdata subdataWithRange:cutRange];
-
-			/* We completely clear out file, write the new data, then save it. */
-			[self.fileHandle truncateFileAtOffset:0];
-			[self.fileHandle writeData:finalData];
-			[self.fileHandle synchronizeFile];
-		}
-	} else {
-		LogToConsole(@"Unable to perform fetch because of missing file handle.");
 	}
 
 	/* Reset timer. */
@@ -351,87 +277,65 @@
 - (NSArray *)listEntriesWithFetchLimit:(NSUInteger)maxEntryCount
 {
 	if (self.fileHandle) {
-		/* Force file to write to disk. */
-		[self.fileHandle synchronizeFile];
+		@autoreleasepool {
+			/* Close the open file handle. */
+			[self close];
 
-		/* Read contents of file. */
-		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:0 error:NULL];
+			/* Read contents of file. */
+			NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
 
-		NSObjectIsEmptyAssertReturn(rawdata, nil);
+			NSObjectIsEmptyAssertReturn(rawdata, nil);
 
-		/* Seek each newline, truncate to that, insert into array, then 
-		 find the next one and repeat process until there are no more. */
-		NSMutableArray *alllines = [NSMutableArray array];
+			/* Seek each newline, truncate to that, insert into array, then 
+			 find the next one and repeat process until there are no more. */
+			NSMutableArray *alllines = [NSMutableArray array];
 
-		NSMutableData *mutdata = [rawdata mutableCopy];
+			NSMutableData *mutdata = [rawdata mutableCopy];
 
-		NSData *newlinedata = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
+			while (1 == 1) {
+				NSRange scanrange = NSMakeRange(0, [mutdata length]);
 
-		while (1 == 1) {
-			NSRange scanrange = NSMakeRange(0, [mutdata length]);
+				NSRange nlrang = [mutdata rangeOfData:[self newline] options:0 range:scanrange];
 
-			NSRange nlrang = [mutdata rangeOfData:newlinedata options:0 range:scanrange];
+				if (nlrang.location == NSNotFound) {
+					break; // No newline was found.
+				} else {
+					NSRange cutRange = NSMakeRange(0, (nlrang.location + 1));
 
-			NSUInteger spaceLocation = nlrang.location;
+					NSData *chunkedData = [mutdata subdataWithRange:cutRange];
 
-			if (spaceLocation == NSNotFound) {
-				break; // No newline was found.
-			} else {
-				NSRange cutRange = NSMakeRange(0, (spaceLocation + 1));
+					[alllines addObject:chunkedData];
 
-				NSData *chunkedData = [mutdata subdataWithRange:cutRange];
-
-				[alllines addObject:chunkedData];
-
-				[mutdata replaceBytesInRange:cutRange withBytes:NULL length:0];
-			}
-		}
-
-		/* Now that we have all lines, limit them based on fetch count. */
-		if ([alllines count] > maxEntryCount) {
-			NSInteger finalCount = [alllines count];
-
-			NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
-
-			NSMutableArray *countedEntries = [NSMutableArray array];
-
-			for (NSInteger i = startingIndex; i < finalCount; i++)
-			{
-				[countedEntries addObject:alllines[i]];
+					[mutdata replaceBytesInRange:cutRange withBytes:NULL length:0];
+				}
 			}
 
-			return countedEntries;
-		}
+			/* Now that we have all lines, limit them based on fetch count. */
+			if ([alllines count] > maxEntryCount) {
+				NSInteger finalCount = [alllines count];
 
-		/* Return found data. */
-		return alllines;
+				NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
+
+				NSMutableArray *countedEntries = [NSMutableArray array];
+
+				for (NSInteger i = startingIndex; i < finalCount; i++)
+				{
+					[countedEntries addObject:alllines[i]];
+				}
+
+				return countedEntries;
+			}
+
+			/* Return found data. */
+			return alllines;
+		}
 	} else {
-		LogToConsole(@"Unable to perform fetch because of missing file handle.");
-
 		return nil;
 	}
 }
 
 #pragma mark -
 #pragma mark Private API
-
-#if _usesBackgroundActivityTask == 1
-- (NSString *)backgroundActivityIdentifier
-{
-	id client = [self.associatedController associatedClient];
-	id channel = [self.associatedController associatedChannel];
-	
-	NSString *combinedName;
-	
-	if (channel) {
-		combinedName = [NSString stringWithFormat:@"%@-%@", [client uniqueIdentifier], [channel uniqueIdentifier]];
-	} else {
-		combinedName = [NSString stringWithFormat:@"%@", [client uniqueIdentifier]];
-	}
-	
-	return [@"com.codeux.irc.textual5.TVCLogControllerHistoricLogBackgroundActivity.%@" stringByAppendingString:combinedName];
-}
-#endif
 
 - (NSString *)writePath
 {

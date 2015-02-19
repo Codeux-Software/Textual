@@ -144,19 +144,6 @@
 
 - (void)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey orientation:(NSInteger)orientationIndex
 {
-	/* Possible values for orientation index:
-	
-	 -1 Do nothing
-	  1 Top, left
-	  2 Top, right
-	  3 Bottom, right
-	  4 Bottom, left
-	  5 Left, top
-	  6 Right, top
-	  7 Right, bottom
-	  8 Left, bottom
-	 */
-
 	/* Do we have a properly formatted ID? */
 	if ([object hasPrefix:@"inlineImage-"] == NO) {
 		object = [@"inlineImage-" stringByAppendingString:object];

@@ -423,13 +423,9 @@
 				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
 					message = [message substringFromIndex:1];
 					
-					[[c associatedClient] sendCommand:message
-									   completeTarget:YES
-											   target:[c name]];
+					[[c associatedClient] sendCommand:message completeTarget:YES target:[c name]];
 				} else {
-					[[c associatedClient] sendText:[NSAttributedString emptyStringWithBase:message]
-										   command:IRCPrivateCommandIndex("privmsg")
-										   channel:c];
+					[[c associatedClient] sendPrivmsg:message toChannel:c];
 				}
 			}
 		}

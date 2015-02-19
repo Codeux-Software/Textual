@@ -264,8 +264,6 @@
 			NSString *s = [path substringFromIndex:1];
 
 			if ([s onlyContainsCharacters:CSCEF_WesternAlphabetIncludingUnderscoreDashCharacterSet]) {
-				/* This site does both http and https. */
-
 				return [NSString stringWithFormat:@"https://cdn.mediacru.sh/%@.jpg", s];
 			}
 		}
@@ -307,20 +305,6 @@
 
 		if (vid) {
 			if ([vid length] > 11) {
-				/* This behavior is was found by accident but is quite interesting. YouTube
-				 links limit the video ID to a maximum length of eleven. If it exceeds that,
-				 it only takes the first eleven characters. So a video link like:
-				 
-				 http://www.youtube.com/watch?v=qMkYlIA7mgw7435345354354343
-				 
-				 will actually be seen as:
-				 
-				 http://www.youtube.com/watch?v=qMkYlIA7mgw
-				 
-				 This is all fine and cool, but their image server does not do the same.
-				 Therefore, this is a fix in Textual to catch the length and resize so that
-				 we provide valid images for the weird links. */
-
 				vid = [vid substringToIndex:11];
 			}
 

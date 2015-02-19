@@ -44,19 +44,10 @@
 	/* Copy specific resource files to the custom addons folder. */
 	/* For now, we only are copying the text file containing information
 	 about installing custom scripts. */
-
-	/* Copy script information. */
-	NSString *destnPath = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Installing Custom Scripts.txt"];
-	NSString *sourePath = [[TPCPathInfo bundledScriptFolderPath] stringByAppendingPathComponent:@"/Installing Custom Scripts.txt"];
-
-	/* Only copy if it does not exist. */
-	if ([RZFileManager() fileExistsAtPath:destnPath] == NO) {
-		[RZFileManager() copyItemAtPath:sourePath toPath:destnPath error:NULL]; // We don't care about erros.
-	}
 	
 	/* Add a system link for the unsupervised scripts folder if it exists. */
-	sourePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
-	destnPath = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	NSString *sourePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
+	NSString *destnPath = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
 	
 	if ([RZFileManager() fileExistsAtPath:sourePath] &&
 		[RZFileManager() fileExistsAtPath:destnPath] == NO)

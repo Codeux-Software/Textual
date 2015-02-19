@@ -185,7 +185,7 @@
 		}
 
 		/* Send the information off. We will validate the information higher up. */
-		if (self.requestOwner) {
+		if ( self.requestOwner) {
 			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
 		}
 	}

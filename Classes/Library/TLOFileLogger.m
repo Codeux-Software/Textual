@@ -58,7 +58,6 @@
 
 	NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
 	
-	/* Write straight to file. */
 	NSData *writeData = [writeString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 	
 	NSObjectIsEmptyAssert(writeData);
