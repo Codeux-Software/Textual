@@ -128,11 +128,11 @@
 - (void)updateReadinessState:(TVCLogController *)controller
 {
 	[self performBlockOnMainThread:^{
-		PointerIsEmptyAssert(controller);
-
 		/* Mark all objects part of this controller
 		 that are not cancelled and have no dependencies
 		 as ready or maybe is ready. */
+		PointerIsEmptyAssert(controller);
+
 		for (id operation in [self operations]) {
 			if ([operation controller] == controller) {
 				NSInteger depCount = [operation dependencyCount];
