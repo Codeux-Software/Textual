@@ -1239,6 +1239,14 @@
 		4CC164C31943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AC1943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png */; };
 		4CC164C41943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */; };
 		4CC164C51943B17100B0D4B6 /* DIRedBadgeRightYosemite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */; };
+		4CC2DC5B1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
+		4CC2DC5C1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
+		4CC2DC5D1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
+		4CC2DC5E1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */; };
+		4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CC2DC661A96BA35006DE696 /* NSTableVIewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CC2DC671A96BA35006DE696 /* NSTableVIewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CC2DC681A96BA35006DE696 /* NSTableVIewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CC3139D1A9509E800A9F036 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; };
 		4CC3139E1A9509EE00A9F036 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CC3139F1A9509F400A9F036 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24DC751A93C9CE0098D1BE /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2430,6 +2438,8 @@
 		4CC164AB1943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIRedBadgeCenterYosemite.png; sourceTree = "<group>"; };
 		4CC164AC1943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIRedBadgeLeftYosemite.png; sourceTree = "<group>"; };
 		4CC164AD1943B17100B0D4B6 /* DIRedBadgeRightYosemite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIRedBadgeRightYosemite.png; sourceTree = "<group>"; };
+		4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSTableViewHelper.m; sourceTree = "<group>"; };
+		4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSTableVIewHelper.h; sourceTree = "<group>"; };
 		4CC6F51B1778AB2E00930E6E /* TVCLogControllerOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerOperationQueue.h; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -2961,6 +2971,7 @@
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
+				4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */,
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
@@ -3066,6 +3077,7 @@
 				4C8AF59C158E99520026668C /* NSColorHelper.m */,
 				4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */,
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
+				4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */,
 			);
 			name = "Cocoa (Objective-C)";
 			path = "Helpers/Cocoa (Objective-C)";
@@ -3806,6 +3818,7 @@
 				4C0BA61D1990798800857343 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
+				4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C0BA61F1990798800857343 /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -3961,6 +3974,7 @@
 				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
 				4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
+				4CC2DC661A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
@@ -4116,6 +4130,7 @@
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4CC2DC671A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -4269,6 +4284,7 @@
 				4CDFA52A1996EAB2007EA46E /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4CDFA52B1996EAB2007EA46E /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4CEC551D19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
+				4CC2DC681A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4CDFA52D1996EAB2007EA46E /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4CD344721A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4CDFA52E1996EAB2007EA46E /* NSObjectHelper.h in Headers */,
@@ -5120,6 +5136,7 @@
 				4CA110EE1955AAA10062EC4E /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */,
 				4C0445A016F1603B00EBB665 /* IRCClient.m in Sources */,
+				4CC2DC5C1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4CFEAF011A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C0445A116F1603B00EBB665 /* IRCClientConfig.m in Sources */,
 				4CEC552519BE6A220028DEF2 /* TVCWebViewAutoScroll.m in Sources */,
@@ -5255,6 +5272,7 @@
 				4C0BA6701990798800857343 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0BA6711990798800857343 /* TXUserInterface.m in Sources */,
 				4C0BA6721990798800857343 /* IRCClientConfig.m in Sources */,
+				4CC2DC5B1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4C0BA6731990798800857343 /* IRCConnection.m in Sources */,
 				4CFEAF001A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C0BA6741990798800857343 /* IRCExtras.m in Sources */,
@@ -5390,6 +5408,7 @@
 				4CA110ED1955AAA10062EC4E /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */,
 				4C8AF6A8158E99520026668C /* IRCClientConfig.m in Sources */,
+				4CC2DC5D1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4C8AF6A9158E99520026668C /* IRCConnection.m in Sources */,
 				4CFEAF021A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4C8AF6AA158E99520026668C /* IRCExtras.m in Sources */,
@@ -5525,6 +5544,7 @@
 				4CDFA5831996EAB2007EA46E /* TVCMainWindowLoadingScreen.m in Sources */,
 				4CDFA5841996EAB2007EA46E /* TXUserInterface.m in Sources */,
 				4CDFA5851996EAB2007EA46E /* IRCClientConfig.m in Sources */,
+				4CC2DC5E1A96BA1A006DE696 /* NSTableViewHelper.m in Sources */,
 				4CDFA5871996EAB2007EA46E /* IRCConnection.m in Sources */,
 				4CFEAF031A80FCFB00AE3914 /* GCDAsyncSocketCipherNames.m in Sources */,
 				4CDFA5881996EAB2007EA46E /* IRCExtras.m in Sources */,

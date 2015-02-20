@@ -40,6 +40,7 @@
 #import "TPISystemProfilerModelIDRequestController.h"
 
 #define _localVolumeBaseDirectory		@"/Volumes"
+
 #define _systemMemoryDivisor			1.073741824
 
 @implementation TPI_SP_CompiledOutput

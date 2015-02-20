@@ -40,6 +40,13 @@
 
 #define _clickInterval			2
 
+NSString * const TXNotificationDialogStandardNicknameFormat		= @"%@ %@";
+NSString * const TXNotificationDialogActionNicknameFormat		= @"\u2022 %@: %@";
+
+NSString * const TXNotificationHighlightLogStandardActionFormat			= @"\u2022 %@: %@";
+NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
+NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %@ %@";
+
 @interface TLOGrowlController ()
 @property (nonatomic, copy) NSDictionary *lastClickedContext;
 @property (nonatomic, assign) NSTimeInterval lastClickedTime;

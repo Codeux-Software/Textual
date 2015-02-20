@@ -320,7 +320,7 @@
 		[self throwJavaScriptException:@"Length of value supplied to retrievePreferencesWithMethodName is less than or equal to zero (0)"];
 	} else {
 		if ([name isKindOfClass:[NSString class]] == NO) {
-			[self throwJavaScriptException:@"The name provided to retrievePreferencesWithMethodName must be a string"];
+			[self throwJavaScriptException:@"The value provided to retrievePreferencesWithMethodName must be a string"];
 		} else {
 			SEL realSelector = NSSelectorFromString(name);
 			

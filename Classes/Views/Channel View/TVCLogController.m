@@ -394,8 +394,6 @@
 
 	if ( js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
 		[js_api callWebScriptMethod:command	withArguments:args];
-	} else {
-		LogToConsole(@"Failed to perform command \"%@\" in view %@ because the core JavaScript API is undefined.", command, self);
 	}
 }
 
@@ -417,7 +415,9 @@
 {
 	DOMElement *topicBar = [self documentChannelTopicBar];
 
-	PointerIsEmptyAssertReturn(topicBar, NSStringEmptyPlaceholder);
+	if (topicBar == nil) {
+		return NSStringEmptyPlaceholder;
+	}
 
 	return [(id)topicBar innerHTML];
 }
@@ -432,14 +432,13 @@
 		NSAssertReturn([operation isCancelled] == NO);
 
 		NSString *body = [TVCLogRenderer renderBody:topic
-										 controller:self
-										 renderType:TVCLogRendererHTMLType
-										 properties:@{
-											@"renderLinks" : @YES,
-											@"lineType" : @(TVCLogLineTopicType)
-										 }
+									  forController:self
+									 withAttributes:@{
+											TVCLogRendererConfigurationShouldRenderLinksAttribute : @YES,
+											TVCLogRendererConfigurationLineTypeAttribute : @(TVCLogLineTopicType)
+													}
 										 resultInfo:NULL];
-		
+
 		[self performBlockOnMainThread:^{
 			DOMElement *topicBar = [self documentChannelTopicBar];
 
@@ -604,10 +603,10 @@
 		NSData *jsondata = [line jsonDictionaryRepresentation];
 
 		[newHistoricArchive appendData:jsondata];
-		[newHistoricArchive appendData:[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]];
+		[newHistoricArchive appendData:[NSData lineFeed]];
 
 		/* Was it a highlight? */
-		BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 		if (highlighted) {
 			@synchronized(self.highlightedLineNumbers) {
@@ -945,8 +944,8 @@
 		self.windowScriptObjectLoaded = NO;
 
 		self.isLoaded = NO;
-	  //_reloadingBacklog = NO;
-	  //_reloadingHistory = NO;
+	 // self.reloadingBacklog = NO;
+	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
 
 		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
@@ -1002,22 +1001,22 @@
 	TVCLogControllerOperationBlock printBlock = ^(id operation) {
 		NSAssertReturn([operation isCancelled] == NO);
 
-		/* Increment by one. */
-		self.activeLineCount += 1;
-
 		/* Render everything. */
 		NSDictionary *resultInfo = nil;
 		
 		NSString *html = [self renderLogLine:logLine resultInfo:&resultInfo];
 
 		if (html) {
+			/* Increment by one. */
+			self.activeLineCount += 1;
+
 			/* Gather result information. */
-			BOOL highlighted = [resultInfo boolForKey:@"wordMatchFound"];
+			BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 			NSString *lineNumber = resultInfo[@"lineNumber"];
 		  //NSString *renderTime = [resultInfo objectForKey:@"lineRenderTime"];
 
-			NSArray *mentionedUsers = [resultInfo arrayForKey:@"mentionedUsers"];
+			NSArray *mentionedUsers = [resultInfo arrayForKey:TVCLogRendererResultsListOfUsersFoundAttribute];
 
 			NSDictionary *inlineImageMatches = [resultInfo dictionaryForKey:@"InlineImagesToValidate"];
 			
@@ -1056,10 +1055,10 @@
 				/* Begin processing inline images. */
 				/* We go through the inline image list here and pass to the loader now so that
 				 we know the links have hit the webview before we even try loading them. */
-				for (NSString *nurl in inlineImageMatches) {
+				for (NSString *uniqueKey in inlineImageMatches) {
 					TVCImageURLoader *loader = [TVCImageURLoader new];
 
-					[loader assesURL:nurl withID:inlineImageMatches[nurl] forController:self];
+					[loader assesURL:inlineImageMatches[uniqueKey] withID:uniqueKey forController:self];
 				}
 				
 				/* Log this log line. */
@@ -1110,48 +1109,44 @@
 
 	BOOL highlighted = NO;
 	
-	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
-	BOOL isPlainText = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
+	BOOL isPlainText = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
+	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
 
 	BOOL drawLinks = ([[TLOLinkParser bannedURLRegexLineTypes] containsObject:lineTypeStng] == NO);
 
-	NSDictionary *inlineImageMatches;
-
 	// ---- //
 
-	NSMutableDictionary *inputDictionary = [NSMutableDictionary dictionary];
-	NSMutableDictionary *outputDictionary = [NSMutableDictionary dictionary];
+	NSMutableDictionary *rendererAttributes = [NSMutableDictionary dictionary];
 
-	[inputDictionary maybeSetObject:[line highlightKeywords] forKey:@"highlightKeywords"];
-	[inputDictionary maybeSetObject:[line excludeKeywords] forKey:@"excludeKeywords"];
-	[inputDictionary maybeSetObject:[line nickname] forKey:@"nickname"];
+	NSDictionary *rendererResults = nil;
+
+	[rendererAttributes maybeSetObject:[line highlightKeywords] forKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
+	[rendererAttributes maybeSetObject:[line excludeKeywords] forKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	
-	[inputDictionary setBool:drawLinks forKey:@"renderLinks"];
-	[inputDictionary setBool:isNormalMsg forKey:@"isNormalMessage"];
-	[inputDictionary setBool:isPlainText forKey:@"isPlainTextMessage"];
+	[rendererAttributes setBool:drawLinks forKey:TVCLogRendererConfigurationShouldRenderLinksAttribute];
 
-	[inputDictionary setInteger:[line lineType] forKey:@"lineType"];
-	[inputDictionary setInteger:[line memberType] forKey:@"memberType"];
+	[rendererAttributes setBool:isNormalMsg forKey:TVCLogRendererConfigurationIsNormalMessageMessageAttribute];
+	[rendererAttributes setBool:isPlainText forKey:TVCLogRendererConfigurationIsPlainTextMessageAttribute];
+
+	[rendererAttributes setInteger:[line lineType] forKey:TVCLogRendererConfigurationLineTypeAttribute];
+	[rendererAttributes setInteger:[line memberType] forKey:TVCLogRendererConfigurationMemberTypeAttribute];
 
 	renderedBody = [TVCLogRenderer renderBody:[line messageBody]
-								   controller:self
-								   renderType:TVCLogRendererHTMLType
-								   properties:inputDictionary
-								   resultInfo:&outputDictionary];
+								forController:self
+							   withAttributes:rendererAttributes
+								   resultInfo:&rendererResults];
 
 	if (renderedBody == nil) {
-		if ([outputDictionary containsKey:@"containsIgnoredNickname"] == NO) {
-			LogToConsole(@"An error occured resulting in the renderer returning a nil value.");
-		}
-		
 		return nil;
 	}
 
+	NSMutableDictionary *resultData = [rendererResults mutableCopy];
+
 	if ([line memberType] == TVCLogLineMemberNormalType) {
-		highlighted = [outputDictionary boolForKey:@"wordMatchFound"];
+		highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 	}
 
-	inlineImageMatches = [outputDictionary dictionaryForKey:@"InlineImageURLMatches"];
+	NSDictionary *inlineImageMatches = [rendererResults dictionaryForKey:TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute];
 
 	// ************************************************************************** /
 	// Draw to display.                                                                /
@@ -1178,14 +1173,14 @@
 
 		if (isNormalMsg) {
 			if ([self inlineImagesEnabledForView]) {
-				for (NSString *nurl in inlineImageMatches) {
-					NSString *uniqueKey = (id)inlineImageMatches[nurl];
+				for (NSString *uniqueKey in inlineImageMatches) {
+					NSString *nurl = (id)inlineImageMatches[uniqueKey];
 
 					NSString *iurl = [TVCImageURLParser imageURLFromBase:nurl];
 
 					NSObjectIsEmptyAssertLoopContinue(iurl);
 
-					inlineImagesToValidate[iurl] = uniqueKey;
+					inlineImagesToValidate[uniqueKey] = iurl;
 
 					[inlineImageLinks addObject:@{
 						  @"preferredMaximumWidth"		: @([TPCPreferences inlineImagesMaxWidth]),
@@ -1197,11 +1192,11 @@
 			}
 		}
 
-		attributes[@"inlineMediaAvailable"] = @(NSObjectIsNotEmpty(inlineImageLinks));
+		attributes[@"inlineMediaAvailable"] = @(NSObjectIsEmpty(inlineImageLinks) == NO);
 		
 		attributes[@"inlineMediaArray"]		= inlineImageLinks;
 
-		outputDictionary[@"InlineImagesToValidate"] = inlineImagesToValidate;
+		resultData[@"InlineImagesToValidate"] = inlineImagesToValidate;
 	}
 
 	// ---- //
@@ -1211,6 +1206,7 @@
 
 		if (time) {
 			attributes[@"timestamp"] = @([[line receivedAt] timeIntervalSince1970]);
+
 			attributes[@"formattedTimestamp"] = time;
 		}
 	}
@@ -1245,7 +1241,7 @@
 
 	// ---- //
 
-	NSString *classRep;
+	NSString *classRep = nil;
 
 	if (isPlainText) {
 		classRep = @"text";
@@ -1300,7 +1296,7 @@
 	attributes[@"lineNumber"] = newLinenNumber;
 	attributes[@"lineRenderTime"] = lineRenderTime;
 	
-	outputDictionary[@"lineNumber"] = newLinenNumber;
+	resultData[@"lineNumber"] = newLinenNumber;
 	
 	NSMutableDictionary *pluginDictionary = [NSMutableDictionary dictionary];
 	
@@ -1314,18 +1310,18 @@
 	
 	[pluginDictionary maybeSetObject:newLinenNumber forKey:@"lineNumber"];
 	
-	[pluginDictionary maybeSetObject:outputDictionary[@"allHyperlinksInBody"] forKey:@"allHyperlinksInBody"];
-	[pluginDictionary maybeSetObject:outputDictionary[@"mentionedUsers"] forKey:@"mentionedUsers"];
-	[pluginDictionary maybeSetObject:outputDictionary[@"messageBody"] forKey:@"messageBody"];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] forKey:@"allHyperlinksInBody"];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute] forKey:@"mentionedUsers"];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute] forKey:@"messageBody"];
 	
-	outputDictionary[@"pluginDictionary"] = pluginDictionary;
+	resultData[@"pluginDictionary"] = pluginDictionary;
 	
 	// ************************************************************************** /
 	// Return information.											              /
 	// ************************************************************************** /
 
-	if (PointerIsNotEmpty(resultInfo)) {
-		*resultInfo = outputDictionary;
+	if ( resultInfo) {
+		*resultInfo = resultData;
 	}
 
 	// ************************************************************************** /
@@ -1341,10 +1337,9 @@
 
 - (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID orientation:(NSInteger)orientationIndex
 {
-	/* Toggle visibility. */
-	NSObjectIsEmptyAssert(uniqueID);
-
-	[self.webViewScriptSink toggleInlineImage:uniqueID withKeyCheck:NO orientation:orientationIndex];
+	if (uniqueID) {
+		[self.webViewScriptSink toggleInlineImage:uniqueID withKeyCheck:NO orientation:orientationIndex];
+	}
 }
 
 #pragma mark -
@@ -1582,7 +1577,7 @@
 
 - (void)logViewRecievedDropWithFile:(NSString *)filename
 {
-	/* TVCLogView guarantees that this delegate method is only called for private messages. */
+	/* TVCLogPolicy guarantees that this delegate method is only called for private messages. */
 	
 	[menuController() memberSendDroppedFilesToSelectedChannel:@[filename]];
 }

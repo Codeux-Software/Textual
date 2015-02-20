@@ -38,6 +38,14 @@
 
 #import "TextualApplication.h"
 
+NSString * const TXDefaultIdentityNicknamePrefix				= @"Guest"; // see +populateDefaultNickname
+
+NSString * const TXDefaultTextualChannelViewTheme				= @"resource:Simplified Light";
+NSString * const TXDefaultTextualChannelViewFont				= @"Lucida Grande";
+
+NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
+NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
+
 @implementation TPCPreferences
 
 #pragma mark -

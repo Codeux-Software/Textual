@@ -39,16 +39,16 @@
 #import "TextualApplication.h"
 
 /* This is the class used for logging to text in Textual… */
-#define TLOFileLoggerConsoleDirectoryName				@"Console"
-#define TLOFileLoggerChannelDirectoryName				@"Channels"
-#define TLOFileLoggerPrivateMessageDirectoryName		@"Queries"
+TEXTUAL_EXTERN NSString * const TLOFileLoggerConsoleDirectoryName;
+TEXTUAL_EXTERN NSString * const TLOFileLoggerChannelDirectoryName;
+TEXTUAL_EXTERN NSString * const TLOFileLoggerPrivateMessageDirectoryName;
 
-#define TLOFileLoggerUndefinedNicknameFormat	@"<%@%n>"
-#define TLOFileLoggerActionNicknameFormat		@"• %n:"
-#define TLOFileLoggerNoticeNicknameFormat		@"-%n-"
+TEXTUAL_EXTERN NSString * const TLOFileLoggerUndefinedNicknameFormat;
+TEXTUAL_EXTERN NSString * const TLOFileLoggerActionNicknameFormat;
+TEXTUAL_EXTERN NSString * const TLOFileLoggerNoticeNicknameFormat;
 
-#define TLOFileLoggerISOStandardClockFormat			@"[%Y-%m-%dT%H:%M:%S%z]" // 2008-07-09T16:13:30+12:00
-#define TLOFileLoggerTwentyFourHourClockFormat		@"[%H:%M:%S]"
+TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
+TEXTUAL_EXTERN NSString * const TLOFileLoggerTwentyFourHourClockFormat;
 
 @interface TLOFileLogger : NSObject
 @property (nonatomic, nweak) IRCClient *client;

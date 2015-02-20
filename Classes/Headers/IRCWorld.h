@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define IRCWorldControllerDefaultsStorageKey				@"World Controller"
+TEXTUAL_EXTERN NSString * const IRCWorldControllerDefaultsStorageKey;
 
 @interface IRCWorld : NSObject
 @property (nonatomic, assign) NSInteger messagesSent;

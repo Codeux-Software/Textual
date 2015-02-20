@@ -38,6 +38,17 @@
 
 #import "TextualApplication.h"
 
+NSString * const TLOFileLoggerConsoleDirectoryName				= @"Console";
+NSString * const TLOFileLoggerChannelDirectoryName				= @"Channels";
+NSString * const TLOFileLoggerPrivateMessageDirectoryName		= @"Queries";
+
+NSString * const TLOFileLoggerUndefinedNicknameFormat	= @"<%@%n>";
+NSString * const TLOFileLoggerActionNicknameFormat		= @"\u2022 %n:";
+NSString * const TLOFileLoggerNoticeNicknameFormat		= @"-%n-";
+
+NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"; // 2008-07-09T16:13:30+12:00
+NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
+
 @implementation TLOFileLogger
 
 #pragma mark -

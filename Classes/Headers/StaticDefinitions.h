@@ -88,7 +88,7 @@
  Textual repo. Textual existed before then, of course, but the date
  will remain as the official reference date for its birthday. */
 /* The date decodes to July 23, 2010 03:53:00 AM */
-#define TXBirthdayReferenceDate		1279871580.000000
+#define TXBirthdayReferenceDate					1279871580.000000
 
 /* nweak and uweak are pretty useless defines. They are
  only defined to make a long list of properties easier to
@@ -127,7 +127,8 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #endif
 
 /* Deprecation and symbol visibility. */
-#define TEXTUAL_EXTERN							__attribute__((visibility("default")))
+#define TEXTUAL_EXTERN							extern
+
 #define TEXTUAL_DEPRECATED(reason)				__attribute__((deprecated((reason))))
 
 #define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);

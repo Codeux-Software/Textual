@@ -37,11 +37,11 @@
 
 #import "TextualApplication.h"
 
-#define TPCResourceManagerBundleDocumentTypeExtension				@".bundle"
-#define TPCResourceManagerBundleDocumentTypeExtensionWithotuDot		@"bundle"
+TEXTUAL_EXTERN NSString * const TPCResourceManagerBundleDocumentTypeExtension;
+TEXTUAL_EXTERN NSString * const TPCResourceManagerBundleDocumentTypeExtensionWithoutPeriod;
 
-#define TPCResourceManagerScriptDocumentTypeExtension				@".scpt"
-#define TPCResourceManagerScriptDocumentTypeExtensionWithotuDot		@"scpt"
+TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtension;
+TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod;
 
 @interface TPCResourceManager : NSObject
 + (void)copyResourcesToCustomAddonsFolder;

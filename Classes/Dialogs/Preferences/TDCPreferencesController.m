@@ -538,7 +538,7 @@
 	NSArray *homeDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:userSoundFolder error:NULL];
 	NSArray *systemDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:systemSoundFolder error:NULL];
 
-	[soundList addObject:TXEmptySoundAlertLabel];
+	[soundList addObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]];
 	[soundList addObject:@"Beep"];
 
 	if ([systemDirectoryContents count] > 0) {
@@ -552,7 +552,7 @@
 	}
 
 	if ([homeDirectoryContents count] > 0) {
-		[soundList addObject:TXEmptySoundAlertLabel];
+		[soundList addObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]];
 
 		for (__strong NSString *s in homeDirectoryContents) {
 			if ([s contains:@"."]) {

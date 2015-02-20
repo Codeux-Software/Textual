@@ -38,18 +38,15 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultIdentityNicknamePrefix						@"Guest" // see +populateDefaultNickname
+TEXTUAL_EXTERN NSString * const TXDefaultIdentityNicknamePrefix;
 
-#define TXDefaultTextualChannelViewTheme			@"resource:Simplified Light"
-#define TXDefaultTextualChannelViewFont				@"Lucida Grande"
+TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewTheme;
+TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewFont;
 
-#define TXDefaultTextualTimestampFormat		TLOFileLoggerTwentyFourHourClockFormat
+TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
+TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
 
-#define TPCPreferencesThemeNameDefaultsKey						@"Theme -> Name"
-#define TPCPreferencesThemeFontNameDefaultsKey					@"Theme -> Font Name"
-
-#define TXDefaultFileTransferPortRangeStart				1096
-#define TXDefaultFileTransferPortRangeEnd				1115
+#define TXDefaultTextualTimestampFormat				TLOFileLoggerTwentyFourHourClockFormat
 
 typedef enum TXNicknameHighlightMatchType : NSInteger {
 	TXNicknameHighlightPartialMatchType = 0,

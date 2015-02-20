@@ -42,7 +42,7 @@
 
 #define _userDefaults					[NSUserDefaults standardUserDefaults]
 
-#define _userDefaultsKey				@"NSSplitView Saved Frames -> TVCMainWindowSplitView"
+NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindowSplitView";
 
 @interface TVCMainWindowSplitView ()
 @property (nonatomic, assign) BOOL restoredPositions;

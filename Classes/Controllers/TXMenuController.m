@@ -1802,7 +1802,7 @@
 	/* Insert names. */
 	[textField replaceCharactersInRange:selectedRange withString:insertString];
 
-	[textField updateTextColorInRange:selectedRange];
+	[textField resetTextColorInRange:selectedRange];
 	
 	/* Close users. */
 	[self deselectMembers:sender];

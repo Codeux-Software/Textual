@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+TEXTUAL_EXTERN NSString * const TXBundleMininumBundleVersionForLoadingExtensions;
+
 @interface THOPluginItem : NSObject
 @property (nonatomic, strong) id primaryClass;
 @property (nonatomic, assign) BOOL hasPreferencePaneView;

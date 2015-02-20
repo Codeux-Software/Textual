@@ -41,6 +41,17 @@
 #pragma mark -
 #pragma mark Theme Controller Private Headers
 
+NSString * const TPCThemeControllerCloudThemeNameBasicPrefix			= @"cloud";
+NSString * const TPCThemeControllerCloudThemeNameCompletePrefix			= @"cloud:";
+
+NSString * const TPCThemeControllerCustomThemeNameBasicPrefix			= @"user";
+NSString * const TPCThemeControllerCustomThemeNameCompletePrefix		= @"user:";
+
+NSString * const TPCThemeControllerBundledThemeNameBasicPrefix			= @"resource";
+NSString * const TPCThemeControllerBundledThemeNameCompletePrefix		= @"resource:";
+
+NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeControllerThemeListDidChangeNotification";
+
 /* Copy operation class is responsible for copying the active theme to a different
  location when a user requests a local copy of the theme. */
 /* I only comment most of this stuff to remember why I did it later on. I am not 

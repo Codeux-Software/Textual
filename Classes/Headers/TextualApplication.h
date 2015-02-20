@@ -264,6 +264,7 @@
 	#import "NSColorHelper.h"
 	#import "NSObjectHelper.h"
 	#import "NSStringHelper.h"
+	#import "NSTableVIewHelper.h"
 
 	/* Dialogs. */
 	#import "TDCSheetBase.h"

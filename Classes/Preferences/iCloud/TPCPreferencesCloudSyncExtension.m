@@ -40,6 +40,9 @@
 @implementation TPCPreferences (TPCPreferencesCloudSyncExtension)
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						= @"SyncPreferencesToTheCloud";
+NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		= @"SyncPreferencesToTheCloudLimitedToServers";
+
 + (BOOL)syncPreferencesToTheCloud
 {
 	return [RZUserDefaults() boolForKey:TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey];

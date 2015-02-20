@@ -40,6 +40,8 @@
 
 #include <objc/message.h>
 
+NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelConfigurationWasUpdatedNotification";
+
 #define _cancelOnNotSelectedChannel			if (self.isChannel == NO || self.isSelectedChannel == NO) {			\
 												return;															\
 											}

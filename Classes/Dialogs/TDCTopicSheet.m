@@ -54,9 +54,13 @@
 	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 	
 	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
-	
+
+	[self.topicValueField setPreferredFont:[NSFont systemFontOfSize:13.0]];
+	[self.topicValueField setPreferredFontColor:[NSColor colorWithCalibratedWhite:0.01 alpha:1.0]];
+
 	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueField preferredFont]
-												honorFormattingPreference:NO];
+														preferredFontColor:[self.topicValueField preferredFontColor]
+												 honorFormattingPreference:NO];
 	
 	[self.topicValueField setAttributedStringValue:topicas];
 

@@ -47,7 +47,7 @@
 {
     if ((self = [super init])) {
 		[NSObject setGlobalMasterControllerClassReference:self];
-		
+
 		// ---- //
 		
 #ifndef TXSystemIsMacOSYosemiteOrNewer

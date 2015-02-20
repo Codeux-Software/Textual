@@ -577,7 +577,8 @@
 	/* Interestingly enough, some IRC networks allow formatting characters.
 	 That makes absolutely no sense, but let's support it in the pop up
 	 just to say that we can. */
-	NSAttributedString *addressAttr = [address attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont
+	NSAttributedString *addressAttr = [address attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont]
+															  preferredFontColor:nil
 													   honorFormattingPreference:NO];
 
 	[[userInfoPopover addressField] setAttributedStringValue:addressAttr];

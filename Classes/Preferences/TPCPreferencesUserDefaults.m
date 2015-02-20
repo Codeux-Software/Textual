@@ -39,6 +39,8 @@
 
 #import "BuildConfig.h"
 
+NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferencesUserDefaultsDidChangeNotification";
+
 #pragma mark -
 #pragma mark Reading & Writing
 

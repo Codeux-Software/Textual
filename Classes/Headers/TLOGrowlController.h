@@ -59,12 +59,12 @@ typedef enum TXNotificationType : NSInteger {
 	TXNotificationFileTransferReceiveRequestedType		= 1015,
 } TXNotificationType;
 
-#define TXNotificationDialogStandardNicknameFormat		@"%@ %@"
-#define TXNotificationDialogActionNicknameFormat		@"• %@: %@"
+TEXTUAL_EXTERN NSString * const TXNotificationDialogStandardNicknameFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationDialogActionNicknameFormat;
 
-#define TXNotificationHighlightLogStandardActionFormat			@"• %@: %@"
-#define TXNotificationHighlightLogStandardMessageFormat			@"%@ %@"
-#define TXNotificationHighlightLogAlternativeActionFormat		@"• %@ %@"
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardActionFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardMessageFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogAlternativeActionFormat;
 
 @interface TLOGrowlController : NSObject <GrowlApplicationBridgeDelegate, NSUserNotificationCenterDelegate>
 @property (nonatomic, assign) BOOL areNotificationsDisabled;

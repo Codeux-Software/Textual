@@ -43,6 +43,9 @@
 	Sheets are used to lock focus to the task at hand.
  */
 
+NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey		= @"Theme -> Name -> Did Not Exist During Last Sync";
+NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme -> Font Name -> Did Not Exist During Last Sync";
+
 @implementation TPCPreferencesImportExport
 
 /* -import handles the actual import menu item. */

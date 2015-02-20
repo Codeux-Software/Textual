@@ -43,8 +43,6 @@
 
 #define _maximumRowCountPerClient			1000
 
-#define _newlineDataObject		[NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding]
-
 @interface TVCLogControllerHistoricLogFile ()
 #if _usesBackgroundActivityTask == 1
 @property (nonatomic, strong) id backgroundTimer;
@@ -58,17 +56,6 @@
 
 #pragma mark -
 #pragma mark Public API
-
-- (NSData *)newline
-{
-	static NSData *_newline = nil;
-
-	if (_newline == nil) {
-		_newline = [NSStringNewlinePlaceholder dataUsingEncoding:NSUTF8StringEncoding];
-	}
-
-	return _newline;
-}
 
 - (void)writeNewEntryWithRawData:(NSData *)jsondata
 {
@@ -95,7 +82,7 @@
 	NSData *jsondata = [logLine jsonDictionaryRepresentation];
 
 	[self writeNewEntryWithRawData:jsondata];
-	[self writeNewEntryWithRawData:[self newline]];
+	[self writeNewEntryWithRawData:[NSData lineFeed]];
 }
 
 - (void)open
@@ -232,7 +219,7 @@
 				/* Our scan range is the range from last newline. */
 				NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
 
-				NSRange nlrang = [mutdata rangeOfData:[self newline] options:0 range:scanrange];
+				NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
 
 				/* If no more newlines are found, then there is nothing to do. */
 				if (nlrang.location == NSNotFound) {
@@ -295,7 +282,7 @@
 			while (1 == 1) {
 				NSRange scanrange = NSMakeRange(0, [mutdata length]);
 
-				NSRange nlrang = [mutdata rangeOfData:[self newline] options:0 range:scanrange];
+				NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
 
 				if (nlrang.location == NSNotFound) {
 					break; // No newline was found.

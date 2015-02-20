@@ -40,9 +40,6 @@
 
 #import "IRCConnectionPrivate.h"
 
-#define _LF	0xa
-#define _CR	0xd
-
 @implementation IRCConnection (IRCConnectionSocket)
 
 #pragma mark -
@@ -140,8 +137,8 @@
 	NSInteger messageSubstringIndex = 0;
 	NSInteger messageDeleteIndex = 0;
 
-	NSRange _LFRange = [*refString rangeOfData:[GCDAsyncSocket LFData] options:0 range:NSMakeRange(0, [*refString length])];
-	NSRange _CRRange = [*refString rangeOfData:[GCDAsyncSocket CRData] options:0 range:NSMakeRange(0, [*refString length])];
+	NSRange _LFRange = [*refString rangeOfData:[NSData lineFeed] options:0 range:NSMakeRange(0, [*refString length])];
+	NSRange _CRRange = [*refString rangeOfData:[NSData carriageReturn] options:0 range:NSMakeRange(0, [*refString length])];
 
 	if (_LFRange.location == NSNotFound) {
 		/* If we do not have any line end for this fragment and the refString is not

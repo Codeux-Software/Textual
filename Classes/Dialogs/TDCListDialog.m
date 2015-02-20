@@ -111,7 +111,9 @@
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
 {
 	if ([channel isChannelName]) {
-		NSArray *item = @[channel, @(count), topic, [topic attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
+		NSAttributedString *renderedTopic = [topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
+
+		NSArray *item = @[channel, @(count), topic, renderedTopic];
 
 		NSString *filter = [self.searchField stringValue];
 

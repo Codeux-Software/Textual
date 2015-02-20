@@ -61,7 +61,6 @@
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
 {
-	/* Update last visible rect for notification. */
 	NSClipView *clipView = [[[self.webFrame documentView] enclosingScrollView] contentView];
 	
 	if (NSDissimilarObjects(clipView, [aNotification object])) {

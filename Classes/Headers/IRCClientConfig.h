@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define IRCConnectionDefaultServerPort		6667
+TEXTUAL_EXTERN NSInteger const IRCConnectionDefaultServerPort;
 
 #define IRCClientConfigFloodControlDefaultDelayTimer					2
 #define IRCClientConfigFloodControlDefaultMessageCount					6

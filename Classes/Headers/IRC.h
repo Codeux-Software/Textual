@@ -38,9 +38,11 @@
 #import "TextualApplication.h"
 
 /* Hard limits. */
-#define TXMaximumIRCBodyLength				512
-#define TXMaximumIRCNicknameLength			50
-#define TXMaximumIRCUsernameLength			40
-#define TXMaximumNodesPerModeCommand		4
+#define TXMaximumIRCBodyLength						512
+#define TXMaximumIRCNicknameLength					50
+#define TXMaximumIRCUsernameLength					40
+
+#define TXMaximumNodesPerModeCommand				4
 
 #define IRCProtocolDefaultNicknameMaximumLength			9
+

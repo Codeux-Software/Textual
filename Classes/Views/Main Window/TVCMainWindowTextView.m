@@ -74,6 +74,8 @@
 	for (NSString *key in _KeyObservingArray) {
 		[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 	}
+
+	[self performSelector:@selector(resetTypeSetterAttributes) withObject:nil afterDelay:1.0];
 }
 
 - (void)dealloc
@@ -82,15 +84,6 @@
 	for (NSString *key in _KeyObservingArray) {
 		[RZUserDefaults() removeObserver:self forKeyPath:key];
 	}
-}
-
-- (void)updateTypeSetterAttributesBasedOnAppearanceSettings
-{
-	/* Set all type attributes. */
-	[self updateTextBoxCachedPreferredFontSize];
-	[self defineDefaultTypeSetterAttributes];
-	[self updateTypeSetterAttributes];
-	[self maybeUpdateInsertionPointColor];
 }
 
 - (void)updateBackgroundColor
@@ -115,9 +108,8 @@
 	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
 	
 	[self setPreferredFontColor:preferredFontColor];
-	
-	/* We changed the font color so we must inform our parent. */
-	[self updateTypeSetterAttributesBasedOnAppearanceSettings];
+
+	[self updateTextBoxCachedPreferredFontSize];
 }
 
 - (void)windowDidChangeKeyState
@@ -280,25 +272,6 @@
 	}
 }
 
-- (void)maybeUpdateInsertionPointColor
-{
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		BOOL usesWriterProsColors = [RZUserDefaults() boolForKey:@"TVCMainWindowTextViewUsesCustomInsertionPointColors"];
-		
-		if (usesWriterProsColors) {
-			NSColor *cursorColor = nil;
-			
-			if ([mainWindow() isUsingVibrantDarkAppearance]) {
-				cursorColor = [TVCMainWindowTextViewYosemiteUserInterace writersProTextFieldCursorBlueColor];
-			} else {
-				cursorColor = [TVCMainWindowTextViewYosemiteUserInterace writersProTextFieldCursorPinkColor];
-			}
-			
-			[self setInsertionPointColor:cursorColor];
-		}
-	}
-}
-
 - (void)internalTextDidChange:(NSNotification *)aNotification
 {
 	[self resetTextFieldCellSize:NO];
@@ -395,7 +368,6 @@
 	/* We only update the font sizes if there was a chagne. */
 	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
 		[self updateAllFontSizesToMatchTheDefaultFont];
-		[self updateTypeSetterAttributes];
 	}
 
 	/* Reset frames. */

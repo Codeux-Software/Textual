@@ -43,6 +43,8 @@
 #define _autoConnectDelay				1
 #define _reconnectAfterWakeupDelay		8
 
+NSString * const IRCWorldControllerDefaultsStorageKey = @"World Controller";
+
 @implementation IRCWorld
 
 #pragma mark -
