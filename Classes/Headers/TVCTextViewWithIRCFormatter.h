@@ -37,12 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define TXPreferredGlobalTextFieldFontColor		[NSColor colorWithCalibratedWhite:0.15 alpha:1.0]
-#define TXPreferredGlobalTextFieldFont          [NSFont fontWithName:@"Helvetica" size:12.0]
-
-#define TVCTextViewWithIRCFormatterWidthPadding		1.0
-#define TVCTextViewWithIRCFormatterHeightPadding	2.0
-
 @interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
 @property (nonatomic, copy) NSFont *preferredFont;
 @property (nonatomic, copy) NSColor *preferredFontColor;
@@ -67,10 +61,8 @@
 
 @property (copy) NSString *stringValue;
 
-- (void)updateTextColorInRange:(NSRange)range;
-
-- (void)updateTypeSetterAttributes;
-- (void)defineDefaultTypeSetterAttributes;
+- (void)resetTextColorInRange:(NSRange)range;
+- (void)resetTypeSetterAttributes;
 
 - (void)updateAllFontSizesToMatchTheDefaultFont;
 

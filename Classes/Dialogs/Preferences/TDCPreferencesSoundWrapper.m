@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NSString * const TXEmptySoundAlertPreferenceValue = @"None";
+
 @implementation TDCPreferencesSoundWrapper
 
 - (instancetype)initWithEventType:(TXNotificationType)aEventType
@@ -49,6 +51,11 @@
 	}
 
 	return nil;
+}
+
++ (NSString *)localizedEmptySoundSelectionLabel
+{
+	return BLS(1234);
 }
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
@@ -65,15 +72,17 @@
 {
 	NSString *soundd = [TPCPreferences soundForEvent:self.eventType];
 
-	NSObjectIsEmptyAssertReturn(soundd, TXEmptySoundAlertLabel);
+	if (NSObjectIsEmpty(soundd)) {
+		return [TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel];
+	}
 
 	return soundd;
 }
 
 - (void)setAlertSound:(NSString *)value
 {
-	if ([value isEqualToString:TXEmptySoundAlertLabel]) {
-		value = TXEmptySoundAlertPreference;
+	if ([value isEqualToString:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]]) { // Do not set the default, none label
+		value = TXEmptySoundAlertPreferenceValue;
 	}
 	
 	if (NSObjectIsNotEmpty(value)) {

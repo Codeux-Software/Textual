@@ -263,7 +263,7 @@
 		if ([path hasPrefix:@"/"] && [path length] == 13) {
 			NSString *s = [path substringFromIndex:1];
 
-			if ([s onlyContainsCharacters:CSCEF_WesternAlphabetIncludingUnderscoreDashCharacterSet]) {
+			if ([s onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
 				return [NSString stringWithFormat:@"https://cdn.mediacru.sh/%@.jpg", s];
 			}
 		}

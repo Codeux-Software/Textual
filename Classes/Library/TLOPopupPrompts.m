@@ -39,6 +39,10 @@
 
 #import <objc/objc-runtime.h>
 
+NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppression -> ";
+
+NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptSpecialSuppressionTextValue>";
+
 @implementation TLOPopupPrompts
 
 + (NSString *)suppressionKeyWithBase:(NSString *)base

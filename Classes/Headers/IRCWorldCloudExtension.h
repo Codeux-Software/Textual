@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-#define IRCWorldControllerCloudDeletedClientsStorageKey		@"World Controller -> Cloud Deleted Clients"
-#define IRCWorldControllerCloudClientEntryKeyPrefix			@"World Controller -> Cloud Synced Client -> "
+TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudDeletedClientsStorageKey;
+TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientEntryKeyPrefix;
 
 @interface IRCWorld (IRCWorldCloudExtension)
 - (NSMutableDictionary *)cloudDictionaryValue;

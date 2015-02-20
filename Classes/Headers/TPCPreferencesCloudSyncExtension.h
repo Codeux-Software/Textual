@@ -58,8 +58,8 @@ typedef enum TPCPreferencesKeyReloadActionMask : NSInteger {
 } TPCPreferencesKeyReloadActionMask;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-#define TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						@"SyncPreferencesToTheCloud"
-#define TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		@"SyncPreferencesToTheCloudLimitedToServers"
+TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey;
+TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey;
 #endif
 
 @interface TPCPreferences (TPCPreferencesCloudSyncExtension)

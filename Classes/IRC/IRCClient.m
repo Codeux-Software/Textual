@@ -92,6 +92,8 @@
 
 #define _maximumChannelCountPerWhoBatchRequest		5
 
+NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfigurationWasUpdatedNotification";
+
 @interface IRCClient ()
 /* These are all considered private. */
 
@@ -680,7 +682,9 @@
 		}
 		
 		/* Create entry. */
-		NSArray *entry = @[channel.name, @([NSDate unixTime]), [messageBody attributedStringWithIRCFormatting:TXPreferredGlobalTableViewFont]];
+		NSAttributedString *renderedMessage = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
+
+		NSArray *entry = @[channel.name, @([NSDate unixTime]), renderedMessage];
 		
 		/* We insert at head so that latest is always on top. */
 		NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
@@ -3080,7 +3084,7 @@
 
 			for (IRCClient *client in [worldController() clientList]) {
 				for (IRCChannel *channel in [client channelList]) {
-					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:CSCEF_WesternAlphabetIncludingUnderscoreDashCharacterSet];
+					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet];
 
 					CGFloat score = [name compareWithWord:uncutInput lengthPenaltyWeight:0.1];
 

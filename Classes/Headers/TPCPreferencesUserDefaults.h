@@ -41,7 +41,7 @@
 #define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
 
 /* The user info dictionary of this notification contains the changed key. */
-#define TPCPreferencesUserDefaultsDidChangeNotification			@"TPCPreferencesUserDefaultsDidChangeNotification"
+TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 
 /* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
  notifications for changed keys on a per-key basis so that the iCloud controller can

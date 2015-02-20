@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define TVCLogViewCommonUserAgentString					@"Textual/1.0 (+http://www.codeux.com/textual/help/Inline-Media-Scanner-User-Agent.kb)"
+TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView : WebView
 @property (nonatomic, uweak) id keyDelegate;

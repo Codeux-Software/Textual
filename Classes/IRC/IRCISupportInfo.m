@@ -40,6 +40,8 @@
 
 #define _channelUserModeValue		100
 
+NSString * const IRCISupportRawSuffix = @"are supported by this server";
+
 @implementation IRCISupportInfo
 
 - (instancetype)init

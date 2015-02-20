@@ -38,8 +38,7 @@
 
 #import "TextualApplication.h"
 
-#define TXEmptySoundAlertLabel			BLS(1234)
-#define TXEmptySoundAlertPreference		@"None"
+TEXTUAL_EXTERN NSString * const TXEmptySoundAlertPreferenceValue;
 
 @interface TDCPreferencesSoundWrapper : NSObject
 @property (nonatomic, assign) TXNotificationType eventType;
@@ -49,6 +48,8 @@
 @property (nonatomic, assign) BOOL pushNotification;
 @property (nonatomic, assign) BOOL disabledWhileAway;
 @property (nonatomic, assign) BOOL bounceDockIcon;
+
++ (NSString *)localizedEmptySoundSelectionLabel;
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType;
 @end

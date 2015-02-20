@@ -37,19 +37,12 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
+@implementation NSTableView (TXTableViewHelper)
 
-/* Absolutely no plugin should call this class. */
-@interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
++ (NSFont *)preferredGlobalTableViewFont
+{
+	return [NSFont systemFontOfSize:12.0];
 
-/* For iCloud purposes. */
-+ (void)import:(id)obj withKey:(id)key;
+}
 
-+ (void)importContentsOfDictionary:(NSDictionary *)aDict;
-+ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
-
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end

@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NSInteger const IRCConnectionDefaultServerPort		= 6667;
+
 @implementation IRCClientConfig
 
 @synthesize serverPassword = _serverPassword;

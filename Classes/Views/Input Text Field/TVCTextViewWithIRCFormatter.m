@@ -37,6 +37,9 @@
 
 #import "TextualApplication.h"
 
+#define TVCTextViewWithIRCFormatterWidthPadding		1.0
+#define TVCTextViewWithIRCFormatterHeightPadding	2.0
+
 @implementation TVCTextViewWithIRCFormatter
 
 - (instancetype)initWithCoder:(NSCoder *)coder
@@ -52,16 +55,15 @@
             [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
 		}
 
-		[self setPreferredFont:TXPreferredGlobalTextFieldFont];
-		[self setPreferredFontColor:TXPreferredGlobalTextFieldFontColor];
+		self.keyEventHandler = [TLOKeyEventHandler new];
 
-		[self defineDefaultTypeSetterAttributes];
-		[self updateTypeSetterAttributes];
-
-        [super setTextContainerInset:NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
+		[super setTextContainerInset:NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
 												TVCTextViewWithIRCFormatterHeightPadding)];
 
-		self.keyEventHandler = [TLOKeyEventHandler new];
+		/* These are the default values. Any class using this one is expected
+		 to define their own values at some point. */
+		[self setPreferredFont:[NSFont systemFontOfSize:12.0]];
+		[self setPreferredFontColor:[NSColor blueColor]];
     }
 	
     return self;
@@ -200,10 +202,7 @@
 - (void)textDidChange:(NSNotification *)aNotification
 {
 	if ([self stringLength] < 1) {
-		/* Reset these values when field becomes empty. */
-		[self defineDefaultTypeSetterAttributes];
-		
-		[self updateTypeSetterAttributes];
+		[self resetTypeSetterAttributes];
 	}
 
 	/* Internal text did change notification. */
@@ -242,20 +241,42 @@
     [[self textStorage] endEditing];
 }
 
-- (void)updateTypeSetterAttributes
+- (void)setPreferredFont:(NSFont *)preferredFont
 {
-	[self setTypingAttributes:@{NSFontAttributeName : self.preferredFont, NSForegroundColorAttributeName : self.preferredFontColor}];
+	if (_preferredFont == preferredFont) {
+		;
+	} else {
+		_preferredFont = [preferredFont copy];
+
+		[self setTypingAttributes:@{NSFontAttributeName : _preferredFont}];
+
+		[self setFont:_preferredFont];
+	}
 }
 
-- (void)defineDefaultTypeSetterAttributes
+- (void)setPreferredFontColor:(NSColor *)preferredFontColor
 {
-	[self setFont:self.preferredFont];
+	if (_preferredFontColor == preferredFontColor) {
+		;
+	} else {
+		_preferredFontColor = [preferredFontColor copy];
 
-	[self setTextColor:self.preferredFontColor];
-	[self setInsertionPointColor:self.preferredFontColor];
+		[self setTypingAttributes:@{NSForegroundColorAttributeName : _preferredFontColor}];
+
+		[self setTextColor:_preferredFontColor];
+		[self setInsertionPointColor:_preferredFontColor];
+	}
 }
 
-- (void)updateTextColorInRange:(NSRange)range
+- (void)resetTypeSetterAttributes
+{
+	[self setTypingAttributes:@{
+		NSFontAttributeName : self.preferredFont,
+		NSForegroundColorAttributeName : self.preferredFontColor
+	}];
+}
+
+- (void)resetTextColorInRange:(NSRange)range
 {
 	[self setTextColor:self.preferredFontColor range:range];
 }

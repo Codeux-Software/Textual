@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";
+NSString * const TPCResourceManagerBundleDocumentTypeExtensionWithoutPeriod		= @"bundle";
+
+NSString * const TPCResourceManagerScriptDocumentTypeExtension					= @".scpt";
+NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @"scpt";
+
 @implementation TPCResourceManager
 
 + (void)copyResourcesToCustomAddonsFolder

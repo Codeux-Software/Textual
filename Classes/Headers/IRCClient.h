@@ -93,7 +93,7 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
-#define IRCClientConfigurationWasUpdatedNotification	@"IRCClientConfigurationWasUpdatedNotification"
+TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 

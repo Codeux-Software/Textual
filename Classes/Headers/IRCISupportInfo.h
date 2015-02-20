@@ -38,8 +38,6 @@
 
 #import "TextualApplication.h"
 
-#define IRCISupportRawSuffix				@"are supported by this server"
-
 @interface IRCISupportInfo : NSObject
 @property (nonatomic, copy) NSDictionary *channelModes;
 @property (nonatomic, assign) NSInteger nicknameLength;

@@ -48,7 +48,7 @@
 
 + (NSColor *)whiteInputTextFieldPlaceholderTextColor
 {
-	return TXPreferredGlobalTextFieldFontColor;
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
 + (NSColor *)blackInputTextFieldPrimaryTextColor

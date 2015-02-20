@@ -40,6 +40,8 @@
 
 @implementation TVCLogView
 
+NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+http://www.codeux.com/textual/help/Inline-Media-Scanner-User-Agent.kb)";
+
 - (void)keyDown:(NSEvent *)e
 {
 	if (self.keyDelegate) {
@@ -112,16 +114,18 @@
 
 - (BOOL)hasSelection
 {
-	return NSObjectIsNotEmpty([self selection]);
+	return (([self selection] == nil) == NO);
 }
 
 - (NSString *)selection
 {
 	DOMRange *range = [self selectedDOMRange];
 
-	PointerIsEmptyAssertReturn(range, nil);
-	
-	return [range toString];
+	if (range == nil)  {
+		return nil;
+	} else {
+		return [range toString];
+	}
 }
 
 @end

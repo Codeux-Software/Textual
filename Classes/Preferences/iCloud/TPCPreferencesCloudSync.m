@@ -40,6 +40,10 @@
 #warning FIXME: This file requires a significant overhaul.
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+NSString * const TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification	= @"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification";
+
+NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification	= @"TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification";
+NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification	= @"TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification";
 
 /* Internal cloud work is divided into two timers. Important work such as
  syncing upstream to the cloud is put on a per-minute timer. This timer

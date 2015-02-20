@@ -38,6 +38,14 @@
 
 #import "TextualApplication.h"
 
+NSString * const TVCLogLineUndefinedNicknameFormat			= @"<%@%n>";
+NSString * const TVCLogLineActionNicknameFormat				= @"%@ ";
+NSString * const TVCLogLineNoticeNicknameFormat				= @"-%@-";
+
+NSString * const TVCLogLineSpecialNoticeMessageFormat		= @"[%@]: %@";
+
+NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
+
 @implementation TVCLogLine
 
 - (instancetype)init
@@ -100,9 +108,9 @@
 {
 	if (type == TVCLogLineMemberLocalUserType) {
 		return @"myself";
+	} else {
+		return @"normal";
 	}
-
-	return @"normal";
 }
 
 - (NSString *)lineTypeString

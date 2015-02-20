@@ -38,8 +38,8 @@
 
 #import "TextualApplication.h"
 
-#define TXDefaultPrimaryStringEncoding			NSUTF8StringEncoding
-#define TXDefaultFallbackStringEncoding			NSISOLatin1StringEncoding
+TEXTUAL_EXTERN NSStringEncoding const TXDefaultPrimaryStringEncoding;
+TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 @interface NSString (TXStringHelper)
 - (NSString *)stringByAppendingIRCFormattingStop;
@@ -53,8 +53,8 @@
 
 @property (readonly, copy) NSString *cleanedServerHostmask;
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont honorFormattingPreference:(BOOL)formattingPreference;
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont;
+- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor;
+- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference;
 
 @property (readonly, copy) NSString *stripIRCEffects;
 

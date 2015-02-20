@@ -46,7 +46,7 @@
 
 + (NSColor *)inputTextFieldPrimaryTextColor
 {
-	return TXPreferredGlobalTextFieldFontColor;
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
 + (NSColor *)inputTextFieldOutlineColorForActiveWindow

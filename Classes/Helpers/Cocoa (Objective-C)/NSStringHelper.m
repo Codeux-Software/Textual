@@ -36,9 +36,12 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 #define _useStrictHostmaskUsernameTypeChecking		0
 
-#import "TextualApplication.h"
+NSStringEncoding const TXDefaultPrimaryStringEncoding		= NSUTF8StringEncoding;
+NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncoding;
 
 @implementation NSString (TXStringHelper)
 
@@ -289,24 +292,30 @@
 	return [AHHyperlinkScanner URLWithProperScheme:self];
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont honorFormattingPreference:(BOOL)formattingPreference
+- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference
 {
-	if (formattingPreference && [TPCPreferences removeAllFormatting]) {
-		return [self stripIRCEffects];
+	if (formattingPreference) {
+		if ([TPCPreferences removeAllFormatting]) {
+			return [self stripIRCEffects];
+		}
 	}
 
-    NSDictionary *input = @{@"attributedStringFont" : defaultFont};
+	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 
-	return [TVCLogRenderer renderBody:self
-						   controller:[mainWindow() selectedViewController]
-						   renderType:TVCLogRendererAttributedStringType
-						   properties:input
-						   resultInfo:NULL];
+	if (preferredFont) {
+		[attributes setObject:preferredFont forKey:TVCLogRendererConfigurationAttributedStringPreferredFontAttribute];
+	}
+
+	if (preferredFontColor) {
+		[attributes setObject:preferredFontColor forKey:TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute];
+	}
+
+	return [TVCLogRenderer renderBodyIntoAttributedString:self withAttributes:attributes];
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)defaultFont
+- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor
 {
-	return [self attributedStringWithIRCFormatting:defaultFont honorFormattingPreference:NO];
+	return [self attributedStringWithIRCFormatting:preferredFont preferredFontColor:preferredFontColor honorFormattingPreference:NO];
 }
 
 - (NSString *)stripIRCEffects

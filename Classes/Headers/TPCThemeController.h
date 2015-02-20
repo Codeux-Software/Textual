@@ -38,16 +38,16 @@
 
 #import "TextualApplication.h"
 
-#define TPCThemeControllerCloudThemeNameBasicPrefix				@"cloud"
-#define TPCThemeControllerCloudThemeNameCompletePrefix			@"cloud:"
+TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameBasicPrefix;
+TEXTUAL_EXTERN NSString * const TPCThemeControllerCloudThemeNameCompletePrefix;
 
-#define TPCThemeControllerCustomThemeNameBasicPrefix			@"user"
-#define TPCThemeControllerCustomThemeNameCompletePrefix			@"user:"
+TEXTUAL_EXTERN NSString * const TPCThemeControllerCustomThemeNameBasicPrefix;
+TEXTUAL_EXTERN NSString * const TPCThemeControllerCustomThemeNameCompletePrefix;
 
-#define TPCThemeControllerBundledThemeNameBasicPrefix			@"resource"
-#define TPCThemeControllerBundledThemeNameCompletePrefix		@"resource:"
+TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameBasicPrefix;
+TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameCompletePrefix;
 
-#define TPCThemeControllerThemeListDidChangeNotification		@"TPCThemeControllerThemeListDidChangeNotification"
+TEXTUAL_EXTERN NSString * const TPCThemeControllerThemeListDidChangeNotification;
 
 typedef enum TPCThemeControllerStorageLocation : NSInteger {
 	TPCThemeControllerStorageBundleLocation,

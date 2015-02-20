@@ -45,7 +45,7 @@ typedef enum IRCChannelStatus : NSInteger {
 	IRCChannelStatusTerminated,
 } IRCChannelStatus;
 
-#define IRCChannelConfigurationWasUpdatedNotification	@"IRCChannelConfigurationWasUpdatedNotification"
+TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 @interface IRCChannel : IRCTreeItem <NSOutlineViewDataSource, NSOutlineViewDelegate>
 @property (readonly, copy) NSString *name;

@@ -44,8 +44,8 @@
 
 #define _requestTimeoutInterval			30.0
 
-#define _userDefaultsModelCacheKey			@"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value"
-#define _userDefaultsSerialCacheKey			@"Private Extension Store -> System Profiler Extension -> Cached Serial Number Value"
+NSString * const _userDefaultsModelCacheKey		= @"Private Extension Store -> System Profiler Extension -> Cached Model Identifier Value";
+NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> System Profiler Extension -> Cached Serial Number Value";
 
 @interface TPISystemProfilerModelIDRequestController ()
 @property (nonatomic, strong) id internalObject;
