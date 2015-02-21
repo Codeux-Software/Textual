@@ -59,7 +59,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
 	if ([TPCPreferences invertSidebarColors]) {
-		dividerColor = [dividerColor invertColor];
+		dividerColor = [dividerColor invertedColor];
 	}
 
 	[dividerColor set];

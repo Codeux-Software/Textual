@@ -46,7 +46,7 @@
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error;
 + (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
 
-- (SecTrustRef)sslCertificateTrustInformation;
+@property (readonly) SecTrustRef sslCertificateTrustInformation;
 @end
 
 @interface AsyncSocket (RLMAsyncSocketExtensions)

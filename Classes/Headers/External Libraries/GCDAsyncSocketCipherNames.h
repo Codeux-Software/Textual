@@ -4,6 +4,6 @@
 #import "TextualApplication.h"
 
 @interface GCDAsyncSocket (GCDsyncSocketCipherNamesExtension)
-- (NSString *)sslNegotiatedProtocolString;
-- (NSString *)sslNegotiatedCipherSuiteString;
+@property (readonly, copy) NSString *sslNegotiatedProtocolString;
+@property (readonly, copy) NSString *sslNegotiatedCipherSuiteString;
 @end
