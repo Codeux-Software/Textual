@@ -81,6 +81,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Textual 5"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
