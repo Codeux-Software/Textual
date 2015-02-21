@@ -144,11 +144,21 @@
 
 - (void)checkForOtherCopiesOfTextualRunning
 {
+	BOOL foundOneMatchForSelf = NO;
+
 	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
 		if ([[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual"] ||
 			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5"] ||
 			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5.trial"])
 		{
+			if ([[application bundleIdentifier] isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
+				if (foundOneMatchForSelf == NO) {
+					foundOneMatchForSelf = YES;
+
+					continue;
+				}
+			}
+
 			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1237][2]")
 																	  title:TXTLS(@"BasicLanguage[1237][1]")
 															  defaultButton:TXTLS(@"BasicLanguage[1237][3]")
