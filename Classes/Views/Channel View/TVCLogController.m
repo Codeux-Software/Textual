@@ -1107,11 +1107,6 @@
 	NSString *renderedBody = nil;
 	NSString *lineTypeStng = [line lineTypeString];
 
-	BOOL highlighted = NO;
-	
-	BOOL isPlainText = (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType);
-	BOOL isNormalMsg = (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType);
-
 	BOOL drawLinks = ([[TLOLinkParser bannedURLRegexLineTypes] containsObject:lineTypeStng] == NO);
 
 	// ---- //
@@ -1124,9 +1119,6 @@
 	[rendererAttributes maybeSetObject:[line excludeKeywords] forKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 	
 	[rendererAttributes setBool:drawLinks forKey:TVCLogRendererConfigurationShouldRenderLinksAttribute];
-
-	[rendererAttributes setBool:isNormalMsg forKey:TVCLogRendererConfigurationIsNormalMessageMessageAttribute];
-	[rendererAttributes setBool:isPlainText forKey:TVCLogRendererConfigurationIsPlainTextMessageAttribute];
 
 	[rendererAttributes setInteger:[line lineType] forKey:TVCLogRendererConfigurationLineTypeAttribute];
 	[rendererAttributes setInteger:[line memberType] forKey:TVCLogRendererConfigurationMemberTypeAttribute];
@@ -1141,6 +1133,8 @@
 	}
 
 	NSMutableDictionary *resultData = [rendererResults mutableCopy];
+
+	BOOL highlighted = NO;
 
 	if ([line memberType] == TVCLogLineMemberNormalType) {
 		highlighted = [rendererResults boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
@@ -1171,7 +1165,8 @@
 
 		NSMutableDictionary *inlineImagesToValidate = [NSMutableDictionary dictionary];
 
-		if (isNormalMsg) {
+		if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType)
+		{
 			if ([self inlineImagesEnabledForView]) {
 				for (NSString *uniqueKey in inlineImageMatches) {
 					NSString *nurl = (id)inlineImageMatches[uniqueKey];
@@ -1243,7 +1238,7 @@
 
 	NSString *classRep = nil;
 
-	if (isPlainText) {
+	if (type == TVCLogLinePrivateMessageType || type == TVCLogLineNoticeType || type == TVCLogLineActionType) {
 		classRep = @"text";
 	} else {
 		classRep = @"event";

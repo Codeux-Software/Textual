@@ -42,8 +42,6 @@
  context so that it can provide the best possible results. */
 /* These properties do not apply to attributed strings. */
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationShouldRenderLinksAttribute; // BOOl
-TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationIsNormalMessageMessageAttribute; // BOOL - is action, privmsg, or notice
-TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationIsPlainTextMessageAttribute; // BOOL - is action or privmsg
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationLineTypeAttribute; // TVCLogLineType
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationMemberTypeAttribute; // TVCLogMemberType
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationHighlightKeywordsAttribute; // NSArray

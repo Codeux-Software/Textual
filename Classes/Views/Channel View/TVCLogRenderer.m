@@ -54,8 +54,6 @@ typedef uint32_t attr_t;
 @end
 
 NSString * const TVCLogRendererConfigurationShouldRenderLinksAttribute			= @"TVCLogRendererConfigurationShouldRenderLinksAttribute";
-NSString * const TVCLogRendererConfigurationIsNormalMessageMessageAttribute		= @"TVCLogRendererConfigurationIsNormalMessageMessageAttribute";
-NSString * const TVCLogRendererConfigurationIsPlainTextMessageAttribute			= @"TVCLogRendererConfigurationIsPlainTextMessageAttribute";
 NSString * const TVCLogRendererConfigurationLineTypeAttribute					= @"TVCLogRendererConfigurationLineTypeAttribute";
 NSString * const TVCLogRendererConfigurationMemberTypeAttribute					= @"TVCLogRendererConfigurationMemberTypeAttribute";
 NSString * const TVCLogRendererConfigurationHighlightKeywordsAttribute			= @"TVCLogRendererConfigurationHighlightKeywordsAttribute";
@@ -316,6 +314,27 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	memcpy(_effectAttributes, attrBuf, bufferSize);
 }
 
+- (BOOL)isRenderingPRIVMSG
+{
+	TVCLogLineType lineType = [_rendererAttributes integerForKey:TVCLogRendererConfigurationLineTypeAttribute];
+
+	return (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType);
+}
+
+- (BOOL)isRenderingPRIVMSG_or_NOTICE
+{
+	TVCLogLineType lineType = [_rendererAttributes integerForKey:TVCLogRendererConfigurationLineTypeAttribute];
+
+	return (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLineActionType || lineType == TVCLogLineNoticeType);
+}
+
+- (BOOL)scanForKeywords
+{
+	TVCLogLineMemberType memberType = [_rendererAttributes integerForKey:TVCLogRendererConfigurationMemberTypeAttribute];
+
+	return ([self isRenderingPRIVMSG] || memberType == TVCLogLineMemberNormalType);
+}
+
 - (void)stripDangerousUnicodeCharactersFromBody
 {
 	if ([TPCPreferences automaticallyFilterUnicodeTextSpam]) {
@@ -373,9 +392,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 - (void)matchKeywords
 {
-	BOOL isNormalMessage = [_rendererAttributes boolForKey:TVCLogRendererConfigurationIsNormalMessageMessageAttribute];
-
-	if (isNormalMessage) {
+	if ([self scanForKeywords]) {
 		id highlightWords = [_rendererAttributes arrayForKey:TVCLogRendererConfigurationHighlightKeywordsAttribute];
 		id excludedWords = [_rendererAttributes arrayForKey:TVCLogRendererConfigurationExcludedKeywordsAttribute];
 
@@ -549,9 +566,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 - (void)findAllChannelNames
 {
-	BOOL isNormalMessage = [_rendererAttributes boolForKey:TVCLogRendererConfigurationIsNormalMessageMessageAttribute];
-
-	if (isNormalMessage) {
+	if ([self isRenderingPRIVMSG_or_NOTICE]) {
 		NSInteger start = 0;
 		NSInteger length = [_body length];
 
@@ -632,9 +647,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 - (void)scanBodyForChannelUsers
 {
-	BOOL isPlainText = [_rendererAttributes boolForKey:TVCLogRendererConfigurationIsPlainTextMessageAttribute];
-
-	if (isPlainText) {
+	if ([self isRenderingPRIVMSG]) {
 		PointerIsEmptyAssert(_controller);
 
 		IRCClient *client = [_controller associatedClient];
