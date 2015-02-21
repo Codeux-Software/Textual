@@ -303,11 +303,11 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 
 	if (preferredFont) {
-		[attributes setObject:preferredFont forKey:TVCLogRendererConfigurationAttributedStringPreferredFontAttribute];
+		attributes[TVCLogRendererConfigurationAttributedStringPreferredFontAttribute] = preferredFont;
 	}
 
 	if (preferredFontColor) {
-		[attributes setObject:preferredFontColor forKey:TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute];
+		attributes[TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute] = preferredFontColor;
 	}
 
 	return [TVCLogRenderer renderBodyIntoAttributedString:self withAttributes:attributes];

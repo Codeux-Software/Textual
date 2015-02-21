@@ -42,7 +42,7 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultPrimaryStringEncoding;
 TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 @interface NSString (TXStringHelper)
-- (NSString *)stringByAppendingIRCFormattingStop;
+@property (readonly, copy) NSString *stringByAppendingIRCFormattingStop;
 
 @property (readonly, copy) NSString *channelNameToken;
 - (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client;

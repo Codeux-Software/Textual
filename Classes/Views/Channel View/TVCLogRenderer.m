@@ -305,7 +305,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	_body = [stringBody copy];
 
-	[_outputDictionary setObject:stringBody forKey:TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute];
+	_outputDictionary[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute] = stringBody;
 
 	NSInteger bufferSize = sizeof(attrBuf);
 
@@ -385,8 +385,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			}
 		}
 
-		[_outputDictionary setObject:urlAryRanges forKey:TVCLogRendererResultsRangesOfAllLinksInBodyAttribute];
-		[_outputDictionary setObject:urlAry       forKey:TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute];
+		_outputDictionary[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] = urlAryRanges;
+		_outputDictionary[TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute] = urlAry;
 	}
 }
 
@@ -720,12 +720,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			}
 
 			/* Return list of mentioned users. This list is used to update weights. */
-			[_outputDictionary setObject:[mentionedUsers allObjects] forKey:TVCLogRendererResultsListOfUsersFoundAttribute];
+			_outputDictionary[TVCLogRendererResultsListOfUsersFoundAttribute] = [mentionedUsers allObjects];
 		} else {
-			[_outputDictionary setObject:[NSSet set] forKey:TVCLogRendererResultsListOfUsersFoundAttribute];
+			_outputDictionary[TVCLogRendererResultsListOfUsersFoundAttribute] = [NSSet set];
 		}
 	} else {
-		[_outputDictionary setObject:[NSSet set] forKey:TVCLogRendererResultsListOfUsersFoundAttribute];
+		_outputDictionary[TVCLogRendererResultsListOfUsersFoundAttribute] = [NSSet set];
 	}
 }
 
@@ -733,13 +733,13 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 {
 	NSRange r = NSMakeRange(rangeStart, rangeLength);
 
-	NSFont *defaultFont = [_rendererAttributes objectForKey:TVCLogRendererConfigurationAttributedStringPreferredFontAttribute];
+	NSFont *defaultFont = _rendererAttributes[TVCLogRendererConfigurationAttributedStringPreferredFontAttribute];
 
 	if (defaultFont == nil) {
 		NSAssert(NO, @"FATAL ERROR: TVCLogRenderer cannot be supplied with a nil 'TVCLogRendererAttributedStringPreferredFontAttribute' attribute when rendering an attributed string");
 	}
 
-	NSColor *defaultColor = [_rendererAttributes objectForKey:TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute];
+	NSColor *defaultColor = _rendererAttributes[TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute];
 
 	if (attrArray & _effectMask) {
 		NSFont *boldItalic = defaultFont;

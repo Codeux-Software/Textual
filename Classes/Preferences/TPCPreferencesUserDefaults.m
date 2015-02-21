@@ -80,17 +80,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (id)init
+- (instancetype)init
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (id)initWithSuiteName:(NSString *)suitename
+- (instancetype)initWithSuiteName:(NSString *)suitename
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (id)initWithUser:(NSString *)username
+- (instancetype)initWithUser:(NSString *)username
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
@@ -260,17 +260,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wobjc-designated-initializers"
-- (id)init
+- (instancetype)init
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-- (id)initWithCoder:(NSCoder *)coder
+- (instancetype)initWithCoder:(NSCoder *)coder
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-- (id)initWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
+- (instancetype)initWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }

@@ -7,7 +7,7 @@
 @property (nonatomic, assign) NSRect lastVisibleRect;
 @property (nonatomic, nweak) WebFrameView *webFrame;
 
-- (BOOL)canScroll;
+@property (readonly) BOOL canScroll;
 
 - (void)forceFrameRedraw;
 @end
