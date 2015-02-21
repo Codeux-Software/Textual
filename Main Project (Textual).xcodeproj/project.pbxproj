@@ -5900,9 +5900,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUILD_SCHEME_TOKEN = debug;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Debug;
 		};
@@ -5912,9 +5909,6 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUILD_SCHEME_TOKEN = devid;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = Release;
 		};
@@ -5924,9 +5918,6 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUILD_SCHEME_TOKEN = appstore;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (App Store)";
 		};
@@ -5971,9 +5962,9 @@
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = "";
-				TEXTUAL_BUNDLE_IDENTIFIER = "";
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = "";
+				TEXTUAL_BUILD_SCHEME_TOKEN = debug;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5987,9 +5978,9 @@
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = "";
-				TEXTUAL_BUNDLE_IDENTIFIER = "";
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = "";
+				TEXTUAL_BUILD_SCHEME_TOKEN = devid;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -6048,12 +6039,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = .tmp/Info.plist;
-				PRODUCT_NAME = "Textual Trial";
+				PRODUCT_NAME = "Textual 5 Trial";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = "";
-				TEXTUAL_BUNDLE_IDENTIFIER = "";
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = "";
+				TEXTUAL_BUILD_SCHEME_TOKEN = trial;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5.trial;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (Trial)";
@@ -6100,9 +6091,6 @@
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEXTUAL_BUILD_SCHEME_TOKEN = trial;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 			};
 			name = "Release (Trial)";
 		};
@@ -6115,9 +6103,9 @@
 				PRODUCT_NAME = "Textual 5";
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = "";
-				TEXTUAL_BUNDLE_IDENTIFIER = "";
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = "";
+				TEXTUAL_BUILD_SCHEME_TOKEN = appstore;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (App Store)";

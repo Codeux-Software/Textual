@@ -99,6 +99,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release (App Store)"
+      customArchiveName = "Textual 5"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

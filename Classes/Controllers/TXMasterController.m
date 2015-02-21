@@ -144,24 +144,30 @@
 
 - (void)checkForOtherCopiesOfTextualRunning
 {
-	NSArray *textualFourRunning = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.codeux.irc.textual"];
-	NSArray *textualFiveRunning = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.codeux.irc.textual5"];
-	
-	if ([textualFourRunning count] > 0 || [textualFiveRunning count] > 1) {
-		BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1237][2]")
-																  title:TXTLS(@"BasicLanguage[1237][1]")
-														  defaultButton:TXTLS(@"BasicLanguage[1237][3]")
-														alternateButton:TXTLS(@"BasicLanguage[1237][4]")
-														 suppressionKey:nil
-														suppressionText:nil];
-		
-		if (continueLaunch == NO) {
-			self.skipTerminateSave = YES;
-			self.applicationIsTerminating = YES;
-			
-			[RZSharedApplication() terminate:nil];
+	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
+		if ([[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual"] ||
+			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5"] ||
+			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5.trial"])
+		{
+			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1237][2]")
+																	  title:TXTLS(@"BasicLanguage[1237][1]")
+															  defaultButton:TXTLS(@"BasicLanguage[1237][3]")
+															alternateButton:TXTLS(@"BasicLanguage[1237][4]")
+															 suppressionKey:nil
+															suppressionText:nil];
+
+			if (continueLaunch == NO) {
+				self.skipTerminateSave = YES;
+				self.applicationIsTerminating = YES;
+
+				[RZSharedApplication() terminate:nil];
+			}
+
+			break;
 		}
 	}
+
+
 }
 
 #pragma mark -
