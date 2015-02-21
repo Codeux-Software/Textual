@@ -64,7 +64,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable>
          <BuildableReference
@@ -80,7 +80,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       customArchiveName = "Textual 5"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
