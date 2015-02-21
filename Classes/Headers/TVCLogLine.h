@@ -49,7 +49,7 @@ TEXTUAL_EXTERN NSString * const TVCLogLineDefaultRawCommandValue;
 typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineUndefinedType					= 0,
 	TVCLogLineActionType,
-	TVCLogLineActionNoHighlightType,
+	TVCLogLineActionNoHighlightType, // Used internally, avoid
 	TVCLogLineCTCPType,
 	TVCLogLineDCCFileTransferType,
 	TVCLogLineDebugType,
@@ -62,7 +62,7 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineNoticeType,
 	TVCLogLinePartType,
 	TVCLogLinePrivateMessageType,
-	TVCLogLinePrivateMessageNoHighlightType,
+	TVCLogLinePrivateMessageNoHighlightType, // Used internally, avoid
 	TVCLogLineQuitType,
 	TVCLogLineTopicType,
 	TVCLogLineWebsiteType,
