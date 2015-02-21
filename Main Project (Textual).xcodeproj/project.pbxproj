@@ -769,7 +769,6 @@
 		4C71CF271990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
 		4C71CF281990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
 		4C71CF291990811D0038C23D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF251990811D0038C23D /* BasicLanguage.strings */; };
-		4C72E19F1A950196007DB81E /* TextualWithoutCloud.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 4C72E19E1A950196007DB81E /* TextualWithoutCloud.entitlements */; };
 		4C77660D19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660C19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m */; };
 		4C77660E19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660C19789F3300759774 /* TVCServerListMavericksDarkUserInterface.m */; };
 		4C77661019789F4200759774 /* TVCServerListMavericksLightUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C77660F19789F4200759774 /* TVCServerListMavericksLightUserInterface.m */; };
@@ -4601,7 +4600,6 @@
 				4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
 				4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */,
 				4C71CEE9199081110038C23D /* TDChanBanExceptionSheet.xib in Resources */,
-				4C72E19F1A950196007DB81E /* TextualWithoutCloud.entitlements in Resources */,
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4C71CEEC199081110038C23D /* TDChanBanSheet.xib in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
