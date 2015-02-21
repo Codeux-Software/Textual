@@ -46,44 +46,56 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 @implementation TPCPreferencesUserDefaults
 
-static id _TPCPreferencesUserDefaults = nil;
-
 + (TPCPreferencesUserDefaults *)sharedUserDefaults
 {
-	@synchronized([TPCPreferencesUserDefaults class]) {
-		if (_TPCPreferencesUserDefaults == nil) {
-			(void)[self alloc];
-		}
+	static id sharedSelf = nil;
 
-		return _TPCPreferencesUserDefaults;
-	}
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		sharedSelf = [[super allocWithZone:NULL] protectedInit];
+	});
+
+	return sharedSelf;
 }
 
 + (id)alloc
 {
-	@synchronized([TPCPreferencesUserDefaults class]) {
-		if (_TPCPreferencesUserDefaults == nil) {
-			(void)[self allocWithZone:NSDefaultMallocZone()];
-		}
-
-		return _TPCPreferencesUserDefaults;
-	}
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone
 {
-	@synchronized([TPCPreferencesUserDefaults class]) {
-		if (_TPCPreferencesUserDefaults == nil) {
-			if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-				_TPCPreferencesUserDefaults = [[super allocWithZone:zone] initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
-			} else {
-				_TPCPreferencesUserDefaults = [[super allocWithZone:zone] init];
-			}
-		}
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
+}
 
-		return _TPCPreferencesUserDefaults;
+- (id)protectedInit
+{
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+	} else {
+		return [super init];
 	}
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+- (id)init
+{
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
+}
+
+- (id)initWithSuiteName:(NSString *)suitename
+{
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
+}
+
+- (id)initWithUser:(NSString *)username
+{
+	return [TPCPreferencesUserDefaults sharedUserDefaults];
+}
+#pragma clang diagnostic pop
+
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
@@ -216,42 +228,53 @@ static id _TPCPreferencesUserDefaults = nil;
 
 @implementation TPCPreferencesUserDefaultsController
 
-static id _TPCPreferencesUserDefaultsController = nil;
-
 + (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController
 {
-	@synchronized([TPCPreferencesUserDefaultsController class]) {
-		if (_TPCPreferencesUserDefaultsController == nil) {
-			(void)[self alloc];
-		}
+	static id sharedSelf = nil;
 
-		return _TPCPreferencesUserDefaultsController;
-	}
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		 sharedSelf = [[super allocWithZone:NULL] protectedInitWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
+
+		[sharedSelf setAppliesImmediately:YES];
+	});
+
+	return sharedSelf;
+}
+
+- (id)protectedInitWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
+{
+	return [super initWithDefaults:defaults initialValues:initialValues];
 }
 
 + (id)alloc
 {
-	@synchronized([TPCPreferencesUserDefaultsController class]) {
-		if (_TPCPreferencesUserDefaultsController == nil) {
-			(void)[self allocWithZone:NSDefaultMallocZone()];
-		}
-
-		return _TPCPreferencesUserDefaultsController;
-	}
+	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
 + (id)allocWithZone:(struct _NSZone *)zone
 {
-	@synchronized([TPCPreferencesUserDefaultsController class]) {
-		if (_TPCPreferencesUserDefaultsController == nil) {
-			_TPCPreferencesUserDefaultsController = [[super allocWithZone:zone] initWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
-
-			[_TPCPreferencesUserDefaultsController setAppliesImmediately:YES];
-		}
-
-		return _TPCPreferencesUserDefaultsController;
-	}
+	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-designated-initializers"
+- (id)init
+{
+	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+}
+
+- (id)initWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
+{
+	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
+}
+#pragma clang diagnostic pop
 
 - (id)defaults
 {
