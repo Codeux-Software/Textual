@@ -49,10 +49,10 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.reqeatTimer = YES;
+		_reqeatTimer = YES;
 		
-		self.selector = nil;
-		self.delegate = nil;
+		_selector = nil;
+		_delegate = nil;
 	}
 
 	return self;
@@ -65,41 +65,41 @@
 
 - (BOOL)timerIsActive
 {
-	return PointerIsNotEmpty(self.timer);
+	return ((_timer == nil) == NO);
 }
 
 - (void)start:(NSTimeInterval)interval
 {
-	PointerIsEmptyAssert(self.delegate);
-	PointerIsEmptyAssert(self.selector);
+	PointerIsEmptyAssert(_delegate);
+	PointerIsEmptyAssert(_selector);
 
 	[self stop];
 
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval
-												  target:self
-												selector:@selector(onTimer:)
-												userInfo:nil
-												 repeats:self.reqeatTimer];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:interval
+											  target:self
+											selector:@selector(onTimer:)
+											userInfo:nil
+											 repeats:_reqeatTimer];
 
-	[RZCurrentRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
+	[RZCurrentRunLoop() addTimer:_timer forMode:NSEventTrackingRunLoopMode];
 }
 
 - (void)stop
 {
-	[self.timer invalidate];
-	 self.timer = nil;
+	[_timer invalidate];
+	 _timer = nil;
 }
 
 - (void)onTimer:(id)sender
 {
 	NSAssertReturn([self timerIsActive]);
 
-	if (self.reqeatTimer == NO) {
+	if (_reqeatTimer == NO) {
 		[self stop];
 	}
 
-	if ([self.delegate respondsToSelector:self.selector]) {
-		objc_msgSend(self.delegate, self.selector, self);
+	if ([_delegate respondsToSelector:_selector]) {
+		objc_msgSend(_delegate, _selector, self);
 	}
 }
 

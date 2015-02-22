@@ -27,6 +27,15 @@
 
 #import "OELReachability.h"
 
+#import <SystemConfiguration/SystemConfiguration.h>
+
+#import <sys/socket.h>
+#import <netinet/in.h>
+#import <netinet6/in6.h>
+#import <arpa/inet.h>
+#import <ifaddrs.h>
+#import <netdb.h>
+
 @interface OELReachability ()
 @property (nonatomic, assign) SCNetworkReachabilityRef reachabilityRef;
 
@@ -69,7 +78,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     if (self = [super init])
     {
-        self.reachabilityRef = ref;
+        _reachabilityRef = ref;
     }
 
     return self;
@@ -79,22 +88,22 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     [self stopNotifier];
 
-    if (self.reachabilityRef)
+    if (_reachabilityRef)
     {
-        CFRelease(self.reachabilityRef);
-				  self.reachabilityRef = nil;
+        CFRelease(_reachabilityRef);
+				  _reachabilityRef = nil;
     }
 
-	self.reachableBlock		= nil;
-	self.unreachableBlock	= nil;
+	_reachableBlock		= nil;
+	_unreachableBlock	= nil;
 }
 
 - (BOOL)startNotifier
 {
     SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
 
-    if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) {
-		if (SCNetworkReachabilityScheduleWithRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
+    if (SCNetworkReachabilitySetCallback(_reachabilityRef, TMReachabilityCallback, &context)) {
+		if (SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
         {
             return YES;
         }
@@ -105,9 +114,9 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (void)stopNotifier
 {
-    SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
+    SCNetworkReachabilitySetCallback(_reachabilityRef, NULL, NULL);
 
-	SCNetworkReachabilityUnscheduleFromRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+	SCNetworkReachabilityUnscheduleFromRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 #define testcase (kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsTransientConnection)
@@ -131,7 +140,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     SCNetworkReachabilityFlags flags;
 
-    if (SCNetworkReachabilityGetFlags(self.reachabilityRef, &flags) == FALSE) {
+    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags) == FALSE) {
         return NO;
 	}
 
@@ -141,12 +150,12 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags
 {
     if ([self isReachableWithFlags:flags]) {
-        if (self.reachableBlock) {
-            self.reachableBlock(self);
+        if (_reachableBlock) {
+            _reachableBlock(self);
         }
     } else {
-        if (self.unreachableBlock) {
-            self.unreachableBlock(self);
+        if (_unreachableBlock) {
+            _unreachableBlock(self);
         }
     }
 }

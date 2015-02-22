@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+/* Please DO NOT use any code declared within this header inside of a plugin.
+ The code contained by this header file was designed to be used internally for
+ Textual and may be dangerous to use otherwise. */
+
 @interface TLONicknameCompletionStatus : NSObject
 @property (nonatomic, copy) NSString *cachedTextFieldStringValue;
 @property (nonatomic, copy) NSString *cachedBackwardCutStringValue;

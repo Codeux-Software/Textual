@@ -23,7 +23,7 @@
 
 typedef struct {
 	NSString *escapeSequence;
-	unichar uchar;
+	UniChar uchar;
 } HTMLEscapeMap;
 
 // Taken from http://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Special_characters
@@ -357,10 +357,14 @@ static HTMLEscapeMap gUnicodeHTMLEscapeMap[] = {
 };
 
 // Utility function for Bsearching table above
-static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
-	const unichar *uchar = (const unichar*)ucharVoid;
+static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid)
+{
+	const UniChar *uchar = (const UniChar *)ucharVoid;
+
 	const HTMLEscapeMap *map = (const HTMLEscapeMap*)mapVoid;
+	
 	int val;
+
 	if (*uchar > map->uchar) {
 		val = 1;
 	} else if (*uchar < map->uchar) {
@@ -368,6 +372,7 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 	} else {
 		val = 0;
 	}
+
 	return val;
 }
 
@@ -375,58 +380,58 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 
 - (NSString *)gtm_stringByEscapingHTMLUsingTable:(HTMLEscapeMap*)table
                                           ofSize:(NSUInteger)size
-                                 escapingUnicode:(BOOL)escapeUnicode {
+                                 escapingUnicode:(BOOL)escapeUnicode
+{
 	NSUInteger length = [self length];
-	if (!length) {
+
+	if (length == 0) {
 		return self;
 	}
 
 	NSMutableString *finalString = [NSMutableString string];
-	NSMutableData *data2 = [NSMutableData dataWithCapacity:sizeof(unichar) * length];
+
+	NSMutableData *data2 = [NSMutableData dataWithCapacity:(sizeof(UniChar) * length)];
 
 	// this block is common between GTMNSString+HTML and GTMNSString+XML but
 	// it's so short that it isn't really worth trying to share.
 	const unichar *buffer = CFStringGetCharactersPtr((CFStringRef)self);
-	if (!buffer) {
+
+	if (buffer == NULL) {
 		// We want this buffer to be autoreleased.
-		NSMutableData *data = [NSMutableData dataWithLength:length * sizeof(UniChar)];
-		if (!data) {
-			// COV_NF_START  - Memory fail case
-			_GTMDevLog(@"couldn't alloc buffer");
+		NSMutableData *data = [NSMutableData dataWithLength:(length * sizeof(UniChar))];
+
+		if (data == nil) {
 			return nil;
-			// COV_NF_END
 		}
+
 		[self getCharacters:[data mutableBytes]];
+
 		buffer = [data bytes];
 	}
 
-	if (!buffer || !data2) {
-		// COV_NF_START
-		_GTMDevLog(@"Unable to allocate buffer or data2");
+	if (buffer == NULL || data2 == nil) {
 		return nil;
-		// COV_NF_END
 	}
 
-	unichar *buffer2 = (unichar *)[data2 mutableBytes];
+	UniChar *buffer2 = (UniChar *)[data2 mutableBytes];
 
 	NSUInteger buffer2Length = 0;
 
 	for (NSUInteger i = 0; i < length; ++i) {
-		HTMLEscapeMap *val = bsearch(&buffer[i], table,
-									 size / sizeof(HTMLEscapeMap),
-									 sizeof(HTMLEscapeMap), EscapeMapCompare);
+		HTMLEscapeMap *val = bsearch(&buffer[i], table, (size / sizeof(HTMLEscapeMap)), sizeof(HTMLEscapeMap), EscapeMapCompare);
+
 		if (val || (escapeUnicode && buffer[i] > 127)) {
 			if (buffer2Length) {
-				CFStringAppendCharacters((CFMutableStringRef)finalString,
-										 buffer2,
-										 buffer2Length);
+				CFStringAppendCharacters((CFMutableStringRef)finalString, buffer2, buffer2Length);
+
 				buffer2Length = 0;
 			}
+
 			if (val) {
 				[finalString appendString:val->escapeSequence];
-			}
-			else {
-				_GTMDevAssert(escapeUnicode && buffer[i] > 127, @"Illegal Character");
+			} else {
+				NSAssert((escapeUnicode && buffer[i] > 127), @"Illegal Character");
+				
 				[finalString appendFormat:@"&#%d;", buffer[i]];
 			}
 		} else {
@@ -434,88 +439,106 @@ static int EscapeMapCompare(const void *ucharVoid, const void *mapVoid) {
 			buffer2Length += 1;
 		}
 	}
+
 	if (buffer2Length) {
-		CFStringAppendCharacters((CFMutableStringRef)finalString,
-								 buffer2,
-								 buffer2Length);
+		CFStringAppendCharacters((CFMutableStringRef)finalString, buffer2, buffer2Length);
 	}
+
 	return finalString;
 }
 
-- (NSString *)gtm_stringByEscapingForHTML {
+- (NSString *)gtm_stringByEscapingForHTML
+{
 	return [self gtm_stringByEscapingHTMLUsingTable:gUnicodeHTMLEscapeMap
 											 ofSize:sizeof(gUnicodeHTMLEscapeMap)
 									escapingUnicode:NO];
-} // gtm_stringByEscapingHTML
+}
 
-- (NSString *)gtm_stringByEscapingForAsciiHTML {
+- (NSString *)gtm_stringByEscapingForAsciiHTML
+{
 	return [self gtm_stringByEscapingHTMLUsingTable:gAsciiHTMLEscapeMap
 											 ofSize:sizeof(gAsciiHTMLEscapeMap)
 									escapingUnicode:YES];
-} // gtm_stringByEscapingAsciiHTML
+}
 
-- (NSString *)gtm_stringByUnescapingFromHTML {
-	NSRange range = NSMakeRange(0, [self length]);
-	NSRange subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:range];
+- (NSString *)gtm_stringByUnescapingFromHTML
+{
+	NSRange searchRange = NSMakeRange(0, [self length]);
 
-	// if no ampersands, we've got a quick way out
-	if (subrange.length == 0) return self;
+	NSRange subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:searchRange];
+
+	if (subrange.length == 0) {
+		return self;
+	}
+
 	NSMutableString *finalString = [NSMutableString stringWithString:self];
+
 	do {
-		NSRange semiColonRange = NSMakeRange(subrange.location, NSMaxRange(range) - subrange.location);
-		semiColonRange = [self rangeOfString:@";" options:0 range:semiColonRange];
-		range = NSMakeRange(0, subrange.location);
-		// if we don't find a semicolon in the range, we don't have a sequence
+		searchRange = NSMakeRange(subrange.location, (NSMaxRange(searchRange) - subrange.location));
+
+		NSRange semiColonRange = [self rangeOfString:@";" options:0 range:searchRange];
+
+		searchRange = NSMakeRange(0, subrange.location);
+
 		if (semiColonRange.location == NSNotFound) {
 			continue;
 		}
-		NSRange escapeRange = NSMakeRange(subrange.location, semiColonRange.location - subrange.location + 1);
+
+		NSRange escapeRange = NSMakeRange(subrange.location, (semiColonRange.location - subrange.location + 1));
+
 		NSString *escapeString = [self substringWithRange:escapeRange];
+
 		NSUInteger length = [escapeString length];
-		// a squence must be longer than 3 (&lt;) and less than 11 (&thetasym;)
+
 		if (length > 3 && length < 11) {
 			if ([escapeString characterAtIndex:1] == '#') {
-				unichar char2 = [escapeString characterAtIndex:2];
+				UniChar char2 = [escapeString characterAtIndex:2];
+
 				if (char2 == 'x' || char2 == 'X') {
-					// Hex escape squences &#xa3;
-					NSString *hexSequence = [escapeString substringWithRange:NSMakeRange(3, length - 4)];
+					NSString *hexSequence = [escapeString substringWithRange:NSMakeRange(3, (length - 4))];
+
 					NSScanner *scanner = [NSScanner scannerWithString:hexSequence];
+
 					unsigned value;
-					if ([scanner scanHexInt:&value] &&
-						value < USHRT_MAX &&
-						value > 0
-						&& [scanner scanLocation] == length - 4) {
-						unichar uchar = (unichar)value;
+
+					if ([scanner scanHexInt:&value] && value < USHRT_MAX && value > 0 && [scanner scanLocation] == (length - 4)) {
+						UniChar uchar = (UniChar)value;
+
 						NSString *charString = [NSString stringWithCharacters:&uchar length:1];
+
 						[finalString replaceCharactersInRange:escapeRange withString:charString];
 					}
-
 				} else {
-					// Decimal Sequences &#123;
-					NSString *numberSequence = [escapeString substringWithRange:NSMakeRange(2, length - 3)];
+					NSString *numberSequence = [escapeString substringWithRange:NSMakeRange(2, (length - 3))];
+
 					NSScanner *scanner = [NSScanner scannerWithString:numberSequence];
+
 					int value;
-					if ([scanner scanInt:&value] &&
-						value < USHRT_MAX &&
-						value > 0
-						&& [scanner scanLocation] == length - 3) {
-						unichar uchar = (unichar)value;
+
+					if ([scanner scanInt:&value] && value < USHRT_MAX && value > 0 && [scanner scanLocation] == (length - 3)) {
+						UniChar uchar = (UniChar)value;
+
 						NSString *charString = [NSString stringWithCharacters:&uchar length:1];
+
 						[finalString replaceCharactersInRange:escapeRange withString:charString];
 					}
 				}
 			} else {
-				// "standard" sequences
-				for (unsigned i = 0; i < sizeof(gAsciiHTMLEscapeMap) / sizeof(HTMLEscapeMap); ++i) {
+				for (unsigned i = 0; i < (sizeof(gAsciiHTMLEscapeMap) / sizeof(HTMLEscapeMap)); ++i)
+				{
 					if ([escapeString isEqualToString:gAsciiHTMLEscapeMap[i].escapeSequence]) {
-						[finalString replaceCharactersInRange:escapeRange withString:[NSString stringWithCharacters:&gAsciiHTMLEscapeMap[i].uchar length:1]];
+						NSString *uc = [NSString stringWithCharacters:&gAsciiHTMLEscapeMap[i].uchar length:1];
+
+						[finalString replaceCharactersInRange:escapeRange withString:uc];
+
 						break;
 					}
 				}
 			}
 		}
-	} while ((subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:range]).length != 0);
+	} while ((subrange = [self rangeOfString:@"&" options:NSBackwardsSearch range:searchRange]).length > 0);
+
 	return finalString;
-} // gtm_stringByUnescapingHTML
+}
 
 @end

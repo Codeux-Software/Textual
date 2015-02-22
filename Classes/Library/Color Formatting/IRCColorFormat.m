@@ -37,12 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define	_textTruncationPRIVMSGCommandConstant				14
-#define _textTruncationNOTICECommandConstant				14
-#define	_textTruncationACTIONCommandConstant				8
-
-#define	_textTruncationSpacePositionMaxDifferential			10
-
 @implementation NSAttributedString (IRCTextFormatter)
 
 #pragma mark -
@@ -74,14 +68,23 @@
 		
 		BOOL boldText       = [baseFont fontTraitSet:NSBoldFontMask];
 		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
+
 		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
-		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
-		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
+		if (underlineText) {
+			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
+		}
+
+		if (italicText) {
+			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
+		}
+
+		if (boldText) {
+			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+		}
 		
 		if (color) {
-			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
+			[result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundNumber integerWithLeadingZero]];
 			
 			if (backgroundColor >= 0 && backgroundColor <= 15) {
 				[result appendFormat:@",%@", [backgroundNumber integerWithLeadingZero]];
@@ -90,10 +93,21 @@
 		
 		[result appendString:[realBody substringWithRange:effectiveRange]];
 		
-		if (color)          { [result appendFormat:@"%c", 0x03]; }
-		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
-		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
+		if (color) {
+			[result appendFormat:@"%c", IRCTextFormatterColorEffectCharacter];
+		}
+
+		if (boldText) {
+			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+		}
+
+		if (italicText) {
+			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
+		}
+
+		if (underlineText) {
+			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
+		}
 		
 		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
 								 (NSMaxRange(limitRange) - NSMaxRange(effectiveRange)));
@@ -102,15 +116,11 @@
 	return result;
 }
 
-- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
-                                       lineType:(TVCLogLineType)type
-										 client:(IRCClient *)client
-                                        channel:(IRCChannel *)channel
++ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString *__autoreleasing *)textToFormat
+									 withClient:(IRCClient *)client
+										channel:(IRCChannel *)channel
+									   lineType:(TVCLogLineType)lineType
 {
-    NSMutableAttributedString *base = [*string copy];
-
-	NSMutableString *result = [NSMutableString string];
-	
 	/* ///////////////////////////////////////////////////// */
 	/* 
 	 Server level truncation does not count the total number of
@@ -118,7 +128,7 @@
 	 everything that precedes it including the hostmask, channel name,
 	 and any other commands.
 	 
-	 Example: :<nickname>!<username>@<host> PRIVMSG #<channel> :<message>
+	 Example: :<nickname>!<username>@<address> PRIVMSG #<channel> :<message>
 	 
 	 The following math takes into account this information. The static
 	 number of fourteen that we add to the math also accounts for the 
@@ -129,23 +139,48 @@
 	 that is it. Textual should only care about regular text.
 	 */
 	/* ///////////////////////////////////////////////////// */
-	
-    NSInteger baseMath = 0;
-	
-	baseMath += ([[channel name] length] + [[client localHostmask] length]);
 
-	if (type == TVCLogLinePrivateMessageType || type == TVCLogLineActionType) {
+#define	_textTruncationPRIVMSGCommandConstant				14
+#define _textTruncationNOTICECommandConstant				14
+#define	_textTruncationACTIONCommandConstant				8
+
+#define _textTruncationHostmaskConstant						15 // Used if local user host is unknown
+
+#define	_textTruncationSpacePositionMaxDifferential			10
+
+	if (client == nil || channel == nil) {
+		return [*textToFormat attributedStringToASCIIFormatting];
+	}
+
+	/* To begin, we calculate the length of the channel name, the user's hostmask,
+	 and the command being sent part of this message. */
+	NSString *channelName = [channel name];
+
+	NSString *userHostmask = [client localHostmask];
+
+	NSInteger baseMath = [channelName length]; // Start with the channel name's length
+
+	if (userHostmask == nil) {
+		baseMath += _textTruncationHostmaskConstant; // It's better to have something rather than nothing
+	} else {
+		baseMath += [userHostmask length];
+	}
+
+	if (lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) {
 		baseMath += _textTruncationPRIVMSGCommandConstant;
-
-		if (type == TVCLogLineActionType) {
-			baseMath += _textTruncationACTIONCommandConstant;
-		}
-	} else if (type == TVCLogLineNoticeType) {
+	} else if (lineType == TVCLogLineActionType || lineType == TVCLogLineActionNoHighlightType) {
+		baseMath += _textTruncationACTIONCommandConstant;
+	} else if (lineType == TVCLogLineNoticeType) {
 		baseMath += _textTruncationNOTICECommandConstant;
 	} else {
-		NSAssert(NO, @"Bad line type.");
+		return [*textToFormat attributedStringToASCIIFormatting];
 	}
-	
+
+	/* Begin computing the truncated string. */
+	NSMutableAttributedString *base = [*textToFormat copy];
+
+	NSMutableString *result = [NSMutableString string];
+
 	/* Write out status. */
 	NSInteger totalCalculatedLength = baseMath;
 	NSInteger stringDeletionLength  = 0;
@@ -200,13 +235,32 @@
 		
 		BOOL boldText       = [baseFont fontTraitSet:NSBoldFontMask];
 		BOOL italicText     = [baseFont fontTraitSet:NSItalicFontMask];
+
 		BOOL underlineText  = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 		
-        if (italicText)         { startCharCount += 1; stopCharCount += 1; }
-        if (underlineText)      { startCharCount += 1; stopCharCount += 1; }
-        if (underlineText)      { startCharCount += 1; stopCharCount += 1; }
-        if (foregroundColorD)   { startCharCount += 3; stopCharCount += 1; }
-        if (backgroundColorD)   { startCharCount += 3; }
+        if (italicText) {
+			startCharCount += 1; // control character
+			stopCharCount += 1; // control character
+		}
+
+        if (underlineText) {
+			startCharCount += 1; // control character
+			stopCharCount += 1; // control character
+		}
+
+        if (underlineText) {
+			startCharCount += 1; // control character
+			stopCharCount += 1; // control character
+		}
+
+        if (foregroundColorD) {
+			startCharCount += 3; // control character plus two digits
+			stopCharCount += 1; // control character
+		}
+
+        if (backgroundColorD) {
+			startCharCount += 3; // comma plus two digits
+		}
 		
 		NSInteger formattingCharacterCount = (startCharCount + stopCharCount);
 		
@@ -252,12 +306,20 @@
 		/* Now is the point at which we begin to append. */
 		/* Append the actual formatting. This uses the same technology used
 		 in the above defined -attributedStringToASCIIFormatting method. */
-		if (underlineText)  { [result appendFormat:@"%c", 0x1F]; }
-		if (italicText)     { [result appendFormat:@"%c", 0x1d]; }
-		if (boldText)       { [result appendFormat:@"%c", 0x02]; }
+		if (underlineText) {
+			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
+		}
+
+		if (italicText) {
+			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+		}
+
+		if (boldText) {
+			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+		}
 
 		if (foregroundColorD) {
-			[result appendFormat:@"%c%@", 0x03, [foregroundNumber integerWithLeadingZero]];
+			[result appendFormat:@"%c%@", IRCTextFormatterColorEffectCharacter, [foregroundNumber integerWithLeadingZero]];
 
 			if (backgroundColorD) {
 				[result appendFormat:@",%@", [backgroundNumber integerWithLeadingZero]];
@@ -281,7 +343,7 @@
 			NSString *c = [[base string] substringWithRange:charRange];
 			
 			/* Update math. */
-			NSInteger characterSize = [c lengthOfBytesUsingEncoding:client.config.primaryEncoding];
+			NSInteger characterSize = [c lengthOfBytesUsingEncoding:[[client config] primaryEncoding]];
 			
 			if (characterSize == 0) {
 				characterSize = charRange.length; // Just incase…
@@ -334,10 +396,21 @@
 			[result appendString:c];
 		}
 
-		if (foregroundColorD)   { [result appendFormat:@"%c", 0x03]; }
-		if (boldText)           { [result appendFormat:@"%c", 0x02]; }
-		if (italicText)         { [result appendFormat:@"%c", 0x1d]; }
-		if (underlineText)      { [result appendFormat:@"%c", 0x1F]; }
+		if (foregroundColor) {
+			[result appendFormat:@"%c", IRCTextFormatterColorEffectCharacter];
+		}
+
+		if (boldText) {
+			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+		}
+
+		if (italicText) {
+			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
+		}
+
+		if (underlineText) {
+			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
+		}
 
 		if (breakLoopAfterAppend) {
 			break; // We cannot go any further in this line.
@@ -357,7 +430,15 @@
 
 	/* Return our attributed string to caller with our formatted line
 	 so that the next one can be served up. */
-    [*string deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
+    [*textToFormat deleteCharactersInRange:NSMakeRange(0, stringDeletionLength)];
+
+#undef _textTruncationPRIVMSGCommandConstant
+#undef _textTruncationNOTICECommandConstant
+#undef _textTruncationACTIONCommandConstant
+
+#undef _textTruncationHostmaskConstant
+
+#undef _textTruncationSpacePositionMaxDifferential
 
     return result;
 }

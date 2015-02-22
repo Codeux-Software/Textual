@@ -44,17 +44,30 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
 	IRCTextFormatterBackgroundColorEffect,
-} IRCTextFormatterEffectType; 
+} IRCTextFormatterEffectType;
+
+#define IRCTextFormatterColorEffectCharacter			0x03
+#define IRCTextFormatterBoldEffectCharacter				0x02
+#define IRCTextFormatterItalicEffectCharacter			0x1d
+#define IRCTextFormatterUnderlineEffectCharacter		0x1F
+#define IRCTextFormatterTerminatingCharacter			0x0F
 
 #define IRCTextFormatterMaximumRainbowTextFormattingLength   300
 
 @interface NSAttributedString (IRCTextFormatter)
+/* Returns an NSString with appropriate formatting characters. */
 @property (readonly, copy) NSString *attributedStringToASCIIFormatting;
 
-- (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)string
-									   lineType:(TVCLogLineType)type
-										 client:(IRCClient *)client
-										channel:(IRCChannel *)channel;
+/* Given contextual information (client, channel, lineType), the original attributed
+ string is converted to use appropriate formatting characters, but this method does
+ not allow the result to exceed TXMaximumIRCBodyLength. If the result exceeds this
+ length, then it returns the remaining buffer in textToFormat for later processing. */
+/* The only valid lineType value is PRIVMSG, ACTION, or NOTICE. Any other will proxy
+ to the -attributedStringToASCIIFormatting method defined above. */
++ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)textToFormatt
+									 withClient:(IRCClient *)client
+										channel:(IRCChannel *)channel
+									   lineType:(TVCLogLineType)lineType;
 @end
 
 @interface TVCTextViewWithIRCFormatter (TVCTextFieldFormattingHelper)

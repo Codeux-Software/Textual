@@ -617,8 +617,8 @@
 "BasicLanguage[1228][2]" = "Please enter desired vHost. (e.g. apple.vhost)";
 
 /* Bad certificate prompt. */
-"BasicLanguage[1229][1]" = "Untrusted Connection";
-"BasicLanguage[1229][2]" = "The server that you are connecting to has a SSL certificate that has either expired or is not trusted.\n\nSelect the \"Show Certificate\" button seen below for more information.";
+"BasicLanguage[1229][1]" = "Textual can’t verify the identify of the server “%@”";
+"BasicLanguage[1229][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@“, which could put your confidential information at risk. Would you like to connect to the server anyway?";
 
 /* Ban list */
 "BasicLanguage[1230][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
