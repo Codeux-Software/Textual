@@ -55,6 +55,8 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 - (NSDictionary *)defaults
 {
 	return @{
+		 @"entryType"							: @(IRCAddressBookIgnoreEntryType),
+
 		 @"trackUserActivity"					: @(NO),
 
 		 @"ignoreClientToClientProtocol"		: @(NO),
@@ -75,7 +77,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 	self.itemUUID							= [NSString stringWithUUID];
 
-	self.entryType							= IRCAddressBookIgnoreEntryType;
+	self.entryType							= [defaults integerForKey:@"entryType"];
 
 	self.trackUserActivity					= [defaults boolForKey:@"trackUserActivity"];
 
