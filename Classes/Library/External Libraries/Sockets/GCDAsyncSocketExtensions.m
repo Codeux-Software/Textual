@@ -44,17 +44,25 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-- (void)useSSLWithClient:(IRCClient *)client withConnectionController:(IRCConnection *)controller
+- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller
 {
+	if (client == nil) {
+		NSAssert(NO, @"'client' cannot be nil");
+	}
+
+	if (controller == nil) {
+		NSAssert(NO, @"'controller' cannot be nil");
+	}
+
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
 	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
 	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-	settings[(id)kCFStreamSSLPeerName] = (id)controller.serverAddress;
+	settings[(id)kCFStreamSSLPeerName] = (id)[controller serverAddress];
 	
-	NSData *localCertData = client.config.identitySSLCertificate;
+	NSData *localCertData = [[client config] identitySSLCertificate];
 	
 	if (localCertData) {
 		SecKeychainItemRef cert;
@@ -74,9 +82,13 @@
 				[controller setIsConnectedWithClientSideCertificate:YES];
 
 				CFRelease(identity);
+			} else {
+				LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#2)", status);
 			}
 			
 			CFRelease(cert);
+		}else {
+			LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#1)", status);
 		}
 	}
 
@@ -85,22 +97,26 @@
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error
 {
-	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
-		NSArray *errorCodes = @[
-			@(errSSLBadCert),
-			@(errSSLNoRootCert),
-			@(errSSLCertExpired),
-			@(errSSLPeerBadCert),
-			@(errSSLPeerCertRevoked),
-			@(errSSLPeerCertExpired),
-			@(errSSLPeerCertUnknown),
-			@(errSSLUnknownRootCert),
-			@(errSSLCertNotYetValid),
-			@(errSSLXCertChainInvalid),
-			@(errSSLPeerUnsupportedCert),
-			@(errSSLPeerUnknownCA),
-			@(errSSLHostNameMismatch
-		)];
+	if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+		static NSArray *errorCodes = nil;
+
+		if (errorCodes == nil) {
+			errorCodes = @[
+				@(errSSLBadCert),
+				@(errSSLNoRootCert),
+				@(errSSLCertExpired),
+				@(errSSLPeerBadCert),
+				@(errSSLPeerCertRevoked),
+				@(errSSLPeerCertExpired),
+				@(errSSLPeerCertUnknown),
+				@(errSSLUnknownRootCert),
+				@(errSSLCertNotYetValid),
+				@(errSSLXCertChainInvalid),
+				@(errSSLPeerUnsupportedCert),
+				@(errSSLPeerUnknownCA),
+				@(errSSLHostNameMismatch
+			)];
+		}
 
 		return [errorCodes containsObject:@([error code])];
 	}

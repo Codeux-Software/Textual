@@ -40,5 +40,7 @@
 typedef void (^TVCQueuedCertificateTrustPanelCompletionBlock)(BOOL isTrusted);
 
 @interface TVCQueuedCertificateTrustPanel : NSObject
-- (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock;
+- (void)dequeueEntryForSocket:(id)socket;
+
+- (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock forSocket:(id)socket;
 @end

@@ -51,9 +51,20 @@
 	return result;
 }
 
-+ (NSArray *)bannedURLRegexLineTypes
++ (NSArray *)bannedLineTypes
 {
-	return @[@"mode", @"join", @"nick", @"invite"];
+	static id _bannedLines = nil;
+
+	if (_bannedLines == nil) {
+		_bannedLines = @[
+			 [TVCLogLine lineTypeString:TVCLogLineModeType],
+			 [TVCLogLine lineTypeString:TVCLogLineJoinType],
+			 [TVCLogLine lineTypeString:TVCLogLineNickType],
+			 [TVCLogLine lineTypeString:TVCLogLineInviteType]
+		];
+	}
+
+	return _bannedLines;
 }
 
 @end

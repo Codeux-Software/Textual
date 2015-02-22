@@ -296,12 +296,12 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command
 {
-	BOOL download = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1236][2]", command)
-														title:TXTLS(@"BasicLanguage[1236][1]")
-												defaultButton:TXTLS(@"BasicLanguage[1236][3]")
-											  alternateButton:BLS(1009)
-											   suppressionKey:@"plugin_manager_reserved_command_dialog"
-											  suppressionText:nil];
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]", command)
+													   title:TXTLS(@"BasicLanguage[1236][1]")
+											   defaultButton:TXTLS(@"BasicLanguage[1236][3]")
+											 alternateButton:BLS(1009)
+											  suppressionKey:@"plugin_manager_reserved_command_dialog"
+											 suppressionText:nil];
 
 	if (download) {
 		[self openExtrasInstallerDownloadURL];

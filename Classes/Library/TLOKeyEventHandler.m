@@ -50,8 +50,8 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.codeHandlerMap = [NSMutableDictionary new];
-		self.characterHandlerMap = [NSMutableDictionary new];
+		_codeHandlerMap = [NSMutableDictionary new];
+		_characterHandlerMap = [NSMutableDictionary new];
 	}
 	
 	return self;
@@ -61,12 +61,12 @@
 {
 	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = self.codeHandlerMap[modsKey];
+	NSMutableDictionary *map = _codeHandlerMap[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		self.codeHandlerMap[modsKey] = map;
+		_codeHandlerMap[modsKey] = map;
 	}
 	
 	map[@(code)] = NSStringFromSelector(selector);
@@ -76,12 +76,12 @@
 {
 	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = self.characterHandlerMap[modsKey];
+	NSMutableDictionary *map = _characterHandlerMap[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		self.characterHandlerMap[modsKey] = map;
+		_characterHandlerMap[modsKey] = map;
 	}
 	
 	map[@(c)] = NSStringFromSelector(selector);
@@ -91,12 +91,12 @@
 {
 	NSNumber *modsKey = @(mods);
 	
-	NSMutableDictionary *map = self.characterHandlerMap[modsKey];
+	NSMutableDictionary *map = _characterHandlerMap[modsKey];
 	
 	if (NSObjectIsEmpty(map)) {
 		map = [NSMutableDictionary dictionary];
 		
-		self.characterHandlerMap[modsKey] = map;
+		_characterHandlerMap[modsKey] = map;
 	}
 	
 	NSInteger from = characterRange.location;
@@ -104,9 +104,7 @@
 	NSInteger to = NSMaxRange(characterRange);
 	
 	for (NSInteger i = from; i < to; ++i) {
-		NSNumber *charKey = @(i);
-		
-		map[charKey] = NSStringFromSelector(selector);
+		map[@(i)] = NSStringFromSelector(selector);
 	}
 }
 
@@ -114,30 +112,27 @@
 {
 	NSTextInputContext *im = [NSTextInputContext currentInputContext];
 
-	if (im && im.client.markedRange.length > 0) {
+	if (im && [[im client] markedRange].length > 0) {
 		return NO;
 	}
 	
-	NSUInteger m;
-
-	m  = [e modifierFlags];
-	m &= (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask);
+	NSUInteger m = ([e modifierFlags] & (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask));
 	
 	NSNumber *modsKey = @(m);
 	
-	NSMutableDictionary *codeMap = self.codeHandlerMap[modsKey];
+	NSMutableDictionary *codeMap = _codeHandlerMap[modsKey];
 	
 	if (codeMap) {
 		NSString *selectorName = codeMap[@([e keyCode])];
 
 		if (selectorName) {
-			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+			objc_msgSend(_target, NSSelectorFromString(selectorName), e);
 			
 			return YES;
 		}
 	}
 	
-	NSMutableDictionary *characterMap = self.characterHandlerMap[modsKey];
+	NSMutableDictionary *characterMap = _characterHandlerMap[modsKey];
 	
 	if (characterMap) {
 		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
@@ -146,7 +141,7 @@
 			NSString *selectorName = characterMap[@([str characterAtIndex:0])];
 			
 			if (selectorName) {
-				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
+				objc_msgSend(_target, NSSelectorFromString(selectorName), e);
 				
 				return YES;
 			}

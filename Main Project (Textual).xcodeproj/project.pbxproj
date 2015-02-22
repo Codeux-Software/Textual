@@ -233,10 +233,8 @@
 		4C0BA5811990798800857343 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5851990798800857343 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5861990798800857343 /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C0BA5871990798800857343 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF745158EB6CA0026668C /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5881990798800857343 /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5891990798800857343 /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C0BA58A1990798800857343 /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58B1990798800857343 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58C1990798800857343 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF533158E99520026668C /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF534158E99520026668C /* IRCAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -606,10 +604,8 @@
 		4C5BA3EF16F1302F00A96CA2 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F316F1302F00A96CA2 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F416F1302F00A96CA2 /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA3F516F1302F00A96CA2 /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF745158EB6CA0026668C /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F616F1302F00A96CA2 /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F716F1302F00A96CA2 /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA3F816F1302F00A96CA2 /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F916F1302F00A96CA2 /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3FA16F1302F00A96CA2 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF533158E99520026668C /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3FB16F1302F00A96CA2 /* IRCAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF534158E99520026668C /* IRCAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1052,10 +1048,8 @@
 		4C8AF6E7158E99520026668C /* TVCMemberListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF608158E99520026668C /* TVCMemberListCell.m */; };
 		4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF751158EB6CA0026668C /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF745158EB6CA0026668C /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF754158EB6CA0026668C /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9234AA195330D30009AAAE /* TXUserInterface.m */; };
@@ -1384,10 +1378,8 @@
 		4CDFA4901996EAB2007EA46E /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA4941996EAB2007EA46E /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA4951996EAB2007EA46E /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CDFA4961996EAB2007EA46E /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF745158EB6CA0026668C /* GTMDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA4971996EAB2007EA46E /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA4981996EAB2007EA46E /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CDFA4991996EAB2007EA46E /* GTMGarbageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA49A1996EAB2007EA46E /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA49B1996EAB2007EA46E /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF533158E99520026668C /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA49C1996EAB2007EA46E /* IRCAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF534158E99520026668C /* IRCAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2342,10 +2334,8 @@
 		4C8AF608158E99520026668C /* TVCMemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCell.m; sourceTree = "<group>"; };
 		4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
-		4C8AF745158EB6CA0026668C /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeHTML.h; sourceTree = "<group>"; };
 		4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeURL.h; sourceTree = "<group>"; };
-		4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMGarbageCollection.h; sourceTree = "<group>"; };
 		4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLMAsyncSocket.h; sourceTree = "<group>"; };
 		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
 		4C9234AA195330D30009AAAE /* TXUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXUserInterface.m; sourceTree = "<group>"; };
@@ -3232,10 +3222,8 @@
 				4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */,
 				4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */,
 				4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */,
-				4C8AF745158EB6CA0026668C /* GTMDefines.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
 				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
-				4C8AF748158EB6CA0026668C /* GTMGarbageCollection.h */,
 				4C8BC0EB16DE552900360EEF /* Mustache */,
 				5D4846C9171F0ACD0015F2B0 /* OELReachability.h */,
 				4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */,
@@ -3682,10 +3670,8 @@
 				4C1CFADE199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */,
 				4C0BA5851990798800857343 /* GCDAsyncSocket.h in Headers */,
 				4C0BA5861990798800857343 /* GCDAsyncSocketExtensions.h in Headers */,
-				4C0BA5871990798800857343 /* GTMDefines.h in Headers */,
 				4C0BA5881990798800857343 /* GTMEncodeHTML.h in Headers */,
 				4C0BA5891990798800857343 /* GTMEncodeURL.h in Headers */,
-				4C0BA58A1990798800857343 /* GTMGarbageCollection.h in Headers */,
 				4C0BA58B1990798800857343 /* RLMAsyncSocket.h in Headers */,
 				4C0BA58C1990798800857343 /* IRC.h in Headers */,
 				4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */,
@@ -3838,10 +3824,8 @@
 				4C1CFADF199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */,
 				4C5BA3F316F1302F00A96CA2 /* GCDAsyncSocket.h in Headers */,
 				4C5BA3F416F1302F00A96CA2 /* GCDAsyncSocketExtensions.h in Headers */,
-				4C5BA3F516F1302F00A96CA2 /* GTMDefines.h in Headers */,
 				4C5BA3F616F1302F00A96CA2 /* GTMEncodeHTML.h in Headers */,
 				4C5BA3F716F1302F00A96CA2 /* GTMEncodeURL.h in Headers */,
-				4C5BA3F816F1302F00A96CA2 /* GTMGarbageCollection.h in Headers */,
 				4C5BA3F916F1302F00A96CA2 /* RLMAsyncSocket.h in Headers */,
 				4C5BA3FA16F1302F00A96CA2 /* IRC.h in Headers */,
 				4C5BA3FB16F1302F00A96CA2 /* IRCAddressBook.h in Headers */,
@@ -3994,10 +3978,8 @@
 				4C1CFAE0199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */,
 				4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */,
 				4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */,
-				4C8AF751158EB6CA0026668C /* GTMDefines.h in Headers */,
 				4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */,
 				4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */,
-				4C8AF754158EB6CA0026668C /* GTMGarbageCollection.h in Headers */,
 				4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */,
 				4C8AF628158E99520026668C /* IRC.h in Headers */,
 				4C8AF629158E99520026668C /* IRCAddressBook.h in Headers */,
@@ -4150,10 +4132,8 @@
 				4C1CFAE1199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */,
 				4CDFA4941996EAB2007EA46E /* GCDAsyncSocket.h in Headers */,
 				4CDFA4951996EAB2007EA46E /* GCDAsyncSocketExtensions.h in Headers */,
-				4CDFA4961996EAB2007EA46E /* GTMDefines.h in Headers */,
 				4CDFA4971996EAB2007EA46E /* GTMEncodeHTML.h in Headers */,
 				4CDFA4981996EAB2007EA46E /* GTMEncodeURL.h in Headers */,
-				4CDFA4991996EAB2007EA46E /* GTMGarbageCollection.h in Headers */,
 				4CDFA49A1996EAB2007EA46E /* RLMAsyncSocket.h in Headers */,
 				4CDFA49B1996EAB2007EA46E /* IRC.h in Headers */,
 				4CDFA49C1996EAB2007EA46E /* IRCAddressBook.h in Headers */,
