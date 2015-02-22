@@ -43,23 +43,47 @@
 @synthesize secretKey = _secretKey;
 @synthesize encryptionKey = _encryptionKey;
 
+- (NSDictionary *)defaults
+{
+	return @{
+		 @"channelType"						: @(IRCChannelChannelType),
+
+		 @"encryptionModeOfOperation"		: @(CSFWBlowfishEncryptionDefaultModeOfOperation),
+
+		 @"joinOnConnect"					:	@(YES),
+
+		 @"ignoreGeneralEventMessages"		: @(NO),
+		 @"ignoreHighlights"				: @(NO),
+		 @"ignoreInlineMedia"				: @(NO),
+
+		 @"enableNotifications"				: @(YES),
+		 @"enableTreeBadgeCountDrawing"		: @(YES)
+	};
+}
+
+- (void)populateDefaults
+{
+	NSDictionary *defaults = [self defaults];
+
+	self.itemUUID						= [NSString stringWithUUID];
+
+	self.type							= [defaults integerForKey:@"channelType"];
+
+	self.autoJoin						= [defaults boolForKey:@"joinOnConnect"];
+	self.pushNotifications				= [defaults boolForKey:@"enableNotifications"];
+	self.showTreeBadgeCount				= [defaults boolForKey:@"enableTreeBadgeCountDrawing"];
+
+	self.ignoreGeneralEventMessages		= [defaults boolForKey:@"ignoreGeneralEventMessages"];
+	self.ignoreHighlights				= [defaults boolForKey:@"ignoreHighlights"];
+	self.ignoreInlineImages				= [defaults boolForKey:@"ignoreInlineMedia"];
+
+	self.encryptionModeOfOperation		= [defaults integerForKey:@"encryptionModeOfOperation"];
+}
+
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.itemUUID = [NSString stringWithUUID];
-
-		self.type = IRCChannelNormalType;
-		
-		self.autoJoin			= YES;
-        self.ignoreHighlights	= NO;
-        self.ignoreInlineImages	= NO;
-        self.ignoreJPQActivity	= NO;
-		self.pushNotifications	= YES;
-		self.showTreeBadgeCount = YES;
-
-		self.defaultModes	= NSStringEmptyPlaceholder;
-		self.defaultTopic	= NSStringEmptyPlaceholder;
-		self.channelName	= NSStringEmptyPlaceholder;
+		[self populateDefaults];
 	}
     
 	return self;
@@ -158,51 +182,6 @@
 	_encryptionKey = nil;
 }
 
-#if 0
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)migrateKeychainItemsToCloud
-{
-	[XRKeychain migrateKeychainItemToCloud:@"Textual (Blowfish Encryption)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemToCloud:@"Textual (Channel JOIN Key)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-}
-
-- (void)migrateKeychainItemsFromCloud
-{
-	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Blowfish Encryption)"
-								withItemKind:@"application password"
-								 forUsername:nil
-								 serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Channel JOIN Key)"
-								withItemKind:@"application password"
-								 forUsername:nil
-								 serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
-}
-
-- (void)destroyKeychainsThatExistOnCloud
-{
-	[XRKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]
-						 fromCloud:YES];
-	
-	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]
-						 fromCloud:YES];
-}
-#endif
-#endif
-
 - (void)destroyKeychains
 {
 	[XRKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
@@ -240,25 +219,31 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		/* If any key does not exist, then its value is inherited from the -init method. */
-		
-		/* General preferences. */
-		[dic assignIntegerTo:&_type forKey:@"channelType"];
-		
-		[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
-		[dic assignStringTo:&_channelName forKey:@"channelName"];
+		/* Load legacy keys (if they exist) */
+		[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
 
-		[dic assignBoolTo:&_autoJoin forKey:@"joinOnConnect"];
-		[dic assignBoolTo:&_ignoreHighlights forKey:@"ignoreHighlights"];
-		[dic assignBoolTo:&_ignoreInlineImages forKey:@"disableInlineMedia"];
-		[dic assignBoolTo:&_ignoreJPQActivity forKey:@"ignoreJPQActivity"];
-		[dic assignBoolTo:&_pushNotifications forKey:@"enableNotifications"];
-		[dic assignBoolTo:&_showTreeBadgeCount forKey:@"enableTreeBadgeCountDrawing"];
+		[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
 
-		[dic assignStringTo:&_defaultModes forKey:@"defaultMode"];
-		[dic assignStringTo:&_defaultTopic forKey:@"defaultTopic"];
+		[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionAlgorithm"];
+
+		/* Load the newest set of keys. */
+		[dic assignIntegerTo:&_type			forKey:@"channelType"];
 		
-		[dic assignIntegerTo:&_encryptionModeOfOperation forKey:@"encryptionAlgorithm"];
+		[dic assignStringTo:&_itemUUID		forKey:@"uniqueIdentifier"];
+		[dic assignStringTo:&_channelName	forKey:@"channelName"];
+
+		[dic assignBoolTo:&_autoJoin					forKey:@"joinOnConnect"];
+		[dic assignBoolTo:&_pushNotifications			forKey:@"enableNotifications"];
+		[dic assignBoolTo:&_showTreeBadgeCount			forKey:@"enableTreeBadgeCountDrawing"];
+
+		[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreGeneralEventMessages"];
+		[dic assignBoolTo:&_ignoreHighlights			forKey:@"ignoreHighlights"];
+		[dic assignBoolTo:&_ignoreInlineImages			forKey:@"ignoreInlineMedia"];
+
+		[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
+		[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
+
+		[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
 		
 		return self;
 	}
@@ -281,32 +266,46 @@
 			NSObjectsAreEqual(_encryptionKey, [seed temporaryEncryptionKey]));
 }
 
-- (NSMutableDictionary *)dictionaryValue
+- (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
+{
+	NSMutableDictionary *ndic = dic;
+
+	NSDictionary *defaults = [self defaults];
+
+	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (NSObjectsAreEqual(defaults[key], obj)) {
+			[ndic removeObjectForKey:key];
+		}
+	}];
+
+	return [ndic copy];
+}
+
+- (NSDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	
 	[dic setInteger:self.type forKey:@"channelType"];
 
-	if (self.type == IRCChannelNormalType) {
-		[dic setBool:self.autoJoin				forKey:@"joinOnConnect"];
-		[dic setBool:self.pushNotifications		forKey:@"enableNotifications"];
-		[dic setBool:self.ignoreHighlights		forKey:@"ignoreHighlights"];
-		[dic setBool:self.ignoreInlineImages	forKey:@"disableInlineMedia"];
-		[dic setBool:self.ignoreJPQActivity		forKey:@"ignoreJPQActivity"];
-		[dic setBool:self.showTreeBadgeCount	forKey:@"enableTreeBadgeCountDrawing"];
-	}
-
-	[dic setInteger:self.encryptionModeOfOperation	forKey:@"encryptionAlgorithm"];
-	
 	[dic maybeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
 	[dic maybeSetObject:self.channelName		forKey:@"channelName"];
 
-	if (self.type == IRCChannelNormalType) {
-		[dic maybeSetObject:self.defaultModes		forKey:@"defaultMode"];
-		[dic maybeSetObject:self.defaultTopic		forKey:@"defaultTopic"];
+	[dic setInteger:self.encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
+
+	if (self.type == IRCChannelChannelType) {
+		[dic setBool:self.autoJoin							forKey:@"joinOnConnect"];
+		[dic setBool:self.pushNotifications					forKey:@"enableNotifications"];
+		[dic setBool:self.showTreeBadgeCount				forKey:@"enableTreeBadgeCountDrawing"];
+
+		[dic setBool:self.ignoreHighlights					forKey:@"ignoreHighlights"];
+		[dic setBool:self.ignoreInlineImages				forKey:@"ignoreInlineMedia"];
+		[dic setBool:self.ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
+
+		[dic maybeSetObject:self.defaultModes				forKey:@"defaultMode"];
+		[dic maybeSetObject:self.defaultTopic				forKey:@"defaultTopic"];
 	}
 	
-	return dic;
+	return [self dictionaryValueByStrippingDefaults:dic];
 }
 
 - (id)copyWithZone:(NSZone *)zone

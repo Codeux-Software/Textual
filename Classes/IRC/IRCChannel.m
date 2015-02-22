@@ -177,7 +177,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (BOOL)isChannel
 {
-	return (self.config.type == IRCChannelNormalType);
+	return (self.config.type == IRCChannelChannelType);
 }
 
 - (BOOL)isPrivateMessage

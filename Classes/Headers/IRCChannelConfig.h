@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 typedef enum IRCChannelType : NSInteger {
-	IRCChannelNormalType,
+	IRCChannelChannelType,
 	IRCChannelPrivateMessageType,
 } IRCChannelType;
 
@@ -54,13 +54,13 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL pushNotifications;
 @property (nonatomic, assign) BOOL showTreeBadgeCount;
-@property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreHighlights;
-@property (nonatomic, assign) BOOL ignoreJPQActivity;
+@property (nonatomic, assign) BOOL ignoreInlineImages;
+@property (nonatomic, assign) BOOL ignoreGeneralEventMessages;
 @property (nonatomic, assign) CSFWBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
-- (NSMutableDictionary *)dictionaryValue;
+- (NSDictionary *)dictionaryValue;
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed;
 
@@ -71,15 +71,6 @@ typedef enum IRCChannelType : NSInteger {
 
 - (void)writeSecretKeyKeychainItemToDisk;
 - (void)writeEncryptionKeyKeychainItemToDisk;
-
-#if 0
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)migrateKeychainItemsToCloud;
-- (void)migrateKeychainItemsFromCloud;
-
-- (void)destroyKeychainsThatExistOnCloud;
-#endif
-#endif
 
 @property (readonly, copy) NSString *temporarySecretKey;
 @property (readonly, copy) NSString *temporaryEncryptionKey;
