@@ -54,21 +54,29 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 - (NSDictionary *)defaults
 {
-	return @{
-		 @"entryType"							: @(IRCAddressBookIgnoreEntryType),
+	static id _defaults = nil;
 
-		 @"trackUserActivity"					: @(NO),
+	if (_defaults == nil) {
+		NSDictionary *defaults = @{
+			 @"entryType"							: @(IRCAddressBookIgnoreEntryType),
 
-		 @"ignoreClientToClientProtocol"		: @(NO),
-		 @"ignoreGeneralEventMessages"			: @(NO),
-		 @"ignoreNoticeMessages"				: @(NO),
-		 @"ignorePrivateMessages"				: @(NO),
-		 @"ignorePrivateMessageHighlights"		: @(NO),
-		 @"ignorePublicMessages"				: @(NO),
-		 @"ignorePublicMessageHighlights"		: @(NO),
-		 @"ignoreFileTransferRequests"			: @(NO),
-		 @"ignoreMessagesContainingMatch"		: @(NO),
-	};
+			 @"trackUserActivity"					: @(NO),
+
+			 @"ignoreClientToClientProtocol"		: @(NO),
+			 @"ignoreGeneralEventMessages"			: @(NO),
+			 @"ignoreNoticeMessages"				: @(NO),
+			 @"ignorePrivateMessages"				: @(NO),
+			 @"ignorePrivateMessageHighlights"		: @(NO),
+			 @"ignorePublicMessages"				: @(NO),
+			 @"ignorePublicMessageHighlights"		: @(NO),
+			 @"ignoreFileTransferRequests"			: @(NO),
+			 @"ignoreMessagesContainingMatch"		: @(NO),
+		 };
+
+		_defaults = [defaults copy];
+	}
+
+	return _defaults;
 }
 
 - (void)populateDefaults

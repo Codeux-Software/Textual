@@ -45,20 +45,28 @@
 
 - (NSDictionary *)defaults
 {
-	return @{
-		 @"channelType"						: @(IRCChannelChannelType),
+	static id _defaults = nil;
 
-		 @"encryptionModeOfOperation"		: @(CSFWBlowfishEncryptionDefaultModeOfOperation),
+	if (_defaults == nil) {
+		NSDictionary *defaults = @{
+			 @"channelType"						: @(IRCChannelChannelType),
 
-		 @"joinOnConnect"					:	@(YES),
+			 @"encryptionModeOfOperation"		: @(CSFWBlowfishEncryptionDefaultModeOfOperation),
 
-		 @"ignoreGeneralEventMessages"		: @(NO),
-		 @"ignoreHighlights"				: @(NO),
-		 @"ignoreInlineMedia"				: @(NO),
+			 @"joinOnConnect"					:	@(YES),
 
-		 @"enableNotifications"				: @(YES),
-		 @"enableTreeBadgeCountDrawing"		: @(YES)
-	};
+			 @"ignoreGeneralEventMessages"		: @(NO),
+			 @"ignoreHighlights"				: @(NO),
+			 @"ignoreInlineMedia"				: @(NO),
+
+			 @"enableNotifications"				: @(YES),
+			 @"enableTreeBadgeCountDrawing"		: @(YES)
+		 };
+
+		_defaults = [defaults copy];
+	}
+
+	return _defaults;
 }
 
 - (void)populateDefaults
