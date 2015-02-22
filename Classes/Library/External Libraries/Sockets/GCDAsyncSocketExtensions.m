@@ -178,6 +178,8 @@
 						}
 					}
 				}
+
+				CFRelease(properties);
 			}
 		}
 	}
