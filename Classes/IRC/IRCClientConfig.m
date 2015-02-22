@@ -46,89 +46,154 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 @synthesize proxyPassword = _proxyPassword;
 @synthesize nicknamePassword = _nicknamePassword;
 
-- (instancetype)init
+- (NSDictionary *)defaults
 {
-	if ((self = [super init])) {
-		self.itemUUID = [NSString stringWithUUID];
-		
-		self.sidebarItemExpanded		= YES;
-		
-		self.alternateNicknames			= @[];
-		self.loginCommands				= @[];
-		self.highlightList				= @[];
-		self.channelList				= @[];
-		self.ignoreList					= @[];
+	static id _defaults = nil;
+
+	if (_defaults == nil) {
+		NSDictionary *defaults = @{
+			 @"autoConnect" : @(NO),
+			 @"autoReconnect" : @(NO),
+			 @"autoSleepModeDisconnect" : @(YES),
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-		self.autojoinWaitsForNickServ	= [TPCPreferences autojoinWaitsForNickServ]; // Use any previous value as default or NO if none
+			 @"autojoinWaitsForNickServ" : @([TPCPreferences autojoinWaitsForNickServ]),
 #pragma clang diagnostic pop
 
-		self.cachedLastServerTimeCapacityReceivedAtTimestamp = 0;
-		
-		self.hideNetworkUnavailabilityNotices			= NO;
-		self.saslAuthenticationUsesExternalMechanism	= NO;
-		self.sendAuthenticationRequestsToUserServ		= NO;
-		
-		self.sendWhoCommandRequestsToChannels			= YES;
-		
-		self.identitySSLCertificate			= nil;
+			 @"connectionPrefersIPv6" : @(NO),
+			 @"prefersSecuredConnection" : @(NO),
+
+			 @"excludedFromCloudSyncing" : @(NO),
+
+			 @"isOutgoingFloodControlEnabled" : @(YES),
+
+			 @"performPongTimer" : @(YES),
+			 @"performDisconnectOnPongTimer" : @(NO),
+			 @"performDisconnectOnReachabilityChange" : @(YES),
+
+			 @"hideNetworkUnavailabilityNotices" : @(NO),
+			 @"saslAuthenticationUsesExternalMechanism" : @(NO),
+			 @"sendAuthenticationRequestsToUserServ" : @(NO),
+			 @"sendWhoCommandRequestsToChannels" : @(YES),
+
+			 @"setInvisibleModeOnConnect" : @(NO),
+
+			 @"sidebarItemExpanded" : @(YES),
+
+			 @"validateServerCertificates" : @(YES),
+
+			 @"zncIgnoreConfiguredAutojoin" : @(NO),
+			 @"zncIgnorePlaybackNotifications" : @(YES),
+
+			 @"proxyType" : @(IRCConnectionSocketNoProxyType),
+			 @"proxyPort" : @(1080),
+
+			 @"primaryEncoding" : @(TXDefaultPrimaryStringEncoding),
+			 @"fallbackEncoding" : @(TXDefaultFallbackStringEncoding),
+
+			 @"floodControlDelayTimerInterval" : @(IRCClientConfigFloodControlDefaultDelayTimer),
+			 @"floodControlMaximumMessages" : @(IRCClientConfigFloodControlDefaultMessageCount),
+
+			 @"connectionName" : BLS(1022),
+
+			 @"serverPort" : @(IRCConnectionDefaultServerPort),
+
+			 @"cachedLastServerTimeCapacityReceivedAtTimestamp" : @(0),
+
+			 @"normalLeavingComment" : BLS(1021),
+			 @"sleepModeLeavingComment" : BLS(1235)
+		};
+
+		_defaults = [defaults copy];
+	}
+
+	return _defaults;
+}
+
+- (void)populateDefaults
+{
+	NSDictionary *defaults = [self defaults];
+
+	NSString *macintoshModel = [XRSystemInformation systemModelName];
+
+	self.itemUUID = [NSString stringWithUUID];
+
+	self.nickname		= [TPCPreferences defaultNickname];
+	self.awayNickname	= [TPCPreferences defaultAwayNickname];
+	self.username		= [TPCPreferences defaultUsername];
+	self.realName		= [TPCPreferences defaultRealname];
+
+	self.alternateNicknames		= @[];
+	self.loginCommands			= @[];
+	self.highlightList			= @[];
+	self.channelList			= @[];
+	self.ignoreList				= @[];
+
+	self.autoConnect				= [defaults boolForKey:@"autoConnect"];
+	self.autoReconnect				= [defaults boolForKey:@"autoReconnect"];
+	self.autoSleepModeDisconnect	= [defaults boolForKey:@"autoSleepModeDisconnect"];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+	self.autojoinWaitsForNickServ	= [defaults boolForKey:@"autojoinWaitsForNickServ"];
+#pragma clang diagnostic pop
+
+	self.connectionPrefersIPv6		= [defaults boolForKey:@"connectionPrefersIPv6"];
+	self.prefersSecuredConnection	= [defaults boolForKey:@"prefersSecuredConnection"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		self.excludedFromCloudSyncing		= NO;
+	self.excludedFromCloudSyncing	= [defaults boolForKey:@"excludedFromCloudSyncing"];
 #endif
 
-		self.autoConnect					= NO;
-		self.autoReconnect					= NO;
-		self.autoSleepModeDisconnect		= YES;
-		
-		self.performPongTimer				= YES;
+	self.isOutgoingFloodControlEnabled	= [defaults boolForKey:@"isOutgoingFloodControlEnabled"];
 
-		self.performDisconnectOnPongTimer				= NO;
-		self.performDisconnectOnReachabilityChange		= YES;
-		
-		self.validateServerSSLCertificate = YES;
-		
-		self.connectionUsesSSL			= NO;
-		self.connectionPrefersIPv6		= NO;
-		
-		self.serverAddress      = NSStringEmptyPlaceholder;
-		self.serverPort         = IRCConnectionDefaultServerPort;
-		
-		self.invisibleMode = NO;
+	self.floodControlDelayTimerInterval = [defaults integerForKey:@"floodControlDelayTimerInterval"];
+	self.floodControlMaximumMessages	= [defaults integerForKey:@"floodControlMaximumMessages"];
 
-		self.zncIgnoreConfiguredAutojoin = NO;
-		self.zncIgnorePlaybackNotifications = YES;
+	self.performPongTimer						= [defaults boolForKey:@"performPongTimer"];
+	self.performDisconnectOnPongTimer			= [defaults boolForKey:@"performDisconnectOnPongTimer"];
+	self.performDisconnectOnReachabilityChange	= [defaults boolForKey:@"performDisconnectOnReachabilityChange"];
 
-		self.proxyType		 = IRCConnectionSocketNoProxyType;
-		self.proxyAddress    = NSStringEmptyPlaceholder;
-		self.proxyPort       = 1080;
-		self.proxyUsername   = NSStringEmptyPlaceholder;
-		
-		self.primaryEncoding	= TXDefaultPrimaryStringEncoding;
-		self.fallbackEncoding	= TXDefaultFallbackStringEncoding;
-        
-        self.outgoingFloodControl            = YES;
-		
-		self.floodControlMaximumMessages     = IRCClientConfigFloodControlDefaultMessageCount;
-		self.floodControlDelayTimerInterval  = IRCClientConfigFloodControlDefaultDelayTimer;
-		
-		self.clientName = BLS(1022);
-		
-		self.nickname		= [TPCPreferences defaultNickname];
-		self.awayNickname	= [TPCPreferences defaultAwayNickname];
-		self.username		= [TPCPreferences defaultUsername];
-		self.realname		= [TPCPreferences defaultRealname];
-		
-		self.normalLeavingComment		= BLS(1021);
-		
-		NSString *modelName = [XRSystemInformation systemModelName];
-		
-		if (modelName == nil) { // Value can be nil in virtual machine.
-			self.sleepModeLeavingComment = BLS(1235);
-		} else {
-			self.sleepModeLeavingComment = BLS(1185, modelName);
-		}
+	self.hideNetworkUnavailabilityNotices			= [defaults boolForKey:@"hideNetworkUnavailabilityNotices"];
+	self.saslAuthenticationUsesExternalMechanism	= [defaults boolForKey:@"saslAuthenticationUsesExternalMechanism"];
+	self.sendAuthenticationRequestsToUserServ		= [defaults boolForKey:@"sendAuthenticationRequestsToUserServ"];
+	self.sendWhoCommandRequestsToChannels			= [defaults boolForKey:@"sendWhoCommandRequestsToChannels"];
+
+	self.setInvisibleModeOnConnect		= [defaults boolForKey:@"setInvisibleModeOnConnect"];
+
+	self.sidebarItemExpanded			= [defaults boolForKey:@"sidebarItemExpanded"];
+
+	self.validateServerCertificates		= [defaults boolForKey:@"validateServerCertificates"];
+
+	self.zncIgnoreConfiguredAutojoin		= [defaults boolForKey:@"zncIgnoreConfiguredAutojoin"];
+	self.zncIgnorePlaybackNotifications		= [defaults boolForKey:@"zncIgnorePlaybackNotifications"];
+
+	self.proxyType = [defaults integerForKey:@"proxyType"];
+	self.proxyPort = [defaults integerForKey:@"proxyPort"];
+
+	self.primaryEncoding	= [defaults integerForKey:@"primaryEncoding"];
+	self.fallbackEncoding	= [defaults integerForKey:@"fallbackEncoding"];
+
+	self.connectionName		= [defaults stringForKey:@"connectionName"];
+
+	self.serverPort			= [defaults integerForKey:@"serverPort"];
+
+	self.cachedLastServerTimeCapacityReceivedAtTimestamp = [defaults integerForKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+
+	self.normalLeavingComment = [defaults stringForKey:@"normalLeavingComment"];
+
+	if (macintoshModel) {
+		self.sleepModeLeavingComment = BLS(1185, macintoshModel);
+	} else {
+		self.sleepModeLeavingComment = [defaults stringForKey:@"sleepModeLeavingComment"];
+	}
+}
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self populateDefaults];
 	}
 	
 	return self;
@@ -258,67 +323,6 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 	_nicknamePassword = nil;
 }
 
-#if 0
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)destroyKeychainsThatExistOnCloud
-{
-	[XRKeychain deleteKeychainItem:@"Textual (NickServ)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]
-						 fromCloud:YES];
-	
-	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]
-						 fromCloud:YES];
-	
-	[XRKeychain deleteKeychainItem:@"Textual (Proxy Server Password)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]
-						 fromCloud:YES];
-}
-
-- (void)migrateKeychainItemsToCloud
-{
-	[XRKeychain migrateKeychainItemToCloud:@"Textual (NickServ)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemToCloud:@"Textual (Server Password)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemToCloud:@"Textual (Proxy Server Password)"
-							  withItemKind:@"application password"
-							   forUsername:nil
-							   serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
-}
-
-- (void)migrateKeychainItemsFromCloud
-{
-	[XRKeychain migrateKeychainItemFromCloud:@"Textual (NickServ)"
-								withItemKind:@"application password"
-								 forUsername:nil
-								 serviceName:[NSString stringWithFormat:@"textual.nickserv.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Server Password)"
-								withItemKind:@"application password"
-								 forUsername:nil
-								 serviceName:[NSString stringWithFormat:@"textual.server.%@", self.itemUUID]];
-	
-	[XRKeychain migrateKeychainItemFromCloud:@"Textual (Proxy Server Password)"
-								withItemKind:@"application password"
-								 forUsername:nil
-								 serviceName:[NSString stringWithFormat:@"textual.proxy-server.%@", self.itemUUID]];
-}
-#endif
-#endif
-
 - (void)destroyKeychains
 {
 	[XRKeychain deleteKeychainItem:@"Textual (Server Password)"
@@ -358,137 +362,178 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 - (instancetype)initWithDictionary:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs
 {
 	if ((self = [self init])) {
-		/* If any key does not exist, then its value is inherited from the -init method. */
-        [dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
+		[self populateDictionaryValue:dic ignorePrivateMessages:ignorePMs];
+	}
 
-		[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
-		
-		[dic assignStringTo:&_clientName forKey:@"connectionName"];
+	return self;
+}
 
-		[dic assignStringTo:&_nickname forKey:@"identityNickname"];
-		[dic assignStringTo:&_awayNickname forKey:@"identityAwayNickname"];
-		
-		[dic assignArrayTo:&_alternateNicknames forKey:@"identityAlternateNicknames"];
-		
-		[dic assignStringTo:&_realname forKey:@"identityRealname"];
-		[dic assignStringTo:&_username forKey:@"identityUsername"];
+- (void)populateDictionaryValue:(NSDictionary *)dic
+{
+	[self populateDictionaryValue:dic ignorePrivateMessages:NO];
+}
 
-		[dic assignObjectTo:&_identitySSLCertificate forKey:@"IdentitySSLCertificate" performCopy:YES];
+- (void)populateDictionaryValue:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs
+{
+	/* Load legacy keys (if they exist) */
+	[dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
 
-		[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
+	[dic assignStringTo:&_nickname		forKey:@"identityNickname"];
+	[dic assignStringTo:&_awayNickname	forKey:@"identityAwayNickname"];
 
-		[dic assignStringTo:&_serverAddress forKey:@"serverAddress"];
-		
-		[dic assignIntegerTo:&_serverPort forKey:@"serverPort"];
-		
-		[dic assignBoolTo:&_autoConnect forKey:@"connectOnLaunch"];
-		[dic assignBoolTo:&_autoReconnect forKey:@"connectOnDisconnect"];
-		[dic assignBoolTo:&_autoSleepModeDisconnect forKey:@"disconnectOnSleepMode"];
-		
-		[dic assignBoolTo:&_connectionUsesSSL forKey:@"connectUsingSSL"];
-		[dic assignBoolTo:&_connectionPrefersIPv6 forKey:@"DNSResolverPrefersIPv6"];
-		
-		[dic assignBoolTo:&_validateServerSSLCertificate forKey:@"validateServerSideSSLCertificate"];
-		
-		[dic assignBoolTo:&_performPongTimer forKey:@"performPongTimer"];
-		
-		[dic assignBoolTo:&_invisibleMode forKey:@"setInvisibleOnConnect"];
-		
-		[dic assignBoolTo:&_performDisconnectOnPongTimer forKey:@"performDisconnectOnPongTimer"];
-		[dic assignBoolTo:&_performDisconnectOnReachabilityChange forKey:@"performDisconnectOnReachabilityChange"];
-		
-		[dic assignIntegerTo:&_proxyType forKey:@"proxyServerType"];
-		
-		[dic assignStringTo:&_proxyAddress forKey:@"proxyServerAddress"];
-		[dic assignIntegerTo:&_proxyPort forKey:@"proxyServerPort"];
-		[dic assignStringTo:&_proxyUsername forKey:@"proxyServerUsername"];
-		
-		[dic assignIntegerTo:&_primaryEncoding forKey:@"characterEncodingDefault"];
-		[dic assignIntegerTo:&_fallbackEncoding forKey:@"characterEncodingFallback"];
-		
-		[dic assignStringTo:&_normalLeavingComment forKey:@"connectionDisconnectDefaultMessage"];
-		[dic assignStringTo:&_sleepModeLeavingComment forKey:@"connectionDisconnectSleepModeMessage"];
+	[dic assignArrayTo:&_alternateNicknames forKey:@"identityAlternateNicknames"];
+
+	[dic assignStringTo:&_realName	forKey:@"identityRealname"];
+	[dic assignStringTo:&_username	forKey:@"identityUsername"];
+
+	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"IdentitySSLCertificate" performCopy:YES];
+
+	[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
+
+	[dic assignBoolTo:&_autoConnect					forKey:@"connectOnLaunch"];
+	[dic assignBoolTo:&_autoReconnect				forKey:@"connectOnDisconnect"];
+	[dic assignBoolTo:&_autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
+
+	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"connectUsingSSL"];
+	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
+
+	[dic assignBoolTo:&_validateServerCertificates	forKey:@"validateServerSideSSLCertificate"];
+
+	[dic assignBoolTo:&_setInvisibleModeOnConnect	forKey:@"setInvisibleOnConnect"];
+
+	[dic assignIntegerTo:&_proxyType		forKey:@"proxyServerType"];
+	[dic assignIntegerTo:&_proxyPort		forKey:@"proxyServerPort"];
+	[dic assignStringTo:&_proxyAddress		forKey:@"proxyServerAddress"];
+	[dic assignStringTo:&_proxyUsername		forKey:@"proxyServerUsername"];
+
+	[dic assignIntegerTo:&_primaryEncoding		forKey:@"characterEncodingDefault"];
+	[dic assignIntegerTo:&_fallbackEncoding		forKey:@"characterEncodingFallback"];
+
+	[dic assignStringTo:&_normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
+	[dic assignStringTo:&_sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
+
+	/* Flood control. */
+	/* This is here to migrate to the new properties. Saving these values
+	 in this dictionary key is no longer preferred. */
+	if ([dic containsKey:@"floodControl"]) {
+		NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
+
+		if (e) {
+			[e assignBoolTo:&_isOutgoingFloodControlEnabled			forKey:@"serviceEnabled"];
+
+			[e assignIntegerTo:&_floodControlMaximumMessages		forKey:@"maximumMessageCount"];
+			[e assignIntegerTo:&_floodControlDelayTimerInterval		forKey:@"delayTimerInterval"];
+		}
+	}
+
+	/* Migrate to keychain. */
+	NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
+
+	if (proxyPassword) {
+		[self setProxyPassword:proxyPassword];
+		[self writeProxyPasswordKeychainItemToDisk];
+	}
+
+	/* Load the newest set of keys. */
+	[dic assignBoolTo:&_autoConnect								forKey:@"autoConnect"];
+	[dic assignBoolTo:&_autoReconnect							forKey:@"autoReconnect"];
+	[dic assignBoolTo:&_autoSleepModeDisconnect					forKey:@"autoSleepModeDisconnect"];
+
+	[dic assignBoolTo:&_autojoinWaitsForNickServ				forKey:@"autojoinWaitsForNickServ"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		[dic assignBoolTo:&_excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
+	[dic assignBoolTo:&_excludedFromCloudSyncing				forKey:@"excludedFromCloudSyncing"];
 #endif
-		
-		[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
-		[dic assignBoolTo:&_zncIgnorePlaybackNotifications forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
-		
-		[dic assignBoolTo:&_hideNetworkUnavailabilityNotices forKey:@"hideNetworkUnavailabilityNotices"];
-		[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
-		[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ forKey:@"sendAuthenticationRequestsToUserServ"];
-		[dic assignBoolTo:&_sendWhoCommandRequestsToChannels forKey:@"sendWhoCommandRequestsToChannels"];
-		
-		[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
-		
-		[dic assignArrayTo:&_loginCommands forKey:@"onConnectCommands"];
-		
-		/* Channel list. */
-		NSMutableArray *channelList = [NSMutableArray array];
 
-		for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
-			IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
-			
-			if (c.type == IRCChannelPrivateMessageType) {
-				if (ignorePMs == NO) {
-					[channelList addObject:c];
-				}
-			} else {
+	[dic assignBoolTo:&_performDisconnectOnPongTimer			forKey:@"performDisconnectOnPongTimer"];
+	[dic assignBoolTo:&_performDisconnectOnReachabilityChange	forKey:@"performDisconnectOnReachabilityChange"];
+	[dic assignBoolTo:&_performPongTimer						forKey:@"performPongTimer"];
+
+	[dic assignBoolTo:&_hideNetworkUnavailabilityNotices		forKey:@"hideNetworkUnavailabilityNotices"];
+	[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
+	[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ	forKey:@"sendAuthenticationRequestsToUserServ"];
+	[dic assignBoolTo:&_sendWhoCommandRequestsToChannels		forKey:@"sendWhoCommandRequestsToChannels"];
+	[dic assignBoolTo:&_setInvisibleModeOnConnect				forKey:@"setInvisibleModeOnConnect"];
+
+	[dic assignBoolTo:&_sidebarItemExpanded						forKey:@"sidebarItemExpanded"];
+
+	[dic assignBoolTo:&_validateServerCertificates				forKey:@"validateServerCertificates"];
+
+	[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin				forKey:@"zncIgnoreConfiguredAutojoin"];
+	[dic assignBoolTo:&_zncIgnorePlaybackNotifications			forKey:@"zncIgnorePlaybackNotifications"];
+
+	[dic assignIntegerTo:&_fallbackEncoding					forKey:@"fallbackEncoding"];
+	[dic assignIntegerTo:&_primaryEncoding					forKey:@"primaryEncoding"];
+
+	[dic assignBoolTo:&_isOutgoingFloodControlEnabled		forKey:@"isOutgoingFloodControlEnabled"];
+	[dic assignIntegerTo:&_floodControlDelayTimerInterval	forKey:@"floodControlDelayTimerInterval"];
+	[dic assignIntegerTo:&_floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
+
+	[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+
+	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"identityClientSideCertificate" performCopy:YES];
+
+	[dic assignStringTo:&_itemUUID					forKey:@"uniqueIdentifier"];
+
+	[dic assignStringTo:&_nickname					forKey:@"nickname"];
+	[dic assignStringTo:&_awayNickname				forKey:@"awayNickname"];
+	[dic assignStringTo:&_realName					forKey:@"realName"];
+	[dic assignStringTo:&_username					forKey:@"username"];
+
+	[dic assignStringTo:&_connectionName			forKey:@"connectionName"];
+	[dic assignStringTo:&_serverAddress				forKey:@"serverAddress"];
+	[dic assignIntegerTo:&_serverPort				forKey:@"serverPort"];
+	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"prefersSecuredConnection"];
+	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"connectionPrefersIPv6"];
+
+	[dic assignIntegerTo:&_proxyType				forKey:@"proxyType"];
+	[dic assignStringTo:&_proxyAddress				forKey:@"proxyAddress"];
+	[dic assignIntegerTo:&_proxyPort				forKey:@"proxyPort"];
+	[dic assignStringTo:&_proxyUsername				forKey:@"proxyUsername"];
+
+	[dic assignStringTo:&_sleepModeLeavingComment	forKey:@"sleepModeLeavingComment"];
+	[dic assignStringTo:&_normalLeavingComment		forKey:@"normalLeavingComment"];
+
+	[dic assignArrayTo:&_loginCommands				forKey:@"onConnectCommands"];
+
+	/* Channel list. */
+	NSMutableArray *channelList = [NSMutableArray array];
+
+	for (NSDictionary *e in [dic arrayForKey:@"channelList"]) {
+		IRCChannelConfig *c = [[IRCChannelConfig alloc] initWithDictionary:e];
+
+		if ([c type] == IRCChannelPrivateMessageType) {
+			if (ignorePMs == NO) {
 				[channelList addObject:c];
 			}
+		} else {
+			[channelList addObject:c];
 		}
-		
-		self.channelList = channelList;
-
-		/* Ignore list. */
-		NSMutableArray *ignoreList = [NSMutableArray array];
-
-		for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
-			IRCAddressBookEntry *ignore = [[IRCAddressBookEntry alloc] initWithDictionary:e];
-			
-			[ignoreList addObject:ignore];
-		}
-		
-		self.ignoreList = ignoreList;
-
-		/* Server specific highlight list. */
-		NSMutableArray *highlightList = [NSMutableArray array];
-
-		for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
-			TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
-
-			[highlightList addObject:c];
-		}
-		
-		self.highlightList = highlightList;
-
-		/* Flood control. */
-		if ([dic containsKey:@"floodControl"]) {
-			NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
-			
-			if (e) {
-				[e assignBoolTo:&_outgoingFloodControl forKey:@"serviceEnabled"];
-			
-				[e assignIntegerTo:&_floodControlMaximumMessages forKey:@"maximumMessageCount"];
-				[e assignIntegerTo:&_floodControlDelayTimerInterval forKey:@"delayTimerInterval"];
-			}
-		}
-
-		/* Migrate to keychain. */
-		NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
-
-		if (proxyPassword) {
-			[self setProxyPassword:proxyPassword];
-			[self writeProxyPasswordKeychainItemToDisk];
-		}
-		
-		/* We're done. */
-		return self;
 	}
-	
-	return nil;
+
+	self.channelList = channelList;
+
+	/* Ignore list. */
+	NSMutableArray *ignoreList = [NSMutableArray array];
+
+	for (NSDictionary *e in [dic arrayForKey:@"ignoreList"]) {
+		IRCAddressBookEntry *ignore = [[IRCAddressBookEntry alloc] initWithDictionary:e];
+
+		[ignoreList addObject:ignore];
+	}
+
+	self.ignoreList = ignoreList;
+
+	/* Server specific highlight list. */
+	NSMutableArray *highlightList = [NSMutableArray array];
+
+	for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
+		TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
+
+		[highlightList addObject:c];
+	}
+
+	self.highlightList = highlightList;
 }
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed
@@ -507,81 +552,97 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 			NSObjectsAreEqual(_proxyPassword, [seed temporaryProxyPassword]));
 }
 
-- (NSMutableDictionary *)dictionaryValue
+- (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
+{
+	NSMutableDictionary *ndic = dic;
+
+	NSDictionary *defaults = [self defaults];
+
+	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (NSObjectsAreEqual(defaults[key], obj)) {
+			[ndic removeObjectForKey:key];
+		}
+	}];
+
+	return [ndic copy];
+}
+
+- (NSDictionary *)dictionaryValue
 {
 	return [self dictionaryValue:NO];
 }
 
-- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary
+- (NSDictionary *)dictionaryValue:(BOOL)isCloudDictionary
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	[dic setInteger:self.fallbackEncoding	forKey:@"characterEncodingFallback"];
-	[dic setInteger:self.primaryEncoding	forKey:@"characterEncodingDefault"];
-	[dic setInteger:self.proxyPort			forKey:@"proxyServerPort"];
-	[dic setInteger:self.proxyType			forKey:@"proxyServerType"];
-	[dic setInteger:self.serverPort			forKey:@"serverPort"];
+
+	/* Set all properties into the dictionary. */
+	[dic setBool:self.autoConnect						forKey:@"autoConnect"];
+	[dic setBool:self.autoReconnect						forKey:@"autoReconnect"];
+	[dic setBool:self.autoSleepModeDisconnect			forKey:@"autoSleepModeDisconnect"];
+
+	[dic setBool:self.autojoinWaitsForNickServ			forKey:@"autojoinWaitsForNickServ"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	[dic setBool:self.excludedFromCloudSyncing forKey:@"excludeFromCloudSyncing"];
+	[dic setBool:self.excludedFromCloudSyncing			forKey:@"excludedFromCloudSyncing"];
 #endif
 
-	[dic setBool:self.autoConnect					forKey:@"connectOnLaunch"];
-	[dic setBool:self.autoReconnect					forKey:@"connectOnDisconnect"];
-	[dic setBool:self.autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
-	[dic setBool:self.connectionUsesSSL				forKey:@"connectUsingSSL"];
-	[dic setBool:self.performPongTimer				forKey:@"performPongTimer"];
-	[dic setBool:self.invisibleMode					forKey:@"setInvisibleOnConnect"];
-	[dic setBool:self.connectionPrefersIPv6			forKey:@"DNSResolverPrefersIPv6"];
-	[dic setBool:self.autojoinWaitsForNickServ		forKey:@"autojoinWaitsForNickServIdentification"];
-
-    [dic setBool:self.sidebarItemExpanded			forKey:@"serverListItemIsExpanded"];
-	
 	[dic setBool:self.performDisconnectOnPongTimer				forKey:@"performDisconnectOnPongTimer"];
 	[dic setBool:self.performDisconnectOnReachabilityChange		forKey:@"performDisconnectOnReachabilityChange"];
-	
-	if (isCloudDictionary == NO) {
-		/* Identify certificate is stored as a referenced to the actual keychain. */
-		/* This cannot be transmitted over the cloud. */
-
-		[dic maybeSetObject:self.identitySSLCertificate forKey:@"IdentitySSLCertificate"];
-	}
-
-	[dic setBool:self.validateServerSSLCertificate		forKey:@"validateServerSideSSLCertificate"];
-
-	[dic setBool:self.zncIgnorePlaybackNotifications	forKey:@"ZNC —> Ignore Playback Buffer Highlights"];
-	[dic setBool:self.zncIgnoreConfiguredAutojoin		forKey:@"ZNC —> Ignore Pre-configured Autojoin"];
+	[dic setBool:self.performPongTimer							forKey:@"performPongTimer"];
 
 	[dic setBool:self.hideNetworkUnavailabilityNotices			forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic setBool:self.saslAuthenticationUsesExternalMechanism	forKey:@"saslAuthenticationUsesExternalMechanism"];
 	[dic setBool:self.sendAuthenticationRequestsToUserServ		forKey:@"sendAuthenticationRequestsToUserServ"];
 	[dic setBool:self.sendWhoCommandRequestsToChannels			forKey:@"sendWhoCommandRequestsToChannels"];
-	
-	[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp		forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
-	
-	[dic maybeSetObject:self.alternateNicknames			forKey:@"identityAlternateNicknames"];
-	[dic maybeSetObject:self.clientName					forKey:@"connectionName"];
-	[dic maybeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
-	[dic maybeSetObject:self.loginCommands				forKey:@"onConnectCommands"];
-	[dic maybeSetObject:self.nickname					forKey:@"identityNickname"];
-	[dic maybeSetObject:self.awayNickname				forKey:@"identityAwayNickname"];
-	[dic maybeSetObject:self.normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
-	[dic maybeSetObject:self.proxyAddress				forKey:@"proxyServerAddress"];
-	[dic maybeSetObject:self.proxyUsername				forKey:@"proxyServerUsername"];
-	[dic maybeSetObject:self.realname					forKey:@"identityRealname"];
-	[dic maybeSetObject:self.serverAddress				forKey:@"serverAddress"];
-	[dic maybeSetObject:self.sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
-	[dic maybeSetObject:self.username					forKey:@"identityUsername"];
-    
-    NSMutableDictionary *floodControl = [NSMutableDictionary dictionary];
-    
-    [floodControl setInteger:self.floodControlDelayTimerInterval	forKey:@"delayTimerInterval"];
-    [floodControl setInteger:self.floodControlMaximumMessages		forKey:@"maximumMessageCount"];
-	
-    [floodControl setBool:self.outgoingFloodControl forKey:@"serviceEnabled"];
-    
-	[dic maybeSetObject:floodControl forKey:@"floodControl"];
+	[dic setBool:self.setInvisibleModeOnConnect					forKey:@"setInvisibleModeOnConnect"];
 
+	if (isCloudDictionary == NO) {
+		[dic setBool:self.sidebarItemExpanded				forKey:@"sidebarItemExpanded"];
+	}
+
+	[dic setBool:self.validateServerCertificates			forKey:@"validateServerCertificates"];
+
+	[dic setBool:self.zncIgnoreConfiguredAutojoin			forKey:@"zncIgnoreConfiguredAutojoin"];
+	[dic setBool:self.zncIgnorePlaybackNotifications		forKey:@"zncIgnorePlaybackNotifications"];
+
+	[dic setInteger:self.fallbackEncoding					forKey:@"fallbackEncoding"];
+	[dic setInteger:self.primaryEncoding					forKey:@"primaryEncoding"];
+
+	[dic setBool:self.isOutgoingFloodControlEnabled			forKey:@"isOutgoingFloodControlEnabled"];
+	[dic setInteger:self.floodControlDelayTimerInterval		forKey:@"floodControlDelayTimerInterval"];
+	[dic setInteger:self.floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
+
+	if (isCloudDictionary == NO) {
+		[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp	forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+
+		[dic maybeSetObject:self.identityClientSideCertificate forKey:@"identityClientSideCertificate"];
+	}
+
+	[dic maybeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
+
+	[dic maybeSetObject:self.nickname					forKey:@"nickname"];
+	[dic maybeSetObject:self.awayNickname				forKey:@"awayNickname"];
+	[dic maybeSetObject:self.realName					forKey:@"realName"];
+	[dic maybeSetObject:self.username					forKey:@"username"];
+
+	[dic maybeSetObject:self.connectionName				forKey:@"connectionName"];
+	[dic maybeSetObject:self.serverAddress				forKey:@"serverAddress"];
+	[dic setInteger:self.serverPort						forKey:@"serverPort"];
+	[dic setBool:self.prefersSecuredConnection			forKey:@"prefersSecuredConnection"];
+	[dic setBool:self.connectionPrefersIPv6				forKey:@"connectionPrefersIPv6"];
+
+	[dic setInteger:self.proxyType						forKey:@"proxyType"];
+	[dic maybeSetObject:self.proxyAddress				forKey:@"proxyAddress"];
+	[dic setInteger:self.proxyPort						forKey:@"proxyPort"];
+	[dic maybeSetObject:self.proxyUsername				forKey:@"proxyUsername"];
+
+	[dic maybeSetObject:self.sleepModeLeavingComment	forKey:@"sleepModeLeavingComment"];
+	[dic maybeSetObject:self.normalLeavingComment		forKey:@"normalLeavingComment"];
+
+	[dic maybeSetObject:self.loginCommands				forKey:@"onConnectCommands"];
+
+	/* Build arrays of certain objects. */
 	NSMutableArray *highlightAry = [NSMutableArray array];
 	NSMutableArray *channelAry = [NSMutableArray array];
 	NSMutableArray *ignoreAry = [NSMutableArray array];
@@ -598,11 +659,19 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 		[highlightAry addObject:[e dictionaryValue]];
 	}
 
-	[dic maybeSetObject:highlightAry forKey:@"highlightList"];
-	[dic maybeSetObject:channelAry forKey:@"channelList"];
-	[dic maybeSetObject:ignoreAry forKey:@"ignoreList"];
-	
-	return dic;
+	if ([highlightAry count] > 0) {
+		[dic maybeSetObject:highlightAry forKey:@"highlightList"];
+	}
+
+	if ([channelAry count] > 0) {
+		[dic maybeSetObject:channelAry forKey:@"channelList"];
+	}
+
+	if ([ignoreAry count] > 0) {
+		[dic maybeSetObject:ignoreAry forKey:@"ignoreList"];
+	}
+
+	return [self dictionaryValueByStrippingDefaults:dic];
 }
 
 - (id)copyWithZone:(NSZone *)zone
