@@ -42,23 +42,37 @@ typedef enum IRCAddressBookEntryType : NSInteger {
 	IRCAddressBookUserTrackingEntryType
 } IRCAddressBookEntryType;
 
+/* Keys that can be accessed by -dictionaryValue. It is recommended to only access
+ these keys as any other are used internally and may change without notice. */
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePublicMessagesKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessagesKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey;
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey;
+
+TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey;
+
 @interface IRCAddressBookEntry : NSObject <NSCopying>
 @property (nonatomic, assign) IRCAddressBookEntryType entryType;
 @property (nonatomic, copy) NSString *hostmask;
-@property (nonatomic, copy) NSString *hostmaskRegex;
+@property (nonatomic, copy) NSString *hostmaskRegularExpression;
 @property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, assign) BOOL ignoreCTCP;
-@property (nonatomic, assign) BOOL ignoreJPQE;
-@property (nonatomic, assign) BOOL ignoreNotices;
-@property (nonatomic, assign) BOOL ignorePrivateHighlights;
+@property (nonatomic, assign) BOOL ignoreClientToClientProtocol;
+@property (nonatomic, assign) BOOL ignoreGeneralEventMessages;
+@property (nonatomic, assign) BOOL ignoreNoticeMessages;
+@property (nonatomic, assign) BOOL ignorePrivateMessageHighlights;
 @property (nonatomic, assign) BOOL ignorePrivateMessages;
-@property (nonatomic, assign) BOOL ignorePublicHighlights;
+@property (nonatomic, assign) BOOL ignorePublicMessageHighlights;
 @property (nonatomic, assign) BOOL ignorePublicMessages;
 @property (nonatomic, assign) BOOL ignoreFileTransferRequests;
 @property (nonatomic, assign) BOOL hideMessagesContainingMatch;
-@property (nonatomic, assign) BOOL notifyJoins;
+@property (nonatomic, assign) BOOL trackUserActivity;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;
 
 @property (readonly, copy) NSString *trackingNickname;
