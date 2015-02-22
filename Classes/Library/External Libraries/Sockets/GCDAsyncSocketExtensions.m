@@ -150,6 +150,41 @@
 	return trust;
 }
 
+- (NSString *)sslCertificateTrustPolicyName
+{
+	NSString *certificateHost = nil;
+
+	SecTrustRef trustRef = [self sslCertificateTrustInformation];
+
+	if (trustRef) {
+		CFArrayRef trustPolicies = NULL;
+
+		SecTrustCopyPolicies(trustRef, &trustPolicies);
+
+		CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
+
+		for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
+			SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
+
+			CFDictionaryRef properties = SecPolicyCopyProperties(policy);
+
+			if (properties) {
+				if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
+					CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
+
+					if (name) {
+						if (CFGetTypeID(name) == CFStringGetTypeID()) {
+							certificateHost = (__bridge NSString *)(name);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return certificateHost;
+}
+
 @end
 
 @implementation AsyncSocket (RLMAsyncSocketExtensions)

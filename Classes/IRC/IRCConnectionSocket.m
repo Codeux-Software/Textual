@@ -424,15 +424,17 @@
 
 		NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
 
+		NSString *policyName = [self.socketConnection sslCertificateTrustPolicyName];
+
 		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
 		[panel setDefaultButtonTitle:BLS(1011)];
 		[panel setAlternateButtonTitle:nil];
 
 		if (protocolString == nil) {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]")];
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", policyName)];
 		} else {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", protocolString)];
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", policyName, protocolString)];
 		}
 
 		[panel beginSheetForWindow:[NSApp mainWindow]
@@ -440,7 +442,7 @@
 					didEndSelector:NULL
 					   contextInfo:NULL
 							 trust:trust
-						   message:TXTLS(@"BasicLanguage[1247][1]")];
+						   message:TXTLS(@"BasicLanguage[1247][1]", policyName)];
 	}
 }
 
