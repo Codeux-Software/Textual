@@ -76,6 +76,10 @@
 		NSAssert(NO, @"'socket' cannot be nil");
 	}
 
+	if ([socket isKindOfClass:[GCDAsyncSocket class]] == NO) {
+		NSAssert(NO, @"'socket' is not kind of class 'GCDAsyncSocket'");
+	}
+
 	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy], socket];
 	
 	@synchronized(_queuedEntries) {
@@ -126,33 +130,7 @@
 		[self setActiveSocket:contextInfo[2]];
 
 		/* Build panel. */
-		NSString *certificateHost = nil;
-
-		SecTrustRef trustRef = (__bridge SecTrustRef)(contextInfo[0]);
-
-		CFArrayRef trustPolicies = NULL;
-
-		SecTrustCopyPolicies(trustRef, &trustPolicies);
-
-		CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
-
-		for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
-			SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
-
-			CFDictionaryRef properties = SecPolicyCopyProperties(policy);
-
-			if (properties) {
-				if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
-					CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
-
-					if (name) {
-						if (CFGetTypeID(name) == CFStringGetTypeID()) {
-							certificateHost = (__bridge NSString *)(name);
-						}
-					}
-				}
-			}
-		}
+		NSString *certificateHost = [_activeSocket sslCertificateTrustPolicyName];
 
 		 _currentPanel = [SFCertificateTrustPanel new];
 		
