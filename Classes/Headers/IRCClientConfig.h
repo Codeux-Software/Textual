@@ -56,65 +56,65 @@ typedef enum TXConnectionProxyType : NSInteger {
 @interface IRCClientConfig : NSObject <NSCopying>
 @property (nonatomic, assign) BOOL autoConnect;
 @property (nonatomic, assign) BOOL autoReconnect;
-@property (nonatomic, assign) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign) BOOL autoSleepModeDisconnect;
+@property (nonatomic, assign) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
-@property (nonatomic, assign) BOOL performPongTimer;
-@property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
-@property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
-@property (nonatomic, assign) BOOL connectionUsesSSL;
-@property (nonatomic, assign) BOOL hideNetworkUnavailabilityNotices;
-@property (nonatomic, assign) BOOL invisibleMode;
-@property (nonatomic, assign) BOOL outgoingFloodControl;
-@property (nonatomic, assign) BOOL saslAuthenticationUsesExternalMechanism;
-@property (nonatomic, assign) BOOL sendAuthenticationRequestsToUserServ;
-@property (nonatomic, assign) BOOL sendWhoCommandRequestsToChannels;
-@property (nonatomic, assign) BOOL sidebarItemExpanded;
-@property (nonatomic, assign) BOOL validateServerSSLCertificate;
-@property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
-@property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;		/* ZNC Related option. */
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 #endif
 
+@property (nonatomic, assign) BOOL hideNetworkUnavailabilityNotices;
+@property (nonatomic, assign) BOOL isOutgoingFloodControlEnabled;
+@property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
+@property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
+@property (nonatomic, assign) BOOL performPongTimer;
+@property (nonatomic, assign) BOOL prefersSecuredConnection;
+@property (nonatomic, assign) BOOL saslAuthenticationUsesExternalMechanism;
+@property (nonatomic, assign) BOOL sendAuthenticationRequestsToUserServ;
+@property (nonatomic, assign) BOOL sendWhoCommandRequestsToChannels;
+@property (nonatomic, assign) BOOL setInvisibleModeOnConnect;
+@property (nonatomic, assign) BOOL sidebarItemExpanded;
+@property (nonatomic, assign) BOOL validateServerCertificates;
+@property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
+@property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;
+@property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
+@property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessages;
-@property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger primaryEncoding;
-@property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
+@property (nonatomic, assign) NSInteger proxyPort;
+@property (nonatomic, assign) NSInteger serverPort;
+@property (nonatomic, assign) NSTimeInterval cachedLastServerTimeCapacityReceivedAtTimestamp;
 @property (nonatomic, copy) NSArray *alternateNicknames;
 @property (nonatomic, copy) NSArray *channelList;
-@property (nonatomic, copy) NSArray *ignoreList;
 @property (nonatomic, copy) NSArray *highlightList;
+@property (nonatomic, copy) NSArray *ignoreList;
 @property (nonatomic, copy) NSArray *loginCommands;
-@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, copy) NSString *clientName;
-@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy) NSData *identityClientSideCertificate;
 @property (nonatomic, copy) NSString *awayNickname;
+@property (nonatomic, copy) NSString *connectionName;
+@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
+@property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *nicknamePassword;
+@property (nonatomic, copy) NSString *normalLeavingComment;
 @property (nonatomic, copy) NSString *proxyAddress;
-@property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, copy) NSString *proxyPassword;
 @property (nonatomic, copy) NSString *proxyUsername;
-@property (nonatomic, copy) NSString *realname;
+@property (nonatomic, copy) NSString *realName;
 @property (nonatomic, copy) NSString *serverAddress;
-@property (nonatomic, assign) NSInteger serverPort;
 @property (nonatomic, copy) NSString *serverPassword;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *normalLeavingComment;
 @property (nonatomic, copy) NSString *sleepModeLeavingComment;
-@property (nonatomic, copy) NSData *identitySSLCertificate;
-@property (nonatomic, assign) NSTimeInterval cachedLastServerTimeCapacityReceivedAtTimestamp;
+@property (nonatomic, copy) NSString *username;
+
+- (id)copyWithoutPrivateMessages;
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
-
-- (id)copyWithoutPrivateMessages;
-
-- (NSMutableDictionary *)dictionaryValue;
-- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
+- (NSDictionary *)dictionaryValue;
+- (NSDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
+- (void)populateDictionaryValue:(NSDictionary *)dic;
 
 - (void)destroyKeychains;
 
@@ -127,13 +127,4 @@ typedef enum TXConnectionProxyType : NSInteger {
 - (void)writeProxyPasswordKeychainItemToDisk;
 - (void)writeServerPasswordKeychainItemToDisk;
 - (void)writeNicknamePasswordKeychainItemToDisk;
-
-#if 0
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)migrateKeychainItemsToCloud;
-- (void)migrateKeychainItemsFromCloud;
-
-- (void)destroyKeychainsThatExistOnCloud;
-#endif
-#endif
 @end
