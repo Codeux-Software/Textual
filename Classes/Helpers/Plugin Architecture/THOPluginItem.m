@@ -51,7 +51,9 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 - (BOOL)loadBundle:(NSBundle *)bundle
 {
 	/* Only load once. */
-	PointerIsNotEmptyAssertReturn(self.primaryClass, NO);
+	if ((_primaryClass == nil) == NO) {
+		NSAssert(NO, @"loadBundle: called a THOPluginItem instance that is already loaded.");
+	}
 
 	/* Begin version comparison. */
 	NSDictionary *bundleInfo = [bundle infoDictionary];
@@ -62,7 +64,7 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 		LogToConsole(@" -------------- WARNING -------------- ");
 		LogToConsole(@" Textual has loaded a bundle at the following path which did not specify a minimum version: ");
 		LogToConsole(@"  ");
-		LogToConsole(@"   Bundle Path: %@", [bundle bundlePath]);
+		LogToConsole(@"		Bundle Path: %@", [bundle bundlePath]);
 		LogToConsole(@"  ");
 		LogToConsole(@" Please add a key-value pair in the bundle's Info.plist file with the key name as \"MinimumTextualVersion\" ");
 		LogToConsole(@" For example, to support this version and later, add the value: ");
@@ -80,10 +82,10 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 			LogToConsole(@" -------------- ERROR -------------- ");
 			LogToConsole(@" Textual has failed to load the bundle at the followig path because the specified minimum version is out of range :");
 			LogToConsole(@"  ");
-			LogToConsole(@"   Bundle Path: %@", [bundle bundlePath]);
+			LogToConsole(@"		Bundle Path: %@", [bundle bundlePath]);
 			LogToConsole(@"  ");
-			LogToConsole(@"   Minimum version specified by bundle: %@", comparisonVersion);
-			LogToConsole(@"   Version used by Textual for comparison: %@", TXBundleMininumBundleVersionForLoadingExtensions);
+			LogToConsole(@"		Minimum version specified by bundle: %@", comparisonVersion);
+			LogToConsole(@"		Version used by Textual for comparison: %@", TXBundleMininumBundleVersionForLoadingExtensions);
 			LogToConsole(@"  ");
 			LogToConsole(@" -------------- ERROR -------------- ");
 			
@@ -94,30 +96,34 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 	/* Initialize the principal class. */
 	Class principalClass = [bundle principalClass];
 
-	PointerIsEmptyAssertReturn(principalClass, NO);
+	if (principalClass == nil) {
+		return NO;
+	}
 
-	self.primaryClass = [principalClass new];
+	_primaryClass = [principalClass new];
+
+	_supportedFeatures = 0;
 
 	/* Say hello! */
-	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)];
-	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)];
+	BOOL supportsOldFeature = [_primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory:)];
+	BOOL supportsNewFeature = [_primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)];
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		if (supportsNewFeature) {
-			[self.primaryClass pluginLoadedIntoMemory];
+			[_primaryClass pluginLoadedIntoMemory];
 		} else {
-			[self.primaryClass pluginLoadedIntoMemory:worldController()];
+			[_primaryClass pluginLoadedIntoMemory:worldController()];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", _primaryClass);
 		}
 	}
 	
 	/* Process server output suppression rules. */
-	if ([self.primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
+	if ([_primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
 	{
 		// Use id, never assume what a 3rd party might give.
-		id outputRulesO = [self.primaryClass pluginOutputDisplayRules];
+		id outputRulesO = [_primaryClass pluginOutputDisplayRules];
 
 		if (VTAE(outputRulesO, NSDictionary)) {
 			NSMutableDictionary *sharedRules = [NSMutableDictionary dictionary];
@@ -130,16 +136,18 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 				}
 			}
 
-			self.outputSuppressionRules = sharedRules;
+			[self setOutputSuppressionRules:sharedRules];
+
+			[self enableFeature:THOPluginItemSupportedFeatureOutputSuppressionRulesFlag];
 		}
 	}
 
 	/* Does the bundle have a preference pane?… */
-	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
-						  [self.primaryClass respondsToSelector:@selector(preferencesView)]);
+	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
+						  [_primaryClass respondsToSelector:@selector(preferencesView)]);
 	
-	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
-						  [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
+	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
+						  [_primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
@@ -147,39 +155,43 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 		id itemName = nil;
 		
 		if (supportsNewFeature) {
-			itemView = [self.primaryClass pluginPreferencesPaneView];
-			itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
+			itemView = [_primaryClass pluginPreferencesPaneView];
+			itemName = [_primaryClass pluginPreferencesPaneMenuItemName];
 		} else {
-			itemView = [self.primaryClass preferencesView];
-			itemName = [self.primaryClass preferencesMenuItemName];
+			itemView = [_primaryClass preferencesView];
+			itemName = [_primaryClass preferencesMenuItemName];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", self.primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", _primaryClass);
 		}
 
 		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
-			self.hasPreferencePaneView = YES;
+			if (supportsNewFeature == NO) {
+				[self enableFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag];
+			} else {
+				[self enableFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag];
+			}
 		}
 	}
 
 	/* Process user input commands. */
-	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
-						  [self.primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]);
+	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(messageSentByUser:message:command:)] &&
+						  [_primaryClass respondsToSelector:@selector(pluginSupportsUserInputCommands)]);
 	
-	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)] &&
-						  [self.primaryClass respondsToSelector:@selector(subscribedUserInputCommands)]);
+	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)] &&
+						  [_primaryClass respondsToSelector:@selector(subscribedUserInputCommands)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		id spdcmds;
 		
 		if (supportsNewFeature) {
-			spdcmds = [self.primaryClass subscribedUserInputCommands];
+			spdcmds = [_primaryClass subscribedUserInputCommands];
 		} else {
-			spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
+			spdcmds = [_primaryClass pluginSupportsUserInputCommands];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", self.primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", _primaryClass);
 		}
 		
 		if (VTAE(spdcmds, NSArray)) {
@@ -193,28 +205,34 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 				}
 			}
 
-			self.supportedUserInputCommands = supportedCommands;
+			if (supportsNewFeature) {
+				[self enableFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag];
+			} else {
+				[self enableFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag];
+			}
+
+			[self setSupportedUserInputCommands:supportedCommands];
 		}
 	}
 
 	/* Process server input commands. */
-	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
-						  [self.primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]);
+	supportsOldFeature = ([_primaryClass respondsToSelector:@selector(messageReceivedByServer:sender:message:)] &&
+						  [_primaryClass respondsToSelector:@selector(pluginSupportsServerInputCommands)]);
 	
-	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)] &&
-						  [self.primaryClass respondsToSelector:@selector(subscribedServerInputCommands)]);
+	supportsNewFeature = ([_primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)] &&
+						  [_primaryClass respondsToSelector:@selector(subscribedServerInputCommands)]);
 	
 	if (supportsOldFeature || supportsNewFeature)
 	{
 		id spdcmds;
 		
 		if (supportsNewFeature) {
-			spdcmds = [self.primaryClass subscribedServerInputCommands];
+			spdcmds = [_primaryClass subscribedServerInputCommands];
 		} else {
-			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
+			spdcmds = [_primaryClass pluginSupportsServerInputCommands];
 			
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", self.primaryClass);
-			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", self.primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", _primaryClass);
+			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", _primaryClass);
 		}
 
 		if (VTAE(spdcmds, NSArray)) {
@@ -226,7 +244,13 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 				}
 			}
 
-			self.supportedServerInputCommands = supportedCommands;
+			if (supportsNewFeature) {
+				[self enableFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag];
+			} else {
+				[self enableFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag];
+			}
+
+			[self setSupportedServerInputCommands:supportedCommands];
 		}
 	}
 	
@@ -234,31 +258,26 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 	 to ask if it responds to the responder everytime we call it. */
 	
 	/* Renderer events. */
-	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
-	{
-		self.supportsNewMessagePostedEventNotifications = YES;
+	if ([_primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)]) {
+		[self enableFeature:THOPluginItemSupportedFeatureNewMessagePostedEventFlag];
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)])
-	{
-		self.supportsWillRenderMessageEventNotifications = YES;
+	if ([_primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
+		[self enableFeature:THOPluginItemSupportedFeatureWillRenderMessageEventFlag];
 	}
 	
 	/* Inline media. */
-	if ([self.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)])
-	{
-		self.supportsInlineMediaManipulation = YES;
+	if ([_primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
+		[self enableFeature:THOPluginItemSupportedFeatureInlineMediaManipulationFlag];
 	}
 	
 	/* Data interception. */
-	if ([self.primaryClass respondsToSelector:@selector(interceptServerInput:for:)])
-	{
-		self.supportsServerInputDataInterception = YES;
+	if ([_primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
+		[self enableFeature:THOPluginItemSupportedFeatureServerInputDataInterceptionFlag];
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(interceptUserInput:command:)])
-	{
-		self.supportsUserInputDataInterception = YES;
+	if ([_primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
+		[self enableFeature:THOPluginItemSupportedFeatureUserInputDataInterceptionFlag];
 	}
 	
 	return YES;
@@ -266,16 +285,10 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 
 - (void)sendDealloc
 {
-	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)];
-	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)];
-	
-	if (supportsOldFeature || supportsNewFeature)
-	{
-		if (supportsNewFeature) {
-			[self.primaryClass pluginWillBeUnloadedFromMemory];
-		} else {
-			[self.primaryClass pluginUnloadedFromMemory];
-		}
+	if ([_primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
+		[_primaryClass pluginUnloadedFromMemory];
+	} else if ([_primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)]) {
+		[_primaryClass pluginWillBeUnloadedFromMemory];
 	}
 }
 
@@ -312,36 +325,43 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 
 - (NSView *)pluginPreferenesPaneView
 {
-	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesView)];
-	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)];
-	
-	if (supportsOldFeature || supportsNewFeature)
-	{
-		if (supportsNewFeature) {
-			return [self.primaryClass pluginPreferencesPaneView];
-		} else {
-			return [self.primaryClass preferencesView];
-		}
+	if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag]) {
+		return [_primaryClass pluginPreferencesPaneView];
+	} else if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag]) {
+		return [_primaryClass preferencesView];
+	} else {
+		return nil;
 	}
-	
-	return nil;
 }
 
 - (NSString *)pluginPreferencesPaneMenuItemName
 {
-	BOOL supportsOldFeature = [self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)];
-	BOOL supportsNewFeature = [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)];
-	
-	if (supportsOldFeature || supportsNewFeature)
-	{
-		if (supportsNewFeature) {
-			return [self.primaryClass pluginPreferencesPaneMenuItemName];
-		} else {
-			return [self.primaryClass preferencesMenuItemName];
-		}
+	if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag]) {
+		return [_primaryClass pluginPreferencesPaneMenuItemName];
+	} else if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag]) {
+		return [_primaryClass preferencesMenuItemName];
+	} else {
+		return nil;
 	}
-	
-	return nil;
+}
+
+- (void)enableFeature:(THOPluginItemSupportedFeaturesFlags)feature
+{
+	if ([self supportsFeature:feature] == NO) {
+		_supportedFeatures |= feature;
+	}
+}
+
+- (void)disableFeature:(THOPluginItemSupportedFeaturesFlags)feature
+{
+	if ([self supportsFeature:feature]) {
+		_supportedFeatures &= ~feature;
+	}
+}
+
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeaturesFlags)feature
+{
+	return ((_supportedFeatures & feature) == feature);
 }
 
 @end

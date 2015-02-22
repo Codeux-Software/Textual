@@ -1295,19 +1295,19 @@
 	
 	NSMutableDictionary *pluginDictionary = [NSMutableDictionary dictionary];
 	
-	[pluginDictionary setBool:highlighted forKey:@"wordMatchFound"];
+	[pluginDictionary setBool:highlighted forKey:THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute];
 	
-	[pluginDictionary setInteger:[line lineType] forKey:@"lineType"];
-	[pluginDictionary setInteger:[line memberType] forKey:@"memberType"];
+	[pluginDictionary setInteger:[line lineType] forKey:THOPluginProtocolDidPostNewMessageLineTypeAttribute];
+	[pluginDictionary setInteger:[line memberType] forKey:THOPluginProtocolDidPostNewMessageMemberTypeAttribute];
 	
-	[pluginDictionary maybeSetObject:[line nickname] forKey:@"senderNickname"];
-	[pluginDictionary maybeSetObject:[line receivedAt] forKey:@"receivedAtTime"];
+	[pluginDictionary maybeSetObject:[line nickname] forKey:THOPluginProtocolDidPostNewMessageSenderNicknameAttribute];
+	[pluginDictionary maybeSetObject:[line receivedAt] forKey:THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute];
 	
-	[pluginDictionary maybeSetObject:newLinenNumber forKey:@"lineNumber"];
+	[pluginDictionary maybeSetObject:newLinenNumber forKey:THOPluginProtocolDidPostNewMessageLineTypeAttribute];
 	
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] forKey:@"allHyperlinksInBody"];
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute] forKey:@"mentionedUsers"];
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute] forKey:@"messageBody"];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfUsersAttribute];
+	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute] forKey:THOPluginProtocolDidPostNewMessageMessageBodyAttribute];
 	
 	resultData[@"pluginDictionary"] = pluginDictionary;
 	

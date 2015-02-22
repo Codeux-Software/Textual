@@ -37,24 +37,41 @@
 
 #import "TextualApplication.h"
 
+/* Please DO NOT use any code declared within this header inside of a plugin.
+ The code contained by this header file was designed to be used internally for
+ Textual and may be dangerous to use otherwise. */
+
 TEXTUAL_EXTERN NSString * const TXBundleMininumBundleVersionForLoadingExtensions;
+
+// OldStyle = deprecated class names
+// NewStyle = current class names for THOPluginProtocol
+typedef enum THOPluginItemSupportedFeaturesFlags : NSInteger {
+	THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag						= 1 << 0,
+	THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag		= 1 << 1,
+	THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag		= 1 << 2,
+	THOPluginItemSupportedFeatureInlineMediaManipulationFlag					= 1 << 3,
+	THOPluginItemSupportedFeatureNewMessagePostedEventFlag						= 1 << 4,
+	THOPluginItemSupportedFeatureWillRenderMessageEventFlag						= 1 << 5,
+	THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag						= 1 << 6,
+	THOPluginItemSupportedFeatureUserInputDataInterceptionFlag					= 1 << 7,
+	THOPluginItemSupportedFeatureServerInputDataInterceptionFlag				= 1 << 8,
+	THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag		= 1 << 9,
+	THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag		= 1 << 10,
+	THOPluginItemSupportedFeatureOutputSuppressionRulesFlag						= 1 << 11
+} THOPluginItemSupportedFeaturesFlags;
 
 @interface THOPluginItem : NSObject
 @property (nonatomic, strong) id primaryClass;
-@property (nonatomic, assign) BOOL hasPreferencePaneView;
-@property (nonatomic, assign) BOOL supportsUserInputDataInterception;
-@property (nonatomic, assign) BOOL supportsServerInputDataInterception;
-@property (nonatomic, assign) BOOL supportsInlineMediaManipulation;
-@property (nonatomic, assign) BOOL supportsNewMessagePostedEventNotifications;
-@property (nonatomic, assign) BOOL supportsWillRenderMessageEventNotifications;
+@property (nonatomic, assign) THOPluginItemSupportedFeaturesFlags supportedFeatures;
 @property (nonatomic, copy) NSArray *supportedUserInputCommands;
 @property (nonatomic, copy) NSArray *supportedServerInputCommands;
 @property (nonatomic, copy) NSDictionary *outputSuppressionRules;
+@property (readonly, strong) NSView *pluginPreferenesPaneView;
+@property (readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
 
 - (BOOL)loadBundle:(NSBundle *)bundle;
 
-- (void)sendDealloc;
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeaturesFlags)feature;
 
-@property (readonly, strong) NSView *pluginPreferenesPaneView;
-@property (readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
+- (void)sendDealloc;
 @end
