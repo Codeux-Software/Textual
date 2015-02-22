@@ -620,8 +620,6 @@
 
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
 {
-	TLOPopupPrompts *popup = [TLOPopupPrompts new];
-	
 	NSWindow *sheetWindow = self.sheet;
 	
 	if (self.channelSheet) {
@@ -631,17 +629,18 @@
 	} else if (self.ignoreSheet) {
 		sheetWindow = self.ignoreSheet.sheet;
 	}
-	
-	[popup sheetWindowWithQuestion:sheetWindow
-							target:self
-							action:@selector(updateUnderlyingConfigurationProfileCallback:withOriginalAlert:)
-							  body:TXTLS(@"BasicLanguage[1240][2]", self.config.clientName)
-							 title:TXTLS(@"BasicLanguage[1240][1]")
-					 defaultButton:TXTLS(@"BasicLanguage[1240][3]")
-				   alternateButton:TXTLS(@"BasicLanguage[1240][4]")
-					   otherButton:nil
-					suppressionKey:nil
-				   suppressionText:nil];
+
+	[TLOPopupPrompts sheetWindowWithWindow:sheetWindow
+									  body:TXTLS(@"BasicLanguage[1240][2]", self.config.clientName)
+									 title:TXTLS(@"BasicLanguage[1240][1]")
+							 defaultButton:TXTLS(@"BasicLanguage[1240][3]")
+						   alternateButton:TXTLS(@"BasicLanguage[1240][4]")
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   [self updateUnderlyingConfigurationProfileCallback:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 }
 
 - (void)load
