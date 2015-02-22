@@ -105,6 +105,11 @@
 	}
 }
 
+- (void)tearDownQueuedCertificateTrustDialog
+{
+	[[TXSharedApplication sharedQueuedCertificateTrustPanel] dequeueEntryForSocket:self.socketConnection];
+}
+
 - (void)closeSocket
 {
 	if ( self.socketConnection) {
@@ -114,11 +119,13 @@
 
 - (void)destroySocket
 {
+	[self tearDownQueuedCertificateTrustDialog];
+
 	if ( self.socketConnection) {
 		[self.socketConnection setDelegate:nil];
 		 self.socketConnection = nil;
 	}
-	
+
 	[self destroyDispatchQueue];
 	
 	self.isConnectedWithClientSideCertificate = NO;
@@ -196,7 +203,7 @@
 
 	if (self.connectionUsesSSL) {
 		if ([self useNewSocketEngine]) {
-			[self.socketConnection useSSLWithClient:self.associatedClient withConnectionController:self];
+			[self.socketConnection useSSLWithClient:self.associatedClient connectionController:self];
 		} else {
 			[self.socketConnection useSSL];
 		}
@@ -216,7 +223,7 @@
 		if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
 			completionHandler(YES);
 		} else if (result == kSecTrustResultRecoverableTrustFailure) {
-			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler];
+			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler forSocket:self.socketConnection];
 		} else {
 			completionHandler(NO);
 		}
@@ -417,15 +424,17 @@
 
 		NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
 
+		NSString *policyName = [self.socketConnection sslCertificateTrustPolicyName];
+
 		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
 		[panel setDefaultButtonTitle:BLS(1011)];
 		[panel setAlternateButtonTitle:nil];
 
 		if (protocolString == nil) {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]")];
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", policyName)];
 		} else {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", protocolString)];
+			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", policyName, protocolString)];
 		}
 
 		[panel beginSheetForWindow:[NSApp mainWindow]
@@ -433,7 +442,7 @@
 					didEndSelector:NULL
 					   contextInfo:NULL
 							 trust:trust
-						   message:TXTLS(@"BasicLanguage[1247][1]")];
+						   message:TXTLS(@"BasicLanguage[1247][1]", policyName)];
 	}
 }
 

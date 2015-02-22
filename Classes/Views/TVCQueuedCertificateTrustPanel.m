@@ -37,10 +37,15 @@
 
 #import "TextualApplication.h"
 
+#import <objc/message.h>
+
 @interface TVCQueuedCertificateTrustPanel ()
 /* Each entry is stored as an array with index 0 containing
  the trustRef and index 1 containing the completion block. */
 @property (nonatomic, strong) NSMutableArray *queuedEntries;
+@property (nonatomic, strong) SFCertificateTrustPanel *currentPanel;
+@property (nonatomic, uweak) id activeSocket; // The current, open sheet
+@property (nonatomic, assign) BOOL doNotInvokeCompletionBlockNextPass;
 @end
 
 @implementation TVCQueuedCertificateTrustPanel
@@ -48,7 +53,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.queuedEntries = [NSMutableArray array];
+		_queuedEntries = [NSMutableArray array];
 		
 		return self;
 	}
@@ -56,17 +61,61 @@
 	return nil;
 }
 
-- (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
+- (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock forSocket:(id)socket
 {
 	/* Add new entry. */
-	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy]];
-	
-	@synchronized(self.queuedEntries) {
-		[self.queuedEntries addObject:newEntry];
+	if (completionBlock == nil) {
+		NSAssert(NO, @"'completionBlock' cannot be nil");
+	}
 
-		/* Maybe present window. */
-		if ([self.queuedEntries count] == 1) {
+	if (trustRef == NULL) {
+		NSAssert(NO, @"'trustRef' cannot be NULL");
+	}
+
+	if (socket == nil) {
+		NSAssert(NO, @"'socket' cannot be nil");
+	}
+
+	if ([socket isKindOfClass:[GCDAsyncSocket class]] == NO) {
+		NSAssert(NO, @"'socket' is not kind of class 'GCDAsyncSocket'");
+	}
+
+	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy], socket];
+	
+	@synchronized(_queuedEntries) {
+		[_queuedEntries addObject:newEntry];
+
+		if ([_queuedEntries count] == 1) {
 			[self presentNextQueuedEntry];
+		}
+	}
+}
+
+- (void)dequeueEntryForSocket:(id)socket
+{
+	if (_activeSocket) {
+		if (_activeSocket == socket) {
+			if (_currentPanel) {
+				if ([_currentPanel respondsToSelector:@selector(_dismissWithCode:)]) {
+					[self setDoNotInvokeCompletionBlockNextPass:YES];
+
+					(void)objc_msgSend(_currentPanel, @selector(_dismissWithCode:), NSModalResponseCancel);
+				}
+			}
+		} else {
+			@synchronized(_queuedEntries) {
+				NSArray *_entries = [_queuedEntries copy];
+
+				[_entries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+					id _socket = obj[2];
+
+					if (_socket == socket) {
+						[_queuedEntries removeObjectAtIndex:idx];
+
+						*stop = YES;
+					}
+				}];
+			}
 		}
 	}
 }
@@ -76,42 +125,57 @@
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		/* Gather information. */
 		/* The oldest entry will be at index 0. */
-		NSArray *contextInfo = self.queuedEntries[0];
-		
+		NSArray *contextInfo = _queuedEntries[0];
+
+		[self setActiveSocket:contextInfo[2]];
+
 		/* Build panel. */
-		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+		NSString *certificateHost = [_activeSocket sslCertificateTrustPolicyName];
+
+		 _currentPanel = [SFCertificateTrustPanel new];
 		
-		[panel setAlternateButtonTitle:BLS(1009)];
+		[_currentPanel setAlternateButtonTitle:BLS(1009)];
 		
-		[panel setInformativeText:TXTLS(@"BasicLanguage[1229][2]")];
+		[_currentPanel setInformativeText:TXTLS(@"BasicLanguage[1229][2]", certificateHost)];
 		
 		/* Begin sheet. */
-		[panel beginSheetForWindow:nil
-					 modalDelegate:self
-					didEndSelector:@selector(certificateSheetDidEnd:returnCode:contextInfo:)
-					   contextInfo:(__bridge void *)(contextInfo)
-							 trust:(__bridge SecTrustRef)(contextInfo[0])
-						   message:TXTLS(@"BasicLanguage[1229][1]")];
+		[_currentPanel beginSheetForWindow:nil
+							 modalDelegate:self
+							didEndSelector:@selector(_certificateSheetDidEnd_stage1:returnCode:contextInfo:)
+							   contextInfo:(__bridge void *)(contextInfo)
+									 trust:(__bridge SecTrustRef)(contextInfo[0])
+								   message:TXTLS(@"BasicLanguage[1229][1]", certificateHost)];
 	});
 }
 
-- (void)certificateSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)_certificateSheetDidEnd_stage1:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	/* Inform callback of result. */
 	NSArray *contextArray = (__bridge NSArray *)contextInfo;
 
-	BOOL isTrusted = (returnCode == NSModalResponseOK);
+	[self _certificateSheetDidEnd_stage2:sheet returnCode:returnCode contextInfo:contextArray];
+}
 
-	TVCQueuedCertificateTrustPanelCompletionBlock completionBlock = contextArray[1];
+- (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(NSArray *)contextInfo
+{
+	/* Inform callback of result. */
+	if (_doNotInvokeCompletionBlockNextPass == NO) {
+		BOOL isTrusted = (returnCode == NSModalResponseOK);
 
-	completionBlock(isTrusted);
-	
-	@synchronized(self.queuedEntries) {
+		((TVCQueuedCertificateTrustPanelCompletionBlock)contextInfo[1])(isTrusted); // Perform the completion block
+	}
+
+	[self setCurrentPanel:nil];
+
+	[self setActiveSocket:nil];
+
+	[self setDoNotInvokeCompletionBlockNextPass:NO];
+
+	@synchronized(_queuedEntries) {
 		/* Remove entry. */
-		[self.queuedEntries removeObjectAtIndex:0];
+		[_queuedEntries removeObjectAtIndex:0];
 
 		/* Maybe show next window. */
-		if ([self.queuedEntries count] > 0) {
+		if ([_queuedEntries count] > 0) {
 			[self presentNextQueuedEntry];
 		}
 	}

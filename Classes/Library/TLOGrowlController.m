@@ -69,34 +69,37 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 - (NSString *)titleForEvent:(TXNotificationType)event
 {
+#define _df(key, num)			case (key): { return BLS((num)); }
+
 	switch (event) {
-		case TXNotificationAddressBookMatchType:				{ return BLS(1086);		}
-		case TXNotificationChannelMessageType:					{ return BLS(1087);		}
-		case TXNotificationChannelNoticeType:					{ return BLS(1088);		}
-		case TXNotificationConnectType:							{ return BLS(1089);		}
-		case TXNotificationDisconnectType:						{ return BLS(1090);		}
-		case TXNotificationInviteType:							{ return BLS(1092);		}
-		case TXNotificationKickType:							{ return BLS(1093);		}
-		case TXNotificationNewPrivateMessageType:				{ return BLS(1094);		}
-		case TXNotificationPrivateMessageType:					{ return BLS(1095);		}
-		case TXNotificationPrivateNoticeType:					{ return BLS(1096);		}
-		case TXNotificationHighlightType:						{ return BLS(1091);		}
-			
-		case TXNotificationFileTransferSendSuccessfulType:		{ return BLS(1097);		}
-		case TXNotificationFileTransferReceiveSuccessfulType:	{ return BLS(1098);		}
-		case TXNotificationFileTransferSendFailedType:			{ return BLS(1099);		}
-		case TXNotificationFileTransferReceiveFailedType:		{ return BLS(1100);		}
-		case TXNotificationFileTransferReceiveRequestedType:	{ return BLS(1101);		}
-			
-		default: { return nil; }
+		_df(TXNotificationAddressBookMatchType, 1086)
+		_df(TXNotificationChannelMessageType, 1087)
+		_df(TXNotificationChannelNoticeType, 1088)
+		_df(TXNotificationConnectType, 1089)
+		_df(TXNotificationDisconnectType, 1090)
+		_df(TXNotificationInviteType, 1092)
+		_df(TXNotificationKickType, 1093)
+		_df(TXNotificationNewPrivateMessageType, 1094)
+		_df(TXNotificationPrivateMessageType, 1095)
+		_df(TXNotificationPrivateNoticeType, 1096)
+		_df(TXNotificationHighlightType, 1091)
+		_df(TXNotificationFileTransferSendSuccessfulType, 1097)
+		_df(TXNotificationFileTransferReceiveSuccessfulType, 1098)
+		_df(TXNotificationFileTransferSendFailedType, 1099)
+		_df(TXNotificationFileTransferReceiveFailedType, 1100)
+		_df(TXNotificationFileTransferReceiveRequestedType, 1101)
 	}
-	
+
+#undef _df
+
 	return nil;
 }
 
 - (void)notify:(TXNotificationType)eventType title:(NSString *)eventTitle description:(NSString *)eventDescription userInfo:(NSDictionary *)eventContext
 {
-	NSAssertReturn([TPCPreferences growlEnabledForEvent:eventType]);
+	if ([TPCPreferences growlEnabledForEvent:eventType] == NO) {
+		return; // This event is disabled by the user.
+	}
 
 	/* titleForEvent: invokes TXTLS for the event type. */
 	NSString *eventKind = [self titleForEvent:eventType];
@@ -345,14 +348,14 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 {
 	NSTimeInterval now = [NSDate unixTime];
 	
-	if ((now - self.lastClickedTime) < _clickInterval) {
-		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
+	if ((now - _lastClickedTime) < _clickInterval) {
+		if (   _lastClickedContext && [_lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
 	
-	self.lastClickedTime = now;
-	self.lastClickedContext = context;
+	_lastClickedTime = now;
+	_lastClickedContext = context;
 
 	BOOL changeFocus = NO;
 	

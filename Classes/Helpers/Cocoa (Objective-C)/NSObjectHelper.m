@@ -41,6 +41,11 @@
 
 @implementation NSObject (TXObjectHelper)
 
+- (id)performSelector:(SEL)aSelector withArguments:(NSArray *)arguments returnsPrimitives:(BOOL)returnsPrimitives usesTypeChecking:(BOOL)usesTypeChecking
+{
+	return [self performSelector:aSelector withArguments:arguments returnsPrimitives:returnsPrimitives usesTypeChecking:usesTypeChecking error:NULL];
+}
+
 - (id)performSelector:(SEL)aSelector withArguments:(NSArray *)arguments returnsPrimitives:(BOOL)returnsPrimitives usesTypeChecking:(BOOL)usesTypeChecking error:(NSArray **)errorMessages
 {
 	/* Define context. */

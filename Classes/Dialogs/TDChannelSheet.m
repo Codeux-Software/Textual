@@ -250,18 +250,17 @@
 
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
 {
-	TLOPopupPrompts *popup = [TLOPopupPrompts new];
-	
-	[popup sheetWindowWithQuestion:self.sheet
-							target:self
-							action:@selector(updateUnderlyingConfigurationProfileCallback:withOriginalAlert:)
-							  body:TXTLS(@"BasicLanguage[1241][2]", self.config.channelName)
-							 title:TXTLS(@"BasicLanguage[1241][1]")
-					 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
-				   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
-					   otherButton:nil
-					suppressionKey:nil
-				   suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
+									  body:TXTLS(@"BasicLanguage[1241][2]", self.config.channelName)
+									 title:TXTLS(@"BasicLanguage[1241][1]")
+							 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
+						   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   [self updateUnderlyingConfigurationProfileCallback:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 }
 
 #pragma mark -

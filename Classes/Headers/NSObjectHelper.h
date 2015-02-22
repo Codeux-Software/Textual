@@ -38,10 +38,11 @@
 #import "TextualApplication.h"
 
 @interface NSObject (TXObjectHelper)
-/* This method expects arguments to only contain the types defined by the WebKit
- JavaScript bridge API as that is what this method was created to proxy. Basically,
- that means arguments can be an object or an NSValue. Anything else will probably
- break this method and throw an exception internally. */
+- (id)performSelector:(SEL)aSelector
+		withArguments:(NSArray *)arguments
+	returnsPrimitives:(BOOL)returnsPrimitives
+	 usesTypeChecking:(BOOL)usesTypeChecking;
+
 - (id)performSelector:(SEL)aSelector
 		withArguments:(NSArray *)arguments
 	returnsPrimitives:(BOOL)returnsPrimitives
