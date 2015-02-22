@@ -154,18 +154,16 @@
 
 		/* Now that we know where our backwardCut check will begin, we must
 		 start checking the all around it. For the left side of backwardCut
-		 we want it to end on a space or the end of the text field it_ */
-
+		 we want it to end on a space or the end of the text field. */
 		NSInteger si = (selectedRange.location - 1);
 		NSInteger ci = 0; // The cut index.
 
 		for (NSInteger i = si; i >= 0; i--) {
 			/* Scanning backwards from the origin unti we find a space
 			 or the end of the text field. */
-
 			UniChar cc = [s characterAtIndex:i];
 
-			if (cc == ' ' || cc == ',') {
+			if (cc == '\x020' || cc == '\x02c') {
 				ci = (i + 1); // Character right of the space.
 
 				isAtStart = NO;
@@ -187,7 +185,9 @@
 
 		backwardCut = [s substringWithRange:self.lastCompletionFragmentRange];
 
-		NSObjectIsEmptyAssert(backwardCut);
+		if ([backwardCut length] == 0) {
+			return;
+		}
 
 		/* Now we gather information about the right side of our backwardCut
 		 which will be turned into the selectedCut. The selectedCut will be
@@ -198,7 +198,6 @@
 
 		if (([s length] - nextIndex) > 0) {
 			/* Only do work if we have work to do. */
-
 			ci = [s length]; // Default to end of text field.
 
 			/* We use the user configured suffix when scanning. */
@@ -222,7 +221,6 @@
 					/* If we have a suffix and the first character of it,
 					 then we are going to substring from that index and
 					 beyond to check if we have the rest of the suffix. */
-
 					if ([ucs length] == 1) {
 						isAtEnd = NO;
 						
@@ -242,8 +240,7 @@
 					}
 				} else {
 					/* Continue with a normal scan. */
-
-					if (cc == ' ' || cc == ':' || cc == ',') {
+					if (cc == '\x020' || cc == '\x03a' || cc == '\x02c') {
 						ci = i; // Index before this char.
 
 						isAtEnd = NO;
@@ -316,19 +313,19 @@
 
 	UniChar c = [backwardCut characterAtIndex:0];
 
-	if (isAtStart && c == '/') {
+	if (isAtStart && c == '\x02f') {
 		commandMode = YES;
 
 		backwardCut = [backwardCut substringFromIndex:1];
 		backwardCutLengthAddition = 1;
-		backwardCutStringAddition = @"/";
-	} else if (c == '@') {
+		backwardCutStringAddition = @"\x02f";
+	} else if (c == '\x040') {
 		PointerIsEmptyAssert(channel);
 
 		backwardCut = [backwardCut substringFromIndex:1];
 		backwardCutLengthAddition = 1;
-		backwardCutStringAddition = @"@";
-	} else if (c == '#') {
+		backwardCutStringAddition = @"\x040";
+	} else if (c == '\x023') {
 		channelMode = YES;
 	}
 
@@ -361,16 +358,18 @@
 		
 		for (IRCChannel *c in [client channelList]) {
 			if ([c isEqual:channel] == NO) {
-				[upperChoices addObject:[c name]];
+				[upperChoices addObjectWithoutDuplication:[c name]];
 			}
 		}
 	} else {
+		/* Complete the entire user list. */
 		NSArray *memberList = [[channel memberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
 
 		for (IRCUser *m in memberList) {
 			[upperChoices addObject:[m nickname]];
 		}
 
+		/* Complete static names, including application name. */
 		[upperChoices addObject:@"NickServ"];
 		[upperChoices addObject:@"RootServ"];
 		[upperChoices addObject:@"OperServ"];
@@ -434,7 +433,7 @@
 		i += 1;
 	}
 
-	NSAssertReturn([currentUpperChoices count] >= 1);
+	NSAssertReturn([currentUpperChoices count] > 0);
 
 	/* Now that we know the choices that are actually available to the
 	   string being completed; we can filter through each going backwards

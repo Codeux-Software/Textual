@@ -235,12 +235,12 @@
 		BOOL enableDialog = [RZUserDefaults() boolForKey:key];
 
 		if (enableDialog == NO) {
-			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"TDCWelcomeSheet[1000][2]")
-																		 title:TXTLS(@"TDCWelcomeSheet[1000][1]")
-																 defaultButton:BLS(1219)
-															   alternateButton:BLS(1182)
-																suppressionKey:@"welcomesheet_join_support_channel"
-															   suppressionText:TLOPopupPromptSpecialSuppressionTextValue];
+			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TDCWelcomeSheet[1000][2]")
+																		title:TXTLS(@"TDCWelcomeSheet[1000][1]")
+																defaultButton:BLS(1219)
+															  alternateButton:BLS(1182)
+															   suppressionKey:@"welcomesheet_join_support_channel"
+															  suppressionText:TLOPopupPromptSpecialSuppressionTextValue];
 
 			if (addSupportChannel) {
 				[self.channelList addObjectWithoutDuplication:@"#textual"];

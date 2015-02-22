@@ -52,6 +52,8 @@ typedef enum TLOPopupPromptReturnType : NSInteger {
 	TLOPopupPromptReturnOtherType,
 } TLOPopupPromptReturnType;
 
+typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert);
+
 @interface TLOPopupPrompts : NSObject
 /* Return the actual suppression key used internally. Do not feed this to
  the suppressionKey: field of these alerts. This is what is fed to that field
@@ -59,23 +61,20 @@ typedef enum TLOPopupPromptReturnType : NSInteger {
 + (NSString *)suppressionKeyWithBase:(NSString *)base;
 
 /* Alerts. */
-+ (void)popupPromptNilSelector:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert;
-
-+ (BOOL)dialogWindowWithQuestion:(NSString *)bodyText
-						   title:(NSString *)titleText
-				   defaultButton:(NSString *)buttonDefault
-				 alternateButton:(NSString *)buttonAlternate
-				  suppressionKey:(NSString *)suppressKey
-				 suppressionText:(NSString *)suppressText;
-
-- (void)sheetWindowWithQuestion:(NSWindow *)window
-						 target:(id)targetClass
-						 action:(SEL)actionSelector
-						   body:(NSString *)bodyText
++ (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
-					otherButton:(NSString *)otherButton
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText;
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(NSString *)buttonAlternate
+				  otherButton:(NSString *)otherButton
+			   suppressionKey:(NSString *)suppressKey
+			  suppressionText:(NSString *)suppressText
+			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock;
 @end

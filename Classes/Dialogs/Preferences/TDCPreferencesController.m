@@ -779,18 +779,15 @@
 
 	NSObjectIsEmptyAssert(tsf);
 
-	TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-
-	[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-							 target:[TLOPopupPrompts class]
-							 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-							   body:TXTLS(@"TDCPreferencesController[1014][2]", [item title], tsf)
-							  title:TXTLS(@"TDCPreferencesController[1014][1]")
-					  defaultButton:BLS(1186)
-					alternateButton:nil
-						otherButton:nil
-					 suppressionKey:@"theme_override_info"
-					suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+									  body:TXTLS(@"TDCPreferencesController[1014][2]", [item title], tsf)
+									 title:TXTLS(@"TDCPreferencesController[1014][1]")
+							 defaultButton:BLS(1186)
+						   alternateButton:nil
+							   otherButton:nil
+							suppressionKey:@"theme_override_info"
+						   suppressionText:nil
+						   completionBlock:nil];
 }
 
 - (void)onSelectNewFont:(id)sender
@@ -962,18 +959,15 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
-		TLOPopupPrompts *popup = [TLOPopupPrompts new];
-		
-		[popup sheetWindowWithQuestion:[NSApp keyWindow]
-								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"BasicLanguage[1102][2]")
-								 title:TXTLS(@"BasicLanguage[1102][1]")
-						 defaultButton:BLS(1186)
-					   alternateButton:nil
-						   otherButton:nil
-						suppressionKey:nil
-					   suppressionText:nil];
+		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+										  body:TXTLS(@"BasicLanguage[1102][2]")
+										 title:TXTLS(@"BasicLanguage[1102][1]")
+								 defaultButton:BLS(1186)
+							   alternateButton:nil
+								   otherButton:nil
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:nil];
 	} else {
 		NSString *path = [TPCPathInfo applicationUbiquitousContainerPath];
 		
@@ -1012,19 +1006,16 @@
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		TLOPopupPrompts *popup = [TLOPopupPrompts new];
+		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+										  body:TXTLS(@"TDCPreferencesController[1000][2]")
+										 title:TXTLS(@"TDCPreferencesController[1000][1]")
+								 defaultButton:BLS(1186)
+							   alternateButton:nil
+								   otherButton:nil
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:nil];
 
-		[popup sheetWindowWithQuestion:[NSApp keyWindow]
-								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"TDCPreferencesController[1000][2]")
-								 title:TXTLS(@"TDCPreferencesController[1000][1]")
-						 defaultButton:BLS(1186)
-					   alternateButton:nil
-						   otherButton:nil
-						suppressionKey:nil
-					   suppressionText:nil];
-		
 		[sharedCloudManager() resetDataToSync];
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
@@ -1095,36 +1086,34 @@
 - (void)onPurgeOfCloudFilesRequested:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	TLOPopupPrompts *popup = [TLOPopupPrompts new];
-	
-	[popup sheetWindowWithQuestion:[NSApp keyWindow]
-							target:self
-							action:@selector(onPurgeOfCloudFilesRequestedCallback:withOriginalAlert:)
-							  body:TXTLS(@"TDCPreferencesController[1001][2]")
-							 title:TXTLS(@"TDCPreferencesController[1001][1]")
-					 defaultButton:BLS(1009)
-				   alternateButton:BLS(1017)
-					   otherButton:nil
-					suppressionKey:nil
-				   suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+									  body:TXTLS(@"TDCPreferencesController[1001][2]")
+									 title:TXTLS(@"TDCPreferencesController[1001][1]")
+							 defaultButton:BLS(1009)
+						   alternateButton:BLS(1017)
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   [self onPurgeOfCloudFilesRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 #endif
 }
 
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	TLOPopupPrompts *popup = [TLOPopupPrompts new];
-
-	[popup sheetWindowWithQuestion:[NSApp keyWindow]
-							target:self
-							action:@selector(onPurgeOfCloudDataRequestedCallback:withOriginalAlert:)
-							  body:TXTLS(@"TDCPreferencesController[1002][2]")
-							 title:TXTLS(@"TDCPreferencesController[1002][1]")
-					 defaultButton:BLS(1009)
-				   alternateButton:BLS(1017)
-					   otherButton:nil
-					suppressionKey:nil
-				   suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+									  body:TXTLS(@"TDCPreferencesController[1002][2]")
+									 title:TXTLS(@"TDCPreferencesController[1002][1]")
+							 defaultButton:BLS(1009)
+						   alternateButton:BLS(1017)
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 #endif
 }
 
@@ -1160,8 +1149,6 @@
 - (void)onOpenPathToThemes:(id)sender
 {
     if ([themeController() isBundledTheme]) {
-		TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-
 		NSString *dialogMessage = @"TDCPreferencesController[1010]";
 		NSString *copyButton = @"TDCPreferencesController[1008]";
 		
@@ -1172,16 +1159,17 @@
 		}
 #endif
 		
-		[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-								 target:self
-								 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-								   body:TXTLS(dialogMessage)
-								  title:TXTLS(@"TDCPreferencesController[1013]")
-						  defaultButton:BLS(1017)
-						alternateButton:BLS(1009)
-							otherButton:TXTLS(copyButton)
-						 suppressionKey:nil
-						suppressionText:nil];
+		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+										  body:TXTLS(dialogMessage)
+										 title:TXTLS(@"TDCPreferencesController[1013]")
+								 defaultButton:BLS(1017)
+							   alternateButton:BLS(1009)
+								   otherButton:TXTLS(copyButton)
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+								   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
+							   }];
 		
 		return;
     } else {
@@ -1192,39 +1180,35 @@
 			if ([themeController() storageLocation] == TPCThemeControllerStorageCustomLocation) {
 				/* If the theme exists in app support folder, but cloud syncing is available,
 				 then offer to sync it to the cloud. */
-				
-				TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-				
-				[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-										 target:self
-										 action:@selector(openPathToThemesCallback:withOriginalAlert:)
-										   body:TXTLS(@"TDCPreferencesController[1012]")
-										  title:TXTLS(@"TDCPreferencesController[1013]")
-								  defaultButton:BLS(1017)
-								alternateButton:BLS(1009)
-									otherButton:TXTLS(@"TDCPreferencesController[1009]")
-								 suppressionKey:nil
-								suppressionText:nil];
-				
+
+				[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+												  body:TXTLS(@"TDCPreferencesController[1012]")
+												 title:TXTLS(@"TDCPreferencesController[1013]")
+										 defaultButton:BLS(1017)
+									   alternateButton:BLS(1009)
+										   otherButton:TXTLS(@"TDCPreferencesController[1009]")
+										suppressionKey:nil
+									   suppressionText:nil
+									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+										   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
+									   }];
+
 				return;
 			}
 		} else {
 			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
 				/* If the current theme is stored in the cloud, but our container is not available, then
 				 we have to tell the user we can't open the files right now. */
-				
-				TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-				
-				[prompt sheetWindowWithQuestion:[NSApp keyWindow]
-										 target:[TLOPopupPrompts class]
-										 action:@selector(popupPromptNilSelector:withOriginalAlert:)
-										   body:TXTLS(@"BasicLanguage[1102][2]")
-										  title:TXTLS(@"BasicLanguage[1102][1]")
-								  defaultButton:BLS(1186)
-								alternateButton:nil
-									otherButton:nil
-								 suppressionKey:nil
-								suppressionText:nil];
+
+				[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+												  body:TXTLS(@"BasicLanguage[1102][2]")
+												 title:TXTLS(@"BasicLanguage[1102][1]")
+										 defaultButton:BLS(1186)
+									   alternateButton:nil
+										   otherButton:nil
+										suppressionKey:nil
+									   suppressionText:nil
+									   completionBlock:nil];
 				
 				return;
 			}

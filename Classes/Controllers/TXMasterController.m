@@ -159,12 +159,12 @@
 				}
 			}
 
-			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1237][2]")
-																	  title:TXTLS(@"BasicLanguage[1237][1]")
-															  defaultButton:TXTLS(@"BasicLanguage[1237][3]")
-															alternateButton:TXTLS(@"BasicLanguage[1237][4]")
-															 suppressionKey:nil
-															suppressionText:nil];
+			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1237][2]")
+																	 title:TXTLS(@"BasicLanguage[1237][1]")
+															 defaultButton:TXTLS(@"BasicLanguage[1237][3]")
+														   alternateButton:TXTLS(@"BasicLanguage[1237][4]")
+															suppressionKey:nil
+														   suppressionText:nil];
 
 			if (continueLaunch == NO) {
 				self.skipTerminateSave = YES;
@@ -265,12 +265,12 @@
 	}
 	
 	if ([TPCPreferences confirmQuit]) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1000][1]")
-														  title:TXTLS(@"BasicLanguage[1000][2]")
-												  defaultButton:TXTLS(@"BasicLanguage[1000][3]")
-												alternateButton:BLS(1009)
-												 suppressionKey:nil
-												suppressionText:nil];
+		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1000][1]")
+														 title:TXTLS(@"BasicLanguage[1000][2]")
+												 defaultButton:TXTLS(@"BasicLanguage[1000][3]")
+											   alternateButton:BLS(1009)
+												suppressionKey:nil
+											   suppressionText:nil];
 
 		return result;
 	}

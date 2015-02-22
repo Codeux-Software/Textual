@@ -127,24 +127,28 @@
 
 + (NSArray *)possibleFormatterColors
 {
-	return @[
-		[self formatterWhiteColor],
-		[self formatterBlackColor],
-		[self formatterNavyBlueColor],
-		[self formatterDarkGreenColor],
-		[self formatterRedColor],
-		[self formatterBrownColor],
-		[self formatterPurpleColor],
-		[self formatterOrangeColor],
-		[self formatterYellowColor],
-		[self formatterLimeGreenColor],
-		[self formatterTealColor],
-		[self formatterAquaCyanColor],
-		[self formatterLightBlueColor],
-		[self formatterFuchsiaPinkColor],
-		[self formatterNormalGrayColor],
-		[self formatterLightGrayColor]
-	];
+	static id _colors = nil;
+
+	if (_colors == nil) {
+		_colors = @[[self formatterWhiteColor],
+					[self formatterBlackColor],
+					[self formatterNavyBlueColor],
+					[self formatterDarkGreenColor],
+					[self formatterRedColor],
+					[self formatterBrownColor],
+					[self formatterPurpleColor],
+					[self formatterOrangeColor],
+					[self formatterYellowColor],
+					[self formatterLimeGreenColor],
+					[self formatterTealColor],
+					[self formatterAquaCyanColor],
+					[self formatterLightBlueColor],
+					[self formatterFuchsiaPinkColor],
+					[self formatterNormalGrayColor],
+					[self formatterLightGrayColor]];
+	}
+
+	return _colors;
 }
 
 #pragma mark -

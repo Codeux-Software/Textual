@@ -238,10 +238,8 @@
 	#import "GRMustacheTemplate.h"
 	#import "GRMustacheTemplateRepository.h"
 	#import "GRMustacheVersion.h"
-	#import "GTMDefines.h"
 	#import "GTMEncodeHTML.h"
 	#import "GTMEncodeURL.h"
-	#import "GTMGarbageCollection.h"
 	#import "OELReachability.h"
 	#import "RLMAsyncSocket.h"
 

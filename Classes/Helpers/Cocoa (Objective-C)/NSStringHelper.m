@@ -47,7 +47,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (NSString *)stringByAppendingIRCFormattingStop
 {
-	return [self stringByAppendingFormat:@"%C", 0x0F];
+	return [self stringByAppendingFormat:@"%C", IRCTextFormatterTerminatingCharacter];
 }
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address
@@ -222,7 +222,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
 	
-	if (PointerIsEmpty(client)) {
+	if (client == nil) {
 		return [self channelNameToken];
 	}
 	
@@ -337,15 +337,15 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 		
 		if (c < 0x20) {
 			switch (c) {
-				case 0x2:
-				case 0xf:
-				case 0x16:
-				case 0x1d:
-				case 0x1f:
+				case IRCTextFormatterBoldEffectCharacter:
+				case 0x16: // Old character used for italic text
+				case IRCTextFormatterItalicEffectCharacter:
+				case IRCTextFormatterUnderlineEffectCharacter:
+				case IRCTextFormatterTerminatingCharacter:
 				{
 					break;
 				}
-				case 0x3:
+				case IRCTextFormatterColorEffectCharacter:
 				{
 					if ((i + 1) >= len) {
 						continue;

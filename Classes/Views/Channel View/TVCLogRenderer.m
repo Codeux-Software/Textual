@@ -176,7 +176,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (c < 0x20) {
 			switch (c) {
-				case 0x02:
+				case IRCTextFormatterBoldEffectCharacter:
 				{
 					if (currentAttr & _rendererBoldFormatAttribute) {
 						currentAttr &= ~_rendererBoldFormatAttribute;
@@ -186,7 +186,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 					continue;
 				}
-				case 0x03:
+				case IRCTextFormatterColorEffectCharacter:
 				{
 					NSInteger foregoundColor  = -1;
 					NSInteger backgroundColor = -1;
@@ -266,14 +266,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 					continue;
 				}
-				case 0x0F:
+				case IRCTextFormatterTerminatingCharacter:
 				{
 					currentAttr = 0;
 
 					continue;
 				}
-				case 0x1d:
-				case 0x16:
+				case IRCTextFormatterItalicEffectCharacter:
+				case 0x16: // Old character used for italic text
 				{
 					if (currentAttr & _rendererItalicFormatAttribute) {
 						currentAttr &= ~_rendererItalicFormatAttribute;
@@ -283,7 +283,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 					continue;
 				}
-				case 0x1F:
+				case IRCTextFormatterUnderlineEffectCharacter:
 				{
 					if (currentAttr & _rendererUnderlineFormatAttribute) {
 						currentAttr &= ~_rendererUnderlineFormatAttribute;
