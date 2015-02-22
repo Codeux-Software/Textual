@@ -1330,12 +1330,12 @@
 	}
 #endif
 	
-	BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(warningToken)
-													  title:TXTLS(@"BasicLanguage[1198][1]")
-											  defaultButton:BLS(1186)
-											alternateButton:BLS(1009)
-											 suppressionKey:nil
-											suppressionText:nil];
+	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(warningToken)
+													 title:TXTLS(@"BasicLanguage[1198][1]")
+											 defaultButton:BLS(1186)
+										   alternateButton:BLS(1009)
+											suppressionKey:nil
+										   suppressionText:nil];
 	
 	if (result == NO) {
 		return;
@@ -1620,12 +1620,12 @@
 	}
 	
 	if (_isChannel) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1010][1]")
-														  title:TXTLS(@"BasicLanguage[1010][2]") 
-												  defaultButton:BLS(1186)
-												alternateButton:BLS(1009)
-												 suppressionKey:@"delete_channel"
-												suppressionText:nil];
+		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1010][1]")
+														 title:TXTLS(@"BasicLanguage[1010][2]")
+												 defaultButton:BLS(1186)
+											   alternateButton:BLS(1009)
+												suppressionKey:@"delete_channel"
+											   suppressionText:nil];
 		
 		if (result == NO) {
 			return;
@@ -2361,12 +2361,12 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
-											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:BLS(1186)
-								  alternateButton:nil
-								   suppressionKey:nil
-								  suppressionText:nil];
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1110][2]")
+										   title:TXTLS(@"BasicLanguage[1110][1]")
+								   defaultButton:BLS(1186)
+								 alternateButton:nil
+								  suppressionKey:nil
+								 suppressionText:nil];
 	}
 }
 
@@ -2384,12 +2384,12 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1110][2]")
-											title:TXTLS(@"BasicLanguage[1110][1]")
-									defaultButton:BLS(1186)
-								  alternateButton:nil
-								   suppressionKey:nil
-								  suppressionText:nil];
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1110][2]")
+										   title:TXTLS(@"BasicLanguage[1110][1]")
+								   defaultButton:BLS(1186)
+								 alternateButton:nil
+								  suppressionKey:nil
+								 suppressionText:nil];
 	}
 }
 

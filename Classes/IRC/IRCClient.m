@@ -1676,7 +1676,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		while ([strc length] > 0)
 		{
-			NSString *newstr = [strc attributedStringToASCIIFormatting:&strc lineType:type client:self channel:channel];
+			NSString *newstr = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type];
 
 			BOOL encrypted = NO;
 			
@@ -2087,8 +2087,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 							channel = [worldController() createPrivateMessage:channelName client:self];
 						}
 					}
-					
-					NSString *t = [s attributedStringToASCIIFormatting:&s lineType:type client:self channel:channel];
+
+					NSString *t = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type];
 
 					NSString *encryptedString = t;
 
@@ -5383,18 +5383,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		};
 		
         /* Prompt user about disconnect. */
-        TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-
-        [prompt sheetWindowWithQuestion:mainWindow()
-                                 target:self
-                                 action:@selector(receiveErrorExcessFloodWarningPopupCallback:withOriginalAlert:)
-                                   body:TXTLS(@"BasicLanguage[1041][2]")
-                                  title:TXTLS(@"BasicLanguage[1041][1]")
-                          defaultButton:BLS(1219)
-                        alternateButton:BLS(1182)
-                            otherButton:TXTLS(@"BasicLanguage[1041][3]")
-                         suppressionKey:nil
-                        suppressionText:nil];
+		[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
+										  body:TXTLS(@"BasicLanguage[1041][2]")
+										 title:TXTLS(@"BasicLanguage[1041][1]")
+								 defaultButton:BLS(1219)
+							   alternateButton:BLS(1182)
+								   otherButton:TXTLS(@"BasicLanguage[1041][3]")
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+								   [self receiveErrorExcessFloodWarningPopupCallback:buttonClicked withOriginalAlert:originalAlert];
+							   }];
     } else {
 		[self printError:message forCommand:[m command]];
     }

@@ -260,12 +260,12 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		/* Use hash of name so the suppression is per-theme. */
 		NSString *suppressionKey = [NSString stringWithFormat:@"incompatible_theme_dialog_%lu", [[self associatedThemeName] hash]];
 
-		(void)[TLOPopupPrompts dialogWindowWithQuestion:TXTLS(@"BasicLanguage[1246][2]", [self name])
-												  title:TXTLS(@"BasicLanguage[1246][1]")
-										  defaultButton:TXTLS(@"BasicLanguage[1246][3]")
-										alternateButton:nil
-										 suppressionKey:suppressionKey
-										suppressionText:nil];
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1246][2]", [self name])
+												 title:TXTLS(@"BasicLanguage[1246][1]")
+										 defaultButton:TXTLS(@"BasicLanguage[1246][3]")
+									   alternateButton:nil
+										suppressionKey:suppressionKey
+									   suppressionText:nil];
 	}
 }
 

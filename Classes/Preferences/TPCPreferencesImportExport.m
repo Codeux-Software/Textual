@@ -51,18 +51,17 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 /* -import handles the actual import menu item. */
 + (void)import
 {
-	TLOPopupPrompts *prompt = [TLOPopupPrompts new];
-
-	[prompt sheetWindowWithQuestion:mainWindow()
-							 target:self
-							 action:@selector(importPreflight:withOriginalAlert:)
-							   body:TXTLS(@"BasicLanguage[1181][2]")
-							  title:TXTLS(@"BasicLanguage[1181][1]")
-					  defaultButton:TXTLS(@"BasicLanguage[1181][3]")
-					alternateButton:BLS(1009)
-						otherButton:nil
-					 suppressionKey:nil
-					suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
+									  body:TXTLS(@"BasicLanguage[1181][2]")
+									 title:TXTLS(@"BasicLanguage[1181][1]")
+							 defaultButton:TXTLS(@"BasicLanguage[1181][3]")
+						   alternateButton:BLS(1009)
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   [self importPreflight:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 }
 
 /* Master controller internal handles for import. */

@@ -1107,7 +1107,7 @@
 	NSString *renderedBody = nil;
 	NSString *lineTypeStng = [line lineTypeString];
 
-	BOOL drawLinks = ([[TLOLinkParser bannedURLRegexLineTypes] containsObject:lineTypeStng] == NO);
+	BOOL drawLinks = ([[TLOLinkParser bannedLineTypes] containsObject:lineTypeStng] == NO);
 
 	// ---- //
 
