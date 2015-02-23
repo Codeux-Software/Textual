@@ -62,7 +62,7 @@
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLPeerName] = (id)[controller serverAddress];
 	
-	NSData *localCertData = [[client config] identitySSLCertificate];
+	NSData *localCertData = [[client config] identityClientSideCertificate];
 	
 	if (localCertData) {
 		SecKeychainItemRef cert;

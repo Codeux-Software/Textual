@@ -8,25 +8,25 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
             <connections>
-                <outlet property="JPQActivityCheck" destination="281" id="336"/>
                 <outlet property="autoJoinCheck" destination="122" id="332"/>
                 <outlet property="cancelButton" destination="p4S-DM-ZI2" id="K9w-go-0a6"/>
-                <outlet property="channelNameField" destination="123" id="340"/>
+                <outlet property="channelNameTextField" destination="123" id="JwL-9r-szt"/>
                 <outlet property="contentView" destination="187" id="330"/>
+                <outlet property="contentViewDefaultsView" destination="243" id="8M0-FU-10I"/>
+                <outlet property="contentViewEncryptionView" destination="147" id="l6n-jm-a6i"/>
+                <outlet property="contentViewGeneralView" destination="109" id="kgV-mp-d6m"/>
                 <outlet property="contentViewTabView" destination="185" id="329"/>
-                <outlet property="defaultModesField" destination="251" id="345"/>
-                <outlet property="defaultTopicField" destination="250" id="343"/>
-                <outlet property="defaultsView" destination="243" id="344"/>
+                <outlet property="defaultModesTextField" destination="251" id="kwe-lU-JDc"/>
+                <outlet property="defaultTopicTextField" destination="250" id="Hda-fW-5nU"/>
                 <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
                 <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
-                <outlet property="encryptionKeyField" destination="151" id="347"/>
+                <outlet property="encryptionKeyTextField" destination="151" id="vlZ-Ad-MWs"/>
                 <outlet property="encryptionModeOfOperationPopup" destination="wJA-xE-WhN" id="Vjw-u8-MFp"/>
-                <outlet property="encryptionView" destination="147" id="348"/>
-                <outlet property="generalView" destination="109" id="346"/>
+                <outlet property="ignoreGeneralEventMessagesCheck" destination="281" id="Nmo-db-2KD"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
                 <outlet property="okButton" destination="RKI-lY-4zM" id="gk7-vj-fV9"/>
                 <outlet property="pushNotificationsCheck" destination="112" id="333"/>
-                <outlet property="secretKeyField" destination="124" id="339"/>
+                <outlet property="secretKeyTextField" destination="124" id="heJ-2E-yYH"/>
                 <outlet property="sheet" destination="5" id="331"/>
                 <outlet property="showTreeBadgeCountCheck" destination="356" id="358"/>
             </connections>
@@ -230,7 +230,7 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="560.5" y="1198"/>
+            <point key="canvasLocation" x="686.5" y="809"/>
         </view>
         <view id="243">
             <rect key="frame" x="0.0" y="0.0" width="325" height="201"/>
@@ -283,7 +283,7 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="415.5" y="1010.5"/>
+            <point key="canvasLocation" x="737.5" y="771.5"/>
         </view>
         <view id="147">
             <rect key="frame" x="0.0" y="0.0" width="343" height="300"/>
@@ -448,7 +448,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                                 <size key="minSize" width="267" height="27"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment content="See the ">
+                                    <fragment content="See the “">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -463,7 +463,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" wiki page for more information.">
+                                    <fragment content="” knowledge base article for more information">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
@@ -515,7 +515,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="297.5" y="567"/>
+            <point key="canvasLocation" x="746.5" y="1069"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>

@@ -38,6 +38,13 @@
 
 #import "TextualApplication.h"
 
+@interface TDCHighlightEntrySheet ()
+@property (nonatomic, copy) NSArray *channelList;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchTypePopupButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchChannelPopupButton;
+@end
+
 @implementation TDCHighlightEntrySheet
 
 - (instancetype)init
@@ -58,12 +65,9 @@
 
 - (void)startWithChannels:(NSArray *)channels
 {
-	/* Start populating. */
 	self.channelList = channels;
-	
-	if ([self.config matchKeyword]) {
-		[self.matchKeywordTextField setStringValue:[self.config matchKeyword]];
-	}
+
+	[self.matchKeywordTextField setStringValue:[self.config matchKeyword]];
 
 	if ([self.config matchIsExcluded]) {
 		[self.matchTypePopupButton selectItemWithTag:2];
@@ -71,71 +75,55 @@
 		[self.matchTypePopupButton selectItemWithTag:1];
 	}
 
-	/* Channel list. */
 	NSInteger channelCount = 0;
 	
 	for (IRCChannelConfig *channel in self.channelList) {
-		/* Add channels that are actual channels. */
 		[self.matchChannelPopupButton addItemWithTitle:[channel channelName]];
-		
-		channelCount += 1;
-		
-		/* Select the channel with matching IDs. */
-		if ([[channel itemUUID] isEqualToString:[self.config matchChannelID]]) {
+
+		if (NSObjectsAreEqual([channel itemUUID], [self.config matchChannelID])) {
 			[self.matchChannelPopupButton selectItemWithTitle:[channel channelName]];
 		}
+
+		channelCount += 1;
 	}
-	
+
 	if (channelCount == 0) {
-		/* If we have nothing, hide the menu divider under "All Channels" */
-		
 		[self.matchChannelPopupButton removeItemAtIndex:1];
 	}
-	
-	/* Pop the sheet. */
+
 	[self startSheet];
+	[self updateSaveButton];
 
 	[self.sheet makeFirstResponder:self.matchKeywordTextField];
-
-	[self updateSaveButton];
 }
 
 - (void)ok:(id)sender
 {
-	/* Save keyword. */
-	[self.config setMatchKeyword:[self.matchKeywordTextField value]];
+	NSInteger selectedChannelItem = [self.matchChannelPopupButton indexOfSelectedItem];
 
-	/* Channel. */
-	NSInteger selectedItem = [self.matchChannelPopupButton indexOfSelectedItem];
+	NSString *selectedChannelTitle = [self.matchChannelPopupButton titleOfSelectedItem];
 
-	NSString *selectedTitle = [self.matchChannelPopupButton titleOfSelectedItem];
-
-	BOOL zeroOutChannel = YES;
-
-	if (selectedItem > 0) { // 0 = ALL CHANNELS
+	if (selectedChannelItem == 0) { // 0 = ALL CHANNELS
+		[self.config setMatchChannelID:nil];
+	} else {
 		IRCChannelConfig *channel = nil;
 		
 		for (IRCChannelConfig *c in self.channelList) {
-			if ([[c channelName] isEqualToString:selectedTitle]) {
+			if ([[c channelName] isEqualToString:selectedChannelTitle]) {
 				channel = c;
 			}
 		}
 		
 		if (channel) {
-			zeroOutChannel = NO;
-			
 			[self.config setMatchChannelID:[channel itemUUID]];
+		} else {
+			[self.config setMatchChannelID:nil];
 		}
 	}
 
-	if (zeroOutChannel) {
-		[self.config setMatchChannelID:NSStringEmptyPlaceholder];
-	}
-
-	/* Entry type. */
 	[self.config setMatchIsExcluded:([self.matchTypePopupButton selectedTag] == 2)];
 
-	/* Finish. */
+	[self.config setMatchKeyword:[self.matchKeywordTextField value]];
 
 	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetOnOK:)]) {
 		[self.delegate highlightEntrySheetOnOK:self];
@@ -174,17 +162,20 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
-		self.itemUUID = [dic objectForKey:@"uniqueIdentifier" orUseDefault:[NSString stringWithUUID]];
-
-		self.matchKeyword = [dic objectForKey:@"matchKeyword" orUseDefault:NSStringEmptyPlaceholder];
-		self.matchChannelID = [dic objectForKey:@"matchChannelID" orUseDefault:NSStringEmptyPlaceholder];
-
-		self.matchIsExcluded = [dic integerForKey:@"matchIsExcluded" orUseDefault:NO];
-
-		return self;
+		[self populateDictionaryValues:dic];
 	}
 
-	return nil;
+	return self;
+}
+
+- (void)populateDictionaryValues:(NSDictionary *)dic
+{
+	[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
+
+	[dic assignStringTo:&_matchKeyword forKey:@"matchKeyword"];
+	[dic assignStringTo:&_matchChannelID forKey:@"matchChannelID"];
+
+	[dic assignBoolTo:&_matchIsExcluded forKey:@"matchIsExcluded"];
 }
 
 - (NSDictionary *)dictionaryValue

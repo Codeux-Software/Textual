@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCHighlightEntrySheet">
@@ -28,7 +28,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <popUpButton verticalHuggingPriority="750" id="304">
-                        <rect key="frame" x="18" y="85" width="100" height="26"/>
+                        <rect key="frame" x="18" y="84" width="99" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" title="Exclude" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="308" id="305">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -41,21 +41,6 @@
                             </menu>
                         </popUpButtonCell>
                     </popUpButton>
-                    <textField verticalHuggingPriority="750" id="310" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="207" y="87" width="207" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" usesSingleLineMode="YES" id="311" customClass="TVCTextFieldWithValueValidationCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="parentField" destination="310" id="h4H-Fm-k8S"/>
-                            </connections>
-                        </textFieldCell>
-                        <connections>
-                            <outlet property="delegate" destination="-2" id="337"/>
-                        </connections>
-                    </textField>
                     <textField verticalHuggingPriority="750" id="312">
                         <rect key="frame" x="120" y="89" width="82" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -75,7 +60,7 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" id="316">
-                        <rect key="frame" x="114" y="58" width="303" height="26"/>
+                        <rect key="frame" x="114" y="57" width="303" height="26"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="317">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -113,6 +98,21 @@ DQ
                             <action selector="ok:" target="-2" id="335"/>
                         </connections>
                     </button>
+                    <textField verticalHuggingPriority="750" id="310" customClass="TVCTextFieldWithValueValidation">
+                        <rect key="frame" x="207" y="87" width="207" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" usesSingleLineMode="YES" id="311" customClass="TVCTextFieldWithValueValidationCell">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <connections>
+                                <outlet property="parentField" destination="310" id="h4H-Fm-k8S"/>
+                            </connections>
+                        </textFieldCell>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="337"/>
+                        </connections>
+                    </textField>
                 </subviews>
             </view>
             <connections>

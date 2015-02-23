@@ -227,36 +227,39 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		/* Load legacy keys (if they exist) */
-		[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
-
-		[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
-
-		[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionAlgorithm"];
-
-		/* Load the newest set of keys. */
-		[dic assignIntegerTo:&_type			forKey:@"channelType"];
-		
-		[dic assignStringTo:&_itemUUID		forKey:@"uniqueIdentifier"];
-		[dic assignStringTo:&_channelName	forKey:@"channelName"];
-
-		[dic assignBoolTo:&_autoJoin					forKey:@"joinOnConnect"];
-		[dic assignBoolTo:&_pushNotifications			forKey:@"enableNotifications"];
-		[dic assignBoolTo:&_showTreeBadgeCount			forKey:@"enableTreeBadgeCountDrawing"];
-
-		[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreGeneralEventMessages"];
-		[dic assignBoolTo:&_ignoreHighlights			forKey:@"ignoreHighlights"];
-		[dic assignBoolTo:&_ignoreInlineImages			forKey:@"ignoreInlineMedia"];
-
-		[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
-		[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
-
-		[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
-		
-		return self;
+		[self populateDictionaryValues:dic];
 	}
-	
-	return nil;
+
+	return self;
+}
+
+- (void)populateDictionaryValues:(NSDictionary *)dic
+{
+	/* Load legacy keys (if they exist) */
+	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
+
+	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
+
+	[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionAlgorithm"];
+
+	/* Load the newest set of keys. */
+	[dic assignIntegerTo:&_type			forKey:@"channelType"];
+
+	[dic assignStringTo:&_itemUUID		forKey:@"uniqueIdentifier"];
+	[dic assignStringTo:&_channelName	forKey:@"channelName"];
+
+	[dic assignBoolTo:&_autoJoin					forKey:@"joinOnConnect"];
+	[dic assignBoolTo:&_pushNotifications			forKey:@"enableNotifications"];
+	[dic assignBoolTo:&_showTreeBadgeCount			forKey:@"enableTreeBadgeCountDrawing"];
+
+	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreGeneralEventMessages"];
+	[dic assignBoolTo:&_ignoreHighlights			forKey:@"ignoreHighlights"];
+	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"ignoreInlineMedia"];
+
+	[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
+	[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
+
+	[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
 }
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed

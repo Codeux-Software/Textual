@@ -44,24 +44,24 @@
 /* Each entry of the array is an array with index 0 equal to the
  view and index 1 equal to the first responder wanted in that view. */
 @property (nonatomic, strong) NSArray *navigationTree;
-@property (nonatomic, nweak) IBOutlet NSButton *JPQActivityCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *disableInlineImagesCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *enableInlineImagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *encryptionModeOfOperationPopup;
 @property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *channelNameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultModesField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicField;
-@property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyField;
-@property (nonatomic, nweak) IBOutlet NSTextField *secretKeyField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *channelNameTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *defaultModesTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *secretKeyTextField;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
-@property (nonatomic, strong) IBOutlet NSView *defaultsView;
-@property (nonatomic, strong) IBOutlet NSView *encryptionView;
-@property (nonatomic, strong) IBOutlet NSView *generalView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewEncryptionView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
 @end
 
 @implementation TDChannelSheet
@@ -79,19 +79,19 @@
 									 object:channel];
 		
 		self.navigationTree = @[
-			//    view				  first responder
-			@[self.generalView,			self.channelNameField],
-			@[self.encryptionView,		self.encryptionKeyField],
-			@[self.defaultsView,		self.defaultTopicField],
+			//		view								first responder
+			@[self.contentViewGeneralView,			self.channelNameTextField],
+			@[self.contentViewEncryptionView,		self.encryptionKeyTextField],
+			@[self.contentViewDefaultsView,			self.defaultTopicTextField],
 		];
 		
-		[self.channelNameField setOnlyShowStatusIfErrorOccurs:YES];
-		[self.channelNameField setStringValueUsesOnlyFirstToken:YES];
-		[self.channelNameField setStringValueIsInvalidOnEmpty:YES];
+		[self.channelNameTextField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.channelNameTextField setStringValueUsesOnlyFirstToken:YES];
+		[self.channelNameTextField setStringValueIsInvalidOnEmpty:YES];
 		
-		[self.channelNameField setTextDidChangeCallback:self];
+		[self.channelNameTextField setTextDidChangeCallback:self];
 		
-		[self.channelNameField setValidationBlock:^(NSString *currentValue) {
+		[self.channelNameTextField setValidationBlock:^(NSString *currentValue) {
 			return [currentValue isChannelName];
 		}];
 	}
@@ -169,22 +169,23 @@
 
 - (void)load
 {
-	[self.channelNameField setStringValue:[self.config channelName]];
+	[self.channelNameTextField		setStringValue:[self.config channelName]];
 	
-	[self.defaultModesField setStringValue:[self.config defaultModes]];
-	[self.defaultTopicField setStringValue:[self.config defaultTopic]];
+	[self.defaultModesTextField		setStringValue:[self.config defaultModes]];
+	[self.defaultTopicTextField		setStringValue:[self.config defaultTopic]];
 	
-	[self.encryptionKeyField setStringValue:[self.config encryptionKeyValue]];
+	[self.encryptionKeyTextField	setStringValue:[self.config encryptionKeyValue]];
 	
-	[self.secretKeyField setStringValue:[self.config secretKeyValue]];
-	
-	[self.encryptionModeOfOperationPopup selectItemWithTag:[self.config encryptionModeOfOperation]];
+	[self.secretKeyTextField		setStringValue:[self.config secretKeyValue]];
 
-	[self.autoJoinCheck	setState:[self.config autoJoin]];
-	[self.JPQActivityCheck setState:[self.config ignoreJPQActivity]];
-	[self.ignoreHighlightsCheck	setState:[self.config ignoreHighlights]];
-	[self.pushNotificationsCheck setState:[self.config pushNotifications]];
-	[self.showTreeBadgeCountCheck setState:[self.config showTreeBadgeCount]];
+	[self.autoJoinCheck				setState:[self.config autoJoin]];
+	[self.pushNotificationsCheck	setState:[self.config pushNotifications]];
+	[self.showTreeBadgeCountCheck	setState:[self.config showTreeBadgeCount]];
+
+	[self.ignoreGeneralEventMessagesCheck	setState:[self.config ignoreGeneralEventMessages]];
+	[self.ignoreHighlightsCheck				setState:[self.config ignoreHighlights]];
+
+	[self.encryptionModeOfOperationPopup	selectItemWithTag:[self.config encryptionModeOfOperation]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.disableInlineImagesCheck setState:[self.config ignoreInlineImages]];
@@ -195,21 +196,22 @@
 
 - (void)save
 {
-	[self.config setChannelName:[self.channelNameField value]];
+	[self.config setChannelName:		[self.channelNameTextField value]];
 	
-	[self.config setDefaultModes:[self.defaultModesField trimmedStringValue]];
-	[self.config setDefaultTopic:[self.defaultTopicField trimmedStringValue]];
+	[self.config setDefaultModes:		[self.defaultModesTextField trimmedStringValue]];
+	[self.config setDefaultTopic:		[self.defaultTopicTextField trimmedStringValue]];
 	
-	[self.config setSecretKey:[self.secretKeyField firstTokenStringValue]];
-	[self.config setEncryptionKey:[self.encryptionKeyField trimmedStringValue]];
-	
-	[self.config setEncryptionModeOfOperation:[self.encryptionModeOfOperationPopup selectedTag]];
-	
-	[self.config setAutoJoin:[self.autoJoinCheck state]];
-	[self.config setIgnoreJPQActivity:[self.JPQActivityCheck state]];
-	[self.config setIgnoreHighlights:[self.ignoreHighlightsCheck state]];
-	[self.config setPushNotifications:[self.pushNotificationsCheck state]];
-	[self.config setShowTreeBadgeCount:[self.showTreeBadgeCountCheck state]];
+	[self.config setSecretKey:			[self.secretKeyTextField firstTokenStringValue]];
+	[self.config setEncryptionKey:		[self.encryptionKeyTextField trimmedStringValue]];
+
+	[self.config setAutoJoin:					[self.autoJoinCheck state]];
+	[self.config setPushNotifications:			[self.pushNotificationsCheck state]];
+	[self.config setShowTreeBadgeCount:			[self.showTreeBadgeCountCheck state]];
+
+	[self.config setIgnoreGeneralEventMessages:		[self.ignoreGeneralEventMessagesCheck state]];
+	[self.config setIgnoreHighlights:				[self.ignoreHighlightsCheck state]];
+
+	[self.config setEncryptionModeOfOperation:		[self.encryptionModeOfOperationPopup selectedTag]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.config setIgnoreInlineImages:[self.disableInlineImagesCheck state]];
@@ -220,9 +222,9 @@
 
 - (void)update
 {
-	[self.okButton setEnabled:[self.channelNameField valueIsValid]];
+	[self.okButton setEnabled:[self.channelNameTextField valueIsValid]];
 	
-	[self.channelNameField setEditable:self.newItem];
+	[self.channelNameTextField setEditable:self.newItem];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
@@ -234,24 +236,12 @@
 {
 	[self cancel:nil];
 }
-
-- (void)updateUnderlyingConfigurationProfileCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
-{
-	if (returnType == TLOPopupPromptReturnPrimaryType) {
-		IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
-		
-		[self close];
-		
-		self.config = [channel config];
-		
-		[self start];
-	}
-}
-
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
 {
+	IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+
 	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-									  body:TXTLS(@"BasicLanguage[1241][2]", self.config.channelName)
+									  body:TXTLS(@"BasicLanguage[1241][2]", [channel name])
 									 title:TXTLS(@"BasicLanguage[1241][1]")
 							 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
 						   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
@@ -259,7 +249,13 @@
 							suppressionKey:nil
 						   suppressionText:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
-							   [self updateUnderlyingConfigurationProfileCallback:buttonClicked withOriginalAlert:originalAlert];
+							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
+								   [self close];
+
+								   [self setConfig:[channel config]];
+								   
+								   [self start];
+							   }
 						   }];
 }
 

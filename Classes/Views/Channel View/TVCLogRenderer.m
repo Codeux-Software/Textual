@@ -683,7 +683,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						 that is set to hide them. */
 						IRCAddressBookEntry *ignoreCheck = [client checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[@"hideMessagesContainingMatch"]];
 
-						if (ignoreCheck && [ignoreCheck hideMessagesContainingMatch]) {
+						if (ignoreCheck && [ignoreCheck ignoreMessagesContainingMatchh]) {
 							_cancelRender = YES;
 
 							return; // Break from this method.
