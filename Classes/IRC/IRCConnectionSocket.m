@@ -47,8 +47,7 @@
 
 - (BOOL)useNewSocketEngine
 {
-	return (self.connectionUsesNormalSocks == NO &&
-			self.connectionUsesSystemSocks == NO);
+	return (self.proxyType == IRCConnectionSocketNoProxyType);
 }
 
 #pragma mark -
@@ -62,12 +61,17 @@
 
 - (void)createDispatchQueue
 {
-	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
+	NSString *dispatchID = [NSString stringWithUUID];
+
+	// A socket queue exists regardless of what library is in use.
+	// This class reads on data on this queue just so the work is not passed to the main thread.
+	NSString *dqname = [@"socketDispatchQueue." stringByAppendingString:dispatchID];
 
 	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], DISPATCH_QUEUE_SERIAL);
 
+	// Create secondary queue incase we are using GCDAsyncSocket
 	if ([self useNewSocketEngine]) {
-		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:[self.associatedClient uniqueIdentifier]];
+		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:dispatchID];
 
 		self.socketQueue = dispatch_queue_create([sqname UTF8String], DISPATCH_QUEUE_SERIAL);
 	}
@@ -96,7 +100,11 @@
 
 	NSError *connError = nil;
 
-	if ([self.socketConnection connectToHost:self.serverAddress onPort:self.serverPort withTimeout:(-1) error:&connError] == NO) {
+	if ([self.socketConnection connectToHost:self.serverAddress
+									  onPort:self.serverPort
+								 withTimeout:(-1)
+									   error:&connError] == NO)
+	{
 		[self onSocket:self.socketConnection willDisconnectWithError:connError];
 
 		if ([self useNewSocketEngine] == NO) {
@@ -175,10 +183,10 @@
 
 - (void)write:(NSData *)data
 {
-	NSAssertReturn(self.isConnected);
-
-	[self.socketConnection writeData:data withTimeout:(-1) tag:0];
-	[self.socketConnection readDataWithTimeout:(-1)	tag:0];
+	if (self.isConnected) {
+		[self.socketConnection writeData:data withTimeout:(-1) tag:0];
+		[self.socketConnection readDataWithTimeout:(-1)	tag:0];
+	}
 }
 
 #pragma mark -
@@ -191,17 +199,19 @@
 
 - (BOOL)onSocketWillConnect:(id)sock
 {
-	if (self.connectionUsesSystemSocks) {
+	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType) {
 		[self.socketConnection useSystemSocksProxy];
-	} else if (self.connectionUsesNormalSocks) {
-		[self.socketConnection useSocksProxyVersion:self.proxySocksVersion
+	} else if (self.proxyType == IRCConnectionSocketSocks4ProxyType ||
+			   self.proxyType == IRCConnectionSocketSocks5ProxyType)
+	{
+		[self.socketConnection useSocksProxyVersion:self.proxyType
 											address:self.proxyAddress
 											   port:self.proxyPort
 										   username:self.proxyUsername
 										   password:self.proxyPassword];
 	}
 
-	if (self.connectionUsesSSL) {
+	if (self.connectionPrefersSecuredConnection) {
 		if ([self useNewSocketEngine]) {
 			[self.socketConnection useSSLWithClient:self.associatedClient connectionController:self];
 		} else {
@@ -272,7 +282,7 @@
 
 - (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
 {
-	if (PointerIsEmpty(error) || [error code] == errSSLClosedGraceful) {
+	if (error == nil || [error code] == errSSLClosedGraceful) {
 		if ([self useNewSocketEngine]) {
 			[self onSocketDidDisconnect:sender withError:nil];
 		}
@@ -339,6 +349,7 @@
 		 time consuming we chose to perform all read actions on a dispatch queue. */
 		/* This behavior is inherited automatically when using the new socket
 		 engine which is pretty much anytime a proxy is not enabled. */
+
 		XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 			[self completeReadForData:data];
 		});
