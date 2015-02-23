@@ -51,8 +51,6 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @property (readonly, copy) NSString *usernameFromHostmask;
 @property (readonly, copy) NSString *addressFromHostmask;
 
-@property (readonly, copy) NSString *cleanedServerHostmask;
-
 - (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor;
 - (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference;
 

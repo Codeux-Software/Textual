@@ -268,25 +268,6 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return nil;
 }
 
-- (NSString *)cleanedServerHostmask
-{
-    NSString *bob = [self trim];
-
-    if ([XRRegularExpression string:bob isMatchedByRegex:@"^([^:]+):([0-9]{2,7})$"] ||
-        [XRRegularExpression string:bob isMatchedByRegex:@"^\\[([0-9a-f:]+)\\]:([0-9]{2,7})$"])
-	{
-		NSRange searchRange = [bob rangeOfString:@":" options:NSBackwardsSearch range:NSMakeRange(0, [self length])];
-
-		if (searchRange.location == NSNotFound) {
-			return bob;
-		}
-
-		return [bob substringToIndex:searchRange.location];
-    }
-
-	return bob;
-}
-
 - (NSString *)stringWithValidURIScheme
 {
 	return [AHHyperlinkScanner URLWithProperScheme:self];
