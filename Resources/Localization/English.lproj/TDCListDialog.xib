@@ -9,8 +9,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCListDialog">
             <connections>
                 <outlet property="channelListTable" destination="68" id="136"/>
-                <outlet property="networkNameField" destination="132" id="137"/>
-                <outlet property="searchField" destination="103" id="138"/>
+                <outlet property="networkNameTextField" destination="132" id="GUU-qy-Vpo"/>
+                <outlet property="searchTextField" destination="103" id="m09-ig-hTb"/>
                 <outlet property="updateButton" destination="76" id="121"/>
                 <outlet property="window" destination="5" id="128"/>
             </connections>
@@ -164,7 +164,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="118"/>
             </connections>
-            <point key="canvasLocation" x="436" y="385"/>
+            <point key="canvasLocation" x="554" y="390"/>
         </window>
     </objects>
 </document>

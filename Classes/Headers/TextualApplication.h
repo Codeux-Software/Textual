@@ -74,7 +74,7 @@
 	@class TDCAboutPanel;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
-	@class TDCFileTransferDialogRemoteAddress;
+	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
 	@class TDChanBanExceptionSheet;
@@ -279,7 +279,7 @@
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
-	#import "TDCFileTransferDialogRemoteAddress.h"
+	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"
 	#import "TDCInviteSheet.h"

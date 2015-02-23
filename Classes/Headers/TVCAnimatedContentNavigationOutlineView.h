@@ -44,6 +44,7 @@
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
 @property (nonatomic, nweak) IBOutlet NSView *contentView;
 @property (nonatomic, nweak) IBOutlet NSWindow *parentWindow;
+@property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
 
 - (void)startAtSelectionIndex:(NSInteger)startingSelection;
 @end

@@ -40,8 +40,6 @@
 
 @interface TDCNickSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *toldNicknameField;
 
 - (void)start:(NSString *)nickname;
 @end

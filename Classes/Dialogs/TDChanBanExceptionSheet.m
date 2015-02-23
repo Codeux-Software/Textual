@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanExceptionSheet ()
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *exceptionTable;
 @property (nonatomic, strong) NSMutableArray *exceptionList;
 @end
@@ -66,7 +66,9 @@
 {
 	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
 
-	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
+	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], [c name]];
+
+	[self.headerTitleTextField setStringValue:headerTitle];
 	
     [self startSheet];
 }
@@ -172,6 +174,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	if ([self.delegate respondsToSelector:@selector(chanBanExceptionDialogWillClose:)]) {
 		[self.delegate chanBanExceptionDialogWillClose:self];
 	}

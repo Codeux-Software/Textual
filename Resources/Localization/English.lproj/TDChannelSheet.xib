@@ -36,21 +36,21 @@
         <window title="Channel Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="1103" y="493" width="325" height="393"/>
+            <rect key="contentRect" x="1103" y="493" width="325" height="384"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
-            <value key="minSize" type="size" width="213" height="107"/>
+            <value key="minSize" type="size" width="100" height="100"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="5" width="325" height="393"/>
+                <rect key="frame" x="0.0" y="0.0" width="325" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <segmentedControl verticalHuggingPriority="750" id="185">
-                        <rect key="frame" x="47" y="354" width="230" height="20"/>
+                        <rect key="frame" x="47" y="345" width="230" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
                             <font key="font" metaFont="titleBar" size="12"/>
                             <segments>
-                                <segment label="General" width="71"/>
-                                <segment label="Encryption" selected="YES" tag="1"/>
+                                <segment label="General" width="71" selected="YES"/>
+                                <segment label="Encryption" tag="1"/>
                                 <segment label="Defaults"/>
                             </segments>
                         </segmentedCell>
@@ -59,7 +59,7 @@
                         </connections>
                     </segmentedControl>
                     <customView id="187">
-                        <rect key="frame" x="0.0" y="61" width="325" height="294"/>
+                        <rect key="frame" x="0.0" y="61" width="325" height="285"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     </customView>
                     <button verticalHuggingPriority="750" id="RKI-lY-4zM">
@@ -99,7 +99,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
             </connections>
-            <point key="canvasLocation" x="374.5" y="655.5"/>
+            <point key="canvasLocation" x="374.5" y="655"/>
         </window>
         <view id="109" userLabel="View">
             <rect key="frame" x="0.0" y="0.0" width="325" height="286"/>

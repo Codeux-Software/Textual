@@ -55,6 +55,52 @@
 
 #define _addonsToolbarItemMultiplier		65
 
+@interface TDCPreferencesController ()
+@property (nonatomic, copy) NSArray *alertSounds;
+@property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
+@property (nonatomic, nweak) IBOutlet NSArrayController *matchKeywordsArrayController;
+@property (nonatomic, nweak) IBOutlet NSButton *addExcludeKeywordButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertBounceDockIconButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertDisableWhileAwayButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertPushNotificationButton;
+@property (nonatomic, nweak) IBOutlet NSButton *alertSpeakEventButton;
+@property (nonatomic, nweak) IBOutlet NSButton *highlightNicknameButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *themeSelectionButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
+@property (nonatomic, nweak) IBOutlet NSTableView *excludeKeywordsTable;
+@property (nonatomic, nweak) IBOutlet NSTableView *installedScriptsTable;
+@property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
+@property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewAlerts;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewChannelManagement;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewCommandScope;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewDefaultIdentity;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewExperimentalSettings;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewFileTransfers;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewFloodControl;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewGeneral;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewHighlights;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewICloud;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewIRCopMessages;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewIncomingData;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInlineMedia;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInstalledAddons;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewInterface;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardAndMouse;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
+@property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
+@property (nonatomic, nweak) IBOutlet NSView *mountainLionDeprecationWarningView;
+@property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
+@property (nonatomic, nweak) IBOutlet NSScrollView *navigationOutlineviewScrollbar;
+@property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
+@end
+
 @implementation TDCPreferencesController
 
 - (instancetype)init
@@ -213,7 +259,6 @@
 	[[self scriptsController] populateData];
 
 	[[self installedScriptsTable] setDataSource:[self scriptsController]];
-	
 	[[self installedScriptsTable] reloadData];
 
 	[self updateThemeSelection];
@@ -250,12 +295,10 @@
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
 								 object:nil];
-	
-	[[self syncPreferencesToTheCloudButton] setState:[TPCPreferences syncPreferencesToTheCloud]];
 #endif
 	
 	[[self window] restoreWindowStateForClass:[self class]];
-	
+
 	[[self window] makeKeyAndOrderFront:nil];
 }
 
@@ -414,13 +457,17 @@
 
 	NSArray *alertSounds = [self availableSounds];
 
-    for (NSString *alertSound in alertSounds) {
-        NSMenuItem *item = [NSMenuItem new];
+    for (id alertSound in alertSounds) {
+		if ([alertSound isKindOfClass:[NSMenuItem class]] == NO) {
+			NSMenuItem *item = [NSMenuItem new];
 
-        [item setTitle:alertSound];
+			[item setTitle:alertSound];
 
-        [[[self alertSoundChoiceButton] menu] addItem:item];
-    }
+			[[[self alertSoundChoiceButton] menu] addItem:item];
+		} else {
+			[[[self alertSoundChoiceButton] menu] addItem:alertSound];
+		}
+	}
 
     [[self alertSoundChoiceButton] selectItemAtIndex:0];
 
@@ -523,8 +570,6 @@
 
 - (NSArray *)availableSounds
 {
-	NSMutableArray *soundList = [NSMutableArray array];
-
 	NSString *systemSoundFolder = @"/System/Library/Sounds";
 
 	NSURL *userSoundFolderURL = [RZFileManager() URLForDirectory:NSLibraryDirectory
@@ -535,35 +580,30 @@
 
 	NSString *userSoundFolder = [[userSoundFolderURL relativePath] stringByAppendingPathComponent:@"/Sounds"];
 
-	NSArray *homeDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:userSoundFolder error:NULL];
-	NSArray *systemDirectoryContents = [RZFileManager() contentsOfDirectoryAtPath:systemSoundFolder error:NULL];
+	NSArray *soundPathList = [TPCPathInfo buildPathArray:userSoundFolder, systemSoundFolder, nil];
 
-	[soundList addObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]];
-	[soundList addObject:@"Beep"];
+	NSMutableArray *soundList = [NSMutableArray array];
 
-	if ([systemDirectoryContents count] > 0) {
-		for (__strong NSString *s in systemDirectoryContents) {
+	[soundList addObject:@"Beep"]; // For NSBeep()
+
+	for (NSString *path in soundPathList) {
+		NSArray *directoryContents = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
+
+		for (NSString *s in directoryContents) {
 			if ([s contains:@"."]) {
-				s = [s stringByDeletingPathExtension];
+				[soundList addObject:[s stringByDeletingPathExtension]];
+			} else {
+				[soundList addObject:s];
 			}
-
-			[soundList addObject:s];
 		}
 	}
 
-	if ([homeDirectoryContents count] > 0) {
-		[soundList addObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]];
+	[soundList sortedArrayUsingSelector:@selector(compare:)];
 
-		for (__strong NSString *s in homeDirectoryContents) {
-			if ([s contains:@"."]) {
-				s = [s stringByDeletingPathExtension];
-			}
-			
-			[soundList addObject:s];
-		}
-	}
+	[soundList insertObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel] atIndex:0];
+	[soundList insertObject:[NSMenuItem separatorItem] atIndex:1];
 
-	return soundList;
+	return [soundList copy];
 }
 
 #pragma mark -
@@ -726,8 +766,7 @@
 		
 		[[[self themeSelectionButton] menu] addItem:cell];
 	}
-	
-	/* Select whatever theme matches current name. */
+
 	[[self themeSelectionButton] selectItemWithTitle:[themeController() name]];
 }
 
@@ -735,16 +774,14 @@
 {
 	NSMenuItem *item = [[self themeSelectionButton] selectedItem];
 
-	NSString *newThemeName = nil;
-
 	TPCThemeControllerStorageLocation storageLocation = [TPCThemeController expectedStorageLocationOfThemeWithName:[item userInfo]];
 	
-	newThemeName = [TPCThemeController buildFilename:[item title] forStorageLocation:storageLocation];
+	NSString *newThemeName = [TPCThemeController buildFilename:[item title] forStorageLocation:storageLocation];
 	
 	NSString *oldThemeName = [TPCPreferences themeName];
 	
 	if ([oldThemeName isEqual:newThemeName]) {
-		return;
+		return; // Do not reselect the same theme…
 	}
 
 	[TPCPreferences setThemeName:newThemeName];
@@ -871,12 +908,12 @@
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +y"];
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +q"];
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +a"];
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +o"];
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +h"];
-	[RZUserDefaults() removeObjectForKey:@"User List Mode Badge Colors —> +v"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +y"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +q"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +a"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +o"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +h"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +v"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +y"];
@@ -892,7 +929,7 @@
 
 - (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
-	[RZUserDefaults() removeObjectForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+	[[RZUserDefaultsController() values] setValue:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
@@ -937,7 +974,7 @@
 {
 	TXFileTransferIPAddressDetectionMethod detectionMethod = [TPCPreferences fileTransferIPAddressDetectionMethod];
 	
-	[[self fileTransferManuallyEnteredIPAddressField] setEnabled:(detectionMethod == TXFileTransferIPAddressManualDetectionMethod)];
+	[[self fileTransferManuallyEnteredIPAddressTextField] setEnabled:(detectionMethod == TXFileTransferIPAddressManualDetectionMethod)];
 }
 
 - (void)onChangedHighlightLogging:(id)sender
@@ -1119,15 +1156,13 @@
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		return;
-	}
-	
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		NSString *oldpath = [themeController() actualPath];
 		
 		[RZWorkspace() openFile:oldpath];
-	} else {
+	}
+
+	if (returnCode == TLOPopupPromptReturnOtherType) {
 		[[originalAlert window] orderOut:nil];
 
 		BOOL copyingToCloud = NO;
@@ -1149,16 +1184,23 @@
 - (void)onOpenPathToThemes:(id)sender
 {
     if ([themeController() isBundledTheme]) {
-		NSString *dialogMessage = @"TDCPreferencesController[1010]";
-		NSString *copyButton = @"TDCPreferencesController[1008]";
+		NSString *dialogMessage = nil;
+		NSString *copyButton = nil;
 		
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			dialogMessage = @"TDCPreferencesController[1011]";
 			copyButton = @"TDCPreferencesController[1009]";
+		} else {
+#endif
+
+			dialogMessage = @"TDCPreferencesController[1010]";
+			copyButton = @"TDCPreferencesController[1008]";
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		}
 #endif
-		
+
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(dialogMessage)
 										 title:TXTLS(@"TDCPreferencesController[1013]")

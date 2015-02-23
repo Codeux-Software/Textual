@@ -51,6 +51,48 @@ NSString * const IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey	=
 
 NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
 
++ (instancetype)newIgnoreEntry
+{
+	IRCAddressBookEntry *newEntry = [IRCAddressBookEntry new];
+
+	[newEntry setEntryType:IRCAddressBookIgnoreEntryType];
+
+	[newEntry setIgnoreClientToClientProtocol:YES];
+	[newEntry setIgnoreFileTransferRequests:YES];
+	[newEntry setIgnoreGeneralEventMessages:YES];
+	[newEntry setIgnoreMessagesContainingMatchh:NO];
+	[newEntry setIgnoreNoticeMessages:YES];
+	[newEntry setIgnorePrivateMessageHighlights:YES];
+	[newEntry setIgnorePrivateMessages:YES];
+	[newEntry setIgnorePublicMessageHighlights:YES];
+	[newEntry setIgnorePublicMessages:YES];
+
+	[newEntry setTrackUserActivity:NO];
+
+	return newEntry;
+}
+
++ (instancetype)newUserTrackingEntry
+{
+	IRCAddressBookEntry *newEntry = [IRCAddressBookEntry new];
+
+	[newEntry setEntryType:IRCAddressBookUserTrackingEntryType];
+
+	[newEntry setIgnoreClientToClientProtocol:NO];
+	[newEntry setIgnoreFileTransferRequests:NO];
+	[newEntry setIgnoreGeneralEventMessages:NO];
+	[newEntry setIgnoreMessagesContainingMatchh:NO];
+	[newEntry setIgnoreNoticeMessages:NO];
+	[newEntry setIgnorePrivateMessageHighlights:NO];
+	[newEntry setIgnorePrivateMessages:NO];
+	[newEntry setIgnorePublicMessageHighlights:NO];
+	[newEntry setIgnorePublicMessages:NO];
+
+	[newEntry setTrackUserActivity:YES];
+
+	return newEntry;
+}
+
 - (NSDictionary *)defaults
 {
 	static id _defaults = nil;
@@ -63,13 +105,13 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 			 @"ignoreClientToClientProtocol"		: @(NO),
 			 @"ignoreGeneralEventMessages"			: @(NO),
+			 @"ignoreMessagesContainingMatch"		: @(NO),
 			 @"ignoreNoticeMessages"				: @(NO),
 			 @"ignorePrivateMessages"				: @(NO),
 			 @"ignorePrivateMessageHighlights"		: @(NO),
 			 @"ignorePublicMessages"				: @(NO),
 			 @"ignorePublicMessageHighlights"		: @(NO),
 			 @"ignoreFileTransferRequests"			: @(NO),
-			 @"ignoreMessagesContainingMatch"		: @(NO),
 		 };
 
 		_defaults = [defaults copy];

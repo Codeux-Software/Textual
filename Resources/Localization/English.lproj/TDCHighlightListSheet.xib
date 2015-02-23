@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="TDCHighlightListSheet">
             <connections>
                 <outlet property="cancelButton" destination="248" id="283"/>
-                <outlet property="headerTitleField" destination="249" id="285"/>
+                <outlet property="headerTitleTextField" destination="249" id="TUM-zE-uVx"/>
                 <outlet property="highlightListTable" destination="255" id="286"/>
                 <outlet property="okButton" destination="248" id="287"/>
                 <outlet property="sheet" destination="243" id="288"/>
@@ -130,7 +130,7 @@ Gw
                     <textField verticalHuggingPriority="750" id="249">
                         <rect key="frame" x="17" y="320" width="486" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Highlight List for &quot;%@&quot;" id="250">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -150,7 +150,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="655.5" y="370"/>
+            <point key="canvasLocation" x="855.5" y="394"/>
         </window>
     </objects>
 </document>

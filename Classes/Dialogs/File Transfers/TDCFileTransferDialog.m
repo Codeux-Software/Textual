@@ -72,19 +72,19 @@
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame
 {
 	if (key) {
-		[self.window makeKeyAndOrderFront:nil];
+		[[self window] makeKeyAndOrderFront:nil];
 	} else {
-		[self.window orderFront:nil];
+		[[self window] orderFront:nil];
 	}
 	
 	if (restoreFrame) {
-		[self.window restoreWindowStateForClass:[self class]];
+		[[self window] restoreWindowStateForClass:[self class]];
 	}
 }
 
 - (void)close
 {
-	[self.window close];
+	[[self window] close];
 }
 
 - (TDCFileTransferDialogTransferController *)fileTransferFromUniqueIdentifier:(NSString *)identifier
@@ -515,6 +515,7 @@
 	
 	[self.fileTransferTable removeRowsAtIndexes:indexes
 								  withAnimation:NSTableViewAnimationSlideUp];
+	
 	@synchronized(self.fileTransfers) {
 		for (NSNumber *index in [indexes arrayFromIndexSet]) {
 			NSInteger actualIndx = [index integerValue];
@@ -531,6 +532,7 @@
 - (void)openReceivedFile:(id)sender
 {
 	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+
 	@synchronized(self.fileTransfers) {
 		for (NSNumber *index in [indexes arrayFromIndexSet]) {
 			NSInteger actualIndx = [index integerValue];
@@ -566,6 +568,7 @@
 - (void)updateMaintenanceTimerOnMainThread
 {
 	BOOL foundActive = NO;
+
 	@synchronized(self.fileTransfers) {
 		for (id e in self.fileTransfers) {
 			if ([e transferStatus] == TDCFileTransferDialogTransferReceivingStatus ||
@@ -584,7 +587,7 @@
 		}
 	} else {
 		if (foundActive) {
-			[self.maintenanceTimer start:1];
+			[self.maintenanceTimer start:1.0];
 		}
 	}
 }
@@ -691,7 +694,7 @@
 {
 	self.sourceIPAddressRequestPending = YES;
 	
-	TDCFileTransferDialogRemoteAddress *request = [TDCFileTransferDialogRemoteAddress new];
+	TDCFileTransferDialogRemoteAddressLookup *request = [TDCFileTransferDialogRemoteAddressLookup new];
 	
 	[request requestRemoteIPAddressFromExternalSource:self];
 }
@@ -858,12 +861,12 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.window saveWindowStateForClass:[self class]];
+	[[self window] saveWindowStateForClass:[self class]];
 }
 
 - (IBAction)hideWindow:(id)sender
 {
-	[self.window close];
+	[[self window] close];
 }
 
 @end

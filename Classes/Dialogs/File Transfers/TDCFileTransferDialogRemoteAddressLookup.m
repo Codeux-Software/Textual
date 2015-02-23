@@ -39,27 +39,24 @@
 
 #define _requestTimeoutInterval			30.0
 
-@interface TDCFileTransferDialogRemoteAddress ()
+@interface TDCFileTransferDialogRemoteAddressLookup ()
 @property (nonatomic, uweak) id requestDelegate;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
 @end
 
-@implementation TDCFileTransferDialogRemoteAddress
+@implementation TDCFileTransferDialogRemoteAddressLookup
 
 #pragma mark -
 #pragma mark Public API
 
 - (void)requestRemoteIPAddressFromExternalSource:(id)delegate
 {
-	/* Who would we be talking with? */
 	PointerIsEmptyAssert(delegate);
-	
-	/* Remember it. */
+
 	self.requestDelegate = delegate;
-	
-	/* Do work… */
+
 	[self setupConnectionRequest];
 }
 

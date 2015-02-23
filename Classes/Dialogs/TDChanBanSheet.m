@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanSheet ()
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
 @end
@@ -65,8 +65,10 @@
 - (void)show
 {
 	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
-	
-	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
+
+	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], [c name]];
+
+	[self.headerTitleTextField setStringValue:headerTitle];
 	
 	[self startSheet];
 }
@@ -172,6 +174,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	if ([self.delegate respondsToSelector:@selector(chanBanDialogWillClose:)]) {
 		[self.delegate chanBanDialogWillClose:self];
 	}

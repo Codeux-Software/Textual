@@ -51,8 +51,6 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 
 - (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context;
 
-- (void)close;
-
 - (IBAction)proxyTypeChanged:(id)sender;
 - (IBAction)floodControlChanged:(id)sender;
 - (IBAction)toggleAdvancedEncodings:(id)sender;

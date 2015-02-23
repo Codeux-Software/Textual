@@ -338,7 +338,7 @@
 		4C0BA60E1990798800857343 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA6111990798800857343 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA6121990798800857343 /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C0BA6131990798800857343 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C0BA6131990798800857343 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA6141990798800857343 /* TVCServerListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA6151990798800857343 /* TVCServerListSharedUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA6161990798800857343 /* TVCMemberListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBFB2E11979AF9C005BB6B5 /* TVCMemberListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -402,7 +402,7 @@
 		4C0BA6671990798800857343 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
 		4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
 		4C0BA6691990798800857343 /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
-		4C0BA66A1990798800857343 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
+		4C0BA66A1990798800857343 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4C0BA66B1990798800857343 /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */; };
 		4C0BA66C1990798800857343 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4C0BA66D1990798800857343 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
@@ -1483,7 +1483,7 @@
 		4CDFA51D1996EAB2007EA46E /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA5201996EAB2007EA46E /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA5211996EAB2007EA46E /* TPCPreferencesUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CDFA5221996EAB2007EA46E /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDFA5221996EAB2007EA46E /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA5231996EAB2007EA46E /* TVCServerListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA5241996EAB2007EA46E /* TVCServerListSharedUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDFA5251996EAB2007EA46E /* TVCMemberListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBFB2E11979AF9C005BB6B5 /* TVCMemberListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1548,7 +1548,7 @@
 		4CDFA5791996EAB2007EA46E /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
 		4CDFA57A1996EAB2007EA46E /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
 		4CDFA57B1996EAB2007EA46E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
-		4CDFA57C1996EAB2007EA46E /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
+		4CDFA57C1996EAB2007EA46E /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CDFA57D1996EAB2007EA46E /* TVCMainWindowTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110EA1955AAA10062EC4E /* TVCMainWindowTextView.m */; };
 		4CDFA57E1996EAB2007EA46E /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CDFA57F1996EAB2007EA46E /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
@@ -1648,10 +1648,10 @@
 		4CE4B7771968B800003CBF67 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CE4B7731968B7D3003CBF67 /* liveresize.js */; };
 		4CE77C7D195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */; };
 		4CE77C7E195E7A8A000DA30D /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */; };
-		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
-		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */; };
-		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
+		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
+		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2449,8 +2449,8 @@
 		4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
 		4CE4B7731968B7D3003CBF67 /* liveresize.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = liveresize.js; path = Resources/Javascript/API/liveresize.js; sourceTree = SOURCE_ROOT; };
 		4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldPrivate.h; sourceTree = "<group>"; };
-		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddress.h; sourceTree = "<group>"; };
-		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddress.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddress.m"; sourceTree = "<group>"; };
+		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
+		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
 		4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
 		4CEC552319BE6A220028DEF2 /* TVCWebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWebViewAutoScroll.m; sourceTree = "<group>"; };
@@ -2570,7 +2570,7 @@
 				4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */,
 				4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */,
 				4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */,
-				4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m */,
+				4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */,
 			);
 			name = "File Transfers";
 			sourceTree = "<group>";
@@ -2964,7 +2964,7 @@
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
-				4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h */,
+				4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */,
 				4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */,
 				4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */,
 				4C8AF55A158E99520026668C /* TDChanBanExceptionSheet.h */,
@@ -3775,7 +3775,7 @@
 				4C0BA60E1990798800857343 /* TDCProgressInformationSheet.h in Headers */,
 				4C0BA6111990798800857343 /* TVCTextFieldWithValueValidation.h in Headers */,
 				4C0BA6121990798800857343 /* TPCPreferencesUserDefaults.h in Headers */,
-				4C0BA6131990798800857343 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
+				4C0BA6131990798800857343 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4C0BA6141990798800857343 /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C7E0FAD19AC25900084173D /* GRMustacheError.h in Headers */,
 				4C7E0FC919AC25900084173D /* GRMustacheTemplate.h in Headers */,
@@ -3961,7 +3961,7 @@
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
-				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
+				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4083,7 +4083,7 @@
 				4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */,
 				4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
 				4CE204F0196989FB00D7E220 /* TPCPreferencesUserDefaults.h in Headers */,
-				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddress.h in Headers */,
+				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4C77661F19789F9A00759774 /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C7E0FAF19AC25900084173D /* GRMustacheError.h in Headers */,
 				4C7E0FCB19AC25900084173D /* GRMustacheTemplate.h in Headers */,
@@ -4237,7 +4237,7 @@
 				4CDFA51D1996EAB2007EA46E /* TDCProgressInformationSheet.h in Headers */,
 				4CDFA5201996EAB2007EA46E /* TVCTextFieldWithValueValidation.h in Headers */,
 				4CDFA5211996EAB2007EA46E /* TPCPreferencesUserDefaults.h in Headers */,
-				4CDFA5221996EAB2007EA46E /* TDCFileTransferDialogRemoteAddress.h in Headers */,
+				4CDFA5221996EAB2007EA46E /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4CDFA5231996EAB2007EA46E /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C7E0FB019AC25900084173D /* GRMustacheError.h in Headers */,
 				4C7E0FCC19AC25900084173D /* GRMustacheTemplate.h in Headers */,
@@ -5103,7 +5103,7 @@
 				4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */,
 				4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */,
 				4CBFB2E01979AEFE005BB6B5 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
-				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */,
+				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4CA110F41955AAA10062EC4E /* TVCMainWindowTextView.m in Sources */,
@@ -5241,7 +5241,7 @@
 				4C0BA6671990798800857343 /* IRCChannel.m in Sources */,
 				4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */,
 				4C0BA6691990798800857343 /* TPCPathInfo.m in Sources */,
-				4C0BA66A1990798800857343 /* TDCFileTransferDialogRemoteAddress.m in Sources */,
+				4C0BA66A1990798800857343 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4C0BA66B1990798800857343 /* TVCMainWindowTextView.m in Sources */,
 				4C0BA66C1990798800857343 /* THOUnicodeHelper.m in Sources */,
 				4C0BA66D1990798800857343 /* IRCChannelMode.m in Sources */,
@@ -5377,7 +5377,7 @@
 				4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */,
 				4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */,
 				4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */,
-				4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddress.m in Sources */,
+				4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CA110F31955AAA10062EC4E /* TVCMainWindowTextView.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
@@ -5513,7 +5513,7 @@
 				4CDFA5791996EAB2007EA46E /* IRCChannel.m in Sources */,
 				4CDFA57A1996EAB2007EA46E /* IRCChannelConfig.m in Sources */,
 				4CDFA57B1996EAB2007EA46E /* TPCPathInfo.m in Sources */,
-				4CDFA57C1996EAB2007EA46E /* TDCFileTransferDialogRemoteAddress.m in Sources */,
+				4CDFA57C1996EAB2007EA46E /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CDFA57D1996EAB2007EA46E /* TVCMainWindowTextView.m in Sources */,
 				4CDFA57E1996EAB2007EA46E /* THOUnicodeHelper.m in Sources */,
 				4CDFA57F1996EAB2007EA46E /* IRCChannelMode.m in Sources */,
