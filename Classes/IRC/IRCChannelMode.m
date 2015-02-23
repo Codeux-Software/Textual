@@ -47,7 +47,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.allModes = [NSMutableDictionary dictionary];
+		_allModes = [NSMutableDictionary dictionary];
 	}
 
 	return self;
@@ -55,15 +55,15 @@
 
 - (void)clear
 {
-	@synchronized(self.allModes) {
-		[self.allModes removeAllObjects];
+	@synchronized(_allModes) {
+		[_allModes removeAllObjects];
 	}
 }
 
 - (NSDictionary *)modeInformation
 {
-	@synchronized(self.allModes) {
-		return [NSDictionary dictionaryWithDictionary:self.allModes];
+	@synchronized(_allModes) {
+		return [NSDictionary dictionaryWithDictionary:_allModes];
 	}
 }
 
@@ -74,9 +74,9 @@
 
 - (NSArray *)update:(NSString *)str
 {
-	NSArray *ary = [self.supportInfo parseMode:str];
+	NSArray *ary = [_supportInfo parseMode:str];
 
-	@synchronized(self.allModes) {
+	@synchronized(_allModes) {
 		for (IRCModeInfo *h in ary) {
 			/* Get basic info. */
 			NSString *modeSymbol = [h modeToken];
@@ -92,7 +92,7 @@
 			}
 			
 			/* Populate new info. */
-			(self.allModes)[modeSymbol] = h;
+			_allModes[modeSymbol] = h;
 		}
 	}
 
@@ -166,8 +166,8 @@
 
 - (BOOL)modeIsDefined:(NSString *)mode
 {
-	@synchronized(self.allModes) {
-		return [self.allModes containsKey:mode];
+	@synchronized(_allModes) {
+		return [_allModes containsKey:mode];
 	}
 }
 
@@ -176,15 +176,15 @@
 	NSObjectIsEmptyAssertReturn(mode, nil);
 	
 	if ([self modeIsDefined:mode] == NO) {
-		IRCModeInfo *m = [self.supportInfo createMode:mode];
+		IRCModeInfo *m = [_supportInfo createMode:mode];
 		
-		@synchronized(self.allModes) {
-			(self.allModes)[mode] = m;
+		@synchronized(_allModes) {
+			_allModes[mode] = m;
 		}
 	}
 	
-	@synchronized(self.allModes) {
-		return (self.allModes)[mode];
+	@synchronized(_allModes) {
+		return _allModes[mode];
 	}
 }
 
@@ -234,12 +234,12 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	IRCChannelMode *newInstance = [[IRCChannelMode allocWithZone:zone] init];
-	
-	@synchronized(self.allModes) {
-		[newInstance.allModes addEntriesFromDictionary:self.allModes];
+
+	[newInstance setSupportInfo:_supportInfo];
+
+	@synchronized(_allModes) {
+		[[newInstance allModes] addEntriesFromDictionary:_allModes];
 	}
-	
-	[newInstance setSupportInfo:self.supportInfo];
 	
 	return newInstance;
 }

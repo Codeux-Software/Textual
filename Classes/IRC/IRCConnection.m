@@ -51,14 +51,14 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.sendQueue = [NSMutableArray new];
+		_sendQueue = [NSMutableArray new];
 		
-		self.floodTimer = [TLOTimer new];
+		_floodTimer = [TLOTimer new];
 		
-		[self.floodTimer setDelegate:self];
-		[self.floodTimer setSelector:@selector(timerOnTimer:)];
+		[_floodTimer setDelegate:self];
+		[_floodTimer setSelector:@selector(timerOnTimer:)];
 		
-		self.floodControlCurrentMessageCount = 0;
+		_floodControlCurrentMessageCount = 0;
 	}
 	
 	return self;
@@ -74,8 +74,6 @@
 
 - (void)open
 {
-	[self fudgeFloodControlMaximumMessageCountForFreenode];
-
 	[self startTimer];
 
 	[self openSocket];
@@ -83,13 +81,13 @@
 
 - (void)close
 {
-	self.isConnected = NO;
-	self.isConnecting = NO;
-	self.isSending = NO;
+	_isConnected = NO;
+	_isConnecting = NO;
+	_isSending = NO;
 
-	self.floodControlCurrentMessageCount = 0;
+	_floodControlCurrentMessageCount = 0;
 
-	[self.sendQueue removeAllObjects];
+	[_sendQueue removeAllObjects];
 	
 	[self stopTimer];
 	
@@ -101,31 +99,16 @@
 
 - (NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	return [self.associatedClient convertFromCommonEncoding:data];
+	return [_associatedClient convertFromCommonEncoding:data];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
-	return [self.associatedClient convertToCommonEncoding:data];
+	return [_associatedClient convertToCommonEncoding:data];
 }
 
 #pragma mark -
 #pragma mark Send Data
-
-- (void)fudgeFloodControlMaximumMessageCountForFreenode
-{
-	/* This code is very deceitful because the user is not aware of this logic in reality.
-	 When a connection is targeting a freenode server, we inteintially override the flood 
-	 control maximum line count if it is set to the defined default value. freenode is
-	 very strict about flood control so this is a tempoary, extremely ugly solution 
-	 to the problem until a permanent one is developed. */
-
-	if ([self.serverAddress hasSuffix:@"freenode.net"]) {
-		if (self.floodControlMaximumMessageCount == IRCClientConfigFloodControlDefaultMessageCount) {
-			self.floodControlMaximumMessageCount  = IRCClientConfigFloodControlDefaultMessageCountForFreenode;
-		}
-	}
-}
 
 - (void)sendLine:(NSString *)line
 {
@@ -133,53 +116,50 @@
 	 placed in the flood control queue. This writes them directly to the socket
 	 instead of actuallying waiting for the queue. We only need this check if
 	 we actually have flood control enabled. */
-	if (self.connectionUsesFloodControl) {
+	if (_connectionUsesOutgoingFloodControl) {
 		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
 		if (isPong) {
-			NSString *firstItem = [line stringByAppendingString:@"\r\n"];
+			NSString *firstItem = [line stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
 
 			NSData *data = [self convertToCommonEncoding:firstItem];
 
 			if (data) {
 				[self write:data];
 
-				[self.associatedClient ircConnectionWillSend:firstItem];
+				[_associatedClient ircConnectionWillSend:firstItem];
 
-				return;
+				return; // Exit from entering the queue.
 			}
 		}
 	}
 
 	/* Normal send. */
-	[self.sendQueue addObject:line];
+	[_sendQueue addObject:line];
 
 	[self tryToSend];
 }
 
 - (BOOL)tryToSend
 {
-	/* Build the queue if we are already sending… */
-	NSAssertReturnR((self.isSending == NO), NO);
-
-	NSObjectIsEmptyAssertReturn(self.sendQueue, NO);
-
-	/* We are not sending so we need to check our numbers. */
-	/* Only count flood control once we are fully connected since the initial connect
-	 will flood the server regardless so we do not want to timeout waiting for ourself. */
-	if (self.connectionUsesFloodControl && self.associatedClient.isLoggedIn) {
-		if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
-			/* The number of lines sent during our timer period has gone above the 
-			 maximum allowed count so we have to return NO to let everyone know we
-			 cannot send at this point. */
-
-			return NO;
-		}
-
-		self.floodControlCurrentMessageCount += 1;
+	if (_isSending) {
+		return NO;
 	}
 
-	/* Send next line. */
+	if ([_sendQueue count] == 0) {
+		return NO;
+	}
+
+	if ([_associatedClient isLoggedIn]) {
+		if (_connectionUsesOutgoingFloodControl) {
+			if (_floodControlCurrentMessageCount >= _floodControlMaximumMessageCount) {
+				return NO;
+			}
+
+			_floodControlCurrentMessageCount += 1;
+		}
+	}
+
 	[self sendNextLine];
 	
 	return YES;
@@ -187,26 +167,26 @@
 
 - (void)sendNextLine
 {
-	NSObjectIsEmptyAssert(self.sendQueue);
+	if ([_sendQueue count] > 0) {
+		NSString *firstItem = [_sendQueue[0] stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
 
-	NSString *firstItem = [self.sendQueue[0] stringByAppendingString:@"\r\n"];
+		[_sendQueue removeObjectAtIndex:0];
 
-	[self.sendQueue removeObjectAtIndex:0];
+		NSData *data = [self convertToCommonEncoding:firstItem];
 
-	NSData *data = [self convertToCommonEncoding:firstItem];
+		if (data) {
+			_isSending = YES;
 
-	if (data) {
-		self.isSending = YES;
+			[self write:data];
 
-		[self write:data];
-
-		[self.associatedClient ircConnectionWillSend:firstItem];
+			[_associatedClient ircConnectionWillSend:firstItem];
+		}
 	}
 }
 
 - (void)clearSendQueue
 {
-	[self.sendQueue removeAllObjects];
+	[_sendQueue removeAllObjects];
 }
 
 #pragma mark -
@@ -214,23 +194,23 @@
 
 - (void)startTimer
 {
-	if ([self.floodTimer timerIsActive] == NO) {
-		if (self.connectionUsesFloodControl) {
-			[self.floodTimer start:self.floodControlDelayInterval];
+	if (_connectionUsesOutgoingFloodControl) {
+		if ([_floodTimer timerIsActive] == NO) {
+			[_floodTimer start:self.floodControlDelayInterval];
 		}
 	}
 }
 
 - (void)stopTimer
 {
-	if ([self.floodTimer timerIsActive]) {
-		[self.floodTimer stop];
+	if ([_floodTimer timerIsActive]) {
+		[_floodTimer stop];
 	}
 }
 
 - (void)timerOnTimer:(id)sender
 {
-	self.floodControlCurrentMessageCount = 0;
+	_floodControlCurrentMessageCount = 0;
 
 	while ([self tryToSend] == YES) {
 		// …
@@ -244,36 +224,36 @@
 {
 	[self clearSendQueue];
 	
-	[self.associatedClient ircConnectionDidConnect:self];
+	[_associatedClient ircConnectionDidConnect:self];
 }
 
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];
 	
-	[self.associatedClient ircConnectionDidError:error];
+	[_associatedClient ircConnectionDidError:error];
 }
 
 - (void)tcpClientDidDisconnect:(NSError *)distcError
 {
 	[self clearSendQueue];
 	
-	[self.associatedClient ircConnectionDidDisconnect:self withError:distcError];
+	[_associatedClient ircConnectionDidDisconnect:self withError:distcError];
 }
 
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
-	[self.associatedClient ircConnectionDidReceive:data];
+	[_associatedClient ircConnectionDidReceive:data];
 }
 
 - (void)tcpClientDidSecureConnection
 {
-	[self.associatedClient ircConnectionDidSecureConnection];
+	[_associatedClient ircConnectionDidSecureConnection];
 }
 
 - (void)tcpClientDidSendData
 {
-	self.isSending = NO;
+	_isSending = NO;
 	
 	[self tryToSend];
 }

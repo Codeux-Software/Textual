@@ -72,14 +72,10 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		/* Channel mode info. */
-		self.modeInfo = [IRCChannelMode new];
+		_modeInfo = [IRCChannelMode new];
 		
-		/* Channel ranked member list used internally. */
-		self.memberListStandardSortedContainer = [NSMutableArray array];
-		
-		/* Length sorted member list used by renderer. */
-		self.memberListLengthSortedContainer = [NSMutableArray array];
+		_memberListStandardSortedContainer = [NSMutableArray array];
+		_memberListLengthSortedContainer = [NSMutableArray array];
 	}
 	
 	return self;
@@ -96,8 +92,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)setup:(IRCChannelConfig *)seed
 {
 	if (seed) {
-		if (self.config == nil) {
-			self.config = seed; // Value is copied on assign.
+		if (_config == nil) {
+			_config = [seed copy];
 		}
 	}
 }
@@ -110,30 +106,22 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification
 {
 	if (seed) {
-		/* We do not want to bother on equality. */
 		NSAssertReturn([seed isEqualToChannelConfiguration:_config] == NO);
-		
-		/* Is the current key equal to the temporary store. */
-		NSString *temporaryKey = [seed temporaryEncryptionKey];
-		
-		/* Both values are either going to be nil or one will be different than the other. */
-		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, self.encryptionKey);
 
-		/* Update the actual local config. */
-		self.config = seed; // Value is copied on assign.
-		
-		/* Save any temporary changes to disk. */
-		[self.config writeKeychainItemsToDisk];
-		
-		/* Inform view of changes. */
+		NSString *temporaryKey = [seed temporaryEncryptionKey];
+
+		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, [self encryptionKey]);
+
+		[self setConfig:seed]; // Value is copied on assign.
+
+		[_config writeKeychainItemsToDisk];
+
 		if (encryptionUnchanged == NO) {
-			[self.viewController channelLevelEncryptionChanged];
+			[[self viewController] channelLevelEncryptionChanged];
 		}
-		
-		/* Rebuild cached version. */
-		[self.associatedClient updateStoredChannelList];
-		
-		/* Post notification. */
+
+		[_associatedClient updateStoredChannelList];
+
 		if (fireChangedNotification) {
 			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
 												  object:self
@@ -144,7 +132,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSDictionary *)dictionaryValue
 {
-	return [self.config dictionaryValue];
+	return [_config dictionaryValue];
 }
 
 #pragma mark -
@@ -152,37 +140,37 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSString *)uniqueIdentifier
 {
-	return self.config.itemUUID;
+	return [_config itemUUID];
 }
 
 - (NSString *)name
 {
-	return self.config.channelName;
+	return [_config channelName];
 }
 
 - (NSString *)secretKey
 {
-	return self.config.secretKey;
+	return [_config secretKey];
 }
 
 - (NSString *)encryptionKey
 {
-	return self.config.encryptionKey;
+	return [_config encryptionKey];
 }
 
 - (CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation;
 {
-	return self.config.encryptionModeOfOperation;
+	return [_config encryptionModeOfOperation];
 }
 
 - (BOOL)isChannel
 {
-	return (self.config.type == IRCChannelChannelType);
+	return ([_config type] == IRCChannelChannelType);
 }
 
 - (BOOL)isPrivateMessage
 {
-	return (self.config.type == IRCChannelPrivateMessageType);
+	return ([_config type] == IRCChannelPrivateMessageType);
 }
 
 - (BOOL)isPrivateMessageOwnedByZNC
@@ -198,7 +186,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSString *)channelTypeString
 {
-	if (self.config.type == IRCChannelPrivateMessageType) {
+	if ([_config type] == IRCChannelPrivateMessageType) {
 		return @"query";
 	} else {
 		return @"channel";
@@ -207,8 +195,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (NSURL *)logFilePath
 {
-	if (self.logFile) {
-		return [self.logFile buildPath];
+	if (_logFile) {
+		return [_logFile buildPath];
 	} else {
 		return nil;
 	}
@@ -219,7 +207,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)setName:(NSString *)value
 {
-	self.config.channelName = value;
+	[_config setChannelName:value];
 }
 
 - (void)setTopic:(NSString *)topic
@@ -228,28 +216,28 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		 _topic = [topic copy];
 	}
 
-    [self.viewController setTopic:topic];
+    [[self viewController] setTopic:topic];
 }
 
 - (void)setEncryptionModeOfOperation:(CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
 {
-	self.config.encryptionModeOfOperation = encryptionModeOfOperation;
+	[_config setEncryptionModeOfOperation:encryptionModeOfOperation];
 }
 
 - (void)setEncryptionKey:(NSString *)encryptionKey
 {
 	/* This is a helper method so that Textual's view controller can
 	 be made aware of encryption changes. This method should be called.
-	 Do not call setEncryptionKey: direction on self.config or that
+	 Do not call setEncryptionKey: directly on self.config or that
 	 will only be written to the temporary store. */
 	
-	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, self.encryptionKey);
+	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, [self encryptionKey]);
 	
 	if (encryptionUnchanged == NO) {
-		[self.config setEncryptionKey:encryptionKey];
-		[self.config writeEncryptionKeyKeychainItemToDisk];
+		[_config setEncryptionKey:encryptionKey];
+		[_config writeEncryptionKeyKeychainItemToDisk];
 		
-		[self.viewController channelLevelEncryptionChanged];
+		[[self viewController] channelLevelEncryptionChanged];
 	}
 }
 
@@ -258,11 +246,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)preferencesChanged
 {
-	[self.viewController preferencesChanged];
+	[[self viewController] preferencesChanged];
 
 	if ([TPCPreferences displayPublicMessageCountOnDockBadge] == NO) {
-		if (self.isPrivateMessage == NO) {
-			self.dockUnreadCount = 0; // Reset counter on changes.
+		if ([self isPrivateMessage] == NO) {
+			[self setDockUnreadCount:0]; // Reset counter on changes.
 		}
 	}
 
@@ -274,17 +262,17 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)resetStatus:(IRCChannelStatus)newStatus
 {
-	self.errorOnLastJoinAttempt = NO;
-	self.inUserInvokedModeRequest = NO;
-	self.sentInitialWhoRequest = NO;
+	_errorOnLastJoinAttempt = NO;
+	_inUserInvokedModeRequest = NO;
+	_sentInitialWhoRequest = NO;
 
-	self.channelJoinTime = -1;
+	_channelJoinTime = -1;
 	
-	self.status = newStatus;
+	_status = newStatus;
 
-    self.topic = nil;
+    _topic = nil;
 	
-	[self.modeInfo clear];
+	[_modeInfo clear];
 
 	[self clearMembers];
 	[self reloadDataForTableView];
@@ -293,35 +281,33 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)activate
 {
 	[self resetStatus:IRCChannelStatusJoined];
-  
-	if (self.isChannel) {
-		/* Fireoff join event. */
-		[self.associatedClient postEventToViewController:@"channelJoined" forChannel:self];
+
+	if ([self isChannel]) {
+		[_associatedClient postEventToViewController:@"channelJoined" forChannel:self];
     }
 
-	if (self.isPrivateMessage) {
-		/* Populate private message users. */
-		IRCUser *m1 = [IRCUser newUserOnClient:self.associatedClient withNickname:self.associatedClient.localNickname];
-		IRCUser *m2 = [IRCUser newUserOnClient:self.associatedClient withNickname:self.name];
+	if ([self isPrivateMessage]) {
+		IRCUser *m1 = [IRCUser newUserOnClient:_associatedClient withNickname:[_associatedClient localNickname]];
+		IRCUser *m2 = [IRCUser newUserOnClient:_associatedClient withNickname:[self name]];
 
 		[self addMember:m1];
 		[self addMember:m2];
 	}
 
-	self.channelJoinTime = [NSDate unixTime];
+	_channelJoinTime = [NSDate unixTime];
 }
 
 - (void)deactivate
 {
 	[self resetStatus:IRCChannelStatusParted];
   
-	if (self.isChannel) {
-		[self.associatedClient postEventToViewController:@"channelParted" forChannel:self];
+	if ([self isChannel]) {
+		[_associatedClient postEventToViewController:@"channelParted" forChannel:self];
 		
-		[self.viewController setTopic:nil];
+		[[self viewController] setTopic:nil];
     }
 
-	self.channelJoinTime = -1;
+	_channelJoinTime = -1;
 }
 
 - (void)prepareForPermanentDestruction
@@ -330,9 +316,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	
 	[self closeLogFile];
 	
-	if (self.isPrivateMessage) {
-		[self.config destroyKeychains];
-	}
+	[_config destroyKeychains];
 	
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelSheet",
 																	 @"TDCTopicSheet",
@@ -349,7 +333,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 	[[TXSharedApplication sharedInputHistoryManager] destroy:self];
 	
-	[self.viewController prepareForPermanentDestruction];
+	[[self viewController] prepareForPermanentDestruction];
 }
 
 - (void)prepareForApplicationTermination
@@ -358,11 +342,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	
 	[self closeLogFile];
 	
-	if (self.isPrivateMessage) {
-		[self.config destroyKeychains];
+	if ([self isPrivateMessage]) {
+		[_config destroyKeychains];
 	}
 
-	[self.viewController prepareForApplicationTermination];
+	[[self viewController] prepareForApplicationTermination];
 }
 
 #pragma mark -
@@ -371,8 +355,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)reopenLogFileIfNeeded
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
-		if ( self.logFile) {
-			[self.logFile reopenIfNeeded];
+		if ( _logFile) {
+			[_logFile reopenIfNeeded];
 		}
 	} else {
 		[self closeLogFile];
@@ -381,8 +365,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)closeLogFile
 {
-	if ( self.logFile) {
-		[self.logFile close];
+	if ( _logFile) {
+		[_logFile close];
 	}
 }
 
@@ -392,14 +376,14 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)writeToLogFile:(TVCLogLine *)line
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (self.logFile == nil) {
-			self.logFile = [TLOFileLogger new];
+		if (_logFile == nil) {
+			_logFile = [TLOFileLogger new];
 
-			self.logFile.client = self.associatedClient;
-			self.logFile.channel = self;
+			[_logFile setClient:_associatedClient];
+			[_logFile setChannel:self];
 		}
 
-		[self.logFile writeLine:line];
+		[_logFile writeLine:line];
 	}
 }
 
@@ -423,13 +407,13 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	NSInteger insertedIndex = 0;
 	
 	/* Insert into normal list and maybe tree view. */
-	@synchronized(self.memberListStandardSortedContainer) {
-		insertedIndex = [self.memberListStandardSortedContainer insertSortedObject:item usingComparator:NSDefaultComparator];
+	@synchronized(_memberListStandardSortedContainer) {
+		insertedIndex = [_memberListStandardSortedContainer insertSortedObject:item usingComparator:NSDefaultComparator];
 	}
 	
 	/* Conversation tracking scans based on nickname length. */
-	@synchronized(self.memberListLengthSortedContainer) {
-		(void)[self.memberListLengthSortedContainer insertSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
+	@synchronized(_memberListLengthSortedContainer) {
+		(void)[_memberListLengthSortedContainer insertSortedObject:item usingComparator:[IRCUser nicknameLengthComparator]];
 	}
 	
 	return insertedIndex;
@@ -455,13 +439,13 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 {
 	/* Find in normal member list. */
 	/* This also removes matched user from tree view. */
-	@synchronized(self.memberListStandardSortedContainer) {
+	@synchronized(_memberListStandardSortedContainer) {
 		/* Remove from internal list. */
-		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:_memberListStandardSortedContainer];
 		
 		if (NSDissimilarObjects(crmi, NSNotFound)) {
 			/* Get matched user. */
-			IRCUser *matchedUser = self.memberListStandardSortedContainer[crmi];
+			IRCUser *matchedUser = _memberListStandardSortedContainer[crmi];
 			
 			/* Maybe remove from tree view. */
 			XRPerformBlockSynchronouslyOnMainQueue(^{
@@ -469,16 +453,16 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 			});
 			
 			/* Remove from array archive. */
-			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
+			[_memberListStandardSortedContainer removeObjectAtIndex:crmi];
 		}
 	}
 	
 	/* Find in alternate list. */
-	@synchronized(self.memberListLengthSortedContainer) {
-		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListLengthSortedContainer];
+	@synchronized(_memberListLengthSortedContainer) {
+		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:_memberListLengthSortedContainer];
 		
 		if (NSDissimilarObjects(crmi, NSNotFound)) {
-			[self.memberListLengthSortedContainer removeObjectAtIndex:crmi];
+			[_memberListLengthSortedContainer removeObjectAtIndex:crmi];
 		}
 	}
 }
@@ -503,8 +487,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		[self informMemberListViewOfAdditionalUserAtIndex:insertedIndex];
 		
 		/* Post event to the style. */
-		if (self.isChannel) {
-			[self.associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
+		if ([self isChannel]) {
+			[_associatedClient postEventToViewController:@"channelMemberAdded" forChannel:self];
 		}
 	});
 }
@@ -518,8 +502,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	});
 	
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if (self.isChannel) {
-			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
+		if ([self isChannel]) {
+			[_associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
 		}
 	});
 }
@@ -588,10 +572,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	
 	PointerIsEmptyAssert(user); // What are we removing?
 
-	/* We create new copy of this user in order to compare them and deterine
-	 if there are changes when we are done. Modifying /user/ directly would
-	 change all instances inside our member lists and we don't want to do 
-	 that right away. */
+	/* We create new copy of this user in order to compare them and deterine if there 
+	 are changes when we are done. Modifying /user/ directly would change all instances 
+	 inside our member lists and we don't want to do  that right away. */
 	IRCUser *newUser = [user copy];
 	
 	UniChar modeChar = [mode characterAtIndex:0];
@@ -617,8 +600,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 			 marked and it was -Y, then we do not remove it. We still 
 			 want to know they are an IRCop even if mode isn't set in
 			 this particular channel. */
-			if (newUser.isCop == NO && value) {
-				newUser.isCop = YES;
+			if (newUser.isCop == NO) {
+				newUser.isCop = value;
 			}
 			
 			break;
@@ -666,12 +649,12 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)clearMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			[self.memberListStandardSortedContainer removeAllObjects];
+		@synchronized(_memberListStandardSortedContainer) {
+			[_memberListStandardSortedContainer removeAllObjects];
 		}
 		
-		@synchronized(self.memberListLengthSortedContainer) {
-			[self.memberListLengthSortedContainer removeAllObjects];
+		@synchronized(_memberListLengthSortedContainer) {
+			[_memberListLengthSortedContainer removeAllObjects];
 		}
 	});
 }
@@ -681,8 +664,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block NSUInteger memberCount = 0;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			memberCount = [self.memberListStandardSortedContainer count];
+		@synchronized(_memberListStandardSortedContainer) {
+			memberCount = [_memberListStandardSortedContainer count];
 		}
 	});
 	
@@ -694,8 +677,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			for (IRCUser *user in self.memberListStandardSortedContainer) {
+		@synchronized(_memberListStandardSortedContainer) {
+			for (IRCUser *user in _memberListStandardSortedContainer) {
 				[mutlist addObject:user];
 			}
 		}
@@ -709,8 +692,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block NSMutableArray *mutlist = [NSMutableArray array];
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListLengthSortedContainer) {
-			for (IRCUser *user in self.memberListLengthSortedContainer) {
+		@synchronized(_memberListLengthSortedContainer) {
+			for (IRCUser *user in _memberListLengthSortedContainer) {
 				[mutlist addObject:user];
 			}
 		}
@@ -737,8 +720,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block BOOL foundUser;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+		@synchronized(_memberListStandardSortedContainer) {
+			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:_memberListStandardSortedContainer];
 			
 			if (somi == NSNotFound) {
 				foundUser = NO;
@@ -761,13 +744,13 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block IRCUser *foundUser;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
+		@synchronized(_memberListStandardSortedContainer) {
+			NSInteger somi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:_memberListStandardSortedContainer];
 			
 			if (somi == NSNotFound) {
 				foundUser = nil;
 			} else {
-				foundUser = self.memberListStandardSortedContainer[somi];
+				foundUser = _memberListStandardSortedContainer[somi];
 			}
 		}
 	});
@@ -780,8 +763,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	__block IRCUser *foundUser;
 	
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			foundUser = (self.memberListStandardSortedContainer)[index];
+		@synchronized(_memberListStandardSortedContainer) {
+			foundUser = (_memberListStandardSortedContainer)[index];
 		}
 	});
 	
@@ -812,8 +795,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)reloadDataForTableViewBySortingMembers
 {
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.memberListStandardSortedContainer) {
-			[self.memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
+		@synchronized(_memberListStandardSortedContainer) {
+			[_memberListStandardSortedContainer sortUsingComparator:NSDefaultComparator];
 			
 			[self reloadDataForTableView];
 		}
@@ -901,7 +884,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (BOOL)isActive
 {
-	return (self.status == IRCChannelStatusJoined);
+	return (_status == IRCChannelStatusJoined);
 }
 
 - (BOOL)isClient

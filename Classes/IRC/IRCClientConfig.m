@@ -46,7 +46,16 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 @synthesize proxyPassword = _proxyPassword;
 @synthesize nicknamePassword = _nicknamePassword;
 
+/* If the defaults dictionary is not already populated, then we populate it.
+ If it is already populated, we can supply a dictionary to override certain
+ sections of it at a later time. This exists for -maybeFudgeFloodControlDefaults
+ which is defined further down the class implementation. */
 - (NSDictionary *)defaults
+{
+	return [self populateOrOverrideDefaults:nil];
+}
+
+- (NSDictionary *)populateOrOverrideDefaults:(NSDictionary *)replacements
 {
 	static id _defaults = nil;
 
@@ -106,6 +115,16 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 		};
 
 		_defaults = [defaults copy];
+	}
+	else // defaults == nil
+	{
+		if (replacements) {
+			NSMutableDictionary *mdefs = [_defaults mutableCopy];
+
+			[mdefs addEntriesFromDictionary:replacements];
+
+			_defaults = [mdefs copy];
+		}
 	}
 
 	return _defaults;
@@ -187,6 +206,25 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 		self.sleepModeLeavingComment = BLS(1185, macintoshModel);
 	} else {
 		self.sleepModeLeavingComment = [defaults stringForKey:@"sleepModeLeavingComment"];
+	}
+}
+
+- (void)maybeFudgeFloodControlDefaults
+{
+	/* This code is very deceitful because the user is not aware of this logic in reality.
+	 When a connection is targeting a freenode server, we inteintially override the flood
+	 control maximum line count if it is set to the defined default value. freenode is
+	 very strict about flood control so this is a tempoary, extremely ugly solution
+	 to the problem until a permanent one is developed. */
+
+	if ([self.serverAddress hasSuffix:@"freenode.net"]) {
+		if (self.floodControlMaximumMessages == IRCClientConfigFloodControlDefaultMessageCount) {
+			NSInteger newValue = IRCClientConfigFloodControlDefaultMessageCountForFreenode;
+
+			[self populateOrOverrideDefaults:@{@"floodControlMaximumMessages" : @(newValue)}];
+
+			self.floodControlMaximumMessages = newValue;
+		}
 	}
 }
 
@@ -534,6 +572,9 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 	}
 
 	self.highlightList = highlightList;
+
+	/* Additional logic */
+	[self maybeFudgeFloodControlDefaults];
 }
 
 - (BOOL)isEqualToClientConfiguration:(IRCClientConfig *)seed

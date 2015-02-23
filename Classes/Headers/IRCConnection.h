@@ -46,10 +46,8 @@
 @property (nonatomic, assign) BOOL isReadyToSend;
 @property (nonatomic, assign) BOOL isSending;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
-@property (nonatomic, assign) BOOL connectionUsesSSL;
-@property (nonatomic, assign) BOOL connectionUsesNormalSocks;
-@property (nonatomic, assign) BOOL connectionUsesSystemSocks;
-@property (nonatomic, assign) BOOL connectionUsesFloodControl;
+@property (nonatomic, assign) BOOL connectionPrefersSecuredConnection;
+@property (nonatomic, assign) BOOL connectionUsesOutgoingFloodControl;
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
 @property (nonatomic, copy) NSString *serverAddress;
@@ -58,7 +56,7 @@
 @property (nonatomic, copy) NSString *proxyPassword;
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, assign) NSInteger proxyPort;
-@property (nonatomic, assign) IRCConnectionSocketProxyType proxySocksVersion;
+@property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
 @property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // Consider this readonly
 
 - (void)open;
