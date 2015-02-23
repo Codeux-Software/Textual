@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCNickSheet">
@@ -11,8 +11,8 @@
                 <outlet property="cancelButton" destination="16" id="41"/>
                 <outlet property="okButton" destination="15" id="29"/>
                 <outlet property="sheet" destination="5" id="37"/>
-                <outlet property="tnewNicknameField" destination="9" id="43"/>
-                <outlet property="toldNicknameField" destination="8" id="45"/>
+                <outlet property="tnewNicknameTextField" destination="9" id="Q6Z-8O-jEC"/>
+                <outlet property="toldNicknameTextField" destination="8" id="4GK-8k-7ol"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

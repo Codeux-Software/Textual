@@ -10,7 +10,7 @@
             <connections>
                 <outlet property="cancelButton" destination="18" id="48"/>
                 <outlet property="exceptionTable" destination="6" id="49"/>
-                <outlet property="headerTitleField" destination="33" id="50"/>
+                <outlet property="headerTitleTextField" destination="33" id="5Dp-6r-9Ig"/>
                 <outlet property="okButton" destination="18" id="51"/>
                 <outlet property="sheet" destination="1" id="52"/>
             </connections>
@@ -154,7 +154,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="47"/>
             </connections>
-            <point key="canvasLocation" x="474" y="388"/>
+            <point key="canvasLocation" x="558" y="382"/>
         </window>
     </objects>
 </document>

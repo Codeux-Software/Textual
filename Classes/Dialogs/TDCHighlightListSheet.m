@@ -41,6 +41,8 @@
 
 @interface TDCHighlightListSheet ()
 @property (nonatomic, copy) NSArray *highlightList;
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, nweak) IBOutlet TVCBasicTableView *highlightListTable;
 @end
 
 @implementation TDCHighlightListSheet
@@ -66,7 +68,9 @@
 
 	NSString *network = [currentNetwork altNetworkName];
 
-	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], network]];
+	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], network];
+
+	[self.headerTitleTextField setStringValue:headerTitle];
 
 	[self.highlightListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
 	
@@ -141,6 +145,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	if ([self.delegate respondsToSelector:@selector(highlightListSheetWillClose:)]) {
 		[self.delegate highlightListSheetWillClose:self];
 	}

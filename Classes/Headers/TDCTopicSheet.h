@@ -41,8 +41,6 @@
 @interface TDCTopicSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleField;
-@property (nonatomic, uweak) IBOutlet TVCTextViewWithIRCFormatter *topicValueField;
 
 - (void)start:(NSString *)topic;
 @end

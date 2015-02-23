@@ -25,7 +25,7 @@
                 <outlet property="contentViewFloodControl" destination="n4A-Pk-quE" id="s0E-dS-fnf"/>
                 <outlet property="contentViewGeneral" destination="Eyz-5p-IkU" id="lw2-bS-xCr"/>
                 <outlet property="contentViewHighlights" destination="Jdv-gk-kj9" id="P9m-wf-sUb"/>
-                <outlet property="contentViewICloud" destination="UpX-LQ-mM5" id="nQj-Zr-hee"/>
+                <outlet property="contentViewICloud" destination="DSr-72-Tlk" id="6VK-Az-ceC"/>
                 <outlet property="contentViewIRCopMessages" destination="Pkr-Na-yb0" id="RrD-oV-018"/>
                 <outlet property="contentViewIncomingData" destination="KpN-mD-prv" id="hWG-Eo-pZT"/>
                 <outlet property="contentViewInlineMedia" destination="qvS-li-dv0" id="mzL-QO-g6I"/>
@@ -38,8 +38,8 @@
                 <outlet property="contentViewUserListColors" destination="9Rp-qO-bTZ" id="O74-q8-JgD"/>
                 <outlet property="excludeKeywordsArrayController" destination="4313" id="7351"/>
                 <outlet property="excludeKeywordsTable" destination="Vqz-0J-ajG" id="Zh5-qx-YFn"/>
-                <outlet property="fileTransferDownloadDestinationButton" destination="eBB-la-cgd" id="EMn-Nr-DRt"/>
-                <outlet property="fileTransferManuallyEnteredIPAddressField" destination="hRh-he-Eij" id="cdc-Io-d2G"/>
+                <outlet property="fileTransferDownloadDestinationButton" destination="dor-Ua-UHj" id="HB1-lp-iad"/>
+                <outlet property="fileTransferManuallyEnteredIPAddressTextField" destination="gsf-QD-Vkr" id="d3X-Uo-t0B"/>
                 <outlet property="highlightNicknameButton" destination="IVv-zw-dDv" id="5mn-VV-cM3"/>
                 <outlet property="installedScriptsTable" destination="rGf-Ih-C97" id="v8k-0K-zxF"/>
                 <outlet property="keywordsTable" destination="nIO-jH-FEm" id="Kk5-Be-I9z"/>
@@ -207,7 +207,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1895" y="326"/>
+            <point key="canvasLocation" x="1981" y="323"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
@@ -1427,7 +1427,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1517,7 +1517,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="20"/>
+                                                    <size key="minSize" width="352" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1899,7 +1899,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ZeM-Wr-wwc">
                     <rect key="frame" x="93" y="175" width="381" height="28"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2rT-lJ-27T">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">The location in which log files are stored cannot be shared with iCloud. This is a limitation of OS X that Textual cannot circumvent.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -2050,7 +2050,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="9Fb-qx-dGB">
-                    <rect key="frame" x="55" y="135" width="172" height="14"/>
+                    <rect key="frame" x="55" y="133" width="172" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Default Shun Reason: " id="6vn-da-cA0">
                         <font key="font" metaFont="cellTitle"/>
@@ -3700,330 +3700,324 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             </subviews>
             <point key="canvasLocation" x="457.5" y="-4197"/>
         </customView>
-        <customView wantsLayer="YES" id="UpX-LQ-mM5" userLabel="iCloud">
+        <customView id="4pD-W0-ghZ" userLabel="File Transfers">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button id="Vi7-Vk-65D">
-                    <rect key="frame" x="73" y="315" width="273" height="18"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="PcW-EO-frL">
+                    <rect key="frame" x="60" y="354" width="223" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Only share connections between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fal-6N-HEj">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="ODe-np-HQz">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="vGr-Fx-7Yk">
+                    <rect key="frame" x="286" y="351" width="193" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="dNd-oi-z2o" id="QsY-G8-09D">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="4hq-nK-sNm">
+                            <items>
+                                <menuItem title="Ignore" tag="1" id="Lc7-g8-RuB"/>
+                                <menuItem title="Open Dialog" tag="2" id="Ab8-sW-zjf"/>
+                                <menuItem title="Automatically Download" state="on" tag="3" id="dNd-oi-z2o"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer Request Reply Action" id="O4f-48-hv4"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="AOa-Oj-4Fg">
+                    <rect key="frame" x="60" y="315" width="175" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="VBT-UA-wAp">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="Kgc-ku-XGt">
+                    <rect key="frame" x="238" y="312" width="269" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="PpR-MQ-ujy" id="eNz-BX-xFG">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="faJ-I4-ysS">
+                            <items>
+                                <menuItem title="Request Address from External Source" state="on" tag="1" id="PpR-MQ-ujy"/>
+                                <menuItem title="Manually Enter Address" tag="2" id="Pp5-Ci-F1D"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="onFileTransferIPAddressDetectionMethodChanged:" target="-2" id="ajo-mq-IKh"/>
+                        <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer IP Address Detection Method" id="319-Hu-T0p"/>
+                    </connections>
+                </popUpButton>
+                <textField verticalHuggingPriority="750" id="gsf-QD-Vkr">
+                    <rect key="frame" x="241" y="289" width="177" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" usesSingleLineMode="YES" id="26x-nD-BMT">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Manually Entered IP Address" id="kE8-pr-Cxw"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="T6Y-nV-U2L">
+                    <rect key="frame" x="79" y="290" width="156" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="CJm-Pw-2rG">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="71N-cI-UHN">
+                    <rect key="frame" x="60" y="249" width="142" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="Hpb-j7-aSg">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" id="yHK-a9-HhN">
+                    <rect key="frame" x="208" y="248" width="74" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" usesSingleLineMode="YES" id="gYx-RF-0hc">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="fileTransferPortRangeStart" id="OhQ-WJ-Fp3">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" id="wbn-z6-T9m">
+                    <rect key="frame" x="311" y="248" width="74" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" usesSingleLineMode="YES" id="Awz-8c-5aM">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="fileTransferPortRangeEnd" id="97R-Ud-cN4">
+                            <dictionary key="options">
+                                <bool key="NSValidatesImmediately" value="YES"/>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vFm-yO-4bU">
+                    <rect key="frame" x="288" y="249" width="17" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="Iaj-LR-FRV">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="6E1-K5-W6c">
+                    <rect key="frame" x="60" y="208" width="203" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="Ccn-iO-uOJ">
+                        <font key="font" metaFont="titleBar" size="12"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="5RD-hB-wq4">
+                    <rect key="frame" x="80" y="158" width="366" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="L4v-zR-ZZa">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Textual, by default, will ask where to save files when downloading them from a sender. This option allows you to skip that process. Please take note this preference cannot be shared using iCloud.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" id="dor-Ua-UHj">
+                    <rect key="frame" x="266" y="205" width="201" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="LiR-Hh-2jk">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                        <menu key="menu" title="OtherViews" id="7W1-bg-iFF">
+                            <items>
+                                <menuItem id="N1t-cD-P20"/>
+                                <menuItem isSeparatorItem="YES" id="b22-Jr-51q">
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </menuItem>
+                                <menuItem title="Select Destination…" tag="2" id="z9P-76-Pjv"/>
+                                <menuItem title="Clear Destination" tag="3" id="Klg-OA-m9v">
+                                    <connections>
+                                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.File Transfers -&gt; File Transfer Download Folder Bookmark" id="e2l-A9-4Gc">
+                                            <dictionary key="options">
+                                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="cPZ-J7-Gsr"/>
+                    </connections>
+                </popUpButton>
+                <button id="bHX-CZ-mFi">
+                    <rect key="frame" x="60" y="126" width="307" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Send passive file transfer requests by default" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="9BD-Ml-CdW">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="wmj-jD-pAW"/>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.SyncPreferencesToTheCloud" id="0C8-aI-zXU"/>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloudLimitedToServers" id="4tg-3t-Ceh"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="eoV-sV-fSg"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="S1T-hH-yI7">
-                    <rect key="frame" x="92" y="281" width="384" height="28"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="eew-zS-chH">
+                    <rect key="frame" x="80" y="64" width="391" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When enabled, this copy of Textual will synchronize only the configured connections and disregard all other preferences." id="Kw7-gh-pLV">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="u41-M4-xrj">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsiblity of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button id="hGW-2b-Xie">
+                    <rect key="frame" x="60" y="32" width="350" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Prevent Mac from sleeping while transferring a file " bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="NNQ-91-2g8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Running Mac OS Mavericks Or Newer" id="GCd-H9-10u">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="KDa-uo-5uH"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="333.5" y="-4425"/>
+        </customView>
+        <customView id="DSr-72-Tlk" userLabel="iCloud">
+            <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button id="Dyl-yk-tUI">
+                    <rect key="frame" x="73" y="316" width="273" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Only share connections between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EyC-rV-GiN">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedCloudSyncingServicesServersOnly:" target="-2" id="aGt-bM-H9F"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.SyncPreferencesToTheCloud" id="lle-4r-Aum"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloudLimitedToServers" id="FES-mD-uM5"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" id="Z0n-R7-U4w">
+                    <rect key="frame" x="92" y="282" width="384" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When enabled, this copy of Textual will synchronize only the configured connections and disregard all other preferences." id="qaR-hH-FZI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="2dk-Hd-ZIP">
-                    <rect key="frame" x="63" y="260" width="442" height="5"/>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="HX9-HF-6ub">
+                    <rect key="frame" x="63" y="261" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField verticalHuggingPriority="750" id="Ee7-Dv-LFa">
-                    <rect key="frame" x="131" y="229" width="207" height="17"/>
+                <textField verticalHuggingPriority="750" id="QXr-v8-iJ3">
+                    <rect key="frame" x="131" y="230" width="207" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="ECd-Ce-gea">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="gy4-lQ-5Aw">
                         <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" id="CK0-Yb-yhA">
-                    <rect key="frame" x="344" y="228" width="103" height="19"/>
+                <button verticalHuggingPriority="750" id="3jj-6v-xTN">
+                    <rect key="frame" x="344" y="229" width="103" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bhr-SP-5AM">
+                    <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dcb-jn-Evt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onOpenPathToCloudFolder:" target="-2" id="ac1-OF-mht"/>
+                        <action selector="onOpenPathToCloudFolder:" target="-2" id="ooI-JL-AmW"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" id="5YP-vA-4dz">
-                    <rect key="frame" x="291" y="72" width="174" height="25"/>
+                <button verticalHuggingPriority="750" id="c4l-gT-o8c">
+                    <rect key="frame" x="291" y="73" width="174" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pl4-5A-bb5">
+                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yvu-CD-znG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="RA6-Aq-ara"/>
+                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="ISp-Lm-NzJ"/>
                     </connections>
                 </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="o3d-BG-svr">
-                    <rect key="frame" x="63" y="209" width="442" height="5"/>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="fFP-yY-BHu">
+                    <rect key="frame" x="63" y="210" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button verticalHuggingPriority="750" id="26j-gf-7Ma">
-                    <rect key="frame" x="103" y="72" width="180" height="25"/>
+                <button verticalHuggingPriority="750" id="45r-PP-31W">
+                    <rect key="frame" x="103" y="73" width="180" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Epr-O7-fie">
+                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G9e-eX-oHv">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="qGX-68-CyX"/>
+                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="oOt-dw-jXL"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vDp-5l-asa">
-                    <rect key="frame" x="244" y="175" width="81" height="22"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ft8-xX-3cD">
+                    <rect key="frame" x="244" y="176" width="81" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="i2X-WZ-GKC">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Erase Data" id="9Gr-za-Ofr">
                         <font key="font" metaFont="systemBold" size="14"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="XQh-D0-Ehi">
-                    <rect key="frame" x="60" y="113" width="447" height="56"/>
+                <textField verticalHuggingPriority="750" id="d2F-ek-xu2">
+                    <rect key="frame" x="60" y="114" width="447" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="fAa-Yr-uch">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">There are two options for erasing the data stored by Textual: The “Erase Data” button erases shared preferences leaving custom add-on files such as styles on iCloud. The “Erase Files” button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-            </subviews>
-            <point key="canvasLocation" x="367.5" y="-4152"/>
-        </customView>
-        <customView id="4pD-W0-ghZ" userLabel="File Transfers">
-            <rect key="frame" x="170" y="8" width="567" height="406"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <customView id="Ww9-9M-LDo" userLabel="Mavericks">
-                    <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Haz-P1-u0A">
-                            <rect key="frame" x="60" y="354" width="223" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="Z8s-VT-Lio">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <popUpButton verticalHuggingPriority="750" id="qiX-aN-rDk">
-                            <rect key="frame" x="286" y="351" width="193" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="push" title="Automatically Download" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="3" imageScaling="proportionallyDown" inset="2" selectedItem="cSc-xH-5lN" id="d9D-Lc-B5D">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                                <menu key="menu" title="OtherViews" id="9tQ-HN-gsn">
-                                    <items>
-                                        <menuItem title="Ignore" tag="1" id="S4M-Bn-mEL"/>
-                                        <menuItem title="Open Dialog" tag="2" id="agb-Df-viR"/>
-                                        <menuItem title="Automatically Download" state="on" tag="3" id="cSc-xH-5lN"/>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer Request Reply Action" id="boH-zZ-XKD"/>
-                            </connections>
-                        </popUpButton>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="xfW-xE-1x8">
-                            <rect key="frame" x="60" y="315" width="175" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="xb3-Dj-gQD">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <popUpButton verticalHuggingPriority="750" id="yyW-8c-SXp">
-                            <rect key="frame" x="238" y="312" width="269" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="push" title="Request Address from External Source" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="YHR-iU-LUI" id="TIT-j4-opL">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                                <menu key="menu" title="OtherViews" id="gB1-ua-tun">
-                                    <items>
-                                        <menuItem title="Request Address from External Source" state="on" tag="1" id="YHR-iU-LUI"/>
-                                        <menuItem title="Manually Enter Address" tag="2" id="bgd-eR-mCD"/>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <action selector="onFileTransferIPAddressDetectionMethodChanged:" target="-2" id="ELQ-ht-YMe"/>
-                                <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer IP Address Detection Method" id="Qxb-We-dJt"/>
-                            </connections>
-                        </popUpButton>
-                        <textField verticalHuggingPriority="750" id="hRh-he-Eij">
-                            <rect key="frame" x="241" y="289" width="177" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" usesSingleLineMode="YES" id="SNl-sJ-NKm">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Manually Entered IP Address" id="gmC-TZ-7UZ"/>
-                            </connections>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="2EM-ea-xHg">
-                            <rect key="frame" x="79" y="290" width="156" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="14R-jo-JuH">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="DnX-oD-3cg">
-                            <rect key="frame" x="60" y="249" width="142" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="Etn-ho-m8M">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" id="wUZ-QM-hbg">
-                            <rect key="frame" x="208" y="248" width="74" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" usesSingleLineMode="YES" id="Wf2-to-2ix">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="fileTransferPortRangeStart" id="73A-Kc-ZPA">
-                                    <dictionary key="options">
-                                        <bool key="NSValidatesImmediately" value="YES"/>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </textField>
-                        <textField verticalHuggingPriority="750" id="AjL-LA-eBc">
-                            <rect key="frame" x="311" y="248" width="74" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1115" drawsBackground="YES" usesSingleLineMode="YES" id="JaN-Jr-0K2">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="fileTransferPortRangeEnd" id="3XY-4v-1m8">
-                                    <dictionary key="options">
-                                        <bool key="NSValidatesImmediately" value="YES"/>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="yFI-Kg-PY5">
-                            <rect key="frame" x="288" y="249" width="17" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="df2-Bl-gux">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="vwp-O3-xS7">
-                            <rect key="frame" x="60" y="208" width="203" height="17"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="kf1-8a-JOw">
-                                <font key="font" metaFont="cellTitle"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="cNc-Cu-GiA">
-                            <rect key="frame" x="80" y="158" width="366" height="42"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="AwJ-9v-OvG">
-                                <font key="font" metaFont="smallSystem"/>
-                                <string key="title">Textual, by default, will ask where to save files when downloading them from a sender. This option allows you to skip that process. Please take note this preference cannot be shared using iCloud.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <popUpButton verticalHuggingPriority="750" id="eBB-la-cgd">
-                            <rect key="frame" x="266" y="205" width="201" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="8Rd-lN-LTO" id="DsF-3z-KTP">
-                                <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                                <menu key="menu" title="OtherViews" id="1IQ-CS-aiK">
-                                    <items>
-                                        <menuItem state="on" id="8Rd-lN-LTO"/>
-                                        <menuItem isSeparatorItem="YES" id="59M-lr-LW8">
-                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                                        </menuItem>
-                                        <menuItem title="Select Destination…" tag="2" id="by0-Py-StW"/>
-                                        <menuItem title="Clear Destination" tag="3" id="bDO-Qh-8a5">
-                                            <connections>
-                                                <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.File Transfers -&gt; File Transfer Download Folder Bookmark" id="SdQ-Aw-18e">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSIsNotNil</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
-                                    </items>
-                                </menu>
-                            </popUpButtonCell>
-                            <connections>
-                                <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="NZv-vk-9wk"/>
-                            </connections>
-                        </popUpButton>
-                        <button id="XW8-Nq-abl">
-                            <rect key="frame" x="60" y="126" width="307" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Send passive file transfer requests by default" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cFg-zF-wCO">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="cellTitle"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Requests Use Reverse DCC" id="SVe-g2-fLe"/>
-                            </connections>
-                        </button>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="ceD-QY-fwv">
-                            <rect key="frame" x="80" y="64" width="391" height="56"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="NbG-BB-kZj">
-                                <font key="font" metaFont="smallSystem"/>
-                                <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsiblity of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
-                                <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <button id="pWV-kW-Wnt">
-                            <rect key="frame" x="60" y="32" width="350" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Prevent Mac from sleeping while transferring a file " bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yS6-HJ-6h0">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="cellTitle"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="Waj-cR-RfP"/>
-                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Running Mac OS Mavericks Or Newer" id="ai9-To-44g">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </button>
-                    </subviews>
-                </customView>
             </subviews>
             <point key="canvasLocation" x="333.5" y="-4425"/>
         </customView>
@@ -4067,7 +4061,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="nyl-Dm-Tsm">
                     <rect key="frame" x="108" y="143" width="366" height="42"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="34J-sn-YZe">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="34J-sn-YZe">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">For a message to qualify as “highlight spam”, a minimum of ten (10) nicknames must be present in the message with at least 75% of the message consisting soley of nicknames.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>

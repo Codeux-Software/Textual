@@ -90,7 +90,7 @@
 "TDCServerSheet[1008]" = "No Certificate Selected";
 
 "TDCServerSheet[1009][1]" = "Select Identity";
-"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Please select the certificate which you would like sent to the configured server upon connection. ";
+"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
 
 /* Welcome sheet help channel prompt for freenode servers. */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";

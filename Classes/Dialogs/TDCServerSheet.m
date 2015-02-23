@@ -57,7 +57,7 @@
 @property (nonatomic, nweak) IBOutlet NSButton *autoDisconnectOnSleepCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autoReconnectCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *autojoinWaitsForNickServCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *connectionUsesSSLCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *prefersSecuredConnectionCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteIgnoreButton;
@@ -66,16 +66,16 @@
 @property (nonatomic, nweak) IBOutlet NSButton *editHighlightButton;
 @property (nonatomic, nweak) IBOutlet NSButton *editIgnoreButton;
 @property (nonatomic, nweak) IBOutlet NSButton *excludedFromCloudSyncingCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *floodControlCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *invisibleModeCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *isOutgoingFloodControlEnabledCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *setInvisibleModeOnConnectCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *pongTimerCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *pongTimerDisconnectCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *prefersIPv6Check;
-@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateChangeCertButton;
-@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateMD5FingerprintCopyButton;
-@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateResetButton;
-@property (nonatomic, nweak) IBOutlet NSButton *sslCertificateSHA1FingerprintCopyButton;
-@property (nonatomic, nweak) IBOutlet NSButton *validateServerSSLCertificateCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *performDisconnectOnPongTimerCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *connectionPrefersIPv6heck;
+@property (nonatomic, nweak) IBOutlet NSButton *clientCertificateChangeCertificateButton;
+@property (nonatomic, nweak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
+@property (nonatomic, nweak) IBOutlet NSButton *clientCertificateResetCertificateButton;
+@property (nonatomic, nweak) IBOutlet NSButton *clientCertificateSHA1FingerprintCopyButton;
+@property (nonatomic, nweak) IBOutlet NSButton *validateServerCertificateChainCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *zncIgnoreConfiguredAutojoinCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *zncIgnorePlaybackNotificationsCheck;
 @property (nonatomic, nweak) IBOutlet NSImageView *erroneousInputErrorImageView;
@@ -84,45 +84,45 @@
 @property (nonatomic, nweak) IBOutlet NSPopUpButton *proxyTypeButton;
 @property (nonatomic, nweak) IBOutlet NSSlider *floodControlDelayTimerSlider;
 @property (nonatomic, nweak) IBOutlet NSSlider *floodControlMessageCountSlider;
-@property (nonatomic, nweak) IBOutlet NSTextField *alternateNicknamesField;
+@property (nonatomic, nweak) IBOutlet NSTextField *alternateNicknamesTextField;
 @property (nonatomic, nweak) IBOutlet NSTextField *erroneousInputErrorTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknamePasswordField;
-@property (nonatomic, nweak) IBOutlet NSTextField *proxyPasswordField;
-@property (nonatomic, nweak) IBOutlet NSTextField *proxyUsernameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *serverPasswordField;
-@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateCommonNameField;
-@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateMD5FingerprintField;
-@property (nonatomic, nweak) IBOutlet NSTextField *sslCertificateSHA1FingerprintField;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknamePasswordTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyPasswordTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *proxyUsernameTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *serverPasswordTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *clientCertificateCommonNameField;
+@property (nonatomic, nweak) IBOutlet NSTextField *clientCertificateMD5FingerprintField;
+@property (nonatomic, nweak) IBOutlet NSTextField *clientCertificateSHA1FingerprintField;
 @property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *highlightsTable;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *ignoreTable;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldComboBoxWithValueValidation *serverAddressCombo;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *awayNicknameField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *nicknameField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *normalLeavingCommentField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *proxyAddressField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *proxyPortField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *realnameField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *serverNameField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *serverPortField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *sleepModeQuitMessageField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *usernameField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldComboBoxWithValueValidation *serverAddressComboBox;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *awayNicknameTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *normalLeavingCommentTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *proxyAddressTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *proxyPortTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *realNameTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *connectionNameTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *serverPortTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *sleepModeQuitMessageTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *usernameTextField;
 @property (nonatomic, strong) IBOutlet NSMenu *addIgnoreMenu;
-@property (nonatomic, strong) IBOutlet NSView *addressBookContentView;
-@property (nonatomic, strong) IBOutlet NSView *autojoinContentView;
-@property (nonatomic, strong) IBOutlet NSView *connectCommandsContentView;
-@property (nonatomic, strong) IBOutlet NSView *contentEncodingContentView;
-@property (nonatomic, strong) IBOutlet NSView *disconnectMessagesContentView;
-@property (nonatomic, strong) IBOutlet NSView *floodControlContentView;
-@property (nonatomic, strong) IBOutlet NSView *floodControlContentViewToolView;
-@property (nonatomic, strong) IBOutlet NSView *generalContentView;
-@property (nonatomic, strong) IBOutlet NSView *highlightsContentView;
-@property (nonatomic, strong) IBOutlet NSView *identityContentView;
-@property (nonatomic, strong) IBOutlet NSView *networkSocketContentView;
-@property (nonatomic, strong) IBOutlet NSView *proxyServerContentView;
-@property (nonatomic, strong) IBOutlet NSView *sslCertificateContentView;
-@property (nonatomic, strong) IBOutlet NSView *zncBouncerContentView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewAddressBook;
+@property (nonatomic, strong) IBOutlet NSView *contentViewAutojoin;
+@property (nonatomic, strong) IBOutlet NSView *contentViewConnectCommands;
+@property (nonatomic, strong) IBOutlet NSView *contentViewEncoding;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDisconnectMessages;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControlToolView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
+@property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
+@property (nonatomic, strong) IBOutlet NSView *contentViewIdentity;
+@property (nonatomic, strong) IBOutlet NSView *contentViewNetworkSocket;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServer;
+@property (nonatomic, strong) IBOutlet NSView *contentViewClientCertificate;
+@property (nonatomic, strong) IBOutlet NSView *contentViewZncBouncer;
 @property (nonatomic, strong) NSMutableArray *mutableChannelList;
 @property (nonatomic, strong) NSMutableArray *mutableHighlightList;
 @property (nonatomic, strong) NSMutableArray *mutableIgnoreList;
@@ -155,16 +155,16 @@
 		[self populateTabViewList];
 		
 		/* Populate the server address field with the IRC network list. */
-		NSArray *sortedKeys = [self.serverList allKeys];
-		
-		sortedKeys = [sortedKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			/* We are sorting keys. They are NSString values. */
-			/* Sort without case so that "freenode" is under servers with a capital F. */
+		NSArray *unsortedServerListKeys = [self.serverList allKeys];
+
+		/* We are sorting keys. They are NSString values. */
+		/* Sort without case so that "freenode" is under servers with a capital F. */
+		NSArray *sortedServerListKeys = [unsortedServerListKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			return [obj1 compare:obj2 options:NSCaseInsensitiveSearch];
 		}];
 		
-		for (NSString *key in sortedKeys) {
-			[self.serverAddressCombo addItemWithObjectValue:key];
+		for (NSString *key in sortedServerListKeys) {
+			[self.serverAddressComboBox addItemWithObjectValue:key];
 		}
 		
 		/* Subscribe to notifications. */
@@ -188,63 +188,63 @@
 		
 		/* Build how input is validated. */
 		/* Away nickname. */
-		[self.awayNicknameField setTextDidChangeCallback:self];
+		[self.awayNicknameTextField setTextDidChangeCallback:self];
 		
-		[self.awayNicknameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.awayNicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.awayNicknameField setStringValueIsInvalidOnEmpty:NO];
-		[self.awayNicknameField setStringValueIsTrimmed:YES];
-		[self.awayNicknameField setStringValueUsesOnlyFirstToken:YES];
+		[self.awayNicknameTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.awayNicknameTextField setStringValueIsTrimmed:YES];
+		[self.awayNicknameTextField setStringValueUsesOnlyFirstToken:YES];
 		
-		[self.awayNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.awayNicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			return [currentValue isHostmaskNickname];
 		}];
 		
 		/* Nickname. */
-		[self.nicknameField setTextDidChangeCallback:self];
+		[self.nicknameTextField setTextDidChangeCallback:self];
 		
-		[self.nicknameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.nicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.nicknameField setStringValueIsInvalidOnEmpty:YES];
-		[self.nicknameField setStringValueIsTrimmed:YES];
-		[self.nicknameField setStringValueUsesOnlyFirstToken:YES];
+		[self.nicknameTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.nicknameTextField setStringValueIsTrimmed:YES];
+		[self.nicknameTextField setStringValueUsesOnlyFirstToken:YES];
 		
-		[self.nicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.nicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			return [currentValue isHostmaskNickname];
 		}];
 		
 		/* Username. */
-		[self.usernameField setTextDidChangeCallback:self];
+		[self.usernameTextField setTextDidChangeCallback:self];
 		
-		[self.usernameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.usernameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.usernameField setStringValueIsInvalidOnEmpty:YES];
-		[self.usernameField setStringValueIsTrimmed:YES];
-		[self.usernameField setStringValueUsesOnlyFirstToken:YES];
+		[self.usernameTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.usernameTextField setStringValueIsTrimmed:YES];
+		[self.usernameTextField setStringValueUsesOnlyFirstToken:YES];
 		
-		[self.usernameField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.usernameTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			return [currentValue isHostmaskUsername];
 		}];
 
 		/* Real name. */
-		[self.realnameField setTextDidChangeCallback:self];
+		[self.realNameTextField setTextDidChangeCallback:self];
 		
-		[self.realnameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.realNameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.realnameField setStringValueIsInvalidOnEmpty:YES];
-		[self.realnameField setStringValueIsTrimmed:YES];
-		[self.realnameField setStringValueUsesOnlyFirstToken:NO];
+		[self.realNameTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.realNameTextField setStringValueIsTrimmed:YES];
+		[self.realNameTextField setStringValueUsesOnlyFirstToken:NO];
 		
 		/* Normal leaving comment. */
-		[self.normalLeavingCommentField setTextDidChangeCallback:self];
+		[self.normalLeavingCommentTextField setTextDidChangeCallback:self];
 		
-		[self.normalLeavingCommentField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.normalLeavingCommentTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.normalLeavingCommentField setStringValueIsInvalidOnEmpty:NO];
-		[self.normalLeavingCommentField setStringValueIsTrimmed:YES];
-		[self.normalLeavingCommentField setStringValueUsesOnlyFirstToken:NO];
+		[self.normalLeavingCommentTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.normalLeavingCommentTextField setStringValueIsTrimmed:YES];
+		[self.normalLeavingCommentTextField setStringValueUsesOnlyFirstToken:NO];
 		
-		[self.normalLeavingCommentField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.normalLeavingCommentTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 				return NO;
 			}
@@ -253,15 +253,15 @@
 		}];
 		
 		/* Sleep mode leaving comment. */
-		[self.sleepModeQuitMessageField setTextDidChangeCallback:self];
+		[self.sleepModeQuitMessageTextField setTextDidChangeCallback:self];
 		
-		[self.sleepModeQuitMessageField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.sleepModeQuitMessageTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.sleepModeQuitMessageField setStringValueIsInvalidOnEmpty:NO];
-		[self.sleepModeQuitMessageField setStringValueIsTrimmed:YES];
-		[self.sleepModeQuitMessageField setStringValueUsesOnlyFirstToken:NO];
+		[self.sleepModeQuitMessageTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.sleepModeQuitMessageTextField setStringValueIsTrimmed:YES];
+		[self.sleepModeQuitMessageTextField setStringValueUsesOnlyFirstToken:NO];
 		
-		[self.sleepModeQuitMessageField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.sleepModeQuitMessageTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			if ([currentValue containsCharactersFromCharacterSet:[NSCharacterSet newlineCharacterSet]]) {
 				return NO;
 			}
@@ -270,33 +270,33 @@
 		}];
 		
 		/* Connection name. */
-		[self.serverNameField setTextDidChangeCallback:self];
+		[self.connectionNameTextField setTextDidChangeCallback:self];
 		
-		[self.serverNameField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.connectionNameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.serverNameField setStringValueIsInvalidOnEmpty:YES];
-		[self.serverNameField setStringValueIsTrimmed:YES];
-		[self.serverNameField setStringValueUsesOnlyFirstToken:NO];
+		[self.connectionNameTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.connectionNameTextField setStringValueIsTrimmed:YES];
+		[self.connectionNameTextField setStringValueUsesOnlyFirstToken:NO];
 		
 		/* Server address. */
-		[self.serverAddressCombo setTextDidChangeCallback:self];
+		[self.serverAddressComboBox setTextDidChangeCallback:self];
 		
-		[self.serverAddressCombo setOnlyShowStatusIfErrorOccurs:YES];
+		[self.serverAddressComboBox setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.serverAddressCombo setStringValueIsInvalidOnEmpty:YES];
-		[self.serverAddressCombo setStringValueIsTrimmed:YES];
-		[self.serverAddressCombo setStringValueUsesOnlyFirstToken:YES];
+		[self.serverAddressComboBox setStringValueIsInvalidOnEmpty:YES];
+		[self.serverAddressComboBox setStringValueIsTrimmed:YES];
+		[self.serverAddressComboBox setStringValueUsesOnlyFirstToken:YES];
 
 		/* Server port. */
-		[self.serverPortField setTextDidChangeCallback:self];
+		[self.serverPortTextField setTextDidChangeCallback:self];
 		
-		[self.serverPortField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.serverPortTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.serverPortField setStringValueIsInvalidOnEmpty:NO];
-		[self.serverPortField setStringValueIsTrimmed:YES];
-		[self.serverPortField setStringValueUsesOnlyFirstToken:NO];
+		[self.serverPortTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.serverPortTextField setStringValueIsTrimmed:YES];
+		[self.serverPortTextField setStringValueUsesOnlyFirstToken:NO];
 		
-		[self.serverPortField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.serverPortTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			if ([currentValue isNumericOnly]) {
 				return ([currentValue length] < 7 && [currentValue integerValue] > 1);
 			} else {
@@ -305,17 +305,17 @@
 		}];
 		
 		/* Proxy address. */
-		[self.proxyAddressField setTextDidChangeCallback:self];
+		[self.proxyAddressTextField setTextDidChangeCallback:self];
 		
-		[self.proxyAddressField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.proxyAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.proxyAddressField setStringValueIsInvalidOnEmpty:NO];
-		[self.proxyAddressField setStringValueIsTrimmed:YES];
-		[self.proxyAddressField setStringValueUsesOnlyFirstToken:YES];
+		[self.proxyAddressTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.proxyAddressTextField setStringValueIsTrimmed:YES];
+		[self.proxyAddressTextField setStringValueUsesOnlyFirstToken:YES];
 		
-		[self.proxyAddressField setPerformValidationWhenEmpty:YES];
+		[self.proxyAddressTextField setPerformValidationWhenEmpty:YES];
 		
-		[self.proxyAddressField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.proxyAddressTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			NSInteger proxyType = [self.proxyTypeButton selectedTag];
 			
 			if (proxyType == IRCConnectionSocketSocks4ProxyType ||
@@ -330,17 +330,17 @@
 		}];
 		
 		/* Proxy port. */
-		[self.proxyPortField setTextDidChangeCallback:self];
+		[self.proxyPortTextField setTextDidChangeCallback:self];
 		
-		[self.proxyPortField setOnlyShowStatusIfErrorOccurs:YES];
+		[self.proxyPortTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.proxyPortField setStringValueIsInvalidOnEmpty:NO];
-		[self.proxyPortField setStringValueIsTrimmed:YES];
-		[self.proxyPortField setStringValueUsesOnlyFirstToken:NO];
+		[self.proxyPortTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.proxyPortTextField setStringValueIsTrimmed:YES];
+		[self.proxyPortTextField setStringValueUsesOnlyFirstToken:NO];
 		
-		[self.proxyPortField setPerformValidationWhenEmpty:YES];
+		[self.proxyPortTextField setPerformValidationWhenEmpty:YES];
 		
-		[self.proxyPortField setValidationBlock:^BOOL(NSString *currentValue) {
+		[self.proxyPortTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			NSInteger proxyType = [self.proxyTypeButton selectedTag];
 			
 			if (proxyType == IRCConnectionSocketSocks4ProxyType ||
@@ -376,34 +376,34 @@
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerSheet[1007][15]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][07]"),	@"view" : self.addressBookContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][01]"),	@"view" : self.autojoinContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][02]"),	@"view" : self.connectCommandsContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][03]"),	@"view" : self.contentEncodingContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][05]"),	@"view" : self.generalContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][06]"),	@"view" : self.identityContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][12]"),	@"view" : self.highlightsContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][08]"),	@"view" : self.disconnectMessagesContentView},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][07]"),	@"view" : self.contentViewAddressBook},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][01]"),	@"view" : self.contentViewAutojoin},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][02]"),	@"view" : self.contentViewConnectCommands},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][03]"),	@"view" : self.contentViewEncoding},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][05]"),	@"view" : self.contentViewGeneral},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][06]"),	@"view" : self.contentViewIdentity},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][12]"),	@"view" : self.contentViewHighlights},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][08]"),	@"view" : self.contentViewDisconnectMessages},
 		]
 	}];
 	
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerSheet[1007][16]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][14]"),	@"view" : self.zncBouncerContentView},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][14]"),	@"view" : self.contentViewZncBouncer},
 		]
 	}];
 	
 	[navigationTreeMatrix addObject:@{
 		@"name" : TXTLS(@"TDCServerSheet[1007][17]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][11]"),	@"view" : self.sslCertificateContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][04]"),	@"view" : self.floodControlContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][13]"),	@"view" : self.networkSocketContentView},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][10]"),	@"view" : self.proxyServerContentView},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][11]"),	@"view" : self.contentViewClientCertificate},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][04]"),	@"view" : self.contentViewFloodControl},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][13]"),	@"view" : self.contentViewNetworkSocket},
+			@{@"name" : TXTLS(@"TDCServerSheet[1007][10]"),	@"view" : self.contentViewProxyServer},
 		]
 	}];
-	
+
 	[self.navigationOutlineview setNavigationTreeMatrix:navigationTreeMatrix];
 	
 	[self.navigationOutlineview setContentViewPadding:_preferencePaneViewFramePadding];
@@ -445,14 +445,11 @@
 	 
 	 We do this two times. The first time setups up preferred encodings at
 	 the top of the list. The next handles everything else. */
-	
 	NSArray *favoredEncodings = @[@"Unicode", @"Western", @"Central European"];
 	
 	[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:NO];
-	
-	BOOL includeAdvancedEncodings = [RZUserDefaults() boolForKey:@"Server Properties Window Sheet -> Include Advanced Encodings"];
-	
-	if (includeAdvancedEncodings) {
+
+	if ([RZUserDefaults() boolForKey:@"Server Properties Window Sheet -> Include Advanced Encodings"]) {
 		[self populateEncodingPopup:encodingAdditions preferredEncodings:favoredEncodings ignoreFavored:YES];
 	}
 }
@@ -536,44 +533,27 @@
 	
 	if (viewToken == TDCServerSheetFloodControlNavigationSelection) {
 		[self showWithDefaultView:_navigationIndexForFloodControl];
-	} else if (viewToken == TDCServerSheetAddressBookNavigationSelection ||
-			   viewToken == TDCServerSheetNewIgnoreEntryNavigationSelection)
-	{
+	} else if (viewToken == TDCServerSheetAddressBookNavigationSelection) {
 		[self showWithDefaultView:_navigationIndexForAddressBook];
-		
-		if ([context isEqualToString:@"-"] == NO) {
-			/* Create ignore sheet. */
-			self.ignoreSheet = [TDCAddressBookSheet new];
-			
-			self.ignoreSheet.delegate = self;
-			self.ignoreSheet.window = self.sheet;
-			
-			self.ignoreSheet.newItem = YES;
-			
-			/* Create ignore. */
-			IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry new];
-			
-			newIgnore.ignoreCTCP = YES;
-			newIgnore.ignoreJPQE = YES;
-			newIgnore.ignoreNotices = YES;
-			newIgnore.ignorePrivateHighlights = YES;
-			newIgnore.ignorePrivateMessages = YES;
-			newIgnore.ignorePublicHighlights = YES;
-			newIgnore.ignorePublicMessages = YES;
-			newIgnore.ignoreFileTransferRequests = YES;
-			
-			if ([context isEqualToString:@"--"]) {
-				//self.ignoreSheet.ignore.hostmask = @"<nickname>";
-			} else {
-				newIgnore.hostmask = context;
-			}
-			
-			/* Copy over configuration. */
-			self.ignoreSheet.ignore = newIgnore;
-			
-			/* Present dialog. */
-			[self.ignoreSheet start];
+	} else if (viewToken == TDCServerSheetNewIgnoreEntryNavigationSelection) {
+		[self showWithDefaultView:_navigationIndexForAddressBook];
+
+		IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry newIgnoreEntry];
+
+		if (context) {
+			newIgnore.hostmask = context;
 		}
+
+		self.ignoreSheet = [TDCAddressBookSheet new];
+		
+		self.ignoreSheet.delegate = self;
+		self.ignoreSheet.window = self.sheet;
+
+		self.ignoreSheet.newItem = YES;
+
+		self.ignoreSheet.ignore = newIgnore;
+
+		[self.ignoreSheet start];
 	} else {
 		[self showWithDefaultView:_navigationIndexForGeneral];
 	}
@@ -581,12 +561,12 @@
 
 - (void)showWithDefaultView:(NSInteger)viewIndex
 {
-	[self startSheet];
-	
 	[self.navigationOutlineview startAtSelectionIndex:viewIndex];
+
+	[self startSheet];
 }
 
-- (void)closeSheets
+- (void)closeChildSheets
 {
 	if (self.channelSheet) {
 		[self.channelSheet cancel:nil];
@@ -599,23 +579,9 @@
 
 - (void)close
 {
-	[self closeSheets];
+	[self closeChildSheets];
 
 	[super cancel:nil];
-}
-
-- (void)updateUnderlyingConfigurationProfileCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
-{
-	if (returnType == TLOPopupPromptReturnPrimaryType) {
-		IRCClient *client = [worldController() findClientById:self.clientID];
-		
-		[self close];
-		
-		self.config = [client copyOfStoredConfig];
-		
-		[self load];
-		[self showWithDefaultView:_navigationIndexForGeneral];
-	}
 }
 
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
@@ -623,15 +589,17 @@
 	NSWindow *sheetWindow = self.sheet;
 	
 	if (self.channelSheet) {
-		sheetWindow = self.channelSheet.sheet;
+		sheetWindow = [self.channelSheet sheet];
 	} else if (self.highlightSheet) {
-		sheetWindow = self.highlightSheet.sheet;
+		sheetWindow = [self.highlightSheet sheet];
 	} else if (self.ignoreSheet) {
-		sheetWindow = self.ignoreSheet.sheet;
+		sheetWindow = [self.ignoreSheet sheet];
 	}
 
+	IRCClient *client = [worldController() findClientById:self.clientID];
+
 	[TLOPopupPrompts sheetWindowWithWindow:sheetWindow
-									  body:TXTLS(@"BasicLanguage[1240][2]", self.config.clientName)
+									  body:TXTLS(@"BasicLanguage[1240][2]", [client name])
 									 title:TXTLS(@"BasicLanguage[1240][1]")
 							 defaultButton:TXTLS(@"BasicLanguage[1240][3]")
 						   alternateButton:TXTLS(@"BasicLanguage[1240][4]")
@@ -639,226 +607,200 @@
 							suppressionKey:nil
 						   suppressionText:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
-							   [self updateUnderlyingConfigurationProfileCallback:buttonClicked withOriginalAlert:originalAlert];
+							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
+								   [self close];
+
+								   [self setConfig:[client copyOfStoredConfig]];
+
+								   [self load];
+								   [self showWithDefaultView:_navigationIndexForGeneral];
+							   }
 						   }];
 }
 
 - (void)load
 {
 	/* General */
-	/* Define server address. */
+	[self.connectionNameTextField setStringValue:self.config.connectionName];
+	
 	NSString *networkName = [self hostFoundInServerList:self.config.serverAddress];
 	
 	if (networkName == nil) {
-		[self.serverAddressCombo setStringValue:self.config.serverAddress];
+		[self.serverAddressComboBox setStringValue:self.config.serverAddress];
 	} else {
-		[self.serverAddressCombo setStringValue:networkName];
+		[self.serverAddressComboBox setStringValue:networkName];
 	}
 
-	/* Server Port. */
-	NSString *serverPort = [NSString stringWithInteger:self.config.serverPort];
-	
-	[self.serverPortField setStringValue:serverPort];
+	[self.serverPortTextField setStringValue:[NSString stringWithInteger:self.config.serverPort]];
 
-	/* Connection name. */
-	[self.serverNameField setStringValue:self.config.clientName];
-	
-	/* Connection uses SSL. */
-	[self.connectionUsesSSLCheck setState:self.config.connectionUsesSSL];
-	
-	/* Server password. */
-	[self.serverPasswordField setStringValue:self.config.serverPassword];
-	
-	/* Other paramaters. */
-	[self.autojoinWaitsForNickServCheck setState:self.config.autojoinWaitsForNickServ];
+	[self.prefersSecuredConnectionCheck setState:self.config.prefersSecuredConnection];
 
-	/* Auto connect status. */
+	[self.serverPasswordTextField setStringValue:self.config.serverPassword];
+
 	[self.autoConnectCheck setState:self.config.autoConnect];
 	[self.autoReconnectCheck setState:self.config.autoReconnect];
 	[self.autoDisconnectOnSleepCheck setState:self.config.autoSleepModeDisconnect];
-	
-	/* Excluded from iCloud. */
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[self.excludedFromCloudSyncingCheck setState:self.config.excludedFromCloudSyncing];
 #endif
-	
-	/* ZNC configuration. */
+
+	/* ZNC Bouncer */
 	[self.zncIgnoreConfiguredAutojoinCheck setState:self.config.zncIgnoreConfiguredAutojoin];
 	[self.zncIgnorePlaybackNotificationsCheck setState:self.config.zncIgnorePlaybackNotifications];
-	
-	/* DNS prefers IPv6. */
-	[self.prefersIPv6Check setState:self.config.connectionPrefersIPv6];
-	
-	/* Internal pong timer. */
+
+	/* Network Socket */
+	[self.connectionPrefersIPv6heck setState:self.config.connectionPrefersIPv6];
+
 	[self.pongTimerCheck setState:self.config.performPongTimer];
-	[self.pongTimerDisconnectCheck setState:self.config.performDisconnectOnPongTimer];
-	
-	/* Reachability check. */
+	[self.performDisconnectOnPongTimerCheck setState:self.config.performDisconnectOnPongTimer];
+
 	[self.disconnectOnReachabilityChangeCheck setState:self.config.performDisconnectOnReachabilityChange];
-	
-	/* Validate SSL certificate. */
-	[self.validateServerSSLCertificateCheck setState:self.config.validateServerSSLCertificate];
-	
-	/* Nickname. */
+
+	[self.validateServerCertificateChainCheck setState:self.config.validateServerCertificateChain];
+
+	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
-		[self.nicknameField setStringValue:[TPCPreferences defaultNickname]];
+		[self.nicknameTextField setStringValue:[TPCPreferences defaultNickname]];
 	} else {
-		[self.nicknameField setStringValue:self.config.nickname];
+		[self.nicknameTextField setStringValue:self.config.nickname];
 	}
-	
-	/* Away nickname. */
-	[self.awayNicknameField setStringValue:self.config.awayNickname];
-	
-	/* Username. */
+
+	[self.awayNicknameTextField setStringValue:self.config.awayNickname];
+
 	if (NSObjectIsEmpty(self.config.username)) {
-		[self.usernameField setStringValue:[TPCPreferences defaultUsername]];
+		[self.usernameTextField setStringValue:[TPCPreferences defaultUsername]];
 	} else {
-		[self.usernameField setStringValue:self.config.username];
+		[self.usernameTextField setStringValue:self.config.username];
 	}
-	
-	/* Real name. */
-	if (NSObjectIsEmpty(self.config.realname)) {
-		[self.realnameField setStringValue:[TPCPreferences defaultRealname]];
+
+	if (NSObjectIsEmpty(self.config.realName)) {
+		[self.realNameTextField setStringValue:[TPCPreferences defaultRealname]];
 	} else {
-		[self.realnameField setStringValue:self.config.realname];
+		[self.realNameTextField setStringValue:self.config.realName];
 	}
-	
-	/* Alternate nicknames. */
+
 	NSString *nicknames = [self.config.alternateNicknames componentsJoinedByString:NSStringWhitespacePlaceholder];
 		
-	[self.alternateNicknamesField setStringValue:nicknames];
-	
-	/* NickServ password. */
-	[self.nicknamePasswordField setStringValue:self.config.nicknamePassword];
-	
+	[self.alternateNicknamesTextField setStringValue:nicknames];
+
+	[self.nicknamePasswordTextField setStringValue:self.config.nicknamePassword];
+
+	[self.autojoinWaitsForNickServCheck setState:self.config.autojoinWaitsForNickServ];
+
 	/* Messages */
-	[self.sleepModeQuitMessageField setStringValue:self.config.sleepModeLeavingComment];
-	[self.normalLeavingCommentField setStringValue:self.config.normalLeavingComment];
-	
+	[self.normalLeavingCommentTextField setStringValue:self.config.normalLeavingComment];
+	[self.sleepModeQuitMessageTextField setStringValue:self.config.sleepModeLeavingComment];
+
 	/* Encoding */
 	NSString *primaryEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.primaryEncoding)];
 	NSString *fallbackEncodingTitle = [self.encodingList firstKeyForObject:@(self.config.fallbackEncoding)];
 	
 	[self.primaryEncodingButton selectItemWithTitle:primaryEncodingTitle];
 	[self.fallbackEncodingButton selectItemWithTitle:fallbackEncodingTitle];
-	
+
 	/* Proxy Server */
 	[self.proxyTypeButton selectItemWithTag:self.config.proxyType];
-	
-	[self.proxyAddressField setStringValue:self.config.proxyAddress];
-	[self.proxyUsernameField setStringValue:self.config.proxyUsername];
-	
-	[self.proxyPasswordField setStringValue:self.config.proxyPassword];
-	
-	[self.proxyPortField setStringValue:[NSString stringWithInteger:self.config.proxyPort]];
-	
-	/* Connect modes. */
-	[self.invisibleModeCheck setState:self.config.invisibleMode];
-	
-	/* Connect commands. */
+	[self.proxyAddressTextField setStringValue:self.config.proxyAddress];
+	[self.proxyUsernameTextField setStringValue:self.config.proxyUsername];
+	[self.proxyPasswordTextField setStringValue:self.config.proxyPassword];
+	[self.proxyPortTextField setStringValue:[NSString stringWithInteger:self.config.proxyPort]];
+
+	/* Connect Commands */
+	[self.setInvisibleModeOnConnectCheck setState:self.config.setInvisibleModeOnConnect];
+
 	NSString *loginCommands = [self.config.loginCommands componentsJoinedByString:NSStringNewlinePlaceholder];
 	
 	[self.connectCommandsField setString:loginCommands];
-	
+
 	/* Flood Control */
-	[self.floodControlCheck setState:self.config.outgoingFloodControl];
-	
+	[self.isOutgoingFloodControlEnabledCheck setState:self.config.isOutgoingFloodControlEnabled];
+
 	[self.floodControlDelayTimerSlider setIntegerValue:self.config.floodControlDelayTimerInterval];
 	[self.floodControlMessageCountSlider setIntegerValue:self.config.floodControlMaximumMessages];
-	
-	/* Mutable stors. */
+
+	/* Mutable Stores */
 	[self.mutableChannelList setArray:self.config.channelList];
 	[self.mutableHighlightList setArray:self.config.highlightList];
 	[self.mutableIgnoreList setArray:self.config.ignoreList];
 	
 	/* Update window based on new configuration. */
+	[self updateChannelsPage];
 	[self updateConnectionPage];
 	[self updateHighlightsPage];
-	[self updateChannelsPage];
 	[self updateIgnoresPage];
-	[self updateSSLCertificatePage];
+	[self updateClientCertificatePage];
 
 	[self proxyTypeChanged:nil];
 	[self floodControlChanged:nil];
-	
+
 	[self reloadChannelTable];
+	[self reloadHighlightsTable];
 	[self reloadIgnoreTable];
-	
-	/* @end */
 }
 
 - (void)save
 {
 	/* General */
-	/* Auto connect status. */
+	self.config.connectionName = [self.connectionNameTextField value];
+	
+	NSString *serverAddressComboBoxValue = [self.serverAddressComboBox lowercaseValue];
+
+	NSString *serverAddressMatchedHost = [self nameMatchesServerInList:serverAddressComboBoxValue];
+
+	if (serverAddressMatchedHost == nil) {
+		self.config.serverAddress = serverAddressComboBoxValue;
+	} else {
+		self.config.serverAddress = self.serverList[serverAddressMatchedHost];
+	}
+
+	self.config.serverPort = [self.serverPortTextField integerValue];
+
+	self.config.prefersSecuredConnection = [self.prefersSecuredConnectionCheck state];
+
+	self.config.serverPassword = [self.serverPasswordTextField trimmedStringValue];
+
 	self.config.autoConnect	= [self.autoConnectCheck state];
 	self.config.autoReconnect = [self.autoReconnectCheck state];
 	self.config.autoSleepModeDisconnect = [self.autoDisconnectOnSleepCheck state];
-	
-	/* Connection type. */
-	self.config.connectionPrefersIPv6 = [self.prefersIPv6Check state];
-	self.config.connectionUsesSSL = [self.connectionUsesSSLCheck state];
-	
-	/* Server password. */
-	self.config.serverPassword = [self.serverPasswordField trimmedStringValue];
-	
-	/* Exclude from iCloud. */
+
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	self.config.excludedFromCloudSyncing = [self.excludedFromCloudSyncingCheck state];
 #endif
-	
-	/* ZNC configuration. */
+
+	/* ZNC Bouncer */
 	self.config.zncIgnoreConfiguredAutojoin = [self.zncIgnoreConfiguredAutojoinCheck state];
 	self.config.zncIgnorePlaybackNotifications = [self.zncIgnorePlaybackNotificationsCheck state];
 	
-	/* Internal pong timer. */
+	/* Network Socket */
+	self.config.connectionPrefersIPv6 = [self.connectionPrefersIPv6heck state];
+
 	self.config.performPongTimer = [self.pongTimerCheck state];
-	self.config.performDisconnectOnPongTimer = [self.pongTimerDisconnectCheck state];
-	
-	/* SSL certificate validation. */
-	self.config.validateServerSSLCertificate = [self.validateServerSSLCertificateCheck state];
-	
-	/* Reachability changes. */
+	self.config.performDisconnectOnPongTimer = [self.performDisconnectOnPongTimerCheck state];
+
 	self.config.performDisconnectOnReachabilityChange = [self.disconnectOnReachabilityChangeCheck state];
-	
-	/* Server address. */
-	/* Get server address value. */
-	NSString *hostname = [self.serverAddressCombo lowercaseValue];
-	
-			  hostname = [hostname cleanedServerHostmask];
-	
-	/* Try to match it against internal server list. */
-	NSString *realhost = [self nameMatchesServerInList:hostname];
-	
-	if (realhost == nil) {
-		self.config.serverAddress = hostname;
-	} else {
-		self.config.serverAddress = self.serverList[realhost];
-	}
-	
-	/* Connection name. */
-	self.config.clientName = [self.serverNameField value];
-	
-	/* Server port. */
-	self.config.serverPort = [self.serverPortField integerValue];
-	
+
+	self.config.validateServerCertificateChain = [self.validateServerCertificateChainCheck state];
+
 	/* Identity */
-	self.config.nickname = [self.nicknameField value];
-	self.config.username = [self.usernameField value];
-	self.config.realname = [self.realnameField value];
+	self.config.nickname = [self.nicknameTextField value];
+	self.config.username = [self.usernameTextField value];
+	self.config.realName = [self.realNameTextField value];
 	
-	self.config.awayNickname = [self.awayNicknameField value];
+	self.config.awayNickname = [self.awayNicknameTextField value];
 	
-	self.config.nicknamePassword = [self.nicknamePasswordField trimmedStringValue];
-	
+	self.config.nicknamePassword = [self.nicknamePasswordTextField trimmedStringValue];
+
+	self.config.autojoinWaitsForNickServ = [self.autojoinWaitsForNickServCheck state];
+
 	/* Alternate nicknames. */
-	NSString *alternateNicknames = [self.alternateNicknamesField stringValue];
+	NSString *alternateNicknames = [self.alternateNicknamesTextField stringValue];
 	
-	NSArray *nicks = [alternateNicknames split:NSStringWhitespacePlaceholder];
+	NSArray *alternateNicknameArray = [alternateNicknames split:NSStringWhitespacePlaceholder];
 	
 	NSMutableArray *newAlternateNicknameList = [NSMutableArray array];
 	
-	for (NSString *s in nicks) {
+	for (NSString *s in alternateNicknameArray) {
 		if ([s length] > 0) {
 			[newAlternateNicknameList addObject:s];
 		}
@@ -866,12 +808,9 @@
 	
 	self.config.alternateNicknames = newAlternateNicknameList;
 
-	/* Other paramaters. */
-	self.config.autojoinWaitsForNickServ = [self.autojoinWaitsForNickServCheck state];
-
 	/* Messages */
-	self.config.sleepModeLeavingComment	= [self.sleepModeQuitMessageField value];
-	self.config.normalLeavingComment = [self.normalLeavingCommentField value];
+	self.config.sleepModeLeavingComment	= [self.sleepModeQuitMessageTextField value];
+	self.config.normalLeavingComment = [self.normalLeavingCommentTextField value];
 	
 	/* Encoding */
 	NSInteger primaryEncoding = [self.encodingList integerForKey:[self.primaryEncodingButton title]];
@@ -880,23 +819,23 @@
 	self.config.primaryEncoding	= primaryEncoding;
 	self.config.fallbackEncoding = fallbackEncoding;
 	
-	/* Proxy server. */
+	/* Proxy Server */
 	self.config.proxyType = [self.proxyTypeButton selectedTag];
-	
-	self.config.proxyAddress = [self.proxyAddressField lowercaseValue];
-	self.config.proxyPort = [self.proxyPortField integerValue];
-	
-	self.config.proxyUsername = [self.proxyUsernameField firstTokenStringValue];
-	self.config.proxyPassword = [self.proxyPasswordField trimmedStringValue];
+	self.config.proxyAddress = [self.proxyAddressTextField lowercaseValue];
+	self.config.proxyPort = [self.proxyPortTextField integerValue];
+	self.config.proxyUsername = [self.proxyUsernameTextField firstTokenStringValue];
+	self.config.proxyPassword = [self.proxyPasswordTextField trimmedStringValue];
 
 	/* Connect Commands */
+	self.config.setInvisibleModeOnConnect = [self.setInvisibleModeOnConnectCheck state];
+
 	NSString *connectCommands = [self.connectCommandsField string];
 	
-	NSArray *commands = [connectCommands split:NSStringNewlinePlaceholder];
+	NSArray *connectCommandsArray = [connectCommands split:NSStringNewlinePlaceholder];
 	
 	NSMutableArray *newConnectCommandsList = [NSMutableArray array];
 	
-	for (NSString *s in commands) {
+	for (NSString *s in connectCommandsArray) {
 		NSString *ts = [s trim];
 		
 		if ([ts length] > 0) {
@@ -905,12 +844,9 @@
 	}
 	
 	self.config.loginCommands = newConnectCommandsList;
-	
-	/* Connect modes. */
-	self.config.invisibleMode = [self.invisibleModeCheck state];
-	
+
 	/* Flood Control */
-	self.config.outgoingFloodControl = [self.floodControlCheck state];
+	self.config.isOutgoingFloodControlEnabled = [self.isOutgoingFloodControlEnabledCheck state];
 	
 	self.config.floodControlMaximumMessages = [self.floodControlMessageCountSlider integerValue];
 	self.config.floodControlDelayTimerInterval = [self.floodControlDelayTimerSlider integerValue];
@@ -919,8 +855,6 @@
 	self.config.channelList = self.mutableChannelList;
 	self.config.highlightList = self.mutableHighlightList;
 	self.config.ignoreList = self.mutableIgnoreList;
-	
-	/* @end */
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
@@ -933,17 +867,17 @@
 	/* This array is not saved as static because it would have to be cleared
 	 out anytime that the sheet closes. */
 	NSArray *fieldsToValidate = @[
-	   @{@"field" : self.nicknameField, @"errorLocalizationNumeric" : @"01"},
-	   @{@"field" : self.awayNicknameField, @"errorLocalizationNumeric" : @"02"},
-	   @{@"field" : self.usernameField, @"errorLocalizationNumeric" : @"03"},
-	   @{@"field" : self.realnameField, @"errorLocalizationNumeric" : @"04"},
-	   @{@"field" : self.serverNameField, @"errorLocalizationNumeric" : @"05"},
-	   @{@"field" : self.serverAddressCombo, @"errorLocalizationNumeric" : @"06"},
-	   @{@"field" : self.serverPortField, @"errorLocalizationNumeric" : @"07"},
-	   @{@"field" : self.proxyAddressField, @"errorLocalizationNumeric" : @"08"},
-	   @{@"field" : self.proxyPortField, @"errorLocalizationNumeric" : @"09"},
-	   @{@"field" : self.normalLeavingCommentField, @"errorLocalizationNumeric" : @"10"},
-	   @{@"field" : self.sleepModeQuitMessageField, @"errorLocalizationNumeric" : @"11"}
+	   @{@"field" : self.nicknameTextField,					@"errorLocalizationNumeric" : @"01"},
+	   @{@"field" : self.awayNicknameTextField,				@"errorLocalizationNumeric" : @"02"},
+	   @{@"field" : self.usernameTextField,					@"errorLocalizationNumeric" : @"03"},
+	   @{@"field" : self.realNameTextField,					@"errorLocalizationNumeric" : @"04"},
+	   @{@"field" : self.connectionNameTextField,			@"errorLocalizationNumeric" : @"05"},
+	   @{@"field" : self.serverAddressComboBox,				@"errorLocalizationNumeric" : @"06"},
+	   @{@"field" : self.serverPortTextField,				@"errorLocalizationNumeric" : @"07"},
+	   @{@"field" : self.proxyAddressTextField,				@"errorLocalizationNumeric" : @"08"},
+	   @{@"field" : self.proxyPortTextField,				@"errorLocalizationNumeric" : @"09"},
+	   @{@"field" : self.normalLeavingCommentTextField,		@"errorLocalizationNumeric" : @"10"},
+	   @{@"field" : self.sleepModeQuitMessageTextField,		@"errorLocalizationNumeric" : @"11"}
 	];
 
 	NSString *errorReason = nil;
@@ -1016,24 +950,24 @@
 
 - (void)floodControlChanged:(id)sender
 {
-	BOOL match = ([self.floodControlCheck state] == NSOnState);
+	BOOL match = ([self.isOutgoingFloodControlEnabledCheck state] == NSOffState);
 	
-	[self.floodControlContentViewToolView setHidden:(match == NO)];
+	[self.contentViewFloodControlToolView setHidden:match];
 }
 
 - (void)useSSLCheckChanged:(id)sender
 {
-	NSInteger serverPort = [self.serverPortField integerValue];
+	NSInteger serverPort = [self.serverPortTextField integerValue];
 	
-	BOOL useSSL = ([self.connectionUsesSSLCheck state] == NSOnState);
+	BOOL useSSL = ([self.prefersSecuredConnectionCheck state] == NSOnState);
 	
 	if (useSSL) {
 		if (serverPort == 6667) {
-			[self.serverPortField setStringValue:@"6697"];
+			[self.serverPortTextField setStringValue:@"6697"];
 		}
 	} else {
 		if (serverPort == 6697) {
-			[self.serverPortField setStringValue:@"6667"];
+			[self.serverPortTextField setStringValue:@"6667"];
 		}
 	}
 }
@@ -1043,16 +977,12 @@
 
 - (void)ok:(id)sender
 {
-	/* Close anything open just incase. */
-	[self closeSheets];
-	
-	/* Remove observer before calling updateConfig: */
+	[self closeChildSheets];
+
 	[RZNotificationCenter() removeObserver:self];
-	
-	/* Save changes. */
+
 	[self save];
-	
-	/* Inform delegate. */
+
 	if ([self.delegate respondsToSelector:@selector(serverSheetOnOK:)]) {
 		[self.delegate serverSheetOnOK:self];
 	}
@@ -1064,16 +994,15 @@
 		}
 	}
 #endif
-	
+
 	[self.sheet makeFirstResponder:nil];
-	
-	/* Tell super. */
+
 	[super ok:nil];
 }
 
 - (void)cancel:(id)sender
 {
-	[self closeSheets];
+	[self closeChildSheets];
 
 	[RZNotificationCenter() removeObserver:self];
 	
@@ -1107,15 +1036,15 @@
 	
 	BOOL enabled = (httpsEnabled || socksEnabled);
 	
-	[self.proxyAddressField	setEnabled:enabled];
-	[self.proxyPortField setEnabled:enabled];
-	[self.proxyUsernameField setEnabled:socksEnabled];
-	[self.proxyPasswordField setEnabled:socksEnabled];
+	[self.proxyAddressTextField	setEnabled:enabled];
+	[self.proxyPortTextField setEnabled:enabled];
+	[self.proxyUsernameTextField setEnabled:socksEnabled];
+	[self.proxyPasswordTextField setEnabled:socksEnabled];
 	
-	[self updateSSLCertificatePage];
+	[self updateClientCertificatePage];
 	
-	[self.proxyAddressField performValidation];
-	[self.proxyPortField performValidation];
+	[self.proxyAddressTextField performValidation];
+	[self.proxyPortTextField performValidation];
 	
 	[self updateConnectionPage];
 }
@@ -1127,8 +1056,8 @@
 	
 	[self populateEncodings];
 	
-	NSMenuItem *primaryItem;
-	NSMenuItem *fallbackItem;
+	NSMenuItem *primaryItem = nil;
+	NSMenuItem *fallbackItem = nil;
 	
 	if (selectedPrimary) {
 		primaryItem = [self.primaryEncodingButton itemWithTitle:selectedPrimary];
@@ -1139,11 +1068,11 @@
 	}
 	
 	if (primaryItem == nil) {
-		selectedPrimary = [NSString localizedNameOfStringEncoding:TXDefaultPrimaryStringEncoding];
+		selectedPrimary = [NSString localizedNameOfStringEncoding:self.config.primaryEncoding];
 	}
 	
 	if (fallbackItem == nil) {
-		selectedFallback = [NSString localizedNameOfStringEncoding:TXDefaultFallbackStringEncoding];
+		selectedFallback = [NSString localizedNameOfStringEncoding:self.config.fallbackEncoding];
 	}
 	
 	/* Select items. */
@@ -1152,44 +1081,35 @@
 }
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)toggleCloudSyncExclusionRequestDeletionCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
-{
-	if (returnType == TLOPopupPromptReturnSecondaryType) {
-		self.requestCloudDeletionOnClose = YES;
-	} else {
-		self.requestCloudDeletionOnClose = NO;
-	}
-}
-
 - (void)toggleCloudSyncExclusion:(id)sender
 {
 	if ([self.excludedFromCloudSyncingCheck state] == NSOnState) {
-		TLOPopupPrompts *popup = [TLOPopupPrompts new];
-		
-		[popup sheetWindowWithQuestion:self.sheet
-								target:self
-								action:@selector(toggleCloudSyncExclusionRequestDeletionCallback:withOriginalAlert:)
-								  body:TXTLS(@"TDCServerSheet[1002][2]")
-								 title:TXTLS(@"TDCServerSheet[1002][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1182]")
-					   alternateButton:TXTLS(@"BasicLanguage[1219]")
-						   otherButton:nil
-						suppressionKey:nil
-					   suppressionText:nil];
+		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
+										  body:TXTLS(@"TDCServerSheet[1002][2]")
+										 title:TXTLS(@"TDCServerSheet[1002][1]")
+								 defaultButton:TXTLS(@"BasicLanguage[1182]")
+							   alternateButton:TXTLS(@"BasicLanguage[1219]")
+								   otherButton:nil
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+								   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
+									   self.requestCloudDeletionOnClose = YES;
+								   } else {
+									   self.requestCloudDeletionOnClose = NO;
+								   }
+							   }];
 	} else {
-		TLOPopupPrompts *popup = [TLOPopupPrompts new];
-		
-		[popup sheetWindowWithQuestion:self.sheet
-								target:[TLOPopupPrompts class]
-								action:@selector(popupPromptNilSelector:withOriginalAlert:)
-								  body:TXTLS(@"TDCServerSheet[1003][2]")
-								 title:TXTLS(@"TDCServerSheet[1003][1]")
-						 defaultButton:TXTLS(@"BasicLanguage[1186]")
-					   alternateButton:nil
-						   otherButton:nil
-						suppressionKey:nil
-					   suppressionText:nil];
-		
+		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
+										  body:TXTLS(@"TDCServerSheet[1003][2]")
+										 title:TXTLS(@"TDCServerSheet[1003][1]")
+								 defaultButton:TXTLS(@"BasicLanguage[1186]")
+							   alternateButton:nil
+								   otherButton:nil
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:nil];
+
 		self.requestCloudDeletionOnClose = NO;
 	}
 }
@@ -1198,104 +1118,100 @@
 #pragma mark -
 #pragma mark SSL Certificate
 
-- (IBAction)onSSLCertificateFingerprintSHA1CopyRequested:(id)sender
+- (void)onClientCertificateFingerprintSHA1CopyRequested:(id)sender
 {
-	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateSHA1FingerprintField stringValue]];
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.clientCertificateSHA1FingerprintField stringValue]];
 	
 	[RZPasteboard() setStringContent:command];
 }
 
-- (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender
+- (void)onClientCertificateFingerprintMD5CopyRequested:(id)sender
 {
-	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.sslCertificateMD5FingerprintField stringValue]];
+	NSString *command = [NSString stringWithFormat:@"/msg NickServ cert add %@", [self.clientCertificateMD5FingerprintField stringValue]];
 	
 	[RZPasteboard() setStringContent:command];
 }
 
-- (void)updateSSLCertificatePage
+- (void)updateClientCertificatePage
 {
 	NSString *commonName = nil;
 	
 	NSString *sha1fingerprint = nil;
 	NSString *md5fingerprint = nil;
-	
-	/* Proxies are ran through an older socket engine which means SSL certificate
-	 validatin is not available when it is enabled. This is the check for that. */
+
 	NSInteger proxyTag = [self.proxyTypeButton selectedTag];
 	
 	BOOL proxyEnabled = NSDissimilarObjects(proxyTag, IRCConnectionSocketNoProxyType);
 	
-	[self.sslCertificateChangeCertButton setEnabled:(proxyEnabled == NO)];
-	
-	/* Continue normal operations. */
-	if (self.config.identitySSLCertificate && proxyEnabled == NO) {
-		SecKeychainItemRef cert;
-		
-		CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identitySSLCertificate);
-		
-		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
-		
-		if (status == noErr) {
-			/* Get certificate name. */
-			CFStringRef commName;
+	[self.clientCertificateChangeCertificateButton setEnabled:(proxyEnabled == NO)];
+
+	if (proxyEnabled == NO) {
+		if (self.config.identityClientSideCertificate) {
+			SecKeychainItemRef cert;
 			
-			status = SecCertificateCopyCommonName((SecCertificateRef)cert, &commName);
+			CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identityClientSideCertificate);
 			
-			if (status == noErr){
-				commonName = (__bridge NSString *)(commName);
+			OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
+			
+			if (status == noErr) {
+				CFStringRef commName;
 				
-				CFRelease(commName);
+				status = SecCertificateCopyCommonName((SecCertificateRef)cert, &commName);
+				
+				if (status == noErr){
+					commonName = (__bridge NSString *)(commName);
+
+					CFDataRef data = SecCertificateCopyData((SecCertificateRef)cert);
+
+					if (data) {
+						NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
+
+						sha1fingerprint = [certNormData sha1];
+						md5fingerprint = [certNormData md5];
+
+						CFRelease(data);
+					}
+
+					CFRelease(commName);
+				}
+
+				CFRelease(cert);
 			}
-			
-			/* Get certificate fingerprint. */
-			CFDataRef data = SecCertificateCopyData((SecCertificateRef)cert);
-			
-			if (data) {
-				NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
-				
-				sha1fingerprint = [certNormData sha1];
-				md5fingerprint = [certNormData md5];
-				
-				CFRelease(data);
-			}
-			
-			/* Cleaning. */
-			CFRelease(cert);
 		}
 	}
-	
+
 	BOOL hasNoCert = NSObjectIsEmpty(commonName);
 	
 	if (hasNoCert) {
-		[self.sslCertificateCommonNameField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
+		[self.clientCertificateCommonNameField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
 		
-		[self.sslCertificateSHA1FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
-		[self.sslCertificateMD5FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
+		[self.clientCertificateSHA1FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
+		[self.clientCertificateMD5FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
 	} else {
-		[self.sslCertificateCommonNameField setStringValue:commonName];
+		[self.clientCertificateCommonNameField setStringValue:commonName];
 		
-		[self.sslCertificateSHA1FingerprintField setStringValue:[sha1fingerprint uppercaseString]];
-		[self.sslCertificateMD5FingerprintField setStringValue:[md5fingerprint uppercaseString]];
+		[self.clientCertificateSHA1FingerprintField setStringValue:[sha1fingerprint uppercaseString]];
+		[self.clientCertificateMD5FingerprintField setStringValue:[md5fingerprint uppercaseString]];
 	}
 	
-	[self.sslCertificateResetButton setEnabled:(hasNoCert == NO)];
-	
-	[self.sslCertificateSHA1FingerprintCopyButton setEnabled:(hasNoCert == NO)];
-	[self.sslCertificateMD5FingerprintCopyButton setEnabled:(hasNoCert == NO)];
+	[self.clientCertificateResetCertificateButton setEnabled:(hasNoCert == NO)];
+
+	[self.clientCertificateSHA1FingerprintCopyButton setEnabled:(hasNoCert == NO)];
+	[self.clientCertificateMD5FingerprintCopyButton setEnabled:(hasNoCert == NO)];
 }
 
-- (void)onSSLCertificateResetRequested:(id)sender
+- (void)onClientCertificateResetRequested:(id)sender
 {
-	self.config.identitySSLCertificate = nil;
-	
-	[self updateSSLCertificatePage];
+	self.config.identityClientSideCertificate = nil;
+
+	[self updateClientCertificatePage];
 }
 
-- (void)onSSLCertificateChangeRequested:(id)sender
+- (void)onClientCertificateChangeRequested:(id)sender
 {
 	/* Before we can present a list of certificates to the end user, we must first
 	 query the keychain and build a list of all of them that exist in there first. */
-	CFArrayRef identities;
+	CFArrayRef identities = NULL;
 	
 	NSDictionary *query = @{
 		(id)kSecClass		: (id)kSecClassIdentity,
@@ -1304,20 +1220,17 @@
 	};
 	
 	OSStatus querystatus = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&identities);
-	
-	/* If we have a good list of identities, we present them. */
+
 	if (querystatus == noErr) {
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
-		[panel setInformativeText:TXTLS(@"TDCServerSheet[1009][2]", [self.serverNameField stringValue])];
+		[panel setInformativeText:TXTLS(@"TDCServerSheet[1009][2]")];
 		
 		[panel setAlternateButtonTitle:BLS(1009)];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
 													message:TXTLS(@"TDCServerSheet[1009][1]")];
-		
-		/* After the user has chose the identity, we have to update our config value
-		 here and not -save since -save has nothing to reference. */
+
 		if (returnCode == NSModalResponseOK) {
 			SecIdentityRef identity = [panel identity];
 			
@@ -1334,11 +1247,11 @@
 					copystatus = SecKeychainItemCreatePersistentReference((SecKeychainItemRef)identityCert, &certData);
 					
 					if (copystatus == noErr) {
-						self.config.identitySSLCertificate = (__bridge NSData *)(certData);
+						self.config.identityClientSideCertificate = (__bridge NSData *)(certData);
 						
 						/* Force enable SSL. */
-						if ([self.connectionUsesSSLCheck state] == NSOffState) {
-							[self.connectionUsesSSLCheck setState:NSOnState];
+						if ([self.prefersSecuredConnectionCheck state] == NSOffState) {
+							[self.prefersSecuredConnectionCheck setState:NSOnState];
 							
 							[self useSSLCheckChanged:nil];
 						}
@@ -1352,10 +1265,12 @@
 	} else {
 		LogToConsole(@"Failed to build list of identities from keychain.");
 	}
-	
-	CFSafeRelease(identities);
-	
-	[self updateSSLCertificatePage];
+
+	if (identities) {
+		CFRelease(identities);
+	}
+
+	[self updateClientCertificatePage];
 }
 
 #pragma mark -
@@ -1367,8 +1282,10 @@
 	self.highlightSheet = [TDCHighlightEntrySheet new];
 
 	self.highlightSheet.newItem = YES;
+
 	self.highlightSheet.delegate = self;
 	self.highlightSheet.window = self.sheet;
+
 	self.highlightSheet.config = [TDCHighlightEntryMatchCondition new];
 
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
@@ -1384,8 +1301,10 @@
 	self.highlightSheet = [TDCHighlightEntrySheet new];
 	
 	self.highlightSheet.newItem = NO;
+
 	self.highlightSheet.delegate = self;
 	self.highlightSheet.window = self.sheet;
+
 	self.highlightSheet.config = self.mutableHighlightList[sel];
 	
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
@@ -1475,8 +1394,10 @@
 	self.channelSheet = [TDChannelSheet new];
 	
 	self.channelSheet.newItem = YES;
+	
 	self.channelSheet.delegate = self;
 	self.channelSheet.window = self.sheet;
+
 	self.channelSheet.config = config;
 	self.channelSheet.clientID = nil;
 	self.channelSheet.channelID = nil;
@@ -1496,8 +1417,10 @@
 	self.channelSheet = [TDChannelSheet new];
 	
 	self.channelSheet.newItem = NO;
+
 	self.channelSheet.delegate = self;
 	self.channelSheet.window = self.sheet;
+
 	self.channelSheet.config = c;
 	self.channelSheet.clientID = nil;
 	self.channelSheet.channelID = nil;
@@ -1575,28 +1498,19 @@
 	self.ignoreSheet = nil;
 	self.ignoreSheet = [TDCAddressBookSheet new];
 	
-	IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry new];
+	IRCAddressBookEntry *newIgnore = nil;
 
 	if ([sender tag] == 4) {
-		newIgnore.entryType = IRCAddressBookUserTrackingEntryType;
-		
-		newIgnore.notifyJoins = YES;
+		newIgnore = [IRCAddressBookEntry newUserTrackingEntry];
 	} else {
-		newIgnore.entryType = IRCAddressBookIgnoreEntryType;
-		
-		newIgnore.ignoreCTCP = YES;
-		newIgnore.ignoreJPQE = YES;
-		newIgnore.ignoreNotices = YES;
-		newIgnore.ignorePrivateHighlights = YES;
-		newIgnore.ignorePrivateMessages = YES;
-		newIgnore.ignorePublicHighlights = YES;
-		newIgnore.ignorePublicMessages = YES;
-		newIgnore.ignoreFileTransferRequests = YES;
+		newIgnore = [IRCAddressBookEntry newIgnoreEntry];
 	}
 	
 	self.ignoreSheet.newItem = YES;
+
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
+
 	self.ignoreSheet.ignore = newIgnore;
 	
 	[self.ignoreSheet start];
@@ -1614,8 +1528,10 @@
 	self.ignoreSheet = [TDCAddressBookSheet new];
 	
 	self.ignoreSheet.newItem = NO;
+
 	self.ignoreSheet.delegate = self;
 	self.ignoreSheet.window = self.sheet;
+
 	self.ignoreSheet.ignore = c;
 	
 	[self.ignoreSheet start];
@@ -1683,16 +1599,11 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		return [self.mutableChannelList count];
-	}
-	else if (sender == self.highlightsTable)
-	{
+	} else if (sender == self.highlightsTable) {
 		return [self.mutableHighlightList count];
-	}
-	else if (sender == self.ignoreTable)
-	{
+	} else if (sender == self.ignoreTable) {
 		return [self.mutableIgnoreList count];
 	}
 	
@@ -1780,8 +1691,7 @@
 
 - (void)tableView:(NSTableView *)sender setObjectValue:(id)obj forTableColumn:(NSTableColumn *)column row:(NSInteger)row
 {
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		IRCChannelConfig *c = self.mutableChannelList[row];
 		
 		NSString *columnId = [column identifier];
@@ -1796,40 +1706,29 @@
 {
 	id sender = [note object];
 	
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		[self updateChannelsPage];
-	}
-	else if (sender == self.highlightsTable)
-	{
+	} else if (sender == self.highlightsTable) {
 		[self updateHighlightsPage];
-	}
-	else if (sender == self.ignoreTable)
-	{
+	} else if (sender == self.ignoreTable) {
 		[self updateIgnoresPage];
 	}
 }
 
 - (void)tableViewDoubleClicked:(id)sender
 {
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		[self editChannel:nil];
-	}
-	else if (sender == self.highlightsTable)
-	{
+	} else if (sender == self.highlightsTable) {
 		[self editHighlight:nil];
-	}
-	else if (sender == self.ignoreTable)
-	{
+	} else if (sender == self.ignoreTable) {
 		[self editIgnore:nil];
 	}
 }
 
 - (BOOL)tableView:(NSTableView *)sender writeRowsWithIndexes:(NSIndexSet *)rows toPasteboard:(NSPasteboard *)pboard
 {
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		[pboard declareTypes:_tableRowTypes owner:self];
 		
 		[pboard setPropertyList:@[@([rows firstIndex])] forType:_tableRowType];
@@ -1840,8 +1739,7 @@
 
 - (NSDragOperation)tableView:(NSTableView *)sender validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
-	if (sender == self.channelTable)
-	{
+	if (sender == self.channelTable) {
 		NSPasteboard *pboard = [info draggingPasteboard];
 		
 		if (op == NSTableViewDropAbove && [pboard availableTypeFromArray:_tableRowTypes]) {
@@ -1901,6 +1799,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	[self.channelTable unregisterDraggedTypes];
 	
 	if ([self.delegate respondsToSelector:@selector(serverSheetWillClose:)]) {

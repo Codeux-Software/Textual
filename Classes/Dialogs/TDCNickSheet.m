@@ -38,6 +38,11 @@
 
 #import "TextualApplication.h"
 
+@interface TDCNickSheet ()
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *toldNicknameTextField;
+@end
+
 @implementation TDCNickSheet
 
 - (instancetype)init
@@ -52,34 +57,34 @@
 - (void)start:(NSString *)nickname
 {
 	/* Define nickname field for user tracking. */
-	[self.tnewNicknameField setStringValueIsInvalidOnEmpty:YES];
-	[self.tnewNicknameField setStringValueUsesOnlyFirstToken:YES];
+	[self.tnewNicknameTextField setStringValueIsInvalidOnEmpty:YES];
+	[self.tnewNicknameTextField setStringValueUsesOnlyFirstToken:YES];
 	
-	[self.tnewNicknameField setOnlyShowStatusIfErrorOccurs:YES];
+	[self.tnewNicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
 	
-	[self.tnewNicknameField setTextDidChangeCallback:self];
+	[self.tnewNicknameTextField setTextDidChangeCallback:self];
 	
-	[self.tnewNicknameField setValidationBlock:^BOOL(NSString *currentValue) {
+	[self.tnewNicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
 		return [currentValue isHostmaskNickname];
 	}];
 	
-	[self.tnewNicknameField setStringValue:nickname];
-	[self.toldNicknameField setStringValue:nickname];
-	
-	[self.sheet makeFirstResponder:self.tnewNicknameField];
+	[self.tnewNicknameTextField setStringValue:nickname];
+	[self.toldNicknameTextField setStringValue:nickname];
+
+	[self.sheet makeFirstResponder:self.tnewNicknameTextField];
 	
 	[self startSheet];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self.okButton setEnabled:[self.tnewNicknameField valueIsValid]];
+	[self.okButton setEnabled:[self.tnewNicknameTextField valueIsValid]];
 }
 
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
-		NSString *newNickname = [self.tnewNicknameField value];
+		NSString *newNickname = [self.tnewNicknameTextField value];
 		
 		[self.delegate nickSheet:self didInputNickname:newNickname];
 	}

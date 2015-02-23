@@ -38,6 +38,11 @@
 
 #import "TextualApplication.h"
 
+@interface TDCInviteSheet ()
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, nweak) IBOutlet NSPopUpButton *channelListPopup;
+@end
+
 @implementation TDCInviteSheet
 
 - (instancetype)init
@@ -66,7 +71,7 @@
 		target = TXTLS(@"TDCInviteSheet[1000]", nicknameCount);
 	}
 	
-	[self.headerTitleField setStringValue:TXTLS(@"TDCInviteSheet[1001]", target)];
+	[self.headerTitleTextField setStringValue:TXTLS(@"TDCInviteSheet[1001]", target)];
 	
 	for (NSString *s in channels) {
 		[self.channelListPopup addItemWithTitle:s];

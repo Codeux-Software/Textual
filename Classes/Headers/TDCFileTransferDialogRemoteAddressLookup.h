@@ -37,11 +37,11 @@
 
 #import "TextualApplication.h"
 
-@interface TDCFileTransferDialogRemoteAddress : NSObject
+@interface TDCFileTransferDialogRemoteAddressLookup : NSObject
 - (void)requestRemoteIPAddressFromExternalSource:(id)delegate;
 @end
 
-@protocol TDCFileTransferDialogRemoteAddressDelegate <NSObject>
+@protocol TDCFileTransferDialogRemoteAddressLookupDelegate <NSObject>
 @required
 
 - (void)fileTransferRemoteAddressRequestDidDetectAddress:(NSString *)address;

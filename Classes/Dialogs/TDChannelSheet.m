@@ -108,7 +108,7 @@
 	NSInteger row = [sender indexOfSelectedItem];
 	
 	/* Switch to that view. */
-	[self firstPane:(self.navigationTree[row][0])];
+	[self selectPane:(self.navigationTree[row][0])];
 	
 	/* Move to appropriate first responder. */
 	[self.sheet makeFirstResponder:(self.navigationTree[row][1])];
@@ -119,7 +119,14 @@
 	return [self.sheet frame];
 }
 
-- (void)firstPane:(NSView *)view 
+- (void)populateStartView
+{
+	[self.contentView addSubview:self.contentViewGeneralView];
+
+	[self.sheet makeFirstResponder:self.channelNameTextField];
+}
+
+- (void)selectPane:(NSView *)view
 {
 	/* Modify frame to match new view. */
 	NSRect windowFrame = [self currentSheetFrame];
@@ -138,14 +145,14 @@
 	
 	/* Set new frame. */
 	[self.sheet setFrame:windowFrame display:YES animate:YES];
-	
+
+	/* Add new view. */
 	NSRect viewFrame = [view frame];
 	
 	viewFrame.origin.y = _windowStaringPosition;
 	
 	[self.contentView setFrame:viewFrame];
-	
-	/* Add new view. */
+
 	[self.contentView addSubview:view];
 	
 	/* Reclaulate loop for tab key. */
@@ -159,12 +166,8 @@
 {
 	[self load];
 	[self update];
-	
+	[self populateStartView];
 	[self startSheet];
-	
-	[self.contentViewTabView setSelectedSegment:0];
-	
-	[self onMenuBarItemChanged:self.contentViewTabView];
 }
 
 - (void)load

@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TDCProgressInformationSheet ()
+@property (nonatomic, nweak) IBOutlet NSProgressIndicator *progressIndicator;
+@end
+
 @implementation TDCProgressInformationSheet
 
 - (instancetype)init
@@ -61,7 +65,6 @@
 
 - (void)startWithWindow:(NSWindow *)window
 {
-	/* Begin work sheet. */
 	if (window == nil) {
 		NSAssert(NO, @"No window specified.");
 	}
@@ -75,7 +78,6 @@
 
 - (void)stop
 {
-	/* End work sheet. */
 	[self.progressIndicator stopAnimation:nil];
 
 	[self endSheet];

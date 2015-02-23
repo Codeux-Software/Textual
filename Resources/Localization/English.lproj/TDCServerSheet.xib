@@ -93,7 +93,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="382" y="280" width="705" height="356"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="-1" width="705" height="356"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -226,7 +226,7 @@ Gw
                 <outlet property="delegate" destination="-2" id="2302"/>
                 <outlet property="initialFirstResponder" destination="1456" id="1467"/>
             </connections>
-            <point key="canvasLocation" x="406.5" y="240"/>
+            <point key="canvasLocation" x="799.5" y="173"/>
         </window>
         <customView id="1469" userLabel="General View">
             <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
@@ -248,7 +248,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" id="1538">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1538">
                     <rect key="frame" x="76" y="218" width="128" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Connection Name:" id="1559">
@@ -257,7 +257,7 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1540">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1540">
                     <rect key="frame" x="99" y="201" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Server Address:" id="1557">
@@ -284,7 +284,7 @@ Gw
                         <outlet property="delegate" destination="-2" id="1560"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1542">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1542">
                     <rect key="frame" x="157" y="172" width="50" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Port:" id="1555">
@@ -302,7 +302,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1544">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1544">
                     <rect key="frame" x="88" y="138" width="119" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Server Password:" id="1553">
@@ -419,7 +419,7 @@ Gw
                         <outlet property="delegate" destination="-2" id="1620"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1596">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1596">
                     <rect key="frame" x="128" y="316" width="92" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="1618">
@@ -440,7 +440,7 @@ Gw
                         </connections>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1598">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1598">
                     <rect key="frame" x="145" y="170" width="75" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="1616">
@@ -461,7 +461,7 @@ Gw
                         </connections>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1600">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1600">
                     <rect key="frame" x="141" y="136" width="80" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="1614">
@@ -479,7 +479,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1603">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1603">
                     <rect key="frame" x="115" y="248" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Alternatives:" id="1611">
@@ -488,7 +488,7 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1604">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1604">
                     <rect key="frame" x="265" y="229" width="150" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="This field is space separated" id="1610">
@@ -518,7 +518,7 @@ Gw
                         </connections>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="2336">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2336">
                     <rect key="frame" x="115" y="285" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="2341">
@@ -552,7 +552,7 @@ Gw
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1623">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1623">
                     <rect key="frame" x="87" y="59" width="134" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Personal Password:" id="1626">
@@ -592,7 +592,7 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="529" height="309"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="750" id="1656">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1656">
                     <rect key="frame" x="33" y="228" width="137" height="18"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Part &amp; Quit Message:" id="1668">
@@ -601,7 +601,7 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" id="1671">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1671">
                     <rect key="frame" x="33" y="128" width="199" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Computer Sleep Quit Message:" id="1674">
@@ -880,7 +880,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1804">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -1006,7 +1006,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1078,7 +1078,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1849">
-                        <rect key="frame" x="294.27800000000002" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
@@ -1143,7 +1143,7 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField verticalHuggingPriority="750" id="1881">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1881">
                     <rect key="frame" x="52" y="252" width="214" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Perform commands on connect:" id="1882">
@@ -1181,7 +1181,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField verticalHuggingPriority="750" id="fNI-3k-yzt">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="fNI-3k-yzt">
                     <rect key="frame" x="327" y="252" width="150" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="This field is line seperated" id="Mnf-Uj-ov2">
@@ -1255,7 +1255,7 @@ Gw
                         <action selector="proxyTypeChanged:" target="-2" id="2289"/>
                     </connections>
                 </popUpButton>
-                <textField verticalHuggingPriority="750" id="1978">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="1978">
                     <rect key="frame" x="196" y="244" width="210" height="13"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="This option requires a reconnect to apply" id="1979">
@@ -1435,7 +1435,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2180">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2180">
                             <rect key="frame" x="36" y="138" width="15" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="1" id="2181">
@@ -1444,7 +1444,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2182">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2182">
                             <rect key="frame" x="445" y="138" width="27" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title=" 60" id="2183">
@@ -1453,7 +1453,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2184">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2184">
                             <rect key="frame" x="96" y="138" width="21" height="14"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="10" id="2185">
@@ -1462,7 +1462,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2186">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2186">
                             <rect key="frame" x="167" y="135" width="27" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="20" id="2187">
@@ -1471,7 +1471,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2188">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2188">
                             <rect key="frame" x="237" y="135" width="27" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="30" id="2189">
@@ -1480,7 +1480,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2190">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2190">
                             <rect key="frame" x="305" y="135" width="27" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="40" id="2191">
@@ -1489,7 +1489,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2192">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2192">
                             <rect key="frame" x="375" y="135" width="27" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title=" 50" id="2193">
@@ -1512,7 +1512,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2212">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2212">
                             <rect key="frame" x="17" y="49" width="76" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="1 Second" id="2213">
@@ -1521,7 +1521,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2214">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2214">
                             <rect key="frame" x="426" y="49" width="76" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="60 Seconds" id="2215">
@@ -1530,7 +1530,7 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" id="2216">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2216">
                             <rect key="frame" x="211" y="49" width="76" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="30 Seconds" id="2217">
@@ -1546,7 +1546,7 @@ Gw
                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <font key="titleFont" metaFont="system"/>
                         </box>
-                        <textField verticalHuggingPriority="750" id="8Ow-z4-Ur7">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="8Ow-z4-Ur7">
                             <rect key="frame" x="92" y="20" width="332" height="14"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="The options presented above require a reconnect to apply." id="YVk-Bd-2RC">
@@ -1557,7 +1557,7 @@ Gw
                         </textField>
                     </subviews>
                 </customView>
-                <textField verticalHuggingPriority="750" id="2178">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="2178">
                     <rect key="frame" x="43" y="238" width="435" height="56"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2179">

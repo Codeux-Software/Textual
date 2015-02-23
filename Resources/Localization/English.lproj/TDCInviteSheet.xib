@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCInviteSheet">
             <connections>
+                <outlet property="cancelButton" destination="10" id="jMs-mJ-IVv"/>
                 <outlet property="channelListPopup" destination="31" id="44"/>
-                <outlet property="headerTitleField" destination="37" id="43"/>
+                <outlet property="headerTitleTextField" destination="37" id="62k-Xx-UjI"/>
                 <outlet property="okButton" destination="9" id="45"/>
                 <outlet property="sheet" destination="5" id="22"/>
             </connections>

@@ -38,6 +38,11 @@
 
 #import "TextualApplication.h"
 
+@interface TDCTopicSheet ()
+@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, uweak) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
+@end
+
 @implementation TDCTopicSheet
 
 - (instancetype)init
@@ -52,19 +57,21 @@
 - (void)start:(NSString *)topic
 {
 	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
-	
-	[self.headerTitleField setStringValue:[NSString stringWithFormat:[self.headerTitleField stringValue], [c name]]];
 
-	[self.topicValueField setPreferredFont:[NSFont systemFontOfSize:13.0]];
-	[self.topicValueField setPreferredFontColor:[NSColor colorWithCalibratedWhite:0.01 alpha:1.0]];
+	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], [c name]];
 
-	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueField preferredFont]
-														preferredFontColor:[self.topicValueField preferredFontColor]
+	[self.headerTitleTextField setStringValue:headerTitle];
+
+	[self.topicValueTextField setPreferredFont:[NSFont systemFontOfSize:13.0]];
+	[self.topicValueTextField setPreferredFontColor:[NSColor colorWithCalibratedWhite:0.01 alpha:1.0]];
+
+	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueTextField preferredFont]
+														preferredFontColor:[self.topicValueTextField preferredFontColor]
 												 honorFormattingPreference:NO];
 	
-	[self.topicValueField setAttributedStringValue:topicas];
+	[self.topicValueTextField setAttributedStringValue:topicas];
 
-	[[mainWindow() formattingMenu] enableSheetField:self.topicValueField];
+	[[mainWindow() formattingMenu] enableSheetField:self.topicValueTextField];
 
 	[self startSheet];
 }
@@ -72,14 +79,12 @@
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
-		NSString *topicv;
+		NSString *formattedTopic = [[self.topicValueTextField attributedStringValue] attributedStringToASCIIFormatting];
 
-		topicv = [[self.topicValueField attributedStringValue] attributedStringToASCIIFormatting];
+		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
+																				   withString:NSStringWhitespacePlaceholder];
 
-		topicv = [topicv stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
-												   withString:NSStringWhitespacePlaceholder];
-
-		[self.delegate topicSheet:self onOK:topicv];
+		[self.delegate topicSheet:self onOK:topicWithoutNewlines];
 	}
 	
 	[super ok:nil];

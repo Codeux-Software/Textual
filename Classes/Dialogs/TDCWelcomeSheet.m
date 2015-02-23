@@ -322,6 +322,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[self releaseTableViewDataSourceBeforeSheetClosure];
+
 	if ([self.delegate respondsToSelector:@selector(welcomeSheetWillClose:)]) {
 		[self.delegate welcomeSheetWillClose:self];
 	}

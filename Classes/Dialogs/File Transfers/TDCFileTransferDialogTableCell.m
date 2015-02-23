@@ -206,7 +206,7 @@
 			/* Format time remaining. */
 			NSInteger timeleft = 0;
 			
-			NSString *remainingTime;
+			NSString *remainingTime = nil;
 			
 			if ([self currentSpeed] > 0) {
 				timeleft = (([self totalFilesize] - [self processedFilesize]) / [self currentSpeed]);
@@ -222,7 +222,7 @@
 			NSString *processedSize = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:[self processedFilesize]];
 			NSString *transferSpeed = [NSByteCountFormatter stringFromByteCountWithPaddedDigits:[self currentSpeed]];
 			
-			NSString *status;
+			NSString *status = nil;
 			
 			if ([self isReceiving]) {
 				if (remainingTime) {

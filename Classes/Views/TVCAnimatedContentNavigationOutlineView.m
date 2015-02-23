@@ -177,13 +177,23 @@
 	[newView setFrame:newViewFinalFrame];
 
 	/* Update window size. */
-	NSRect windowFrame = [self.parentWindow frame];
+	BOOL updateWindowFrame = YES;
 
-	windowFrame.size.height = (self.contentViewPadding + newViewFinalFrame.size.height);
+	if ([self.parentWindow isVisible] == NO) {
+		if (self.updateWindowFrameWhileOffscreen == NO) {
+			updateWindowFrame = NO;
+		}
+	}
 
-	windowFrame.origin.y = (NSMaxY([self.parentWindow frame]) - windowFrame.size.height);
+	if (updateWindowFrame) {
+		NSRect windowFrame = [self.parentWindow frame];
 
-	[self.parentWindow setFrame:windowFrame display:YES animate:NO];
+		windowFrame.size.height = (self.contentViewPadding + newViewFinalFrame.size.height);
+
+		windowFrame.origin.y = (NSMaxY([self.parentWindow frame]) - windowFrame.size.height);
+
+		[self.parentWindow setFrame:windowFrame display:YES animate:NO];
+	}
 
 	/* Add new frame. */
 	if ([[self.contentView subviews] count] == 1) {

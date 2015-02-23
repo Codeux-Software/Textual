@@ -40,50 +40,6 @@
 
 @interface TDCPreferencesController : NSWindowController
 @property (nonatomic, uweak) id delegate;
-@property (nonatomic, copy) NSArray *alertSounds;
-@property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
-@property (nonatomic, nweak) IBOutlet NSArrayController *matchKeywordsArrayController;
-@property (nonatomic, nweak) IBOutlet NSButton *addExcludeKeywordButton;
-@property (nonatomic, nweak) IBOutlet NSButton *alertBounceDockIconButton;
-@property (nonatomic, nweak) IBOutlet NSButton *alertDisableWhileAwayButton;
-@property (nonatomic, nweak) IBOutlet NSButton *alertPushNotificationButton;
-@property (nonatomic, nweak) IBOutlet NSButton *alertSpeakEventButton;
-@property (nonatomic, nweak) IBOutlet NSButton *highlightNicknameButton;
-@property (nonatomic, nweak) IBOutlet NSButton *syncPreferencesToTheCloudButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *themeSelectionButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *transcriptFolderButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
-@property (nonatomic, nweak) IBOutlet NSTableView *excludeKeywordsTable;
-@property (nonatomic, nweak) IBOutlet NSTableView *installedScriptsTable;
-@property (nonatomic, nweak) IBOutlet NSTableView *keywordsTable;
-@property (nonatomic, nweak) IBOutlet NSTextField *alertNotificationDestinationTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressField;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewAlerts;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewChannelManagement;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewCommandScope;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewDefaultIdentity;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewExperimentalSettings;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewFileTransfers;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewFloodControl;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewGeneral;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewHighlights;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewICloud;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewIRCopMessages;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewIncomingData;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewInlineMedia;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewInstalledAddons;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewInterface;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewKeyboardAndMouse;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewLogLocation;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewMainTextField;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewStyle;
-@property (nonatomic, nweak) IBOutlet NSView *contentViewUserListColors;
-@property (nonatomic, nweak) IBOutlet NSView *mountainLionDeprecationWarningView;
-@property (nonatomic, nweak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
-@property (nonatomic, nweak) IBOutlet NSScrollView *navigationOutlineviewScrollbar;
-@property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 
 - (void)show;
 

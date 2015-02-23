@@ -41,8 +41,8 @@
 @interface TDCListDialog ()
 @property (nonatomic, assign) BOOL waitingForReload;
 @property (nonatomic, nweak) IBOutlet NSButton *updateButton;
-@property (nonatomic, nweak) IBOutlet NSSearchField *searchField;
-@property (nonatomic, nweak) IBOutlet NSTextField *networkNameField;
+@property (nonatomic, nweak) IBOutlet NSSearchField *searchTextField;
+@property (nonatomic, nweak) IBOutlet NSTextField *networkNameTextField;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelListTable;
 @property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
@@ -79,18 +79,18 @@
 {
 	IRCClient *client = [worldController() findClientById:self.clientID];
 
-    [self.networkNameField setStringValue:TXTLS(@"TDCListDialog[1000]", [client altNetworkName])];
+    [self.networkNameTextField setStringValue:TXTLS(@"TDCListDialog[1000]", [client altNetworkName])];
 
-	[self.window restoreWindowStateForClass:[self class]];
+	[[self window] restoreWindowStateForClass:[self class]];
 	
-	[self.window makeKeyAndOrderFront:nil];
+	[[self window] makeKeyAndOrderFront:nil];
 }
 
 - (void)close
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 
-	[self.window close];
+	[[self window] close];
 }
 
 - (void)releaseTableViewDataSourceBeforeClosure
@@ -115,7 +115,7 @@
 
 		NSArray *item = @[channel, @(count), topic, renderedTopic];
 
-		NSString *filter = [self.searchField stringValue];
+		NSString *filter = [self.searchTextField stringValue];
 
 		if ([filter length] > 0) {
 			if (self.filteredList == nil) {
@@ -158,7 +158,7 @@
 	NSString *count1 = TXFormattedNumber([self.unfilteredList count]);
 	NSString *count2 = TXFormattedNumber([self.filteredList count]);
 	
-	NSString *filterText = [self.searchField stringValue];
+	NSString *filterText = [self.searchTextField stringValue];
 
 	if ([filterText length] > 0 && [count1 isEqual:count2] == NO) {
 		titleCount = TXTLS(@"TDCListDialog[1003]", count1, count2);
@@ -242,7 +242,7 @@
 {
 	self.filteredList = nil;
 
-	NSString *filter = [self.searchField stringValue];
+	NSString *filter = [self.searchTextField stringValue];
 
 	if ([filter length] > 0) {
 		NSMutableArray *ary = [NSMutableArray new];
@@ -344,7 +344,7 @@
 {
 	[self releaseTableViewDataSourceBeforeClosure];
 
-	[self.window saveWindowStateForClass:[self class]];
+	[[self window] saveWindowStateForClass:[self class]];
 	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
 		[self.delegate listDialogWillClose:self];

@@ -42,16 +42,6 @@
 @property (nonatomic, copy) IRCChannelMode *mode;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
-@property (nonatomic, nweak) IBOutlet NSButton *sCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *pCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *nCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *tCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *iCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *mCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *kCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *lCheck;
-@property (nonatomic, nweak) IBOutlet NSTextField *kText;
-@property (nonatomic, nweak) IBOutlet NSTextField *lText;
 
 - (void)start;
 

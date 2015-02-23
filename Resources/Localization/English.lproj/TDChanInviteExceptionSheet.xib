@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B17" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChanInviteExceptionSheet">
             <connections>
                 <outlet property="cancelButton" destination="8" id="36"/>
                 <outlet property="exceptionTable" destination="15" id="37"/>
-                <outlet property="headerTitleField" destination="7" id="38"/>
+                <outlet property="headerTitleTextField" destination="7" id="Ep8-uf-pJN"/>
                 <outlet property="okButton" destination="8" id="39"/>
                 <outlet property="sheet" destination="3" id="40"/>
             </connections>
@@ -157,6 +157,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="44"/>
             </connections>
+            <point key="canvasLocation" x="432" y="397"/>
         </window>
     </objects>
 </document>
