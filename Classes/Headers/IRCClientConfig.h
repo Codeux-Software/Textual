@@ -75,7 +75,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL sendWhoCommandRequestsToChannels;
 @property (nonatomic, assign) BOOL setInvisibleModeOnConnect;
 @property (nonatomic, assign) BOOL sidebarItemExpanded;
-@property (nonatomic, assign) BOOL validateServerCertificates;
+@property (nonatomic, assign) BOOL validateServerCertificateChain;
 @property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
 @property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;
 @property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;

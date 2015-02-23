@@ -81,7 +81,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 
 			 @"sidebarItemExpanded" : @(YES),
 
-			 @"validateServerCertificates" : @(YES),
+			 @"validateServerCertificateChain" : @(YES),
 
 			 @"zncIgnoreConfiguredAutojoin" : @(NO),
 			 @"zncIgnorePlaybackNotifications" : @(YES),
@@ -164,7 +164,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 
 	self.sidebarItemExpanded			= [defaults boolForKey:@"sidebarItemExpanded"];
 
-	self.validateServerCertificates		= [defaults boolForKey:@"validateServerCertificates"];
+	self.validateServerCertificateChain		= [defaults boolForKey:@"validateServerCertificateChain"];
 
 	self.zncIgnoreConfiguredAutojoin		= [defaults boolForKey:@"zncIgnoreConfiguredAutojoin"];
 	self.zncIgnorePlaybackNotifications		= [defaults boolForKey:@"zncIgnorePlaybackNotifications"];
@@ -397,7 +397,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"connectUsingSSL"];
 	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
 
-	[dic assignBoolTo:&_validateServerCertificates	forKey:@"validateServerSideSSLCertificate"];
+	[dic assignBoolTo:&_validateServerCertificateChain	forKey:@"validateServerSideSSLCertificate"];
 
 	[dic assignBoolTo:&_setInvisibleModeOnConnect	forKey:@"setInvisibleOnConnect"];
 
@@ -457,7 +457,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 
 	[dic assignBoolTo:&_sidebarItemExpanded						forKey:@"sidebarItemExpanded"];
 
-	[dic assignBoolTo:&_validateServerCertificates				forKey:@"validateServerCertificates"];
+	[dic assignBoolTo:&_validateServerCertificateChain			forKey:@"validateServerCertificateChain"];
 
 	[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin				forKey:@"zncIgnoreConfiguredAutojoin"];
 	[dic assignBoolTo:&_zncIgnorePlaybackNotifications			forKey:@"zncIgnorePlaybackNotifications"];
@@ -601,7 +601,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 		[dic setBool:self.sidebarItemExpanded				forKey:@"sidebarItemExpanded"];
 	}
 
-	[dic setBool:self.validateServerCertificates			forKey:@"validateServerCertificates"];
+	[dic setBool:self.validateServerCertificateChain		forKey:@"validateServerCertificateChain"];
 
 	[dic setBool:self.zncIgnoreConfiguredAutojoin			forKey:@"zncIgnoreConfiguredAutojoin"];
 	[dic setBool:self.zncIgnorePlaybackNotifications		forKey:@"zncIgnorePlaybackNotifications"];
