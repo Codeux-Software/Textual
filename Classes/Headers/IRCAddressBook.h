@@ -69,11 +69,12 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKe
 @property (nonatomic, assign) BOOL ignorePublicMessageHighlights;
 @property (nonatomic, assign) BOOL ignorePublicMessages;
 @property (nonatomic, assign) BOOL ignoreFileTransferRequests;
-@property (nonatomic, assign) BOOL hideMessagesContainingMatch;
+@property (nonatomic, assign) BOOL ignoreMessagesContainingMatchh;
 @property (nonatomic, assign) BOOL trackUserActivity;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;
+- (void)populateDictionaryValues:(NSDictionary *)dic;
 
 @property (readonly, copy) NSString *trackingNickname;
 

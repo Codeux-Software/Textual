@@ -41,22 +41,22 @@
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, copy) IRCAddressBookEntry *ignore;
-@property (nonatomic, nweak) IBOutlet NSButton *hideMessagesContainingMatchCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreCTCPCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreJPQECheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreNoticesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreMessagesContainingMatchCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *notifyJoinsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignoreNoticeMessagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessageHighlightsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessageHighlightsCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessagesCheck;
+@property (nonatomic, nweak) IBOutlet NSButton *trackUserActivityCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *ignoreEntrySaveButton;
 @property (nonatomic, nweak) IBOutlet NSButton *userTrackingEntrySaveButton;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameField;
-@property (nonatomic, strong) IBOutlet NSWindow *ignoreView;
-@property (nonatomic, strong) IBOutlet NSWindow *notifyView;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskTextField;
+@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameTextField;
+@property (nonatomic, strong) IBOutlet NSWindow *ignoreEntryView;
+@property (nonatomic, strong) IBOutlet NSWindow *userTrackingEntryView;
 
 - (void)start;
 @end

@@ -47,7 +47,6 @@ NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey	
 NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey		= @"ignoreGeneralEventMessages";
 NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey		= @"ignoreFileTransferRequests";
 NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey	= @"ignoreClientToClientProtocol";
-
 NSString * const IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey	= @"ignoreMessagesContainingMatch";
 
 NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
@@ -98,7 +97,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	self.ignorePublicMessageHighlights		= [defaults boolForKey:@"ignorePublicMessageHighlights"];
 	self.ignorePublicMessages				= [defaults boolForKey:@"ignorePublicMessages"];
 
-	self.hideMessagesContainingMatch		= [defaults boolForKey:@"ignoreMessagesContainingMatch"];
+	self.ignoreMessagesContainingMatchh		= [defaults boolForKey:@"ignoreMessagesContainingMatch"];
 }
 
 - (instancetype)init
@@ -113,44 +112,48 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 - (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [self init])) {
-		/* First try to assign legacy keys. If these keys do not exist in the
-		 dictionary, then there is no sadness in losing them. The new key names
-		 will be used in -dictionaryValue after the first pass. */
-		[dic assignBoolTo:&_trackUserActivity				forKey:@"notifyJoins"];
-
-		[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreCTCP"];
-		[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreJPQE"];
-		[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNotices"];
-		[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePMHighlights"];
-		[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
-		[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
-		[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
-
-		[dic assignBoolTo:&_hideMessagesContainingMatch		forKey:@"hideMessagesContainingMatch"];
-
-		/* With the old keys populated, try to fill in the new ones. */
-		[dic assignBoolTo:&_trackUserActivity				forKey:@"trackUserActivity"];
-
-		[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreClientToClientProtocol"];
-		[dic assignBoolTo:&_ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
-		[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-		[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNoticeMessages"];
-		[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePrivateMessageHighlights"];
-		[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMessages"];
-		[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignorePublicMessageHighlights"];
-		[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMessages"];
-
-		[dic assignBoolTo:&_hideMessagesContainingMatch		forKey:@"ignoreMessagesContainingMatch"];
-
-		[dic assignStringTo:&_itemUUID						forKey:@"uniqueIdentifier"];
-
-		[dic assignIntegerTo:&_entryType						forKey:@"entryType"];
-
-		/* Cannot use assign* on self.hostmask because it uses a custom setter. */
-		self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
+		[self populateDictionaryValues:dic];
 	}
 
 	return self;
+}
+
+- (void)populateDictionaryValues:(NSDictionary *)dic
+{
+	/* First try to assign legacy keys. If these keys do not exist in the
+	 dictionary, then there is no sadness in losing them. The new key names
+	 will be used in -dictionaryValue after the first pass. */
+	[dic assignBoolTo:&_trackUserActivity				forKey:@"notifyJoins"];
+
+	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreCTCP"];
+	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreJPQE"];
+	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNotices"];
+	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePMHighlights"];
+	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
+	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
+	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
+
+	[dic assignBoolTo:&_ignoreMessagesContainingMatchh		forKey:@"hideMessagesContainingMatch"];
+
+	/* With the old keys populated, try to fill in the new ones. */
+	[dic assignBoolTo:&_trackUserActivity				forKey:@"trackUserActivity"];
+
+	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreClientToClientProtocol"];
+	[dic assignBoolTo:&_ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
+	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
+	[dic assignBoolTo:&_ignoreMessagesContainingMatchh	forKey:@"ignoreMessagesContainingMatch"];
+	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNoticeMessages"];
+	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePrivateMessageHighlights"];
+	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMessages"];
+	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignorePublicMessageHighlights"];
+	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMessages"];
+
+	[dic assignStringTo:&_itemUUID						forKey:@"uniqueIdentifier"];
+
+	[dic assignIntegerTo:&_entryType						forKey:@"entryType"];
+
+	/* Cannot use assign* on self.hostmask because it uses a custom setter. */
+	self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
 }
 
 - (BOOL)checkIgnore:(NSString *)thehost
@@ -228,11 +231,10 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 	[dic setInteger:self.entryType					forKey:@"entryType"];
 
-	[dic setBool:self.hideMessagesContainingMatch	forKey:@"ignoreMessagesContainingMatch"];
-
 	[dic setBool:self.ignoreClientToClientProtocol		forKey:@"ignoreClientToClientProtocol"];
 	[dic setBool:self.ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
 	[dic setBool:self.ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
+	[dic setBool:self.ignoreMessagesContainingMatchh	forKey:@"ignoreMessagesContainingMatch"];
 	[dic setBool:self.ignoreNoticeMessages				forKey:@"ignoreNoticeMessages"];
 	[dic setBool:self.ignorePublicMessages				forKey:@"ignorePublicMessages"];
 	[dic setBool:self.ignorePrivateMessages				forKey:@"ignorePrivateMessages"];

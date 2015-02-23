@@ -42,8 +42,8 @@
 @property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
 @property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknameField;
-@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressField;
+@property (nonatomic, nweak) IBOutlet NSTextField *nicknameTextField;
+@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressComboBox;
 @property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, copy) NSDictionary *serverList;
@@ -67,16 +67,16 @@
 		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 
 		/* Populate the server address field with the IRC network list. */
-		NSArray *sortedKeys = [self.serverList allKeys];
+		NSArray *unsortedServerListKeys = [self.serverList allKeys];
 
-		sortedKeys = [sortedKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			/* We are sorting keys. They are NSString values. */
-			/* Sort without case so that "freenode" is under servers with a capital F. */
+		/* We are sorting keys. They are NSString values. */
+		/* Sort without case so that "freenode" is under servers with a capital F. */
+		NSArray *sortedServerListKeys = [unsortedServerListKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
 			return [obj1 compare:obj2 options:NSCaseInsensitiveSearch];
 		}];
 		
-		for (NSString *key in sortedKeys) {
-			[self.serverAddressField addItemWithObjectValue:key];
+		for (NSString *key in sortedServerListKeys) {
+			[self.serverAddressComboBox addItemWithObjectValue:key];
 		}
 	}
 	
@@ -107,7 +107,7 @@
 
 	[self.channelTable setTextEditingDelegate:self];
 	
-	[self.nicknameField setStringValue:[TPCPreferences defaultNickname]];
+	[self.nicknameTextField setStringValue:[TPCPreferences defaultNickname]];
 	
 	[self startSheet];
 }
@@ -128,28 +128,30 @@
 	IRCClientConfig *newConfig = [IRCClientConfig new];
 	
 	/* Get actaul server. */
-	NSString *userServAddress = [self.serverAddressField firstTokenStringValue];
+	NSString *userServAddress = [self.serverAddressComboBox firstTokenStringValue];
 	
-	NSString *realhost = [self nameMatchesServerInList:userServAddress];
+	NSString *translatedServerAddress = [self nameMatchesServerInList:userServAddress];
 	
-	if (realhost == nil) {
-		realhost = [userServAddress cleanedServerHostmask];
+	if (translatedServerAddress == nil) {
+		translatedServerAddress = userServAddress;
 	} else {
-		realhost = self.serverList[realhost];
+		translatedServerAddress = self.serverList[translatedServerAddress];
 	}
 	
 	/* Complete basic information. */
 	BOOL autoConnect = [self.autoConnectCheck state];
 	
-	NSString *nickname = [self.nicknameField firstTokenStringValue];
-	
-	[newConfig setClientName:realhost];
-	[newConfig setServerAddress:realhost];
+	NSString *nickname = [self.nicknameTextField firstTokenStringValue];
+
+	[newConfig setConnectionName:userServAddress];
+	[newConfig setServerAddress:translatedServerAddress];
 	[newConfig setAutoConnect:autoConnect];
 	[newConfig setNickname:nickname];
 	
 	/* Populate channels. */
-	NSMutableArray *channels = [NSMutableArray array];
+	NSMutableArray *channelList = [NSMutableArray array];
+
+	NSMutableArray *channelsAdded = [NSMutableArray array];
 	
 	for (NSString *s in self.channelList) {
 		NSString *t = [s trim];
@@ -158,14 +160,20 @@
 			if ([t isChannelName] == NO) {
 				 t = [@"#" stringByAppendingString:s];
 			}
-			
-			IRCChannelConfig *cc = [IRCChannelConfig seedWithName:t];
 
-			[channels addObjectWithoutDuplication:cc];
+			if ([channelsAdded containsObject:t] == NO) {
+				IRCChannelConfig *cc = [IRCChannelConfig seedWithName:t];
+
+				[channelList addObject:cc];
+
+				[channelsAdded addObject:t];
+			}
 		}
 	}
+
+	channelsAdded = nil;
 	
-	[newConfig setChannelList:channels];
+	[newConfig setChannelList:channelList];
 
 	/* Inform delegate and finish. */
 	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
@@ -227,7 +235,7 @@
 
 - (void)askAboutTheSupportChannel
 {
-	NSString *host = [self.serverAddressField stringValue];
+	NSString *host = [self.serverAddressComboBox stringValue];
 
 	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"freenode"]) {
 		NSString *key = [TLOPopupPrompts suppressionKeyWithBase:@"welcomesheet_join_support_channel"];
@@ -253,8 +261,8 @@
 
 - (void)updateOKButton
 {
-	NSString *nick = [self.nicknameField trimmedStringValue];
-	NSString *host = [self.serverAddressField trimmedStringValue];
+	NSString *nick = [self.nicknameTextField trimmedStringValue];
+	NSString *host = [self.serverAddressComboBox trimmedStringValue];
 	
 	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
 	

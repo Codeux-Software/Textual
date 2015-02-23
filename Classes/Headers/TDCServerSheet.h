@@ -77,8 +77,8 @@ typedef enum TDCServerSheetNavigationSelection : NSInteger {
 
 - (IBAction)useSSLCheckChanged:(id)sender;
 
-- (IBAction)onSSLCertificateResetRequested:(id)sender;
-- (IBAction)onSSLCertificateChangeRequested:(id)sender;
-- (IBAction)onSSLCertificateFingerprintSHA1CopyRequested:(id)sender;
-- (IBAction)onSSLCertificateFingerprintMD5CopyRequested:(id)sender;
+- (IBAction)onClientCertificateResetRequested:(id)sender;
+- (IBAction)onClientCertificateChangeRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintSHA1CopyRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintMD5CopyRequested:(id)sender;
 @end

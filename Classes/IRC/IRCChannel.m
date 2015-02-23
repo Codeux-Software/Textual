@@ -142,7 +142,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 }
 
-- (NSMutableDictionary *)dictionaryValue
+- (NSDictionary *)dictionaryValue
 {
 	return [self.config dictionaryValue];
 }

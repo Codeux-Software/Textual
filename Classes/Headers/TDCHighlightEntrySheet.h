@@ -40,13 +40,8 @@
 /* TDCHighlightEntrySheet handles management of highlights inside TDCServerSheet. */
 /* It should not be mistaken for TDCHighlightListSheet which shows the actual list of
 highlights for a server by using Command+5 or the actual Windows menu bar item. */
-
 @interface TDCHighlightEntrySheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) NSArray *channelList;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchTypePopupButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchChannelPopupButton;
 @property (nonatomic, copy) TDCHighlightEntryMatchCondition *config;
 
 - (void)startWithChannels:(NSArray *)channels;
@@ -58,6 +53,7 @@ highlights for a server by using Command+5 or the actual Windows menu bar item. 
 @property (nonatomic, copy) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
 @property (nonatomic, assign) BOOL matchIsExcluded;
 
-- (instancetype)initWithDictionary:(NSDictionary *)dic NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;
+- (void)populateDictionaryValues:(NSDictionary *)dic;
 @end

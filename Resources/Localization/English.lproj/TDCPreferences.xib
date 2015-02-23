@@ -417,7 +417,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" id="6H1-Tg-Tt8">
-                    <rect key="frame" x="231" y="201" width="207" height="19"/>
+                    <rect key="frame" x="231" y="213" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="OMU-g9-Wob">
                         <font key="font" metaFont="smallSystem"/>
@@ -434,7 +434,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="cC6-1A-pvW">
-                    <rect key="frame" x="155" y="203" width="71" height="16"/>
+                    <rect key="frame" x="155" y="215" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="0bY-1G-9fo">
                         <font key="font" metaFont="cellTitle"/>
@@ -443,7 +443,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="AEb-I8-O30">
-                    <rect key="frame" x="231" y="147" width="207" height="19"/>
+                    <rect key="frame" x="231" y="159" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="d1d-pG-lez">
                         <font key="font" metaFont="smallSystem"/>
@@ -460,7 +460,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="uNQ-s8-bAv">
-                    <rect key="frame" x="155" y="149" width="71" height="16"/>
+                    <rect key="frame" x="155" y="161" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="crB-fG-ufp">
                         <font key="font" metaFont="cellTitle"/>
@@ -469,7 +469,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="Odd-uF-wUV">
-                    <rect key="frame" x="231" y="120" width="207" height="19"/>
+                    <rect key="frame" x="231" y="132" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="kc8-cg-xFg">
                         <font key="font" metaFont="smallSystem"/>
@@ -486,17 +486,16 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="Sne-aI-1Oj">
-                    <rect key="frame" x="81" y="239" width="404" height="48"/>
+                    <rect key="frame" x="17" y="259" width="532" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="Kn7-a5-s6a">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="The following information will be filled in when creating a new connection." id="Kn7-a5-s6a">
                         <font key="font" metaFont="cellTitle"/>
-                        <string key="title">The following information will be filled in automatically when creating a new connection. Changing this information will have no impact on existing connections.</string>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="iNX-QK-nm1">
-                    <rect key="frame" x="231" y="174" width="207" height="19"/>
+                    <rect key="frame" x="231" y="186" width="207" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="9WX-iW-Isu">
                         <font key="font" metaFont="smallSystem"/>
@@ -513,7 +512,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" id="xt6-0d-74R">
-                    <rect key="frame" x="126" y="177" width="100" height="16"/>
+                    <rect key="frame" x="126" y="189" width="100" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="Fie-vu-Czl">
                         <font key="font" metaFont="cellTitle"/>
@@ -522,7 +521,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="YhK-iA-Uk0">
-                    <rect key="frame" x="178" y="168" width="48" height="11"/>
+                    <rect key="frame" x="178" y="180" width="48" height="11"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="iYy-yb-Bx8">
                         <font key="font" metaFont="miniSystem"/>
@@ -531,7 +530,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" id="11g-Me-msX">
-                    <rect key="frame" x="155" y="122" width="71" height="16"/>
+                    <rect key="frame" x="155" y="134" width="71" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="jRf-a0-3jI">
                         <font key="font" metaFont="cellTitle"/>
@@ -1417,7 +1416,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </textFieldCell>
                                     </textField>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="mPZ-Hq-fGD">
-                                        <rect key="frame" x="91" y="122" width="352" height="20"/>
+                                        <rect key="frame" x="90" y="122" width="352" height="20"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aE5-zh-wjR">
                                             <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -1428,7 +1427,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1518,7 +1517,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="352" height="16"/>
+                                                    <size key="minSize" width="352" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -2717,7 +2716,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="530.5" y="-2743"/>
+            <point key="canvasLocation" x="427.5" y="-2927"/>
         </customView>
         <customView id="egI-fh-Ox8" userLabel="Main Text Field">
             <rect key="frame" x="0.0" y="1" width="567" height="476"/>
@@ -3151,7 +3150,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <button id="g7g-wa-Lin">
                     <rect key="frame" x="81" y="256" width="357" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Use &quot;x&quot; to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
+                    <buttonCell key="cell" type="check" title="Use “x” to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="CTi-8F-Hm0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -3797,7 +3796,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="GhK-dw-xt2">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">There are two options for erasing the data stored by Textual: The "Erase Data" button erases shared preferences leaving custom add-on files such as styles on iCloud. The "Erase Files" button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
+                        <string key="title">There are two options for erasing the data stored by Textual: The “Erase Data” button erases shared preferences leaving custom add-on files such as styles on iCloud. The “Erase Files” button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4033,7 +4032,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button id="uSb-WR-Mph">
-                    <rect key="frame" x="105" y="194" width="294" height="18"/>
+                    <rect key="frame" x="93" y="191" width="294" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically handle highlight spam" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="9iB-R9-pX3">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4044,7 +4043,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="bX7-BN-4lf">
-                    <rect key="frame" x="105" y="222" width="356" height="18"/>
+                    <rect key="frame" x="93" y="219" width="356" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically handle dangerous Unicode characters" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="wTY-bZ-ZLP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4055,7 +4054,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     </connections>
                 </button>
                 <button id="qfG-DF-6ev">
-                    <rect key="frame" x="106" y="166" width="302" height="18"/>
+                    <rect key="frame" x="93" y="247" width="302" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="Automatically reply to CTCP requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="MT3-bO-x65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4065,6 +4064,16 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReplyUnignoredExternalCTCPRequests" id="F3h-Qb-l6T"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="nyl-Dm-Tsm">
+                    <rect key="frame" x="108" y="143" width="366" height="42"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="34J-sn-YZe">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">For a message to qualify as “highlight spam”, a minimum of ten (10) nicknames must be present in the message with at least 75% of the message consisting soley of nicknames.</string>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="386.5" y="-4396"/>
         </customView>

@@ -8,7 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAboutPanel">
             <connections>
-                <outlet property="versionInfoField" destination="7" id="26"/>
+                <outlet property="versionInfoTextField" destination="7" id="ag2-GR-UdV"/>
                 <outlet property="window" destination="1" id="25"/>
             </connections>
         </customObject>
