@@ -254,10 +254,6 @@
 
 			break;
 		}
-		default:
-		{
-			break;
-		}
 	}
 	
 	/* Update clear button. */

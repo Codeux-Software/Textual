@@ -200,14 +200,10 @@
 		case 504810 ... 504812: // User, right click menu, - mode changes
 		{
 			return _disableInSheet(YES);
-
-			break;
 		}
 		case 51066: // "Toggle Visbility of Member List"
 		{
 			return _disableInSheet(_isChannel);
-
-			break;
 		}
 		case 331: // "Search on Google"
 		{
@@ -216,16 +212,12 @@
 			PointerIsEmptyAssertReturn(web, NO);
 			
 			return _disableInSheet([web hasSelection]);
-			
-			break;
 		}
 		case 542: // "Logs"
 		{
 			BOOL condition = [TPCPreferences logToDiskIsEnabled];
 
 			return condition;
-
-			break;
 		}
 		case 5422: // "Channel Properties"
 		{
@@ -234,8 +226,6 @@
 			[item setHidden:(condition == NO)];
 
 			return _disableInSheet(condition);
-
-			break;
 		}
 		case 5423: // "Channel" (submenu) (main menu)
 		case 5424: // "Channel" (submenu) (webkit)
@@ -253,8 +243,6 @@
 			[[[item submenu] itemWithTag:937] setHidden:(condition1 == NO)];
 
 			return YES;
-
-			break;
 		}
 		case 501: // "Connect"
 		{
@@ -291,8 +279,6 @@
 			}
 
 			return _disableInSheet((condition == NO && [u isQuitting] == NO));
-			
-			break;
 		}
 		case 502: // "Disconnect"
 		{
@@ -301,8 +287,6 @@
 			[item setHidden:(condition == NO)];
 			
 			return _disableInSheet(condition);
-			
-			break;
 		}
 		case 503: // "Cancel Reconnect"
 		{
@@ -311,21 +295,15 @@
 			[item setHidden:(condition == NO)];
 			
 			return _disableInSheet(condition);
-			
-			break;
 		}
 		case 511: // "Change Nickname…"
 		case 519: // "Channel List…"
 		{
 			return _disableInSheet(_connectionLoggedIn);
-			
-			break;
 		}
 		case 523: // "Delete Server"
 		{
 			return _disableInSheet(_notConnected);
-			
-			break;
 		}
 		case 522: // "Duplicate Server"
 		case 541: // "Server Properties…"
@@ -333,14 +311,10 @@
 		case 591: // "Ignore List"
 		{
 			return _disableInSheet(_noClient == NO);
-			
-			break;
 		}
 		case 592: // "Textual Logs"
 		{
 			return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
-			
-			break;
 		}
 		case 601: // "Join Channel"
 		{
@@ -359,8 +333,6 @@
 				
 				return _disableInSheet(condition);
 			}
-			
-			break;
 		}
 		case 602: // "Leave Channel"
 		{
@@ -373,8 +345,6 @@
 				
 				return _disableInSheet(_activate);
 			}
-			
-			break;
 		}
 		case 651: // "Add Channel…"
 		{
@@ -387,8 +357,6 @@
 				
 				return _disableInSheet(_noClient == NO);
 			}
-			
-			break;
 		}
 		case 652: // "Delete Channel"
 		{
@@ -401,14 +369,10 @@
 				
 				return _disableInSheet(_isChannel);
 			}
-			
-			break;
 		}
 		case 691: // "Add Channel…" — Server Menu
 		{
 			return _disableInSheet(_noClient == NO);
-			
-			break;
 		}
 		case 2005: // "Invite To…"
 		{
@@ -425,8 +389,6 @@
 			}
 			
 			return _disableInSheet((count > 0));
-			
-			break;
 		}
 		case 5421: // "Query Logs"
 		{
@@ -439,8 +401,6 @@
 				
 				return NO;
 			}
-			
-			break;
 		}
 		case 9631: // "Close Window"
 		{
@@ -504,14 +464,10 @@
 			}
 			
 			return YES;
-			
-			break;
 		}
 		case 593: // "Highlight List"
 		{
 			return _disableInSheet([TPCPreferences logHighlights] && _connectionLoggedIn);
-			
-			break;
 		}
         case 54092: // Developer Mode
         {
@@ -522,14 +478,10 @@
             }
             
             return YES;
-			
-			break;
         }
 		case 504813: // "All Modes Given"
 		{
 			return NO;
-
-			break;
 		}
 		case 504913: // "All Modes Taken"
 		{
@@ -599,30 +551,22 @@
 #undef _userControlsMenuTakeModeOMenuTag
 #undef _userControlsMenuTakeModeHMenuTag
 #undef _userControlsMenuTakeModeVMenuTag
-			
-			break;
 		}
 		case 990002: // "Next Highlight"
 		{
 			TVCLogController *currentView = [mainWindow() selectedViewController];
 
 			return _disableInSheet([currentView highlightAvailable:NO]);
-			
-			break;
 		}
 		case 990003: // "Previous Highlight"
 		{
 			TVCLogController *currentView = [mainWindow() selectedViewController];
 
 			return _disableInSheet([currentView highlightAvailable:YES]);
-			
-			break;
 		}
 		default:
 		{
 			return YES;
-			
-			break;
 		}
 	}
 
@@ -2520,7 +2464,7 @@
 	[TLOpenLink openWithString:@"http://www.textualapp.com/"];
 }
 
-- (void)processNavigationItem:(NSMenuItem *)sender
+- (void)processNavigationItem:(id)sender
 {
 	switch ([sender tag]) {
 		case 50001: { [mainWindow() selectNextServer:nil];					break;		}

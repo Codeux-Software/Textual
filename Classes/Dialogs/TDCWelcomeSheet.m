@@ -272,7 +272,7 @@
 #pragma mark -
 #pragma mark NSTextView Delegate (for support channel link)
 
-- (BOOL)textView:(NSTextView *)textView clickedOnLink:(NSURL *)link atIndex:(NSUInteger)charIndex
+- (BOOL)textView:(NSTextView *)textView clickedOnLink:(id)link atIndex:(NSUInteger)charIndex
 {
 	if ([[link absoluteString] hasPrefix:@"textual://"]) {
 		[self cancel:nil];

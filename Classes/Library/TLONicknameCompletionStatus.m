@@ -206,7 +206,7 @@
 			/* State variable of the suffix. */
 			BOOL isucsempty = NSObjectIsEmpty(ucs);
 
-			UniChar ucsfc;
+			UniChar ucsfc = NULL;
 
 			/* Does user even have a suffix? */
 			if (isucsempty == NO) {

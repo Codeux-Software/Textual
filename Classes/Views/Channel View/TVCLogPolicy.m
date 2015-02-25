@@ -204,8 +204,6 @@
 		
 		return ary;
 	}
-	
-	return defaultMenuItems;
 }
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener

@@ -50,7 +50,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
 - (instancetype)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		/* Define defaults. */
 		self.receivedAt = [NSDate date];
 

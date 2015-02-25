@@ -358,26 +358,18 @@ static NSInteger _cachedHighlightCount = -1;
 		case 1 ... 9:
 		{
 			return 5;
-			
-			break;
 		}
 		case 10 ... 99:
 		{
 			return 16;
-			
-			break;
 		}
 		case 100 ... 999:
 		{
 			return 28;
-			
-			break;
 		}
 		case 1000 ... 9999:
 		{
 			return 38;
-			
-			break;
 		}
 	}
 	
@@ -390,26 +382,18 @@ static NSInteger _cachedHighlightCount = -1;
 		case 1 ... 9:
 		{
 			return 1;
-			
-			break;
 		}
 		case 10 ... 99:
 		{
 			return 1;
-			
-			break;
 		}
 		case 100 ... 999:
 		{
 			return 18;
-			
-			break;
 		}
 		case 1000 ... 9999:
 		{
 			return 28;
-			
-			break;
 		}
 	}
 	

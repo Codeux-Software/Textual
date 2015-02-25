@@ -317,12 +317,12 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 }
 
-- (BOOL)performValidationForCurrentTheme:(NSString **)suggestedThemeName suggestedFont:(NSString **)suggestedFontName
+- (BOOL)performValidationForCurrentTheme:(NSString * __autoreleasing *)suggestedThemeName suggestedFont:(NSString * __autoreleasing *)suggestedFontName
 {
 	return [self performValidationForTheme:[self associatedThemeName] suggestedTheme:suggestedThemeName suggestedFont:suggestedFontName];
 }
 
-- (BOOL)performValidationForTheme:(NSString *)validatedTheme suggestedTheme:(NSString **)suggestedThemeName suggestedFont:(NSString **)suggestedFontName
+- (BOOL)performValidationForTheme:(NSString *)validatedTheme suggestedTheme:(NSString * __autoreleasing  *)suggestedThemeName suggestedFont:(NSString * __autoreleasing *)suggestedFontName
 {
 	/* Validate font. */
 	BOOL keyChanged = NO;
@@ -437,20 +437,14 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		case TPCThemeControllerStorageBundleLocation:
 		{
 			return [TPCThemeControllerBundledThemeNameCompletePrefix stringByAppendingString:name];
-			
-			break;
 		}
 		case TPCThemeControllerStorageCustomLocation:
 		{
 			return [TPCThemeControllerCustomThemeNameCompletePrefix stringByAppendingString:name];
-			
-			break;
 		}
 		case TPCThemeControllerStorageCloudLocation:
 		{
 			return [TPCThemeControllerCloudThemeNameCompletePrefix stringByAppendingString:name];
-			
-			break;
 		}
 		default:
 		{

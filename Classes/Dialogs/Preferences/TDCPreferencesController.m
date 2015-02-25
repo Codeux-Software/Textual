@@ -53,8 +53,6 @@
 #define _forcedPreferencePaneViewFrameHeight		406
 #define _forcedPreferencePaneViewFrameWidth			567
 
-#define _addonsToolbarItemMultiplier		65
-
 @interface TDCPreferencesController ()
 @property (nonatomic, copy) NSArray *alertSounds;
 @property (nonatomic, nweak) IBOutlet NSArrayController *excludeKeywordsArrayController;
@@ -385,7 +383,7 @@
 	[TPCPreferences setFileTransferPortRangeEnd:[value integerValue]];
 }
 
-- (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
+- (BOOL)validateValue:(inout __autoreleasing id *)value forKey:(NSString *)key error:(out NSError *__autoreleasing *)outError
 {
 	if ([key isEqualToString:@"maxLogLines"]) {
 		NSInteger n = [*value integerValue];

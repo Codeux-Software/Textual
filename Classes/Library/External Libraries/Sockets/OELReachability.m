@@ -76,9 +76,9 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (OELReachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref
 {
-    if (self = [super init])
+    if ((self = [super init]))
     {
-        _reachabilityRef = ref;
+        self.reachabilityRef = ref;
     }
 
     return self;
@@ -88,22 +88,22 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     [self stopNotifier];
 
-    if (_reachabilityRef)
+    if (self.reachabilityRef)
     {
-        CFRelease(_reachabilityRef);
-				  _reachabilityRef = nil;
+        CFRelease(self.reachabilityRef);
+				  self.reachabilityRef = nil;
     }
 
-	_reachableBlock		= nil;
-	_unreachableBlock	= nil;
+	self.reachableBlock		= nil;
+	self.unreachableBlock	= nil;
 }
 
 - (BOOL)startNotifier
 {
     SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
 
-    if (SCNetworkReachabilitySetCallback(_reachabilityRef, TMReachabilityCallback, &context)) {
-		if (SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
+    if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) {
+		if (SCNetworkReachabilityScheduleWithRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
         {
             return YES;
         }
@@ -114,9 +114,9 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (void)stopNotifier
 {
-    SCNetworkReachabilitySetCallback(_reachabilityRef, NULL, NULL);
+    SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
 
-	SCNetworkReachabilityUnscheduleFromRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+	SCNetworkReachabilityUnscheduleFromRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
 #define testcase (kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsTransientConnection)
@@ -140,7 +140,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     SCNetworkReachabilityFlags flags;
 
-    if (SCNetworkReachabilityGetFlags(_reachabilityRef, &flags) == FALSE) {
+    if (SCNetworkReachabilityGetFlags(self.reachabilityRef, &flags) == FALSE) {
         return NO;
 	}
 
@@ -150,12 +150,12 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags
 {
     if ([self isReachableWithFlags:flags]) {
-        if (_reachableBlock) {
-            _reachableBlock(self);
+        if (self.reachableBlock) {
+            self.reachableBlock(self);
         }
     } else {
-        if (_unreachableBlock) {
-            _unreachableBlock(self);
+        if (self.unreachableBlock) {
+            self.unreachableBlock(self);
         }
     }
 }

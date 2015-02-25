@@ -338,7 +338,7 @@
 		if (vid && [vid length] > 2) {
 			long long vidNum = [[vid substringFromIndex:2] longLongValue];
 
-			return [NSString stringWithFormat:@"http://tn-skr%qi.smilevideo.jp/smile?i=%qi", ((vidNum % 4) + 1), vidNum];
+			return [NSString stringWithFormat:@"http://tn-skr%lli.smilevideo.jp/smile?i=%lli", ((vidNum % 4) + 1), vidNum];
 		}
 	} else if ([path hasPrefix:@"/image/"]) {
 		/* Try our best to regonize cl.ly custom domains. */

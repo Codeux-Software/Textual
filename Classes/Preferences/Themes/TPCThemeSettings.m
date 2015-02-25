@@ -176,7 +176,7 @@
 	return nil;
 }
 
-- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError
+- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * __autoreleasing *)resultError
 {
 	if ([key length] <= 0) {
 		*resultError = @"Empty key value";
@@ -195,7 +195,7 @@
 	return nil;
 }
 
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError
+- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString * __autoreleasing *)resultError
 {
 	if ([objectKey length] <= 0) {
 		*resultError = @"Empty key value";

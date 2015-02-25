@@ -50,7 +50,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return [self stringByAppendingFormat:@"%C", IRCTextFormatterTerminatingCharacter];
 }
 
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address
+- (BOOL)hostmaskComponents:(NSString *__autoreleasing *)nickname username:(NSString *__autoreleasing *)username address:(NSString *__autoreleasing *)address
 {
 	/* Gather basic information. */
 

@@ -364,7 +364,7 @@ static const char *kMacNames[] = {
 {
 	SSLCipherSuite cipher = [self sslNegotiatedCipherSuite];
 
-	for (NSInteger pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
+	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
 		CipherSuite cs = kCipherSuites[pos];
 
 		if (cs.cipher_suite == cipher) {

@@ -68,7 +68,7 @@
 
 - (instancetype)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		self.transferStatus = TDCFileTransferDialogTransferStoppedStatus;
 		
 		self.speedRecords = [NSMutableArray new];

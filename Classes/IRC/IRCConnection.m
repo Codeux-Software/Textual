@@ -81,13 +81,13 @@
 
 - (void)close
 {
-	_isConnected = NO;
-	_isConnecting = NO;
-	_isSending = NO;
+	self.isConnected = NO;
+	self.isConnecting = NO;
+	self.isSending = NO;
 
-	_floodControlCurrentMessageCount = 0;
+	self.floodControlCurrentMessageCount = 0;
 
-	[_sendQueue removeAllObjects];
+	[self.sendQueue removeAllObjects];
 	
 	[self stopTimer];
 	
@@ -99,12 +99,12 @@
 
 - (NSString *)convertFromCommonEncoding:(NSData *)data
 {
-	return [_associatedClient convertFromCommonEncoding:data];
+	return [self.associatedClient convertFromCommonEncoding:data];
 }
 
 - (NSData *)convertToCommonEncoding:(NSString *)data
 {
-	return [_associatedClient convertToCommonEncoding:data];
+	return [self.associatedClient convertToCommonEncoding:data];
 }
 
 #pragma mark -
@@ -116,7 +116,7 @@
 	 placed in the flood control queue. This writes them directly to the socket
 	 instead of actuallying waiting for the queue. We only need this check if
 	 we actually have flood control enabled. */
-	if (_connectionUsesOutgoingFloodControl) {
+	if (self.connectionUsesOutgoingFloodControl) {
 		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
 		if (isPong) {
@@ -127,7 +127,7 @@
 			if (data) {
 				[self write:data];
 
-				[_associatedClient ircConnectionWillSend:firstItem];
+				[self.associatedClient ircConnectionWillSend:firstItem];
 
 				return; // Exit from entering the queue.
 			}
@@ -135,28 +135,28 @@
 	}
 
 	/* Normal send. */
-	[_sendQueue addObject:line];
+	[self.sendQueue addObject:line];
 
 	[self tryToSend];
 }
 
 - (BOOL)tryToSend
 {
-	if (_isSending) {
+	if (self.isSending) {
 		return NO;
 	}
 
-	if ([_sendQueue count] == 0) {
+	if ([self.sendQueue count] == 0) {
 		return NO;
 	}
 
-	if ([_associatedClient isLoggedIn]) {
-		if (_connectionUsesOutgoingFloodControl) {
-			if (_floodControlCurrentMessageCount >= _floodControlMaximumMessageCount) {
+	if ([self.associatedClient isLoggedIn]) {
+		if (self.connectionUsesOutgoingFloodControl) {
+			if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
 				return NO;
 			}
 
-			_floodControlCurrentMessageCount += 1;
+			self.floodControlCurrentMessageCount += 1;
 		}
 	}
 
@@ -167,26 +167,26 @@
 
 - (void)sendNextLine
 {
-	if ([_sendQueue count] > 0) {
-		NSString *firstItem = [_sendQueue[0] stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
+	if ([self.sendQueue count] > 0) {
+		NSString *firstItem = [self.sendQueue[0] stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
 
-		[_sendQueue removeObjectAtIndex:0];
+		[self.sendQueue removeObjectAtIndex:0];
 
 		NSData *data = [self convertToCommonEncoding:firstItem];
 
 		if (data) {
-			_isSending = YES;
+			self.isSending = YES;
 
 			[self write:data];
 
-			[_associatedClient ircConnectionWillSend:firstItem];
+			[self.associatedClient ircConnectionWillSend:firstItem];
 		}
 	}
 }
 
 - (void)clearSendQueue
 {
-	[_sendQueue removeAllObjects];
+	[self.sendQueue removeAllObjects];
 }
 
 #pragma mark -
@@ -194,23 +194,23 @@
 
 - (void)startTimer
 {
-	if (_connectionUsesOutgoingFloodControl) {
-		if ([_floodTimer timerIsActive] == NO) {
-			[_floodTimer start:self.floodControlDelayInterval];
+	if (self.connectionUsesOutgoingFloodControl) {
+		if ([self.floodTimer timerIsActive] == NO) {
+			[self.floodTimer start:self.floodControlDelayInterval];
 		}
 	}
 }
 
 - (void)stopTimer
 {
-	if ([_floodTimer timerIsActive]) {
-		[_floodTimer stop];
+	if ([self.floodTimer timerIsActive]) {
+		[self.floodTimer stop];
 	}
 }
 
 - (void)timerOnTimer:(id)sender
 {
-	_floodControlCurrentMessageCount = 0;
+	self.floodControlCurrentMessageCount = 0;
 
 	while ([self tryToSend] == YES) {
 		// …
@@ -224,36 +224,36 @@
 {
 	[self clearSendQueue];
 	
-	[_associatedClient ircConnectionDidConnect:self];
+	[self.associatedClient ircConnectionDidConnect:self];
 }
 
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];
 	
-	[_associatedClient ircConnectionDidError:error];
+	[self.associatedClient ircConnectionDidError:error];
 }
 
 - (void)tcpClientDidDisconnect:(NSError *)distcError
 {
 	[self clearSendQueue];
 	
-	[_associatedClient ircConnectionDidDisconnect:self withError:distcError];
+	[self.associatedClient ircConnectionDidDisconnect:self withError:distcError];
 }
 
 - (void)tcpClientDidReceiveData:(NSString *)data
 {
-	[_associatedClient ircConnectionDidReceive:data];
+	[self.associatedClient ircConnectionDidReceive:data];
 }
 
 - (void)tcpClientDidSecureConnection
 {
-	[_associatedClient ircConnectionDidSecureConnection];
+	[self.associatedClient ircConnectionDidSecureConnection];
 }
 
 - (void)tcpClientDidSendData
 {
-	_isSending = NO;
+	self.isSending = NO;
 	
 	[self tryToSend];
 }

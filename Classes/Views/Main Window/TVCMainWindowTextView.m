@@ -47,8 +47,6 @@
 
 #define _WindowContentViewMinimumHeightConstraint		35.0
 
-#define _InputTextFieldOriginDefaultX			166.0
-
 #define _KeyObservingArray 	@[	@"TextFieldAutomaticSpellCheck", \
 								@"TextFieldAutomaticGrammarCheck", \
 								@"TextFieldAutomaticSpellCorrection", \

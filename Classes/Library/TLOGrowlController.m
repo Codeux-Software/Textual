@@ -348,14 +348,14 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 {
 	NSTimeInterval now = [NSDate unixTime];
 	
-	if ((now - _lastClickedTime) < _clickInterval) {
-		if (   _lastClickedContext && [_lastClickedContext isEqual:context]) {
+	if ((now - self.lastClickedTime) < _clickInterval) {
+		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
 	
-	_lastClickedTime = now;
-	_lastClickedContext = context;
+	self.lastClickedTime = now;
+	self.lastClickedContext = context;
 
 	BOOL changeFocus = NO;
 	
