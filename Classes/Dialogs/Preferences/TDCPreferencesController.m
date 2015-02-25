@@ -607,6 +607,27 @@
 #pragma mark -
 #pragma mark File Transfer Destination Folder Popup
 
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError *__autoreleasing *)outError
+{
+	/* The path is hardcoded because we run this check on all build schemes with means
+	 the value of our ubiquitous container URL will not be available in all situations. */
+	NSString *cloudPath = [[TPCPathInfo userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
+
+	if ([[url relativePath] hasPrefix:cloudPath]) {
+		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+
+		[userInfo setObject:url forKey:NSURLErrorKey];
+		[userInfo setObject:TXTLS(@"BasicLanguage[1251][1]") forKey:NSLocalizedDescriptionKey];
+		[userInfo setObject:TXTLS(@"BasicLanguage[1251][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+
+		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+
+		return NO;
+	} else {
+		return YES;
+	}
+}
+
 - (void)updateFileTransferDownloadDestinationFolder
 {
 	TDCFileTransferDialog *transferController = [menuController() fileTransferController];
@@ -635,7 +656,8 @@
 
 	if ([[self fileTransferDownloadDestinationButton] selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
-		
+
+		[d setDelegate:self];
 		[d setCanChooseFiles:NO];
 		[d setResolvesAliases:YES];
 		[d setCanChooseDirectories:YES];
@@ -705,6 +727,7 @@
 	if ([[self transcriptFolderButton] selectedTag] == 2) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 
+		[d setDelegate:self];
 		[d setCanChooseFiles:NO];
 		[d setResolvesAliases:YES];
 		[d setCanChooseDirectories:YES];

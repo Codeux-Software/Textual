@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCPreferencesController : NSWindowController
+@interface TDCPreferencesController : NSWindowController <NSOpenSavePanelDelegate>
 @property (nonatomic, uweak) id delegate;
 
 - (void)show;

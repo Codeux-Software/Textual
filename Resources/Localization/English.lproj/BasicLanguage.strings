@@ -35,26 +35,26 @@
 
  *********************************************************************** */
 
-/* About window version info. */
+/* About window version info */
 "TDCAboutPanel[1000]" = "Version %@";
 
-/* Server properties Address Book entry types. */
+/* Server properties Address Book entry types */
 "TDCServerSheet[1000]" = "User Ignore";
 "TDCServerSheet[1001]" = "User Tracking";
 
-/* Server properties iCloud options. */
+/* Server properties iCloud options */
 "TDCServerSheet[1002][1]" = "iCloud Sharing Disabled";
 "TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
 
 "TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
 "TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
-/* Server specific highlight entry things. */
+/* Server specific highlight entry things */
 "TDCServerSheet[1004]" = "All Channels";
 "TDCServerSheet[1005]" = "Exclude";
 "TDCServerSheet[1006]" = "Match";
 
-/* Server properties navigation menu. */
+/* Server properties navigation menu */
 "TDCServerSheet[1007][01]" = "Channel List";
 "TDCServerSheet[1007][02]" = "Connect Commands";
 "TDCServerSheet[1007][03]" = "Encoding";
@@ -86,28 +86,28 @@
 "TDCServerSheet[1010][10]" = "Misconfigued value in Messages setion.";
 "TDCServerSheet[1010][11]" = "Misconfigued value in Messages setion.";
 
-/* Custom client-side certificate selection. */
+/* Custom client-side certificate selection */
 "TDCServerSheet[1008]" = "No Certificate Selected";
 
 "TDCServerSheet[1009][1]" = "Select Identity";
 "TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
 
-/* Welcome sheet help channel prompt for freenode servers. */
+/* Welcome sheet help channel prompt for freenode servers */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
 "TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
 
-/* Channel list dialog. */
+/* Channel list dialog */
 "TDCListDialog[1000]" = "Channel List for “%@”";
 "TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
 "TDCListDialog[1002]" = "%@ Public Channels";
 "TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
 
-/* Invite dialog. */
+/* Invite dialog */
 "TDCInviteSheet[1000]" = "%d users";
 "TDCInviteSheet[1001]" = "Invite %@ to:";
 "TDCInviteSheet[1002]" = "%1$@ and %2$@";
 
-/* Preferences window iCloud options. */
+/* Preferences window iCloud options */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
 "TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the “Manage iCloud” button.";
 
@@ -122,7 +122,7 @@
 
 "TDCPreferencesController[1005]" = "Growl is running. Notifications will be forwarded to it.";
 "TDCPreferencesController[1006]" = "Notifications will be posted using Notification Center.";
-"TDCPreferencesController[1007]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC. */
+"TDCPreferencesController[1007]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC */
 
 "TDCPreferencesController[1008]" = "Make Local Copy";
 "TDCPreferencesController[1009]" = "Copy to iCloud";
@@ -173,7 +173,7 @@
 "TDCPreferencesController[1021][5]" = "iCloud Syncing";
 "TDCPreferencesController[1021][6]" = "Log Location";
 
-/* Final transfer dialog. */
+/* Final transfer dialog */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
 
@@ -205,81 +205,81 @@
 
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
-/* Main window text field placeholder. */
+/* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
-/* Application terminating confirmation dialog. */
+/* Application terminating confirmation dialog */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
 "BasicLanguage[1000][3]" = "Quit";
 
-/* Basic encryption related localizations. */
+/* Basic encryption related localizations */
 "BasicLanguage[1245]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
 "BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
 "BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
 "BasicLanguage[1003]" = "Encryption started";
 "BasicLanguage[1004]" = "Encryption stopped";
 
-/* Sections of channel information in main window title bar. */
+/* Sections of channel information in main window title bar */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";
 "BasicLanguage[1007]" = " (%ld users)";
 "BasicLanguage[1008]" = "%1$@ on %2$@";
 
-/* Cancel button used by prompts. */
+/* Cancel button used by prompts */
 "BasicLanguage[1009]" = "Cancel";
 
-/* Channel deletion prompt. */
+/* Channel deletion prompt */
 "BasicLanguage[1010][1]" = "There is no undo and all data related to this channel, except for logs, will be erased.";
 "BasicLanguage[1010][2]" = "Do you want to delete the selection?";
 
-/* Close button for dialogs. */
+/* Close button for dialogs */
 "BasicLanguage[1011]" = "Close";
 
-/* Menu item titles for Command W menu item. */
+/* Menu item titles for Command W menu item */
 "BasicLanguage[1012]" = "Close Query";
 "BasicLanguage[1013]" = "Close Window";
 "BasicLanguage[1014]" = "Disconnect from %@";
 "BasicLanguage[1015]" = "Leave Channel";
 "BasicLanguage[1016]" = "Quit Textual & IRC";
 
-/* Continue button for dialogs. */
+/* Continue button for dialogs */
 "BasicLanguage[1017]" = "Continue";
 
-/* Channel view right click menu, menu items. */
+/* Channel view right click menu, menu items */
 "BasicLanguage[1018]" = "Copy Log as HTML";
 "BasicLanguage[1019]" = "Force Reload Style";
 
-/* DCC request console error. */
+/* DCC request console error */
 "BasicLanguage[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
 
-/* A few defaults. */
+/* A few defaults */
 "BasicLanguage[1021]" = "Textual IRC Client: www.textualapp.com";
 "BasicLanguage[1022]" = "Untitled Connection";
 
-/* Delete button for dialogs. */
+/* Delete button for dialogs */
 "BasicLanguage[1023]" = "Delete";
 
-/* Delete channel menu item titles. */
+/* Delete channel menu item titles */
 "BasicLanguage[1024]" = "Delete Channel";
 "BasicLanguage[1025]" = "Close Query";
 
-/* Find panel. */
+/* Find panel */
 "BasicLanguage[1026][1]" = "Search";
 "BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search begins, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
 "BasicLanguage[1026][3]" = "Search for Message";
 
-/* Default G:Line reason. */
+/* Default G:Line reason */
 "BasicLanguage[1027]" = "35d Your behavior is not conducive to the desired environment";
 "BasicLanguage[1028]" = "Your behavior is not conducive to the desired environment";
 "BasicLanguage[1029]" = "Your behavior is not conducive to the desired environment";
 "BasicLanguage[1030]" = "1d Shunned";
 
-/* Network not available messages. */
+/* Network not available messages */
 "BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
 "BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, right-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, right-click the server and select \002Cancel Reconnect\002.";
 
-/* /defaults/ command. */
+/* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
 
 "BasicLanguage[1034][01]" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
@@ -299,21 +299,21 @@
 "BasicLanguage[1037]" = "Enabled Feature: %@";
 "BasicLanguage[1038]" = "Disabled Feature: %@";
 
-/* DCC console messages. */
+/* DCC console messages */
 "BasicLanguage[1039]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
 "BasicLanguage[1040]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
 
-/* Excess flood disconnect warning sheet. */
+/* Excess flood disconnect warning sheet */
 "BasicLanguage[1041][1]" = "Excess Flood";
 "BasicLanguage[1041][2]" = "A disconnection has occured due to excess flood. Reconnect?";
 "BasicLanguage[1041][3]" = "Configure Flood Control";
 
-/* /mode/ command error. */
+/* /mode/ command error */
 "BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server";
 
-/* Notification spoken text. */
+/* Notification spoken text */
 /* Address Book spoken text uses the actual notification message for that
- notification type. It is not defined here. */
+ notification type. It is not defined here */
 "BasicLanguage[1043]" = "Channel Message in %1$@ by %2$@, %3$@";
 "BasicLanguage[1044]" = "Channel Notice in %1$@ by %2$@, %3$@";
 "BasicLanguage[1045]" = "Highlight in %1$@ by %2$@, %3$@";
@@ -330,7 +330,7 @@
 "BasicLanguage[1056]" = "File transfer from %@ has failed";
 "BasicLanguage[1057]" = "Received file transfer request from %@";
 
-/* Notification bubble titles. */
+/* Notification bubble titles */
 "BasicLanguage[1058]" = "Address Book Notification";
 "BasicLanguage[1059]" = "Channel Message: %@";
 "BasicLanguage[1060]" = "Channel Notice: %@";
@@ -350,7 +350,7 @@
 
 /* Notification bubble descriptions. 
  These are only notifications that require localization. Many notifications
- just send the raw message received so they are not localized here. */
+ just send the raw message received so they are not localized here */
 "BasicLanguage[1074]" = "Connection successful";
 "BasicLanguage[1075]" = "Disconnection successful";
 "BasicLanguage[1076]" = "%1$@ has invited you to %2$@";
@@ -364,13 +364,13 @@
 "BasicLanguage[1084]" = "User with nickname “%1$@” is no longer available";
 "BasicLanguage[1085]" = "User with nickname “%1$@” is now available";
 
-/* Notification bubble replyb button placeholders. */
+/* Notification bubble replyb button placeholders */
 "BasicLanguage[1239]" = "Enter message to reply to this private message";
 
-/* File transfer notification accept button. */
+/* File transfer notification accept button */
 "BasicLanguage[1244]" = "Accept";
 
-/* Notification type titles. */
+/* Notification type titles */
 "BasicLanguage[1086]" = "Address Book Notification";
 "BasicLanguage[1087]" = "Channel Message";
 "BasicLanguage[1088]" = "Channel Notice";
@@ -388,16 +388,16 @@
 "BasicLanguage[1100]" = "Failed File Transfer (Receiving)";
 "BasicLanguage[1101]" = "File Transfer Request";
 
-/* iCloud. */
+/* iCloud */
 "BasicLanguage[1102][1]" = "iCloud is Not Available";
 "BasicLanguage[1102][2]" = "It appears iCloud may not be available right now. Please try again later.";
 
-/* /loaded_plugins/ command. */
+/* /loaded_plugins/ command */
 "BasicLanguage[1103]" = "Loaded Bundles: %@";
 "BasicLanguage[1104]" = "Loaded Scripts: %@";
 "BasicLanguage[1105]" = "Nothing loaded";
 
-/* /lagcheck/ command. */
+/* /lagcheck/ command */
 "BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
 "BasicLanguage[1107]" = "Waiting for response from lag check …";
 "BasicLanguage[1108]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
@@ -413,19 +413,19 @@
 "BasicLanguage[1109][08]" = "Dang! Call your ISP";
 "BasicLanguage[1109][09]" = "You Fail! (www.youfail.org)";
 
-/* Open log folder error dialog. */
+/* Open log folder error dialog */
 "BasicLanguage[1110][1]" = "No Logs Found";
 "BasicLanguage[1110][2]" = "No logs were found for this chat session";
 
-/* Version info. */
+/* Version info */
 "BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
 
-/* /myversion/ command. */
+/* /myversion/ command */
 "BasicLanguage[1112]" = "%1$@ %2$@ (Git Reference: %3$@) ";
 "BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Build Date: %5$@)";
 "BasicLanguage[1114]" = "\002Current Version:\002 %@";
 
-/* Miscellaneous messages related to IRC events. */
+/* Miscellaneous messages related to IRC events */
 "BasicLanguage[1115]" = "Be back later";
 "BasicLanguage[1116]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
 "BasicLanguage[1117]" = "away-notify multi-prefix userhost-in-names sasl server-time";
@@ -487,40 +487,40 @@
 "BasicLanguage[1171]" = "%@ is not accepting private messages from unrecognized users. They have been notified that you have tried messaging them, but the last message you have sent to them has been lost. Any further communication will also be lost until they add you to their list of recognized users.";
 "BasicLanguage[1172]" = "%1$@ (%2$@) has tried to send you a private message, but it was blocked due to \002umode +g\002. The message they sent has been lost, but typing the command “/accept %1$@” will allow new messages to be received until they or you disconnect from IRC.";
 
-/* /timer/ command. */
+/* /timer/ command */
 "BasicLanguage[1173]" = "Timer command requires number for interval. Syntax: “/timer <seconds> <command>”";
 
-/* Raw mode messages. */
+/* Raw mode messages */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
 "BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the OS X ”Console” application. To disable, execute “/debug raw off”";
 "BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
 "BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
-/* Log file session headers. */
+/* Log file session headers */
 "BasicLanguage[1178]" = "------------- Begin Session -------------";
 "BasicLanguage[1179]" = "------------- End Session -------------";
 
-/* Preferences file import/export. */
+/* Preferences file import/export */
 "BasicLanguage[1180]" = "Please select the location in which to save the file.\n\nIMPORTANT: The file that will be saved does not contain passwords\nas those are considered sensitive information. It also does not include\nany custom addons such as scripts and styles.";
 
 "BasicLanguage[1181][1]" = "Import Preferences";
 "BasicLanguage[1181][2]" = "Please take note that the following preferences cannot be imported:\n\n    • Passwords\n    • Log location\n    • File transfer download location\n    • Any custom addons such as styles or scripts\n\nAll other preferences will apply immediately.";
 "BasicLanguage[1181][3]" = "Select File";
 
-/* No button for dialogs. */
+/* No button for dialogs */
 "BasicLanguage[1182]" = "No";
 
 /* Channel list navigation menu entries.*/
 "BasicLanguage[1183]" = "%@";
 "BasicLanguage[1184]" = "   %@";
 
-/* Default sleep message. */
+/* Default sleep message */
 "BasicLanguage[1185]" = "My %@ has gone to sleep. ZZZzzz…";
 "BasicLanguage[1235]" = "My Mac has gone to sleep. ZZZzzz…";
 
-/* Ok button for dialogs. */
+/* Ok button for dialogs */
 "BasicLanguage[1186]" = "OK";
 
-/* Custom addon installer messages. */
+/* Custom addon installer messages */
 "BasicLanguage[1187][1]" = "Install Custom Script";
 "BasicLanguage[1187][2]" = "Select the folder named “%@” to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
 
@@ -539,28 +539,28 @@
 "BasicLanguage[1192][1]" = "Install Extension?";
 "BasicLanguage[1192][2]" = "Would you like to install the extension named “%@” so that it can be used by Textual?";
 
-/* Misc. error. */
+/* Misc. error */
 "BasicLanguage[1193]" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";
 
-/* Default suppression message for prompts. */
+/* Default suppression message for prompts */
 "BasicLanguage[1194]" = "Do not show this message again";
 
-/* Script execution error message. */
+/* Script execution error message */
 "BasicLanguage[1195]" = "Script Execution Failure: %@";
 "BasicLanguage[1196]" = "Script Execution Failure (%1$@: %2$@): %3$@";
 
 /* Good thing to catch… */
 "BasicLanguage[1197]" = "Textual has prevented you from banning yourself on %@";
 
-/* Server delete dialog. */
+/* Server delete dialog */
 "BasicLanguage[1198][1]" = "Do you want to delete the selection?";
 "BasicLanguage[1198][2]" = "There is no undo and all data related to this server, except for logs, will be erased.";
 "BasicLanguage[1198][3]" = "There is no undo and all data related to this server held on this device and shared with iCloud, except for logs, will be erased.\n\nOpen Server Properties and select “Do not share with other devices using iCloud” to stop this server from being erased on all shared devices.";
 
-/* Misc. error. */
+/* Misc. error */
 "BasicLanguage[1199]" = "Failed to send data to server. Not connected.";
 
-/* Formatted time. */
+/* Formatted time */
 "BasicLanguage[1204][DAY]" = "days";
 "BasicLanguage[1204][HOUR]" = "hours";
 "BasicLanguage[1204][MINUTE]" = "minutes";
@@ -575,7 +575,7 @@
 "BasicLanguage[1205][SECOND]" = "second";
 "BasicLanguage[1205][YEAR]" = "year";
 
-/* User info popover. */
+/* User info popover */
 "BasicLanguage[1206]" = "No Privileges";
 "BasicLanguage[1207]" = "Voice";
 "BasicLanguage[1208]" = "Half-op";
@@ -588,35 +588,35 @@
 
 "BasicLanguage[1215]" = "Information Not Available";
 
-/* Formatted time. */
+/* Formatted time */
 "BasicLanguage[1216]" = "%@ ago";
 
-/* Trust button for dialogs. */
+/* Trust button for dialogs */
 "BasicLanguage[1217]" = "Trust";
 
-/* Unknown. */
+/* Unknown */
 "BasicLanguage[1218]" = "Unknown";
 
-/* Yes button for dialogs. */
+/* Yes button for dialogs */
 "BasicLanguage[1219]" = "Yes";
 
-/* /mute/ command. */
+/* /mute/ command */
 "BasicLanguage[1220]" = "Sound is already muted";
 "BasicLanguage[1221]" = "Sound is no longer muted";
 "BasicLanguage[1222]" = "Sound is not muted";
 "BasicLanguage[1223]" = "Sound has been muted";
 
-/* Selet button for dialogs. */
+/* Selet button for dialogs */
 "BasicLanguage[1225]" = "Select";
 
-/* /tage/ command. */
+/* /tage/ command */
 "BasicLanguage[1226]" = "\002Time Since First Commit:\002 %@";
 
-/* Set user cloak prompt. */
+/* Set user cloak prompt */
 "BasicLanguage[1228][1]" = "Set User vHost";
 "BasicLanguage[1228][2]" = "Please enter desired vHost. (e.g. apple.vhost)";
 
-/* Bad certificate prompt. */
+/* Bad certificate prompt */
 "BasicLanguage[1229][1]" = "Textual can’t verify the identify of the server “%@”";
 "BasicLanguage[1229][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
 "BasicLanguage[1229][3]" = "The certificate was issued by “%1$@” for “%2$@” located in %3$@, %4$@, %5$@";
@@ -633,58 +633,61 @@
 "BasicLanguage[1232][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
 "BasicLanguage[1232][2]" = "Ban exception in %1$@: %2$@";
 
-/* Connect menu item. */
+/* Connect menu item */
 "BasicLanguage[1233][1]" = "Connect";
 "BasicLanguage[1233][2]" = "Connect using IPv4";
 "BasicLanguage[1233][3]" = "Connect using IPv6";
 
-/* Empty alert sound label. */
+/* Empty alert sound label */
 "BasicLanguage[1234]" = "None";
 
-/* Reserved commands. */
+/* Reserved commands */
 "BasicLanguage[1236][1]" = "Reserved Command";
 "BasicLanguage[1236][2]" = "The command performed (“%@”) is included in a package of downloadable add-ons that is not bundled with Textual out-of-the-box because of restrictions imposed by the Mac App Store.\n\nWould you like to download it?";
 "BasicLanguage[1236][3]" = "Download";
 "BasicLanguage[1236][4]" = "Send Command to Server";
 
-/* Check for other copies of Textual running. */
+/* Check for other copies of Textual running */
 "BasicLanguage[1237][1]" = "More than one copy of Textual is currently in use";
 "BasicLanguage[1237][2]" = "One or more copies of Textual are currently in use on this Mac. As a result, preferences may become out of sync resulting in undefined behavior.\n\nAre you sure that you would like to continue launching this copy of Textual?";
 "BasicLanguage[1237][3]" = "Continue";
 "BasicLanguage[1237][4]" = "Terminate this copy of Textual";
 
-/* Configuration updated for client. */
+/* Configuration updated for client */
 "BasicLanguage[1240][1]" = "Underlying Configuration Changed";
 "BasicLanguage[1240][2]" = "The configuration options for the connection “%@” have changed as a result of an outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Server Properties dialog with the latest version of the configuration options for this connection?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
 "BasicLanguage[1240][3]" = "Load New Configuration";
 "BasicLanguage[1240][4]" = "Cancel";
 
-/* Configuration updated for channel. */
+/* Configuration updated for channel */
 "BasicLanguage[1241][1]" = "Underlying Configuration Changed";
 "BasicLanguage[1241][2]" = "The configuration options for the channel “%@” have changed as a result of an outside sources such as iCloud or importing preferences.\n\nWould you like to populate the Channel Properties dialog with the latest version of the configuration options for this channel?\n\nReloading the configuration will replace any unsaved changes with those from the new configuration.\n\nHowever, if you choose to save the current values, then the saved values will take priority.";
 "BasicLanguage[1241][3]" = "Load New Configuration";
 "BasicLanguage[1241][4]" = "Cancel";
 
-/* Incompatible style warning dialog. */
+/* Incompatible style warning dialog */
 "BasicLanguage[1246][1]" = "Incompatible Style";
 "BasicLanguage[1246][2]" = "The style named “%1$@” is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";
 "BasicLanguage[1246][3]" = "OK";
 
-/* Certificate conext command dialog. */
+/* Certificate conext command dialog */
 "BasicLanguage[1247][1]" = "Textual is using an encrypted connection to “%@“";
 "BasicLanguage[1247][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
 "BasicLanguage[1247][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
 
-/* Connection protocol and cipher suite. */
+/* Connection protocol and cipher suite */
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
+/* NSOpenPanel error messages */
+"BasicLanguage[1251][1]" = "Cannot select iCloud Drive as a location to save data";
+"BasicLanguage[1251][2]" = "Please choose a location other than iCloud Drive to save data to.";
 
 
 
 
 
 
-/* Next unusued key: 1250 */
+/* Next unusued key: 1252 */
 
 
