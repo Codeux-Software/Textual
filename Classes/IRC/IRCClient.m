@@ -5243,18 +5243,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if ([m isPrintOnlyMessage] == NO) {
 			NSArray *info = [[c modeInfo] update:modestr];
 
-			BOOL performWho = NO;
-
 			for (IRCModeInfo *h in info) {
 				[c changeMember:[h modeParamater] mode:[h modeToken] value:[h modeIsSet]];
-
-				if ([h modeIsSet] == NO && [self isCapacityEnabled:ClientIRCv3SupportedCapacityMultiPreifx] == NO) {
-					performWho = YES;
-				}
-			}
-
-			if (performWho) {
-				[self send:IRCPrivateCommandIndex("who"), [c name], nil, nil];
 			}
 		}
 

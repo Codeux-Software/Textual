@@ -72,9 +72,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		 _modeInfo = [IRCChannelMode new];
-		[_modeInfo setSupportInfo:[_associatedClient supportInfo]];
-		
 		_memberListStandardSortedContainer = [NSMutableArray array];
 		_memberListLengthSortedContainer = [NSMutableArray array];
 	}
@@ -272,8 +269,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	_status = newStatus;
 
     _topic = nil;
-	
-	[_modeInfo clear];
+
+	_modeInfo = nil;
 
 	[self clearMembers];
 	[self reloadDataForTableView];
@@ -285,6 +282,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 	if ([self isChannel]) {
 		[_associatedClient postEventToViewController:@"channelJoined" forChannel:self];
+
+	     _modeInfo = [IRCChannelMode new];
+		[_modeInfo setSupportInfo:[_associatedClient supportInfo]];
     }
 
 	if ([self isPrivateMessage]) {
@@ -296,6 +296,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	_channelJoinTime = [NSDate unixTime];
+
 }
 
 - (void)deactivate
