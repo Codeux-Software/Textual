@@ -987,6 +987,18 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		attr_t t = ((attr_t *)_effectAttributes)[start];
 
+		BOOL attributesIncludeURL = ((t & _rendererURLAttribute) == _rendererURLAttribute);
+
+		if (_rendererIsRenderingLinkIndex == NSNotFound) {
+			if (attributesIncludeURL) {
+				_rendererIsRenderingLinkIndex = start;
+			}
+		} else {
+			if (attributesIncludeURL == NO) {
+				_rendererIsRenderingLinkIndex = NSNotFound;
+			}
+		}
+
 		id renderedSegment = [self renderRange:_body attributes:t start:start length:n];
 
 		if (renderedSegment) {
@@ -1012,18 +1024,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		NSAssertReturnLoopBreak(n > 0);
 
 		attr_t t = ((attr_t *)_effectAttributes)[start];
-
-		BOOL attributesIncludeURL = (t & _rendererURLAttribute);
-
-		if (_rendererIsRenderingLinkIndex == NSNotFound) {
-			if (attributesIncludeURL) {
-				_rendererIsRenderingLinkIndex = start;
-			}
-		} else {
-			if (attributesIncludeURL == NO) {
-				_rendererIsRenderingLinkIndex = NSNotFound;
-			}
-		}
 
 		result = [self renderAttributedRange:result attributes:t start:start length:n];
 
