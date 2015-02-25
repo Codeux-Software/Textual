@@ -115,7 +115,7 @@
 
 - (void)mainWindowSelectionDidChange
 {
-	[self forceAllChildrenElementsOfMenuToValidate:[self.channelMenuItem submenu] recursively:NO];
+	[self forceAllChildrenElementsOfMenuToValidate:[self.channelMenuItem submenu] recursively:YES];
 }
 
 - (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
