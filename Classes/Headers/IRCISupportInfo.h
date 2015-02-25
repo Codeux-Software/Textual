@@ -54,7 +54,8 @@
 
 - (void)update:(NSString *)configData client:(IRCClient *)client;
 
-- (NSArray *)buildConfigurationRepresentation;
+- (NSString *)buildConfigurationRepresentationForLastEntry;
+- (NSString *)buildConfigurationRepresentationForEntry:(NSDictionary *)entries;
 
 - (NSString *)userModePrefixSymbol:(NSString *)mode;
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode;

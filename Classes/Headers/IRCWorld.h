@@ -74,7 +74,7 @@ TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; 
 - (void)markAllAsRead;
 - (void)markAllAsRead:(IRCClient *)limitedClient;
 
-- (void)markAllScrollbacks; // Only marks if auto marking of scrollback is enabled.
+- (void)markAllScrollbacks TEXTUAL_DEPRECATED("Method is no longer used by Textual");
 
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;
@@ -84,12 +84,15 @@ TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; 
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s;
-- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item; // I honestly could not think of a better name for it. Don't dog me over it. 
+- (IRCTreeItem *)findItemFromPasteboardString:(NSString *)s;
+- (NSString *)pasteboardStringForItem:(IRCTreeItem *)item;
+
+- (IRCTreeItem *)findItemFromInfo:(NSString *)s TEXTUAL_DEPRECATED("Use -findItemFromPasteboardString instead");
+- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item TEXTUAL_DEPRECATED("Use -pasteboardStringForItem: instead");
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload;
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;
-- (IRCChannel *)createPrivateMessage:(NSString *)nick client:(IRCClient *)client;
+- (IRCChannel *)createPrivateMessage:(NSString *)nickname client:(IRCClient *)client;
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel;
 

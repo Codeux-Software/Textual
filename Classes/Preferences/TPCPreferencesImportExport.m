@@ -195,7 +195,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 			NSObjectIsKindOfClassAssert(obj, NSDictionary);
 			
 			/* Start import. */
-			NSArray *clientList = obj[@"clients"];
+			NSArray *clientList = obj[IRCWorldControllerClientListDefaultsStorageKey];
 			
 			NSObjectIsEmptyAssert(clientList);
 			

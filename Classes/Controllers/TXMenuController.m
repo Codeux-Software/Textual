@@ -680,7 +680,7 @@
 			}
 
 			/* The tag identifies each item. */
-			[newItem setUserInfo:[worldController() findItemFromInfoGeneratedValue:c]];
+			[newItem setUserInfo:[worldController() pasteboardStringForItem:c]];
 			
 			[newItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
 
@@ -697,7 +697,7 @@
 
 - (void)navigateToSpecificChannelInNavigationList:(NSMenuItem *)sender
 {
-	id treeItem = [worldController() findItemFromInfo:[sender userInfo]];
+	id treeItem = [worldController() findItemFromPasteboardString:[sender userInfo]];
 
 	if (treeItem) {
 		[mainWindow() select:treeItem];

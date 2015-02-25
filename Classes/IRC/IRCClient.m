@@ -129,16 +129,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (instancetype)init
 {
-	if ((self = [super init]))
-	{
-		/* ---- */
+	if ((self = [super init])) {
 		self.supportInfo = [IRCISupportInfo new];
-		
-		/* ---- */
+
 		self.connectType = IRCClientConnectNormalMode;
 		self.disconnectType = IRCClientDisconnectNormalMode;
-		
-		/* ---- */
+
 		self.inUserInvokedNamesRequest = NO;
 		self.inUserInvokedWatchRequest = NO;
 		self.inUserInvokedWhoRequest = NO;
@@ -146,12 +142,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.inUserInvokedModeRequest = NO;
 		self.inUserInvokedJoinRequest = NO;
 		self.inUserInvokedWatchRequest = NO;
-		
-		/* ---- */
+
 		self.capacitiesPending = 0;
 		self.capacities = 0;
-		
-		/* ---- */
+
 		self.isAutojoined = NO;
 		self.isAway = NO;
 		self.isConnected = NO;
@@ -162,87 +156,70 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.isQuitting = NO;
 		self.isWaitingForNickServ = NO;
 		self.isZNCBouncerConnection = NO;
-		
-		/* ---- */
+
 		self.autojoinInProgress = NO;
 		self.rawModeEnabled = NO;
 		self.reconnectEnabled = NO;
 		self.serverHasNickServ = NO;
 		self.timeoutWarningShownToUser = NO;
-		
-		/* ---- */
+
 		self.cachedHighlights = @[];
-		
-		/* ---- */
+
 		self.lastSelectedChannel = nil;
 		
 		self.lastWhoRequestChannelListIndex = 0;
-		
-		/* ---- */
+
 		self.lastLagCheck = 0;
-		
-		/* ---- */
+
 		self.cachedLocalHostmask = nil;
 		self.cachedLocalNickname = nil;
-		
-		/* ---- */
+
 		self.tryingNicknameSentNickname = nil;
 		self.tryingNicknameNumber = -1;
-		
-		/* ---- */
+
 		self.channels = [NSMutableArray array];
 		self.commandQueue = [NSMutableArray array];
-		
-		/* ---- */
+
 		self.trackedUsers = [NSMutableDictionary dictionary];
-		
-		/* ---- */
+
 		self.preAwayNickname = nil;
-		
-		/* ---- */
+
 		self.lastMessageReceived = 0;
 		self.lastMessageServerTime = 0;
-		
-		/* ---- */
+
 		self.serverRedirectAddressTemporaryStore = nil;
 		self.serverRedirectPortTemporaryStore = 0;
-		
-		/* ---- */
-		self.reconnectTimer					= [TLOTimer new];
-		self.reconnectTimer.delegate		= self;
-		self.reconnectTimer.reqeatTimer		= NO;
-		self.reconnectTimer.selector		= @selector(onReconnectTimer:);
-		
-		/* ---- */
-		self.retryTimer						= [TLOTimer new];
-		self.retryTimer.delegate			= self;
-		self.retryTimer.reqeatTimer			= NO;
-		self.retryTimer.selector			= @selector(onRetryTimer:);
-		
-		/* ---- */
-		self.commandQueueTimer				= [TLOTimer new];
-		self.commandQueueTimer.delegate		= self;
-		self.commandQueueTimer.reqeatTimer	= NO;
-		self.commandQueueTimer.selector		= @selector(onCommandQueueTimer:);
-		
-		/* ---- */
-		self.pongTimer						= [TLOTimer new];
-		self.pongTimer.delegate				= self;
-		self.pongTimer.reqeatTimer			= YES;
-		self.pongTimer.selector				= @selector(onPongTimer:);
-		
-		/* ---- */
-		self.isonTimer						= [TLOTimer new];
-		self.isonTimer.delegate				= self;
-		self.isonTimer.reqeatTimer			= YES;
-		self.isonTimer.selector				= @selector(onISONTimer:);
-		
-		/* ---- */
+
+		 self.reconnectTimer = [TLOTimer new];
+		[self.reconnectTimer setReqeatTimer:NO];
+		[self.reconnectTimer setDelegate:self];
+		[self.reconnectTimer setSelector:@selector(onReconnectTimer:)];
+
+		 self.retryTimer = [TLOTimer new];
+		[self.retryTimer setReqeatTimer:NO];
+		[self.retryTimer setDelegate:self];
+		[self.retryTimer setSelector:@selector(onRetryTimer:)];
+
+		 self.commandQueueTimer = [TLOTimer new];
+		[self.commandQueueTimer setReqeatTimer:NO];
+		[self.commandQueueTimer setDelegate:self];
+		[self.commandQueueTimer setSelector:@selector(onCommandQueueTimer:)];
+
+		 self.pongTimer = [TLOTimer new];
+		[self.pongTimer setReqeatTimer:YES];
+		[self.pongTimer setDelegate:self];
+		[self.pongTimer setSelector:@selector(onPongTimer:)];
+
+	  	 self.isonTimer	= [TLOTimer new];
+		[self.isonTimer setReqeatTimer:YES];
+		[self.isonTimer setDelegate:self];
+		[self.isonTimer setSelector:@selector(onISONTimer:)];
+
 #ifdef TEXTUAL_TRIAL_BINARY
-		self.trialPeriodTimer				= [TLOTimer new];
-		self.trialPeriodTimer.delegate		= self;
-		self.trialPeriodTimer.reqeatTimer	= NO;
-		self.trialPeriodTimer.selector		= @selector(onTrialPeriodTimer:);
+		 self.trialPeriodTimer = [TLOTimer new];
+		[self.trialPeriodTimer setReqeatTimer:NO];
+		[self.trialPeriodTimer setDelegate:self];
+		[self.trialPeriodTimer setSelector:@selector(onTrialPeriodTimer:)];
 #endif
 	}
 	
@@ -264,15 +241,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)setup:(id)seed
 {
-	if ([seed isKindOfClass:[NSDictionary class]]) {
-		self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
-	} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
-		self.config = seed; // Setter will copy.
-	} else {
-		NSAssert(NO, @"Bad configuration type.");
-	}
+	if (self.config == nil) {
+		if ([seed isKindOfClass:[NSDictionary class]]) {
+			self.config = [[IRCClientConfig alloc] initWithDictionary:seed];
+		} else if ([seed isKindOfClass:[IRCClientConfig class]]) {
+			self.config = seed; // Setter will copy.
+		} else {
+			NSAssert(NO, @"Bad configuration type.");
+		}
 
-	[self resetAllPropertyValues];
+		[self resetAllPropertyValues];
+	}
 }
 
 - (NSString *)description
@@ -283,24 +262,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)updateConfigFromTheCloud:(IRCClientConfig *)seed
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	/* It is important to know this value changed before seed update. */
-	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == seed.excludedFromCloudSyncing);
-	
-	/* Temporary store. */
-	/* The identity certificate cannot be stored in the cloud since it requires to
-	 a reference to a local resource. Therefore, when updating from the cloud, we
-	 take the value stored locally, cache it into a local variable, allow the new
-	 seed to be applied, then apply that value back to the seed. This allows the
-	 user to define certificates on each machine. */
-	NSData *identitySSLCertificateInformation = self.config.identitySSLCertificate;
+	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == [seed excludedFromCloudSyncing]);
+#endif
 
-	/* Seed new configuration. */
-	[self updateConfig:seed withSelectionUpdate:YES];
+	[self updateConfig:seed withSelectionUpdate:YES isImportingFromCloud:YES];
 
-	/* Update new, local seed with cache SSL certificate. */
-	self.config.identitySSLCertificate = identitySSLCertificateInformation;
-	
-	/* Maybe remove this client from deleted list (maybe). */
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (syncToCloudIsSame == NO) {
 			if (self.config.excludedFromCloudSyncing == NO) {
@@ -308,8 +275,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 		}
 	}
-#else
-	[self updateConfig:seed withSelectionUpdate:YES];
 #endif
 }
 
@@ -320,11 +285,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)updateConfig:(IRCClientConfig *)seed withSelectionUpdate:(BOOL)reloadSelection
 {
+	[self updateConfig:seed withSelectionUpdate:reloadSelection isImportingFromCloud:NO];
+}
+
+- (void)updateConfig:(IRCClientConfig *)seed withSelectionUpdate:(BOOL)reloadSelection isImportingFromCloud:(BOOL)importingFromCloud
+{
 	/* Ignore if we have equality. */
-	NSAssertReturn([seed isEqualToClientConfiguration:_config] == NO);
+	NSAssertReturn([seed isEqualToClientConfiguration:self.config] == NO);
 	
 	/* Did the ignore list change at all? */
-	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, seed.ignoreList);
+	BOOL ignoreListIsSame = NSObjectsAreEqual(self.config.ignoreList, [seed ignoreList]);
 	
 	/* Write all channel keychains before copying over new configuration. */
 	for (IRCChannelConfig *i in [seed channelList]) {
@@ -332,14 +302,22 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 	
 	/* Populate new seed. */
-	self.config = seed; // Setter handles copy.
+	/* When dealing with an IRCClientConfig instance from iCloud, we populate the existing
+	 configuration with its value instead of copying over the new values. There are certain
+	 keys stored in IRCClientConfig that are excluded from iCloud. Therefore, the existing 
+	 values are populated to merge with the existing configuration. */
+	if (importingFromCloud) {
+		[self.config populateDictionaryValue:[seed dictionaryValue]];
+	} else {
+		 self.config = seed; // Setter handles copy.
+	}
 
 	/* Begin normal operations. */
 	/* List of channels that are in current configuration. */
 	NSArray *channelConfigurations = self.config.channelList;
 	
 	/* List of channels actively particpating with this client. */
-	NSMutableArray *originalChannelList;
+	NSMutableArray *originalChannelList = nil;
 	
 	@synchronized(self.channels) {
 		originalChannelList = [NSMutableArray arrayWithArray:self.channels];
@@ -463,12 +441,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return [self.config copyWithoutPrivateMessages];
 }
 
-- (NSMutableDictionary *)dictionaryValue
+- (NSDictionary *)dictionaryValue
 {
 	return [self.config dictionaryValue:NO];
 }
 
-- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary
+- (NSDictionary *)dictionaryValue:(BOOL)isCloudDictionary
 {
 	return [self.config dictionaryValue:isCloudDictionary];
 }
@@ -588,7 +566,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)name
 {
-	return self.config.clientName;
+	return self.config.connectionName;
 }
 
 - (NSString *)networkName
@@ -599,7 +577,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (NSString *)altNetworkName
 {
 	if (NSObjectIsEmpty(self.supportInfo.networkName)) {
-		return self.config.clientName;
+		return self.config.connectionName;
 	} else {
 		return self.supportInfo.networkName;
 	}
@@ -652,7 +630,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (BOOL)connectionIsSecured
 {
 	if (self.socket) {
-		return self.socket.connectionUsesSSL;
+		return self.socket.connectionPrefersSecuredConnection;
 	} else {
 		return NO;
 	}
@@ -879,7 +857,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)label
 {
-	return [self.config.clientName uppercaseString];
+	return [self.config.connectionName uppercaseString];
 }
 
 #pragma mark -
@@ -1052,29 +1030,32 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 /* Spoken events are only called from within the following calls so we are going to 
  shove the key value matching in here to make it all in one place for management. */
-
 - (NSInteger)localizedSpokenMessageForEvent:(TXNotificationType)event
 {
-	switch (event) {
-		case TXNotificationChannelMessageType:						{ return (1043);		}
-		case TXNotificationChannelNoticeType:						{ return (1044);		}
-		case TXNotificationConnectType:								{ return (1051);		}
-		case TXNotificationDisconnectType:							{ return (1052);		}
-		case TXNotificationInviteType:								{ return (1046);		}
-		case TXNotificationKickType:								{ return (1047);		}
-		case TXNotificationNewPrivateMessageType:					{ return (1048);		}
-		case TXNotificationPrivateMessageType:						{ return (1049);		}
-		case TXNotificationPrivateNoticeType:						{ return (1050);		}
-		case TXNotificationHighlightType:							{ return (1045);		}
+#define _dc(event, id)			case (event): {return ((id)); }
 
-		case TXNotificationFileTransferSendSuccessfulType:			{ return (1053);		}
-		case TXNotificationFileTransferReceiveSuccessfulType:		{ return (1054);		}
-		case TXNotificationFileTransferSendFailedType:				{ return (1055);		}
-		case TXNotificationFileTransferReceiveFailedType:			{ return (1056);		}
-		case TXNotificationFileTransferReceiveRequestedType:		{ return (1057);		}
-	
-		default: { return 0; }
+	switch (event) {
+		_dc(TXNotificationChannelMessageType, 1043)
+		_dc(TXNotificationChannelNoticeType, 1044)
+		_dc(TXNotificationConnectType, 1051)
+		_dc(TXNotificationDisconnectType, 1052)
+		_dc(TXNotificationInviteType, 1046)
+		_dc(TXNotificationKickType, 1047)
+		_dc(TXNotificationNewPrivateMessageType, 1048)
+		_dc(TXNotificationPrivateMessageType, 1049)
+		_dc(TXNotificationPrivateNoticeType, 1050)
+		_dc(TXNotificationHighlightType, 1045)
+
+		_dc(TXNotificationFileTransferSendSuccessfulType, 1053)
+		_dc(TXNotificationFileTransferReceiveSuccessfulType, 1054)
+		_dc(TXNotificationFileTransferSendFailedType, 1055)
+		_dc(TXNotificationFileTransferReceiveFailedType, 1056)
+		_dc(TXNotificationFileTransferReceiveRequestedType, 1057)
+
+		default: { break; }
 	}
+
+#undef _dc
 
 	return 0;
 }
@@ -2510,19 +2491,18 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				IRCAddressBookEntry *g = [IRCAddressBookEntry new];
 				
 				[g setHostmask:[user banMask]];
-				
-				[g setIgnoreCTCP:YES];
-				[g setIgnoreJPQE:YES];
-				[g setIgnoreNotices:YES];
-				[g setIgnorePrivateHighlights:YES];
-				[g setIgnorePrivateMessages:YES];
-				[g setIgnorePublicHighlights:YES];
-				[g setIgnorePublicMessages:YES];
+
+				[g setIgnoreClientToClientProtocol:YES];
+				[g setIgnoreGeneralEventMessages:YES];
 				[g setIgnoreFileTransferRequests:YES];
-				
-				[g setHideMessagesContainingMatch:NO];
-				
-				[g setNotifyJoins:NO];
+				[g setIgnoreMessagesContainingMatchh:NO];
+				[g setIgnoreNoticeMessages:YES];
+				[g setIgnorePrivateMessageHighlights:YES];
+				[g setIgnorePrivateMessages:YES];
+				[g setIgnorePublicMessageHighlights:YES];
+				[g setIgnorePublicMessages:YES];
+
+				[g setTrackUserActivity:NO];
 				
 				if (isIgnoreCommand) {
 					BOOL found = NO;
@@ -3815,13 +3795,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self.supportInfo reset];
 
 	NSString *username = self.config.username;
-	NSString *realname = self.config.realname;
+	NSString *realname = self.config.realName;
 	
 	NSString *modeParam = @"0";
 	
 	NSString *serverPassword = self.config.serverPassword;
 
-	if (self.config.invisibleMode) {
+	if (self.config.setInvisibleModeOnConnect) {
 		modeParam = @"8";
 	}
 
@@ -4229,15 +4209,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* Ignore dictionary. */
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-														withMatches:@[	@"ignoreHighlights",
-																		@"ignorePMHighlights",
-																		@"ignoreNotices",
-																		@"ignorePublicMsg",
-																		@"ignorePrivateMsg"	]];
+														withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
+																		IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
+																		IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey,
+																		IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
+																		IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
 
 
 	/* Ignore highlights? */
-	if ([ignoreChecks ignorePublicHighlights] == YES) {
+	if ([ignoreChecks ignorePublicMessageHighlights] == YES) {
 		if (type == TVCLogLineActionType) {
 			type = TVCLogLineActionNoHighlightType;
 		} else if (type == TVCLogLinePrivateMessageType) {
@@ -4248,7 +4228,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	/* Is the target a channel? */
 	if ([target isChannelName:self]) {
 		/* Ignore message? */
-		if ([ignoreChecks ignoreNotices] && type == TVCLogLineNoticeType) {
+		if ([ignoreChecks ignoreNoticeMessages] && type == TVCLogLineNoticeType) {
 			return;
 		} else if ([ignoreChecks ignorePublicMessages]) {
 			return;
@@ -4342,7 +4322,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			[self print:nil type:type nickname:nil messageBody:text receivedAt:[m receivedAt] command:[m command]];
 		} else {
 			/* Ignore message? */
-			if ([ignoreChecks ignoreNotices] && type == TVCLogLineNoticeType) {
+			if ([ignoreChecks ignoreNoticeMessages] && type == TVCLogLineNoticeType) {
 				return;
 			} else if ([ignoreChecks ignorePrivateMessages]) {
 				return;
@@ -4616,10 +4596,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSMutableString *s = [text mutableCopy];
 
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-															 withMatches:@[@"ignoreCTCP",
-																		   @"ignoreFileTransferRequests"]];
+															 withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey,
+																		   IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey]];
 
-	NSAssertReturn([ignoreChecks ignoreCTCP] == NO);
+	NSAssertReturn([ignoreChecks ignoreClientToClientProtocol] == NO);
 	
 	NSString *sendern = [m senderNickname];
 	
@@ -4728,9 +4708,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSMutableString *s = [text mutableCopy];
 
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-															 withMatches:@[@"ignoreCTCP"]];
+															 withMatches:@[IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey]];
 
-	NSAssertReturn([ignoreChecks ignoreCTCP] == NO);
+	NSAssertReturn([ignoreChecks ignoreClientToClientProtocol] == NO);
 
 	NSString *sendern = [m senderNickname];
 	
@@ -4834,14 +4814,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-															 withMatches:@[@"ignoreJPQE",
-																		   @"notifyJoins"]];
+															 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+																		   IRCAddressBookDictionaryValueTrackUserActivityKey]];
 	
 	if ([m isPrintOnlyMessage] == NO) {
 		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 	}
 
-	if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
+	if (([ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages) && myself == NO) {
 		return;
 	}
 
@@ -4900,9 +4880,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	if ([TPCPreferences showJoinLeave] || myself) {
 		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-																 withMatches:@[@"ignoreJPQE"]];
+																 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
-		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
+		if (([ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages) && myself == NO) {
 			return;
 		}
 
@@ -4965,9 +4945,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	if ([TPCPreferences showJoinLeave] || myself) {
 		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-																 withMatches:@[@"ignoreJPQE"]];
+																 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
-		if (([ignoreChecks ignoreJPQE] || c.config.ignoreJPQActivity) && myself == NO) {
+		if (([ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages) && myself == NO) {
 			return;
 		}
 
@@ -4997,7 +4977,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	BOOL myself = [sendern isEqualIgnoringCase:[self localNickname]];
 
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-															 withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
+															 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+																		   IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 	/* When m.isPrintOnlyMessage is set for quit messages the order in which
 	 the paramas is handled is a little different. Index 0 is the target channel
@@ -5026,7 +5007,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		text = BLS(1150, text, [comment stringByAppendingIRCFormattingStop]);
 	}
 	
-#define	_showQuitInChannel		([TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO)
+#define	_showQuitInChannel		([TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)
 
 	/* Is this a targetted print message? */
 	if ([m isPrintOnlyMessage]) {
@@ -5143,14 +5124,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if ([m isPrintOnlyMessage] == NO) {
 			/* Check new nickname in address book user check. */
 			ignoreChecks = [self checkIgnoreAgainstHostmask:[newNick stringByAppendingString:@"!-@-"]
-												withMatches:@[@"notifyJoins"]];
+												withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 		}
 
 		/* Check old nickname in address book user check. */
 		ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-											withMatches:@[@"ignoreJPQE", @"notifyJoins"]];
+											withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey,
+														  IRCAddressBookDictionaryValueTrackUserActivityKey]];
 
 		if ([m isPrintOnlyMessage] == NO) {
 			[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
@@ -5164,7 +5146,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if (c) {
 			NSString *text = nil;
 			
-			if (myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO) {
+			if (myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO) {
 				text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
 
 			}
@@ -5194,7 +5176,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if ([c memberExists:oldNick]) {
 				NSString *text = nil;
 				
-				if ((myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreJPQE] == NO && c.config.ignoreJPQActivity == NO)) {
+				if ((myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)) {
 					text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
 				}
 				
@@ -5276,7 +5258,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 		}
 
-		if ([TPCPreferences showJoinLeave] && c.config.ignoreJPQActivity == NO) {
+		if ([TPCPreferences showJoinLeave] && c.config.ignoreGeneralEventMessages == NO) {
 			[self print:c
 				   type:TVCLogLineModeType
 			   nickname:nil
@@ -5970,9 +5952,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		{
             [self.supportInfo update:[m sequence:1] client:self];
             
-			 NSArray *configRep = [self.supportInfo buildConfigurationRepresentation];
+			NSString *configRep = [self.supportInfo buildConfigurationRepresentationForLastEntry];
 
-			[self printDebugInformationToConsole:[configRep lastObject] forCommand:[m command]];
+			[self printDebugInformationToConsole:configRep forCommand:[m command]];
 
 			[mainWindow() reloadTreeGroup:self];
 
@@ -7152,9 +7134,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				hostmaskwon = [NSString stringWithFormat:@"%@@%@", username, address];
 				hostmaskwnn = [NSString stringWithFormat:@"%@!%@", nickname, hostmaskwon];
 
-				ignoreChecks = [self checkIgnoreAgainstHostmask:hostmaskwnn withMatches:@[@"notifyJoins"]];
+				ignoreChecks = [self checkIgnoreAgainstHostmask:hostmaskwnn withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 			} else {
-				ignoreChecks = [self checkIgnoreAgainstHostmask:[nickname stringByAppendingString:@"!-@-"] withMatches:@[@"notifyJoins"]];
+				ignoreChecks = [self checkIgnoreAgainstHostmask:[nickname stringByAppendingString:@"!-@-"] withMatches:@[IRCAddressBookDictionaryValueTrackUserActivityKey]];
 			}
 
 			/* We only continue if there is an actual address book match for the nickname. */
@@ -7968,12 +7950,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.socket.serverPort = socketPort;
 
 	self.socket.connectionPrefersIPv6 = preferIPv6;
-	self.socket.connectionUsesSSL = self.config.connectionUsesSSL;
+	self.socket.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
+
+	self.socket.proxyType = self.config.proxyType;
 
 	if (self.config.proxyType == IRCConnectionSocketSystemSocksProxyType)
 	{
-		self.socket.connectionUsesSystemSocks = YES;
-
 		[self printDebugInformationToConsole:BLS(1142, socketAddress, socketPort)];
 	}
 	else if (self.config.proxyType == IRCConnectionSocketSocks4ProxyType ||
@@ -7981,13 +7963,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			 self.config.proxyType == IRCConnectionSocketHTTPProxyType ||
 			 self.config.proxyType == IRCConnectionSocketHTTPSProxyType)
 	{
-		self.socket.connectionUsesNormalSocks = YES;
-		
 		self.socket.proxyPort = self.config.proxyPort;
 		self.socket.proxyAddress = self.config.proxyAddress;
 		self.socket.proxyPassword = self.config.proxyPassword;
 		self.socket.proxyUsername = self.config.proxyUsername;
-		self.socket.proxySocksVersion = self.config.proxyType;
 
 		[self printDebugInformationToConsole:BLS(1141, socketAddress, socketPort, self.config.proxyAddress, self.config.proxyPort)];
 	}
@@ -7996,7 +7975,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self printDebugInformationToConsole:BLS(1140, socketAddress, socketPort)];
 	}
 
-	self.socket.connectionUsesFloodControl = self.config.outgoingFloodControl;
+	self.socket.connectionUsesOutgoingFloodControl = self.config.isOutgoingFloodControlEnabled;
 
 	self.socket.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
 	self.socket.floodControlMaximumMessageCount = self.config.floodControlMaximumMessages;
@@ -8358,7 +8337,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)presentCertificateTrustInformation
 {
 	if (	 self.socket.isConnected) {
-		if ( self.socket.connectionUsesSSL) {
+		if ( self.socket.connectionPrefersSecuredConnection) {
 			[self.socket openSSLCertificateTrustDialog];
 		}
 	}
@@ -8744,7 +8723,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 							  nickname:(NSString *)nick
 							  langitem:(NSInteger)localKey
 {
-	if ([ignoreItem notifyJoins]) {
+	if ([ignoreItem trackUserActivity]) {
 		NSString *text = BLS(localKey, nick);
 
 		[self notifyEvent:TXNotificationAddressBookMatchType lineType:TVCLogLineNoticeType target:nil nickname:nick text:text];
@@ -8792,7 +8771,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* First we go through all the new entries fed to this method and add them. */
 	for (IRCAddressBookEntry *g in ignores) {
-		if ([g notifyJoins]) {
+		if ([g trackUserActivity]) {
 			NSString *lname = [g trackingNickname];
 
 			if ([lname isHostmaskNickname]) {

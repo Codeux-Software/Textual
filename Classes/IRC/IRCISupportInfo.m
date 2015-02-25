@@ -55,12 +55,6 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 - (void)reset
 {
-    /* Our configuration cache is not used very much throughout Textual, but having it
-     part of the source does make future expansion that may require access to it possible. */
-    /* Each item of the configuration cache is a dictionary containing key and values for 
-     each configuration that was feeded for the line that was parsed then inserted. If a 
-     configuration key does not have an actual value, then it is defined as a BOOL, YES. */
-
     self.cachedConfiguration = @[];
     
 	self.networkAddress = nil;
@@ -88,15 +82,17 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 - (void)update:(NSString *)configData client:(IRCClient *)client
 {
-	if ([configData hasSuffix:IRCISupportRawSuffix]) {
-		configData = [configData substringToIndex:([configData length] - [IRCISupportRawSuffix length])];
+	NSString *configDataString = configData;
+
+	if ([configDataString hasSuffix:IRCISupportRawSuffix]) {
+		 configDataString = [configDataString substringToIndex:([configData length] - [IRCISupportRawSuffix length])];
 	}
 
-	NSObjectIsEmptyAssert(configData);
+	NSObjectIsEmptyAssert(configDataString);
 
     NSMutableDictionary *cachedConfig = [NSMutableDictionary dictionary];
 	
-	NSArray *configVariables = [configData split:NSStringWhitespacePlaceholder];
+	NSArray *configVariables = [configDataString split:NSStringWhitespacePlaceholder];
 	
 	for (NSString *cvar in configVariables) {
 		NSString *vakey = cvar;
@@ -154,40 +150,43 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
     self.cachedConfiguration = [self.cachedConfiguration arrayByAddingObject:cachedConfig];
 }
 
-- (NSArray *)buildConfigurationRepresentation
+- (NSString *)buildConfigurationRepresentationForEntry:(NSDictionary *)entries
 {
-    /* This takes our cached configuration data and builds it into what it would look like if we
-      were to receive an actual 005. The only difference is this method formats each token that
-      is in our configuration cache to make them easier to see. We use bold for the tokens. This
-      is pretty much only used in developer mode, but it could have other uses? */
+	/* This takes our cached configuration data and builds it into what it would look like if we
+	 were to receive an actual 005. The only difference is this method formats each token that
+	 is in our configuration cache to make them easier to see. We use bold for the tokens. This
+	 is pretty much only used in developer mode, but it could have other uses? */
 
-    NSArray *resultArray = @[];
+	PointerIsEmptyAssertReturn(entries, nil);
 
-    for (NSDictionary *cachedConfig in self.cachedConfiguration) {
-        NSMutableString *cacheString = [NSMutableString string];
+	NSMutableString *cacheString = [NSMutableString string];
 
-        NSArray *sortedKeys = [cachedConfig sortedDictionaryKeys];
+	NSArray *sortedKeys = [entries sortedDictionaryKeys];
 
-        for (NSString *configToken in sortedKeys) {
-            /* Does it have value or is it empty? */
+	for (NSString *configToken in sortedKeys) {
+		id objectValue = entries[configToken];
 
-            id objectValue = cachedConfig[configToken];
+		if ([objectValue isKindOfClass:[NSString class]]) {
+			[cacheString appendFormat:@"\002%@\002=%@ ", configToken, objectValue];
+		} else {
+			[cacheString appendFormat:@"\002%@\002 ", configToken];
+		}
+	}
 
-            if ([objectValue isKindOfClass:[NSString class]]) {
-                [cacheString appendFormat:@"\002%@\002=%@ ", configToken, objectValue];
-            } else {
-                [cacheString appendFormat:@"\002%@\002 ", configToken];
-            }
-        }
+	if ([cacheString length] == 0) {
+		return nil;
+	} else {
+		[cacheString appendString:IRCISupportRawSuffix];
 
-        NSObjectIsEmptyAssertLoopContinue(cacheString);
+		return [cacheString copy];
+	}
+}
 
-        [cacheString appendString:IRCISupportRawSuffix];
+- (NSString *)buildConfigurationRepresentationForLastEntry
+{
+	NSDictionary *entries = [self.cachedConfiguration lastObject];
 
-        resultArray = [resultArray arrayByAddingObject:cacheString];
-    }
-
-    return resultArray;
+	return [self buildConfigurationRepresentationForEntry:entries];
 }
 
 - (NSArray *)parseMode:(NSString *)modeString
@@ -243,9 +242,9 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	if ([value contains:@"("] && [value contains:@")"]) {
 		NSInteger endSignPos = [value stringPosition:@")"];
 		
-		NSString *nodes;
-		NSString *chars;
-		
+		NSString *nodes = nil;
+		NSString *chars = nil;
+
 		nodes = [value substringToIndex:endSignPos];
 		nodes = [nodes substringFromIndex:1];
 		
@@ -321,7 +320,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 - (NSString *)userModePrefixSymbol:(NSString *)mode
 {
-	return (self.userModePrefixes)[mode];
+	return self.userModePrefixes[mode];
 }
 
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode
