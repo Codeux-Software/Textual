@@ -54,7 +54,7 @@
 
 - (instancetype)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		self.fileTransfers = [NSMutableArray array];
 		
 		[RZMainBundle() loadNibNamed:@"TDCFileTransferDialog" owner:self topLevelObjects:nil];
@@ -351,8 +351,6 @@
 			}
 			
 			return NO;
-			
-			break;
 		}
 		case 3003: // Stop Download
 		{
@@ -371,14 +369,10 @@
 			}
 			
 			return NO;
-			
-			break;
 		}
 		case 3004: // Remove Item
 		{
 			return YES;
-			
-			break;
 		}
 		case 3005: // Open File
 		{
@@ -391,8 +385,6 @@
 			}
 			
 			return NO;
-			
-			break;
 		}
 		case 3006: // Reveal In Finder
 		{
@@ -405,8 +397,6 @@
 			}
 			
 			return NO;
-			
-			break;
 		}
 	}
 	

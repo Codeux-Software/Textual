@@ -113,8 +113,6 @@
 			}
 			
 			return YES;
-			
-			break;
 		}
 		case 95002:
 		{
@@ -129,8 +127,6 @@
 			[item setState:italicText];
 			
 			return YES;
-			
-			break;
 		}
 		case 95003:
 		{
@@ -145,8 +141,6 @@
 			[item setState:underlineText];
 			
 			return YES;
-			
-			break;
 		}
 		default:
 		{

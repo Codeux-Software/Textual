@@ -98,7 +98,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	return [self valueForHashedKey:hashedKey actualKey:NULL];
 }
 
-- (id)valueForHashedKey:(NSString *)key actualKey:(NSString **)realKeyValue /* @private */
+- (id)valueForHashedKey:(NSString *)key actualKey:(NSString * __autoreleasing *)realKeyValue /* @private */
 {
 	/* Get initial value. */
 	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];

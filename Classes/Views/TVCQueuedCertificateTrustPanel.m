@@ -55,7 +55,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		_queuedEntries = [NSMutableArray array];
+		self.queuedEntries = [NSMutableArray array];
 		
 		return self;
 	}
@@ -84,10 +84,10 @@
 
 	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy], socket];
 	
-	@synchronized(_queuedEntries) {
-		[_queuedEntries addObject:newEntry];
+	@synchronized(self.queuedEntries) {
+		[self.queuedEntries addObject:newEntry];
 
-		if ([_queuedEntries count] == 1) {
+		if ([self.queuedEntries count] == 1) {
 			[self presentNextQueuedEntry];
 		}
 	}
@@ -95,24 +95,24 @@
 
 - (void)dequeueEntryForSocket:(id)socket
 {
-	if (_activeSocket) {
-		if (_activeSocket == socket) {
-			if (_currentPanel) {
-				if ([_currentPanel respondsToSelector:@selector(_dismissWithCode:)]) {
+	if (self.activeSocket) {
+		if (self.activeSocket == socket) {
+			if (self.currentPanel) {
+				if ([self.currentPanel respondsToSelector:@selector(_dismissWithCode:)]) {
 					[self setDoNotInvokeCompletionBlockNextPass:YES];
 
-					(void)objc_msgSend(_currentPanel, @selector(_dismissWithCode:), NSModalResponseCancel);
+					(void)objc_msgSend(self.currentPanel, @selector(_dismissWithCode:), NSModalResponseCancel);
 				}
 			}
 		} else {
-			@synchronized(_queuedEntries) {
-				NSArray *_entries = [_queuedEntries copy];
+			@synchronized(self.queuedEntries) {
+				NSArray *_entries = [self.queuedEntries copy];
 
 				[_entries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 					id _socket = obj[2];
 
 					if (_socket == socket) {
-						[_queuedEntries removeObjectAtIndex:idx];
+						[self.queuedEntries removeObjectAtIndex:idx];
 
 						*stop = YES;
 					}
@@ -127,12 +127,12 @@
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		/* Gather information. */
 		/* The oldest entry will be at index 0. */
-		NSArray *contextInfo = _queuedEntries[0];
+		NSArray *contextInfo = self.queuedEntries[0];
 
 		[self setActiveSocket:contextInfo[2]];
 
 		/* Build panel. */
-		NSString *certificateHost = [_activeSocket sslCertificateTrustPolicyName];
+		NSString *certificateHost = [self.activeSocket sslCertificateTrustPolicyName];
 
 #if _descriptionIncludesAdditionalInformation == 1
 		NSString *ownershipInformation = [_activeSocket sslCertificateLocalizedOwnershipInformation];
@@ -149,14 +149,14 @@
 		NSString *description = TXTLS(@"BasicLanguage[1229][2]", certificateHost);
 #endif
 
-		 _currentPanel = [SFCertificateTrustPanel new];
+		 self.currentPanel = [SFCertificateTrustPanel new];
 		
-		[_currentPanel setAlternateButtonTitle:BLS(1009)];
+		[self.currentPanel setAlternateButtonTitle:BLS(1009)];
 		
-		[_currentPanel setInformativeText:description];
+		[self.currentPanel setInformativeText:description];
 		
 		/* Begin sheet. */
-		[_currentPanel beginSheetForWindow:nil
+		[self.currentPanel beginSheetForWindow:nil
 							 modalDelegate:self
 							didEndSelector:@selector(_certificateSheetDidEnd_stage1:returnCode:contextInfo:)
 							   contextInfo:(__bridge void *)(contextInfo)
@@ -175,10 +175,12 @@
 - (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(NSArray *)contextInfo
 {
 	/* Inform callback of result. */
-	if (_doNotInvokeCompletionBlockNextPass == NO) {
+	if (self.doNotInvokeCompletionBlockNextPass == NO) {
 		BOOL isTrusted = (returnCode == NSModalResponseOK);
 
 		((TVCQueuedCertificateTrustPanelCompletionBlock)contextInfo[1])(isTrusted); // Perform the completion block
+	} else {
+		self.doNotInvokeCompletionBlockNextPass = NO;
 	}
 
 	[self setCurrentPanel:nil];
@@ -187,12 +189,12 @@
 
 	[self setDoNotInvokeCompletionBlockNextPass:NO];
 
-	@synchronized(_queuedEntries) {
+	@synchronized(self.queuedEntries) {
 		/* Remove entry. */
-		[_queuedEntries removeObjectAtIndex:0];
+		[self.queuedEntries removeObjectAtIndex:0];
 
 		/* Maybe show next window. */
-		if ([_queuedEntries count] > 0) {
+		if ([self.queuedEntries count] > 0) {
 			[self presentNextQueuedEntry];
 		}
 	}

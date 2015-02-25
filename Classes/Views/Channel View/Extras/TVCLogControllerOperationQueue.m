@@ -55,7 +55,7 @@
 
 - (instancetype)init
 {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		[self setName:@"TVCLogControllerOperationQueue"];
 		
 		[self setMaxConcurrentOperationCount:6];

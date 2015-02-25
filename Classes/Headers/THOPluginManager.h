@@ -1,4 +1,4 @@
-;/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -50,8 +50,6 @@
 
 /* Information about loaded plugins. */
 @property (readonly, copy) NSArray *allLoadedExtensions;
-
-@property (readonly, copy) NSArray *dangerousCommandNames;
 
 @property (readonly, copy) NSArray *supportedUserInputCommands;
 @property (readonly, copy) NSArray *supportedServerInputCommands;

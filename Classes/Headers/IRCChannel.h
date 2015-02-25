@@ -63,7 +63,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)updateConfig:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
 
-- (NSMutableDictionary *)dictionaryValue;
+- (NSDictionary *)dictionaryValue;
 
 - (void)setName:(NSString *)value;
 

@@ -607,8 +607,6 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 		case TXNotificationFileTransferSendFailedType:			{ return @"NotificationType -> Failed File Transfer (Sending)";				}
 		case TXNotificationFileTransferReceiveFailedType:		{ return @"NotificationType -> Failed File Transfer (Receiving)";			}
 		case TXNotificationFileTransferReceiveRequestedType:	{ return @"NotificationType -> File Transfer Request";						}
-			
-		default: { return nil; }
 	}
 
 	return nil;

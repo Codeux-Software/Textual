@@ -61,7 +61,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		_dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);
+		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);
 
 		return self;
 	}
@@ -71,8 +71,8 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)dealloc
 {
-	if (_dispatchQueue) {
-		_dispatchQueue = NULL;
+	if (self.dispatchQueue) {
+		self.dispatchQueue = NULL;
 	}
 }
 
@@ -81,8 +81,8 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)loadPlugins
 {
-	XRPerformBlockAsynchronouslyOnQueue(_dispatchQueue, ^{
-		if (_allLoadedBundles) {
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+		if (self.allLoadedBundles) {
 			NSAssert(NO, @"-loadPlugins called more than one time.");
 		}
 
@@ -136,8 +136,8 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)unloadPlugins
 {
-	XRPerformBlockSynchronouslyOnQueue(_dispatchQueue, ^{
-		for (THOPluginItem *plugin in _allLoadedPlugins) {
+	XRPerformBlockSynchronouslyOnQueue(self.dispatchQueue, ^{
+		for (THOPluginItem *plugin in self.allLoadedPlugins) {
 			[plugin sendDealloc];
 		}
 
@@ -243,7 +243,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 }
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command
-						   scriptPath:(NSString **)scriptPath
+						   scriptPath:(NSString *__autoreleasing *)scriptPath
 						   isReserved:(BOOL *)isReserved
 							 isScript:(BOOL *)isScript
 						  isExtension:(BOOL *)isExtension
@@ -325,7 +325,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	NSMutableArray *allRules = [NSMutableArray array];
 
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureOutputSuppressionRulesFlag]) {
 			NSArray *srules = [[plugin outputSuppressionRules] arrayForKey:command];
 
@@ -342,7 +342,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag] ||
 			[plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag])
 		{
@@ -357,7 +357,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	NSMutableArray *allCommands = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag] ||
 			[plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag])
 		{
@@ -372,7 +372,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	NSMutableArray *allExtensions = [NSMutableArray array];
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins) {
+	for (THOPluginItem *plugin in self.allLoadedPlugins) {
 		if ([plugin supportsFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag] ||
 			[plugin supportsFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag])
 		{
@@ -387,7 +387,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	NSMutableArray *allPlugins = [NSMutableArray array];
 	
-	for (NSBundle *bundle in _allLoadedBundles) {
+	for (NSBundle *bundle in self.allLoadedBundles) {
 		NSString *path = [bundle bundlePath];
 
 		NSString *bundleName = [path lastPathComponent];
@@ -403,12 +403,12 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
-	XRPerformBlockAsynchronouslyOnQueue(_dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdUpper = [command uppercaseString];
 
 		NSString *cmdLower = [command lowercaseString];
 		
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag] ||
 				[plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag])
@@ -427,7 +427,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message
 {
-	XRPerformBlockAsynchronouslyOnQueue(_dispatchQueue, ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
 		NSString *cmdLower = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
@@ -448,7 +448,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 			@"messageNetwork"		: NSDictionaryNilValue([client networkName])
 		};
 		
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag] ||
 				[plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag])
@@ -472,7 +472,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	id resourceCopy = resource;
 
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureInlineMediaManipulationFlag]) {
             NSString *input = [[plugin primaryClass] processInlineMediaContentURL:resourceCopy];
@@ -498,7 +498,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 	id inputCopy = input;
 	id commandCopy = command;
 
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureUserInputDataInterceptionFlag]) {
 			inputCopy = [[plugin primaryClass] interceptUserInput:inputCopy command:commandCopy];
@@ -516,7 +516,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 {
 	IRCMessage *inputCopy = input;
 
-    for (THOPluginItem *plugin in _allLoadedPlugins)
+    for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureServerInputDataInterceptionFlag]) {
 			inputCopy = [[plugin primaryClass] interceptServerInput:inputCopy for:client];
@@ -532,8 +532,8 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload
 {
-	XRPerformBlockAsynchronouslyOnQueue(_dispatchQueue, ^{
-		for (THOPluginItem *plugin in _allLoadedPlugins)
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportedFeatureNewMessagePostedEventFlag]) {
 				[[plugin primaryClass] didPostNewMessageForViewController:logController messageInfo:messageInfo isThemeReload:isThemeReload isHistoryReload:isHistoryReload];
@@ -548,7 +548,7 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 
 	NSString *newMessageCopy = newMessage;
 	
-	for (THOPluginItem *plugin in _allLoadedPlugins)
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportedFeatureWillRenderMessageEventFlag]) {
 			NSString *pluginResult = [[plugin primaryClass] willRenderMessage:newMessageCopy forViewController:viewController lineType:lineType memberType:memberType];

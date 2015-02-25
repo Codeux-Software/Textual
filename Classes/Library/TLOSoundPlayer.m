@@ -98,7 +98,7 @@
 	return nil;
 }
 
-+ (BOOL)doesSoundFileDictionary:(NSDictionary *)fileList containName:(NSString *)name returnedPath:(NSString **)path
++ (BOOL)doesSoundFileDictionary:(NSDictionary *)fileList containName:(NSString *)name returnedPath:(NSString * __autoreleasing *)path
 {
 	/* Scan input and return based on name. */
 	for (NSString *filename in [fileList allKeys])

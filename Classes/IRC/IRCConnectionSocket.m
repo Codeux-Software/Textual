@@ -145,7 +145,7 @@
 #pragma mark -
 #pragma mark Socket Read & Write
 
-- (NSData *)readLine:(NSMutableData **)refString
+- (NSData *)readLine:(NSMutableData * __autoreleasing *)refString
 {
 	NSObjectIsEmptyAssertReturn(*refString, nil);
 	

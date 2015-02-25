@@ -468,24 +468,18 @@
                 NSFont *baseFont = dict[NSFontAttributeName];
 				
                 return [baseFont fontTraitSet:NSBoldFontMask];
-				
-				break;
 			}
 			case IRCTextFormatterItalicEffect: 
 			{
                 NSFont *baseFont = dict[NSFontAttributeName];
 				
                 return [baseFont fontTraitSet:NSItalicFontMask];
-				
-				break;
 			}
 			case IRCTextFormatterUnderlineEffect:
 			{
 				BOOL result = ([dict integerForKey:NSUnderlineStyleAttributeName] == 1);
 				
 				return result;
-				
-				break;
 			}
 			case IRCTextFormatterForegroundColorEffect:
 			{
@@ -521,8 +515,7 @@
 				}
 				
 				break;
-			} 
-            default: { return NO; break; }
+			}
 		}
 		
 		limitRange = NSMakeRange (NSMaxRange(effectiveRange),
@@ -603,7 +596,6 @@
                 
                 break;
             }
-            default: { break; }
         }
 
 		[self addUndoActionForAttributes:dict inRange:effectiveRange];
@@ -684,7 +676,6 @@
 					
 					break;
 				}
-				default: break;
 			}
 		}
 

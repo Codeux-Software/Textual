@@ -150,7 +150,7 @@
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.
 			}
 			
-			CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)_responseData, NULL);
+			CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)self.responseData, NULL);
 			
 			if (PointerIsEmpty(imageSource)) {
 				return [self destroyConnectionRequest]; // Destroy and return for bad input.

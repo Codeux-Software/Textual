@@ -202,7 +202,7 @@
 		windowColor = [NSColor blackColor];
 	}
 
-	[(id)_webView setBackgroundColor:windowColor];
+	[(id)self.webView setBackgroundColor:windowColor];
 	
 	[[self.webView mainFrame] stopLoading];
 	[[self.webView mainFrame] loadHTMLString:newHTML baseURL:[self baseURL]];
@@ -1094,7 +1094,7 @@
 	[[self printingQueue] enqueueMessageBlock:printBlock for:self];
 }
 
-- (NSString *)renderLogLine:(TVCLogLine *)line resultInfo:(NSDictionary **)resultInfo
+- (NSString *)renderLogLine:(TVCLogLine *)line resultInfo:(NSDictionary * __autoreleasing *)resultInfo
 {
 	NSObjectIsEmptyAssertReturn([line messageBody], nil);
 

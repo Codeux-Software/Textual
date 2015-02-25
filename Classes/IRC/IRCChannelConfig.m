@@ -132,18 +132,18 @@
 
 - (NSString *)temporarySecretKey
 {
-	return _secretKey;
+	return self.secretKey;
 }
 
 - (NSString *)temporaryEncryptionKey
 {
-	return _encryptionKey;
+	return self.encryptionKey;
 }
 
 - (NSString *)secretKeyValue
 {
-	if (_secretKey) {
-		return _secretKey;
+	if (self.secretKey) {
+		return self.secretKey;
 	} else {
 		return [self secretKey];
 	}
@@ -151,8 +151,8 @@
 
 - (NSString *)encryptionKeyValue
 {
-	if (_encryptionKey) {
-		return _encryptionKey;
+	if (self.encryptionKey) {
+		return self.encryptionKey;
 	} else {
 		return [self encryptionKey];
 	}

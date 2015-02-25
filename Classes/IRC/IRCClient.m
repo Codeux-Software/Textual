@@ -1004,7 +1004,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return message;
 }
 
-- (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel
+- (void)decryptIncomingMessage:(NSString *__autoreleasing *)message channel:(IRCChannel *)channel
 {
 	if (channel.isChannel || channel.isPrivateMessage) {
 		NSString *encryptionKey = channel.encryptionKey;
@@ -5474,10 +5474,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			break;
 		}
-		default:
-		{
-			break;
-		}
 	}
 	
 	return stringValue;
@@ -8085,7 +8081,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)joinChannel:(IRCChannel *)channel
 {
-	return [self joinChannel:channel password:nil];
+	[self joinChannel:channel password:nil];
 }
 
 - (void)joinUnlistedChannel:(NSString *)channel
@@ -8583,9 +8579,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSString *trail;
 
 	if ([transferToken length] > 0) {
-		trail = [NSString stringWithFormat:@"%@ %@ %li %qi %@", escapedFileName, address, (long)port, totalFilesize, transferToken];
+		trail = [NSString stringWithFormat:@"%@ %@ %li %lli %@", escapedFileName, address, (long)port, totalFilesize, transferToken];
 	} else {
-		trail = [NSString stringWithFormat:@"%@ %@ %li %qi", escapedFileName, address, (long)port, totalFilesize];
+		trail = [NSString stringWithFormat:@"%@ %@ %li %lli", escapedFileName, address, (long)port, totalFilesize];
 	}
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
@@ -8617,7 +8613,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		a |= y; a <<= 8;
 		a |= z;
 		
-		address = [NSString stringWithFormat:@"%qu", a];
+		address = [NSString stringWithFormat:@"%llu", a];
 	}
 	
 	return address;
@@ -8720,7 +8716,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (void)populateISONTrackedUsersList:(NSMutableArray *)ignores
+- (void)populateISONTrackedUsersList:(NSArray *)ignores
 {
     NSAssertReturn(self.isLoggedIn);
 	

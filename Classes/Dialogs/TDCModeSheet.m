@@ -103,7 +103,7 @@
 	[[self.mode modeInfoFor:@"l"] setModeParamater:value];
 }
 
-- (BOOL)validateValue:(id *)value forKey:(NSString *)key error:(NSError **)error
+- (BOOL)validateValue:(inout __autoreleasing id *)value forKey:(NSString *)key error:(out NSError *__autoreleasing *)outError
 {
 	if ([key isEqualToString:@"channelUserLimitMode"]) {
 		NSInteger n = [*value integerValue];

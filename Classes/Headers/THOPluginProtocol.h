@@ -258,7 +258,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  * @param newMessage An unedited copy of the message being rendered
  * @param viewController The view responsible for the event
  * @param lineType The line type of the message being rendered
- * @param viewController The member type of the message being rendered
+ * @param memberType The member type of the message being rendered
  */
 - (NSString *)willRenderMessage:(NSString *)newMessage
 			  forViewController:(TVCLogController *)viewController
@@ -319,7 +319,10 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  * @param input Depending on whether the value of the text field was submitted 
     programmatically or by the user directly interacting with it, this value can be an 
     instance of NSString or NSAttributedString.
- * @param client The client responsible for the event
+ * @param command Textual allows the end user to send text entered into the text field 
+    without using the "/me" command. When this occurs, Textual informs lower-level APIs 
+    of this intent by changing the value of this parameter from "privmsg" to "action" -
+    In most cases a plugin should disregard this parameter and pass it untouched.
  */
 - (id)interceptUserInput:(id)input command:(NSString *)command;
 
