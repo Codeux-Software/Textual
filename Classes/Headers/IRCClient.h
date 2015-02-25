@@ -126,7 +126,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 @property (nonatomic, assign) BOOL reconnectEnabled;			// YES if reconnection is allowed, else NO.
 @property (nonatomic, assign) BOOL serverHasNickServ;			// YES if NickServ service was found on server, else NO.
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacities;
-@property (nonatomic, nweak) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
+@property (nonatomic, copy) NSArray *channelList; // channelList is actually a proxy setter/getter for internal storage.
 @property (nonatomic, copy) NSArray *cachedHighlights;
 @property (nonatomic, strong) IRCChannel *lastSelectedChannel; // If this is the selected client, then the value of this property is the current selection. If the current client is not selected, then this value is either its previous selection or nil.
 @property (nonatomic, copy) NSString *preAwayNickname; // Nickname before away was set.
@@ -155,8 +155,8 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 // -dictionaryValue may return a value that contains private messages. This depends on whether
 // end user has configured Textual to remember the state of queries between saves.
-- (NSMutableDictionary *)dictionaryValue; // Values to be used for saving to NSUserDefaults and no other purposes.
-- (NSMutableDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
+- (NSDictionary *)dictionaryValue; // Values to be used for saving to NSUserDefaults and no other purposes.
+- (NSDictionary *)dictionaryValue:(BOOL)isCloudDictionary;
 
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction; // Call -quit before invoking this or you know, use IRCWorld
@@ -264,7 +264,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 // Creating a channel will require Textual to create a new WebView
 // Invoking this method on anything other than the main thread will
-// crash Textual because WebView requires all operations to occur on
+// crash Textual because WebKit requires all operations to occur on
 // the main thread. If you already are certain that the channel will
 // already exist, then call from whatever thread you want.
 - (IRCChannel *)findChannel:(NSString *)name;
@@ -274,8 +274,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
-// Defaults to TVCLogLineUndefinedNicknameFormat
-- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel;
+- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel; // Defaults to TVCLogLineUndefinedNicknameFormat
 - (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
@@ -292,7 +291,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 /* WARNING:
  
-	WebKit which Textual uses for rendering messages will crash if it is not
+	WebKit, which Textual uses for rendering messages, will crash if it is not
 	interacted with on the main thread. Therefore, always make sure you send
 	messages on the main thread. Otherwise, happy crashing. :)
  */
@@ -306,15 +305,15 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)sendLine:(NSString *)str;
 - (void)send:(NSString *)str, ...;
 
+- (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel;
+- (void)sendNotice:(NSString *)message toChannel:(IRCChannel *)channel;
+
 /* When using -sendPrivmsgToSelectedChannel:, if the actual selected channel in the main
  window is not owned by this client, then the message will be sent to the server console. */
 /* The method obviously does not work as expected so it has been marked as deprecated.
  However, it will remain functional for plugin authors who wish to use it. */
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message TEXTUAL_DEPRECATED("Use sendPrivmsg:toChannel: instead");
-
-- (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel;
-- (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel;
-- (void)sendNotice:(NSString *)message toChannel:(IRCChannel *)channel;
 
 #pragma mark -
 

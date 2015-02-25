@@ -44,6 +44,7 @@
 #define _reconnectAfterWakeupDelay		8
 
 NSString * const IRCWorldControllerDefaultsStorageKey = @"World Controller";
+NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 @implementation IRCWorld
 
