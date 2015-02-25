@@ -74,7 +74,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
 	} else {
-		return [super init];
+		return [super initWithUser:nil];
 	}
 }
 
