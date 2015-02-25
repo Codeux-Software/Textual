@@ -51,6 +51,7 @@ typedef uint32_t attr_t;
 @property (nonatomic, strong) NSMutableDictionary *outputDictionary;
 @property (nonatomic, copy) NSDictionary *rendererAttributes;
 @property (nonatomic, assign) BOOL cancelRender;
+@property (nonatomic, assign) NSInteger rendererIsRenderingLinkIndex;
 @end
 
 NSString * const TVCLogRendererConfigurationShouldRenderLinksAttribute			= @"TVCLogRendererConfigurationShouldRenderLinksAttribute";
@@ -94,6 +95,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 
 #pragma mark -
 
+/*
 static void resetRange(attr_t *attrBuf, NSInteger start, NSInteger len)
 {
 	attr_t *target = (attrBuf + start);
@@ -105,6 +107,7 @@ static void resetRange(attr_t *attrBuf, NSInteger start, NSInteger len)
 		++target;
 	}
 }
+*/
 
 static void setFlag(attr_t *attrBuf, attr_t flag, NSInteger start, NSInteger len)
 {
@@ -152,6 +155,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 #pragma mark -
 
 @implementation TVCLogRenderer
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		_rendererIsRenderingLinkIndex = NSNotFound;
+	}
+
+	return self;
+}
 
 /* Given body, strip effects, place them in a attr_t, and return the 
  body without the effects that were defined in the attr_t */
@@ -370,7 +382,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 			if (r.length > 0) {
 				/* Strip existing effects and apply section as URL. */
-				resetRange(_effectAttributes, r.location, r.length);
+				// resetRange(_effectAttributes, r.location, r.length);
 
 				setFlag(_effectAttributes, _rendererURLAttribute, r.location, r.length);
 
@@ -796,6 +808,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	NSString *escapedContent = [TVCLogRenderer escapeString:unescapedContent];
 
+	NSString *messageFragment = nil;
+
 	NSMutableDictionary *templateTokens = [NSMutableDictionary dictionary];
 
 	if (attrArray & _rendererURLAttribute)
@@ -807,7 +821,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		for (NSArray *rn in _outputDictionary[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute]) {
 			NSRange r = NSRangeFromString(rn[0]);
 
-			if (r.location == rangeStart) {
+			if (r.location == _rendererIsRenderingLinkIndex) {
 				templateTokens[@"anchorLocation"] = rn[1];
 			}
 		}
@@ -829,133 +843,134 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 
 		/* Render template. */
-		return [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
+		messageFragment = [TVCLogRenderer renderTemplate:@"renderedStandardAnchorLinkResource" attributes:templateTokens];
 	}
 	else if (attrArray & _rendererChannelNameAttribute)
 	{
 		templateTokens[@"channelName"] = escapedContent;
 
-		return [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
+		messageFragment = [TVCLogRenderer renderTemplate:@"renderedChannelNameLinkResource" attributes:templateTokens];
 	}
-	else
+	else if (attrArray & _rendererConversationTrackerAttribute)
 	{
-		if (attrArray & _rendererConversationTrackerAttribute) {
-			templateTokens[@"messageFragment"] = escapedContent;
+		templateTokens[@"messageFragment"] = escapedContent;
 
-			if ([TPCPreferences disableNicknameColorHashing] == YES) {
-				templateTokens[@"inlineNicknameMatchFound"] = @(NO);
-			} else {
-				if (_controller) {
-					IRCClient *u = [_controller associatedClient];
-					IRCChannel *c = [_controller associatedChannel];
+		if ([TPCPreferences disableNicknameColorHashing] == YES) {
+			templateTokens[@"inlineNicknameMatchFound"] = @(NO);
+		} else {
+			if (_controller) {
+				IRCClient *u = [_controller associatedClient];
+				IRCChannel *c = [_controller associatedChannel];
 
-					IRCUser *user = [c findMember:escapedContent];
+				IRCUser *user = [c findMember:escapedContent];
 
-					if (user) {
-						if (NSObjectsAreEqual([user nickname], [u localNickname]) == NO)
-						{
-							NSString *modeSymbol = NSStringEmptyPlaceholder;
+				if (user) {
+					if (NSObjectsAreEqual([user nickname], [u localNickname]) == NO)
+					{
+						NSString *modeSymbol = NSStringEmptyPlaceholder;
 
-							if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
-								NSString *usermark = [user mark];
+						if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
+							NSString *usermark = [user mark];
 
-								if (rangeStart > 0) {
-									if (usermark) {
-										NSString *prevchar = [body stringCharacterAtIndex:(rangeStart - 1)];
+							if (rangeStart > 0) {
+								if (usermark) {
+									NSString *prevchar = [body stringCharacterAtIndex:(rangeStart - 1)];
 
-										if ([prevchar isEqualToString:usermark] == NO) {
-											modeSymbol = usermark;
-										}
-									}
-								} else {
-									if (usermark) {
+									if ([prevchar isEqualToString:usermark] == NO) {
 										modeSymbol = usermark;
 									}
 								}
-							}
-
-							/* If nickname length = 1 and mode char is +, then we ignore it
-							 becasue someone with nick "m" becoming "+m" might be confused
-							 for a mode symbol. Same could apply to - too, but I do not know
-							 of any network that uses that for status symbol. */
-							if ([[user nickname] length] == 1) {
-								if ([modeSymbol isEqualToString:@"+"] || [modeSymbol isEqualToString:@"-"]) {
-									modeSymbol = NSStringEmptyPlaceholder;
+							} else {
+								if (usermark) {
+									modeSymbol = usermark;
 								}
 							}
-
-							templateTokens[@"inlineNicknameMatchFound"] = @(YES);
-							templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
-							templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 						}
+
+						/* If nickname length = 1 and mode char is +, then we ignore it
+						 becasue someone with nick "m" becoming "+m" might be confused
+						 for a mode symbol. Same could apply to - too, but I do not know
+						 of any network that uses that for status symbol. */
+						if ([[user nickname] length] == 1) {
+							if ([modeSymbol isEqualToString:@"+"] || [modeSymbol isEqualToString:@"-"]) {
+								modeSymbol = NSStringEmptyPlaceholder;
+							}
+						}
+
+						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
+						templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
+						templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 					}
 				}
 			}
 		}
+	}
 
-		// --- //
+	if (messageFragment == nil) {
+		messageFragment = escapedContent;
+	}
 
-		if (attrArray & _effectMask) {
-			templateTokens[@"fragmentContainsFormattingSymbols"] = @(YES);
+	// --- //
 
-			if (attrArray & _rendererBoldFormatAttribute) {
-				templateTokens[@"fragmentIsBold"] = @(YES);
-			}
+	if (attrArray & _effectMask) {
+		templateTokens[@"fragmentContainsFormattingSymbols"] = @(YES);
 
-			if (attrArray & _rendererItalicFormatAttribute) {
-				templateTokens[@"fragmentIsItalicized"] = @(YES);
-			}
+		if (attrArray & _rendererBoldFormatAttribute) {
+			templateTokens[@"fragmentIsBold"] = @(YES);
+		}
 
-			if (attrArray & _rendererUnderlineFormatAttribute) {
-				templateTokens[@"fragmentIsUnderlined"] = @(YES);
-			}
+		if (attrArray & _rendererItalicFormatAttribute) {
+			templateTokens[@"fragmentIsItalicized"] = @(YES);
+		}
 
-			if (attrArray & _rendererTextColorAttribute) {
-				NSInteger colorCode = (attrArray & _textColorMask);
+		if (attrArray & _rendererUnderlineFormatAttribute) {
+			templateTokens[@"fragmentIsUnderlined"] = @(YES);
+		}
 
-				/* We have to tell the template that the color is actually set
-				 because if it only checked the value of "fragmentTextColor" in
-				 an if statement the color white (code 0) would not show because
-				 zero would show as a null value to the if statement. */
-				
+		if (attrArray & _rendererTextColorAttribute) {
+			NSInteger colorCode = (attrArray & _textColorMask);
+
+			/* We have to tell the template that the color is actually set
+			 because if it only checked the value of "fragmentTextColor" in
+			 an if statement the color white (code 0) would not show because
+			 zero would show as a null value to the if statement. */
+			
+			templateTokens[@"fragmentTextColorIsSet"] = @(YES);
+			templateTokens[@"fragmentTextColor"] = @(colorCode);
+		}
+
+		if (attrArray & _rendererBackgroundColorAttribute) {
+			NSInteger colorCode = ((attrArray & _backgroundColorMask) >> 4);
+
+			templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
+			templateTokens[@"fragmentBackgroundColor"] = @(colorCode);
+
+			/* If a background color is set, but a foreground one is not, we supply a value
+			 of -1 for the foreground color to trigger the template to add appropriate 
+			 HTML for defining color elements. */
+			if ((attrArray & _rendererTextColorAttribute) == NO) {
 				templateTokens[@"fragmentTextColorIsSet"] = @(YES);
-				templateTokens[@"fragmentTextColor"] = @(colorCode);
-			}
-
-			if (attrArray & _rendererBackgroundColorAttribute) {
-				NSInteger colorCode = ((attrArray & _backgroundColorMask) >> 4);
-
-				templateTokens[@"fragmentBackgroundColorIsSet"] = @(YES);
-				templateTokens[@"fragmentBackgroundColor"] = @(colorCode);
-
-				/* If a background color is set, but a foreground one is not, we supply a value
-				 of -1 for the foreground color to trigger the template to add appropriate 
-				 HTML for defining color elements. */
-				if ((attrArray & _rendererTextColorAttribute) == NO) {
-					templateTokens[@"fragmentTextColorIsSet"] = @(YES);
-					templateTokens[@"fragmentTextColor"] = @(-1);
-				}
-			}
-
-			/* Escape spaces that are prefix and suffix characters. */
-			if ([escapedContent hasPrefix:NSStringWhitespacePlaceholder]) {
-				escapedContent = [escapedContent stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-																		 withString:@"&nbsp;"];
-			}
-
-			if ([escapedContent hasSuffix:NSStringWhitespacePlaceholder]) {
-				escapedContent = [escapedContent stringByReplacingCharactersInRange:NSMakeRange(([escapedContent length] - 1), 1)
-																		 withString:@"&nbsp;"];
+				templateTokens[@"fragmentTextColor"] = @(-1);
 			}
 		}
 
-		/* Define content. */
-		templateTokens[@"messageFragment"] = escapedContent;
+		/* Escape spaces that are prefix and suffix characters. */
+		if ([messageFragment hasPrefix:NSStringWhitespacePlaceholder]) {
+			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+																	   withString:@"&nbsp;"];
+		}
 
-		// --- //
-
-		return [TVCLogRenderer renderTemplate:@"formattedMessageFragment" attributes:templateTokens];
+		if ([messageFragment hasSuffix:NSStringWhitespacePlaceholder]) {
+			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(([escapedContent length] - 1), 1)
+																	 withString:@"&nbsp;"];
+		}
 	}
+
+	// --- //
+
+	templateTokens[@"messageFragment"] = messageFragment;
+
+	return [TVCLogRenderer renderTemplate:@"formattedMessageFragment" attributes:templateTokens];
 }
 
 - (void)renderFinalResultsForPlainTextBody
@@ -997,6 +1012,18 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		NSAssertReturnLoopBreak(n > 0);
 
 		attr_t t = ((attr_t *)_effectAttributes)[start];
+
+		BOOL attributesIncludeURL = (t & _rendererURLAttribute);
+
+		if (_rendererIsRenderingLinkIndex == NSNotFound) {
+			if (attributesIncludeURL) {
+				_rendererIsRenderingLinkIndex = start;
+			}
+		} else {
+			if (attributesIncludeURL == NO) {
+				_rendererIsRenderingLinkIndex = NSNotFound;
+			}
+		}
 
 		result = [self renderAttributedRange:result attributes:t start:start length:n];
 
