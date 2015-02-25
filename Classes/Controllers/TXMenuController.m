@@ -63,6 +63,7 @@
 
 @interface TXMenuController ()
 @property (nonatomic, strong) NSMutableDictionary *openWindowList;
+@property (nonatomic, copy) NSString *currentSearchPhrase;
 @end
 
 @implementation TXMenuController
@@ -1076,7 +1077,7 @@
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[RZWorkspace() openURL:[NSURL URLWithString:@"http://www.codeux.com/textual/help/Writing-Scripts.kb"]];
+	[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Writing-Scripts.kb"];
 }
 
 - (void)searchGoogle:(id)sender
@@ -1089,11 +1090,7 @@
 
 	NSObjectIsEmptyAssert(s);
 
-	/* Interesting fact: The class that Textual uses to encode URI arguments
-	 is develooped by Google. So we are using a Google class to search Google. */
-	s = [s gtm_stringByEscapingForURLArgument];
-		
-	NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", s];
+	NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", [s gtm_stringByEscapingForURLArgument]];
 		
 	[TLOpenLink openWithString:urlStr];
 }
@@ -1104,7 +1101,7 @@
 
 	PointerIsEmptyAssert(sel);
 	
-	[RZPasteboard() setStringContent:sel.contentString];
+	[RZPasteboard() setStringContent:[sel contentString]];
 }
 
 - (void)markScrollback:(id)sender
@@ -1166,7 +1163,7 @@
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	
-	if (_noClient || _connected) {
+	if (_noClient || _connected || [u isQuitting]) {
 		return;
 	}
 	
@@ -1179,7 +1176,7 @@
 {
 	IRCClient *u = [mainWindow() selectedClient];
 
-	if (_noClient || _connected) {
+	if (_noClient || _connected || [u isQuitting]) {
 		return;
 	}
 
@@ -1192,7 +1189,7 @@
 {
 	IRCClient *u = [mainWindow() selectedClient];
 
-	if (_noClient || _notConnected) {
+	if (_noClient || _notConnected || [u isQuitting]) {
 		return;
 	}
 	
@@ -1227,9 +1224,10 @@
 	TDCNickSheet *nickSheet = [TDCNickSheet new];
 
 	[nickSheet setDelegate:self];
-	[nickSheet setClientID:[u uniqueIdentifier]];
 	[nickSheet setWindow:mainWindow()];
-	
+
+	[nickSheet setClientID:[u uniqueIdentifier]];
+
 	[nickSheet start:[u localNickname]];
 
 	[self addWindowToWindowList:nickSheet];
@@ -1272,10 +1270,11 @@
 	[self popWindowSheetIfExists];
 	
 	TDCServerSheet *d = [TDCServerSheet new];
-	
-	[d setClientID:nil];
+
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
+
+	[d setClientID:nil];
 	[d setConfig:[IRCClientConfig new]];
 
 	[d start:TDCServerSheetDefaultNavigationSelection withContext:nil];
@@ -1293,11 +1292,11 @@
 	
 	IRCClientConfig *config = [u copyOfStoredConfig];
 	
-	NSString *newName = [[config clientName] stringByAppendingString:@"_"];
+	NSString *newName = [[config connectionName] stringByAppendingString:@"_"];
 
 	[config setItemUUID:[NSString stringWithUUID]];
 	
-	[config setClientName:newName];
+	[config setConnectionName:newName];
 	
 	[config setProxyPassword:nil];
 	[config setServerPassword:nil];
@@ -1305,11 +1304,11 @@
 	
 	IRCClient *n = [worldController() createClient:config reload:YES];
 	
-	[worldController() save];
-	
 	if ([_serverCurrentConfig sidebarItemExpanded]) { // Only expand new client if old was expanded already.
 		[mainWindow() expandClient:n];
 	}
+
+	[worldController() save];
 }
 
 - (void)deleteServer:(id)sender
@@ -1381,7 +1380,7 @@
 	if ([sender clientID] == nil) {
 		[worldController() createClient:[sender config] reload:YES];
 		
-		[sender.config writeKeychainItemsToDisk];
+		[[sender config] writeKeychainItemsToDisk];
 	} else {
 		IRCClient *u = [worldController() findClientById:[sender clientID]];
 		
@@ -1389,8 +1388,8 @@
 			return;
 		}
 
-		BOOL samencoding = (sender.config.primaryEncoding ==
-							     u.config.primaryEncoding);
+		BOOL samencoding = ([[sender config] primaryEncoding] ==
+							     [[u config] primaryEncoding]);
 
 		[u updateConfig:[sender config]];
 
@@ -1690,7 +1689,7 @@
 
 		NSString *oldKey = [_channelConfig encryptionKey];
 		
-		NSString *newKey = [sender.config temporaryEncryptionKey];
+		NSString *newKey = [[sender config] temporaryEncryptionKey];
 		
 		BOOL oldKeyEmpty = NSObjectIsEmpty(oldKey);
 		BOOL newKeyEmpty = NSObjectIsEmpty(newKey);
@@ -1779,7 +1778,7 @@
 	NSInteger insertLocation = selectedRange.location;
     
 	/* Build insert string. */
-	NSString *insertString;
+	NSString *insertString = nil;
     
 	if (insertLocation > 0) {
 		UniChar prev = [[textField stringValue] characterAtIndex:(insertLocation - 1)];
@@ -1896,10 +1895,12 @@
 - (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
-	
-	if (u && [channelName isChannelName]) {
-		for (NSString *nick in [sender nicknames]) {
-			[u send:IRCPrivateCommandIndex("invite"), nick, channelName, nil];
+
+	if (u) {
+		if ([channelName isChannelName]) {
+			for (NSString *nick in [sender nicknames]) {
+				[u send:IRCPrivateCommandIndex("invite"), nick, channelName, nil];
+			}
 		}
 	}
 }
@@ -2046,7 +2047,7 @@
 {
 	[self showServerPropertyDialog:[mainWindow() selectedClient]
 					withDefaultView:TDCServerSheetAddressBookNavigationSelection
-						andContext:@"-"];
+						andContext:nil];
 }
 
 #pragma mark -
@@ -2073,11 +2074,9 @@
 	[mainWindow() expandClient:u];
 	
 	[worldController() save];
-	
-	if (u.config.autoConnect) {
-		[u connect];
-	}
-	
+
+	[u connect];
+
 	[u selectFirstChannelInChannelList];
 }
 
@@ -2317,17 +2316,7 @@
 		return;
 	}
 
-	for (NSString *pathURL in files) {
-		BOOL isDirectory = NO;
-		
-		if ([RZFileManager() fileExistsAtPath:pathURL isDirectory:&isDirectory]) {
-			if (isDirectory) {
-				continue;
-			}
-		}
-		
-		(void)[self.fileTransferController addSenderForClient:u nickname:[c name] path:pathURL autoOpen:YES];
-	}
+	[self memberSendDroppedFiles:files to:[c name]];
 }
 
 - (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row
@@ -2341,16 +2330,23 @@
 	
 	IRCUser *member = [mainWindowMemberList() itemAtRow:[row integerValue]];
 	
+	[self memberSendDroppedFiles:files to:[member nickname]];
+}
+
+- (void)memberSendDroppedFiles:(NSArray *)files to:(NSString *)nickname
+{
+	IRCClient *u = [mainWindow() selectedClient];
+
 	for (NSString *pathURL in files) {
 		BOOL isDirectory = NO;
-		
+
 		if ([RZFileManager() fileExistsAtPath:pathURL isDirectory:&isDirectory]) {
 			if (isDirectory) {
 				continue;
 			}
 		}
-		
-		(void)[self.fileTransferController addSenderForClient:u nickname:[member nickname] path:pathURL autoOpen:YES];
+
+		(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:pathURL autoOpen:YES];
 	}
 }
 
@@ -2439,7 +2435,6 @@
 					  }
 					  
 					  [self removeWindowFromWindowList:windowToken];
-					  
 				  }];
 	
 	[self addWindowToWindowList:dialog withKeyValue:windowToken];
@@ -2572,8 +2567,7 @@
 		[u setChannelList:channels];
 		
 		[u updateConfig:[u copyOfStoredConfig] withSelectionUpdate:NO];
-		
-		// Reload actual views.
+
 		[serverList reloadItem:u reloadChildren:YES];
 	}
 
@@ -2595,6 +2589,7 @@
 	}
 
 	[mainWindow() setFrame:[mainWindow() defaultWindowFrame] display:YES animate:YES];
+
 	[mainWindow() exactlyCenterWindow];
 }
 
@@ -2647,6 +2642,8 @@
 	}
 
 	[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("mode"), [c name], modeValue]];
+
+#undef _toggleChannelInviteStatusModeOffTag
 }
 
 - (void)toggleDeveloperMode:(id)sender
@@ -2764,12 +2761,8 @@
 
 - (void)toggleMemberListVisibility:(id)sender
 {
-	/* Textual automatically hides and show the member list when switching between 
-	 server console, channels, and queries therefore we have to tell it through a
-	 property that we don't want it shown at all. */
 	[mainWindowMemberList() setIsHiddenByUser:([mainWindowMemberList() isHiddenByUser] == NO)];
 
-	/* Toggle visibility. */
 	[[mainWindow() contentSplitView] toggleMemberListVisbility];
 }
 
@@ -2820,9 +2813,7 @@
 
 - (IBAction)openMigrationAssistantDownloadPage:(id)sender
 {
-	NSURL *assistantURL = [NSURL URLWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
-	
-	[RZWorkspace() openURL:assistantURL];
+	[TLOpenLink openWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
 }
 
 - (IBAction)openMacAppStoreDownloadPage:(id)sender

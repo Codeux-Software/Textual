@@ -50,8 +50,10 @@
 	NSObjectIsEmptyAssert(location);
 
 	/* Basic input clean up. */
-	location = [location decodeURIFragment];
-	location = [location trim];
+	NSString *locationValue = location;
+
+	locationValue = [locationValue decodeURIFragment];
+	locationValue = [locationValue trim];
 
 	/* We will scan our input to look for each slash in it.
 	 There is supposed to be one (minus the scheme), so let's
@@ -60,8 +62,7 @@
 	 seperate the channel name from the server name. If there
 	 is more than three, then our input is already invalid and
 	 we do not want to go any further with it. */
-
-	NSArray *slashMatches = [XRRegularExpression matchesInString:location withRegex:@"([/])"];
+	NSArray *slashMatches = [XRRegularExpression matchesInString:locationValue withRegex:@"([/])"];
 
 	if (NSNumberInRange([slashMatches count], 2, 3) == NO) {
 		return;
@@ -74,23 +75,22 @@
 	 they are seperated, we will run the server address section through
 	 NSURL. If NSURL does not result in a valid result, then we can
 	 consider the beginning of our URL trash and invalid. */
-
-	NSString *serverInfo = location;
+	NSString *serverInfo = locationValue;
 	NSString *channelInfo = nil;
 
 	if ([slashMatches count] == 3) { // Only cut if we do have an extra slash.
-		NSRange backwardRange = [location rangeOfString:@"/" options:NSBackwardsSearch];
+		NSRange backwardRange = [locationValue rangeOfString:@"/" options:NSBackwardsSearch];
 
 		if (NSDissimilarObjects(backwardRange.location, NSNotFound)) {
-			serverInfo = [location substringToIndex:backwardRange.location];
-			channelInfo = [location substringAfterIndex:backwardRange.location];
+			serverInfo = [locationValue substringToIndex:backwardRange.location];
+
+			channelInfo = [locationValue substringAfterIndex:backwardRange.location];
 		}
 	}
 
 	/* We now have each section of the URL in its own store so time
 	 to run the first section through NSURL to see if it returns a
 	 valid scheme and host. */
-
 	NSURL *baseURL = [NSURL URLWithString:serverInfo];
 
 	NSString *serverAddress = [baseURL host];
@@ -130,9 +130,6 @@
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
-			/* It is easier to use textualapp.com which we can always update
-			 just incase you know… */
-
 			[TLOpenLink openWithString:@"http://www.textualapp.com/"];
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
@@ -184,7 +181,7 @@
 	/* Continue normal parsing… */
 	NSNumber *serverPort = [baseURL port];
 
-	if (PointerIsEmpty(serverPort)) {
+	if (serverPort == nil) {
 		serverPort = @(IRCConnectionDefaultServerPort);
 	}
 
@@ -243,14 +240,13 @@
 
 	/* We have parsed every part of our URL. Build the final result and
 	 pass it along. We are done here. */
-
-	NSString *finalResult = NSStringEmptyPlaceholder;
+	NSMutableString *finalResult = [NSMutableString string];
 
 	if (connectionUsesSSL) {
-		finalResult = @"-SSL ";
+		[finalResult appendString:@"-SSL "];
 	}
 
-	finalResult = [finalResult stringByAppendingFormat:@"%@:%@", serverAddress, serverPort];
+	[finalResult appendFormat:@"%@:%@", serverAddress, serverPort];
 
 	/* A URL is consider untrusted and will not auto connect. */
 	[IRCExtras createConnectionAndJoinChannel:finalResult channel:channelList autoConnect:NO];
@@ -274,9 +270,7 @@
     BOOL connectionUsesSSL = NO;
 
 	/* Begin parsing. */
-	NSString *tempStore = nil;
-
-    NSMutableString *base = [serverInfo mutableCopy];
+	NSMutableString *base = [serverInfo mutableCopy];
 
 	/* Get our first token. A token is everything before
 	 the first occurrence of a space character. getToken
@@ -284,7 +278,7 @@
 	 erase the remaining content of that string so that
 	 each call to getToken gives us the next section
 	 of our string. */
-    tempStore = [base getToken];
+	NSString *tempStore = [base getToken];
 
     /* Secure Socket Layer? */
     if ([tempStore isEqualIgnoringCase:@"-SSL"]) {
@@ -388,13 +382,13 @@
 	NSObjectIsEmptyAssert(serverAddress);
 	
 	IRCClientConfig *baseConfig = [IRCClientConfig new];
-	
-	[baseConfig setClientName:serverAddress];
+
+	[baseConfig setConnectionName:serverAddress];
 	
 	[baseConfig setServerAddress:serverAddress];
 	[baseConfig setServerPort:serverPort];
-	
-	[baseConfig setConnectionUsesSSL:connectionUsesSSL];
+
+	[baseConfig setPrefersSecuredConnection:connectionUsesSSL];
 	
 	if ([channelList length] > 0) {
 		NSMutableArray *channels = [NSMutableArray array];

@@ -140,7 +140,6 @@
  */
 
 @interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
-@property (nonatomic, copy) NSString *currentSearchPhrase;
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
@@ -158,7 +157,6 @@
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
 @property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
-@property (nonatomic, assign) BOOL memberListUserControlMenuOpen;
 
 - (void)setupOtherServices;
 

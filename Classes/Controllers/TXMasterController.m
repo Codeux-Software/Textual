@@ -48,16 +48,12 @@
     if ((self = [super init])) {
 		[NSObject setGlobalMasterControllerClassReference:self];
 
-		// ---- //
-		
 #ifndef TXSystemIsMacOSYosemiteOrNewer
 		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			NSAssert(NO, @"This copy of Textual cannot be used on Yosemite. Please rebuild against the Yosemite SDK.");
 		}
 #endif
-		
-		// ---- //
-		
+
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
@@ -67,21 +63,15 @@
 			LogToConsole(@"Launching without autoconnecting to the configured servers.");
 		}
 #endif
-		
-		// ---- //
-
+	
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
 			self.debugModeIsOn = YES;
 
 			LogToConsole(@"Launching in debug mode.");
 		}
-
-		// ---- //
-
-		return self;
     }
 
-    return nil;
+	return self;
 }
 
 - (void)awakeFromNib
@@ -109,6 +99,7 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
+
 	[sharedCloudManager() initializeCloudSyncSession];
 #endif
 	
