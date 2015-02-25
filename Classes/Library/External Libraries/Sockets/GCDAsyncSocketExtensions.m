@@ -150,6 +150,99 @@
 	return trust;
 }
 
+- (NSString *)sslCertificateLocalizedOwnershipInformation
+{
+	SecTrustRef trustRef = [self sslCertificateTrustInformation];
+
+	if (trustRef) {
+		CFIndex certificateCount = SecTrustGetCertificateCount(trustRef);
+
+		if (certificateCount > 0) {
+			SecCertificateRef certificate = SecTrustGetCertificateAtIndex(trustRef, (certificateCount - 1)); // Get last certificate in chain.
+
+			if (certificate) {
+				if (CFGetTypeID(certificate) == SecCertificateGetTypeID()) {
+					CFDictionaryRef certificateProperties = SecCertificateCopyValues(certificate, NULL, NULL);
+
+					if (certificateProperties) {
+						if (CFGetTypeID(certificateProperties) == CFDictionaryGetTypeID()) {
+							static id (^getTopLevelObjectValue)(id, CFTypeRef) = ^id (id inputValues, CFTypeRef childKey)
+							{
+								id childValue = [inputValues objectForKey:(__bridge id)childKey];
+
+								if (childValue) {
+									if ([childValue isKindOfClass:[NSDictionary class]]) {
+										return [childValue objectForKey:(__bridge id)kSecPropertyKeyValue];
+									}
+								}
+
+								return nil;
+							};
+
+							static id (^getObjectValueForChild)(id, CFTypeRef) = ^id (id inputValues, CFTypeRef childKey)
+							{
+								if ([inputValues isKindOfClass:[NSArray class]] == NO) {
+									return nil;
+								}
+
+								NSString *childKeyString = (__bridge NSString *)(childKey);
+
+								for (id object in inputValues) {
+									if ([object isKindOfClass:[NSDictionary class]]) {
+										id objectLabel = [object objectForKey:(__bridge id)(kSecPropertyKeyLabel)];
+
+										if (objectLabel) {
+											if ([childKeyString isEqual:objectLabel] == NO) {
+												continue; // Skp this entry…
+											}
+										}
+
+										return [object objectForKey:(__bridge id)kSecPropertyKeyValue];
+									}
+								}
+
+								return nil;
+							};
+
+							id issuerInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1IssuerName);
+							id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
+
+							PointerIsEmptyAssertReturn(issuerInformation, nil);
+							PointerIsEmptyAssertReturn(subjectInformation, nil);
+
+							NSString *issuerOrganization = getObjectValueForChild(issuerInformation, kSecOIDOrganizationName);
+
+							NSString *subjectOrganization = getObjectValueForChild(subjectInformation, kSecOIDOrganizationName);
+							NSString *subjectLocationCountry = getObjectValueForChild(subjectInformation, kSecOIDCountryName);
+							NSString *subjectLocationState = getObjectValueForChild(subjectInformation, kSecOIDStateProvinceName);
+							NSString *subjectLocationCity = getObjectValueForChild(subjectInformation, kSecOIDLocalityName);
+
+							if (issuerOrganization &&
+								subjectOrganization &&
+								subjectLocationCountry &&
+								subjectLocationState &&
+								subjectLocationCity)
+							{
+								return TXTLS(@"BasicLanguage[1229][3]",
+											 issuerOrganization,
+											 subjectOrganization,
+											 subjectLocationCity,
+											 subjectLocationState,
+											 subjectLocationCountry);
+							}
+						}
+
+						CFRelease(certificateProperties);
+					}
+				}
+			}
+		}
+
+	}
+
+	return nil;
+}
+
 - (NSString *)sslCertificateTrustPolicyName
 {
 	NSString *certificateHost = nil;

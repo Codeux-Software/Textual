@@ -39,6 +39,8 @@
 
 #import <objc/message.h>
 
+#define _descriptionIncludesAdditionalInformation			0
+
 @interface TVCQueuedCertificateTrustPanel ()
 /* Each entry is stored as an array with index 0 containing
  the trustRef and index 1 containing the completion block. */
@@ -132,11 +134,26 @@
 		/* Build panel. */
 		NSString *certificateHost = [_activeSocket sslCertificateTrustPolicyName];
 
+#if _descriptionIncludesAdditionalInformation == 1
+		NSString *ownershipInformation = [_activeSocket sslCertificateLocalizedOwnershipInformation];
+
+		NSMutableString *description = [NSMutableString string];
+
+		[description appendString:TXTLS(@"BasicLanguage[1229][2]", certificateHost)];
+
+		if (ownershipInformation) {
+			[description appendString:@"\n\n"];
+			[description appendString:ownershipInformation];
+		}
+#else
+		NSString *description = TXTLS(@"BasicLanguage[1229][2]", certificateHost);
+#endif
+
 		 _currentPanel = [SFCertificateTrustPanel new];
 		
 		[_currentPanel setAlternateButtonTitle:BLS(1009)];
 		
-		[_currentPanel setInformativeText:TXTLS(@"BasicLanguage[1229][2]", certificateHost)];
+		[_currentPanel setInformativeText:description];
 		
 		/* Begin sheet. */
 		[_currentPanel beginSheetForWindow:nil

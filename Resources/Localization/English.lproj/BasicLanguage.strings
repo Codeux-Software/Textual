@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -619,6 +619,7 @@
 /* Bad certificate prompt. */
 "BasicLanguage[1229][1]" = "Textual can’t verify the identify of the server “%@”";
 "BasicLanguage[1229][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
+"BasicLanguage[1229][3]" = "The certificate was issued by “%1$@” for “%2$@” located in %3$@, %4$@, %5$@";
 
 /* Ban list */
 "BasicLanguage[1230][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
@@ -672,7 +673,7 @@
 /* Certificate conext command dialog. */
 "BasicLanguage[1247][1]" = "Textual is using an encrypted connection to “%@“";
 "BasicLanguage[1247][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
-"BasicLanguage[1247][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nConnection encrypted using: %2$@";
+"BasicLanguage[1247][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
 
 /* Connection protocol and cipher suite. */
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
