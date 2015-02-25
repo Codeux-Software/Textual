@@ -71,7 +71,7 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	
 	NSDictionary *config = [TPCPreferences loadWorld];
 
-	for (NSDictionary *e in config[@"clients"]) {
+	for (NSDictionary *e in config[IRCWorldControllerClientListDefaultsStorageKey]) {
 		[self createClient:e reload:YES];
 	}
 
@@ -97,7 +97,7 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
-	dict[@"clients"] = ary;
+	dict[IRCWorldControllerClientListDefaultsStorageKey] = ary;
 	
 	dict[@"soundIsMuted"] = @([sharedGrowlController() areNotificationSoundsDisabled]);
 
@@ -208,8 +208,8 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 {
 	@synchronized(self.clients) {
 		for (IRCClient *c in self.clients) {
-			if (c.isLoggedIn) {
-				if (c.config.autoSleepModeDisconnect) {
+			if (c.config.autoSleepModeDisconnect) {
+				if (c.isLoggedIn) {
 					c.disconnectType = IRCClientDisconnectComputerSleepMode;
 			
 					[c quit:c.config.sleepModeLeavingComment];
@@ -279,8 +279,10 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {
-			if (limitedClient && NSDissimilarObjects(u, limitedClient)) {
-				continue;
+			if (limitedClient) {
+				if (NSDissimilarObjects(u, limitedClient)) {
+					continue;
+				}
 			}
 
 			if (markScrollback) {
@@ -308,8 +310,6 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 - (void)markAllScrollbacks
 {
-	NSAssertReturn([TPCPreferences autoAddScrollbackMark]);
-	
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {
 			[u.viewController mark];
@@ -331,9 +331,6 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 		}
 	}
 
-	/* Redraw dock icon on changes. There is possiblity the downstream
-	 preferencesChanged made modifications for the counts so we must 
-	 honor those by attempting a redraw. */
 	if ([TPCPreferences displayDockBadge] == NO) {
 		[TVCDockIcon drawWithoutCount];
 	} else {
@@ -349,9 +346,9 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 - (IRCClient *)findClientById:(NSString *)uid
 {
 	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients)
-		{
-			if ([uid isEqualToString:[u treeUUID]] || [uid isEqualToString:[u uniqueIdentifier]])
+		for (IRCClient *u in self.clients) {
+			if ([uid isEqualToString:[u treeUUID]] ||
+				[uid isEqualToString:[u uniqueIdentifier]])
 			{
 				return u;
 			}
@@ -366,9 +363,9 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	IRCClient *u = [self findClientById:uid];
 	
 	if (u) {
-		for (IRCChannel *c in u.channelList)
-		{
-			if ([cid isEqualToString:[c treeUUID]] || [cid isEqualToString:[c uniqueIdentifier]])
+		for (IRCChannel *c in u.channelList) {
+			if ([cid isEqualToString:[c treeUUID]] ||
+				[cid isEqualToString:[c uniqueIdentifier]])
 			{
 				return c;
 			}
@@ -378,33 +375,43 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	return nil;
 }
 
-- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item
+- (NSString *)pasteboardStringForItem:(IRCTreeItem *)item
 {
-	NSString *s;
-	
+	NSString *s = nil;
+
 	if ([item isClient] == NO) {
-		s = [NSString stringWithFormat:@"%@ %@", item.treeUUID, item.associatedClient.treeUUID];
+		s = [NSString stringWithFormat:@"%@ %@", [item treeUUID], [[item associatedClient] treeUUID]];
 	} else {
-		s = [NSString stringWithFormat:@"%@", item.treeUUID];
+		s = [NSString stringWithFormat:@"%@", [item treeUUID]];
 	}
-	
+
 	return s;
 }
 
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s
+- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item
+{
+	return [self pasteboardStringForItem:item];
+}
+
+- (IRCTreeItem *)findItemFromPasteboardString:(NSString *)s
 {
 	NSObjectIsEmptyAssertReturn(s, nil);
-	
+
 	if ([s contains:@" "]) {
 		NSArray *ary = [s split:@" "];
-		
+
 		NSString *uid = ary[1];
 		NSString *cid = ary[0];
-		
+
 		return [self findChannelByClientId:uid channelId:cid];
 	} else {
 		return [self findClientById:s];
 	}
+}
+
+- (IRCTreeItem *)findItemFromInfo:(NSString *)s
+{
+	return [self findItemFromPasteboardString:s];
 }
 
 #pragma mark -
@@ -528,28 +535,22 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload
 {
-	/* We are very strict about this. */
 	if (seed == nil) {
 		NSAssert(NO, @"nil configuration seed.");
 	}
-	
-	/* Create new client. */
+
 	IRCClient *c = [IRCClient new];
-	
-	/* Populate new seed. */
+
 	[c setup:seed];
 
-	/* Assign factories. */
 	c.viewController = [self createLogWithClient:c channel:nil];
 
 	c.printingQueue = [TVCLogControllerOperationQueue new];
 
-	/* Create all channels. */
-	for (IRCChannelConfig *e in c.config.channelList) {
+	for (IRCChannelConfig *e in [[c config] channelList]) {
 		[self createChannel:e client:c reload:NO adjust:NO];
 	}
-	
-	/* Populate client list and tree view. */
+
 	@synchronized(self.clients) {
 		[self.clients addObject:c];
 	
@@ -558,15 +559,11 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 			[mainWindowServerList() addItemToList:index inParent:nil];
 		}
-		
-		/* Finsih up creation. */
-		if ([self.clients count] == 1 && self.isPopulatingSeeds == NO) {
-			/* If our client count is 1, then it means we just added our
-			 first client ever. We want to force the selection to this
-			 because if we had no client beforehand, then we did not have
-			 any selection at all. */
-			
-			[mainWindow() select:c];
+
+		if (self.isPopulatingSeeds == NO) {
+			if ([self.clients count] == 1) {
+				[mainWindow() select:c];
+			}
 		}
 	}
 
@@ -579,7 +576,6 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust
 {
-	/* We are very strict about this. */
 	if (seed == nil) {
 		NSAssert(NO, @"nil configuration seed.");
 	}
@@ -587,31 +583,23 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	if (client == nil) {
 		NSAssert(NO, @"nil associated client.");
 	}
-	
-	/* Check if channel already exists. */
-	IRCChannel *c = [client findChannel:seed.channelName];
+
+	IRCChannel *c = [client findChannel:[seed channelName]];
 
 	if (c) {
 		return c;
 	}
-	
-	/* Create new channel. */
+
 	c = [IRCChannel new];
-	
-	/* Make sure we can trace our origin. */
-	c.associatedClient = client;
-	
-	c.modeInfo.supportInfo = client.supportInfo;
-	
-	/* Setup new channel. */
+
+	[c setAssociatedClient:client];
+
 	[c setup:seed];
 	
 	c.viewController = [self createLogWithClient:client channel:c];
 
-	/* Insert ourself into a specific index if we are query. */
 	[client addChannel:c];
-	
-	/* Reload server list. */
+
 	if (reload) {
 		NSInteger index = [client.channelList indexOfObject:c];
 
@@ -619,33 +607,27 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 	}
 
 	if (adjust) {
-	/* Update selection. */
 		[mainWindow() adjustSelection];
 
-		/* Populate channel list. */
 		[menuController() populateNavgiationChannelList];
 	}
 	
 	return c;
 }
 
-- (IRCChannel *)createPrivateMessage:(NSString *)nick client:(IRCClient *)client
+- (IRCChannel *)createPrivateMessage:(NSString *)nickname client:(IRCClient *)client
 {
-	/* Be very strict. */
-	if (NSObjectIsEmpty(nick)) {
+	if (NSObjectIsEmpty(nickname)) {
 		NSAssert(NO, @"empty nickname value.");
 	}
-	
-	/* Create base configuration. */
+
 	IRCChannelConfig *seed = [IRCChannelConfig new];
-	
-	seed.type = IRCChannelPrivateMessageType;
-	seed.channelName = nick;
-	
-	/* Create channel. */
+
+	[seed setChannelName:nickname];
+	[seed setType:IRCChannelPrivateMessageType];
+
 	IRCChannel *c = [self createChannel:seed client:client reload:YES adjust:YES];
-	
-	/* Active? */
+
 	if ([client isLoggedIn]) {
 		[c activate];
 	}
@@ -811,14 +793,14 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 {
 	TVCLogController *c = [TVCLogController new];
 
-	c.associatedClient = client;
-	c.associatedChannel = channel;
-	
-	c.maximumLineCount = [TPCPreferences scrollbackLimit];
+	[c setAssociatedClient:client];
+	[c setAssociatedChannel:channel];
+
+	[c setMaximumLineCount:[TPCPreferences scrollbackLimit]];
 	
 	[c setUp];
 	
-	[c.webView setHostWindow:mainWindow()];
+	[[c webView] setHostWindow:mainWindow()];
 	
 	return c;
 }

@@ -72,7 +72,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		_modeInfo = [IRCChannelMode new];
+		 _modeInfo = [IRCChannelMode new];
+		[_modeInfo setSupportInfo:[_associatedClient supportInfo]];
 		
 		_memberListStandardSortedContainer = [NSMutableArray array];
 		_memberListLengthSortedContainer = [NSMutableArray array];

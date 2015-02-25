@@ -69,10 +69,10 @@
 + (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname
 {
 	IRCUser *newUser = [IRCUser new];
-	
-	newUser.associatedClient = client;
-	
-	newUser.nickname = nickname;
+
+	[newUser setAssociatedClient:client];
+
+	[newUser setNickname:nickname];
 	
 	return newUser;
 }
@@ -94,20 +94,16 @@
 		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
 	} else {
 		switch ([TPCPreferences banFormat]) {
-			case TXHostmaskBanWHNINFormat:
-			{
+			case TXHostmaskBanWHNINFormat: {
 				return [NSString stringWithFormat:@"*!*@%@", self.address];
 			}
-			case TXHostmaskBanWHAINNFormat:
-			{
+			case TXHostmaskBanWHAINNFormat: {
 				return [NSString stringWithFormat:@"*!%@@%@", self.username, self.address];
 			}
-			case TXHostmaskBanWHANNIFormat:
-			{
+			case TXHostmaskBanWHANNIFormat: {
 				return [NSString stringWithFormat:@"%@!*%@", self.nickname, self.address];
 			}
-			case TXHostmaskBanExactFormat:
-			{
+			case TXHostmaskBanExactFormat: {
 				return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];
 			}
 		}
@@ -262,13 +258,14 @@
 - (NSComparisonResult)compareUsingWeights:(IRCUser *)other
 {
 	CGFloat local = self.totalWeight;
-	CGFloat remte = other.totalWeight;
 
-	if (local > remte) {
+	CGFloat remote = [other totalWeight];
+
+	if (local > remote) {
 		return NSOrderedAscending;
 	}
 	
-	if (local < remte) {
+	if (local < remote) {
 		return NSOrderedDescending;
 	}
 
@@ -301,9 +298,9 @@
 	
 	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
 	
-	if (favorIRCop && self.isCop && other.isCop == NO) {
+	if (favorIRCop && self.isCop && [other isCop] == NO) {
 		return NSOrderedAscending;
-	} else if (favorIRCop && self.isCop == NO && other.isCop) {
+	} else if (favorIRCop && self.isCop == NO && [other isCop]) {
 		return NSOrderedDescending;
 	} else if (invertedRank == NSOrderedSame) {
 		return [self.nickname caseInsensitiveCompare:other.nickname];

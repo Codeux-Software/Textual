@@ -1682,7 +1682,7 @@
 	
 	IRCTreeItem *i = items[0];
 	
-	NSString *s = [worldController() findItemFromInfoGeneratedValue:i];
+	NSString *s = [worldController() pasteboardStringForItem:i];
 	
 	[pboard declareTypes:_treeDragItemTypes owner:self];
 	
@@ -1713,7 +1713,7 @@
 	}
 	
 	/* Validate selection. */
-	IRCTreeItem *i = [worldController() findItemFromInfo:infoStr];
+	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
 	
 	if (i == nil) {
 		return NSDragOperationNone;
@@ -1793,7 +1793,7 @@
 	}
 	
 	/* Validate selection. */
-	IRCTreeItem *i = [worldController() findItemFromInfo:infoStr];
+	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
 	
 	if (i == nil) {
 		return NSDragOperationNone;
