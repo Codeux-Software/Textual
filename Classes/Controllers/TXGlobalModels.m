@@ -47,7 +47,7 @@
 NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 {
 	/* If the format is empty, a default is called. */
-	if (NSObjectIsEmpty(format)) {
+	if (format == nil || [format length] == 0) {
 		format = TXDefaultTextualTimestampFormat;
 	}
 	
@@ -69,7 +69,7 @@ NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 	return [NSString stringWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
 }
 
-NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSUInteger orderMatrix)
+NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix)
 {
 	/* Default what we will return. */
 	if (orderMatrix == 0) {
@@ -187,21 +187,18 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 
 NSString *TXTLS(NSString *key, ...)
 {
-	/* Build result using newer API. */
 	va_list args;
 	va_start(args, key);
 	
 	NSString *result = TXLocalizedString(RZMainBundle(), key, args);
 	
 	va_end(args);
-	
-	/* Return result. */
+
 	return result;
 }
 
 NSString *BLS(NSInteger key, ...)
 {
-	/* Build result using newer API. */
 	va_list args;
 	va_start(args, key);
 	
@@ -210,34 +207,28 @@ NSString *BLS(NSInteger key, ...)
 	NSString *result = TXLocalizedString(RZMainBundle(), resultKey, args);
 	
 	va_end(args);
-	
-	/* Return result. */
+
 	return result;
 }
 
 NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
-	/* Get the unformatted value. */
 	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
-	
-	/* Format it based on input. */
+
 	NSString *formattedString = [[NSString alloc] initWithFormat:languageString arguments:args];
-	
-	/* Return result. */
+
 	return formattedString;
 }
 
 NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 {
-	/* Build result using newer API. */
 	va_list args;
 	va_start(args, key);
 	
 	NSString *result = TXLocalizedString(bundle, key, args);
 	
 	va_end(args);
-	
-	/* Return result. */
+
 	return result;
 }
 
