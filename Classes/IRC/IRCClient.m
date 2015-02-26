@@ -7940,21 +7940,21 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	self.socket.proxyType = self.config.proxyType;
 
-	if (self.config.proxyType == IRCConnectionSocketSystemSocksProxyType)
+	if (self.socket.proxyType == IRCConnectionSocketSystemSocksProxyType)
 	{
 		[self printDebugInformationToConsole:BLS(1142, socketAddress, socketPort)];
 	}
-	else if (self.config.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			 self.config.proxyType == IRCConnectionSocketSocks5ProxyType ||
-			 self.config.proxyType == IRCConnectionSocketHTTPProxyType ||
-			 self.config.proxyType == IRCConnectionSocketHTTPSProxyType)
+	else if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType ||
+			 self.socket.proxyType == IRCConnectionSocketSocks5ProxyType ||
+			 self.socket.proxyType == IRCConnectionSocketHTTPProxyType ||
+			 self.socket.proxyType == IRCConnectionSocketHTTPSProxyType)
 	{
 		self.socket.proxyPort = self.config.proxyPort;
 		self.socket.proxyAddress = self.config.proxyAddress;
 		self.socket.proxyPassword = self.config.proxyPassword;
 		self.socket.proxyUsername = self.config.proxyUsername;
 
-		[self printDebugInformationToConsole:BLS(1141, socketAddress, socketPort, self.config.proxyAddress, self.config.proxyPort)];
+		[self printDebugInformationToConsole:BLS(1141, socketAddress, socketPort, self.socket.proxyAddress, self.socket.proxyPort)];
 	}
 	else
 	{
