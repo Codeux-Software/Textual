@@ -44,6 +44,7 @@
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL windowScriptObjectLoaded;
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
+@property (nonatomic, assign) BOOL viewIsEncrypted;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
@@ -78,6 +79,8 @@
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;
+
+		self.viewIsEncrypted = NO;
 	}
 
 	return self;
@@ -110,12 +113,12 @@
 #pragma mark -
 #pragma mark Encryption Information
 
-- (BOOL)viewIsEncrypted
+- (BOOL)isViewIsEncrypted
 {
 	if (self.associatedChannel == nil) {
 		return NO;
 	} else {
-		NSString *encryptionKey = self.associatedChannel.encryptionKey;
+		NSString *encryptionKey = [self.associatedChannel encryptionKey];
 		
 		return ([encryptionKey length] > 0);
 	}
@@ -123,7 +126,9 @@
 
 - (void)channelLevelEncryptionChanged
 {
-	if ([self viewIsEncrypted]) {
+	self.viewIsEncrypted = [self isViewIsEncrypted];
+
+	if (self.viewIsEncrypted) {
 		[self closeHistoricLog];
 	}
 }
@@ -173,6 +178,9 @@
 	[self.webView setShouldUpdateWhileOffscreen:NO];
 	
 	[self.webView setHostWindow:mainWindow()];
+
+	/* Define additional context information. */
+	self.viewIsEncrypted = [self isViewIsEncrypted];
 	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
@@ -183,13 +191,16 @@
 	/* Even if we aren't playing back history, we still open it
 	 because theme reloads use it to playback messages. */
 	[self.historicLogFile setAssociatedController:self];
-	[self.historicLogFile open];
-	
-	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-		self.historyLoaded = YES;
-	} else {
-		if (self.historyLoaded == NO && (self.associatedChannel && ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates]))) {
-			[self reloadHistory];
+
+	if (self.viewIsEncrypted == NO) {
+		[self.historicLogFile open];
+		
+		if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+			self.historyLoaded = YES;
+		} else {
+			if (self.historyLoaded == NO && (self.associatedChannel && ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates]))) {
+				[self reloadHistory];
+			}
 		}
 	}
 }
@@ -667,7 +678,7 @@
 
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
-	if ([self viewIsEncrypted] == NO) {
+	if (self.viewIsEncrypted == NO) {
 		[self reloadOldLines:YES withOldLines:objects];
 
 		[self performBlockOnMainThread:^{
@@ -704,7 +715,7 @@
 
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
-	if ([self viewIsEncrypted] == NO) {
+	if (self.viewIsEncrypted == NO) {
 		[self reloadOldLines:NO withOldLines:objects];
 
 		[self performBlockOnMainThread:^{
@@ -1068,7 +1079,7 @@
 				/* Doing it this way does break the ability to reload chatter
 				 in the view as well as playback on restart, but the added
 				 security can be seen as a bonus. */
-				if ([self viewIsEncrypted] == NO) {
+				if (self.viewIsEncrypted == NO) {
 					[self.historicLogFile writeNewEntryForLogLine:logLine];
 				}
 
