@@ -662,69 +662,75 @@
 - (void)reloadHistory
 {
 	self.historyLoaded = YES;
-	
-	self.reloadingHistory = YES;
 
-	[[self printingQueue] enqueueMessageBlock:^(id operation) {
-		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
+	if (self.viewIsEncrypted == NO)
+	{
+		self.reloadingHistory = YES;
 
-			[self.historicLogFile resetData];
+		[[self printingQueue] enqueueMessageBlock:^(id operation) {
+			if ([operation isCancelled] == NO) {
+				NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
-			[self reloadHistoryCompletionBlock:objects];
-		} else {
-			[self reloadHistoryCompletionBlock:nil];
-		}
-	 } for:self isStandalone:YES];
+				[self.historicLogFile resetData];
+
+				[self reloadHistoryCompletionBlock:objects];
+			} else {
+				[self reloadHistoryCompletionBlock:nil];
+			}
+		 } for:self isStandalone:YES];
+	}
 }
 
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
-	if (self.viewIsEncrypted == NO) {
-		[self reloadOldLines:YES withOldLines:objects];
+	[self reloadOldLines:YES withOldLines:objects];
 
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+	[self performBlockOnMainThread:^{
+		[self moveToBottom];
 
-			[self maybeRedrawFrame];
-		}];
-	}
+		[self maybeRedrawFrame];
+	}];
 
 	self.reloadingHistory = NO;
 }
 
 - (void)reloadTheme
 {
-	NSAssertReturn(self.reloadingHistory == NO);
+	if (self.reloadingHistory == NO) {
+		self.reloadingBacklog = YES;
 
-	self.reloadingBacklog = YES;
+		[self clearWithReset:NO];
 
-	[self clearWithReset:NO];
-
-	[[self printingQueue] enqueueMessageBlock:^(id operation) {
-		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
-			
-			[self.historicLogFile resetData];
-			
-			[self reloadThemeCompletionBlock:objects];
-		} else {
-			[self reloadThemeCompletionBlock:nil];
+		if (self.viewIsEncrypted == NO)
+		{
+			[[self printingQueue] enqueueMessageBlock:^(id operation) {
+				if ([operation isCancelled] == NO) {
+					NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
+					
+					[self.historicLogFile resetData];
+					
+					[self reloadThemeCompletionBlock:objects];
+				} else {
+					[self reloadThemeCompletionBlock:nil];
+				}
+			} for:self isStandalone:YES];
 		}
-	} for:self isStandalone:YES];
+		else
+		{
+			self.reloadingBacklog = NO;
+		}
+	}
 }
 
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
-	if (self.viewIsEncrypted == NO) {
-		[self reloadOldLines:NO withOldLines:objects];
+	[self reloadOldLines:NO withOldLines:objects];
 
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+	[self performBlockOnMainThread:^{
+		[self moveToBottom];
 
-			[self maybeRedrawFrame];
-		}];
-	}
+		[self maybeRedrawFrame];
+	}];
 
 	self.reloadingBacklog = NO;
 }
