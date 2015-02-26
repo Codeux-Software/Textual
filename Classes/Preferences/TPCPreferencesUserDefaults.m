@@ -153,7 +153,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)removeObjectForKey:(NSString *)defaultName
 {
-	[super removeObjectForKey:defaultName];
+	[self __defaultsController_setObject:[NSNull null] forControllerKey:defaultName];
 
 	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
 }
