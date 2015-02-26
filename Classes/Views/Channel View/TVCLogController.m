@@ -192,15 +192,13 @@
 	 because theme reloads use it to playback messages. */
 	[self.historicLogFile setAssociatedController:self];
 
-	if (self.viewIsEncrypted == NO) {
-		[self.historicLogFile open];
-		
-		if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-			self.historyLoaded = YES;
-		} else {
-			if (self.historyLoaded == NO && (self.associatedChannel && ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates]))) {
-				[self reloadHistory];
-			}
+	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+		self.historyLoaded = YES;
+	} else {
+		if (self.historyLoaded == NO && (self.associatedChannel &&
+									   ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates])))
+		{
+			[self reloadHistory];
 		}
 	}
 }
@@ -241,9 +239,14 @@
 	if ([self viewIsEncrypted] || withForcedReset) {
 		[self.historicLogFile resetData]; // -resetData calls -close on your behalf
 	} else {
-		if ([TPCPreferences reloadScrollbackOnLaunch] == NO || self.associatedChannel == nil || ([self.associatedChannel isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO)) {
+		if ([TPCPreferences reloadScrollbackOnLaunch] == NO ||
+			  self.associatedChannel == nil ||
+			([self.associatedChannel isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO))
+		{
 			[self.historicLogFile resetData];
-		} else {
+		}
+		else
+		{
 			[self.historicLogFile close];
 		}
 	}
@@ -667,7 +670,6 @@
 			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
 			[self.historicLogFile resetData];
-			[self.historicLogFile open];
 
 			[self reloadHistoryCompletionBlock:objects];
 		} else {
@@ -704,7 +706,6 @@
 			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
 			
 			[self.historicLogFile resetData];
-			[self.historicLogFile open];
 			
 			[self reloadThemeCompletionBlock:objects];
 		} else {
@@ -941,7 +942,6 @@
 
 		if (resetQueue) {
 			[self.historicLogFile resetData];
-			[self.historicLogFile open];
 		}
 		
 		@synchronized(self.highlightedLineNumbers) {
