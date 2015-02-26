@@ -1068,11 +1068,11 @@
 	}
 	
 	if (primaryItem == nil) {
-		selectedPrimary = [NSString localizedNameOfStringEncoding:self.config.primaryEncoding];
+		selectedPrimary = [NSString localizedNameOfStringEncoding:TXDefaultPrimaryStringEncoding];
 	}
 	
 	if (fallbackItem == nil) {
-		selectedFallback = [NSString localizedNameOfStringEncoding:self.config.fallbackEncoding];
+		selectedFallback = [NSString localizedNameOfStringEncoding:TXDefaultFallbackStringEncoding];
 	}
 	
 	/* Select items. */
