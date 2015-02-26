@@ -833,11 +833,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 				NSString *hashedValue = [templateTokens[@"anchorLocation"] md5];
 
-				NSString *keyValue = urlMatches[hashedValue];
-
-				if (keyValue) {
+				if ([urlMatches containsKey:hashedValue]) {
 					templateTokens[@"anchorInlineImageAvailable"] = @(YES);
-					templateTokens[@"anchorInlineImageUniqueID"] = keyValue;
+					templateTokens[@"anchorInlineImageUniqueID"] = hashedValue;
 				}
 			}
 		}
