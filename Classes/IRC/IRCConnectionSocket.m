@@ -224,23 +224,27 @@
 
 - (void)socket:(id)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler
 {
-	SecTrustResultType result;
-	
-	OSStatus trustEvalStatus = SecTrustEvaluate(trust, &result);
-	
-	if (trustEvalStatus == errSecSuccess)
-	{
-		if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
-			completionHandler(YES);
-		} else if (result == kSecTrustResultRecoverableTrustFailure) {
-			[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler forSocket:self.socketConnection];
-		} else {
+	if ([[self.associatedClient config] validateServerCertificateChain] == NO) {
+		completionHandler(YES);
+	} else {
+		SecTrustResultType result;
+		
+		OSStatus trustEvalStatus = SecTrustEvaluate(trust, &result);
+		
+		if (trustEvalStatus == errSecSuccess)
+		{
+			if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
+				completionHandler(YES);
+			} else if (result == kSecTrustResultRecoverableTrustFailure) {
+				[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler forSocket:self.socketConnection];
+			} else {
+				completionHandler(NO);
+			}
+		}
+		else
+		{
 			completionHandler(NO);
 		}
-	}
-	else
-	{
-		completionHandler(NO);
 	}
 }
 	

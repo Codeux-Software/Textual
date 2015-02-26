@@ -61,12 +61,6 @@
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 	settings[(id)kCFStreamSSLPeerName] = (id)[controller serverAddress];
-
-	if ([[client config] validateServerCertificateChain]) {
-		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanTrue;
-	} else {
-		settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
-	}
 	
 	NSData *localCertData = [[client config] identityClientSideCertificate];
 	
