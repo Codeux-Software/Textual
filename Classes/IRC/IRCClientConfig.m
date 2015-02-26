@@ -595,13 +595,13 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 
 - (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
 {
-	NSMutableDictionary *ndic = dic;
+	NSMutableDictionary *ndic = [NSMutableDictionary dictionary];
 
 	NSDictionary *defaults = [self defaults];
 
 	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (NSObjectsAreEqual(defaults[key], obj)) {
-			[ndic removeObjectForKey:key];
+		if (NSObjectsAreEqual(defaults[key], obj) == NO) {
+			[ndic setObject:obj forKey:key];
 		}
 	}];
 
