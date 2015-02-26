@@ -47,7 +47,7 @@ TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString
 /* Time. */
 TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format); // Acts as a forward for strftime(). TXDefaultTextualTimestampFormat is used when format is empty.
 
-TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSUInteger orderMatrix);
+TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 

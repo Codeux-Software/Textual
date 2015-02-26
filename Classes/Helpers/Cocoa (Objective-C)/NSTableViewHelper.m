@@ -42,7 +42,6 @@
 + (NSFont *)preferredGlobalTableViewFont
 {
 	return [NSFont systemFontOfSize:12.0];
-
 }
 
 @end
