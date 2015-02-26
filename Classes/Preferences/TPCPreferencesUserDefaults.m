@@ -321,7 +321,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 {
 	BOOL newValueIsNull = (value == nil || [value isKindOfClass:[NSNull class]]);
 
-	id defaultsValue = [[self defaults] objectForKey:value];
+	id defaultsValue = [[self defaults] objectForKey:key];
 
 	if (defaultsValue == nil) {
 		if (newValueIsNull) {
