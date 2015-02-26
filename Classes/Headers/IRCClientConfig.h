@@ -39,10 +39,7 @@
 #import "TextualApplication.h"
 
 TEXTUAL_EXTERN NSInteger const IRCConnectionDefaultServerPort;
-
-#define IRCClientConfigFloodControlDefaultDelayTimer					2
-#define IRCClientConfigFloodControlDefaultMessageCount					6
-#define IRCClientConfigFloodControlDefaultMessageCountForFreenode		2 // freenode gets a special case 'cause they are strict about flood control
+TEXTUAL_EXTERN NSInteger const IRCConnectionDefaultProxyPort;
 
 typedef enum TXConnectionProxyType : NSInteger {
 	IRCConnectionSocketNoProxyType = 0,
