@@ -265,9 +265,7 @@
 {
 	@autoreleasepool {
 		/* Close the open file handle. */
-		if (self.fileHandle) {
-			[self close];
-		}
+		[self close];
 
 		/* Read contents of file. */
 		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
