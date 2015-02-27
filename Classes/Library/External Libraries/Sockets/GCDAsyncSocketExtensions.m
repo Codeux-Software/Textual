@@ -328,12 +328,12 @@
 
 - (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version address:(NSString *)address port:(NSInteger)port username:(NSString *)username password:(NSString *)password
 {
-	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-
 	switch (version) {
 		case IRCConnectionSocketSocks4ProxyType:
 		case IRCConnectionSocketSocks5ProxyType:
 		{
+			NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+
 			if (version == IRCConnectionSocketSocks4ProxyType) {
 				settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion4;
 			} else {

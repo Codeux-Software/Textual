@@ -38,7 +38,13 @@
 
 #import "TextualApplication.h"
 
-NSInteger const IRCConnectionDefaultServerPort		= 6667;
+NSInteger const IRCConnectionDefaultServerPort = 6667;
+
+NSInteger const IRCConnectionDefaultProxyPort = 1080;
+
+#define IRCClientConfigFloodControlDefaultDelayTimer					2
+#define IRCClientConfigFloodControlDefaultMessageCount					6
+#define IRCClientConfigFloodControlDefaultMessageCountForFreenode		2 // freenode gets a special case 'cause they are strict about flood control
 
 @implementation IRCClientConfig
 
@@ -96,7 +102,7 @@ NSInteger const IRCConnectionDefaultServerPort		= 6667;
 			 @"zncIgnorePlaybackNotifications" : @(YES),
 
 			 @"proxyType" : @(IRCConnectionSocketNoProxyType),
-			 @"proxyPort" : @(1080),
+			 @"proxyPort" : @(IRCConnectionDefaultProxyPort),
 
 			 @"primaryEncoding" : @(TXDefaultPrimaryStringEncoding),
 			 @"fallbackEncoding" : @(TXDefaultFallbackStringEncoding),
