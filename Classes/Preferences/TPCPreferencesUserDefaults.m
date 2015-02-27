@@ -153,7 +153,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)removeObjectForKey:(NSString *)defaultName
 {
-	[self __defaultsController_setObject:[NSNull null] forControllerKey:defaultName];
+	id hasValue = [self objectForKey:defaultName];
+
+	if (hasValue) {
+		[self __defaultsController_setObject:nil forControllerKey:defaultName];
+	}
 }
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
