@@ -100,9 +100,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isHostmaskAddress
 {
-	return ([self length] > 0 &&
-			[self containsCharacters:@"!@"] == NO &&
-			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
+	return ([self length] > 0 && [self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
 - (BOOL)isHostmaskUsername
@@ -136,7 +134,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 #else
 	return ([self length] > 0 &&
 			[self length] <= TXMaximumIRCUsernameLength &&
-			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
+			[self containsCharacters:@"\x000\x020\x00d\x00a"] == NO);
 #endif
 }
 
@@ -145,8 +143,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return ([self isNotEqualTo:@"*"] &&
 			[self length] > 0 &&
 			[self length] <= TXMaximumIRCNicknameLength &&
-			[self containsCharacters:@"!@"] == NO &&
-			[self containsCharactersFromCharacterSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] == NO);
+			[self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
 - (BOOL)isNickname
