@@ -239,6 +239,7 @@
 {
 	[self cancel:nil];
 }
+
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
 {
 	IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
@@ -267,15 +268,11 @@
 
 - (void)cancel:(id)sender
 {
-	[RZNotificationCenter() removeObserver:self];
-
 	[super cancel:sender];
 }
 
 - (void)ok:(id)sender
 {
-	[RZNotificationCenter() removeObserver:self];
-
 	[self save];
 	
 	if ([self.delegate respondsToSelector:@selector(channelSheetOnOK:)]) {
@@ -290,6 +287,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	[RZNotificationCenter() removeObserver:self];
+
+	[self.sheet makeFirstResponder:nil];
+
 	if ([self.delegate respondsToSelector:@selector(channelSheetWillClose:)]) {
 		[self.delegate channelSheetWillClose:self];
 	}

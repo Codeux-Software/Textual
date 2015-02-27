@@ -515,7 +515,7 @@ However, if backwards compatibility is not a concern, then it is highly recommen
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="180.5" y="897"/>
+            <point key="canvasLocation" x="277.5" y="897"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
