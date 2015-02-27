@@ -263,61 +263,59 @@
 
 - (NSArray *)listEntriesWithFetchLimit:(NSUInteger)maxEntryCount
 {
-	if (self.fileHandle) {
-		@autoreleasepool {
-			/* Close the open file handle. */
+	@autoreleasepool {
+		/* Close the open file handle. */
+		if (self.fileHandle) {
 			[self close];
-
-			/* Read contents of file. */
-			NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
-
-			NSObjectIsEmptyAssertReturn(rawdata, nil);
-
-			/* Seek each newline, truncate to that, insert into array, then 
-			 find the next one and repeat process until there are no more. */
-			NSMutableArray *alllines = [NSMutableArray array];
-
-			NSMutableData *mutdata = [rawdata mutableCopy];
-
-			while (1 == 1) {
-				NSRange scanrange = NSMakeRange(0, [mutdata length]);
-
-				NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
-
-				if (nlrang.location == NSNotFound) {
-					break; // No newline was found.
-				} else {
-					NSRange cutRange = NSMakeRange(0, (nlrang.location + 1));
-
-					NSData *chunkedData = [mutdata subdataWithRange:cutRange];
-
-					[alllines addObject:chunkedData];
-
-					[mutdata replaceBytesInRange:cutRange withBytes:NULL length:0];
-				}
-			}
-
-			/* Now that we have all lines, limit them based on fetch count. */
-			if ([alllines count] > maxEntryCount) {
-				NSInteger finalCount = [alllines count];
-
-				NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
-
-				NSMutableArray *countedEntries = [NSMutableArray array];
-
-				for (NSInteger i = startingIndex; i < finalCount; i++)
-				{
-					[countedEntries addObject:alllines[i]];
-				}
-
-				return countedEntries;
-			}
-
-			/* Return found data. */
-			return alllines;
 		}
-	} else {
-		return nil;
+
+		/* Read contents of file. */
+		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
+
+		NSObjectIsEmptyAssertReturn(rawdata, nil);
+
+		/* Seek each newline, truncate to that, insert into array, then 
+		 find the next one and repeat process until there are no more. */
+		NSMutableArray *alllines = [NSMutableArray array];
+
+		NSMutableData *mutdata = [rawdata mutableCopy];
+
+		while (1 == 1) {
+			NSRange scanrange = NSMakeRange(0, [mutdata length]);
+
+			NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
+
+			if (nlrang.location == NSNotFound) {
+				break; // No newline was found.
+			} else {
+				NSRange cutRange = NSMakeRange(0, (nlrang.location + 1));
+
+				NSData *chunkedData = [mutdata subdataWithRange:cutRange];
+
+				[alllines addObject:chunkedData];
+
+				[mutdata replaceBytesInRange:cutRange withBytes:NULL length:0];
+			}
+		}
+
+		/* Now that we have all lines, limit them based on fetch count. */
+		if ([alllines count] > maxEntryCount) {
+			NSInteger finalCount = [alllines count];
+
+			NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
+
+			NSMutableArray *countedEntries = [NSMutableArray array];
+
+			for (NSInteger i = startingIndex; i < finalCount; i++)
+			{
+				[countedEntries addObject:alllines[i]];
+			}
+
+			return countedEntries;
+		}
+
+		/* Return found data. */
+		return alllines;
 	}
 }
 

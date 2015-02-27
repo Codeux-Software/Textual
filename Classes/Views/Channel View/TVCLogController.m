@@ -236,7 +236,7 @@
 	 then we call a save before terminating. Or, we just erase the file from the
 	 path that it is written to entirely. */
 
-	if ([self viewIsEncrypted] || withForcedReset) {
+	if (self.viewIsEncrypted || withForcedReset) {
 		[self.historicLogFile resetData]; // -resetData calls -close on your behalf
 	} else {
 		if ([TPCPreferences reloadScrollbackOnLaunch] == NO ||
