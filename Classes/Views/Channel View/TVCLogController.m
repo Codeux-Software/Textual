@@ -44,6 +44,7 @@
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL windowScriptObjectLoaded;
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
+@property (nonatomic, assign) BOOL viewIsEncrypted;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
@@ -78,6 +79,8 @@
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;
+
+		self.viewIsEncrypted = NO;
 	}
 
 	return self;
@@ -110,12 +113,12 @@
 #pragma mark -
 #pragma mark Encryption Information
 
-- (BOOL)viewIsEncrypted
+- (BOOL)isViewIsEncrypted
 {
 	if (self.associatedChannel == nil) {
 		return NO;
 	} else {
-		NSString *encryptionKey = self.associatedChannel.encryptionKey;
+		NSString *encryptionKey = [self.associatedChannel encryptionKey];
 		
 		return ([encryptionKey length] > 0);
 	}
@@ -123,7 +126,9 @@
 
 - (void)channelLevelEncryptionChanged
 {
-	if ([self viewIsEncrypted]) {
+	self.viewIsEncrypted = [self isViewIsEncrypted];
+
+	if (self.viewIsEncrypted) {
 		[self closeHistoricLog];
 	}
 }
@@ -173,6 +178,9 @@
 	[self.webView setShouldUpdateWhileOffscreen:NO];
 	
 	[self.webView setHostWindow:mainWindow()];
+
+	/* Define additional context information. */
+	self.viewIsEncrypted = [self isViewIsEncrypted];
 	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
@@ -183,12 +191,13 @@
 	/* Even if we aren't playing back history, we still open it
 	 because theme reloads use it to playback messages. */
 	[self.historicLogFile setAssociatedController:self];
-	[self.historicLogFile open];
-	
+
 	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
 		self.historyLoaded = YES;
 	} else {
-		if (self.historyLoaded == NO && (self.associatedChannel && ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates]))) {
+		if (self.historyLoaded == NO && (self.associatedChannel &&
+									   ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates])))
+		{
 			[self reloadHistory];
 		}
 	}
@@ -230,9 +239,14 @@
 	if ([self viewIsEncrypted] || withForcedReset) {
 		[self.historicLogFile resetData]; // -resetData calls -close on your behalf
 	} else {
-		if ([TPCPreferences reloadScrollbackOnLaunch] == NO || self.associatedChannel == nil || ([self.associatedChannel isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO)) {
+		if ([TPCPreferences reloadScrollbackOnLaunch] == NO ||
+			  self.associatedChannel == nil ||
+			([self.associatedChannel isChannel] == NO && [TPCPreferences rememberServerListQueryStates] == NO))
+		{
 			[self.historicLogFile resetData];
-		} else {
+		}
+		else
+		{
 			[self.historicLogFile close];
 		}
 	}
@@ -648,71 +662,75 @@
 - (void)reloadHistory
 {
 	self.historyLoaded = YES;
-	
-	self.reloadingHistory = YES;
 
-	[[self printingQueue] enqueueMessageBlock:^(id operation) {
-		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
+	if (self.viewIsEncrypted == NO)
+	{
+		self.reloadingHistory = YES;
 
-			[self.historicLogFile resetData];
-			[self.historicLogFile open];
+		[[self printingQueue] enqueueMessageBlock:^(id operation) {
+			if ([operation isCancelled] == NO) {
+				NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:100];
 
-			[self reloadHistoryCompletionBlock:objects];
-		} else {
-			[self reloadHistoryCompletionBlock:nil];
-		}
-	 } for:self isStandalone:YES];
+				[self.historicLogFile resetData];
+
+				[self reloadHistoryCompletionBlock:objects];
+			} else {
+				[self reloadHistoryCompletionBlock:nil];
+			}
+		 } for:self isStandalone:YES];
+	}
 }
 
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
-	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:YES withOldLines:objects];
+	[self reloadOldLines:YES withOldLines:objects];
 
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+	[self performBlockOnMainThread:^{
+		[self moveToBottom];
 
-			[self maybeRedrawFrame];
-		}];
-	}
+		[self maybeRedrawFrame];
+	}];
 
 	self.reloadingHistory = NO;
 }
 
 - (void)reloadTheme
 {
-	NSAssertReturn(self.reloadingHistory == NO);
+	if (self.reloadingHistory == NO) {
+		self.reloadingBacklog = YES;
 
-	self.reloadingBacklog = YES;
+		[self clearWithReset:NO];
 
-	[self clearWithReset:NO];
-
-	[[self printingQueue] enqueueMessageBlock:^(id operation) {
-		if ([operation isCancelled] == NO) {
-			NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
-			
-			[self.historicLogFile resetData];
-			[self.historicLogFile open];
-			
-			[self reloadThemeCompletionBlock:objects];
-		} else {
-			[self reloadThemeCompletionBlock:nil];
+		if (self.viewIsEncrypted == NO)
+		{
+			[[self printingQueue] enqueueMessageBlock:^(id operation) {
+				if ([operation isCancelled] == NO) {
+					NSArray *objects = [self.historicLogFile listEntriesWithFetchLimit:1000];
+					
+					[self.historicLogFile resetData];
+					
+					[self reloadThemeCompletionBlock:objects];
+				} else {
+					[self reloadThemeCompletionBlock:nil];
+				}
+			} for:self isStandalone:YES];
 		}
-	} for:self isStandalone:YES];
+		else
+		{
+			self.reloadingBacklog = NO;
+		}
+	}
 }
 
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
-	if ([self viewIsEncrypted] == NO) {
-		[self reloadOldLines:NO withOldLines:objects];
+	[self reloadOldLines:NO withOldLines:objects];
 
-		[self performBlockOnMainThread:^{
-			[self moveToBottom];
+	[self performBlockOnMainThread:^{
+		[self moveToBottom];
 
-			[self maybeRedrawFrame];
-		}];
-	}
+		[self maybeRedrawFrame];
+	}];
 
 	self.reloadingBacklog = NO;
 }
@@ -930,7 +948,6 @@
 
 		if (resetQueue) {
 			[self.historicLogFile resetData];
-			[self.historicLogFile open];
 		}
 		
 		@synchronized(self.highlightedLineNumbers) {
@@ -1068,7 +1085,7 @@
 				/* Doing it this way does break the ability to reload chatter
 				 in the view as well as playback on restart, but the added
 				 security can be seen as a bonus. */
-				if ([self viewIsEncrypted] == NO) {
+				if (self.viewIsEncrypted == NO) {
 					[self.historicLogFile writeNewEntryForLogLine:logLine];
 				}
 
