@@ -115,7 +115,7 @@
 
 - (BOOL)valueIsEmpty
 {
-	return NSObjectIsEmpty([self value]);
+	return NSObjectIsEmpty([self stringValue]);
 }
 
 - (BOOL)valueIsValid
