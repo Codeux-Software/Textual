@@ -979,8 +979,6 @@
 {
 	[self closeChildSheets];
 
-	[RZNotificationCenter() removeObserver:self];
-
 	[self save];
 
 	if ([self.delegate respondsToSelector:@selector(serverSheetOnOK:)]) {
@@ -995,18 +993,12 @@
 	}
 #endif
 
-	[self.sheet makeFirstResponder:nil];
-
 	[super ok:nil];
 }
 
 - (void)cancel:(id)sender
 {
 	[self closeChildSheets];
-
-	[RZNotificationCenter() removeObserver:self];
-	
-	[self.sheet makeFirstResponder:nil];
 	
 	[super cancel:nil];
 }
@@ -1800,6 +1792,10 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self releaseTableViewDataSourceBeforeSheetClosure];
+
+	[RZNotificationCenter() removeObserver:self];
+
+	[self.sheet makeFirstResponder:nil];
 
 	[self.channelTable unregisterDraggedTypes];
 	
