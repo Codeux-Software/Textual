@@ -241,28 +241,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		Class class = [self class];
-
-		SEL originalSelector = @selector(      _applyValue:forKey:registrationDomain:);
-		SEL swizzledSelector = @selector(__priv_applyValue:forKey:registrationDomain:);
-
-		Method originalMethod = class_getInstanceMethod(class, originalSelector);
-		Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-
-		BOOL methodAdded =
-		class_addMethod(class,
-						originalSelector,
-						method_getImplementation(swizzledMethod),
-						method_getTypeEncoding(swizzledMethod));
-
-		if (methodAdded) {
-			class_replaceMethod(class,
-								swizzledSelector,
-								method_getImplementation(originalMethod),
-								method_getTypeEncoding(originalMethod));
-		} else {
-			method_exchangeImplementations(originalMethod, swizzledMethod);
-		}
+		XRExchangeImplementation(@"TPCPreferencesUserDefaultsController",
+								 @"_applyValue:forKey:registrationDomain:",
+								 @"__priv_applyValue:forKey:registrationDomain:");
 	});
 }
 
