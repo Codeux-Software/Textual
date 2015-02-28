@@ -12,3 +12,4 @@ Build Results/*
 xcuserdata
 *.xcworkspace
 Resources/Build Configurations/Provisioning Profile.xcconfig
+Resources/Documents/Header Documentation/Results/*
