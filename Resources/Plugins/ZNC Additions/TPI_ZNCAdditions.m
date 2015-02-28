@@ -47,8 +47,8 @@
 				   messageInformation:(NSDictionary *)messageDict
 {
 	if ([client isZNCBouncerConnection]) {
-		NSString *sender = senderDict[@"senderNickname"];
-		NSString *message = messageDict[@"messageSequence"];
+		NSString *sender = senderDict[THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
+		NSString *message = messageDict[THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute];
 
 		if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
 			/* We listen for ZNC disconnects so that we can terminate channels when we
