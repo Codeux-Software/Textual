@@ -1,0 +1,3 @@
+#!/bin/sh
+
+headerdoc2html -u -q -H -o "./Results" "../../../Classes/Headers/THOPluginProtocol.h"
