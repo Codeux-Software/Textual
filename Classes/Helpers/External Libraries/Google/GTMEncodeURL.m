@@ -34,7 +34,11 @@
                                             (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                             kCFStringEncodingUTF8);
 
-	return (NSString *)escaped;
+	NSString *result = [NSString stringWithString:(NSString *)escaped];
+
+	CFRelease(escaped);
+
+	return result;
 }
 
 - (NSString *)gtm_stringByUnescapingFromURLArgument
