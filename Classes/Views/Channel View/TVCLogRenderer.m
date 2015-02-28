@@ -525,7 +525,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length)) {
 					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length);
 
-					*foundKeyword = YES;
+					if ( foundKeyword) {
+						*foundKeyword = YES;
+					}
 
 					break;
 				}
@@ -537,7 +539,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		/* We break after finding a keyword because as long as there is one
 		 amongst many, that is all the end user really cares about. */
 		if (foundKeyword) {
-			break;
+			if (*foundKeyword) {
+				break;
+			}
 		}
 	}
 }
@@ -567,7 +571,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (isClear(_effectAttributes, _rendererURLAttribute, matchRange.location, matchRange.length)) {
 					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, matchRange.location, matchRange.length);
 
-					*foundKeyword = YES;
+					if ( foundKeyword) {
+						*foundKeyword = YES;
+					}
 
 					break; // break from first for loop ending search
 				}

@@ -614,13 +614,15 @@
 	NSString *cloudPath = [[TPCPathInfo userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
 
 	if ([[url relativePath] hasPrefix:cloudPath]) {
-		NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+		if (outError) {
+			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
-		[userInfo setObject:url forKey:NSURLErrorKey];
-		[userInfo setObject:TXTLS(@"BasicLanguage[1251][1]") forKey:NSLocalizedDescriptionKey];
-		[userInfo setObject:TXTLS(@"BasicLanguage[1251][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+			[userInfo setObject:url forKey:NSURLErrorKey];
+			[userInfo setObject:TXTLS(@"BasicLanguage[1251][1]") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:TXTLS(@"BasicLanguage[1251][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
 
-		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+		}
 
 		return NO;
 	} else {

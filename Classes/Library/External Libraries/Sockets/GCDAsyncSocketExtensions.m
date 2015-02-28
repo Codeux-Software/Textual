@@ -207,8 +207,17 @@
 							id issuerInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1IssuerName);
 							id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
 
-							PointerIsEmptyAssertReturn(issuerInformation, nil);
-							PointerIsEmptyAssertReturn(subjectInformation, nil);
+							if (issuerInformation == nil) {
+								CFRelease(certificateProperties);
+
+								return nil;
+							}
+
+							if (subjectInformation == nil) {
+								CFRelease(certificateProperties);
+
+								return nil;
+							}
 
 							NSString *issuerOrganization = getObjectValueForChild(issuerInformation, kSecOIDOrganizationName);
 
@@ -217,27 +226,32 @@
 							NSString *subjectLocationState = getObjectValueForChild(subjectInformation, kSecOIDStateProvinceName);
 							NSString *subjectLocationCity = getObjectValueForChild(subjectInformation, kSecOIDLocalityName);
 
+							NSString *builtResult = nil;
+
 							if (issuerOrganization &&
 								subjectOrganization &&
 								subjectLocationCountry &&
 								subjectLocationState &&
 								subjectLocationCity)
 							{
-								return TXTLS(@"BasicLanguage[1229][3]",
-											 issuerOrganization,
-											 subjectOrganization,
-											 subjectLocationCity,
-											 subjectLocationState,
-											 subjectLocationCountry);
+								builtResult = TXTLS(@"BasicLanguage[1229][3]",
+													issuerOrganization,
+													subjectOrganization,
+													subjectLocationCity,
+													subjectLocationState,
+													subjectLocationCountry);
 							}
+
+							CFRelease(certificateProperties);
+
+							return builtResult;
 						}
 
-						CFRelease(certificateProperties);
+						CFRelease(certificateProperties); // Placed here to quiet analyzer
 					}
 				}
 			}
 		}
-
 	}
 
 	return nil;
