@@ -396,7 +396,7 @@
 			[result appendString:c];
 		}
 
-		if (foregroundColor) {
+		if (foregroundColorD) {
 			[result appendFormat:@"%c", IRCTextFormatterColorEffectCharacter];
 		}
 
