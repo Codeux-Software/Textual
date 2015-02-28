@@ -984,7 +984,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if (channel.isChannel || channel.isPrivateMessage) {
 		NSString *encryptionKey = channel.config.encryptionKey;
 		
-		if (encryptionKey) {
+		if (NSObjectIsNotEmpty(encryptionKey)) {
 			NSString *newstr = [CSFWBlowfish encodeData:message key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding];
 
 			if ([newstr length] < 5) {
@@ -1009,7 +1009,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if (channel.isChannel || channel.isPrivateMessage) {
 		NSString *encryptionKey = channel.encryptionKey;
 		
-		if (encryptionKey) {
+		if (NSObjectIsNotEmpty(encryptionKey)) {
 			NSInteger badCharCount = 0;
 			
 			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding badBytes:&badCharCount];
@@ -3815,7 +3815,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self send:IRCPrivateCommandIndex("cap"), @"LS", nil];
 
-	if (serverPassword) {
+	if (NSObjectIsNotEmpty(serverPassword)) {
 		[self send:IRCPrivateCommandIndex("pass"), serverPassword, nil];
 	}
 
@@ -4400,7 +4400,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					if (self.isWaitingForNickServ == NO) {
 						NSString *nicknamePassword = self.config.nicknamePassword;
 						
-						if (nicknamePassword) {
+						if (NSObjectIsNotEmpty(nicknamePassword)) {
 							for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
 								if ([cleanedText containsIgnoringCase:token]) {
 									continueNickServScan = NO;
@@ -4769,7 +4769,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		
 		[mainWindow() reloadTreeItem:c];
 
-		if (c.encryptionKey) {
+		if (NSObjectIsNotEmpty(c.encryptionKey)) {
 			[self printDebugInformation:BLS(1003) channel:c];
 		}
 		
@@ -5665,7 +5665,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* If the user has a configured nickname password, then we will
 	 use that instead for plain text authentication. */
-	if (self.config.nicknamePassword) {
+	if (NSObjectIsNotEmpty(self.config.nicknamePassword)) {
 		return IRCClientIdentificationWithSASLPlainTextMechanism;
 	}
 
@@ -8101,8 +8101,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[channel setStatus:IRCChannelStatusJoining];
 
 	if (NSObjectIsEmpty(password)) {
-		if (channel.config.secretKey) {
-			password = [channel secretKey];
+		NSString *secretKey = [channel secretKey];
+
+		if (NSObjectIsNotEmpty(secretKey)) {
+			password = secretKey;
 		} else {
 			password = nil;
 		}
@@ -8218,9 +8220,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			BOOL channelListEmpty = NSObjectIsEmpty(channelList);
 			BOOL passwordListEmpty = NSObjectIsEmpty(passwordList);
 			
-			NSString *secretKey = c.config.secretKey;
+			NSString *secretKey = [c secretKey];
 
-			if (secretKey) {
+			if (NSObjectIsNotEmpty(secretKey)) {
 				if (passKeys == NO) {
 					continue;
 				}
@@ -8254,7 +8256,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 				[channelList setString:[c name]];
 
-				if (secretKey) {
+				if (NSObjectIsNotEmpty(secretKey)) {
 					[passwordList setString:secretKey];
 				}
 

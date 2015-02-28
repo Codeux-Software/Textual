@@ -1615,7 +1615,7 @@
 		} else if ([columnId isEqualToString:@"pass"]) {
 			NSString *secretKeyValue = [c secretKey];
 			
-			if (secretKeyValue) {
+			if (NSObjectIsNotEmpty(secretKeyValue)) {
 				return secretKeyValue;
 			} else {
 				return NSStringEmptyPlaceholder;
