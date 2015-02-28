@@ -75,8 +75,8 @@
 				   messageInformation:(NSDictionary *)messageDict
 {
 	[self performBlockOnMainThread:^{
-		NSString *person  = senderDict[@"senderNickname"];
-		NSString *message = messageDict[@"messageSequence"];
+		NSString *person  = senderDict[THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
+		NSString *message = messageDict[THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute];
 
 		if ([message hasPrefix:@"+"]) {
 			/* For some reason, NOTICE has a + prefix for key exchange on

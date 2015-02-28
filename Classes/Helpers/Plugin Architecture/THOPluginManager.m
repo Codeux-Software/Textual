@@ -43,15 +43,29 @@
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
 @end
 
-NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute			= @"lineNumber";
-NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute		= @"senderNickname";
-NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute			= @"lineType";
-NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute			= @"memberType";
-NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute		= @"receivedAtTime";
-NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute	= @"allHyperlinksInBody";
-NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute			= @"mentionedUsers";
-NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute			= @"messageBody";
-NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= @"wordMatchFound";
+NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute = @"lineNumber";
+NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute = @"senderNickname";
+NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute = @"lineType";
+NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute = @"memberType";
+NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute = @"receivedAtTime";
+NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute = @"allHyperlinksInBody";
+NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute	= @"mentionedUsers";
+NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute	= @"messageBody";
+NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute = @"wordMatchFound";
+
+NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute = @"senderIsServer";
+NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute = @"senderHostmask";
+NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute = @"senderNickname";
+NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute = @"senderUsername";
+NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute = @"senderDNSMask";
+
+NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute = @"messageReceived";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute = @"messageParamaters";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute = @"messageNumericReply";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute = @"messageCommand";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute = @"messageSequence";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute = @"messageServer";
+NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute = @"messageNetwork";
 
 @implementation THOPluginManager
 
@@ -431,21 +445,21 @@ NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute	= 
 		NSString *cmdLower = [[message command] lowercaseString];
 
 		NSDictionary *senderData = @{
-			@"senderIsServer"	: @([[message sender] isServer]),
-			@"senderHostmask"	: NSDictionaryNilValue([message senderHostmask]),
-			@"senderNickname"	: NSDictionaryNilValue([message senderNickname]),
-			@"senderUsername"	: NSDictionaryNilValue([message senderUsername]),
-			@"senderDNSMask"	: NSDictionaryNilValue([message senderAddress])
+			THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute	: @([[message sender] isServer]),
+			THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute	: NSDictionaryNilValue([message senderHostmask]),
+			THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute	: NSDictionaryNilValue([message senderNickname]),
+			THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute	: NSDictionaryNilValue([message senderUsername]),
+			THOPluginProtocolDidReceiveServerInputSenderAddressAttribute	: NSDictionaryNilValue([message senderAddress])
 		};
 
 		NSDictionary *messageData = @{
-			@"messageReceived"      :   [message receivedAt],
-			@"messageParamaters"	:   [message params],
-			@"messageNumericReply"	: @([message numericReply]),
-			@"messageCommand"		:   [message command],
-			@"messageSequence"		: NSDictionaryNilValue([message sequence]),
-			@"messageServer"		: NSDictionaryNilValue([client networkAddress]),
-			@"messageNetwork"		: NSDictionaryNilValue([client networkName])
+			THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute    :   [message receivedAt],
+			THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute		:   [message params],
+			THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute		: @([message numericReply]),
+			THOPluginProtocolDidReceiveServerInputMessageCommandAttribute			:   [message command],
+			THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute			: NSDictionaryNilValue([message sequence]),
+			THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute	: NSDictionaryNilValue([client networkAddress]),
+			THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute		: NSDictionaryNilValue([client networkName])
 		};
 		
 		for (THOPluginItem *plugin in self.allLoadedPlugins)

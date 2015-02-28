@@ -56,9 +56,12 @@
 /* This call expects the localized strings to be inside the filename "BasicLanguage.strings"
  Any other name will not work unless the actual Cocoa APIs for accessing localized strings
  is used in place of these. */
-#define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
-
 #define TPILocalizedString(k, ...)		TXLocalizedStringAlternative(TPIBundleFromClass(), k, ##__VA_ARGS__)
+
+/*!
+ * @brief Returns the NSBundle that owns the calling class.
+ */
+#define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
 
 @protocol THOPluginProtocol <NSObject>
 
@@ -68,36 +71,43 @@
 #pragma mark Subscribed Events 
 
 /*!
- * @return An NSArray containing a lowercase list of commands that this plugin 
+ * @brief Defines a list of commands that the plugin will support as user input 
+ * from the main text field.
+ *
+ * @return An NSArray containing a lowercase list of commands that the plugin
  * will support as user input from the main text field.
  *
- * @warning If a plugin tries to add a command already built into Textual onto 
- * this list, it will not work.
+ * @discussion Considerations:
+ * 
+ * 1. If a command is a number (0-9), then insert it into the array as
+ * an NSString.
  *
- * @warning It is possible, but unlikely, that another plugin the end user has 
- * loaded is subscribed to the same command. When that occurs, each plugin 
- * subscribed to the command will be informed of when the command is performed.
+ * 2. If a plugin tries to add a command already built into Textual onto
+ *  this list, it will not work.
  *
- * @warning To avoid conflicts, a plugin cannot subscribe to a command already 
- * defined by a script. If a script and a plugin both share the same command, then 
- * neither will be executed and an error will be printed to the OS X console.
+ * 3. It is possible, but unlikely, that another plugin the end user has
+ *  loaded is subscribed to the same command. When that occurs, each plugin
+ *  subscribed to the command will be informed of when the command is performed.
  *
- * @warning If a command is a number (0-9), then insert it into the array as an NSString.
+ * 4. To avoid conflicts, a plugin cannot subscribe to a command already
+ *  defined by a script. If a script and a plugin both share the same command, then
+ *  neither will be executed and an error will be printed to the OS X console.
  */
 - (NSArray *)subscribedUserInputCommands;
 
 /*!
- * @return An NSArray containing a lowercase list of commands that this plugin 
- * will support as server input.
+ * @brief Defines a list of commands that the plugin will support as server input.
  *
- * @warning If a raw numeric (a number) is being asked for, then insert it into 
- * the array as an NSString.
+ * @return An NSArray containing a lowercase list of commands that the plugin
+ *  will support as server input.
+ *
+ * @discussion If a raw numeric (a number) is being asked for, then insert it into
+ *  the array as an NSString.
  */
 - (NSArray *)subscribedServerInputCommands;
 
 /*!
- * This method is invoked when a subscribed user input command requires processing 
- * because the end user has used it.
+ * @brief Method invoked when a subscribed user input command requires processing.
  *
  * @param client The client responsible for the event
  * @param commandString The name of the command used by the end user
@@ -106,31 +116,134 @@
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString;
 
 /*!
- * This method is invoked when a subscribed server input command requires processing 
- * when data is received.
+ * @brief Method invoked when a subscribed server input command requires processing.
  *
- * The dictionaries sent as part of this method are guaranteed to always contain the 
- * same key pair. When a specific key does not have a value, NSNull is used as its value.
-*
+ * @discussion The dictionaries sent as part of this method are guaranteed to always contain 
+ *  the same key pair. When a specific key does not have a value, NSNull is used as its value.
+ *
  * @param client The client responsible for the event
  * @param senderDict A dictionary which contains information related to the sender
  * @param messageDict A dictionary which contains information related to the incoming data
+ *
+ * @see THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderAddressAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageCommandAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute
  */
 - (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict;
+
+/*!
+ * @brief Whether the input was from a regular user or from the server itself.
+ *
+ * @return NSNumber (BOOL)
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute;
+
+/*!
+ * @brief The combined hostmask of the sender.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute;
+
+/*!
+ * @brief The nickname portion of the sender's hostmask.
+ * 
+ * @discussion If THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute is YES, then the
+ *  value of this field is the address of the server.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute;
+
+/*!
+ * @brief The username (ident) portion of the sender's hostmask.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute;
+
+/*!
+ * @brief The address portion of the sender's hostmask.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute;
+
+/*!
+ * @brief The date & time during which the input was receieved.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute;
+
+/*!
+ * @brief The input, split into sections using the space character.
+ *
+ * @return NSArray
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute;
+
+/*!
+ * @brief The input's command
+ *
+ * @return
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute;
+
+/*!
+ * @brief The value of THOPluginProtocolDidReceiveServerInputMessageCommandAttribute, as an integer.
+ *
+ * @return NSNumber (NSInteger)
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute;
+
+/*!
+ * @brief The input itself
+ *
+ * @return NSString 
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute;
+
+/*!
+ * @brief The server address of the IRC network 
+ * 
+ * @discussion The value of this attribute is the address of the server that Textual is 
+ *  currently connected to and does not equal the sender of the input.
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute;
+
+/*!
+ * @brief The name of the IRC network
+ *
+ * @return NSString
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute;
 
 #pragma mark -
 #pragma mark Initialization
 
 /*!
- * This method is invoked very early on. It occurs once the principal class of 
- * the plugin has been allocated and is guaranteed to be the first call home that
- * a plugin will receive from Textual.
+ * @brief Method invoked during initialization of a plugin.
+ *
+ * @discussion This method is invoked very early on. It occurs once the principal 
+ *  class of the plugin has been allocated and is guaranteed to be the first call
+ *  home that a plugin will receive from Textual.
  */
 - (void)pluginLoadedIntoMemory;
 
 /*!
- * This method is invoked when the plugin is being unloaded during application 
- * termination.
+ * @brief Method invoked prior to deallocation of a plugin.
  */
 - (void)pluginWillBeUnloadedFromMemory;
 
@@ -138,17 +251,17 @@
 #pragma mark Preferences Pane
 
 /*!
- * @return The NSView used by the Preferences dialog to allow configuration of 
- * the plugin.
- * 
- * A width of 567 pixels and a minimum height of 406 pixels will be enforced for 
- * the returned view.
+ * @brief Defines an NSView used by the Preferences dialog of Textual to 
+ *  allow user-interactive configuration of the plugin.
+ *
+ * @return An instance of NSView with a width of 567 pixels and a minimum 
+ *  height of 406 pixels
  */
 - (NSView *)pluginPreferencesPaneView;
 
 /*!
- * @return An NSString which is used by the Preferences dialog to create a new 
- * entry in the navigation list.
+ * @brief Defines an NSString which is used by the Preferences dialog of
+ *  Textual to create a new entry in its navigation list.
  */
 - (NSString *)pluginPreferencesPaneMenuItemName;
 
@@ -156,102 +269,130 @@
 #pragma mark Renderer Events
 
 /*!
- * This method is invoked when a message has been added to the Document Object Model (DOM)
- * of logController
+ * @brief Method invoked when the Document Object Model (DOM) of a view has been modified.
+ *
+ * @discussion This method is invoked when a message has been added to the Document
+ *  Object Model (DOM) of logController
  *
  * Depending on the type of message added, the set of keys available within the messageInfo
- * dictionary will vary. See the set of THOPluginProtocolDidPostNewMessage* constants in
- * the THOPluginProtocol.h header for a list of possible values.
+ *  dictionary will vary.
  *
  * @warning It is NOT recommended to do any heavy work when isThemeReload or isHistoryReload
- * is YES as these events have thousands of messages being processed at the same time.
+ *  is YES as these events have thousands of messages being processed at the same time.
  * 
  * @warning This method is invoked on an asynchronous background dispatch queue. Not the 
- * main thread. It is extremely important to remember this because WebKit will throw an
- * exception if it is not interacted with on the main thread.
+ *  main thread. It is extremely important to remember this because WebKit will throw an
+ *  exception if it is not interacted with on the main thread.
  *
  * @param logController The view responsible for the event
  * @param messageInfo A dictionary which contains information about the message
  * @param isThemeReload Whether or not the message was posted as part of a theme reload
  * @param isHistoryReload Whether or not the message was posted as part of playback on application start
+ *
+ * @see THOPluginProtocolDidPostNewMessageLineNumberAttribute
+ *  THOPluginProtocolDidPostNewMessageSenderNicknameAttribute
+ *  THOPluginProtocolDidPostNewMessageLineTypeAttribute
+ *  THOPluginProtocolDidPostNewMessageMemberTypeAttribute
+ *  THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute
+ *  THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute
+ *  THOPluginProtocolDidPostNewMessageListOfUsersAttribute
+ *  THOPluginProtocolDidPostNewMessageMessageBodyAttribute
+ *  THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute
 */
-- (void)didPostNewMessageForViewController:(TVCLogController *)logController
-							   messageInfo:(NSDictionary *)messageInfo
-							 isThemeReload:(BOOL)isThemeReload
-						   isHistoryReload:(BOOL)isHistoryReload;
+- (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload;
 
 /*!
- * The unique hash of the message which can be used to access the message.
+ * @brief The unique hash of the message which can be used to access the message.
+ *
+ * @return NSString
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute;
 
 /*!
- * The nickname of the person and/or server responsible for producing the message.
+ * @brief The nickname of the person and/or server responsible for producing the message.
  * This value may be empty. Not every event on IRC will have a sender value.
+ *
+ * @return NSString
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute;
 
 /*!
- * Integer representation of TVCLogLineType
+ * @brief Integer representation of TVCLogLineType
+ * 
+ * @return NSNumber (NSInteger)
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute;
 
 /*!
- * Integer representation of TVCLogLineMemberType
+ * @brief Integer representation of TVCLogLineMemberType
+ *
+ * @return NSNumber (NSInteger)
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute;
 
 /*!
- * Date & time shown left of the message in the chat view.
+ * @brief Date & time shown left of the message in the chat view.
+ *
+ * @return NSDate
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute;
 
 /*!
- * Array of ranges (NSRange) of text in the message body believed to be a URL. 
+ * @brief Array of ranges (NSRange) of text in the message body believed to be a URL.
  * 
- * Each entry in this array is another array containing two indexes. First index (0) is 
- * the range in THOPluginProtocolDidPostNewMessageMessageBodyAttribute that the URL was at. 
- * The second index (1) is the URL that was found. The URL may differ from the value in the 
- * range as URL schemes may have been appended. For example, the text at the given range may 
- * be "www.example.com" whereas the entry at index 1 is "http://www.example.com"
+ * @discussion Each entry in this array is another array containing two indexes. First 
+ * index (0) is the range in THOPluginProtocolDidPostNewMessageMessageBodyAttribute that the 
+ * URL was at. The second index (1) is the URL that was found. The URL may differ from the 
+ * value in the range as URL schemes may have been appended. For example, the text at the 
+ * given range may be "www.example.com" whereas the entry at index 1 is "http://www.example.com"
+ * 
+ * @return NSArray
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute;
 
 /*!
- * List of users from the channel that appear in the message;
+ * @brief List of users from the channel that appear in the message;
+ * 
+ * @return NSSet
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute;
 
 /*!
- * The contents of the message visible to the end user, minus any formatting.
+ * @brief The contents of the message visible to the end user, minus any formatting.
+ * 
+ * @return NSString
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute;
 
 /*!
- * Whether or not a highlight word was matched in the message body.
+ * @brief Whether or not a highlight word was matched in the message body.
+ *
+ * @return NSNumber (BOOL)
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute;
 
 #pragma mark -
 
 /*!
- * This method is invoked prior to a message being converted to its HTML equivalent.
+ * @brief Method invoked prior to a message being converted to its HTML equivalent.
  *
- * This gives a plugin the chance to modify the text that will be displayed for a certain
- * message by replacing one or more segments of it.
+ * @discussion This gives a plugin the chance to modify the text that will be displayed 
+ * for a certain message by replacing one or more segments of it.
+ * 
+ * Considerations:
  *
- * Returning nil or a string with zero length from this method will indicate that there is
- * no interest in modifying newMessage.
+ * 1. Returning nil or a string with zero length from this method will indicate that there is
+ *  no interest in modifying newMessage.
  *
- * There is no way to inform the renderer that you do not want a specific value of newMessage
- * shown to the end user. Use the intercept* methods for this purpose.
+ * 2. There is no way to inform the renderer that you do not want a specific value of newMessage
+ *  shown to the end user. Use the intercept* methods for this purpose.
  *
  * @warning This method is invoked on each plugin in the order loaded. This method does not 
- * stop for the first result returned which means that value being passed may have been 
- * modified by a plugin above the one being talked to.
+ *  stop for the first result returned which means that value being passed may have been
+ *  modified by a plugin above the one being talked to.
  *
  * @warning Under no circumstances should you insert HTML at this point. Doing so will result 
- * in undefined behavior.
+ *  in undefined behavior.
  * 
  * @return The original and/or modified copy of newMessage
  *
@@ -268,16 +409,22 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 #pragma mark -
 
 /*!
- * @return A URL that can be shown as an inline image in relation to resource or nil to ignore.
+ * @brief Given a URL, returns the same URL or another that can be shown as an 
+ *  image inline with chat.
  *
- * @discussion The return value must be a valid URL for an image file if non-nil. 
- * Textual validates the return value by attempting to create an instance of NSURL 
- * with it. If NSURL returns a nil object, then it is certain that a plugin returned 
- * a bad value.
+ * @return A URL that can be shown as an inline image in relation to resource or 
+ *  nil to ignore.
  *
- * Textual uses the first non-nil, valid URL returned by any plugin. It does not
- * chain the responses similar to other methods defined by the THOPluginProtocol
- * protocol.
+ * @discussion Considerations:
+ *
+ * 1. The return value must be a valid URL for an image file if non-nil.
+ *  Textual validates the return value by attempting to create an instance of NSURL
+ *  with it. If NSURL returns a nil object, then it is certain that a plugin returned
+ *  a bad value.
+ *
+ * 2. Textual uses the first non-nil, valid URL, returned by a plugin. It does not
+ *  chain the responses similar to other methods defined by the THOPluginProtocol
+ *  protocol.
  *
  * @param resource A URL that was detected in a message being rendered.
  */
@@ -287,16 +434,16 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 #pragma mark Input Manipulation
 
 /*!
- * This method allows a plugin to modify and/or completely ignore incoming data from
- * the server before any action can be taken on it by Textual.
+ * @brief Method used to modify and/or completely ignore incoming data from
+ *  the server before any action can be taken on it by Textual.
  *
  * @warning This method is invoked on each plugin in the order loaded. This method 
- * does not stop for the first result returned which means that value being passed may 
- * have been modified by a plugin above the one being talked to.
+ *  does not stop for the first result returned which means that value being passed may
+ *  have been modified by a plugin above the one being talked to.
  *
  * @warning Textual does not perform validation against the instance of IRCMessage that 
- * is returned which means that if Textual tries to access specific information which has
- * been improperly modified or removed, the entire application may crash.
+ *  is returned which means that if Textual tries to access specific information which has
+ *  been improperly modified or removed, the entire application may crash.
  * 
  * @return The original and/or modified copy of IRCMessage or nil to prevent the data from being processed altogether.
  *
@@ -306,23 +453,26 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 - (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client;
 
 /*!
- * This method allows a plugin to modify and/or completely ignore text entered into the
- * main text field of Textual by the end user. This method is invoked once the user has
- * hit return on the text field to submit whatever its value may be.
+ * @brief Method used to modify and/or completely ignore text entered into the
+ *  main text field of Textual by the end user.
+ *
+ * @discussion This method is invoked once the user has hit return on the text field 
+ *  to submit whatever its value may be.
  *
  * @warning This method is invoked on each plugin in the order loaded. This method
- * does not stop for the first result returned which means that value being passed may
- * have been modified by a plugin above the one being talked to.
+ *  does not stop for the first result returned which means that value being passed may
+ *  have been modified by a plugin above the one being talked to.
  * 
- * @return The original and/or modified copy of input or nil to prevent the data from being processed altogether.
+ * @return The original and/or modified copy of input or nil to prevent the data from 
+ *  being processed altogether.
  * 
  * @param input Depending on whether the value of the text field was submitted 
-    programmatically or by the user directly interacting with it, this value can be an 
-    instance of NSString or NSAttributedString.
+ *  programmatically or by the user directly interacting with it, this value can be an
+ *  instance of NSString or NSAttributedString.
  * @param command Textual allows the end user to send text entered into the text field 
-    without using the "/me" command. When this occurs, Textual informs lower-level APIs 
-    of this intent by changing the value of this parameter from "privmsg" to "action" -
-    In most cases a plugin should disregard this parameter and pass it untouched.
+ *  without using the "/me" command. When this occurs, Textual informs lower-level APIs
+ *  of this intent by changing the value of this parameter from "privmsg" to "action" -
+ *  In most cases a plugin should disregard this parameter and pass it untouched.
  */
 - (id)interceptUserInput:(id)input command:(NSString *)command;
 
