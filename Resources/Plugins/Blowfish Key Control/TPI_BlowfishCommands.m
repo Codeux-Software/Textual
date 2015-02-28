@@ -135,7 +135,7 @@
 					
 					[client printDebugInformation:BLS(1004) channel:c];
 				} else {
-					if (encryptionKey) {
+					if (NSObjectIsNotEmpty(encryptionKey)) {
 						if ([encryptionKey isEqualToString:_messageString] == NO) {
 							[client printDebugInformation:BLS(1002) channel:c];
 						}
@@ -154,7 +154,7 @@
 				
 				[client printDebugInformation:BLS(1004) channel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
-				if (encryptionKey) {
+				if (NSObjectIsNotEmpty(encryptionKey)) {
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1001]", encryptionKey) channel:c];
 				} else {	
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]") channel:c];
@@ -175,7 +175,7 @@
 				} else {
 					if ([self keyExchangeRequestExists:c]) {
 						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [c name]) channel:c];
-					} else if (encryptionKey) {
+					} else if (NSObjectIsNotEmpty(encryptionKey)) {
 						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) channel:c];
 					} else {
 						CFDH1080 *keyRequest = [CFDH1080 new];
@@ -246,7 +246,7 @@
 	
 	NSString *encryptionKey = [channel encryptionKey];
 	
-    if (encryptionKey) {
+    if (NSObjectIsNotEmpty(encryptionKey)) {
         [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 
         return;
@@ -376,7 +376,7 @@
 		} else {
 			NSString *encryptionKey = [channel encryptionKey];
 			
-			if (encryptionKey) {
+			if (NSObjectIsNotEmpty(encryptionKey)) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
 				
 				return;

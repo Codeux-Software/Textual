@@ -188,7 +188,7 @@
 	NSInteger maximumLength = TXMaximumIRCBodyLength;
 	
 	/* If message is going to be encrypted, we have to take that into account. */
-	if ([channel encryptionKey]) {
+	if (NSObjectIsNotEmpty([channel encryptionKey])) {
 		/* This method will take a given size and estimate the maximum number of
 		 characters that can fit within that range. */
 		NSUInteger newEstimation = [CSFWBlowfish estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]

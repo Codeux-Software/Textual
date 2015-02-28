@@ -1242,9 +1242,9 @@
 	
 	[config setConnectionName:newName];
 	
-	[config setProxyPassword:nil];
-	[config setServerPassword:nil];
-	[config setNicknamePassword:nil];
+	[config setProxyPassword:NSStringEmptyPlaceholder];
+	[config setServerPassword:NSStringEmptyPlaceholder];
+	[config setNicknamePassword:NSStringEmptyPlaceholder];
 	
 	IRCClient *n = [worldController() createClient:config reload:YES];
 	
