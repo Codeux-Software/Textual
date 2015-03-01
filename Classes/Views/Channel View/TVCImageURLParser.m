@@ -271,16 +271,16 @@
 		NSString *vid = nil;
 
 		if ([host isEqualToString:@"youtu.be"]) {
-			NSString *path = [u path];
+			NSString *dpath = [u path];
 			
-			NSObjectIsEmptyAssertReturn(path, nil);
+			NSObjectIsEmptyAssertReturn(dpath, nil);
 			
-			vid = [path substringFromIndex:1];
+			vid = [dpath substringFromIndex:1];
 		} else {
-			NSString *query = [u query];
+			NSString *dquery = [u query];
 
-			if ([query length] > 0) {
-				NSArray *queries = [query componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
+			if ([dquery length] > 0) {
+				NSArray *queries = [dquery componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"&"]];
 
 				if ([queries count] > 0) {
 					NSCharacterSet *equal = [NSCharacterSet characterSetWithCharactersInString:@"="];
@@ -314,23 +314,23 @@
 		NSString *vid = nil;
 
 		if ([host isEqualToString:@"nico.ms"]) {
-			NSString *path = [u path];
+			NSString *dpath = [u path];
 			
-			NSObjectIsEmptyAssertReturn(path, nil);
+			NSObjectIsEmptyAssertReturn(dpath, nil);
 			
-			path = [path substringFromIndex:1];
+			dpath = [dpath substringFromIndex:1];
 
-			if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
-				vid = path;
+			if ([dpath hasPrefix:@"sm"] || [dpath hasPrefix:@"nm"]) {
+				vid = dpath;
 			}
 		} else {
-			NSString *path = [u path];
+			NSString *dpath = [u path];
 			
-			if ([path hasPrefix:@"/watch/"]) {
-				path = [path substringFromIndex:7];
+			if ([dpath hasPrefix:@"/watch/"]) {
+				dpath = [dpath substringFromIndex:7];
 
-				if ([path hasPrefix:@"sm"] || [path hasPrefix:@"nm"]) {
-					vid = path;
+				if ([dpath hasPrefix:@"sm"] || [dpath hasPrefix:@"nm"]) {
+					vid = dpath;
 				}
 			}
 		}
