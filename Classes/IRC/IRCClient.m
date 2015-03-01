@@ -3146,13 +3146,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 					} else {
 						if (applyToAll) {
-							for (IRCClient *u in [worldController() clientList]) {
-								applyKey(u, section3, YES);
+							for (IRCClient *uu in [worldController() clientList]) {
+								applyKey(uu, section3, YES);
 
-								if (u == self) {
-									[u printDebugInformation:BLS(1037, section3)];
+								if (uu == self) {
+									[uu printDebugInformation:BLS(1037, section3)];
 								} else {
-									[u printDebugInformationToConsole:BLS(1037, section3)];
+									[uu printDebugInformationToConsole:BLS(1037, section3)];
 								}
 							}
 						} else {
@@ -3182,13 +3182,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 					} else {
 						if (applyToAll) {
-							for (IRCClient *u in [worldController() clientList]) {
-								applyKey(u, section3, NO);
+							for (IRCClient *uu in [worldController() clientList]) {
+								applyKey(uu, section3, NO);
 
-								if (u == self) {
-									[u printDebugInformation:BLS(1038, section3)];
+								if (uu == self) {
+									[uu printDebugInformation:BLS(1038, section3)];
 								} else {
-									[u printDebugInformationToConsole:BLS(1038, section3)];
+									[uu printDebugInformationToConsole:BLS(1038, section3)];
 								}
 							}
 						} else {

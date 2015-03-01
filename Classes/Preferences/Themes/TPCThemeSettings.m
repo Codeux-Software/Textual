@@ -140,18 +140,17 @@
 {
 	NSError *load_error = nil;
 
-	/* First look for a custom template. */
-	GRMustacheTemplate *tmpl = [self.styleTemplateRepository templateNamed:name error:&load_error];
+	GRMustacheTemplate *localTemplate = [self.styleTemplateRepository templateNamed:name error:&load_error];
 
-	if (PointerIsEmpty(tmpl) || load_error) {
-		/* If no custom template is found, then revert to application defaults. */
+	if (localTemplate == nil || load_error) {
 		if ([load_error code] == GRMustacheErrorCodeTemplateNotFound || [load_error code] == 260) {
-			GRMustacheTemplate *tmpl = [self.appTemplateRepository templateNamed:name error:&load_error];
+			GRMustacheTemplate *defaultTemplate = [self.appTemplateRepository templateNamed:name error:&load_error];
 
-			PointerIsNotEmptyAssertReturn(tmpl, tmpl); // Return default template.
+			if (defaultTemplate) {
+				return defaultTemplate;
+			}
 		}
 
-		/* If either template failed to load, then log a error. */
         if (load_error) {
 			LogToConsole(@"Failed to load template \"%@\" with error: %@", name, load_error);
 			LogToConsoleCurrentStackTrace
@@ -160,7 +159,7 @@
 		return nil;
 	}
 
-	return tmpl; // Return custom template.
+	return localTemplate;
 }
 
 #pragma mark -

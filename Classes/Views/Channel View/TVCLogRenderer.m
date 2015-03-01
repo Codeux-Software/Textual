@@ -636,24 +636,24 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		NSInteger prev = (r.location - 1);
 
 		if (0 <= prev && prev < length) {
-			UniChar c = [_body characterAtIndex:prev];
+			UniChar cc = [_body characterAtIndex:prev];
 
-			if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
+			if ([THOUnicodeHelper isAlphabeticalCodePoint:cc] || CSCEF_StringIsBase10Numeric(cc)) {
 				cleanMatch = NO;
 			}
 		}
 	}
 
 	if (cleanMatch) {
-		UniChar c = [_body characterAtIndex:(NSMaxRange(r) - 1)];
+		UniChar cc = [_body characterAtIndex:(NSMaxRange(r) - 1)];
 
-		if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
+		if ([THOUnicodeHelper isAlphabeticalCodePoint:cc] || CSCEF_StringIsBase10Numeric(cc)) {
 			NSInteger next = NSMaxRange(r);
 
 			if (next < length) {
-				UniChar c = [_body characterAtIndex:next];
+				UniChar ccc = [_body characterAtIndex:next];
 
-				if ([THOUnicodeHelper isAlphabeticalCodePoint:c] || CSCEF_StringIsBase10Numeric(c)) {
+				if ([THOUnicodeHelper isAlphabeticalCodePoint:ccc] || CSCEF_StringIsBase10Numeric(ccc)) {
 					cleanMatch = NO;
 				}
 			}

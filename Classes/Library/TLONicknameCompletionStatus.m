@@ -356,9 +356,9 @@
 			[upperChoices addObject:[channel name]];
 		}
 		
-		for (IRCChannel *c in [client channelList]) {
-			if ([c isEqual:channel] == NO) {
-				[upperChoices addObjectWithoutDuplication:[c name]];
+		for (IRCChannel *cc in [client channelList]) {
+			if ([cc isEqual:channel] == NO) {
+				[upperChoices addObjectWithoutDuplication:[cc name]];
 			}
 		}
 	} else {
@@ -401,17 +401,17 @@
 		/* Add objects to the arrays plus their stripped versions. */
 		NSCharacterSet *nonAlphaChars = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
 
-		for (NSString *s in tempChoices) {
-			[upperChoices addObject:s];
-			[lowerChoices addObject:[s lowercaseString]];
+		for (NSString *ss in tempChoices) {
+			[upperChoices addObject:ss];
+			[lowerChoices addObject:[ss lowercaseString]];
 
-			NSString *stripped = [self trimNickname:s usingCharacterSet:nonAlphaChars];
+			NSString *stripped = [self trimNickname:ss usingCharacterSet:nonAlphaChars];
 
-			if ([s isNotEqualTo:stripped] && [stripped length] > 0) {
+			if ([ss isNotEqualTo:stripped] && [stripped length] > 0) {
 				stripped = stripped.lowercaseString;
 
 				if ([lowerChoices containsObject:stripped] == NO) {
-					[upperChoices addObject:s];
+					[upperChoices addObject:ss];
 					[lowerChoices addObject:[stripped lowercaseString]];
 				}
 			}
@@ -424,9 +424,9 @@
 
 	NSInteger i = 0;
 
-	for (NSString *s in lowerChoices) {
-		if ([s hasPrefix:lowerBackwardCut]) {
-			[currentLowerChoices addObject:s];
+	for (NSString *ss in lowerChoices) {
+		if ([ss hasPrefix:lowerBackwardCut]) {
+			[currentLowerChoices addObject:ss];
 			[currentUpperChoices addObject:upperChoices[i]];
 		}
 

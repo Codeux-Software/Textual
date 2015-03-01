@@ -252,21 +252,25 @@
 	NSMutableArray *pathData = [NSMutableArray array];
 	
 	/* What considers are path valid? */
-	void (^checkPath)(NSString *) = ^(NSString *pathObj) {
-		if (pathObj) {
-			if ([pathObj length] > 0) {
-				BOOL pathExists = [RZFileManager() fileExistsAtPath:pathObj];
-				
+	void (^checkPath)(NSString *) = ^(NSString *pathInfo) {
+		if (pathInfo) {
+			if ([pathInfo length] > 0) {
+				BOOL isDirectory = NO;
+
+				BOOL pathExists = [RZFileManager() fileExistsAtPath:pathInfo isDirectory:&isDirectory];
+
 				if (pathExists) {
-					[pathData addObject:pathObj];
+					if (isDirectory) {
+						[pathData addObject:pathInfo];
+					}
 				}
 			}
 		}
 	};
 	
 	/* Filter list. */
-	for (NSString *path in pathObjects) {
-		checkPath(path);
+	for (NSString *pathObject in pathObjects) {
+		checkPath(pathObject);
 	}
 	
 	/* Return results. */
