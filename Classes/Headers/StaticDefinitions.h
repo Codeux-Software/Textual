@@ -129,7 +129,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
 
-#define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED
+#define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED(reason)
 
 /* Defines for script support instead of importing the
  entire Carbon framework for three items. */
