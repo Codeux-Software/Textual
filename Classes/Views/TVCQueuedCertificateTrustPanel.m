@@ -98,10 +98,12 @@
 	if (self.activeSocket) {
 		if (self.activeSocket == socket) {
 			if (self.currentPanel) {
-				if ([self.currentPanel respondsToSelector:@selector(_dismissWithCode:)]) {
+				SEL selectorName = NSSelectorFromString(@"_dismissWithCode:");
+
+				if ([self.currentPanel respondsToSelector:selectorName]) {
 					[self setDoNotInvokeCompletionBlockNextPass:YES];
 
-					(void)objc_msgSend(self.currentPanel, @selector(_dismissWithCode:), NSModalResponseCancel);
+					(void)objc_msgSend(self.currentPanel, selectorName, NSModalResponseCancel);
 				}
 			}
 		} else {
