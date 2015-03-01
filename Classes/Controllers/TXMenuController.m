@@ -1099,8 +1099,8 @@
 {
 	// This does nothing. Validation overrides this with one
 	// of the actions from below.
-	
-	TEXTUAL_DEPRECATED_ASSERT;
+
+	NSAssert(NO, @"This method should not be invoked directly.");
 }
 
 - (void)connectPreferringIPv6:(id)sender
