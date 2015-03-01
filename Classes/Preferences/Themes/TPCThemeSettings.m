@@ -154,6 +154,7 @@
 		/* If either template failed to load, then log a error. */
         if (load_error) {
 			LogToConsole(@"Failed to load template \"%@\" with error: %@", name, load_error);
+			LogToConsoleCurrentStackTrace
         }
 
 		return nil;

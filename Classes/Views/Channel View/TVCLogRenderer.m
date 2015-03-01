@@ -1068,6 +1068,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 	if (inputDictionary == nil) {
 		LogToConsole(@"WARNING: TVCLogRenderer is not designed to be supplied a nil inputDictionary. Please supply an inputDictionary value.");
+		LogToConsoleCurrentStackTrace
 
 		[renderer setRendererAttributes:@{}];
 	} else {

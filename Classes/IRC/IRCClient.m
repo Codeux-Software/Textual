@@ -877,6 +877,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	if (s == nil) {
 		DebugLogToConsole(@"NSData encode failure. (%@)", data);
+		LogToConsoleCurrentStackTrace
 	}
 
 	return s;
@@ -896,6 +897,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	if (s == nil) {
 		DebugLogToConsole(@"NSData decode failure. (%@)", data);
+		LogToConsoleCurrentStackTrace
 	}
 
 	return s;
@@ -4014,10 +4016,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					/* ZNC sends CAPs using its own server hostmask so we will use that to detect 
 					 if the connection is ZNC based. */
 
-					if ([@"irc.znc.in" isEqualToString:[m senderNickname]] && [m senderIsServer]) {
-						self.isZNCBouncerConnection = YES;
+					if ([m senderIsServer]) {
+						if ([@"irc.znc.in" isEqualToString:[m senderNickname]]) {
+							self.isZNCBouncerConnection = YES;
 
-						DebugLogToConsole(@"ZNC based connection detected…");
+							DebugLogToConsole(@"ZNC based connection detected…");
+						}
 					}
 				}
 				
