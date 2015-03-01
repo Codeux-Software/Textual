@@ -524,11 +524,11 @@
 "BasicLanguage[1187][1]" = "Install Custom Script";
 "BasicLanguage[1187][2]" = "Select the folder named “%@” to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
 
-"BasicLanguage[1188][1]" = "New Script Installed";
-"BasicLanguage[1188][2]" = "The script “%@” has been successfully installed and is now available for usage.";
+"BasicLanguage[1188][1]" = "Script Installed";
+"BasicLanguage[1188][2]" = "The script named “%@” has been successfully installed and is now available for usage.";
 
-"BasicLanguage[1189][1]" = "New Extension Installed";
-"BasicLanguage[1189][2]" = "The extension “%@” has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
+"BasicLanguage[1189][1]" = "Extension Installed";
+"BasicLanguage[1189][2]" = "The extension named “%@” has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
 
 "BasicLanguage[1190][1]" = "Incompatiable System Version";
 "BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of OS X.";
