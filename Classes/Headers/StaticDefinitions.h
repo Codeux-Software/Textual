@@ -129,10 +129,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
 
-#define TEXTUAL_DEPRECATED(reason)				__attribute__((deprecated((reason))))
-
-#define TEXTUAL_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
-#define TEXTUAL_DEPRECATED_ASSERT_C				NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
+#define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED
 
 /* Defines for script support instead of importing the
  entire Carbon framework for three items. */
