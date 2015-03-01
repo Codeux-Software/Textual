@@ -125,18 +125,18 @@
  * @param senderDict A dictionary which contains information related to the sender
  * @param messageDict A dictionary which contains information related to the incoming data
  *
- * @see //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderAddressAttribute THOPluginProtocolDidReceiveServerInputSenderAddressAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageCommandAttribute THOPluginProtocolDidReceiveServerInputMessageCommandAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute
+ * @see THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute
+ *  THOPluginProtocolDidReceiveServerInputSenderAddressAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageCommandAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute
+ *  THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute
  */
 - (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict;
 
@@ -200,7 +200,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessagePar
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute;
 
 /*!
- * @brief The value of @link //textual_ref/c/data/THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute @/link, as an integer.
+ * @brief The value of THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute, as an integer.
  *
  * @return NSNumber (NSInteger)
  */
@@ -289,15 +289,15 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
  * @param isThemeReload Whether or not the message was posted as part of a theme reload
  * @param isHistoryReload Whether or not the message was posted as part of playback on application start
  *
- * @see //textual_ref/c/data/THOPluginProtocolDidPostNewMessageLineNumberAttribute THOPluginProtocolDidPostNewMessageLineNumberAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageSenderNicknameAttribute THOPluginProtocolDidPostNewMessageSenderNicknameAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageLineTypeAttribute THOPluginProtocolDidPostNewMessageLineTypeAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageMemberTypeAttribute THOPluginProtocolDidPostNewMessageMemberTypeAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageListOfUsersAttribute THOPluginProtocolDidPostNewMessageListOfUsersAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageMessageBodyAttribute THOPluginProtocolDidPostNewMessageMessageBodyAttribute
- *  //textual_ref/c/data/THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute
+ * @see THOPluginProtocolDidPostNewMessageLineNumberAttribute
+ *  THOPluginProtocolDidPostNewMessageSenderNicknameAttribute
+ *  THOPluginProtocolDidPostNewMessageLineTypeAttribute
+ *  THOPluginProtocolDidPostNewMessageMemberTypeAttribute
+ *  THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute
+ *  THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute
+ *  THOPluginProtocolDidPostNewMessageListOfUsersAttribute
+ *  THOPluginProtocolDidPostNewMessageMessageBodyAttribute
+ *  THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute
 */
 - (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload;
 
@@ -341,7 +341,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTime
  * @brief Array of ranges (NSRange) of text in the message body believed to be a URL.
  * 
  * @discussion Each entry in this array is another array containing two indexes. First 
- * index (0) is the range in @link //textual_ref/c/data/THOPluginProtocolDidPostNewMessageMessageBodyAttribute THOPluginProtocolDidPostNewMessageMessageBodyAttribute @/link that the
+ * index (0) is the range in THOPluginProtocolDidPostNewMessageMessageBodyAttribute that the
  * URL was at. The second index (1) is the URL that was found. The URL may differ from the 
  * value in the range as URL schemes may have been appended. For example, the text at the 
  * given range may be "www.example.com" whereas the entry at index 1 is "http://www.example.com"
