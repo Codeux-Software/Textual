@@ -217,7 +217,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
+	NSObjectIsEmptyAssertReturn(self, nil);
 	
 	if (client == nil) {
 		return [self channelNameToken];
