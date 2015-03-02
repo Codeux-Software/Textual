@@ -60,8 +60,8 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	/* Find first @ starting from the right side of string. */
 	NSRange bang2pos = [self rangeOfString:@"@" options:NSBackwardsSearch];
 
-	NSAssertReturnR((bang1pos.location >= 0), NO);
-	NSAssertReturnR((bang2pos.location >= 0), NO);
+	NSAssertReturnR((bang1pos.location != NSNotFound), NO);
+	NSAssertReturnR((bang2pos.location != NSNotFound), NO);
 	NSAssertReturnR((bang2pos.location > bang1pos.location), NO);
 
 	/* Bind sections of the host. */
