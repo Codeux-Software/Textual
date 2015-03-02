@@ -1596,6 +1596,7 @@
 	TDChannelSheet *d = [TDChannelSheet new];
 
 	[d setNewItem:NO];
+	[d setObserveChanges:YES];
 	
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1623,7 +1624,7 @@
 		
 		[worldController() createChannel:[sender config] client:u reload:YES adjust:YES];
 		
-		[sender.config writeKeychainItemsToDisk];
+		[[sender config] writeKeychainItemsToDisk];
 	} else {
 		IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 		
