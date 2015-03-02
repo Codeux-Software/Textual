@@ -70,14 +70,7 @@
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
-		
-		IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
-		
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(underlyingConfigurationChanged:)
-									   name:IRCChannelConfigurationWasUpdatedNotification
-									 object:channel];
-		
+
 		self.navigationTree = @[
 			//		view								first responder
 			@[self.contentViewGeneralView,			self.channelNameTextField],
@@ -88,7 +81,7 @@
 		[self.channelNameTextField setOnlyShowStatusIfErrorOccurs:YES];
 		[self.channelNameTextField setStringValueUsesOnlyFirstToken:YES];
 		[self.channelNameTextField setStringValueIsInvalidOnEmpty:YES];
-		
+
 		[self.channelNameTextField setTextDidChangeCallback:self];
 		
 		[self.channelNameTextField setValidationBlock:^(NSString *currentValue) {
@@ -168,6 +161,7 @@
 	[self update];
 	[self populateStartView];
 	[self startSheet];
+	[self addConfigurationDidChangeObserver];
 }
 
 - (void)load
@@ -240,9 +234,41 @@
 	[self cancel:nil];
 }
 
+- (void)addConfigurationDidChangeObserver
+{
+	if (self.observeChanges) {
+		IRCChannel *channel = [self channelObjectByProperties];
+
+		if (channel) {
+			[RZNotificationCenter() addObserver:self
+									   selector:@selector(underlyingConfigurationChanged:)
+										   name:IRCChannelConfigurationWasUpdatedNotification
+										 object:channel];
+		}
+	}
+}
+
+- (void)removeConfigurationDidChangeObserver
+{
+	if (self.observeChanges) {
+		IRCChannel *channel = [self channelObjectByProperties];
+
+		if (channel) {
+			[RZNotificationCenter() removeObserver:self
+											  name:IRCChannelConfigurationWasUpdatedNotification
+											object:[self channelObjectByProperties]];
+		}
+	}
+}
+
+- (IRCChannel *)channelObjectByProperties
+{
+	return [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+}
+
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
 {
-	IRCChannel *channel = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	IRCChannel *channel = [notification object];
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
 									  body:TXTLS(@"BasicLanguage[1241][2]", [channel name])
@@ -268,11 +294,15 @@
 
 - (void)cancel:(id)sender
 {
+	[self removeConfigurationDidChangeObserver];
+
 	[super cancel:sender];
 }
 
 - (void)ok:(id)sender
 {
+	[self removeConfigurationDidChangeObserver];
+	
 	[self save];
 	
 	if ([self.delegate respondsToSelector:@selector(channelSheetOnOK:)]) {
@@ -287,8 +317,6 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[RZNotificationCenter() removeObserver:self];
-
 	[self.sheet makeFirstResponder:nil];
 
 	if ([self.delegate respondsToSelector:@selector(channelSheetWillClose:)]) {

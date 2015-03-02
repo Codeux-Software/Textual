@@ -166,15 +166,7 @@
 		for (NSString *key in sortedServerListKeys) {
 			[self.serverAddressComboBox addItemWithObjectValue:key];
 		}
-		
-		/* Subscribe to notifications. */
-		IRCClient *client = [worldController() findClientById:self.clientID];
-		
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(underlyingConfigurationChanged:)
-									   name:IRCClientConfigurationWasUpdatedNotification
-									 object:client];
-		
+
 		/* Create temporary stores. */
 		self.mutableChannelList = [NSMutableArray array];
 		self.mutableHighlightList = [NSMutableArray array];
@@ -557,6 +549,8 @@
 	} else {
 		[self showWithDefaultView:_navigationIndexForGeneral];
 	}
+
+	[self addConfigurationDidChangeObserver];
 }
 
 - (void)showWithDefaultView:(NSInteger)viewIndex
@@ -579,9 +573,35 @@
 
 - (void)close
 {
-	[self closeChildSheets];
+	[self cancel:nil];
+}
 
-	[super cancel:nil];
+- (IRCClient *)clientObjectByProperties
+{
+	return [worldController() findClientById:self.clientID];
+}
+
+- (void)addConfigurationDidChangeObserver
+{
+	IRCClient *client = [self clientObjectByProperties];
+
+	if (client) {
+		[RZNotificationCenter() addObserver:self
+								   selector:@selector(underlyingConfigurationChanged:)
+									   name:IRCClientConfigurationWasUpdatedNotification
+									 object:client];
+	}
+}
+
+- (void)removeConfigurationDidChangeObserver
+{
+	IRCClient *client = [self clientObjectByProperties];
+
+	if (client) {
+		[RZNotificationCenter() removeObserver:self
+									   name:IRCClientConfigurationWasUpdatedNotification
+									 object:client];
+	}
 }
 
 - (void)underlyingConfigurationChanged:(NSNotification *)notification
@@ -608,7 +628,8 @@
 						   suppressionText:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
-								   [self close];
+								   [self closeChildSheets];
+								   [self endSheet];
 
 								   [self setConfig:[client copyOfStoredConfig]];
 
@@ -977,6 +998,8 @@
 
 - (void)ok:(id)sender
 {
+	[self removeConfigurationDidChangeObserver];
+
 	[self closeChildSheets];
 
 	[self save];
@@ -998,6 +1021,8 @@
 
 - (void)cancel:(id)sender
 {
+	[self removeConfigurationDidChangeObserver];
+
 	[self closeChildSheets];
 	
 	[super cancel:nil];
@@ -1386,6 +1411,7 @@
 	self.channelSheet = [TDChannelSheet new];
 	
 	self.channelSheet.newItem = YES;
+	self.channelSheet.observeChanges = NO;
 	
 	self.channelSheet.delegate = self;
 	self.channelSheet.window = self.sheet;
@@ -1409,6 +1435,7 @@
 	self.channelSheet = [TDChannelSheet new];
 	
 	self.channelSheet.newItem = NO;
+	self.channelSheet.observeChanges = NO;
 
 	self.channelSheet.delegate = self;
 	self.channelSheet.window = self.sheet;
@@ -1792,8 +1819,6 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	[self releaseTableViewDataSourceBeforeSheetClosure];
-
-	[RZNotificationCenter() removeObserver:self];
 
 	[self.sheet makeFirstResponder:nil];
 
