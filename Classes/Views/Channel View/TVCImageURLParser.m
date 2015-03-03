@@ -72,17 +72,6 @@
 	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
 
 	NSString *scheme = [u scheme];
-	
-	NSString *host = [[u host] lowercaseString];
-
-	NSString *path = [[u path] encodeURIFragment];
-	NSString *query = [[u query] encodeURIFragment];
-
-	NSString *lowercasePath = [path lowercaseString];
-    
-    if (query) {
-        path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
-    }
 
 	if ([scheme isEqualToString:@"file"]) {
 		// If the file is a local file (file:// scheme), then let us ignore it.
@@ -90,6 +79,16 @@
 
 		return nil;
 	}
+	
+	NSString *host = [[u host] lowercaseString];
+
+	NSString *path = [[u path] encodeURIFragment];
+	NSString *query = [[u query] encodeURIFragment];
+    
+    if (query) {
+        path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
+    }
+
 
 	NSString *plguinResult = [sharedPluginManager() processInlineMediaContentURL:[u absoluteString]];
 
@@ -99,13 +98,13 @@
 
 	BOOL hadExtension = NO;
 
-	if ([lowercasePath hasSuffix:@".jpg"]	||
-		[lowercasePath hasSuffix:@".jpeg"]	||
-		[lowercasePath hasSuffix:@".png"]	||
-		[lowercasePath hasSuffix:@".gif"]	||
-		[lowercasePath hasSuffix:@".tif"]	||
-		[lowercasePath hasSuffix:@".tiff"]	||
-		[lowercasePath hasSuffix:@".bmp"])
+	if ([path hasSuffixIgnoringCase:@".jpg"]	||
+		[path hasSuffixIgnoringCase:@".jpeg"]	||
+		[path hasSuffixIgnoringCase:@".png"]	||
+		[path hasSuffixIgnoringCase:@".gif"]	||
+		[path hasSuffixIgnoringCase:@".tif"]	||
+		[path hasSuffixIgnoringCase:@".tiff"]	||
+		[path hasSuffixIgnoringCase:@".bmp"])
 	{
 		hadExtension = YES;
 
