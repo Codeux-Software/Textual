@@ -843,7 +843,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			
 			/* Enumrate the cache. */
 			for (NSURL *itemURL in enumerator) {
-				NSError *error;
+				NSError *error = nil;
 				
 				NSNumber *isDirectory = nil;
 				
@@ -858,7 +858,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 						[cachedFiles setObject:[NSNull null] forKey:path];
 					} else {
 						/* Path is a file. We need it's modification date. */
-						NSDate *fileDate;
+						NSDate *fileDate = nil;
 						
 						if ([itemURL getResourceValue:&fileDate forKey:NSURLContentModificationDateKey error:&error]) {
 							[cachedFiles setObject:fileDate forKey:path];
@@ -974,7 +974,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					[cachedFiles removeObjectForKey:basicFolderPath]; // Folder cache.
 					
 					/* Now we can copy the file if needed. */
-					NSError *updateError;
+					NSError *updateError = nil;
 					
 					if (updateOrAddFile) {
 						/* Delete old file if we have to. */

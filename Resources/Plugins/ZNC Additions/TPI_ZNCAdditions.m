@@ -81,7 +81,7 @@
 
 		messageString = [messageString trim];
 		
-		IRCChannel *matchedChannel;
+		IRCChannel *matchedChannel = nil;
 		
 		if ([messageString isChannelName:client]) {
 			matchedChannel = [client findChannel:messageString];

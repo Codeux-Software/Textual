@@ -175,7 +175,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 	}
 
 	/* Format nickname into a standard format ignoring user preference. */
-	NSString *nick;
+	NSString *nick = nil;
 
 	if ([self lineType] == TVCLogLineActionType) {
 		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
@@ -230,7 +230,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 	 to make maximum number of lines apply. */
 	/* We used to have Core Data but that had too many instablities and performance
 	 overhead to justify keeping it around. */
-	NSError *jsonerror;
+	NSError *jsonerror = nil;
 
 	NSData *jsondata = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&jsonerror];
 
@@ -245,7 +245,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
 - (TVCLogLine *)initWithRawJSONData:(NSData *)input
 {
-	NSError *jsonconverr;
+	NSError *jsonconverr = nil;
 
 	NSDictionary *jsondata = [NSJSONSerialization JSONObjectWithData:input options:0 error:&jsonconverr];
 

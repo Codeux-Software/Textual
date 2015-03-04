@@ -313,7 +313,7 @@
 
 - (void)completeReadForData:(NSData *)data
 {
-	NSMutableData *readBuffer;
+	NSMutableData *readBuffer = nil;
 
 	BOOL hasOverflowPrefix = ([self.bufferOverflowString length] > 0);
 

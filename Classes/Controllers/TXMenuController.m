@@ -115,7 +115,7 @@
 
 - (void)mainWindowSelectionDidChange
 {
-	[self forceAllChildrenElementsOfMenuToValidate:[self.channelMenuItem submenu] recursively:YES];
+	[self forceAllChildrenElementsOfMenuToValidate:[NSApp mainMenu] recursively:YES];
 }
 
 - (void)forceAllChildrenElementsOfMenuToValidate:(NSMenu *)menu
@@ -151,9 +151,6 @@
 	IRCChannel *c = [mainWindow() selectedChannel];
 
 	switch (tag) {
-		case 935: // --
-		case 937: // --
-		case 936: // --
 		case 2433: // "Sort Channel List"
 		case 32345: // "Mark Scrollback"
 		case 32346: // "Scrollback Marker"
@@ -230,17 +227,27 @@
 		case 5423: // "Channel" (submenu) (main menu)
 		case 5424: // "Channel" (submenu) (webkit)
 		{
-			if (tag == 5424) {
+#define _channelMenuSeparatorTag_1			935
+#define _channelMenuSeparatorTag_2			936
+#define _channelMenuSeparatorTag_3			937
+#define _channelWebkitMenuTag				5424
+
+			if (tag == _channelWebkitMenuTag) {
 				[item setHidden:(_isChannel == NO)];
 			}
 
 			BOOL condition2 =  _isQuery;
 			BOOL condition1 = (condition2 || _isChannel);
 
-			[[[item submenu] itemWithTag:935] setHidden:condition2];
+			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_1] setHidden:condition2];
 
-			[[[item submenu] itemWithTag:936] setHidden:(condition1 == NO)];
-			[[[item submenu] itemWithTag:937] setHidden:(condition1 == NO)];
+			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_2] setHidden:(condition1 == NO)];
+			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_3] setHidden:(condition1 == NO)];
+
+#undef _channelMenuSeparatorTag_1
+#undef _channelMenuSeparatorTag_2
+#undef _channelMenuSeparatorTag_3
+#undef _channelWebkitMenuTag
 
 			return YES;
 		}
@@ -2554,7 +2561,7 @@
 		return;
 	}
 	
-	NSString *modeValue;
+	NSString *modeValue = nil;
 	
 	if ([sender tag] == _toggleChannelModerationModeOffTag) {
 		modeValue = @"-m";
@@ -2578,7 +2585,7 @@
 		return;
 	}
 	
-	NSString *modeValue;
+	NSString *modeValue = nil;
 	
 	if ([sender tag] == _toggleChannelInviteStatusModeOffTag) {
 		modeValue = @"-i";

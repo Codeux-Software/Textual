@@ -131,7 +131,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	NSURL *folder = [self.filename URLByDeletingLastPathComponent];
 
 	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
-		NSError *fmerr;
+		NSError *fmerr = nil;
 
 		[RZFileManager() createDirectoryAtURL:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
 
@@ -146,7 +146,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 	/* Does the file exist? */
 	if ([RZFileManager() fileExistsAtPath:[self.filename path]] == NO) {
-		NSError *fcerr;
+		NSError *fcerr = nil;
 
 		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 

@@ -99,7 +99,7 @@
 	NSURL *folder = [path URLByDeletingLastPathComponent];
 
 	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
-		NSError *fmerr;
+		NSError *fmerr = nil;
 
 		[RZFileManager() createDirectoryAtURL:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
 
@@ -114,7 +114,7 @@
 
 	/* Does the file exist? */
 	if ([RZFileManager() fileExistsAtPath:rawpath] == NO) {
-		NSError *fcerr;
+		NSError *fcerr = nil;
 
 		[NSStringEmptyPlaceholder writeToURL:path atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 
@@ -251,7 +251,7 @@
 				NSError *writeError = nil;
 
 				if ([finalData writeToFile:[self writePath] options:NSDataWritingAtomic error:&writeError] == NO) {
-					LogToConsole(@"Failed to write file to disk.");
+					LogToConsole(@"Failed to write file to disk: %@", writeError);
 				}
 			}
 		}
@@ -327,7 +327,7 @@
 	id client = [self.associatedController associatedClient];
 	id channel = [self.associatedController associatedChannel];
 
-	NSString *combinedName;
+	NSString *combinedName = nil;
 
 	if (channel) {
 		combinedName = [NSString stringWithFormat:@"/MessageArchive/%@/historicLogFile-%@.json", [client uniqueIdentifier], [channel uniqueIdentifier]];

@@ -49,7 +49,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 	static BOOL _dataPopulated = NO;
 	
 	if (_dataPopulated == NO) {
-		NSURL *filePath;
+		NSURL *filePath = nil;
 
 		/* Get public information. */
 		filePath = [RZMainBundle() URLForResource:@"IRCCommandIndexPublicValues" withExtension:@"plist"];

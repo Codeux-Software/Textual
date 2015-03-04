@@ -61,6 +61,11 @@
 	return nil;
 }
 
+- (void)dealloc
+{
+	[self.speechSynthesizer setDelegate:nil];
+}
+
 #pragma mark -
 #pragma mark Public API
 

@@ -828,7 +828,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 #endif
 
 	/* Perform copy operation. */
-	NSError *copyError;
+	NSError *copyError = nil;
 	
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (isCloudCopy) {

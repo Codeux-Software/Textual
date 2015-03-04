@@ -246,7 +246,7 @@
 {
 	NSString *sysinfo = TPILocalizedString(@"BasicLanguage[1001]");
 
-	NSString *_new;
+	NSString *_new = nil;
 
 	NSString *_model			= [TPI_SP_SysInfo model];
 	NSString *_cpu_model		= [TPI_SP_SysInfo processor];
@@ -277,7 +277,7 @@
 
 	/* Mac Model. */
 	if (NSObjectIsNotEmpty(_model)) {
-		NSString *_exact_model;
+		NSString *_exact_model = nil;
 
 		NSString *_realModel = [[TPISystemProfilerModelIDRequestController sharedController] cachedIdentifier];
 

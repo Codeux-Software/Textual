@@ -233,7 +233,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	PointerIsEmptyAssertReturn(url, NO);
 	PointerIsEmptyAssertReturn(destination, NO);
 	
-	NSError *instError;
+	NSError *instError = nil;
 	
 	/* Try to remove the existing item before continuing. */
 	if ([destination checkResourceIsReachableAndReturnError:NULL]) {

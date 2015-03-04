@@ -1391,7 +1391,7 @@
 {
 	NSInteger sel = [self.channelTable selectedRow];
 	
-	IRCChannelConfig *config;
+	IRCChannelConfig *config = nil;
 	
 	if (sel < 0) {
 		config = [IRCChannelConfig new];

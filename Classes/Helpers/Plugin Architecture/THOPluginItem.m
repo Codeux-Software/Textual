@@ -295,7 +295,7 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 	id commandRules = outputRules[sourceCommand];
 	
 	if (VTAE(commandRules, NSArray)) {
-		NSArray *newBosses;
+		NSArray *newBosses = nil;
 
 		for (id commandRule in commandRules) {
 			if (VTAE(commandRule, NSArray) && [commandRule count] == 4) {
