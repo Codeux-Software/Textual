@@ -108,7 +108,7 @@
 {
 	NSMutableArray *changeArray = [NSMutableArray array];
 
-	NSString *modeString;
+	NSString *modeString = nil;
 	
 	NSMutableString *mdstr = [NSMutableString stringWithString:@"-"];
 	NSMutableString *trail = [NSMutableString string];

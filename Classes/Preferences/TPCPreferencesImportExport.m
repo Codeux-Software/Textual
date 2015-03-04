@@ -314,7 +314,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	/* The export will be saved as binary. Two reasons: 1) Discourages user from
 	 trying to tamper with stuff. 2) Smaller, faster. Mostly #1. */
-	NSError *parseError;
+	NSError *parseError = nil;
 
 	/* Create the new property list. */
 	NSData *plist = [NSPropertyListSerialization dataWithPropertyList:mutsettings

@@ -310,7 +310,7 @@
 	}
 	
 	/* Draw status image badge. */
-	NSImage *statusImage;
+	NSImage *statusImage = nil;
 	
 	if ([self parentValueIsValid] == NO) {
 		statusImage = [NSImage imageNamed:@"ErroneousTextFieldValueIndicator"];

@@ -196,8 +196,12 @@
 	
 	/* Set command and numeric value. */
 	self.command = [foundCommand uppercaseString];
-	
-	self.numericReply = [foundCommand integerValue];
+
+	if ([self.command isNumericOnly]) {
+		self.numericReply = [foundCommand integerValue];
+	} else {
+		self.numericReply = 0;
+	}
 
     /* After the sender information and command information is extracted,
      there is not much left to the parse. Just searching for the beginning

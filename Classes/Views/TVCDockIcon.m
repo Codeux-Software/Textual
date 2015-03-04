@@ -133,7 +133,7 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSMutableAttributedString *badgeText = [NSMutableAttributedString alloc];
 	
-	NSDictionary *badgeTextAttrs;
+	NSDictionary *badgeTextAttrs = nil;
 	
 	NSInteger badgeTextFrameCorrection = 0;
 	
@@ -159,13 +159,13 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	NSImage *appIcon = [[self applicationIcon] copy];
 	
-	NSImage *redBadgeLeft;
-	NSImage *redBadgeCenter;
-	NSImage *redBadgeRight;
+	NSImage *redBadgeLeft = nil;
+	NSImage *redBadgeCenter = nil;
+	NSImage *redBadgeRight = nil;
 
-	NSImage *greenBadgeLeft;
-	NSImage *greenBadgeCenter;
-	NSImage *greenBadgeRight;
+	NSImage *greenBadgeLeft = nil;
+	NSImage *greenBadgeCenter = nil;
+	NSImage *greenBadgeRight = nil;
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		redBadgeLeft   = [NSImage imageNamed:@"DIRedBadgeLeftYosemite.png"];

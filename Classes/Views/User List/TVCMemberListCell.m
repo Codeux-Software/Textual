@@ -356,7 +356,7 @@
 	[newImage lockFocus];
 	
 	/* Decide the background color. */
-	NSColor *backgroundColor;
+	NSColor *backgroundColor = nil;
 	
 	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
 					   [assosicatedUser InspIRCd_y_upper]);
@@ -678,7 +678,7 @@
 		
 		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
-			NSColor *selectionColor;
+			NSColor *selectionColor = nil;
 			
 			if ([mainWindow() isActiveForDrawing]) {
 				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];

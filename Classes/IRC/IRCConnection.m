@@ -51,14 +51,14 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		_sendQueue = [NSMutableArray new];
+		self.sendQueue = [NSMutableArray new];
 		
-		_floodTimer = [TLOTimer new];
+		self.floodTimer = [TLOTimer new];
 		
-		[_floodTimer setDelegate:self];
-		[_floodTimer setSelector:@selector(timerOnTimer:)];
+		[self.floodTimer setDelegate:self];
+		[self.floodTimer setSelector:@selector(timerOnTimer:)];
 		
-		_floodControlCurrentMessageCount = 0;
+		self.floodControlCurrentMessageCount = 0;
 	}
 	
 	return self;
@@ -66,6 +66,9 @@
 
 - (void)dealloc
 {
+	[self.floodTimer stop];
+	[self.floodTimer setDelegate:nil];
+
 	[self close];
 }
 

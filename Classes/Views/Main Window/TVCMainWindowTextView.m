@@ -198,7 +198,7 @@
 		[self.segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];
 		
 		/* Set menu for segment 1. */
-		NSMenuItem *segmentOneMenuItem;
+		NSMenuItem *segmentOneMenuItem = nil;
 		
 		if (c == nil) {
 			segmentOneMenuItem = [menuController() serverMenuItem];
@@ -402,7 +402,7 @@
 	}
 
 	/* Set defaults. */
-	NSInteger backgroundHeight;
+	NSInteger backgroundHeight = 0;
 	
 	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
 

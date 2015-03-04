@@ -295,7 +295,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	
 	NSObjectIsEmptyAssert(bookmark);
 	
-	NSError *resolveError;
+	NSError *resolveError = nil;
 	
 	BOOL isStale = YES;
 	

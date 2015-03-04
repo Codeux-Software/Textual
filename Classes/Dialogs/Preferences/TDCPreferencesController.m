@@ -1122,7 +1122,7 @@
 		}
 		
 		/* Delete styles folder. */
-		NSError *delError;
+		NSError *delError = nil;
 		
 		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&delError];
 		

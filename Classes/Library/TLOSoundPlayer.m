@@ -130,7 +130,7 @@
 
 	NSString *soundPath = nil;
 
-	NSDictionary *soundFiles;
+	NSDictionary *soundFiles = nil;
 	
 	/* I know the condition will always be NO, but there are three
 	 blocks of copy and pasted code. I wanted them to look the same. */

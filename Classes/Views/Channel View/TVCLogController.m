@@ -107,6 +107,13 @@
 
 - (void)dealloc
 {
+	[self.webView setKeyDelegate:nil];
+	[self.webView setDraggingDelegate:nil];
+	[self.webView setFrameLoadDelegate:nil];
+	[self.webView setResourceLoadDelegate:nil];
+	[self.webView setPolicyDelegate:nil];
+	[self.webView setUIDelegate:nil];
+
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 

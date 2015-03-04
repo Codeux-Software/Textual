@@ -128,7 +128,7 @@
 	
 	/* Loop until we find a name that does not exist. */
 	while ([RZFileManager() fileExistsAtPath:filepath]) {
-		NSString *newFilename;
+		NSString *newFilename = nil;
 
 		if ([filenameExtension length] > 0) {
 			newFilename = [NSString stringWithFormat:@"%@_%ld.%@", nameWOExtension, (long)i, filenameExtension];
@@ -199,7 +199,7 @@
 													 delegateQueue:self.serverDispatchQueue
 													   socketQueue:self.serverSocketQueue];
 	
-	NSError *connError;
+	NSError *connError = nil;
 	
 	BOOL isConnected = NO;
 	

@@ -41,7 +41,7 @@
 
 - (void)appendPluralOrSingular:(NSString **)resultString valueToken:(NSInteger)valueToken value:(NSInteger)valueActual
 {
-	NSString *valueKey;
+	NSString *valueKey = nil;
 
 	if (NSDissimilarObjects(valueActual, 1)) {
 		valueKey = [NSString stringWithFormat:@"BasicLanguage[%ld][1]", valueToken];

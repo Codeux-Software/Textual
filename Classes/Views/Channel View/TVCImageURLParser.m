@@ -137,7 +137,7 @@
 
 			NSAssertReturnR(([parts count] == 4 || [parts count] == 5), nil);
 
-			NSString *photoID;
+			NSString *photoID = nil;
 
 			if ([parts count] == 5) {
 				if ([parts[4] isEqualToString:@"edit"]) { // Add a little validation.

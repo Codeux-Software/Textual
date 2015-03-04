@@ -69,6 +69,12 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	[self.maintenanceTimer stop];
+	[self.maintenanceTimer setDelegate:nil];
+}
+
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame
 {
 	if (key) {
@@ -810,7 +816,7 @@
 	
 	NSObjectIsEmptyAssert(bookmark);
 	
-	NSError *resolveError;
+	NSError *resolveError = nil;
 	
 	BOOL isStale = YES;
 	

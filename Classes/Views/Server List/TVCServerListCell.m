@@ -902,7 +902,7 @@
 		
 		if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 		{
-			NSColor *selectionColor;
+			NSColor *selectionColor = nil;
 			
 			if ([mainWindow() isActiveForDrawing]) {
 				selectionColor = [userInterfaceObjects rowSelectionColorForActiveWindow];

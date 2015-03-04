@@ -118,6 +118,16 @@
 	}
 }
 
+- (void)dealloc
+{
+	[self.memberList setKeyDelegate:nil];
+
+	[self.serverList setDelegate:nil];
+	[self.serverList setDataSource:nil];
+	
+	[self.serverList setKeyDelegate:nil];
+}
+
 - (void)maybeToggleFullscreenAfterLaunch
 {
 	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];

@@ -233,9 +233,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self.retryTimer stop];
 	[self.reconnectTimer stop];
 	[self.commandQueueTimer stop];
-	
+
+	[self.isonTimer	setDelegate:nil];
+	[self.pongTimer	setDelegate:nil];
+	[self.retryTimer setDelegate:nil];
+	[self.reconnectTimer setDelegate:nil];
+	[self.commandQueueTimer setDelegate:nil];
+
 #ifdef TEXTUAL_TRIAL_BINARY
 	[self.trialPeriodTimer stop];
+
+	[self.trialPeriodTimer setDelegate:nil];
 #endif
 }
 
@@ -646,7 +654,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
-		NSString *messageBody;
+		NSString *messageBody = nil;
 		NSString *nicknameBody = [logLine formattedNickname:channel];
 		
 		if ([logLine lineType] == TVCLogLineActionType) {
@@ -1067,7 +1075,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	text = [text trim]; // Do not leave spaces in text to be spoken.
 	text = [text stripIRCEffects]; // Do not leave formatting in text to be spoken.
 
-	NSString *formattedMessage;
+	NSString *formattedMessage = nil;
 	
 	switch (type) {
 		case TXNotificationHighlightType:
@@ -1214,7 +1222,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 	
 	NSString *title = channelName;
-	NSString *desc;
+	NSString *desc = nil;
 
 	if (ltype == TVCLogLineActionType || ltype == TVCLogLineActionNoHighlightType) {
 		desc = [NSString stringWithFormat:TXNotificationDialogActionNicknameFormat, nick, text];
@@ -1737,7 +1745,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(target);
 	NSObjectIsEmptyAssert(command);
 
-	NSString *trail;
+	NSString *trail = nil;
 
 	if (NSObjectIsEmpty(text)) {
 		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
@@ -1753,7 +1761,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(target);
 	NSObjectIsEmptyAssert(command);
 	
-	NSString *trail;
+	NSString *trail = nil;
 
 	if (NSObjectIsEmpty(text)) {
 		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
@@ -2359,7 +2367,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					targetChannelName = [s getTokenAsString];
 				}
 
-				NSString *sign;
+				NSString *sign = nil;
 
 				if ([uppercaseCommand hasPrefix:@"DE"] || [uppercaseCommand hasPrefix:@"UN"]) {
 					sign = @"-";
@@ -2799,7 +2807,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				gref = BLS(1218);
 			}
 
-			NSString *text;
+			NSString *text = nil;
 			
 			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
 				NSDateFormatter *dateFormatter = [NSDateFormatter new];
@@ -4674,7 +4682,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if (time > self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:[self localNickname]]) {
 				double delta = (time -		self.lastLagCheck);
 
-				NSString *rating;
+				NSString *rating = nil;
 
 					   if (delta < 0.01) {						rating = TXTLS(@"BasicLanguage[1109][00]");
 				} else if (delta >= 0.01 && delta < 0.1) {		rating = TXTLS(@"BasicLanguage[1109][01]");
@@ -5091,12 +5099,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)receiveNick:(IRCMessage *)m
 {
-	IRCAddressBookEntry *ignoreChecks;
+	IRCAddressBookEntry *ignoreChecks = nil;
 
 	NSString *oldNick = [m senderNickname];
 	
-	NSString *newNick;
-	NSString *target;
+	NSString *newNick = nil;
+	NSString *target = nil;
 
 	/* Check input conditions. */
 	if ([m isPrintOnlyMessage] == NO) {
@@ -6870,7 +6878,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			} else {
 				NSString *nick = [banowner nicknameFromHostmask];
 
-				NSString *text;
+				NSString *text = nil;
 
 				if (extendedLine) {
 					text = TXTLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
@@ -6934,7 +6942,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			} else {
 				NSString *nick = [banowner nicknameFromHostmask];
 
-				NSString *text;
+				NSString *text = nil;
 
 				if (extendedLine) {
 					text = TXTLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
@@ -6998,7 +7006,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			} else {
 				NSString *nick = [banowner nicknameFromHostmask];
 
-				NSString *text;
+				NSString *text = nil;
 
 				if (extendedLine) {
 					text = TXTLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
@@ -8444,11 +8452,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		NSObjectIsEmptyAssert(section4);
 
 		/* Start data association. */
-		NSString *hostAddress;
-		NSString *hostPort;
-		NSString *filename;
-		NSString *filesize;
-		NSString *transferToken;
+		NSString *hostAddress = nil;
+		NSString *hostPort = nil;
+		NSString *filename = nil;
+		NSString *filesize = nil;
+		NSString *transferToken = nil;
 		
 		/* Match data variables. */
 		if (isSendRequest)
@@ -8582,7 +8590,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(address);
 	
 	/* Send file information. */
-	NSString *trail;
+	NSString *trail = nil;
 
 	if ([transferToken length] > 0) {
 		trail = [NSString stringWithFormat:@"%@ %@ %li %lli %@", escapedFileName, address, (long)port, totalFilesize, transferToken];
@@ -8599,7 +8607,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)DCCTransferAddress
 {
-	NSString *address;
+	NSString *address = nil;
 	NSString *baseaddr = [[self fileTransferController] cachedIPAddress];
 	
 	if ([baseaddr isIPv6Address]) {

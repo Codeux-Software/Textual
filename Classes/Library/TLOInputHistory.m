@@ -154,7 +154,7 @@ NSString * const _inputHistoryGlobalObjectKey	= @"TLOInputHistoryDefaultObject";
 - (TLOInputHistoryObject *)currentObjectForFocusedTreeView
 {
 	@synchronized(self.historyObjects) {
-		NSString *currentObjectKey;
+		NSString *currentObjectKey = nil;
 		
 		if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 			currentObjectKey = self.currentTreeItem;

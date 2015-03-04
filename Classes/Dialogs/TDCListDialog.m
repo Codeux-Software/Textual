@@ -153,7 +153,7 @@
 {
     self.waitingForReload = NO;
 
-	NSString *titleCount;
+	NSString *titleCount = nil;
 
 	NSString *count1 = TXFormattedNumber([self.unfilteredList count]);
 	NSString *count2 = TXFormattedNumber([self.filteredList count]);

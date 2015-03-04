@@ -131,7 +131,7 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 			
 			/* If results isn't zero, we show it. */
 			if (total >= 1) {
-				NSString *languageKey;
+				NSString *languageKey = nil;
 				
 				if (total > 1 || total < 1) {
 					languageKey = [NSString stringWithFormat:@"BasicLanguage[1204][%@]", [unit uppercaseString]];
