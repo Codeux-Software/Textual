@@ -179,9 +179,9 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderUser
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute;
 
 /*!
- * @brief The date & time during which the input was receieved.
+ * @brief The date & time during which the input was received.
  *
- * @return NSString
+ * @return NSDate
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute;
 
@@ -224,7 +224,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSeq
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute;
 
 /*!
- * @brief The name of the IRC network
+ * @brief The name of the IRC network or NSNull if unknown.
  *
  * @return NSString
  */
@@ -302,7 +302,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
 - (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload;
 
 /*!
- * @brief The unique hash of the message which can be used to access the message.
+ * @brief The ID of the message that can be used to access it using getElementByID()
  *
  * @return NSString
  */
