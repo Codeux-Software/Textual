@@ -162,6 +162,8 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dic
 {
 	if ((self = [super init])) {
+		self.itemUUID = [NSString stringWithUUID];
+
 		[self populateDictionaryValues:dic];
 	}
 

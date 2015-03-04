@@ -128,7 +128,7 @@
 	for (NSMenuItem *item in [menu itemArray]) {
 		if ([item target]) {
 			if ([[item target] respondsToSelector:@selector(validateMenuItem:)]) {
-				[[item target] performSelector:@selector(validateMenuItem:) withObject:item];
+				(void)[[item target] performSelector:@selector(validateMenuItem:) withObject:item];
 			}
 		}
 
