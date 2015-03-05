@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
@@ -207,210 +207,117 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="1981" y="323"/>
+            <point key="canvasLocation" x="2132" y="324"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="170" y="8" width="567" height="406"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="50" affinity="minX"/>
+                <userLayoutGuide location="203" affinity="minY"/>
             </userGuides>
             <subviews>
-                <customView id="mOC-65-rPr" userLabel="With iCloud">
-                    <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
+                <button id="ih4-DZ-XxY">
+                    <rect key="frame" x="45" y="204" width="332" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button id="loT-Jq-CC4">
-                            <rect key="frame" x="45" y="261" width="312" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="nmP-Xv-vo0">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedCloudSyncingServices:" target="-2" id="J4y-sh-fhj"/>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloud" id="kSy-7j-RhB"/>
-                            </connections>
-                        </button>
-                        <button id="bFO-EK-2kp">
-                            <rect key="frame" x="45" y="126" width="357" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="6lV-4n-ckO">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedUserListModeSortOrder:" target="-2" id="TiT-QL-Fc8"/>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="IwQ-zr-5hm"/>
-                            </connections>
-                        </button>
-                        <button id="TAe-ck-Xr4">
-                            <rect key="frame" x="45" y="154" width="452" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="loQ-C1-afF">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayServerMessageOfTheDayOnConnect" id="bvA-P8-BBg"/>
-                            </connections>
-                        </button>
-                        <button id="Nc0-Xr-uzy">
-                            <rect key="frame" x="45" y="210" width="332" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ZmJ-r9-pFw">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="m0f-aS-7Sp"/>
-                            </connections>
-                        </button>
-                        <button id="uso-J8-aAb">
-                            <rect key="frame" x="45" y="289" width="312" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Dqg-EV-0nL">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConfirmApplicationQuit" id="U5G-hv-Db5"/>
-                            </connections>
-                        </button>
-                        <button id="GWk-Pv-NpP">
-                            <rect key="frame" x="45" y="182" width="302" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="zz0-ay-h6a">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="3a3-ig-MVf"/>
-                            </connections>
-                        </button>
-                        <button id="wa5-YH-sSf">
-                            <rect key="frame" x="45" y="98" width="260" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2uS-6b-ZUY">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="bSA-CE-koo"/>
-                            </connections>
-                        </button>
-                        <button verticalHuggingPriority="750" tag="13" id="KWG-6t-Hi7">
-                            <rect key="frame" x="363" y="260" width="157" height="19"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="roundTextured" title="Manage iCloud" bezelStyle="texturedRounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B0p-rl-Oyd">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystem"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onManageiCloudButtonClicked:" target="-2" id="aai-d3-DXt"/>
-                            </connections>
-                        </button>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="9OO-TT-pze">
-                            <rect key="frame" x="60" y="242" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                    </subviews>
+                    <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="fja-7p-wFI">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="I5j-eF-4fb">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="uQ0-FL-t9P"/>
                     </connections>
-                </customView>
-                <customView id="rd5-1t-uQy" userLabel="Without iCloud">
-                    <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
+                </button>
+                <button id="rEb-fv-Kla">
+                    <rect key="frame" x="45" y="283" width="312" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="lQA-tP-WC2">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConfirmApplicationQuit" id="xbQ-oz-SdL"/>
+                    </connections>
+                </button>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="DDA-MD-FW7">
+                    <rect key="frame" x="60" y="236" width="442" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <subviews>
-                        <button id="uFI-Ds-HBf">
-                            <rect key="frame" x="54" y="275" width="312" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                            <buttonCell key="cell" type="check" title="Request confirmation before quitting Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="scP-yQ-Rmv">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ConfirmApplicationQuit" id="7qt-KC-fvc"/>
-                            </connections>
-                        </button>
-                        <button id="NyR-pk-ZY5">
-                            <rect key="frame" x="54" y="140" width="357" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="1vK-h8-9i9">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="onChangedUserListModeSortOrder:" target="-2" id="qbE-6i-GYr"/>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="38l-G9-wCG"/>
-                            </connections>
-                        </button>
-                        <button id="L7h-OA-1ef">
-                            <rect key="frame" x="54" y="168" width="452" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="SAT-sM-Xgx">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayServerMessageOfTheDayOnConnect" id="imL-zF-W1c"/>
-                            </connections>
-                        </button>
-                        <button id="O4M-nX-5pq">
-                            <rect key="frame" x="54" y="224" width="332" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Rejoin a channel after being kicked" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="S0u-wf-CZM">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RejoinChannelOnLocalKick" id="I5X-wb-XYT"/>
-                            </connections>
-                        </button>
-                        <button id="tNb-Om-CfB">
-                            <rect key="frame" x="54" y="196" width="302" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Zks-mB-PeT">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="qLn-I2-Au3"/>
-                            </connections>
-                        </button>
-                        <button id="eIX-KJ-OOv">
-                            <rect key="frame" x="54" y="112" width="260" height="18"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Drp-6j-M7W">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="titleBar" size="12"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="sJ1-Vy-o6S"/>
-                            </connections>
-                        </button>
-                        <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="rg4-eL-Xiq">
-                            <rect key="frame" x="69" y="256" width="442" height="5"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <font key="titleFont" metaFont="system"/>
-                        </box>
-                    </subviews>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <button verticalHuggingPriority="750" tag="13" id="OJP-WO-iOh">
+                    <rect key="frame" x="363" y="254" width="157" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="roundTextured" title="Manage iCloud" bezelStyle="texturedRounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="edm-fG-6FP">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="smallSystem"/>
+                    </buttonCell>
                     <connections>
-                        <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="NwR-Ct-4ae"/>
+                        <action selector="onManageiCloudButtonClicked:" target="-2" id="ZjT-qa-0Qr"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.System -&gt; Built with iCloud Support" id="QZ6-eb-YRh"/>
                     </connections>
-                </customView>
+                </button>
+                <button id="IOa-gH-q8h">
+                    <rect key="frame" x="45" y="255" width="312" height="18"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="3bK-dy-5Oq">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedCloudSyncingServices:" target="-2" id="vQp-c7-ngh"/>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.System -&gt; Built with iCloud Support" id="xBi-ra-wkq"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SyncPreferencesToTheCloud" id="M1a-Xd-w6R"/>
+                    </connections>
+                </button>
+                <button id="BcB-bU-ghH">
+                    <rect key="frame" x="45" y="120" width="357" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Save the state of queries between restarts" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Xno-3n-hRm">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedUserListModeSortOrder:" target="-2" id="56D-g8-o69"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ServerListRetainsQueriesBetweenRestarts" id="juB-9y-5GM"/>
+                    </connections>
+                </button>
+                <button id="fHV-AP-8XO">
+                    <rect key="frame" x="45" y="148" width="452" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Display the Message of the Day (MOTD) of a server upon connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Vjw-gg-RKc">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayServerMessageOfTheDayOnConnect" id="anK-W3-LLa"/>
+                    </connections>
+                </button>
+                <button id="REe-wH-Kh4">
+                    <rect key="frame" x="45" y="176" width="302" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Automatically join a channel when invited" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="qh2-KY-hOZ">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutojoinChannelOnInvite" id="24Y-sW-A1i"/>
+                    </connections>
+                </button>
+                <button id="IbM-65-cQu">
+                    <rect key="frame" x="45" y="92" width="260" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Toggle away status on display sleep" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="alr-IU-Ga5">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.SetAwayOnScreenSleep" id="b65-ug-Qf1"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="832.5" y="223"/>
+            <point key="canvasLocation" x="1117.5" y="256"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="567" height="406"/>
@@ -3708,7 +3615,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="60" y="354" width="223" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="When file transfer request is received:" id="ODe-np-HQz">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3735,7 +3642,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="60" y="315" width="175" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="IP Address detection method:" id="VBT-UA-wAp">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3774,7 +3681,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="79" y="290" width="156" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manually entered address:" id="CJm-Pw-2rG">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3783,7 +3690,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="60" y="249" width="142" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="File transfer port range:" id="Hpb-j7-aSg">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3824,7 +3731,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="288" y="249" width="17" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="to" id="Iaj-LR-FRV">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3833,7 +3740,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <rect key="frame" x="60" y="208" width="203" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Downloaded files go to the folder:" id="Ccn-iO-uOJ">
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -3906,12 +3813,12 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="KDa-uo-5uH"/>
                         <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Running Mac OS Mavericks Or Newer" id="GCd-H9-10u">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; Idle System Sleep Prevented During File Transfer" id="KDa-uo-5uH"/>
                     </connections>
                 </button>
             </subviews>
@@ -3964,7 +3871,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dcb-jn-Evt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
+                        <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
                         <action selector="onOpenPathToCloudFolder:" target="-2" id="ooI-JL-AmW"/>
