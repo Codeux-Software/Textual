@@ -41,20 +41,20 @@
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, copy) IRCAddressBookEntry *ignore;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreMessagesContainingMatchCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreNoticeMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessageHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePrivateMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessageHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignorePublicMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *trackUserActivityCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreEntrySaveButton;
-@property (nonatomic, nweak) IBOutlet NSButton *userTrackingEntrySaveButton;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskTextField;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameTextField;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreMessagesContainingMatchCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreNoticeMessagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignorePrivateMessageHighlightsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignorePrivateMessagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignorePublicMessageHighlightsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignorePublicMessagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *trackUserActivityCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreEntrySaveButton;
+@property (nonatomic, weak) IBOutlet NSButton *userTrackingEntrySaveButton;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameTextField;
 @property (nonatomic, strong) IBOutlet NSWindow *ignoreEntryView;
 @property (nonatomic, strong) IBOutlet NSWindow *userTrackingEntryView;
 

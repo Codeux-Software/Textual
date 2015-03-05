@@ -55,7 +55,7 @@
 #define TXKeyUpArrowCode		0x7E
 
 @interface TLOKeyEventHandler : NSObject
-@property (nonatomic, uweak) id target;
+@property (nonatomic, weak) id target;
 
 - (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
 - (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;

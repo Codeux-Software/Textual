@@ -41,8 +41,8 @@
 
 @interface TDCHighlightListSheet ()
 @property (nonatomic, copy) NSArray *highlightList;
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *highlightListTable;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
 @end
 
 @implementation TDCHighlightListSheet

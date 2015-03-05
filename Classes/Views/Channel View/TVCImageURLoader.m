@@ -44,7 +44,7 @@
 
 /* Private stuff. =) */
 @interface TVCImageURLoader ()
-@property (nonatomic, nweak) TVCLogController *requestOwner;
+@property (nonatomic, weak) TVCLogController *requestOwner;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, copy) NSString *requestImageUniqeID;
 @property (nonatomic, strong) NSURLConnection *requestConnection;

@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TLOTimer : NSObject
-@property (nonatomic, uweak) id delegate;
-@property (nonatomic, uweak) SEL selector;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, assign) SEL selector;
 @property (nonatomic, assign) BOOL reqeatTimer;
 @property (readonly) BOOL timerIsActive;
 

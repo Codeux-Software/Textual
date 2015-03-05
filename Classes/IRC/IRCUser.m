@@ -41,7 +41,7 @@
 #define _colorNumberMax				 30
 
 @interface IRCUser ()
-@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, weak) IRCClient *associatedClient;
 @end
 
 @implementation IRCUser

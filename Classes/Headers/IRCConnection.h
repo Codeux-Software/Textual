@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection : NSObject
-@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, strong) TLOTimer *floodTimer;
 @property (nonatomic, assign) BOOL isConnected;
 @property (nonatomic, assign) BOOL isConnecting;

@@ -46,7 +46,7 @@
  the trustRef and index 1 containing the completion block. */
 @property (nonatomic, strong) NSMutableArray *queuedEntries;
 @property (nonatomic, strong) SFCertificateTrustPanel *currentPanel;
-@property (nonatomic, uweak) id activeSocket; // The current, open sheet
+@property (nonatomic, weak) id activeSocket; // The current, open sheet
 @property (nonatomic, assign) BOOL doNotInvokeCompletionBlockNextPass;
 @end
 

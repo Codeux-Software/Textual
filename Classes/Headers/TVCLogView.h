@@ -41,8 +41,8 @@
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView : WebView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, uweak) id draggingDelegate;
+@property (nonatomic, weak) id keyDelegate;
+@property (nonatomic, weak) id draggingDelegate;
 
 @property (readonly, copy) NSString *contentString;
 

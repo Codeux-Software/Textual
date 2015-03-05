@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TDCNickSheet ()
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *toldNicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *toldNicknameTextField;
 @end
 
 @implementation TDCNickSheet

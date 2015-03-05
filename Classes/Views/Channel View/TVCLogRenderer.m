@@ -47,7 +47,7 @@ typedef uint32_t attr_t;
 
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) id finalResult;
-@property (nonatomic, uweak) TVCLogController *controller;
+@property (nonatomic, weak) TVCLogController *controller;
 @property (nonatomic, strong) NSMutableDictionary *outputDictionary;
 @property (nonatomic, copy) NSDictionary *rendererAttributes;
 @property (nonatomic, assign) BOOL cancelRender;

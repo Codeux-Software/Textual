@@ -39,16 +39,16 @@
 #import "TextualApplication.h"
 
 @interface TDCModeSheet ()
-@property (nonatomic, nweak) IBOutlet NSButton *sCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *pCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *nCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *tCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *iCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *mCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *kCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *lCheck;
-@property (nonatomic, nweak) IBOutlet NSTextField *kText;
-@property (nonatomic, nweak) IBOutlet NSTextField *lText;
+@property (nonatomic, weak) IBOutlet NSButton *sCheck;
+@property (nonatomic, weak) IBOutlet NSButton *pCheck;
+@property (nonatomic, weak) IBOutlet NSButton *nCheck;
+@property (nonatomic, weak) IBOutlet NSButton *tCheck;
+@property (nonatomic, weak) IBOutlet NSButton *iCheck;
+@property (nonatomic, weak) IBOutlet NSButton *mCheck;
+@property (nonatomic, weak) IBOutlet NSButton *kCheck;
+@property (nonatomic, weak) IBOutlet NSButton *lCheck;
+@property (nonatomic, weak) IBOutlet NSTextField *kText;
+@property (nonatomic, weak) IBOutlet NSTextField *lText;
 @end
 
 @implementation TDCModeSheet

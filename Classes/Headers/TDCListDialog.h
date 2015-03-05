@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TDCListDialog : NSWindowController
-@property (nonatomic, uweak) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
 

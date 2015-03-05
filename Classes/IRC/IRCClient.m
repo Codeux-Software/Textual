@@ -119,7 +119,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
-@property (nonatomic, nweak) IRCChannel *lagCheckDestinationChannel;
+@property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
 @end
 
 @implementation IRCClient

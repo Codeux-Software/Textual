@@ -40,9 +40,9 @@
 
 @interface TDCHighlightEntrySheet ()
 @property (nonatomic, copy) NSArray *channelList;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchTypePopupButton;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *matchChannelPopupButton;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *matchTypePopupButton;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *matchChannelPopupButton;
 @end
 
 @implementation TDCHighlightEntrySheet

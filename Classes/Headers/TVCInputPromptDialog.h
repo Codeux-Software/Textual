@@ -41,11 +41,11 @@
  TLOPopupPrompts.h for methods used to run such dialogs. */
 
 @interface TVCInputPromptDialog : NSWindowController
-@property (nonatomic, nweak) IBOutlet NSButton *defaultButton;
-@property (nonatomic, nweak) IBOutlet NSButton *alternateButton;
-@property (nonatomic, nweak) IBOutlet NSTextField *informationalText;
-@property (nonatomic, nweak) IBOutlet NSTextField *informationalTitle;
-@property (nonatomic, nweak) IBOutlet NSTextField *informationalInput;
+@property (nonatomic, weak) IBOutlet NSButton *defaultButton;
+@property (nonatomic, weak) IBOutlet NSButton *alternateButton;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalText;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalTitle;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalInput;
 @property (nonatomic, copy) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
 
 - (void)alertWithMessageTitle:(NSString *)messageTitle

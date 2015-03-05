@@ -142,21 +142,21 @@
 @interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
-@property (nonatomic, nweak) IBOutlet NSMenu *navigationChannelList;
-@property (nonatomic, nweak) IBOutlet NSMenu *addServerMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *channelViewMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *dockMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *joinChannelMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *segmentedControllerMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *tcopyURLMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *userControlMenu;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *closeWindowMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *channelMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *serverMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
-@property (nonatomic, nweak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenu *navigationChannelList;
+@property (nonatomic, weak) IBOutlet NSMenu *addServerMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *channelViewMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *dockMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *joinChannelMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *segmentedControllerMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *tcopyURLMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *userControlMenu;
+@property (nonatomic, weak) IBOutlet NSMenuItem *closeWindowMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *channelMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *serverMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
+@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
 
 - (void)setupOtherServices;
 

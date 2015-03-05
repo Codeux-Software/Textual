@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TDCTopicSheet ()
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, uweak) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
 
 @implementation TDCTopicSheet

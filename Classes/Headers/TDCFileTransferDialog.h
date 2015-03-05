@@ -65,7 +65,7 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 @property (nonatomic, copy) NSString *cachedIPAddress;
 @property (nonatomic, assign) BOOL sourceIPAddressRequestPending;
 @property (nonatomic, copy) NSURL *downloadDestination;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *fileTransferTable;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *fileTransferTable;
 
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame;
 

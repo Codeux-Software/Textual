@@ -41,11 +41,11 @@
 #define TDCSheetBaseDeclared		1
 
 @interface TDCSheetBase : NSObject
-@property (nonatomic, uweak) id delegate;
-@property (nonatomic, nweak) NSWindow *window; // Window being attached to.
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak) NSWindow *window; // Window being attached to.
 @property (nonatomic, strong) IBOutlet NSWindow *sheet; // Window being attached.
-@property (nonatomic, nweak) IBOutlet NSButton *okButton;
-@property (nonatomic, nweak) IBOutlet NSButton *cancelButton;
+@property (nonatomic, weak) IBOutlet NSButton *okButton;
+@property (nonatomic, weak) IBOutlet NSButton *cancelButton;
 
 - (void)startSheet;
 - (void)startSheetWithWindow:(NSWindow *)awindow;

@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDChanBanSheet ()
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *banTable;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
 @end
 

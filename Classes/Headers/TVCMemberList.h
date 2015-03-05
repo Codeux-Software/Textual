@@ -38,14 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberList : NSOutlineView
-@property (nonatomic, uweak) id keyDelegate;
+@property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, assign) BOOL isHiddenByUser;
 @property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, nweak) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
+@property (nonatomic, weak) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
 
 #ifdef TXSystemIsMacOSYosemiteOrNewer
-@property (nonatomic, nweak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
 #endif
 
 /* Additions & Removals. */

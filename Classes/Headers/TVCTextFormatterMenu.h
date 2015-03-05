@@ -43,12 +43,12 @@
  When enabled inside a sheet, the right click menu is available but the
  keyboard shortcuts are reserved for main window access. */
 @interface TVCTextViewIRCFormattingMenu : NSObject <NSMenuDelegate>
-@property (nonatomic, nweak) IBOutlet NSMenuItem *formatterMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *foregroundColorMenu;
-@property (nonatomic, nweak) IBOutlet NSMenu *backgroundColorMenu;
+@property (nonatomic, weak) IBOutlet NSMenuItem *formatterMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *foregroundColorMenu;
+@property (nonatomic, weak) IBOutlet NSMenu *backgroundColorMenu;
 @property (nonatomic, assign) BOOL sheetOverrideEnabled;
 @property (nonatomic, strong) dispatch_queue_t formattingQueue;
-@property (nonatomic, uweak) TVCTextViewWithIRCFormatter *textField;
+@property (nonatomic, unsafe_unretained) TVCTextViewWithIRCFormatter *textField;
 
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
 - (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;

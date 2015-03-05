@@ -41,13 +41,13 @@
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
 @property (nonatomic, copy) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
+@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
+@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
 
 - (void)updateSegmentedController;
 - (void)reloadSegmentedControllerOrigin;
@@ -66,7 +66,7 @@
 @end
 
 @interface TVCMainWindowTextViewBackground : NSView
-@property (nonatomic, nweak) IBOutlet TVCMainWindowTextViewContentView *contentView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
 
 @property (readonly, copy) NSColor *systemSpecificTextFieldTextFontColor;
 @property (readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;

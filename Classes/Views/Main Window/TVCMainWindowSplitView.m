@@ -48,8 +48,8 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 @property (nonatomic, assign) BOOL restoredPositions;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForServerList;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
 @end
 
 @implementation TVCMainWindowSplitView
