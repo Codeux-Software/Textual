@@ -38,9 +38,9 @@
 #import "TextualApplication.h"
 
 @interface TVCMemberListCell : NSTableCellView
-@property (nonatomic, nweak) IRCUser *memberPointer;
+@property (nonatomic, weak) IRCUser *memberPointer;
 
-@property (nonatomic, nweak) IBOutlet NSTextField *cellTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
 
 @property (readonly, copy) NSDictionary *drawingContext;
 

@@ -5,7 +5,7 @@
 @interface TVCWebViewAutoScroll : NSObject
 @property (nonatomic, assign) NSRect lastFrame;
 @property (nonatomic, assign) NSRect lastVisibleRect;
-@property (nonatomic, nweak) WebFrameView *webFrame;
+@property (nonatomic, weak) WebFrameView *webFrame;
 
 @property (readonly) BOOL canScroll;
 

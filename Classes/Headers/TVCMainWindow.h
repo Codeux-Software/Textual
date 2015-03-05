@@ -62,16 +62,16 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 @interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
-@property (nonatomic, nweak) IBOutlet NSBox *channelViewBox;
-@property (nonatomic, nweak) IBOutlet NSView *titlebarAccessoryView;
-@property (nonatomic, nweak) IBOutlet NSTitlebarAccessoryViewController *titlebarAccessoryViewController;
+@property (nonatomic, weak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, weak) IBOutlet NSView *titlebarAccessoryView;
+@property (nonatomic, weak) IBOutlet NSTitlebarAccessoryViewController *titlebarAccessoryViewController;
 @property (nonatomic, strong) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
 @property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
-@property (nonatomic, uweak) IBOutlet TVCMainWindowTextView *inputTextField;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowSplitView *contentSplitView;
-@property (nonatomic, nweak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
-@property (nonatomic, nweak) IBOutlet TVCMemberList *memberList;
-@property (nonatomic, nweak) IBOutlet TVCServerList *serverList;
+@property (nonatomic, unsafe_unretained) IBOutlet TVCMainWindowTextView *inputTextField;
+@property (nonatomic, weak) IBOutlet TVCMainWindowSplitView *contentSplitView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
+@property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
+@property (nonatomic, weak) IBOutlet TVCServerList *serverList;
 @property (nonatomic, strong) IRCTreeItem *selectedItem; // Please don't directy modify this without calling -adjustSelection
 @property (nonatomic, copy) NSString *previousSelectedClientId; // There are no reasons to modify this.
 @property (nonatomic, copy) NSString *previousSelectedChannelId; // There are no reasons to modify this.

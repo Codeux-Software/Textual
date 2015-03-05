@@ -39,8 +39,8 @@
 
 @interface TDChanInviteExceptionSheet ()
 @property (nonatomic, strong) NSMutableArray *exceptionList;
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *exceptionTable;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *exceptionTable;
 @end
 
 @implementation TDChanInviteExceptionSheet

@@ -44,8 +44,8 @@
 @interface TDCFileTransferDialog ()
 @property (nonatomic, strong) TLOTimer *maintenanceTimer;
 @property (nonatomic, strong) NSMutableArray *fileTransfers;
-@property (nonatomic, nweak) IBOutlet NSButton *clearButton;
-@property (nonatomic, nweak) IBOutlet NSSegmentedCell *navigationControllerCell;
+@property (nonatomic, weak) IBOutlet NSButton *clearButton;
+@property (nonatomic, weak) IBOutlet NSSegmentedCell *navigationControllerCell;
 
 - (IBAction)hideWindow:(id)sender;
 @end

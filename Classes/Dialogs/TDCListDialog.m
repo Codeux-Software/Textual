@@ -40,10 +40,10 @@
 
 @interface TDCListDialog ()
 @property (nonatomic, assign) BOOL waitingForReload;
-@property (nonatomic, nweak) IBOutlet NSButton *updateButton;
-@property (nonatomic, nweak) IBOutlet NSSearchField *searchTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *networkNameTextField;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelListTable;
+@property (nonatomic, weak) IBOutlet NSButton *updateButton;
+@property (nonatomic, weak) IBOutlet NSSearchField *searchTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *networkNameTextField;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *channelListTable;
 @property (nonatomic, strong) NSMutableArray *unfilteredList;
 @property (nonatomic, strong) NSMutableArray *filteredList;
 @property (nonatomic, readonly) NSMutableArray *activeList; // Proxies one of the two above.

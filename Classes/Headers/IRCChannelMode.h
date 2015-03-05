@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface IRCChannelMode : NSObject <NSCopying>
-@property (nonatomic, nweak) IRCISupportInfo *supportInfo;
+@property (nonatomic, weak) IRCISupportInfo *supportInfo;
 
 - (void)clear;
 

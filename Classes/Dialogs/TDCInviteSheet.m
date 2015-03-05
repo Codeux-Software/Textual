@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TDCInviteSheet ()
-@property (nonatomic, nweak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *channelListPopup;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
 @end
 
 @implementation TDCInviteSheet

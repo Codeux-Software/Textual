@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCLogControllerHistoricLogFile : NSObject
-@property (nonatomic, nweak) TVCLogController *associatedController;
+@property (nonatomic, weak) TVCLogController *associatedController;
 
 - (void)writeNewEntryForLogLine:(TVCLogLine *)logLine;
 - (void)writeNewEntryWithRawData:(NSData *)jsondata; // Does not automatically append newline.

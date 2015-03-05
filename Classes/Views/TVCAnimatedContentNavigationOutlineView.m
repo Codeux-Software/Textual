@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCAnimatedContentNavigationOutlineView ()
-@property (nonatomic, nweak) id lastSelectionWeakRef;
+@property (nonatomic, weak) id lastSelectionWeakRef;
 @end
 
 /* This outline view used to be animated. See git history. */

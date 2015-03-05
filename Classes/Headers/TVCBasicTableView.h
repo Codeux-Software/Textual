@@ -39,8 +39,8 @@
 #import "TextualApplication.h"
 
 @interface TVCBasicTableView : NSTableView
-@property (nonatomic, uweak) id keyDelegate;
-@property (nonatomic, uweak) id textEditingDelegate;
+@property (nonatomic, weak) id keyDelegate;
+@property (nonatomic, weak) id textEditingDelegate;
 
 @property (readonly, copy) NSArray *selectedRows;
 @property (readonly) NSInteger countSelectedRows;

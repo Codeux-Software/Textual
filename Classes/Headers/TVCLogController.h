@@ -41,8 +41,8 @@
 #import "TVCLogView.h" // @protocol
 
 @interface TVCLogController : NSObject <TVCLogViewDelegate>
-@property (nonatomic, nweak) IRCClient *associatedClient;
-@property (nonatomic, nweak) IRCChannel *associatedChannel;
+@property (nonatomic, weak) IRCClient *associatedClient;
+@property (nonatomic, weak) IRCChannel *associatedChannel;
 @property (nonatomic, strong) TVCLogView *webView;
 @property (nonatomic, strong) TVCLogPolicy *webViewPolicy;
 @property (nonatomic, assign) BOOL isLoaded;

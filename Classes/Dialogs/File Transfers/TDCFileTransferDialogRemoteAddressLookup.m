@@ -40,7 +40,7 @@
 #define _requestTimeoutInterval			30.0
 
 @interface TDCFileTransferDialogRemoteAddressLookup ()
-@property (nonatomic, uweak) id requestDelegate;
+@property (nonatomic, weak) id requestDelegate;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;

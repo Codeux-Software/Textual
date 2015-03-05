@@ -39,12 +39,12 @@
 #import "TextualApplication.h"
 
 @interface TDCWelcomeSheet ()
-@property (nonatomic, nweak) IBOutlet NSButton *autoConnectCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *addChannelButton;
-@property (nonatomic, nweak) IBOutlet NSButton *deleteChannelButton;
-@property (nonatomic, nweak) IBOutlet NSTextField *nicknameTextField;
-@property (nonatomic, nweak) IBOutlet NSComboBox *serverAddressComboBox;
-@property (nonatomic, nweak) IBOutlet TVCBasicTableView *channelTable;
+@property (nonatomic, weak) IBOutlet NSButton *autoConnectCheck;
+@property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
+@property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
+@property (nonatomic, weak) IBOutlet NSTextField *nicknameTextField;
+@property (nonatomic, weak) IBOutlet NSComboBox *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, copy) NSDictionary *serverList;
 @end

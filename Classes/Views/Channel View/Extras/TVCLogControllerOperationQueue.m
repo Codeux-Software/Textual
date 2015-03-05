@@ -41,7 +41,7 @@
 #pragma mark Define Private Header
 
 @interface TVCLogControllerOperationItem : NSOperation
-@property (nonatomic, nweak) TVCLogController *controller;
+@property (nonatomic, weak) TVCLogController *controller;
 @property (nonatomic, copy) TVCLogControllerOperationBlock executionBlock;
 @property (nonatomic, assign) BOOL isStandalone;
 

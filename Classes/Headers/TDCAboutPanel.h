@@ -38,8 +38,8 @@
 #import "TextualApplication.h"
 
 @interface TDCAboutPanel : NSWindowController
-@property (nonatomic, uweak) id delegate;
-@property (nonatomic, nweak) IBOutlet NSTextField *versionInfoTextField;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
 
 - (void)show;
 

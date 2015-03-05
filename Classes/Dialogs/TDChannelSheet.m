@@ -44,21 +44,21 @@
 /* Each entry of the array is an array with index 0 equal to the
  view and index 1 equal to the first responder wanted in that view. */
 @property (nonatomic, strong) NSArray *navigationTree;
-@property (nonatomic, nweak) IBOutlet NSButton *autoJoinCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *disableInlineImagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *enableInlineImagesCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *pushNotificationsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *showTreeBadgeCountCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreHighlightsCheck;
-@property (nonatomic, nweak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
-@property (nonatomic, nweak) IBOutlet NSPopUpButton *encryptionModeOfOperationPopup;
-@property (nonatomic, nweak) IBOutlet NSSegmentedControl *contentViewTabView;
-@property (nonatomic, nweak) IBOutlet TVCTextFieldWithValueValidation *channelNameTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultModesTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *defaultTopicTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *encryptionKeyTextField;
-@property (nonatomic, nweak) IBOutlet NSTextField *secretKeyTextField;
-@property (nonatomic, nweak) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
+@property (nonatomic, weak) IBOutlet NSButton *disableInlineImagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *enableInlineImagesCheck;
+@property (nonatomic, weak) IBOutlet NSButton *pushNotificationsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *showTreeBadgeCountCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreHighlightsCheck;
+@property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *encryptionModeOfOperationPopup;
+@property (nonatomic, weak) IBOutlet NSSegmentedControl *contentViewTabView;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *channelNameTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *defaultModesTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *defaultTopicTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *encryptionKeyTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *secretKeyTextField;
+@property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewEncryptionView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;

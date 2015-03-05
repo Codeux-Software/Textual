@@ -42,8 +42,8 @@
 @property (nonatomic, assign) NSInteger contentViewPreferredWidth;
 @property (nonatomic, assign) NSInteger contentViewPreferredHeight;
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
-@property (nonatomic, nweak) IBOutlet NSView *contentView;
-@property (nonatomic, nweak) IBOutlet NSWindow *parentWindow;
+@property (nonatomic, weak) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSWindow *parentWindow;
 @property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
 
 - (void)startAtSelectionIndex:(NSInteger)startingSelection;

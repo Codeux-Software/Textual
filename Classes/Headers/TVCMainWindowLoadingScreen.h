@@ -39,14 +39,14 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowLoadingScreenView : NSBox
-@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerNormalView;
-@property (nonatomic, nweak) IBOutlet NSView *welcomeAddServerTrialView;
-@property (nonatomic, nweak) IBOutlet NSView *loadingConfigurationView;
-@property (nonatomic, nweak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, nweak) IBOutlet NSButton *welcomePurchaseTextualButton;
-@property (nonatomic, nweak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
+@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerTrialView;
+@property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
+@property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
+@property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
 
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;

@@ -38,12 +38,12 @@
 #import "TextualApplication.h"
 
 @interface TVCServerListCell : NSTableCellView
-@property (nonatomic, nweak) IRCTreeItem *cellItem;
-@property (nonatomic, nweak) IBOutlet NSTextField *cellTextField;
-@property (nonatomic, nweak) IBOutlet NSImageView *messageCountBadgeImageView;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
-@property (nonatomic, nweak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
+@property (nonatomic, weak) IRCTreeItem *cellItem;
+@property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
+@property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 
 @property (readonly, copy) NSDictionary *drawingContext;
 

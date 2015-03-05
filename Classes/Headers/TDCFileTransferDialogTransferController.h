@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 @interface TDCFileTransferDialogTransferController : NSObject <GCDAsyncSocketDelegate>
-@property (nonatomic, nweak) IRCClient *associatedClient;
+@property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, assign) BOOL isHidden; // Is visible on the dialog.
 @property (nonatomic, assign) BOOL isReversed; // Is reverse DCC transfer.
 @property (nonatomic, assign) BOOL isSender; // Type of transfer.
@@ -52,8 +52,8 @@
 @property (nonatomic, copy) NSString *uniqueIdentifier;
 @property (nonatomic, assign) NSInteger transferPort;
 @property (nonatomic, strong) NSFileHandle *fileHandle;
-@property (nonatomic, uweak) TDCFileTransferDialog *transferDialog;
-@property (nonatomic, nweak) TDCFileTransferDialogTableCell *parentCell;
+@property (nonatomic, weak) TDCFileTransferDialog *transferDialog;
+@property (nonatomic, weak) TDCFileTransferDialogTableCell *parentCell;
 @property (nonatomic, assign) TXUnsignedLongLong totalFilesize;
 @property (nonatomic, assign) TXUnsignedLongLong processedFilesize;
 @property (nonatomic, assign) TXUnsignedLongLong currentRecord;
