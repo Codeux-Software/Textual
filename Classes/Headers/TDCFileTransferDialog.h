@@ -108,16 +108,6 @@ typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
 - (void)updateClearButton;
 - (void)updateMaintenanceTimer;
 
-- (IBAction)clear:(id)sender;
-
-- (IBAction)startTransferOfFile:(id)sender;
-- (IBAction)stopTransferOfFile:(id)sender;
-- (IBAction)removeTransferFromList:(id)sender;
-- (IBAction)openReceivedFile:(id)sender;
-- (IBAction)revealReceivedFileInFinder:(id)sender;
-
-- (IBAction)navigationSelectionDidChange:(id)sender;
-
 /* Do not call these as a plugin please. */
 /* The startUsing* method does not check if the local variable is already set. */
 - (void)startUsingDownloadDestinationFolderSecurityScopedBookmark;

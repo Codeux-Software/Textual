@@ -46,6 +46,4 @@
 @property (nonatomic, copy) IRCChannelConfig *config;
 
 - (void)start;
-
-- (IBAction)onMenuBarItemChanged:(id)sender;
 @end

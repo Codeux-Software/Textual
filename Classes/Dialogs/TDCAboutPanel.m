@@ -37,6 +37,12 @@
 
 #import "TextualApplication.h"
 
+@interface TDCAboutPanel ()
+@property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
+
+- (IBAction)displayAcknowledgments:(id)sender;
+@end
+
 @implementation TDCAboutPanel
 
 - (instancetype)init

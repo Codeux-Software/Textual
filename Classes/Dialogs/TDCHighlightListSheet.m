@@ -43,6 +43,8 @@
 @property (nonatomic, copy) NSArray *highlightList;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
+
+- (IBAction)onClearList:(id)sender;
 @end
 
 @implementation TDCHighlightListSheet

@@ -86,6 +86,12 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)item
 {
+	if ([[NSApp keyWindow] firstResponder] == self.textField) {
+		;
+	} else {
+		return NO;
+	}
+
 	switch ([item tag]) {
 		case 95001:
 		{

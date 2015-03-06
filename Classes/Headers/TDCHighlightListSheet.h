@@ -43,6 +43,4 @@
 - (void)show;
 
 - (void)reloadTable;
-
-- (IBAction)onClearList:(id)sender;
 @end

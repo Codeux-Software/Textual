@@ -41,6 +41,8 @@
 
 @interface TPISystemProfiler ()
 @property (nonatomic, strong) NSView *preferencePaneView;
+
+- (IBAction)didChangePreferenceToUseRemoteRequestForModelID:(id)sender;
 @end
 
 @implementation TPISystemProfiler

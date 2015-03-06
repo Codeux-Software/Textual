@@ -38,6 +38,14 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowLoadingScreenView ()
+@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
+@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerTrialView;
+@property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
+@property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
+@property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
 @property (nonatomic, assign) BOOL stackLocked; // YES when animation is in progress.
 @end
 

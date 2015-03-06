@@ -47,6 +47,11 @@
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, copy) NSDictionary *serverList;
+
+- (IBAction)onAddChannel:(id)sender;
+- (IBAction)onDeleteChannel:(id)sender;
+
+- (IBAction)onServerAddressChanged:(id)sender;
 @end
 
 @implementation TDCWelcomeSheet

@@ -41,22 +41,6 @@
 @interface TDCAddressBookSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, copy) IRCAddressBookEntry *ignore;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreMessagesContainingMatchCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreNoticeMessagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignorePrivateMessageHighlightsCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignorePrivateMessagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignorePublicMessageHighlightsCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignorePublicMessagesCheck;
-@property (nonatomic, weak) IBOutlet NSButton *trackUserActivityCheck;
-@property (nonatomic, weak) IBOutlet NSButton *ignoreEntrySaveButton;
-@property (nonatomic, weak) IBOutlet NSButton *userTrackingEntrySaveButton;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *ignoreEntryHostmaskTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *userTrackingEntryNicknameTextField;
-@property (nonatomic, strong) IBOutlet NSWindow *ignoreEntryView;
-@property (nonatomic, strong) IBOutlet NSWindow *userTrackingEntryView;
 
 - (void)start;
 @end

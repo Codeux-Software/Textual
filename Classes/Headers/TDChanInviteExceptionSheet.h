@@ -47,7 +47,4 @@
 - (void)clear;
 
 - (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
-
-- (IBAction)onUpdate:(id)sender;
-- (IBAction)onRemoveExceptions:(id)sender;
 @end

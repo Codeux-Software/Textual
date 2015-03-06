@@ -47,7 +47,4 @@
 - (void)clear;
 
 - (void)addBan:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
-
-- (IBAction)onUpdate:(id)sender;
-- (IBAction)onRemoveBans:(id)sender;
 @end

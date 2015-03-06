@@ -41,9 +41,4 @@
 @interface TDCWelcomeSheet : TDCSheetBase <NSTextViewDelegate>
 - (void)show;
 - (void)close;
-
-- (IBAction)onAddChannel:(id)sender;
-- (IBAction)onDeleteChannel:(id)sender;
-
-- (IBAction)onServerAddressChanged:(id)sender;
 @end

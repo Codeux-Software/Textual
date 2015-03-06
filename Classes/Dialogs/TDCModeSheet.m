@@ -49,6 +49,8 @@
 @property (nonatomic, weak) IBOutlet NSButton *lCheck;
 @property (nonatomic, weak) IBOutlet NSTextField *kText;
 @property (nonatomic, weak) IBOutlet NSTextField *lText;
+
+- (IBAction)onChangeCheck:(id)sender;
 @end
 
 @implementation TDCModeSheet

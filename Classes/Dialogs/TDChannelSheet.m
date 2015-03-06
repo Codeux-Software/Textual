@@ -62,6 +62,8 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewEncryptionView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
+
+- (IBAction)onMenuBarItemChanged:(id)sender;
 @end
 
 @implementation TDChannelSheet

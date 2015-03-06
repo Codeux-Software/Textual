@@ -41,6 +41,9 @@
 @property (nonatomic, strong) NSMutableArray *exceptionList;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *exceptionTable;
+
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onRemoveExceptions:(id)sender;
 @end
 
 @implementation TDChanInviteExceptionSheet
