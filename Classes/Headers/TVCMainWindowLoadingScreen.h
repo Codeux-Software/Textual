@@ -39,15 +39,6 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowLoadingScreenView : NSBox
-@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
-@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerTrialView;
-@property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
-@property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
-@property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
-
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;
 

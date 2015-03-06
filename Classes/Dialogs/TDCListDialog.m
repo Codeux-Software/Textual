@@ -50,6 +50,12 @@
 @property (nonatomic, readonly) NSInteger listCount; // Proxies one of the two above.
 @property (nonatomic, assign) NSComparisonResult sortOrder;
 @property (nonatomic, assign) NSInteger sortKey;
+
+- (IBAction)onClose:(id)sender;
+
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onJoinChannels:(id)sender;
+- (IBAction)onSearchFieldChange:(id)sender;
 @end
 
 @implementation TDCListDialog

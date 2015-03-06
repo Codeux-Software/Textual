@@ -48,6 +48,16 @@
 @property (nonatomic, weak) IBOutlet NSSegmentedCell *navigationControllerCell;
 
 - (IBAction)hideWindow:(id)sender;
+
+- (IBAction)clear:(id)sender;
+
+- (IBAction)startTransferOfFile:(id)sender;
+- (IBAction)stopTransferOfFile:(id)sender;
+- (IBAction)removeTransferFromList:(id)sender;
+- (IBAction)openReceivedFile:(id)sender;
+- (IBAction)revealReceivedFileInFinder:(id)sender;
+
+- (IBAction)navigationSelectionDidChange:(id)sender;
 @end
 
 @implementation TDCFileTransferDialog

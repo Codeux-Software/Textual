@@ -47,6 +47,14 @@
 
 #import "TextualApplication.h"
 
+@interface TDCFileTransferDialogTableCell ()
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
+@property (nonatomic, weak) IBOutlet NSImageView *fileIconView;
+@property (nonatomic, weak) IBOutlet NSTextField *filenameTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *filesizeTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *transferProgressField;
+@end
+
 @implementation TDCFileTransferDialogTableCell
 
 #pragma mark -

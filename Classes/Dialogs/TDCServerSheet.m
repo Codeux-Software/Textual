@@ -134,6 +134,35 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, assign) BOOL requestCloudDeletionOnClose;
 #endif
+
+- (IBAction)proxyTypeChanged:(id)sender;
+- (IBAction)floodControlChanged:(id)sender;
+- (IBAction)toggleAdvancedEncodings:(id)sender;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+- (IBAction)toggleCloudSyncExclusion:(id)sender;
+#endif
+
+- (IBAction)addChannel:(id)sender;
+- (IBAction)editChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
+
+- (IBAction)addHighlight:(id)sender;
+- (IBAction)editHighlight:(id)sender;
+- (IBAction)deleteHighlight:(id)sender;
+
+- (IBAction)addIgnore:(id)sender;
+- (IBAction)editIgnore:(id)sender;
+- (IBAction)deleteIgnore:(id)sender;
+
+- (IBAction)showAddIgnoreMenu:(id)sender;
+
+- (IBAction)useSSLCheckChanged:(id)sender;
+
+- (IBAction)onClientCertificateResetRequested:(id)sender;
+- (IBAction)onClientCertificateChangeRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintSHA1CopyRequested:(id)sender;
+- (IBAction)onClientCertificateFingerprintMD5CopyRequested:(id)sender;
 @end
 
 #pragma clang diagnostic push

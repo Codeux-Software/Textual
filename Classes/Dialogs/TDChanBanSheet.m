@@ -41,6 +41,9 @@
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *banTable;
 @property (nonatomic, strong) NSMutableArray *banList;
+
+- (IBAction)onUpdate:(id)sender;
+- (IBAction)onRemoveBans:(id)sender;
 @end
 
 @implementation TDChanBanSheet

@@ -44,6 +44,4 @@
 @property (nonatomic, copy) NSString *channelID;
 
 - (void)start;
-
-- (IBAction)onChangeCheck:(id)sender;
 @end

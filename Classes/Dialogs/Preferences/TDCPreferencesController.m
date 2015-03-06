@@ -68,7 +68,11 @@
 #define _toolbarItemIndexLogLocation				115
 #define _toolbarItemIndexDefaultIdentity			116
 #define _toolbarItemIndexDefualtIRCopMessages		117
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 #define _toolbarItemIndexICloud						118
+#endif
+
 #define _toolbarItemIndexExperimentalSettings		119
 
 #define _toolbarHeight								79
@@ -106,7 +110,11 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
+
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
+#endif
+
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInlineMedia;
@@ -133,10 +141,16 @@
 - (IBAction)onChangedAlertNotification:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 
 - (IBAction)onOpenPathToCloudFolder:(id)sender;
+
+- (IBAction)onManageiCloudButtonClicked:(id)sender;
+- (IBAction)onPurgeOfCloudDataRequested:(id)sender;
+- (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
+#endif
 
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
@@ -163,10 +177,6 @@
 
 - (IBAction)onOpenPathToScripts:(id)sender;
 - (IBAction)onOpenPathToThemes:(id)sender;
-
-- (IBAction)onManageiCloudButtonClicked:(id)sender;
-- (IBAction)onPurgeOfCloudDataRequested:(id)sender;
-- (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
 
 - (IBAction)onSelectNewFont:(id)sender;
 @end
@@ -344,7 +354,9 @@
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 		_de(_toolbarItemIndexICloud,				[self contentViewICloud],					_toolbarItemIndexAdvanced)
+#endif
 
 		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
 
@@ -1160,16 +1172,14 @@
 	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPath]];
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onManageiCloudButtonClicked:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[self firstPane:[self contentViewICloud] selectedItem:_toolbarItemIndexAdvanced];
-#endif
 }
 
 - (void)onChangedCloudSyncingServices:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"TDCPreferencesController[1000][2]")
@@ -1188,12 +1198,10 @@
 		[sharedCloudManager() syncEverythingNextSync];
 		[sharedCloudManager() synchronizeFromCloud];
 	}
-#endif
 }
 
 - (void)onChangedCloudSyncingServicesServersOnly:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
 			[RZUbiquitousKeyValueStore() synchronize];
@@ -1201,21 +1209,17 @@
 			[sharedCloudManager() synchronizeFromCloud];
 		}
 	}
-#endif
 }
 
 - (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		[sharedCloudManager() purgeDataStoredWithCloud];
 	}
-#endif
 }
 
 - (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		NSString *path = [sharedCloudManager() ubiquitousContainerURLPath];
 		
@@ -1245,12 +1249,10 @@
 		// We do not call performValidationForKeyValues here because the
 		// metadata query will do that for us once we change the direcoty by deleting.
 	}
-#endif
 }
 
 - (void)onPurgeOfCloudFilesRequested:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1001][2]")
 									 title:TXTLS(@"TDCPreferencesController[1001][1]")
@@ -1262,12 +1264,10 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudFilesRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
-#endif
 }
 
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1002][2]")
 									 title:TXTLS(@"TDCPreferencesController[1002][1]")
@@ -1279,8 +1279,8 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
-#endif
 }
+#endif
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {

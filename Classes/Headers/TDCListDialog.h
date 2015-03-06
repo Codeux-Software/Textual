@@ -49,10 +49,4 @@
 - (void)clear;
 
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic;
-
-- (IBAction)onClose:(id)sender;
-
-- (IBAction)onUpdate:(id)sender;
-- (IBAction)onJoinChannels:(id)sender;
-- (IBAction)onSearchFieldChange:(id)sender;
 @end

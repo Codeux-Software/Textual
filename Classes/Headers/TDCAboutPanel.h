@@ -39,9 +39,6 @@
 
 @interface TDCAboutPanel : NSWindowController
 @property (nonatomic, weak) id delegate;
-@property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
 
 - (void)show;
-
-- (IBAction)displayAcknowledgments:(id)sender;
 @end

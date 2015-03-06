@@ -40,7 +40,16 @@
 #define _textContainerPadding		3
 
 @interface TVCInputPromptDialog ()
+@property (nonatomic, weak) IBOutlet NSButton *defaultButton;
+@property (nonatomic, weak) IBOutlet NSButton *alternateButton;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalText;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalTitle;
+@property (nonatomic, weak) IBOutlet NSTextField *informationalInput;
+@property (nonatomic, copy) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
 @property (nonatomic, assign) BOOL defaultButtonClicked;
+
+- (IBAction)modalDidCloseWithDefaultButton:(id)sender;
+- (IBAction)modalDidCloseWithAlternateButton:(id)sender;
 @end
 
 @implementation TVCInputPromptDialog

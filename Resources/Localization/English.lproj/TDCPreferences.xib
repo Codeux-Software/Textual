@@ -169,19 +169,19 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             <action selector="onPrefPaneSelected:" target="-2" id="qAU-RF-I8Y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2EF7BF85-4F22-4453-B6E7-6713200C2069" explicitItemIdentifier="108" label="Advanced" paletteLabel="Advanced" tag="108" image="87C86C8B-59AD-4A60-8DA6-FEEB2888C796" selectable="YES" id="Ljh-iZ-r98">
+                    <toolbarItem implicitItemIdentifier="2EF7BF85-4F22-4453-B6E7-6713200C2069" explicitItemIdentifier="108" label="Advanced" paletteLabel="Advanced" tag="108" image="D85C99B3-2690-46A9-B201-8816FF0BE45C" selectable="YES" id="Ljh-iZ-r98">
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
                             <rect key="frame" x="12" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="HKa-gD-tv3" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Y0B-GY-ayZ" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
                                     <items>
-                                        <menuItem state="on" image="87C86C8B-59AD-4A60-8DA6-FEEB2888C796" hidden="YES" id="FeN-Jh-HW4">
+                                        <menuItem state="on" image="D85C99B3-2690-46A9-B201-8816FF0BE45C" hidden="YES" id="FeN-Jh-HW4">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -236,10 +236,23 @@ DQ
                                                 <action selector="onPrefPaneSelected:" target="-2" id="1Tt-jt-zZs"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="Y0B-GY-ayZ"/>
+                                        <menuItem isSeparatorItem="YES" id="Y0B-GY-ayZ">
+                                            <connections>
+                                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="PhU-XO-ksr">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="iCloud" tag="118" id="f4k-Xz-cSf">
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="NxK-pa-Ose"/>
+                                                <binding destination="G2Q-fc-ddg" name="hidden" keyPath="values.System -&gt; Built with iCloud Support" id="O4p-KG-uxT">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="dAl-wZ-ADf"/>
@@ -256,7 +269,7 @@ DQ
                             <action selector="onPrefPaneSelected:" target="-2" id="73o-gm-Tci"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="19E87B08-365E-4C82-AF67-7AF1D1BA7654" explicitItemIdentifier="107" label="Addons" paletteLabel="Addons" tag="107" image="4468B701-034B-4864-9B7F-EF2BFD0D835E" selectable="YES" id="BVW-Pf-3Qn">
+                    <toolbarItem implicitItemIdentifier="19E87B08-365E-4C82-AF67-7AF1D1BA7654" explicitItemIdentifier="107" label="Addons" paletteLabel="Addons" tag="107" image="26D3FBC1-01B7-4188-A0A5-7026C5507617" selectable="YES" id="BVW-Pf-3Qn">
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
@@ -268,7 +281,7 @@ DQ
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
                                     <items>
-                                        <menuItem state="on" image="4468B701-034B-4864-9B7F-EF2BFD0D835E" hidden="YES" id="b9Y-Fr-JSg">
+                                        <menuItem state="on" image="26D3FBC1-01B7-4188-A0A5-7026C5507617" hidden="YES" id="b9Y-Fr-JSg">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -4145,7 +4158,7 @@ DQ
         <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
     <resources>
-        <image name="4468B701-034B-4864-9B7F-EF2BFD0D835E" width="512" height="512">
+        <image name="26D3FBC1-01B7-4188-A0A5-7026C5507617" width="512" height="512">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBMY
 HR4iIysuMTc6VSRudWxs1QkKCwwNDg8QERJWJGNsYXNzXE5TSW1hZ2VGbGFnc1ZOU1JlcHNcTlNJc1Rl
@@ -21695,7 +21708,7 @@ ABAOzAAQDs4AEA7QABAO1QAQDt0AEA7gABAO5QAQDu0AEA7wABAPAgAQDwUAEA8KAAAAAAAABAEAAAAA
 AAAAQQAAAAAAAAAAAAAAAAAQDww
 </mutableData>
         </image>
-        <image name="87C86C8B-59AD-4A60-8DA6-FEEB2888C796" width="512" height="512">
+        <image name="D85C99B3-2690-46A9-B201-8816FF0BE45C" width="512" height="512">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBMY
 HR4iIysuMTc6VSRudWxs1QkKCwwNDg8QERJWJGNsYXNzXE5TSW1hZ2VGbGFnc1ZOU1JlcHNcTlNJc1Rl
