@@ -59,7 +59,6 @@
 #define _toolbarItemIndexAddons						107
 #define _toolbarItemIndexAdvanced					108
 
-#define _toolbarItemIndexInlineMedia				109
 #define _toolbarItemIndexChannelManagement			110
 #define _toolbarItemIndexCommandScope				111
 #define _toolbarItemIndexIncomingData				112
@@ -68,10 +67,6 @@
 #define _toolbarItemIndexLogLocation				115
 #define _toolbarItemIndexDefaultIdentity			116
 #define _toolbarItemIndexDefualtIRCopMessages		117
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-#define _toolbarItemIndexICloud						118
-#endif
 
 #define _toolbarItemIndexExperimentalSettings		119
 
@@ -117,7 +112,6 @@
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
-@property (nonatomic, strong) IBOutlet NSView *contentViewInlineMedia;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
@@ -340,8 +334,6 @@
 		_de(_toolbarItemIndexInterface,				[self contentViewInterface],		_toolbarItemIndexInterface)
 		_de(_toolbarItemIndexStyle,					[self contentViewStyle],			_toolbarItemIndexStyle)
 
-		_de(_toolbarItemIndexInlineMedia,			[self contentViewInlineMedia],				_toolbarItemIndexAdvanced)
-
 		_de(_toolbarItemIndexChannelManagement,		[self contentViewChannelManagement],		_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexCommandScope,			[self contentViewCommandScope],				_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexIncomingData,			[self contentViewIncomingData],				_toolbarItemIndexAdvanced)
@@ -353,10 +345,6 @@
 
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-		_de(_toolbarItemIndexICloud,				[self contentViewICloud],					_toolbarItemIndexAdvanced)
-#endif
 
 		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
 
