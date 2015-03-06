@@ -1,0 +1,29 @@
+Textual incorporates work from www.iconfinder.com, the use of which is hereby acknowledged. 
+
+Files related to this website:
+
+Resources/Images/Preferences/TPWTB_Addons_1_Template.tga
+Resources/Images/Preferences/TPWTB_Addons_2_Template.tga
+Resources/Images/Preferences/TPWTB_Advanced_1_Template.tga
+Resources/Images/Preferences/TPWTB_Advanced_2_Template.tga
+Resources/Images/Preferences/TPWTB_ControlsTemplate.tga
+Resources/Images/Preferences/TPWTB_GeneralTemplate.tga
+Resources/Images/Preferences/TPWTB_HighlightsTemplate.tga
+Resources/Images/Preferences/TPWTB_InterfaceTemplate.tga
+Resources/Images/Preferences/TPWTB_NotificationsTemplate.tga
+Resources/Images/Preferences/TPWTB_Style_Template.tga
+
+Basic License <https://www.iconfinder.com/licenses/basic>
+
+• https://www.iconfinder.com/icons/113234/gear_settings_icon
+• https://www.iconfinder.com/icons/117034/back_hom_home_home_page_house_main_application_main_page_wood_icon
+• https://www.iconfinder.com/icons/359665/color_design_graphic_paint_paint_roller_roller_tool_icon
+• https://www.iconfinder.com/icons/111765/browser_icon
+• https://www.iconfinder.com/icons/111708/preferences_screwdriver_settings_tool_tools_wrench_icon
+• https://www.iconfinder.com/icons/113352/alert_bubble_thought_warning_icon
+• https://www.iconfinder.com/icons/247092/bullhorn_command_loud_speaker_management_megaphone_icon
+
+Free for commercial use 
+
+• https://www.iconfinder.com/icons/186411/arrow_down_icon
+• https://www.iconfinder.com/icons/183265/keyboard_icon
