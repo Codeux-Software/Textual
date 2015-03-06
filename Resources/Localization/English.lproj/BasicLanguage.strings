@@ -74,17 +74,17 @@
 "TDCServerSheet[1007][17]" = "Advanced";
 
 /* Error localizations */
-"TDCServerSheet[1010][01]" = "Misconfigued value in Identity setion.";
-"TDCServerSheet[1010][02]" = "Misconfigued value in Identity setion.";
-"TDCServerSheet[1010][03]" = "Misconfigued value in Identity setion.";
-"TDCServerSheet[1010][04]" = "Misconfigued value in Identity setion.";
-"TDCServerSheet[1010][05]" = "Misconfigued value in General setion.";
-"TDCServerSheet[1010][06]" = "Misconfigued value in General setion.";
-"TDCServerSheet[1010][07]" = "Misconfigued value in General setion.";
-"TDCServerSheet[1010][08]" = "Misconfigued value in Proxy Server setion.";
-"TDCServerSheet[1010][09]" = "Misconfigued value in Proxy Server setion.";
-"TDCServerSheet[1010][10]" = "Misconfigued value in Messages setion.";
-"TDCServerSheet[1010][11]" = "Misconfigued value in Messages setion.";
+"TDCServerSheet[1010][01]" = "Misconfigued value in Identity setion";
+"TDCServerSheet[1010][02]" = "Misconfigued value in Identity setion";
+"TDCServerSheet[1010][03]" = "Misconfigued value in Identity setion";
+"TDCServerSheet[1010][04]" = "Misconfigued value in Identity setion";
+"TDCServerSheet[1010][05]" = "Misconfigued value in General setion";
+"TDCServerSheet[1010][06]" = "Misconfigued value in General setion";
+"TDCServerSheet[1010][07]" = "Misconfigued value in General setion";
+"TDCServerSheet[1010][08]" = "Misconfigued value in Proxy Server setion";
+"TDCServerSheet[1010][09]" = "Misconfigued value in Proxy Server setion";
+"TDCServerSheet[1010][10]" = "Misconfigued value in Messages setion";
+"TDCServerSheet[1010][11]" = "Misconfigued value in Messages setion";
 
 /* Custom client-side certificate selection */
 "TDCServerSheet[1008]" = "No Certificate Selected";
@@ -140,38 +140,6 @@
 "TDCPreferencesController[1015][2]" = "• Timestamp Format";
 "TDCPreferencesController[1015][3]" = "• Window Colors";
 "TDCPreferencesController[1015][4]" = "• Channel View Font";
-
-"TDCPreferencesController[1016][1]" = "Appearance";
-"TDCPreferencesController[1016][2]" = "Channel View";
-"TDCPreferencesController[1016][3]" = "Embeddable Media";
-"TDCPreferencesController[1016][4]" = "User Interface";
-"TDCPreferencesController[1016][5]" = "User List Colors";
-
-"TDCPreferencesController[1017][1]" = "Basic Settings";
-"TDCPreferencesController[1017][2]" = "General";
-"TDCPreferencesController[1017][3]" = "Channel Management";
-"TDCPreferencesController[1017][4]" = "Command Scope";
-"TDCPreferencesController[1017][5]" = "Highlights";
-"TDCPreferencesController[1017][6]" = "Incoming Data";
-"TDCPreferencesController[1017][7]" = "Notifications";
-
-"TDCPreferencesController[1018][1]" = "Defaults";
-"TDCPreferencesController[1018][2]" = "Identity";
-"TDCPreferencesController[1018][3]" = "IRC Operator";
-
-"TDCPreferencesController[1019][1]" = "Input Controls";
-"TDCPreferencesController[1019][2]" = "Keyboard & Mouse";
-"TDCPreferencesController[1019][3]" = "Main Text Field";
-
-"TDCPreferencesController[1020][1]" = "Addons";
-"TDCPreferencesController[1020][2]" = "Installed Addons";
-
-"TDCPreferencesController[1021][1]" = "Advanced";
-"TDCPreferencesController[1021][2]" = "Experimental Settings";
-"TDCPreferencesController[1021][3]" = "File Transfers";
-"TDCPreferencesController[1021][4]" = "Flood Control";
-"TDCPreferencesController[1021][5]" = "iCloud Syncing";
-"TDCPreferencesController[1021][6]" = "Log Location";
 
 /* Final transfer dialog */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
