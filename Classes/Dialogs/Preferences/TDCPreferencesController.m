@@ -48,55 +48,127 @@
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			65535
 
-#define _preferencePaneViewFramePadding				38
+#define _forcedPreferencePaneViewFrameWidth			589
 
-#define _forcedPreferencePaneViewFrameHeight		406
-#define _forcedPreferencePaneViewFrameWidth			567
+#define _toolbarItemIndexGeneral					101
+#define _toolbarItemIndexHighlights					102
+#define _toolbarItemIndexNotifications				103
+#define _toolbarItemIndexControls					104
+#define _toolbarItemIndexInterface					105
+#define _toolbarItemIndexStyle						106
+#define _toolbarItemIndexAddons						107
+#define _toolbarItemIndexAdvanced					108
+
+#define _toolbarItemIndexInlineMedia				109
+#define _toolbarItemIndexChannelManagement			110
+#define _toolbarItemIndexCommandScope				111
+#define _toolbarItemIndexIncomingData				112
+#define _toolbarItemIndexFileTransfers				113
+#define _toolbarItemIndexFloodControl				114
+#define _toolbarItemIndexLogLocation				115
+#define _toolbarItemIndexDefaultIdentity			116
+#define _toolbarItemIndexDefualtIRCopMessages		117
+#define _toolbarItemIndexICloud						118
+#define _toolbarItemIndexExperimentalSettings		119
+
+#define _toolbarHeight								79
+
+#define _addonsToolbarInstalledAddonsMenuItemIndex		120
+#define _addonsToolbarItemMultiplier					995
 
 @interface TDCPreferencesController ()
 @property (nonatomic, copy) NSArray *alertSounds;
-@property (nonatomic, weak) IBOutlet NSArrayController *excludeKeywordsArrayController;
-@property (nonatomic, weak) IBOutlet NSArrayController *matchKeywordsArrayController;
-@property (nonatomic, weak) IBOutlet NSButton *addExcludeKeywordButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertBounceDockIconButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertDisableWhileAwayButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertPushNotificationButton;
-@property (nonatomic, weak) IBOutlet NSButton *alertSpeakEventButton;
-@property (nonatomic, weak) IBOutlet NSButton *highlightNicknameButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *alertSoundChoiceButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *alertTypeChoiceButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *themeSelectionButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *transcriptFolderButton;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
-@property (nonatomic, weak) IBOutlet NSTableView *excludeKeywordsTable;
-@property (nonatomic, weak) IBOutlet NSTableView *installedScriptsTable;
-@property (nonatomic, weak) IBOutlet NSTableView *keywordsTable;
-@property (nonatomic, weak) IBOutlet NSTextField *alertNotificationDestinationTextField;
-@property (nonatomic, weak) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
-@property (nonatomic, weak) IBOutlet NSView *contentViewAlerts;
-@property (nonatomic, weak) IBOutlet NSView *contentViewChannelManagement;
-@property (nonatomic, weak) IBOutlet NSView *contentViewCommandScope;
-@property (nonatomic, weak) IBOutlet NSView *contentViewDefaultIdentity;
-@property (nonatomic, weak) IBOutlet NSView *contentViewExperimentalSettings;
-@property (nonatomic, weak) IBOutlet NSView *contentViewFileTransfers;
-@property (nonatomic, weak) IBOutlet NSView *contentViewFloodControl;
-@property (nonatomic, weak) IBOutlet NSView *contentViewGeneral;
-@property (nonatomic, weak) IBOutlet NSView *contentViewHighlights;
-@property (nonatomic, weak) IBOutlet NSView *contentViewICloud;
-@property (nonatomic, weak) IBOutlet NSView *contentViewIRCopMessages;
-@property (nonatomic, weak) IBOutlet NSView *contentViewIncomingData;
-@property (nonatomic, weak) IBOutlet NSView *contentViewInlineMedia;
-@property (nonatomic, weak) IBOutlet NSView *contentViewInstalledAddons;
-@property (nonatomic, weak) IBOutlet NSView *contentViewInterface;
-@property (nonatomic, weak) IBOutlet NSView *contentViewKeyboardAndMouse;
-@property (nonatomic, weak) IBOutlet NSView *contentViewLogLocation;
-@property (nonatomic, weak) IBOutlet NSView *contentViewMainTextField;
-@property (nonatomic, weak) IBOutlet NSView *contentViewStyle;
-@property (nonatomic, weak) IBOutlet NSView *contentViewUserListColors;
-@property (nonatomic, weak) IBOutlet NSView *mountainLionDeprecationWarningView;
-@property (nonatomic, weak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
-@property (nonatomic, weak) IBOutlet NSScrollView *navigationOutlineviewScrollbar;
+@property (nonatomic, strong) IBOutlet NSArrayController *excludeKeywordsArrayController;
+@property (nonatomic, strong) IBOutlet NSArrayController *matchKeywordsArrayController;
+@property (nonatomic, strong) IBOutlet NSButton *addExcludeKeywordButton;
+@property (nonatomic, strong) IBOutlet NSButton *alertBounceDockIconButton;
+@property (nonatomic, strong) IBOutlet NSButton *alertDisableWhileAwayButton;
+@property (nonatomic, strong) IBOutlet NSButton *alertPushNotificationButton;
+@property (nonatomic, strong) IBOutlet NSButton *alertSpeakEventButton;
+@property (nonatomic, strong) IBOutlet NSButton *highlightNicknameButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *alertSoundChoiceButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *alertTypeChoiceButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *themeSelectionButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *transcriptFolderButton;
+@property (nonatomic, strong) IBOutlet NSPopUpButton *fileTransferDownloadDestinationButton;
+@property (nonatomic, strong) IBOutlet NSTableView *excludeKeywordsTable;
+@property (nonatomic, strong) IBOutlet NSTableView *installedScriptsTable;
+@property (nonatomic, strong) IBOutlet NSTableView *keywordsTable;
+@property (nonatomic, strong) IBOutlet NSTextField *alertNotificationDestinationTextField;
+@property (nonatomic, strong) IBOutlet NSTextField *fileTransferManuallyEnteredIPAddressTextField;
+@property (nonatomic, strong) IBOutlet NSView *contentViewNotifications;
+@property (nonatomic, strong) IBOutlet NSView *contentViewChannelManagement;
+@property (nonatomic, strong) IBOutlet NSView *contentViewCommandScope;
+@property (nonatomic, strong) IBOutlet NSView *contentViewControls;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIdentity;
+@property (nonatomic, strong) IBOutlet NSView *contentViewExperimentalSettings;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFileTransfers;
+@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
+@property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
+@property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
+@property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
+@property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
+@property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
+@property (nonatomic, strong) IBOutlet NSView *contentViewInlineMedia;
+@property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
+@property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
+@property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
+@property (nonatomic, strong) IBOutlet NSView *contentView;
+@property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
+@property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
+@property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
+@property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
+
+- (IBAction)onPrefPaneSelected:(id)sender;
+
+- (IBAction)onAddKeyword:(id)sender;
+- (IBAction)onAddExcludeKeyword:(id)sender;
+
+- (IBAction)onChangedAlertSpoken:(id)sender;
+- (IBAction)onChangedAlertSound:(id)sender;
+- (IBAction)onChangedAlertDisableWhileAway:(id)sender;
+- (IBAction)onChangedAlertBounceDockIcon:(id)sender;
+- (IBAction)onChangedAlertNotification:(id)sender;
+- (IBAction)onChangedAlertType:(id)sender;
+
+- (IBAction)onChangedCloudSyncingServices:(id)sender;
+- (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
+
+- (IBAction)onOpenPathToCloudFolder:(id)sender;
+
+- (IBAction)onChangedHighlightLogging:(id)sender;
+- (IBAction)onChangedHighlightType:(id)sender;
+- (IBAction)onChangedInputHistoryScheme:(id)sender;
+- (IBAction)onChangedMainWindowSegmentedController:(id)sender;
+- (IBAction)onChangedSidebarColorInversion:(id)sender;
+- (IBAction)onChangedStyle:(id)sender;
+- (IBAction)onChangedTheme:(id)sender;
+- (IBAction)onChangedTranscriptFolder:(id)sender;
+- (IBAction)onChangedTransparency:(id)sender;
+- (IBAction)onChangedUserListModeColor:(id)sender;
+- (IBAction)onChangedUserListModeSortOrder:(id)sender;
+- (IBAction)onChangedServerListUnreadBadgeColor:(id)sender;
+
+- (IBAction)onChangedMainInputTextFieldFontSize:(id)sender;
+
+- (IBAction)onHideMountainLionDeprecationWarning:(id)sender;
+
+- (IBAction)onFileTransferIPAddressDetectionMethodChanged:(id)sender;
+- (IBAction)onFileTransferDownloadDestinationFolderChanged:(id)sender;
+
+- (IBAction)onResetUserListModeColorsToDefaults:(id)sender;
+- (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender;
+
+- (IBAction)onOpenPathToScripts:(id)sender;
+- (IBAction)onOpenPathToThemes:(id)sender;
+
+- (IBAction)onManageiCloudButtonClicked:(id)sender;
+- (IBAction)onPurgeOfCloudDataRequested:(id)sender;
+- (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
+
+- (IBAction)onSelectNewFont:(id)sender;
 @end
 
 @implementation TDCPreferencesController
@@ -147,100 +219,6 @@
 	[alertSounds addObject:[TDCPreferencesSoundWrapper soundWrapperWithEventType:TXNotificationFileTransferReceiveFailedType]];
 
 	[self setAlertSounds:alertSounds];
-	
-	// Build navigation tree.
-	NSMutableArray *navigationTreeMatrix = [NSMutableArray array];
-
-	[navigationTreeMatrix addObject:@{
-	   @"name" : TXTLS(@"TDCPreferencesController[1016][1]"),
-	   @"children" : @[
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][2]"),	@"view" : self.contentViewStyle},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][3]"),	@"view" : self.contentViewInlineMedia},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][4]"),	@"view" : self.contentViewInterface},
-			@{@"name" : TXTLS(@"TDCPreferencesController[1016][5]"),	@"view" : self.contentViewUserListColors}
-		]
-	   }];
-
-	[navigationTreeMatrix addObject:@{
-	   @"name" : TXTLS(@"TDCPreferencesController[1017][1]"),
-	   @"children" : @[
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][2]"),	@"view" : self.contentViewGeneral},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][3]"),	@"view" : self.contentViewChannelManagement},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][4]"),	@"view" : self.contentViewCommandScope},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][5]"),	@"view" : self.contentViewHighlights},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][6]"),	@"view" : self.contentViewIncomingData},
-			  @{@"name" : TXTLS(@"TDCPreferencesController[1017][7]"),	@"view" : self.contentViewAlerts}
-		]
-	   }];
-
-	[navigationTreeMatrix addObject:@{
-	   @"name" : TXTLS(@"TDCPreferencesController[1018][1]"),
-	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][2]"),	@"view" : self.contentViewDefaultIdentity},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1018][3]"),	@"view" : self.contentViewIRCopMessages}
-		]
-	   }];
-
-	[navigationTreeMatrix addObject:@{
-	   @"name" : TXTLS(@"TDCPreferencesController[1019][1]"),
-	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][2]"),	@"view" : self.contentViewKeyboardAndMouse},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1019][3]"),	@"view" : self.contentViewMainTextField}
-		]
-	   }];
-
-	// ----------------- //
-
-	NSMutableArray *pluginNavigationItems = [NSMutableArray array];
-
-	[pluginNavigationItems addObject:
-		@{@"name" : TXTLS(@"TDCPreferencesController[1020][2]"), @"view" : self.contentViewInstalledAddons}
-	];
-
-	NSArray *bundles = [sharedPluginManager() pluginsWithPreferencePanes];
-
-	for (THOPluginItem *plugin in bundles) {
-		NSString *name = [plugin pluginPreferencesPaneMenuItemName];
-
-		NSView *view = [plugin pluginPreferenesPaneView];
-
-		[pluginNavigationItems addObject:@{@"name" : name, @"view" : view}];
-	}
-
-	[navigationTreeMatrix addObject:
-		@{@"name" : TXTLS(@"TDCPreferencesController[1020][1]"), @"children" : pluginNavigationItems}
-	 ];
-
-	// ----------------- //
-
-	[navigationTreeMatrix addObject:@{
-	   @"name" : TXTLS(@"TDCPreferencesController[1021][1]"),
-	   @"children" : @[
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][2]"),	@"view" : self.contentViewExperimentalSettings},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][3]"),	@"view" : self.contentViewFileTransfers},
-			   @{@"name" : TXTLS(@"TDCPreferencesController[1021][4]"),	@"view" : self.contentViewFloodControl},
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-				@{@"name" : TXTLS(@"TDCPreferencesController[1021][5]"),	@"view" : self.contentViewICloud, @"iCloudSyncingNavigationItem" : @(YES)},
-#endif
-
-				@{@"name" : TXTLS(@"TDCPreferencesController[1021][6]"),	@"view" : self.contentViewLogLocation}
-		]
-	   }];
-	
-	[[self navigationOutlineview] setNavigationTreeMatrix:navigationTreeMatrix];
-
-	[[self navigationOutlineview] setContentViewPadding:_preferencePaneViewFramePadding];
-	[[self navigationOutlineview] setContentViewPreferredWidth:_forcedPreferencePaneViewFrameWidth];
-	[[self navigationOutlineview] setContentViewPreferredHeight:_forcedPreferencePaneViewFrameHeight];
-	
-	[[self navigationOutlineview] reloadData];
-
-	[[self navigationOutlineview] expandItem:navigationTreeMatrix[0]];
-	[[self navigationOutlineview] expandItem:navigationTreeMatrix[1]];
-	[[self navigationOutlineview] expandItem:navigationTreeMatrix[3]];
-
-	[[self navigationOutlineview] startAtSelectionIndex:6];
 
 	/* Growl check. */
 	BOOL growlRunning = [GrowlApplicationBridge isGrowlRunning];
@@ -259,6 +237,8 @@
 	[[self installedScriptsTable] setDataSource:[self scriptsController]];
 	[[self installedScriptsTable] reloadData];
 
+	[self setUpToolbarItemsAndMenus];
+
 	[self updateThemeSelection];
     [self updateAlertSelection];
 	[self updateTranscriptFolder];
@@ -268,21 +248,7 @@
 	[self onChangedHighlightType:nil];
 	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
-	
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		[[self mountainLionDeprecationWarningView] setHidden:YES];
 
-		[ [self navigationOutlineviewScrollbar]		setHidden:NO];
-		[[[self navigationOutlineview] contentView] setHidden:NO];
-	} else {
-		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
-
-		[[self mountainLionDeprecationWarningView] setHidden:warningViewHidden];
-
-		[ [self navigationOutlineviewScrollbar]		setHidden:(warningViewHidden == NO)];
-		[[[self navigationOutlineview] contentView] setHidden:(warningViewHidden == NO)];
-	}
-	
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCThemeControllerThemeListDidChangeNotification
@@ -298,6 +264,158 @@
 	[[self window] restoreWindowStateForClass:[self class]];
 
 	[[self window] makeKeyAndOrderFront:nil];
+
+	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
+		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+
+		if (warningViewHidden == NO) {
+			[self setMountainLionDeprecationWarningIsVisible:YES];
+
+			[[self mountainLionDeprecationWarningView] setHidden:NO];
+
+			[self firstPane:[self mountainLionDeprecationWarningView] selectedItem:_toolbarItemIndexGeneral];
+
+			return; // Do not continue to General…
+		}
+	}
+
+	[self setMountainLionDeprecationWarningIsVisible:NO];
+
+	[[self mountainLionDeprecationWarningView] setHidden:YES];
+
+	[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
+}
+
+#pragma mark -
+#pragma mark NSToolbar Delegates
+
+ - (void)setUpToolbarItemsAndMenus
+{
+	/* Extensions. */
+	NSArray *bundles = [sharedPluginManager() pluginsWithPreferencePanes];
+
+	if ([bundles count] > 0) {
+		[[self installedAddonsMenu] addItem:[NSMenuItem separatorItem]];
+	}
+
+	for (THOPluginItem *plugin in bundles) {
+		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
+
+		NSMenuItem *pluginMenu = [NSMenuItem menuItemWithTitle:[plugin pluginPreferencesPaneMenuItemName]
+														target:self
+														action:@selector(onPrefPaneSelected:)];
+
+		[pluginMenu setTag:tagIndex];
+
+		[[self installedAddonsMenu] addItem:pluginMenu];
+	}
+}
+
+ - (void)onPrefPaneSelected:(id)sender
+{
+	if ([self mountainLionDeprecationWarningIsVisible]) {
+		[[self navigationToolbar] setSelectedItemIdentifier:[NSString stringWithInteger:_toolbarItemIndexGeneral]];
+
+		return;
+	}
+
+#define _de(matchTag, view, selectionIndex)			case (matchTag): { [self firstPane:(view) selectedItem:(selectionIndex)]; break; }
+
+	switch ([sender tag]) {
+		_de(_toolbarItemIndexGeneral,				[self contentViewGeneral],			_toolbarItemIndexGeneral)
+		_de(_toolbarItemIndexHighlights,			[self contentViewHighlights],		_toolbarItemIndexHighlights)
+		_de(_toolbarItemIndexNotifications,			[self contentViewNotifications],	_toolbarItemIndexNotifications)
+
+		_de(_toolbarItemIndexControls,				[self contentViewControls],			_toolbarItemIndexControls)
+		_de(_toolbarItemIndexInterface,				[self contentViewInterface],		_toolbarItemIndexInterface)
+		_de(_toolbarItemIndexStyle,					[self contentViewStyle],			_toolbarItemIndexStyle)
+
+		_de(_toolbarItemIndexInlineMedia,			[self contentViewInlineMedia],				_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexChannelManagement,		[self contentViewChannelManagement],		_toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexCommandScope,			[self contentViewCommandScope],				_toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexIncomingData,			[self contentViewIncomingData],				_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexFileTransfers,			[self contentViewFileTransfers],			_toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexFloodControl,			[self contentViewFloodControl],				_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexLogLocation,			[self contentViewLogLocation],				_toolbarItemIndexAdvanced);
+
+		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
+		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexICloud,				[self contentViewICloud],					_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
+
+		_de(_addonsToolbarInstalledAddonsMenuItemIndex,		[self contentViewInstalledAddons],	_toolbarItemIndexAddons)
+
+		default: {
+			if ([sender tag] >= _addonsToolbarItemMultiplier) {
+				NSInteger pluginIndex = ([sender tag] - _addonsToolbarItemMultiplier);
+
+				THOPluginItem *plugin = [sharedPluginManager() pluginsWithPreferencePanes][pluginIndex];
+
+				if (plugin) {
+					NSView *prefsView = [plugin pluginPreferenesPaneView];
+
+					if (prefsView) {
+						[self firstPane:prefsView selectedItem:_toolbarItemIndexAddons];
+					}
+				}
+			}
+
+			break;
+		}
+	}
+
+#undef _de
+}
+
+- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
+{
+	[self firstPane:view selectedItem:key display:YES animianteTransition:YES];
+}
+
+- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key display:(BOOL)display animianteTransition:(BOOL)isAnimated
+{
+	NSRect windowFrame = [[self window] frame];
+
+	NSRect viewFrame = [view frame];
+
+	windowFrame.size.width = NSWidth(viewFrame);
+	windowFrame.size.height = (NSHeight(viewFrame) + _toolbarHeight);
+
+	BOOL centerView = NO;
+
+	if (windowFrame.size.width < _forcedPreferencePaneViewFrameWidth) {
+		windowFrame.size.width = _forcedPreferencePaneViewFrameWidth;
+
+		centerView = YES;
+	}
+
+	windowFrame.origin.y = (NSMaxY([[self window] frame]) - NSHeight(windowFrame));
+
+	if (centerView) {
+		viewFrame.origin.x = ((NSWidth(windowFrame) - NSWidth(viewFrame)) / 2.0);
+	}
+
+	NSArray *subviews = [[self contentView] subviews];
+
+	if ([subviews count] > 0) {
+		[subviews[0] removeFromSuperview];
+	}
+
+	[[self window] setFrame:windowFrame display:display animate:isAnimated];
+
+	[[self contentView] setFrame:viewFrame];
+	[[self contentView] addSubview:view];
+
+	if (display) {
+		[[self window] recalculateKeyViewLoop];
+
+		[[self navigationToolbar] setSelectedItemIdentifier:[NSString stringWithInteger:key]];
+	}
 }
 
 #pragma mark -
@@ -888,10 +1006,11 @@
 {
 	[[self mountainLionDeprecationWarningView] setHidden:YES];
 
-	[ [self navigationOutlineviewScrollbar]		setHidden:NO];
-	[[[self navigationOutlineview] contentView] setHidden:NO];
-
 	[RZUserDefaults() setBool:YES forKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
+
+	[self setMountainLionDeprecationWarningIsVisible:NO];
+
+	[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
 }
 
 - (void)onChangedHighlightType:(id)sender
@@ -1044,21 +1163,7 @@
 - (void)onManageiCloudButtonClicked:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	for (NSDictionary *subdic in [[self navigationOutlineview] navigationTreeMatrix]) {
-		for (NSDictionary *chldic in subdic[@"children"]) {
-			if ([chldic boolForKey:@"iCloudSyncingNavigationItem"]) {
-				if ([[self navigationOutlineview] isItemExpanded:subdic] == NO) {
-					[[self navigationOutlineview] expandItem:subdic];
-
-					[self onManageiCloudButtonClicked:sender];
-				} else {
-					NSInteger icrow = [[self navigationOutlineview] rowForItem:chldic];
-
-					[[self navigationOutlineview] selectItemAtIndex:icrow];
-				}
-			}
-		}
-	}
+	[self firstPane:[self contentViewICloud] selectedItem:_toolbarItemIndexAdvanced];
 #endif
 }
 
@@ -1300,17 +1405,13 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
+	/* Stop observing notifications. */
 	[RZNotificationCenter() removeObserver:self];
 
-	/* Forced save frame to use default size. */
-	/* We set alpha to hide window but also change frame underneath user. */
+	/* Reset the frame back to that of General before saving the existing position. */
 	[[self window] setAlphaValue:0.0];
 
-	NSRect windowFrame = [[self window] frame];
-
-	windowFrame.size.height = _forcedPreferencePaneViewFrameHeight;
-
-	[[self window] setFrame:windowFrame display:NO animate:NO];
+	[self firstPane:[self contentViewGeneral] selectedItem:-1 display:NO animianteTransition:NO];
 
 	[[self window] saveWindowStateForClass:[self class]];
 
