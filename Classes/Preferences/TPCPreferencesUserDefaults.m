@@ -98,16 +98,23 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 }
 #pragma clang diagnostic pop
 
-- (void)__defaultsController_setObject:(id)value forControllerKey:(NSString *)defaultName
-{
-	[super setObject:value forKey:defaultName];
-
-	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
-}
-
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
-	[[RZUserDefaultsController() values] setValue:value forKey:defaultName];
+	[self willChangeValueForKey:defaultName];
+
+	if (value == nil) {
+		if ([self objectForKey:defaultName] == nil) {
+			;
+		} else {
+			[super setObject:nil forKey:defaultName];
+		}
+	} else {
+		[super setObject:value forKey:defaultName];
+	}
+
+	[self didChangeValueForKey:defaultName];
+
+	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
@@ -153,11 +160,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)removeObjectForKey:(NSString *)defaultName
 {
-	id hasValue = [self objectForKey:defaultName];
-
-	if (hasValue) {
-		[self __defaultsController_setObject:nil forControllerKey:defaultName];
-	}
+	[self setObject:nil forKey:defaultName];
 }
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
@@ -236,17 +239,6 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 @implementation TPCPreferencesUserDefaultsController
 
-+ (void)load
-{
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		XRExchangeImplementation(@"TPCPreferencesUserDefaultsController",
-								 @"_applyValue:forKey:registrationDomain:",
-								 @"__priv_applyValue:forKey:registrationDomain:");
-	});
-}
-
 + (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController
 {
 	static id sharedSelf = nil;
@@ -298,33 +290,6 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 - (id)defaults
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
-}
-
-- (void)__priv_applyValue:(id)value forKey:(NSString *)key registrationDomain:(id)registrationDomain
-{
-	BOOL newValueIsNull = (value == nil || [value isKindOfClass:[NSNull class]]);
-
-	id defaultsValue = [[self defaults] objectForKey:key];
-
-	if (defaultsValue == nil) {
-		if (newValueIsNull) {
-			return; // Nothing to do at this point…
-		}
-	} else {
-		if (newValueIsNull) {
-			[[self defaults] removeObjectForKey:key];
-
-			return; // Nothing to do at this point…
-		} else {
-			if ([defaultsValue isEqual:value]) {
-				return; // Nothing to do at this point…
-			}
-		}
-	}
-
-	[[self defaults] performSelector:@selector(__defaultsController_setObject:forControllerKey:)
-						  withObject:value
-						  withObject:key];
 }
 
 @end

@@ -118,14 +118,14 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
         </arrayController>
         <window title="Textual Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="4929" userLabel="Toolbar Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="367" y="318" width="589" height="285"/>
+            <rect key="contentRect" x="367" y="318" width="589" height="272"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
             <view key="contentView" id="4930">
-                <rect key="frame" x="0.0" y="5" width="589" height="285"/>
+                <rect key="frame" x="0.0" y="5" width="589" height="272"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView id="qlV-Dy-30D" userLabel="General">
-                        <rect key="frame" x="0.0" y="0.0" width="589" height="285"/>
+                        <rect key="frame" x="0.0" y="0.0" width="589" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <userGuides>
                             <userLayoutGuide location="50" affinity="minX"/>
@@ -292,7 +292,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="6064"/>
             </connections>
-            <point key="canvasLocation" x="515.5" y="-66.5"/>
+            <point key="canvasLocation" x="688.5" y="-226"/>
         </window>
         <customView id="Eyz-5p-IkU" userLabel="General">
             <rect key="frame" x="0.0" y="-1" width="567" height="272"/>
@@ -401,7 +401,7 @@ DQ
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="806.5" y="-288"/>
+            <point key="canvasLocation" x="827.5" y="-153"/>
         </customView>
         <customView id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="1" width="567" height="206"/>
