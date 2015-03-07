@@ -1050,12 +1050,12 @@
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
 {
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +y"];
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +q"];
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +a"];
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +o"];
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +h"];
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"User List Mode Badge Colors —> +v"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +y"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +q"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +a"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +o"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +h"];
+	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors —> +v"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors —> +y"];
@@ -1071,7 +1071,7 @@
 
 - (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
-	[[RZUserDefaultsController() values] setValue:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
+	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
