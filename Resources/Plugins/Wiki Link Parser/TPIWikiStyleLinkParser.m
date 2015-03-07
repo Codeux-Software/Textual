@@ -214,7 +214,7 @@
 		NSMenuItem *umi = [NSMenuItem new];
 
 		[umi setEnabled:NO]; // Do not let user pick only a client.
-		[umi setTitle:[[u config] clientName]];
+		[umi setTitle:[[u config] connectionName]];
 
 		[[self.rnewConditionChannelPopup menu] addItem:umi];
 
