@@ -191,8 +191,8 @@
 	if (NSObjectIsNotEmpty([channel encryptionKey])) {
 		/* This method will take a given size and estimate the maximum number of
 		 characters that can fit within that range. */
-		NSUInteger newEstimation = [CSFWBlowfish estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
-																  thatFitsWithinBounds:(maximumLength - baseMath)];
+		NSUInteger newEstimation = [EKBlowfishEncryption estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
+																		  thatFitsWithinBounds:(maximumLength - baseMath)];
 		
 		maximumLength = newEstimation;
 	}

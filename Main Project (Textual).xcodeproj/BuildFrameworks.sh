@@ -10,11 +10,11 @@ cp -R "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/Release/AutoHyper
 rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/Build Results/"
 rm -rf "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/.tmp/"
 
-cd "${PROJECT_DIR}/Frameworks/Blowfish Encryption/"
+cd "${PROJECT_DIR}/Frameworks/Encryption Kit/"
 xcodebuild -alltargets -configuration "Release" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}"
-cp -R "${PROJECT_DIR}/Frameworks/Blowfish Encryption/Build Results/Release/BlowfishEncryption.framework" "${BUILD_DESTINATION_FOLDER}"
-rm -rf "${PROJECT_DIR}/Frameworks/Blowfish Encryption/Build Results/"
-rm -rf "${PROJECT_DIR}/Frameworks/Blowfish Encryption/.tmp/"
+cp -R "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/Release/EncryptionKit.framework" "${BUILD_DESTINATION_FOLDER}"
+rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/Build Results/"
+rm -rf "${PROJECT_DIR}/Frameworks/Encryption Kit/.tmp/"
 
 cd "${PROJECT_DIR}/Frameworks/Cocoa Extensions/"
 xcodebuild -alltargets -configuration "Release" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}"

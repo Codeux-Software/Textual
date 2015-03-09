@@ -931,8 +931,6 @@
 		4C7E0FD419AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7E4DB51A9116FA00EBE11B /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C7E4DB71A9116FA00EBE11B /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
-		4C7E4DB81A9116FA00EBE11B /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7E4DB91A9116FA00EBE11B /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4C7E4DBA1A9116FA00EBE11B /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7E4DBB1A9116FA00EBE11B /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
@@ -1098,6 +1096,14 @@
 		4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF756158EB6CA0026668C /* RLMAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C8F2F5F1AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
+		4C8F2F601AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
+		4C8F2F621AAE647D007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
+		4C8F2F631AAE647D007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C8F2F651AAE648B007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C8F2F671AAE6491007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C8F2F681AAE64A6007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
+		4C8F2F691AAE64A6007821CC /* EncryptionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C9234AB195330D30009AAAE /* TXUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9234AA195330D30009AAAE /* TXUserInterface.m */; };
 		4C9234AC195330D30009AAAE /* TXUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9234AA195330D30009AAAE /* TXUserInterface.m */; };
 		4C9234B3195330E30009AAAE /* TXUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9234B2195330E30009AAAE /* TXUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1224,7 +1230,6 @@
 		4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CBE7B651A9148BD008FB230 /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
-		4CBE7B661A9148BD008FB230 /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
 		4CBE7B671A9148BD008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CBE7B681A9148BD008FB230 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CBE7B691A9148BD008FB230 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
@@ -1708,26 +1713,21 @@
 		4CF09D1B195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */; };
-		4CF76A3F1A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
-		4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; };
 		4CF76A451A91153A0088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CF76A5A1A9115670088BF9A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CF76A661A91157B0088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A681A91157B0088BF9A /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A6A1A91157B0088BF9A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CF76A6C1A91157B0088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4CF76A6E1A91157B0088BF9A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A751A9115910088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A771A9115910088BF9A /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A791A9115910088BF9A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A7B1A9115910088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A7D1A9115910088BF9A /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A831A9116510088BF9A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4CF76A861A9116510088BF9A /* BlowfishEncryption.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A881A9116510088BF9A /* CocoaExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4CF76A891A9116510088BF9A /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; };
 		4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1953,8 +1953,8 @@
 				4C7E4DB61A9116FA00EBE11B /* AutoHyperlinks.framework in Embed Frameworks */,
 				4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */,
 				4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */,
+				4C8F2F691AAE64A6007821CC /* EncryptionKit.framework in Embed Frameworks */,
 				4CC3139E1A9509EE00A9F036 /* Sparkle.framework in Embed Frameworks */,
-				4C7E4DB81A9116FA00EBE11B /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2030,10 +2030,10 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4CF76A6A1A91157B0088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
+				4C8F2F631AAE647D007821CC /* EncryptionKit.framework in Embed Frameworks */,
 				4CF76A661A91157B0088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A6C1A91157B0088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A6E1A91157B0088BF9A /* HockeySDK.framework in Embed Frameworks */,
-				4CF76A681A91157B0088BF9A /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2045,10 +2045,10 @@
 			dstSubfolderSpec = 10;
 			files = (
 				4CF76A791A9115910088BF9A /* CocoaExtensions.framework in Embed Frameworks */,
+				4C8F2F651AAE648B007821CC /* EncryptionKit.framework in Embed Frameworks */,
 				4CF76A751A9115910088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A7B1A9115910088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A7D1A9115910088BF9A /* HockeySDK.framework in Embed Frameworks */,
-				4CF76A771A9115910088BF9A /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2063,8 +2063,8 @@
 				4CF76A841A9116510088BF9A /* AutoHyperlinks.framework in Embed Frameworks */,
 				4CF76A8A1A9116510088BF9A /* Growl.framework in Embed Frameworks */,
 				4CF76A8C1A9116510088BF9A /* HockeySDK.framework in Embed Frameworks */,
+				4C8F2F671AAE6491007821CC /* EncryptionKit.framework in Embed Frameworks */,
 				4CC3139F1A9509F400A9F036 /* Sparkle.framework in Embed Frameworks */,
-				4CF76A861A9116510088BF9A /* BlowfishEncryption.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2393,6 +2393,7 @@
 		4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeURL.h; sourceTree = "<group>"; };
 		4C8AF74A158EB6CA0026668C /* RLMAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLMAsyncSocket.h; sourceTree = "<group>"; };
 		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
+		4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EncryptionKit.framework; path = ".tmp/SharedBuildResults-Frameworks/EncryptionKit.framework"; sourceTree = "<group>"; };
 		4C9234AA195330D30009AAAE /* TXUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXUserInterface.m; sourceTree = "<group>"; };
 		4C9234B2195330E30009AAAE /* TXUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXUserInterface.h; sourceTree = "<group>"; };
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCResourceManager.h; sourceTree = "<group>"; };
@@ -2512,7 +2513,6 @@
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = ".tmp/SharedBuildResults-Frameworks/AutoHyperlinks.framework"; sourceTree = "<group>"; };
-		4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BlowfishEncryption.framework; path = ".tmp/SharedBuildResults-Frameworks/BlowfishEncryption.framework"; sourceTree = "<group>"; };
 		4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = ".tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
 		4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCWorldCloudExtension.m; path = IRC/IRCWorldCloudExtension.m; sourceTree = "<group>"; };
@@ -2533,9 +2533,9 @@
 				4C0BA6231990798800857343 /* AppKit.framework in Frameworks */,
 				4C0BA6241990798800857343 /* AudioToolbox.framework in Frameworks */,
 				4CF76A5A1A9115670088BF9A /* AutoHyperlinks.framework in Frameworks */,
-				4CF76A3F1A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
 				4C0BA6271990798800857343 /* Cocoa.framework in Frameworks */,
 				4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */,
+				4C8F2F621AAE647D007821CC /* EncryptionKit.framework in Frameworks */,
 				4C0BA6281990798800857343 /* Foundation.framework in Frameworks */,
 				4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */,
 				4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */,
@@ -2555,9 +2555,9 @@
 				4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */,
 				4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */,
 				4CF76A831A9116510088BF9A /* AutoHyperlinks.framework in Frameworks */,
-				4CF76A411A91153A0088BF9A /* BlowfishEncryption.framework in Frameworks */,
 				4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */,
 				4CF76A451A91153A0088BF9A /* CocoaExtensions.framework in Frameworks */,
+				4C8F2F601AAE6467007821CC /* EncryptionKit.framework in Frameworks */,
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
 				4CF76A891A9116510088BF9A /* Growl.framework in Frameworks */,
 				4CF76A8B1A9116510088BF9A /* HockeySDK.framework in Frameworks */,
@@ -2578,9 +2578,9 @@
 				4CBE7B6D1A9148BD008FB230 /* AppKit.framework in Frameworks */,
 				4CBE7B6E1A9148BD008FB230 /* AudioToolbox.framework in Frameworks */,
 				4CBE7B651A9148BD008FB230 /* AutoHyperlinks.framework in Frameworks */,
-				4CBE7B661A9148BD008FB230 /* BlowfishEncryption.framework in Frameworks */,
 				4CBE7B6F1A9148BD008FB230 /* Cocoa.framework in Frameworks */,
 				4CBE7B671A9148BD008FB230 /* CocoaExtensions.framework in Frameworks */,
+				4C8F2F5F1AAE6467007821CC /* EncryptionKit.framework in Frameworks */,
 				4CBE7B711A9148BD008FB230 /* Foundation.framework in Frameworks */,
 				4CBE7B681A9148BD008FB230 /* Growl.framework in Frameworks */,
 				4CBE7B691A9148BD008FB230 /* HockeySDK.framework in Frameworks */,
@@ -2600,9 +2600,9 @@
 				4CDFA5341996EAB2007EA46E /* AppKit.framework in Frameworks */,
 				4CDFA5361996EAB2007EA46E /* AudioToolbox.framework in Frameworks */,
 				4C7E4DB51A9116FA00EBE11B /* AutoHyperlinks.framework in Frameworks */,
-				4C7E4DB71A9116FA00EBE11B /* BlowfishEncryption.framework in Frameworks */,
 				4CDFA5391996EAB2007EA46E /* Cocoa.framework in Frameworks */,
 				4C7E4DB91A9116FA00EBE11B /* CocoaExtensions.framework in Frameworks */,
+				4C8F2F681AAE64A6007821CC /* EncryptionKit.framework in Frameworks */,
 				4C7E4DBD1A9116FA00EBE11B /* HockeySDK.framework in Frameworks */,
 				4CDFA53A1996EAB2007EA46E /* Foundation.framework in Frameworks */,
 				4C7E4DBB1A9116FA00EBE11B /* Growl.framework in Frameworks */,
@@ -2863,8 +2863,8 @@
 			isa = PBXGroup;
 			children = (
 				4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */,
-				4CF76A381A91153A0088BF9A /* BlowfishEncryption.framework */,
 				4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */,
+				4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */,
 				4CCF2EE1158046F9006FFE21 /* Growl.framework */,
 				4CDB24A018CAB914007EF6DE /* HockeySDK.framework */,
 				4C24DC751A93C9CE0098D1BE /* Sparkle.framework */,
@@ -6014,7 +6014,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "7f2b669b-2159-4a75-9b0e-78f31e26ab11";
 			};
 			name = Debug;
 		};
@@ -6023,7 +6022,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "7f2b669b-2159-4a75-9b0e-78f31e26ab11";
 			};
 			name = Release;
 		};
@@ -6032,7 +6030,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "7f2b669b-2159-4a75-9b0e-78f31e26ab11";
 			};
 			name = "Release (Trial)";
 		};
@@ -6041,7 +6038,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "7f2b669b-2159-4a75-9b0e-78f31e26ab11";
 			};
 			name = "Release (App Store)";
 		};
@@ -6081,10 +6077,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -6093,10 +6085,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -6145,10 +6133,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -6206,10 +6190,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -6242,10 +6222,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -6254,10 +6230,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -6266,10 +6238,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (Trial)";
@@ -6278,10 +6246,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";

@@ -995,7 +995,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		NSString *encryptionKey = channel.config.encryptionKey;
 		
 		if (NSObjectIsNotEmpty(encryptionKey)) {
-			NSString *newstr = [CSFWBlowfish encodeData:message key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding];
+			NSString *newstr = [EKBlowfishEncryption encodeData:message key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding];
 
 			if ([newstr length] < 5) {
 				[self printDebugInformation:BLS(1001) channel:channel];
@@ -1022,7 +1022,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if (NSObjectIsNotEmpty(encryptionKey)) {
 			NSInteger badCharCount = 0;
 			
-			NSString *newstr = [CSFWBlowfish decodeData:(*message) key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding badBytes:&badCharCount];
+			NSString *newstr = [EKBlowfishEncryption decodeData:(*message) key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding badBytes:&badCharCount];
 
 			if (badCharCount > 0) {
 				[self printDebugInformation:BLS(1245, badCharCount) channel:channel];
