@@ -63,6 +63,29 @@
  */
 #define TPIBundleFromClass()				[NSBundle bundleForClass:[self class]]
 
+/*!
+ * A plugin must declare the minimum version of Textual that it is compatible with.
+ *
+ * Textual declares the constant named THOPluginProtocolCompatibilityMinimumVersion.
+ * This constant is compared against the minimum version that a plugin specifies.
+ * If the plugin's value is equal to or greater than this constant, then the plugin
+ * is considered safe to load. 
+ *
+ * Unlike the version information that visible to the end user, this constant does
+ * not change often. It only changes when modifications have been made to Textual’s
+ * codebase that may result in crashes when loading existing plugins.
+ *
+ * For example, even though Textual’s visible version number is “5.0.4”, the value
+ * of this constant is “5.0.0”
+ *
+ * To declare compatibility, add a new entry to a plugin's Info.plist file with 
+ * the key named: "MinimumTextualVersion" - Set the value of this entry, as a 
+ * String, to the return value of THOPluginProtocolCompatibilityMinimumVersion.
+ *
+ * @return "5.0.0" as of March 09, 2015
+ */
+TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
+
 @protocol THOPluginProtocol <NSObject>
 
 @optional
