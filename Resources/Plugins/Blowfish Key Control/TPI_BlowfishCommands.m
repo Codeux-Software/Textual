@@ -37,6 +37,9 @@
 
 #import "TPI_BlowfishCommands.h"
 
+#import <EncryptionKit/BlowfishEncryption.h>
+#import <EncryptionKit/BlowfishEncryptionKeyExchange.h>
+
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
 
@@ -45,7 +48,7 @@
 @interface TPI_BlowfishCommands ()
 /* 
 	  key format:	STRING("<channel UUID> –> <remote nickname>")
-	value format:	 ARRAY("<pointer to CFDH1080>", "<pointer to IRCChannel>")
+	value format:	 ARRAY("<pointer to EKBlowfishEncryptionKeyExchange>", "<pointer to IRCChannel>")
  
 	-keyExchangeDictionaryKey: can be used to generate key.
 */
