@@ -149,7 +149,11 @@
 #define	_textTruncationSpacePositionMaxDifferential			10
 
 	if (client == nil || channel == nil) {
-		return [*textToFormat attributedStringToASCIIFormatting];
+		NSString *resultString = [*textToFormat attributedStringToASCIIFormatting];
+
+		[*textToFormat deleteCharactersInRange:[*textToFormat range]];
+
+		return resultString;
 	}
 
 	/* To begin, we calculate the length of the channel name, the user's hostmask,
