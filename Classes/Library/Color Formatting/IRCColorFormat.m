@@ -149,7 +149,11 @@
 #define	_textTruncationSpacePositionMaxDifferential			10
 
 	if (client == nil || channel == nil) {
-		return [*textToFormat attributedStringToASCIIFormatting];
+		NSString *resultString = [*textToFormat attributedStringToASCIIFormatting];
+
+		[*textToFormat deleteCharactersInRange:[*textToFormat range]];
+
+		return resultString;
 	}
 
 	/* To begin, we calculate the length of the channel name, the user's hostmask,
@@ -191,8 +195,8 @@
 	if (NSObjectIsNotEmpty([channel encryptionKey])) {
 		/* This method will take a given size and estimate the maximum number of
 		 characters that can fit within that range. */
-		NSUInteger newEstimation = [CSFWBlowfish estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
-																  thatFitsWithinBounds:(maximumLength - baseMath)];
+		NSUInteger newEstimation = [EKBlowfishEncryption estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
+																		  thatFitsWithinBounds:(maximumLength - baseMath)];
 		
 		maximumLength = newEstimation;
 	}

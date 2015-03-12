@@ -37,6 +37,9 @@
 
 #import "TPI_BlowfishCommands.h"
 
+#import <EncryptionKit/BlowfishEncryption.h>
+#import <EncryptionKit/BlowfishEncryptionKeyExchange.h>
+
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
 
@@ -45,7 +48,7 @@
 @interface TPI_BlowfishCommands ()
 /* 
 	  key format:	STRING("<channel UUID> –> <remote nickname>")
-	value format:	 ARRAY("<pointer to CFDH1080>", "<pointer to IRCChannel>")
+	value format:	 ARRAY("<pointer to EKBlowfishEncryptionKeyExchange>", "<pointer to IRCChannel>")
  
 	-keyExchangeDictionaryKey: can be used to generate key.
 */
@@ -161,11 +164,11 @@
 				}
 			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
 				if ([_messageString isEqualIgnoringCase:@"CBC"]) {
-					[c setEncryptionModeOfOperation:CSFWBlowfishEncryptionCBCModeOfOperation];
+					[c setEncryptionModeOfOperation:EKBlowfishEncryptionCBCModeOfOperation];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") channel:c];
 				} else {
-					[c setEncryptionModeOfOperation:CSFWBlowfishEncryptionECBModeOfOperation];
+					[c setEncryptionModeOfOperation:EKBlowfishEncryptionECBModeOfOperation];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1021]") channel:c];
 				}
@@ -178,7 +181,7 @@
 					} else if (NSObjectIsNotEmpty(encryptionKey)) {
 						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1016]", [c name]) channel:c];
 					} else {
-						CFDH1080 *keyRequest = [CFDH1080 new];
+						EKBlowfishEncryptionKeyExchange *keyRequest = [EKBlowfishEncryptionKeyExchange new];
 
 						NSString *publicKey = [keyRequest generatePublicKey];
 
@@ -252,7 +255,7 @@
         return;
     }
 	
-	CSFWBlowfishEncryptionModeOfOperation mode = CSFWBlowfishEncryptionDefaultModeOfOperation;
+	EKBlowfishEncryptionModeOfOperation mode = EKBlowfishEncryptionDefaultModeOfOperation;
 
 	NSString *requestData = nil;
 	
@@ -264,7 +267,7 @@
 		requestData = parts[0];
 		
 		if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
-			mode = CSFWBlowfishEncryptionCBCModeOfOperation;
+			mode = EKBlowfishEncryptionCBCModeOfOperation;
 		}
 	} else {
 		requestData =  requestDataRaw;
@@ -282,7 +285,7 @@
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1009]", [channel name]) channel:channel];
 		} else {
-			CFDH1080 *keyRequest = [CFDH1080 new];
+			EKBlowfishEncryptionKeyExchange *keyRequest = [EKBlowfishEncryptionKeyExchange new];
 
 			/* Process secret from the Receiver. */
 			NSString *theSecret = [keyRequest secretKeyFromPublicKey:requestData];
@@ -313,7 +316,7 @@
 			/* Finish up. */
 			NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
 			
-			if (mode == CSFWBlowfishEncryptionCBCModeOfOperation) {
+			if (mode == EKBlowfishEncryptionCBCModeOfOperation) {
 				requestMsg = [requestMsg stringByAppendingString:@" CBC"];
 			}
 
@@ -327,7 +330,7 @@
 			
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
 			
-			if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
+			if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
 			} else {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
@@ -346,7 +349,7 @@
 	if (exchangeData) {
 		NSString *responseData = nil;
 		
-		CSFWBlowfishEncryptionModeOfOperation mode = CSFWBlowfishEncryptionDefaultModeOfOperation;
+		EKBlowfishEncryptionModeOfOperation mode = EKBlowfishEncryptionDefaultModeOfOperation;
 
 		if ([responseDataRaw length] > [TXExchangeResponsePrefix length]) {
 			responseData = [responseDataRaw substringFromIndex:[TXExchangeResponsePrefix length]];
@@ -356,7 +359,7 @@
 			responseData = parts[0];
 			
 			if ([parts count] > 1 && [parts[1] isEqualToString:@"CBC"]) {
-				mode = CSFWBlowfishEncryptionCBCModeOfOperation;
+				mode = EKBlowfishEncryptionCBCModeOfOperation;
 			}
 		} else {
 			responseData =  responseDataRaw;
@@ -367,7 +370,7 @@
 		//DebugLogToConsole(@"	Response Info: %@", exchangeData);
 		//DebugLogToConsole(@"	Message: %@", responseData);
 
-		CFDH1080 *request = exchangeData[0];
+		EKBlowfishEncryptionKeyExchange *request = exchangeData[0];
 		
 		IRCChannel *channel = exchangeData[1];
 		
@@ -402,7 +405,7 @@
 			/* Finish up. */
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];
 			
-			if (mode == CSFWBlowfishEncryptionDefaultModeOfOperation || mode == CSFWBlowfishEncryptionECBModeOfOperation) {
+			if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1017]") channel:channel];
 			} else {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1018]") channel:channel];
@@ -455,12 +458,12 @@
 		id request = requestData[0];
 		id channel = requestData[1];
 
-		if ([requestData count] == 2							&& // Array count is equal to 2.
-			PointerIsNotEmpty( request )						&& // Pointer are not empty.
-			PointerIsNotEmpty( channel )						&& // Pointer are not empty.
-			PointerIsNotEmpty([channel associatedClient])		&& // Pointer are not empty.
-			[request isKindOfClass:[CFDH1080 class]]			&& // Type of class is correct.
-			[channel isKindOfClass:[IRCChannel class]]) {		   // Type of class is correct.
+		if ([requestData count] == 2												&& // Array count is equal to 2.
+			PointerIsNotEmpty( request )											&& // Pointer are not empty.
+			PointerIsNotEmpty( channel )											&& // Pointer are not empty.
+			PointerIsNotEmpty([channel associatedClient])							&& // Pointer are not empty.
+			[request isKindOfClass:[EKBlowfishEncryptionKeyExchange class]]			&& // Type of class is correct.
+			[channel isKindOfClass:[IRCChannel class]]) {							   // Type of class is correct.
 
 			return requestData;
 		}

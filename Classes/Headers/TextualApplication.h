@@ -50,8 +50,9 @@
 	#import <WebKit/WebKit.h>
 
 	#import <AutoHyperlinks/AutoHyperlinks.h>
-	#import <BlowfishEncryption/BlowfishEncryption.h>
 	#import <CocoaExtensions/CocoaExtensions.h>
+
+	#import <EncryptionKit/BlowfishEncryption.h>
 
 	/* Class Forwarders. */
 	@class IRCAddressBookEntry;

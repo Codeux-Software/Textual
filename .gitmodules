@@ -7,6 +7,6 @@
 [submodule "Frameworks/Cocoa Extensions"]
 	path = Frameworks/Cocoa Extensions
 	url = https://github.com/Codeux-Software/Cocoa-Extensions.git
-[submodule "Frameworks/Blowfish Encryption"]
-	path = Frameworks/Blowfish Encryption
-	url = https://github.com/Codeux-Software/Blowfish-Encryption.git
+[submodule "Frameworks/Encryption Kit"]
+	path = Frameworks/Encryption Kit
+	url = https://github.com/Codeux-Software/Encryption-Kit.git

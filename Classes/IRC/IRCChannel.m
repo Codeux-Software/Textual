@@ -156,7 +156,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	return [self.config encryptionKey];
 }
 
-- (CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
+- (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
 {
 	return [self.config encryptionModeOfOperation];
 }
@@ -217,7 +217,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
     [[self viewController] setTopic:topic];
 }
 
-- (void)setEncryptionModeOfOperation:(CSFWBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
+- (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
 {
 	[self.config setEncryptionModeOfOperation:encryptionModeOfOperation];
 }

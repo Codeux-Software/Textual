@@ -41,8 +41,6 @@
 
 @implementation THOPluginItem
 
-NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
-
 #define VOCT(o, t)				 [o isKindOfClass:[t class]]
 #define VTAE(o, t)				([o isKindOfClass:[t class]] && NSObjectIsNotEmpty(o))
 
@@ -68,22 +66,22 @@ NSString * const TXBundleMininumBundleVersionForLoadingExtensions = @"5.0.0";
 		LogToConsole(@" For example, to support this version and later, add the value: ");
 		LogToConsole(@"  ");
 		LogToConsole(@"     <key>MinimumTextualVersion</key>");
-		LogToConsole(@"     <string>%@</string>", TXBundleMininumBundleVersionForLoadingExtensions);
+		LogToConsole(@"     <string>%@</string>", THOPluginProtocolCompatibilityMinimumVersion);
 		LogToConsole(@"  ");
 		LogToConsole(@" Failure to provide a minimum version is currently only a warning, but in the future, Textual will ");
 		LogToConsole(@" refuse to load bundles that do not specify a minimum version to load within. ");
 		LogToConsole(@"-------------- WARNING -------------- ");
 	} else {
-		NSComparisonResult comparisonResult = [comparisonVersion compare:TXBundleMininumBundleVersionForLoadingExtensions options:NSNumericSearch];
+		NSComparisonResult comparisonResult = [comparisonVersion compare:THOPluginProtocolCompatibilityMinimumVersion options:NSNumericSearch];
 		
-		if (comparisonResult == NSOrderedDescending) {
+		if (comparisonResult == NSOrderedAscending) {
 			LogToConsole(@" -------------- ERROR -------------- ");
-			LogToConsole(@" Textual has failed to load the bundle at the followig path because the specified minimum version is out of range :");
+			LogToConsole(@" Textual has failed to load the bundle at the followig path because the specified minimum version is out of range:");
 			LogToConsole(@"  ");
 			LogToConsole(@"		Bundle Path: %@", [bundle bundlePath]);
 			LogToConsole(@"  ");
 			LogToConsole(@"		Minimum version specified by bundle: %@", comparisonVersion);
-			LogToConsole(@"		Version used by Textual for comparison: %@", TXBundleMininumBundleVersionForLoadingExtensions);
+			LogToConsole(@"		Version used by Textual for comparison: %@", THOPluginProtocolCompatibilityMinimumVersion);
 			LogToConsole(@"  ");
 			LogToConsole(@" -------------- ERROR -------------- ");
 			

@@ -114,7 +114,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+http://www.co
 
 - (BOOL)hasSelection
 {
-	return (([self selection] == nil) == NO);
+	return (NSObjectIsEmpty([self selection]) == NO);
 }
 
 - (NSString *)selection

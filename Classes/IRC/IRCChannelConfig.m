@@ -51,7 +51,7 @@
 		NSDictionary *defaults = @{
 			 @"channelType"						: @(IRCChannelChannelType),
 
-			 @"encryptionModeOfOperation"		: @(CSFWBlowfishEncryptionDefaultModeOfOperation),
+			 @"encryptionModeOfOperation"		: @(EKBlowfishEncryptionDefaultModeOfOperation),
 
 			 @"joinOnConnect"					:	@(YES),
 

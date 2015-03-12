@@ -43,6 +43,8 @@
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
 @end
 
+NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"5.0.0";
+
 NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute = @"lineNumber";
 NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute = @"senderNickname";
 NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute = @"lineType";

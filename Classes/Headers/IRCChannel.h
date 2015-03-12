@@ -93,7 +93,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
 @property (nonatomic, copy) NSString *encryptionKey;
-@property (nonatomic, assign) CSFWBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
+@property (nonatomic, assign) EKBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (BOOL)memberExists:(NSString *)nickname;
 

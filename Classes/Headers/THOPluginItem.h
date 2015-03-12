@@ -41,8 +41,6 @@
  The code contained by this header file was designed to be used internally for
  Textual and may be dangerous to use otherwise. */
 
-TEXTUAL_EXTERN NSString * const TXBundleMininumBundleVersionForLoadingExtensions;
-
 // OldStyle = deprecated class names
 // NewStyle = current class names for THOPluginProtocol
 typedef enum THOPluginItemSupportedFeaturesFlags : NSInteger {
