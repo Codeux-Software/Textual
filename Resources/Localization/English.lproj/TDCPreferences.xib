@@ -230,7 +230,7 @@ DQ
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Y0B-GY-ayZ"/>
-                                        <menuItem title="Experimtnal Settings" tag="119" id="FDb-XE-P95">
+                                        <menuItem title="Experimental Settings" tag="119" id="FDb-XE-P95">
                                             <connections>
                                                 <action selector="onPrefPaneSelected:" target="-2" id="wJI-G9-QuF"/>
                                             </connections>
@@ -2369,7 +2369,7 @@ DQ
             </subviews>
             <point key="canvasLocation" x="460.5" y="-2845.5"/>
         </customView>
-        <customView id="e8Q-5b-yYH" userLabel="Experimtnal Settings">
+        <customView id="e8Q-5b-yYH" userLabel="Experimental Settings">
             <rect key="frame" x="0.0" y="-1" width="567" height="305"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
             <userGuides>
