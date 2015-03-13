@@ -44,7 +44,7 @@
 
 /* Server properties iCloud options */
 "TDCServerSheet[1002][1]" = "iCloud Sharing Disabled";
-"TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
+"TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
 
 "TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
 "TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
@@ -109,7 +109,7 @@
 
 /* Preferences window iCloud options */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
-"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored with iCloud can be erased at any time by clicking the “Manage iCloud” button.";
+"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored on iCloud will remain there unless it is erased by clicking the “Manage iCloud” button.";
 
 "TDCPreferencesController[1001][1]" = "Are you sure you wish to continue?";
 "TDCPreferencesController[1001][2]" = "Selecting “Continue” will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
@@ -138,14 +138,17 @@
 
 "TDCPreferencesController[1015][1]" = "• Nickname Format";
 "TDCPreferencesController[1015][2]" = "• Timestamp Format";
-"TDCPreferencesController[1015][3]" = "• Window Colors";
+"TDCPreferencesController[1015][3]" = "• Window Appearance";
 "TDCPreferencesController[1015][4]" = "• Channel View Font";
+
+"TDCPreferencesController[1016][1]" = "Cannot select iCloud Drive as a location to save data";
+"TDCPreferencesController[1016][2]" = "Please choose a location other than iCloud Drive to save data to.";
 
 /* Final transfer dialog */
 "TDCFileTransferDialog[1000][1]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@";
 "TDCFileTransferDialog[1000][2]" = "%1$@ of %2$@ (%3$@/s) sent to %4$@ — %5$@ remaining";
 
-"TDCFileTransferDialog[1001]" = "Transfer to %@ is stopped. Right click to start.";
+"TDCFileTransferDialog[1001]" = "Transfer to %@ is stopped. Control click to start.";
 "TDCFileTransferDialog[1002]" = "Transfer to %@ is initializing. Attempting to map listening port.";
 "TDCFileTransferDialog[1003]" = "Transfer to %@ is initializing. Determining local IP address.";
 "TDCFileTransferDialog[1004]" = "Transfer to %@ is initializing";
@@ -156,12 +159,12 @@
 "TDCFileTransferDialog[1008][1]" = "%1$@ of %2$@ (%3$@/s) received from %4$@";
 "TDCFileTransferDialog[1008][2]" = "%1$@ of %2$@ (%3$@/s) received from %4$@ — %5$@ remaining";
 
-"TDCFileTransferDialog[1009]" = "Transfer from %@ is stopped. Right click to start.";
+"TDCFileTransferDialog[1009]" = "Transfer from %@ is stopped. Control click to start.";
 "TDCFileTransferDialog[1010]" = "Transfer from %@ is initializing. Attempting to map listening port.";
 "TDCFileTransferDialog[1011]" = "Transfer from %@ is initializing. Determining local IP address.";
 "TDCFileTransferDialog[1012]" = "Transfer from %@ is initializing";
-"TDCFileTransferDialog[1013]" = "Transfer from %@ is ready. Right click to start.";
-"TDCFileTransferDialog[1014]" = "Transfer from %@ is complete. Right click to open in Finder.";
+"TDCFileTransferDialog[1013]" = "Transfer from %@ is ready. Control click to start.";
+"TDCFileTransferDialog[1014]" = "Transfer from %@ is complete. Control click to open in Finder.";
 
 "TDCFileTransferDialog[1015]" = "Connecting to %@";
 
@@ -244,8 +247,8 @@
 "BasicLanguage[1030]" = "1d Shunned";
 
 /* Network not available messages */
-"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, right-click the server and click \002Connect\002.";
-"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, right-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, right-click the server and select \002Cancel Reconnect\002.";
+"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the server and click \002Connect\002.";
+"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the server and select \002Cancel Reconnect\002.";
 
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
@@ -463,6 +466,7 @@
 "BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the OS X ”Console” application. To disable, execute “/debug raw off”";
 "BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
 "BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
+
 /* Log file session headers */
 "BasicLanguage[1178]" = "------------- Begin Session -------------";
 "BasicLanguage[1179]" = "------------- End Session -------------";
@@ -646,10 +650,6 @@
 /* Connection protocol and cipher suite */
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
-
-/* NSOpenPanel error messages */
-"BasicLanguage[1251][1]" = "Cannot select iCloud Drive as a location to save data";
-"BasicLanguage[1251][2]" = "Please choose a location other than iCloud Drive to save data to.";
 
 
 
