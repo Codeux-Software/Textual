@@ -736,8 +736,8 @@
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
 			[userInfo setObject:url forKey:NSURLErrorKey];
-			[userInfo setObject:TXTLS(@"BasicLanguage[1251][1]") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:TXTLS(@"BasicLanguage[1251][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+			[userInfo setObject:TXTLS(@"TDCPreferencesController[1016][1]") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:TXTLS(@"TDCPreferencesController[1016][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
 
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
 		}

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPISystemProfiler">
@@ -14,19 +14,19 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="1">
-            <rect key="frame" x="0.0" y="-1" width="567" height="415"/>
+            <rect key="frame" x="0.0" y="-1" width="567" height="387"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <userGuides>
                 <userLayoutGuide location="432" affinity="minY"/>
                 <userLayoutGuide location="144" affinity="minX"/>
-                <userLayoutGuide location="373" affinity="minY"/>
+                <userLayoutGuide location="380" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button id="3">
-                    <rect key="frame" x="143" y="334" width="253" height="18"/>
+                    <rect key="frame" x="143" y="306" width="253" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="CPU Model &amp; Associated Information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4">
+                    <buttonCell key="cell" type="check" title="CPU model and related information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -39,9 +39,9 @@
                     </connections>
                 </button>
                 <button id="5">
-                    <rect key="frame" x="143" y="306" width="225" height="18"/>
+                    <rect key="frame" x="143" y="278" width="225" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="System Memory Total Allocation" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6">
+                    <buttonCell key="cell" type="check" title="System memory" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -54,9 +54,9 @@
                     </connections>
                 </button>
                 <button id="12">
-                    <rect key="frame" x="143" y="278" width="183" height="18"/>
+                    <rect key="frame" x="143" y="250" width="183" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Operating System Uptime" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="13">
+                    <buttonCell key="cell" type="check" title="Operating system uptime" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="13">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -69,9 +69,9 @@
                     </connections>
                 </button>
                 <button id="14">
-                    <rect key="frame" x="143" y="250" width="212" height="18"/>
+                    <rect key="frame" x="143" y="222" width="212" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Boot Volume Disk Information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="15">
+                    <buttonCell key="cell" type="check" title="Boot volume disk information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="15">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -84,9 +84,9 @@
                     </connections>
                 </button>
                 <button id="16">
-                    <rect key="frame" x="143" y="222" width="194" height="18"/>
+                    <rect key="frame" x="143" y="194" width="194" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Graphics Card Model Name" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="17">
+                    <buttonCell key="cell" type="check" title="Graphics card" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="17">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -99,9 +99,9 @@
                     </connections>
                 </button>
                 <button id="18">
-                    <rect key="frame" x="143" y="194" width="227" height="18"/>
+                    <rect key="frame" x="143" y="166" width="227" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Active Display Screen Resolution" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="19">
+                    <buttonCell key="cell" type="check" title="Active display screen resolution" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="19">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -113,25 +113,10 @@
                         </binding>
                     </connections>
                 </button>
-                <button id="20">
-                    <rect key="frame" x="143" y="166" width="156" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="System Load Average" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="21">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="114" name="value" keyPath="values.System Profiler Extension -&gt; Feature Disabled -&gt; Load Average" id="Fo2-d4-jE3">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
-                    </connections>
-                </button>
                 <button id="22">
                     <rect key="frame" x="143" y="138" width="264" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Operating System Version Information" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="23">
+                    <buttonCell key="cell" type="check" title="Operating system version" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="23">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
@@ -144,7 +129,7 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" id="92">
-                    <rect key="frame" x="66" y="369" width="435" height="16"/>
+                    <rect key="frame" x="66" y="341" width="435" height="16"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
                         <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
@@ -265,7 +250,7 @@
                     </scroller>
                 </scrollView>
             </subviews>
-            <point key="canvasLocation" x="389.5" y="450.5"/>
+            <point key="canvasLocation" x="389.5" y="436.5"/>
         </customView>
         <userDefaultsController id="114" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>

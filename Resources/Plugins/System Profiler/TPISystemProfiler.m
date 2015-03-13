@@ -61,7 +61,6 @@
 			@"System Profiler Extension -> Feature Disabled -> System Uptime" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> Memory Information" : @(YES),
 			@"System Profiler Extension -> Feature Disabled -> Screen Resolution" : @(YES),
-			@"System Profiler Extension -> Feature Disabled -> Load Average" : @(YES),
 			@"System Profiler Extension -> Request Model Information from Apple" : @(NO),
 		};
 		
