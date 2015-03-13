@@ -85,7 +85,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	NSString *configDataString = configData;
 
 	if ([configDataString hasSuffix:IRCISupportRawSuffix]) {
-		 configDataString = [configDataString substringToIndex:([configData length] - [IRCISupportRawSuffix length])];
+		 configDataString = [configDataString substringToIndex:([configDataString length] - [IRCISupportRawSuffix length])];
 	}
 
 	NSObjectIsEmptyAssert(configDataString);
@@ -239,26 +239,23 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 {
 	// Format: (qaohv)~&@%+
 
-	if ([value contains:@"("] && [value contains:@")"]) {
+	if ([value hasPrefix:@"("] && [value contains:@")"]) {
 		NSInteger endSignPos = [value stringPosition:@")"];
-		
-		NSString *nodes = nil;
-		NSString *chars = nil;
 
-		nodes = [value substringToIndex:endSignPos];
-		nodes = [nodes substringFromIndex:1];
-		
-		chars = [value substringAfterIndex:endSignPos];
+		NSString *chars = [value substringAfterIndex:endSignPos];
 
-		NSInteger modeLength = [nodes length];
+		NSString *modes = [value substringWithRange:NSMakeRange(1, (endSignPos - 1))];
+
+		NSInteger modeLength = [modes length];
 		NSInteger charLength = [chars length];
 
 		NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
-		NSMutableDictionary *modePrefixes = [self.userModePrefixes mutableCopy];
+
+		NSMutableDictionary *modePrefixes = [NSMutableDictionary dictionary]; // Reset defaults values because order is important
 		
 		if (charLength == modeLength) {
 			for (NSInteger i = 0; i < charLength; i++) {
-				NSString *modeKey = [nodes stringCharacterAtIndex:i];
+				NSString *modeKey = [modes stringCharacterAtIndex:i];
 				NSString *modeChar = [chars stringCharacterAtIndex:i];
 
 				modePrefixes[modeKey] = modeChar;
@@ -268,6 +265,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 		}
 
 		self.channelModes = channelModes;
+
 		self.userModePrefixes = modePrefixes;
 	}
 }
@@ -318,16 +316,67 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	self.channelModes = channelModes;
 }
 
-- (NSString *)userModePrefixSymbol:(NSString *)mode
+- (NSString *)userModePrefixSymbolWithMode:(NSString *)mode
 {
 	return self.userModePrefixes[mode];
 }
 
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode
 {
-	NSString *prefix = [self userModePrefixSymbol:mode];
+	id prefix = [self userModePrefixSymbolWithMode:mode];
 	
-	return ([prefix length] > 0);
+	return ((prefix == nil) == NO);
+}
+
+- (NSString *)modeCharacterFromUserPrefixSymbol:(NSString *)symbol
+{
+	__block NSString *mode = nil;
+
+	[self.userModePrefixes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (NSObjectsAreEqual(symbol, obj)) {
+			mode = [key copy];
+
+			*stop = YES;
+		}
+	}];
+
+	return mode;
+}
+
+- (BOOL)symbolIsUserPrefixCharacter:(NSString *)symbol
+{
+	id prefix = [self modeCharacterFromUserPrefixSymbol:symbol];
+
+	return ((prefix == nil) == NO);
+}
+
+- (NSInteger)rankForUserPrefixWithMode:(NSString *)mode
+{
+#define _defaultStart			100
+
+	NSObjectIsEmptyAssertReturn(mode, _defaultStart);
+
+	__block BOOL foundResult = NO;
+
+	__block NSInteger rankValue = _defaultStart;
+
+	[self.userModePrefixes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (NSObjectsAreEqual(key, mode)) {
+			*stop = YES;
+
+			foundResult = YES;
+		} else {
+			rankValue -= 1;
+		}
+	}];
+
+#undef _defaultStart
+
+	if (foundResult) {
+		return rankValue;
+	} else {
+		return 0; // Nothing was found at all for input.
+	}
 }
 
 - (IRCModeInfo *)createMode:(NSString *)mode

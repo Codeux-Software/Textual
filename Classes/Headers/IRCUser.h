@@ -40,7 +40,7 @@
 
 typedef enum IRCUserRank : NSInteger {
 	IRCUserNoRank				= 0,	// nothing
-	IRCUserIRCopRank,					// +y/+Y
+	IRCUserIRCopByModeRank,				// +y/+Y
 	IRCUserChannelOwnerRank,			// +q
 	IRCUserSuperOperatorRank,			// +a
 	IRCUserNormalOperatorRank,			// +o
@@ -54,15 +54,8 @@ typedef enum IRCUserRank : NSInteger {
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *realname;
 @property (nonatomic, assign) NSInteger colorNumber;
-@property (nonatomic, assign) BOOL q;
-@property (nonatomic, assign) BOOL a;
-@property (nonatomic, assign) BOOL o;
-@property (nonatomic, assign) BOOL h;
-@property (nonatomic, assign) BOOL v;
-@property (nonatomic, assign) BOOL binircd_O; // Channel mode (+O) for channel owner on binircd.
-@property (nonatomic, assign) BOOL InspIRCd_y_upper; // Channel mode (+Y) for IRCop on InspIRCd-2.0
-@property (nonatomic, assign) BOOL InspIRCd_y_lower; // Channel mode (+y) for IRCop on InspIRCd-2.0
-@property (nonatomic, assign) BOOL isCop;
+@property (nonatomic, copy) NSString *modes; // List of all user modes, ranked highest to lowest
+@property (nonatomic, assign) BOOL isCop; 
 @property (nonatomic, assign) BOOL isAway;
 @property (readonly) CGFloat totalWeight;
 @property (nonatomic, assign) CGFloat incomingWeight;
@@ -71,7 +64,15 @@ typedef enum IRCUserRank : NSInteger {
 
 + (id)newUserOnClient:(IRCClient *)client withNickname:(NSString *)nickname;
 
-@property (readonly, copy) NSString *mark;
+// Custom user modes are becoming more and more popular so it is better
+// to move away from hard coded booleans for these modes and instead use
+// -currentRank for Textual to make an educated guess about where the user
+// stands based off what it knows so far.
+@property (readonly) BOOL q TEXTUAL_DEPRECATED("Use -currentRank instead");
+@property (readonly) BOOL a TEXTUAL_DEPRECATED("Use -currentRank instead");
+@property (readonly) BOOL o TEXTUAL_DEPRECATED("Use -currentRank instead");
+@property (readonly) BOOL h TEXTUAL_DEPRECATED("Use -currentRank instead");
+@property (readonly) BOOL v TEXTUAL_DEPRECATED("Use -currentRank instead");
 
 @property (getter=isOp, readonly) BOOL op;
 @property (getter=isHalfOp, readonly) BOOL halfOp;
@@ -81,7 +82,16 @@ typedef enum IRCUserRank : NSInteger {
 
 @property (readonly, copy) NSString *lowercaseNickname;
 
+// A user can have multiple modes. -currentRank returns the highest rank
+// (or mode) that is set on the user.
+
+// -currentRank returns IRCUserIRCopByModeRank if the +Y/+y modes defined
+// by InspIRCd-2.0 for IRC operators are in use by this user. It does not
+// return this if the user is an IRC operator, but lacks these modes.
+// Use -isCop for the status of the user regardless of these modes.
 @property (readonly) IRCUserRank currentRank;
+
+@property (readonly, copy) NSString *mark; // Returns mode symbol for highest rank (-modes)
 
 - (void)outgoingConversation;
 - (void)incomingConversation;

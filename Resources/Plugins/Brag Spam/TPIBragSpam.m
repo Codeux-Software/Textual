@@ -56,6 +56,9 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 	if ([commandString isEqualToString:@"BRAG"]) {
 		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
 
@@ -157,6 +160,8 @@
 				 command:IRCPrivateCommandIndex("privmsg")
 				 channel:selectedChannel];
 	}
+
+#pragma clang diagnostic pop
 }
 
 - (NSArray *)subscribedUserInputCommands

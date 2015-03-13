@@ -554,7 +554,7 @@
 "BasicLanguage[1209]" = "Operator";
 "BasicLanguage[1210]" = "Super Admin";
 "BasicLanguage[1211]" = "Channel Owner";
-"BasicLanguage[1212]" = " — Server Staff Member";
+"BasicLanguage[1212]" = "Server Staff Member (IRC Operator)";
 "BasicLanguage[1213]" = "User is away";
 "BasicLanguage[1214]" = "User is not away";
 

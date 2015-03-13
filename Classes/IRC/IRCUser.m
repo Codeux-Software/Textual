@@ -41,7 +41,7 @@
 #define _colorNumberMax				 30
 
 @interface IRCUser ()
-@property (nonatomic, weak) IRCClient *associatedClient;
+@property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @end
 
 @implementation IRCUser
@@ -70,7 +70,7 @@
 {
 	IRCUser *newUser = [IRCUser new];
 
-	[newUser setAssociatedClient:client];
+	[newUser setSupportInfo:[client supportInfo]];
 
 	[newUser setNickname:nickname];
 	
@@ -79,95 +79,147 @@
 
 - (NSString *)hostmask
 {
+	NSObjectIsEmptyAssertReturn(self.nickname, nil);
 	NSObjectIsEmptyAssertReturn(self.username, nil);
 	NSObjectIsEmptyAssertReturn(self.address, nil);
-	NSObjectIsEmptyAssertReturn(self.nickname, nil);
 	
 	return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];
 }
 
 - (NSString *)banMask
 {
-	NSObjectIsEmptyAssertReturn(self.nickname, nil);
-	
+	if (NSObjectIsEmpty(self.nickname)) {
+		return nil;
+	}
+
 	if (NSObjectIsEmpty(self.username) || NSObjectIsEmpty(self.address)) {
 		return [NSString stringWithFormat:@"%@!*@*", self.nickname];
-	} else {
-		switch ([TPCPreferences banFormat]) {
-			case TXHostmaskBanWHNINFormat: {
-				return [NSString stringWithFormat:@"*!*@%@", self.address];
-			}
-			case TXHostmaskBanWHAINNFormat: {
-				return [NSString stringWithFormat:@"*!%@@%@", self.username, self.address];
-			}
-			case TXHostmaskBanWHANNIFormat: {
-				return [NSString stringWithFormat:@"%@!*%@", self.nickname, self.address];
-			}
-			case TXHostmaskBanExactFormat: {
-				return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];
-			}
-		}
+	}
+
+	switch ([TPCPreferences banFormat]) {
+		case TXHostmaskBanWHNINFormat: {	return [NSString stringWithFormat:@"*!*@%@", self.address];										}
+		case TXHostmaskBanWHAINNFormat: {	return [NSString stringWithFormat:@"*!%@@%@", self.username, self.address];						}
+		case TXHostmaskBanWHANNIFormat: {	return [NSString stringWithFormat:@"%@!*%@", self.nickname, self.address];						}
+		case TXHostmaskBanExactFormat: {	return [NSString stringWithFormat:@"%@!%@@%@", self.nickname, self.username, self.address];		}
 	}
 	
 	return nil;
+}
+
+- (BOOL)userModesContainsMode:(NSString *)mode
+{
+	NSParameterAssert(([mode length] == 1));
+
+	if (NSObjectIsEmpty(self.modes)) {
+		return NO;
+	} else {
+		return [self.modes contains:mode];
+	}
+}
+
+- (NSString *)highestRankedUserMode
+{
+	if (NSObjectIsEmpty(self.modes)) {
+		return nil;
+	} else {
+		return [self.modes stringCharacterAtIndex:0];
+	}
 }
 
 - (NSString *)mark
 {
-	IRCISupportInfo *supportInfo = self.associatedClient.supportInfo;
-	
-	if (self.q) {
-		if (self.binircd_O) {
-			return [supportInfo userModePrefixSymbol:@"O"]; // binircd-1.0.0
-		} else {
-			return [supportInfo userModePrefixSymbol:@"q"];
-		}
-	} else if (self.a) {
-		return [supportInfo userModePrefixSymbol:@"a"];
-	} else if (self.o) {
-		return [supportInfo userModePrefixSymbol:@"o"];
-	} else if (self.h) {
-		return [supportInfo userModePrefixSymbol:@"h"];
-	} else if (self.v) {
-		return [supportInfo userModePrefixSymbol:@"v"];
-	} else if (self.isCop) {
-		if (self.InspIRCd_y_lower) {
-			return [supportInfo userModePrefixSymbol:@"y"]; // InspIRCd-2.0
-		} else if (self.InspIRCd_y_upper) {
-			return [supportInfo userModePrefixSymbol:@"Y"]; // InspIRCd-2.0
-		}
-	}
+	NSString *highestRank = [self highestRankedUserMode];
 
-	return nil;
+	if (highestRank) {
+		return [self.supportInfo userModePrefixSymbolWithMode:highestRank];
+	} else {
+		return nil;
+	}
+}
+
+- (NSInteger)channelRank
+{
+	NSString *highestRank = [self highestRankedUserMode];
+
+	if (highestRank) {
+		return [self.supportInfo rankForUserPrefixWithMode:highestRank];
+	} else {
+		return 0; // Furthest that can be gone down.
+	}
 }
 
 - (BOOL)isOp
 {
-	return (self.o || self.a || self.q);
+	if (NSObjectIsEmpty(self.modes)) {
+		return NO;
+	} else {
+		return [self.modes containsCharacters:@"qOao"];
+	}
 }
 
 - (BOOL)isHalfOp 
 {
-	return (self.h || self.o || self.a || self.q);
+	if (NSObjectIsEmpty(self.modes)) {
+		return NO;
+	} else {
+		return [self.modes containsCharacters:@"qOaoh"];
+	}
+}
+
+- (BOOL)q
+{
+	return [self userModesContainsMode:@"q"];
+}
+
+- (BOOL)a
+{
+	return [self userModesContainsMode:@"a"];
+}
+
+- (BOOL)o
+{
+	return [self userModesContainsMode:@"o"];
+}
+
+- (BOOL)h
+{
+	return [self userModesContainsMode:@"h"];
+}
+
+- (BOOL)v
+{
+	return [self userModesContainsMode:@"v"];
 }
 
 - (IRCUserRank)currentRank
 {
-	if (self.isCop) {
-		return IRCUserIRCopRank;
-	} else if (self.q) {
+	NSString *highestMark = [self highestRankedUserMode];
+
+	if (highestMark == nil) {
+		return IRCUserNoRank; // Furthest that can be gone down.
+	}
+
+#define _mm(mode)			NSObjectsAreEqual(highestMark, (mode))
+
+	// +Y/+y is used by InspIRCd-2.0 to represent an IRCop
+	// +O is used by binircd-1.0.0 for channel owner
+	if (_mm(@"y") || _mm(@"Y")) {
+		return IRCUserIRCopByModeRank;
+	} else if (_mm(@"q") || _mm(@"O")) {
 		return IRCUserChannelOwnerRank;
-	} else if (self.a) {
+	} else if (_mm(@"a")) {
 		return IRCUserSuperOperatorRank;
-	} else if (self.o) {
+	} else if (_mm(@"o")) {
 		return IRCUserNormalOperatorRank;
-	} else if (self.h) {
+	} else if (_mm(@"h")) {
 		return IRCUserHalfOperatorRank;
-	} else if (self.v) {
+	} else if (_mm(@"v")) {
 		return IRCUserVoicedRank;
 	} else {
 		return IRCUserNoRank;
 	}
+
+#undef _mm
 }
 
 - (NSInteger)colorNumber
@@ -193,9 +245,11 @@
 
 - (BOOL)isEqual:(id)other
 {
-	NSObjectIsKindOfClassAssertReturn(other, IRCUser, NO);
-	
-	return [self.nickname isEqualIgnoringCase:[other nickname]];
+	if ([other isKindOfClass:[IRCUser class]] == NO) {
+		return NO;
+	} else {
+		return NSObjectsAreEqual([self lowercaseNickname], [other lowercaseNickname]);
+	}
 }
 
 - (NSUInteger)hash
@@ -274,57 +328,28 @@
 
 - (NSComparisonResult)compare:(IRCUser *)other
 {
-	/* If the user specifically requests that the IRCops get placed higher but
-	 the server doesn't support the y prefix, place them at the top, but sort
-	 them by their ranks within the channel instead of just alphabetically.
-
-	 Otherwise we sort by their channel rank since the y prefix will naturally
-	 float to the top. 
-	 
-	 Example on a server without the y prefix:
-	 
-	 q and IRCop is the topmost
-	 a and IRCop next
-	 ...
-	 no rank and IRCop next
-	 q and NOT IRCop next
-	 a and NOT IRCop next
-	 and so on
-	 */
-	
-	NSComparisonResult normalRank = [@([self channelRank]) compare:@([other channelRank])];
-	
-	NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
-	
-	BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-	
-	if (favorIRCop && self.isCop && [other isCop] == NO) {
-		return NSOrderedAscending;
-	} else if (favorIRCop && self.isCop == NO && [other isCop]) {
-		return NSOrderedDescending;
-	} else if (invertedRank == NSOrderedSame) {
-		return [self.nickname caseInsensitiveCompare:other.nickname];
+	if ([other isKindOfClass:[IRCUser class]] == NO) {
+		return NSOrderedSame;
 	} else {
-		return invertedRank;
-	}
-}
+		NSNumber *localRank = [NSNumber numberWithInteger:[self channelRank]];
 
-- (NSInteger)channelRank
-{
-	if (self.isCop && (self.InspIRCd_y_upper || self.InspIRCd_y_lower)) {
-		return 6;
-	} else if (self.q) {
-		return 5;
-	} else if (self.a) {
-		return 4;
-	} else if (self.o) {
-		return 3;
-	} else if (self.h) {
-		return 2;
-	} else if (self.v) {
-		return 1;
-	} else {
-		return 0;
+		NSNumber *remoteRank = [NSNumber numberWithInteger:[other channelRank]];
+
+		NSComparisonResult normalRank = [localRank compare:remoteRank];
+
+		NSComparisonResult invertedRank = NSInvertedComparisonResult(normalRank);
+
+		BOOL favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+
+		if (favorIRCop && [self isCop] && [other isCop] == NO) {
+			return NSOrderedAscending;
+		} else if (favorIRCop && [self isCop] == NO && [other isCop]) {
+			return NSOrderedDescending;
+		} else if (invertedRank == NSOrderedSame) {
+			return [[self nickname] caseInsensitiveCompare:[other nickname]];
+		} else {
+			return invertedRank;
+		}
 	}
 }
 
@@ -338,8 +363,7 @@
 
 - (void)migrate:(IRCUser *)from
 {
-	/* Lazy-man copy. */
-	self.associatedClient = [from associatedClient];
+	self.supportInfo = [from supportInfo];
 	
 	self.nickname = [from nickname];
 	self.username = [from username];
@@ -349,19 +373,10 @@
 
 	self.colorNumber = [from colorNumber];
 
-	self.q = [from q];
-	self.a = [from a];
-	self.o = [from o];
-	self.h = [from h];
-	self.v = [from v];
+	self.modes = [from modes];
 
 	self.isCop = [from isCop];
 	self.isAway = [from isAway];
-
-	self.InspIRCd_y_upper = [from InspIRCd_y_upper];
-	self.InspIRCd_y_lower = [from InspIRCd_y_lower];
-
-	self.binircd_O = [from binircd_O];
 }
 
 - (NSString *)description

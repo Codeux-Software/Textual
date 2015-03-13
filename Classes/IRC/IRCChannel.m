@@ -550,16 +550,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	 a copy of the user, change what we want changed, then compare the copy with original. If
 	 any of these conditions fault, then that means the appearnce of the user in member list 
 	 tree will need to be updated. */
-	BOOL hasEqualStatus = ([user1 binircd_O]			== [user2 binircd_O]			&&
-						   [user1 InspIRCd_y_lower]		== [user1 InspIRCd_y_lower]		&&
-						   [user1 InspIRCd_y_upper]		== [user2 InspIRCd_y_upper]		&&
-						   [user1 isCop]				== [user2 isCop]				&&
-						   [user1 isAway]				== [user2 isAway]				&&
-						   [user1 q]					== [user2 q]					&&
-						   [user1 a]					== [user2 a]					&&
-						   [user1 o]					== [user2 o]					&&
-						   [user1 h]					== [user2 h]					&&
-						   [user1 v]					== [user2 v]);
+	BOOL hasEqualStatus = (NSObjectsAreEqual([user1 modes], [user2 modes])				&&
+							                 [user1 isCop]		== [user2 isCop]		&&
+						                     [user1 isAway]		== [user2 isAway]);
 	
 	return (hasEqualStatus == NO);
 }
@@ -568,6 +561,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 {
 	NSObjectIsEmptyAssert(nickname);
 	NSObjectIsEmptyAssert(mode);
+
+	NSParameterAssert(([mode length] == 1));
 	
 	/* Find user. */
 	IRCUser *user = [self findMember:nickname options:NSCaseInsensitiveSearch];
@@ -578,49 +573,72 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	 are changes when we are done. Modifying /user/ directly would change all instances 
 	 inside our member lists and we don't want to do  that right away. */
 	IRCUser *newUser = [user copy];
-	
-	UniChar modeChar = [mode characterAtIndex:0];
-	
-	switch (modeChar) {
-		case 'O':
-		{
-			/* Why would an IRCd define a differnet mode for this? */
-			newUser.binircd_O = value;
-			
-			/* We will still treat it as q (owner). ,,|,, */
-			newUser.q = value;
-			
-			break;
+
+	NSString *existingModeValues = [newUser modes];
+
+	if (existingModeValues == nil || [existingModeValues length] == 0) {
+		if (value) {
+			[newUser setModes:mode];
 		}
-		case 'Y': // Lower Y cannot change…
-		{
-			/* Mode Y is treated as an IRCop. */
-			newUser.InspIRCd_y_upper = value;
-			
-			/* If the user wasn't already marked as an IRCop, then we 
-			 mark them at this point. However, if they were already 
-			 marked and it was -Y, then we do not remove it. We still 
+	} else {
+		if ([existingModeValues contains:mode]) {
+			if (value) {
+				return; // Why add what already exists…
+			}
+		}
+
+		IRCISupportInfo *supportInfo = [[self associatedClient] supportInfo];
+
+		NSInteger rankOfNewMode = [supportInfo rankForUserPrefixWithMode:mode];
+
+		NSMutableString *newModeValues = [NSMutableString string];
+
+		for (NSInteger i = 0; i < [existingModeValues length]; i++) {
+			NSString *cc = [existingModeValues stringCharacterAtIndex:i];
+
+			if (value == NO) {
+				/* If we are unsetting a mode value, then all we have to 
+				 do is skip over the existing mode, if it exists at all. */
+
+				if (NSObjectsAreEqual(cc, mode)) {
+					continue;
+				} else {
+					[newModeValues appendString:cc];
+				}
+			} else {
+				/* When setting a mode, we have to insert it into our
+				 string into its correct rank. */
+				NSInteger rankOfCurrentMode = [supportInfo rankForUserPrefixWithMode:cc];
+
+				if (rankOfNewMode > rankOfCurrentMode) {
+					[newModeValues appendString:mode];
+				}
+
+				[newModeValues appendString:cc];
+			}
+		}
+
+		if ([newModeValues length] == 0) {
+			[newUser setModes:nil]; // Do not set a string of zero length
+		} else {
+			[newUser setModes:newModeValues];
+		}
+	}
+
+	/* Make special exceptions. */
+	if (value) {
+		/* InspIRCd treats +Y as an IRCop. */
+
+		if (NSObjectsAreEqual(mode, @"Y")) {
+			/* If the user wasn't already marked as an IRCop, then we
+			 mark them at this point. However, if they were already
+			 marked and it was -Y, then we do not remove it. We still
 			 want to know they are an IRCop even if mode isn't set in
 			 this particular channel. */
-			if (newUser.isCop == NO) {
-				newUser.isCop = value;
+
+			if ([newUser isCop] == NO) {
+				[newUser setIsCop:YES];
 			}
-			
-			break;
-		}
-		case 'q':
-		case 'a':
-		case 'o':
-		case 'h':
-		case 'v':
-		{
-			NSString *modeString = [NSString stringWithUniChar:modeChar];
-			
-			SEL changeSelector = NSSelectorFromString([NSString stringWithFormat:@"set%@:", [modeString uppercaseString]]);
-			
-			objc_msgSend(newUser, changeSelector, value);
-			
-			break;
 		}
 	}
 

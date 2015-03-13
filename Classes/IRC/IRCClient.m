@@ -1987,7 +1987,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("omsg")]) {
-				destinationPrefix = [self.supportInfo userModePrefixSymbol:@"o"];
+				destinationPrefix = [self.supportInfo userModePrefixSymbolWithMode:@"o"];
 
 				type = TVCLogLinePrivateMessageType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umsg")]) {
@@ -1997,7 +1997,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("notice")]) {
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("onotice")]) {
-				destinationPrefix = [self.supportInfo userModePrefixSymbol:@"o"];
+				destinationPrefix = [self.supportInfo userModePrefixSymbolWithMode:@"o"];
 
 				type = TVCLogLineNoticeType;
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("unotice")]) {
@@ -6576,7 +6576,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			
 			[newUser setUsername:username];
 			[newUser setAddress:hostmask];
-			
+
 			[newUser setIsAway:isAway];
 			[newUser setIsCop:isIRCop];
 
@@ -6593,35 +6593,24 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			[newUser setRealname:realname];
 
 			/* Update user modes */
-#define _userModeSymbol(s)		([prefix isEqualTo:[self.supportInfo userModePrefixSymbol:(s)]])
-			
+			NSMutableString *userModes = [NSMutableString string];
+
 			for (NSUInteger i = 0; i < [flfields length]; i++) {
 				NSString *prefix = [flfields stringCharacterAtIndex:i];
-				
-				if (_userModeSymbol(@"q")) {
-					[newUser setQ:YES];
-				} else if (_userModeSymbol(@"O")) { // binircd-1.0.0
-					[newUser setQ:YES];
-					[newUser setBinircd_O:YES];
-				} else if (_userModeSymbol(@"a")) {
-					[newUser setA:YES];
-				} else if (_userModeSymbol(@"o")) {
-					[newUser setO:YES];
-				} else if (_userModeSymbol(@"h")) {
-					[newUser setH:YES];
-				} else if (_userModeSymbol(@"v")) {
-					[newUser setV:YES];
-				} else if (_userModeSymbol(@"y")) { // InspIRCd-2.0
-					[newUser setIsCop:YES];
-					[newUser setInspIRCd_y_lower:YES];
-				} else if (_userModeSymbol(@"Y")) { // InspIRCd-2.0
-					[newUser setIsCop:YES];
-					[newUser setInspIRCd_y_upper:YES];
-				} else {
+
+				NSString *mode = [self.supportInfo modeCharacterFromUserPrefixSymbol:prefix];
+
+				if (mode == nil) {
 					break;
+				} else {
+					[userModes appendString:mode];
 				}
 			}
-			
+
+			if ([userModes length] > 0) {
+				[newUser setModes:userModes];
+			}
+
 			/* Update local cache of our hostmask. */
 			if ([nickname isEqualIgnoringCase:[self localNickname]]) {
 				NSString *completehost = [NSString stringWithFormat:@"%@!%@@%@", nickname, username, hostmask];
@@ -6665,56 +6654,46 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
-			for (__strong NSString *nickname in items) {
-				/* Create shell user. */
+			for (NSString *nickname in items) {
 				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces…
 				
 				IRCUser *member = [IRCUser newUserOnClient:self withNickname:nil];
 
 				NSUInteger i;
 				
-				/* Apply modes. */
+				/* Find first character that is not mode prefix. */
+				NSMutableString *userModes = [NSMutableString string];
+
 				for (i = 0; i < [nickname length]; i++) {
 					NSString *prefix = [nickname stringCharacterAtIndex:i];
 
-					if (_userModeSymbol(@"q")) {
-						[member setQ:YES];
-					} else if (_userModeSymbol(@"O")) { // binircd-1.0.0
-						[member setQ:YES];
-						[member setBinircd_O:YES];
-					} else if (_userModeSymbol(@"a")) {
-						[member setA:YES];
-					} else if (_userModeSymbol(@"o")) {
-						[member setO:YES];
-					} else if (_userModeSymbol(@"h")) {
-						[member setH:YES];
-					} else if (_userModeSymbol(@"v")) {
-						[member setV:YES];
-					} else if (_userModeSymbol(@"y")) { // InspIRCd-2.0
-						[member setIsCop:YES];
-						[member setInspIRCd_y_lower:YES];
-					} else if (_userModeSymbol(@"Y")) { // InspIRCd-2.0
-						[member setIsCop:YES];
-						[member setInspIRCd_y_upper:YES];
-					} else {
+					NSString *mode = [self.supportInfo modeCharacterFromUserPrefixSymbol:prefix];
+
+					if (mode == nil) {
 						break;
+					} else {
+						[userModes appendString:mode];
 					}
+				}
+
+				if ([userModes length] > 0) {
+					[member setModes:userModes];
 				}
 				
 #undef _userModeSymbol
 
 				/* Split away hostmask if available. */
-				nickname = [nickname substringFromIndex:i];
+				NSString *newNickname = [nickname substringFromIndex:i];
 
 				NSString *nicknameInt = nil;
 				NSString *usernameInt = nil;
 				NSString *addressInt = nil;
 
-				if ([nickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt] == NO) {
+				if ([newNickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt] == NO) {
 					/* When NAMES reply is not a host, then set the nicknameInt
 					 to the value of nickname and leave the rest as nil. */
 
-					nicknameInt = nickname;
+					nicknameInt = newNickname;
 				}
 
 				[member setNickname:nicknameInt];

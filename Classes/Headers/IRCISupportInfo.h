@@ -57,8 +57,11 @@
 - (NSString *)buildConfigurationRepresentationForLastEntry;
 - (NSString *)buildConfigurationRepresentationForEntry:(NSDictionary *)entries;
 
-- (NSString *)userModePrefixSymbol:(NSString *)mode;
+- (NSString *)modeCharacterFromUserPrefixSymbol:(NSString *)symbol;
+- (NSString *)userModePrefixSymbolWithMode:(NSString *)mode;
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode;
+- (BOOL)symbolIsUserPrefixCharacter:(NSString *)symbol;
+- (NSInteger)rankForUserPrefixWithMode:(NSString *)mode; // Starts at 100; 100 = highest rank
 
 - (NSArray *)parseMode:(NSString *)modeString;
 - (IRCModeInfo *)createMode:(NSString *)mode;

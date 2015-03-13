@@ -266,49 +266,34 @@
 	IRCUser *assosicatedUser = [self memberPointer];
 	
 	NSString *userMark = [assosicatedUser mark];
-	
-	/* We manually define userRank instead of asking IRCUser what it is
-	 directly because we weant it set based on whether users prefer IRCops
-	 placed at the top of the user list. */
-	IRCUserRank userRank = IRCUserNoRank;
-	
-	/* Find the cache image based on user mode. */
-	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
-					   [assosicatedUser InspIRCd_y_upper]);
-	
-	if (favorIRCop == NO) {
-		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
+
+	IRCUserRank userRankToDraw = IRCUserNoRank;
+
+	if ([TPCPreferences memberListSortFavorsServerStaff]) {
+		if ([assosicatedUser isCop]) {
+			userRankToDraw = IRCUserIRCopByModeRank;
+		}
 	}
-	
-	if ([assosicatedUser isCop] && favorIRCop) {
-		userRank = IRCUserIRCopRank;
-	} else if ([assosicatedUser q]) {
-		userRank = IRCUserChannelOwnerRank;
-	} else if ([assosicatedUser a]) {
-		userRank = IRCUserSuperOperatorRank;
-	} else if ([assosicatedUser o]) {
-		userRank = IRCUserNormalOperatorRank;
-	} else if ([assosicatedUser h]) {
-		userRank = IRCUserHalfOperatorRank;
-	} else if ([assosicatedUser v]) {
-		userRank = IRCUserVoicedRank;
+
+	if (userRankToDraw == IRCUserNoRank) {
+		userRankToDraw = [assosicatedUser currentRank];
 	}
-	
+
 	/* Get value by performing cache token. */
 	NSImage *cachedImage = nil;
 	
 	if (selected == NO) {
-		cachedImage = [userInterfaceObjects cachedUserMarkBadgeForSymbol:userMark rank:userRank];
+		cachedImage = [userInterfaceObjects cachedUserMarkBadgeForSymbol:userMark rank:userRankToDraw];
 	}
 	
 	/* Do we have a cache? */
 	if (cachedImage == nil) {
 		/* There is no cache so we generate the image live then set it. */
-		cachedImage = [self drawModeBadge:selected];
+		cachedImage = [self drawModeBadge:selected forRank:userRankToDraw];
 		
 		/* If we are not selected, we write the cached value to the UI. */
 		if (selected == NO) {
-			[userInterfaceObjects cacheUserMarkBadge:cachedImage forSymbol:userMark rank:userRank];
+			[userInterfaceObjects cacheUserMarkBadge:cachedImage forSymbol:userMark rank:userRankToDraw];
 		}
 	}
 	
@@ -320,7 +305,7 @@
 	}
 }
 
-- (NSImage *)drawModeBadge:(BOOL)selected
+- (NSImage *)drawModeBadge:(BOOL)selected forRank:(IRCUserRank)userRank
 {
 	/* Define context information. */
 	id userInterfaceObjects = [mainWindowMemberList() userInterfaceObjects];
@@ -357,27 +342,20 @@
 	
 	/* Decide the background color. */
 	NSColor *backgroundColor = nil;
-	
-	BOOL favorIRCop = ([assosicatedUser InspIRCd_y_lower] ||
-					   [assosicatedUser InspIRCd_y_upper]);
-	
-	if (favorIRCop == NO) {
-		favorIRCop = [TPCPreferences memberListSortFavorsServerStaff];
-	}
-	
+
 	if (selected) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeSelectedBackgroundColor];
-	} else if ([assosicatedUser isCop] && favorIRCop) {
+	} else if (userRank == IRCUserIRCopByModeRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Y];
-	} else if ([assosicatedUser q]) {
+	} else if (userRank == IRCUserChannelOwnerRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_Q];
-	} else if ([assosicatedUser a]) {
+	} else if (userRank == IRCUserSuperOperatorRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_A];
-	} else if ([assosicatedUser o]) {
+	} else if (userRank == IRCUserNormalOperatorRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_O];
-	} else if ([assosicatedUser h]) {
+	} else if (userRank == IRCUserHalfOperatorRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_H];
-	} else if ([assosicatedUser v]) {
+	} else if (userRank == IRCUserVoicedRank) {
 		backgroundColor = [userInterfaceObjects userMarkBadgeBackgroundColor_V];
 	} else {
 		if (isDrawingForMavericks) {
@@ -521,26 +499,30 @@
 
 	/* What permissions does the user have? */
 	IRCUser *associatedUser = [self memberPointer];
-	
-    NSString *permissions = @"BasicLanguage[1206]";
 
-	if ([associatedUser q]) {
-        permissions = @"BasicLanguage[1211]";
-    } else if ([associatedUser a]) {
-        permissions = @"BasicLanguage[1210]";
-    } else if ([associatedUser o]) {
-        permissions = @"BasicLanguage[1209]";
-    } else if ([associatedUser h]) {
-        permissions = @"BasicLanguage[1208]";
-    } else if ([associatedUser v]) {
-        permissions = @"BasicLanguage[1207]";
-    }
+	IRCUserRank userRank = [associatedUser currentRank];
 
-    permissions = TXTLS(permissions);
+	NSString *permissions = nil;
 
-    if ([associatedUser isCop]) {
-        permissions = [permissions stringByAppendingString:BLS(1212)];
-    }
+	if ([associatedUser isCop]) {
+		userRank = IRCUserIRCopByModeRank;
+	}
+
+	if (userRank == IRCUserIRCopByModeRank) {
+		permissions = BLS(1212);
+	} else if (userRank == IRCUserChannelOwnerRank) {
+		permissions = BLS(1211);
+	} else if (userRank == IRCUserSuperOperatorRank) {
+		permissions = BLS(1210);
+	} else if (userRank == IRCUserNormalOperatorRank) {
+		permissions = BLS(1209);
+	} else if (userRank == IRCUserHalfOperatorRank) {
+		permissions = BLS(1208);
+	} else if (userRank == IRCUserVoicedRank) {
+		permissions = BLS(1207);
+	} else {
+		permissions = BLS(1206);
+	}
 
     /* User info. */
 	NSString *nickname = [associatedUser nickname];
