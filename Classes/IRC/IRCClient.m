@@ -1667,7 +1667,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		while ([strc length] > 0)
 		{
-			NSString *newstr = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type];
+			NSString *newstr = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type  isEncrypted:(NSObjectIsEmpty(channel.encryptionKey) == NO)];
 
 			BOOL encrypted = NO;
 			
@@ -2079,7 +2079,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 					}
 
-					NSString *t = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type];
+					NSString *t = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type isEncrypted:(NSObjectIsEmpty(channel.encryptionKey) == NO)];
 
 					NSString *encryptedString = t;
 
