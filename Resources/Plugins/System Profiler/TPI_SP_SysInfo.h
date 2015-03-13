@@ -63,8 +63,6 @@
 + (NSInteger)systemUptime;
 + (NSInteger)applicationUptime;
 
-+ (NSString *)loadAverageWithCores:(NSInteger)cores;
-
 + (TXUnsignedLongLong)freeMemorySize;
 + (TXUnsignedLongLong)totalMemorySize;
 

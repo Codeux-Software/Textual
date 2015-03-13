@@ -49,7 +49,6 @@
 "BasicLanguage[1008]" = " \002Graphics:\002 %@ \002•\002";
 "BasicLanguage[1009]" = " \002Screen Resolution:\002 %.0f x %.0f \002•\002";
 "BasicLanguage[1010]" = " \002Screen Resolution:\002 %.0f x %.0f (HiDPI Mode) \002•\002";
-"BasicLanguage[1011]" = " \002Load:\002 %@%% \002•\002";
 "BasicLanguage[1012]" = " \002OS:\002 OS X %1$@ (%2$@) (Build %3$@)";
 
 "BasicLanguage[1013]" = "%@";

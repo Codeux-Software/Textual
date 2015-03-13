@@ -257,7 +257,6 @@
 
 	NSString *_memory		= [TPI_SP_SysInfo formattedTotalMemorySize];
 	NSString *_gpu_model	= [TPI_SP_SysInfo formattedGraphicsCardInformation];
-	NSString *_loadavg		= [TPI_SP_SysInfo loadAverageWithCores:_cpu_count_v];
 
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 
@@ -272,7 +271,6 @@
 	BOOL _show_sys_uptime	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> System Uptime"] == NO);
 	BOOL _show_sys_memory	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Memory Information"] == NO);
 	BOOL _show_screen_res	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Screen Resolution"] == NO);
-	BOOL _show_load_avg		= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> Load Average"] == NO);
 	BOOL _show_os_version	= ([RZUserDefaults() boolForKey:@"System Profiler Extension -> Feature Disabled -> OS Version"] == NO);
 
 	/* Mac Model. */
@@ -359,15 +357,6 @@
 		}
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
-	}
-
-	if (_show_load_avg) {
-		/* Load Average. */
-		if (NSObjectIsNotEmpty(_loadavg)) {
-			_new = TPILocalizedString(@"BasicLanguage[1011]", _loadavg);
-
-			sysinfo = [sysinfo stringByAppendingString:_new];
-		}
 	}
 
 	if (_show_os_version) {
@@ -619,17 +608,6 @@
 + (NSInteger)applicationUptime
 {
 	return [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
-}
-
-+ (NSString *)loadAverageWithCores:(NSInteger)cores
-{
-	double load_ave[3];
-	
-	if (getloadavg(load_ave, 3) == 3) {
-		return [NSString stringWithFormat:@"%.0f", ((load_ave[0] * 100) / cores)];
-	}
-	
-	return nil;
 }
 
 + (NSString *)processor
