@@ -224,33 +224,33 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 									c = source[(i + 1)];
 								}
 							}
-						}
 
-						/* It's possible for an IRC client to send formatting with only a comma
-						 and the background color digit. Therefore, this logic is independent
-						 of the logic shown above for the foreground color. */
-						if (c == ',') {
-							++i;
+							/* It's possible for an IRC client to send formatting with only a comma
+							and the background color digit. Therefore, this logic is independent
+							of the logic shown above for the foreground color. */
+							if (c == ',') {
+								++i;
 
-							if ((i + 1) < length) {
-								c = source[(i + 1)];
+								if ((i + 1) < length) {
+									c = source[(i + 1)];
 
-								if (CSCEF_StringIsBase10Numeric(c)) {
-									++i;
+									if (CSCEF_StringIsBase10Numeric(c)) {
+										++i;
 
-									backgroundColor = (c - '0');
+										backgroundColor = (c - '0');
 
-									if ((i + 1) < length) {
-										c = source[(i + 1)];
+										if ((i + 1) < length) {
+											c = source[(i + 1)];
 
-										if (CSCEF_StringIsBase10Numeric(c)) {
-											++i;
+											if (CSCEF_StringIsBase10Numeric(c)) {
+												++i;
 
-											backgroundColor = (backgroundColor * 10 + c - '0');
+												backgroundColor = (backgroundColor * 10 + c - '0');
+											}
 										}
+									} else {
+										i--;
 									}
-								} else {
-									i--;
 								}
 							}
 						}
