@@ -965,7 +965,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 
 		if ([messageFragment hasSuffix:NSStringWhitespacePlaceholder]) {
-			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(([escapedContent length] - 1), 1)
+			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(([messageFragment length] - 1), 1)
 																	 withString:@"&nbsp;"];
 		}
 	}
