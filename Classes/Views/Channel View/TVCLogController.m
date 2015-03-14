@@ -125,11 +125,18 @@
 	return NO;
 }
 
-- (void)channelLevelEncryptionChanged
+- (void)noteEncryptionWasDisabled
 {
-	self.viewIsEncrypted = [self isViewIsEncrypted];
+	if (self.associatedChannel) {
+		self.viewIsEncrypted = [self.associatedChannel isEncrypted];
+	}
+}
 
-	if (self.viewIsEncrypted) {
+- (void)noteEncryptionWasEnabled
+{
+	if (self.associatedChannel) {
+		self.viewIsEncrypted = [self.associatedChannel isEncrypted];
+
 		[self closeHistoricLog];
 	}
 }

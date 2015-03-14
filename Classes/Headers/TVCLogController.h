@@ -54,8 +54,10 @@
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
 
-- (void)channelLevelEncryptionChanged;
 - (void)preferencesChanged;
+
+- (void)noteEncryptionWasEnabled;
+- (void)noteEncryptionWasDisabled;
 
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;

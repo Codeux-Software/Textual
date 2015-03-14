@@ -200,10 +200,23 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)setTopic:(NSString *)topic
 {
 	if ([_topic isEqualToString:topic] == NO) {
-		 _topic = [topic copy];
-	}
+		_topic = [topic copy];
 
-    [[self viewController] setTopic:topic];
+		[[self viewController] setTopic:_topic];
+	}
+}
+
+- (void)setIsEncrypted:(BOOL)isEncrypted
+{
+	if (NSDissimilarObjects(_isEncrypted, isEncrypted)) {
+		_isEncrypted = isEncrypted;
+
+		if (isEncrypted) {
+			[[self viewController] noteEncryptionWasEnabled];
+		} else {
+			[[self viewController] noteEncryptionWasDisabled];
+		}
+	}
 }
 
 #pragma mark -
