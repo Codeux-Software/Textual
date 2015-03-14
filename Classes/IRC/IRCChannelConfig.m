@@ -41,7 +41,6 @@
 @implementation IRCChannelConfig
 
 @synthesize secretKey = _secretKey;
-@synthesize encryptionKey = _encryptionKey;
 
 - (NSDictionary *)defaults
 {
@@ -50,8 +49,6 @@
 	if (_defaults == nil) {
 		NSDictionary *defaults = @{
 			 @"channelType"						: @(IRCChannelChannelType),
-
-			 @"encryptionModeOfOperation"		: @(EKBlowfishEncryptionDefaultModeOfOperation),
 
 			 @"joinOnConnect"					:	@(YES),
 
@@ -84,8 +81,6 @@
 	self.ignoreGeneralEventMessages		= [defaults boolForKey:@"ignoreGeneralEventMessages"];
 	self.ignoreHighlights				= [defaults boolForKey:@"ignoreHighlights"];
 	self.ignoreInlineImages				= [defaults boolForKey:@"ignoreInlineMedia"];
-
-	self.encryptionModeOfOperation		= [defaults integerForKey:@"encryptionModeOfOperation"];
 }
 
 - (instancetype)init
@@ -100,16 +95,6 @@
 #pragma mark -
 #pragma mark Keychain Management
 
-- (NSString *)encryptionKey
-{
-	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Blowfish Encryption)"
-													  withItemKind:@"application password"
-													   forUsername:nil
-													   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-
-	return kcPassword;
-}
-
 - (NSString *)secretKey
 {
 	NSString *kcPassword = [XRKeychain getPasswordFromKeychainItem:@"Textual (Channel JOIN Key)"
@@ -118,11 +103,6 @@
 													   serviceName:[NSString stringWithFormat:@"textual.cjoinkey.%@", self.itemUUID]];
 
 	return kcPassword;
-}
-
-- (void)setEncryptionKey:(NSString *)pass
-{
-	_encryptionKey = [pass copy];
 }
 
 - (void)setSecretKey:(NSString *)pass
@@ -135,11 +115,6 @@
 	return self.secretKey;
 }
 
-- (NSString *)temporaryEncryptionKey
-{
-	return self.encryptionKey;
-}
-
 - (NSString *)secretKeyValue
 {
 	if (self.secretKey) {
@@ -149,18 +124,8 @@
 	}
 }
 
-- (NSString *)encryptionKeyValue
-{
-	if (self.encryptionKey) {
-		return self.encryptionKey;
-	} else {
-		return [self encryptionKey];
-	}
-}
-
 - (void)writeKeychainItemsToDisk
 {
-	[self writeEncryptionKeyKeychainItemToDisk];
 	[self writeSecretKeyKeychainItemToDisk];
 }
 
@@ -177,26 +142,8 @@
 	_secretKey = nil;
 }
 
-- (void)writeEncryptionKeyKeychainItemToDisk
-{
-	if (_encryptionKey) {
-		[XRKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
-							   withItemKind:@"application password"
-								forUsername:nil
-							withNewPassword:_encryptionKey
-								serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	}
-
-	_encryptionKey = nil;
-}
-
 - (void)destroyKeychains
 {
-	[XRKeychain deleteKeychainItem:@"Textual (Blowfish Encryption)"
-					  withItemKind:@"application password"
-					   forUsername:nil
-					   serviceName:[NSString stringWithFormat:@"textual.cblowfish.%@", self.itemUUID]];
-	
 	[XRKeychain deleteKeychainItem:@"Textual (Channel JOIN Key)"
 					  withItemKind:@"application password"
 					   forUsername:nil
@@ -209,7 +156,6 @@
 {
 	/* Reset temporary store. */
 	_secretKey = nil;
-	_encryptionKey = nil;
 }
 
 #pragma mark -
@@ -240,8 +186,6 @@
 
 	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
 
-	[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionAlgorithm"];
-
 	/* Load the newest set of keys. */
 	[dic assignIntegerTo:&_type			forKey:@"channelType"];
 
@@ -258,8 +202,6 @@
 
 	[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
 	[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
-
-	[dic assignIntegerTo:&_encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
 }
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed
@@ -273,8 +215,7 @@
 	/* Only declare ourselves as equal when we do not have any 
 	 temporary keychain items stored in memory. */
 	return (NSObjectsAreEqual(s1, s2) &&
-			NSObjectsAreEqual(_secretKey, [seed temporarySecretKey]) &&
-			NSObjectsAreEqual(_encryptionKey, [seed temporaryEncryptionKey]));
+			NSObjectsAreEqual(_secretKey, [seed temporarySecretKey]));
 }
 
 - (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
@@ -301,8 +242,6 @@
 	[dic maybeSetObject:self.itemUUID			forKey:@"uniqueIdentifier"];
 	[dic maybeSetObject:self.channelName		forKey:@"channelName"];
 
-	[dic setInteger:self.encryptionModeOfOperation	forKey:@"encryptionModeOfOperation"];
-
 	if (self.type == IRCChannelChannelType) {
 		[dic setBool:self.autoJoin							forKey:@"joinOnConnect"];
 		[dic setBool:self.pushNotifications					forKey:@"enableNotifications"];
@@ -324,7 +263,6 @@
 	IRCChannelConfig *mut = [[IRCChannelConfig allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 	
 	[mut setSecretKey:_secretKey];
-	[mut setEncryptionKey:_encryptionKey];
 	
 	return mut;
 }

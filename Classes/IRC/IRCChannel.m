@@ -98,27 +98,26 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	[self updateConfig:seed fireChangedNotification:YES];
+	[self updateConfig:seed fireChangedNotification:YES updateStoredChannelList:YES];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification
 {
+	[self updateConfig:seed fireChangedNotification:fireChangedNotification updateStoredChannelList:YES];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList
+{
 	if (seed) {
 		NSAssertReturn([seed isEqualToChannelConfiguration:self.config] == NO);
-
-		NSString *temporaryKey = [seed temporaryEncryptionKey];
-
-		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, [self encryptionKey]);
 
 		[self setConfig:seed]; // Value is copied on assign.
 
 		[self.config writeKeychainItemsToDisk];
 
-		if (encryptionUnchanged == NO) {
-			[[self viewController] channelLevelEncryptionChanged];
+		if (updateStoredChannelList) {
+			[self.associatedClient updateStoredChannelList];
 		}
-
-		[self.associatedClient updateStoredChannelList];
 
 		if (fireChangedNotification) {
 			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
@@ -149,16 +148,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (NSString *)secretKey
 {
 	return [self.config secretKey];
-}
-
-- (NSString *)encryptionKey
-{
-	return [self.config encryptionKey];
-}
-
-- (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
-{
-	return [self.config encryptionModeOfOperation];
 }
 
 - (BOOL)isChannel
@@ -215,28 +204,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
     [[self viewController] setTopic:topic];
-}
-
-- (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
-{
-	[self.config setEncryptionModeOfOperation:encryptionModeOfOperation];
-}
-
-- (void)setEncryptionKey:(NSString *)encryptionKey
-{
-	/* This is a helper method so that Textual's view controller can
-	 be made aware of encryption changes. This method should be called.
-	 Do not call setEncryptionKey: directly on self.config or that
-	 will only be written to the temporary store. */
-	
-	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, [self encryptionKey]);
-	
-	if (encryptionUnchanged == NO) {
-		[self.config setEncryptionKey:encryptionKey];
-		[self.config writeEncryptionKeyKeychainItemToDisk];
-		
-		[[self viewController] channelLevelEncryptionChanged];
-	}
 }
 
 #pragma mark -

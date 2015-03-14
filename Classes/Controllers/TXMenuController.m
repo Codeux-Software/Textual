@@ -1471,12 +1471,8 @@
 	if (_noClientOrChannel || _isClient || _isQuery) {
 		return;
 	}
-	
-	NSString *encryptedString = [u encryptOutgoingMessage:topic channel:c performedEncryption:NULL];
-	
-	if (encryptedString) {
-		[u send:IRCPrivateCommandIndex("topic"), [c name], encryptedString, nil];
-	}
+
+	[u send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 }
 
 - (void)topicSheetWillClose:(TDCTopicSheet *)sender
@@ -1644,24 +1640,7 @@
 			return;
 		}
 
-		NSString *oldKey = [_channelConfig encryptionKey];
-		
-		NSString *newKey = [[sender config] temporaryEncryptionKey];
-		
-		BOOL oldKeyEmpty = NSObjectIsEmpty(oldKey);
-		BOOL newKeyEmpty = NSObjectIsEmpty(newKey);
-
 		[c updateConfig:[sender config]];
-
-		if (oldKeyEmpty && newKeyEmpty == NO) {
-			[[c associatedClient] printDebugInformation:BLS(1003) channel:c];
-		} else if (oldKeyEmpty == NO && newKeyEmpty) {
-			[[c associatedClient] printDebugInformation:BLS(1004) channel:c];
-		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
-			if (NSObjectsAreEqual(oldKey, newKey) == NO) {
-				[[c associatedClient] printDebugInformation:BLS(1002) channel:c];
-			}
-		}
 	}
 	
 	[worldController() save];

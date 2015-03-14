@@ -341,7 +341,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		if (cinl) {
 			/* It exists so we update its configuration. */
-			[cinl updateConfig:i fireChangedNotification:NO];
+			[cinl updateConfig:i fireChangedNotification:NO updateStoredChannelList:NO];
 
 			/* We also are sure to add it to new list of channels. */
 			[newChannelList addObject:cinl];
@@ -971,68 +971,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	return NO;
-}
-
-#pragma mark -
-#pragma mark Encryption and Decryption Handling
-
-- (BOOL)isMessageEncrypted:(NSString *)message channel:(IRCChannel *)channel
-{
-	if (channel.isChannel || channel.isPrivateMessage) {
-		return ([message hasPrefix:@"+OK "] || [message hasPrefix:@"mcps"]);
-	}
-
-	return NO;
-}
-
-- (NSString *)encryptOutgoingMessage:(NSString *)message channel:(IRCChannel *)channel performedEncryption:(BOOL *)performedEncryption
-{
-	if ( performedEncryption) {
-		*performedEncryption = NO;
-	}
-	
-	if (channel.isChannel || channel.isPrivateMessage) {
-		NSString *encryptionKey = channel.config.encryptionKey;
-		
-		if (NSObjectIsNotEmpty(encryptionKey)) {
-			NSString *newstr = [EKBlowfishEncryption encodeData:message key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding];
-
-			if ([newstr length] < 5) {
-				[self printDebugInformation:BLS(1001) channel:channel];
-
-				return nil;
-			} else {
-				if ( performedEncryption) {
-					*performedEncryption = YES;
-				}
-				
-				return newstr;
-			}
-		}
-	}
-
-	return message;
-}
-
-- (void)decryptIncomingMessage:(NSString *__autoreleasing *)message channel:(IRCChannel *)channel
-{
-	if (channel.isChannel || channel.isPrivateMessage) {
-		NSString *encryptionKey = channel.encryptionKey;
-		
-		if (NSObjectIsNotEmpty(encryptionKey)) {
-			NSInteger badCharCount = 0;
-			
-			NSString *newstr = [EKBlowfishEncryption decodeData:(*message) key:encryptionKey mode:channel.encryptionModeOfOperation encoding:self.config.primaryEncoding badBytes:&badCharCount];
-
-			if (badCharCount > 0) {
-				[self printDebugInformation:BLS(1245, badCharCount) channel:channel];
-			} else {
-				if (NSObjectIsNotEmpty(newstr)) {
-					(*message) = newstr;
-				}
-			}
-		}
-	}
 }
 
 #pragma mark -
@@ -1667,37 +1605,23 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		while ([strc length] > 0)
 		{
-			NSString *newstr = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type  isEncrypted:(NSObjectIsEmpty(channel.encryptionKey) == NO)];
+			NSString *newstr = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type isEncrypted:NO];
 
-			BOOL encrypted = NO;
-			
-			NSString *encryptedString = nil;
-			
-			if (encryptChat) {
-				encryptedString = [self encryptOutgoingMessage:newstr channel:channel performedEncryption:&encrypted];
-			} else {
-				encryptedString = newstr;
-			}
-			
 			[self print:channel
 				   type:type
 			   nickname:[self localNickname]
 			messageBody:newstr
-			isEncrypted:encrypted
+			isEncrypted:NO
 			 receivedAt:[NSDate date]
 				command:commandActual];
-
-            if (encryptedString == nil) {
-				continue; // Encryption failed.
-            }
             
 			if (type == TVCLogLineActionType) {
 				command = IRCPrivateCommandIndex("privmsg");
 
-				encryptedString = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), encryptedString, 0x01];
+				newstr = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), newstr, 0x01];
 			}
 
-			[self send:command, [channel name], encryptedString, nil];
+			[self send:command, [channel name], newstr, nil];
 		}
 	}
 	
@@ -2079,28 +2003,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 					}
 
-					NSString *t = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type isEncrypted:(NSObjectIsEmpty(channel.encryptionKey) == NO)];
-
-					NSString *encryptedString = t;
+					NSString *t = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type isEncrypted:NO];
 
 					if (channel) {
-						BOOL encrypted = NO;
-						
-						if (doNotEncrypt == NO) {
-							encryptedString = [self encryptOutgoingMessage:t channel:channel performedEncryption:&encrypted];
-						}
-
 						[self print:channel
 							   type:type
 						   nickname:[self localNickname]
 						messageBody:t
-						isEncrypted:encrypted
+						isEncrypted:NO
 						 receivedAt:[NSDate date]
 							command:uppercaseCommand];
-
-                        if (encryptedString == nil) {
-							continue; // Encryption failed. Break here.
-                        }
                     }
 
 					if ([channelName isChannelName:self]) {
@@ -2110,10 +2022,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					}
 
 					if (type == TVCLogLineActionType) {
-						encryptedString = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), encryptedString, 0x01];
+						t = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), t, 0x01];
 					}
 
-					[self send:uppercaseCommand, channelName, encryptedString, nil];
+					[self send:uppercaseCommand, channelName, t, nil];
 
 					/* Focus message destination? */
 					if (channel && secretMsg == NO && [TPCPreferences giveFocusOnMessageCommand]) {
@@ -2173,13 +2085,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if (NSObjectIsEmpty(topic)) {
 				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, nil];
 			} else {
-				IRCChannel *channel = [self findChannel:targetChannelName];
-
-				NSString *encryptedString = [self encryptOutgoingMessage:topic channel:channel performedEncryption:NULL];
-				
-				if (encryptedString) {
-					[self send:IRCPrivateCommandIndex("topic"), targetChannelName, encryptedString, nil];
-				}
+				[self send:IRCPrivateCommandIndex("topic"), targetChannelName, topic, nil];
 			}
 
 			break;
@@ -4186,8 +4092,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	NSString *target = [m paramAt:0];
 
-	BOOL isEncrypted = NO;
-
 	/* Operator message? */
 	if ([target length] > 1) {
 		/* This logic has to deal with use cases where different symbols would
@@ -4251,13 +4155,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		PointerIsEmptyAssert(c);
 
-		/* Is it encrypted? If so, decrypt. */
-		isEncrypted = [self isMessageEncrypted:text channel:c];
-
-		if (isEncrypted) {
-			[self decryptIncomingMessage:&text channel:c];
-		}
-
 		if (type == TVCLogLineNoticeType) {
 			/* Post notice and inform Growl. */
 
@@ -4265,7 +4162,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				   type:type
 			   nickname:sender
 			messageBody:text
-			isEncrypted:isEncrypted
+			isEncrypted:NO
 			 receivedAt:[m receivedAt]
 				command:[m command]
 	   referenceMessage:m];
@@ -4281,7 +4178,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						 command:[m command]
 						nickname:sender
 					 messageBody:text
-					 isEncrypted:isEncrypted
+					 isEncrypted:NO
 					  receivedAt:[m receivedAt]
 				referenceMessage:m
 				 completionBlock:^(BOOL isHighlight)
@@ -4361,13 +4258,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 
 			BOOL newPrivateMessage = NO;
-
-			/* Is the message encrypted? If so, decrypt. */
-			isEncrypted = [self isMessageEncrypted:text channel:c];
-
-			if (isEncrypted) {
-				[self decryptIncomingMessage:&text channel:c];
-			}
 
 			if (type == TVCLogLineNoticeType) {
 				/* Where do we send a notice if it is not from a server? */
@@ -4497,7 +4387,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 							 command:[m command]
 							nickname:sender
 						 messageBody:text
-						 isEncrypted:isEncrypted
+						 isEncrypted:NO
 						  receivedAt:[m receivedAt]
 					referenceMessage:m
 					 completionBlock:^(BOOL isHighlight)
@@ -4534,7 +4424,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 							 command:[m command]
 							nickname:sender
 						 messageBody:text
-						 isEncrypted:isEncrypted
+						 isEncrypted:NO
 						  receivedAt:[m receivedAt]
 					referenceMessage:m
 					 completionBlock:^(BOOL isHighlight)
@@ -4780,10 +4670,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		
 		[mainWindow() reloadTreeItem:c];
-
-		if (NSObjectIsNotEmpty(c.encryptionKey)) {
-			[self printDebugInformation:BLS(1003) channel:c];
-		}
 		
 		self.cachedLocalHostmask = [m senderHostmask];
 		
@@ -5293,12 +5179,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	IRCChannel *c = [self findChannel:channel];
 
-	BOOL isEncrypted = [self isMessageEncrypted:topicav channel:c];
-
-	if (isEncrypted) {
-		[self decryptIncomingMessage:&topicav channel:c];
-	}
-	
 	if ([m isPrintOnlyMessage] == NO) {
 		[c setTopic:topicav];
 	}
@@ -5307,7 +5187,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		   type:TVCLogLineTopicType
 	   nickname:nil
 	messageBody:BLS(1128, sendern, topicav)
-	isEncrypted:isEncrypted
+	isEncrypted:NO
 	 receivedAt:[m receivedAt]
 		command:[m command]];
 }
@@ -6327,12 +6207,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			PointerIsEmptyAssertLoopBreak(c);
 
-			BOOL isEncrypted = [self isMessageEncrypted:topicva channel:c];
-
-			if (isEncrypted) {
-				[self decryptIncomingMessage:&topicva channel:c];
-			}
-
 			if ([c isActive]) {
 				[c setTopic:topicva];
 				
@@ -6340,7 +6214,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					   type:TVCLogLineTopicType
 				   nickname:nil
 				messageBody:BLS(1124, topicva)
-				isEncrypted:isEncrypted
+				isEncrypted:NO
 				 receivedAt:[m receivedAt]
 					command:[m command]];
 			}
@@ -6733,11 +6607,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					NSString *topic = c.config.defaultTopic;
 
 					if (NSObjectIsNotEmpty(topic)) {
-						NSString *encryptedString = [self encryptOutgoingMessage:topic channel:c performedEncryption:NULL];
-						
-						if (encryptedString) {
-							[self send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
-						}
+						[self send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 					}
 				}
 			}

@@ -204,16 +204,6 @@
 	
 	NSInteger maximumLength = TXMaximumIRCBodyLength;
 	
-	/* If message is going to be encrypted, we have to take that into account. */
-	if (isEncrypted) {
-		/* This method will take a given size and estimate the maximum number of
-		 characters that can fit within that range. */
-		NSUInteger newEstimation = [EKBlowfishEncryption estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
-																		  thatFitsWithinBounds:(maximumLength - baseMath)];
-		
-		maximumLength = newEstimation;
-	}
-	
 	/* Begin actual work. */
 	NSInteger startCharCount = 0;
 	NSInteger stopCharCount = 0;

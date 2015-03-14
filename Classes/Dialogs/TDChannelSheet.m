@@ -51,16 +51,13 @@
 @property (nonatomic, weak) IBOutlet NSButton *showTreeBadgeCountCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreHighlightsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *encryptionModeOfOperationPopup;
 @property (nonatomic, weak) IBOutlet NSSegmentedControl *contentViewTabView;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *channelNameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultModesTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *defaultTopicTextField;
-@property (nonatomic, weak) IBOutlet NSTextField *encryptionKeyTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *secretKeyTextField;
 @property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
-@property (nonatomic, strong) IBOutlet NSView *contentViewEncryptionView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
@@ -76,7 +73,6 @@
 		self.navigationTree = @[
 			//		view								first responder
 			@[self.contentViewGeneralView,			self.channelNameTextField],
-			@[self.contentViewEncryptionView,		self.encryptionKeyTextField],
 			@[self.contentViewDefaultsView,			self.defaultTopicTextField],
 		];
 		
@@ -172,9 +168,7 @@
 	
 	[self.defaultModesTextField		setStringValue:[self.config defaultModes]];
 	[self.defaultTopicTextField		setStringValue:[self.config defaultTopic]];
-	
-	[self.encryptionKeyTextField	setStringValue:[self.config encryptionKeyValue]];
-	
+
 	[self.secretKeyTextField		setStringValue:[self.config secretKeyValue]];
 
 	[self.autoJoinCheck				setState:[self.config autoJoin]];
@@ -183,8 +177,6 @@
 
 	[self.ignoreGeneralEventMessagesCheck	setState:[self.config ignoreGeneralEventMessages]];
 	[self.ignoreHighlightsCheck				setState:[self.config ignoreHighlights]];
-
-	[self.encryptionModeOfOperationPopup	selectItemWithTag:[self.config encryptionModeOfOperation]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.disableInlineImagesCheck setState:[self.config ignoreInlineImages]];
@@ -201,7 +193,6 @@
 	[self.config setDefaultTopic:		[self.defaultTopicTextField trimmedStringValue]];
 	
 	[self.config setSecretKey:			[self.secretKeyTextField firstTokenStringValue]];
-	[self.config setEncryptionKey:		[self.encryptionKeyTextField trimmedStringValue]];
 
 	[self.config setAutoJoin:					[self.autoJoinCheck state]];
 	[self.config setPushNotifications:			[self.pushNotificationsCheck state]];
@@ -209,8 +200,6 @@
 
 	[self.config setIgnoreGeneralEventMessages:		[self.ignoreGeneralEventMessagesCheck state]];
 	[self.config setIgnoreHighlights:				[self.ignoreHighlightsCheck state]];
-
-	[self.config setEncryptionModeOfOperation:		[self.encryptionModeOfOperationPopup selectedTag]];
 
 	if ([TPCPreferences showInlineImages]) {
 		[self.config setIgnoreInlineImages:[self.disableInlineImagesCheck state]];

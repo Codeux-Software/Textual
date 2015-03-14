@@ -62,6 +62,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 - (void)updateConfig:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList;
 
 - (NSDictionary *)dictionaryValue;
 
@@ -91,9 +92,6 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-@property (nonatomic, copy) NSString *encryptionKey;
-@property (nonatomic, assign) EKBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (BOOL)memberExists:(NSString *)nickname;
 

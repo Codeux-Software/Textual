@@ -184,13 +184,6 @@
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
 "BasicLanguage[1000][3]" = "Quit";
 
-/* Basic encryption related localizations */
-"BasicLanguage[1245]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
-"BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
-"BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
-"BasicLanguage[1003]" = "Encryption started";
-"BasicLanguage[1004]" = "Encryption stopped";
-
 /* Sections of channel information in main window title bar */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelSheet">
@@ -13,15 +13,12 @@
                 <outlet property="channelNameTextField" destination="123" id="JwL-9r-szt"/>
                 <outlet property="contentView" destination="187" id="330"/>
                 <outlet property="contentViewDefaultsView" destination="243" id="8M0-FU-10I"/>
-                <outlet property="contentViewEncryptionView" destination="147" id="l6n-jm-a6i"/>
                 <outlet property="contentViewGeneralView" destination="109" id="kgV-mp-d6m"/>
                 <outlet property="contentViewTabView" destination="185" id="329"/>
                 <outlet property="defaultModesTextField" destination="251" id="kwe-lU-JDc"/>
                 <outlet property="defaultTopicTextField" destination="250" id="Hda-fW-5nU"/>
                 <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
                 <outlet property="enableInlineImagesCheck" destination="HBZ-KH-HBg" id="IAK-i2-siX"/>
-                <outlet property="encryptionKeyTextField" destination="151" id="vlZ-Ad-MWs"/>
-                <outlet property="encryptionModeOfOperationPopup" destination="wJA-xE-WhN" id="Vjw-u8-MFp"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="281" id="Nmo-db-2KD"/>
                 <outlet property="ignoreHighlightsCheck" destination="111" id="334"/>
                 <outlet property="okButton" destination="RKI-lY-4zM" id="gk7-vj-fV9"/>
@@ -44,14 +41,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <segmentedControl verticalHuggingPriority="750" id="185">
-                        <rect key="frame" x="47" y="345" width="230" height="20"/>
+                        <rect key="frame" x="90" y="345" width="145" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
                             <font key="font" metaFont="titleBar" size="12"/>
                             <segments>
                                 <segment label="General" width="71" selected="YES"/>
-                                <segment label="Encryption" tag="1"/>
-                                <segment label="Defaults"/>
+                                <segment label="Defaults" tag="1"/>
                             </segments>
                         </segmentedCell>
                         <connections>
@@ -99,7 +95,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
             </connections>
-            <point key="canvasLocation" x="374.5" y="655"/>
+            <point key="canvasLocation" x="372.5" y="679"/>
         </window>
         <view id="109" userLabel="View">
             <rect key="frame" x="0.0" y="0.0" width="325" height="286"/>
@@ -284,238 +280,6 @@ DQ
                 </textField>
             </subviews>
             <point key="canvasLocation" x="737.5" y="771.5"/>
-        </view>
-        <view id="147">
-            <rect key="frame" x="0.0" y="0.0" width="343" height="300"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="IV7-Zt-7XT">
-                    <rect key="frame" x="38" y="206" width="280" height="45"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="i2q-Qt-P30">
-                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="b2i-86-aO8">
-                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="280" height="45"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment>
-                                        <string key="content">This passphrase will be used to encrypt and decrypt messages so that only those with it may be able to read the transmitted conversation.</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="280" height="45"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Mb9-gp-YNZ">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="hrJ-SA-q4M">
-                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <textField verticalHuggingPriority="750" id="155">
-                    <rect key="frame" x="23" y="261" width="80" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Passphrase:" id="174">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" id="151" customClass="NSSecureTextField">
-                    <rect key="frame" x="109" y="259" width="209" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="178">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="mL5-yH-ck1">
-                    <rect key="frame" x="20" y="46" width="303" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="oky-HV-Bq9">
-                    <rect key="frame" x="38" y="58" width="267" height="95"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="JFM-YA-v04">
-                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="5eM-Ks-gx0">
-                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="95"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="The ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Electronic Codebook (ECB)">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Electronic_codebook_.28ECB.29"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment>
-                                        <string key="content"> mode of operation is used by default to provide greatest compatibility with legacy IRC clients.
-
-However, if backwards compatibility is not a concern, then it is highly recommended to use the </string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Cipher-block Chaining (CBC)">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher-block_chaining_.28CBC.29"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" instead.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="95"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="wGf-dV-4Yz">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Qqf-Rt-UYK">
-                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="TMK-zQ-Spf">
-                    <rect key="frame" x="20" y="196" width="303" height="5"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="b4H-ig-AYn">
-                    <rect key="frame" x="37" y="12" width="267" height="27"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="YGd-y2-Ras">
-                        <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="eQ1-x3-dtS">
-                                <rect key="frame" x="0.0" y="0.0" width="274" height="182"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="267" height="27"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="See the “">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Encrypting Chat">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158662683822" green="0.16511158662683822" blue="0.16511158662683822" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <url key="NSLink" string="http://www.codeux.com/textual/wiki/Encrypted-Chat.wiki"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="” knowledge base article for more information">
-                                        <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" metaFont="smallSystem"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="267" height="27"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="kgg-17-o8l">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Zk0-ao-KOE">
-                        <rect key="frame" x="-100" y="-100" width="16" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <popUpButton verticalHuggingPriority="750" id="wJA-xE-WhN">
-                    <rect key="frame" x="78" y="158" width="243" height="26"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="l5W-tg-6hY">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="bwJ-HS-537">
-                            <items>
-                                <menuItem title="Default" id="xj8-qa-tOq">
-                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                </menuItem>
-                                <menuItem isSeparatorItem="YES" id="Nbp-xf-MIy"/>
-                                <menuItem title="Electronic Codebook (ECB)" tag="1" id="0bV-6Q-M7g"/>
-                                <menuItem title="Cipher-block Chaining (CBC)" tag="2" id="zgR-Ea-XR7"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <textField verticalHuggingPriority="750" id="eUD-Za-iXF">
-                    <rect key="frame" x="22" y="161" width="52" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Mode:" id="oEt-hm-1i1">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <point key="canvasLocation" x="277.5" y="897"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
