@@ -415,7 +415,6 @@
 		4C0BA6771990798800857343 /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BF158E99520026668C /* IRCModeInfo.m */; };
 		4C0BA6781990798800857343 /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C0158E99520026668C /* IRCPrefix.m */; };
 		4C0BA6791990798800857343 /* TVCAnimatedContentNavigationOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4806B1965344300E0782E /* TVCAnimatedContentNavigationOutlineView.m */; };
-		4C0BA67A1990798800857343 /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
 		4C0BA67B1990798800857343 /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C1158E99520026668C /* IRCSendingMessage.m */; };
 		4C0BA67C1990798800857343 /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C2158E99520026668C /* IRCTreeItem.m */; };
@@ -495,6 +494,10 @@
 		4C0BA6D31990798800857343 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C0E363516F192F200B426C2 /* TVCServerList.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EA16F15F8200EBB665 /* TVCServerList.m */; };
 		4C0E363616F192F200B426C2 /* TVCServerListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0444EB16F15F8200EBB665 /* TVCServerListCell.m */; };
+		4C0EC1251AB49ACA00D0015C /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
+		4C0EC1261AB49DD000D0015C /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
+		4C0EC1271AB49DDE00D0015C /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
+		4C0EC1281AB49DE400D0015C /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */; };
 		4C1382F91AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga in Resources */ = {isa = PBXBuildFile; fileRef = 4C1382EB1AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga */; };
 		4C1382FA1AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga in Resources */ = {isa = PBXBuildFile; fileRef = 4C1382EB1AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga */; };
 		4C1382FB1AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga in Resources */ = {isa = PBXBuildFile; fileRef = 4C1382EB1AA9F9A20099F887 /* TPWTB_Addons_1_Template.tga */; };
@@ -1146,8 +1149,6 @@
 		4CA110E01955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E11955AA890062EC4E /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
 		4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
-		4CA110E41955AA890062EC4E /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
-		4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
 		4CA110EB1955AAA10062EC4E /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110E61955AAA10062EC4E /* TVCMainWindow.m */; };
 		4CA110EC1955AAA10062EC4E /* TVCMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110E61955AAA10062EC4E /* TVCMainWindow.m */; };
 		4CA110ED1955AAA10062EC4E /* TVCMainWindowLoadingScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110E71955AAA10062EC4E /* TVCMainWindowLoadingScreen.m */; };
@@ -1617,7 +1618,6 @@
 		4CDFA58B1996EAB2007EA46E /* IRCModeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5BF158E99520026668C /* IRCModeInfo.m */; };
 		4CDFA58C1996EAB2007EA46E /* IRCPrefix.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C0158E99520026668C /* IRCPrefix.m */; };
 		4CDFA58D1996EAB2007EA46E /* TVCAnimatedContentNavigationOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4806B1965344300E0782E /* TVCAnimatedContentNavigationOutlineView.m */; };
-		4CDFA58E1996EAB2007EA46E /* TPCResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DD1955AA890062EC4E /* TPCResourceManager.m */; };
 		4CDFA58F1996EAB2007EA46E /* IRCSendingMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C1158E99520026668C /* IRCSendingMessage.m */; };
 		4CDFA5901996EAB2007EA46E /* TPCPreferencesUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */; };
 		4CDFA5911996EAB2007EA46E /* IRCTreeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5C2158E99520026668C /* IRCTreeItem.m */; };
@@ -2424,7 +2424,6 @@
 		4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCApplicationInfo.m; path = Preferences/TPCApplicationInfo.m; sourceTree = "<group>"; };
 		4CA110DB1955AA890062EC4E /* TPCPathInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPathInfo.m; path = Preferences/TPCPathInfo.m; sourceTree = "<group>"; };
 		4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesImportExport.m; path = Preferences/TPCPreferencesImportExport.m; sourceTree = "<group>"; };
-		4CA110DD1955AA890062EC4E /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
 		4CA110E61955AAA10062EC4E /* TVCMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindow.m; path = "Main Window/TVCMainWindow.m"; sourceTree = "<group>"; };
 		4CA110E71955AAA10062EC4E /* TVCMainWindowLoadingScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowLoadingScreen.m; path = "Main Window/TVCMainWindowLoadingScreen.m"; sourceTree = "<group>"; };
 		4CA110E81955AAA10062EC4E /* TVCMainWindowSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowSegmentedControl.m; path = "Main Window/TVCMainWindowSegmentedControl.m"; sourceTree = "<group>"; };
@@ -3662,7 +3661,6 @@
 				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
 				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
 				4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */,
-				4CA110DD1955AA890062EC4E /* TPCResourceManager.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -5186,7 +5184,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CA110E51955AA890062EC4E /* TPCResourceManager.m in Sources */,
 				4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4CA6CA48197A3BE200AF1D19 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
 				4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */,
@@ -5315,6 +5312,7 @@
 				4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4C9FFBA119059C4F008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C3E698B1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */,
+				4C0EC1251AB49ACA00D0015C /* TPCResourceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5380,7 +5378,6 @@
 				4C0BA6771990798800857343 /* IRCModeInfo.m in Sources */,
 				4C0BA6781990798800857343 /* IRCPrefix.m in Sources */,
 				4C0BA6791990798800857343 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
-				4C0BA67A1990798800857343 /* TPCResourceManager.m in Sources */,
 				4C0BA67B1990798800857343 /* IRCSendingMessage.m in Sources */,
 				4C0BA67C1990798800857343 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
@@ -5451,6 +5448,7 @@
 				4C0BA6C71990798800857343 /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4C0BA6C81990798800857343 /* TVCLogControllerOperationQueue.m in Sources */,
 				4C0BA6C91990798800857343 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
+				4C0EC1281AB49DE400D0015C /* TPCResourceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5516,7 +5514,6 @@
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
 				4CB4806C1965344300E0782E /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
-				4CA110E41955AA890062EC4E /* TPCResourceManager.m in Sources */,
 				4C8AF6AF158E99520026668C /* IRCSendingMessage.m in Sources */,
 				4CFC40DF1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */,
 				4C8AF6B0158E99520026668C /* IRCTreeItem.m in Sources */,
@@ -5587,6 +5584,7 @@
 				4C3E69881789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */,
 				4C001C08197A10DC0061C2C5 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
+				4C0EC1261AB49DD000D0015C /* TPCResourceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5652,7 +5650,6 @@
 				4CDFA58B1996EAB2007EA46E /* IRCModeInfo.m in Sources */,
 				4CDFA58C1996EAB2007EA46E /* IRCPrefix.m in Sources */,
 				4CDFA58D1996EAB2007EA46E /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
-				4CDFA58E1996EAB2007EA46E /* TPCResourceManager.m in Sources */,
 				4CDFA58F1996EAB2007EA46E /* IRCSendingMessage.m in Sources */,
 				4CDFA5901996EAB2007EA46E /* TPCPreferencesUserDefaults.m in Sources */,
 				4CDFA5911996EAB2007EA46E /* IRCTreeItem.m in Sources */,
@@ -5723,6 +5720,7 @@
 				4CDFA5DB1996EAB2007EA46E /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CDFA5DC1996EAB2007EA46E /* TVCLogControllerOperationQueue.m in Sources */,
 				4CDFA5DD1996EAB2007EA46E /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
+				4C0EC1271AB49DDE00D0015C /* TPCResourceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

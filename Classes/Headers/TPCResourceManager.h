@@ -47,5 +47,5 @@ TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtensionWit
 + (void)copyResourcesToCustomAddonsFolder;
 @end
 
-@interface TPCResourceManagerDocumentTypeImporter : NSDocument
+@interface TPCResourceManagerDocumentTypeImporter : NSDocument <NSOpenSavePanelDelegate>
 @end

@@ -148,6 +148,27 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #pragma mark -
 #pragma mark Custom Script Files
 
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError *__autoreleasing *)outError
+{
+	if ([[url relativePath] hasPrefix:[TPCPathInfo systemUnsupervisedScriptFolderPath]] == NO) {
+		if (outError) {
+			NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];
+
+			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+
+			[userInfo setObject:url forKey:NSURLErrorKey];
+			[userInfo setObject:TXTLS(@"BasicLanguage[1252][1]") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:TXTLS(@"BasicLanguage[1252][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+
+			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
+		}
+
+		return NO;
+	} else {
+		return YES;
+	}
+}
+
 - (void)performImportOfScriptFile:(NSURL *)url
 {
 	/* Establish install path. */
@@ -174,19 +195,19 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	/* First we need to check which folder exists where. We are going to try
 	 and bring users to the actual scripts folder, but if that does not exist,
 	 then we bring them to the root folder for them to create it. */
-	NSString *txtlsFolder = [TPCPathInfo systemUnsupervisedScriptFolderPath];
-	
+	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderPath] isDirectory:YES];
+
 	BOOL scriptsFolderExists = NO;
-	
-	if ([RZFileManager() fileExistsAtPath:txtlsFolder isDirectory:&scriptsFolderExists] == NO) {
-		txtlsFolder = [TPCPathInfo systemUnsupervisedScriptFolderRootPath];
+
+	if ([RZFileManager() fileExistsAtPath:[folderRep relativePath] isDirectory:&scriptsFolderExists] == NO) {
+		folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderRootPath] isDirectory:YES];
 	}
-	
-	NSURL *folderRep = [NSURL fileURLWithPath:txtlsFolder isDirectory:YES];
-	
+
 	NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];
 	
 	/* Show save panel to user. */
+	[d setDelegate:self];
+
 	[d setCanCreateDirectories:YES];
 	[d setDirectoryURL:folderRep];
 

@@ -494,7 +494,10 @@
 
 /* Custom addon installer messages */
 "BasicLanguage[1187][1]" = "Install Custom Script";
-"BasicLanguage[1187][2]" = "Select the folder named “%@” to install this script within.\nIf this folder does not exist, then create it. No other folder name can be used.";
+"BasicLanguage[1187][2]" = "Select the following folder to install the script within:\n\n[home folder] \U279C Library \U279C Application Scripts \U279C %@\n\nIf this folder does not exist, then create it.";
+
+"BasicLanguage[1252][1]" = "Invalid Destination";
+"BasicLanguage[1252][2]" = "A script cannot be installed here.";
 
 "BasicLanguage[1188][1]" = "Script Installed";
 "BasicLanguage[1188][2]" = "The script named “%@” has been successfully installed and is now available for usage.";
@@ -656,6 +659,6 @@
 
 
 
-/* Next unusued key: 1252 */
+/* Next unusued key: 1253 */
 
 
