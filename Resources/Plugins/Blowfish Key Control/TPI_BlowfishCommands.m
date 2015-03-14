@@ -259,6 +259,8 @@
 									forUsername:nil
 								withNewPassword:encryptionKey
 									serviceName:serviceName];
+
+			[channel setIsEncrypted:([encryptionKey length] > 0)];
 		}
 	}
 }
