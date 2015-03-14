@@ -2046,7 +2046,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			
 			NSObjectIsEmptyAssert(targetChannelName);
 			
-			NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
+			NSArray *userModePrefixes = [self.supportInfo userModePrefixes];
 
 			NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
 
@@ -2055,8 +2055,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			while ([s length] > 0)
 			{
 				for (__strong NSString *channelName in targets) {
-					for (NSString *prefixMode in userModePrefixes) {
-						NSString *symbol = userModePrefixes[prefixMode];
+					for (NSArray *prefixData in userModePrefixes) {
+						NSString *symbol = prefixData[1];
 
 						if ([channelName hasPrefix:symbol]) {
 							NSString *nch = [channelName stringCharacterAtIndex:1];
@@ -4194,10 +4194,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		 be used for channels instead of being confused about the channel named
 		 "+channel" and thinking it is being addressed to all users in the channel
 		 named "channel" with a +, we must take this into account. */
-		NSDictionary *userModePrefixes = [self.supportInfo userModePrefixes];
+		NSArray *userModePrefixes = [self.supportInfo userModePrefixes];
 
-		for (NSString *prefixMode in userModePrefixes) {
-			NSString *symbol = userModePrefixes[prefixMode];
+		for (NSArray *prefixData in userModePrefixes) {
+			NSString *symbol = prefixData[1];
 
 			if ([target hasPrefix:symbol]) {
 				/* We detected a possible prefix match. At this point, we scan ahead

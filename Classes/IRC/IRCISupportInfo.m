@@ -67,10 +67,10 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	self.nicknameLength = IRCProtocolDefaultNicknameMaximumLength;
 	self.modesCount = TXMaximumNodesPerModeCommand;
 
-	self.userModePrefixes = @{
-		@"o" : @"@",
-		@"v" : @"+"
-	};
+	self.userModePrefixes = @[
+		@[@"o", @"@"],
+		@[@"v", @"+"]
+	];
 
 	self.channelModes = @{
 		@"o" : @(_channelUserModeValue),
@@ -251,14 +251,14 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 		NSMutableDictionary *channelModes = [self.channelModes mutableCopy];
 
-		NSMutableDictionary *modePrefixes = [NSMutableDictionary dictionary]; // Reset defaults values because order is important
+		NSMutableArray *modePrefixes = [NSMutableArray arrayWithCapacity:modeLength]; // Reset defaults values because order is important
 		
 		if (charLength == modeLength) {
 			for (NSInteger i = 0; i < charLength; i++) {
 				NSString *modeKey = [modes stringCharacterAtIndex:i];
 				NSString *modeChar = [chars stringCharacterAtIndex:i];
 
-				modePrefixes[modeKey] = modeChar;
+				[modePrefixes addObject:@[modeKey, modeChar]];
 				
 				[channelModes setInteger:_channelUserModeValue forKey:modeKey];
 			}
@@ -318,7 +318,17 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 - (NSString *)userModePrefixSymbolWithMode:(NSString *)mode
 {
-	return self.userModePrefixes[mode];
+	__block NSString *charr = nil;
+
+	[self.userModePrefixes enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL *stop) {
+		if (NSObjectsAreEqual(obj[0], mode)) {
+			charr = [obj[1] copy];
+
+			*stop = YES;
+		}
+	}];
+
+	return charr;
 }
 
 - (BOOL)modeIsSupportedUserPrefix:(NSString *)mode
@@ -332,9 +342,9 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 {
 	__block NSString *mode = nil;
 
-	[self.userModePrefixes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (NSObjectsAreEqual(symbol, obj)) {
-			mode = [key copy];
+	[self.userModePrefixes enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL *stop) {
+		if (NSObjectsAreEqual(obj[1], symbol)) {
+			mode = [obj[0] copy];
 
 			*stop = YES;
 		}
@@ -360,8 +370,8 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 
 	__block NSInteger rankValue = _defaultStart;
 
-	[self.userModePrefixes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (NSObjectsAreEqual(key, mode)) {
+	[self.userModePrefixes enumerateObjectsUsingBlock:^(NSArray *obj, NSUInteger idx, BOOL *stop) {
+		if (NSObjectsAreEqual(obj[0], mode)) {
 			*stop = YES;
 
 			foundResult = YES;
