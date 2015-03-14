@@ -253,6 +253,8 @@
 							  withItemKind:@"application password"
 							   forUsername:nil
 							   serviceName:serviceName];
+
+			[channel setIsEncrypted:NO];
 		} else {
 			[XRKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
 								   withItemKind:@"application password"
