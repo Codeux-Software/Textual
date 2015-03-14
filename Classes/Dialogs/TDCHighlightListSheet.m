@@ -120,7 +120,7 @@
 
 	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
 										 lineMultiplier:_rowHeightMultiplier
-											 forcedFont:[NSFont systemFontOfSize:13.0]];
+											 forcedFont:[NSTableView preferredGlobalTableViewFont]];
 
 	return (totalLines * _rowHeightMultiplier);
 }
