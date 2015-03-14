@@ -1,8 +1,12 @@
 ## Introduction to Textual
 
-Textual is a highly modified version of the open source project known as [LimeChat](https://github.com/psychs/limechat) created by Satoshi Nakagawa. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](http://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
+Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](http://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
+
+Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, Textual has since evolved into one of the most popular applications for interacting with IRC on OS X. 
 
 ## Supporting Textual
+
+Those wishing to support Textual can [buy a copy](http://www.textualapp.com/) of it on the Mac App Store for 4.99 USD.
 
 Please do not abuse the power to build Textual in order to freely distribute it to hundreds of users. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked, is asked out of respect so that the project can continue to thrive.
 
@@ -15,8 +19,6 @@ Please be aware that while it is within your right to compile Textual, **we will
 **It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment. 
 
 For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. The kernel makes its judgements using identity defined by the certificate used for code signing. Therefore, if disabled, certain features such as logging to disk will never work because Textual wont be able to save the bookmark to the specified logging location.
-
-Another example is that Textual may have difficulties accessing passwords when not code signed. This is a result of the OS X keychain internals relying on the trust defined by process of code signing.
 
 ## Building Textual
 
