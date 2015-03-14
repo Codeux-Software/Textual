@@ -152,8 +152,6 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 {
 	if ([[url relativePath] hasPrefix:[TPCPathInfo systemUnsupervisedScriptFolderPath]] == NO) {
 		if (outError) {
-			NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];
-
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
 			[userInfo setObject:url forKey:NSURLErrorKey];
