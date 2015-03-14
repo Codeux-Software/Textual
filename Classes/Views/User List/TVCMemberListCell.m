@@ -276,7 +276,7 @@
 	}
 
 	if (userRankToDraw == IRCUserNoRank) {
-		userRankToDraw = [assosicatedUser currentRank];
+		userRankToDraw = [assosicatedUser rank];
 	}
 
 	/* Get value by performing cache token. */
@@ -500,7 +500,7 @@
 	/* What permissions does the user have? */
 	IRCUser *associatedUser = [self memberPointer];
 
-	IRCUserRank userRank = [associatedUser currentRank];
+	IRCUserRank userRank = [associatedUser rank];
 
 	NSString *permissions = nil;
 

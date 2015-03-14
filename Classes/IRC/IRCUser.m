@@ -168,38 +168,66 @@
 
 - (BOOL)q
 {
-	return [self userModesContainsMode:@"q"];
+	return (([self ranks] & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
 }
 
 - (BOOL)a
 {
-	return [self userModesContainsMode:@"a"];
+	return (([self ranks] & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
 }
 
 - (BOOL)o
 {
-	return [self userModesContainsMode:@"o"];
+	return (([self ranks] & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
 }
 
 - (BOOL)h
 {
-	return [self userModesContainsMode:@"h"];
+	return (([self ranks] & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 }
 
 - (BOOL)v
 {
-	return [self userModesContainsMode:@"v"];
+	return (([self ranks] & IRCUserVoicedRank) == IRCUserVoicedRank);
 }
 
-- (IRCUserRank)currentRank
+- (IRCUserRank)rank
 {
 	NSString *highestMark = [self highestRankedUserMode];
 
-	if (highestMark == nil) {
+	return [self rankWithMark:highestMark];
+}
+
+- (IRCUserRank)ranks
+{
+	IRCUserRank ranks = 0;
+
+	if (NSObjectIsEmpty(self.modes) == NO) {
+		for (NSInteger i = 0; i < [self.modes length]; i++) {
+			NSString *cc = [self.modes stringCharacterAtIndex:i];
+
+			IRCUserRank rank = [self rankWithMark:cc];
+
+			if (NSDissimilarObjects(rank, IRCUserNoRank)) {
+				ranks |= rank;
+			}
+		}
+	}
+
+	if (ranks == 0) {
+		ranks |= IRCUserNoRank;
+	}
+
+	return ranks;
+}
+
+- (IRCUserRank)rankWithMark:(NSString *)mark
+{
+	if (mark == nil) {
 		return IRCUserNoRank; // Furthest that can be gone down.
 	}
 
-#define _mm(mode)			NSObjectsAreEqual(highestMark, (mode))
+#define _mm(mode)			NSObjectsAreEqual(mark, (mode))
 
 	// +Y/+y is used by InspIRCd-2.0 to represent an IRCop
 	// +O is used by binircd-1.0.0 for channel owner
