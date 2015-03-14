@@ -189,10 +189,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
 		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
+		[key hasPrefix:@"TPCPreferencesUserDefaults"] ||					/* Textual owned prefix. */
 
-		[key isEqualToString:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"] ||					/* Textual owned prefix. */
-		[key isEqualToString:@"TPCPreferencesUserDefaultsPerformedGroupContaineCleanup"] ||						/* Textual owned prefix. */
-		[key isEqualToString:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"])		/* Textual owned prefix. */
+		[key isEqualToString:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"])
 	{
 		return YES;
 	}
@@ -202,34 +201,55 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	}
 }
 
+/* Perform a one time migration of old keys to new keys. */
++ (void)migrateOldKeyValues
+{
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
+
+	if (migratedOldKeys == nil) {
+		NSString *remappedKeysPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsRemappedKeys" ofType:@"plist"];
+
+		NSDictionary *remappedKeys = [NSDictionary dictionaryWithContentsOfFile:remappedKeysPath];
+
+		[remappedKeys enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			id oldValue = [RZUserDefaults() objectForKey:key];
+
+			if (oldValue) {
+				DebugLogToConsole(@"Remapped '%@' to '%@'", key, obj);
+
+				[RZUserDefaults() removeObjectForKey:key];
+
+				[RZUserDefaults() setObject:oldValue forKey:obj];
+			}
+		}];
+	}
+
+	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
+}
+
 /* Performs a one time migration of sandbox level keys to the group container
  if they were previously used on a system that did not have a group container. */
 + (void)migrateValuesToGroupContainer
 {
-	//  _userDefaults = object that controls non-group container level values
-#define _userDefaults			[NSUserDefaults standardUserDefaults]
-
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		id usesGroupContainer = [_userDefaults objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		id usesGroupContainer = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 
 		if (usesGroupContainer) { // make sure the key even exists (non-nil)
 			if ([usesGroupContainer boolValue] == NO) {
-				NSDictionary *localDictionary = [_userDefaults dictionaryRepresentation];
+				NSDictionary *localDictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
 
-				for (NSString *dictKey in localDictionary) {
-					if ([_userDefaults objectForKey:dictKey] == nil) {
-						[_userDefaults setObject:localDictionary[dictKey] forKey:dictKey];
+				[localDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+					if ([RZUserDefaults() objectForKey:key] == nil) {
+						[RZUserDefaults() setObject:obj forKey:key];
 					}
-				}
+				}];
 			}
 		}
 
-		[_userDefaults setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 	} else {
-		[_userDefaults setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		[RZUserDefaults() setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 	}
-
-#undef _userDefaults
 }
 
 @end

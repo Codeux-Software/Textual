@@ -563,6 +563,10 @@
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
 		4C31D910197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
 		4C31D911197CB2F5000CA4CC /* RegisteredUserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */; };
+		4C324CF51AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */; };
+		4C324CF61AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */; };
+		4C324CF71AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */; };
+		4C324CF81AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */; };
 		4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C36091D18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */; };
@@ -2116,6 +2120,7 @@
 		4C24DC881A93CC340098D1BE /* Shared Trial Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Trial Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Trial Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = RegisteredUserDefaults.plist; path = Resources/Miscellaneous/RegisteredUserDefaults.plist; sourceTree = SOURCE_ROOT; };
+		4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = RegisteredUserDefaultsRemappedKeys.plist; path = Resources/Miscellaneous/RegisteredUserDefaultsRemappedKeys.plist; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C36091C18B4E8A800243B3A /* TVCTextFieldWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldWithValueValidation.m; sourceTree = "<group>"; };
@@ -2782,10 +2787,11 @@
 		4C46CCA31580437B00846B64 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
-				4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */,
 				4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */,
 				4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */,
 				4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */,
+				4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */,
+				4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -4680,6 +4686,7 @@
 				4C71CF04199081110038C23D /* TDCNickSheet.xib in Resources */,
 				4C0BA5601990798800857343 /* FormattingColor_4.png in Resources */,
 				4C0BA5611990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
+				4C324CF51AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4C71CF0D199081110038C23D /* TDCServerSheet.xib in Resources */,
 				4C0BA5621990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4C0BA5631990798800857343 /* IRCCommandIndexPublicValues.plist in Resources */,
@@ -4807,6 +4814,7 @@
 				4C71CF02199081110038C23D /* TDCNickSheet.xib in Resources */,
 				4C46F46B1943A654004CA8BA /* FormattingColor_4.png in Resources */,
 				4C7766501978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
+				4C324CF71AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4C71CF0B199081110038C23D /* TDCServerSheet.xib in Resources */,
 				4C7766441978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CB26C6519528FA5005F927C /* IRCCommandIndexPublicValues.plist in Resources */,
@@ -4934,6 +4942,7 @@
 				4C71CF03199081110038C23D /* TDCNickSheet.xib in Resources */,
 				4C46F46C1943A654004CA8BA /* FormattingColor_4.png in Resources */,
 				4C7766511978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
+				4C324CF61AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4C71CF0C199081110038C23D /* TDCServerSheet.xib in Resources */,
 				4C7766451978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CB26C6619528FA5005F927C /* IRCCommandIndexPublicValues.plist in Resources */,
@@ -5061,6 +5070,7 @@
 				4CDFA46B1996EAB2007EA46E /* TDCNickSheet.xib in Resources */,
 				4CDFA46C1996EAB2007EA46E /* FormattingColor_4.png in Resources */,
 				4CDFA46D1996EAB2007EA46E /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
+				4C324CF81AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CDFA46E1996EAB2007EA46E /* TDCServerSheet.xib in Resources */,
 				4CDFA46F1996EAB2007EA46E /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CDFA4701996EAB2007EA46E /* IRCCommandIndexPublicValues.plist in Resources */,

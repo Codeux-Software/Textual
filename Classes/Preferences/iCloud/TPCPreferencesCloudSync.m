@@ -335,12 +335,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 	if (_keypair == nil) {
 		_keypair = @{
-			@"6a7c4f02d4665f20eb951265fa8660bd" : @"User List Mode Badge Colors —> +y",
-			@"9714e2693d89e87b5fbcca377bd02148" : @"User List Mode Badge Colors —> +q",
-			@"dec5d9211265f26885a8e97c683f1634" : @"User List Mode Badge Colors —> +a",
-			@"bfce0a9671b013a91509ea1fbe1866ec" : @"User List Mode Badge Colors —> +o",
-			@"ea082def5090ff85a20f726ceee819af" : @"User List Mode Badge Colors —> +h",
-			@"9b5c85ae92222e96eb01ba6a734b24ee" : @"User List Mode Badge Colors —> +v",
+			@"eb2dc862342c6c653e29d7363f6d421e" : @"User List Mode Badge Colors -> +y",
+			@"0d6b24b13a7e43211762da51815b2064" : @"User List Mode Badge Colors -> +q",
+			@"74f61fa09dce30a57fd7c1331cd99ddb" : @"User List Mode Badge Colors -> +a",
+			@"1ceffaa7b5291aa3b15e7e229a50e272" : @"User List Mode Badge Colors -> +o",
+			@"4f8e8414604e9ccb757d980991d576a1" : @"User List Mode Badge Colors -> +h",
+			@"76248ae19d477d639cb821f1e0a6dae2" : @"User List Mode Badge Colors -> +v",
 			@"051baac72009cc4914d1815916e1ed49" : @"Server List Unread Message Count Badge Colors -> Highlight"
 		};
 	}
@@ -353,12 +353,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	/* List of keys that when synced downstream are allowed to be removed
 	 from NSUserDefaults if they no longer exist in the cloud. */
 
-	return ([key isEqualToString:@"User List Mode Badge Colors —> +y"] ||
-			[key isEqualToString:@"User List Mode Badge Colors —> +q"] ||
-			[key isEqualToString:@"User List Mode Badge Colors —> +a"] ||
-			[key isEqualToString:@"User List Mode Badge Colors —> +o"] ||
-			[key isEqualToString:@"User List Mode Badge Colors —> +h"] ||
-			[key isEqualToString:@"User List Mode Badge Colors —> +v"] ||
+	return ([key isEqualToString:@"User List Mode Badge Colors -> +y"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> +q"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> +a"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> +o"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> +h"] ||
+			[key isEqualToString:@"User List Mode Badge Colors -> +v"] ||
 			[key isEqualToString:@"Server List Unread Message Count Badge Colors -> Highlight"]);
 }
 

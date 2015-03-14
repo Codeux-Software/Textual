@@ -837,6 +837,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
+	/* These values are not static because they are not accessed often. */
 	NSString *defaultsPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaults" ofType:@"plist"];
 
 	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
@@ -851,6 +852,7 @@ static NSMutableArray *excludeKeywords = nil;
 	// ====================================================== //
 
 	[TPCPreferencesUserDefaults migrateValuesToGroupContainer];
+	[TPCPreferencesUserDefaults migrateOldKeyValues];
 
 	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
 

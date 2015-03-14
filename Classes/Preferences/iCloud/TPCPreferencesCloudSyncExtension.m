@@ -134,12 +134,12 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	}
 	
 	/* Member list user badge colors. */
-	if ([prefKeys containsObject:@"User List Mode Badge Colors —> +y"] ||						/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +q"] ||						/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +a"] ||						/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +o"] ||						/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +h"] ||						/* User mode badge color. */
-		[prefKeys containsObject:@"User List Mode Badge Colors —> +v"])							/* User mode badge color. */
+	if ([prefKeys containsObject:@"User List Mode Badge Colors -> +y"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors -> +q"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors -> +a"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors -> +o"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors -> +h"] ||						/* User mode badge color. */
+		[prefKeys containsObject:@"User List Mode Badge Colors -> +v"])							/* User mode badge color. */
 	{
 		reloadActions |= TPCPreferencesKeyReloadMemberListAction;
 		reloadActions |= TPCPreferencesKeyReloadMemberListUserBadgesAction;

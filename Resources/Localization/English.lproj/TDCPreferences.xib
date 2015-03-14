@@ -176,7 +176,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
                             <rect key="frame" x="12" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Y0B-GY-ayZ" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced_2_Template" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Y0B-GY-ayZ" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -251,7 +251,7 @@ DQ
                         <popUpButton key="view" tag="107" id="yuI-3m-esZ">
                             <rect key="frame" x="17" y="16" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons_2_Template" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Im1-Pd-BXM" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Im1-Pd-BXM" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1181,7 +1181,7 @@ DQ
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="331" height="18"/>
+                                                    <size key="minSize" width="331" height="14"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1271,7 +1271,7 @@ DQ
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="331" height="18"/>
+                                                    <size key="minSize" width="331" height="14"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1344,7 +1344,7 @@ DQ
                                             </menu>
                                         </popUpButtonCell>
                                         <connections>
-                                            <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.inlineImageMaxFilesize" id="40y-dz-jtG"/>
+                                            <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.InlineMediaMaximumFilesize" id="Krh-7c-CA9"/>
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" id="hcX-lJ-xzY">
@@ -1874,7 +1874,7 @@ DQ
                     </tabViewItems>
                 </tabView>
             </subviews>
-            <point key="canvasLocation" x="251.5" y="-882.5"/>
+            <point key="canvasLocation" x="511.5" y="-910.5"/>
         </customView>
         <customView id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="0.0" y="-1" width="567" height="119"/>
@@ -2722,7 +2722,7 @@ DQ
                                         <connections>
                                             <accessibilityConnection property="title" destination="ykv-44-sRE" id="3a8-Ce-LYA"/>
                                             <accessibilityConnection property="title" destination="ykv-44-sRE" id="HUb-6q-lnK"/>
-                                            <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.Keyboard -&gt; Command+W Action" id="asd-rC-y9q"/>
+                                            <binding destination="G2Q-fc-ddg" name="selectedIndex" keyPath="values.Keyboard -&gt; Command+W Key Action" id="DBX-FS-Vcg"/>
                                         </connections>
                                     </popUpButton>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" id="dJl-5C-foA">
@@ -3184,7 +3184,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="IXq-I3-M72"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +y" id="GzY-Ki-kDQ">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +y" id="GzY-Ki-kDQ">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3206,7 +3206,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="meL-e3-Oab"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +q" id="jNB-MT-zjP">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +q" id="jNB-MT-zjP">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3228,7 +3228,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="qyJ-DW-aTf"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +a" id="OpN-Q4-qQT">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +a" id="OpN-Q4-qQT">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3250,7 +3250,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="d9J-XE-tNi"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +o" id="Dbp-qa-FSS">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +o" id="Dbp-qa-FSS">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3272,7 +3272,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="Y7e-RA-FfC"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +h" id="AnD-Pz-Jld">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +h" id="AnD-Pz-Jld">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>
@@ -3294,7 +3294,7 @@ DQ
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="jdM-Ar-u3T"/>
-                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors —&gt; +v" id="LGN-uw-k3a">
+                                            <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +v" id="LGN-uw-k3a">
                                                 <dictionary key="options">
                                                     <string key="NSValueTransformerName">NSUnarchiveFromData</string>
                                                 </dictionary>

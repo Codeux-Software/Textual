@@ -57,6 +57,7 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
 
 /* Do not call the following method from a plugin. */
++ (void)migrateOldKeyValues;
 + (void)migrateValuesToGroupContainer;
 @end
 
