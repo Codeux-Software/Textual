@@ -73,5 +73,8 @@
 
 + (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.
 + (NSString *)cloudCustomThemeCachedFolderPath; // Where iCloud folder is cached locally.
+
++ (void)openApplicationUbiquitousContainer;
++ (void)openCloudCustomThemeFolder;
 #endif
 @end

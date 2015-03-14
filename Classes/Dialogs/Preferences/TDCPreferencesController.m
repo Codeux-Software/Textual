@@ -1137,21 +1137,7 @@
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
-		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(@"BasicLanguage[1102][2]")
-										 title:TXTLS(@"BasicLanguage[1102][1]")
-								 defaultButton:BLS(1186)
-							   alternateButton:nil
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil
-							   completionBlock:nil];
-	} else {
-		NSString *path = [TPCPathInfo applicationUbiquitousContainerPath];
-		
-		[RZWorkspace() openFile:path];
-	}
+	[TPCPathInfo openApplicationUbiquitousContainer];
 #endif
 }
 

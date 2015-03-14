@@ -162,7 +162,7 @@
 				 [serverAddress isEqualToString:@"icloud-styles-folder"])
 		{
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-			[RZWorkspace() openFile:[TPCPathInfo cloudCustomThemeFolderPath]];
+			[TPCPathInfo openCloudCustomThemeFolder];
 #endif
 		}
 		else if ([serverAddress isEqualToString:@"unsupervised-script-folder"] ||

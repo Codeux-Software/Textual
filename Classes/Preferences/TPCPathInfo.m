@@ -161,6 +161,33 @@
 	
 	return dest;
 }
+
++ (void)openCloudPathOrErrorIfUnavailable:(NSString *)path
+{
+	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
+		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+										  body:TXTLS(@"BasicLanguage[1102][2]")
+										 title:TXTLS(@"BasicLanguage[1102][1]")
+								 defaultButton:BLS(1186)
+							   alternateButton:nil
+								   otherButton:nil
+								suppressionKey:nil
+							   suppressionText:nil
+							   completionBlock:nil];
+	} else {
+		[RZWorkspace() openFile:path];
+	}
+}
+
++ (void)openApplicationUbiquitousContainer
+{
+	[TPCPathInfo openCloudPathOrErrorIfUnavailable:[TPCPathInfo applicationUbiquitousContainerPath]];
+}
+
++ (void)openCloudCustomThemeFolder
+{
+	[TPCPathInfo openCloudPathOrErrorIfUnavailable:[TPCPathInfo cloudCustomThemeFolderPath]];
+}
 #endif
 
 + (NSString *)bundledScriptFolderPath
