@@ -95,6 +95,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
 		LogToConsole(@"Failed to hide the folder at the path '%@': %@", componentPathURL, [attributesChangeError localizedDescription]);
 	}
+
+	[otrKit setMaximumProtocolSize:[self otrKitProtocolMaximumMessageSize]
+					   forProtocol:[self otrKitProtocol]];
 }
 
 - (void)prepareEncryptionComponentPath:(NSString *)path
@@ -132,8 +135,23 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 }
 
+- (void)setEncryptionPolicy:(OTRKitPolicy)policy
+{
+	[[OTRKit sharedInstance] setOtrPolicy:policy];
+}
+
 #pragma mark -
 #pragma mark Off-the-Record Kit Delegate
+
+- (NSString *)otrKitProtocol
+{
+	return @"prpl-irc";
+}
+
+- (int)otrKitProtocolMaximumMessageSize
+{
+	return 400; // Chosen by fair dice roll.
+}
 
 - (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
 {
