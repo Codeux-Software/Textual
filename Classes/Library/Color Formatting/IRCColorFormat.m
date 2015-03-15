@@ -305,7 +305,7 @@
 		}
 
 		if (italicText) {
-			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
 		}
 
 		if (boldText) {
