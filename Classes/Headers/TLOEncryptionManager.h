@@ -41,6 +41,8 @@
  plugins. Please use higher up APIs in IRCClient and elsewhere for 
  sending encrypted messages to one or more users. */
 
+#define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
+
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *resultString, BOOL wasEncrypted);
 
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification;

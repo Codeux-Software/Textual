@@ -121,19 +121,6 @@
 										channel:(IRCChannel *)channel
 									   lineType:(TVCLogLineType)lineType
 {
-	return [NSAttributedString attributedStringToASCIIFormatting:textToFormat
-													  withClient:client
-														 channel:channel
-														lineType:lineType
-													 isEncrypted:NO];
-}
-
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString *__autoreleasing *)textToFormat
-									 withClient:(IRCClient *)client
-										channel:(IRCChannel *)channel
-									   lineType:(TVCLogLineType)lineType
-									isEncrypted:(BOOL)isEncrypted
-{
 	/* ///////////////////////////////////////////////////// */
 	/* 
 	 Server level truncation does not count the total number of

@@ -266,19 +266,29 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	NSParameterAssert(messageFrom notEqual nil);
 	NSParameterAssert(messageBody notEqual nil);
 
-	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
+	if (messageState == OTRKitMessageStatePlaintext) {
+		if (callbackBlock) {
+			callbackBlock(messageBody, NO);
+		}
+	} else {
+		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setCallbackBlock:callbackBlock];
+		[messageObject setMessageTo:messageTo];
+		[messageObject setMessageFrom:messageFrom];
 
-	[[OTRKit sharedInstance] encodeMessage:messageBody
-									  tlvs:nil
-								  username:messageTo
-							   accountName:messageFrom
-								  protocol:[self otrKitProtocol]
-									   tag:messageObject];
+		[messageObject setCallbackBlock:callbackBlock];
+
+		[[OTRKit sharedInstance] encodeMessage:messageBody
+										  tlvs:nil
+									  username:messageTo
+								   accountName:messageFrom
+									  protocol:[self otrKitProtocol]
+										   tag:messageObject];
+	}
 }
 
 #pragma mark -
@@ -374,4 +384,10 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	;
 }
 
+@end
+
+#pragma mark -
+#pragma mark Dummy Class
+
+@implementation TLOEncryptionManagerEncodingDecodingObject
 @end
