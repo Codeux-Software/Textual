@@ -52,6 +52,9 @@
 	#import <AutoHyperlinks/AutoHyperlinks.h>
 	#import <CocoaExtensions/CocoaExtensions.h>
 
+	#import <EncryptionKit/OTRKit.h>
+	#import <EncryptionKit/OTRTLV.h>
+
 	/* Class Forwarders. */
 	@class IRCAddressBookEntry;
 	@class IRCChannel;
@@ -98,6 +101,7 @@
 	@class THOPluginItem;
 	@class THOPluginManager;
 	@class THOUnicodeHelper;
+	@class TLOEncryptionManager;
 	@class TLOFileLogger;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
@@ -303,6 +307,7 @@
 	#import "THOUnicodeHelper.h"
 
 	/* Library. */
+	#import "TLOEncryptionManager.h"
 	#import "TLOFileLogger.h"
 	#import "TLOGrowlController.h"
 	#import "TLOInputHistory.h"
