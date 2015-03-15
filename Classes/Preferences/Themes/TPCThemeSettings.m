@@ -152,7 +152,7 @@
 		}
 
         if (load_error) {
-			LogToConsole(@"Failed to load template \"%@\" with error: %@", name, load_error);
+			LogToConsole(@"Failed to load template \"%@\" with error: %@", name, [load_error localizedDescription]);
 			LogToConsoleCurrentStackTrace
         }
 
