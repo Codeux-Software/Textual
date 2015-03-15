@@ -43,7 +43,8 @@
 
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
 
-typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *resultString, BOOL wasEncrypted);
+typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
+typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification;
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification;
@@ -73,10 +74,11 @@ TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKe
 - (void)encryptMessage:(NSString *)messageBody
 				  from:(NSString *)messageFrom
 					to:(NSString *)messageTo
-	 operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock;
+	  encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback
+	 injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
 
 - (void)decryptMessage:(NSString *)messageBody
 				  from:(NSString *)messageFrom
 					to:(NSString *)messageTo
-	 operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock;
+	  decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 @end

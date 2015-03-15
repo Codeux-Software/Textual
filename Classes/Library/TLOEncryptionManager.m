@@ -46,9 +46,11 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
 // Properties that should be manipulated to provide context information
-@property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock callbackBlock;
+@property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock encodingCallback;
+@property (nonatomic, copy) TLOEncryptionManagerInjectCallbackBlock injectionCallback;
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
+@property (nonatomic, copy) NSString *messageBody; // unencrypted value
 
 // Properties that are assigned by the delegate methods of OTRKit
 @property (nonatomic, assign) OTRKitMessageEvent lastEvent;
@@ -243,7 +245,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 #pragma mark -
 #pragma mark Encryption & Decryption
 
-- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
+- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
 	NSParameterAssert(messageTo notEqual nil);
 	NSParameterAssert(messageFrom notEqual nil);
@@ -253,8 +255,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 	[messageObject setMessageTo:messageTo];
 	[messageObject setMessageFrom:messageFrom];
+	[messageObject setMessageBody:messageBody];
 
-	[messageObject setCallbackBlock:callbackBlock];
+	[messageObject setEncodingCallback:decodingCallback];
 
 	[[OTRKit sharedInstance] decodeMessage:messageBody
 								  username:messageFrom
@@ -263,7 +266,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 									   tag:messageObject];
 }
 
-- (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
+- (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
 	NSParameterAssert(messageTo notEqual nil);
 	NSParameterAssert(messageFrom notEqual nil);
@@ -273,8 +276,10 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 	[messageObject setMessageTo:messageTo];
 	[messageObject setMessageFrom:messageFrom];
+	[messageObject setMessageBody:messageBody];
 
-	[messageObject setCallbackBlock:callbackBlock];
+	[messageObject setEncodingCallback:encodingCallback];
+	[messageObject setInjectionCallback:injectionCallback];
 
 	[[OTRKit sharedInstance] encodeMessage:messageBody
 									  tlvs:nil
@@ -404,7 +409,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 	if (boundryRegex == nil) {
 		NSString *boundryMatch = [NSString stringWithFormat:
-			@"\\?OTRv([0-9]+)\\?\n<b>(.*)</b> has requested an "
+			@"\\?OTRv?([0-9]+)\\?\n<b>(.*)</b> has requested an "
 			@"<a href=\"https://otr.cypherpunks.ca/\">Off-the-Record "
 			@"private conversation</a>.  However, you do not have a plugin "
 			@"to support that.\nSee <a href=\"https://otr.cypherpunks.ca/\">"
@@ -428,6 +433,19 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 {
 	message = [self maybeInsertProperNegotationMessge:message];
 
+	if (tag) {
+		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+			if ([messageObject injectionCallback]) {
+				[messageObject injectionCallback](message);
+
+				return; // Do not continue after callback block...
+			}
+		}
+	}
+
+
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[client send:IRCPrivateCommandIndex("privmsg"), [channel name], message, nil];
 	}];
@@ -435,14 +453,12 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
-	encodedMessage = [self maybeInsertProperNegotationMessge:encodedMessage];
-
 	if (tag) {
 		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-			if ([messageObject callbackBlock]) {
-				[messageObject callbackBlock](encodedMessage, wasEncrypted);
+			if ([tag encodingCallback]) {
+				[tag encodingCallback]([messageObject messageBody], wasEncrypted);
 			}
 		}
 	}
@@ -454,8 +470,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-			if ([messageObject callbackBlock]) {
-				[messageObject callbackBlock](decodedMessage, wasEncrypted);
+			if ([messageObject encodingCallback]) {
+				[messageObject encodingCallback](decodedMessage, wasEncrypted);
 			}
 		}
 	}
@@ -470,11 +486,19 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	NSString *statusChangedMessage = nil;
 
 	if (messageState ==  OTRKitMessageStateEncrypted) {
-		statusChangedMessage = @"BasicLanguage[1253][01]";
+		BOOL isVerified = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:username
+																			  accountName:accountName
+																				 protocol:[self otrKitProtocol]];
+
+		if (isVerified) {
+			statusChangedMessage = @"BasicLanguage[1253][02]";
+		} else {
+			statusChangedMessage = @"BasicLanguage[1253][01]";
+		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
 	{
-		statusChangedMessage = @"BasicLanguage[1253][02]";
+		statusChangedMessage = @"BasicLanguage[1256]";
 	}
 
 	if (statusChangedMessage) {

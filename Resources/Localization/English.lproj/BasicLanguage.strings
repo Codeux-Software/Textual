@@ -648,8 +648,10 @@
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
 /* Off-the-Record Messaging. */
-"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Encryption has started.";
-"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Encryption has finished.";
+"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with UNVERIFIED user.";
+"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Private conversation started with verified user.";
+
+"BasicLanguage[1256]" = "Off-the-Record Messaging: Private conversation has been closed.";
 
 "BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out.";
 "BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
@@ -669,6 +671,6 @@
 
 "BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
-/* Next unusued key: 1256 */
+/* Next unusued key: 1257 */
 
 

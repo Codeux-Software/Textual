@@ -1610,24 +1610,26 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		{
 			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type];
 
-			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *resultString, BOOL wasEncrypted) {
-				NSString *sendCommand = command;
-
+			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 				[self print:channel
 					   type:type
 				   nickname:[self localNickname]
-				messageBody:unencryptedMessage
+				messageBody:originalString
 				isEncrypted:wasEncrypted
 				 receivedAt:[NSDate date]
 					command:commandActual];
+			};
+
+			TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
+				NSString *sendCommand = command;
 
 				if (type == TVCLogLineActionType) {
 					sendCommand = IRCPrivateCommandIndex("privmsg");
 
-					resultString = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), resultString, 0x01];
+					encodedString = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), encodedString, 0x01];
 				}
 
-				[self send:sendCommand, [channel name], resultString, nil];
+				[self send:sendCommand, [channel name], encodedString, nil];
 			};
 
 			BOOL sendUnencrypted = (encryptChat == NO);
@@ -1638,12 +1640,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			if (sendUnencrypted) {
 				encryptionBlock(unencryptedMessage, NO);
+
+				injectionBlock(unencryptedMessage);
 			} else {
 				NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
 
 				NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[channel name] onClient:self];
 
-				[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName operationCallback:encryptionBlock];
+				[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 			}
 		}
 	}
@@ -2032,20 +2036,23 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type];
 
-					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *resultString, BOOL wasEncrypted) {
-						NSString *sendCommand = uppercaseCommand;
 
-						NSString *sendChannelName = destinationChannelName;
-
+					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 						if (channel) {
 							[self print:channel
 								   type:type
 							   nickname:[self localNickname]
-							messageBody:unencryptedMessage
+							messageBody:originalString
 							isEncrypted:wasEncrypted
 							 receivedAt:[NSDate date]
 								command:uppercaseCommand];
 						}
+					};
+
+					TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
+						NSString *sendCommand = uppercaseCommand;
+
+						NSString *sendChannelName = destinationChannelName;
 
 						if ([sendChannelName isChannelName:self]) {
 							if (destinationPrefix) {
@@ -2054,10 +2061,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 
 						if (type == TVCLogLineActionType) {
-							resultString = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), resultString, 0x01];
+							encodedString = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), encodedString, 0x01];
 						}
 
-						[self send:sendCommand, sendChannelName, resultString, nil];
+						[self send:sendCommand, sendChannelName, encodedString, nil];
 					};
 
 					/* secretMessage does not create a private message so we only attempt to encrypt if
@@ -2076,12 +2083,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 					if (sendUnencrypted) {
 						encryptionBlock(unencryptedMessage, NO);
+
+						injectionBlock(unencryptedMessage);
 					} else {
 						NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
 
 						NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[channel name] onClient:self];
 
-						[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName operationCallback:encryptionBlock];
+						[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 					}
 
 					/* Focus message destination? */
@@ -4095,29 +4104,29 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		text = [text substringFromIndex:1];
 	}
 
-	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *resultString, BOOL wasEncrypted) {
-		if ([resultString hasPrefix:@"\x01"]) {
-			resultString = [resultString substringFromIndex:1];
+	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+		if ([originalString hasPrefix:@"\x01"]) {
+			originalString = [originalString substringFromIndex:1];
 
-			NSInteger n = [resultString stringPosition:@"\x01"];
+			NSInteger n = [originalString stringPosition:@"\x01"];
 
 			if (n >= 0) {
-				resultString = [resultString substringToIndex:n];
+				originalString = [originalString substringToIndex:n];
 			}
 
 			if ([[m command] isEqualToString:IRCPrivateCommandIndex("privmsg")]) {
-				if ([resultString hasPrefixIgnoringCase:@"ACTION "]) {
-					resultString = [resultString substringFromIndex:7];
+				if ([originalString hasPrefixIgnoringCase:@"ACTION "]) {
+					originalString = [originalString substringFromIndex:7];
 
-					[self receiveText:m command:IRCPrivateCommandIndex("action") text:resultString wasEncrypted:wasEncrypted];
+					[self receiveText:m command:IRCPrivateCommandIndex("action") text:originalString wasEncrypted:wasEncrypted];
 				} else {
-					[self receiveCTCPQuery:m text:resultString wasEncrypted:wasEncrypted];
+					[self receiveCTCPQuery:m text:originalString wasEncrypted:wasEncrypted];
 				}
 			} else {
-				[self receiveCTCPReply:m text:resultString wasEncrypted:wasEncrypted];
+				[self receiveCTCPReply:m text:originalString wasEncrypted:wasEncrypted];
 			}
 		} else {
-			[self receiveText:m command:[m command] text:resultString wasEncrypted:wasEncrypted];
+			[self receiveText:m command:[m command] text:originalString wasEncrypted:wasEncrypted];
 		}
 	};
 
@@ -4138,7 +4147,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[m senderNickname] onClient:self];
 
-		[sharedEncryptionManager() decryptMessage:text from:remoteAccountName to:localAccountName operationCallback:decryptionBlock];
+		[sharedEncryptionManager() decryptMessage:text from:remoteAccountName to:localAccountName decodingCallback:decryptionBlock];
 	}
 }
 
