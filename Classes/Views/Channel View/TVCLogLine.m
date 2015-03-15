@@ -79,29 +79,36 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
+#define _dv(lineType, returnValue)			case (lineType): { return (returnValue); }
+
 	switch (type) {
-		case TVCLogLineActionType:							{ return @"action";						}
-		case TVCLogLineActionNoHighlightType:				{ return @"action";						}
-		case TVCLogLineCTCPType:							{ return @"ctcp";						}
-		case TVCLogLineDCCFileTransferType:					{ return @"dccfiletransfer";			}
-		case TVCLogLineDebugType:							{ return @"debug";						}
-		case TVCLogLineInviteType:							{ return @"invite";						}
-		case TVCLogLineJoinType:							{ return @"join";						}
-		case TVCLogLineKickType:							{ return @"kick";						}
-		case TVCLogLineKillType:							{ return @"kill";						}
-		case TVCLogLineModeType:							{ return @"mode";						}
-		case TVCLogLineNickType:							{ return @"nick";						}
-		case TVCLogLineNoticeType:							{ return @"notice";						}
-		case TVCLogLinePartType:							{ return @"part";						}
-		case TVCLogLinePrivateMessageType:					{ return @"privmsg";					}
-		case TVCLogLinePrivateMessageNoHighlightType:		{ return @"privmsg";					}
-		case TVCLogLineQuitType:							{ return @"quit";						}
-		case TVCLogLineTopicType:							{ return @"topic";						}
-		case TVCLogLineWebsiteType:							{ return @"website";					}
-		default:											{ return nil;							}
+		_dv(TVCLogLineActionNoHighlightType, @"action")
+		_dv(TVCLogLineActionType, @"action")
+		_dv(TVCLogLineCTCPType, @"ctcp")
+		_dv(TVCLogLineDCCFileTransferType, @"dcc-file-transfer")
+		_dv(TVCLogLineDebugType, @"debug")
+		_dv(TVCLogLineInviteType, @"invite")
+		_dv(TVCLogLineJoinType, @"join")
+		_dv(TVCLogLineKickType, @"kick")
+		_dv(TVCLogLineKillType, @"kill")
+		_dv(TVCLogLineModeType, @"mode")
+		_dv(TVCLogLineNickType, @"nick")
+		_dv(TVCLogLineNoticeType, @"notice")
+		_dv(TVCLogLineOffTheRecordEncryptionStatusType, @"off-the-record-encryption-status")
+		_dv(TVCLogLinePartType, @"part")
+		_dv(TVCLogLinePrivateMessageNoHighlightType, @"privmsg")
+		_dv(TVCLogLinePrivateMessageType, @"privmsg")
+		_dv(TVCLogLineQuitType, @"quit")
+		_dv(TVCLogLineTopicType, @"topic")
+		_dv(TVCLogLineWebsiteType, @"website")
+
+		default:
+		{
+			return nil;
+		}
 	}
-	
-	return nil;
+
+#undef _dv
 }
 
 + (NSString *)memberTypeString:(TVCLogLineMemberType)type
