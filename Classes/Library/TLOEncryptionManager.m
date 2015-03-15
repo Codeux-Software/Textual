@@ -48,7 +48,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 @property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock callbackBlock;
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
-@property (nonatomic, copy) NSString *messageBody;
+@property (nonatomic, assign) BOOL wasEncrypted;
 @end
 
 @implementation TLOEncryptionManager
@@ -242,12 +242,43 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
 {
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(messageBody notEqual nil);
 
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+
+	[messageObject setMessageTo:messageTo];
+	[messageObject setMessageFrom:messageFrom];
+
+	[messageObject setCallbackBlock:callbackBlock];
+
+	[[OTRKit sharedInstance] decodeMessage:messageBody
+								  username:messageFrom
+							   accountName:messageTo
+								  protocol:[self otrKitProtocol]
+									   tag:messageObject];
 }
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
 {
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(messageBody notEqual nil);
 
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+
+	[messageObject setMessageTo:messageTo];
+	[messageObject setMessageFrom:messageFrom];
+
+	[messageObject setCallbackBlock:callbackBlock];
+
+	[[OTRKit sharedInstance] encodeMessage:messageBody
+									  tlvs:nil
+								  username:messageTo
+							   accountName:messageFrom
+								  protocol:[self otrKitProtocol]
+									   tag:messageObject];
 }
 
 #pragma mark -
@@ -270,17 +301,37 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
 {
-	;
+	if (tag) {
+		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+			if ([messageObject callbackBlock]) {
+				[messageObject callbackBlock](message, [messageObject wasEncrypted]);
+			}
+		}
+	}
 }
 
 - (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
-	;
+	if (tag) {
+		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+			[messageObject setWasEncrypted:wasEncrypted];
+		}
+	}
 }
 
 - (void)otrKit:(OTRKit *)otrKit decodedMessage:(NSString *)decodedMessage wasEncrypted:(BOOL)wasEncrypted tlvs:(NSArray *)tlvs username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
 {
-	;
+	if (tag) {
+		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+			[messageObject setWasEncrypted:wasEncrypted];
+		}
+	}
 }
 
 - (void)otrKit:(OTRKit *)otrKit updateMessageState:(OTRKitMessageState)messageState username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
