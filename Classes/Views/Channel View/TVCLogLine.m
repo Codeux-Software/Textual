@@ -79,7 +79,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
 + (NSString *)lineTypeString:(TVCLogLineType)type
 {
-#define _dv(lineType, returnValue)			case (lineType): { return (returnValue); }
+#define _dv(lineType, returnValue)			case (lineType): { return (returnValue); break; }
 
 	switch (type) {
 		_dv(TVCLogLineActionNoHighlightType, @"action")
