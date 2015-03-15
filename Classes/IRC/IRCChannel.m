@@ -202,9 +202,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	if ([_topic isEqualToString:topic] == NO) {
 		_topic = [topic copy];
 
-		if (self.isChannel) {
-			[[self viewController] setTopic:_topic];
-		}
+		[[self viewController] setTopic:_topic]; // Set even for queries incase a style wants to use it…
 	}
 }
 
@@ -235,8 +233,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)noteEncryptionStateDidChange
 {
-	// TODO: Insert localizations here...
-
 	[[self viewController] noteEncryptionStateDidChange];
 }
 
@@ -299,6 +295,10 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)deactivate
 {
+	if ([self isPrivateMessage]) {
+		[self closeOpenEncryptionSessions];
+	}
+
 	[self resetStatus:IRCChannelStatusParted];
   
 	if ([self isChannel]) {
@@ -306,10 +306,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		
 		[[self viewController] setTopic:nil];
     }
-
-	if ([self isPrivateMessage]) {
-		[self closeOpenEncryptionSessions];
-	}
 }
 
 - (void)prepareForPermanentDestruction

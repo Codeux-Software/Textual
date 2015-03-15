@@ -647,11 +647,28 @@
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
+/* Off-the-Record Messaging. */
+"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Encryption has started.";
+"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Encryption has finished.";
 
+"BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out.";
+"BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
+"BasicLanguage[1254][03]" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
+"BasicLanguage[1254][04]" = "Off-the-Record Messaging: A private conversation could not be started.";
+"BasicLanguage[1254][05]" = "Off-the-Record Messaging: Our original message has been sent back to us.";
+"BasicLanguage[1254][06]" = "Off-the-Record Messaging: The previous message was resent.";
+"BasicLanguage[1254][07]" = "Off-the-Record Messaging: Received an encrypted message but cannot read it because a private conversation has not been started.";
+"BasicLanguage[1254][08]" = "Off-the-Record Messaging: Cannot read the message received.";
+"BasicLanguage[1254][09]" = "Off-the-Record Messaging: The message received contains malformed data.";
+"BasicLanguage[1254][10]" = "Off-the-Record Messaging: Received a heartbeat.";
+"BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat.";
+"BasicLanguage[1254][12]" = "Off-the-Record Messaging: Received a general error from the Off-the-Record Messaging library.";
+"BasicLanguage[1254][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
+"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized ";
+"BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
+"BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
-
-
-/* Next unusued key: 1253 */
+/* Next unusued key: 1256 */
 
 

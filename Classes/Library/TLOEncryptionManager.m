@@ -45,9 +45,13 @@ NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification =
 NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification = @"TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification";
 
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
+// Properties that should be manipulated to provide context information
 @property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock callbackBlock;
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
+
+// Properties that are assigned by the delegate methods of OTRKit
+@property (nonatomic, assign) OTRKitMessageEvent lastEvent;
 @end
 
 @implementation TLOEncryptionManager
@@ -281,22 +285,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 }
 
 #pragma mark -
-#pragma mark Off-the-Record Kit Delegate
-
-- (void)setEncryptionPolicy:(OTRKitPolicy)policy
-{
-	[[OTRKit sharedInstance] setOtrPolicy:policy];
-}
-
-- (NSString *)otrKitProtocol
-{
-	return @"prpl-irc";
-}
-
-- (int)otrKitProtocolMaximumMessageSize
-{
-	return 400; // Chosen by fair dice roll.
-}
+#pragma mark Helper Methods
 
 - (void)performBlockInRelationToAccountName:(NSString *)accountName block:(void (^)(NSString *nickname, IRCClient *client, IRCChannel *channel))block
 {
@@ -315,8 +304,130 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	}];
 }
 
+- (NSString *)localizedStringForEvent:(OTRKitMessageEvent)event
+{
+	NSString *localeKey = nil;
+
+#define _dv(event, localInt)		case (event): { localeKey = (localInt); break; }
+
+	switch (event) {
+			_dv(OTRKitMessageEventEncryptionRequired,				@"01")
+			_dv(OTRKitMessageEventEncryptionError,					@"02")
+			_dv(OTRKitMessageEventConnectionEnded,					@"03")
+			_dv(OTRKitMessageEventSetupError,						@"04")
+			_dv(OTRKitMessageEventMessageReflected,					@"05")
+			_dv(OTRKitMessageEventMessageResent,					@"06")
+			_dv(OTRKitMessageEventReceivedMessageNotInPrivate,		@"07")
+			_dv(OTRKitMessageEventReceivedMessageUnreadable,		@"08")
+			_dv(OTRKitMessageEventReceivedMessageMalformed,			@"09")
+			_dv(OTRKitMessageEventLogHeartbeatReceived,				@"10")
+			_dv(OTRKitMessageEventLogHeartbeatSent,					@"11")
+			_dv(OTRKitMessageEventReceivedMessageGeneralError,		@"12")
+			_dv(OTRKitMessageEventReceivedMessageUnencrypted,		@"13")
+			_dv(OTRKitMessageEventReceivedMessageUnrecognized,		@"14")
+			_dv(OTRKitMessageEventReceivedMessageForOtherInstance,	@"15")
+
+		default:
+		{
+			break;
+		}
+	}
+
+#undef _dv
+
+	if (localeKey) {
+		localeKey = [NSString stringWithFormat:@"BasicLanguage[1254][%@]", localeKey];
+	}
+
+	if (localeKey) {
+		return TXTLS(localeKey);
+	} else {
+		return nil;
+	}
+}
+
+- (BOOL)eventIsErrornous:(OTRKitMessageEvent)event
+{
+	switch (event) {
+		case OTRKitMessageEventEncryptionError:
+		case OTRKitMessageEventReceivedMessageGeneralError:
+		case OTRKitMessageEventReceivedMessageMalformed:
+		case OTRKitMessageEventReceivedMessageNotInPrivate:
+		case OTRKitMessageEventReceivedMessageUnreadable:
+		case OTRKitMessageEventReceivedMessageUnrecognized:
+		{
+			return YES;
+		}
+		default:
+		{
+			return NO;
+		}
+	}
+}
+
+- (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName
+{
+	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		[client print:channel
+				 type:TVCLogLineOffTheRecordEncryptionStatusType
+			 nickname:nil
+		  messageBody:message command:TVCLogLineDefaultRawCommandValue];
+	}];
+}
+
+- (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName
+{
+	[self presentMessage:errorMessage withAccountName:accountName];
+}
+
+#pragma mark -
+#pragma mark Off-the-Record Kit Delegate
+
+- (void)setEncryptionPolicy:(OTRKitPolicy)policy
+{
+	[[OTRKit sharedInstance] setOtrPolicy:policy];
+}
+
+- (NSString *)otrKitProtocol
+{
+	return @"prpl-irc";
+}
+
+- (int)otrKitProtocolMaximumMessageSize
+{
+	return 400; // Chosen by fair dice roll.
+}
+
+- (NSString *)maybeInsertProperNegotationMessge:(NSString *)message
+{
+	static NSRegularExpression *boundryRegex = nil;
+
+	if (boundryRegex == nil) {
+		NSString *boundryMatch = [NSString stringWithFormat:
+			@"\\?OTRv([0-9]+)\\?\n<b>(.*)</b> has requested an "
+			@"<a href=\"https://otr.cypherpunks.ca/\">Off-the-Record "
+			@"private conversation</a>.  However, you do not have a plugin "
+			@"to support that.\nSee <a href=\"https://otr.cypherpunks.ca/\">"
+			@"https://otr.cypherpunks.ca/</a> for more information."];
+
+		boundryRegex = [NSRegularExpression regularExpressionWithPattern:boundryMatch options:0 error:NULL];
+	}
+
+	NSUInteger numMatches = [boundryRegex numberOfMatchesInString:message options:0 range:[message range]];
+
+	if (numMatches == 1) {
+		NSArray *messageComponents = [message componentsSeparatedByString:NSStringNewlinePlaceholder];
+
+		return [NSString stringWithFormat:@"%@%@", messageComponents[0], TXTLS(@"BasicLanguage[1255]")];
+	} else {
+		return message;
+	}
+}
+
 - (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
 {
+	message = [self maybeInsertProperNegotationMessge:message];
+
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[client send:IRCPrivateCommandIndex("privmsg"), [channel name], message, nil];
 	}];
@@ -353,11 +464,31 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[channel setEncryptionState:messageState];
 	}];
+
+	NSString *statusChangedMessage = nil;
+
+	if (messageState ==  OTRKitMessageStateEncrypted) {
+		statusChangedMessage = @"BasicLanguage[1253][01]";
+	} else if (messageState == OTRKitMessageStateFinished ||
+			   messageState == OTRKitMessageStatePlaintext)
+	{
+		statusChangedMessage = @"BasicLanguage[1253][02]";
+	}
+
+	if (statusChangedMessage) {
+		[self presentMessage:TXTLS(statusChangedMessage) withAccountName:username];
+	}
 }
 
 - (BOOL)otrKit:(OTRKit *)otrKit isUsernameLoggedIn:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	return NO;
+	__block BOOL userIsActive = NO;
+
+	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		userIsActive = [channel isActive];
+	}];
+
+	return userIsActive;
 }
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
@@ -372,22 +503,32 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
-	LogToConsole(@"-");
+	if (tag) {
+		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+			[messageObject setLastEvent:event];
+
+			if ([self eventIsErrornous:event]) {
+				[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
+			}
+		}
+	}
 }
 
 - (void)otrKit:(OTRKit *)otrKit receivedSymmetricKey:(NSData *)symmetricKey forUse:(NSUInteger)use useData:(NSData *)useData username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	LogToConsole(@"-");
+	;
 }
 
 - (void)otrKit:(OTRKit *)otrKit willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	LogToConsole(@"-");
+	;
 }
 
 - (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
 {
-	LogToConsole(@"-");
+	;
 }
 
 @end
