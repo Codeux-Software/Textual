@@ -49,10 +49,78 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 @implementation TLOEncryptionManager
 
-- (void)generatePrivateKey
-{
+#pragma mark -
+#pragma mark Initialization
 
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[self setupEncryptionManager];
+
+		return self;
+	}
+
+	return nil;
 }
+
+- (NSString *)pathToStoreEncryptionSecrets
+{
+	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPath];
+
+	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Encryption Components/"];
+
+	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+
+	return dest;
+}
+
+- (void)setupEncryptionManager
+{
+	OTRKit *otrKit = [OTRKit sharedInstance];
+
+	[otrKit setDelegate:self];
+
+	[otrKit setupWithDataPath:[self pathToStoreEncryptionSecrets]];
+
+	[self prepareEncryptionComponentPath:[otrKit privateKeyPath]];
+	[self prepareEncryptionComponentPath:[otrKit fingerprintsPath]];
+	[self prepareEncryptionComponentPath:[otrKit instanceTagsPath]];
+
+	NSURL *componentPathURL = [NSURL fileURLWithPath:[self pathToStoreEncryptionSecrets] isDirectory:YES];
+
+	NSError *attributesChangeError = nil;
+
+	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
+		LogToConsole(@"Failed to hide the folder at the path '%@': %@", componentPathURL, [attributesChangeError localizedDescription]);
+	}
+}
+
+- (void)prepareEncryptionComponentPath:(NSString *)path
+{
+	/* Create the path if it does not already exist. */
+	if ([RZFileManager() fileExistsAtPath:path] == NO) {
+		NSError *writeError = nil;
+
+		if ([NSStringEmptyPlaceholder writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
+			LogToConsole(@"Failed to create base file for encryption component at path: %@", [writeError localizedDescription]);
+		}
+	}
+
+	/* Files are stored in a location that is accessible to Time Machine
+	 which means we must mark the files to not be backed up. */
+	NSURL *pathURL = [NSURL fileURLWithPath:path isDirectory:NO];
+
+	NSError *attributesChangeError = nil;
+
+	if ([pathURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&attributesChangeError] == NO) {
+		LogToConsole(@"Failed to exclude the files at the path '%@' from backup: %@", pathURL, [attributesChangeError localizedDescription]);
+	}
+}
+
+#pragma mark -
+#pragma mark Public API
 
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
 {
@@ -110,6 +178,16 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 - (void)otrKit:(OTRKit *)otrKit receivedSymmetricKey:(NSData *)symmetricKey forUse:(NSUInteger)use useData:(NSData *)useData username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	;
+}
+
+- (void)otrKit:(OTRKit *)otrKit willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol
+{
+
+}
+
+- (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
+{
+	
 }
 
 @end

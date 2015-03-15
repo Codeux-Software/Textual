@@ -43,8 +43,6 @@ TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKe
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification;
 
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate>
-- (void)generatePrivateKey;
-
 - (void)encryptMessage:(NSString *)messageBody
 				  from:(NSString *)messageFrom
 					to:(NSString *)messageTo
