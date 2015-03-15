@@ -418,7 +418,7 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	if (numMatches == 1) {
 		NSArray *messageComponents = [message componentsSeparatedByString:NSStringNewlinePlaceholder];
 
-		return [NSString stringWithFormat:@"%@%@", messageComponents[0], TXTLS(@"BasicLanguage[1255]")];
+		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"BasicLanguage[1255]")];
 	} else {
 		return message;
 	}
@@ -435,6 +435,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
+	encodedMessage = [self maybeInsertProperNegotationMessge:encodedMessage];
+
 	if (tag) {
 		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
