@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#define notEqual		!=
+
 NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification = @"TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification";
 NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification = @"TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification";
 
@@ -125,6 +127,69 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 #pragma mark -
 #pragma mark Public API
 
+- (NSString *)accountNameWithUser:(IRCUser *)user onClient:(IRCClient *)client
+{
+	return @"example <-> chat.freenode.net"; // not yet implemented
+}
+
+- (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+
+	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
+												accountName:messageFrom
+												   protocol:[self otrKitProtocol]];
+}
+
+- (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+
+	[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
+											   accountName:messageFrom
+												  protocol:[self otrKitProtocol]];
+}
+
+- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret
+{
+	[self sendSocialistMillionaireProblem:messageTo from:messageFrom secret:problemSecret question:nil];
+}
+
+- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret question:(NSString *)problemQuestion
+{
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(problemSecret notEqual nil);
+
+	if (problemQuestion == nil) {
+		[[OTRKit sharedInstance] initiateSMPForUsername:messageTo
+											accountName:messageFrom
+											   protocol:[self otrKitProtocol]
+												 secret:problemSecret];
+	} else {
+		[[OTRKit sharedInstance] initiateSMPForUsername:messageTo
+											accountName:messageFrom
+											   protocol:[self otrKitProtocol]
+											   question:problemQuestion
+												 secret:problemSecret];
+	}
+}
+
+- (void)replyToSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret
+{
+	NSParameterAssert(messageTo notEqual nil);
+	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(problemSecret notEqual nil);
+
+	[[OTRKit sharedInstance] respondToSMPForUsername:messageTo
+										 accountName:messageFrom
+											protocol:[self otrKitProtocol]
+											  secret:problemSecret];
+}
+
+
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
 {
 
@@ -200,12 +265,12 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-
+	;
 }
 
 - (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
 {
-	
+	;
 }
 
 @end

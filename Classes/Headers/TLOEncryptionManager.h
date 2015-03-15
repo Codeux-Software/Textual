@@ -43,6 +43,16 @@ TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKe
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification;
 
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate>
+- (NSString *)accountNameWithUser:(IRCUser *)user onClient:(IRCClient *)client;
+
+- (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
+- (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
+
+- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
+- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret question:(NSString *)problemQuestion;
+
+- (void)replyToSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
+
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;
 
 - (void)encryptMessage:(NSString *)messageBody
