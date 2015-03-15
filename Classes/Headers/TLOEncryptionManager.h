@@ -37,24 +37,37 @@
 
 #import "TextualApplication.h"
 
+/* TLOEncryptionManager class is a beast that should be avoided by
+ plugins. Please use higher up APIs in IRCClient and elsewhere for 
+ sending encrypted messages to one or more users. */
+
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *resultString);
 
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification;
 TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification;
 
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate>
-- (NSString *)accountNameWithUser:(IRCUser *)user onClient:(IRCClient *)client;
+/* Returns unique "account name" used for messageFrom and messageTo parameters. */
+- (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;
 
+/* Converts the "account name" into its individual components. */
+- (NSString *)nicknameFromAccountName:(NSString *)accountName;
+- (IRCClient *)connectionFromAccountName:(NSString *)accountName;
+
+/* Begin and end an encrypted conversation with a user. */
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
 
+/* Socialist Millionaire Problem <http://en.wikipedia.org/wiki/Socialist_millionaire> */
 - (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
 - (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret question:(NSString *)problemQuestion;
 
 - (void)replyToSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
 
+/* Define configuration options */
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;
 
+/* Encryption/Decryption */
 - (void)encryptMessage:(NSString *)messageBody
 				  from:(NSString *)messageFrom
 					to:(NSString *)messageTo

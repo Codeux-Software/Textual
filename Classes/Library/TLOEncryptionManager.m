@@ -39,6 +39,8 @@
 
 #define notEqual		!=
 
+#define _accountNameSeparatorSequence		@" <-> "
+
 NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification = @"TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification";
 NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification = @"TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification";
 
@@ -125,12 +127,55 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 }
 
 #pragma mark -
-#pragma mark Public API
+#pragma mark Account Name Information
 
-- (NSString *)accountNameWithUser:(IRCUser *)user onClient:(IRCClient *)client
+- (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client
 {
-	return @"example <-> chat.freenode.net"; // not yet implemented
+	/* A common theme of this class is an extensive use of asserts. Encryption is very
+	 serious so we fail at any hint of a bad input value so that the end user does not
+	 suffer by software doing something it should not. */
+
+	NSParameterAssert(client notEqual nil);
+	NSParameterAssert(nickname notEqual nil);
+
+	return [NSString stringWithFormat:@"%@%@%@", nickname, _accountNameSeparatorSequence, [client uniqueIdentifier]];
 }
+
+- (NSString *)nicknameFromAccountName:(NSString *)accountName
+{
+	NSParameterAssert(accountName notEqual nil);
+
+	NSRange sequenceRange = [accountName rangeOfString:_accountNameSeparatorSequence options:NSBackwardsSearch];
+
+	NSInteger sliceRange = sequenceRange.location;
+
+	NSAssert((sliceRange > 0), @"Bad accountName value");
+	NSAssert((sliceRange notEqual NSNotFound), @"Bad accountName value");
+
+	NSString *nickname = [accountName substringToIndex:sliceRange];
+
+	return nickname;
+}
+
+- (IRCClient *)connectionFromAccountName:(NSString *)accountName
+{
+	NSParameterAssert(accountName notEqual nil);
+
+	NSRange sequenceRange = [accountName rangeOfString:_accountNameSeparatorSequence options:NSBackwardsSearch];
+
+	NSInteger sliceRange = (sequenceRange.location + [_accountNameSeparatorSequence length]);
+
+	NSAssert((sliceRange > 0), @"Bad accountName value");
+	NSAssert((sliceRange < [accountName length]), @"Bad accountName value");
+	NSAssert((sequenceRange.location notEqual NSNotFound), @"Bad accountName value");
+
+	NSString *clientIdentifier = [accountName substringFromIndex:sliceRange];
+
+	return [worldController() findClientById:clientIdentifier];
+}
+
+#pragma mark -
+#pragma mark Starting Encryption & Stopping Encryption
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
@@ -151,6 +196,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 											   accountName:messageFrom
 												  protocol:[self otrKitProtocol]];
 }
+
+#pragma mark -
+#pragma mark Socialist Millionaire
 
 - (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret
 {
@@ -189,6 +237,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 											  secret:problemSecret];
 }
 
+#pragma mark -
+#pragma mark Encryption & Decryption
 
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo operationCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)callbackBlock
 {
@@ -200,13 +250,13 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 }
 
+#pragma mark -
+#pragma mark Off-the-Record Kit Delegate
+
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy
 {
 	[[OTRKit sharedInstance] setOtrPolicy:policy];
 }
-
-#pragma mark -
-#pragma mark Off-the-Record Kit Delegate
 
 - (NSString *)otrKitProtocol
 {
