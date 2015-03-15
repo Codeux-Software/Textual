@@ -202,20 +202,18 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	if ([_topic isEqualToString:topic] == NO) {
 		_topic = [topic copy];
 
-		[[self viewController] setTopic:_topic];
+		if (self.isChannel) {
+			[[self viewController] setTopic:_topic];
+		}
 	}
 }
 
-- (void)setIsEncrypted:(BOOL)isEncrypted
+- (void)setEncryptionState:(OTRKitMessageState)encryptionState
 {
-	if (NSDissimilarObjects(_isEncrypted, isEncrypted)) {
-		_isEncrypted = isEncrypted;
+	if (NSDissimilarObjects(_encryptionState, encryptionState)) {
+		_encryptionState = encryptionState;
 
-		if (isEncrypted) {
-			[[self viewController] noteEncryptionWasEnabled];
-		} else {
-			[[self viewController] noteEncryptionWasDisabled];
-		}
+		[self noteEncryptionStateDidChange];
 	}
 }
 
@@ -233,6 +231,26 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	[self reopenLogFileIfNeeded];
+}
+
+- (void)noteEncryptionStateDidChange
+{
+	// TODO: Insert localizations here...
+
+	[[self viewController] noteEncryptionStateDidChange];
+}
+
+- (void)closeOpenEncryptionSessions
+{
+	if (self.encryptionState == OTRKitMessageStateEncrypted) {
+		IRCClient *u = [self associatedClient];
+
+		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[self name] onClient:u];
+
+		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
+
+		[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
+	}
 }
 
 #pragma mark -
@@ -253,6 +271,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	self.modeInfo = nil;
 
 	[self clearMembers];
+
 	[self reloadDataForTableView];
 }
 
@@ -276,7 +295,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	self.channelJoinTime = [NSDate unixTime];
-
 }
 
 - (void)deactivate
@@ -289,7 +307,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		[[self viewController] setTopic:nil];
     }
 
-	self.channelJoinTime = -1;
+	if ([self isPrivateMessage]) {
+		[self closeOpenEncryptionSessions];
+	}
 }
 
 - (void)prepareForPermanentDestruction

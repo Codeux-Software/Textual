@@ -39,7 +39,7 @@
 
 #define notEqual		!=
 
-#define _accountNameSeparatorSequence		@" <-> "
+#define _accountNameSeparatorSequence		@"@"
 
 NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification = @"TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification";
 NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification = @"TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification";
@@ -48,7 +48,6 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 @property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock callbackBlock;
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
-@property (nonatomic, assign) BOOL wasEncrypted;
 @end
 
 @implementation TLOEncryptionManager
@@ -266,29 +265,19 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	NSParameterAssert(messageFrom notEqual nil);
 	NSParameterAssert(messageBody notEqual nil);
 
-	OTRKitMessageState messageState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	if (messageState == OTRKitMessageStatePlaintext) {
-		if (callbackBlock) {
-			callbackBlock(messageBody, NO);
-		}
-	} else {
-		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	[messageObject setMessageTo:messageTo];
+	[messageObject setMessageFrom:messageFrom];
 
-		[messageObject setMessageTo:messageTo];
-		[messageObject setMessageFrom:messageFrom];
+	[messageObject setCallbackBlock:callbackBlock];
 
-		[messageObject setCallbackBlock:callbackBlock];
-
-		[[OTRKit sharedInstance] encodeMessage:messageBody
-										  tlvs:nil
-									  username:messageTo
-								   accountName:messageFrom
-									  protocol:[self otrKitProtocol]
-										   tag:messageObject];
-	}
+	[[OTRKit sharedInstance] encodeMessage:messageBody
+									  tlvs:nil
+								  username:messageTo
+							   accountName:messageFrom
+								  protocol:[self otrKitProtocol]
+									   tag:messageObject];
 }
 
 #pragma mark -
@@ -309,17 +298,28 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	return 400; // Chosen by fair dice roll.
 }
 
+- (void)performBlockInRelationToAccountName:(NSString *)accountName block:(void (^)(NSString *nickname, IRCClient *client, IRCChannel *channel))block
+{
+	[self performBlockOnMainThread:^{
+		NSString *nickname = [self nicknameFromAccountName:accountName];
+
+		IRCClient *client = [self connectionFromAccountName:accountName];
+
+		if (client == nil) {
+			LogToConsole(@"-connectionFromAccountName: returned a nil value, failing");
+		} else {
+			IRCChannel *channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
+
+			block(nickname, client, channel);
+		}
+	}];
+}
+
 - (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
 {
-	if (tag) {
-		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
-
-			if ([messageObject callbackBlock]) {
-				[messageObject callbackBlock](message, [messageObject wasEncrypted]);
-			}
-		}
-	}
+	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		[client send:IRCPrivateCommandIndex("privmsg"), [channel name], message, nil];
+	}];
 }
 
 - (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
@@ -328,7 +328,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-			[messageObject setWasEncrypted:wasEncrypted];
+			if ([messageObject callbackBlock]) {
+				[messageObject callbackBlock](encodedMessage, wasEncrypted);
+			}
 		}
 	}
 }
@@ -339,14 +341,18 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-			[messageObject setWasEncrypted:wasEncrypted];
+			if ([messageObject callbackBlock]) {
+				[messageObject callbackBlock](decodedMessage, wasEncrypted);
+			}
 		}
 	}
 }
 
 - (void)otrKit:(OTRKit *)otrKit updateMessageState:(OTRKitMessageState)messageState username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	;
+	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		[channel setEncryptionState:messageState];
+	}];
 }
 
 - (BOOL)otrKit:(OTRKit *)otrKit isUsernameLoggedIn:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
@@ -356,32 +362,32 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	;
+	LogToConsole(@"-");
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	;
+	LogToConsole(@"-");
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
-	;
+	LogToConsole(@"-");
 }
 
 - (void)otrKit:(OTRKit *)otrKit receivedSymmetricKey:(NSData *)symmetricKey forUse:(NSUInteger)use useData:(NSData *)useData username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	;
+	LogToConsole(@"-");
 }
 
 - (void)otrKit:(OTRKit *)otrKit willStartGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	;
+	LogToConsole(@"-");
 }
 
 - (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
 {
-	;
+	LogToConsole(@"-");
 }
 
 @end

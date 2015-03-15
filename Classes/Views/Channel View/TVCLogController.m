@@ -125,19 +125,14 @@
 	return NO;
 }
 
-- (void)noteEncryptionWasDisabled
+- (void)noteEncryptionStateDidChange
 {
 	if (self.associatedChannel) {
-		self.viewIsEncrypted = [self.associatedChannel isEncrypted];
-	}
-}
+		self.viewIsEncrypted = ([self.associatedChannel encryptionState] == OTRKitMessageStateEncrypted);
 
-- (void)noteEncryptionWasEnabled
-{
-	if (self.associatedChannel) {
-		self.viewIsEncrypted = [self.associatedChannel isEncrypted];
-
-		[self closeHistoricLog];
+		if (self.viewIsEncrypted) {
+			[self closeHistoricLog];
+		}
 	}
 }
 

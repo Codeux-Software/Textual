@@ -943,7 +943,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	NSObjectIsEmptyAssertReturn(raw, NO);
 	
-	if ([TPCPreferences removeAllFormatting]) {
+	if ([TPCPreferences removeAllFormatting] == NO) {
 		raw = [raw stripIRCEffects];
 	}
 
@@ -1011,7 +1011,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)speakEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nick:(NSString *)nick text:(NSString *)text
 {
 	text = [text trim]; // Do not leave spaces in text to be spoken.
-	text = [text stripIRCEffects]; // Do not leave formatting in text to be spoken.
+
+	if ([TPCPreferences removeAllFormatting] == NO) {
+		text = [text stripIRCEffects]; // Do not leave formatting in text to be spoken.
+	}
 
 	NSString *formattedMessage = nil;
 	
@@ -4083,7 +4086,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)receivePrivmsgAndNotice:(IRCMessage *)m
 {
 	NSAssertReturn([m paramsCount] > 1);
-	
+
 	NSString *text = [m paramAt:1];
 
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIdentifyCTCP] && ([text hasPrefix:@"+\x01"] || [text hasPrefix:@"-\x01"])) {
@@ -4092,63 +4095,80 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		text = [text substringFromIndex:1];
 	}
 
-	if ([text hasPrefix:@"\x01"]) {
-		text = [text substringFromIndex:1];
+	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *resultString, BOOL wasEncrypted) {
+		if ([resultString hasPrefix:@"\x01"]) {
+			resultString = [resultString substringFromIndex:1];
 
-		NSInteger n = [text stringPosition:@"\x01"];
+			NSInteger n = [resultString stringPosition:@"\x01"];
 
-		if (n >= 0) {
-			text = [text substringToIndex:n];
-		}
+			if (n >= 0) {
+				resultString = [resultString substringToIndex:n];
+			}
 
-		if ([[m command] isEqualToString:IRCPrivateCommandIndex("privmsg")]) {
-			if ([text hasPrefixIgnoringCase:@"ACTION "]) {
-				text = [text substringFromIndex:7];
+			if ([[m command] isEqualToString:IRCPrivateCommandIndex("privmsg")]) {
+				if ([resultString hasPrefixIgnoringCase:@"ACTION "]) {
+					resultString = [resultString substringFromIndex:7];
 
-				[self receiveText:m command:IRCPrivateCommandIndex("action") text:text];
+					[self receiveText:m command:IRCPrivateCommandIndex("action") text:resultString wasEncrypted:wasEncrypted];
+				} else {
+					[self receiveCTCPQuery:m text:resultString wasEncrypted:wasEncrypted];
+				}
 			} else {
-				[self receiveCTCPQuery:m text:text];
+				[self receiveCTCPReply:m text:resultString wasEncrypted:wasEncrypted];
 			}
 		} else {
-			[self receiveCTCPReply:m text:text];
+			[self receiveText:m command:[m command] text:resultString wasEncrypted:wasEncrypted];
 		}
+	};
+
+	BOOL decryptData = NO;
+
+	NSString *target = [m paramAt:0];
+
+	if ([target isChannelName:self] == NO) {
+		if ([m senderIsServer] == NO) {
+			decryptData = YES;
+		}
+	}
+
+	if (decryptData == NO) {
+		decryptionBlock(text, NO);
 	} else {
-		[self receiveText:m command:[m command] text:text];
+		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[m senderNickname] onClient:self];
+
+		[sharedEncryptionManager() decryptMessage:text from:remoteAccountName to:localAccountName operationCallback:decryptionBlock];
 	}
 }
 
-- (void)receiveText:(IRCMessage *)m command:(NSString *)command text:(NSString *)text
+- (void)receiveText:(IRCMessage *)referenceMessage command:(NSString *)command text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
 {
-	NSAssertReturn([m paramsCount] > 0);
+	NSAssertReturn([referenceMessage paramsCount] > 0);
 
 	NSObjectIsEmptyAssert(command);
-	
-	/* Message type. */
-	TVCLogLineType type = TVCLogLinePrivateMessageType;
-	
+
+	TVCLogLineType type = TVCLogLineUndefinedType;
+
 	if ([command isEqualToString:IRCPrivateCommandIndex("notice")]) {
 		type = TVCLogLineNoticeType;
 	} else if ([command isEqualToString:IRCPrivateCommandIndex("action")]) {
 		type = TVCLogLineActionType;
+	} else {
+		type = TVCLogLinePrivateMessageType;
 	}
 
-	/* Basic validation. */
 	if (type == TVCLogLineActionType) {
 		if (NSObjectIsEmpty(text)) {
-			/* Use a single space if an action is empty. */
-			
 			text = NSStringWhitespacePlaceholder;
 		}
 	} else {
-		/* Allow in actions without a body. */
-		
 		NSObjectIsEmptyAssert(text);
 	}
-	
-	/* Beginw ork. */
-	NSString *sender = [m senderNickname];
 
-	NSString *target = [m paramAt:0];
+	NSString *sender = [referenceMessage senderNickname];
+
+	NSString *target = [referenceMessage paramAt:0];
 
 	/* Operator message? */
 	if ([target length] > 1) {
@@ -4171,8 +4191,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				NSString *validTargetPrefixes = [self.supportInfo channelNamePrefixes];
 
 				if ([validTargetPrefixes contains:nch]) {
-					/* The match is valid, remove prefix character. */
-
 					target = [target substringFromIndex:1];
 				}
 
@@ -4181,13 +4199,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-	/* Ignore dictionary. */
-	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-														withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
-																		IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
-																		IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey,
-																		IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
-																		IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
+	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[referenceMessage senderHostmask]
+															 withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
+																			IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
+																			IRCAddressBookDictionaryValueIgnoreNoticeMessagesKey,
+																			IRCAddressBookDictionaryValueIgnorePublicMessagesKey,
+																			IRCAddressBookDictionaryValueIgnorePrivateMessagesKey	]];
 
 
 	/* Ignore highlights? */
@@ -4199,357 +4216,366 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-	/* Is the target a channel? */
-	if ([target isChannelName:self]) {
-		/* Ignore message? */
-		if ([ignoreChecks ignoreNoticeMessages] && type == TVCLogLineNoticeType) {
+	if (type == TVCLogLineNoticeType) {
+		if ([ignoreChecks ignoreNoticeMessages]) {
 			return;
-		} else if ([ignoreChecks ignorePublicMessages]) {
-			return;
-		}
-
-		/* Does the target exist? */
-		IRCChannel *c = [self findChannel:target];
-
-		PointerIsEmptyAssert(c);
-
-		if (type == TVCLogLineNoticeType) {
-			/* Post notice and inform Growl. */
-
-			[self print:c
-				   type:type
-			   nickname:sender
-			messageBody:text
-			isEncrypted:NO
-			 receivedAt:[m receivedAt]
-				command:[m command]
-	   referenceMessage:m];
-
-			if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-				[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nickname:sender text:text];
-			}
-		} else {
-			/* Post regular message and inform Growl. */
-			
-			[self printToWebView:c
-							type:type
-						 command:[m command]
-						nickname:sender
-					 messageBody:text
-					 isEncrypted:NO
-					  receivedAt:[m receivedAt]
-				referenceMessage:m
-				 completionBlock:^(BOOL isHighlight)
-				{
-					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-						 BOOL postevent = NO;
-						 
-						 if (isHighlight) {
-							 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nickname:sender text:text];
-							 
-							 if (postevent) {
-								 [self setKeywordState:c];
-							 }
-						 } else {
-							 postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nickname:sender text:text];
-						 }
-						 
-						 /* Mark channel as unread. */
-						 if (postevent) {
-							 [self setUnreadState:c isHighlight:isHighlight];
-						 }
-					 } else {
-						 if (isHighlight) {
-							 [self setKeywordState:c];
-						 }
-						 
-						 [self setUnreadState:c isHighlight:isHighlight];
-					 }
-				 }];
-
-			/* Weights. */
-			IRCUser *owner = [c findMember:sender];
-
-			PointerIsEmptyAssert(owner);
-
-			NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
-
-			/* If we are mentioned in this piece of text, then update our weight for the user. */
-			if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
-				[owner outgoingConversation];
-			} else {
-				[owner conversation];
-			}
 		}
 	}
-	else // The target is not a channel.
-	{
-		/* Is the sender a server? */
-		if ([m senderIsServer]) {
-			[self print:nil type:type nickname:nil messageBody:text receivedAt:[m receivedAt] command:[m command]];
+
+	if ([target isChannelName:self]) {
+		if ([ignoreChecks ignorePublicMessages]) {
+			return;
+		}
+
+		[self processPublicMessageComponents:type sender:sender command:command target:target text:text referenceMessage:referenceMessage];
+	} else {
+		if ([referenceMessage senderIsServer]) {
+			[self print:nil type:type nickname:nil messageBody:text receivedAt:[referenceMessage receivedAt] command:[referenceMessage command]];
 		} else {
-			/* Ignore message? */
-			if ([ignoreChecks ignoreNoticeMessages] && type == TVCLogLineNoticeType) {
-				return;
-			} else if ([ignoreChecks ignorePrivateMessages]) {
+			if ([ignoreChecks ignorePrivateMessages]) {
 				return;
 			}
 
-			/* If the self-message CAP is not enabled, we still check if we are on a ZNC
-			 based connections because older versions of ZNC combined with the privmsg
-			 module need the correct behavior which the self-message CAP evolved into. */
-			BOOL isSelfMessage = NO;
-
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] || self.isZNCBouncerConnection == YES) {
-				if ([sender isEqualToString:[self localNickname]]) {
-					isSelfMessage = YES;
-				}
-			}
-
-			/* Does the query for the sender already exist?… */
-			IRCChannel *c = nil;
-
-			if (isSelfMessage == YES) {
-				c = [self findChannel:target]; // Look for a query related to target, rather than sender
-			} else {
-				c = [self findChannel:sender];
-			}
-
-			BOOL newPrivateMessage = NO;
-
-			if (type == TVCLogLineNoticeType) {
-				/* Where do we send a notice if it is not from a server? */
-				if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
-					c = [mainWindow() selectedChannelOn:self];
-				}
-
-				if ([sender isEqualIgnoringCase:@"ChanServ"]) {
-					/* Forward entry messages to the channel they are associated with. */
-					/* Format we are going for: -ChanServ- [#channelname] blah blah… */
-					NSInteger spacePos = [text stringPosition:NSStringWhitespacePlaceholder];
-
-					if ([text hasPrefix:@"["] && spacePos > 3) {
-						NSString *textHead = [text substringToIndex:spacePos];
-
-						if ([textHead hasSuffix:@"]"]) {
-							textHead = [textHead substringToIndex:([textHead length] - 1)]; // Remove the ]
-							textHead = [textHead substringFromIndex:1]; // Remove the [
-
-							if ([textHead isChannelName:self]) {
-								IRCChannel *thisChannel = [self findChannel:textHead];
-
-								if (thisChannel) {
-									text = [text substringFromIndex:([textHead length] + 2)]; // Remove the [#channelname] from the text.'
-
-									c = thisChannel;
-								}
-							}
-						}
-					}
-				} else if ([sender isEqualIgnoringCase:@"NickServ"]) {
-					self.serverHasNickServ = YES;
-					
-                    BOOL continueNickServScan = YES;
-					
-					NSString *cleanedText = text;
-					
-					if ([TPCPreferences removeAllFormatting] == NO) {
-						cleanedText = [cleanedText stripIRCEffects];
-					}
-					
-					if (self.isWaitingForNickServ == NO) {
-						NSString *nicknamePassword = self.config.nicknamePassword;
-						
-						if (NSObjectIsNotEmpty(nicknamePassword)) {
-							for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
-								if ([cleanedText containsIgnoringCase:token]) {
-									continueNickServScan = NO;
-									
-									if ([self.networkAddress hasSuffix:@"dal.net"])
-									{
-										NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
-										
-										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
-									}
-									else if (self.config.sendAuthenticationRequestsToUserServ)
-									{
-										NSString *IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, nicknamePassword];
-										
-										[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", IDMessage, nil];
-									}
-									else
-									{
-										NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
-										
-										[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
-									}
-									
-									self.isWaitingForNickServ = YES;
-									
-									nicknamePassword = nil;
-									
-									break;
-								}
-							}
-						}
-					}
-					
-                    /* Scan for messages telling us that we are now identified. */
-                    if (continueNickServScan) {
-                        for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
-                            if ([cleanedText containsIgnoringCase:token]) {
-                                self.isIdentifiedWithNickServ = YES;
-								self.isWaitingForNickServ = NO;
-                                
-                                if (self.config.autojoinWaitsForNickServ) {
-                                    if (self.isAutojoined == NO && self.autojoinInProgress == NO) {
-                                        [self performAutoJoin];
-                                    }
-                                }
-                            }
-                        }
-                    }
-				}
-				
-				/* Place creation block last so ChanServ entry messages forwarded to a channel
-				 does not create a new private message beforehand. */
-				if (c == nil) {
-					BOOL createNewWindow = YES;
-					
-					if (type == TVCLogLineNoticeType) {
-						if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
-							;
-						} else {
-							createNewWindow = NO;
-						}
-					}
-					
-					if (createNewWindow) {
-						/* Create a private message depending on who the message targetted. */
-
-						if (isSelfMessage) {
-							if (NSObjectIsEmpty(target) == NO) {
-								c = [worldController() createPrivateMessage:target client:self];
-							}
-						} else {
-							if (NSObjectIsEmpty(sender) == NO) {
-								c = [worldController() createPrivateMessage:sender client:self];
-							}
-						}
-					}
-				}
-				
-				/* Post the notice. */
-				[self printToWebView:c
-								type:type
-							 command:[m command]
-							nickname:sender
-						 messageBody:text
-						 isEncrypted:NO
-						  receivedAt:[m receivedAt]
-					referenceMessage:m
-					 completionBlock:^(BOOL isHighlight)
-					{
-						 /* Set the query as unread and inform Growl. */
-						 [self setUnreadState:c];
-						 
-						 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-							 if (isSelfMessage == NO) { // Do not notify for self
-								 [self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nickname:sender text:text];
-							 }
-						 }
-					 }];
-			} else {
-				/* Post regular message and inform Growl. */
-				if (c == nil) {
-					/* Create a private message depending on who the message targetted. */
-
-					if (isSelfMessage) {
-						if (NSObjectIsEmpty(target) == NO) {
-							c = [worldController() createPrivateMessage:target client:self];
-						}
-					} else {
-						if (NSObjectIsEmpty(sender) == NO) {
-							c = [worldController() createPrivateMessage:sender client:self];
-						}
-					}
-
-					newPrivateMessage = YES;
-				}
-				
-				[self printToWebView:c
-								type:type
-							 command:[m command]
-							nickname:sender
-						 messageBody:text
-						 isEncrypted:NO
-						  receivedAt:[m receivedAt]
-					referenceMessage:m
-					 completionBlock:^(BOOL isHighlight)
-					{
-					 if ([self isSafeToPostNotificationForMessage:m inChannel:c]) {
-						 if (isSelfMessage == NO) { // Do not notify for self
-							 BOOL postevent = NO;
-							 
-							 if (isHighlight) {
-								 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nickname:sender text:text];
-								 
-								 if (postevent) {
-									 [self setKeywordState:c];
-								 }
-							 } else {
-								 if (newPrivateMessage) {
-									 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nickname:sender text:text];
-								 } else {
-									 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nickname:sender text:text];
-								 }
-							 }
-							 
-							 /* Mark query as unread. */
-							 if (postevent) {
-								 [self setUnreadState:c isHighlight:isHighlight];
-							 }
-						 } else {
-							 if (isHighlight) {
-								 [self setKeywordState:c];
-							 }
-							 
-							 [self setUnreadState:c isHighlight:isHighlight];
-						 }
-					 } else {
-						 if (isSelfMessage == NO) { // Do not notify for self
-							 if (isHighlight) {
-								 [self setKeywordState:c];
-							 }
-							 
-							 [self setUnreadState:c isHighlight:isHighlight];
-						 }
-					 }
-				}];
-
-				/* Set the query topic to the host of the sender. */
-				/* Internally this is how Textual sets the title of the window. 
-				 It is kind of hackish, but it's really not that bad. */
-				NSString *hostTopic = [m senderHostmask];
-
-				if ([hostTopic isEqualIgnoringCase:[c topic]] == NO) {
-					[c setTopic:hostTopic];
-
-                    [mainWindow() updateTitleFor:c];
-				}
-
-				/* Update query status. */
-				if ([c isActive] == NO) {
-					[c activate];
-
-					[mainWindow() reloadTreeItem:c];
-				}
-			}
+			[self processPrivateMessageComponents:type sender:sender command:command target:target text:text referenceMessage:referenceMessage wasEncrypted:wasEncrypted];
 		}
 	}
 }
 
-- (void)receiveCTCPQuery:(IRCMessage *)m text:(NSString *)text
+- (void)processPublicMessageComponents:(TVCLogLineType)type sender:(NSString *)sender command:(NSString *)command target:(NSString *)target text:(NSString *)text referenceMessage:(IRCMessage *)referenceMessage
+{
+	/* Does the target exist? */
+	IRCChannel *c = [self findChannel:target];
+
+	PointerIsEmptyAssert(c);
+
+	if (type == TVCLogLineNoticeType) {
+		[self print:c
+			   type:type
+		   nickname:sender
+		messageBody:text
+		isEncrypted:NO
+		 receivedAt:[referenceMessage receivedAt]
+			command:[referenceMessage command]
+   referenceMessage:referenceMessage];
+
+		if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
+			[self notifyText:TXNotificationChannelNoticeType lineType:type target:c nickname:sender text:text];
+		}
+	} else {
+		[self printToWebView:c
+						type:type
+					 command:[referenceMessage command]
+					nickname:sender
+				 messageBody:text
+				 isEncrypted:NO
+				  receivedAt:[referenceMessage receivedAt]
+			referenceMessage:referenceMessage
+			 completionBlock:^(BOOL isHighlight)
+		 {
+			 if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
+				 BOOL postevent = NO;
+
+				 if (isHighlight) {
+					 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nickname:sender text:text];
+
+					 if (postevent) {
+						 [self setKeywordState:c];
+					 }
+				 } else {
+					 postevent = [self notifyText:TXNotificationChannelMessageType lineType:type target:c nickname:sender text:text];
+				 }
+
+				 /* Mark channel as unread. */
+				 if (postevent) {
+					 [self setUnreadState:c isHighlight:isHighlight];
+				 }
+			 } else {
+				 if (isHighlight) {
+					 [self setKeywordState:c];
+				 }
+
+				 [self setUnreadState:c isHighlight:isHighlight];
+			 }
+		 }];
+
+		/* Weights. */
+		IRCUser *owner = [c findMember:sender];
+
+		PointerIsEmptyAssert(owner);
+
+		NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
+
+		/* If we are mentioned in this piece of text, then update our weight for the user. */
+		if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
+			[owner outgoingConversation];
+		} else {
+			[owner conversation];
+		}
+	}
+}
+
+- (void)processPrivateMessageComponents:(TVCLogLineType)type sender:(NSString *)sender command:(NSString *)command target:(NSString *)target text:(NSString *)text referenceMessage:(IRCMessage *)referenceMessage wasEncrypted:(BOOL)wasEncrypted
+{
+	/* If the self-message CAP is not enabled, we still check if we are on a ZNC
+	 based connections because older versions of ZNC combined with the privmsg
+	 module need the correct behavior which the self-message CAP evolved into. */
+	BOOL isSelfMessage = NO;
+
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCSelfMessage] || self.isZNCBouncerConnection == YES) {
+		if ([sender isEqualToString:[self localNickname]]) {
+			isSelfMessage = YES;
+		}
+	}
+
+	/* Does the query for the sender already exist?… */
+	IRCChannel *c = nil;
+
+	if (isSelfMessage == YES) {
+		c = [self findChannel:target]; // Look for a query related to target, rather than sender
+	} else {
+		c = [self findChannel:sender];
+	}
+
+	BOOL newPrivateMessage = NO;
+
+	if (type == TVCLogLineNoticeType) {
+		/* Determine where to send notice messages. */
+		if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+			c = [mainWindow() selectedChannelOn:self];
+		}
+
+		/* It is safe to assume that ChanServ and NickServ will not send encrypted data
+		 so we do not make any attempt at this point to decrypt data. Data will be
+		 decrypted when it comes time to print the message. */
+		if ([sender isEqualIgnoringCase:@"ChanServ"])
+		{
+			/* Forward entry messages to the channel they are associated with. */
+			/* Format we are going for: -ChanServ- [#channelname] blah blah… */
+			NSInteger spacePos = [text stringPosition:NSStringWhitespacePlaceholder];
+
+			if ([text hasPrefix:@"["] && spacePos > 3) {
+				NSString *textHead = [text substringToIndex:spacePos];
+
+				if ([textHead hasSuffix:@"]"]) {
+					textHead = [textHead substringToIndex:([textHead length] - 1)]; // Remove the ]
+					textHead = [textHead substringFromIndex:1]; // Remove the [
+
+					if ([textHead isChannelName:self]) {
+						IRCChannel *thisChannel = [self findChannel:textHead];
+
+						if (thisChannel) {
+							text = [text substringFromIndex:([textHead length] + 2)]; // Remove the [#channelname] from the text.'
+
+							c = thisChannel;
+						}
+					}
+				}
+			}
+		}
+		else if ([sender isEqualIgnoringCase:@"NickServ"])
+		{
+			self.serverHasNickServ = YES;
+
+			BOOL continueNickServScan = YES;
+
+			NSString *cleanedText = nil;
+
+			if ([TPCPreferences removeAllFormatting] == NO) {
+				cleanedText = [cleanedText stripIRCEffects];
+			} else {
+				cleanedText = text;
+			}
+
+			if (self.isWaitingForNickServ == NO) {
+				NSString *nicknamePassword = self.config.nicknamePassword;
+
+				if (NSObjectIsNotEmpty(nicknamePassword)) {
+					for (NSString *token in [self nickServSupportedNeedIdentificationTokens]) {
+						if ([cleanedText containsIgnoringCase:token]) {
+							continueNickServScan = NO;
+
+							if ([self.networkAddress hasSuffix:@"dal.net"])
+							{
+								NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
+
+								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ@services.dal.net", IDMessage, nil];
+							}
+							else if (self.config.sendAuthenticationRequestsToUserServ)
+							{
+								NSString *IDMessage = [NSString stringWithFormat:@"login %@ %@", self.config.nickname, nicknamePassword];
+
+								[self send:IRCPrivateCommandIndex("privmsg"), @"userserv", IDMessage, nil];
+							}
+							else
+							{
+								NSString *IDMessage = [NSString stringWithFormat:@"IDENTIFY %@", nicknamePassword];
+
+								[self send:IRCPrivateCommandIndex("privmsg"), @"NickServ", IDMessage, nil];
+							}
+
+							self.isWaitingForNickServ = YES;
+
+							break;
+						}
+					}
+
+					nicknamePassword = nil;
+				}
+			}
+
+			/* Scan for messages telling us that we are now identified. */
+			if (continueNickServScan) {
+				for (NSString *token in [self nickServSupportedSuccessfulIdentificationTokens]) {
+					if ([cleanedText containsIgnoringCase:token]) {
+						self.isIdentifiedWithNickServ = YES;
+						self.isWaitingForNickServ = NO;
+
+						if (self.config.autojoinWaitsForNickServ) {
+							if (self.isAutojoined == NO && self.autojoinInProgress == NO) {
+								[self performAutoJoin];
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/* Place creation block last so ChanServ entry messages forwarded to a channel
+		 does not create a new private message beforehand. */
+		if (c == nil) {
+			BOOL createNewWindow = YES;
+
+			if (type == TVCLogLineNoticeType) {
+				if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
+					;
+				} else {
+					createNewWindow = NO;
+				}
+			}
+
+			if (createNewWindow) {
+				if (isSelfMessage) {
+					if (NSObjectIsEmpty(target) == NO) {
+						c = [worldController() createPrivateMessage:target client:self];
+					}
+				} else {
+					if (NSObjectIsEmpty(sender) == NO) {
+						c = [worldController() createPrivateMessage:sender client:self];
+					}
+				}
+			}
+		}
+
+		/* Post the notice. */
+		[self printToWebView:c
+						type:type
+					 command:[referenceMessage command]
+					nickname:sender
+				 messageBody:text
+				 isEncrypted:wasEncrypted
+				  receivedAt:[referenceMessage receivedAt]
+			referenceMessage:referenceMessage
+			 completionBlock:^(BOOL isHighlight)
+		 {
+			 /* Set the query as unread and inform Growl. */
+			 [self setUnreadState:c];
+
+			 if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
+				 if (isSelfMessage == NO) { // Do not notify for self
+					 [self notifyText:TXNotificationPrivateNoticeType lineType:type target:c nickname:sender text:text];
+				 }
+			 }
+		 }];
+	}
+	else // if statement if message is NOTICE
+	{
+		if (c == nil) {
+			if (isSelfMessage) {
+				if (NSObjectIsEmpty(target) == NO) {
+					c = [worldController() createPrivateMessage:target client:self];
+				}
+			} else {
+				if (NSObjectIsEmpty(sender) == NO) {
+					c = [worldController() createPrivateMessage:sender client:self];
+				}
+			}
+
+			newPrivateMessage = YES;
+		}
+
+		[self printToWebView:c
+						type:type
+					 command:[referenceMessage command]
+					nickname:sender
+				 messageBody:text
+				 isEncrypted:wasEncrypted
+				  receivedAt:[referenceMessage receivedAt]
+			referenceMessage:referenceMessage
+			 completionBlock:^(BOOL isHighlight)
+		 {
+			 if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
+				 if (isSelfMessage == NO) { // Do not notify for self
+					 BOOL postevent = NO;
+
+					 if (isHighlight) {
+						 postevent = [self notifyText:TXNotificationHighlightType lineType:type target:c nickname:sender text:text];
+
+						 if (postevent) {
+							 [self setKeywordState:c];
+						 }
+					 } else {
+						 if (newPrivateMessage) {
+							 postevent = [self notifyText:TXNotificationNewPrivateMessageType lineType:type target:c nickname:sender text:text];
+						 } else {
+							 postevent = [self notifyText:TXNotificationPrivateMessageType lineType:type target:c nickname:sender text:text];
+						 }
+					 }
+
+					 /* Mark query as unread. */
+					 if (postevent) {
+						 [self setUnreadState:c isHighlight:isHighlight];
+					 }
+				 } else {
+					 if (isHighlight) {
+						 [self setKeywordState:c];
+					 }
+
+					 [self setUnreadState:c isHighlight:isHighlight];
+				 }
+			 }
+			 else // is safe to post notification
+			 {
+				 if (isSelfMessage == NO) { // Do not notify for self
+					 if (isHighlight) {
+						 [self setKeywordState:c];
+					 }
+
+					 [self setUnreadState:c isHighlight:isHighlight];
+				 }
+			 }
+			}];
+
+		/* Set the query topic to the host of the sender. */
+		/* Internally this is how Textual sets the title of the window.
+		 It is kind of hackish, but it's really not that bad. */
+		NSString *hostTopic = [referenceMessage senderHostmask];
+
+		if ([hostTopic isEqualIgnoringCase:[c topic]] == NO) {
+			[c setTopic:hostTopic];
+
+			[mainWindow() updateTitleFor:c];
+		}
+
+		/* Update query status. */
+		if ([c isActive] == NO) {
+			[c activate];
+			
+			[mainWindow() reloadTreeItem:c];
+		}
+	}
+}
+
+- (void)receiveCTCPQuery:(IRCMessage *)m text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
 {
 	NSObjectIsEmptyAssert(text);
 
@@ -4661,7 +4687,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (void)receiveCTCPReply:(IRCMessage *)m text:(NSString *)text
+- (void)receiveCTCPReply:(IRCMessage *)m text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
 {
 	NSObjectIsEmptyAssert(text);
 

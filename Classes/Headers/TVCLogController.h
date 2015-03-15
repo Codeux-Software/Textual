@@ -56,8 +56,7 @@
 
 - (void)preferencesChanged;
 
-- (void)noteEncryptionWasEnabled;
-- (void)noteEncryptionWasDisabled;
+- (void)noteEncryptionStateDidChange;
 
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
