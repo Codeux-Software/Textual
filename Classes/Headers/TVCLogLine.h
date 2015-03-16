@@ -51,6 +51,8 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineActionType,
 	TVCLogLineActionNoHighlightType, // Used internally, avoid
 	TVCLogLineCTCPType,
+	TVCLogLineCTCPQueryType,
+	TVCLogLineCTCPReplyType,
 	TVCLogLineDCCFileTransferType,
 	TVCLogLineDebugType,
 	TVCLogLineInviteType,

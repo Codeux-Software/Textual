@@ -530,14 +530,18 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
 {
-	if (tag) {
-		if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-			TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+	if (event == OTRKitMessageEventReceivedMessageUnencrypted) {
+		[self otrKit:otrKit decodedMessage:message wasEncrypted:NO tlvs:nil username:username accountName:accountName protocol:protocol tag:tag];
+	} else {
+		if (tag) {
+			if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
+				TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-			[messageObject setLastEvent:event];
+				[messageObject setLastEvent:event];
 
-			if ([self eventIsErrornous:event]) {
-				[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
+				if ([self eventIsErrornous:event]) {
+					[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
+				}
 			}
 		}
 	}

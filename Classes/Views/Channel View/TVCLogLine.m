@@ -85,6 +85,8 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		_dv(TVCLogLineActionNoHighlightType, @"action")
 		_dv(TVCLogLineActionType, @"action")
 		_dv(TVCLogLineCTCPType, @"ctcp")
+		_dv(TVCLogLineCTCPQueryType, @"ctcp")
+		_dv(TVCLogLineCTCPReplyType, @"ctcp")
 		_dv(TVCLogLineDCCFileTransferType, @"dcc-file-transfer")
 		_dv(TVCLogLineDebugType, @"debug")
 		_dv(TVCLogLineInviteType, @"invite")

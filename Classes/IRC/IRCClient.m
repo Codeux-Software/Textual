@@ -2036,7 +2036,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type];
 
-
 					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 						if (channel) {
 							[self print:channel
@@ -4104,29 +4103,41 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		text = [text substringFromIndex:1];
 	}
 
-	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
-		if ([originalString hasPrefix:@"\x01"]) {
-			originalString = [originalString substringFromIndex:1];
+	TVCLogLineType lineType = TVCLogLineUndefinedType;
 
-			NSInteger n = [originalString stringPosition:@"\x01"];
+	if ([text hasPrefix:@"\x01"]) {
+		text = [text substringFromIndex:1];
 
-			if (n >= 0) {
-				originalString = [originalString substringToIndex:n];
-			}
+		NSInteger n = [text stringPosition:@"\x01"];
 
-			if ([[m command] isEqualToString:IRCPrivateCommandIndex("privmsg")]) {
-				if ([originalString hasPrefixIgnoringCase:@"ACTION "]) {
-					originalString = [originalString substringFromIndex:7];
+		if (n >= 0) {
+			text = [text substringToIndex:n];
+		}
 
-					[self receiveText:m command:IRCPrivateCommandIndex("action") text:originalString wasEncrypted:wasEncrypted];
-				} else {
-					[self receiveCTCPQuery:m text:originalString wasEncrypted:wasEncrypted];
-				}
+		if ([[m command] isEqualToString:IRCPrivateCommandIndex("privmsg")]) {
+			if ([text hasPrefixIgnoringCase:@"ACTION "]) {
+				text = [text substringFromIndex:7];
+
+				lineType = TVCLogLineActionType;
 			} else {
-				[self receiveCTCPReply:m text:originalString wasEncrypted:wasEncrypted];
+				lineType = TVCLogLineCTCPQueryType;
 			}
 		} else {
+			lineType = TVCLogLineCTCPReplyType;
+		}
+	} else {
+		lineType = TVCLogLinePrivateMessageType; // could be notice too, just a placeholder
+	}
+
+	TLOEncryptionManagerEncodingDecodingCallbackBlock decryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
+		if (lineType == TVCLogLinePrivateMessageType) {
 			[self receiveText:m command:[m command] text:originalString wasEncrypted:wasEncrypted];
+		} else if (lineType == TVCLogLineActionType) {
+			[self receiveText:m command:IRCPrivateCommandIndex("action") text:originalString wasEncrypted:wasEncrypted];
+		} else if (lineType == TVCLogLineCTCPQueryType) {
+			[self receiveCTCPQuery:m text:originalString wasEncrypted:wasEncrypted];
+		} else if (lineType == TVCLogLineCTCPReplyType) {
+			[self receiveCTCPReply:m text:originalString wasEncrypted:wasEncrypted];
 		}
 	};
 
@@ -4621,7 +4632,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
 			[self print:target
-				   type:TVCLogLineCTCPType
+				   type:TVCLogLineCTCPQueryType
 			   nickname:nil
 			messageBody:textm
 			 receivedAt:[m receivedAt]
@@ -4726,7 +4737,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	[self print:c
-		   type:TVCLogLineCTCPType
+		   type:TVCLogLineCTCPReplyType
 	   nickname:nil
 	messageBody:text
 	 receivedAt:[m receivedAt]
