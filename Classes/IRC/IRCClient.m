@@ -1696,31 +1696,47 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(target);
 	NSObjectIsEmptyAssert(command);
 
-	NSString *trail = nil;
+	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
+		NSString *trail = nil;
 
-	if (NSObjectIsEmpty(text)) {
-		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
-	} else {
-		trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, text, 0x01];
-	}
+		if (NSObjectIsEmpty(text)) {
+			trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
+		} else {
+			trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, encodedString, 0x01];
+		}
 
-	[self send:IRCPrivateCommandIndex("privmsg"), target, trail, nil];
+		[self send:IRCPrivateCommandIndex("privmsg"), target, trail, nil];
+	};
+
+	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:target onClient:self];
+
+	[sharedEncryptionManager() encryptMessage:text from:localAccountName to:remoteAccountName encodingCallback:nil injectionCallback:injectionBlock];
 }
 
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text
 {
 	NSObjectIsEmptyAssert(target);
 	NSObjectIsEmptyAssert(command);
-	
-	NSString *trail = nil;
 
-	if (NSObjectIsEmpty(text)) {
-		trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
-	} else {
-		trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, text, 0x01];
-	}
+	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
+		NSString *trail = nil;
 
-	[self send:IRCPrivateCommandIndex("notice"), target, trail, nil];
+		if (NSObjectIsEmpty(text)) {
+			trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
+		} else {
+			trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, encodedString, 0x01];
+		}
+
+		[self send:IRCPrivateCommandIndex("notice"), target, trail, nil];
+	};
+
+	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:target onClient:self];
+
+	[sharedEncryptionManager() encryptMessage:text from:localAccountName to:remoteAccountName encodingCallback:nil injectionCallback:injectionBlock];
 }
 
 - (void)sendCTCPPing:(NSString *)target
@@ -4635,6 +4651,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				   type:TVCLogLineCTCPQueryType
 			   nickname:nil
 			messageBody:textm
+			isEncrypted:wasEncrypted
 			 receivedAt:[m receivedAt]
 				command:[m command]];
 		}
@@ -4740,6 +4757,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		   type:TVCLogLineCTCPReplyType
 	   nickname:nil
 	messageBody:text
+	isEncrypted:wasEncrypted
 	 receivedAt:[m receivedAt]
 		command:[m command]];
 }
