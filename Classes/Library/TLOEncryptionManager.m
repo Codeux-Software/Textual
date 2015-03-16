@@ -376,7 +376,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 		[client print:channel
 				 type:TVCLogLineOffTheRecordEncryptionStatusType
 			 nickname:nil
-		  messageBody:message command:TVCLogLineDefaultRawCommandValue];
+		  messageBody:message
+			  command:TVCLogLineDefaultRawCommandValue];
 	}];
 }
 
