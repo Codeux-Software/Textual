@@ -974,6 +974,27 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 }
 
 #pragma mark -
+#pragma mark Encryption and Decryption
+
+- (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
+{
+	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
+
+	[sharedEncryptionManager() encryptMessage:messageBody from:localAccountName to:remoteAccountName encodingCallback:encodingCallback injectionCallback:injectionCallback];
+}
+
+- (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
+{
+	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
+
+	[sharedEncryptionManager() decryptMessage:messageBody from:remoteAccountName to:localAccountName decodingCallback:decodingCallback];
+}
+
+#pragma mark -
 #pragma mark Growl
 
 /* Spoken events are only called from within the following calls so we are going to 
@@ -1643,11 +1664,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 				injectionBlock(unencryptedMessage);
 			} else {
-				NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-				NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[channel name] onClient:self];
-
-				[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName encodingCallback:encryptionBlock injectionCallback:injectionBlock];
+				[self encryptMessage:unencryptedMessage directedAt:[channel name] encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 			}
 		}
 	}
@@ -1708,11 +1725,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self send:IRCPrivateCommandIndex("privmsg"), target, trail, nil];
 	};
 
-	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:target onClient:self];
-
-	[sharedEncryptionManager() encryptMessage:text from:localAccountName to:remoteAccountName encodingCallback:nil injectionCallback:injectionBlock];
+	if (text == nil) {
+		[self encryptMessage:NSStringEmptyPlaceholder directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	} else {
+		[self encryptMessage:text directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	}
 }
 
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text
@@ -1732,11 +1749,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self send:IRCPrivateCommandIndex("notice"), target, trail, nil];
 	};
 
-	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:target onClient:self];
-
-	[sharedEncryptionManager() encryptMessage:text from:localAccountName to:remoteAccountName encodingCallback:nil injectionCallback:injectionBlock];
+	if (text == nil) {
+		[self encryptMessage:NSStringEmptyPlaceholder directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	} else {
+		[self encryptMessage:text directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	}
 }
 
 - (void)sendCTCPPing:(NSString *)target
@@ -2101,11 +2118,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 						injectionBlock(unencryptedMessage);
 					} else {
-						NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-						NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[channel name] onClient:self];
-
-						[sharedEncryptionManager() encryptMessage:unencryptedMessage from:localAccountName to:remoteAccountName encodingCallback:encryptionBlock injectionCallback:injectionBlock];
+						[self encryptMessage:unencryptedMessage directedAt:[channel name] encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 					}
 
 					/* Focus message destination? */
@@ -4170,11 +4183,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if (decryptData == NO) {
 		decryptionBlock(text, NO);
 	} else {
-		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[m senderNickname] onClient:self];
-
-		[sharedEncryptionManager() decryptMessage:text from:remoteAccountName to:localAccountName decodingCallback:decryptionBlock];
+		[self decryptMessage:text directedAt:[m senderNickname] decodingCallback:decryptionBlock];
 	}
 }
 

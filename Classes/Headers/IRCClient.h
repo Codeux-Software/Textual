@@ -97,6 +97,8 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 
+#import "TLOEncryptionManager.h"
+
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
@@ -216,6 +218,9 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
+
+- (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
+- (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)mode;
