@@ -5,9 +5,6 @@
       location = "container:Main Project (Textual).xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Resources/Plugins/Blowfish Key Control/Blowfish Key Control Extension.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
    </FileRef>
    <FileRef
