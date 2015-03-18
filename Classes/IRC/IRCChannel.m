@@ -231,15 +231,20 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[self reopenLogFileIfNeeded];
 }
 
+- (BOOL)isEncrypted
+{
+	return (self.encryptionState == OTRKitMessageStateEncrypted);
+}
+
 - (void)noteEncryptionStateDidChange
 {
-	[[self viewController] noteEncryptionStateDidChange];
+	[[self viewController] setViewIsEncrypted:[self isEncrypted]];
 }
 
 - (void)closeOpenEncryptionSessions
 {
 	if ([sharedEncryptionManager() usesWeakCiphers] == NO) {
-		if (self.encryptionState == OTRKitMessageStateEncrypted) {
+		if ([self isEncrypted]) {
 			IRCClient *u = [self associatedClient];
 
 			NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[self name] onClient:u];

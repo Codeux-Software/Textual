@@ -44,7 +44,6 @@
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL windowScriptObjectLoaded;
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
-@property (nonatomic, assign) BOOL viewIsEncrypted;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
@@ -79,8 +78,6 @@
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;
-
-		self.viewIsEncrypted = NO;
 	}
 
 	return self;
@@ -115,25 +112,6 @@
 	[self.webView setUIDelegate:nil];
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-}
-
-#pragma mark -
-#pragma mark Encryption Information
-
-- (BOOL)isViewIsEncrypted
-{
-	return NO;
-}
-
-- (void)noteEncryptionStateDidChange
-{
-	if (self.associatedChannel) {
-		self.viewIsEncrypted = ([self.associatedChannel encryptionState] == OTRKitMessageStateEncrypted);
-
-		if (self.viewIsEncrypted) {
-			[self closeHistoricLog];
-		}
-	}
 }
 
 #pragma mark -
@@ -181,9 +159,6 @@
 	[self.webView setShouldUpdateWhileOffscreen:NO];
 	
 	[self.webView setHostWindow:mainWindow()];
-
-	/* Define additional context information. */
-	self.viewIsEncrypted = [self isViewIsEncrypted];
 	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
@@ -267,6 +242,17 @@
 
 		if (self.maximumLineCount > 0 && self.activeLineCount > self.maximumLineCount) {
 			[self setNeedsLimitNumberOfLines];
+		}
+	}
+}
+
+- (void)setViewIsEncrypted:(BOOL)viewIsEncrypted
+{
+	if (NSDissimilarObjects(_viewIsEncrypted, viewIsEncrypted)) {
+		_viewIsEncrypted = viewIsEncrypted;
+
+		if (viewIsEncrypted) {
+			[self closeHistoricLog];
 		}
 	}
 }
