@@ -96,6 +96,9 @@ typedef unsigned long long						TXUnsignedLongLong;
 /* Empty block for cleaner paramaters. */
 typedef void (^TXEmtpyBlockDataType)(void);
 
+/* Include a forced lifespan for beta builds. */
+// #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+
 /* Standard out logging. */
 /* It is recommended to always use these calls above plain-ol' NSLog. */
 #ifdef DEBUG
