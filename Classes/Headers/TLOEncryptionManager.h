@@ -77,3 +77,21 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 					to:(NSString *)messageTo
 	  decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 @end
+
+/* The “weak ciphers” addition exists for backwards compatibility. */
+/* It existence does not weaken Textual’s Off-the-Record implementation. */
+/* It exists for Textual's "FiSH" plugin to hook into the encryption
+ manager to accept encryption responsibilities when the user has a need
+ to use those tools because of applications that do not support OTR. */
+/* The weak cipher manager must be set before TLOEncryptionManager has
+ been constructed so that TLOEncryptionManager knows not to hook into
+ any features of Off-the-Record. Trying to set the weak cipher manager
+ after the class is constructed with throw an exception. */
+/* When set, all calls to -encryptMessage: and -decryptMessage: are
+ proxied  through to the “weak cipher manager” */
+
+@interface TLOEncryptionManager (TLOEncryptionManagerWeakCiphers)
+- (BOOL)usesWeakCiphers;
+
++ (void)setWeakCipherManager:(id)weakCipherManager;
+@end

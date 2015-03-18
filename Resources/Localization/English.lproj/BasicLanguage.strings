@@ -694,7 +694,17 @@
 "BasicLanguage[1257]" = "Error: This command can only be performed within a query (private message)";
 "BasicLanguage[1258]" = "Error: Invalid syntax";
 "BasicLanguage[1261]" = "Error: There are no fingerprints in use by the Off-the-Record Messaging library.";
+"BasicLanguage[1264]" = "Error: Off-the-Record Messaging is not available at this time.";
 
-/* Next unusued key: 1263 */
+
+
+
+
+
+
+
+
+
+/* Next unusued key: 1265 */
 
 

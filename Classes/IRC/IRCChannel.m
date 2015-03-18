@@ -238,14 +238,16 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)closeOpenEncryptionSessions
 {
-	if (self.encryptionState == OTRKitMessageStateEncrypted) {
-		IRCClient *u = [self associatedClient];
+	if ([sharedEncryptionManager() usesWeakCiphers] == NO) {
+		if (self.encryptionState == OTRKitMessageStateEncrypted) {
+			IRCClient *u = [self associatedClient];
 
-		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[self name] onClient:u];
+			NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[self name] onClient:u];
 
-		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
+			NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
 
-		[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
+			[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
+		}
 	}
 }
 

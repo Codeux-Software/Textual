@@ -51,6 +51,16 @@
 @property (nonatomic, assign) OTRKitMessageEvent lastEvent;
 @end
 
+static BOOL _classInitiated = NO;
+
+#define _cancelCallForWeakCiphersVoid			if ([self usesWeakCiphers]) {			\
+													return;								\
+												}
+
+#define _cancelCallForWeakCiphersReturn(r)		if ([self usesWeakCiphers]) {			\
+													return (r);							\
+												}
+
 @implementation TLOEncryptionManager
 
 #pragma mark -
@@ -59,6 +69,8 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
+		_classInitiated = YES;
+
 		[self setupEncryptionManager];
 
 		return self;
@@ -82,6 +94,8 @@
 
 - (void)setupEncryptionManager
 {
+	_cancelCallForWeakCiphersVoid
+
 	OTRKit *otrKit = [OTRKit sharedInstance];
 
 	[otrKit setDelegate:self];
@@ -133,6 +147,8 @@
 
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client
 {
+	_cancelCallForWeakCiphersReturn(nil)
+
 	/* A common theme of this class is an extensive use of asserts. Encryption is very
 	 serious so we fail at any hint of a bad input value so that the end user does not
 	 suffer by software doing something it should not. */
@@ -145,6 +161,8 @@
 
 - (NSString *)nicknameFromAccountName:(NSString *)accountName
 {
+	_cancelCallForWeakCiphersReturn(nil)
+
 	NSString *nickname = [[OTRKit sharedInstance] leftPortionOfAccountName:accountName];
 
 	return nickname;
@@ -152,6 +170,8 @@
 
 - (IRCClient *)connectionFromAccountName:(NSString *)accountName
 {
+	_cancelCallForWeakCiphersReturn(nil)
+
 	NSString *clientIdentifier = [[OTRKit sharedInstance] rightPortionOfAccountName:accountName];
 
 	return [worldController() findClientById:clientIdentifier];
@@ -162,6 +182,8 @@
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
+	_cancelCallForWeakCiphersVoid
+
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
 
@@ -172,6 +194,8 @@
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
+	_cancelCallForWeakCiphersVoid
+
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
 
@@ -182,6 +206,8 @@
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
+	_cancelCallForWeakCiphersVoid
+
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
 
@@ -204,6 +230,8 @@
 
 - (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom
 {
+	_cancelCallForWeakCiphersVoid
+
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
 
@@ -233,19 +261,25 @@
 	NSParameterAssert(messageFrom != nil);
 	NSParameterAssert(messageBody != nil);
 
-	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	if ([self usesWeakCiphers]) {
+		if ([[self weakCipherManager] respondsToSelector:@selector(decryptMessage:from:to:decodingCallback:)]) {
+			[[self weakCipherManager] decryptMessage:messageTo from:messageFrom to:messageTo decodingCallback:decodingCallback];
+		}
+	} else {
+		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+		[messageObject setMessageTo:messageTo];
+		[messageObject setMessageFrom:messageFrom];
+		[messageObject setMessageBody:messageBody];
 
-	[messageObject setEncodingCallback:decodingCallback];
+		[messageObject setEncodingCallback:decodingCallback];
 
-	[[OTRKit sharedInstance] decodeMessage:messageBody
-								  username:messageFrom
-							   accountName:messageTo
-								  protocol:[self otrKitProtocol]
-									   tag:messageObject];
+		[[OTRKit sharedInstance] decodeMessage:messageBody
+									  username:messageFrom
+								   accountName:messageTo
+									  protocol:[self otrKitProtocol]
+										   tag:messageObject];
+	}
 }
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
@@ -254,21 +288,27 @@
 	NSParameterAssert(messageFrom != nil);
 	NSParameterAssert(messageBody != nil);
 
-	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	if ([self usesWeakCiphers]) {
+		if ([[self weakCipherManager] respondsToSelector:@selector(encryptMessage:from:to:encodingCallback:injectionCallback:)]) {
+			[[self weakCipherManager] encryptMessage:messageBody from:messageFrom to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
+		}
+	} else {
+		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+		[messageObject setMessageTo:messageTo];
+		[messageObject setMessageFrom:messageFrom];
+		[messageObject setMessageBody:messageBody];
 
-	[messageObject setEncodingCallback:encodingCallback];
-	[messageObject setInjectionCallback:injectionCallback];
+		[messageObject setEncodingCallback:encodingCallback];
+		[messageObject setInjectionCallback:injectionCallback];
 
-	[[OTRKit sharedInstance] encodeMessage:messageBody
-									  tlvs:nil
-								  username:messageTo
-							   accountName:messageFrom
-								  protocol:[self otrKitProtocol]
-									   tag:messageObject];
+		[[OTRKit sharedInstance] encodeMessage:messageBody
+										  tlvs:nil
+									  username:messageTo
+								   accountName:messageFrom
+									  protocol:[self otrKitProtocol]
+										   tag:messageObject];
+	}
 }
 
 #pragma mark -
@@ -554,6 +594,34 @@
 - (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
 {
 	;
+}
+
+#pragma mark -
+#pragma mark Weak Cipher Manager
+
+__weak static id _weakCipherManager = nil;
+
+static BOOL _weakCipherInUse = NO;
+
+- (id)weakCipherManager
+{
+	return _weakCipherManager;
+}
+
++ (void)setWeakCipherManager:(id)weakCipherManager
+{
+	if (_classInitiated) {
+		NSAssert(NO, @"Method called after TLOEncryptionManager was initialized.");
+	} else {
+		_weakCipherManager = weakCipherManager;
+
+		_weakCipherInUse = YES;
+	}
+}
+
+- (BOOL)usesWeakCiphers
+{
+	return _weakCipherInUse;
 }
 
 @end

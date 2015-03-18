@@ -978,20 +978,34 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+	if ([sharedEncryptionManager() usesWeakCiphers])
+	{
+		[sharedEncryptionManager() encryptMessage:messageBody from:[self localNickname] to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
+	}
+	else
+	{
+		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
 
-	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
+		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
 
-	[sharedEncryptionManager() encryptMessage:messageBody from:localAccountName to:remoteAccountName encodingCallback:encodingCallback injectionCallback:injectionCallback];
+		[sharedEncryptionManager() encryptMessage:messageBody from:localAccountName to:remoteAccountName encodingCallback:encodingCallback injectionCallback:injectionCallback];
+	}
 }
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+	if ([sharedEncryptionManager() usesWeakCiphers])
+	{
+		[sharedEncryptionManager() decryptMessage:messageBody from:[self localNickname] to:messageTo decodingCallback:decodingCallback];
+	}
+	else
+	{
+		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
 
-	NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
+		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
 
-	[sharedEncryptionManager() decryptMessage:messageBody from:remoteAccountName to:localAccountName decodingCallback:decodingCallback];
+		[sharedEncryptionManager() decryptMessage:messageBody from:remoteAccountName to:localAccountName decodingCallback:decodingCallback];
+	}
 }
 
 #pragma mark -
@@ -3218,6 +3232,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 5102: // Command: OTR
 		{
+			if ([sharedEncryptionManager() usesWeakCiphers]) {
+				[self printDebugInformation:BLS(1264)];
+
+				break;
+			}
+
 			if (NSObjectIsEmpty(uncutInput)) {
 				[self printDebugInformation:BLS(1258)];
 
