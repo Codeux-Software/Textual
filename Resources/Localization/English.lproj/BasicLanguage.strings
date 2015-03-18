@@ -686,6 +686,8 @@
 "BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized ";
 "BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
+"BasicLanguage[1263]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not in session.";
+
 "BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
 /* Errors related to the /OTR/ command */
@@ -693,6 +695,6 @@
 "BasicLanguage[1258]" = "Error: Invalid syntax";
 "BasicLanguage[1261]" = "Error: There are no fingerprints in use by the Off-the-Record Messaging library.";
 
-/* Next unusued key: 1262 */
+/* Next unusued key: 1263 */
 
 

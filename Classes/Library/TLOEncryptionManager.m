@@ -207,13 +207,21 @@
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
 
-	[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
-													 accountName:messageFrom
-														protocol:[self otrKitProtocol]
-														callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
-	{
-		[self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
-	}];
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStateEncrypted) {
+		[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
+														 accountName:messageFrom
+															protocol:[self otrKitProtocol]
+															callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
+		 {
+			 [self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
+		 }];
+	} else {
+		[self presentErrorMessage:BLS(1263) withAccountName:messageTo];
+	}
 }
 
 #pragma mark -
