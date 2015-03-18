@@ -37,12 +37,7 @@
 
 #import "TextualApplication.h"
 
-#define notEqual		!=
-
-#define _accountNameSeparatorSequence		@"@"
-
-NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification = @"TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification";
-NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification = @"TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification";
+#import <EncryptionKit/OTRKitAuthenticationDialog.h>
 
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
 // Properties that should be manipulated to provide context information
@@ -90,6 +85,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	OTRKit *otrKit = [OTRKit sharedInstance];
 
 	[otrKit setDelegate:self];
+
+	[otrKit setAccountNameSeparator:@"@"];
 
 	[otrKit setupWithDataPath:[self pathToStoreEncryptionSecrets]];
 
@@ -140,41 +137,22 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 	 serious so we fail at any hint of a bad input value so that the end user does not
 	 suffer by software doing something it should not. */
 
-	NSParameterAssert(client notEqual nil);
-	NSParameterAssert(nickname notEqual nil);
+	NSParameterAssert(client != nil);
+	NSParameterAssert(nickname != nil);
 
-	return [NSString stringWithFormat:@"%@%@%@", nickname, _accountNameSeparatorSequence, [client uniqueIdentifier]];
+	return [NSString stringWithFormat:@"%@%@%@", nickname, [[OTRKit sharedInstance] accountNameSeparator], [client uniqueIdentifier]];
 }
 
 - (NSString *)nicknameFromAccountName:(NSString *)accountName
 {
-	NSParameterAssert(accountName notEqual nil);
-
-	NSRange sequenceRange = [accountName rangeOfString:_accountNameSeparatorSequence options:NSBackwardsSearch];
-
-	NSInteger sliceRange = sequenceRange.location;
-
-	NSAssert((sliceRange > 0), @"Bad accountName value");
-	NSAssert((sliceRange notEqual NSNotFound), @"Bad accountName value");
-
-	NSString *nickname = [accountName substringToIndex:sliceRange];
+	NSString *nickname = [[OTRKit sharedInstance] leftPortionOfAccountName:accountName];
 
 	return nickname;
 }
 
 - (IRCClient *)connectionFromAccountName:(NSString *)accountName
 {
-	NSParameterAssert(accountName notEqual nil);
-
-	NSRange sequenceRange = [accountName rangeOfString:_accountNameSeparatorSequence options:NSBackwardsSearch];
-
-	NSInteger sliceRange = (sequenceRange.location + [_accountNameSeparatorSequence length]);
-
-	NSAssert((sliceRange > 0), @"Bad accountName value");
-	NSAssert((sliceRange < [accountName length]), @"Bad accountName value");
-	NSAssert((sequenceRange.location notEqual NSNotFound), @"Bad accountName value");
-
-	NSString *clientIdentifier = [accountName substringFromIndex:sliceRange];
+	NSString *clientIdentifier = [[OTRKit sharedInstance] rightPortionOfAccountName:accountName];
 
 	return [worldController() findClientById:clientIdentifier];
 }
@@ -184,8 +162,8 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
 												accountName:messageFrom
@@ -194,52 +172,48 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
 											   accountName:messageFrom
 												  protocol:[self otrKitProtocol]];
 }
 
+- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+
+	[self presentMessage:BLS(1260) withAccountName:messageTo];
+
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStateEncrypted) {
+		[self endConversationWith:messageTo from:messageFrom];
+	}
+
+	[self beginConversationWith:messageTo from:messageFrom];
+
+}
+
 #pragma mark -
 #pragma mark Socialist Millionaire
 
-- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret
+- (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self sendSocialistMillionaireProblem:messageTo from:messageFrom secret:problemSecret question:nil];
-}
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
-- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret question:(NSString *)problemQuestion
-{
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
-	NSParameterAssert(problemSecret notEqual nil);
-
-	if (problemQuestion == nil) {
-		[[OTRKit sharedInstance] initiateSMPForUsername:messageTo
-											accountName:messageFrom
-											   protocol:[self otrKitProtocol]
-												 secret:problemSecret];
-	} else {
-		[[OTRKit sharedInstance] initiateSMPForUsername:messageTo
-											accountName:messageFrom
-											   protocol:[self otrKitProtocol]
-											   question:problemQuestion
-												 secret:problemSecret];
-	}
-}
-
-- (void)replyToSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret
-{
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
-	NSParameterAssert(problemSecret notEqual nil);
-
-	[[OTRKit sharedInstance] respondToSMPForUsername:messageTo
-										 accountName:messageFrom
-											protocol:[self otrKitProtocol]
-											  secret:problemSecret];
+	[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
+													 accountName:messageFrom
+														protocol:[self otrKitProtocol]
+														callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
+	{
+		[self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
+	}];
 }
 
 #pragma mark -
@@ -247,9 +221,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
-	NSParameterAssert(messageBody notEqual nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(messageBody != nil);
 
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
@@ -268,9 +242,9 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-	NSParameterAssert(messageTo notEqual nil);
-	NSParameterAssert(messageFrom notEqual nil);
-	NSParameterAssert(messageBody notEqual nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(messageBody != nil);
 
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
@@ -316,21 +290,21 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 #define _dv(event, localInt)		case (event): { localeKey = (localInt); break; }
 
 	switch (event) {
-			_dv(OTRKitMessageEventEncryptionRequired,				@"01")
-			_dv(OTRKitMessageEventEncryptionError,					@"02")
-			_dv(OTRKitMessageEventConnectionEnded,					@"03")
-			_dv(OTRKitMessageEventSetupError,						@"04")
-			_dv(OTRKitMessageEventMessageReflected,					@"05")
-			_dv(OTRKitMessageEventMessageResent,					@"06")
-			_dv(OTRKitMessageEventReceivedMessageNotInPrivate,		@"07")
-			_dv(OTRKitMessageEventReceivedMessageUnreadable,		@"08")
-			_dv(OTRKitMessageEventReceivedMessageMalformed,			@"09")
-			_dv(OTRKitMessageEventLogHeartbeatReceived,				@"10")
-			_dv(OTRKitMessageEventLogHeartbeatSent,					@"11")
-			_dv(OTRKitMessageEventReceivedMessageGeneralError,		@"12")
-			_dv(OTRKitMessageEventReceivedMessageUnencrypted,		@"13")
-			_dv(OTRKitMessageEventReceivedMessageUnrecognized,		@"14")
-			_dv(OTRKitMessageEventReceivedMessageForOtherInstance,	@"15")
+		_dv(OTRKitMessageEventEncryptionRequired,				@"01")
+		_dv(OTRKitMessageEventEncryptionError,					@"02")
+		_dv(OTRKitMessageEventConnectionEnded,					@"03")
+		_dv(OTRKitMessageEventSetupError,						@"04")
+		_dv(OTRKitMessageEventMessageReflected,					@"05")
+		_dv(OTRKitMessageEventMessageResent,					@"06")
+		_dv(OTRKitMessageEventReceivedMessageNotInPrivate,		@"07")
+		_dv(OTRKitMessageEventReceivedMessageUnreadable,		@"08")
+		_dv(OTRKitMessageEventReceivedMessageMalformed,			@"09")
+		_dv(OTRKitMessageEventLogHeartbeatReceived,				@"10")
+		_dv(OTRKitMessageEventLogHeartbeatSent,					@"11")
+		_dv(OTRKitMessageEventReceivedMessageGeneralError,		@"12")
+		_dv(OTRKitMessageEventReceivedMessageUnencrypted,		@"13")
+		_dv(OTRKitMessageEventReceivedMessageUnrecognized,		@"14")
+		_dv(OTRKitMessageEventReceivedMessageForOtherInstance,	@"15")
 
 		default:
 		{
@@ -384,6 +358,17 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 - (void)presentErrorMessage:(NSString *)errorMessage withAccountName:(NSString *)accountName
 {
 	[self presentMessage:errorMessage withAccountName:accountName];
+}
+
+- (void)authenticationStatusChangedForAccountName:(NSString *)accountName isVerified:(BOOL)isVerified
+{
+	NSString *nickname = [self nicknameFromAccountName:accountName];
+
+	if (isVerified) {
+		[self presentMessage:TXTLS(@"BasingLanguage[1259][01]", nickname) withAccountName:accountName];
+	} else {
+		[self presentMessage:TXTLS(@"BasingLanguage[1259][02]", nickname) withAccountName:accountName];
+	}
 }
 
 #pragma mark -
@@ -520,12 +505,18 @@ NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification =
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	LogToConsole(@"-");
+	[OTRKitAuthenticationDialog showFingerprintConfirmationForUsername:username
+														   accountName:accountName
+															  protocol:protocol
+															  callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
+	 {
+		[self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
+	}];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	LogToConsole(@"-");
+	[OTRKitAuthenticationDialog handleAuthenticationRequest:event progress:progress question:question username:username accountName:accountName protocol:protocol];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error

@@ -3100,7 +3100,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if (NSObjectIsEmpty(uncutInput)) {
 				[self printDebugInformation:BLS(1033)];
 
-				return;
+				break;
 			}
 
 			/* Begin processing input. */
@@ -3214,6 +3214,78 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				}
 			}
 
+			break;
+		}
+		case 5102: // Command: OTR
+		{
+			if (NSObjectIsEmpty(uncutInput)) {
+				[self printDebugInformation:BLS(1258)];
+
+				break;
+			}
+
+			if (selChannel == nil || [selChannel isPrivateMessage] == NO) {
+				[self printDebugInformation:BLS(1257)];
+
+				break;
+			}
+
+			NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+
+			NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[selChannel name] onClient:self];
+
+			NSString *section1 = [s getTokenAsString];
+
+			if (NSObjectsAreEqual(section1, @"auth"))
+			{
+				[sharedEncryptionManager() authenticateUser:remoteAccountName from:localAccountName];
+			}
+			else if (NSObjectsAreEqual(section1, @"close"))
+			{
+				[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
+			}
+			else if (NSObjectsAreEqual(section1, @"refresh"))
+			{
+				[sharedEncryptionManager() refreshConversationWith:remoteAccountName from:localAccountName];
+			}
+			else if (NSObjectsAreEqual(section1, @"fingerprints"))
+			{
+				NSArray *fingersprints = [[OTRKit sharedInstance] requestAllFingerprints];
+
+				if ([fingersprints count] <= 0) {
+					[self printDebugInformation:BLS(1261)];
+
+					break;
+				}
+
+				[self printDebugInformation:@"-----------------------------------------------"];
+
+				for (NSDictionary *fingerprint in fingersprints) {
+					@autoreleasepool {
+						NSString *remoteAccountName = fingerprint[kOTRKitUsernameKey];
+						NSString *localAccountName = fingerprint[kOTRKitAccountNameKey];
+						NSString *fingerprintValue = fingerprint[kOTRKitFingerprintKey];
+
+						BOOL isTrusted = [fingerprint[kOTRKitTrustKey] boolValue];
+
+						NSString *isTrustedString = nil;
+
+						if (isTrusted) {
+							isTrustedString = @"YES";
+						} else {
+							isTrustedString = @"NO";
+						}
+
+						[self printDebugInformation:[NSString stringWithFormat:@"\tRemote Account Name: %@", remoteAccountName]];
+						[self printDebugInformation:[NSString stringWithFormat:@"\tLocal Account Name: %@", localAccountName]];
+						[self printDebugInformation:[NSString stringWithFormat:@"\tFingerprint: %@", fingerprintValue]];
+						[self printDebugInformation:[NSString stringWithFormat:@"\tTrusted: %@", isTrustedString]];
+
+						[self printDebugInformation:@"-----------------------------------------------"];
+					}
+				}
+			}
+			
 			break;
 		}
 		default:

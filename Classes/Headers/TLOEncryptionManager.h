@@ -46,9 +46,6 @@
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
-TEXTUAL_EXTERN NSString * const TLOEncryptionManagerWillStartGeneratingPrivateKeyNotification;
-TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKeyNotification;
-
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate>
 /* Returns unique "account name" used for messageFrom and messageTo parameters. */
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;
@@ -59,13 +56,11 @@ TEXTUAL_EXTERN NSString * const TLOEncryptionManagerDidFinishGeneratingPrivateKe
 
 /* Begin and end an encrypted conversation with a user. */
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
+- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
 
 /* Socialist Millionaire Problem <http://en.wikipedia.org/wiki/Socialist_millionaire> */
-- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
-- (void)sendSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret question:(NSString *)problemQuestion;
-
-- (void)replyToSocialistMillionaireProblem:(NSString *)messageTo from:(NSString *)messageFrom secret:(NSString *)problemSecret;
+- (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom;
 
 /* Define configuration options */
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;

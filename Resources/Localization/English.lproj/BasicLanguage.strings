@@ -647,11 +647,16 @@
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
-/* Off-the-Record Messaging. */
-"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with UNVERIFIED user.";
-"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Private conversation started with verified user.";
+/* Off-the-Record Messaging status messages */
+"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with UNTRUSTED user.";
+"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Private conversation started with trusted user.";
+
+"BasingLanguage[1259][01]" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
+"BasingLanguage[1259][02]" = "Off-the-Record Messaging: %@ FAILED to confirm their identity.";
 
 "BasicLanguage[1256]" = "Off-the-Record Messaging: Private conversation has been closed.";
+
+"BasicLanguage[1260]" = "Off-the-Record Messaging: Attempting to refresh the conversation…";
 
 "BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out.";
 "BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
@@ -671,6 +676,11 @@
 
 "BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
-/* Next unusued key: 1257 */
+/* Errors related to the /OTR/ command */
+"BasicLanguage[1257]" = "Error: This command can only be performed within a query (private message)";
+"BasicLanguage[1258]" = "Error: Invalid syntax";
+"BasicLanguage[1261]" = "Error: There are no fingerprints in use by the Off-the-Record Messaging library.";
+
+/* Next unusued key: 1262 */
 
 
