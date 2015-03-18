@@ -648,8 +648,8 @@
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
 /* Off-the-Record Messaging status messages */
-"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with UNTRUSTED user.";
-"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Private conversation started with trusted user.";
+"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user.";
+"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Private conversation started with a recognized user.";
 
 "BasingLanguage[1259][01]" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
 "BasingLanguage[1259][02]" = "Off-the-Record Messaging: %@ FAILED to confirm their identity.";
