@@ -469,26 +469,21 @@
 		[channel setEncryptionState:messageState];
 	}];
 
-	NSString *statusChangedMessage = nil;
-
 	if (messageState ==  OTRKitMessageStateEncrypted) {
 		BOOL isVerified = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:username
 																			  accountName:accountName
 																				 protocol:[self otrKitProtocol]];
 
 		if (isVerified) {
-			statusChangedMessage = @"BasicLanguage[1253][02]";
+			[self presentMessage:TXTLS(@"BasicLanguage[1253][03]") withAccountName:username];
 		} else {
-			statusChangedMessage = @"BasicLanguage[1253][01]";
+			[self presentMessage:TXTLS(@"BasicLanguage[1253][01]") withAccountName:username];
+			[self presentMessage:TXTLS(@"BasicLanguage[1253][02]") withAccountName:username];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
 	{
-		statusChangedMessage = @"BasicLanguage[1256]";
-	}
-
-	if (statusChangedMessage) {
-		[self presentMessage:TXTLS(statusChangedMessage) withAccountName:username];
+		[self presentMessage:TXTLS(@"BasicLanguage[1256]") withAccountName:username];
 	}
 }
 
