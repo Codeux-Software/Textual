@@ -79,42 +79,6 @@
 	[self.informationalTitle setStringValue:messageTitle];
 
 	self.completionBlock = callbackBlock;
-
-	[self runModal];
-}
-
-- (NSFont *)informativeTextFont
-{
-	return [NSFont boldSystemFontOfSize:11.0];
-}
-
-- (void)runModal
-{
-	/* The following math dynamically resizes the dialog window and informational
-	 text view based on any value provided to the modal. It is actually very complex,
-	 but Textual has some strong APIs to assist. */
-	
-	/* Get base measurements. */
-	NSString *informativeText = [self.informationalText stringValue];
-
-	NSRect infoTextFrame = [self.informationalText frame];
-
-	CGFloat newHeight = [informativeText pixelHeightInWidth:infoTextFrame.size.width forcedFont:[self informativeTextFont]];
-
-	NSInteger heightDiff = (infoTextFrame.size.height - newHeight);
-
-	/* Compare it to windows frame. */
-	NSRect windowFrame = [[self window] frame];
-	
-	windowFrame.size.height = ((windowFrame.size.height - heightDiff) + _textContainerPadding);
-	
-	infoTextFrame.size.height = (newHeight + _textContainerPadding);
-	
-	/* Apply new frames. */
-	[[self window] setFrame:windowFrame display:NO animate:NO];
-	[[self window] makeKeyAndOrderFront:nil];
-	
-	[self.informationalText setFrame:infoTextFrame];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender

@@ -88,7 +88,7 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
  any features of Off-the-Record. Trying to set the weak cipher manager
  after the class is constructed with throw an exception. */
 /* When set, all calls to -encryptMessage: and -decryptMessage: are
- proxied  through to the “weak cipher manager” */
+ proxied through to the “weak cipher manager” */
 
 @interface TLOEncryptionManager (TLOEncryptionManagerWeakCiphers)
 - (BOOL)usesWeakCiphers;

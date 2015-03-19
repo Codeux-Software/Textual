@@ -57,8 +57,6 @@
 
 - (void)preferencesChanged;
 
-- (void)noteEncryptionStateDidChange;
-
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
 

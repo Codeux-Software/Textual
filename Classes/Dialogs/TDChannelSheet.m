@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _windowPadding					98
-#define _windowStaringPosition			61
-
 @interface TDChannelSheet ()
 /* Each entry of the array is an array with index 0 equal to the
  view and index 1 equal to the first responder wanted in that view. */
@@ -59,6 +56,7 @@
 @property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
 @end
@@ -95,58 +93,33 @@
 
 - (void)onMenuBarItemChanged:(id)sender
 {
-	/* Get selected tab. */
-	NSInteger row = [sender indexOfSelectedItem];
-	
-	/* Switch to that view. */
-	[self selectPane:(self.navigationTree[row][0])];
-	
-	/* Move to appropriate first responder. */
-	[self.sheet makeFirstResponder:(self.navigationTree[row][1])];
+	[self navigateToIndex:[sender indexOfSelectedItem]];
 }
 
-- (NSRect)currentSheetFrame
+- (void)navigateToIndex:(NSInteger)row
 {
-	return [self.sheet frame];
-}
+	[self selectPane:self.navigationTree[row][0]];
 
-- (void)populateStartView
-{
-	[self.contentView addSubview:self.contentViewGeneralView];
-
-	[self.sheet makeFirstResponder:self.channelNameTextField];
+	[self.sheet makeFirstResponder:self.navigationTree[row][1]];
 }
 
 - (void)selectPane:(NSView *)view
 {
-	/* Modify frame to match new view. */
-	NSRect windowFrame = [self currentSheetFrame];
-	
-	windowFrame.size.width  =  view.frame.size.width;
-	windowFrame.size.height = (view.frame.size.height + _windowPadding);
+	/* Remove any views that may already be in place. */
+	NSArray *contentSubviews = [self.contentView subviews];
 
-	windowFrame.origin.y = (NSMaxY([self currentSheetFrame]) - windowFrame.size.height);
-	
-	/* Remove any old subviews. */
-	NSArray *subviews = [self.contentView subviews];
-	
-	if ([subviews count] > 0) {
-		[subviews[0] removeFromSuperview];
+	if ([contentSubviews count] > 0) {
+		[contentSubviews[0] removeFromSuperview];
 	}
-	
-	/* Set new frame. */
-	[self.sheet setFrame:windowFrame display:YES animate:YES];
 
-	/* Add new view. */
-	NSRect viewFrame = [view frame];
+	/* Set constraints and add the new view. */
+	LogToConsole(@"%@", NSStringFromRect([view frame]));
 	
-	viewFrame.origin.y = _windowStaringPosition;
-	
-	[self.contentView setFrame:viewFrame];
+	[self.contentViewHeightConstraint setConstant:NSHeight([view frame])];
 
 	[self.contentView addSubview:view];
-	
-	/* Reclaulate loop for tab key. */
+
+	/* Update keyboard navigation (tab key) */
 	[self.sheet recalculateKeyViewLoop];
 }
 
@@ -157,7 +130,7 @@
 {
 	[self load];
 	[self update];
-	[self populateStartView];
+	[self navigateToIndex:0];
 	[self startSheet];
 	[self addConfigurationDidChangeObserver];
 }
