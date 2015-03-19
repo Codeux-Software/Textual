@@ -28,7 +28,7 @@
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7">
                         <rect key="frame" x="19" y="95" width="117" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Current nickname:" id="21">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Current nickname:" id="21">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -90,7 +90,7 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="10">
                         <rect key="frame" x="37" y="64" width="99" height="17"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="New nickname:" id="24">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="New nickname:" id="24">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -119,7 +119,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="36"/>
             </connections>
-            <point key="canvasLocation" x="414.5" y="398"/>
+            <point key="canvasLocation" x="363.5" y="425"/>
         </window>
     </objects>
 </document>
