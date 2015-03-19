@@ -230,7 +230,7 @@
 
 /* Find panel */
 "BasicLanguage[1026][1]" = "Search";
-"BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search begins, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
+"BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search begins, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G can be used to return to the previous search result.";
 "BasicLanguage[1026][3]" = "Search for Message";
 
 /* Default G:Line reason */

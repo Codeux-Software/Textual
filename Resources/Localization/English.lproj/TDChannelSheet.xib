@@ -217,7 +217,7 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="117">
                     <rect key="frame" x="38" y="206" width="46" height="11"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="(optional)" id="136">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="136">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -332,13 +332,12 @@ DQ
                 <constraint firstItem="252" firstAttribute="leading" secondItem="243" secondAttribute="leading" constant="32" id="TmY-NO-QZF"/>
                 <constraint firstItem="250" firstAttribute="leading" secondItem="252" secondAttribute="trailing" constant="8" id="Zwn-uh-POK"/>
                 <constraint firstAttribute="trailing" secondItem="250" secondAttribute="trailing" constant="20" id="bGX-U5-9hi"/>
-                <constraint firstAttribute="trailing" secondItem="S13-Uc-xNq" secondAttribute="trailing" constant="64" id="bxZ-M1-awW"/>
                 <constraint firstItem="251" firstAttribute="leading" secondItem="253" secondAttribute="trailing" constant="8" id="cG0-iI-0u1"/>
                 <constraint firstItem="251" firstAttribute="top" secondItem="250" secondAttribute="bottom" constant="10" id="ekE-JU-qgV"/>
                 <constraint firstAttribute="trailing" secondItem="251" secondAttribute="trailing" constant="20" id="fYH-L2-4xd"/>
                 <constraint firstAttribute="height" constant="170" id="feB-0q-Nq3"/>
             </constraints>
-            <point key="canvasLocation" x="334.5" y="359.5"/>
+            <point key="canvasLocation" x="334.5" y="359"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
