@@ -25,8 +25,8 @@
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3">
                         <rect key="frame" x="60" y="126" width="98" height="98"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="98" id="20J-Sy-gn7"/>
-                            <constraint firstAttribute="width" constant="98" id="XHu-O9-QUx"/>
+                            <constraint firstAttribute="width" constant="98" id="3Sc-S8-gQx"/>
+                            <constraint firstAttribute="height" constant="98" id="ass-90-CNE"/>
                         </constraints>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="4"/>
                     </imageView>
@@ -56,8 +56,12 @@
                             <action selector="displayAcknowledgments:" target="-2" id="44"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MDL-oh-scd">
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="MDL-oh-scd">
                         <rect key="frame" x="207" y="0.0" width="11" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="9QW-b5-VXx"/>
+                            <constraint firstAttribute="width" constant="11" id="k5m-0J-ITf"/>
+                        </constraints>
                         <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="jdf-Pe-UVP">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -71,25 +75,24 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" id="8vI-XG-8o9"/>
-                    <constraint firstItem="40" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="45" id="Gmv-iu-hTe"/>
-                    <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="28" id="SCj-QZ-PwL"/>
-                    <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="18" id="WtZ-JL-Np4"/>
-                    <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" id="bRK-aO-gK2"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="28" id="d03-Np-w1C"/>
-                    <constraint firstAttribute="trailing" secondItem="40" secondAttribute="trailing" constant="45" id="gFP-tI-dnn"/>
-                    <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="60" id="lLk-AP-x0I"/>
-                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="60" id="n8p-BQ-DxS"/>
-                    <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="60" id="p2n-2q-62S"/>
-                    <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="20" id="ryk-W6-UZ8"/>
-                    <constraint firstItem="40" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="26" id="xIm-D1-W2h"/>
-                    <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" constant="60" id="zMd-F4-J46"/>
+                    <constraint firstAttribute="trailing" secondItem="MDL-oh-scd" secondAttribute="trailing" id="4s6-UM-qYJ"/>
+                    <constraint firstItem="7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="28" id="5Yf-bW-iQV"/>
+                    <constraint firstItem="40" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="7Cy-qY-XZK"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="18" id="LqP-v5-xwR"/>
+                    <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="QfP-c9-8Cg"/>
+                    <constraint firstAttribute="bottom" secondItem="MDL-oh-scd" secondAttribute="bottom" id="S9R-MU-Zvh"/>
+                    <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="TSu-8F-A7d"/>
+                    <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="20" symbolic="YES" id="VzH-QN-2U2"/>
+                    <constraint firstItem="40" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="cgP-eI-aZl"/>
+                    <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="eHu-4Q-o7e"/>
+                    <constraint firstItem="3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="pgv-Vg-Vkb"/>
+                    <constraint firstItem="7" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="z7T-S8-UJB"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="27"/>
             </connections>
-            <point key="canvasLocation" x="433" y="237"/>
+            <point key="canvasLocation" x="31" y="126"/>
         </window>
     </objects>
     <resources>

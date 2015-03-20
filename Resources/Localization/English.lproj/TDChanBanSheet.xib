@@ -150,20 +150,18 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="14" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="1ug-UH-2iA"/>
-                    <constraint firstAttribute="trailing" secondItem="3" secondAttribute="trailing" id="2Hw-r5-vk1"/>
-                    <constraint firstItem="33" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" id="2pw-Ec-MYM"/>
-                    <constraint firstItem="33" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="9lT-5q-X5Z"/>
-                    <constraint firstItem="18" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="CVg-uH-cej"/>
-                    <constraint firstItem="3" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="13" id="Dlq-Yt-zyd"/>
-                    <constraint firstAttribute="bottom" secondItem="18" secondAttribute="bottom" constant="10" id="HNq-8B-9Z2"/>
-                    <constraint firstItem="16" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="MlW-cO-y08"/>
-                    <constraint firstAttribute="bottom" secondItem="16" secondAttribute="bottom" constant="10" id="RhK-QB-ScJ"/>
-                    <constraint firstItem="14" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="TZY-cq-gxj"/>
-                    <constraint firstAttribute="bottom" secondItem="14" secondAttribute="bottom" constant="10" id="TaZ-hu-lj9"/>
-                    <constraint firstItem="18" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="12" id="W34-En-2jl"/>
-                    <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="20" id="dHs-Zj-wrb"/>
-                    <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="flR-91-gPd"/>
+                    <constraint firstItem="18" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="12" symbolic="YES" id="5nR-Cd-Djm"/>
+                    <constraint firstItem="14" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="9Oy-hk-LJo"/>
+                    <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="20" symbolic="YES" id="BX5-bb-IOh"/>
+                    <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="GZC-x5-lKx"/>
+                    <constraint firstItem="16" firstAttribute="baseline" secondItem="18" secondAttribute="baseline" id="KJw-DZ-c9b"/>
+                    <constraint firstItem="14" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="NWH-Kl-TBv"/>
+                    <constraint firstItem="3" firstAttribute="top" secondItem="33" secondAttribute="bottom" constant="13" id="Tr4-L2-o5U"/>
+                    <constraint firstAttribute="bottom" secondItem="14" secondAttribute="bottom" constant="10" id="YR3-uB-rD4"/>
+                    <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="beA-Lv-YKx"/>
+                    <constraint firstItem="33" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="fmW-6u-lC9"/>
+                    <constraint firstItem="14" firstAttribute="baseline" secondItem="16" secondAttribute="baseline" id="lxy-d5-KE4"/>
+                    <constraint firstItem="33" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="oTe-ca-iCv"/>
                 </constraints>
             </view>
             <connections>

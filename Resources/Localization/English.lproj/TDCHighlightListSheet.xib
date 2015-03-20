@@ -202,25 +202,24 @@ Gw
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="2Pb-9d-utA"/>
-                    <constraint firstItem="248" firstAttribute="leading" secondItem="247" secondAttribute="trailing" constant="12" id="FBs-vm-aBc"/>
-                    <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="HmB-Kc-Wlj"/>
-                    <constraint firstItem="248" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="LLH-ln-KgG"/>
-                    <constraint firstAttribute="bottom" secondItem="247" secondAttribute="bottom" constant="10" id="Nuq-XR-jeW"/>
-                    <constraint firstItem="277" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" id="P8q-Z4-Wep"/>
-                    <constraint firstAttribute="trailing" secondItem="246" secondAttribute="trailing" id="RdS-Hz-wui"/>
-                    <constraint firstItem="249" firstAttribute="top" secondItem="244" secondAttribute="top" constant="13" id="a4z-VW-BVF"/>
-                    <constraint firstAttribute="bottom" secondItem="277" secondAttribute="bottom" constant="13" id="lFf-aZ-ulq"/>
-                    <constraint firstItem="247" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="laf-jH-DRd"/>
-                    <constraint firstAttribute="trailing" secondItem="248" secondAttribute="trailing" constant="20" id="paM-K6-jlE"/>
-                    <constraint firstAttribute="bottom" secondItem="248" secondAttribute="bottom" constant="10" id="tZ6-GR-tgX"/>
-                    <constraint firstItem="249" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" id="vhz-JW-7Uh"/>
+                    <constraint firstItem="246" firstAttribute="top" secondItem="249" secondAttribute="bottom" constant="13" id="2eU-2Y-oXs"/>
+                    <constraint firstItem="247" firstAttribute="baseline" secondItem="248" secondAttribute="baseline" id="R8L-kg-ypT"/>
+                    <constraint firstItem="248" firstAttribute="leading" secondItem="247" secondAttribute="trailing" constant="12" symbolic="YES" id="UhY-2I-PFH"/>
+                    <constraint firstItem="277" firstAttribute="leading" secondItem="249" secondAttribute="leading" id="Yg8-pk-yLy"/>
+                    <constraint firstItem="277" firstAttribute="baseline" secondItem="247" secondAttribute="baseline" id="hLC-nJ-ycH"/>
+                    <constraint firstAttribute="trailing" secondItem="248" secondAttribute="trailing" constant="20" symbolic="YES" id="iFS-I2-HQM"/>
+                    <constraint firstAttribute="bottom" secondItem="247" secondAttribute="bottom" constant="10" id="loK-IN-9bb"/>
+                    <constraint firstItem="246" firstAttribute="centerX" secondItem="244" secondAttribute="centerX" id="n2A-Ou-C5Z"/>
+                    <constraint firstItem="249" firstAttribute="top" secondItem="244" secondAttribute="top" constant="13" id="oHc-Jd-kBt"/>
+                    <constraint firstItem="249" firstAttribute="leading" secondItem="244" secondAttribute="leading" constant="20" symbolic="YES" id="oYF-cz-qoa"/>
+                    <constraint firstItem="247" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="qys-dq-XwC"/>
+                    <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="ypx-IL-Ez0"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="1324" y="292.5"/>
+            <point key="canvasLocation" x="1232" y="225.5"/>
         </window>
     </objects>
 </document>

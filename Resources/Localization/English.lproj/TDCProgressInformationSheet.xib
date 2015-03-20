@@ -36,12 +36,10 @@
                     </progressIndicator>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="44f-oq-qcQ" firstAttribute="leading" secondItem="nX8-Wu-d5N" secondAttribute="trailing" constant="15" id="9Ca-hz-S9z"/>
-                    <constraint firstItem="44f-oq-qcQ" firstAttribute="top" secondItem="WV3-RL-BkV" secondAttribute="top" constant="23" id="REE-XA-SMt"/>
-                    <constraint firstAttribute="bottom" secondItem="nX8-Wu-d5N" secondAttribute="bottom" constant="16" id="XBH-KY-7Dj"/>
-                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="leading" secondItem="WV3-RL-BkV" secondAttribute="leading" constant="20" id="iJS-ph-ROM"/>
-                    <constraint firstAttribute="trailing" secondItem="44f-oq-qcQ" secondAttribute="trailing" constant="20" id="mGf-oG-aJs"/>
-                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="top" secondItem="WV3-RL-BkV" secondAttribute="top" constant="16" id="xz4-e3-Rz5"/>
+                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="centerY" secondItem="WV3-RL-BkV" secondAttribute="centerY" id="APo-5a-dOm"/>
+                    <constraint firstItem="44f-oq-qcQ" firstAttribute="centerY" secondItem="nX8-Wu-d5N" secondAttribute="centerY" id="bPQ-VF-UKr"/>
+                    <constraint firstAttribute="trailing" secondItem="44f-oq-qcQ" secondAttribute="trailing" constant="20" symbolic="YES" id="fCX-3Q-GAC"/>
+                    <constraint firstItem="nX8-Wu-d5N" firstAttribute="leading" secondItem="WV3-RL-BkV" secondAttribute="leading" constant="20" symbolic="YES" id="iPN-xW-rt4"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="412.5" y="397"/>

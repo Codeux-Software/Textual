@@ -150,20 +150,18 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="6" secondAttribute="bottom" constant="10" id="5Yx-91-dQU"/>
-                    <constraint firstItem="5" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="9Tv-v1-Jsj"/>
-                    <constraint firstItem="7" firstAttribute="top" secondItem="4" secondAttribute="top" constant="13" id="HvG-FU-DX6"/>
-                    <constraint firstItem="8" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="10" id="LSt-V2-YA7"/>
-                    <constraint firstItem="9" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="10" id="TbN-GO-ne3"/>
-                    <constraint firstItem="8" firstAttribute="leading" secondItem="9" secondAttribute="trailing" constant="12" id="XPV-oK-ZEm"/>
-                    <constraint firstItem="5" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="13" id="ap2-Sr-nxM"/>
-                    <constraint firstAttribute="bottom" secondItem="9" secondAttribute="bottom" constant="10" id="bYu-Ft-HCU"/>
-                    <constraint firstItem="6" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="10" id="eUO-IF-hKj"/>
-                    <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="20" id="kOB-RI-IAi"/>
-                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="mzX-NT-61a"/>
-                    <constraint firstAttribute="bottom" secondItem="8" secondAttribute="bottom" constant="10" id="rhx-H6-sYV"/>
-                    <constraint firstItem="6" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" id="yy8-ne-jcp"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" id="zqg-na-sxv"/>
+                    <constraint firstAttribute="bottom" secondItem="6" secondAttribute="bottom" constant="10" id="0Wn-AT-HoE"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="1x7-47-P6E"/>
+                    <constraint firstItem="5" firstAttribute="centerX" secondItem="4" secondAttribute="centerX" id="47Q-St-bnu"/>
+                    <constraint firstItem="6" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="7ER-FT-XRT"/>
+                    <constraint firstItem="6" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="10" id="FnE-1p-z5G"/>
+                    <constraint firstItem="7" firstAttribute="top" secondItem="4" secondAttribute="top" constant="13" id="NDa-eR-utc"/>
+                    <constraint firstItem="8" firstAttribute="leading" secondItem="9" secondAttribute="trailing" constant="12" symbolic="YES" id="R1w-gV-k4k"/>
+                    <constraint firstItem="7" firstAttribute="leading" secondItem="4" secondAttribute="leading" constant="20" symbolic="YES" id="ank-It-te2"/>
+                    <constraint firstItem="9" firstAttribute="baseline" secondItem="8" secondAttribute="baseline" id="fCD-RX-nSr"/>
+                    <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="20" symbolic="YES" id="ncf-Tv-yvn"/>
+                    <constraint firstItem="6" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="tAu-G5-uj8"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="13" id="z6R-rt-mga"/>
                 </constraints>
             </view>
             <connections>

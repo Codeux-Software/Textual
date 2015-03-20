@@ -30,7 +30,7 @@
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
                         <rect key="frame" x="18" y="85" width="99" height="26"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="94" id="ePy-CD-AOz"/>
+                            <constraint firstAttribute="width" constant="94" id="nPm-5S-cdY"/>
                         </constraints>
                         <popUpButtonCell key="cell" type="push" title="Exclude" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="308" id="305">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -53,6 +53,9 @@
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="314">
                         <rect key="frame" x="18" y="64" width="91" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="87" id="txM-n6-h4c"/>
+                        </constraints>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="315">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -61,9 +64,6 @@
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
                         <rect key="frame" x="113" y="58" width="304" height="26"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="299" id="Kh6-5P-vUY"/>
-                        </constraints>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="317">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -92,7 +92,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="323">
                         <rect key="frame" x="226" y="13" width="97" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="gEj-Hs-rfA"/>
+                            <constraint firstAttribute="width" constant="85" id="vZV-OE-BYC"/>
                         </constraints>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="324">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -105,7 +105,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="325">
                         <rect key="frame" x="323" y="13" width="97" height="32"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="oYY-fn-hYe"/>
+                            <constraint firstAttribute="width" constant="85" id="0W9-T0-FSE"/>
                         </constraints>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="326">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -120,24 +120,22 @@ DQ
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="325" firstAttribute="top" secondItem="316" secondAttribute="bottom" constant="20" id="27c-RN-Dvq"/>
-                    <constraint firstAttribute="trailing" secondItem="310" secondAttribute="trailing" constant="20" id="7G6-1v-2YL"/>
-                    <constraint firstAttribute="trailing" secondItem="316" secondAttribute="trailing" constant="20" id="CO2-yw-I07"/>
-                    <constraint firstAttribute="bottom" secondItem="323" secondAttribute="bottom" constant="20" id="GTo-gF-o7G"/>
-                    <constraint firstItem="316" firstAttribute="leading" secondItem="314" secondAttribute="trailing" constant="8" id="NcS-mn-roo"/>
-                    <constraint firstItem="314" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" id="RRO-Wb-nqb"/>
-                    <constraint firstItem="312" firstAttribute="top" secondItem="303" secondAttribute="top" constant="22" id="UHv-oR-Bgl"/>
-                    <constraint firstAttribute="bottom" secondItem="325" secondAttribute="bottom" constant="20" id="V1B-xn-KxI"/>
-                    <constraint firstItem="310" firstAttribute="leading" secondItem="312" secondAttribute="trailing" constant="8" id="c1C-Bi-IE8"/>
-                    <constraint firstItem="325" firstAttribute="leading" secondItem="323" secondAttribute="trailing" constant="12" id="cHR-8h-R8y"/>
-                    <constraint firstItem="314" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="7" id="dbK-gf-rg7"/>
-                    <constraint firstAttribute="trailing" secondItem="325" secondAttribute="trailing" constant="20" id="g9H-SE-UqD"/>
-                    <constraint firstItem="312" firstAttribute="leading" secondItem="304" secondAttribute="trailing" constant="8" id="kBI-fG-TPq"/>
-                    <constraint firstItem="304" firstAttribute="top" secondItem="303" secondAttribute="top" constant="20" id="kSN-ze-Cxc"/>
-                    <constraint firstItem="310" firstAttribute="top" secondItem="303" secondAttribute="top" constant="19" id="lta-Pr-EgS"/>
-                    <constraint firstItem="323" firstAttribute="top" secondItem="316" secondAttribute="bottom" constant="20" id="m8v-R3-18N"/>
-                    <constraint firstItem="316" firstAttribute="top" secondItem="310" secondAttribute="bottom" constant="6" id="mRJ-0k-zfD"/>
-                    <constraint firstItem="304" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" id="mcZ-9c-L9z"/>
+                    <constraint firstItem="304" firstAttribute="top" secondItem="303" secondAttribute="top" constant="20" symbolic="YES" id="8Ue-l8-Eye"/>
+                    <constraint firstItem="314" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="7" id="F23-ls-OjV"/>
+                    <constraint firstItem="310" firstAttribute="bottom" secondItem="304" secondAttribute="bottom" id="JdS-Jc-OWW"/>
+                    <constraint firstItem="312" firstAttribute="baseline" secondItem="310" secondAttribute="baseline" id="Kh2-fk-ILh"/>
+                    <constraint firstAttribute="trailing" secondItem="310" secondAttribute="trailing" constant="20" symbolic="YES" id="TAy-9k-0ne"/>
+                    <constraint firstItem="316" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="8" symbolic="YES" id="UD9-t2-G7q"/>
+                    <constraint firstItem="304" firstAttribute="leading" secondItem="314" secondAttribute="leading" id="V7b-IE-ocg"/>
+                    <constraint firstItem="325" firstAttribute="baseline" secondItem="323" secondAttribute="baseline" id="Vh4-nG-WCx"/>
+                    <constraint firstItem="316" firstAttribute="leading" secondItem="314" secondAttribute="trailing" constant="8" symbolic="YES" id="YmC-KU-NA3"/>
+                    <constraint firstItem="325" firstAttribute="trailing" secondItem="316" secondAttribute="trailing" id="auv-HK-RUS"/>
+                    <constraint firstItem="316" firstAttribute="trailing" secondItem="310" secondAttribute="trailing" id="cvk-14-gdl"/>
+                    <constraint firstItem="325" firstAttribute="leading" secondItem="323" secondAttribute="trailing" constant="12" symbolic="YES" id="dTA-9e-Cmz"/>
+                    <constraint firstItem="310" firstAttribute="leading" secondItem="312" secondAttribute="trailing" constant="8" symbolic="YES" id="dm6-8H-bEx"/>
+                    <constraint firstItem="323" firstAttribute="top" secondItem="316" secondAttribute="bottom" constant="20" symbolic="YES" id="gBX-ic-JtJ"/>
+                    <constraint firstItem="304" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" symbolic="YES" id="vVj-mk-k6a"/>
+                    <constraint firstItem="312" firstAttribute="leading" secondItem="304" secondAttribute="trailing" constant="8" symbolic="YES" id="xXJ-9S-Z1h"/>
                 </constraints>
             </view>
             <connections>
