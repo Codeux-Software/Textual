@@ -1392,6 +1392,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="contentSplitView" destination="2wO-1t-EIG" id="7dJ-Lw-BiU"/>
                 <outlet property="formattingMenu" destination="yyd-f5-aHb" id="kVN-yL-nC0"/>
                 <outlet property="inputTextField" destination="AbN-7J-waj" id="ACY-G1-FGq"/>
+                <outlet property="loadingScreen" destination="fcA-DA-hcd" id="HGo-MF-pEX"/>
                 <outlet property="mainMenuProxy" destination="oRw-Te-R5j" id="HzB-QD-J7j"/>
                 <outlet property="memberList" destination="uZZ-ie-yHv" id="gm8-QW-Z2m"/>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
