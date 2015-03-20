@@ -120,60 +120,6 @@
                         </binding>
                     </connections>
                 </button>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="92">
-                    <rect key="frame" x="77" y="341" width="435" height="16"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
-                        <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="96">
-                                <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="435" height="16"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="Select each item to show as part of the ">
-                                        <attributes>
-                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="/sysinfo">
-                                        <attributes>
-                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" command:">
-                                        <attributes>
-                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="435" height="16"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="94">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="93">
-                        <rect key="frame" x="224" y="1" width="15" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="97">
                     <rect key="frame" x="67" y="116" width="454" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -237,9 +183,65 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="92">
+                    <rect key="frame" x="110" y="341" width="368" height="16"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
+                        <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="96">
+                                <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="textColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="368" height="16"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="Select each item to show as part of the ">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="/sysinfo">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" command:">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="368" height="16"/>
+                                <size key="maxSize" width="463" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="94">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="93">
+                        <rect key="frame" x="224" y="1" width="15" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
             </subviews>
             <constraints>
                 <constraint firstItem="97" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="1hl-wt-fGE"/>
+                <constraint firstItem="92" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="110" id="2HM-cC-OS1"/>
+                <constraint firstItem="3" firstAttribute="top" secondItem="92" secondAttribute="bottom" constant="19" id="2xv-2g-xxg"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="156" id="4fg-70-ieJ"/>
                 <constraint firstItem="3" firstAttribute="top" secondItem="1" secondAttribute="top" constant="65" id="9Vh-9P-cfU"/>
                 <constraint firstItem="14" firstAttribute="top" secondItem="12" secondAttribute="bottom" constant="14" id="Cqq-tW-rrq"/>
@@ -248,15 +250,14 @@
                 <constraint firstItem="12" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="Gc3-57-Hcg"/>
                 <constraint firstItem="16" firstAttribute="top" secondItem="14" secondAttribute="bottom" constant="14" id="HUN-fa-hhY"/>
                 <constraint firstItem="97" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="67" id="J6R-n1-Se0"/>
-                <constraint firstItem="92" firstAttribute="centerX" secondItem="97" secondAttribute="centerX" id="Jg4-r9-XRH"/>
+                <constraint firstItem="92" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="LcK-yq-TdT"/>
                 <constraint firstItem="12" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="14" id="Olx-0n-2Ss"/>
                 <constraint firstItem="101" firstAttribute="top" secondItem="98" secondAttribute="bottom" constant="8" symbolic="YES" id="QF9-70-EaD"/>
                 <constraint firstAttribute="bottom" secondItem="101" secondAttribute="bottom" constant="30" id="SDb-ZL-Qpj"/>
                 <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="23" id="Tfk-11-JcR"/>
+                <constraint firstItem="92" firstAttribute="centerX" secondItem="97" secondAttribute="centerX" id="WC8-fa-dqq"/>
                 <constraint firstAttribute="width" constant="589" id="XFX-0R-Qfp"/>
                 <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="14" id="YN8-Sk-bDj"/>
-                <constraint firstItem="3" firstAttribute="top" secondItem="92" secondAttribute="bottom" constant="19" id="Za2-Va-2Y1"/>
-                <constraint firstItem="92" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="bWh-tB-enL"/>
                 <constraint firstItem="18" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="14" id="c9O-La-C2b"/>
                 <constraint firstItem="101" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="117" id="cd3-oq-j5e"/>
                 <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="14" id="fdL-9S-zVb"/>
@@ -266,7 +267,6 @@
                 <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="kku-SS-yIh"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
                 <constraint firstAttribute="trailing" secondItem="101" secondAttribute="trailing" constant="105" id="tXq-aL-wGW"/>
-                <constraint firstItem="92" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="77" id="w6r-4O-CAG"/>
                 <constraint firstItem="97" firstAttribute="top" secondItem="22" secondAttribute="bottom" constant="21" id="yY3-HT-8Kf"/>
             </constraints>
             <point key="canvasLocation" x="389.5" y="436.5"/>
