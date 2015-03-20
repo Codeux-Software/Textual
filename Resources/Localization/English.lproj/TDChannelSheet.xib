@@ -16,6 +16,7 @@
                 <outlet property="contentViewGeneralView" destination="109" id="kgV-mp-d6m"/>
                 <outlet property="contentViewHeightConstraint" destination="ydh-Kx-F2Z" id="2Cw-vm-6VV"/>
                 <outlet property="contentViewTabView" destination="185" id="329"/>
+                <outlet property="contentViewWidthConstraint" destination="cW1-Ut-AEa" id="m2p-Z2-hXq"/>
                 <outlet property="defaultModesTextField" destination="251" id="kwe-lU-JDc"/>
                 <outlet property="defaultTopicTextField" destination="250" id="Hda-fW-5nU"/>
                 <outlet property="disableInlineImagesCheck" destination="279" id="iwc-dc-DN4"/>
@@ -31,7 +32,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Channel Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
+        <window title="Channel Properties" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="1103" y="493" width="325" height="384"/>
@@ -236,7 +237,7 @@ DQ
                 <constraint firstItem="124" firstAttribute="leading" secondItem="118" secondAttribute="trailing" constant="8" id="7O4-WV-LDd"/>
                 <constraint firstItem="122" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="25" id="8cQ-Si-xhE"/>
                 <constraint firstItem="356" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="25" id="8yt-LL-HSy"/>
-                <constraint firstAttribute="width" constant="325" id="EOr-84-Gm0"/>
+                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="325" id="EOr-84-Gm0"/>
                 <constraint firstItem="HBZ-KH-HBg" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="25" id="FYh-S4-xE7"/>
                 <constraint firstItem="118" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="20" id="G8K-Ct-haT"/>
                 <constraint firstItem="312" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="12" id="JXk-df-f4W"/>
@@ -328,7 +329,7 @@ DQ
                 <constraint firstItem="253" firstAttribute="top" secondItem="252" secondAttribute="bottom" constant="59" id="MWt-wR-Lu7"/>
                 <constraint firstItem="250" firstAttribute="top" secondItem="S13-Uc-xNq" secondAttribute="bottom" constant="16" id="Mf6-CD-EfY"/>
                 <constraint firstItem="S13-Uc-xNq" firstAttribute="leading" secondItem="243" secondAttribute="leading" constant="20" id="Svd-oj-c4J"/>
-                <constraint firstAttribute="width" constant="325" id="TdI-gX-WWz"/>
+                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="325" id="TdI-gX-WWz"/>
                 <constraint firstItem="252" firstAttribute="leading" secondItem="243" secondAttribute="leading" constant="32" id="TmY-NO-QZF"/>
                 <constraint firstItem="250" firstAttribute="leading" secondItem="252" secondAttribute="trailing" constant="8" id="Zwn-uh-POK"/>
                 <constraint firstAttribute="trailing" secondItem="250" secondAttribute="trailing" constant="20" id="bGX-U5-9hi"/>

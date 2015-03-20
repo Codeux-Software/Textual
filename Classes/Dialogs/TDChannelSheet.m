@@ -56,6 +56,7 @@
 @property (nonatomic, weak) IBOutlet NSView *contentView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultsView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneralView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
@@ -105,22 +106,9 @@
 
 - (void)selectPane:(NSView *)view
 {
-	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = [self.contentView subviews];
-
-	if ([contentSubviews count] > 0) {
-		[contentSubviews[0] removeFromSuperview];
-	}
-
-	/* Set constraints and add the new view. */
-	LogToConsole(@"%@", NSStringFromRect([view frame]));
-	
-	[self.contentViewHeightConstraint setConstant:NSHeight([view frame])];
-
-	[self.contentView addSubview:view];
-
-	/* Update keyboard navigation (tab key) */
-	[self.sheet recalculateKeyViewLoop];
+	[self.contentView attachSubview:view
+			adjustedWidthConstraint:self.contentViewWidthConstraint
+		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
 #pragma mark -

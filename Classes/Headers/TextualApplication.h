@@ -274,6 +274,7 @@
 	#import "NSObjectHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTableVIewHelper.h"
+	#import "NSViewHelper.h"
 
 	/* Dialogs. */
 	#import "TDCSheetBase.h"

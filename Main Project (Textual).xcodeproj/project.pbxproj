@@ -555,6 +555,14 @@
 		4C1893ED17980F060091D173 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1893EB17980F060091D173 /* TVCImageURLoader.m */; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1893F417980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C195A8D1ABBC72E0009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
+		4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C195A921ABBC7590009BCB6 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
+		4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
+		4C195A961ABBC93B0009BCB6 /* NSViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */; };
+		4C195A971ABBC9520009BCB6 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C195A921ABBC7590009BCB6 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C195A981ABBC9580009BCB6 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C195A921ABBC7590009BCB6 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C195A991ABBC95E0009BCB6 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C195A921ABBC7590009BCB6 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1CFADE199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1CFADD199D72A3002A3C0E /* IRCConnectionPrivate.h */; };
 		4C1CFADF199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1CFADD199D72A3002A3C0E /* IRCConnectionPrivate.h */; };
 		4C1CFAE0199D72A3002A3C0E /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1CFADD199D72A3002A3C0E /* IRCConnectionPrivate.h */; };
@@ -2099,6 +2107,8 @@
 		4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSync.h; path = Classes/Headers/TPCPreferencesCloudSync.h; sourceTree = SOURCE_ROOT; };
 		4C1893EB17980F060091D173 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCImageURLoader.m; path = "Classes/Views/Channel View/TVCImageURLoader.m"; sourceTree = SOURCE_ROOT; };
 		4C1893F217980F460091D173 /* TVCImageURLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLoader.h; sourceTree = "<group>"; };
+		4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSViewHelper.m; sourceTree = "<group>"; };
+		4C195A921ABBC7590009BCB6 /* NSViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSViewHelper.h; sourceTree = "<group>"; };
 		4C1CFADD199D72A3002A3C0E /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionPrivate.h; sourceTree = "<group>"; };
 		4C1DC5521580420500A47BC9 /* Textual 5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Textual 5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
@@ -3025,6 +3035,7 @@
 				4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4CC2DC641A96BA35006DE696 /* NSTableVIewHelper.h */,
+				4C195A921ABBC7590009BCB6 /* NSViewHelper.h */,
 				4C8AF558158E99520026668C /* TDCAboutPanel.h */,
 				4C8AF559158E99520026668C /* TDCAddressBookSheet.h */,
 				4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */,
@@ -3132,6 +3143,7 @@
 				4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */,
 				4C8AF5A6158E99520026668C /* NSStringHelper.m */,
 				4CC2DC5A1A96BA1A006DE696 /* NSTableViewHelper.m */,
+				4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */,
 			);
 			name = "Cocoa (Objective-C)";
 			path = "Helpers/Cocoa (Objective-C)";
@@ -3863,6 +3875,7 @@
 				4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
+				4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C0BA61F1990798800857343 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C0BA6201990798800857343 /* TVCLogControllerHistoricLogFile.h in Headers */,
@@ -4019,6 +4032,7 @@
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C992DD41AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
+				4C195A991ABBC95E0009BCB6 /* NSViewHelper.h in Headers */,
 				4C001C0B197A11E60061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -4174,6 +4188,7 @@
 				4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C992DD51AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
+				4C195A981ABBC9580009BCB6 /* NSViewHelper.h in Headers */,
 				4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */,
@@ -4329,6 +4344,7 @@
 				4CDFA52E1996EAB2007EA46E /* NSObjectHelper.h in Headers */,
 				4C992DD61AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4CDFA52F1996EAB2007EA46E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
+				4C195A971ABBC9520009BCB6 /* NSViewHelper.h in Headers */,
 				4CDFA5301996EAB2007EA46E /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4CDFA5311996EAB2007EA46E /* TVCLogControllerHistoricLogFile.h in Headers */,
 				4CDFA5321996EAB2007EA46E /* BuildConfig.h in Headers */,
@@ -5292,6 +5308,7 @@
 				4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
 				4C3E69891789A31E00B1CB6B /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4C9FFBA119059C4F008C600C /* TVCQueuedCertificateTrustPanel.m in Sources */,
+				4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */,
 				4C3E698B1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */,
 				4C0EC1251AB49ACA00D0015C /* TPCResourceManager.m in Sources */,
 			);
@@ -5403,6 +5420,7 @@
 				4C0BA6A51990798800857343 /* TPCPreferences.m in Sources */,
 				4C0BA6A61990798800857343 /* TVCLogRenderer.m in Sources */,
 				4C0BA6A71990798800857343 /* TXSharedApplication.m in Sources */,
+				4C195A8D1ABBC72E0009BCB6 /* NSViewHelper.m in Sources */,
 				4C0BA6A81990798800857343 /* TVCImageURLParser.m in Sources */,
 				4C0BA6A91990798800857343 /* TVCLogController.m in Sources */,
 				4C0BA6AA1990798800857343 /* TDCProgressInformationSheet.m in Sources */,
@@ -5568,6 +5586,7 @@
 				4C3E698A1789A31E00B1CB6B /* TVCLogControllerOperationQueue.m in Sources */,
 				4C001C08197A10DC0061C2C5 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
 				4C0EC1261AB49DD000D0015C /* TPCResourceManager.m in Sources */,
+				4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5704,6 +5723,7 @@
 				4CDFA5DB1996EAB2007EA46E /* TVCLogControllerHistoricLogFile.m in Sources */,
 				4CDFA5DC1996EAB2007EA46E /* TVCLogControllerOperationQueue.m in Sources */,
 				4CDFA5DD1996EAB2007EA46E /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
+				4C195A961ABBC93B0009BCB6 /* NSViewHelper.m in Sources */,
 				4C0EC1271AB49DDE00D0015C /* TPCResourceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

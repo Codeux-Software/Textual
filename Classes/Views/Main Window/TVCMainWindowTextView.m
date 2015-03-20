@@ -410,7 +410,7 @@
 	if ([self stringLength] < 1) {
 		backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
 	} else {
-		NSInteger backgroundViewMaxHeight = (windowFrame.size.height - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
+		NSInteger backgroundViewMaxHeight = (NSHeight(windowFrame) - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
 		
 		backgroundHeight = [self highestHeightBelowHeight:backgroundViewMaxHeight withPadding:contentBorderPadding];
 		
