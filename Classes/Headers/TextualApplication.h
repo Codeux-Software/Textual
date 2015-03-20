@@ -51,9 +51,7 @@
 
 	#import <AutoHyperlinks/AutoHyperlinks.h>
 	#import <CocoaExtensions/CocoaExtensions.h>
-
-	#import <EncryptionKit/OTRKit.h>
-	#import <EncryptionKit/OTRTLV.h>
+	#import <EncryptionKit/EncryptionKit.h>
 
 	/* Class Forwarders. */
 	@class IRCAddressBookEntry;

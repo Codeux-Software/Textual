@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import <EncryptionKit/OTRKitAuthenticationDialog.h>
-
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
 // Properties that should be manipulated to provide context information
 @property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock encodingCallback;
