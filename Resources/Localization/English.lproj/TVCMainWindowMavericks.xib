@@ -1118,7 +1118,7 @@
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="uzp-4X-0Tx"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kbz-6A-Zah">
-                                            <rect key="frame" x="89" y="206" width="256" height="36"/>
+                                            <rect key="frame" x="83" y="206" width="268" height="36"/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual" id="B2k-oA-oga">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1183,12 +1183,11 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstItem="pIl-hm-fnb" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="12" id="1DS-e7-tu1"/>
                                         <constraint firstItem="TRd-At-ffY" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="55" id="2a2-ot-S0P"/>
                                         <constraint firstItem="jrh-HM-Lgv" firstAttribute="top" secondItem="TRd-At-ffY" secondAttribute="bottom" constant="15" id="6Xx-nk-jMI"/>
+                                        <constraint firstAttribute="centerX" secondItem="Kbz-6A-Zah" secondAttribute="centerX" id="78P-zp-4XS"/>
                                         <constraint firstItem="TRd-At-ffY" firstAttribute="top" secondItem="pIl-hm-fnb" secondAttribute="bottom" constant="9" id="BMy-Tj-nwu"/>
                                         <constraint firstItem="Kbz-6A-Zah" firstAttribute="top" secondItem="wSc-Fj-0wO" secondAttribute="bottom" constant="5" id="Ebg-kM-HfW"/>
                                         <constraint firstItem="jrh-HM-Lgv" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="59" id="F6p-oI-2mz"/>
                                         <constraint firstAttribute="trailing" secondItem="hkQ-S0-wFG" secondAttribute="trailing" constant="36" id="HEd-u0-OEr"/>
-                                        <constraint firstItem="Kbz-6A-Zah" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="91" id="HZc-bc-7Ck"/>
-                                        <constraint firstAttribute="trailing" secondItem="Kbz-6A-Zah" secondAttribute="trailing" constant="91" id="LvJ-iJ-dEb"/>
                                         <constraint firstItem="wSc-Fj-0wO" firstAttribute="top" secondItem="xwj-qd-MUV" secondAttribute="top" constant="8" id="NF5-bb-PRr"/>
                                         <constraint firstItem="hkQ-S0-wFG" firstAttribute="top" secondItem="Kbz-6A-Zah" secondAttribute="bottom" constant="10" id="OZS-vz-3eb"/>
                                         <constraint firstItem="wSc-Fj-0wO" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="141" id="aTA-H5-3Ap"/>
@@ -1275,12 +1274,11 @@ There are no other limits. What you see, is what you get.</string>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="VG0-ab-tMk" secondAttribute="trailing" constant="165" id="04z-bG-CQQ"/>
                                         <constraint firstItem="77q-3M-JWx" firstAttribute="top" secondItem="Pws-V3-ua8" secondAttribute="bottom" constant="15" id="2ba-PD-G3s"/>
-                                        <constraint firstItem="oUM-ya-bcb" firstAttribute="leading" secondItem="wHu-Jd-5VZ" secondAttribute="leading" constant="111" id="2by-G5-IN2"/>
                                         <constraint firstItem="Pws-V3-ua8" firstAttribute="leading" secondItem="wHu-Jd-5VZ" secondAttribute="leading" constant="162" id="2oe-gC-cOZ"/>
                                         <constraint firstAttribute="trailing" secondItem="77q-3M-JWx" secondAttribute="trailing" constant="158" id="5wf-4y-QBG"/>
                                         <constraint firstAttribute="trailing" secondItem="3Cp-9m-lts" secondAttribute="trailing" constant="38" id="7zC-LZ-MIe"/>
-                                        <constraint firstAttribute="trailing" secondItem="oUM-ya-bcb" secondAttribute="trailing" constant="111" id="8mN-zA-DIq"/>
                                         <constraint firstItem="Pws-V3-ua8" firstAttribute="top" secondItem="3Cp-9m-lts" secondAttribute="bottom" constant="18" id="9Kp-gP-5e1"/>
+                                        <constraint firstAttribute="centerX" secondItem="oUM-ya-bcb" secondAttribute="centerX" id="BN8-6S-GlG"/>
                                         <constraint firstItem="1RL-oL-dqH" firstAttribute="top" secondItem="oUM-ya-bcb" secondAttribute="bottom" constant="5" id="GUd-bv-eGE"/>
                                         <constraint firstItem="bM8-g5-5hv" firstAttribute="leading" secondItem="wHu-Jd-5VZ" secondAttribute="leading" constant="165" id="Jbg-hf-sRw"/>
                                         <constraint firstItem="3Cp-9m-lts" firstAttribute="top" secondItem="VG0-ab-tMk" secondAttribute="bottom" constant="20" id="QZV-cM-h7r"/>
@@ -1333,8 +1331,8 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstItem="Xrm-5i-DXu" firstAttribute="leading" secondItem="5Ie-Si-j8y" secondAttribute="trailing" constant="10" id="55j-k6-6O0"/>
                                         <constraint firstAttribute="bottom" secondItem="Xrm-5i-DXu" secondAttribute="bottom" constant="13" id="7zQ-8a-viB"/>
                                         <constraint firstAttribute="trailing" secondItem="Xrm-5i-DXu" secondAttribute="trailing" constant="73" id="DG1-wu-sBr"/>
-                                        <constraint firstItem="ufd-37-aMI" firstAttribute="leading" secondItem="x8f-Op-1pT" secondAttribute="leading" constant="33" id="EZW-fN-NZF"/>
                                         <constraint firstItem="Xrm-5i-DXu" firstAttribute="leading" secondItem="5Ie-Si-j8y" secondAttribute="trailing" constant="10" id="Ku9-Wg-kLv"/>
+                                        <constraint firstAttribute="centerX" secondItem="ufd-37-aMI" secondAttribute="centerX" id="T52-Lb-ccD"/>
                                         <constraint firstItem="ufd-37-aMI" firstAttribute="top" secondItem="LL8-k5-Sto" secondAttribute="bottom" constant="8" id="U3Z-9u-C3j"/>
                                         <constraint firstAttribute="width" constant="326" id="WnY-2h-JlB"/>
                                         <constraint firstItem="5Ie-Si-j8y" firstAttribute="top" secondItem="ufd-37-aMI" secondAttribute="bottom" constant="8" id="bAP-EB-mi4"/>
@@ -1342,7 +1340,6 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstAttribute="trailing" secondItem="LL8-k5-Sto" secondAttribute="trailing" constant="88" id="g2U-FR-Tir"/>
                                         <constraint firstAttribute="height" constant="244" id="kre-ER-jQe"/>
                                         <constraint firstItem="LL8-k5-Sto" firstAttribute="leading" secondItem="x8f-Op-1pT" secondAttribute="leading" constant="88" id="maY-LX-rPS"/>
-                                        <constraint firstAttribute="trailing" secondItem="ufd-37-aMI" secondAttribute="trailing" constant="33" id="mui-oW-ijb"/>
                                         <constraint firstItem="5Ie-Si-j8y" firstAttribute="leading" secondItem="x8f-Op-1pT" secondAttribute="leading" constant="73" id="rx6-2P-Uy4"/>
                                         <constraint firstItem="ufd-37-aMI" firstAttribute="top" secondItem="LL8-k5-Sto" secondAttribute="bottom" constant="8" id="wWF-Vm-Pdf"/>
                                     </constraints>
@@ -1398,7 +1395,7 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
                 <outlet property="titlebarAccessoryView" destination="Gov-KZ-ujg" id="M1J-aq-DJu"/>
             </connections>
-            <point key="canvasLocation" x="3573" y="549.5"/>
+            <point key="canvasLocation" x="3732" y="547.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
