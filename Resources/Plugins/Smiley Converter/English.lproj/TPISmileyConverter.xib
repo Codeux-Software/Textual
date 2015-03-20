@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
@@ -12,18 +12,16 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="1">
-            <rect key="frame" x="0.0" y="1" width="567" height="230"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="589" height="230"/>
             <userGuides>
                 <userLayoutGuide location="432" affinity="minY"/>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="Wmf-ec-NvO">
-                    <rect key="frame" x="60" y="154" width="447" height="46"/>
-                    <autoresizingMask key="autoresizingMask"/>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wmf-ec-NvO">
+                    <rect key="frame" x="71" y="154" width="447" height="46"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4Ss-Jq-da1">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,9 +57,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <button id="64">
-                    <rect key="frame" x="66" y="105" width="165" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
+                    <rect key="frame" x="77" y="105" width="159" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable smiley converter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -71,9 +68,8 @@
                         <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Service" id="2bD-6F-V3R"/>
                     </connections>
                 </button>
-                <button id="d4p-fS-sg0">
-                    <rect key="frame" x="66" y="79" width="165" height="18"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="d4p-fS-sg0">
+                    <rect key="frame" x="77" y="79" width="157" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable extra emoticons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="nlC-dQ-P7M">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="titleBar" size="12"/>
@@ -83,9 +79,8 @@
                         <binding destination="LeY-as-hAW" name="value" keyPath="values.Smiley Converter Extension -&gt; Enable Extra Emoticons" id="Hkv-nI-vbY"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="VVb-gg-jxO">
-                    <rect key="frame" x="83" y="31" width="420" height="42"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VVb-gg-jxO">
+                    <rect key="frame" x="94" y="31" width="420" height="42"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="gKd-Kk-6FE">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">The Smiley Converter only scans for a small number of emoticons by default to allow for an acceptable level of performance. By enabling extra emoticons, an additional 800 emoticons are added that can be converted.</string>
@@ -94,6 +89,21 @@
                     </textFieldCell>
                 </textField>
             </subviews>
+            <constraints>
+                <constraint firstItem="64" firstAttribute="top" secondItem="Wmf-ec-NvO" secondAttribute="bottom" constant="33" id="Dyv-Z8-FJQ"/>
+                <constraint firstItem="d4p-fS-sg0" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="12" id="Ivx-XY-k1L"/>
+                <constraint firstAttribute="trailing" secondItem="VVb-gg-jxO" secondAttribute="trailing" constant="77" id="QZS-aS-cQI"/>
+                <constraint firstItem="d4p-fS-sg0" firstAttribute="leading" secondItem="64" secondAttribute="leading" id="TMD-3k-iM8"/>
+                <constraint firstItem="VVb-gg-jxO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="96" id="VlR-7b-xNF"/>
+                <constraint firstItem="Wmf-ec-NvO" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="Z1Y-F7-lX3"/>
+                <constraint firstItem="Wmf-ec-NvO" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="eEh-Kb-QLA"/>
+                <constraint firstAttribute="bottom" secondItem="VVb-gg-jxO" secondAttribute="bottom" constant="31" id="lM8-2T-c79"/>
+                <constraint firstAttribute="width" constant="589" id="mD6-A6-BNu"/>
+                <constraint firstItem="VVb-gg-jxO" firstAttribute="top" secondItem="d4p-fS-sg0" secondAttribute="bottom" constant="8" symbolic="YES" id="nY9-Nc-vBE"/>
+                <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="79" id="ovr-h4-1Gk"/>
+                <constraint firstItem="Wmf-ec-NvO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="71" id="xnC-kH-Hky"/>
+                <constraint firstAttribute="height" constant="230" id="y0b-OV-l6w"/>
+            </constraints>
             <point key="canvasLocation" x="412.5" y="357"/>
         </customView>
         <userDefaultsController id="LeY-as-hAW" customClass="TPCPreferencesUserDefaultsController"/>
