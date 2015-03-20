@@ -757,6 +757,8 @@
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
 	[self executeQuickScriptCommand:@"notifyDidBecomeVisible" withArguments:@[]];
+
+	[self maybeRedrawFrame];
 }
 
 - (void)changeTextSize:(BOOL)bigger
