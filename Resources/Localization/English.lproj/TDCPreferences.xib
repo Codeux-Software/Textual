@@ -155,49 +155,49 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="QvU-QG-4EI"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="4tt-rO-NHB"/>
-                    <toolbarItem implicitItemIdentifier="85E627A0-4579-4CC9-9CDD-932BB5A5C509" explicitItemIdentifier="101" label="General" paletteLabel="General" tag="101" image="TPWTB_GeneralTemplate" selectable="YES" id="ye6-2h-R4p">
+                    <toolbarItem implicitItemIdentifier="85E627A0-4579-4CC9-9CDD-932BB5A5C509" explicitItemIdentifier="101" label="General" paletteLabel="General" tag="101" image="TPWTB_General" selectable="YES" id="ye6-2h-R4p">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="lUX-Dw-ox4"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="828F8CBE-4875-42F2-889B-44C7ABC0A505" explicitItemIdentifier="103" label="Notifications" paletteLabel="Notifications" tag="103" image="TPWTB_NotificationsTemplate" selectable="YES" id="z3r-Sc-CPs">
+                    <toolbarItem implicitItemIdentifier="828F8CBE-4875-42F2-889B-44C7ABC0A505" explicitItemIdentifier="103" label="Notifications" paletteLabel="Notifications" tag="103" image="TPWTB_Notifications" selectable="YES" id="z3r-Sc-CPs">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="yTn-hb-5mQ"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="DAADB4A9-1320-4760-92B4-C87B72E3AC6D" explicitItemIdentifier="102" label="Highlights" paletteLabel="Highlights" tag="102" image="TPWTB_HighlightsTemplate" selectable="YES" id="6P8-n2-nNV">
+                    <toolbarItem implicitItemIdentifier="DAADB4A9-1320-4760-92B4-C87B72E3AC6D" explicitItemIdentifier="102" label="Highlights" paletteLabel="Highlights" tag="102" image="TPWTB_Highlights" selectable="YES" id="6P8-n2-nNV">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="qiW-zZ-e38"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="0F260716-789B-4786-B676-0C4237450930" explicitItemIdentifier="105" label="Interface" paletteLabel="Interface" tag="105" image="TPWTB_InterfaceTemplate" selectable="YES" id="fzQ-55-v97">
+                    <toolbarItem implicitItemIdentifier="0F260716-789B-4786-B676-0C4237450930" explicitItemIdentifier="105" label="Interface" paletteLabel="Interface" tag="105" image="TPWTB_Interface" selectable="YES" id="fzQ-55-v97">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="waW-CS-aPJ"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="CB2072E5-5461-4254-B1A1-48CAB8F724D3" explicitItemIdentifier="106" label="Style" paletteLabel="Style" tag="106" image="TPWTB_Style_Template" selectable="YES" id="Ggd-0D-rbs">
+                    <toolbarItem implicitItemIdentifier="CB2072E5-5461-4254-B1A1-48CAB8F724D3" explicitItemIdentifier="106" label="Style" paletteLabel="Style" tag="106" image="TPWTB_Style" selectable="YES" id="Ggd-0D-rbs">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="Ia1-Hq-C1G"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="58E4DD0E-BEE2-4844-889E-1BD91F6CBFB9" explicitItemIdentifier="104" label="Controls" paletteLabel="Controls" tag="104" image="TPWTB_ControlsTemplate" selectable="YES" id="e6N-0C-9Eo">
+                    <toolbarItem implicitItemIdentifier="58E4DD0E-BEE2-4844-889E-1BD91F6CBFB9" explicitItemIdentifier="104" label="Controls" paletteLabel="Controls" tag="104" image="TPWTB_Controls" selectable="YES" id="e6N-0C-9Eo">
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="qAU-RF-I8Y"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2EF7BF85-4F22-4453-B6E7-6713200C2069" explicitItemIdentifier="108" label="Advanced" paletteLabel="Advanced" tag="108" image="TPWTB_Advanced_2_Template" selectable="YES" id="Ljh-iZ-r98">
+                    <toolbarItem implicitItemIdentifier="2EF7BF85-4F22-4453-B6E7-6713200C2069" explicitItemIdentifier="108" label="Advanced" paletteLabel="Advanced" tag="108" image="TPWTB_Advanced" selectable="YES" id="Ljh-iZ-r98">
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
                             <rect key="frame" x="12" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced_2_Template" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Y0B-GY-ayZ" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="FeN-Jh-HW4" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
                                     <items>
-                                        <menuItem state="on" image="TPWTB_Advanced_2_Template" hidden="YES" id="FeN-Jh-HW4">
+                                        <menuItem state="on" image="TPWTB_Advanced" hidden="YES" id="FeN-Jh-HW4">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -260,19 +260,19 @@ DQ
                             <action selector="onPrefPaneSelected:" target="-2" id="73o-gm-Tci"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="19E87B08-365E-4C82-AF67-7AF1D1BA7654" explicitItemIdentifier="107" label="Addons" paletteLabel="Addons" tag="107" image="TPWTB_Addons_2_Template" selectable="YES" id="BVW-Pf-3Qn">
+                    <toolbarItem implicitItemIdentifier="19E87B08-365E-4C82-AF67-7AF1D1BA7654" explicitItemIdentifier="107" label="Addons" paletteLabel="Addons" tag="107" image="TPWTB_Addons" selectable="YES" id="BVW-Pf-3Qn">
                         <nil key="toolTip"/>
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
                         <popUpButton key="view" tag="107" id="yuI-3m-esZ">
                             <rect key="frame" x="17" y="16" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons_2_Template" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Im1-Pd-BXM" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
                                     <items>
-                                        <menuItem state="on" image="TPWTB_Addons_2_Template" hidden="YES" id="b9Y-Fr-JSg">
+                                        <menuItem state="on" image="TPWTB_Addons" hidden="YES" id="b9Y-Fr-JSg">
                                             <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
@@ -1304,7 +1304,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RemoveIRCTextFormatting" id="zmC-iH-hNx"/>
                                         </connections>
                                     </button>
-                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
+                                    <scrollView appearanceType="aqua" misplaced="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
                                         <rect key="frame" x="109" y="37" width="357" height="13"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
                                             <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -2222,9 +2222,9 @@ DQ
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <scrollView focusRingType="none" appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
-                    <rect key="frame" x="59" y="130" width="471" height="209.5"/>
-                    <clipView key="contentView" id="AXK-zU-57a">
+                <scrollView focusRingType="none" appearanceType="aqua" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
+                    <rect key="frame" x="59" y="130" width="471" height="209.25"/>
+                    <clipView key="contentView" misplaced="YES" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -2292,8 +2292,8 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wqE-6p-1vl">
-                    <rect key="frame" x="326" y="33" width="103" height="18.5"/>
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqE-6p-1vl">
+                    <rect key="frame" x="326" y="33" width="103" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="103" id="eR3-V8-xPB"/>
                     </constraints>
@@ -3525,7 +3525,7 @@ DQ
                                 <rect key="frame" x="10" y="25" width="521" height="360"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
+                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
                                         <rect key="frame" x="58" y="201" width="323" height="18"/>
                                         <buttonCell key="cell" type="check" title="Use “x” to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8DQ-Jg-CgL">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3536,13 +3536,13 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayUserListNoModeSymbol" id="Tvx-vv-1Xj"/>
                                         </connections>
                                     </button>
-                                    <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
+                                    <box appearanceType="aqua" verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
                                         <rect key="frame" x="39" y="261" width="443" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
+                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
                                         <rect key="frame" x="58" y="173" width="320" height="18"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="egC-El-gcj">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3553,7 +3553,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListSortFavorsServerStaff" id="lRa-9p-0ml"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
+                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
                                         <rect key="frame" x="58" y="95" width="134" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="Pab-0Z-VAE">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3561,7 +3561,7 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
+                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
                                         <rect key="frame" x="197" y="96" width="25" height="11"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="etq-xm-HYN">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3569,13 +3569,13 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
+                                    <box appearanceType="aqua" verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
                                         <rect key="frame" x="40" y="126" width="442" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
+                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
                                         <rect key="frame" x="58" y="145" width="280" height="18"/>
                                         <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0ZL-Zz-8el">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3585,7 +3585,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListUpdatesUserInfoPopoverOnScroll" id="d0I-sB-16Z"/>
                                         </connections>
                                     </button>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Pbc-E1-SsU">
+                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pbc-E1-SsU">
                                         <rect key="frame" x="58" y="280" width="240" height="18"/>
                                         <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="acY-VO-4TI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3595,7 +3595,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OpenClickedLinksInBackgroundBrowser" id="msX-zG-yJX"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
+                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
                                         <rect key="frame" x="428" y="94" width="23" height="13"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="19" id="dhi-Py-uLh"/>
@@ -3606,7 +3606,7 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
+                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
                                         <rect key="frame" x="58" y="229" width="181" height="18"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RdW-uj-Mh1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3618,7 +3618,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="1tV-gb-bDM"/>
                                         </connections>
                                     </button>
-                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
+                                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
                                         <rect key="frame" x="225" y="94" width="197" height="15"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="4bQ-HS-Zy3"/>
                                         <connections>
@@ -4870,13 +4870,13 @@ DQ
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="TPWTB_Addons_2_Template" width="512" height="512"/>
-        <image name="TPWTB_Advanced_2_Template" width="512" height="512"/>
-        <image name="TPWTB_ControlsTemplate" width="512" height="512"/>
-        <image name="TPWTB_GeneralTemplate" width="512" height="512"/>
-        <image name="TPWTB_HighlightsTemplate" width="512" height="512"/>
-        <image name="TPWTB_InterfaceTemplate" width="512" height="512"/>
-        <image name="TPWTB_NotificationsTemplate" width="512" height="512"/>
-        <image name="TPWTB_Style_Template" width="512" height="512"/>
+        <image name="TPWTB_Addons" width="32" height="32"/>
+        <image name="TPWTB_Advanced" width="32" height="32"/>
+        <image name="TPWTB_Controls" width="32" height="32"/>
+        <image name="TPWTB_General" width="32" height="32"/>
+        <image name="TPWTB_Highlights" width="32" height="32"/>
+        <image name="TPWTB_Interface" width="32" height="32"/>
+        <image name="TPWTB_Notifications" width="32" height="32"/>
+        <image name="TPWTB_Style" width="32" height="32"/>
     </resources>
 </document>
