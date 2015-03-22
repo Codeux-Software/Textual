@@ -373,6 +373,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
+
+	[sharedEncryptionManager() prepareForApplicationTermination];
 	
 	[menuController() prepareForApplicationTermination];
 

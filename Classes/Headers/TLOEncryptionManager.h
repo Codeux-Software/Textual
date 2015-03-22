@@ -65,6 +65,9 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 /* Open dialog containing list of fingerprints. */
 - (void)presentListOfFingerprints;
 
+/* Call before terminating Textual */
+- (void)prepareForApplicationTermination;
+
 /* Define configuration options */
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;
 

@@ -141,6 +141,13 @@ static BOOL _classInitiated = NO;
 	}
 }
 
+- (void)prepareForApplicationTermination
+{
+	_cancelCallForWeakCiphersVoid
+
+	[RZNotificationCenter() postNotificationName:OTRKitPrepareForApplicationTerminationNotification object:nil];
+}
+
 #pragma mark -
 #pragma mark Fingerprint Manager
 
