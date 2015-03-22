@@ -48,9 +48,6 @@
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
 @property (nonatomic, copy) NSString *messageBody; // unencrypted value
-
-// Properties that are assigned by the delegate methods of OTRKit
-@property (nonatomic, assign) OTRKitMessageEvent lastEvent;
 @end
 
 static BOOL _classInitiated = NO;
@@ -578,10 +575,6 @@ static BOOL _classInitiated = NO;
 	} else {
 		if (tag) {
 			if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-				TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
-
-				[messageObject setLastEvent:event];
-
 				if ([self eventIsErrornous:event]) {
 					[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
 				}
