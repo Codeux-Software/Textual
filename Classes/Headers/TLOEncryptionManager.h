@@ -46,7 +46,7 @@
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
-@interface TLOEncryptionManager : NSObject <OTRKitDelegate>
+@interface TLOEncryptionManager : NSObject <OTRKitDelegate, OTRKitFingerprintManagerDialogDelegate>
 /* Returns unique "account name" used for messageFrom and messageTo parameters. */
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;
 
@@ -61,6 +61,9 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 
 /* Socialist Millionaire Problem <http://en.wikipedia.org/wiki/Socialist_millionaire> */
 - (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom;
+
+/* Open dialog containing list of fingerprints. */
+- (void)presentListOfFingerprints;
 
 /* Define configuration options */
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;

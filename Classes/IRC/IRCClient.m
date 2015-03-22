@@ -3270,40 +3270,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 			else if (NSObjectsAreEqual(section1, @"fingerprints"))
 			{
-				NSArray *fingersprints = [[OTRKit sharedInstance] requestAllFingerprints];
-
-				if ([fingersprints count] <= 0) {
-					[self printDebugInformation:BLS(1261)];
-
-					break;
-				}
-
-				[self printDebugInformation:@"-----------------------------------------------"];
-
-				for (NSDictionary *fingerprint in fingersprints) {
-					@autoreleasepool {
-						NSString *remoteAccountName = fingerprint[kOTRKitUsernameKey];
-						NSString *localAccountName = fingerprint[kOTRKitAccountNameKey];
-						NSString *fingerprintValue = fingerprint[kOTRKitFingerprintKey];
-
-						BOOL isTrusted = [fingerprint[kOTRKitTrustKey] boolValue];
-
-						NSString *isTrustedString = nil;
-
-						if (isTrusted) {
-							isTrustedString = @"YES";
-						} else {
-							isTrustedString = @"NO";
-						}
-
-						[self printDebugInformation:[NSString stringWithFormat:@"\tRemote Account Name: %@", remoteAccountName]];
-						[self printDebugInformation:[NSString stringWithFormat:@"\tLocal Account Name: %@", localAccountName]];
-						[self printDebugInformation:[NSString stringWithFormat:@"\tFingerprint: %@", fingerprintValue]];
-						[self printDebugInformation:[NSString stringWithFormat:@"\tTrusted: %@", isTrustedString]];
-
-						[self printDebugInformation:@"-----------------------------------------------"];
-					}
-				}
+				[sharedEncryptionManager() presentListOfFingerprints];
 			}
 			
 			break;

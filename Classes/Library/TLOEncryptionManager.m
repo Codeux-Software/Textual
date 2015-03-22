@@ -37,6 +37,10 @@
 
 #import "TextualApplication.h"
 
+@interface TLOEncryptionManager ()
+@property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
+@end
+
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
 // Properties that should be manipulated to provide context information
 @property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock encodingCallback;
@@ -141,6 +145,24 @@ static BOOL _classInitiated = NO;
 }
 
 #pragma mark -
+#pragma mark Fingerprint Manager
+
+- (void)presentListOfFingerprints
+{
+	_cancelCallForWeakCiphersVoid
+
+	if ([self fingerprintManagerDialog] == nil) {
+		OTRKitFingerprintManagerDialog *dialog = [OTRKitFingerprintManagerDialog new];
+
+		[dialog setDelegate:self];
+
+		[self setFingerprintManagerDialog:dialog];
+	}
+
+	[[self fingerprintManagerDialog] open];
+}
+
+#pragma mark -
 #pragma mark Account Name Information
 
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client
@@ -240,11 +262,7 @@ static BOOL _classInitiated = NO;
 	if (currentState == OTRKitMessageStateEncrypted) {
 		[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
 														 accountName:messageFrom
-															protocol:[self otrKitProtocol]
-															callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
-		 {
-			 [self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
-		 }];
+															protocol:[self otrKitProtocol]];
 	} else {
 		[self presentErrorMessage:BLS(1263) withAccountName:messageTo];
 	}
@@ -477,7 +495,6 @@ static BOOL _classInitiated = NO;
 		}
 	}
 
-
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[client send:IRCPrivateCommandIndex("privmsg"), [channel name], message, nil];
 	}];
@@ -546,13 +563,7 @@ static BOOL _classInitiated = NO;
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	[OTRKitAuthenticationDialog showFingerprintConfirmationForUsername:username
-														   accountName:accountName
-															  protocol:protocol
-															  callback:^(NSString *username, NSString *accountName, NSString *protocol, BOOL isAuthenticated)
-	 {
-		[self authenticationStatusChangedForAccountName:username isVerified:isAuthenticated];
-	}];
+	[OTRKitAuthenticationDialog showFingerprintConfirmationForUsername:username accountName:accountName protocol:protocol];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
@@ -593,6 +604,17 @@ static BOOL _classInitiated = NO;
 {
 	;
 }
+
+- (void)otrKit:(OTRKit *)otrKit fingerprintIsVerifiedStateChangedForUsername:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol verified:(BOOL)verified
+{
+	[self authenticationStatusChangedForAccountName:username isVerified:verified];
+}
+
+- (void)otrKitFingerprintManagerDialogDidClose:(OTRKitFingerprintManagerDialog *)otrkitFingerprintManager
+{
+	[self setFingerprintManagerDialog:nil];
+}
+
 
 #pragma mark -
 #pragma mark Weak Cipher Manager
