@@ -163,7 +163,7 @@ static BOOL _classInitiated = NO;
 		[self setFingerprintManagerDialog:dialog];
 	}
 
-	[[self fingerprintManagerDialog] open];
+	[[self fingerprintManagerDialog] open:mainWindow()];
 }
 
 #pragma mark -
@@ -567,7 +567,7 @@ static BOOL _classInitiated = NO;
 
 - (void)otrKit:(OTRKit *)otrKit showFingerprintConfirmationForTheirHash:(NSString *)theirHash ourHash:(NSString *)ourHash username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
-	[OTRKitAuthenticationDialog showFingerprintConfirmationForUsername:username accountName:accountName protocol:protocol];
+	[OTRKitAuthenticationDialog showFingerprintConfirmation:mainWindow() username:username accountName:accountName protocol:protocol];
 }
 
 - (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
