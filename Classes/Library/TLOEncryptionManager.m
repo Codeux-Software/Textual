@@ -573,12 +573,8 @@ static BOOL _classInitiated = NO;
 	if (event == OTRKitMessageEventReceivedMessageUnencrypted) {
 		[self otrKit:otrKit decodedMessage:message wasEncrypted:NO tlvs:nil username:username accountName:accountName protocol:protocol tag:tag];
 	} else {
-		if (tag) {
-			if ([tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-				if ([self eventIsErrornous:event]) {
-					[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
-				}
-			}
+		if ([self eventIsErrornous:event]) {
+			[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
 		}
 	}
 }
