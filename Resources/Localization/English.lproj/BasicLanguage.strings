@@ -690,6 +690,11 @@
 
 "BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
+/* Off-the-Record Messaging status messages for the title bar of the main window */
+"BasicLanguage[1265][1]" = "Not Private";
+"BasicLanguage[1265][2]" = "Unverified";
+"BasicLanguage[1265][3]" = "Private";
+
 /* Errors related to the /OTR/ command */
 "BasicLanguage[1257]" = "Error: This command can only be performed within a query (private message)";
 "BasicLanguage[1258]" = "Error: Invalid syntax";

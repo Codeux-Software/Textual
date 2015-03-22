@@ -1393,7 +1393,8 @@ There are no other limits. What you see, is what you get.</string>
                 <outlet property="mainMenuProxy" destination="oRw-Te-R5j" id="HzB-QD-J7j"/>
                 <outlet property="memberList" destination="uZZ-ie-yHv" id="gm8-QW-Z2m"/>
                 <outlet property="serverList" destination="bhZ-Cj-KBM" id="QGQ-U3-gy6"/>
-                <outlet property="titlebarAccessoryView" destination="Gov-KZ-ujg" id="M1J-aq-DJu"/>
+                <outlet property="titlebarAccessoryView" destination="8Pz-wu-9PV" id="wtn-6H-hnV"/>
+                <outlet property="titlebarAccessoryViewLockButton" destination="N9S-CI-zgv" id="BLp-fo-3Ue"/>
             </connections>
             <point key="canvasLocation" x="3732" y="547.5"/>
         </window>
@@ -1551,27 +1552,27 @@ There are no other limits. What you see, is what you get.</string>
             </constraints>
             <point key="canvasLocation" x="284" y="314"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Gov-KZ-ujg">
-            <rect key="frame" x="0.0" y="0.0" width="103" height="20"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">
+            <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
             <subviews>
-                <button toolTip="This connection is secured." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lVg-Br-WOl">
-                    <rect key="frame" x="60" y="-1" width="20" height="19"/>
-                    <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSLockLockedTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wGW-vZ-cJL">
+                <button toolTip="This connection is secured." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-CI-zgv" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">
+                    <rect key="frame" x="12" y="-1" width="99" height="19"/>
+                    <buttonCell key="cell" type="recessed" title="Not Private" bezelStyle="recessed" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WDX-xV-mcZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
                     </buttonCell>
                     <connections>
-                        <action selector="presentCertificateTrustInformation:" target="Yum-Vp-Zoi" id="meW-TM-8m3"/>
+                        <action selector="titlebarAccessoryViewLockButtonClicked:" target="Yum-Vp-Zoi" id="EIC-U3-eH2"/>
                     </connections>
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="lVg-Br-WOl" firstAttribute="top" secondItem="Gov-KZ-ujg" secondAttribute="top" constant="2" id="JtI-T2-gE0"/>
-                <constraint firstAttribute="width" constant="103" id="PUw-Ck-tCz"/>
-                <constraint firstAttribute="trailing" secondItem="lVg-Br-WOl" secondAttribute="trailing" constant="23" id="pap-S5-hJU"/>
-                <constraint firstAttribute="height" constant="20" id="yNF-hC-MH3"/>
+                <constraint firstItem="N9S-CI-zgv" firstAttribute="top" secondItem="8Pz-wu-9PV" secondAttribute="top" constant="2" id="M2Z-qG-tIo"/>
+                <constraint firstAttribute="height" constant="20" id="cYT-t8-8HD"/>
+                <constraint firstAttribute="trailing" secondItem="N9S-CI-zgv" secondAttribute="trailing" constant="23" id="dGz-pi-g2g"/>
+                <constraint firstAttribute="width" constant="134" id="e2u-qi-Lgc"/>
             </constraints>
-            <point key="canvasLocation" x="3430.5" y="719"/>
+            <point key="canvasLocation" x="3508" y="759"/>
         </customView>
     </objects>
     <resources>
@@ -1595,7 +1596,7 @@ There are no other limits. What you see, is what you get.</string>
         <image name="MainWindowSegmentedControlUserTemplate" width="20" height="18"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSLockLockedTemplate" width="10" height="14"/>
+        <image name="NSLockUnlockedTemplate" width="10" height="14"/>
         <image name="applicationIconYosemite" width="512" height="512"/>
     </resources>
 </document>

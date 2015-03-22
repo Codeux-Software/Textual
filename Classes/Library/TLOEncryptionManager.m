@@ -279,6 +279,7 @@ static BOOL _classInitiated = NO;
 {
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
+
 	NSParameterAssert(messageBody != nil);
 
 	if ([self usesWeakCiphers]) {
@@ -306,6 +307,7 @@ static BOOL _classInitiated = NO;
 {
 	NSParameterAssert(messageTo != nil);
 	NSParameterAssert(messageFrom != nil);
+
 	NSParameterAssert(messageBody != nil);
 
 	if ([self usesWeakCiphers]) {
@@ -333,6 +335,40 @@ static BOOL _classInitiated = NO;
 
 #pragma mark -
 #pragma mark Helper Methods
+
+- (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	NSParameterAssert(button != nil);
+
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStateEncrypted) {
+		BOOL hasVerifiedKey = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:messageTo
+																				  accountName:messageFrom
+																					 protocol:[self otrKitProtocol]];
+
+		if (hasVerifiedKey) {
+			[button setTitle:TXTLS(@"BasicLanguage[1265][3]")];
+
+			[button setIconAsLocked];
+		} else {
+			[button setTitle:TXTLS(@"BasicLanguage[1265][2]")];
+
+			/* Even though we are encrypted, our icon is still set to unlocked because
+			 the identity of messageTo still has not been authenticated. */
+			[button setIconAsUnlocked];
+		}
+	} else {
+		[button setTitle:TXTLS(@"BasicLanguage[1265][1]")];
+
+		[button setIconAsUnlocked];
+	}
+}
 
 - (void)performBlockInRelationToAccountName:(NSString *)accountName block:(void (^)(NSString *nickname, IRCClient *client, IRCChannel *channel))block
 {
@@ -412,14 +448,19 @@ static BOOL _classInitiated = NO;
 	}
 }
 
+- (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client
+{
+	[client print:channel
+			 type:TVCLogLineOffTheRecordEncryptionStatusType
+		 nickname:nil
+	  messageBody:message
+		  command:TVCLogLineDefaultRawCommandValue];
+}
+
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName
 {
 	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		[client print:channel
-				 type:TVCLogLineOffTheRecordEncryptionStatusType
-			 nickname:nil
-		  messageBody:message
-			  command:TVCLogLineDefaultRawCommandValue];
+		[self printMessage:message inChannel:channel onClient:client];
 	}];
 }
 
@@ -430,13 +471,15 @@ static BOOL _classInitiated = NO;
 
 - (void)authenticationStatusChangedForAccountName:(NSString *)accountName isVerified:(BOOL)isVerified
 {
-	NSString *nickname = [self nicknameFromAccountName:accountName];
+	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		if (isVerified) {
+			[self printMessage:TXTLS(@"BasingLanguage[1259][01]", nickname) inChannel:channel onClient:client];
+		} else {
+			[self printMessage:TXTLS(@"BasingLanguage[1259][02]", nickname) inChannel:channel onClient:client];
+		}
 
-	if (isVerified) {
-		[self presentMessage:TXTLS(@"BasingLanguage[1259][01]", nickname) withAccountName:accountName];
-	} else {
-		[self presentMessage:TXTLS(@"BasingLanguage[1259][02]", nickname) withAccountName:accountName];
-	}
+		[mainWindow() updateTitleFor:channel];
+	}];
 }
 
 #pragma mark -
@@ -534,6 +577,8 @@ static BOOL _classInitiated = NO;
 {
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[channel setEncryptionState:messageState];
+
+		[mainWindow() updateTitleFor:channel];
 	}];
 
 	if (messageState ==  OTRKitMessageStateEncrypted) {

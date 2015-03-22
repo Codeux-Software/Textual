@@ -141,7 +141,6 @@
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
-	@class TVCMainWindowChannelViewBox;
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedController;
 	@class TVCMainWindowSegmentedControllerCell;
@@ -151,6 +150,9 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMainWindowTextViewMavericksUserInterace;
 	@class TVCMainWindowTextViewYosemiteUserInterace;
+	@class TVCMainWindowTitlebarAccessoryView;
+	@class TVCMainWindowTitlebarAccessoryViewController;
+	@class TVCMainWindowTitlebarAccessoryViewLockButton;
 	@class TVCMemberLisCellYosemiteTextFieldInterior;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
@@ -355,6 +357,7 @@
 	#import "TVCMainWindowSplitView.h"
 	#import "TVCMainWindowTextViewMavericksUserInterace.h"
 	#import "TVCMainWindowTextViewYosemiteUserInterace.h"
+	#import "TVCMainWindowTitlebarAccessoryView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"

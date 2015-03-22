@@ -1066,12 +1066,57 @@
 #pragma mark -
 #pragma mark Window Extras
 
-- (void)presentCertificateTrustInformation:(id)sender
+- (void)titlebarAccessoryViewLockButtonClicked:(id)sender
 {
 	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
 
 	if ( u) {
-		[u presentCertificateTrustInformation];
+		if ([c isPrivateMessage]) {
+			;
+		} else {
+			[u presentCertificateTrustInformation];
+		}
+	}
+}
+
+- (void)updateAccessoryViewLockButton
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	if ([c isPrivateMessage]) {
+		[self.titlebarAccessoryViewLockButton enableDrawingCustomBackgroundColor];
+		[self.titlebarAccessoryViewLockButton positionImageOnLeftSide];
+
+		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[c name] onClient:u];
+
+		NSString *localAccountname = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
+
+		[sharedEncryptionManager() updateLockIconButton:self.titlebarAccessoryViewLockButton
+											withStateOf:remoteAccountName
+												   from:localAccountname];
+
+		[self.titlebarAccessoryView setHidden:NO];
+	} else {
+		[self.titlebarAccessoryViewLockButton disableDrawingCustomBackgroundColor];
+		[self.titlebarAccessoryViewLockButton positionImageOverContent];
+
+		[self.titlebarAccessoryViewLockButton setTitle:NSStringEmptyPlaceholder];
+
+		if (u) {
+			if ([u connectionIsSecured]) {
+				[self.titlebarAccessoryViewLockButton setIconAsLocked];
+			} else {
+				[self.titlebarAccessoryViewLockButton setIconAsUnlocked];
+			}
+		} else {
+			[self.titlebarAccessoryView setHidden:YES];
+		}
+	}
+
+	if ([self.titlebarAccessoryView isHidden] == NO) {
+		[self.titlebarAccessoryViewLockButton sizeToFit];
 	}
 }
 
@@ -1126,11 +1171,7 @@
 	IRCChannel *c = self.selectedChannel;
 
 	/* Update accessory view. */
-	if (u) {
-		[self.titlebarAccessoryView setHidden:([u connectionIsSecured] == NO)];
-	} else {
-		[self.titlebarAccessoryView setHidden:YES];
-	}
+	[self updateAccessoryViewLockButton];
 
 	/* Set default window title if there is none. */
 	if (u == nil && c == nil) {
