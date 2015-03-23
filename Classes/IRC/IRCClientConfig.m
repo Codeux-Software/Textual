@@ -520,6 +520,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 	[dic assignStringTo:&_itemUUID					forKey:@"uniqueIdentifier"];
 
 	[dic assignStringTo:&_nickname					forKey:@"nickname"];
+	[dic assignArrayTo:&_alternateNicknames			forKey:@"alternateNicknames"];
 	[dic assignStringTo:&_awayNickname				forKey:@"awayNickname"];
 	[dic assignStringTo:&_realName					forKey:@"realName"];
 	[dic assignStringTo:&_username					forKey:@"username"];
@@ -669,6 +670,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 	[dic maybeSetObject:self.itemUUID					forKey:@"uniqueIdentifier"];
 
 	[dic maybeSetObject:self.nickname					forKey:@"nickname"];
+	[dic maybeSetObject:self.alternateNicknames			forKey:@"alternateNicknames"];
 	[dic maybeSetObject:self.awayNickname				forKey:@"awayNickname"];
 	[dic maybeSetObject:self.realName					forKey:@"realName"];
 	[dic maybeSetObject:self.username					forKey:@"username"];
