@@ -43,6 +43,12 @@
 
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
 
+#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			9930 // "Start Private Conversation"
+#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		9931 // "Refresh Private Conversation"
+#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			9932 // "End Private Conversation"
+#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			9933 // "Authenticate Chat Partner"
+#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			9934 // "View List of Fingerprints"
+
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
@@ -69,6 +75,8 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 - (void)prepareForApplicationTermination;
 
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
 
 /* Define configuration options */
 - (void)setEncryptionPolicy:(OTRKitPolicy)policy;

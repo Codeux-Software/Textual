@@ -247,11 +247,8 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		if ([self isEncrypted]) {
 			IRCClient *u = [self associatedClient];
 
-			NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[self name] onClient:u];
-
-			NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
-
-			[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
+			[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[self name]]
+													  from:[u encryptionAccountNameForLocalUser]];
 		}
 	}
 }

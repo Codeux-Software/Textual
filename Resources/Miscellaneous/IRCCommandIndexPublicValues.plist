@@ -583,15 +583,6 @@
 		<key>indexValue</key>
 		<integer>5053</integer>
 	</dict>
-	<key>otr</key>
-	<dict>
-		<key>command</key>
-		<string>OTR</string>
-		<key>developerModeOnly</key>
-		<false/>
-		<key>indexValue</key>
-		<integer>5102</integer>
-	</dict>
 	<key>part</key>
 	<dict>
 		<key>command</key>

@@ -939,6 +939,7 @@ CQ
                 <outlet property="channelViewMenu" destination="374" id="gt4-AW-DbM"/>
                 <outlet property="closeWindowMenuItem" destination="1770" id="fJx-2N-mHr"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
+                <outlet property="encryptionManagerStatusMenu" destination="edI-1l-81o" id="fSt-o4-bUU"/>
                 <outlet property="joinChannelMenu" destination="963" id="LXx-Gs-vAU"/>
                 <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>
                 <outlet property="muteNotificationsFileMenuItem" destination="QNy-Fk-SRO" id="nHn-Ki-RJX"/>
@@ -951,6 +952,47 @@ CQ
                 <outlet property="userControlMenu" destination="327" id="Qyi-GH-9oZ"/>
             </connections>
         </customObject>
+        <menu id="edI-1l-81o" userLabel="Encryption Manager Status Menu">
+            <items>
+                <menuItem title="What's this?" enabled="NO" id="fdJ-Px-D0q">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Rqm-1P-8cE"/>
+                <menuItem title="Start Private Conversation" tag="9930" id="wTZ-NT-MgD">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionStartPrivateConversation:" target="267" id="uqX-jS-WxC"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Refresh Private Conversation" tag="9931" id="SJp-pz-WvU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionRefreshPrivateConversation:" target="267" id="lS1-ZG-dAN"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="End Private Conversation" tag="9932" id="bJT-Nc-UwZ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionEndPrivateConversation:" target="267" id="bPL-Ih-3je"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="vgt-gi-rFQ"/>
+                <menuItem title="Authenticate Chat Partner" tag="9933" id="9eO-kw-9HG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionAuthenticateChatPartner:" target="267" id="F1j-kX-1Dw"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="seh-5B-FFy"/>
+                <menuItem title="View List of Fingerprints" tag="9934" id="aii-WP-szA">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionListFingerprints:" target="267" id="8Ai-8r-XNy"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-362.5" y="736.5"/>
+        </menu>
         <menu title="Menu" id="327" userLabel="User Controls Menu">
             <items>
                 <menuItem title="Invite to..." tag="2005" id="1003">

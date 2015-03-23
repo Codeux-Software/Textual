@@ -1066,18 +1066,22 @@
 #pragma mark -
 #pragma mark Window Extras
 
-- (void)titlebarAccessoryViewLockButtonClicked:(id)sender
+- (void)presentCertificateTrustInformation:(id)sender
 {
 	IRCClient *u = self.selectedClient;
-	IRCChannel *c = self.selectedChannel;
 
 	if ( u) {
-		if ([c isPrivateMessage]) {
-			;
-		} else {
-			[u presentCertificateTrustInformation];
-		}
+		[u presentCertificateTrustInformation];
 	}
+}
+
+- (void)titlebarAccessoryViewLockButtonClicked:(id)sender
+{
+	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
+
+	[statusMenu popUpMenuPositioningItem:nil
+							  atLocation:self.titlebarAccessoryViewLockButton.frame.origin
+								  inView:self.titlebarAccessoryViewLockButton];
 }
 
 - (void)updateAccessoryViewLockButton
@@ -1085,31 +1089,33 @@
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	if ([c isPrivateMessage]) {
+	BOOL updateEncryption = ([sharedEncryptionManager() usesWeakCiphers] == NO &&		// Do not change lock when a weak cipher is enaled
+							 NSObjectsAreEqual([u localNickname], [c name]) == NO &&	// Do not change lock when the query is for self
+							 [c isPrivateMessage]);										// Do not change lock unless we are in a query
+
+	if (updateEncryption) {
+		[self.titlebarAccessoryViewLockButton setAction:@selector(titlebarAccessoryViewLockButtonClicked:)];
+
 		[self.titlebarAccessoryViewLockButton enableDrawingCustomBackgroundColor];
 		[self.titlebarAccessoryViewLockButton positionImageOnLeftSide];
 
-		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[c name] onClient:u];
-
-		NSString *localAccountname = [sharedEncryptionManager() accountNameWithUser:[u localNickname] onClient:u];
-
 		[sharedEncryptionManager() updateLockIconButton:self.titlebarAccessoryViewLockButton
-											withStateOf:remoteAccountName
-												   from:localAccountname];
+											withStateOf:[u encryptionAccountNameForUser:[c name]]
+												   from:[u encryptionAccountNameForLocalUser]];
 
 		[self.titlebarAccessoryView setHidden:NO];
 	} else {
+		[self.titlebarAccessoryViewLockButton setAction:@selector(presentCertificateTrustInformation:)];
+
 		[self.titlebarAccessoryViewLockButton disableDrawingCustomBackgroundColor];
 		[self.titlebarAccessoryViewLockButton positionImageOverContent];
 
 		[self.titlebarAccessoryViewLockButton setTitle:NSStringEmptyPlaceholder];
 
-		if (u) {
-			if ([u connectionIsSecured]) {
-				[self.titlebarAccessoryViewLockButton setIconAsLocked];
-			} else {
-				[self.titlebarAccessoryViewLockButton setIconAsUnlocked];
-			}
+		if ([u connectionIsSecured]) {
+			[self.titlebarAccessoryView setHidden:NO];
+
+			[self.titlebarAccessoryViewLockButton setIconAsLocked];
 		} else {
 			[self.titlebarAccessoryView setHidden:YES];
 		}

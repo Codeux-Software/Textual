@@ -173,12 +173,8 @@ static BOOL _classInitiated = NO;
 {
 	_cancelCallForWeakCiphersReturn(nil)
 
-	/* A common theme of this class is an extensive use of asserts. Encryption is very
-	 serious so we fail at any hint of a bad input value so that the end user does not
-	 suffer by software doing something it should not. */
-
-	NSParameterAssert(client != nil);
-	NSParameterAssert(nickname != nil);
+	PointerIsEmptyAssertReturn(nickname, nil)
+	PointerIsEmptyAssertReturn(client, nil)
 
 	return [NSString stringWithFormat:@"%@%@%@", nickname, [[OTRKit sharedInstance] accountNameSeparator], [client uniqueIdentifier]];
 }
@@ -206,47 +202,56 @@ static BOOL _classInitiated = NO;
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	_cancelCallForWeakCiphersVoid
-
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
-
-	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
-												accountName:messageFrom
-												   protocol:[self otrKitProtocol]];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:BLS(1269)];
 }
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
 	_cancelCallForWeakCiphersVoid
 
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
-
-	[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
-											   accountName:messageFrom
-												  protocol:[self otrKitProtocol]];
-}
-
-- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
-{
-	_cancelCallForWeakCiphersVoid
-
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
-
-	[self presentMessage:BLS(1260) withAccountName:messageTo];
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
 																			  protocol:[self otrKitProtocol]];
 
 	if (currentState == OTRKitMessageStateEncrypted) {
-		[self endConversationWith:messageTo from:messageFrom];
+		[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
+												   accountName:messageFrom
+													  protocol:[self otrKitProtocol]];
+	} else {
+		[self presentErrorMessage:BLS(1270) withAccountName:messageTo];
+	}
+}
+
+- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:BLS(1260)];
+}
+
+- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
+{
+	_cancelCallForWeakCiphersVoid
+
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
+
+	[self presentMessage:message withAccountName:messageTo];
+
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStateEncrypted) {
+		[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
+												   accountName:messageFrom
+													  protocol:[self otrKitProtocol]];
 	}
 
-	[self beginConversationWith:messageTo from:messageFrom];
-
+	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
+												accountName:messageFrom
+												   protocol:[self otrKitProtocol]];
 }
 
 #pragma mark -
@@ -256,8 +261,8 @@ static BOOL _classInitiated = NO;
 {
 	_cancelCallForWeakCiphersVoid
 
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -277,10 +282,9 @@ static BOOL _classInitiated = NO;
 
 - (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
-
-	NSParameterAssert(messageBody != nil);
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
+	PointerIsEmptyAssert(messageBody)
 
 	if ([self usesWeakCiphers]) {
 		if ([[self weakCipherManager] respondsToSelector:@selector(decryptMessage:from:to:decodingCallback:)]) {
@@ -305,10 +309,9 @@ static BOOL _classInitiated = NO;
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
-
-	NSParameterAssert(messageBody != nil);
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
+	PointerIsEmptyAssert(messageBody)
 
 	if ([self usesWeakCiphers]) {
 		if ([[self weakCipherManager] respondsToSelector:@selector(encryptMessage:from:to:encodingCallback:injectionCallback:)]) {
@@ -338,10 +341,11 @@ static BOOL _classInitiated = NO;
 
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	NSParameterAssert(button != nil);
+	_cancelCallForWeakCiphersVoid
 
-	NSParameterAssert(messageTo != nil);
-	NSParameterAssert(messageFrom != nil);
+	PointerIsEmptyAssert(button)
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -656,6 +660,54 @@ static BOOL _classInitiated = NO;
 	[self setFingerprintManagerDialog:nil];
 }
 
+#pragma mark -
+#pragma mark Menu Item Actions
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	_cancelCallForWeakCiphersReturn(NO)
+
+	PointerIsEmptyAssertReturn(menuItem, NO)
+	PointerIsEmptyAssertReturn(messageTo, NO)
+	PointerIsEmptyAssertReturn(messageFrom, NO)
+
+	NSInteger menuItemTag = [menuItem tag];
+
+	if (menuItemTag == TLOEncryptionManagerMenuItemTagViewListOfFingerprints) {
+		return YES;
+	} else {
+		OTRKitMessageState currentMessageState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																					  accountName:messageFrom
+																						 protocol:[self otrKitProtocol]];
+
+		BOOL messageStateEncrypted = (currentMessageState == OTRKitMessageStateEncrypted);
+
+		switch (menuItemTag) {
+			case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+			{
+				[menuItem setHidden:messageStateEncrypted];
+
+				return YES;
+			}
+			case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+			{
+				[menuItem setHidden:(messageStateEncrypted == NO)];
+
+				return YES;
+			}
+			case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+			{
+				return messageStateEncrypted;
+			}
+			case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+			{
+				return messageStateEncrypted;
+			}
+		}
+	}
+
+	return NO;
+}
 
 #pragma mark -
 #pragma mark Weak Cipher Manager

@@ -605,6 +605,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
+- (NSString *)encryptionAccountNameForLocalUser
+{
+	return [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+}
+
+- (NSString *)encryptionAccountNameForUser:(NSString *)nickname
+{
+	return [sharedEncryptionManager() accountNameWithUser:nickname onClient:self];
+}
+
 - (NSString *)localHostmask
 {
 	return self.cachedLocalHostmask;
@@ -978,33 +988,26 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-	if ([sharedEncryptionManager() usesWeakCiphers])
-	{
+	if ([sharedEncryptionManager() usesWeakCiphers]) {
 		[sharedEncryptionManager() encryptMessage:messageBody from:[self localNickname] to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
-	}
-	else
-	{
-		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
-
-		[sharedEncryptionManager() encryptMessage:messageBody from:localAccountName to:remoteAccountName encodingCallback:encodingCallback injectionCallback:injectionCallback];
+	} else {
+		[sharedEncryptionManager() encryptMessage:messageBody
+											 from:[self encryptionAccountNameForLocalUser]
+											   to:[self encryptionAccountNameForUser:messageTo]
+								 encodingCallback:encodingCallback
+								injectionCallback:injectionCallback];
 	}
 }
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	if ([sharedEncryptionManager() usesWeakCiphers])
-	{
+	if ([sharedEncryptionManager() usesWeakCiphers]) {
 		[sharedEncryptionManager() decryptMessage:messageBody from:[self localNickname] to:messageTo decodingCallback:decodingCallback];
-	}
-	else
-	{
-		NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-		NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:messageTo onClient:self];
-
-		[sharedEncryptionManager() decryptMessage:messageBody from:remoteAccountName to:localAccountName decodingCallback:decodingCallback];
+	} else {
+		[sharedEncryptionManager() decryptMessage:messageBody
+											 from:[self encryptionAccountNameForUser:messageTo]
+											   to:[self encryptionAccountNameForLocalUser]
+								 decodingCallback:decodingCallback];
 	}
 }
 
@@ -3228,51 +3231,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				}
 			}
 
-			break;
-		}
-		case 5102: // Command: OTR
-		{
-			if ([sharedEncryptionManager() usesWeakCiphers]) {
-				[self printDebugInformation:BLS(1264)];
-
-				break;
-			}
-
-			if (NSObjectIsEmpty(uncutInput)) {
-				[self printDebugInformation:BLS(1258)];
-
-				break;
-			}
-
-			if (selChannel == nil || [selChannel isPrivateMessage] == NO) {
-				[self printDebugInformation:BLS(1257)];
-
-				break;
-			}
-
-			NSString *localAccountName = [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
-
-			NSString *remoteAccountName = [sharedEncryptionManager() accountNameWithUser:[selChannel name] onClient:self];
-
-			NSString *section1 = [s getTokenAsString];
-
-			if (NSObjectsAreEqual(section1, @"auth"))
-			{
-				[sharedEncryptionManager() authenticateUser:remoteAccountName from:localAccountName];
-			}
-			else if (NSObjectsAreEqual(section1, @"close"))
-			{
-				[sharedEncryptionManager() endConversationWith:remoteAccountName from:localAccountName];
-			}
-			else if (NSObjectsAreEqual(section1, @"refresh"))
-			{
-				[sharedEncryptionManager() refreshConversationWith:remoteAccountName from:localAccountName];
-			}
-			else if (NSObjectsAreEqual(section1, @"fingerprints"))
-			{
-				[sharedEncryptionManager() presentListOfFingerprints];
-			}
-			
 			break;
 		}
 		default:

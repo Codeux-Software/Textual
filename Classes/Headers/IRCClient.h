@@ -222,6 +222,9 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 
+- (NSString *)encryptionAccountNameForLocalUser;
+- (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
+
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)mode;
 - (void)connect:(IRCClientConnectMode)mode preferringIPv6:(BOOL)preferIPv6;

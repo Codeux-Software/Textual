@@ -124,8 +124,6 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
 
-- (IBAction)titlebarAccessoryViewLockButtonClicked:(id)sender;
-
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;
 - (void)selectNextWindow:(NSEvent *)e;

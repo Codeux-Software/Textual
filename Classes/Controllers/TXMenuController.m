@@ -486,6 +486,25 @@
             
             return YES;
         }
+		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagViewListOfFingerprints:
+		{
+			/* Even if we are not logged in, we still ask the encryption manager
+			 to validate the menu item first so that it can hide specific menu items. 
+			 After it has done that, then we can disable if not logged in. */
+			BOOL valid = [sharedEncryptionManager() validateMenuItem:item
+														 withStateOf:[u encryptionAccountNameForUser:[c name]]
+																from:[u encryptionAccountNameForLocalUser]];
+
+			if (_connectionNotLoggedIn) {
+				return NO;
+			} else {
+				return valid;
+			}
+		}
 		case 504813: // "All Modes Given"
 		{
 			return NO;
@@ -2640,6 +2659,66 @@
 - (void)exportPreferences:(id)sender
 {
 	[TPCPreferencesImportExport export];
+}
+
+#pragma mark -
+#pragma mark Encryption 
+
+- (IBAction)encryptionStartPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() beginConversationWith:[u encryptionAccountNameForUser:[c name]]
+												from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (IBAction)encryptionRefreshPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() refreshConversationWith:[u encryptionAccountNameForUser:[c name]]
+												  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (IBAction)encryptionEndPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[c name]]
+											  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (IBAction)encryptionAuthenticateChatPartner:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() authenticateUser:[u encryptionAccountNameForUser:[c name]]
+										   from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (IBAction)encryptionListFingerprints:(id)sender
+{
+	[sharedEncryptionManager() presentListOfFingerprints];
 }
 
 #pragma mark -
