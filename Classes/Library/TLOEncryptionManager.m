@@ -117,6 +117,8 @@ static BOOL _classInitiated = NO;
 
 	[otrKit setMaximumProtocolSize:[self otrKitProtocolMaximumMessageSize]
 					   forProtocol:[self otrKitProtocol]];
+
+	[self updatePolicy];
 }
 
 - (void)prepareEncryptionComponentPath:(NSString *)path
@@ -442,6 +444,7 @@ static BOOL _classInitiated = NO;
 		case OTRKitMessageEventReceivedMessageNotInPrivate:
 		case OTRKitMessageEventReceivedMessageUnreadable:
 		case OTRKitMessageEventReceivedMessageUnrecognized:
+		case OTRKitMessageEventEncryptionRequired:
 		{
 			return YES;
 		}
@@ -489,9 +492,17 @@ static BOOL _classInitiated = NO;
 #pragma mark -
 #pragma mark Off-the-Record Kit Delegate
 
-- (void)setEncryptionPolicy:(OTRKitPolicy)policy
+- (void)updatePolicy
 {
-	[[OTRKit sharedInstance] setOtrPolicy:policy];
+	if ([TPCPreferences textEncryptionIsRequired]) {
+		[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyAlways];
+	} else {
+		if ([TPCPreferences textEncryptionIsOpportunistic]) {
+			[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyOpportunistic];
+		} else {
+			[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyManual];
+		}
+	}
 }
 
 - (NSString *)otrKitProtocol

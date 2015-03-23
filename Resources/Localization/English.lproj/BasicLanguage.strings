@@ -671,7 +671,7 @@
 "BasicLanguage[1260]" = "Off-the-Record Messaging: Refreshing the private conversation…";
 "BasicLanguage[1269]" = "Off-the-Record Messaging: Starting a private conversation…";
 
-"BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out.";
+"BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out. The message visible on your screen will be sent once a private conversation has started.";
 "BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
 "BasicLanguage[1254][03]" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
 "BasicLanguage[1254][04]" = "Off-the-Record Messaging: A private conversation could not be started.";

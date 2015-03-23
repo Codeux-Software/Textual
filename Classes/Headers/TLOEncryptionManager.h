@@ -79,7 +79,7 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
 
 /* Define configuration options */
-- (void)setEncryptionPolicy:(OTRKitPolicy)policy;
+- (void)updatePolicy;
 
 /* Encryption/Decryption */
 - (void)encryptMessage:(NSString *)messageBody

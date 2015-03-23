@@ -156,6 +156,16 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
 
++ (BOOL)textEncryptionIsOpportunistic
+{
+	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
+}
+
++ (BOOL)textEncryptionIsRequired
+{
+	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Require Encryption"];
+}
+
 + (BOOL)displayServerMOTD
 {
 	return [RZUserDefaults() boolForKey:@"DisplayServerMessageOfTheDayOnConnect"];

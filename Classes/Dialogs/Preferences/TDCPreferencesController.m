@@ -65,8 +65,8 @@
 #define _toolbarItemIndexLogLocation				115
 #define _toolbarItemIndexDefaultIdentity			116
 #define _toolbarItemIndexDefualtIRCopMessages		117
-
 #define _toolbarItemIndexExperimentalSettings		119
+#define _toolbarItemIndexOffRecordMessaging		    121
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		120
 #define _addonsToolbarItemMultiplier					995
@@ -111,6 +111,7 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
@@ -171,6 +172,8 @@
 - (IBAction)onOpenPathToThemes:(id)sender;
 
 - (IBAction)onSelectNewFont:(id)sender;
+
+- (IBAction)offRecordMessagingPolicyChanged:(id)sender;
 @end
 
 @implementation TDCPreferencesController
@@ -335,7 +338,6 @@
 		_de(_toolbarItemIndexChannelManagement,		[self contentViewChannelManagement],		_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexCommandScope,			[self contentViewCommandScope],				_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexIncomingData,			[self contentViewIncomingData],				_toolbarItemIndexAdvanced)
-
 		_de(_toolbarItemIndexFileTransfers,			[self contentViewFileTransfers],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexFloodControl,			[self contentViewFloodControl],				_toolbarItemIndexAdvanced)
 
@@ -343,6 +345,8 @@
 
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexOffRecordMessaging,	[self contentViewOffRecordMessaging],		_toolbarItemIndexAdvanced)
 
 		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
 
@@ -962,6 +966,11 @@
 
 #pragma mark -
 #pragma mark Actions
+
+- (void)offRecordMessagingPolicyChanged:(id)sender
+{
+	[sharedEncryptionManager() updatePolicy];
+}
 
 - (void)onHideMountainLionDeprecationWarning:(id)sender
 {
