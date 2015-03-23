@@ -112,7 +112,7 @@
 	self.sortedSmileyList = nil;
 }
 
-- (IBAction)preferenceChanged:(id)sender
+- (void)preferenceChanged:(id)sender
 {
 	[self destroyConversionTable];
 

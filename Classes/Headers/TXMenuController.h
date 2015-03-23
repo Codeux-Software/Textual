@@ -305,6 +305,7 @@
 - (IBAction)importPreferences:(id)sender;
 - (IBAction)exportPreferences:(id)sender;
 
+- (IBAction)encryptionWhatIsThisInformation:(id)sender;
 - (IBAction)encryptionStartPrivateConversation:(id)sender;
 - (IBAction)encryptionRefreshPrivateConversation:(id)sender;
 - (IBAction)encryptionEndPrivateConversation:(id)sender;

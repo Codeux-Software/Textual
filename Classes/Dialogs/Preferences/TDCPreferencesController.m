@@ -1030,7 +1030,7 @@
 	[self onChangedUserListModeColor:sender];
 }
 
-- (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
+- (void)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
 	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
@@ -1090,7 +1090,7 @@
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
 }
 
-- (IBAction)onChangedServerListUnreadBadgeColor:(id)sender
+- (void)onChangedServerListUnreadBadgeColor:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListUnreadBadgesAction];
 }

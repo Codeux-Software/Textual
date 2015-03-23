@@ -267,7 +267,7 @@ DQ
                         <popUpButton key="view" tag="107" id="yuI-3m-esZ">
                             <rect key="frame" x="17" y="16" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1304,8 +1304,8 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RemoveIRCTextFormatting" id="zmC-iH-hNx"/>
                                         </connections>
                                     </button>
-                                    <scrollView appearanceType="aqua" misplaced="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="37" width="357" height="13"/>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
+                                        <rect key="frame" x="109" y="41" width="357" height="13"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
                                             <rect key="frame" x="1" y="1" width="223" height="133"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2046,14 +2046,14 @@ DQ
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="339" height="13"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="A list of formatting symbols can be found at ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <font key="NSOriginalFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2142,7 +2142,7 @@ DQ
                 <constraint firstItem="lpz-77-UDw" firstAttribute="top" secondItem="oeR-nv-slx" secondAttribute="top" constant="16" id="paA-Y3-ejr"/>
                 <constraint firstAttribute="height" constant="383" id="s8q-u7-xGy"/>
             </constraints>
-            <point key="canvasLocation" x="331.5" y="-996.5"/>
+            <point key="canvasLocation" x="85.5" y="-916.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="0.0" y="0.0" width="589" height="119"/>
@@ -2222,9 +2222,9 @@ DQ
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <scrollView focusRingType="none" appearanceType="aqua" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
-                    <rect key="frame" x="59" y="130" width="471" height="209.25"/>
-                    <clipView key="contentView" misplaced="YES" id="AXK-zU-57a">
+                <scrollView focusRingType="none" appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
+                    <rect key="frame" x="59" y="130" width="471" height="210"/>
+                    <clipView key="contentView" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -2292,8 +2292,8 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqE-6p-1vl">
-                    <rect key="frame" x="326" y="33" width="103" height="19"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wqE-6p-1vl">
+                    <rect key="frame" x="326" y="33" width="103" height="18"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="103" id="eR3-V8-xPB"/>
                     </constraints>
@@ -3525,7 +3525,7 @@ DQ
                                 <rect key="frame" x="10" y="25" width="521" height="360"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Gmu-Oh-Krb">
                                         <rect key="frame" x="58" y="201" width="323" height="18"/>
                                         <buttonCell key="cell" type="check" title="Use “x” to indicate user with no mode set in user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="8DQ-Jg-CgL">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3536,13 +3536,13 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayUserListNoModeSymbol" id="Tvx-vv-1Xj"/>
                                         </connections>
                                     </button>
-                                    <box appearanceType="aqua" verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
+                                    <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="pbE-2M-fRW">
                                         <rect key="frame" x="39" y="261" width="443" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Fdc-sn-QgS">
                                         <rect key="frame" x="58" y="173" width="320" height="18"/>
                                         <buttonCell key="cell" type="check" title="Place known server staff members at top of user list" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="egC-El-gcj">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3553,7 +3553,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListSortFavorsServerStaff" id="lRa-9p-0ml"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wa5-Rg-5aD">
                                         <rect key="frame" x="58" y="95" width="134" height="16"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Window Transparency:" id="Pab-0Z-VAE">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3561,7 +3561,7 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lSR-7V-PDD">
                                         <rect key="frame" x="197" y="96" width="25" height="11"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="80%" id="etq-xm-HYN">
                                             <font key="font" metaFont="miniSystem"/>
@@ -3569,13 +3569,13 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <box appearanceType="aqua" verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
+                                    <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="v8u-aO-cik">
                                         <rect key="frame" x="40" y="126" width="442" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="tNs-id-cdg">
                                         <rect key="frame" x="58" y="145" width="280" height="18"/>
                                         <buttonCell key="cell" type="check" title="User list info popover updates while scrolling" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0ZL-Zz-8el">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3585,7 +3585,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.MemberListUpdatesUserInfoPopoverOnScroll" id="d0I-sB-16Z"/>
                                         </connections>
                                     </button>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pbc-E1-SsU">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Pbc-E1-SsU">
                                         <rect key="frame" x="58" y="280" width="240" height="18"/>
                                         <buttonCell key="cell" type="check" title="Open browser links in the background" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="acY-VO-4TI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3595,7 +3595,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.OpenClickedLinksInBackgroundBrowser" id="msX-zG-yJX"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lQi-te-LwT">
                                         <rect key="frame" x="428" y="94" width="23" height="13"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="19" id="dhi-Py-uLh"/>
@@ -3606,7 +3606,7 @@ DQ
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="hDx-CA-NhV">
                                         <rect key="frame" x="58" y="229" width="181" height="18"/>
                                         <buttonCell key="cell" type="check" title="Darken main window colors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RdW-uj-Mh1">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3618,7 +3618,7 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Invert Sidebar Colors Preference Enabled" id="1tV-gb-bDM"/>
                                         </connections>
                                     </button>
-                                    <slider verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
+                                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
                                         <rect key="frame" x="225" y="94" width="197" height="15"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="4bQ-HS-Zy3"/>
                                         <connections>
@@ -3954,7 +3954,7 @@ DQ
                 <constraint firstItem="emo-oX-cWx" firstAttribute="leading" secondItem="2Th-u8-aIC" secondAttribute="leading" constant="31" id="f7l-ep-Nt6"/>
                 <constraint firstItem="emo-oX-cWx" firstAttribute="centerX" secondItem="2Th-u8-aIC" secondAttribute="centerX" id="qAu-2Z-JEb"/>
             </constraints>
-            <point key="canvasLocation" x="401.5" y="-329.5"/>
+            <point key="canvasLocation" x="-64.5" y="-773.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1YF-k7-FrW" userLabel="Command Scope">
             <rect key="frame" x="0.0" y="0.0" width="589" height="311"/>

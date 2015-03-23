@@ -786,7 +786,7 @@
 	return count;
 }
 
-- (IBAction)navigationSelectionDidChange:(id)sender
+- (void)navigationSelectionDidChange:(id)sender
 {
 	@synchronized(self.fileTransfers) {
 		[self.fileTransfers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
@@ -870,7 +870,7 @@
 	[[self window] saveWindowStateForClass:[self class]];
 }
 
-- (IBAction)hideWindow:(id)sender
+- (void)hideWindow:(id)sender
 {
 	[[self window] close];
 }

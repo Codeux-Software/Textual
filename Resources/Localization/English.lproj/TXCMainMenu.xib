@@ -954,8 +954,11 @@ CQ
         </customObject>
         <menu id="edI-1l-81o" userLabel="Encryption Manager Status Menu">
             <items>
-                <menuItem title="What's this?" enabled="NO" id="fdJ-Px-D0q">
+                <menuItem title="What is this?" id="fdJ-Px-D0q">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionWhatIsThisInformation:" target="267" id="kzN-uE-GOs"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Rqm-1P-8cE"/>
                 <menuItem title="Start Private Conversation" tag="9930" id="wTZ-NT-MgD">

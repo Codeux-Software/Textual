@@ -1018,7 +1018,7 @@
     }
 }
 
-- (IBAction)print:(id)sender
+- (void)print:(id)sender
 {
 	[[self currentWebView] print:sender];
 }
@@ -2452,7 +2452,7 @@
 		   @(102) : @"http://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
 		   @(103) : @"http://www.codeux.com/textual/help/home.kb",
 		   @(104) : @"http://www.codeux.com/textual/help/iCloud-Syncing.kb",
-		   @(105) : @"http://www.codeux.com/textual/help/Encrypted-Chat.kb",
+		   @(105) : @"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
 		   @(106) : @"http://www.codeux.com/textual/help/Command-Reference.kb",
 		   @(107) : @"http://www.codeux.com/textual/help/Support.kb",
 		   @(108) : @"http://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
@@ -2664,7 +2664,7 @@
 #pragma mark -
 #pragma mark Encryption 
 
-- (IBAction)encryptionStartPrivateConversation:(id)sender
+- (void)encryptionStartPrivateConversation:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2677,7 +2677,7 @@
 												from:[u encryptionAccountNameForLocalUser]];
 }
 
-- (IBAction)encryptionRefreshPrivateConversation:(id)sender
+- (void)encryptionRefreshPrivateConversation:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2690,7 +2690,7 @@
 												  from:[u encryptionAccountNameForLocalUser]];
 }
 
-- (IBAction)encryptionEndPrivateConversation:(id)sender
+- (void)encryptionEndPrivateConversation:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2703,7 +2703,7 @@
 											  from:[u encryptionAccountNameForLocalUser]];
 }
 
-- (IBAction)encryptionAuthenticateChatPartner:(id)sender
+- (void)encryptionAuthenticateChatPartner:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2716,9 +2716,14 @@
 										   from:[u encryptionAccountNameForLocalUser]];
 }
 
-- (IBAction)encryptionListFingerprints:(id)sender
+- (void)encryptionListFingerprints:(id)sender
 {
 	[sharedEncryptionManager() presentListOfFingerprints];
+}
+
+- (void)encryptionWhatIsThisInformation:(id)sender
+{
+	[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
 }
 
 #pragma mark -
@@ -2800,7 +2805,7 @@
 #pragma mark -
 #pragma mark Developer Tools
 
-- (IBAction)simulateCrash:(id)sender
+- (void)simulateCrash:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[[[BITHockeyManager sharedHockeyManager] crashManager] generateTestCrash];
@@ -2810,7 +2815,7 @@
 #pragma mark -
 #pragma mark Sparkle Framework
 
-- (IBAction)checkForUpdates:(id)sender
+- (void)checkForUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	[[SUUpdater sharedUpdater] checkForUpdates:sender];
@@ -2821,17 +2826,17 @@
 
 @implementation TXMenuControllerMainWindowProxy
 
-- (IBAction)openWelcomeSheet:(id)sender
+- (void)openWelcomeSheet:(id)sender
 {
 	[menuController() openWelcomeSheet:sender];
 }
 
-- (IBAction)openMigrationAssistantDownloadPage:(id)sender
+- (void)openMigrationAssistantDownloadPage:(id)sender
 {
 	[TLOpenLink openWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
 }
 
-- (IBAction)openMacAppStoreDownloadPage:(id)sender
+- (void)openMacAppStoreDownloadPage:(id)sender
 {
 	[menuController() openMacAppStoreDownloadPage:sender];
 }
