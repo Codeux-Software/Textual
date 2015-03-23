@@ -336,8 +336,8 @@ body[dir=rtl] div[ltype*=action] .sender:after {
 
 body div.line[ltype*=invite],
 body div.line[ltype*=debug],
-body div.line[ltype*=rawhtml],
-body div.line[ltype*=dccfiletransfer] {
+body div.line[ltype*=dcc-file-transfer],
+body div.line[ltype*=off-the-record-encryption-status] {
 	color: #777;
   	z-index: 190;
 	background: #222;
@@ -345,6 +345,12 @@ body div.line[ltype*=dccfiletransfer] {
  	padding: 2px 5px 2px 5px;
 	border-top: 1px solid #444;
 	border-bottom: 1px solid #444;
+}
+
+/* off-the-record-encryption-status Message Event */
+body div.line[ltype*=off-the-record-encryption-status] .message {
+	color: #ff0000;
+	font-weight: 700;
 }
 
 /* Message of the Day (MOTD) */

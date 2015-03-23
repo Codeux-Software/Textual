@@ -68,12 +68,6 @@ typedef enum IRCTextFormatterEffectType : NSInteger {
 									 withClient:(IRCClient *)client
 										channel:(IRCChannel *)channel
 									   lineType:(TVCLogLineType)lineType;
-
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString *__autoreleasing *)textToFormat
-									 withClient:(IRCClient *)client
-										channel:(IRCChannel *)channel
-									   lineType:(TVCLogLineType)lineType
-									isEncrypted:(BOOL)isEncrypted;
 @end
 
 @interface TVCTextViewWithIRCFormatter (TVCTextFieldFormattingHelper)

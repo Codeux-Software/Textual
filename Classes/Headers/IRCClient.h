@@ -97,6 +97,8 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 
+#import "TLOEncryptionManager.h"
+
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
@@ -211,14 +213,17 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)postEventToViewController:(NSString *)eventToken;
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel;
 
-- (NSString *)encryptOutgoingMessage:(NSString *)message channel:(IRCChannel *)channel performedEncryption:(BOOL *)performedEncryption;
-- (void)decryptIncomingMessage:(NSString **)message channel:(IRCChannel *)channel;
-
 - (IRCAddressBookEntry *)checkIgnoreAgainstHostmask:(NSString *)host withMatches:(NSArray *)matches;
 
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type;
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
+
+- (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
+- (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
+
+- (NSString *)encryptionAccountNameForLocalUser;
+- (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)mode;

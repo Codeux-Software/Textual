@@ -276,12 +276,18 @@ div[ltype*=action] .sender:after {
 
 .line[ltype*=invite],
 .line[ltype*=debug],
-.line[ltype*=rawhtml],
-.line[ltype*=dccfiletransfer] {
+.line[ltype*=dcc-file-transfer],
+.line[ltype*=off-the-record-encryption-status] {
 	color: #4D4D4C; /* Tomorrow: Foreground */
 	z-index: 190;
 	background: rgba(55, 59, 65, 0.2); /* Tomorrow Night: Selection 20% */
 	position: relative;
+}
+
+/* off-the-record-encryption-status Message Event */
+.line[ltype*=off-the-record-encryption-status] .message {
+	color: #F2777A;
+	font-weight: 700;
 }
 
 /* @end */

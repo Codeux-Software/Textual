@@ -49,7 +49,6 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *defaultTopic;
 @property (nonatomic, copy) NSString *defaultModes;
-@property (nonatomic, copy) NSString *encryptionKey;
 @property (nonatomic, copy) NSString *secretKey;
 @property (nonatomic, assign) BOOL autoJoin;
 @property (nonatomic, assign) BOOL pushNotifications;
@@ -57,7 +56,6 @@ typedef enum IRCChannelType : NSInteger {
 @property (nonatomic, assign) BOOL ignoreHighlights;
 @property (nonatomic, assign) BOOL ignoreInlineImages;
 @property (nonatomic, assign) BOOL ignoreGeneralEventMessages;
-@property (nonatomic, assign) EKBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dic;
 - (NSDictionary *)dictionaryValue;
@@ -71,11 +69,8 @@ typedef enum IRCChannelType : NSInteger {
 - (void)writeKeychainItemsToDisk;
 
 - (void)writeSecretKeyKeychainItemToDisk;
-- (void)writeEncryptionKeyKeychainItemToDisk;
 
 @property (readonly, copy) NSString *temporarySecretKey;
-@property (readonly, copy) NSString *temporaryEncryptionKey;
 
 @property (readonly, copy) NSString *secretKeyValue;
-@property (readonly, copy) NSString *encryptionKeyValue;
 @end

@@ -48,8 +48,6 @@
 #define _fileTransferPortRangeMin			1024
 #define _fileTransferPortRangeMax			65535
 
-#define _forcedPreferencePaneViewFrameWidth			589
-
 #define _toolbarItemIndexGeneral					101
 #define _toolbarItemIndexHighlights					102
 #define _toolbarItemIndexNotifications				103
@@ -67,10 +65,8 @@
 #define _toolbarItemIndexLogLocation				115
 #define _toolbarItemIndexDefaultIdentity			116
 #define _toolbarItemIndexDefualtIRCopMessages		117
-
 #define _toolbarItemIndexExperimentalSettings		119
-
-#define _toolbarHeight								79
+#define _toolbarItemIndexOffRecordMessaging		    121
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		120
 #define _addonsToolbarItemMultiplier					995
@@ -115,8 +111,11 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
+@property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
 @property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
@@ -173,6 +172,8 @@
 - (IBAction)onOpenPathToThemes:(id)sender;
 
 - (IBAction)onSelectNewFont:(id)sender;
+
+- (IBAction)offRecordMessagingPolicyChanged:(id)sender;
 @end
 
 @implementation TDCPreferencesController
@@ -337,7 +338,6 @@
 		_de(_toolbarItemIndexChannelManagement,		[self contentViewChannelManagement],		_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexCommandScope,			[self contentViewCommandScope],				_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexIncomingData,			[self contentViewIncomingData],				_toolbarItemIndexAdvanced)
-
 		_de(_toolbarItemIndexFileTransfers,			[self contentViewFileTransfers],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexFloodControl,			[self contentViewFloodControl],				_toolbarItemIndexAdvanced)
 
@@ -345,6 +345,8 @@
 
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
+
+		_de(_toolbarItemIndexOffRecordMessaging,	[self contentViewOffRecordMessaging],		_toolbarItemIndexAdvanced)
 
 		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
 
@@ -374,48 +376,11 @@
 
 - (void)firstPane:(NSView *)view selectedItem:(NSInteger)key
 {
-	[self firstPane:view selectedItem:key display:YES animianteTransition:YES];
-}
+	[[self contentView] attachSubview:view
+			  adjustedWidthConstraint:[self contentViewWidthConstraint]
+			 adjustedHeightConstraint:[self contentViewHeightConstraint]];
 
-- (void)firstPane:(NSView *)view selectedItem:(NSInteger)key display:(BOOL)display animianteTransition:(BOOL)isAnimated
-{
-	NSRect windowFrame = [[self window] frame];
-
-	NSRect viewFrame = [view frame];
-
-	windowFrame.size.width = NSWidth(viewFrame);
-	windowFrame.size.height = (NSHeight(viewFrame) + _toolbarHeight);
-
-	BOOL centerView = NO;
-
-	if (windowFrame.size.width < _forcedPreferencePaneViewFrameWidth) {
-		windowFrame.size.width = _forcedPreferencePaneViewFrameWidth;
-
-		centerView = YES;
-	}
-
-	windowFrame.origin.y = (NSMaxY([[self window] frame]) - NSHeight(windowFrame));
-
-	if (centerView) {
-		viewFrame.origin.x = ((NSWidth(windowFrame) - NSWidth(viewFrame)) / 2.0);
-	}
-
-	NSArray *subviews = [[self contentView] subviews];
-
-	if ([subviews count] > 0) {
-		[subviews[0] removeFromSuperview];
-	}
-
-	[[self window] setFrame:windowFrame display:display animate:isAnimated];
-
-	[[self contentView] setFrame:viewFrame];
-	[[self contentView] addSubview:view];
-
-	if (display) {
-		[[self window] recalculateKeyViewLoop];
-
-		[[self navigationToolbar] setSelectedItemIdentifier:[NSString stringWithInteger:key]];
-	}
+	[[self navigationToolbar] setSelectedItemIdentifier:[NSString stringWithInteger:key]];
 }
 
 #pragma mark -
@@ -1002,6 +967,11 @@
 #pragma mark -
 #pragma mark Actions
 
+- (void)offRecordMessagingPolicyChanged:(id)sender
+{
+	[sharedEncryptionManager() updatePolicy];
+}
+
 - (void)onHideMountainLionDeprecationWarning:(id)sender
 {
 	[[self mountainLionDeprecationWarningView] setHidden:YES];
@@ -1069,7 +1039,7 @@
 	[self onChangedUserListModeColor:sender];
 }
 
-- (IBAction)onResetServerListUnreadBadgeColorsToDefault:(id)sender
+- (void)onResetServerListUnreadBadgeColorsToDefault:(id)sender
 {
 	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
@@ -1129,7 +1099,7 @@
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
 }
 
-- (IBAction)onChangedServerListUnreadBadgeColor:(id)sender
+- (void)onChangedServerListUnreadBadgeColor:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListUnreadBadgesAction];
 }
@@ -1385,7 +1355,7 @@
 	/* Reset the frame back to that of General before saving the existing position. */
 	[[self window] setAlphaValue:0.0];
 
-	[self firstPane:[self contentViewGeneral] selectedItem:-1 display:NO animianteTransition:NO];
+	[self firstPane:[self contentViewGeneral] selectedItem:-1];
 
 	[[self window] saveWindowStateForClass:[self class]];
 

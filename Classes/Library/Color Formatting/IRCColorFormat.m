@@ -121,19 +121,6 @@
 										channel:(IRCChannel *)channel
 									   lineType:(TVCLogLineType)lineType
 {
-	return [NSAttributedString attributedStringToASCIIFormatting:textToFormat
-													  withClient:client
-														 channel:channel
-														lineType:lineType
-													 isEncrypted:NO];
-}
-
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString *__autoreleasing *)textToFormat
-									 withClient:(IRCClient *)client
-										channel:(IRCChannel *)channel
-									   lineType:(TVCLogLineType)lineType
-									isEncrypted:(BOOL)isEncrypted
-{
 	/* ///////////////////////////////////////////////////// */
 	/* 
 	 Server level truncation does not count the total number of
@@ -203,16 +190,6 @@
 	NSInteger stringDeletionLength  = 0;
 	
 	NSInteger maximumLength = TXMaximumIRCBodyLength;
-	
-	/* If message is going to be encrypted, we have to take that into account. */
-	if (isEncrypted) {
-		/* This method will take a given size and estimate the maximum number of
-		 characters that can fit within that range. */
-		NSUInteger newEstimation = [EKBlowfishEncryption estimatedLengthOfStringEncryptedUsing:[channel encryptionModeOfOperation]
-																		  thatFitsWithinBounds:(maximumLength - baseMath)];
-		
-		maximumLength = newEstimation;
-	}
 	
 	/* Begin actual work. */
 	NSInteger startCharCount = 0;
@@ -328,7 +305,7 @@
 		}
 
 		if (italicText) {
-			[result appendFormat:@"%c", IRCTextFormatterBoldEffectCharacter];
+			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
 		}
 
 		if (boldText) {

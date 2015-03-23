@@ -41,6 +41,12 @@
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#import "BuildConfig.h"
+
+#define _betaTesterMaxApplicationLifespan			5184000 // 60 days
+#endif
+
 @implementation TXMasterController
 
 - (instancetype)init
@@ -213,8 +219,49 @@
 #endif
 }
 
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+- (void)presentBetaTesterDialog
+{
+	NSTimeInterval currentTime = [NSDate unixTime];
+
+	NSTimeInterval buildTime = [TXBundleBuildDate integerValue];
+
+	NSTimeInterval timeSpent = (currentTime - buildTime);
+	NSTimeInterval timeleft = (_betaTesterMaxApplicationLifespan - timeSpent);
+
+	if (timeSpent > _betaTesterMaxApplicationLifespan) {
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1243][2]")
+												 title:TXTLS(@"BasicLanguage[1243][1]")
+										 defaultButton:TXTLS(@"BasicLanguage[1243][3]")
+									   alternateButton:nil
+										suppressionKey:nil
+									   suppressionText:nil];
+
+		self.skipTerminateSave = YES;
+		self.applicationIsTerminating = YES;
+
+		[RZSharedApplication() terminate:nil];
+	} else {
+		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
+
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
+												 title:TXTLS(@"BasicLanguage[1242][1]")
+										 defaultButton:TXTLS(@"BasicLanguage[1242][3]")
+									   alternateButton:nil
+										suppressionKey:nil
+									   suppressionText:nil];
+	}
+}
+#endif
+
 - (void)applicationDidFinishLaunching
 {
+#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+	[self presentBetaTesterDialog];
+
+	[mainWindow() makeKeyAndOrderFront:nil];
+#endif
+
 	if ([worldController() clientCount] < 1) {
 		[mainWindowLoadingScreen() hideAll:NO];
 		[mainWindowLoadingScreen() popWelcomeAddServerView];
@@ -326,6 +373,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
+
+	[sharedEncryptionManager() prepareForApplicationTermination];
 	
 	[menuController() prepareForApplicationTermination];
 

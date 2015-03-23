@@ -354,6 +354,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (lineType == TVCLogLineActionType			||
 			lineType == TVCLogLineCTCPType				||
+			lineType == TVCLogLineCTCPQueryType			||
+			lineType == TVCLogLineCTCPReplyType			||
 			lineType == TVCLogLineDCCFileTransferType	||
 			lineType == TVCLogLineNoticeType			||
 			lineType == TVCLogLinePrivateMessageType	||

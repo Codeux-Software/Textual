@@ -51,8 +51,7 @@
 
 	#import <AutoHyperlinks/AutoHyperlinks.h>
 	#import <CocoaExtensions/CocoaExtensions.h>
-
-	#import <EncryptionKit/BlowfishEncryption.h>
+	#import <EncryptionKit/EncryptionKit.h>
 
 	/* Class Forwarders. */
 	@class IRCAddressBookEntry;
@@ -100,6 +99,7 @@
 	@class THOPluginItem;
 	@class THOPluginManager;
 	@class THOUnicodeHelper;
+	@class TLOEncryptionManager;
 	@class TLOFileLogger;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
@@ -141,7 +141,6 @@
 	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
-	@class TVCMainWindowChannelViewBox;
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedController;
 	@class TVCMainWindowSegmentedControllerCell;
@@ -151,6 +150,9 @@
 	@class TVCMainWindowTextViewContentView;
 	@class TVCMainWindowTextViewMavericksUserInterace;
 	@class TVCMainWindowTextViewYosemiteUserInterace;
+	@class TVCMainWindowTitlebarAccessoryView;
+	@class TVCMainWindowTitlebarAccessoryViewController;
+	@class TVCMainWindowTitlebarAccessoryViewLockButton;
 	@class TVCMemberLisCellYosemiteTextFieldInterior;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
@@ -272,6 +274,7 @@
 	#import "NSObjectHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTableVIewHelper.h"
+	#import "NSViewHelper.h"
 
 	/* Dialogs. */
 	#import "TDCSheetBase.h"
@@ -305,6 +308,7 @@
 	#import "THOUnicodeHelper.h"
 
 	/* Library. */
+	#import "TLOEncryptionManager.h"
 	#import "TLOFileLogger.h"
 	#import "TLOGrowlController.h"
 	#import "TLOInputHistory.h"
@@ -353,6 +357,7 @@
 	#import "TVCMainWindowSplitView.h"
 	#import "TVCMainWindowTextViewMavericksUserInterace.h"
 	#import "TVCMainWindowTextViewYosemiteUserInterace.h"
+	#import "TVCMainWindowTitlebarAccessoryView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
 	#import "TVCMemberListCell.h"

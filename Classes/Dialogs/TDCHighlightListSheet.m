@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _rowHeightMultiplier		17
-
 @interface TDCHighlightListSheet ()
 @property (nonatomic, copy) NSArray *highlightList;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
@@ -106,40 +104,42 @@
 	return [self.highlightList count];
 }
 
-- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+- (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
 {
-	/* See the addHighlight… in IRCClieht.m for a description of the format
-	 of highlight entries for a client. */
-	NSObjectIsEmptyAssertReturn(self.highlightList, _rowHeightMultiplier);
-	
-	NSRect columnRect = [tableView rectOfColumn:1];
-	
-	NSArray *data = (self.highlightList)[row];
+	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"messageContents"];
 
-	NSAttributedString *baseString = data[2];
+	NSTableCellView *cellView = (id)[self tableView:aTableView viewForTableColumn:tableColumn row:row];
 
-	NSInteger totalLines = [baseString wrappedLineCount:columnRect.size.width
-										 lineMultiplier:_rowHeightMultiplier
-											 forcedFont:[NSTableView preferredGlobalTableViewFont]];
+	NSCell *cellViewTextFieldCell = [[cellView textField] cell];
 
-	return (totalLines * _rowHeightMultiplier);
+	NSSize matchedSize = [cellViewTextFieldCell cellSizeForBounds:NSMakeRect(0, 0, [tableColumn width], CGFLOAT_MAX)];
+
+	return MAX(matchedSize.height, [aTableView rowHeight]);
 }
 
-- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
+	NSTableCellView *result = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+
 	NSArray *item = self.highlightList[row];
-	
-    if ([[column identifier] isEqualToString:@"chan"]) {
-		return item[0];
-	} else if ([[column identifier] isEqualToString:@"time"]) {
+
+	NSString *stringValue = nil;
+
+	if ([[tableColumn identifier] isEqualToString:@"channelName"]) {
+		stringValue = item[0];
+	} else if ([[tableColumn identifier] isEqualToString:@"timeValue"]) {
 		NSInteger timeInterval = [item integerAtIndex:1];
-		
+
 		NSString *timestring = TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0);
-		
-		return BLS(1216, timestring);
-    } else {
-		return item[2];
-    }
+
+		stringValue = BLS(1216, timestring);
+	} else {
+		stringValue = item[2];
+	}
+
+	[[result textField] setStringValue:stringValue];
+
+	return result;
 }
 
 #pragma mark -

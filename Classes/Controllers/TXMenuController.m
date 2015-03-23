@@ -486,6 +486,25 @@
             
             return YES;
         }
+		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+		case TLOEncryptionManagerMenuItemTagViewListOfFingerprints:
+		{
+			/* Even if we are not logged in, we still ask the encryption manager
+			 to validate the menu item first so that it can hide specific menu items. 
+			 After it has done that, then we can disable if not logged in. */
+			BOOL valid = [sharedEncryptionManager() validateMenuItem:item
+														 withStateOf:[u encryptionAccountNameForUser:[c name]]
+																from:[u encryptionAccountNameForLocalUser]];
+
+			if (_connectionNotLoggedIn) {
+				return NO;
+			} else {
+				return valid;
+			}
+		}
 		case 504813: // "All Modes Given"
 		{
 			return NO;
@@ -999,7 +1018,7 @@
     }
 }
 
-- (IBAction)print:(id)sender
+- (void)print:(id)sender
 {
 	[[self currentWebView] print:sender];
 }
@@ -1471,12 +1490,8 @@
 	if (_noClientOrChannel || _isClient || _isQuery) {
 		return;
 	}
-	
-	NSString *encryptedString = [u encryptOutgoingMessage:topic channel:c performedEncryption:NULL];
-	
-	if (encryptedString) {
-		[u send:IRCPrivateCommandIndex("topic"), [c name], encryptedString, nil];
-	}
+
+	[u send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 }
 
 - (void)topicSheetWillClose:(TDCTopicSheet *)sender
@@ -1644,24 +1659,7 @@
 			return;
 		}
 
-		NSString *oldKey = [_channelConfig encryptionKey];
-		
-		NSString *newKey = [[sender config] temporaryEncryptionKey];
-		
-		BOOL oldKeyEmpty = NSObjectIsEmpty(oldKey);
-		BOOL newKeyEmpty = NSObjectIsEmpty(newKey);
-
 		[c updateConfig:[sender config]];
-
-		if (oldKeyEmpty && newKeyEmpty == NO) {
-			[[c associatedClient] printDebugInformation:BLS(1003) channel:c];
-		} else if (oldKeyEmpty == NO && newKeyEmpty) {
-			[[c associatedClient] printDebugInformation:BLS(1004) channel:c];
-		} else if (oldKeyEmpty == NO && newKeyEmpty == NO) {
-			if (NSObjectsAreEqual(oldKey, newKey) == NO) {
-				[[c associatedClient] printDebugInformation:BLS(1002) channel:c];
-			}
-		}
 	}
 	
 	[worldController() save];
@@ -2454,7 +2452,7 @@
 		   @(102) : @"http://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
 		   @(103) : @"http://www.codeux.com/textual/help/home.kb",
 		   @(104) : @"http://www.codeux.com/textual/help/iCloud-Syncing.kb",
-		   @(105) : @"http://www.codeux.com/textual/help/Encrypted-Chat.kb",
+		   @(105) : @"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
 		   @(106) : @"http://www.codeux.com/textual/help/Command-Reference.kb",
 		   @(107) : @"http://www.codeux.com/textual/help/Support.kb",
 		   @(108) : @"http://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
@@ -2664,6 +2662,71 @@
 }
 
 #pragma mark -
+#pragma mark Encryption 
+
+- (void)encryptionStartPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() beginConversationWith:[u encryptionAccountNameForUser:[c name]]
+												from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionRefreshPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() refreshConversationWith:[u encryptionAccountNameForUser:[c name]]
+												  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionEndPrivateConversation:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[c name]]
+											  from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionAuthenticateChatPartner:(id)sender
+{
+	IRCClient *u = [mainWindow() selectedClient];
+	IRCChannel *c = [mainWindow() selectedChannel];
+
+	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+		return;
+	}
+
+	[sharedEncryptionManager() authenticateUser:[u encryptionAccountNameForUser:[c name]]
+										   from:[u encryptionAccountNameForLocalUser]];
+}
+
+- (void)encryptionListFingerprints:(id)sender
+{
+	[sharedEncryptionManager() presentListOfFingerprints];
+}
+
+- (void)encryptionWhatIsThisInformation:(id)sender
+{
+	[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
+}
+
+#pragma mark -
 #pragma mark Toggle Mute
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state
@@ -2742,7 +2805,7 @@
 #pragma mark -
 #pragma mark Developer Tools
 
-- (IBAction)simulateCrash:(id)sender
+- (void)simulateCrash:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[[[BITHockeyManager sharedHockeyManager] crashManager] generateTestCrash];
@@ -2752,7 +2815,7 @@
 #pragma mark -
 #pragma mark Sparkle Framework
 
-- (IBAction)checkForUpdates:(id)sender
+- (void)checkForUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	[[SUUpdater sharedUpdater] checkForUpdates:sender];
@@ -2763,17 +2826,17 @@
 
 @implementation TXMenuControllerMainWindowProxy
 
-- (IBAction)openWelcomeSheet:(id)sender
+- (void)openWelcomeSheet:(id)sender
 {
 	[menuController() openWelcomeSheet:sender];
 }
 
-- (IBAction)openMigrationAssistantDownloadPage:(id)sender
+- (void)openMigrationAssistantDownloadPage:(id)sender
 {
 	[TLOpenLink openWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
 }
 
-- (IBAction)openMacAppStoreDownloadPage:(id)sender
+- (void)openMacAppStoreDownloadPage:(id)sender
 {
 	[menuController() openMacAppStoreDownloadPage:sender];
 }

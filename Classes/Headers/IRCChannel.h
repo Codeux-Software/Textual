@@ -57,11 +57,13 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (nonatomic, assign) BOOL sentInitialWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) NSInteger channelJoinTime;
+@property (nonatomic, assign) OTRKitMessageState encryptionState;
 
 - (void)setup:(IRCChannelConfig *)seed;
 
 - (void)updateConfig:(IRCChannelConfig *)seed;
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification;
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList;
 
 - (NSDictionary *)dictionaryValue;
 
@@ -91,9 +93,6 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-@property (nonatomic, copy) NSString *encryptionKey;
-@property (nonatomic, assign) EKBlowfishEncryptionModeOfOperation encryptionModeOfOperation;
 
 - (BOOL)memberExists:(NSString *)nickname;
 

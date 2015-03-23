@@ -251,7 +251,7 @@
 				NSError *writeError = nil;
 
 				if ([finalData writeToFile:[self writePath] options:NSDataWritingAtomic error:&writeError] == NO) {
-					LogToConsole(@"Failed to write file to disk: %@", writeError);
+					LogToConsole(@"Failed to write file to disk: %@", [writeError localizedDescription]);
 				}
 			}
 		}

@@ -1433,7 +1433,6 @@
 		
 		config.channelName		= NSStringEmptyPlaceholder;
 		config.secretKey		= NSStringEmptyPlaceholder;
-		config.encryptionKey	= NSStringEmptyPlaceholder;
 	}
 	
 	self.channelSheet = nil;

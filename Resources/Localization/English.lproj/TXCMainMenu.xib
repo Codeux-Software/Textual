@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -372,12 +372,12 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Channel Properties" id="1501">
                                     <items>
-                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1505">
+                                        <menuItem title="View Logs" tag="542" keyEquivalent="L" id="1505">
                                             <connections>
                                                 <action selector="openChannelLogs:" target="267" id="2572"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Topic" tag="6876" keyEquivalent="t" id="1504">
+                                        <menuItem title="Modify Topic" tag="6876" keyEquivalent="t" id="1504">
                                             <connections>
                                                 <action selector="showChannelTopicDialog:" target="267" id="2615"/>
                                             </connections>
@@ -421,23 +421,23 @@ CA
                                             </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1685"/>
-                                        <menuItem title="Ban List" tag="6877" keyEquivalent="B" id="1503">
+                                        <menuItem title="List of Bans" tag="6877" keyEquivalent="B" id="1503">
                                             <connections>
                                                 <action selector="showChannelBanList:" target="267" id="2562"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Ban Exceptions" tag="6878" keyEquivalent="E" id="1683">
+                                        <menuItem title="List of Ban Exceptions" tag="6878" keyEquivalent="E" id="1683">
                                             <connections>
                                                 <action selector="showChannelBanExceptionList:" target="267" id="2560"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Invite Exceptions" tag="6879" keyEquivalent="I" id="2030">
+                                        <menuItem title="List of Invite Exceptions" tag="6879" keyEquivalent="I" id="2030">
                                             <connections>
                                                 <action selector="showChannelInviteExceptionList:" target="267" id="2558"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="1506"/>
-                                        <menuItem title="General Settings" tag="6880" keyEquivalent="i" id="1507">
+                                        <menuItem title="Channel Properties…" tag="6880" keyEquivalent="i" id="1507">
                                             <connections>
                                                 <action selector="showChannelPropertiesDialog:" target="267" id="2624"/>
                                             </connections>
@@ -671,7 +671,7 @@ CQ
                                     <action selector="showChannelIgnoreList:" target="267" id="2577"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Textual Logs" tag="592" keyEquivalent="4" id="1378">
+                            <menuItem title="View Logs" tag="592" keyEquivalent="4" id="1378">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>
                                     <action selector="openLogLocation:" target="267" id="2574"/>
@@ -711,7 +711,7 @@ CQ
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1661"/>
-                            <menuItem title="3rd Party Addons" tag="101" id="1710">
+                            <menuItem title="3rd-party Addons" tag="101" id="1710">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="openHelpMenuLinkItem:" target="267" id="1711"/>
@@ -939,6 +939,7 @@ CQ
                 <outlet property="channelViewMenu" destination="374" id="gt4-AW-DbM"/>
                 <outlet property="closeWindowMenuItem" destination="1770" id="fJx-2N-mHr"/>
                 <outlet property="dockMenu" destination="Q9Y-E0-gAT" id="930-9r-xqt"/>
+                <outlet property="encryptionManagerStatusMenu" destination="edI-1l-81o" id="fSt-o4-bUU"/>
                 <outlet property="joinChannelMenu" destination="963" id="LXx-Gs-vAU"/>
                 <outlet property="muteNotificationsDockMenuItem" destination="dnc-ku-aQ3" id="Af9-tD-wlC"/>
                 <outlet property="muteNotificationsFileMenuItem" destination="QNy-Fk-SRO" id="nHn-Ki-RJX"/>
@@ -951,6 +952,50 @@ CQ
                 <outlet property="userControlMenu" destination="327" id="Qyi-GH-9oZ"/>
             </connections>
         </customObject>
+        <menu id="edI-1l-81o" userLabel="Encryption Manager Status Menu">
+            <items>
+                <menuItem title="What is this?" id="fdJ-Px-D0q">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionWhatIsThisInformation:" target="267" id="kzN-uE-GOs"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Rqm-1P-8cE"/>
+                <menuItem title="Start Private Conversation" tag="9930" id="wTZ-NT-MgD">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionStartPrivateConversation:" target="267" id="uqX-jS-WxC"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Refresh Private Conversation" tag="9931" id="SJp-pz-WvU">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionRefreshPrivateConversation:" target="267" id="lS1-ZG-dAN"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="End Private Conversation" tag="9932" id="bJT-Nc-UwZ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionEndPrivateConversation:" target="267" id="bPL-Ih-3je"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="vgt-gi-rFQ"/>
+                <menuItem title="Authenticate Chat Partner" tag="9933" id="9eO-kw-9HG">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionAuthenticateChatPartner:" target="267" id="F1j-kX-1Dw"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="seh-5B-FFy"/>
+                <menuItem title="View List of Fingerprints" tag="9934" id="aii-WP-szA">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="encryptionListFingerprints:" target="267" id="8Ai-8r-XNy"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-362.5" y="736.5"/>
+        </menu>
         <menu title="Menu" id="327" userLabel="User Controls Menu">
             <items>
                 <menuItem title="Invite to..." tag="2005" id="1003">
@@ -1219,89 +1264,84 @@ CA
                             <menuItem isSeparatorItem="YES" tag="937" id="1883">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Query Logs" tag="5421" keyEquivalent="L" id="1884">
-                                <connections>
-                                    <action selector="openChannelLogs:" target="267" id="2570"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Channel Properties" tag="5422" id="1885">
+                            <menuItem title="Channel Properties" tag="5422" id="624-78-nUq">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Channel Properties" id="1886">
+                                <menu key="submenu" title="Channel Properties" id="XEE-pP-mt8">
                                     <items>
-                                        <menuItem title="Logs" tag="542" keyEquivalent="L" id="1892">
+                                        <menuItem title="View Logs" tag="542" keyEquivalent="L" id="NFl-XD-Qcy">
                                             <connections>
-                                                <action selector="openChannelLogs:" target="267" id="2569"/>
+                                                <action selector="openChannelLogs:" target="267" id="kPt-dE-IW2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Topic" keyEquivalent="t" id="1893">
+                                        <menuItem title="Modify Topic" tag="6876" keyEquivalent="t" id="ZT5-x5-8fX">
                                             <connections>
-                                                <action selector="showChannelTopicDialog:" target="267" id="2614"/>
+                                                <action selector="showChannelTopicDialog:" target="267" id="cRu-D2-m7S"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Modes" id="1887">
+                                        <menuItem title="Modes" id="LV4-vm-6rL">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Modes" id="1895">
+                                            <menu key="submenu" title="Modes" id="EKO-VB-f28">
                                                 <items>
-                                                    <menuItem title="Moderated (+m)" keyEquivalent="M" id="1901">
+                                                    <menuItem title="Moderated (+m)" tag="6881" keyEquivalent="M" id="dXJ-r8-5EF">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                                         <connections>
-                                                            <action selector="toggleChannelModerationMode:" target="267" id="2582"/>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="ELT-lk-79k"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Unmoderated (-m)" tag="1" keyEquivalent="m" id="1900">
+                                                    <menuItem title="Unmoderated (-m)" tag="6882" keyEquivalent="m" id="FWD-hf-h9H">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                                         <connections>
-                                                            <action selector="toggleChannelModerationMode:" target="267" id="2581"/>
+                                                            <action selector="toggleChannelModerationMode:" target="267" id="8c1-x1-55O"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="1899"/>
-                                                    <menuItem title="Invite Only (+i)" keyEquivalent="I" id="1898">
+                                                    <menuItem isSeparatorItem="YES" id="g9U-aC-dqD"/>
+                                                    <menuItem title="Invite Only (+i)" tag="6883" keyEquivalent="I" id="ad4-ac-5DD">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                                         <connections>
-                                                            <action selector="toggleChannelInviteMode:" target="267" id="2585"/>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="u6N-3T-9Gf"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Anyone Can Join (-i)" tag="1" keyEquivalent="i" id="1897">
+                                                    <menuItem title="Anyone Can Join (-i)" tag="6884" keyEquivalent="i" id="RSP-yd-Zik">
                                                         <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                                         <connections>
-                                                            <action selector="toggleChannelInviteMode:" target="267" id="2586"/>
+                                                            <action selector="toggleChannelInviteMode:" target="267" id="u7v-Tb-yS8"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem isSeparatorItem="YES" id="1896"/>
-                                                    <menuItem title="Manage All Modes" keyEquivalent="o" id="1902">
+                                                    <menuItem isSeparatorItem="YES" id="bHs-hp-cI8"/>
+                                                    <menuItem title="Manage All Modes" tag="6885" keyEquivalent="o" id="Jqp-cI-fDK">
                                                         <connections>
-                                                            <action selector="showChannelModeDialog:" target="267" id="2616"/>
+                                                            <action selector="showChannelModeDialog:" target="267" id="9Ph-0Q-p6j"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1888"/>
-                                        <menuItem title="Ban List" keyEquivalent="B" id="1894">
+                                        <menuItem isSeparatorItem="YES" id="yin-Gz-WIA"/>
+                                        <menuItem title="List of Bans" tag="6877" keyEquivalent="B" id="Bip-Zt-RcP">
                                             <connections>
-                                                <action selector="showChannelBanList:" target="267" id="2563"/>
+                                                <action selector="showChannelBanList:" target="267" id="WQ7-Yh-5tx"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Ban Exceptions" keyEquivalent="E" id="1889">
+                                        <menuItem title="List of Ban Exceptions" tag="6878" keyEquivalent="E" id="0HO-nI-ehF">
                                             <connections>
-                                                <action selector="showChannelBanExceptionList:" target="267" id="2561"/>
+                                                <action selector="showChannelBanExceptionList:" target="267" id="PaF-zF-Hm2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Invite Exceptions" keyEquivalent="I" id="2033">
+                                        <menuItem title="List of Invite Exceptions" tag="6879" keyEquivalent="I" id="iZq-Py-mCL">
                                             <connections>
-                                                <action selector="showChannelInviteExceptionList:" target="267" id="2559"/>
+                                                <action selector="showChannelInviteExceptionList:" target="267" id="9dQ-30-JrY"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="1891"/>
-                                        <menuItem title="General Settings" keyEquivalent="i" id="1890">
+                                        <menuItem isSeparatorItem="YES" id="nL8-lA-Xng"/>
+                                        <menuItem title="Channel Properties…" tag="6880" keyEquivalent="i" id="y1H-qv-KHu">
                                             <connections>
-                                                <action selector="showChannelPropertiesDialog:" target="267" id="2623"/>
+                                                <action selector="showChannelPropertiesDialog:" target="267" id="B2Z-rg-0hf"/>
                                             </connections>
                                         </menuItem>
                                     </items>
                                 </menu>
                                 <connections>
-                                    <action selector="emptyAction:" target="267" id="m0u-Pa-HS6"/>
+                                    <action selector="emptyAction:" target="267" id="nz7-t1-30k"/>
                                 </connections>
                             </menuItem>
                         </items>

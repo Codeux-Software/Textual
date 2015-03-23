@@ -162,47 +162,9 @@
 
 - (void)presentView:(NSView *)newView
 {
-	/* Calculate view frame. */
-	NSRect newViewFinalFrame = [newView frame];
-
-	newViewFinalFrame.origin.x = 0;
-	newViewFinalFrame.origin.y = 0;
-
-	newViewFinalFrame.size.width = self.contentViewPreferredWidth;
-
-	if (newViewFinalFrame.size.height < self.contentViewPreferredHeight) {
-		newViewFinalFrame.size.height = self.contentViewPreferredHeight;
-	}
-
-	[newView setFrame:newViewFinalFrame];
-
-	/* Update window size. */
-	BOOL updateWindowFrame = YES;
-
-	if ([self.parentWindow isVisible] == NO) {
-		if (self.updateWindowFrameWhileOffscreen == NO) {
-			updateWindowFrame = NO;
-		}
-	}
-
-	if (updateWindowFrame) {
-		NSRect windowFrame = [self.parentWindow frame];
-
-		windowFrame.size.height = (self.contentViewPadding + newViewFinalFrame.size.height);
-
-		windowFrame.origin.y = (NSMaxY([self.parentWindow frame]) - windowFrame.size.height);
-
-		[self.parentWindow setFrame:windowFrame display:YES animate:NO];
-	}
-
-	/* Add new frame. */
-	if ([[self.contentView subviews] count] == 1) {
-		[[self.contentView subviews][0] removeFromSuperview];
-	}
-
-	[self.contentView addSubview:newView];
-
-	[self.parentWindow recalculateKeyViewLoop];
+	[self.contentView attachSubview:newView
+			adjustedWidthConstraint:self.contentViewWidthConstraint
+		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
 @end

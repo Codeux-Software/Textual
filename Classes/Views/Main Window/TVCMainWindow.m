@@ -1075,6 +1075,57 @@
 	}
 }
 
+- (void)titlebarAccessoryViewLockButtonClicked:(id)sender
+{
+	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
+
+	[statusMenu popUpMenuPositioningItem:nil
+							  atLocation:self.titlebarAccessoryViewLockButton.frame.origin
+								  inView:self.titlebarAccessoryViewLockButton];
+}
+
+- (void)updateAccessoryViewLockButton
+{
+	IRCClient *u = self.selectedClient;
+	IRCChannel *c = self.selectedChannel;
+
+	BOOL updateEncryption = ([sharedEncryptionManager() usesWeakCiphers] == NO &&		// Do not change lock when a weak cipher is enaled
+							 NSObjectsAreEqual([u localNickname], [c name]) == NO &&	// Do not change lock when the query is for self
+							 [c isPrivateMessage]);										// Do not change lock unless we are in a query
+
+	if (updateEncryption) {
+		[self.titlebarAccessoryViewLockButton setAction:@selector(titlebarAccessoryViewLockButtonClicked:)];
+
+		[self.titlebarAccessoryViewLockButton enableDrawingCustomBackgroundColor];
+		[self.titlebarAccessoryViewLockButton positionImageOnLeftSide];
+
+		[sharedEncryptionManager() updateLockIconButton:self.titlebarAccessoryViewLockButton
+											withStateOf:[u encryptionAccountNameForUser:[c name]]
+												   from:[u encryptionAccountNameForLocalUser]];
+
+		[self.titlebarAccessoryView setHidden:NO];
+	} else {
+		[self.titlebarAccessoryViewLockButton setAction:@selector(presentCertificateTrustInformation:)];
+
+		[self.titlebarAccessoryViewLockButton disableDrawingCustomBackgroundColor];
+		[self.titlebarAccessoryViewLockButton positionImageOverContent];
+
+		[self.titlebarAccessoryViewLockButton setTitle:NSStringEmptyPlaceholder];
+
+		if ([u connectionIsSecured]) {
+			[self.titlebarAccessoryView setHidden:NO];
+
+			[self.titlebarAccessoryViewLockButton setIconAsLocked];
+		} else {
+			[self.titlebarAccessoryView setHidden:YES];
+		}
+	}
+
+	if ([self.titlebarAccessoryView isHidden] == NO) {
+		[self.titlebarAccessoryViewLockButton sizeToFit];
+	}
+}
+
 - (void)addAccessoryViewsToTitlebar
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
@@ -1126,11 +1177,7 @@
 	IRCChannel *c = self.selectedChannel;
 
 	/* Update accessory view. */
-	if (u) {
-		[self.titlebarAccessoryView setHidden:([u connectionIsSecured] == NO)];
-	} else {
-		[self.titlebarAccessoryView setHidden:YES];
-	}
+	[self updateAccessoryViewLockButton];
 
 	/* Set default window title if there is none. */
 	if (u == nil && c == nil) {

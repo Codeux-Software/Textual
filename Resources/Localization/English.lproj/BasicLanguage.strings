@@ -184,13 +184,6 @@
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
 "BasicLanguage[1000][3]" = "Quit";
 
-/* Basic encryption related localizations */
-"BasicLanguage[1245]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
-"BasicLanguage[1001]" = "Encryption of message failed; not sending to server.";
-"BasicLanguage[1002]" = "Encryption key changed; adjusting accordingly.";
-"BasicLanguage[1003]" = "Encryption started";
-"BasicLanguage[1004]" = "Encryption stopped";
-
 /* Sections of channel information in main window title bar */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";
@@ -237,7 +230,7 @@
 
 /* Find panel */
 "BasicLanguage[1026][1]" = "Search";
-"BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search begins, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G to return to the previous.";
+"BasicLanguage[1026][2]" = "Enter a phrase to search for. Once a search begins, the keyboard shortcut ⌘G can be used to continue to the next search result and the combination ⌘⇧G can be used to return to the previous search result.";
 "BasicLanguage[1026][3]" = "Search for Message";
 
 /* Default G:Line reason */
@@ -645,6 +638,16 @@
 "BasicLanguage[1246][2]" = "The style named “%1$@” is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";
 "BasicLanguage[1246][3]" = "OK";
 
+/* Beta warning dialog. */
+"BasicLanguage[1242][1]" = "Thank you for beta testing Textual";
+"BasicLanguage[1242][2]" = "This copy of Textual will expire in %@. Once expired, it can no longer be used.";
+"BasicLanguage[1242][3]" = "OK";
+
+/* Beta warning dialog. */
+"BasicLanguage[1243][1]" = "Thank you for beta testing Textual";
+"BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
+"BasicLanguage[1243][3]" = "OK";
+
 /* Certificate conext command dialog */
 "BasicLanguage[1247][1]" = "Textual is using an encrypted connection to “%@“";
 "BasicLanguage[1247][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
@@ -654,11 +657,56 @@
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
 "BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
 
+/* Off-the-Record Messaging status messages */
+"BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user.";
+"BasicLanguage[1253][02]" = "Off-the-Record Messaging: Use to the command “/otr auth” to confirm their identity.";
+
+"BasicLanguage[1253][03]" = "Off-the-Record Messaging: Private conversation started with a recognized user.";
+
+"BasingLanguage[1259][01]" = "Off-the-Record Messaging: %@ was successful in confirming their identity.";
+"BasingLanguage[1259][02]" = "Off-the-Record Messaging: %@ FAILED to confirm their identity.";
+
+"BasicLanguage[1256]" = "Off-the-Record Messaging: Private conversation has ended.";
+
+"BasicLanguage[1260]" = "Off-the-Record Messaging: Refreshing the private conversation…";
+"BasicLanguage[1269]" = "Off-the-Record Messaging: Starting a private conversation…";
+
+"BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out. The message visible on your screen will be sent once a private conversation has started.";
+"BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
+"BasicLanguage[1254][03]" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
+"BasicLanguage[1254][04]" = "Off-the-Record Messaging: A private conversation could not be started.";
+"BasicLanguage[1254][05]" = "Off-the-Record Messaging: Our original message has been sent back to us.";
+"BasicLanguage[1254][06]" = "Off-the-Record Messaging: The previous message was resent.";
+"BasicLanguage[1254][07]" = "Off-the-Record Messaging: Received an encrypted message but cannot read it because a private conversation has not been started.";
+"BasicLanguage[1254][08]" = "Off-the-Record Messaging: Cannot read the message received.";
+"BasicLanguage[1254][09]" = "Off-the-Record Messaging: The message received contains malformed data.";
+"BasicLanguage[1254][10]" = "Off-the-Record Messaging: Received a heartbeat.";
+"BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat.";
+"BasicLanguage[1254][12]" = "Off-the-Record Messaging: Received a general error from the Off-the-Record Messaging library.";
+"BasicLanguage[1254][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
+"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized ";
+"BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
+
+"BasicLanguage[1263]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not in session.";
+"BasicLanguage[1270]" = "Off-the-Record Messaging: Cannot end private conversation because there is not one open.";
+
+"BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
+
+/* Off-the-Record Messaging status messages for the title bar of the main window */
+"BasicLanguage[1265][1]" = "Not Private";
+"BasicLanguage[1265][2]" = "Unverified";
+"BasicLanguage[1265][3]" = "Private";
 
 
 
 
 
-/* Next unusued key: 1253 */
+
+
+
+
+
+
+/* Next unusued key: 1272 */
 
 

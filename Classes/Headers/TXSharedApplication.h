@@ -58,14 +58,15 @@
 #define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
 @interface TXSharedApplication : NSObject
-+ (THOPluginManager *)applicationPluginManager;
-+ (TLOInputHistory *)sharedInputHistoryManager;
-+ (TLOGrowlController *)sharedGrowlController;
-+ (TPCThemeController *)sharedThemeController;
-+ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
-+ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
-+ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 + (OELReachability *)sharedNetworkReachabilityObject;
++ (THOPluginManager *)applicationPluginManager;
++ (TLOEncryptionManager *)sharedEncryptionManager;
++ (TLOGrowlController *)sharedGrowlController;
++ (TLOInputHistory *)sharedInputHistoryManager;
++ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
++ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
++ (TPCThemeController *)sharedThemeController;
++ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 
 /* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
  and this queue alone to prevent accessing on different threads at same time 

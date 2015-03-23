@@ -46,6 +46,7 @@
 @property (nonatomic, strong) TVCLogView *webView;
 @property (nonatomic, strong) TVCLogPolicy *webViewPolicy;
 @property (nonatomic, assign) BOOL isLoaded;
+@property (nonatomic, assign) BOOL viewIsEncrypted;
 @property (nonatomic, assign) NSInteger maximumLineCount;
 
 @property (assign) BOOL reloadingBacklog;
@@ -54,7 +55,6 @@
 - (void)setUp;
 - (void)notifyDidBecomeVisible;
 
-- (void)channelLevelEncryptionChanged;
 - (void)preferencesChanged;
 
 - (void)prepareForApplicationTermination;

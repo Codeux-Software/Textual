@@ -37,98 +37,29 @@
 
 #import "TextualApplication.h"
 
+#define _defineSharedInstance(si_name, si_class)	+ (si_class *)si_name						\
+													{											\
+														static id sharedSelf = nil;				\
+																								\
+														static dispatch_once_t onceToken;		\
+																								\
+														dispatch_once(&onceToken, ^{			\
+															sharedSelf = [si_class new];		\
+														});										\
+																								\
+														return sharedSelf;						\
+													}
+
 @implementation TXSharedApplication
 
-+ (THOPluginManager *)applicationPluginManager
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [THOPluginManager new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TLOInputHistory *)sharedInputHistoryManager
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TLOInputHistory new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TLOGrowlController *)sharedGrowlController
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TLOGrowlController new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TPCThemeController *)sharedThemeController
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TPCThemeController new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TLOSpeechSynthesizer new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TLONicknameCompletionStatus new];
-	});
-	
-	return sharedSelf;
-}
-
-+ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TVCQueuedCertificateTrustPanel new];
-	});
-	
-	return sharedSelf;
-}
+_defineSharedInstance(applicationPluginManager, THOPluginManager)
+_defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
+_defineSharedInstance(sharedGrowlController, TLOGrowlController)
+_defineSharedInstance(sharedInputHistoryManager, TLOInputHistory)
+_defineSharedInstance(sharedNicknameCompletionStatus, TLONicknameCompletionStatus)
+_defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel)
+_defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer)
+_defineSharedInstance(sharedThemeController, TPCThemeController)
 
 + (OELReachability *)sharedNetworkReachabilityObject
 {

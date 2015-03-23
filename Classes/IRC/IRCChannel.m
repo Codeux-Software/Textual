@@ -98,27 +98,26 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)updateConfig:(IRCChannelConfig *)seed
 {
-	[self updateConfig:seed fireChangedNotification:YES];
+	[self updateConfig:seed fireChangedNotification:YES updateStoredChannelList:YES];
 }
 
 - (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification
 {
+	[self updateConfig:seed fireChangedNotification:fireChangedNotification updateStoredChannelList:YES];
+}
+
+- (void)updateConfig:(IRCChannelConfig *)seed fireChangedNotification:(BOOL)fireChangedNotification updateStoredChannelList:(BOOL)updateStoredChannelList
+{
 	if (seed) {
 		NSAssertReturn([seed isEqualToChannelConfiguration:self.config] == NO);
-
-		NSString *temporaryKey = [seed temporaryEncryptionKey];
-
-		BOOL encryptionUnchanged = NSObjectsAreEqual(temporaryKey, [self encryptionKey]);
 
 		[self setConfig:seed]; // Value is copied on assign.
 
 		[self.config writeKeychainItemsToDisk];
 
-		if (encryptionUnchanged == NO) {
-			[[self viewController] channelLevelEncryptionChanged];
+		if (updateStoredChannelList) {
+			[self.associatedClient updateStoredChannelList];
 		}
-
-		[self.associatedClient updateStoredChannelList];
 
 		if (fireChangedNotification) {
 			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
@@ -149,16 +148,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (NSString *)secretKey
 {
 	return [self.config secretKey];
-}
-
-- (NSString *)encryptionKey
-{
-	return [self.config encryptionKey];
-}
-
-- (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
-{
-	return [self.config encryptionModeOfOperation];
 }
 
 - (BOOL)isChannel
@@ -211,31 +200,18 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)setTopic:(NSString *)topic
 {
 	if ([_topic isEqualToString:topic] == NO) {
-		 _topic = [topic copy];
+		_topic = [topic copy];
+
+		[[self viewController] setTopic:_topic]; // Set even for queries incase a style wants to use it…
 	}
-
-    [[self viewController] setTopic:topic];
 }
 
-- (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperation
+- (void)setEncryptionState:(OTRKitMessageState)encryptionState
 {
-	[self.config setEncryptionModeOfOperation:encryptionModeOfOperation];
-}
+	if (NSDissimilarObjects(_encryptionState, encryptionState)) {
+		_encryptionState = encryptionState;
 
-- (void)setEncryptionKey:(NSString *)encryptionKey
-{
-	/* This is a helper method so that Textual's view controller can
-	 be made aware of encryption changes. This method should be called.
-	 Do not call setEncryptionKey: directly on self.config or that
-	 will only be written to the temporary store. */
-	
-	BOOL encryptionUnchanged = NSObjectsAreEqual(encryptionKey, [self encryptionKey]);
-	
-	if (encryptionUnchanged == NO) {
-		[self.config setEncryptionKey:encryptionKey];
-		[self.config writeEncryptionKeyKeychainItemToDisk];
-		
-		[[self viewController] channelLevelEncryptionChanged];
+		[self noteEncryptionStateDidChange];
 	}
 }
 
@@ -253,6 +229,28 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	[self reopenLogFileIfNeeded];
+}
+
+- (BOOL)isEncrypted
+{
+	return (self.encryptionState == OTRKitMessageStateEncrypted);
+}
+
+- (void)noteEncryptionStateDidChange
+{
+	[[self viewController] setViewIsEncrypted:[self isEncrypted]];
+}
+
+- (void)closeOpenEncryptionSessions
+{
+	if ([sharedEncryptionManager() usesWeakCiphers] == NO) {
+		if ([self isEncrypted]) {
+			IRCClient *u = [self associatedClient];
+
+			[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[self name]]
+													  from:[u encryptionAccountNameForLocalUser]];
+		}
+	}
 }
 
 #pragma mark -
@@ -273,6 +271,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	self.modeInfo = nil;
 
 	[self clearMembers];
+
 	[self reloadDataForTableView];
 }
 
@@ -296,11 +295,14 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	self.channelJoinTime = [NSDate unixTime];
-
 }
 
 - (void)deactivate
 {
+	if ([self isPrivateMessage]) {
+		[self closeOpenEncryptionSessions];
+	}
+
 	[self resetStatus:IRCChannelStatusParted];
   
 	if ([self isChannel]) {
@@ -308,8 +310,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		
 		[[self viewController] setTopic:nil];
     }
-
-	self.channelJoinTime = -1;
 }
 
 - (void)prepareForPermanentDestruction
