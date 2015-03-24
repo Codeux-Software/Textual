@@ -47,43 +47,27 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 + (void)populateCommandIndex
 {
 	static BOOL _dataPopulated = NO;
-	
+
 	if (_dataPopulated == NO) {
-		NSURL *filePath = nil;
+		/* Populate public data */
+		id publicValue = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCCommandIndexPublicValues"];
 
-		/* Get public information. */
-		filePath = [RZMainBundle() URLForResource:@"IRCCommandIndexPublicValues" withExtension:@"plist"];
-		
-		if (filePath) {
-			NSData *rawData = [NSData dataWithContentsOfURL:filePath];
+		if (publicValue) {
+			NSMutableDictionary *mutplist = [publicValue mutableCopy];
 
-			NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
-																			options:NSPropertyListImmutable
-																			 format:NULL
-																			  error:NULL];
-			
-			NSMutableDictionary *mutplist = [plist mutableCopy];
-			
 			[mutplist removeObjectForKey:_reservedSlotDictionaryKey];
-			
+
 			IRCCommandIndexPublicValues = [mutplist copy];
 		}
-		
-		/* Get private information. */
-		filePath = [RZMainBundle() URLForResource:@"IRCCommandIndexPrivateValues" withExtension:@"plist"];
-		
-		if (filePath) {
-			NSData *rawData = [NSData dataWithContentsOfURL:filePath];
 
-			NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
-																			options:NSPropertyListImmutable
-																			 format:NULL
-																			  error:NULL];
+		/* Populate private data */
+		id privateValue = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCCommandIndexPrivateValues"];
 
-			NSMutableDictionary *mutplist = [plist mutableCopy];
-			
+		if (privateValue) {
+			NSMutableDictionary *mutplist = [privateValue mutableCopy];
+
 			[mutplist removeObjectForKey:_reservedSlotDictionaryKey];
-			
+
 			IRCCommandIndexPrivateValues = [mutplist copy];
 		}
 		

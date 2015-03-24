@@ -67,7 +67,7 @@
 		self.channelList = [NSMutableArray new];
 
 		/* Load the list of available IRC networks. */
-		NSString *slp = [RZMainBundle() pathForResource:@"IRCNetworks" ofType:@"plist"];
+		NSString *slp = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
 		
 		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
 

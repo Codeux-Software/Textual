@@ -207,7 +207,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
 
 	if (migratedOldKeys == nil) {
-		NSString *remappedKeysPath = [RZMainBundle() pathForResource:@"RegisteredUserDefaultsRemappedKeys" ofType:@"plist"];
+		NSString *remappedKeysPath = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
 
 		NSDictionary *remappedKeys = [NSDictionary dictionaryWithContentsOfFile:remappedKeysPath];
 
