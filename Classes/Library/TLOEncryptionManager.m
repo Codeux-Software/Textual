@@ -341,6 +341,42 @@ static BOOL _classInitiated = NO;
 #pragma mark -
 #pragma mark Helper Methods
 
+- (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
+{
+	_cancelCallForWeakCiphersReturn(NO)
+
+	PointerIsEmptyAssertReturn(messageTo, NO)
+	PointerIsEmptyAssertReturn(messageFrom, NO)
+
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	if (currentState == OTRKitMessageStateEncrypted) {
+		if (isIncomingFileTransfer) {
+			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
+																 title:TXTLS(@"BasicLanguage[1272][1]")
+														 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
+													   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
+														suppressionKey:nil
+													   suppressionText:nil];
+
+			return (continueop == NO);
+		} else {
+			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][3]")
+																 title:TXTLS(@"BasicLanguage[1272][1]")
+														 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
+													   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
+														suppressionKey:nil
+													   suppressionText:nil];
+
+			return (continueop == NO);
+		}
+	} else {
+		return YES;
+	}
+}
+
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
 	_cancelCallForWeakCiphersVoid
