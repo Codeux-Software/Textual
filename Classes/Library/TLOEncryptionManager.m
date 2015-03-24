@@ -286,7 +286,7 @@
 
 	if ([self usesWeakCiphers]) {
 		if ([[self weakCipherManager] respondsToSelector:@selector(decryptMessage:from:to:decodingCallback:)]) {
-			[[self weakCipherManager] decryptMessage:messageTo from:messageFrom to:messageTo decodingCallback:decodingCallback];
+			[[self weakCipherManager] decryptMessage:messageBody from:messageFrom to:messageTo decodingCallback:decodingCallback];
 		}
 	} else {
 		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
