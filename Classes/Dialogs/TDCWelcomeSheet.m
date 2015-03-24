@@ -67,9 +67,7 @@
 		self.channelList = [NSMutableArray new];
 
 		/* Load the list of available IRC networks. */
-		NSString *slp = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
-		
-		self.serverList = [NSDictionary dictionaryWithContentsOfFile:slp];
+		self.serverList = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
 
 		/* Populate the server address field with the IRC network list. */
 		NSArray *unsortedServerListKeys = [self.serverList allKeys];
