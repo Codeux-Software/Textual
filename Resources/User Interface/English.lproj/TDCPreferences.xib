@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
@@ -1327,14 +1327,14 @@ DQ
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="357" height="13"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1383,7 +1383,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=", ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1397,7 +1397,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=", ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1412,7 +1412,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=", etc.">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1589,14 +1589,14 @@ DQ
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="MHv-vv-IRm">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="407" height="55"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="A value of ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1610,7 +1610,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=" disables the checking of image height. ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1624,7 +1624,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=" which may take a long time on connections with slow internet connections. ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1662,14 +1662,14 @@ DQ
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="UqK-4p-c7Q">
                                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="394" height="27"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="If inline images are disabled here, then Textual provides the option to enable them on a per-channel basis using ">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -1683,7 +1683,7 @@ DQ
                                                         </fragment>
                                                         <fragment content=".">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -2018,7 +2018,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="  %@ = User mode; %n = User nickname">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                             </attributes>
@@ -2900,14 +2900,14 @@ DQ
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="Ncp-xZ-uCx">
                                 <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="371" height="44"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="A reload will occur if a file with a file extension of ">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -2922,7 +2922,7 @@ DQ
                                     </fragment>
                                     <fragment content=" or ">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -2937,7 +2937,7 @@ DQ
                                     </fragment>
                                     <fragment content=" is modified within the root directory of the active style. Additionally, any alterations to the ">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -2952,7 +2952,7 @@ DQ
                                     </fragment>
                                     <fragment content=" file will result in a reload.">
                                         <attributes>
-                                            <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -3643,7 +3643,7 @@ DQ
                                     </slider>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="94" id="1RT-RW-76a"/>
+                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="90" id="1RT-RW-76a"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="top" secondItem="Gmu-Oh-Krb" secondAttribute="bottom" constant="14" id="1yE-Lm-UNE"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="top" secondItem="Fdc-sn-QgS" secondAttribute="bottom" constant="14" id="2wX-CW-lVs"/>
                                     <constraint firstItem="6Uk-IU-HIb" firstAttribute="leading" secondItem="lSR-7V-PDD" secondAttribute="trailing" constant="5" id="6my-i2-fCG"/>
@@ -3664,7 +3664,7 @@ DQ
                                     <constraint firstAttribute="trailing" secondItem="lQi-te-LwT" secondAttribute="trailing" constant="72" id="gdj-hN-n2p"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="leading" secondItem="wa5-Rg-5aD" secondAttribute="leading" id="gtB-xG-IGR"/>
                                     <constraint firstItem="v8u-aO-cik" firstAttribute="leading" secondItem="Ht3-ub-Duo" secondAttribute="leading" constant="40" id="jeH-aw-bck"/>
-                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="95" id="k8N-TL-t3h"/>
+                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="91" id="k8N-TL-t3h"/>
                                     <constraint firstItem="wa5-Rg-5aD" firstAttribute="top" secondItem="v8u-aO-cik" secondAttribute="bottom" constant="17" id="m9L-oI-wIi"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="leading" secondItem="Gmu-Oh-Krb" secondAttribute="leading" id="mlg-G7-aRq"/>
                                     <constraint firstItem="hDx-CA-NhV" firstAttribute="top" secondItem="pbE-2M-fRW" secondAttribute="bottom" constant="18" id="ocI-pl-aNw"/>
@@ -4905,12 +4905,12 @@ DQ
                     </buttonCell>
                     <connections>
                         <action selector="offRecordMessagingPolicyChanged:" target="-2" id="dHa-Df-hCq"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Off-the-Record Messaging -&gt; Automatically Enable Service" id="FBY-3K-6HH"/>
                         <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Off-the-Record Messaging -&gt; Require Encryption" id="SCm-cO-76g">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
                             </dictionary>
                         </binding>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Off-the-Record Messaging -&gt; Automatically Enable Service" id="FBY-3K-6HH"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwB-LQ-B19">
