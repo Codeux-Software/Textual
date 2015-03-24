@@ -178,7 +178,7 @@
 		return;
 	}
 
-	/* Continue normal parsing… */
+	/* Continue normal parsing... */
 	NSNumber *serverPort = [baseURL port];
 
 	if (serverPort == nil) {

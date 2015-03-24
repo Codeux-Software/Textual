@@ -731,7 +731,7 @@
 	/* Is it even IP? */
 	NSAssertReturn([address isIPAddress]);
 	
-	/* Okay, we are good… */
+	/* Okay, we are good... */
 	self.cachedIPAddress = address;
 	
 	self.sourceIPAddressRequestPending = NO;

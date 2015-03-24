@@ -114,7 +114,7 @@
 			}
 		}
 		
-		/* Update type of progress bar, if any… */
+		/* Update type of progress bar, if any... */
 		if (transferIsStopped == NO) {
 			if ([self transferStatus] == TDCFileTransferDialogTransferConnectingStatus) {
 				[self.progressIndicator setIndeterminate:YES];

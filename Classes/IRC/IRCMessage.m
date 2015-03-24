@@ -169,7 +169,7 @@
 
 		[sender setHostmask:t]; // Declare entire section as host.
 		
-		[sender setIsServer:NO]; // Do not set as server until host is parsed…
+		[sender setIsServer:NO]; // Do not set as server until host is parsed...
 		
 		/* Parse the user info into their appropriate sections or return NO if we can't. */
 		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
@@ -185,7 +185,7 @@
 	
 	self.sender = sender;
 
-    /* Now that we have the sender information… continue to the
+    /* Now that we have the sender information... continue to the
      actual command being used. */
 	NSString *foundCommand = [s getToken];
 	

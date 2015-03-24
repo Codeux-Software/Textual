@@ -171,7 +171,7 @@ Textual.nicknameMaybeWasDoubleClicked = function(e)
 
 Textual.nicknameSingleClicked = function(e)
 {
-	// API does not handle this action by default…
+	// API does not handle this action by default...
 };
 
 Textual.nicknameDoubleClicked = function(e)

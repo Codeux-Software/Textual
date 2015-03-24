@@ -141,7 +141,7 @@
 		i += 1;
 	}
 	
-	/* Update filename if we have to… */
+	/* Update filename if we have to... */
 	if (i > 1) {
 		self.filename = [filepath lastPathComponent];
 	}
@@ -448,7 +448,7 @@
 		/* No matter what, this loop shall never reach more than 300 passes. */
 		NSAssertReturnLoopBreak(loopedCount < 300);
 
-		/* If last pass set token, break it… */
+		/* If last pass set token, break it... */
 		if (self.transferToken == nil) {
 			/* Build token. */
 			NSString *transferToken = [NSString stringWithInteger:TXRandomNumber(9999)];
@@ -475,7 +475,7 @@
 		/* We will send actual request to the user from here. */
 		NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:[self completePath] error:NULL];
 
-		/* If we had problem reading file, then we need to stop now… */
+		/* If we had problem reading file, then we need to stop now... */
 		if (PointerIsEmpty(fileAttrs)) {
 			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 
@@ -485,7 +485,7 @@
 		/* Send to user. */
 		TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
 
-		/* Determine which type of message is sent… */
+		/* Determine which type of message is sent... */
 		if ([self isReversed]) {
 			[self buildTransferToken];
 

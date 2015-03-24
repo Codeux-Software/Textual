@@ -53,7 +53,7 @@
 		if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
 			/* We listen for ZNC disconnects so that we can terminate channels when we
 			 disconnect from the server ZNC was connected to. ZNC does not localize 
-			 itself so detecting these disconnects is not very hard… */
+			 itself so detecting these disconnects is not very hard... */
 
 			/* handleIRCSideDisconnect: calls -deactivate on IRCChannel. That call in 
 			 IRCChannel posts a script event to the active style. Therefore, we have to
@@ -118,7 +118,7 @@
 	NSString *s = [input paramAt:1];
 
 	if ([s hasPrefix:@"The playback buffer for ["]		&&
-		[s contains:@"] channels matching ["]			&& // This is much cleaner than regular expression…
+		[s contains:@"] channels matching ["]			&& // This is much cleaner than regular expression...
 		[s hasSuffix:@"] has been cleared."])
 	{
 		return nil; // Ignore this event

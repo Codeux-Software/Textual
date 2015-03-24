@@ -75,7 +75,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)setValue:(id)value forKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
+	NSObjectIsEmptyAssert(key); // Yeah, we need a key...
 	
 	/* Set it and forget it. */
 	NSString *hashedKey = [key md5];
@@ -89,7 +89,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (id)valueForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key…
+	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key...
 	
 	/* Insert pointless comment here. */
 	NSString *hashedKey = [key md5];
@@ -103,14 +103,14 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	/* Get initial value. */
 	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];
 	
-	/* We are only looking for dictionary entries… */
+	/* We are only looking for dictionary entries... */
 	NSObjectIsKindOfClassAssertReturn(dictObject, NSDictionary, nil);
 	
 	/* Gather entry info. */
 	id keyname = [dictObject objectForKey:@"key"];
 	id objectValue = [dictObject objectForKey:@"value"];
 	
-	/* Some validation. Not strict, but meh… */
+	/* Some validation. Not strict, but meh... */
 	PointerIsEmptyAssertReturn(keyname, nil);
 	PointerIsEmptyAssertReturn(objectValue, nil);
 	
@@ -124,7 +124,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)removeObjectForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key); // Yeah, we need a key…
+	NSObjectIsEmptyAssert(key); // Yeah, we need a key...
 	
 	/* Set it and forget it. */
 	NSString *hashedKey = [key md5];
@@ -137,12 +137,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Add key to removal array. */
@@ -161,7 +161,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
 		/* Apple very clearly states not to do call this on the main thread
-		 since it does a lot of work, so we wont… */
+		 since it does a lot of work, so we wont... */
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
 		
 		if (ucurl) {
@@ -214,12 +214,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* Debug information. */
@@ -235,14 +235,14 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			
 			NSString *localFontVa = [TPCPreferences themeChannelViewFontName];
 			
-			/* Do the actual compare… */
+			/* Do the actual compare... */
 			if ([localFontVa isEqual:remoteValue] == NO) {
 				if ([NSFont fontIsAvailable:remoteValue]) {
 					DebugLogToConsole(@"iCloud: Remote font does not match local font. Setting font and reloading theme.");
 					
 					[TPCPreferences setThemeChannelViewFontName:remoteValue]; // Will remove the BOOL
 					
-					/* Font only applies to actual theme so we don't have to reload sidebars too… */
+					/* Font only applies to actual theme so we don't have to reload sidebars too... */
 					[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
 					
 					[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification object:nil];
@@ -256,12 +256,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Perform a sync. */
@@ -366,12 +366,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* Begin work. */
@@ -482,12 +482,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 		 You cannot have a key longer than 64 bytes in iCloud so what am I going
 		 to do when there are keys stored by Textual longer than that? Rewrite
-		 the entire internals of Textual to use shorter keys? Ha, as-if… Instead
+		 the entire internals of Textual to use shorter keys? Ha, as-if... Instead
 		 just use a static hash of the key name as the actual key, then have the
 		 value of the key a dictionary with the real key name in it and the value. */
 		[changedValues enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			if ([self keyIsNotPermittedInCloud:key]) {
-				// Nobody cares about this…
+				// Nobody cares about this...
 			} else {
 				/* Special save conditions. */
 				if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey]) {
@@ -520,7 +520,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					id defaultsValue = [defaults objectForKey:key];
 					
 					if ([defaultsValue isEqual:obj]) {
-						return; // Nothing has changed…
+						return; // Nothing has changed...
 					}
 				}
 				
@@ -543,12 +543,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* Perform operation. */
@@ -556,7 +556,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		/* Debug data. */
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
-		/* Announce our intents… */
+		/* Announce our intents... */
 		[self setIsSyncingLocalKeysDownstream:YES];
 
 		/* Get the list of changed keys. */
@@ -601,7 +601,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			} else {
 				/* Block stuff from syncing that we did not want. */
 				if ([self keyIsNotPermittedFromCloud:keyname]) {
-					continue; // Do not continue operation…
+					continue; // Do not continue operation...
 				}
 				
 				/* Compare the local to the new. */
@@ -626,11 +626,11 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
 					
 					/* Bet you're wondering why this is added to an array instead of
-					 just calling the importWorld… method. Well, it took me a long time
+					 just calling the importWorld... method. Well, it took me a long time
 					 to figure this out too. It used to just call the method directly,
 					 then I realized, doing that creates a new instance of TVCLogController
 					 for each client/channel added. That's all fine, but if the theme
-					 ends up changing when calling the TPCPreferences reload… method 
+					 ends up changing when calling the TPCPreferences reload... method 
 					 below, then that will also reload the theme of thenewly created 
 					 view controller instance creating a race condition. Now, we just
 					 reload the theme then create the views afterwars. */
@@ -682,7 +682,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Gather information about the sync request. */
@@ -725,12 +725,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 	
 	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Downstream syncing will fire this notification so we
@@ -743,7 +743,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			
 			if (pendingWrites) {
 				if ([pendingWrites containsObject:changedKey]) {
-					return; // Do not add this key…
+					return; // Do not add this key...
 				}
 			}
 
@@ -801,7 +801,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Begin work. */
@@ -852,7 +852,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					/* Get the path of this item minus the prefix path. */
 					NSString *path = [[itemURL path] stringByDeletingPreifx:[cachePahtURL path]];
 					
-					/* Continus processing… */
+					/* Continus processing... */
 					if ([isDirectory boolValue]) {
 						/* We do not care about modification dates of directories. */
 						[cachedFiles setObject:[NSNull null] forKey:path];
@@ -897,7 +897,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 				NSURL *cachedFileLocation = [cachePahtURL URLByAppendingPathComponent:basicFilePath];
 				
 				/* Now, we begin gathering relevant information about the file. */
-				BOOL updateOrAddFile = NO; // Used later on…
+				BOOL updateOrAddFile = NO; // Used later on...
 				BOOL removeFromCacheArray = NO; // Setting to YES will remove the file from deletion pool.
 				
 				BOOL cloudFileExists = [RZFileManager() fileExistsAtPath:[fileURL path]];
@@ -1006,7 +1006,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					}
 				}
 				
-				/* We are done with this file. Do it all again for the next… */
+				/* We are done with this file. Do it all again for the next... */
 			};
 			
 			/* ========================================================== */
@@ -1077,7 +1077,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Get new token first. */
@@ -1159,7 +1159,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation…
+		return; // Do not continue operation...
 	}
 
 	/* Perform work. */

@@ -113,7 +113,7 @@
         } else if ([url hasPrefix:@"http://fukung.net/v/"]) {
 			return [url stringByReplacingOccurrencesOfString:@"http://fukung.net/v/" withString:@"http://media.fukung.net/images/"];
         } else if ([host hasSuffix:@"dropbox.com"]) {
-			// Continue to processing…
+			// Continue to processing...
 		} else {
 			return [u absoluteString];
 		}

@@ -377,7 +377,7 @@
 				return _disableInSheet(_isChannel);
 			}
 		}
-		case 691: // "Add Channel…" — Server Menu
+		case 691: // "Add Channel…" - Server Menu
 		{
 			return _disableInSheet(_noClient == NO);
 		}
@@ -624,7 +624,7 @@
 	/* Remove all previous entries. */
 	[self.navigationChannelList removeAllItems];
 
-	/* Begin populating… */
+	/* Begin populating... */
 	NSInteger channelCount = 0;
 
 	for (IRCClient *u in [worldController() clientList]) {
@@ -662,7 +662,7 @@
 			/* Add to the actaul navigation list. */
 			[self.navigationChannelList addItem:newItem];
 
-			/* Bump the count… */
+			/* Bump the count... */
 			channelCount += 1;
 		}
 	}

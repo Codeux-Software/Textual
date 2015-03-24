@@ -91,7 +91,7 @@ typedef enum TVCLogLineMemberType : NSInteger {
 @property (nonatomic, copy) NSArray *highlightKeywords;
 @property (nonatomic, copy) NSArray *excludeKeywords;
 
-- (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON… call.
+- (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON... call.
 - (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input;
 
 @property (readonly, copy) NSData *jsonDictionaryRepresentation;

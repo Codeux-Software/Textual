@@ -216,7 +216,7 @@
 	self.floodControlCurrentMessageCount = 0;
 
 	while ([self tryToSend] == YES) {
-		// …
+		;
 	}
 }
 

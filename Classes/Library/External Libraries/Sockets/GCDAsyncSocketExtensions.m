@@ -193,7 +193,7 @@
 
 										if (objectLabel) {
 											if ([childKeyString isEqual:objectLabel] == NO) {
-												continue; // Skp this entry…
+												continue; // Skp this entry...
 											}
 										}
 

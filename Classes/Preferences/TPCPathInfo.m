@@ -140,7 +140,7 @@
 {
 	NSString *source = [TPCPathInfo applicationUbiquitousContainerPath];
 	
-	NSObjectIsEmptyAssertReturn(source, nil); // We need a source folder first…
+	NSObjectIsEmptyAssertReturn(source, nil); // We need a source folder first...
 	
 	NSString *dest = [source stringByAppendingPathComponent:@"/Documents/Styles/"];
 	

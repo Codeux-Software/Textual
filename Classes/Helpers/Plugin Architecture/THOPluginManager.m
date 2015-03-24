@@ -284,7 +284,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 		*isReserved = NO;
 		*isExtension = NO;
 		
-		return; // We have something so shutdown…
+		return; // We have something so shutdown...
 	} else {
 		*isScript = NO;
 		

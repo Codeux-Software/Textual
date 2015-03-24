@@ -823,7 +823,7 @@
 
 - (void)drawDraggingDestinationFeedbackInRect:(NSRect)dirtyRect
 {
-	; // Do nothing for this…
+	; // Do nothing for this...
 }
 
 - (void)setSelected:(BOOL)selected

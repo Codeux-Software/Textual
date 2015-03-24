@@ -116,7 +116,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	NSURL *path = [self fileWritePath];
 
 	if (path == nil) {
-		return; // Some type of error occured…
+		return; // Some type of error occured...
 	}
 
 	/* What will the filename be? The filename
@@ -207,7 +207,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 			return oldPath;
 		}
 
-		/* It did not exist… use new naming scheme. */
+		/* It did not exist... use new naming scheme. */
 		NSString *servHead = [[self.client uniqueIdentifier] substringToIndex:5];
 
 		serverName = [NSString stringWithFormat:@"%@ (%@)", serverName, servHead];

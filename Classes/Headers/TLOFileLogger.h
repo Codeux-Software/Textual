@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-/* This is the class used for logging to text in Textual… */
+/* This is the class used for logging to text in Textual... */
 TEXTUAL_EXTERN NSString * const TLOFileLoggerConsoleDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerChannelDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerPrivateMessageDirectoryName;

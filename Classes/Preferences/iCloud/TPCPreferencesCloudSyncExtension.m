@@ -56,13 +56,13 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 
 + (void)performReloadActionForKeyValues:(NSArray *)prefKeys
 {
-	/* Begin the process… */
-	/* Some of these keys may be repeated because they are shared amongst different elements… */
+	/* Begin the process... */
+	/* Some of these keys may be repeated because they are shared amongst different elements... */
 	/* The -performReloadActionForActionType: method the keys are used to update is smart enough
 	 to know when specific actions repeat and will accomidate that. */
 	TPCPreferencesKeyReloadActionMask reloadActions = 0;
 	
-	/* Style specific reloads… */
+	/* Style specific reloads... */
 	if ([prefKeys containsObject:TPCPreferencesThemeNameDefaultsKey] ||					/* Style name. */
 		[prefKeys containsObject:TPCPreferencesThemeFontNameDefaultsKey] ||				/* Style font name. */
 		[prefKeys containsObject:@"Theme -> Font Size"] ||								/* Style font size. */
@@ -129,7 +129,7 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	}
 	
 	/* Member list sort order. */
-	if ([prefKeys containsObject:@"MemberListSortFavorsServerStaff"]) { // Place server staff at top of list…
+	if ([prefKeys containsObject:@"MemberListSortFavorsServerStaff"]) { // Place server staff at top of list...
 		reloadActions |= TPCPreferencesKeyReloadMemberListSortOrderAction;
 	}
 	

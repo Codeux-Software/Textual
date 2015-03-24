@@ -74,7 +74,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	}
 #endif
 
-	/* We're done here for now… */
+	/* We're done here for now... */
 }
 
 @end
@@ -93,7 +93,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	}
 	
 	/* Is it a plugin? */
-	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"]; // It's a folder…
+	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"]; // It's a folder...
 	
 	if ([[url absoluteString] hasSuffix:pluginSuffix]) {
 		[self performImportOfPluginFile:url];

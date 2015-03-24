@@ -1282,7 +1282,7 @@
 	/* Fake the delegate call. */
 	[self outlineViewSelectionDidChange:nil];
 	
-	/* Draw default icon as soon as we setup… */
+	/* Draw default icon as soon as we setup... */
 	/* This is done to apply birthday icon as soon as we start. */
 	[TVCDockIcon drawWithoutCount];
 	
@@ -1911,7 +1911,7 @@
 		/* :) */
 		NSInteger originalIndex = [ary indexOfObject:i];
 		
-		/* Something, something… */
+		/* Something, something... */
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
 		

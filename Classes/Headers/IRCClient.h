@@ -69,7 +69,7 @@ typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
  capacity negotation but once accepted, the default server-time flag 
  is set for the maintained capacity. */
 
-/* ClientIRCv3SupportedCapacitySASL… is set once negotation begins. It is 
+/* ClientIRCv3SupportedCapacitySASL... is set once negotation begins. It is 
  reset if negotation fails. Use ClientIRCv3SupportedCapacityIsIdentifiedWithSASL
  to find actual status of identification. */
 typedef enum ClientIRCv3SupportedCapacities : NSInteger {
@@ -331,7 +331,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 			  nickname:(NSString *)nickname											// The nickname associated with the print.
 		   messageBody:(NSString *)messageBody										// The actual text being printed.
 		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
-			receivedAt:(NSDate *)receivedAt											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — … TVCLogLineDefaultRawCommandValue = internal debug command.
+			receivedAt:(NSDate *)receivedAt											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — TVCLogLineDefaultRawCommandValue = internal debug command.
 	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
 	   completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */

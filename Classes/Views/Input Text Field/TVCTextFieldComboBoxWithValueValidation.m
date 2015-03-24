@@ -260,7 +260,7 @@
 
 - (NSRect)erroneousValueBadgeIconRectInParentRect:(NSRect)aRect
 {
-	/* Look at all those magic numbers… */
+	/* Look at all those magic numbers... */
 	NSInteger rightEdge = (NSMaxX(aRect) - 40.0);
 	
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {

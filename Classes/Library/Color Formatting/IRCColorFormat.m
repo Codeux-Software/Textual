@@ -322,7 +322,7 @@
 
 		/* Okay, at this point we know two things. The the formatting characters above and below
 		 the following append will fit within this segment plus at least one unicode character with
-		 a length of two. Now here is where it gets tricky… we will go character by character in
+		 a length of two. Now here is where it gets tricky... we will go character by character in
 		 our segment and append that. Any character below 0x7f will count against only one towards
 		 the final result. Anything above it, is equal to two. We keep adding until the segment
 		 is completed or we run out of space. At that point, we break. We have already added 
@@ -340,7 +340,7 @@
 			NSInteger characterSize = [c lengthOfBytesUsingEncoding:[[client config] primaryEncoding]];
 			
 			if (characterSize == 0) {
-				characterSize = charRange.length; // Just incase…
+				characterSize = charRange.length; // Just incase...
 			}
 			
 			/* Update locals. */

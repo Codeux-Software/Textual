@@ -283,7 +283,7 @@
 - (void)scrollViewBoundsDidChangeNotification:(NSNotification *)aNote
 {
 	if ([TPCPreferences memberListUpdatesUserInfoPopoverOnScroll]) {
-		/* Only responds to events that are related to us… */
+		/* Only responds to events that are related to us... */
 		if ([[aNote object] isEqual:[self scrollViewContentView]]) {
 			/* Get current mouse position. */
 			NSPoint mouseLocation = [NSEvent mouseLocation];
@@ -419,7 +419,7 @@
 
 - (void)drawContextMenuHighlightForRow:(int)row
 {
-    // Do not draw focus ring …
+    // Do not draw focus ring ...
 }
 
 - (void)reloadUserInterfaceObjects

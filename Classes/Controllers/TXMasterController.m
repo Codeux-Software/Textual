@@ -447,7 +447,7 @@
 {
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:NO]; // We can speak again!
 
-	[worldController() autoConnectAfterWakeup:YES]; // Wake clients up…
+	[worldController() autoConnectAfterWakeup:YES]; // Wake clients up...
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note

@@ -114,7 +114,7 @@
 						*methodReturnType == _C_SEL ||
 						 methodReturnsVoid)
 					{
-						; // Safe to continue…
+						; // Safe to continue...
 					} else {
 						_insertError(NO, ([NSString stringWithFormat:@"Error performing %1$@ on %2$@: Return type of %1$@ is a primitive but the value of returnsPrimitives is set to NO", NSStringFromSelector(aSelector), NSStringFromClass([self class])]));
 						
@@ -149,7 +149,7 @@
 								const char *actualArgumentValue = [argument objCType];
 								
 								if (*expectedArgumentValue == *actualArgumentValue) {
-									; // Safe to continue…
+									; // Safe to continue...
 								} else {
 									if (usesTypeChecking) {
 										_insertError(NO, ([NSString stringWithFormat:@"Error: Performing %@ on %@: Mismatched argument type at index %lu — Expected type token: '%@', actual type token: '%@'", NSStringFromSelector(aSelector), NSStringFromClass([self class]), argumentIndex, @(expectedArgumentValue), @(actualArgumentValue)]));

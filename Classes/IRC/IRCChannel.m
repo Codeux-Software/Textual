@@ -202,7 +202,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	if ([_topic isEqualToString:topic] == NO) {
 		_topic = [topic copy];
 
-		[[self viewController] setTopic:_topic]; // Set even for queries incase a style wants to use it…
+		[[self viewController] setTopic:_topic]; // Set even for queries incase a style wants to use it...
 	}
 }
 
@@ -583,7 +583,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	} else {
 		if ([existingModeValues contains:mode]) {
 			if (value) {
-				return; // Why add what already exists…
+				return; // Why add what already exists...
 			}
 		}
 

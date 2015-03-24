@@ -363,7 +363,7 @@
 
 /* /lagcheck/ command */
 "BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
-"BasicLanguage[1107]" = "Waiting for response from lag check …";
+"BasicLanguage[1107]" = "Waiting for response from lag check…";
 "BasicLanguage[1108]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
 
 "BasicLanguage[1109][00]" = "Yeah, okay…";
@@ -419,8 +419,8 @@
 "BasicLanguage[1140]" = "Connecting to [%1$@] on port %2$ld";
 "BasicLanguage[1141]" = "Connecting to [%1$@] on port %2$ld with the proxy [%3$@] on port %4$ld";
 "BasicLanguage[1142]" = "Connecting to [%1$@] on port %2$ld with the system-wide SOCKS proxy";
-"BasicLanguage[1143]" = "Reconnecting …";
-"BasicLanguage[1144]" = "Retrying …";
+"BasicLanguage[1143]" = "Reconnecting…";
+"BasicLanguage[1144]" = "Retrying…";
 "BasicLanguage[1145]" = "\002%1$@\002 sets mode \002%2$@\002";
 "BasicLanguage[1146]" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "BasicLanguage[1147]" = "\002-%1$@ CTCP-\002 %2$@ %3$@";

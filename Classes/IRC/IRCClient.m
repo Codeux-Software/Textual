@@ -1464,7 +1464,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	// Check other conditionals.
-	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check…
+	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check...
 }
 
 - (BOOL)messageIsPartOfZNCPlaybackBuffer:(IRCMessage *)m inChannel:(IRCChannel *)channel
@@ -1485,7 +1485,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	 guess. We do this by checking if the message being parsed has a @time= attached
 	 to it from server-time and also if it was sent during join.
 	 
-	 This is all best guess… */
+	 This is all best guess... */
 	return m.isHistoric;
 }
 
@@ -4104,7 +4104,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						if ([@"irc.znc.in" isEqualToString:[m senderNickname]]) {
 							self.isZNCBouncerConnection = YES;
 
-							DebugLogToConsole(@"ZNC based connection detected…");
+							DebugLogToConsole(@"ZNC based connection detected...");
 						}
 					}
 				}
@@ -4444,7 +4444,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-	/* Does the query for the sender already exist?… */
+	/* Does the query for the sender already exist?... */
 	IRCChannel *c = nil;
 
 	if (isSelfMessage == YES) {
@@ -4467,7 +4467,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if ([sender isEqualIgnoringCase:@"ChanServ"])
 		{
 			/* Forward entry messages to the channel they are associated with. */
-			/* Format we are going for: -ChanServ- [#channelname] blah blah… */
+			/* Format we are going for: -ChanServ- [#channelname] blah blah... */
 			NSInteger spacePos = [text stringPosition:NSStringWhitespacePlaceholder];
 
 			if ([text hasPrefix:@"["] && spacePos > 3) {
@@ -4881,7 +4881,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		c = [self findChannel:channel];
 		
 		if (c == nil) {
-			return; // Do not continue…
+			return; // Do not continue...
 		}
 	}
 
@@ -6052,7 +6052,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			[self disconnect]; // No worry about gracefully disconnecting by using quit: since it is just a redirect.
 			
-			/* -disconnect would destroy this so we set them after… */
+			/* -disconnect would destroy this so we set them after... */
 			self.serverRedirectAddressTemporaryStore = address;
 			self.serverRedirectPortTemporaryStore = [portraw integerValue];
 			
@@ -6204,7 +6204,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		case 379: // RPL_WHOISMODES
 		case 616: // RPL_WHOISHOST
 		case 671: // RPL_WHOISSECURE
-		case 672: // RPL_WHOIS? — (is a CGI:IRC client from…, hybrid)
+		case 672: // RPL_WHOIS? — (is a CGI:IRC client from..., hybrid)
 		case 727: // RPL_WHOIS? — (is captured, hybrid)
 		{
 			NSAssertReturnLoopBreak([m paramsCount] > 2);
@@ -6732,7 +6732,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
 
 			for (NSString *nickname in items) {
-				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces…
+				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces...
 				
 				IRCUser *member = [IRCUser newUserOnClient:self withNickname:nil];
 
@@ -7723,7 +7723,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	 line is thrown through inputText:command: to have Textual treat it like any other user input. */
 
 	/* -splitIntoLines is only available to NSAttributedString and I was too lazy to add it to NSString
-	 so fuck it… just convert our input over. */
+	 so fuck it... just convert our input over. */
 	NSAttributedString *resultBase = [NSAttributedString emptyStringWithBase:resultString];
 
 	NSArray *lines = [resultBase splitIntoLines];
@@ -7981,7 +7981,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.serverRedirectAddressTemporaryStore = nil;
 	self.serverRedirectPortTemporaryStore = 0;
 
-	/* Continue connection… */
+	/* Continue connection... */
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCClientConnectReconnectMode) {
@@ -8090,7 +8090,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)quit:(NSString *)comment
 {
-	/* If we are already quitting… derp. */
+	/* If we are already quitting... derp. */
     if (self.isQuitting) {
         return;
     }

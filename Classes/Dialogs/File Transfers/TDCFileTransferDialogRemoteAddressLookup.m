@@ -129,10 +129,10 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-	/* We failed with error… that is not good. */
+	/* We failed with error... that is not good. */
 	[self destroyConnectionRequest]; // Destroy the existing request.
 	
-	/* Log something… */
+	/* Log something... */
 	if (self.requestDelegate) {
 		if ([self.requestDelegate respondsToSelector:@selector(fileTransferRemoteAddressRequestDidCloseWithError:)]) {
 			[self.requestDelegate fileTransferRemoteAddressRequestDidCloseWithError:error];

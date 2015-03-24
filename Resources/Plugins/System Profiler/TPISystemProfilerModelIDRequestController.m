@@ -95,7 +95,7 @@ NSString * const _userDefaultsSerialCacheKey	= @"Private Extension Store -> Syst
 
 		if (cachedSerialNumber) {
 			if ([cachedSerialNumber isEqual:currentSerial]) {
-				return; // Matching serial numbers…
+				return; // Matching serial numbers...
 			} else {
 				/* Invalidate cache. */
 				[RZUserDefaults() removeObjectForKey:_userDefaultsModelCacheKey];

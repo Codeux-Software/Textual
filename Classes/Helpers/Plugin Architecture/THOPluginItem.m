@@ -138,7 +138,7 @@
 		}
 	}
 
-	/* Does the bundle have a preference pane?… */
+	/* Does the bundle have a preference pane?... */
 	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
 						  [self.primaryClass respondsToSelector:@selector(preferencesView)]);
 	

@@ -221,7 +221,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		[notification setUserInfo:eventContext];
 		
 		if (eventType == TXNotificationFileTransferReceiveRequestedType) {
-			/* sshhhh… you didn't see nothing. */
+			/* sshhhh... you didn't see nothing. */
 			[notification setValue:@(YES) forKey:@"_showsButtons"];
 
 			[notification setActionButtonTitle:BLS(1244)];
@@ -242,7 +242,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
 
-		return; // Do not continue to Growl…
+		return; // Do not continue to Growl...
 	}
 
 	/* Nope, let Growl handle. */
@@ -429,7 +429,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			NSObjectIsEmptyAssert(message);
 			
 			if (c) { // We want both a client and channel.
-				/* A user may want to do an action… #yolo */
+				/* A user may want to do an action... */
 				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
 					message = [message substringFromIndex:1];
 					

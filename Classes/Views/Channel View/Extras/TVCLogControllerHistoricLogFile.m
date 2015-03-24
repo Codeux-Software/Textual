@@ -199,7 +199,7 @@
 			NSObjectIsEmptyAssert(rawdata);
 
 			/* Discussion: Yes, I could simply convert this NSData chunk to 
-			 an NSString, split it, and be done with it… BUT, NSJSONSerialization
+			 an NSString, split it, and be done with it... BUT, NSJSONSerialization
 			 which the data will ultimately be fed to only accepts NSData so
 			 the workload of converting this to NSString then converting the
 			 individual chunks back to NSData is a lot of overhead. That is

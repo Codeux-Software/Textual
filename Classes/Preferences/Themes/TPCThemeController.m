@@ -599,11 +599,11 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 					{
 						activeThemeContentsWereModified = YES;
 						
-						continue; // Only thing we care about here…
+						continue; // Only thing we care about here...
 					}
 				}
 				
-				continue; // Only thing we care about here…
+				continue; // Only thing we care about here...
 			}
 			
 			/* Update status of inset stuff. */

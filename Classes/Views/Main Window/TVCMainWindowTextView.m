@@ -112,7 +112,7 @@
 
 - (void)windowDidChangeKeyState
 {
-	; // Nothing to do here…
+	; // Nothing to do here...
 }
 
 #pragma mark -
@@ -133,7 +133,7 @@
 	TVCMainWindowNegateActionWithAttachedSheet();
 
 	/* Don't know why control click is broken in the text field. 
-	 Possibly because of how hacked together it is… anyways, this
+	 Possibly because of how hacked together it is... anyways, this
 	 is a quick fix for control click to open the right click menu. */
 	if ([NSEvent modifierFlags] & NSControlKeyMask) {
 		[super rightMouseDown:theEvent];
@@ -406,7 +406,7 @@
 	
 	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
 
-	/* Begin works… */
+	/* Begin works... */
 	if ([self stringLength] < 1) {
 		backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
 	} else {

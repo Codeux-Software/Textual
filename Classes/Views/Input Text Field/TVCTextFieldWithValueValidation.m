@@ -220,7 +220,7 @@
 
 - (NSRect)erroneousValueBadgeIconRectInParentRect:(NSRect)aRect
 {
-	/* Look at all those magic numbers… */
+	/* Look at all those magic numbers... */
 	NSInteger rightEdge = (NSMaxX(aRect) - 21.0);
 	
 	return NSMakeRect(rightEdge, 4.0, 15.0, 15.0);

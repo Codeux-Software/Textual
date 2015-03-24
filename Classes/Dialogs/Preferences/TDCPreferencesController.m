@@ -280,7 +280,7 @@
 
 			[self firstPane:[self mountainLionDeprecationWarningView] selectedItem:_toolbarItemIndexGeneral];
 
-			return; // Do not continue to General…
+			return; // Do not continue to General...
 		}
 	}
 
@@ -887,7 +887,7 @@
 	NSString *oldThemeName = [TPCPreferences themeName];
 	
 	if ([oldThemeName isEqual:newThemeName]) {
-		return; // Do not reselect the same theme…
+		return; // Do not reselect the same theme...
 	}
 
 	[TPCPreferences setThemeName:newThemeName];
@@ -1167,7 +1167,7 @@
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
 		NSString *path = [sharedCloudManager() ubiquitousContainerURLPath];
 		
-		/* Try to see if we even have a path… */
+		/* Try to see if we even have a path... */
 		if (path == nil) {
 			LogToConsole(@"Cannot empty iCloud files at this time because iCloud is not available.");
 			
@@ -1329,7 +1329,7 @@
 		}
 #endif
 		
-		/* pathOfTheme… is called to ignore the cloud cache location. */
+		/* pathOfTheme... is called to ignore the cloud cache location. */
 		NSString *filepath = [themeController() actualPath];
 		
 		[RZWorkspace() openFile:filepath];
