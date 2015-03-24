@@ -992,15 +992,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	static NSArray *_blockedNames = nil;
 
 	if (_blockedNames == nil) {
-		_blockedNames = @[
-			@"botserv",
-			@"chanserv",
-			@"hostserv",
-			@"memoserv",
-			@"nickserv",
-			@"operserv",
-			@"rootserv"
-		];
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		_blockedNames = [[staticValues arrayForKey:@"IRCClient List of Nicknames that Encryption Forbids"] copy];
 	}
 
 	return _blockedNames;
@@ -4154,17 +4148,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	static NSArray *__reservedData = nil;
 
 	if (__reservedData == nil) {
-		__reservedData = @[
-		   @"nickname is owned",
-		   @"nickname is registered",
-		   @"owned by someone else",
-		   @"nick belongs to another user",
-		   @"if you do not change your nickname",
-		   @"authentication required",
-		   @"authenticate yourself",
-		   @"identify yourself",
-		   @"type /msg NickServ IDENTIFY password"
-		];
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		__reservedData = [[staticValues arrayForKey:@"IRCClient List of NickServ Needs Identification Tokens"] copy];
 	}
 
 	return __reservedData;
@@ -4175,15 +4161,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	static NSArray *__reservedData = nil;
 
 	if (__reservedData == nil) {
-		__reservedData = @[
-		   @"now recognized",
-		   @"automatically identified",
-		   @"already identified",
-		   @"successfully identified",
-		   @"you are already logged in",
-		   @"you are now identified",
-		   @"password accepted"
-		];
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		__reservedData = [[staticValues arrayForKey:@"IRCClient List of NickServ Successfully Identified Tokens"] copy];
 	}
 
 	return __reservedData;

@@ -231,28 +231,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	static NSArray *_reservedNames = nil;
 
 	if (_reservedNames == nil) {
-		_reservedNames = @[
-		   @"apps",
-		   @"banhammer",
-		   @"ffuu",
-		   @"flip",
-		   @"hermes",
-		   @"instacast",
-		   @"itunes",
-		   @"music",
-		   @"np",
-		   @"o_p",
-		   @"page",
-		   @"qt",
-		   @"radium",
-		   @"rdio",
-		   @"reverse",
-		   @"shell",
-		   @"slap",
-		   @"spotify",
-		   @"uuid",
-		   @"vlc",
-		];
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		_reservedNames = [[staticValues arrayForKey:@"THOPluginManager List of Reserved Commands"] copy];
 	}
 
 	return _reservedNames;

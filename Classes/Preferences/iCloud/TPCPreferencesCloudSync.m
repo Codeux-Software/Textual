@@ -334,15 +334,9 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	static NSDictionary *_keypair = nil;
 
 	if (_keypair == nil) {
-		_keypair = @{
-			@"eb2dc862342c6c653e29d7363f6d421e" : @"User List Mode Badge Colors -> +y",
-			@"0d6b24b13a7e43211762da51815b2064" : @"User List Mode Badge Colors -> +q",
-			@"74f61fa09dce30a57fd7c1331cd99ddb" : @"User List Mode Badge Colors -> +a",
-			@"1ceffaa7b5291aa3b15e7e229a50e272" : @"User List Mode Badge Colors -> +o",
-			@"4f8e8414604e9ccb757d980991d576a1" : @"User List Mode Badge Colors -> +h",
-			@"76248ae19d477d639cb821f1e0a6dae2" : @"User List Mode Badge Colors -> +v",
-			@"051baac72009cc4914d1815916e1ed49" : @"Server List Unread Message Count Badge Colors -> Highlight"
-		};
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"AppleCloudMappedKeys"];
+
+		_keypair = [staticValues copy];
 	}
 
 	return _keypair[key];

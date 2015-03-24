@@ -1742,6 +1742,14 @@
 		4CE8683F1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE868401ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CE868411ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CE979221AC148FF006BE64E /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE979211AC148FF006BE64E /* StaticStore.plist */; };
+		4CE979231AC148FF006BE64E /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE979211AC148FF006BE64E /* StaticStore.plist */; };
+		4CE979241AC148FF006BE64E /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE979211AC148FF006BE64E /* StaticStore.plist */; };
+		4CE979251AC148FF006BE64E /* StaticStore.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE979211AC148FF006BE64E /* StaticStore.plist */; };
+		4CE9792B1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */; };
+		4CE9792C1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */; };
+		4CE9792D1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */; };
+		4CE9792E1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */; };
 		4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
@@ -2549,6 +2557,8 @@
 		4CE77C7C195E7A8A000DA30D /* IRCWorldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldPrivate.h; sourceTree = "<group>"; };
 		4CE868381ABEBDCD0060F5F9 /* TVCMainWindowTitlebarAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowTitlebarAccessoryView.m; path = "Main Window/TVCMainWindowTitlebarAccessoryView.m"; sourceTree = "<group>"; };
 		4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTitlebarAccessoryView.h; sourceTree = "<group>"; };
+		4CE979211AC148FF006BE64E /* StaticStore.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = StaticStore.plist; path = Resources/Miscellaneous/StaticStore.plist; sourceTree = SOURCE_ROOT; };
+		4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppleCloudMappedKeys.plist; path = Resources/Miscellaneous/AppleCloudMappedKeys.plist; sourceTree = SOURCE_ROOT; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
@@ -2831,11 +2841,13 @@
 		4C46CCA31580437B00846B64 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				4CE9792A1AC14C2D006BE64E /* AppleCloudMappedKeys.plist */,
 				4CB26C6119528FA5005F927C /* IRCCommandIndexPrivateValues.plist */,
 				4CB26C6219528FA5005F927C /* IRCCommandIndexPublicValues.plist */,
 				4CCF2EEA15804790006FFE21 /* IRCNetworks.plist */,
 				4C31D90D197CB2F5000CA4CC /* RegisteredUserDefaults.plist */,
 				4C324CF41AB4692C000CFC1E /* RegisteredUserDefaultsRemappedKeys.plist */,
+				4CE979211AC148FF006BE64E /* StaticStore.plist */,
 			);
 			name = Miscellaneous;
 			sourceTree = "<group>";
@@ -4625,6 +4637,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C71CEF8199081110038C23D /* TDCHighlightListSheet.xib in Resources */,
+				4CE979221AC148FF006BE64E /* StaticStore.plist in Resources */,
 				4C0BA5001990798800857343 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4C0BA5011990798800857343 /* FormattingColor_8.png in Resources */,
 				4C0BA5021990798800857343 /* FormattingColor_10.png in Resources */,
@@ -4703,6 +4716,7 @@
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4C71CEEC199081110038C23D /* TDChanBanSheet.xib in Resources */,
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
+				4CE9792B1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */,
@@ -4758,6 +4772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C71CEF6199081110038C23D /* TDCHighlightListSheet.xib in Resources */,
+				4CE979241AC148FF006BE64E /* StaticStore.plist in Resources */,
 				4C7766381978CECA00759774 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4C46F4731943A654004CA8BA /* FormattingColor_8.png in Resources */,
 				4C46F45B1943A654004CA8BA /* FormattingColor_10.png in Resources */,
@@ -4836,6 +4851,7 @@
 				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4C71CEEA199081110038C23D /* TDChanBanSheet.xib in Resources */,
 				4CCFA6781ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
+				4CE9792D1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */,
 				4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CB2294A1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
@@ -4891,6 +4907,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C71CEF7199081110038C23D /* TDCHighlightListSheet.xib in Resources */,
+				4CE979231AC148FF006BE64E /* StaticStore.plist in Resources */,
 				4C7766391978CECA00759774 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4C46F4741943A654004CA8BA /* FormattingColor_8.png in Resources */,
 				4C46F45C1943A654004CA8BA /* FormattingColor_10.png in Resources */,
@@ -4969,6 +4986,7 @@
 				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4C71CEEB199081110038C23D /* TDChanBanSheet.xib in Resources */,
 				4CCFA6771ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
+				4CE9792C1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */,
 				4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CB2294B1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4C46F4761943A654004CA8BA /* FormattingColor_9.png in Resources */,
@@ -5024,6 +5042,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CDFA40E1996EAB2007EA46E /* TDCHighlightListSheet.xib in Resources */,
+				4CE979251AC148FF006BE64E /* StaticStore.plist in Resources */,
 				4CDFA40F1996EAB2007EA46E /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
 				4CDFA4101996EAB2007EA46E /* FormattingColor_8.png in Resources */,
 				4CDFA4111996EAB2007EA46E /* FormattingColor_10.png in Resources */,
@@ -5102,6 +5121,7 @@
 				4CDFA4541996EAB2007EA46E /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4CDFA4551996EAB2007EA46E /* TDChanBanSheet.xib in Resources */,
 				4CCFA6791ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
+				4CE9792E1AC14C2D006BE64E /* AppleCloudMappedKeys.plist in Resources */,
 				4CCFA6591ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CDFA4561996EAB2007EA46E /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4CDFA4571996EAB2007EA46E /* FormattingColor_9.png in Resources */,
