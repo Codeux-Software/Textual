@@ -871,42 +871,39 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				IRCUser *user = [c findMember:escapedContent];
 
 				if (user) {
-					if (NSObjectsAreEqual([user nickname], [u localNickname]) == NO)
-					{
-						NSString *modeSymbol = NSStringEmptyPlaceholder;
+					NSString *modeSymbol = NSStringEmptyPlaceholder;
 
-						if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
-							NSString *usermark = [user mark];
+					if ([TPCPreferences conversationTrackingIncludesUserModeSymbol]) {
+						NSString *usermark = [user mark];
 
-							if (rangeStart > 0) {
-								if (usermark) {
-									NSString *prevchar = [body stringCharacterAtIndex:(rangeStart - 1)];
+						if (rangeStart > 0) {
+							if (usermark) {
+								NSString *prevchar = [body stringCharacterAtIndex:(rangeStart - 1)];
 
-									if ([prevchar isEqualToString:usermark] == NO) {
-										modeSymbol = usermark;
-									}
-								}
-							} else {
-								if (usermark) {
+								if ([prevchar isEqualToString:usermark] == NO) {
 									modeSymbol = usermark;
 								}
 							}
-						}
-
-						/* If nickname length = 1 and mode char is +, then we ignore it
-						 becasue someone with nick "m" becoming "+m" might be confused
-						 for a mode symbol. Same could apply to - too, but I do not know
-						 of any network that uses that for status symbol. */
-						if ([[user nickname] length] == 1) {
-							if ([modeSymbol isEqualToString:@"+"] || [modeSymbol isEqualToString:@"-"]) {
-								modeSymbol = NSStringEmptyPlaceholder;
+						} else {
+							if (usermark) {
+								modeSymbol = usermark;
 							}
 						}
-
-						templateTokens[@"inlineNicknameMatchFound"] = @(YES);
-						templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
-						templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 					}
+
+					/* If nickname length = 1 and mode char is +, then we ignore it
+					 becasue someone with nick "m" becoming "+m" might be confused
+					 for a mode symbol. Same could apply to - too, but I do not know
+					 of any network that uses that for status symbol. */
+					if ([[user nickname] length] == 1) {
+						if ([modeSymbol isEqualToString:@"+"] || [modeSymbol isEqualToString:@"-"]) {
+							modeSymbol = NSStringEmptyPlaceholder;
+						}
+					}
+
+					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
+					templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
+					templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 				}
 			}
 		}
