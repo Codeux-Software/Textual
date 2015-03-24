@@ -1782,22 +1782,20 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(command);
 
 	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
-		NSString *trail = nil;
+		NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, encodedString, 0x01];
 
-		if (NSObjectIsEmpty(text)) {
-			trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
-		} else {
-			trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, encodedString, 0x01];
-		}
-
-		[self send:IRCPrivateCommandIndex("privmsg"), target, trail, nil];
+		[self send:IRCPrivateCommandIndex("privmsg"), target, message, nil];
 	};
 
-	if (text == nil) {
-		[self encryptMessage:NSStringEmptyPlaceholder directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	NSString *trail = nil;
+
+	if (NSObjectIsEmpty(text)) {
+		trail = command;
 	} else {
-		[self encryptMessage:text directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+		trail = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
+
+	[self encryptMessage:trail directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
 }
 
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text
@@ -1806,22 +1804,20 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(command);
 
 	TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
-		NSString *trail = nil;
+		NSString *message = [NSString stringWithFormat:@"%c%@%c", 0x01, encodedString, 0x01];
 
-		if (NSObjectIsEmpty(text)) {
-			trail = [NSString stringWithFormat:@"%c%@%c", 0x01, command, 0x01];
-		} else {
-			trail = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, command, encodedString, 0x01];
-		}
-
-		[self send:IRCPrivateCommandIndex("notice"), target, trail, nil];
+		[self send:IRCPrivateCommandIndex("notice"), target, message, nil];
 	};
 
-	if (text == nil) {
-		[self encryptMessage:NSStringEmptyPlaceholder directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	NSString *trail = nil;
+
+	if (NSObjectIsEmpty(text)) {
+		trail = command;
 	} else {
-		[self encryptMessage:text directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+		trail = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
+
+	[self encryptMessage:trail directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
 }
 
 - (void)sendCTCPPing:(NSString *)target
