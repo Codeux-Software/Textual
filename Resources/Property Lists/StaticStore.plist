@@ -38,14 +38,11 @@
 	<array>
 		<string>apps</string>
 		<string>banhammer</string>
-		<string>delkey</string>
 		<string>ffuu</string>
 		<string>flip</string>
 		<string>hermes</string>
 		<string>instacast</string>
 		<string>itunes</string>
-		<string>key</string>
-		<string>keyx</string>
 		<string>music</string>
 		<string>np</string>
 		<string>o_p</string>
@@ -54,8 +51,6 @@
 		<string>radium</string>
 		<string>rdio</string>
 		<string>reverse</string>
-		<string>setkey</string>
-		<string>setkeymode</string>
 		<string>shell</string>
 		<string>slap</string>
 		<string>spotify</string>
