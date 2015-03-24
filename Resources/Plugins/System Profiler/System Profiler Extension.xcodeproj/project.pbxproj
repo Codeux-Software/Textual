@@ -7,37 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C1BE0FA159A5FCF00DB3341 /* TPISystemProfiler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C1BE0F8159A5FCF00DB3341 /* TPISystemProfiler.xib */; };
-		4C44DD3E19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C44DD3D19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.m */; };
-		4C57A681131D378900252759 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */; };
-		4C57A682131D378900252759 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C57A680131D378900252759 /* TPISystemProfiler.m */; };
+		4C69EAFF1AC1A96B003EC07D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EAFE1AC1A96B003EC07D /* BasicLanguage.strings */; };
 		4CBE7B571A91483E008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B551A91483E008FB230 /* CocoaExtensions.framework */; };
-		4CD4026016C8C0EF00FEA686 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CD4025F16C8C0EF00FEA686 /* BasicLanguage.strings */; };
-		4CD69D82131E2BD200F4618E /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CD69D81131E2BD200F4618E /* MacintoshModels.plist */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
+		4CF40D7C1AC1A16E00A26BE0 /* MacintoshModels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40D771AC1A16E00A26BE0 /* MacintoshModels.plist */; };
+		4CF40D7E1AC1A16E00A26BE0 /* TPISystemProfiler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40D791AC1A16E00A26BE0 /* TPISystemProfiler.xib */; };
+		4CF40D861AC1A18700A26BE0 /* TPI_SP_SysInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D811AC1A18700A26BE0 /* TPI_SP_SysInfo.m */; };
+		4CF40D871AC1A18700A26BE0 /* TPISystemProfiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D831AC1A18700A26BE0 /* TPISystemProfiler.m */; };
+		4CF40D881AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D851AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.m */; };
 		63EF581515D2D5FE001071C8 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63EF581215D2D57F001071C8 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
-		4C1BE0F9159A5FCF00DB3341 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TPISystemProfiler.xib; sourceTree = "<group>"; };
 		4C24DC8D1A93CD6E0098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C24DC8E1A93CD6E0098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
-		4C44DD3C19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfilerModelIDRequestController.h; sourceTree = "<group>"; };
-		4C44DD3D19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfilerModelIDRequestController.m; sourceTree = "<group>"; };
-		4C57A67C131D378900252759 /* SystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemProfiler.h; sourceTree = "<group>"; };
-		4C57A67D131D378900252759 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_SP_SysInfo.h; sourceTree = "<group>"; };
-		4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_SP_SysInfo.m; sourceTree = "<group>"; };
-		4C57A67F131D378900252759 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPISystemProfiler.h; sourceTree = "<group>"; };
-		4C57A680131D378900252759 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPISystemProfiler.m; sourceTree = "<group>"; };
 		4C588BB216E34C00007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
+		4C69EAFE1AC1A96B003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
 		4CBE7B551A91483E008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
-		4CD4025F16C8C0EF00FEA686 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
-		4CD69D81131E2BD200F4618E /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MacintoshModels.plist; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4CF40D761AC1A16E00A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		4CF40D771AC1A16E00A26BE0 /* MacintoshModels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = MacintoshModels.plist; path = "Resources/Property Lists/MacintoshModels.plist"; sourceTree = "<group>"; };
+		4CF40D7A1AC1A16E00A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TPISystemProfiler.xib"; sourceTree = "<group>"; };
+		4CF40D7F1AC1A18700A26BE0 /* SystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemProfiler.h; path = Classes/SystemProfiler.h; sourceTree = "<group>"; };
+		4CF40D801AC1A18700A26BE0 /* TPI_SP_SysInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_SP_SysInfo.h; path = Classes/TPI_SP_SysInfo.h; sourceTree = "<group>"; };
+		4CF40D811AC1A18700A26BE0 /* TPI_SP_SysInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_SP_SysInfo.m; path = Classes/TPI_SP_SysInfo.m; sourceTree = "<group>"; };
+		4CF40D821AC1A18700A26BE0 /* TPISystemProfiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPISystemProfiler.h; path = Classes/TPISystemProfiler.h; sourceTree = "<group>"; };
+		4CF40D831AC1A18700A26BE0 /* TPISystemProfiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPISystemProfiler.m; path = Classes/TPISystemProfiler.m; sourceTree = "<group>"; };
+		4CF40D841AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPISystemProfilerModelIDRequestController.h; path = Classes/TPISystemProfilerModelIDRequestController.h; sourceTree = "<group>"; };
+		4CF40D851AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPISystemProfilerModelIDRequestController.m; path = Classes/TPISystemProfilerModelIDRequestController.m; sourceTree = "<group>"; };
 		63EF581215D2D57F001071C8 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		8D576316048677EA00EA77CD /* SystemProfiler.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SystemProfiler.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,13 +90,13 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C57A67C131D378900252759 /* SystemProfiler.h */,
-				4C57A67D131D378900252759 /* TPI_SP_SysInfo.h */,
-				4C57A67E131D378900252759 /* TPI_SP_SysInfo.m */,
-				4C57A67F131D378900252759 /* TPISystemProfiler.h */,
-				4C57A680131D378900252759 /* TPISystemProfiler.m */,
-				4C44DD3C19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.h */,
-				4C44DD3D19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.m */,
+				4CF40D7F1AC1A18700A26BE0 /* SystemProfiler.h */,
+				4CF40D801AC1A18700A26BE0 /* TPI_SP_SysInfo.h */,
+				4CF40D811AC1A18700A26BE0 /* TPI_SP_SysInfo.m */,
+				4CF40D821AC1A18700A26BE0 /* TPISystemProfiler.h */,
+				4CF40D831AC1A18700A26BE0 /* TPISystemProfiler.m */,
+				4CF40D841AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.h */,
+				4CF40D851AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -112,8 +112,8 @@
 		4C1BE079159A57BD00DB3341 /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
-				8D576317048677EA00EA77CD /* Info.plist */,
-				4CD69D81131E2BD200F4618E /* MacintoshModels.plist */,
+				4CF40D761AC1A16E00A26BE0 /* Info.plist */,
+				4CF40D771AC1A16E00A26BE0 /* MacintoshModels.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -121,7 +121,7 @@
 		4C1BE07B159A57C300DB3341 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				4C1BE0F8159A5FCF00DB3341 /* TPISystemProfiler.xib */,
+				4CF40D791AC1A16E00A26BE0 /* TPISystemProfiler.xib */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -140,7 +140,7 @@
 		4CD4025D16C8C0C600FEA686 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4CD4025F16C8C0EF00FEA686 /* BasicLanguage.strings */,
+				4C69EAFE1AC1A96B003EC07D /* BasicLanguage.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -199,9 +199,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CD4026016C8C0EF00FEA686 /* BasicLanguage.strings in Resources */,
-				4CD69D82131E2BD200F4618E /* MacintoshModels.plist in Resources */,
-				4C1BE0FA159A5FCF00DB3341 /* TPISystemProfiler.xib in Resources */,
+				4CF40D7C1AC1A16E00A26BE0 /* MacintoshModels.plist in Resources */,
+				4CF40D7E1AC1A16E00A26BE0 /* TPISystemProfiler.xib in Resources */,
+				4C69EAFF1AC1A96B003EC07D /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,19 +212,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C57A681131D378900252759 /* TPI_SP_SysInfo.m in Sources */,
-				4C57A682131D378900252759 /* TPISystemProfiler.m in Sources */,
-				4C44DD3E19B6F08500EC5A20 /* TPISystemProfilerModelIDRequestController.m in Sources */,
+				4CF40D861AC1A18700A26BE0 /* TPI_SP_SysInfo.m in Sources */,
+				4CF40D871AC1A18700A26BE0 /* TPISystemProfiler.m in Sources */,
+				4CF40D881AC1A18700A26BE0 /* TPISystemProfilerModelIDRequestController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4C1BE0F8159A5FCF00DB3341 /* TPISystemProfiler.xib */ = {
+		4CF40D791AC1A16E00A26BE0 /* TPISystemProfiler.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				4C1BE0F9159A5FCF00DB3341 /* English */,
+				4CF40D7A1AC1A16E00A26BE0 /* English */,
 			);
 			name = TPISystemProfiler.xib;
 			sourceTree = "<group>";
@@ -251,7 +251,7 @@
 			baseConfigurationReference = 4C24DC8E1A93CD6E0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SystemProfiler;
 			};
 			name = Debug;
@@ -260,7 +260,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8E1A93CD6E0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SystemProfiler;
 			};
 			name = Release;

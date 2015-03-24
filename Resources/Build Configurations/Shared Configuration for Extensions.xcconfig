@@ -14,7 +14,7 @@ TARGET_TEMP_DIR = ${OBJROOT}
 SHARED_PRECOMPS_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildPCH
 CONFIGURATION_BUILD_DIR = ${TEXTUAL_PROJECT_ROOT}/.tmp/SharedBuildProducts-Extensions
 
-CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Exceptions/Auxiliary.entitlements
+CODE_SIGN_ENTITLEMENTS = ${TEXTUAL_PROJECT_ROOT}/Resources/Sandbox/Entitlements/Auxiliary.entitlements
 
 HEADER_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**"
 LIBRARY_SEARCH_PATHS = "${TEXTUAL_PROJECT_ROOT}/Frameworks/**"

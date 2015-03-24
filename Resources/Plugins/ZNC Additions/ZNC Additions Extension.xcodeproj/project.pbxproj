@@ -7,24 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C393AAD121AE217004C66F4 /* TPI_ZNCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C393AAC121AE217004C66F4 /* TPI_ZNCAdditions.m */; };
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
-		4C91FED0178DEABD002108EE /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C91FECF178DEABD002108EE /* BasicLanguage.strings */; };
+		4C69EAFB1AC1A941003EC07D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */; };
 		4CBE7B591A91485C008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */; };
+		4CF40D661AC1A03F00A26BE0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40D651AC1A03F00A26BE0 /* Info.plist */; };
+		4CF40D6B1AC1A06300A26BE0 /* TPI_ZNCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0AA1909FFE8422F4C02AAC07 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		4C24DC8B1A93CD540098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Base Configuration.xcconfig"; sourceTree = "<group>"; };
 		4C24DC8C1A93CD540098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Shared Configuration for Extensions.xcconfig"; sourceTree = "<group>"; };
-		4C393AAB121AE217004C66F4 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPI_ZNCAdditions.h; sourceTree = "<group>"; };
-		4C393AAC121AE217004C66F4 /* TPI_ZNCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPI_ZNCAdditions.m; sourceTree = "<group>"; };
 		4C393B2D121AE5D5004C66F4 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4C588BB416E34C07007EFF6D /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Code Signing Identity.xcconfig"; sourceTree = "<group>"; };
-		4C91FECF178DEABD002108EE /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = BasicLanguage.strings; sourceTree = "<group>"; };
+		4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = SOURCE_ROOT; };
 		4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
+		4CF40D651AC1A03F00A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
+		4CF40D691AC1A06300A26BE0 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ZNCAdditions.h; path = Classes/TPI_ZNCAdditions.h; sourceTree = "<group>"; };
+		4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_ZNCAdditions.m; path = Classes/TPI_ZNCAdditions.m; sourceTree = "<group>"; };
 		8D576316048677EA00EA77CD /* ZNCAdditions.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZNCAdditions.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		8D576317048677EA00EA77CD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,8 +75,8 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C393AAB121AE217004C66F4 /* TPI_ZNCAdditions.h */,
-				4C393AAC121AE217004C66F4 /* TPI_ZNCAdditions.m */,
+				4CF40D691AC1A06300A26BE0 /* TPI_ZNCAdditions.h */,
+				4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -102,7 +103,7 @@
 		4C91FED1178DEB4B002108EE /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C91FECF178DEABD002108EE /* BasicLanguage.strings */,
+				4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -110,7 +111,7 @@
 		4CD4026316C8CB2A00FEA686 /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
-				8D576317048677EA00EA77CD /* Info.plist */,
+				4CF40D651AC1A03F00A26BE0 /* Info.plist */,
 			);
 			name = "Property Lists";
 			sourceTree = "<group>";
@@ -168,7 +169,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C91FED0178DEABD002108EE /* BasicLanguage.strings in Resources */,
+				4CF40D661AC1A03F00A26BE0 /* Info.plist in Resources */,
+				4C69EAFB1AC1A941003EC07D /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +181,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C393AAD121AE217004C66F4 /* TPI_ZNCAdditions.m in Sources */,
+				4CF40D6B1AC1A06300A26BE0 /* TPI_ZNCAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +206,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8C1A93CD540098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Debug;
@@ -213,7 +215,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8C1A93CD540098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = ZNCAdditions;
 			};
 			name = Release;
