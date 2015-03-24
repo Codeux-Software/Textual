@@ -1022,7 +1022,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
 	/* Check if we are accepting encryption from this user. */
-	if ([self encryptionAllowedForNickname:messageTo]) {
+	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 		encodingCallback(messageBody, NO);
 
 		injectionCallback(messageBody);
@@ -1045,7 +1045,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
 	/* Check if we are accepting encryption from this user. */
-	if ([self encryptionAllowedForNickname:messageTo]) {
+	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 		decodingCallback(messageBody, NO);
 
 		return; // Do not continue with this operation...
