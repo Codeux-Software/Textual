@@ -50,8 +50,6 @@
 @property (nonatomic, copy) NSString *messageBody; // unencrypted value
 @end
 
-static BOOL _classInitiated = NO;
-
 #define _cancelCallForWeakCiphersVoid			if ([self usesWeakCiphers]) {			\
 													return;								\
 												}
@@ -68,8 +66,6 @@ static BOOL _classInitiated = NO;
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		_classInitiated = YES;
-
 		[self setupEncryptionManager];
 
 		return self;
@@ -530,6 +526,8 @@ static BOOL _classInitiated = NO;
 
 - (void)updatePolicy
 {
+	_cancelCallForWeakCiphersVoid
+
 	if ([TPCPreferences textEncryptionIsRequired]) {
 		[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyAlways];
 	} else {
@@ -767,15 +765,11 @@ static BOOL _weakCipherInUse = NO;
 	return _weakCipherManager;
 }
 
-+ (void)setWeakCipherManager:(id)weakCipherManager
+- (void)setWeakCipherManager:(id)weakCipherManager
 {
-	if (_classInitiated) {
-		NSAssert(NO, @"Method called after TLOEncryptionManager was initialized.");
-	} else {
-		_weakCipherManager = weakCipherManager;
+	_weakCipherManager = weakCipherManager;
 
-		_weakCipherInUse = YES;
-	}
+	_weakCipherInUse = YES;
 }
 
 - (BOOL)usesWeakCiphers
