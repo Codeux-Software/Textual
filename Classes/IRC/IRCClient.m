@@ -1006,6 +1006,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	if ([[self localNickname] isEqualIgnoringCase:nickname]) {
 		return NO;
+	} else if ([self nicknameIsPrivateZNCUser:nickname]) {
+		return NO;
 	} else {
 		NSString *lowercaseName = [nickname lowercaseString];
 
