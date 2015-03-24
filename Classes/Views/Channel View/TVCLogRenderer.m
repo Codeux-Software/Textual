@@ -865,7 +865,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			templateTokens[@"inlineNicknameMatchFound"] = @(NO);
 		} else {
 			if (_controller) {
-				IRCClient *u = [_controller associatedClient];
 				IRCChannel *c = [_controller associatedChannel];
 
 				IRCUser *user = [c findMember:escapedContent];
