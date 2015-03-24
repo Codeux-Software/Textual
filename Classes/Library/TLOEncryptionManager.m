@@ -602,10 +602,9 @@ static BOOL _classInitiated = NO;
 																				 protocol:[self otrKitProtocol]];
 
 		if (isVerified) {
-			[self presentMessage:TXTLS(@"BasicLanguage[1253][03]") withAccountName:username];
+			[self presentMessage:TXTLS(@"BasicLanguage[1253][02]") withAccountName:username];
 		} else {
 			[self presentMessage:TXTLS(@"BasicLanguage[1253][01]") withAccountName:username];
-			[self presentMessage:TXTLS(@"BasicLanguage[1253][02]") withAccountName:username];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
