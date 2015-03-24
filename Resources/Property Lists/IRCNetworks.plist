@@ -4,6 +4,8 @@
 <dict>
 	<key>AlphaChat</key>
 	<string>irc.alphachat.net</string>
+	<key>btrIRC</key>
+	<string>irc.btri.x10.bz</string>
 	<key>DALnet</key>
 	<string>irc.dal.net</string>
 	<key>EFnet</key>
