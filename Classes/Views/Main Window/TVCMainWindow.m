@@ -1089,9 +1089,8 @@
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	BOOL updateEncryption = ([sharedEncryptionManager() usesWeakCiphers] == NO &&		// Do not change lock when a weak cipher is enaled
-							 NSObjectsAreEqual([u localNickname], [c name]) == NO &&	// Do not change lock when the query is for self
-							 [c isPrivateMessage]);										// Do not change lock unless we are in a query
+	BOOL updateEncryption = ([sharedEncryptionManager() usesWeakCiphers] == NO &&
+							([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]));
 
 	if (updateEncryption) {
 		[self.titlebarAccessoryViewLockButton setAction:@selector(titlebarAccessoryViewLockButtonClicked:)];

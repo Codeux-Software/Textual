@@ -986,8 +986,55 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Encryption and Decryption
 
+- (NSArray *)listOfNicknamesToDisallowEncryption
+{
+	/* Add entries as lowercase because thats how they are compared. */
+	static NSArray *_blockedNames = nil;
+
+	if (_blockedNames == nil) {
+		_blockedNames = @[
+			@"botserv",
+			@"chanserv",
+			@"hostserv",
+			@"memoserv",
+			@"nickserv",
+			@"operserv",
+			@"rootserv"
+		];
+	}
+
+	return _blockedNames;
+}
+
+- (BOOL)encryptionAllowedForNickname:(NSString *)nickname
+{
+	PointerIsEmptyAssertReturn(nickname, NO)
+
+	if ([[self localNickname] isEqualIgnoringCase:nickname]) {
+		return NO;
+	} else {
+		NSString *lowercaseName = [nickname lowercaseString];
+
+		if ([[self listOfNicknamesToDisallowEncryption] containsObject:lowercaseName]) {
+			return NO;
+		} else {
+			return YES;
+		}
+	}
+}
+
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
+	/* Check if we are accepting encryption from this user. */
+	if ([self encryptionAllowedForNickname:messageTo]) {
+		encodingCallback(messageBody, NO);
+
+		injectionCallback(messageBody);
+
+		return; // Do not continue with this operation...
+	}
+
+	/* Continue with normal encryption operations. */
 	if ([sharedEncryptionManager() usesWeakCiphers]) {
 		[sharedEncryptionManager() encryptMessage:messageBody from:[self localNickname] to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
 	} else {
@@ -1001,6 +1048,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
+	/* Check if we are accepting encryption from this user. */
+	if ([self encryptionAllowedForNickname:messageTo]) {
+		decodingCallback(messageBody, NO);
+
+		return; // Do not continue with this operation...
+	}
+
+	/* Continue with normal encryption operations. */
 	if ([sharedEncryptionManager() usesWeakCiphers]) {
 		[sharedEncryptionManager() decryptMessage:messageBody from:[self localNickname] to:messageTo decodingCallback:decodingCallback];
 	} else {
