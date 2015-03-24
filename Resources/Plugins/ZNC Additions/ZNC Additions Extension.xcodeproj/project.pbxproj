@@ -10,7 +10,6 @@
 		4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C393B2D121AE5D5004C66F4 /* Cocoa.framework */; };
 		4C69EAFB1AC1A941003EC07D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */; };
 		4CBE7B591A91485C008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */; };
-		4CF40D661AC1A03F00A26BE0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40D651AC1A03F00A26BE0 /* Info.plist */; };
 		4CF40D6B1AC1A06300A26BE0 /* TPI_ZNCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */; };
 /* End PBXBuildFile section */
 
@@ -169,7 +168,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF40D661AC1A03F00A26BE0 /* Info.plist in Resources */,
 				4C69EAFB1AC1A941003EC07D /* BasicLanguage.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
