@@ -3769,7 +3769,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>This 3rd party extension created by Tobias Pollmann allows greater control of now playing information for iTunes. It also allows for playing, pausing, skipping, and much more from within Textual.</string>
+												<string>This 3rd-party extension created by Tobias Pollmann allows greater control of now playing information coming from iTunes.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
@@ -3806,7 +3806,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>This 3rd party extension created by Tobias Pollmann provides the ability to track every URL that passes through Textual in a convenient fashion.</string>
+												<string>This 3rd-party extension created by Tobias Pollmann provides the ability to track every URL that passes through Textual.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
@@ -3843,7 +3843,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>Wiki-style link parser to automatically replace [[&lt;title&gt;]] text blocks with the actual link that they represent. The parser can be configured on a per-channel basis from its included preference pane.</string>
+												<string>The Wiki-style Link Parser automatically replaces [[&lt;title&gt;]] text blocks with the actual link that they represent. The parser can be configured on a per-channel basis from its included preference pane.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>
