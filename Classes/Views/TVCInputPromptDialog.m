@@ -79,6 +79,8 @@
 	[self.informationalTitle setStringValue:messageTitle];
 
 	self.completionBlock = callbackBlock;
+
+	[[self window] makeKeyAndOrderFront:nil];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
