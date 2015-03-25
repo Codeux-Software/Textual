@@ -50,14 +50,6 @@
 @property (nonatomic, copy) NSString *messageBody; // unencrypted value
 @end
 
-#define _cancelCallForWeakCiphersVoid			if ([self usesWeakCiphers]) {			\
-													return;								\
-												}
-
-#define _cancelCallForWeakCiphersReturn(r)		if ([self usesWeakCiphers]) {			\
-													return (r);							\
-												}
-
 @implementation TLOEncryptionManager
 
 #pragma mark -
@@ -89,8 +81,6 @@
 
 - (void)setupEncryptionManager
 {
-	_cancelCallForWeakCiphersVoid
-
 	OTRKit *otrKit = [OTRKit sharedInstance];
 
 	[otrKit setDelegate:self];
@@ -141,8 +131,6 @@
 
 - (void)prepareForApplicationTermination
 {
-	_cancelCallForWeakCiphersVoid
-
 	[RZNotificationCenter() postNotificationName:OTRKitPrepareForApplicationTerminationNotification object:nil];
 }
 
@@ -151,8 +139,6 @@
 
 - (void)presentListOfFingerprints
 {
-	_cancelCallForWeakCiphersVoid
-
 	if ([self fingerprintManagerDialog] == nil) {
 		OTRKitFingerprintManagerDialog *dialog = [OTRKitFingerprintManagerDialog new];
 
@@ -169,8 +155,6 @@
 
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client
 {
-	_cancelCallForWeakCiphersReturn(nil)
-
 	PointerIsEmptyAssertReturn(nickname, nil)
 	PointerIsEmptyAssertReturn(client, nil)
 
@@ -179,8 +163,6 @@
 
 - (NSString *)nicknameFromAccountName:(NSString *)accountName
 {
-	_cancelCallForWeakCiphersReturn(nil)
-
 	NSString *nickname = [[OTRKit sharedInstance] leftPortionOfAccountName:accountName];
 
 	return nickname;
@@ -188,8 +170,6 @@
 
 - (IRCClient *)connectionFromAccountName:(NSString *)accountName
 {
-	_cancelCallForWeakCiphersReturn(nil)
-
 	NSString *clientIdentifier = [[OTRKit sharedInstance] rightPortionOfAccountName:accountName];
 
 	return [worldController() findClientById:clientIdentifier];
@@ -205,8 +185,6 @@
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	_cancelCallForWeakCiphersVoid
-
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
@@ -230,8 +208,6 @@
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
 {
-	_cancelCallForWeakCiphersVoid
-
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
@@ -257,8 +233,6 @@
 
 - (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	_cancelCallForWeakCiphersVoid
-
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
@@ -284,25 +258,19 @@
 	PointerIsEmptyAssert(messageFrom)
 	PointerIsEmptyAssert(messageBody)
 
-	if ([self usesWeakCiphers]) {
-		if ([[self weakCipherManager] respondsToSelector:@selector(decryptMessage:from:to:decodingCallback:)]) {
-			[[self weakCipherManager] decryptMessage:messageBody from:messageFrom to:messageTo decodingCallback:decodingCallback];
-		}
-	} else {
-		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-		[messageObject setMessageTo:messageTo];
-		[messageObject setMessageFrom:messageFrom];
-		[messageObject setMessageBody:messageBody];
+	[messageObject setMessageTo:messageTo];
+	[messageObject setMessageFrom:messageFrom];
+	[messageObject setMessageBody:messageBody];
 
-		[messageObject setEncodingCallback:decodingCallback];
+	[messageObject setEncodingCallback:decodingCallback];
 
-		[[OTRKit sharedInstance] decodeMessage:messageBody
-									  username:messageFrom
-								   accountName:messageTo
-									  protocol:[self otrKitProtocol]
-										   tag:messageObject];
-	}
+	[[OTRKit sharedInstance] decodeMessage:messageBody
+								  username:messageFrom
+							   accountName:messageTo
+								  protocol:[self otrKitProtocol]
+									   tag:messageObject];
 }
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
@@ -311,27 +279,21 @@
 	PointerIsEmptyAssert(messageFrom)
 	PointerIsEmptyAssert(messageBody)
 
-	if ([self usesWeakCiphers]) {
-		if ([[self weakCipherManager] respondsToSelector:@selector(encryptMessage:from:to:encodingCallback:injectionCallback:)]) {
-			[[self weakCipherManager] encryptMessage:messageBody from:messageFrom to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
-		}
-	} else {
-		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-		[messageObject setMessageTo:messageTo];
-		[messageObject setMessageFrom:messageFrom];
-		[messageObject setMessageBody:messageBody];
+	[messageObject setMessageTo:messageTo];
+	[messageObject setMessageFrom:messageFrom];
+	[messageObject setMessageBody:messageBody];
 
-		[messageObject setEncodingCallback:encodingCallback];
-		[messageObject setInjectionCallback:injectionCallback];
+	[messageObject setEncodingCallback:encodingCallback];
+	[messageObject setInjectionCallback:injectionCallback];
 
-		[[OTRKit sharedInstance] encodeMessage:messageBody
-										  tlvs:nil
-									  username:messageTo
-								   accountName:messageFrom
-									  protocol:[self otrKitProtocol]
-										   tag:messageObject];
-	}
+	[[OTRKit sharedInstance] encodeMessage:messageBody
+									  tlvs:nil
+								  username:messageTo
+							   accountName:messageFrom
+								  protocol:[self otrKitProtocol]
+									   tag:messageObject];
 }
 
 #pragma mark -
@@ -339,8 +301,6 @@
 
 - (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
 {
-	_cancelCallForWeakCiphersReturn(NO)
-
 	PointerIsEmptyAssertReturn(messageTo, NO)
 	PointerIsEmptyAssertReturn(messageFrom, NO)
 
@@ -375,8 +335,6 @@
 
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	_cancelCallForWeakCiphersVoid
-
 	PointerIsEmptyAssert(button)
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
@@ -526,8 +484,6 @@
 
 - (void)updatePolicy
 {
-	_cancelCallForWeakCiphersVoid
-
 	if ([TPCPreferences textEncryptionIsRequired]) {
 		[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyAlways];
 	} else {
@@ -709,8 +665,6 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	_cancelCallForWeakCiphersReturn(NO)
-
 	PointerIsEmptyAssertReturn(menuItem, NO)
 	PointerIsEmptyAssertReturn(messageTo, NO)
 	PointerIsEmptyAssertReturn(messageFrom, NO)
@@ -751,30 +705,6 @@
 	}
 
 	return NO;
-}
-
-#pragma mark -
-#pragma mark Weak Cipher Manager
-
-__weak static id _weakCipherManager = nil;
-
-static BOOL _weakCipherInUse = NO;
-
-- (id)weakCipherManager
-{
-	return _weakCipherManager;
-}
-
-- (void)setWeakCipherManager:(id)weakCipherManager
-{
-	_weakCipherManager = weakCipherManager;
-
-	_weakCipherInUse = YES;
-}
-
-- (BOOL)usesWeakCiphers
-{
-	return _weakCipherInUse;
 }
 
 @end

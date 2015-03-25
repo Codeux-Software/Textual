@@ -1031,15 +1031,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	/* Continue with normal encryption operations. */
-	if ([sharedEncryptionManager() usesWeakCiphers]) {
-		[sharedEncryptionManager() encryptMessage:messageBody from:[self localNickname] to:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
-	} else {
-		[sharedEncryptionManager() encryptMessage:messageBody
-											 from:[self encryptionAccountNameForLocalUser]
-											   to:[self encryptionAccountNameForUser:messageTo]
-								 encodingCallback:encodingCallback
-								injectionCallback:injectionCallback];
-	}
+	[sharedEncryptionManager() encryptMessage:messageBody
+										 from:[self encryptionAccountNameForLocalUser]
+										   to:[self encryptionAccountNameForUser:messageTo]
+							 encodingCallback:encodingCallback
+							injectionCallback:injectionCallback];
 }
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
@@ -1052,14 +1048,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 
 	/* Continue with normal encryption operations. */
-	if ([sharedEncryptionManager() usesWeakCiphers]) {
-		[sharedEncryptionManager() decryptMessage:messageBody from:[self localNickname] to:messageTo decodingCallback:decodingCallback];
-	} else {
-		[sharedEncryptionManager() decryptMessage:messageBody
-											 from:[self encryptionAccountNameForUser:messageTo]
-											   to:[self encryptionAccountNameForLocalUser]
-								 decodingCallback:decodingCallback];
-	}
+	[sharedEncryptionManager() decryptMessage:messageBody
+										 from:[self encryptionAccountNameForUser:messageTo]
+										   to:[self encryptionAccountNameForLocalUser]
+							 decodingCallback:decodingCallback];
 }
 
 #pragma mark -
@@ -1721,10 +1713,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				[self send:sendCommand, [channel name], encodedString, nil];
 			};
 
-			BOOL sendUnencrypted = (encryptChat == NO);
+			BOOL sendUnencrypted = YES;
 
-			if ([channel isPrivateMessage] == NO) {
-				sendUnencrypted = YES;
+			if ([channel isPrivateMessage]) {
+				sendUnencrypted = (encryptChat == NO);
 			}
 
 			if (sendUnencrypted) {
@@ -2163,17 +2155,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						[self send:sendCommand, sendChannelName, encodedString, nil];
 					};
 
-					/* secretMessage does not create a private message so we only attempt to encrypt if
-					 secretMessage is true AND a channel already exists as the destination. */
-					BOOL sendUnencrypted = doNotEncrypt;
+					BOOL sendUnencrypted = YES;
 
 					if (channel) {
-						if ([channel isPrivateMessage] == NO) {
-							sendUnencrypted = YES;
-						}
-					} else {
-						if (secretMessage) {
-							sendUnencrypted = YES;
+						if ([channel isPrivateMessage]) {
+							sendUnencrypted = doNotEncrypt;
 						}
 					}
 
@@ -2185,7 +2171,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						[self encryptMessage:unencryptedMessage directedAt:[channel name] encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 					}
 
-					/* Focus message destination? */
 					if (channel) {
 						if (secretMessage == NO) {
 							if ([TPCPreferences giveFocusOnMessageCommand]) {

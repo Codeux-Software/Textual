@@ -1089,8 +1089,7 @@
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	BOOL updateEncryption = ([sharedEncryptionManager() usesWeakCiphers] == NO &&
-							([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]));
+	BOOL updateEncryption = ([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]);
 
 	if (updateEncryption) {
 		[self.titlebarAccessoryViewLockButton setAction:@selector(titlebarAccessoryViewLockButtonClicked:)];

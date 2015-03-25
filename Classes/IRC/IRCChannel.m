@@ -243,13 +243,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)closeOpenEncryptionSessions
 {
-	if ([sharedEncryptionManager() usesWeakCiphers] == NO) {
-		if ([self isEncrypted]) {
-			IRCClient *u = [self associatedClient];
+	if ([self isEncrypted]) {
+		IRCClient *u = [self associatedClient];
 
-			[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[self name]]
-													  from:[u encryptionAccountNameForLocalUser]];
-		}
+		[sharedEncryptionManager() endConversationWith:[u encryptionAccountNameForUser:[self name]]
+												  from:[u encryptionAccountNameForLocalUser]];
 	}
 }
 
