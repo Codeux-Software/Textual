@@ -1023,9 +1023,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
-		encodingCallback(messageBody, NO);
+		if (encodingCallback) {
+			encodingCallback(messageBody, NO);
+		}
 
-		injectionCallback(messageBody);
+		if (injectionCallback) {
+			injectionCallback(messageBody);
+		}
 
 		return; // Do not continue with this operation...
 	}
@@ -1042,7 +1046,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
-		decodingCallback(messageBody, NO);
+		if (decodingCallback) {
+			decodingCallback(messageBody, NO);
+		}
 
 		return; // Do not continue with this operation...
 	}
