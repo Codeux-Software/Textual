@@ -383,7 +383,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 
 + (TXCommandWKeyAction)commandWKeyAction
 {
-	return (TXCommandWKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Command+W Action"];
+	return (TXCommandWKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Command+W Key Action"];
 }
 
 + (TXHostmaskBanFormat)banFormat
