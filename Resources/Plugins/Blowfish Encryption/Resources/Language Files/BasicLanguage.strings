@@ -73,3 +73,8 @@
 "BasicLanguage[1028][1]" = "Services not enabled";
 "BasicLanguage[1028][2]" = "In order to use the command “%@“, “FiSH” encryption must be enabled by browsing to Preferences ➜ Addons ➜ Blowfish Encryption";
 "BasicLanguage[1028][3]" = "OK";
+
+"BasicLanguage[1029][1]" = "Cannot toggle preference";
+"BasicLanguage[1029][2]" = "Off-the-Record Messaging (OTR) cannot be enabled when “FiSH” encryption is enabled.";
+"BasicLanguage[1029][3]" = "OK";
+

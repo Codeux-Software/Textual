@@ -32,9 +32,6 @@
 
 #import "TPIBlowfishEncryption.h"
 
-#import "BlowfishEncryption.h"
-#import "BlowfishEncryptionKeyExchange.h"
-
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
 
@@ -59,7 +56,7 @@
 #pragma mark -
 #pragma mark Plugin Structure
 
-- (BOOL)isPluginEnabled
++ (BOOL)isPluginEnabled
 {
 	static BOOL _servicesEnabledChecked = NO;
 	static BOOL _servicesEnabled = NO;
@@ -71,6 +68,11 @@
 	}
 
 	return _servicesEnabled;
+}
+
+- (BOOL)isPluginEnabled
+{
+	return [TPIBlowfishEncryption isPluginEnabled];
 }
 
 - (void)pluginLoadedIntoMemory
@@ -180,11 +182,11 @@
 		if ([c isChannel] || [c isPrivateMessage]) {
 			NSString *_messageString = [messageString trimAndGetFirstToken];
 
-			NSString *encryptionKey = [self encryptionKeyForChannel:c];
+			NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:c];
 			
 			if ([commandString isEqualToString:@"SETKEY"]) {
 				if (NSObjectIsEmpty(_messageString)) {
-					[self setEncryptionKey:nil forChannel:c];
+					[TPIBlowfishEncryption setEncryptionKey:nil forChannel:c];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1026]") channel:c];
 				} else {
@@ -200,10 +202,10 @@
 						}
 					}
 
-					[self setEncryptionKey:_messageString forChannel:c];
+					[TPIBlowfishEncryption setEncryptionKey:_messageString forChannel:c];
 				}
 			} else if ([commandString isEqualToString:@"DELKEY"]) {
-				[self setEncryptionKey:nil forChannel:c];
+				[TPIBlowfishEncryption setEncryptionKey:nil forChannel:c];
 				
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1026]") channel:c];
 			} else if ([commandString isEqualToString:@"KEY"]) {
@@ -214,11 +216,11 @@
 				}
 			} else if ([commandString isEqualToString:@"SETKEYMODE"]) {
 				if ([_messageString isEqualIgnoringCase:@"CBC"]) {
-					[self setEncryptionModeOfOperation:EKBlowfishEncryptionCBCModeOfOperation forChannel:c];
+					[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionCBCModeOfOperation forChannel:c];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1020]") channel:c];
 				} else {
-					[self setEncryptionModeOfOperation:EKBlowfishEncryptionECBModeOfOperation forChannel:c];
+					[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionECBModeOfOperation forChannel:c];
 					
 					[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1021]") channel:c];
 				}
@@ -293,7 +295,7 @@
 #pragma mark -
 #pragma mark Options
 
-- (void)setEncryptionKey:(NSString *)encryptionKey forChannel:(IRCChannel *)channel
++ (void)setEncryptionKey:(NSString *)encryptionKey forChannel:(IRCChannel *)channel
 {
 	if (channel) {
 		NSString *serviceName = [NSString stringWithFormat:@"textual.cblowfish.%@", [channel uniqueIdentifier]];
@@ -303,17 +305,21 @@
 							  withItemKind:@"application password"
 							   forUsername:nil
 							   serviceName:serviceName];
+
+			[[channel viewController] setViewIsEncrypted:NO];
 		} else {
 			[XRKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
 								   withItemKind:@"application password"
 									forUsername:nil
 								withNewPassword:encryptionKey
 									serviceName:serviceName];
+
+			[[channel viewController] setViewIsEncrypted:YES];
 		}
 	}
 }
 
-- (NSString *)encryptionKeyForChannel:(IRCChannel *)channel
++ (NSString *)encryptionKeyForChannel:(IRCChannel *)channel
 {
 	if (channel) {
 		NSString *serviceName = [NSString stringWithFormat:@"textual.cblowfish.%@", [channel uniqueIdentifier]];
@@ -327,7 +333,7 @@
 	}
 }
 
-- (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)modeOfOperation forChannel:(IRCChannel *)channel
++ (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)modeOfOperation forChannel:(IRCChannel *)channel
 {
 	if (channel) {
 		NSString *defaultsKey = [NSString stringWithFormat:@"Private Extension Store -> Blowfish Encryption Extension -> Encryption Mode of Operation -> %@", [channel uniqueIdentifier]];
@@ -340,7 +346,7 @@
 	}
 }
 
-- (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperationForChannel:(IRCChannel *)channel
++ (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperationForChannel:(IRCChannel *)channel
 {
 	if (channel) {
 		NSString *defaultsKey = [NSString stringWithFormat:@"Private Extension Store -> Blowfish Encryption Extension -> Encryption Mode of Operation -> %@", [channel uniqueIdentifier]];
@@ -364,7 +370,7 @@
 {
 	IRCChannel *channel = [client findChannelOrCreate:requestSender isPrivateMessage:YES];
 	
-	NSString *encryptionKey = [self encryptionKeyForChannel:channel];
+	NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:channel];
 	
     if (NSObjectIsNotEmpty(encryptionKey)) {
         [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
@@ -426,9 +432,8 @@
 
 			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 
-			[self setEncryptionKey:theSecret forChannel:channel];
-
-			[self setEncryptionModeOfOperation:mode forChannel:channel];
+			[TPIBlowfishEncryption setEncryptionKey:theSecret forChannel:channel];
+			[TPIBlowfishEncryption setEncryptionModeOfOperation:mode forChannel:channel];
 
 			/* Finish up. */
 			NSString *requestMsg = [TXExchangeResponsePrefix stringByAppendingString:publicKey];
@@ -494,7 +499,7 @@
 		if ([responseData length] <= 0) {
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") channel:channel];
 		} else {
-			NSString *encryptionKey = [self encryptionKeyForChannel:channel];
+			NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:channel];
 			
 			if (NSObjectIsNotEmpty(encryptionKey)) {
 				[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1015]", [channel name]) channel:channel];
@@ -515,9 +520,8 @@
 			
 			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
 
-			[self setEncryptionKey:theSecret forChannel:channel];
-
-			[self setEncryptionModeOfOperation:mode forChannel:channel];
+			[TPIBlowfishEncryption setEncryptionKey:theSecret forChannel:channel];
+			[TPIBlowfishEncryption setEncryptionModeOfOperation:mode forChannel:channel];
 			
 			/* Finish up. */
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1005]", [channel name]) channel:channel];

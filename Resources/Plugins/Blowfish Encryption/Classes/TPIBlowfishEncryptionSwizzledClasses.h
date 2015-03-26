@@ -32,15 +32,11 @@
 
 #import "TextualApplication.h"
 
-#import "BlowfishEncryption.h"
-#import "BlowfishEncryptionKeyExchange.h"
+@interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsSwizzled)
+@end
 
-@interface TPIBlowfishEncryption : NSObject <THOPluginProtocol>
-+ (BOOL)isPluginEnabled;
+@interface IRCClient (IRCClientSwizzled)
+@end
 
-+ (NSString *)encryptionKeyForChannel:(IRCChannel *)channel;
-+ (void)setEncryptionKey:(NSString *)encryptionKey forChannel:(IRCChannel *)channel;
-
-+ (EKBlowfishEncryptionModeOfOperation)encryptionModeOfOperationForChannel:(IRCChannel *)channel;
-+ (void)setEncryptionModeOfOperation:(EKBlowfishEncryptionModeOfOperation)modeOfOperation forChannel:(IRCChannel *)channel;
+@interface IRCChannel (IRCChannelSwizzled)
 @end
