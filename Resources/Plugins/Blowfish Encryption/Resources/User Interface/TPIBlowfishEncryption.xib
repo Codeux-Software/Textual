@@ -87,7 +87,7 @@
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">The encryption that FiSH provides is very dated compared to modern cryptography. FiSH is prone to attack, lacks forward secrecy, deniable authentication, and is </string>
+                                        <string key="content">The encryption that FiSH provides is very dated compared to modern cryptography. FiSH is prone to attack, lacks forward secrecy, lacks deniable authentication, and its </string>
                                         <attributes>
                                             <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>

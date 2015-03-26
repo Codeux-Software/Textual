@@ -105,12 +105,15 @@
 
 - (void)preferencesChanged:(id)sender
 {
-	(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1027][2]")
-											 title:TPILocalizedString(@"BasicLanguage[1027][1]")
-									 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
-								   alternateButton:nil
-									suppressionKey:nil
-								   suppressionText:nil];
+	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+									  body:TPILocalizedString(@"BasicLanguage[1027][2]")
+									 title:TPILocalizedString(@"BasicLanguage[1027][1]")
+							 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
+						   alternateButton:nil
+							   otherButton:nil
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:nil];
 }
 
 - (void)didReceiveServerInputOnClient:(IRCClient *)client
@@ -167,9 +170,9 @@
 {
 	[self performBlockOnMainThread:^{
 		if ([self isPluginEnabled] == NO) {
-			(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1028][2]")
-													 title:TPILocalizedString(@"BasicLanguage[1028][1]")
-											 defaultButton:TPILocalizedString(@"BasicLanguage[1028][3]")
+			(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]")
+													 title:TPILocalizedString(@"BasicLanguage[1030][1]")
+											 defaultButton:TPILocalizedString(@"BasicLanguage[1030][3]")
 										   alternateButton:nil
 											suppressionKey:nil
 										   suppressionText:nil];

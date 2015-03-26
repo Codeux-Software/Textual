@@ -38,6 +38,7 @@
 + (void)load
 {
 	XRExchangeImplementation(@"IRCClient", @"encryptionAllowedForNickname:", @"__tpi_encryptionAllowedForNickname:");
+	XRExchangeImplementation(@"IRCClient", @"receiveText:command:text:wasEncrypted:", @"__tpi_receiveText:command:text:wasEncrypted:");
 }
 
 - (BOOL)__tpi_encryptionAllowedForNickname:(NSString *)nickname
@@ -49,6 +50,52 @@
 	}
 }
 
+- (void)__tpi_receiveText:(IRCMessage *)referenceMessage command:(NSString *)command text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
+{
+	if ([TPIBlowfishEncryption isPluginEnabled])
+	{
+		if ([text hasPrefix:@"+OK "] || [text hasPrefix:@"mcps"]) {
+			if ([referenceMessage senderIsServer] == NO) {
+				NSString *target = [referenceMessage paramAt:0];
+
+				NSString *sender = [referenceMessage senderNickname];
+
+				IRCChannel *targetChannel = nil;
+
+				if ([target isChannelName:self]) {
+					targetChannel = [self findChannel:target];
+				} else {
+					targetChannel = [self findChannel:sender];
+				}
+
+				if (targetChannel) {
+					NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
+
+					if (encryptionKey) {
+						NSInteger badCharCount = 0;
+
+						EKBlowfishEncryptionModeOfOperation decodeMode = [TPIBlowfishEncryption encryptionModeOfOperationForChannel:targetChannel];
+
+						NSString *newstr = [EKBlowfishEncryption decodeData:text key:encryptionKey mode:decodeMode encoding:self.config.primaryEncoding badBytes:&badCharCount];
+
+						if (badCharCount > 0) {
+							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]", badCharCount) channel:targetChannel];
+						} else {
+							if (NSObjectIsNotEmpty(newstr)) {
+								text = [newstr copy];
+
+								wasEncrypted = YES;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	[self __tpi_receiveText:referenceMessage command:command text:text wasEncrypted:wasEncrypted];
+}
+
 @end
 
 #pragma mark -
@@ -57,13 +104,30 @@
 
 + (void)load
 {
+	XRExchangeImplementation(@"IRCChannel", @"prepareForApplicationTermination", @"__tpi_prepareForApplicationTermination");
 	XRExchangeImplementation(@"IRCChannel", @"prepareForPermanentDestruction", @"__tpi_prepareForPermanentDestruction");
+}
+
+- (void)__tpi_prepareForApplicationTermination
+{
+	if ([TPIBlowfishEncryption isPluginEnabled]) {
+		if ([self isPrivateMessage]) {
+			[TPIBlowfishEncryption setEncryptionKey:nil forChannel:self];
+			[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionDefaultModeOfOperation forChannel:self];
+		}
+	}
+
+	[self __tpi_prepareForApplicationTermination];
 }
 
 - (void)__tpi_prepareForPermanentDestruction
 {
-	[TPIBlowfishEncryption setEncryptionKey:nil forChannel:self];
-	[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionDefaultModeOfOperation forChannel:self];
+	if ([TPIBlowfishEncryption isPluginEnabled]) {
+		if ([self isPrivateMessage]) {
+			[TPIBlowfishEncryption setEncryptionKey:nil forChannel:self];
+			[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionDefaultModeOfOperation forChannel:self];
+		}
+	}
 
 	[self __tpi_prepareForPermanentDestruction];
 }
