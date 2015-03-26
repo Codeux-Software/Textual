@@ -501,11 +501,8 @@
 "BasicLanguage[1190][1]" = "Incompatiable System Version";
 "BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of OS X.";
 
-"BasicLanguage[1191][1]" = "Install Script?";
-"BasicLanguage[1191][2]" = "Would you like to install the script named “%@” so that it can be used by Textual?";
-
-"BasicLanguage[1192][1]" = "Install Extension?";
-"BasicLanguage[1192][2]" = "Would you like to install the extension named “%@” so that it can be used by Textual?";
+"BasicLanguage[1192][1]" = "Are you sure that you would like to open this file with Textual?";
+"BasicLanguage[1192][2]" = "Would you to open the file named “%@” with Textual?";
 
 /* Misc. error */
 "BasicLanguage[1193]" = "Error: The command %@ is shared by both a script and plugin. Sending to server because of inability to determine priority.";

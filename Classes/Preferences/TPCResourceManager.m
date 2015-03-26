@@ -112,12 +112,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	PointerIsEmptyAssert(url);
 
 	/* Establish install path. */
-	NSString *filenamewiext = [url lastPathComponent];
-	
-	NSString *filenamewoext = [filenamewiext stringByDeletingPathExtension];
+	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filenamewoext)
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
 															 title:TXTLS(@"BasicLanguage[1192][1]")
 													 defaultButton:BLS(1182)
 												   alternateButton:BLS(1219)
@@ -130,13 +128,13 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	}
 
 	/* Try to import. */
-	NSString *newPath = [[TPCPathInfo customExtensionFolderPath] stringByAppendingPathComponent:filenamewiext];
+	NSString *newPath = [[TPCPathInfo customExtensionFolderPath] stringByAppendingPathComponent:filename];
 
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
 	
 	/* Was it successful? */
 	if (didImport) {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1189][2]", filenamewoext)
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1189][2]", [filename stringByDeletingPathExtension])
 										   title:TXTLS(@"BasicLanguage[1189][1]")
 								   defaultButton:BLS(1186)
 								 alternateButton:nil
@@ -170,13 +168,11 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 - (void)performImportOfScriptFile:(NSURL *)url
 {
 	/* Establish install path. */
-	NSString *filenamewiext = [url lastPathComponent];
-	
-	NSString *filenamewoext = [filenamewiext stringByDeletingPathExtension];
+	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1191][2]", filenamewoext)
-															 title:TXTLS(@"BasicLanguage[1191][1]")
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
+															 title:TXTLS(@"BasicLanguage[1192][1]")
 													 defaultButton:BLS(1182)
 												   alternateButton:BLS(1219)
 													suppressionKey:nil
@@ -225,10 +221,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		if (returnCode == NSModalResponseOK) {
 			if ([self import:url into:[d URL]]) {
 				/* Script was successfully installed. */
-				NSString *filename = [[[d URL] lastPathComponent] stringByDeletingPathExtension];
+				NSString *filename = [[d URL] lastPathComponent];
 	
 				/* Perform after a delay to allow sheet to close. */
-				[self performSelector:@selector(performImportOfScriptFilePostflight:) withObject:filename afterDelay:0.5];
+				[self performSelector:@selector(performImportOfScriptFilePostflight:)
+						   withObject:[filename stringByDeletingPathExtension]
+						   afterDelay:0.5];
 			}
 		}
 	}];
