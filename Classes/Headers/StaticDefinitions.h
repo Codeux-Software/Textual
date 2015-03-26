@@ -105,7 +105,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
 #else
 	#define DebugLogToConsole(fmt, ...)			if ([masterController() debugModeIsOn]) {			\
-													LogToConsole(fmt, ##__VA_ARGS__);			\
+													LogToConsole(fmt, ##__VA_ARGS__);				\
 												}
 #endif
 

@@ -254,30 +254,12 @@
 #pragma mark -
 #pragma mark Factory
 
-+ (NSArray *)buildPathArray:(NSString *)path, ...
+
++ (NSArray *)buildPathArrayWithPaths:(NSArray *)paths
 {
-	/* Add any paths that follow. */
-	NSMutableArray *pathObjects = [NSMutableArray array];
-	
-	/* Add first path in arguments. */
-	if ( path) {
-		[pathObjects addObject:path];
-	}
-	
-	id pathObj;
-	
-	va_list args;
-	va_start(args, path);
-	
-	while ((pathObj = va_arg(args, id))) {
-		[pathObjects addObject:pathObj];
-	}
-	
-	va_end(args);
-	
 	/* We now filter based on conditions. */
 	NSMutableArray *pathData = [NSMutableArray array];
-	
+
 	/* What considers are path valid? */
 	void (^checkPath)(NSString *) = ^(NSString *pathInfo) {
 		if (pathInfo) {
@@ -294,14 +276,36 @@
 			}
 		}
 	};
-	
+
 	/* Filter list. */
-	for (NSString *pathObject in pathObjects) {
+	for (NSString *pathObject in paths) {
 		checkPath(pathObject);
 	}
-	
+
 	/* Return results. */
 	return [pathData copy];
+}
+
++ (NSArray *)buildPathArray:(NSString *)path, ...
+{
+	NSMutableArray *pathObjects = [NSMutableArray array];
+
+	if ( path) {
+		[pathObjects addObject:path];
+	}
+	
+	id pathObj;
+	
+	va_list args;
+	va_start(args, path);
+	
+	while ((pathObj = va_arg(args, id))) {
+		[pathObjects addObject:pathObj];
+	}
+	
+	va_end(args);
+
+	return [self buildPathArrayWithPaths:pathObjects];
 }
 
 #pragma mark -

@@ -1004,9 +1004,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	PointerIsEmptyAssertReturn(nickname, NO)
 
-	if ([[self localNickname] isEqualIgnoringCase:nickname]) {
+	if ([nickname isChannelName:self]) { // Do not allow channel names...
 		return NO;
-	} else if ([self nicknameIsPrivateZNCUser:nickname]) {
+	} else if ([[self localNickname] isEqualIgnoringCase:nickname]) { // Do not allow the local user...
+		return NO;
+	} else if ([self nicknameIsPrivateZNCUser:nickname]) { // Do not allow a ZNC private user...
 		return NO;
 	} else {
 		NSString *lowercaseName = [nickname lowercaseString];
@@ -1040,6 +1042,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 										   to:[self encryptionAccountNameForUser:messageTo]
 							 encodingCallback:encodingCallback
 							injectionCallback:injectionCallback];
+}
+
+- (void)decryptMessage:(NSString *)messageBody referenceMessage:(IRCMessage *)referenceMessage decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
+{
+	if ([referenceMessage senderIsServer] == NO) {
+		[self decryptMessage:messageBody directedAt:[referenceMessage senderNickname] decodingCallback:decodingCallback];
+	}
 }
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
@@ -1589,9 +1598,18 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	worldController().bandwidthOut += [str length];
 }
 
+- (void)send:(NSString *)str arguments:(NSArray *)arguments
+{
+	NSString *s = [IRCSendingMessage stringWithCommand:str arguments:arguments];
+
+	NSObjectIsEmptyAssert(s);
+
+	[self sendLine:s];
+}
+
 - (void)send:(NSString *)str, ...
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray *arguments = [NSMutableArray array];
 
 	id obj;
 
@@ -1599,16 +1617,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	va_start(args, str);
 
 	while ((obj = va_arg(args, id))) {
-		[ary addObject:obj];
+		[arguments addObject:obj];
 	}
 
 	va_end(args);
 
-	NSString *s = [IRCSendingMessage stringWithCommand:str arguments:ary];
-
-	NSObjectIsEmptyAssert(s);
-
-	[self sendLine:s];
+	[self send:str arguments:arguments];
 }
 
 #pragma mark -
@@ -1710,22 +1724,18 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			TLOEncryptionManagerInjectCallbackBlock injectionBlock = ^(NSString *encodedString) {
 				NSString *sendCommand = command;
 
+				NSString *sendMessage = encodedString;
+
 				if (type == TVCLogLineActionType) {
 					sendCommand = IRCPrivateCommandIndex("privmsg");
 
-					encodedString = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), encodedString, 0x01];
+					sendMessage = [NSString stringWithFormat:@"%c%@ %@%c", 0x01, IRCPrivateCommandIndex("action"), sendMessage, 0x01];
 				}
 
-				[self send:sendCommand, [channel name], encodedString, nil];
+				[self send:sendCommand, [channel name], sendMessage, nil];
 			};
 
-			BOOL sendUnencrypted = YES;
-
-			if ([channel isPrivateMessage]) {
-				sendUnencrypted = (encryptChat == NO);
-			}
-
-			if (sendUnencrypted) {
+			if (encryptChat == NO) {
 				encryptionBlock(unencryptedMessage, NO);
 
 				injectionBlock(unencryptedMessage);
@@ -2148,6 +2158,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 						NSString *sendChannelName = destinationChannelName;
 
+						NSString *sendMessage = encodedString;
+
 						if ([sendChannelName isChannelName:self]) {
 							if (destinationPrefix) {
 								sendChannelName = [destinationPrefix stringByAppendingString:sendChannelName];
@@ -2155,21 +2167,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 						}
 
 						if (type == TVCLogLineActionType) {
-							encodedString = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), encodedString, 0x01];
+							sendMessage = [NSString stringWithFormat:@"%C%@ %@%C", 0x01, IRCPrivateCommandIndex("action"), sendMessage, 0x01];
 						}
 
-						[self send:sendCommand, sendChannelName, encodedString, nil];
+						[self send:sendCommand, sendChannelName, sendMessage, nil];
 					};
 
-					BOOL sendUnencrypted = YES;
-
-					if (channel) {
-						if ([channel isPrivateMessage]) {
-							sendUnencrypted = doNotEncrypt;
-						}
-					}
-
-					if (sendUnencrypted) {
+					if (channel == nil || doNotEncrypt) {
 						encryptionBlock(unencryptedMessage, NO);
 
 						injectionBlock(unencryptedMessage);
@@ -4211,21 +4215,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	};
 
-	BOOL decryptData = NO;
-
-	NSString *target = [m paramAt:0];
-
-	if ([target isChannelName:self] == NO) {
-		if ([m senderIsServer] == NO) {
-			decryptData = YES;
-		}
-	}
-
-	if (decryptData == NO) {
-		decryptionBlock(text, NO);
-	} else {
-		[self decryptMessage:text directedAt:[m senderNickname] decodingCallback:decryptionBlock];
-	}
+	[self decryptMessage:text referenceMessage:m decodingCallback:decryptionBlock];
 }
 
 - (void)receiveText:(IRCMessage *)referenceMessage command:(NSString *)command text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted

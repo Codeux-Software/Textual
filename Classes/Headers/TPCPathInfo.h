@@ -67,6 +67,7 @@
 + (NSString *)userDownloadFolderPath;
 
 + (NSArray *)buildPathArray:(NSString *)path, ...;
++ (NSArray *)buildPathArrayWithPaths:(NSArray *)paths;
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 + (NSString *)applicationUbiquitousContainerPath;
