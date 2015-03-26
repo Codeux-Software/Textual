@@ -38,7 +38,8 @@
 + (void)load
 {
 	XRExchangeImplementation(@"IRCClient", @"encryptionAllowedForNickname:", @"__tpi_encryptionAllowedForNickname:");
-	XRExchangeImplementation(@"IRCClient", @"receiveText:command:text:wasEncrypted:", @"__tpi_receiveText:command:text:wasEncrypted:");
+	XRExchangeImplementation(@"IRCClient", @"decryptMessage:referenceMessage:decodingCallback:", @"__tpi_decryptMessage:referenceMessage:decodingCallback:");
+	XRExchangeImplementation(@"IRCClient", @"encryptMessage:directedAt:encodingCallback:injectionCallback:", @"__tpi_encryptMessage:directedAt:encodingCallback:injectionCallback:");
 }
 
 - (BOOL)__tpi_encryptionAllowedForNickname:(NSString *)nickname
@@ -50,50 +51,84 @@
 	}
 }
 
-- (void)__tpi_receiveText:(IRCMessage *)referenceMessage command:(NSString *)command text:(NSString *)text wasEncrypted:(BOOL)wasEncrypted
+- (void)__tpi_encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
 	if ([TPIBlowfishEncryption isPluginEnabled])
 	{
-		if ([text hasPrefix:@"+OK "] || [text hasPrefix:@"mcps"]) {
-			if ([referenceMessage senderIsServer] == NO) {
-				NSString *target = [referenceMessage paramAt:0];
+		IRCChannel *targetChannel = [self findChannel:messageTo];
 
-				NSString *sender = [referenceMessage senderNickname];
+		if (targetChannel) {
+			NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
 
-				IRCChannel *targetChannel = nil;
+			if (encryptionKey) {
+				EKBlowfishEncryptionModeOfOperation decodeMode = [TPIBlowfishEncryption encryptionModeOfOperationForChannel:targetChannel];
 
-				if ([target isChannelName:self]) {
-					targetChannel = [self findChannel:target];
+				NSString *newstr = [EKBlowfishEncryption encodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding];
+
+				if ([newstr length] < 5) {
+					[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1023]") channel:targetChannel];
 				} else {
-					targetChannel = [self findChannel:sender];
+					if (encodingCallback) {
+						encodingCallback(messageBody, YES);
+					}
+
+					if (injectionCallback) {
+						injectionCallback(newstr);
+					}
 				}
 
-				if (targetChannel) {
-					NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
+				return; // Cancel operation...
+			}
+		}
+	}
 
-					if (encryptionKey) {
-						NSInteger badCharCount = 0;
+	[self __tpi_encryptMessage:messageBody directedAt:messageTo encodingCallback:encodingCallback injectionCallback:injectionCallback];
+}
 
-						EKBlowfishEncryptionModeOfOperation decodeMode = [TPIBlowfishEncryption encryptionModeOfOperationForChannel:targetChannel];
+- (void)__tpi_decryptMessage:(NSString *)messageBody referenceMessage:(IRCMessage *)referenceMessage decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
+{
+	if ([TPIBlowfishEncryption isPluginEnabled])
+	{
+		if ([messageBody hasPrefix:@"+OK "] || [messageBody hasPrefix:@"mcps"]) {
+			NSString *target = [referenceMessage paramAt:0];
 
-						NSString *newstr = [EKBlowfishEncryption decodeData:text key:encryptionKey mode:decodeMode encoding:self.config.primaryEncoding badBytes:&badCharCount];
+			NSString *sender = [referenceMessage senderNickname];
 
-						if (badCharCount > 0) {
-							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]", badCharCount) channel:targetChannel];
-						} else {
-							if (NSObjectIsNotEmpty(newstr)) {
-								text = [newstr copy];
+			IRCChannel *targetChannel = nil;
 
-								wasEncrypted = YES;
+			if ([target isChannelName:self]) {
+				targetChannel = [self findChannel:target];
+			} else {
+				targetChannel = [self findChannel:sender];
+			}
+
+			if (targetChannel) {
+				NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
+
+				if (encryptionKey) {
+					NSInteger badCharCount = 0;
+
+					EKBlowfishEncryptionModeOfOperation decodeMode = [TPIBlowfishEncryption encryptionModeOfOperationForChannel:targetChannel];
+
+					NSString *newstr = [EKBlowfishEncryption decodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding badBytes:&badCharCount];
+
+					if (badCharCount > 0) {
+						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]", badCharCount) channel:targetChannel];
+					} else {
+						if (NSObjectIsNotEmpty(newstr)) {
+							if (decodingCallback) {
+								decodingCallback(newstr, YES);
 							}
 						}
 					}
+
+					return; // Cancel operation...
 				}
 			}
 		}
 	}
 
-	[self __tpi_receiveText:referenceMessage command:command text:text wasEncrypted:wasEncrypted];
+	[self __tpi_decryptMessage:messageBody referenceMessage:referenceMessage decodingCallback:decodingCallback];
 }
 
 @end
@@ -108,7 +143,7 @@
 	XRExchangeImplementation(@"IRCChannel", @"prepareForPermanentDestruction", @"__tpi_prepareForPermanentDestruction");
 }
 
-- (void)__tpi_prepareForApplicationTermination
+- (void)__tpi_destroyEncryptionKeychain
 {
 	if ([TPIBlowfishEncryption isPluginEnabled]) {
 		if ([self isPrivateMessage]) {
@@ -116,18 +151,18 @@
 			[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionDefaultModeOfOperation forChannel:self];
 		}
 	}
+}
+
+- (void)__tpi_prepareForApplicationTermination
+{
+	[self __tpi_destroyEncryptionKeychain];
 
 	[self __tpi_prepareForApplicationTermination];
 }
 
 - (void)__tpi_prepareForPermanentDestruction
 {
-	if ([TPIBlowfishEncryption isPluginEnabled]) {
-		if ([self isPrivateMessage]) {
-			[TPIBlowfishEncryption setEncryptionKey:nil forChannel:self];
-			[TPIBlowfishEncryption setEncryptionModeOfOperation:EKBlowfishEncryptionDefaultModeOfOperation forChannel:self];
-		}
-	}
+	[self __tpi_destroyEncryptionKeychain];
 
 	[self __tpi_prepareForPermanentDestruction];
 }

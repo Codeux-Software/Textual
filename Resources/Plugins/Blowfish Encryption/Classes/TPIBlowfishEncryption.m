@@ -255,9 +255,7 @@
 
 							[[self keyExchangeRequests] setObject:@[keyRequest, c] forKey:requestKey];
 
-							[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
-									 command:IRCPrivateCommandIndex("notice")
-									 channel:c];
+							[client send:IRCPrivateCommandIndex("notice"), [c name], requestMsg, nil];
 
 							[self keyExchangeSetupTimeoutTimer:requestKey];
 							
@@ -445,10 +443,7 @@
 				requestMsg = [requestMsg stringByAppendingString:@" CBC"];
 			}
 
-			[client sendText:[NSAttributedString emptyStringWithBase:requestMsg]
-					 command:IRCPrivateCommandIndex("notice")
-					 channel:channel
-			  withEncryption:NO];
+			[client send:IRCPrivateCommandIndex("notice"), [channel name], requestMsg, nil];
 
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1010]", [channel name]) channel:channel];
 			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1013]", [channel name]) channel:channel];
