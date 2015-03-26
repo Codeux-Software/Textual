@@ -4467,9 +4467,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *cleanedText = nil;
 
 			if ([TPCPreferences removeAllFormatting] == NO) {
-				cleanedText = [cleanedText stripIRCEffects];
+				cleanedText = [text stripIRCEffects];
 			} else {
-				cleanedText = text;
+				cleanedText =  text;
 			}
 
 			if (self.isWaitingForNickServ == NO) {
