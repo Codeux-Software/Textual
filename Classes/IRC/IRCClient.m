@@ -1803,7 +1803,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		trail = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
 
-	[self encryptMessage:trail directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	injectionBlock(trail);
 }
 
 - (void)sendCTCPReply:(NSString *)target command:(NSString *)command text:(NSString *)text
@@ -1825,7 +1825,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		trail = [NSString stringWithFormat:@"%@ %@", command, text];
 	}
 
-	[self encryptMessage:trail directedAt:target encodingCallback:nil injectionCallback:injectionBlock];
+	injectionBlock(trail);
 }
 
 - (void)sendCTCPPing:(NSString *)target
