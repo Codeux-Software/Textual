@@ -232,17 +232,23 @@
 #define _channelMenuSeparatorTag_3			937
 #define _channelWebkitMenuTag				5424
 
+			NSMenu *hostMenu = nil;
+
 			if (tag == _channelWebkitMenuTag) {
 				[item setHidden:(_isChannel == NO)];
+
+				hostMenu = [item menu];
+			} else {
+				hostMenu = [item submenu];
 			}
 
-			BOOL condition2 =  _isQuery;
-			BOOL condition1 = (condition2 || _isChannel);
+			BOOL condition2 =   _isQuery;
+			BOOL condition1 = ( _isQuery || _isChannel);
 
-			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_1] setHidden:condition2];
+			[[hostMenu itemWithTag:_channelMenuSeparatorTag_1] setHidden:condition2];
 
-			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_2] setHidden:(condition1 == NO)];
-			[[[item submenu] itemWithTag:_channelMenuSeparatorTag_3] setHidden:(condition1 == NO)];
+			[[hostMenu itemWithTag:_channelMenuSeparatorTag_2] setHidden:(condition1 == NO)];
+			[[hostMenu itemWithTag:_channelMenuSeparatorTag_3] setHidden:(condition1 == NO)];
 
 #undef _channelMenuSeparatorTag_1
 #undef _channelMenuSeparatorTag_2
