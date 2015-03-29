@@ -4913,26 +4913,29 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kwB-LQ-B19">
-                    <rect key="frame" x="122" y="31" width="343" height="42"/>
+                    <rect key="frame" x="122" y="31" width="336" height="42"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="332" id="Iev-6i-ER9"/>
+                    </constraints>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="Pzt-74-0SL">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">When sending a message inside a query (private message) that is not using Off-the-Record Messaging (OTR), attempt to start a private conversation, else discard the message.</string>
+                        <string key="title">If an Off-the-Record conversation is not active, then try to start one. If that fails, then discard any messages destined for the user that is not using Off-the-Record Messaging.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="318-ie-koO" firstAttribute="top" secondItem="ZYk-23-zvA" secondAttribute="top" constant="32" id="Ejq-Oy-nvw"/>
-                <constraint firstAttribute="height" constant="155" id="FCq-Io-q7U"/>
-                <constraint firstItem="kwB-LQ-B19" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="124" id="YaL-7k-bTR"/>
-                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="106" id="aMc-fg-tSG"/>
-                <constraint firstAttribute="width" constant="589" id="mnm-ch-mlb"/>
-                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="c2f-dF-OoT" secondAttribute="leading" id="nsG-Qy-ebc"/>
-                <constraint firstItem="c2f-dF-OoT" firstAttribute="top" secondItem="318-ie-koO" secondAttribute="bottom" constant="14" id="qs7-Vz-UKq"/>
-                <constraint firstItem="kwB-LQ-B19" firstAttribute="top" secondItem="c2f-dF-OoT" secondAttribute="bottom" constant="8" symbolic="YES" id="t0e-CK-1tD"/>
+                <constraint firstItem="kwB-LQ-B19" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="124" id="44q-Zf-ozs"/>
+                <constraint firstItem="318-ie-koO" firstAttribute="top" secondItem="ZYk-23-zvA" secondAttribute="top" constant="32" id="4RD-K6-c0q"/>
+                <constraint firstItem="kwB-LQ-B19" firstAttribute="top" secondItem="c2f-dF-OoT" secondAttribute="bottom" constant="8" symbolic="YES" id="7iI-bo-lEf"/>
+                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="ZYk-23-zvA" secondAttribute="leading" constant="106" id="IRF-NU-bcZ"/>
+                <constraint firstItem="c2f-dF-OoT" firstAttribute="top" secondItem="318-ie-koO" secondAttribute="bottom" constant="14" id="N3o-wf-4q0"/>
+                <constraint firstItem="318-ie-koO" firstAttribute="leading" secondItem="c2f-dF-OoT" secondAttribute="leading" id="gLD-YE-ihs"/>
+                <constraint firstAttribute="width" constant="589" id="xQA-A2-XFv"/>
+                <constraint firstAttribute="height" constant="155" id="zqq-EV-NEl"/>
             </constraints>
-            <point key="canvasLocation" x="96.5" y="-3728.5"/>
+            <point key="canvasLocation" x="222.5" y="-3386.5"/>
         </customView>
         <userDefaultsController id="G2Q-fc-ddg" userLabel="Preferences User Defaults Controller" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
