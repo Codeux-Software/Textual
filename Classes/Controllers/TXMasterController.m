@@ -180,31 +180,26 @@
 #pragma mark -
 #pragma mark NSApplication Delegate
 
-- (void)prepareThirdPartyServices
+- (void)prepareThirdPartyServiceHockeyAppFramework
 {
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1 || TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSDictionary *resourcesDict = [[RZMainBundle() infoDictionary] dictionaryForKey:@"3rd-party Definitions"];
-#endif
-
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	NSDictionary *hockeyAppData = [resourcesDict dictionaryForKey:@"HockeyApp Framework"];
+	NSDictionary *hockeyAppData = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreHockeyAppFramework"];
 
-	DebugLogToConsole(@"HockeyApp application identifier: %@", hockeyAppData);
+	NSString *applicationIdentifier = hockeyAppData[@"Application Identifier"];
 
-	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:hockeyAppData[@"Application Identifier"] delegate:self];
+	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:self];
 	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
+}
 
-	// ---
-
+- (void)prepareThirdPartyServiceSparkleFramework
+{
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSDictionary *sparkleData = [resourcesDict dictionaryForKey:@"Sparkle Framework"];
+	NSDictionary *sparkleData = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
 
 	NSString *feedURL = [sparkleData objectForKey:@"SUFeedURL"];
 
 	if (feedURL) {
-		DebugLogToConsole(@"Sparkle Framework feed URL: %@", feedURL);
-
 		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:feedURL]];
 
 		[[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
@@ -217,6 +212,12 @@
 		[[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 	}
 #endif
+}
+
+- (void)prepareThirdPartyServices
+{
+	[self prepareThirdPartyServiceHockeyAppFramework];
+	[self prepareThirdPartyServiceSparkleFramework];
 }
 
 #ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN

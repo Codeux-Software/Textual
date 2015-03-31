@@ -2,29 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>3rd-party Definitions</key>
-	<dict>
-		<key>Sparkle Framework</key>
-		<dict>
-			<key>SUFeedURL</key>
-			<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
-			<key>SUAllowsAutomaticUpdates</key>
-			<false/>
-			<key>SUBundleName</key>
-			<string>Textual</string>
-			<key>SUEnableAutomaticChecks</key>
-			<true/>
-			<key>SUEnableSystemProfiling</key>
-			<false/>
-			<key>SUScheduledCheckInterval</key>
-			<string>1728000</string>
-		</dict>
-		<key>HockeyApp Framework</key>
-		<dict>
-			<key>Application Identifier</key>
-			<string>93d6d315ace023a30793e8c52a02f920</string>
-		</dict>
-	</dict>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.social-networking</string>
 	<key>CFBundleSignature</key>
