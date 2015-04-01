@@ -279,6 +279,29 @@
 	PointerIsEmptyAssert(messageFrom)
 	PointerIsEmptyAssert(messageBody)
 
+	/* If we are not performing encryption automatically and we are not in an encrypted
+	 conversation, then manually invoke blocks at this point and do not message OTRKit. 
+	 This exception is made because when OTRL_POLICY_MANUAL is set, OTR discards outgoing
+	 messages altogther. */
+	if ([TPCPreferences textEncryptionIsOpportunistic] == NO) {
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
+
+		if (currentState == OTRKitMessageStatePlaintext) {
+			if (encodingCallback) {
+				encodingCallback(messageBody, NO);
+			}
+
+			if (injectionCallback) {
+				injectionCallback(messageBody);
+			}
+
+			return; // Cancel operation...
+		}
+	}
+
+	/* Pass message off to OTRKit */
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
 	[messageObject setMessageTo:messageTo];
