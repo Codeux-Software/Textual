@@ -1,6 +1,6 @@
 ## Introduction to Textual
 
-Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](http://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](http://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
+Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](https://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](https://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
 
 Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, Textual has since evolved into one of the most popular applications for interacting with IRC on OS X. 
 
@@ -12,7 +12,7 @@ Please do not abuse the power to build Textual in order to freely distribute it 
 
 ## Note Regarding Support
 
-Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](http://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](https://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available.
 
 ## Note Regarding Code Signing
 

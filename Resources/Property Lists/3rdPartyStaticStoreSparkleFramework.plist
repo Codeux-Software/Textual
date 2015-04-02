@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>SUFeedURL</key>
-	<string>http://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
+	<string>https://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<false/>
 	<key>SUBundleName</key>

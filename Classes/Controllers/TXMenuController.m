@@ -1058,7 +1058,7 @@
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Writing-Scripts.kb"];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Writing-Scripts.kb"];
 }
 
 - (void)searchGoogle:(id)sender
@@ -2454,20 +2454,20 @@
 	
 	if (_helpMenuLinks == nil) {
 		_helpMenuLinks = @{
-		   @(101) : @"http://www.codeux.com/textual/help/3rd-Party-Addons.kb",
-		   @(102) : @"http://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
-		   @(103) : @"http://www.codeux.com/textual/help/home.kb",
-		   @(104) : @"http://www.codeux.com/textual/help/iCloud-Syncing.kb",
-		   @(105) : @"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
-		   @(106) : @"http://www.codeux.com/textual/help/Command-Reference.kb",
-		   @(107) : @"http://www.codeux.com/textual/help/Support.kb",
-		   @(108) : @"http://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
-		   @(109) : @"http://www.codeux.com/textual/help/Memory-Management.kb",
-		   @(110) : @"http://www.codeux.com/textual/help/Text-Formatting.kb",
-		   @(111) : @"http://www.codeux.com/textual/help/Styles.kb",
-		   @(112) : @"http://www.codeux.com/textual/help/Using-CertFP.kb",
-		   @(113) : @"http://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
-		   @(114) : @"http://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
+		   @(101) : @"https://www.codeux.com/textual/help/3rd-Party-Addons.kb",
+		   @(102) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
+		   @(103) : @"https://www.codeux.com/textual/help/home.kb",
+		   @(104) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
+		   @(105) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
+		   @(106) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
+		   @(107) : @"https://www.codeux.com/textual/help/Support.kb",
+		   @(108) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
+		   @(109) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
+		   @(110) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
+		   @(111) : @"https://www.codeux.com/textual/help/Styles.kb",
+		   @(112) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
+		   @(113) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
+		   @(114) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
 		};
 	}
 	
@@ -2729,7 +2729,7 @@
 
 - (void)encryptionWhatIsThisInformation:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
 }
 
 #pragma mark -
@@ -2839,7 +2839,7 @@
 
 - (void)openMigrationAssistantDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.codeux.com/textual/downloads/migrationAssistant.download"];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/downloads/migrationAssistant.download"];
 }
 
 - (void)openMacAppStoreDownloadPage:(id)sender

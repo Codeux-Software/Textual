@@ -309,7 +309,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 {
 	NSString *currentVersion = [TPCApplicationInfo applicationVersion];
 
-	NSString *urlToOpen = [NSString stringWithFormat:@"http://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
+	NSString *urlToOpen = [NSString stringWithFormat:@"https://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
 
 	[RZWorkspace() openURL:[NSURL URLWithString:urlToOpen]];
 }

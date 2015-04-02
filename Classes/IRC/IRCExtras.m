@@ -143,7 +143,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"newsletter"])
 		{
-			[TLOpenLink openWithString:@"http://www.codeux.com/textual/newsletter/"];
+			[TLOpenLink openWithString:@"https://www.codeux.com/textual/newsletter/"];
 		}
 		else if ([serverAddress isEqualToString:@"diagnostic-reports-folder"])
 		{
@@ -172,7 +172,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"knowledge-base"])
 		{
-			[TLOpenLink openWithString:@"http://www.codeux.com/textual/help/"];
+			[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/"];
 		}
 
 		return;
