@@ -206,6 +206,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (void)setEncryptionState:(OTRKitMessageState)encryptionState
 {
 	if (NSDissimilarObjects(_encryptionState, encryptionState)) {
@@ -214,6 +215,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		[self noteEncryptionStateDidChange];
 	}
 }
+#endif
 
 #pragma mark -
 #pragma mark Utilities
@@ -229,6 +231,15 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 
 	[self reopenLogFileIfNeeded];
+}
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+- (void)refreshEncryptionStatus
+{
+	IRCClient *u = [self associatedClient];
+
+	[sharedEncryptionManager() updateEncryptionStatusFor:[u encryptionAccountNameForUser:[self name]]
+													from:[u encryptionAccountNameForLocalUser]];
 }
 
 - (BOOL)isEncrypted
@@ -250,6 +261,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 												  from:[u encryptionAccountNameForLocalUser]];
 	}
 }
+#endif
 
 #pragma mark -
 #pragma mark Channel Status
@@ -290,6 +302,10 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 		[self addMember:m1];
 		[self addMember:m2];
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+		[self refreshEncryptionStatus];
+#endif
 	}
 
 	self.channelJoinTime = [NSDate unixTime];
@@ -297,9 +313,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)deactivate
 {
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	if ([self isPrivateMessage]) {
 		[self closeOpenEncryptionSessions];
 	}
+#endif
 
 	[self resetStatus:IRCChannelStatusParted];
   

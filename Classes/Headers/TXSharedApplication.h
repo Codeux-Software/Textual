@@ -60,13 +60,16 @@
 @interface TXSharedApplication : NSObject
 + (OELReachability *)sharedNetworkReachabilityObject;
 + (THOPluginManager *)applicationPluginManager;
-+ (TLOEncryptionManager *)sharedEncryptionManager;
 + (TLOGrowlController *)sharedGrowlController;
 + (TLOInputHistory *)sharedInputHistoryManager;
 + (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TPCThemeController *)sharedThemeController;
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
++ (TLOEncryptionManager *)sharedEncryptionManager;
+#endif
 
 /* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
  and this queue alone to prevent accessing on different threads at same time 

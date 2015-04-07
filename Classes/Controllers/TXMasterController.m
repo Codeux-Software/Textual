@@ -375,8 +375,10 @@
 	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	[sharedEncryptionManager() prepareForApplicationTermination];
-	
+#endif
+
 	[menuController() prepareForApplicationTermination];
 
 	if (self.skipTerminateSave == NO) {

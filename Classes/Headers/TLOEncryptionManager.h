@@ -41,6 +41,7 @@
  plugins. Please use higher up APIs in IRCClient and elsewhere for 
  sending encrypted messages to one or more users. */
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
 
 #define TLOEncryptionManagerMenuItemTagStartPrivateConversation			9930 // "Start Private Conversation"
@@ -48,10 +49,12 @@
 #define TLOEncryptionManagerMenuItemTagEndPrivateConversation			9932 // "End Private Conversation"
 #define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			9933 // "Authenticate Chat Partner"
 #define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			9934 // "View List of Fingerprints"
+#endif
 
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate, OTRKitFingerprintManagerDialogDelegate>
 /* Returns unique "account name" used for messageFrom and messageTo parameters. */
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;
@@ -80,6 +83,8 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 
 - (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer;
 
+- (void)updateEncryptionStatusFor:(NSString *)messageTo from:(NSString *)messageFrom;
+
 /* Define configuration options */
 - (void)updatePolicy;
 
@@ -95,3 +100,4 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 					to:(NSString *)messageTo
 	  decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
 @end
+#endif

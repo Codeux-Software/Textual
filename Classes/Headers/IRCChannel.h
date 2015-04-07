@@ -57,7 +57,10 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (nonatomic, assign) BOOL sentInitialWhoRequest;
 @property (nonatomic, assign) BOOL inUserInvokedModeRequest;
 @property (nonatomic, assign) NSInteger channelJoinTime;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 @property (nonatomic, assign) OTRKitMessageState encryptionState;
+#endif
 
 - (void)setup:(IRCChannelConfig *)seed;
 

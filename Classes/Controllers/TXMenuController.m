@@ -492,6 +492,8 @@
             
             return YES;
         }
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
 		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
 		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
@@ -511,6 +513,8 @@
 				return valid;
 			}
 		}
+#endif
+
 		case 504813: // "All Modes Given"
 		{
 			return NO;
@@ -2670,6 +2674,7 @@
 #pragma mark -
 #pragma mark Encryption 
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (void)encryptionStartPrivateConversation:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
@@ -2731,6 +2736,7 @@
 {
 	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
 }
+#endif
 
 #pragma mark -
 #pragma mark Toggle Mute

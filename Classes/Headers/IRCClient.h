@@ -97,7 +97,9 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 #import "TLOEncryptionManager.h"
+#endif
 
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
@@ -219,6 +221,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
@@ -226,6 +229,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (NSString *)encryptionAccountNameForLocalUser;
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname;
+#endif
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)mode;

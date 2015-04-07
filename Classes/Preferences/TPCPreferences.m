@@ -156,6 +156,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 + (BOOL)textEncryptionIsOpportunistic
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
@@ -165,6 +166,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Require Encryption"];
 }
+#endif
 
 + (BOOL)displayServerMOTD
 {
@@ -909,6 +911,12 @@ static NSMutableArray *excludeKeywords = nil;
 	} else {
 		[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
 	}
+#endif
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+	[RZUserDefaults() setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
+#else
+	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #endif
 
 	/* Setup loggin. */

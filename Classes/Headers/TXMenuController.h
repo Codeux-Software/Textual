@@ -150,7 +150,11 @@
 @property (nonatomic, weak) IBOutlet NSMenu *segmentedControllerMenu;
 @property (nonatomic, weak) IBOutlet NSMenu *tcopyURLMenu;
 @property (nonatomic, weak) IBOutlet NSMenu *userControlMenu;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 @property (nonatomic, weak) IBOutlet NSMenu *encryptionManagerStatusMenu;
+#endif
+
 @property (nonatomic, weak) IBOutlet NSMenuItem *closeWindowMenuItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *channelMenuItem;
 @property (nonatomic, weak) IBOutlet NSMenuItem *serverMenuItem;
@@ -305,12 +309,14 @@
 - (IBAction)importPreferences:(id)sender;
 - (IBAction)exportPreferences:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;
 - (IBAction)encryptionStartPrivateConversation:(id)sender;
 - (IBAction)encryptionRefreshPrivateConversation:(id)sender;
 - (IBAction)encryptionEndPrivateConversation:(id)sender;
 - (IBAction)encryptionAuthenticateChatPartner:(id)sender;
 - (IBAction)encryptionListFingerprints:(id)sender;
+#endif
 
 - (IBAction)toggleServerListVisibility:(id)sender;
 - (IBAction)toggleMemberListVisibility:(id)sender;

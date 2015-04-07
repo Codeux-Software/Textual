@@ -53,13 +53,16 @@
 @implementation TXSharedApplication
 
 _defineSharedInstance(applicationPluginManager, THOPluginManager)
-_defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
 _defineSharedInstance(sharedGrowlController, TLOGrowlController)
 _defineSharedInstance(sharedInputHistoryManager, TLOInputHistory)
 _defineSharedInstance(sharedNicknameCompletionStatus, TLONicknameCompletionStatus)
 _defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel)
 _defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer)
 _defineSharedInstance(sharedThemeController, TPCThemeController)
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+_defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
+#endif
 
 + (OELReachability *)sharedNetworkReachabilityObject
 {

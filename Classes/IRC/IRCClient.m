@@ -605,6 +605,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (NSString *)encryptionAccountNameForLocalUser
 {
 	return [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
@@ -614,6 +615,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	return [sharedEncryptionManager() accountNameWithUser:nickname onClient:self];
 }
+#endif
 
 - (NSString *)localHostmask
 {
@@ -1000,6 +1002,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return _blockedNames;
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname
 {
 	PointerIsEmptyAssertReturn(nickname, NO)
@@ -1020,11 +1023,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 }
+#endif
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
+#endif
 		if (encodingCallback) {
 			encodingCallback(messageBody, NO);
 		}
@@ -1033,6 +1039,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			injectionCallback(messageBody);
 		}
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 		return; // Do not continue with this operation...
 	}
 
@@ -1042,6 +1049,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 										   to:[self encryptionAccountNameForUser:messageTo]
 							 encodingCallback:encodingCallback
 							injectionCallback:injectionCallback];
+#endif
 }
 
 - (void)decryptMessage:(NSString *)messageBody referenceMessage:(IRCMessage *)referenceMessage decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
@@ -1053,12 +1061,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
+#endif
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
 		}
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 		return; // Do not continue with this operation...
 	}
 
@@ -1067,6 +1078,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 										 from:[self encryptionAccountNameForUser:messageTo]
 										   to:[self encryptionAccountNameForLocalUser]
 							 decodingCallback:decodingCallback];
+#endif
 }
 
 #pragma mark -

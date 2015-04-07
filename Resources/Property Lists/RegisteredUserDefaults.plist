@@ -116,9 +116,9 @@
 	<true/>
 	<key>NotificationType -&gt; Successful File Transfer (Sending) -&gt; Enabled</key>
 	<true/>
-	<key>Off-the-Record Messaging -> Automatically Enable Service</key>
+	<key>Off-the-Record Messaging -&gt; Automatically Enable Service</key>
 	<true/>
-	<key>Off-the-Record Messaging -> Require Encryption</key>
+	<key>Off-the-Record Messaging -&gt; Require ion</key>
 	<false/>
 	<key>PostNotificationsWhileInFocus</key>
 	<true/>

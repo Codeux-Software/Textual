@@ -193,6 +193,7 @@
 
 - (NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	BOOL allowWithOTR = [sharedEncryptionManager() safeToContinueFileTransferTo:[client encryptionAccountNameForUser:nickname]
 																		   from:[client encryptionAccountNameForLocalUser]
 														 isIncomingFileTransfer:YES];
@@ -200,6 +201,7 @@
 	if (allowWithOTR == NO) {
 		return nil; // This operation is not allowed...
 	}
+#endif
 
 	if ([self countNumberOfReceivers] > _addReceiverHardLimit) {
 		LogToConsole(@"Max receiver count of %i exceeded.", _addReceiverHardLimit);
@@ -248,6 +250,7 @@
 
 - (NSString *)addSenderForClient:(IRCClient *)client nickname:(NSString *)nickname path:(NSString *)completePath autoOpen:(BOOL)autoOpen
 {
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	/* Ask whether we should be allowed to add the file. */
 	BOOL allowWithOTR = [sharedEncryptionManager() safeToContinueFileTransferTo:[client encryptionAccountNameForUser:nickname]
 																		   from:[client encryptionAccountNameForLocalUser]
@@ -256,6 +259,7 @@
 	if (allowWithOTR == NO) {
 		return nil; // This operation is not allowed...
 	}
+#endif
 
 	/* Gather file information. */
 	NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:completePath error:NULL];

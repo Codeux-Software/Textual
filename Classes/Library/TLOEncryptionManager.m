@@ -37,6 +37,7 @@
 
 #import "TextualApplication.h"
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 @interface TLOEncryptionManager ()
 @property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end
@@ -321,6 +322,20 @@
 
 #pragma mark -
 #pragma mark Helper Methods
+
+- (void)updateEncryptionStatusFor:(NSString *)messageTo from:(NSString *)messageFrom
+{
+	PointerIsEmptyAssert(messageTo)
+	PointerIsEmptyAssert(messageFrom)
+
+	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																		   accountName:messageFrom
+																			  protocol:[self otrKitProtocol]];
+
+	[self performBlockInRelationToAccountName:messageTo block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+		[channel setEncryptionState:currentState];
+	}];
+}
 
 - (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
 {
@@ -737,3 +752,4 @@
 
 @implementation TLOEncryptionManagerEncodingDecodingObject
 @end
+#endif

@@ -66,7 +66,10 @@
 #define _toolbarItemIndexDefaultIdentity			116
 #define _toolbarItemIndexDefualtIRCopMessages		117
 #define _toolbarItemIndexExperimentalSettings		119
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 #define _toolbarItemIndexOffRecordMessaging		    121
+#endif
 
 #define _addonsToolbarInstalledAddonsMenuItemIndex		120
 #define _addonsToolbarItemMultiplier					995
@@ -111,7 +114,11 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 @property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
+#endif
+
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
@@ -173,7 +180,9 @@
 
 - (IBAction)onSelectNewFont:(id)sender;
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (IBAction)offRecordMessagingPolicyChanged:(id)sender;
+#endif
 @end
 
 @implementation TDCPreferencesController
@@ -346,7 +355,9 @@
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 		_de(_toolbarItemIndexOffRecordMessaging,	[self contentViewOffRecordMessaging],		_toolbarItemIndexAdvanced)
+#endif
 
 		_de(_toolbarItemIndexExperimentalSettings,	[self contentViewExperimentalSettings],		_toolbarItemIndexAdvanced);
 
@@ -967,10 +978,12 @@
 #pragma mark -
 #pragma mark Actions
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
 	[sharedEncryptionManager() updatePolicy];
 }
+#endif
 
 - (void)onHideMountainLionDeprecationWarning:(id)sender
 {

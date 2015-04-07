@@ -1075,6 +1075,7 @@
 	}
 }
 
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 - (void)titlebarAccessoryViewLockButtonClicked:(id)sender
 {
 	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
@@ -1083,10 +1084,13 @@
 							  atLocation:self.titlebarAccessoryViewLockButton.frame.origin
 								  inView:self.titlebarAccessoryViewLockButton];
 }
+#endif
 
 - (void)updateAccessoryViewLockButton
 {
 	IRCClient *u = self.selectedClient;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	IRCChannel *c = self.selectedChannel;
 
 	BOOL updateEncryption = ([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]);
@@ -1103,6 +1107,8 @@
 
 		[self.titlebarAccessoryView setHidden:NO];
 	} else {
+#endif
+
 		[self.titlebarAccessoryViewLockButton setAction:@selector(presentCertificateTrustInformation:)];
 
 		[self.titlebarAccessoryViewLockButton disableDrawingCustomBackgroundColor];
@@ -1117,11 +1123,14 @@
 		} else {
 			[self.titlebarAccessoryView setHidden:YES];
 		}
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	}
 
 	if ([self.titlebarAccessoryView isHidden] == NO) {
 		[self.titlebarAccessoryViewLockButton sizeToFit];
 	}
+#endif
 }
 
 - (void)addAccessoryViewsToTitlebar
