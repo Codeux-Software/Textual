@@ -284,7 +284,9 @@
 	 conversation, then manually invoke blocks at this point and do not message OTRKit. 
 	 This exception is made because when OTRL_POLICY_MANUAL is set, OTR discards outgoing
 	 messages altogther. */
-	if ([TPCPreferences textEncryptionIsOpportunistic] == NO) {
+	if ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
+		[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever)
+	{
 		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																			   accountName:messageFrom
 																				  protocol:[self otrKitProtocol]];
