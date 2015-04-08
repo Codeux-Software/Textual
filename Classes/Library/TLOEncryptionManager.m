@@ -334,6 +334,8 @@
 
 	[self performBlockInRelationToAccountName:messageTo block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		[channel setEncryptionState:currentState];
+
+		[mainWindow() updateTitleFor:channel];
 	}];
 }
 
