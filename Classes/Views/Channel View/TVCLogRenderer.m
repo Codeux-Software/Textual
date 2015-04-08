@@ -521,11 +521,11 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				}
 			}
 
-			if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType) {
-				enabled = [self sectionOfBodyIsSurroundedByNonAlphabeticals:r];
-			}
-
 			if (enabled) {
+				if ([TPCPreferences highlightMatchingMethod] == TXNicknameHighlightExactMatchType) {
+					enabled = [self sectionOfBodyIsSurroundedByNonAlphabeticals:r];
+				}
+
 				if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length)) {
 					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length);
 
