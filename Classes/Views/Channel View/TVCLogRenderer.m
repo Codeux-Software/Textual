@@ -447,8 +447,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			}
 		}
 
-		BOOL foundKeyword = NO;
-
 		NSMutableArray *excludeRanges = [NSMutableArray array];
 
 		/* Exclude word matching. */
@@ -458,8 +456,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		for (NSString *excludeWord in excludedWords) {
 			while (start < length) {
 				NSRange r = [_body rangeOfString:excludeWord
-										options:NSCaseInsensitiveSearch
-										  range:NSMakeRange(start, (length - start))];
+										 options:NSCaseInsensitiveSearch
+										   range:NSMakeRange(start, (length - start))];
 
 				if (r.location == NSNotFound) {
 					break;
@@ -473,17 +471,19 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			start = 0;
 		}
 
+		BOOL foundKeyword = NO;
+
 		switch ([TPCPreferences highlightMatchingMethod]) {
 			case TXNicknameHighlightExactMatchType:
 			case TXNicknameHighlightPartialMatchType:
 			{
-				[self matchKeywordsUsingNormalMatching:highlightWords excludedRanges:excludeRanges foundKeyword:&foundKeyword];
+				foundKeyword = [self matchKeywordsUsingNormalMatching:highlightWords excludedRanges:excludeRanges];
 
 				break;
 			}
 			case TXNicknameHighlightRegularExpressionMatchType:
 			{
-				[self matchKeywordsUsingRegularExpression:highlightWords excludedRanges:excludeRanges foundKeyword:&foundKeyword];
+				foundKeyword = [self matchKeywordsUsingRegularExpression:highlightWords excludedRanges:excludeRanges];
 
 				break;
 			}
@@ -493,9 +493,11 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 }
 
-- (void)matchKeywordsUsingNormalMatching:(NSArray *)keywrods excludedRanges:(NSArray *)excludedRanges foundKeyword:(BOOL *)foundKeyword
+- (BOOL)matchKeywordsUsingNormalMatching:(NSArray *)keywrods excludedRanges:(NSArray *)excludedRanges
 {
 	/* Normal keyword matching. Partial and absolute. */
+	BOOL foundKeyword = NO;
+
 	for (__strong NSString *keyword in keywrods) {
 		NSInteger start = 0;
 		NSInteger length = [_body length];
@@ -512,7 +514,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			BOOL enabled = YES;
 
 			for (NSValue *e in excludedRanges) {
-				if (NSIntersectionRange(r, e.rangeValue).length > 0) {
+				if (NSIntersectionRange(r, [e rangeValue]).length > 0) {
 					enabled = NO;
 
 					break;
@@ -527,9 +529,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length)) {
 					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length);
 
-					if ( foundKeyword) {
-						*foundKeyword = YES;
-					}
+					foundKeyword = YES;
 
 					break;
 				}
@@ -541,16 +541,18 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		/* We break after finding a keyword because as long as there is one
 		 amongst many, that is all the end user really cares about. */
 		if (foundKeyword) {
-			if (*foundKeyword) {
-				break;
-			}
+			break;
 		}
 	}
+
+	return foundKeyword;
 }
 
-- (void)matchKeywordsUsingRegularExpression:(NSArray *)keywords excludedRanges:(NSArray *)excludedRanges foundKeyword:(BOOL *)foundKeyword
+- (BOOL)matchKeywordsUsingRegularExpression:(NSArray *)keywords excludedRanges:(NSArray *)excludedRanges
 {
 	/* Regular expression keyword matching. */
+	BOOL foundKeyword = NO;
+
 	for (NSString *keyword in keywords) {
 		NSRange matchRange = [XRRegularExpression string:_body rangeOfRegex:keyword withoutCase:YES];
 
@@ -561,7 +563,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 			for (NSValue *e in excludedRanges) {
 				/* Did the regular expression find a match inside an excluded range? */
-				if (NSIntersectionRange(matchRange, e.rangeValue).length > 0) {
+				if (NSIntersectionRange(matchRange, [e rangeValue]).length > 0) {
 					enabled = NO;
 
 					break;
@@ -573,15 +575,20 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				if (isClear(_effectAttributes, _rendererURLAttribute, matchRange.location, matchRange.length)) {
 					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, matchRange.location, matchRange.length);
 
-					if ( foundKeyword) {
-						*foundKeyword = YES;
-					}
+					foundKeyword = YES;
 
 					break; // break from first for loop ending search
 				}
 			}
+
+			/* Break if any keywords are matched. */
+			if (foundKeyword) {
+				break;
+			}
 		}
 	}
+
+	return foundKeyword;
 }
 
 - (void)findAllChannelNames
