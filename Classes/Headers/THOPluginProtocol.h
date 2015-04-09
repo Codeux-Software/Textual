@@ -274,16 +274,21 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
 #pragma mark Preferences Pane
 
 /*!
- * @brief Defines an NSView used by the Preferences dialog of Textual to 
+ * @brief Defines an NSView used by the Preferences window of Textual to
  *  allow user-interactive configuration of the plugin.
  *
- * @return An instance of NSView with a width of 567 pixels and a minimum 
- *  height of 406 pixels
+ * @discussion Textual 5.1.2 and later use auto layout for the Preferences 
+ *  window. Therefore, for a preference pane to be displayed properly,
+ *  a width and height constraint must be set on the returned view.
+ *
+ * @return An instance of NSView with a width of at least 589. This width
+ *  is not enforced, but having a view with a width lower than this magic
+ *  number will result in one or more toolbar items not fitting on screen.
  */
 - (NSView *)pluginPreferencesPaneView;
 
 /*!
- * @brief Defines an NSString which is used by the Preferences dialog of
+ * @brief Defines an NSString which is used by the Preferences window of
  *  Textual to create a new entry in its navigation list.
  */
 - (NSString *)pluginPreferencesPaneMenuItemName;
