@@ -176,7 +176,7 @@
 
 - (void)performValidation
 {
-	if ([self valueIsEmpty] == NO) {
+	if (NSObjectIsEmpty([self actualValue]) == NO) {
 		if (self.validationBlock) {
 			self.cachedValidValue = self.validationBlock([self actualValue]);
 		} else {
