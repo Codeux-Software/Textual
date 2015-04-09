@@ -377,13 +377,13 @@ static const char *kMacNames[] = {
 
 			_append(kKeyExchangeNames, (cs.encoded >> 8))
 
-			[resultString appendString:@" "];
+			[resultString appendString:@"-"];
 
 // -
 
 			_append(kCipherNames, ((cs.encoded >> 3) & 0x1f));
 
-			[resultString appendString:@" "];
+			[resultString appendString:@"-"];
 
 // -
 
