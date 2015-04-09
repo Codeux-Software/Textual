@@ -140,15 +140,17 @@
 
 - (void)presentListOfFingerprints
 {
-	if ([self fingerprintManagerDialog] == nil) {
-		OTRKitFingerprintManagerDialog *dialog = [OTRKitFingerprintManagerDialog new];
+	[self performBlockOnMainThread:^{
+		if ([self fingerprintManagerDialog] == nil) {
+			OTRKitFingerprintManagerDialog *dialog = [OTRKitFingerprintManagerDialog new];
 
-		[dialog setDelegate:self];
+			[dialog setDelegate:self];
 
-		[self setFingerprintManagerDialog:dialog];
-	}
+			[self setFingerprintManagerDialog:dialog];
+		}
 
-	[[self fingerprintManagerDialog] open:mainWindow()];
+		[[self fingerprintManagerDialog] open:mainWindow()];
+	}];
 }
 
 #pragma mark -
@@ -189,17 +191,19 @@
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-	if (currentState == OTRKitMessageStateEncrypted) {
-		[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
-												   accountName:messageFrom
-													  protocol:[self otrKitProtocol]];
-	} else {
-		[self presentErrorMessage:BLS(1270) withAccountName:messageTo];
-	}
+		if (currentState == OTRKitMessageStateEncrypted) {
+			[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
+													   accountName:messageFrom
+														  protocol:[self otrKitProtocol]];
+		} else {
+			[self presentErrorMessage:BLS(1270) withAccountName:messageTo];
+		}
+	}];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
@@ -212,21 +216,23 @@
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
-	[self presentMessage:message withAccountName:messageTo];
+	[self performBlockOnMainThread:^{
+		[self presentMessage:message withAccountName:messageTo];
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-	if (currentState == OTRKitMessageStateEncrypted) {
-		[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
-												   accountName:messageFrom
-													  protocol:[self otrKitProtocol]];
-	}
+		if (currentState == OTRKitMessageStateEncrypted) {
+			[[OTRKit sharedInstance] disableEncryptionWithUsername:messageTo
+													   accountName:messageFrom
+														  protocol:[self otrKitProtocol]];
+		}
 
-	[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
-												accountName:messageFrom
-												   protocol:[self otrKitProtocol]];
+		[[OTRKit sharedInstance] initiateEncryptionWithUsername:messageTo
+													accountName:messageFrom
+													   protocol:[self otrKitProtocol]];
+	}];
 }
 
 #pragma mark -
@@ -237,17 +243,19 @@
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-	if (currentState == OTRKitMessageStateEncrypted) {
-		[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
-														 accountName:messageFrom
-															protocol:[self otrKitProtocol]];
-	} else {
-		[self presentErrorMessage:BLS(1263) withAccountName:messageTo];
-	}
+		if (currentState == OTRKitMessageStateEncrypted) {
+			[OTRKitAuthenticationDialog requestAuthenticationForUsername:messageTo
+															 accountName:messageFrom
+																protocol:[self otrKitProtocol]];
+		} else {
+			[self presentErrorMessage:BLS(1263) withAccountName:messageTo];
+		}
+	}];
 }
 
 #pragma mark -
@@ -259,19 +267,21 @@
 	PointerIsEmptyAssert(messageFrom)
 	PointerIsEmptyAssert(messageBody)
 
-	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+	[self performBlockOnMainThread:^{
+		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+		[messageObject setMessageTo:messageTo];
+		[messageObject setMessageFrom:messageFrom];
+		[messageObject setMessageBody:messageBody];
 
-	[messageObject setEncodingCallback:decodingCallback];
+		[messageObject setEncodingCallback:decodingCallback];
 
-	[[OTRKit sharedInstance] decodeMessage:messageBody
-								  username:messageFrom
-							   accountName:messageTo
-								  protocol:[self otrKitProtocol]
-									   tag:messageObject];
+		[[OTRKit sharedInstance] decodeMessage:messageBody
+									  username:messageFrom
+								   accountName:messageTo
+									  protocol:[self otrKitProtocol]
+										   tag:messageObject];
+	}];
 }
 
 - (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
@@ -280,46 +290,48 @@
 	PointerIsEmptyAssert(messageFrom)
 	PointerIsEmptyAssert(messageBody)
 
-	/* If we are not performing encryption automatically and we are not in an encrypted
-	 conversation, then manually invoke blocks at this point and do not message OTRKit. 
-	 This exception is made because when OTRL_POLICY_MANUAL is set, OTR discards outgoing
-	 messages altogther. */
-	if ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
-		[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever)
-	{
-		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																			   accountName:messageFrom
-																				  protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		/* If we are not performing encryption automatically and we are not in an encrypted
+		 conversation, then manually invoke blocks at this point and do not message OTRKit.
+		 This exception is made because when OTRL_POLICY_MANUAL is set, OTR discards outgoing
+		 messages altogther. */
+		if ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
+			[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever)
+		{
+			OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																				   accountName:messageFrom
+																					  protocol:[self otrKitProtocol]];
 
-		if (currentState == OTRKitMessageStatePlaintext) {
-			if (encodingCallback) {
-				encodingCallback(messageBody, NO);
+			if (currentState == OTRKitMessageStatePlaintext) {
+				if (encodingCallback) {
+					encodingCallback(messageBody, NO);
+				}
+
+				if (injectionCallback) {
+					injectionCallback(messageBody);
+				}
+
+				return; // Cancel operation...
 			}
-
-			if (injectionCallback) {
-				injectionCallback(messageBody);
-			}
-
-			return; // Cancel operation...
 		}
-	}
 
-	/* Pass message off to OTRKit */
-	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
+		/* Pass message off to OTRKit */
+		TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+		[messageObject setMessageTo:messageTo];
+		[messageObject setMessageFrom:messageFrom];
+		[messageObject setMessageBody:messageBody];
 
-	[messageObject setEncodingCallback:encodingCallback];
-	[messageObject setInjectionCallback:injectionCallback];
+		[messageObject setEncodingCallback:encodingCallback];
+		[messageObject setInjectionCallback:injectionCallback];
 
-	[[OTRKit sharedInstance] encodeMessage:messageBody
-									  tlvs:nil
-								  username:messageTo
-							   accountName:messageFrom
-								  protocol:[self otrKitProtocol]
-									   tag:messageObject];
+		[[OTRKit sharedInstance] encodeMessage:messageBody
+										  tlvs:nil
+									  username:messageTo
+								   accountName:messageFrom
+									  protocol:[self otrKitProtocol]
+										   tag:messageObject];
+	}];
 }
 
 #pragma mark -
@@ -330,14 +342,16 @@
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-	[self performBlockInRelationToAccountName:messageTo block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		[channel setEncryptionState:currentState];
+		[self performBlockInRelationToAccountName:messageTo block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
+			[channel setEncryptionState:currentState];
 
-		[mainWindow() updateTitleFor:channel];
+			[mainWindow() updateTitleFor:channel];
+		}];
 	}];
 }
 
@@ -346,33 +360,37 @@
 	PointerIsEmptyAssertReturn(messageTo, NO)
 	PointerIsEmptyAssertReturn(messageFrom, NO)
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	__block BOOL returnValue = YES;
 
-	if (currentState == OTRKitMessageStateEncrypted) {
-		if (isIncomingFileTransfer) {
-			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
-																 title:TXTLS(@"BasicLanguage[1272][1]")
-														 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-													   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
-														suppressionKey:nil
-													   suppressionText:nil];
+	[self performBlockOnMainThread:^{
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-			return (continueop == NO);
-		} else {
-			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][3]")
-																 title:TXTLS(@"BasicLanguage[1272][1]")
-														 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-													   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
-														suppressionKey:nil
-													   suppressionText:nil];
+		if (currentState == OTRKitMessageStateEncrypted) {
+			if (isIncomingFileTransfer) {
+				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
+																	 title:TXTLS(@"BasicLanguage[1272][1]")
+															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
+														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
+															suppressionKey:nil
+														   suppressionText:nil];
 
-			return (continueop == NO);
+				returnValue = (continueop == NO);
+			} else {
+				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][3]")
+																	 title:TXTLS(@"BasicLanguage[1272][1]")
+															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
+														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
+															suppressionKey:nil
+														   suppressionText:nil];
+
+				returnValue = (continueop == NO);
+			}
 		}
-	} else {
-		return YES;
-	}
+	}];
+
+	return returnValue;
 }
 
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
@@ -381,31 +399,33 @@
 	PointerIsEmptyAssert(messageTo)
 	PointerIsEmptyAssert(messageFrom)
 
-	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																		   accountName:messageFrom
-																			  protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																			   accountName:messageFrom
+																				  protocol:[self otrKitProtocol]];
 
-	if (currentState == OTRKitMessageStateEncrypted) {
-		BOOL hasVerifiedKey = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:messageTo
-																				  accountName:messageFrom
-																					 protocol:[self otrKitProtocol]];
+		if (currentState == OTRKitMessageStateEncrypted) {
+			BOOL hasVerifiedKey = [[OTRKit sharedInstance] activeFingerprintIsVerifiedForUsername:messageTo
+																					  accountName:messageFrom
+																						 protocol:[self otrKitProtocol]];
 
-		if (hasVerifiedKey) {
-			[button setTitle:TXTLS(@"BasicLanguage[1265][3]")];
+			if (hasVerifiedKey) {
+				[button setTitle:TXTLS(@"BasicLanguage[1265][3]")];
 
-			[button setIconAsLocked];
+				[button setIconAsLocked];
+			} else {
+				[button setTitle:TXTLS(@"BasicLanguage[1265][2]")];
+
+				/* Even though we are encrypted, our icon is still set to unlocked because
+				 the identity of messageTo still has not been authenticated. */
+				[button setIconAsUnlocked];
+			}
 		} else {
-			[button setTitle:TXTLS(@"BasicLanguage[1265][2]")];
+			[button setTitle:TXTLS(@"BasicLanguage[1265][1]")];
 
-			/* Even though we are encrypted, our icon is still set to unlocked because
-			 the identity of messageTo still has not been authenticated. */
 			[button setIconAsUnlocked];
 		}
-	} else {
-		[button setTitle:TXTLS(@"BasicLanguage[1265][1]")];
-
-		[button setIconAsUnlocked];
-	}
+	}];
 }
 
 - (void)performBlockInRelationToAccountName:(NSString *)accountName block:(void (^)(NSString *nickname, IRCClient *client, IRCChannel *channel))block
@@ -711,42 +731,54 @@
 	PointerIsEmptyAssertReturn(messageTo, NO)
 	PointerIsEmptyAssertReturn(messageFrom, NO)
 
-	NSInteger menuItemTag = [menuItem tag];
+	__block BOOL returnValue = NO;
 
-	if (menuItemTag == TLOEncryptionManagerMenuItemTagViewListOfFingerprints) {
-		return YES;
-	} else {
-		OTRKitMessageState currentMessageState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																					  accountName:messageFrom
-																						 protocol:[self otrKitProtocol]];
+	[self performBlockOnMainThread:^{
+		NSInteger menuItemTag = [menuItem tag];
 
-		BOOL messageStateEncrypted = (currentMessageState == OTRKitMessageStateEncrypted);
+		if (menuItemTag == TLOEncryptionManagerMenuItemTagViewListOfFingerprints) {
+			returnValue = YES;
+		} else {
+			OTRKitMessageState currentMessageState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+																						  accountName:messageFrom
+																							 protocol:[self otrKitProtocol]];
 
-		switch (menuItemTag) {
-			case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
-			{
-				[menuItem setHidden:messageStateEncrypted];
+			BOOL messageStateEncrypted = (currentMessageState == OTRKitMessageStateEncrypted);
 
-				return YES;
-			}
-			case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
-			{
-				[menuItem setHidden:(messageStateEncrypted == NO)];
+			switch (menuItemTag) {
+				case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
+				{
+					[menuItem setHidden:messageStateEncrypted];
 
-				return YES;
-			}
-			case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
-			{
-				return messageStateEncrypted;
-			}
-			case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
-			{
-				return messageStateEncrypted;
+					returnValue = YES;
+
+					break;
+				}
+				case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
+				{
+					[menuItem setHidden:(messageStateEncrypted == NO)];
+
+					returnValue = YES;
+
+					break;
+				}
+				case TLOEncryptionManagerMenuItemTagEndPrivateConversation:
+				{
+					returnValue = messageStateEncrypted;
+
+					break;
+				}
+				case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
+				{
+					returnValue = messageStateEncrypted;
+
+					break;
+				}
 			}
 		}
-	}
+	}];
 
-	return NO;
+	return returnValue;
 }
 
 @end
