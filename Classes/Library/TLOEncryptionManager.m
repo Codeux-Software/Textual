@@ -291,12 +291,26 @@
 	PointerIsEmptyAssert(messageBody)
 
 	[self performBlockOnMainThread:^{
-		/* If we are not performing encryption automatically and we are not in an encrypted
+		/* 
+		 If we are not performing encryption automatically and we are not in an encrypted
 		 conversation, then manually invoke blocks at this point and do not message OTRKit.
 		 This exception is made because when OTRL_POLICY_MANUAL is set, OTR discards outgoing
-		 messages altogther. */
-		if ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
-			[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever)
+		 messages altogther. 
+		 
+		 If we allow automatic OTR, then we hae to check whether the OTR request was rejected.
+		 If it was, then we manually send the message because OTR will refuse to once it has
+		 been rejected. 
+		 */
+		BOOL isManualPolicy = ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
+							   [[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever);
+
+		BOOL isRejectedOffer = ([[OTRKit sharedInstance] offerStateForUsername:messageTo
+																   accountName:messageFrom
+																	  protocol:[self otrKitProtocol]] == OTRKitOfferStateRejected &&
+
+								[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyOpportunistic);
+
+		if (isRejectedOffer || isManualPolicy)
 		{
 			OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																				   accountName:messageFrom
