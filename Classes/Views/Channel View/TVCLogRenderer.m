@@ -526,12 +526,14 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					enabled = [self sectionOfBodyIsSurroundedByNonAlphabeticals:r];
 				}
 
-				if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length)) {
-					setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length);
+				if (enabled) {
+					if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length)) {
+						setFlag(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length);
 
-					foundKeyword = YES;
+						foundKeyword = YES;
 
-					break;
+						break;
+					}
 				}
 			}
 
