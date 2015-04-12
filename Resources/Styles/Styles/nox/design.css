@@ -127,6 +127,7 @@ a:hover {
 	opacity: 0; /* Set by JavaScript */
 	z-index: 400;
 	color: #dddddd;
+	overflow: hidden; 
 	position: fixed;
 	padding: 7px 0.5em 7px;
 	box-shadow: 0 1px 5px #777;
