@@ -219,17 +219,17 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		[notification setInformativeText:eventDescription];
 		[notification setDeliveryDate:[NSDate date]];
 		[notification setUserInfo:eventContext];
-		
-		if (eventType == TXNotificationFileTransferReceiveRequestedType) {
-			/* sshhhh... you didn't see nothing. */
-			[notification setValue:@(YES) forKey:@"_showsButtons"];
-
-			[notification setActionButtonTitle:BLS(1244)];
-		}
 
 		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-			/* These are the only event types we want to support for now. */
+			/* These private APIs are not available on Mountain Lion */
+			if (eventType == TXNotificationFileTransferReceiveRequestedType) {
+				/* sshhhh... you didn't see nothing. */
+				[notification setValue:@(YES) forKey:@"_showsButtons"];
 
+				[notification setActionButtonTitle:BLS(1244)];
+			}
+
+			/* These are the only event types we want to support for now. */
 			if (eventType == TXNotificationNewPrivateMessageType ||
 				eventType == TXNotificationPrivateMessageType)
 			{
