@@ -209,7 +209,9 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		}
 	}
 
-	eventDescription = [eventDescription stripIRCEffects];
+	if ([TPCPreferences removeAllFormatting] == NO) {
+		eventDescription = [eventDescription stripIRCEffects];
+	}
 
 	/* Send to notification center? */
 	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
