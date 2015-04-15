@@ -409,7 +409,7 @@
 "BasicLanguage[1249]" = "Connection secured using %@";
 "BasicLanguage[1131]" = "Disconnect for Sleep Mode";
 "BasicLanguage[1132]" = "Disconnected for server redirect";
-"BasicLanguage[1133]" = "Disconnected from server because of an untrusted SSL certificate";
+"BasicLanguage[1133]" = "Disconnected from server because of an untrusted certificate";
 "BasicLanguage[1134]" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "BasicLanguage[1135]" = "Disconnected from server because the configured IRC server is not reachable";
 "BasicLanguage[1136]" = "Disconnected";
