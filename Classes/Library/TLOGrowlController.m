@@ -227,7 +227,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			[notification setActionButtonTitle:BLS(1244)];
 		}
 
-#ifdef TXSystemIsMacOSMavericksOrNewer
 		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 			/* These are the only event types we want to support for now. */
 
@@ -238,7 +237,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 				[notification setResponsePlaceholder:BLS(1239)];
 			}
 		}
-#endif 
 
 		[RZUserNotificationCenter() scheduleNotification:notification];
 
@@ -268,7 +266,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 {
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
-#ifdef TXSystemIsMacOSMavericksOrNewer
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
@@ -280,7 +277,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			return; // Do not continue this method.
 		}
 	}
-#endif
 	
 	[self growlNotificationWasClicked:[notification userInfo]
 					   activationType:[notification activationType]

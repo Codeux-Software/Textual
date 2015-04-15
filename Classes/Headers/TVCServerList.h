@@ -43,10 +43,7 @@
 @property (nonatomic, weak) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
 @property (nonatomic, copy) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy) NSImage *outlineViewAlternateDisclosureTriangle;
-
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 @property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
-#endif
 
 /* addItemToList and removeItemFromList work two completely different ways.
  addItemToList expects that you have already added the item to the data source

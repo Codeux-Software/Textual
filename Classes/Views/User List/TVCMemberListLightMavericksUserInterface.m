@@ -45,7 +45,6 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
 	} else {
@@ -61,9 +60,6 @@
 			return NO;
 		}
 	}
-#else
-	return NO;
-#endif
 }
 
 - (NSString *)keyForRetrievingCachedUserMarkBadgeWithSymbol:(NSString *)mark rank:(IRCUserRank)rank

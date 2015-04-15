@@ -451,7 +451,6 @@
 
 - (void)updateVibrancy
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 	/* Build context. */
 	NSAppearance *appearance = nil;
 	
@@ -469,7 +468,6 @@
 	
 	/* Use the underlying visual effect view for real situations. */
 	[visaulEffectView setAppearance:appearance];
-#endif
 }
 
 - (void)updateBackgroundColor

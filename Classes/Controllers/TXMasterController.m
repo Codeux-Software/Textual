@@ -54,12 +54,6 @@
     if ((self = [super init])) {
 		[NSObject setGlobalMasterControllerClassReference:self];
 
-#ifndef TXSystemIsMacOSYosemiteOrNewer
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			NSAssert(NO, @"This copy of Textual cannot be used on Yosemite. Please rebuild against the Yosemite SDK.");
-		}
-#endif
-
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else

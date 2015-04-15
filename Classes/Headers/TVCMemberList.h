@@ -43,10 +43,7 @@
 @property (nonatomic, strong) id userInterfaceObjects;
 @property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
 @property (nonatomic, weak) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
-
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 @property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
-#endif
 
 /* Additions & Removals. */
 - (void)addItemToList:(NSInteger)index;

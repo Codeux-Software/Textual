@@ -86,7 +86,6 @@
 
 - (void)updateBackgroundColor
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 	/* Set background appearance. */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		/* Update button appearance. */
@@ -100,7 +99,6 @@
 
 		[self.backgroundView setNeedsDisplay:YES];
 	}
-#endif
 
 	/* Use font color depending on appearance. */
 	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];

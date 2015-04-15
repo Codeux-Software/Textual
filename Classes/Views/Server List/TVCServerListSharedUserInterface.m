@@ -41,7 +41,6 @@
 
 + (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
 	} else {
@@ -57,9 +56,6 @@
 			return NO;
 		}
 	}
-#else
-	return NO;
-#endif
 }
 
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image

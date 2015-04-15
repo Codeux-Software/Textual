@@ -146,7 +146,6 @@
 
 - (void)updateBackgroundColor
 {
-#ifdef TXSystemIsMacOSYosemiteOrNewer
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
@@ -158,9 +157,6 @@
 
 		[self.contentSplitView setNeedsDisplay:YES];
 	}
-#else
-	self.usingVibrantDarkAppearance = NO;
-#endif
 	
 	[self.memberList updateBackgroundColor];
 	[self.serverList updateBackgroundColor];

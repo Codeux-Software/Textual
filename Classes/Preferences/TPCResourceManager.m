@@ -209,12 +209,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	[d setMessage:TXTLS(@"BasicLanguage[1187][2]", bundleID)];
 
 	[d setNameFieldStringValue:[url lastPathComponent]];
-	
-#ifdef TXSystemIsMacOSMavericksOrNewer
+
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[d setShowsTagField:NO];
 	}
-#endif
 	
 	/* Complete the import. */
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
