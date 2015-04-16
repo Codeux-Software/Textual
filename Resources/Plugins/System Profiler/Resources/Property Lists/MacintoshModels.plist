@@ -18,6 +18,8 @@
 	<string>MacBook (Late 2009)</string>
 	<key>MacBook7,1</key>
 	<string>MacBook (Mid-2010)</string>
+	<key>MacBook8,1</key>
+	<string>MacBook (Early 2015)</string>
 	<key>MacBookAir1,1</key>
 	<string>MacBook Air (Early 2008)</string>
 	<key>MacBookAir2,1</key>
@@ -38,6 +40,10 @@
 	<string>MacBook Air (11-inch Mid-2013)</string>
 	<key>MacBookAir6,2</key>
 	<string>MacBook Air (13-inch Mid-2013)</string>
+	<key>MacBookAir7,1</key>
+	<string>MacBook Air (11-inch Early-2015)</string>
+	<key>MacBookAir7,2</key>
+	<string>MacBook Air (13-inch Early-2015)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
@@ -86,6 +92,8 @@
 	<string>MacBook Pro (15-inch Retina Late-2013)</string>
 	<key>MacBookPro11,3</key>
 	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<key>MacBookPro12,1</key>
+	<string>MacBook Pro (13-inch Retina Early-2015)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
