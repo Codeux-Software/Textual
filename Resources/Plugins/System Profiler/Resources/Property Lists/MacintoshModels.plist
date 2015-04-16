@@ -11,7 +11,7 @@
 	<key>MacBook4,1</key>
 	<string>MacBook (Early 2008)</string>
 	<key>MacBook5,1</key>
-	<string>MacBook (Unibody Late 2008)</string>
+	<string>MacBook (Late 2008)</string>
 	<key>MacBook5,2</key>
 	<string>MacBook (Early 2009)</string>
 	<key>MacBook6,1</key>
@@ -25,33 +25,33 @@
 	<key>MacBookAir2,1</key>
 	<string>MacBook Air (Late 2008)</string>
 	<key>MacBookAir3,1</key>
-	<string>MacBook Air (11-inch Late 2010)</string>
+	<string>MacBook Air (11-inch, Late 2010)</string>
 	<key>MacBookAir3,2</key>
-	<string>MacBook Air (13-inch Late 2010)</string>
+	<string>MacBook Air (13-inch, Late 2010)</string>
 	<key>MacBookAir4,1</key>
-	<string>MacBook Air (11-inch Mid-2011)</string>
+	<string>MacBook Air (11-inch, Mid-2011)</string>
 	<key>MacBookAir4,2</key>
-	<string>MacBook Air (13-inch Mid-2011)</string>
+	<string>MacBook Air (13-inch, Mid-2011)</string>
 	<key>MacBookAir5,1</key>
-	<string>MacBook Air (11-inch Mid-2012)</string>
+	<string>MacBook Air (11-inch, Mid-2012)</string>
 	<key>MacBookAir5,2</key>
-	<string>MacBook Air (13-inch Mid-2012)</string>
+	<string>MacBook Air (13-inch, Mid-2012)</string>
 	<key>MacBookAir6,1</key>
-	<string>MacBook Air (11-inch Mid-2013)</string>
+	<string>MacBook Air (11-inch, Mid-2013)</string>
 	<key>MacBookAir6,2</key>
-	<string>MacBook Air (13-inch Mid-2013)</string>
+	<string>MacBook Air (13-inch, Mid-2013)</string>
 	<key>MacBookAir7,1</key>
-	<string>MacBook Air (11-inch Early-2015)</string>
+	<string>MacBook Air (11-inch, Early 2015)</string>
 	<key>MacBookAir7,2</key>
-	<string>MacBook Air (13-inch Early-2015)</string>
+	<string>MacBook Air (13-inch, Early 2015)</string>
 	<key>MacBookPro1,1</key>
 	<string>MacBook Pro (Original)</string>
 	<key>MacBookPro1,2</key>
 	<string>MacBook Pro (17-inch)</string>
 	<key>MacBookPro2,1</key>
-	<string>MacBook Pro (17-inch Core 2 Duo)</string>
+	<string>MacBook Pro (17-inch)</string>
 	<key>MacBookPro2,2</key>
-	<string>MacBook Pro (15-inch Core 2 Duo)</string>
+	<string>MacBook Pro (15-inch)</string>
 	<key>MacBookPro3,1</key>
 	<string>MacBook Pro (Mid/Late 2007)</string>
 	<key>MacBookPro4,1</key>
@@ -67,37 +67,37 @@
 	<key>MacBookPro5,5</key>
 	<string>MacBook Pro (Mid-2009)</string>
 	<key>MacBookPro6,1</key>
-	<string>MacBook Pro (17-inch Mid-2010)</string>
+	<string>MacBook Pro (17-inch, Mid-2010)</string>
 	<key>MacBookPro6,2</key>
-	<string>MacBook Pro (15-inch Mid-2010)</string>
+	<string>MacBook Pro (15-inch, Mid-2010)</string>
 	<key>MacBookPro7,1</key>
-	<string>MacBook Pro (13-inch Mid-2010)</string>
+	<string>MacBook Pro (13-inch, Mid-2010)</string>
 	<key>MacBookPro8,1</key>
-	<string>MacBook Pro (13-inch 2011)</string>
+	<string>MacBook Pro (13-inch, Early/Late 2011)</string>
 	<key>MacBookPro8,2</key>
-	<string>MacBook Pro (15-inch 2011)</string>
+	<string>MacBook Pro (15-inch, Early/Late 2011)</string>
 	<key>MacBookPro8,3</key>
-	<string>MacBook Pro (17-inch 2011)</string>
+	<string>MacBook Pro (17-inch, Early/Late 2011)</string>
 	<key>MacBookPro9,2</key>
-	<string>MacBook Pro (13-inch Mid-2012)</string>
+	<string>MacBook Pro (13-inch, Mid-2012)</string>
 	<key>MacBookPro9,1</key>
-	<string>MacBook Pro (15-inch Mid-2012)</string>
+	<string>MacBook Pro (15-inch, Mid-2012)</string>
 	<key>MacBookPro10,1</key>
-	<string>MacBook Pro (15-inch Retina Mid-2012)</string>
+	<string>MacBook Pro (15-inch, Retina, Mid-2012)</string>
 	<key>MacBookPro10,2</key>
-	<string>MacBook Pro (13-inch Retina Mid-2012)</string>
+	<string>MacBook Pro (13-inch, Retina, Mid-2012)</string>
 	<key>MacBookPro11,1</key>
-	<string>MacBook Pro (13-inch Retina Late-2013)</string>
+	<string>MacBook Pro (13-inch, Retina, Late 2013)</string>
 	<key>MacBookPro11,2</key>
-	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<string>MacBook Pro (15-inch, Retina, Late 2013)</string>
 	<key>MacBookPro11,3</key>
-	<string>MacBook Pro (15-inch Retina Late-2013)</string>
+	<string>MacBook Pro (15-inch, Retina, Late 2013)</string>
 	<key>MacBookPro12,1</key>
-	<string>MacBook Pro (13-inch Retina Early-2015)</string>
+	<string>MacBook Pro (13-inch, Retina, Early 2015)</string>
 	<key>MacPro1,1*</key>
 	<string>Mac Pro (Original)</string>
 	<key>MacPro2,1</key>
-	<string>Mac Pro (8 Core)</string>
+	<string>Mac Pro (Early 2008)</string>
 	<key>MacPro3,1</key>
 	<string>Mac Pro (Early 2008)</string>
 	<key>MacPro4,1</key>
@@ -113,11 +113,11 @@
 	<key>Macmini4,1</key>
 	<string>Mac Mini (Mid-2010)</string>
 	<key>Macmini5,1</key>
-	<string>Mac Mini (2011)</string>
+	<string>Mac Mini (Mid-2011)</string>
 	<key>Macmini5,2</key>
-	<string>Mac Mini (2011)</string>
+	<string>Mac Mini (Mid-2011)</string>
 	<key>Macmini5,3</key>
-	<string>Mac Mini Server (2011)</string>
+	<string>Mac Mini Server (Mid-2011)</string>
 	<key>Macmini6,1</key>
 	<string>Mac Mini (Late 2012)</string>
 	<key>Macmini6,2</key>
@@ -137,27 +137,27 @@
 	<key>iMac11,1</key>
 	<string>iMac (Late 2009)</string>
 	<key>iMac11,2</key>
-	<string>iMac (21.5-inch Mid-2010)</string>
+	<string>iMac (21.5-inch, Mid-2010)</string>
 	<key>iMac11,3</key>
-	<string>iMac (27-inch Mid-2010)</string>
+	<string>iMac (27-inch, Mid-2010)</string>
 	<key>iMac12,1</key>
-	<string>iMac (21.5-inch 2011)</string>
+	<string>iMac (21.5-inch, 2011)</string>
 	<key>iMac12,2</key>
-	<string>iMac (27-inch Mid-2011)</string>
+	<string>iMac (27-inch, Mid-2011)</string>
 	<key>iMac13,1</key>
-	<string>iMac (21.5-inch Late 2012)</string>
+	<string>iMac (21.5-inch, Late 2012)</string>
 	<key>iMac13,2</key>
-	<string>iMac (27-inch Late 2012)</string>
+	<string>iMac (27-inch, Late 2012)</string>
 	<key>iMac14,1</key>
-	<string>iMac (21.5-inch Late 2013)</string>
+	<string>iMac (21.5-inch, Late 2013)</string>
 	<key>iMac14,2</key>
-	<string>iMac (27-inch Late 2013)</string>
+	<string>iMac (27-inch, Late 2013)</string>
 	<key>iMac14,3</key>
-	<string>iMac (21.5-inch Late 2013)</string>
+	<string>iMac (21.5-inch, Late 2013)</string>
 	<key>iMac14,4</key>
-	<string>iMac (21.5-inch Late 2014)</string>
+	<string>iMac (21.5-inch, Late 2014)</string>
 	<key>iMac15,1</key>
-	<string>iMac (27-inch Retina Late 2014)</string>
+	<string>iMac (27-inch, Retina, Late 2014)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
@@ -167,7 +167,7 @@
 	<key>iMac5,2</key>
 	<string>iMac (Late 2006)</string>
 	<key>iMac6,1</key>
-	<string>iMac (24-inch late 2006)</string>
+	<string>iMac (24-inch, Late 2006)</string>
 	<key>iMac7,1</key>
 	<string>iMac (Mid-2007)</string>
 	<key>iMac8,1</key>
