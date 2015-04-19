@@ -188,71 +188,69 @@
 {
 	DebugLogToConsole(@"Performing truncation on file to meet maximum line count of %i.", _maximumRowCountPerClient);
 
-	if (self.fileHandle) {
-		@autoreleasepool {
-			/* Close the open file handle. */
-			[self close];
+	@autoreleasepool {
+		/* Close the open file handle. */
+		[self close];
 
-			/* Read contents of file. */
-			NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
+		/* Read contents of file. */
+		NSData *rawdata = [NSData dataWithContentsOfFile:[self writePath] options:NSDataReadingUncached error:NULL];
 
-			NSObjectIsEmptyAssert(rawdata);
+		NSObjectIsEmptyAssert(rawdata);
 
-			/* Discussion: Yes, I could simply convert this NSData chunk to 
-			 an NSString, split it, and be done with it... BUT, NSJSONSerialization
-			 which the data will ultimately be fed to only accepts NSData so
-			 the workload of converting this to NSString then converting the
-			 individual chunks back to NSData is a lot of overhead. That is
-			 why I implement such a messy while loop that gets the range of
-			 every newline and breaks it apart into smaller data. */
-			/* The same idea applies to the code for reading entries which
-			 is inherited from this codebase. */
-			/* Seek each newline, truncate to that, insert into array, then
-			 find the next one and repeat process until there are no more. */
-			NSMutableArray *alllines = [NSMutableArray array];
+		/* Discussion: Yes, I could simply convert this NSData chunk to 
+		 an NSString, split it, and be done with it... BUT, NSJSONSerialization
+		 which the data will ultimately be fed to only accepts NSData so
+		 the workload of converting this to NSString then converting the
+		 individual chunks back to NSData is a lot of overhead. That is
+		 why I implement such a messy while loop that gets the range of
+		 every newline and breaks it apart into smaller data. */
+		/* The same idea applies to the code for reading entries which
+		 is inherited from this codebase. */
+		/* Seek each newline, truncate to that, insert into array, then
+		 find the next one and repeat process until there are no more. */
+		NSMutableArray *alllines = [NSMutableArray array];
 
-			NSMutableData *mutdata = [rawdata mutableCopy];
+		NSMutableData *mutdata = [rawdata mutableCopy];
 
-			NSInteger startIndex = 0;
+		NSInteger startIndex = 0;
 
-			while (1 == 1) {
-				/* Our scan range is the range from last newline. */
-				NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
+		while (1 == 1) {
+			/* Our scan range is the range from last newline. */
+			NSRange scanrange = NSMakeRange(startIndex, ([mutdata length] - startIndex));
 
-				NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
+			NSRange nlrang = [mutdata rangeOfData:[NSData lineFeed] options:0 range:scanrange];
 
-				/* If no more newlines are found, then there is nothing to do. */
-				if (nlrang.location == NSNotFound) {
-					break; // No newline was found.
-				} else {
-					[alllines addObject:@(nlrang.location)];
+			/* If no more newlines are found, then there is nothing to do. */
+			if (nlrang.location == NSNotFound) {
+				break; // No newline was found.
+			} else {
+				[alllines addObject:@(nlrang.location)];
 
-					startIndex = (nlrang.location + 1);
-				}
+				startIndex = (nlrang.location + 1);
 			}
+		}
 
-			/* Now that we have all lines, limit them based on fetch count. */
-			if ([alllines count] > _maximumRowCountPerClient) {
-				/* The last possible index is the line which will be truncated to. This line
-				 is calculated by taking the maximum number of clients and subtracting the
-				 file number of lines from it. That will give us a negative number, so we
-				 times it by -1. After that, we minus one so the only rows remaining are the
-				 number that we have defined as maximum. */
-				NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
+		/* Now that we have all lines, limit them based on fetch count. */
+		if ([alllines count] > _maximumRowCountPerClient) {
+			/* The last possible index is the line which will be truncated to. This line
+			 is calculated by taking the maximum number of clients and subtracting the
+			 file number of lines from it. That will give us a negative number, so we
+			 times it by -1. After that, we minus one so the only rows remaining are the
+			 number that we have defined as maximum. */
+			NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
 
-				/* Add 1 to not have first line a newline. */
-				NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
+			/* Add 1 to not have first line a newline. */
+			NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
 
-				NSRange cutRange = NSMakeRange(lastBytePos, ([rawdata length] - lastBytePos));
+			NSRange cutRange = NSMakeRange(lastBytePos, ([rawdata length] - lastBytePos));
 
-				NSData *finalData = [rawdata subdataWithRange:cutRange];
+			NSData *finalData = [rawdata subdataWithRange:cutRange];
 
-				/* We completely clear out file, write the new data, then save it. */
-				NSError *writeError = nil;
+			/* We completely clear out file, write the new data, then save it. */
+			NSError *writeError = nil;
 
-				if ([finalData writeToFile:[self writePath] options:NSDataWritingAtomic error:&writeError] == NO) {
-					LogToConsole(@"Failed to write file to disk: %@", [writeError localizedDescription]);
-				}
+			if ([finalData writeToFile:[self writePath] options:NSDataWritingAtomic error:&writeError] == NO) {
+				LogToConsole(@"Failed to write file to disk: %@", [writeError localizedDescription]);
 			}
 		}
 	}
