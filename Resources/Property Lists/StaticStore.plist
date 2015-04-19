@@ -43,6 +43,7 @@
 			<string>nickserv</string>
 			<string>operserv</string>
 			<string>rootserv</string>
+			<string>statserv</string>
 			<string>userserv</string>
 		</array>
 	</dict>
