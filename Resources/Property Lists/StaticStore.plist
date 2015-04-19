@@ -28,9 +28,10 @@
 	<dict>
 		<key>UnderNet</key>
 		<array>
-			<string>c</string>	
-			<string>w</string>	
+			<string>c</string>
+			<string>w</string>
 			<string>x</string>
+			<string>x@channels.undernet.org</string>
 		</array>
 		<key>-default-</key>
 		<array>
