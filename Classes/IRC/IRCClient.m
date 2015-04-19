@@ -988,15 +988,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Encryption and Decryption
 
-- (NSArray *)listOfNicknamesToDisallowEncryption
+- (NSDictionary *)listOfNicknamesToDisallowEncryption
 {
 	/* Add entries as lowercase because thats how they are compared. */
-	static NSArray *_blockedNames = nil;
+	static NSDictionary *_blockedNames = nil;
 
 	if (_blockedNames == nil) {
 		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		_blockedNames = [[staticValues arrayForKey:@"IRCClient List of Nicknames that Encryption Forbids"] copy];
+		_blockedNames = [[staticValues dictionaryForKey:@"IRCClient List of Nicknames that Encryption Forbids"] copy];
 	}
 
 	return _blockedNames;
@@ -1014,13 +1014,35 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	} else if ([self nicknameIsPrivateZNCUser:nickname]) { // Do not allow a ZNC private user...
 		return NO;
 	} else {
-		NSString *lowercaseName = [nickname lowercaseString];
+		/* Build context information for lookup */
+		NSDictionary *exceptionRules = [self listOfNicknamesToDisallowEncryption];
 
-		if ([[self listOfNicknamesToDisallowEncryption] containsObject:lowercaseName]) {
-			return NO;
-		} else {
-			return YES;
+		NSString *lowercaseNickname = [nickname lowercaseString];
+
+		/* Check network specific rules (such as "X" on UnderNet) */
+		NSString *networkName = [[self supportInfo] networkName];
+
+		if (networkName) {
+			NSArray *networkSpecificData = [exceptionRules arrayForKey:networkName];
+
+			if (networkSpecificData) {
+				if ([networkSpecificData containsObject:lowercaseNickname]) {
+					return NO;
+				}
+			}
 		}
+
+		/* Look up rules for all networks */
+		NSArray *defaultsData = [exceptionRules objectForKey:@"-default-"];
+
+		if (defaultsData) {
+			if ([defaultsData containsObject:lowercaseNickname]) {
+				return NO;
+			}
+		}
+
+		/* Allow the nickname through when there are no rules */
+		return YES;
 	}
 }
 #endif
