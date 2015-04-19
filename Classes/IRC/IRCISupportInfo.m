@@ -60,7 +60,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	self.networkAddress = nil;
 	
 	self.networkName = nil;
-	self.networkNameActual = nil;
+	self.networkNameFormatted = nil;
 
 	self.channelNamePrefixes = @"#";
 
@@ -119,8 +119,8 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 			} else if ([vakey isEqualIgnoringCase:@"MODES"]) {
 				self.modesCount = [value integerValue];
 			} else if ([vakey isEqualIgnoringCase:@"NETWORK"]) {
-				self.networkNameActual = value;
-				self.networkName = BLS(1151, value);
+				self.networkName = value;
+				self.networkNameFormatted = BLS(1151, value);
 			} else if ([vakey isEqualIgnoringCase:@"CHANTYPES"]) {
 				self.channelNamePrefixes = value;
 			} else if ([vakey isEqualIgnoringCase:@"ZNCPREFIX"]) {

@@ -579,15 +579,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)networkName
 {
-	return self.supportInfo.networkName;
+	return self.supportInfo.networkNameFormatted;
 }
 
 - (NSString *)altNetworkName
 {
-	if (NSObjectIsEmpty(self.supportInfo.networkName)) {
+	if (NSObjectIsEmpty(self.supportInfo.networkNameFormatted)) {
 		return self.config.connectionName;
 	} else {
-		return self.supportInfo.networkName;
+		return self.supportInfo.networkNameFormatted;
 	}
 }
 

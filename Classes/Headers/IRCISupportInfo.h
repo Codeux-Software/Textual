@@ -45,7 +45,7 @@
 @property (nonatomic, copy) NSString *channelNamePrefixes;
 @property (nonatomic, copy) NSString *networkAddress;
 @property (nonatomic, copy) NSString *networkName;
-@property (nonatomic, copy) NSString *networkNameActual;
+@property (nonatomic, copy) NSString *networkNameFormatted;
 @property (nonatomic, copy) NSArray *userModePrefixes;
 @property (nonatomic, copy) NSArray *cachedConfiguration;
 @property (nonatomic, copy) NSString *privateMessageNicknamePrefix;
