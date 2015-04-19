@@ -70,7 +70,7 @@
 			[self scheduleNextRandomFileTruncationEvent];
 		}
 		@catch (NSException *exception) {
-			[self close];
+			self.fileHandle = nil;
 
 			LogToConsole(@"An exception happened to a non-critical component of Textual.");
 		}
