@@ -245,6 +245,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self.trialPeriodTimer setDelegate:nil];
 #endif
+
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)setup:(id)seed
@@ -3816,6 +3818,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self stopPongTimer];
 	[self stopRetryTimer];
 	[self stopISONTimer];
+
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 
 	[self.printingQueue cancelAllOperations];
 
