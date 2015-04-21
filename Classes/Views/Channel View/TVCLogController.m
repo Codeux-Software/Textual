@@ -164,11 +164,17 @@
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
 	/* Cache last known state of encryption. */
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	if (self.associatedChannel) {
 		self.viewIsEncrypted = [self.associatedChannel encryptionStateIsEncrypted];
 	} else {
+#endif
+
 		self.viewIsEncrypted = NO;
+
+#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	}
+#endif
 
 	/* Playback history. */
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
