@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIBlowfishEncryption">
@@ -13,24 +13,10 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="LOA-uM-qhd">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="259"/>
-            <userGuides>
-                <userLayoutGuide location="33" affinity="minY"/>
-            </userGuides>
+            <rect key="frame" x="0.0" y="1" width="589" height="243"/>
             <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="JUL-dK-X0r">
-                    <rect key="frame" x="205" y="151" width="179" height="18"/>
-                    <buttonCell key="cell" type="check" title="Enable “FiSH” encryption" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rLW-So-J3H">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="preferencesChanged:" target="-2" id="hWM-vl-JE2"/>
-                        <binding destination="Bbo-6V-xug" name="value" keyPath="values.Blowfish Encryption Extension -&gt; Enable Service" id="sOZ-hQ-7lc"/>
-                    </connections>
-                </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="vp3-Ql-vLX">
-                    <rect key="frame" x="106" y="181" width="377" height="47"/>
+                    <rect key="frame" x="106" y="181" width="377" height="31"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="DzA-KK-MGn">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,11 +25,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="223" height="156"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="377" height="47"/>
+                                <size key="minSize" width="377" height="31"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment>
-                                        <string key="content">“FiSH” refers to a type of text based encryption that a few applications support for peer-to-peer communications. It was popularized over a decade ago and has not changed since.</string>
+                                    <fragment content="“FiSH” refers to a type of text based encryption that many applications support for peer-to-peer communications.">
                                         <attributes>
                                             <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -51,7 +36,7 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="377" height="47"/>
+                                <size key="minSize" width="377" height="31"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                             </textView>
                         </subviews>
@@ -66,8 +51,19 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="JUL-dK-X0r">
+                    <rect key="frame" x="205" y="150" width="179" height="18"/>
+                    <buttonCell key="cell" type="check" title="Enable “FiSH” encryption" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="rLW-So-J3H">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="preferencesChanged:" target="-2" id="hWM-vl-JE2"/>
+                        <binding destination="Bbo-6V-xug" name="value" keyPath="values.Blowfish Encryption Extension -&gt; Enable Service" id="sOZ-hQ-7lc"/>
+                    </connections>
+                </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="NvJ-e8-90E">
-                    <rect key="frame" x="106" y="31" width="377" height="106"/>
+                    <rect key="frame" x="106" y="30" width="377" height="106"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zt2-Hf-A6W">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,20 +136,20 @@ Cgo
                 </scrollView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="height" constant="259" id="4FZ-QE-Afd"/>
-                <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="92" id="4H6-6b-ncZ"/>
-                <constraint firstItem="NvJ-e8-90E" firstAttribute="trailing" secondItem="vp3-Ql-vLX" secondAttribute="trailing" id="5nf-13-gAe"/>
-                <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="NvJ-e8-90E" secondAttribute="leading" id="66w-s1-mtr"/>
-                <constraint firstAttribute="width" constant="589" id="LZH-iR-MEX"/>
-                <constraint firstItem="NvJ-e8-90E" firstAttribute="top" secondItem="JUL-dK-X0r" secondAttribute="bottom" constant="16" id="Oah-lU-Jf8"/>
-                <constraint firstItem="JUL-dK-X0r" firstAttribute="centerX" secondItem="LOA-uM-qhd" secondAttribute="centerX" id="Ogd-iH-U2h"/>
-                <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="vp3-Ql-vLX" secondAttribute="bottom" constant="14" id="WZ8-Ee-m7F"/>
-                <constraint firstItem="JUL-dK-X0r" firstAttribute="centerX" secondItem="vp3-Ql-vLX" secondAttribute="centerX" id="Wt7-kA-K1T"/>
-                <constraint firstAttribute="bottom" secondItem="NvJ-e8-90E" secondAttribute="bottom" constant="31" id="mJk-CO-yWn"/>
-                <constraint firstItem="vp3-Ql-vLX" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="31" id="w0a-xo-JWv"/>
-                <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="106" id="zO8-tG-bM2"/>
+                <constraint firstItem="vp3-Ql-vLX" firstAttribute="centerX" secondItem="LOA-uM-qhd" secondAttribute="centerX" id="0Ez-Ig-dNm"/>
+                <constraint firstItem="NvJ-e8-90E" firstAttribute="top" secondItem="JUL-dK-X0r" secondAttribute="bottom" constant="16" id="0v4-yZ-lXl"/>
+                <constraint firstAttribute="width" constant="589" id="3zb-qs-03v"/>
+                <constraint firstAttribute="bottom" secondItem="NvJ-e8-90E" secondAttribute="bottom" constant="30" id="4QV-HW-GZH"/>
+                <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="77" id="6Cw-us-2DY"/>
+                <constraint firstItem="NvJ-e8-90E" firstAttribute="trailing" secondItem="vp3-Ql-vLX" secondAttribute="trailing" id="XYQ-4j-aE3"/>
+                <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="vp3-Ql-vLX" secondAttribute="bottom" constant="15" id="bGA-m9-PNe"/>
+                <constraint firstItem="vp3-Ql-vLX" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="31" id="dYv-pk-t9J"/>
+                <constraint firstAttribute="height" constant="243" id="fCc-Nq-6fL"/>
+                <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="106" id="pgG-ni-dbR"/>
+                <constraint firstItem="JUL-dK-X0r" firstAttribute="centerX" secondItem="vp3-Ql-vLX" secondAttribute="centerX" id="pgu-SY-Frk"/>
+                <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="NvJ-e8-90E" secondAttribute="leading" id="xLF-K6-nh3"/>
             </constraints>
-            <point key="canvasLocation" x="387.5" y="265.5"/>
+            <point key="canvasLocation" x="387.5" y="257.5"/>
         </customView>
         <userDefaultsController id="Bbo-6V-xug" customClass="TPCPreferencesUserDefaultsController"/>
     </objects>
