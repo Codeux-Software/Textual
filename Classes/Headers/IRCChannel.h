@@ -59,7 +59,9 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 @property (nonatomic, assign) NSInteger channelJoinTime;
 
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
-@property (nonatomic, assign) OTRKitMessageState encryptionState;
+@property (readonly) BOOL encryptionStateIsEncrypted;
+
+- (void)noteEncryptionStateDidChange;
 #endif
 
 - (void)setup:(IRCChannelConfig *)seed;

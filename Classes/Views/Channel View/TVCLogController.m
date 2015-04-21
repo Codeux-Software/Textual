@@ -162,7 +162,14 @@
 	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
-	
+
+	/* Cache last known state of encryption. */
+	if (self.associatedChannel) {
+		self.viewIsEncrypted = [self.associatedChannel encryptionStateIsEncrypted];
+	} else {
+		self.viewIsEncrypted = NO;
+	}
+
 	/* Playback history. */
 	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
 	

@@ -549,7 +549,7 @@
 			[self printMessage:TXTLS(@"BasingLanguage[1259][02]", nickname) inChannel:channel onClient:client];
 		}
 
-		[mainWindow() updateTitleFor:channel];
+		[channel noteEncryptionStateDidChange];
 	}];
 }
 
@@ -655,9 +655,7 @@
 - (void)otrKit:(OTRKit *)otrKit updateMessageState:(OTRKitMessageState)messageState username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		[channel setEncryptionState:messageState];
-
-		[mainWindow() updateTitleFor:channel];
+		[channel noteEncryptionStateDidChange];
 	}];
 
 	if (messageState ==  OTRKitMessageStateEncrypted) {
