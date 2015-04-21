@@ -351,22 +351,20 @@
 #pragma mark -
 #pragma mark Helper Methods
 
-- (void)updateEncryptionStatusFor:(NSString *)messageTo from:(NSString *)messageFrom
+- (OTRKitMessageState)messageStateFor:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
+	PointerIsEmptyAssertReturn(messageTo, OTRKitMessageStatePlaintext);
+	PointerIsEmptyAssertReturn(messageFrom, OTRKitMessageStatePlaintext);
+
+	__block OTRKitMessageState currentState = OTRKitMessageStatePlaintext;
 
 	[self performBlockOnMainThread:^{
-		OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
-																			   accountName:messageFrom
-																				  protocol:[self otrKitProtocol]];
-
-		[self performBlockInRelationToAccountName:messageTo block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-			[channel setEncryptionState:currentState];
-
-			[mainWindow() updateTitleFor:channel];
-		}];
+		currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
+															accountName:messageFrom
+															   protocol:[self otrKitProtocol]];
 	}];
+
+	return currentState;
 }
 
 - (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer

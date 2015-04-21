@@ -75,6 +75,8 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 - (void)presentListOfFingerprints;
 
 /* State information */
+- (OTRKitMessageState)messageStateFor:(NSString *)messageTo from:(NSString *)messageFrom;
+
 - (void)prepareForApplicationTermination;
 
 - (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
@@ -82,8 +84,6 @@ typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *orig
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
 
 - (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer;
-
-- (void)updateEncryptionStatusFor:(NSString *)messageTo from:(NSString *)messageFrom;
 
 /* Define configuration options */
 - (void)updatePolicy;
