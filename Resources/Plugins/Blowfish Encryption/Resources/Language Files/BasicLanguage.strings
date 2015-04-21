@@ -75,6 +75,6 @@
 "BasicLanguage[1030][3]" = "OK";
 
 "BasicLanguage[1029][1]" = "Cannot toggle preference";
-"BasicLanguage[1029][2]" = "Off-the-Record Messaging (OTR) cannot be enabled when “FiSH” encryption is enabled.";
+"BasicLanguage[1029][2]" = "Changes to preferences related to Off-the-Record Messaging (OTR) will have no effect when “FiSH” encryption is enabled. ";
 "BasicLanguage[1029][3]" = "OK";
 
