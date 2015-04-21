@@ -120,7 +120,7 @@
 	<true/>
 	<key>Off-the-Record Messaging -&gt; Enable Encryption</key>
 	<true/>
-	<key>Off-the-Record Messaging -&gt; Require ion</key>
+	<key>Off-the-Record Messaging -&gt; Require Encryption</key>
 	<false/>
 	<key>PostNotificationsWhileInFocus</key>
 	<true/>
