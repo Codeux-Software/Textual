@@ -137,6 +137,7 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 + (BOOL)textEncryptionIsOpportunistic;
 + (BOOL)textEncryptionIsRequired;
++ (BOOL)textEncryptionIsEnabled;
 #endif
 
 + (BOOL)giveFocusOnMessageCommand;

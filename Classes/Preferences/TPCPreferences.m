@@ -166,6 +166,11 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Require Encryption"];
 }
+
++ (BOOL)textEncryptionIsEnabled
+{
+	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Enable Encryption"];
+}
 #endif
 
 + (BOOL)displayServerMOTD
