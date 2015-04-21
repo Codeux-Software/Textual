@@ -170,7 +170,7 @@
 {
 	[self performBlockOnMainThread:^{
 		if ([self isPluginEnabled] == NO) {
-			(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]")
+			(void)[TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"BasicLanguage[1030][2]", [commandString lowercaseString])
 													 title:TPILocalizedString(@"BasicLanguage[1030][1]")
 											 defaultButton:TPILocalizedString(@"BasicLanguage[1030][3]")
 										   alternateButton:nil
