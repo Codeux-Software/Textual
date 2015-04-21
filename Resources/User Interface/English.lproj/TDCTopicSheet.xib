@@ -49,6 +49,9 @@
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="551" height="90"/>
                                     <size key="maxSize" width="555" height="10000000"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="1bI-Ag-KTX"/>
+                                    </connections>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -76,6 +76,21 @@
 	[self startSheet];
 }
 
+- (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
+{
+	if (aSelector == @selector(insertNewline:)) {
+		[self ok:nil];
+
+		return YES;
+	} else if (aSelector == @selector(insertNewlineIgnoringFieldEditor:) ) {
+		/* Do not allow a new line to be inserted using Option + Enter */
+
+		return YES;
+	}
+
+	return NO;
+}
+
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
