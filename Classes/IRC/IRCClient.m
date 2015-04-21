@@ -701,6 +701,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 }
+
 #pragma mark -
 #pragma mark Reachability
 
@@ -1009,7 +1010,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	PointerIsEmptyAssertReturn(nickname, NO)
 
-	if ([nickname isChannelName:self]) { // Do not allow channel names...
+	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+		return NO;
+	} else if ([nickname isChannelName:self]) { // Do not allow channel names...
 		return NO;
 	} else if ([[self localNickname] isEqualIgnoringCase:nickname]) { // Do not allow the local user...
 		return NO;

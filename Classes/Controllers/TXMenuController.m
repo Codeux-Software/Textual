@@ -503,6 +503,10 @@
 			/* Even if we are not logged in, we still ask the encryption manager
 			 to validate the menu item first so that it can hide specific menu items. 
 			 After it has done that, then we can disable if not logged in. */
+			if ([TPCPreferences textEncryptionIsEnabled] == NO) {
+				return NO;
+			}
+
 			BOOL valid = [sharedEncryptionManager() validateMenuItem:item
 														 withStateOf:[u encryptionAccountNameForUser:[c name]]
 																from:[u encryptionAccountNameForLocalUser]];
@@ -2675,12 +2679,14 @@
 #pragma mark Encryption 
 
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#define _encryptionNotEnabled		([TPCPreferences textEncryptionIsEnabled] == NO)
+
 - (void)encryptionStartPrivateConversation:(id)sender
 {
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 
-	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+	if (_encryptionNotEnabled || _noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2693,7 +2699,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 
-	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+	if (_encryptionNotEnabled || _noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2706,7 +2712,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 
-	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+	if (_encryptionNotEnabled || _noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2719,7 +2725,7 @@
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 
-	if (_noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
+	if (_encryptionNotEnabled || _noClientOrChannel || _isClient || _isChannel || _connectionNotLoggedIn) {
 		return;
 	}
 
@@ -2736,6 +2742,8 @@
 {
 	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
 }
+
+#undef _encryptionNotEnabled
 #endif
 
 #pragma mark -
