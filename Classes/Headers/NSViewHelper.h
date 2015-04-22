@@ -38,5 +38,5 @@
 #import "TextualApplication.h"
 
 @interface NSView (TXViewHelper)
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)widthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)heightConstraint;
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint;
 @end

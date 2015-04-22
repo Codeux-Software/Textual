@@ -39,7 +39,7 @@
 
 @implementation NSView (TXViewHelper)
 
-- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)widthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)heightConstraint
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint
 {
 	/* Validate input */
 	NSParameterAssert(subview != nil);
@@ -51,16 +51,42 @@
 		[contentSubviews[0] removeFromSuperview];
 	}
 
-	/* Set constraints and add the new view. */
+	/* Adjust constraints of parent view to maintain the same size
+	 of the subview that is being added. */
 	NSRect subviewFrame = [subview frame];
 
-	if ( widthConstraint) {
-		[widthConstraint setConstant:NSWidth(subviewFrame)];
+	CGFloat subviewFrameWidth = NSWidth(subviewFrame);
+	CGFloat subviewFrameHeight = NSHeight(subviewFrame);
+
+	if ( parentViewWidthConstraint) {
+		[parentViewWidthConstraint setConstant:subviewFrameWidth];
 	}
 
-	if ( heightConstraint) {
-		[heightConstraint setConstant:NSHeight(subviewFrame)];
+	if ( parentViewHeightConstraint) {
+		[parentViewHeightConstraint setConstant:subviewFrameHeight];
 	}
+
+	/* Create a width and height constraint for the subview so that 
+	 auto layout works properly when added as a subview. */
+	NSLayoutConstraint *subviewWidthConstraint =
+	[NSLayoutConstraint constraintWithItem:subview
+								 attribute:NSLayoutAttributeWidth
+								 relatedBy:NSLayoutRelationEqual
+									toItem:nil
+								 attribute:NSLayoutAttributeNotAnAttribute
+								multiplier:1.0
+								  constant:subviewFrameWidth];
+
+	NSLayoutConstraint *subviewHeightConstraint =
+	[NSLayoutConstraint constraintWithItem:subview
+								 attribute:NSLayoutAttributeHeight
+								 relatedBy:NSLayoutRelationEqual
+									toItem:nil
+								 attribute:NSLayoutAttributeNotAnAttribute
+								multiplier:1.0
+								  constant:subviewFrameHeight];
+
+	[subview addConstraints:@[subviewWidthConstraint, subviewHeightConstraint]];
 
 	[self addSubview:subview];
 }
