@@ -274,10 +274,10 @@
 								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
 								 object:nil];
 #endif
-	
+
 	[[self window] restoreWindowStateForClass:[self class]];
 
-	[[self window] makeKeyAndOrderFront:nil];
+	[self setMountainLionDeprecationWarningIsVisible:NO];
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
 		BOOL warningViewHidden = [RZUserDefaults() boolForKey:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"];
@@ -288,16 +288,14 @@
 			[[self mountainLionDeprecationWarningView] setHidden:NO];
 
 			[self firstPane:[self mountainLionDeprecationWarningView] selectedItem:_toolbarItemIndexGeneral];
-
-			return; // Do not continue to General...
 		}
 	}
 
-	[self setMountainLionDeprecationWarningIsVisible:NO];
+	if ([self mountainLionDeprecationWarningIsVisible] == NO) {
+		[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
+	}
 
-	[[self mountainLionDeprecationWarningView] setHidden:YES];
-
-	[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
+	[[self window] makeKeyAndOrderFront:nil];
 }
 
 #pragma mark -
@@ -329,6 +327,8 @@
 {
 	if ([self mountainLionDeprecationWarningIsVisible]) {
 		[[self navigationToolbar] setSelectedItemIdentifier:[NSString stringWithInteger:_toolbarItemIndexGeneral]];
+
+		NSBeep();
 
 		return;
 	}
