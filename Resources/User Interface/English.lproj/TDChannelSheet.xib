@@ -247,7 +247,6 @@ DQ
                 <constraint firstItem="123" firstAttribute="top" secondItem="109" secondAttribute="top" constant="20" symbolic="YES" id="INy-Jl-raJ"/>
                 <constraint firstItem="123" firstAttribute="leading" secondItem="124" secondAttribute="leading" id="KJR-l1-kcC"/>
                 <constraint firstItem="124" firstAttribute="top" secondItem="123" secondAttribute="bottom" constant="8" id="OQH-Q2-qAL"/>
-                <constraint firstAttribute="height" constant="284" id="QQ4-bP-TFb"/>
                 <constraint firstItem="281" firstAttribute="leading" secondItem="111" secondAttribute="leading" id="QS5-S7-alR"/>
                 <constraint firstItem="122" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="25" id="RjM-wl-Arc"/>
                 <constraint firstItem="122" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="20" id="VfF-QA-A6l"/>
@@ -256,7 +255,6 @@ DQ
                 <constraint firstItem="112" firstAttribute="top" secondItem="122" secondAttribute="bottom" constant="14" id="fG0-mc-qqN"/>
                 <constraint firstAttribute="trailing" secondItem="123" secondAttribute="trailing" constant="20" symbolic="YES" id="g3T-UU-MmA"/>
                 <constraint firstItem="312" firstAttribute="top" secondItem="124" secondAttribute="bottom" constant="22" id="hxJ-hf-e6B"/>
-                <constraint firstAttribute="width" constant="325" id="jUe-pV-OoK"/>
                 <constraint firstItem="356" firstAttribute="top" secondItem="112" secondAttribute="bottom" constant="13" id="kfe-08-tUI"/>
                 <constraint firstItem="122" firstAttribute="leading" secondItem="112" secondAttribute="leading" id="luf-gJ-OyQ"/>
                 <constraint firstItem="279" firstAttribute="baseline" secondItem="HBZ-KH-HBg" secondAttribute="baseline" id="mlP-Ky-Nmo"/>
@@ -333,10 +331,8 @@ DQ
                 <constraint firstItem="251" firstAttribute="leading" secondItem="253" secondAttribute="trailing" constant="8" symbolic="YES" id="RZH-CD-eX7"/>
                 <constraint firstItem="253" firstAttribute="baseline" secondItem="251" secondAttribute="baseline" id="Rvm-6p-ZmZ"/>
                 <constraint firstAttribute="trailing" secondItem="250" secondAttribute="trailing" constant="20" symbolic="YES" id="ZQs-rm-mzd"/>
-                <constraint firstAttribute="height" constant="170" id="bx6-92-lbg"/>
                 <constraint firstItem="252" firstAttribute="top" secondItem="S13-Uc-xNq" secondAttribute="bottom" constant="19" id="emv-Vb-kbK"/>
                 <constraint firstItem="252" firstAttribute="leading" secondItem="243" secondAttribute="leading" constant="32" id="fif-fL-kCT"/>
-                <constraint firstAttribute="width" constant="325" id="ixw-4e-DmK"/>
                 <constraint firstItem="250" firstAttribute="leading" secondItem="252" secondAttribute="trailing" constant="8" symbolic="YES" id="qCM-Gy-JXL"/>
             </constraints>
             <point key="canvasLocation" x="179.5" y="272"/>

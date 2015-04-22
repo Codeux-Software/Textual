@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPISmileyConverter">
@@ -98,11 +98,9 @@
                 <constraint firstItem="Wmf-ec-NvO" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="Z1Y-F7-lX3"/>
                 <constraint firstItem="Wmf-ec-NvO" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="eEh-Kb-QLA"/>
                 <constraint firstAttribute="bottom" secondItem="VVb-gg-jxO" secondAttribute="bottom" constant="31" id="lM8-2T-c79"/>
-                <constraint firstAttribute="width" constant="589" id="mD6-A6-BNu"/>
                 <constraint firstItem="VVb-gg-jxO" firstAttribute="top" secondItem="d4p-fS-sg0" secondAttribute="bottom" constant="8" symbolic="YES" id="nY9-Nc-vBE"/>
                 <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="79" id="ovr-h4-1Gk"/>
                 <constraint firstItem="Wmf-ec-NvO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="71" id="xnC-kH-Hky"/>
-                <constraint firstAttribute="height" constant="230" id="y0b-OV-l6w"/>
             </constraints>
             <point key="canvasLocation" x="412.5" y="357"/>
         </customView>

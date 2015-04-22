@@ -138,13 +138,11 @@ Cgo
             <constraints>
                 <constraint firstItem="vp3-Ql-vLX" firstAttribute="centerX" secondItem="LOA-uM-qhd" secondAttribute="centerX" id="0Ez-Ig-dNm"/>
                 <constraint firstItem="NvJ-e8-90E" firstAttribute="top" secondItem="JUL-dK-X0r" secondAttribute="bottom" constant="16" id="0v4-yZ-lXl"/>
-                <constraint firstAttribute="width" constant="589" id="3zb-qs-03v"/>
                 <constraint firstAttribute="bottom" secondItem="NvJ-e8-90E" secondAttribute="bottom" constant="30" id="4QV-HW-GZH"/>
                 <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="77" id="6Cw-us-2DY"/>
                 <constraint firstItem="NvJ-e8-90E" firstAttribute="trailing" secondItem="vp3-Ql-vLX" secondAttribute="trailing" id="XYQ-4j-aE3"/>
                 <constraint firstItem="JUL-dK-X0r" firstAttribute="top" secondItem="vp3-Ql-vLX" secondAttribute="bottom" constant="15" id="bGA-m9-PNe"/>
                 <constraint firstItem="vp3-Ql-vLX" firstAttribute="top" secondItem="LOA-uM-qhd" secondAttribute="top" constant="31" id="dYv-pk-t9J"/>
-                <constraint firstAttribute="height" constant="243" id="fCc-Nq-6fL"/>
                 <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="LOA-uM-qhd" secondAttribute="leading" constant="106" id="pgG-ni-dbR"/>
                 <constraint firstItem="JUL-dK-X0r" firstAttribute="centerX" secondItem="vp3-Ql-vLX" secondAttribute="centerX" id="pgu-SY-Frk"/>
                 <constraint firstItem="vp3-Ql-vLX" firstAttribute="leading" secondItem="NvJ-e8-90E" secondAttribute="leading" id="xLF-K6-nh3"/>

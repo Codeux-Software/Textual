@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikiStyleLinkParser">
@@ -128,7 +128,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                                 <rect key="frame" x="0.0" y="0.0" width="492" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="channel" editable="NO" width="125.55560302734375" minWidth="40" maxWidth="1000" id="279">
@@ -211,10 +211,8 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="height" constant="435" id="7DP-is-qXo"/>
                 <constraint firstItem="284" firstAttribute="top" secondItem="286" secondAttribute="top" id="97D-Yn-mqC"/>
                 <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="76" id="AFL-2S-V2M"/>
-                <constraint firstAttribute="width" constant="589" id="EaT-Tp-6ll"/>
                 <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="13" id="Eh8-re-mfA"/>
                 <constraint firstAttribute="trailing" secondItem="284" secondAttribute="trailing" constant="74" id="GFh-El-sEg"/>
                 <constraint firstAttribute="trailing" secondItem="273" secondAttribute="trailing" constant="45" id="HpU-1d-BmJ"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPISystemProfiler">
@@ -121,7 +121,7 @@
                     </connections>
                 </button>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="97">
-                    <rect key="frame" x="67" y="116" width="454" height="5"/>
+                    <rect key="frame" x="67" y="116" width="454.5" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
@@ -184,7 +184,7 @@
                     </scroller>
                 </scrollView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="92">
-                    <rect key="frame" x="110" y="341" width="368" height="16"/>
+                    <rect key="frame" x="110" y="341" width="368.5" height="16"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="qvj-NF-uPO">
                         <rect key="frame" x="0.0" y="0.0" width="435" height="16"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -194,7 +194,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="368" height="16"/>
+                                <size key="minSize" width="368.5" height="16"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Select each item to show as part of the ">
@@ -222,7 +222,7 @@
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="368" height="16"/>
+                                <size key="minSize" width="368.5" height="16"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -256,14 +256,12 @@
                 <constraint firstAttribute="bottom" secondItem="101" secondAttribute="bottom" constant="30" id="SDb-ZL-Qpj"/>
                 <constraint firstItem="98" firstAttribute="top" secondItem="97" secondAttribute="bottom" constant="23" id="Tfk-11-JcR"/>
                 <constraint firstItem="92" firstAttribute="centerX" secondItem="97" secondAttribute="centerX" id="WC8-fa-dqq"/>
-                <constraint firstAttribute="width" constant="589" id="XFX-0R-Qfp"/>
                 <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="14" id="YN8-Sk-bDj"/>
                 <constraint firstItem="18" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="14" id="c9O-La-C2b"/>
                 <constraint firstItem="101" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="117" id="cd3-oq-j5e"/>
                 <constraint firstItem="22" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="14" id="fdL-9S-zVb"/>
                 <constraint firstItem="98" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="105" id="fqP-we-Lp3"/>
                 <constraint firstItem="22" firstAttribute="leading" secondItem="18" secondAttribute="leading" id="huX-hj-Car"/>
-                <constraint firstAttribute="height" constant="387" id="jZI-o3-zMy"/>
                 <constraint firstItem="16" firstAttribute="leading" secondItem="14" secondAttribute="leading" id="kku-SS-yIh"/>
                 <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="qWh-kV-gCg"/>
                 <constraint firstAttribute="trailing" secondItem="101" secondAttribute="trailing" constant="105" id="tXq-aL-wGW"/>
