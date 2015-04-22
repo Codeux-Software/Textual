@@ -694,9 +694,9 @@
 "BasicLanguage[1272][5]" = "Continue";
 
 /* Off-the-Record Messaging status messages for the title bar of the main window */
-"BasicLanguage[1265][1]" = "Not Private";
-"BasicLanguage[1265][2]" = "Unverified";
-"BasicLanguage[1265][3]" = "Private";
+"BasicLanguage[1265][1]" = "Not Encrypted";
+"BasicLanguage[1265][2]" = "Encrypted & Unverified";
+"BasicLanguage[1265][3]" = "Encrypted & Verified";
 
 
 

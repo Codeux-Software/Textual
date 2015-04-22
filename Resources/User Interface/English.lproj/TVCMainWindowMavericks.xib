@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -1554,10 +1554,10 @@ There are no other limits. What you see, is what you get.</string>
             <point key="canvasLocation" x="284" y="314"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">
-            <rect key="frame" x="0.0" y="0.0" width="134" height="20"/>
+            <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-CI-zgv" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">
-                    <rect key="frame" x="12" y="-1" width="99" height="19"/>
+                    <rect key="frame" x="78" y="-1" width="99" height="19"/>
                     <buttonCell key="cell" type="recessed" title="Not Private" bezelStyle="recessed" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WDX-xV-mcZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -1571,9 +1571,9 @@ There are no other limits. What you see, is what you get.</string>
                 <constraint firstItem="N9S-CI-zgv" firstAttribute="top" secondItem="8Pz-wu-9PV" secondAttribute="top" constant="2" id="M2Z-qG-tIo"/>
                 <constraint firstAttribute="height" constant="20" id="cYT-t8-8HD"/>
                 <constraint firstAttribute="trailing" secondItem="N9S-CI-zgv" secondAttribute="trailing" constant="23" id="dGz-pi-g2g"/>
-                <constraint firstAttribute="width" constant="134" id="e2u-qi-Lgc"/>
+                <constraint firstAttribute="width" constant="200" id="ySq-jU-5W2"/>
             </constraints>
-            <point key="canvasLocation" x="3508" y="759"/>
+            <point key="canvasLocation" x="3546.5" y="899"/>
         </customView>
     </objects>
     <resources>
