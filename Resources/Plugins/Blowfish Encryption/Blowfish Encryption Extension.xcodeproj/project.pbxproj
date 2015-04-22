@@ -298,6 +298,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8A1A93CD350098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
 			};
@@ -307,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8A1A93CD350098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
 			};
