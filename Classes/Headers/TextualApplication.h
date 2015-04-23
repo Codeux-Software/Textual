@@ -223,6 +223,7 @@
 	#import "TDCSharedProtocolDefinitions.h"
 
 	/* 3rd Party Extensions. */
+	#import "RLMAsyncSocket.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
 	#import "GCDAsyncSocketCipherNames.h"
@@ -244,7 +245,6 @@
 	#import "GTMEncodeHTML.h"
 	#import "GTMEncodeURL.h"
 	#import "OELReachability.h"
-	#import "RLMAsyncSocket.h"
 
 	/* IRC Controllers — Core. */
 	#import "IRC.h"

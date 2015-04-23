@@ -212,11 +212,7 @@
 	}
 
 	if (self.connectionPrefersSecuredConnection) {
-		if ([self useNewSocketEngine]) {
-			[self.socketConnection useSSLWithClient:self.associatedClient connectionController:self];
-		} else {
-			[self.socketConnection useSSL];
-		}
+		[self.socketConnection useSSLWithClient:self.associatedClient connectionController:self];
 	}
 
 	return YES;

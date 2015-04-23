@@ -35,7 +35,6 @@
 
  *********************************************************************** */
 
-#import "RLMAsyncSocket.h" // superclass
 #import "IRCClientConfig.h" // typedef enum
 
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
@@ -54,7 +53,7 @@
 @interface AsyncSocket (RLMAsyncSocketExtensions)
 + (instancetype)socketWithDelegate:(id)delegate;
 
-- (void)useSSL;
+- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller;
 
 - (void)useSystemSocksProxy;
 - (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version
