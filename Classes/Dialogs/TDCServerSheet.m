@@ -1085,8 +1085,6 @@
 	[self.proxyUsernameTextField setEnabled:socksEnabled];
 	[self.proxyPasswordTextField setEnabled:socksEnabled];
 	
-	[self updateClientCertificatePage];
-	
 	[self.proxyAddressTextField performValidation];
 	[self.proxyPortTextField performValidation];
 	
@@ -1183,44 +1181,36 @@
 	NSString *sha1fingerprint = nil;
 	NSString *md5fingerprint = nil;
 
-	NSInteger proxyTag = [self.proxyTypeButton selectedTag];
-	
-	BOOL proxyEnabled = NSDissimilarObjects(proxyTag, IRCConnectionSocketNoProxyType);
-	
-	[self.clientCertificateChangeCertificateButton setEnabled:(proxyEnabled == NO)];
-
-	if (proxyEnabled == NO) {
-		if (self.config.identityClientSideCertificate) {
-			SecKeychainItemRef cert;
+	if (self.config.identityClientSideCertificate) {
+		SecKeychainItemRef cert;
+		
+		CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identityClientSideCertificate);
+		
+		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
+		
+		if (status == noErr) {
+			CFStringRef commName;
 			
-			CFDataRef rawCertData = (__bridge CFDataRef)(self.config.identityClientSideCertificate);
+			status = SecCertificateCopyCommonName((SecCertificateRef)cert, &commName);
 			
-			OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
-			
-			if (status == noErr) {
-				CFStringRef commName;
-				
-				status = SecCertificateCopyCommonName((SecCertificateRef)cert, &commName);
-				
-				if (status == noErr){
-					commonName = (__bridge NSString *)(commName);
+			if (status == noErr){
+				commonName = (__bridge NSString *)(commName);
 
-					CFDataRef data = SecCertificateCopyData((SecCertificateRef)cert);
+				CFDataRef data = SecCertificateCopyData((SecCertificateRef)cert);
 
-					if (data) {
-						NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
+				if (data) {
+					NSData *certNormData = [NSData dataWithBytes:CFDataGetBytePtr(data) length:CFDataGetLength(data)];
 
-						sha1fingerprint = [certNormData sha1];
-						md5fingerprint = [certNormData md5];
+					sha1fingerprint = [certNormData sha1];
+					md5fingerprint = [certNormData md5];
 
-						CFRelease(data);
-					}
-
-					CFRelease(commName);
+					CFRelease(data);
 				}
 
-				CFRelease(cert);
+				CFRelease(commName);
 			}
+
+			CFRelease(cert);
 		}
 	}
 
