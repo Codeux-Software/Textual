@@ -67,9 +67,11 @@
 
 - (void)pluginLoadedIntoMemory
 {
-	[TPIBundleFromClass() loadNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
-	
-	[self updateRemoveConditionButton];
+	[self performBlockOnMainThread:^{
+		[TPIBundleFromClass() loadNibNamed:@"TPIWikiStyleLinkParser" owner:self topLevelObjects:nil];
+
+		[self updateRemoveConditionButton];
+	}];
 }
 
 #pragma mark -
