@@ -4348,7 +4348,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			return;
 		}
 
-		[self processPublicMessageComponents:type sender:sender command:command target:target text:text referenceMessage:referenceMessage];
+		[self processPublicMessageComponents:type sender:sender command:command target:target text:text referenceMessage:referenceMessage wasEncrypted:wasEncrypted];
 	} else {
 		if ([referenceMessage senderIsServer]) {
 			[self print:nil type:type nickname:nil messageBody:text receivedAt:[referenceMessage receivedAt] command:[referenceMessage command]];
@@ -4362,7 +4362,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (void)processPublicMessageComponents:(TVCLogLineType)type sender:(NSString *)sender command:(NSString *)command target:(NSString *)target text:(NSString *)text referenceMessage:(IRCMessage *)referenceMessage
+- (void)processPublicMessageComponents:(TVCLogLineType)type sender:(NSString *)sender command:(NSString *)command target:(NSString *)target text:(NSString *)text referenceMessage:(IRCMessage *)referenceMessage wasEncrypted:(BOOL)wasEncrypted
 {
 	/* Does the target exist? */
 	IRCChannel *c = [self findChannel:target];
@@ -4374,7 +4374,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			   type:type
 		   nickname:sender
 		messageBody:text
-		isEncrypted:NO
+		isEncrypted:wasEncrypted
 		 receivedAt:[referenceMessage receivedAt]
 			command:[referenceMessage command]
    referenceMessage:referenceMessage];
