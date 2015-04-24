@@ -456,7 +456,7 @@
 
 /* Raw mode messages */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the IRC server in the OS X ”Console” application. To disable, execute “/debug raw off”";
+"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the server in the OS X ”Console” application. Raw mode will remain enabled until the connection to this server is disconnected. To disable raw mode before a disconnection occurs, execute “/debug raw off”";
 "BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
 "BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
 

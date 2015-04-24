@@ -2737,6 +2737,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if ([uncutInput isEqualIgnoringCase:@"raw on"]) {
 				self.rawModeEnabled = YES;
 
+				[RZWorkspace() launchApplication:@"Console"];
+
 				[self printDebugInformation:BLS(1175)];
 
 				LogToConsole(@"%@", BLS(1177));
