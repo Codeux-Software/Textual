@@ -36,11 +36,6 @@
 
  *********************************************************************** */
 
-#import "IRCTreeItem.h" // superclass
-
-#import "TVCLogLine.h"			// typedef enum
-#import "TLOGrowlController.h"	// typedef enum
-
 typedef enum IRCClientConnectMode : NSInteger {
 	IRCClientConnectNormalMode,
 	IRCClientConnectRetryMode,
@@ -57,22 +52,7 @@ typedef enum IRCClientDisconnectMode : NSInteger {
 	IRCClientDisconnectServerRedirectMode,
 } IRCClientDisconnectMode;
 
-typedef enum IRCClientIdentificationWithSASLMechanism : NSInteger {
-	IRCClientIdentificationWithSASLNoMechanism,
-	IRCClientIdentificationWithSASLPlainTextMechanism,
-	IRCClientIdentificationWithSASLExternalMechanism,
-} IRCClientIdentificationWithSASLMechanism;
-
-/* Always check for ClientIRCv3SupportedCapacityServerTime if the server-time
- capacity is being checked. ClientIRCv3SupportedCapacityZNCServerTime and
- ClientIRCv3SupportedCapacityZNCServerTimeISO are used internally for 
- capacity negotation but once accepted, the default server-time flag 
- is set for the maintained capacity. */
-
-/* ClientIRCv3SupportedCapacitySASL... is set once negotation begins. It is 
- reset if negotation fails. Use ClientIRCv3SupportedCapacityIsIdentifiedWithSASL
- to find actual status of identification. */
-typedef enum ClientIRCv3SupportedCapacities : NSInteger {
+enum {
 	ClientIRCv3SupportedCapacityAwayNotify				= 1 << 0, // YES if away-notify CAP supported.
 	ClientIRCv3SupportedCapacityIdentifyCTCP			= 1 << 1, // YES if identify-ctcp CAP supported.
 	ClientIRCv3SupportedCapacityIdentifyMsg				= 1 << 2, // YES if identify-msg CAP supported.
@@ -80,25 +60,26 @@ typedef enum ClientIRCv3SupportedCapacities : NSInteger {
 	ClientIRCv3SupportedCapacityServerTime				= 1 << 4, // YES if server-time CAP supported.
 	ClientIRCv3SupportedCapacityUserhostInNames			= 1 << 5, // YES if userhost-in-names CAP supported.
 	ClientIRCv3SupportedCapacityWatchCommand			= 1 << 6, // YES if the WATCH command is supported.
-	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 7, // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacityZNCServerTime			= 1 << 8, // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacityZNCServerTimeISO		= 1 << 9, // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacitySASLGeneric				= 1 << 10, // YES if any type of SASL is in use.
-	ClientIRCv3SupportedCapacitySASLPlainText			= 1 << 11, // YES if SASL plain text CAP is supported.
-	ClientIRCv3SupportedCapacitySASLExternal			= 1 << 12, // YES if SASL external CAP is supported.
-	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 13, // YES if in SASL CAP authentication request, else NO.
-	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 14, // YES if SASL authentication was successful, else NO.
-	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 15, // YES if the ZNC vendor specific CAP supported.
-} ClientIRCv3SupportedCapacities;
+	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 7, // YES if in SASL CAP authentication request, else NO.
+	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 8, // YES if SASL authentication was successful, else NO.
+	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 15, // YES if the ZNC vendor specific CAP supported.
+};
+typedef NSInteger ClientIRCv3SupportedCapacities;
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
+#import "IRCTreeItem.h" // superclass
+
+#import "TVCLogLine.h"			// typedef enum
+#import "TLOGrowlController.h"	// typedef enum
+
 #import "IRCConnection.h" // @protocol
 
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
-#import "TLOEncryptionManager.h"
+#import "TLOEncryptionManager.h" // typdef enum
 #endif
 
 @interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>

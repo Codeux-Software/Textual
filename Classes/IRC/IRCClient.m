@@ -92,6 +92,14 @@
 
 #define _maximumChannelCountPerWhoBatchRequest		5
 
+enum {
+	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 9,
+	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 10, // YES if SASL=plain CAP is supported.
+	ClientIRCv3SupportedCapacitySASLExternal		= 1 << 11, // YES if SASL=external CAP is supported.
+	ClientIRCv3SupportedCapacityZNCServerTime		= 1 << 12, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityZNCServerTimeISO	= 1 << 13, // YES if the ZNC vendor specific CAP supported.
+};
+
 NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfigurationWasUpdatedNotification";
 
 @interface IRCClient ()
@@ -3931,7 +3939,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		realname = self.config.nickname;
 	}
 
-	[self send:IRCPrivateCommandIndex("cap"), @"LS", nil];
+	[self send:IRCPrivateCommandIndex("cap"), @"LS", @"302", nil];
 
 	if (NSObjectIsNotEmpty(serverPassword)) {
 		[self send:IRCPrivateCommandIndex("pass"), serverPassword, nil];
@@ -5596,7 +5604,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
 	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
-	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);;
+	appendValue(ClientIRCv3SupportedCapacityIsIdentifiedWithSASL);
 	appendValue(ClientIRCv3SupportedCapacityServerTime);
 	appendValue(ClientIRCv3SupportedCapacityUserhostInNames);
 	appendValue(ClientIRCv3SupportedCapacityZNCPlaybackModule);
@@ -5664,7 +5672,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	// Information about several of these supported CAP
 	// extensions can be found at: http://ircv3.atheme.org
 	
-	BOOL condition1 = ([cap isEqualIgnoringCase:@"identify-msg"]			||
+	BOOL condition1 = ([cap isEqualIgnoringCase:@"sasl"]					||
+					   [cap isEqualIgnoringCase:@"identify-msg"]			||
 					   [cap isEqualIgnoringCase:@"identify-ctcp"]			||
 					   [cap isEqualIgnoringCase:@"away-notify"]				||
 					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
@@ -5675,15 +5684,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
 	
-	if (condition1 == NO) {
-		if ([cap isEqualIgnoringCase:@"sasl"]) {
-			return [self isSASLInformationAvailable];
-		} else {
-			return NO;
-		}
-	} else {
-		return YES;
-	}
+	return condition1;
 }
 
 - (ClientIRCv3SupportedCapacities)capacityFromStringValue:(NSString *)stringValue
@@ -5717,6 +5718,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)cap:(NSString *)cap result:(BOOL)supported
 {
+	[self cap:cap result:supported isUpdateRequest:NO];
+}
+
+- (void)cap:(NSString *)cap result:(BOOL)supported isUpdateRequest:(BOOL)isUpdateRequest
+{
 	if ([cap isEqualIgnoringCase:@"sasl"]) {
 		if (supported) {
 			[self pauseCap];
@@ -5734,12 +5740,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			{
 				capacity = ClientIRCv3SupportedCapacityServerTime;
 			}
-			else if (capacity == ClientIRCv3SupportedCapacitySASLPlainText ||
-					 capacity == ClientIRCv3SupportedCapacitySASLExternal)
-			{
-				capacity = ClientIRCv3SupportedCapacitySASLGeneric;
-			}
-			
+
 			if (supported) {
 				[self enableCapacity:capacity];
 			} else {
@@ -5749,100 +5750,122 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (IRCClientIdentificationWithSASLMechanism)identificationMechanismForSASL
+- (void)processPendingCapacity:(NSString *)cap
 {
-	/* If we have certificate, we will use the fingerprint from that 
-	 for identification if the user configured that. */
-	if (self.config.saslAuthenticationUsesExternalMechanism) {
-		if (self.socket.isConnectedWithClientSideCertificate) {
-			return IRCClientIdentificationWithSASLExternalMechanism;
+	NSArray *capSegments = [cap componentsSeparatedByString:@"="];
+
+	NSString *capValue = nil;
+
+	NSArray *capOptions = nil;
+
+	if ([capSegments count] == 2) {
+		capValue = capSegments[0];
+
+		capOptions = [capSegments[1] componentsSeparatedByString:@","];
+	} else {
+		capValue = cap;
+	}
+
+	[self processPendingCapacity:capValue options:capOptions];
+}
+
+- (void)processPendingCapacity:(NSString *)cap options:(NSArray *)options
+{
+	if ([self isCapAvailable:cap]) {
+		ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:cap];
+
+		if ([cap isEqualToString:@"sasl"]) {
+			[self processPendingCapacityForSASL:options];
 		} else {
-			LogToConsole(@"Client wants to use SASL EXTERNAL but is not connected with a client side certificate.");
-			LogToConsole(@"Client will fall back to SASL PLAIN in absence of a client side certificate.");
+			if ((_capacitiesPending &  capacity) == 0) {
+				 _capacitiesPending |= capacity;
+			}
+		}
+	}
+}
+
+- (void)processPendingCapacityForSASL:(NSArray *)options
+{
+	ClientIRCv3SupportedCapacities identificationMechanism = 0;
+
+	if (NSObjectIsEmpty(options)) {
+		if (self.config.saslAuthenticationUsesExternalMechanism) {
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLExternal;
+		} else {
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
+		}
+	} else {
+		if ([options containsObject:@"EXTERNAL"]) {
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLGeneric;
+		} else if ([options containsObject:@"PLAIN"]) {
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
 		}
 	}
 
-	/* If the user has a configured nickname password, then we will
-	 use that instead for plain text authentication. */
-	if (NSObjectIsNotEmpty(self.config.nicknamePassword)) {
-		return IRCClientIdentificationWithSASLPlainTextMechanism;
+	if (identificationMechanism == ClientIRCv3SupportedCapacitySASLExternal) {
+		if (self.socket.isConnectedWithClientSideCertificate) {
+			_capacitiesPending |= ClientIRCv3SupportedCapacitySASLExternal;
+		} else {
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText; // Use as a fallback...
+		}
 	}
 
-	/* Cannot use SASL for identification. */
-	return IRCClientIdentificationWithSASLNoMechanism;
-}
-
-- (BOOL)isSASLInformationAvailable
-{
-	IRCClientIdentificationWithSASLMechanism idtype = [self identificationMechanismForSASL];
-
-	return NSDissimilarObjects(idtype, IRCClientIdentificationWithSASLNoMechanism);
+	if (identificationMechanism == ClientIRCv3SupportedCapacitySASLPlainText) {
+		if (NSObjectIsEmpty(self.config.nicknamePassword) == NO) {
+			_capacitiesPending |= ClientIRCv3SupportedCapacitySASLPlainText;
+		}
+	}
 }
 
 - (void)sendSASLIdentificationInformation
 {
-	switch ([self identificationMechanismForSASL]) {
-		case IRCClientIdentificationWithSASLPlainTextMechanism:
-		{
-			NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",
-									 self.config.username, 0x00,
-									 self.config.username, 0x00,
-									 self.config.nicknamePassword];
+	if ((_capacitiesPending & ClientIRCv3SupportedCapacityIsInSASLNegotiation) == 0)
+	{
+		return; // Do not continue operation...
+	}
 
-			NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
+	if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLPlainText) == ClientIRCv3SupportedCapacitySASLPlainText)
+	{
+		NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",
+								 self.config.username, 0x00,
+								 self.config.username, 0x00,
+								 self.config.nicknamePassword];
 
-			NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+		NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
 
-			for (NSString *string in authStrings) {
-				[self send:IRCPrivateCommandIndex("cap_authenticate"), string, nil];
-			}
+		NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 
-			/* I don't really know when the condition below would be true. It's a
-			 copy over from Colloquy. Is it even needed? */
-			if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
-				[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
-			}
-
-			break;
+		for (NSString *string in authStrings) {
+			[self send:IRCPrivateCommandIndex("cap_authenticate"), string, nil];
 		}
-		case IRCClientIdentificationWithSASLExternalMechanism:
-		{
+
+		if (NSObjectIsEmpty(authStrings) || [(NSString *)[authStrings lastObject] length] == 400) {
 			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
-
-			break;
 		}
-		default:
-		{
-			break;
-		}
+	}
+	else if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLExternal) == ClientIRCv3SupportedCapacitySASLExternal)
+	{
+		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"+", nil];
 	}
 }
 
 - (void)sendSASLIdentificationRequest
 {
-	[self enableCapacity:ClientIRCv3SupportedCapacityIsInSASLNegotiation];
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] ||
+		((_capacitiesPending & ClientIRCv3SupportedCapacityIsInSASLNegotiation) == ClientIRCv3SupportedCapacityIsInSASLNegotiation))
+	{
+		return; // Do not continue operation...
+	}
 
-	switch ([self identificationMechanismForSASL]) {
-		case IRCClientIdentificationWithSASLPlainTextMechanism:
-		{
-			[self enableCapacity:ClientIRCv3SupportedCapacitySASLPlainText];
-			
-			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
+	_capacitiesPending |= ClientIRCv3SupportedCapacityIsInSASLNegotiation;
 
-			break;
-		}
-		case IRCClientIdentificationWithSASLExternalMechanism:
-		{
-			[self enableCapacity:ClientIRCv3SupportedCapacitySASLExternal];
-
-			[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
-
-			break;
-		}
-		default:
-		{
-			break;
-		}
+	if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLPlainText) == ClientIRCv3SupportedCapacitySASLPlainText)
+	{
+		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
+	}
+	else if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLExternal) == ClientIRCv3SupportedCapacitySASLExternal)
+	{
+		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
 	}
 }
 
@@ -5857,35 +5880,44 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSString *baseprt = [m paramAt:1];
 	NSString *actions = [m sequence:2];
 
-	if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap")]) {
+	if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap")])
+	{
 		if ([baseprt isEqualIgnoringCase:@"LS"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				if ([self isCapAvailable:cap]) {
-					ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:cap];
-					
-					if ((_capacitiesPending & capacity) == 0) {
-						 _capacitiesPending |= capacity;
-					}
-				}
+				[self processPendingCapacity:cap];
 			}
 		} else if ([baseprt isEqualIgnoringCase:@"ACK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self cap:cap result:YES];
+				[self cap:cap result:YES isUpdateRequest:NO];
 			}
 		} else if ([baseprt isEqualIgnoringCase:@"NAK"]) {
 			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			for (NSString *cap in caps) {
-				[self cap:cap result:NO];
+				[self cap:cap result:NO isUpdateRequest:NO];
+			}
+		} else if ([baseprt isEqualIgnoringCase:@"NEW"]) {
+			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			for (NSString *cap in caps) {
+				[self cap:cap result:YES isUpdateRequest:YES];
+			}
+		} else if ([baseprt isEqualIgnoringCase:@"DEL"]) {
+			NSArray *caps = [actions componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			for (NSString *cap in caps) {
+				[self cap:cap result:NO isUpdateRequest:YES];
 			}
 		}
 
 		[self sendNextCap];
-	} else {
+	}
+	else if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("authenticate")])
+	{
 		if ([starprt isEqualToString:@"+"]) {
 			[self sendSASLIdentificationInformation];
 		}
@@ -7279,9 +7311,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				[self printReply:m];
 			}
 
-			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsInSASLNegotiation]) {
-				[self disableCapacity:ClientIRCv3SupportedCapacityIsInSASLNegotiation];
-				
+			if (_capacitiesPending &   ClientIRCv3SupportedCapacityIsInSASLNegotiation) {
+				_capacitiesPending &= ~ClientIRCv3SupportedCapacityIsInSASLNegotiation;
+
 				[self resumeCap];
 			}
 
