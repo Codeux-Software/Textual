@@ -94,7 +94,7 @@
 
 /* Welcome sheet help channel prompt for freenode servers */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
-"TDCWelcomeSheet[1000][2]" = "The Textual IRC Client support channel is located on freenode. Would you like to add this channel?";
+"TDCWelcomeSheet[1000][2]" = "The support channel for Textual is located on freenode. Would you like to add this channel?";
 
 /* Channel list dialog */
 "TDCListDialog[1000]" = "Channel List for “%@”";
@@ -109,13 +109,13 @@
 
 /* Preferences window iCloud options */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
-"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored on iCloud will remain there unless it is erased by clicking the “Manage iCloud” button.";
+"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored on iCloud will remain on iCloud unless it is erased by clicking the “Manage iCloud” button.";
 
 "TDCPreferencesController[1001][1]" = "Are you sure you wish to continue?";
 "TDCPreferencesController[1001][2]" = "Selecting “Continue” will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
 
 "TDCPreferencesController[1002][1]" = "Are you sure you wish to continue?";
-"TDCPreferencesController[1002][2]" = "Selecting “Continue” will erase all data stored by Textual on iCloud including passwords and preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running that copy.";
+"TDCPreferencesController[1002][2]" = "Selecting “Continue” will erase all data stored by Textual on iCloud including passwords and preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running the enabled copy.";
 
 "TDCPreferencesController[1003]" = "No Log Location Selected";
 "TDCPreferencesController[1004]" = "No Location Selected";
@@ -180,7 +180,7 @@
 "TDCMainWindow[1000]" = "Send message…";
 
 /* Application terminating confirmation dialog */
-"BasicLanguage[1000][1]" = "Quitting will disconnect you from any IRC server that you are connected to until you restart Textual.";
+"BasicLanguage[1000][1]" = "Quitting will disconnect you from any server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";
 "BasicLanguage[1000][3]" = "Quit";
 
@@ -411,7 +411,7 @@
 "BasicLanguage[1132]" = "Disconnected for server redirect";
 "BasicLanguage[1133]" = "Disconnected from server because of an untrusted certificate";
 "BasicLanguage[1134]" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
-"BasicLanguage[1135]" = "Disconnected from server because the configured IRC server is not reachable";
+"BasicLanguage[1135]" = "Disconnected from server because the configured server is not reachable";
 "BasicLanguage[1136]" = "Disconnected";
 "BasicLanguage[1137]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
 "BasicLanguage[1138]" = "%.0f minutes have elapsed since last response from this connection. It is possible the connection is timing out.";
@@ -687,7 +687,7 @@
 
 "BasicLanguage[1255]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
-"BasicLanguage[1272][1]" = "Sending file through insecure channel";
+"BasicLanguage[1272][1]" = "Sending file through insecure connection";
 "BasicLanguage[1272][2]" = "A file transfer request has been received from a user that you are conversing with using Off-the-Record Messaging. However, file transfers occur in plain text, outside the control of Off-the-Record.\n\nDo you wish to continue?";
 "BasicLanguage[1272][3]" = "You are sending a file to a user that you are conversing with using Off-the-Record Messaging. However, file transfers occur in plain text, outside the control of Off-the-Record.\n\nDo you wish to continue?";
 "BasicLanguage[1272][4]" = "Cancel Transfer";
