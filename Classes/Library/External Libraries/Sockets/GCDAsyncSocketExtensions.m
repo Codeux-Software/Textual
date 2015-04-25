@@ -314,6 +314,13 @@
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+	settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
+	settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
+	settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
+#pragma clang diagnostic pop
+
 	settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
 
 	[GCDAsyncSocket applyClientSideCertificateForClient:client withController:controller toSettingsPool:&settings];
