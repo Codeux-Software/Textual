@@ -203,7 +203,7 @@
 			}
 
 			CFRelease(cert);
-		}else {
+		} else {
 			LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#1)", status);
 		}
 	}
