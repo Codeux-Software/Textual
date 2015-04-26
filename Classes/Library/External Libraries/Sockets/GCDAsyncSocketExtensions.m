@@ -44,7 +44,7 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller
+- (void)useSSLWithHost:(NSString *)hostAddress clientSideCertificate:(NSArray *)localCertData
 {
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	
@@ -54,46 +54,13 @@
 	
 	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
 
-	settings[(id)kCFStreamSSLPeerName] = (id)[controller serverAddress];
-	
-	[GCDAsyncSocket applyClientSideCertificateForClient:client withController:controller toSettingsPool:&settings];
-
-	[self startTLS:settings];
-}
-
-+ (void)applyClientSideCertificateForClient:(IRCClient *)client withController:(IRCConnection *)controller toSettingsPool:(NSMutableDictionary **)settingsPool
-{
-	NSData *localCertData = [[client config] identityClientSideCertificate];
+	settings[(id)kCFStreamSSLPeerName] = (id)hostAddress;
 
 	if (localCertData) {
-		SecKeychainItemRef cert;
-
-		CFDataRef rawCertData = (__bridge CFDataRef)(localCertData);
-
-		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
-
-		if (status == noErr) {
-			SecIdentityRef identity;
-
-			status = SecIdentityCreateWithCertificate(NULL, (SecCertificateRef)cert, &identity);
-
-			if (status == noErr) {
-				if ( settingsPool) {
-					[*settingsPool setObject:@[(__bridge id)identity, (__bridge id)cert] forKey:(id)kCFStreamSSLCertificates];
-				}
-
-				[controller setIsConnectedWithClientSideCertificate:YES];
-
-				CFRelease(identity);
-			} else {
-				LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#2)", status);
-			}
-
-			CFRelease(cert);
-		}else {
-			LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#1)", status);
-		}
+		settings[(id)kCFStreamSSLCertificates] = (id)localCertData;
 	}
+
+	[self startTLS:settings];
 }
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error

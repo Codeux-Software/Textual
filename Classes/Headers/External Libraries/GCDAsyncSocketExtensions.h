@@ -40,7 +40,7 @@
 @interface GCDAsyncSocket (GCDsyncSocketExtensions)
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
-- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller;
+- (void)useSSLWithHost:(NSString *)hostAddress clientSideCertificate:(NSArray *)localCertData;
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error;
 + (NSString *)posixErrorStringFromError:(NSInteger)errorCode;

@@ -176,6 +176,41 @@
 #pragma mark -
 #pragma mark Primary Socket Delegate
 
+- (NSArray *)clientSideCertificateForAuthentication
+{
+	NSData *localCertData = [[[self associatedClient] config] identityClientSideCertificate];
+
+	id returnValue = nil;
+
+	if (localCertData) {
+		SecKeychainItemRef cert;
+
+		CFDataRef rawCertData = (__bridge CFDataRef)(localCertData);
+
+		OSStatus status = SecKeychainItemCopyFromPersistentReference(rawCertData, &cert);
+
+		if (status == noErr) {
+			SecIdentityRef identity;
+
+			status = SecIdentityCreateWithCertificate(NULL, (SecCertificateRef)cert, &identity);
+
+			if (status == noErr) {
+				returnValue = @[(__bridge id)identity, (__bridge id)cert];
+
+				CFRelease(identity);
+			} else {
+				LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#2)", status);
+			}
+
+			CFRelease(cert);
+		}else {
+			LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#1)", status);
+		}
+	}
+
+	return returnValue;
+}
+
 - (NSString *)connectedAddress
 {
 	return [self.socketConnection connectedHost];
@@ -196,7 +231,9 @@
 	}
 
 	if (self.connectionPrefersSecuredConnection) {
-		[self.socketConnection useSSLWithClient:self.associatedClient connectionController:self];
+		NSArray *localCertData = [self clientSideCertificateForAuthentication];
+
+		[self.socketConnection useSSLWithHost:self.serverAddress clientSideCertificate:localCertData];
 	}
 
 	return YES;
@@ -204,7 +241,7 @@
 
 - (void)socket:(id)sock didReceiveTrust:(SecTrustRef)trust completionHandler:(void (^)(BOOL shouldTrustPeer))completionHandler
 {
-	if ([[self.associatedClient config] validateServerCertificateChain] == NO) {
+	if (self.connectionShouldValidateCertificateChain == NO) {
 		completionHandler(YES);
 	} else {
 		SecTrustResultType result;

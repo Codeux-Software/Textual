@@ -8043,7 +8043,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.socket.serverPort = socketPort;
 
 	self.socket.connectionPrefersIPv6 = preferIPv6;
+
 	self.socket.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
+	self.socket.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
 
 	self.socket.proxyType = self.config.proxyType;
 
