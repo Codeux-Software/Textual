@@ -51,6 +51,7 @@
 - (void)tcpClientDidDisconnect:(NSError *)distcError;
 - (void)tcpClientDidReceiveData:(NSString *)data;
 - (void)tcpClientDidSecureConnection;
+- (void)tcpClientDidReceivedAnInsecureCertificate;
 - (void)tcpClientDidSendData;
 @end
 

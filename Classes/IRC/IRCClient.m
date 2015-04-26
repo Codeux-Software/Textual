@@ -3886,6 +3886,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[mainWindow() reloadTreeGroup:self];
 }
 
+- (void)ircConnectionDidReceivedAnInsecureCertificate
+{
+	[self setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
+}
+
 - (void)ircConnectionDidSecureConnection
 {
 	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString:NO];

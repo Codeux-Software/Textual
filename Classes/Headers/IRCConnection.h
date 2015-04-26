@@ -79,4 +79,5 @@
 - (void)ircConnectionDidReceive:(NSString *)data;
 - (void)ircConnectionWillSend:(NSString *)line;
 - (void)ircConnectionDidSecureConnection;
+- (void)ircConnectionDidReceivedAnInsecureCertificate;
 @end

@@ -43,19 +43,12 @@
 @implementation IRCConnection (IRCConnectionSocket)
 
 #pragma mark -
-#pragma mark Socket Specifics
-
-- (BOOL)useNewSocketEngine
-{
-	return (self.proxyType == IRCConnectionSocketNoProxyType);
-}
-
-#pragma mark -
 #pragma mark Grand Centeral Dispatch
 
 - (void)destroyDispatchQueue
 {
 	self.dispatchQueue = NULL;
+
 	self.socketQueue = NULL;
 }
 
@@ -70,11 +63,9 @@
 	self.dispatchQueue = dispatch_queue_create([dqname UTF8String], DISPATCH_QUEUE_SERIAL);
 
 	// Create secondary queue incase we are using GCDAsyncSocket
-	if ([self useNewSocketEngine]) {
-		NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:dispatchID];
+	NSString *sqname = [@"socketReadWriteQueue." stringByAppendingString:dispatchID];
 
-		self.socketQueue = dispatch_queue_create([sqname UTF8String], DISPATCH_QUEUE_SERIAL);
-	}
+	self.socketQueue = dispatch_queue_create([sqname UTF8String], DISPATCH_QUEUE_SERIAL);
 }
 
 #pragma mark -
@@ -88,15 +79,11 @@
 	
 	self.isConnecting = YES;
 
-	if ([self useNewSocketEngine]) {
-        self.socketConnection = [GCDAsyncSocket socketWithDelegate:self
-													 delegateQueue:self.dispatchQueue
-													   socketQueue:self.socketQueue];
+	self.socketConnection = [GCDAsyncSocket socketWithDelegate:self
+												 delegateQueue:self.dispatchQueue
+												   socketQueue:self.socketQueue];
 
-		[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
-	} else {
-		self.socketConnection = [AsyncSocket socketWithDelegate:self];
-	}
+	[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
 
 	NSError *connError = nil;
 
@@ -105,11 +92,7 @@
 								 withTimeout:(-1)
 									   error:&connError] == NO)
 	{
-		[self onSocket:self.socketConnection willDisconnectWithError:connError];
-
-		if ([self useNewSocketEngine] == NO) {
-			[self onSocketDidDisconnect:self.socketConnection withError:nil];
-		}
+		[self socketDidDisconnect:self.socketConnection withError:connError];
 	}
 }
 
@@ -185,6 +168,7 @@
 {
 	if (self.isConnected) {
 		[self.socketConnection writeData:data withTimeout:(-1) tag:0];
+
 		[self.socketConnection readDataWithTimeout:(-1)	tag:0];
 	}
 }
@@ -254,56 +238,51 @@
 	[self tcpClientDidConnect];
 }
 
-- (void)onSocketDidDisconnect:(id)sock
+- (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
 {
-	if ([self useNewSocketEngine] == NO) {
-		[self closeSocket];
-		[self destroySocket];
-		
-		if (self.lastDisconnectWasErroneous == NO) {
-			[self tcpClientDidDisconnect:nil];
-		}
-	}
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self onSocketWillConnect:sock];
+
+		[self onSocket:sock didConnectToHost:ahost port:aport];
+	});
 }
 
-- (void)onSocketDidDisconnect:(id)sock withError:(NSError *)distcError
+- (void)onSocketDidDisconnect:(id)sock withError:(NSError *)error
 {
-	if ([self useNewSocketEngine]) {
-		[self closeSocket];
-		[self destroySocket];
-	}
+	[self closeSocket];
+	[self destroySocket];
 	
-	if (distcError) {
+	if (error) {
 		self.lastDisconnectWasErroneous = YES;
 	}
 
-	[self tcpClientDidDisconnect:distcError];
+	[self tcpClientDidDisconnect:error];
 }
 
-- (void)onSocket:(id)sender willDisconnectWithError:(NSError *)error
+- (void)socketDidDisconnect:(id)sock withError:(NSError *)error
 {
 	if (error == nil || [error code] == errSSLClosedGraceful) {
-		if ([self useNewSocketEngine]) {
-			[self onSocketDidDisconnect:sender withError:nil];
-		}
+		[self onSocketDidDisconnect:sock withError:nil];
 	} else {
-		NSString *errorMessage = nil;
-
 		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-			[self.associatedClient setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
+			[self tcpClientDidReceivedAnInsecureCertificate];
 		} else {
-			if ([error.domain isEqualToString:NSPOSIXErrorDomain]) {
-				errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
-			}
+			NSString *errorMessage = nil;
 
-			if (NSObjectIsEmpty(errorMessage)) {
-				errorMessage = [error localizedDescription];
+			if (error) {
+				if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
+					errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
+				}
+
+				if (NSObjectIsEmpty(errorMessage)) {
+					errorMessage = [error localizedDescription];
+				}
 			}
 
 			[self tcpClientDidError:errorMessage];
 		}
 
-		[self onSocketDidDisconnect:sender withError:error];
+		[self onSocketDidDisconnect:sock withError:error];
 	}
 }
 
@@ -342,25 +321,14 @@
 	}
 }
 
-- (void)onSocket:(id)sock didReadData:(NSData *)data withTag:(long)tag
+- (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	if ([self useNewSocketEngine] == NO) {
-		/* The classic socket does not use GCD, but seeing as read events can be
-		 time consuming we chose to perform all read actions on a dispatch queue. */
-		/* This behavior is inherited automatically when using the new socket
-		 engine which is pretty much anytime a proxy is not enabled. */
-
-		XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
-			[self completeReadForData:data];
-		});
-	} else {
-		[self completeReadForData:data];
-	}
+	[self completeReadForData:data];
 
 	[self.socketConnection readDataWithTimeout:(-1) tag:0];
 }
 
-- (void)onSocket:(id)sock didWriteDataWithTag:(long)tag
+- (void)socket:(id)sock didWriteDataWithTag:(long)tag
 {
 	[self tcpClientDidSendData];
 }
@@ -368,37 +336,6 @@
 - (void)socketDidSecure:(id)sock
 {
 	[self tcpClientDidSecureConnection];
-}
-
-#pragma mark -
-#pragma mark Secondary Socket Delegate
-
-- (void)socket:(id)sock didConnectToHost:(NSString *)ahost port:(UInt16)aport
-{
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self onSocketWillConnect:sock];
-
-		[self onSocket:sock didConnectToHost:ahost port:aport];
-	});
-}
-
-- (void)socketDidDisconnect:(id)sock withError:(NSError *)err
-{
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self onSocket:sock willDisconnectWithError:err];
-	});
-}
-
-- (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
-{
-	[self onSocket:sock didReadData:data withTag:tag];
-}
-
-- (void)socket:(id)sock didWriteDataWithTag:(long)tag
-{
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		[self onSocket:sock didWriteDataWithTag:tag];
-	});
 }
 
 #pragma mark -
@@ -411,50 +348,44 @@
 
 - (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText
 {
-	if ([self useNewSocketEngine]) {
-		NSString *protocol = [self.socketConnection sslNegotiatedProtocolString];
+	NSString *protocol = [self.socketConnection sslNegotiatedProtocolString];
 
-		NSString *cipher = [self.socketConnection sslNegotiatedCipherSuiteString];
+	NSString *cipher = [self.socketConnection sslNegotiatedCipherSuiteString];
 
-		if (plainText) {
-			return BLS(1250, protocol, cipher);
-		} else {
-			return BLS(1248, protocol, cipher);
-		}
+	if (plainText) {
+		return BLS(1250, protocol, cipher);
 	} else {
-		return nil;
+		return BLS(1248, protocol, cipher);
 	}
 }
 
 - (void)openSSLCertificateTrustDialog
 {
-	if ([self useNewSocketEngine]) {
-		SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
+	SecTrustRef trust = [self.socketConnection sslCertificateTrustInformation];
 
-		PointerIsEmptyAssert(trust);
+	PointerIsEmptyAssert(trust);
 
-		NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
+	NSString *protocolString = [self localizedSecureConnectionProtocolString:YES];
 
-		NSString *policyName = [self.socketConnection sslCertificateTrustPolicyName];
+	NSString *policyName = [self.socketConnection sslCertificateTrustPolicyName];
 
-		SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-		[panel setDefaultButtonTitle:BLS(1011)];
-		[panel setAlternateButtonTitle:nil];
+	[panel setDefaultButtonTitle:BLS(1011)];
+	[panel setAlternateButtonTitle:nil];
 
-		if (protocolString == nil) {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", policyName)];
-		} else {
-			[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", policyName, protocolString)];
-		}
-
-		[panel beginSheetForWindow:[NSApp mainWindow]
-					 modalDelegate:nil
-					didEndSelector:NULL
-					   contextInfo:NULL
-							 trust:trust
-						   message:TXTLS(@"BasicLanguage[1247][1]", policyName)];
+	if (protocolString == nil) {
+		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", policyName)];
+	} else {
+		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", policyName, protocolString)];
 	}
+
+	[panel beginSheetForWindow:[NSApp mainWindow]
+				 modalDelegate:nil
+				didEndSelector:NULL
+				   contextInfo:NULL
+						 trust:trust
+					   message:TXTLS(@"BasicLanguage[1247][1]", policyName)];
 }
 
 @end

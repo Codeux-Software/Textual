@@ -295,40 +295,6 @@
 	return certificateHost;
 }
 
-@end
-
-@implementation AsyncSocket (RLMAsyncSocketExtensions)
-
-+ (instancetype)socketWithDelegate:(id)delegate
-{
-	return [[self alloc] initWithDelegate:delegate];
-}
-
-- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller
-{
-	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-
-	settings[(id)kCFStreamSSLLevel] = (id)kCFStreamSocketSecurityLevelNegotiatedSSL;
-
-	settings[(id)kCFStreamSSLPeerName] = (id)kCFNull;
-	
-	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-	settings[(id)kCFStreamSSLAllowsAnyRoot] = (id)kCFBooleanTrue;
-	settings[(id)kCFStreamSSLAllowsExpiredRoots] = (id)kCFBooleanTrue;
-	settings[(id)kCFStreamSSLAllowsExpiredCertificates] = (id)kCFBooleanTrue;
-#pragma clang diagnostic pop
-
-	settings[(id)kCFStreamSSLValidatesCertificateChain] = (id)kCFBooleanFalse;
-
-	[GCDAsyncSocket applyClientSideCertificateForClient:client withController:controller toSettingsPool:&settings];
-
-    CFReadStreamSetProperty(theReadStream, kCFStreamPropertySSLSettings, (__bridge CFTypeRef)(settings));
-    CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySSLSettings, (__bridge CFTypeRef)(settings));
-}
-
 - (void)useSystemSocksProxy
 {
 	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
@@ -342,8 +308,7 @@
 
 		if (isEnabledInt == 1) {
 			if (CFDictionaryGetValueIfPresent(settings, (id)kCFStreamPropertySOCKSProxyHost, NULL)) {
-				CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, settings);
-				CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, settings);
+				// TODO: Implement -useSystemSocksProxy
 			}
 		}
 	}
@@ -353,37 +318,7 @@
 
 - (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version address:(NSString *)address port:(NSInteger)port username:(NSString *)username password:(NSString *)password
 {
-	switch (version) {
-		case IRCConnectionSocketSocks4ProxyType:
-		case IRCConnectionSocketSocks5ProxyType:
-		{
-			NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 
-			if (version == IRCConnectionSocketSocks4ProxyType) {
-				settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion4;
-			} else {
-				settings[(id)kCFStreamPropertySOCKSVersion] = (id)kCFStreamSocketSOCKSVersion5;
-			}
-			
-			settings[(id)kCFStreamPropertySOCKSProxyHost] = address;
-			settings[(id)kCFStreamPropertySOCKSProxyPort] = @(port);
-			
-			if (NSObjectIsNotEmpty(username)) {
-				settings[(id)kCFStreamPropertySOCKSUser] = username;
-			}
-			
-			if (NSObjectIsNotEmpty(password)) {
-				settings[(id)kCFStreamPropertySOCKSPassword] = password;
-			}
-			
-			CFReadStreamSetProperty(theReadStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
-			CFWriteStreamSetProperty(theWriteStream, kCFStreamPropertySOCKSProxy, (__bridge CFTypeRef)(settings));
-		}
-		default:
-		{
-			break;
-		}
-	}
 }
 
 @end

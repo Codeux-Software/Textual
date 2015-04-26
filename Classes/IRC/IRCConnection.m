@@ -86,6 +86,7 @@
 {
 	self.isConnected = NO;
 	self.isConnecting = NO;
+
 	self.isSending = NO;
 
 	self.floodControlCurrentMessageCount = 0;
@@ -123,17 +124,9 @@
 		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
 		if (isPong) {
-			NSString *firstItem = [line stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
+			[self sendData:line removeFromQueue:NO];
 
-			NSData *data = [self convertToCommonEncoding:firstItem];
-
-			if (data) {
-				[self write:data];
-
-				[self.associatedClient ircConnectionWillSend:firstItem];
-
-				return; // Exit from entering the queue.
-			}
+			return; // Exit from entering the queue.
 		}
 	}
 
@@ -171,19 +164,31 @@
 - (void)sendNextLine
 {
 	if ([self.sendQueue count] > 0) {
-		NSString *firstItem = [self.sendQueue[0] stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
+		self.isSending = YES;
 
+		[self sendData:self.sendQueue[0] removeFromQueue:YES];
+	}
+}
+
+- (void)sendData:(NSString *)dataToSend
+{
+	[self sendData:dataToSend removeFromQueue:NO];
+}
+
+- (void)sendData:(NSString *)dataToSend removeFromQueue:(BOOL)removeFromQueue
+{
+	NSString *firstItem = [dataToSend stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
+
+	if (removeFromQueue) {
 		[self.sendQueue removeObjectAtIndex:0];
+	}
 
-		NSData *data = [self convertToCommonEncoding:firstItem];
+	NSData *data = [self convertToCommonEncoding:firstItem];
 
-		if (data) {
-			self.isSending = YES;
+	if (data) {
+		[self write:data];
 
-			[self write:data];
-
-			[self.associatedClient ircConnectionWillSend:firstItem];
-		}
+		[self.associatedClient ircConnectionWillSend:firstItem];
 	}
 }
 
@@ -252,6 +257,11 @@
 - (void)tcpClientDidSecureConnection
 {
 	[self.associatedClient ircConnectionDidSecureConnection];
+}
+
+- (void)tcpClientDidReceivedAnInsecureCertificate
+{
+	[self.associatedClient ircConnectionDidReceivedAnInsecureCertificate];
 }
 
 - (void)tcpClientDidSendData

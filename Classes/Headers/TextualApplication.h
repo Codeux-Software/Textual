@@ -223,7 +223,6 @@
 	#import "TDCSharedProtocolDefinitions.h"
 
 	/* 3rd Party Extensions. */
-	#import "RLMAsyncSocket.h"
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
 	#import "GCDAsyncSocketCipherNames.h"

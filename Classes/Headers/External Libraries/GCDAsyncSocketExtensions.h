@@ -48,12 +48,6 @@
 @property (readonly) SecTrustRef sslCertificateTrustInformation;
 @property (readonly) NSString *sslCertificateTrustPolicyName;
 @property (readonly) NSString *sslCertificateLocalizedOwnershipInformation;
-@end
-
-@interface AsyncSocket (RLMAsyncSocketExtensions)
-+ (instancetype)socketWithDelegate:(id)delegate;
-
-- (void)useSSLWithClient:(IRCClient *)client connectionController:(IRCConnection *)controller;
 
 - (void)useSystemSocksProxy;
 - (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version

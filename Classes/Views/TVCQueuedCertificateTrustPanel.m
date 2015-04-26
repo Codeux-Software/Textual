@@ -39,7 +39,7 @@
 
 #import <objc/message.h>
 
-#define _descriptionIncludesAdditionalInformation			0
+#define _descriptionIncludesAdditionalInformation			1
 
 @interface TVCQueuedCertificateTrustPanel ()
 /* Each entry is stored as an array with index 0 containing
