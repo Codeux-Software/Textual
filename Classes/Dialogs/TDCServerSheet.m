@@ -778,7 +778,6 @@
 	[self updateHighlightsPage];
 	[self updateIgnoresPage];
 	[self updateClientCertificatePage];
-	[self updateNetworkSocketPage];
 
 	[self proxyTypeChanged:nil];
 	[self floodControlChanged:nil];
@@ -958,17 +957,6 @@
 	}
 }
 
-- (void)updateNetworkSocketPage
-{
-	NSInteger proxyTag = [self.proxyTypeButton selectedTag];
-
-	if (proxyTag == IRCConnectionSocketNoProxyType) {
-		[self.validateServerCertificateChainCheck setHidden:NO];
-	} else {
-		[self.validateServerCertificateChainCheck setHidden:YES];
-	}
-}
-
 - (void)updateChannelsPage
 {
 	NSInteger i = [self.channelTable selectedRow];
@@ -1101,7 +1089,6 @@
 	[self.proxyPortTextField performValidation];
 	
 	[self updateConnectionPage];
-	[self updateNetworkSocketPage];
 }
 
 - (void)toggleAdvancedEncodings:(id)sender
