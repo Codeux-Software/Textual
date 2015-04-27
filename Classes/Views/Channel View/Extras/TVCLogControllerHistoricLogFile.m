@@ -237,7 +237,7 @@
 			 file number of lines from it. That will give us a negative number, so we
 			 times it by -1. After that, we minus one so the only rows remaining are the
 			 number that we have defined as maximum. */
-			NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * -(1)) - 1);
+			NSInteger lastPosIndex = (((_maximumRowCountPerClient - [alllines count]) * (-1)) - 1);
 
 			/* Add 1 to not have first line a newline. */
 			NSInteger lastBytePos = ([alllines integerAtIndex:lastPosIndex] + 1);
@@ -298,7 +298,7 @@
 		if ([alllines count] > maxEntryCount) {
 			NSInteger finalCount = [alllines count];
 
-			NSInteger startingIndex = ((maxEntryCount - finalCount) * -(1));
+			NSInteger startingIndex = ((maxEntryCount - finalCount) * (-1));
 
 			NSMutableArray *countedEntries = [NSMutableArray array];
 

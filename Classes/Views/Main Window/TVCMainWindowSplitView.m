@@ -265,7 +265,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	
 	NSRect windowFrame = [mainWindow() frame];
 	
-	NSInteger position = ((rawPosition - NSWidth(windowFrame)) * -(1));
+	NSInteger position = ((rawPosition - NSWidth(windowFrame)) * (-1));
 	
 	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
 		position = TVCMainWindowSplitViewMemberListDefaultPosition;

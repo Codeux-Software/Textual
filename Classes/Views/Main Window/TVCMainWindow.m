@@ -881,7 +881,7 @@
 	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
 	
 	if (invertedScrollingDirection) {
-		x = (x * -(1));
+		x = (x * (-1));
 	}
 	
     if (x > 0) {
@@ -957,7 +957,7 @@
 	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
 	
 	if (invertedScrollingDirection) {
-		x = (x * -(1));
+		x = (x * (-1));
 	}
 
 	if (x > 0) {
