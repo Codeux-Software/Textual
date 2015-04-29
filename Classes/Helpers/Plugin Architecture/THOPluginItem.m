@@ -118,7 +118,7 @@
 	/* Process server output suppression rules. */
 	if ([self.primaryClass respondsToSelector:@selector(pluginOutputDisplayRules)])
 	{
-		// Use id, never assume what a 3rd party might give.
+		// Use id, never assume what a 3rd-party might give.
 		id outputRulesO = [self.primaryClass pluginOutputDisplayRules];
 
 		if (VTAE(outputRulesO, NSDictionary)) {

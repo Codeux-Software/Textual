@@ -37,7 +37,7 @@
  *********************************************************************** */
 
 /* A portion of this source file contains copyrighted work derived from one or more
- 3rd party, open source projects. The use of this work is hereby acknowledged. */
+ 3rd-party, open source projects. The use of this work is hereby acknowledged. */
 
 /* This source file contains work that originated from the Chat Core 
  framework of the Colloquy project. The source in question is in relation

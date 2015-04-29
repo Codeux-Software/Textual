@@ -222,7 +222,7 @@
 	/* Protocol defenitions. (see file) */
 	#import "TDCSharedProtocolDefinitions.h"
 
-	/* 3rd Party Extensions. */
+	/* 3rd-party Extensions. */
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
 	#import "GCDAsyncSocketCipherNames.h"
