@@ -118,7 +118,7 @@
 	return trust;
 }
 
-- (NSString *)sslCertificateLocalizedOwnershipInformation
+- (NSString *)sslCertificateLocalizedOwnershipInformation:(BOOL)shortResult
 {
 	SecTrustRef trustRef = [self sslCertificateTrustInformation];
 
@@ -172,8 +172,9 @@
 								return nil;
 							};
 
+							NSString *builtResult = nil;
+
 							id issuerInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1IssuerName);
-							id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
 
 							if (issuerInformation == nil) {
 								CFRelease(certificateProperties);
@@ -181,33 +182,39 @@
 								return nil;
 							}
 
-							if (subjectInformation == nil) {
-								CFRelease(certificateProperties);
-
-								return nil;
-							}
-
 							NSString *issuerOrganization = getObjectValueForChild(issuerInformation, kSecOIDOrganizationName);
 
-							NSString *subjectOrganization = getObjectValueForChild(subjectInformation, kSecOIDOrganizationName);
-							NSString *subjectLocationCountry = getObjectValueForChild(subjectInformation, kSecOIDCountryName);
-							NSString *subjectLocationState = getObjectValueForChild(subjectInformation, kSecOIDStateProvinceName);
-							NSString *subjectLocationCity = getObjectValueForChild(subjectInformation, kSecOIDLocalityName);
+							if (shortResult) {
+								if (issuerOrganization) {
+									builtResult = TXTLS(@"BasicLanguage[1229][4]", issuerOrganization);
+								}
+							} else {
+								id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
 
-							NSString *builtResult = nil;
+								if (subjectInformation == nil) {
+									CFRelease(certificateProperties);
 
-							if (issuerOrganization &&
-								subjectOrganization &&
-								subjectLocationCountry &&
-								subjectLocationState &&
-								subjectLocationCity)
-							{
-								builtResult = TXTLS(@"BasicLanguage[1229][3]",
-													issuerOrganization,
-													subjectOrganization,
-													subjectLocationCity,
-													subjectLocationState,
-													subjectLocationCountry);
+									return nil;
+								}
+
+								NSString *subjectOrganization = getObjectValueForChild(subjectInformation, kSecOIDOrganizationName);
+								NSString *subjectLocationCountry = getObjectValueForChild(subjectInformation, kSecOIDCountryName);
+								NSString *subjectLocationState = getObjectValueForChild(subjectInformation, kSecOIDStateProvinceName);
+								NSString *subjectLocationCity = getObjectValueForChild(subjectInformation, kSecOIDLocalityName);
+
+								if (issuerOrganization &&
+									subjectOrganization &&
+									subjectLocationCountry &&
+									subjectLocationState &&
+									subjectLocationCity)
+								{
+									builtResult = TXTLS(@"BasicLanguage[1229][3]",
+														issuerOrganization,
+														subjectOrganization,
+														subjectLocationCity,
+														subjectLocationState,
+														subjectLocationCountry);
+								}
 							}
 
 							CFRelease(certificateProperties);

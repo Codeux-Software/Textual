@@ -47,5 +47,6 @@
 
 @property (readonly) SecTrustRef sslCertificateTrustInformation;
 @property (readonly) NSString *sslCertificateTrustPolicyName;
-@property (readonly) NSString *sslCertificateLocalizedOwnershipInformation;
+
+- (NSString *)sslCertificateLocalizedOwnershipInformation:(BOOL)shortResult;
 @end

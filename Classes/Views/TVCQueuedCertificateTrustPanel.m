@@ -137,7 +137,7 @@
 		NSString *certificateHost = [self.activeSocket sslCertificateTrustPolicyName];
 
 #if _descriptionIncludesAdditionalInformation == 1
-		NSString *ownershipInformation = [_activeSocket sslCertificateLocalizedOwnershipInformation];
+		NSString *ownershipInformation = [_activeSocket sslCertificateLocalizedOwnershipInformation:YES];
 
 		NSMutableString *description = [NSMutableString string];
 
