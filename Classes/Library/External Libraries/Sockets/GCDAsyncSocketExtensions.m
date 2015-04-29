@@ -262,30 +262,4 @@
 	return certificateHost;
 }
 
-- (void)useSystemSocksProxy
-{
-	CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
-
-	CFNumberRef isEnabledRef = CFDictionaryGetValue(settings, (id)kSCPropNetProxiesSOCKSEnable);
-
-	if (isEnabledRef && CFGetTypeID(isEnabledRef) == CFNumberGetTypeID()) {
-		NSInteger isEnabledInt = 0;
-
-		CFNumberGetValue(isEnabledRef, kCFNumberIntType, &isEnabledInt);
-
-		if (isEnabledInt == 1) {
-			if (CFDictionaryGetValueIfPresent(settings, (id)kCFStreamPropertySOCKSProxyHost, NULL)) {
-				// TODO: Implement -useSystemSocksProxy
-			}
-		}
-	}
-
-	CFRelease(settings);
-}
-
-- (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version address:(NSString *)address port:(NSInteger)port username:(NSString *)username password:(NSString *)password
-{
-
-}
-
 @end

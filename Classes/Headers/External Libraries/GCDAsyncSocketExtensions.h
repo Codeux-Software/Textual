@@ -48,11 +48,4 @@
 @property (readonly) SecTrustRef sslCertificateTrustInformation;
 @property (readonly) NSString *sslCertificateTrustPolicyName;
 @property (readonly) NSString *sslCertificateLocalizedOwnershipInformation;
-
-- (void)useSystemSocksProxy;
-- (void)useSocksProxyVersion:(IRCConnectionSocketProxyType)version
-					 address:(NSString *)address
-						port:(NSInteger)port
-					username:(NSString *)username
-					password:(NSString *)password;
 @end
