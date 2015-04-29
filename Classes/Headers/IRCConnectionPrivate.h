@@ -40,7 +40,6 @@
 @interface IRCConnection ()
 @property (nonatomic, strong) NSMutableArray *sendQueue;
 @property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
-@property (nonatomic, assign) BOOL lastDisconnectWasErroneous;
 @property (nonatomic, strong) dispatch_queue_t dispatchQueue;
 @property (nonatomic, strong) dispatch_queue_t socketQueue;
 @property (nonatomic, copy) NSData *bufferOverflowString;

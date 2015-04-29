@@ -46,9 +46,14 @@
 
 - (NSString *)localizedSecureConnectionProtocolString:(BOOL)plainText;
 
+// When using a proxy, -connectedAddress will always return nil
+// In proxy mode we do not know the actual address that the proxy
+// connected to, only the proxy address itself. While we could
+// return the address the proxy was instructed to connect to, that
+// does not equal the resolved address.
 @property (readonly, copy) NSString *connectedAddress;
 
-- (void)write:(NSData *)data;
+- (void)writeDataToSocket:(NSData *)data;
 
 - (void)openSSLCertificateTrustDialog;
 @end

@@ -186,7 +186,7 @@
 	NSData *data = [self convertToCommonEncoding:firstItem];
 
 	if (data) {
-		[self write:data];
+		[self writeDataToSocket:data];
 
 		[self.associatedClient ircConnectionWillSend:firstItem];
 	}
