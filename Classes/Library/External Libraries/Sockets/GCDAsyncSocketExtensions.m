@@ -44,25 +44,6 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-- (void)useSSLWithHost:(NSString *)hostAddress clientSideCertificate:(NSArray *)localCertData
-{
-	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
-	
-	settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
-
-	settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
-	
-	settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
-
-	settings[(id)kCFStreamSSLPeerName] = (id)hostAddress;
-
-	if (localCertData) {
-		settings[(id)kCFStreamSSLCertificates] = (id)localCertData;
-	}
-
-	[self startTLS:settings];
-}
-
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error
 {
 	if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
