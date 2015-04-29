@@ -3910,7 +3910,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* If the address we are connecting to is not an IP address,
 	 then we report back the actual IP address it was resolved to. */
-	if ([self.socket.serverAddress isIPAddress]) {
+	NSString *connectedAddress = [self.socket connectedAddress];
+
+	if (connectedAddress == nil || [self.socket.serverAddress isIPAddress]) {
 		[self printDebugInformationToConsole:BLS(1129)];
 	} else {
 		[self printDebugInformationToConsole:BLS(1130, [self.socket connectedAddress])];
