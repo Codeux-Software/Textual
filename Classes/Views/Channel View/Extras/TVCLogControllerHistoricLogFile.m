@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#warning FIXME: This file requires a significant overhaul.
+#warning TVCLogControllerHistoricLogFile FIXME: This file requires a significant overhaul.
 
 #define _usesBackgroundActivityTask			0
 

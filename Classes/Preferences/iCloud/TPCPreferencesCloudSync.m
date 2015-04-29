@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#warning FIXME: This file requires a significant overhaul.
+#warning TPCPreferencesCloudSync FIXME: This file requires a significant overhaul.
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 NSString * const TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification	= @"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification";
