@@ -221,11 +221,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)quit:(NSString *)comment;
 - (void)cancelReconnect;
 
-- (void)sendNextCap;
-- (void)pauseCap;
-- (void)resumeCap;
 - (BOOL)isCapAvailable:(NSString *)cap;
-- (void)cap:(NSString *)cap result:(BOOL)supported;
 
 - (void)joinChannel:(IRCChannel *)channel;
 - (void)joinChannel:(IRCChannel *)channel password:(NSString *)password;

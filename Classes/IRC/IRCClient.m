@@ -109,8 +109,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) BOOL isInvokingISONCommandForFirstTime;
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
+@property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
-@property (nonatomic, assign) NSUInteger CAPPausedStatus;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
 @property (nonatomic, strong) NSString *cachedLocalHostmask;
@@ -150,6 +150,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.inUserInvokedModeRequest = NO;
 		self.inUserInvokedJoinRequest = NO;
 		self.inUserInvokedWatchRequest = NO;
+
+		self.CAPNegotiationIsPaused = NO;
 
 		self.capacitiesPending = 0;
 		self.capacities = 0;
@@ -3813,8 +3815,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.preAwayNickname = nil;
 	
 	self.lastMessageReceived = 0;
-	
-	self.CAPPausedStatus = 0;
+
+	self.CAPNegotiationIsPaused = NO;
 	
 	self.capacitiesPending = 0;
 	self.capacities = 0;
@@ -5643,35 +5645,37 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	/* We try to send each cap. First one to return a YES for sending
 	 itself will break the chain and we'll try next one later. */
-#define _rony(s)		if ([self maybeSendNextCapacity:(s)] == YES) { return; }
-	
-	if (_capacitiesPending == 0) {
-		[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
-	} else {
-		_rony(ClientIRCv3SupportedCapacitySASLGeneric)
-		_rony(ClientIRCv3SupportedCapacityAwayNotify)
-		_rony(ClientIRCv3SupportedCapacityIdentifyCTCP)
-		_rony(ClientIRCv3SupportedCapacityIdentifyMsg)
-		_rony(ClientIRCv3SupportedCapacityMultiPreifx)
-		_rony(ClientIRCv3SupportedCapacityServerTime)
-		_rony(ClientIRCv3SupportedCapacityUserhostInNames)
-		_rony(ClientIRCv3SupportedCapacityZNCPlaybackModule)
-		_rony(ClientIRCv3SupportedCapacityZNCServerTime)
-		_rony(ClientIRCv3SupportedCapacityZNCServerTimeISO)
-		_rony(ClientIRCv3SupportedCapacityZNCSelfMessage)
+	if (self.CAPNegotiationIsPaused == YES) {
+		return; // Cannot continue operation...
 	}
+
+#define _rony(s)		if ([self maybeSendNextCapacity:(s)] == YES) { return; }
+
+	_rony(ClientIRCv3SupportedCapacitySASLGeneric)
+	_rony(ClientIRCv3SupportedCapacityAwayNotify)
+	_rony(ClientIRCv3SupportedCapacityIdentifyCTCP)
+	_rony(ClientIRCv3SupportedCapacityIdentifyMsg)
+	_rony(ClientIRCv3SupportedCapacityMultiPreifx)
+	_rony(ClientIRCv3SupportedCapacityServerTime)
+	_rony(ClientIRCv3SupportedCapacityUserhostInNames)
+	_rony(ClientIRCv3SupportedCapacityZNCPlaybackModule)
+	_rony(ClientIRCv3SupportedCapacityZNCServerTime)
+	_rony(ClientIRCv3SupportedCapacityZNCServerTimeISO)
+	_rony(ClientIRCv3SupportedCapacityZNCSelfMessage)
+
+	[self send:IRCPrivateCommandIndex("cap"), @"END", nil];
 	
 #undef _rony
 }
 
 - (void)pauseCap
 {
-	self.CAPPausedStatus++;
+	self.CAPNegotiationIsPaused = YES;
 }
 
 - (void)resumeCap
 {
-	self.CAPPausedStatus--;
+	self.CAPNegotiationIsPaused = NO;
 
 	[self sendNextCap];
 }
@@ -5734,9 +5738,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	if ([cap isEqualIgnoringCase:@"sasl"]) {
 		if (supported) {
-			[self pauseCap];
-			
-			[self sendSASLIdentificationRequest];
+			if ([self sendSASLIdentificationRequest]) {
+				[self pauseCap];
+			}
 		}
 	} else {
 		ClientIRCv3SupportedCapacities capacity = [self capacityFromStringValue:cap];
@@ -5805,7 +5809,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	} else {
 		if ([options containsObject:@"EXTERNAL"]) {
-			identificationMechanism = ClientIRCv3SupportedCapacitySASLGeneric;
+			identificationMechanism = ClientIRCv3SupportedCapacitySASLExternal;
 		} else if ([options containsObject:@"PLAIN"]) {
 			identificationMechanism = ClientIRCv3SupportedCapacitySASLPlainText;
 		}
@@ -5823,6 +5827,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		if (NSObjectIsEmpty(self.config.nicknamePassword) == NO) {
 			_capacitiesPending |= ClientIRCv3SupportedCapacitySASLPlainText;
 		}
+	}
+
+	if (identificationMechanism > 0) {
+		_capacitiesPending |= ClientIRCv3SupportedCapacitySASLGeneric;
 	}
 }
 
@@ -5858,12 +5866,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (void)sendSASLIdentificationRequest
+- (BOOL)sendSASLIdentificationRequest
 {
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL] ||
 		((_capacitiesPending & ClientIRCv3SupportedCapacityIsInSASLNegotiation) == ClientIRCv3SupportedCapacityIsInSASLNegotiation))
 	{
-		return; // Do not continue operation...
+		return NO; // Do not continue operation...
 	}
 
 	_capacitiesPending |= ClientIRCv3SupportedCapacityIsInSASLNegotiation;
@@ -5871,10 +5879,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLPlainText) == ClientIRCv3SupportedCapacitySASLPlainText)
 	{
 		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"PLAIN", nil];
+
+		return YES;
 	}
 	else if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLExternal) == ClientIRCv3SupportedCapacitySASLExternal)
 	{
 		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
+
+		return NO;
 	}
 }
 
@@ -5925,7 +5937,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		[self sendNextCap];
 	}
-	else if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("authenticate")])
+	else if ([command isEqualIgnoringCase:IRCPrivateCommandIndex("cap_authenticate")])
 	{
 		if ([starprt isEqualToString:@"+"]) {
 			[self sendSASLIdentificationInformation];
