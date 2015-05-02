@@ -62,7 +62,7 @@
 "9822" = "Record Overflow"; // errSSLPeerRecordOverflow
 "9823" = "Decompression Failure"; // errSSLPeerDecompressFail
 "9824" = "Handshake Failure"; // errSSLPeerHandshakeFail
-"9825" = "Generic Certificate Error"; // errSSLPeerBadCert
+"9825" = "Bad Certificate"; // errSSLPeerBadCert
 "9826" = "Invalid or unsupported certificate format"; // errSSLPeerUnsupportedCert
 "9827" = "Certificate Revoked"; // errSSLPeerCertRevoked
 "9828" = "Certificate Expired"; // errSSLPeerCertExpired
