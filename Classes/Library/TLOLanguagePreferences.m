@@ -41,12 +41,22 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle()];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:@"BasicLanguage"];
+}
+
++ (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:table];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
 {
-	return NSLocalizedStringFromTableInBundle(key, @"BasicLanguage", bundle, nil);
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:@"BasicLanguage"];
+}
+
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table
+{
+	return [bundle localizedStringForKey:key value:NSStringEmptyPlaceholder table:table];
 }
 
 @end

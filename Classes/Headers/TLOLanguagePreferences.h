@@ -39,5 +39,7 @@
 
 @interface TLOLanguagePreferences : NSObject 
 + (NSString *)localizedStringWithKey:(NSString *)key;
++ (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
 @end
