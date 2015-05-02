@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-"heading" = "Transport Layer Security (TLS) Error: ";
+"heading" = "Transport Layer Security (TLS) Error: %1$@ (%2$ld)";
 
 "9800" = "Generic Protocol Error"; // errSSLProtocol
 "9801" = "Cipher Suite Negotation Failure"; // errSSLNegotiation

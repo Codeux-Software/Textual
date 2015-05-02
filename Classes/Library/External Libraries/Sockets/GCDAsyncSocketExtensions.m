@@ -62,7 +62,7 @@
 																   table:@"SecureTransportErrorCodes"];
 
 		/* Maybe format the error message. */
-		return [headingFormat stringByAppendingString:localizedError];
+		return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
 	} else {
 		return nil;
 	}
