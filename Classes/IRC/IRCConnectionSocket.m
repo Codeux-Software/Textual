@@ -351,19 +351,21 @@
 	if (error == nil || [error code] == errSSLClosedGraceful) {
 		[self _socketDidDisconnect:sock withError:nil];
 	} else {
-		if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
-			[self tcpClientDidReceivedAnInsecureCertificate];
-		} else {
-			NSString *errorMessage = nil;
+		NSString *errorMessage = nil;
 
-			if (error) {
-				if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
-					errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
-				}
+		if (error) {
+			if ([[error domain] isEqualToString:NSPOSIXErrorDomain]) {
+				errorMessage = [GCDAsyncSocket posixErrorStringFromError:[error code]];
+			} else if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+				errorMessage = [GCDAsyncSocket sslHandshakeErrorStringFromError:[error code]];
 
-				if (NSObjectIsEmpty(errorMessage)) {
-					errorMessage = [error localizedDescription];
+				if ([GCDAsyncSocket badSSLCertificateErrorFound:error]) {
+					[self tcpClientDidReceivedAnInsecureCertificate];
 				}
+			}
+
+			if (NSObjectIsEmpty(errorMessage)) {
+				errorMessage = [error localizedDescription];
 			}
 
 			[self tcpClientDidError:errorMessage];
