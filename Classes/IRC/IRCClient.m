@@ -5886,8 +5886,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	{
 		[self send:IRCPrivateCommandIndex("cap_authenticate"), @"EXTERNAL", nil];
 
-		return NO;
+		return YES;
 	}
+
+	return NO;
 }
 
 - (void)receiveCapacityOrAuthenticationRequest:(IRCMessage *)m
