@@ -41,6 +41,7 @@
 + (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error;
++ (NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode;
 + (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
 
 @property (readonly) SecTrustRef sslCertificateTrustInformation;

@@ -44,6 +44,30 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
++ (NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode
+{
+	NSInteger positiveErrorCode = (errorCode * (-1));
+
+	if ((positiveErrorCode >= 9800) && (positiveErrorCode <= 9849)) {
+		/* Request the heading for the formatted error message. */
+		NSString *headingFormat = [RZMainBundle() localizedStringForKey:@"heading"
+																  value:NSStringEmptyPlaceholder
+																  table:@"SecureTransportErrorCodes"];
+
+		/* Request the reason for the formatting error message. */
+		NSString *lookupKey = [NSString stringWithInteger:positiveErrorCode];
+
+		NSString *localizedError = [RZMainBundle() localizedStringForKey:lookupKey
+																   value:NSStringEmptyPlaceholder
+																   table:@"SecureTransportErrorCodes"];
+
+		/* Maybe format the error message. */
+		return [headingFormat stringByAppendingString:localizedError];
+	} else {
+		return nil;
+	}
+}
+
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error
 {
 	if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
