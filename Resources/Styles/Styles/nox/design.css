@@ -215,6 +215,9 @@ body[dir=ltr] div[ltype=action] .sender:before {
 
 /* Historic / Log readback */
 #historic_messages {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
 	opacity: 1.0;
 	font-weight: 200;
 	-webkit-filter: brightness(75%);
