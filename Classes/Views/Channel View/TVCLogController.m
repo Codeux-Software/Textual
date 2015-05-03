@@ -578,6 +578,37 @@
 #pragma mark -
 #pragma mark Reload Scrollback
 
+- (void)appendHistoricMessageFragmentToBody:(NSString *)html
+{
+	/* This method looks for #historic_messages and appends to that if it
+	 exists. If it does not exist, then it looks for #body_home. This div 
+	 should exist, but if it does not, then the method is cancelled.
+	 
+	 The appended fragment is placed above the first child node of the
+	 container, or is simply appended to the container if no child exists. */
+
+	DOMDocument *doc = [self mainFrameDocument];
+	PointerIsEmptyAssert(doc);
+
+	DOMElement *body = [doc getElementById:@"historic_messages"];
+
+	if (body == nil) {
+		body = [self documentBody];
+
+		PointerIsEmptyAssert(body);
+	}
+
+	DOMNodeList *childNodes = [body childNodes];
+
+	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
+
+	if ([childNodes length] < 1) {
+		[body appendChild:frag];
+	} else {
+		[body insertBefore:frag refChild:[childNodes item:0]];
+	}
+}
+
 /* reloadOldLines: is supposed to be called from inside a queue. */
 - (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines
 {
@@ -636,7 +667,7 @@
 
 	/* Update WebKit. */
 	[self performBlockOnMainThread:^{
-		[self prependToDocumentBody:patchedAppend];
+		[self appendHistoricMessageFragmentToBody:patchedAppend];
 
 		[self mark];
 
