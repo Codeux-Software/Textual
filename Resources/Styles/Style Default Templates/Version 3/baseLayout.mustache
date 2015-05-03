@@ -109,12 +109,15 @@
 		{{/isPrivateMessageView}}
 
 		dir="{{textDirectionToken}}">
-			{{! The elements "body_home," "loading_screen," "topic_bar," and "mark" must always
-			    remain the same as the ID value of these elements are used internally by Textual. }}
+			{{! The elements "body_home," "historic_messages," "loading_screen," 
+			"topic_bar," and "mark" must always remain the same as the ID value 
+			of these elements are used internally by Textual. }}
 
 			<div id="loading_screen">View is Loading…</div>
 
-			<div id="body_home">{{! Filled at runtime. }}</div>
+			<div id="body_home">
+				<span id="historic_messages"></span>
+			</div>
 
 			{{#isChannelView}}
 				<div id="topic_bar" ondblclick="Textual.topicDoubleClicked()">{{{formattedTopicValue}}}</div>
