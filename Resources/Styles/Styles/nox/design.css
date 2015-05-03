@@ -214,8 +214,11 @@ body[dir=ltr] div[ltype=action] .sender:before {
 }
 
 /* Historic / Log readback */
-.historic {
-	opacity: 0.6;
+#historic_messages {
+	opacity: 1.0;
+	font-weight: 200;
+	-webkit-filter: brightness(75%);
+	-webkit-filter: grayscale(90%);
 }
 
 /* NOTICE/CTCP/WALLOPS */
