@@ -350,38 +350,6 @@
 	[body appendChild:frag];
 }
 
-- (void)prependToDocumentBody:(NSString *)html
-{
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [self documentBody];
-	PointerIsEmptyAssert(body);
-
-	DOMNodeList *childNodes = [body childNodes];
-
-	if ([childNodes length] < 1) {
-		[self appendToDocumentBody:html];
-	} else {
-		DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
-
-		[body insertBefore:frag refChild:[childNodes item:0]];
-	}
-}
-
-- (void)insertOntoDocumentBody:(NSString *)html beforeNode:(DOMNode *)dnode
-{
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [self documentBody];
-	PointerIsEmptyAssert(body);
-
-	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
-
-	[body insertBefore:frag refChild:dnode];
-}
-
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
 	[self executeScriptCommand:command withArguments:args onQueue:YES];
