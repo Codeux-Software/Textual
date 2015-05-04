@@ -51,21 +51,19 @@
 
 #import "IRCConnectionPrivate.h"
 
+#include <sys/socket.h>
+#include <netinet/in.h>
+
 #define SOCKS_PROXY_OPEN_TAG					10100
 #define SOCKS_PROXY_CONNECT_TAG					10200
 #define SOCKS_PROXY_CONNECT_REPLY_1_TAG			10300
 #define SOCKS_PROXY_CONNECT_REPLY_2_TAG			10400
 #define SOCKS_PROXY_AUTH_USERPASS_TAG			10500
 
-#define SOCKS_PROXY_CONNECT_TIMEOUT			8.00
-#define SOCKS_PROXY_READ_TIMEOUT			5.00
-#define SOCKS_PROXY_TOTAL_TIMEOUT			80.00
+#define SOCKS_PROXY_READ_TIMEOUT			30.00
 
 #define CONNECT_TIMEOUT						30.0
 
-#warning IRCConnectionSocket TODO: Add SOCKS4(a) support
-#warning IRCConnectionSocket TODO: Add support for system-wide SOCKS proxy
-#warning IRCConnectionSocket TODO: Add better error checking for incoming and outgoing SOCKS communications
 #warning IRCConnectionSocket TODO: Fix TLS negotiation in SOCKS proxy mode. It is prone to failure, very commonly.
 
 @implementation IRCConnection (IRCConnectionSocket)
@@ -112,8 +110,6 @@
 	[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
 
 	if ([self usesSocksProxy]) {
-		[self socksProxyPopulateSystemSocksProxy];
-
 		[self performConnectToHost:self.proxyAddress onPort:self.proxyPort];
 	} else {
 		[self performConnectToHost:self.serverAddress onPort:self.serverPort];
@@ -140,6 +136,15 @@
 	}
 }
 
+- (void)closeSocketWithError:(NSString *)errorMessage
+{
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:errorMessage forKey:NSLocalizedDescriptionKey];
+
+	self.alternateDisconnectError = [NSError errorWithDomain:GCDAsyncSocketErrorDomain code:GCDAsyncSocketOtherError userInfo:userInfo];
+
+	[self closeSocket];
+}
+
 - (void)destroySocket
 {
 	[self tearDownQueuedCertificateTrustDialog];
@@ -150,6 +155,8 @@
 	}
 
 	[self destroyDispatchQueue];
+
+	self.alternateDisconnectError = nil;
 	
 	self.isConnectedWithClientSideCertificate = NO;
 	
@@ -298,6 +305,8 @@
 
 		settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
 
+		settings[GCDAsyncSocketSSLSessionOptionFalseStart] = @(NO);
+
 		settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
 
 		settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
@@ -313,7 +322,7 @@
 		[self.socketConnection startTLS:settings];
 	}
 }
-	
+
 - (void)onSocketConnectedToHost
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
@@ -348,6 +357,10 @@
 
 - (void)socketDidDisconnect:(id)sock withError:(NSError *)error
 {
+	if (error == nil && self.alternateDisconnectError) {
+		error =         self.alternateDisconnectError;
+	}
+
 	if (error == nil || [error code] == errSSLClosedGraceful) {
 		[self _socketDidDisconnect:sock withError:nil];
 	} else {
@@ -499,7 +512,13 @@
 {
 	return (/*	self.proxyType == IRCConnectionSocketSystemSocksProxyType	|| */ // Not supported yet
 				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
-				self.proxyType == IRCConnectionSocketSocks5ProxyType		  );
+				self.proxyType == IRCConnectionSocketSocks5ProxyType);
+}
+
+- (BOOL)socksProxyCanAuthenticate
+{
+	return (NSObjectIsNotEmpty(self.proxyUsername) &&
+			NSObjectIsNotEmpty(self.proxyPassword));
 }
 
 - (void)socksProxyPopulateSystemSocksProxy
@@ -525,198 +544,229 @@
 	}
 }
 
-/**
- * Sends the SOCKS5 open/handshake/authentication data, and starts reading the response.
- * We attempt to gain anonymous access (no authentication).
- **/
 - (void)socksProxyOpen
 {
-	//      +-----+-----------+---------+
-	// NAME | VER | NMETHODS  | METHODS |
-	//      +-----+-----------+---------+
-	// SIZE |  1  |    1      | 1 - 255 |
-	//      +-----+-----------+---------+
-	//
-	// Note: Size is in bytes
-	//
-	// Version    = 5 (for SOCKS5)
-	// NumMethods = 1
-	// Method     = 0 (No authentication, anonymous access)
+	[self socksProxyPopulateSystemSocksProxy];
 
-	NSUInteger byteBufferLength = 3;
-
-	uint8_t *byteBuffer = malloc((byteBufferLength * sizeof(uint8_t)));
-
-	uint8_t version = 5; // VER
-	byteBuffer[0] = version;
-
-	uint8_t numMethods = 1; // NMETHODS
-	byteBuffer[1] = numMethods;
-
-	uint8_t method = 0; // 0 == no auth
-	if ([self.proxyUsername length] > 0 ||
-		[self.proxyPassword length] > 0)
-	{
-		method = 2; // username/password
+	if (self.proxyType == IRCConnectionSocketSocks4ProxyType) {
+		[self socks4ProxyOpen];
+	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
+		[self socks5ProxyOpen];
 	}
-	byteBuffer[2] = method;
-
-	NSData *data = [NSData dataWithBytesNoCopy:byteBuffer length:byteBufferLength freeWhenDone:YES];
-
-	[self.socketConnection writeData:data withTimeout:(-1) tag:SOCKS_PROXY_OPEN_TAG];
-
-	//      +-----+--------+
-	// NAME | VER | METHOD |
-	//      +-----+--------+
-	// SIZE |  1  |   1    |
-	//      +-----+--------+
-	//
-	// Note: Size is in bytes
-	//
-	// Version = 5 (for SOCKS5)
-	// Method  = 0 (No authentication, anonymous access)
-
-	[self.socketConnection readDataToLength:2 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
 }
 
-/*
- For username/password authentication the client's authentication request is
-
- field 1: version number, 1 byte (must be 0x01)
- field 2: username length, 1 byte
- field 3: username
- field 4: password length, 1 byte
- field 5: password
- */
-
-- (void)socksProxyUserPassAuth
+- (BOOL)socksProxyDidReadData:(NSData *)data withTag:(long)tag
 {
-	NSData *usernameData = [self.proxyUsername dataUsingEncoding:NSUTF8StringEncoding];
-	NSData *passwordData = [self.proxyPassword dataUsingEncoding:NSUTF8StringEncoding];
-
-	uint8_t usernameLength = (uint8_t)[usernameData length];
-	uint8_t passwordLength = (uint8_t)[passwordData length];
-
-	NSMutableData *authData = [NSMutableData dataWithCapacity:(1 + 1 + usernameLength + 1 + passwordLength)];
-
-	uint8_t version[1] = {0x01};
-
-	[authData appendBytes:version length:1];
-	[authData appendBytes:&usernameLength length:1];
-	[authData appendBytes:[usernameData bytes] length:usernameLength];
-	[authData appendBytes:&passwordLength length:1];
-	[authData appendBytes:[passwordData bytes] length:passwordLength];
-
-	[self.socketConnection writeData:authData withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
-
-	[self.socketConnection readDataToLength:2 withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
+	if (self.proxyType == IRCConnectionSocketSocks4ProxyType) {
+		return [self socks4ProxyDidReadData:data withTag:tag];
+	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
+		return [self socks5ProxyDidReadData:data withTag:tag];
+	} else {
+		return NO;
+	}
 }
 
-/**
- * Sends the SOCKS5 connect data (according to XEP-65), and starts reading the response.
- **/
+- (const struct sockaddr *)socksProxyResolvedAddress
+{
+	NSData *resolvedAddress4 = nil;
+	NSData *resolvedAddress6 = nil;
+
+	NSArray *resolvedAddresses = [GCDAsyncSocket lookupHost:self.serverAddress port:self.serverPort error:NULL];
+
+	for (NSData *address in resolvedAddresses) {
+		if (resolvedAddress4 == nil && [GCDAsyncSocket isIPv4Address:address]) {
+			resolvedAddress4 = address;
+		} else if (resolvedAddress6 == nil && [GCDAsyncSocket isIPv6Address:address]) {
+			resolvedAddress6 = address;
+		}
+	}
+
+	if ((resolvedAddress4        && resolvedAddress6 && self.connectionPrefersIPv6) ||
+		(resolvedAddress4 == nil && resolvedAddress6))
+	{
+		return [resolvedAddress6 bytes];
+	}
+
+	if (        resolvedAddress4) {
+		return [resolvedAddress4 bytes];
+	}
+
+	return NULL;
+}
+
+- (void)socks4ProxyOpen
+{
+	[self socksProxyConnect];
+}
+
+- (void)socks5ProxyOpen
+{
+	[self socks5ProxySendGreeting];
+}
+
 - (void)socksProxyConnect
 {
+	//
+	// Packet layout for SOCKS4 connect:
+	//
+	// 	    +----+----+---------+-------------------+---------+....+----+
+	// NAME | VN | CD | DSTPORT |      DSTIP        | USERID       |NULL|
+	//      +----+----+---------+-------------------+---------+....+----+
+	// SIZE	   1    1      2              4           variable       1
+	//
+	// ---------------------------------------------------------------------------
+	//
+	// Packet layout for SOCKS5 connect:
+	//
 	//      +-----+-----+-----+------+------+------+
 	// NAME | VER | CMD | RSV | ATYP | ADDR | PORT |
 	//      +-----+-----+-----+------+------+------+
 	// SIZE |  1  |  1  |  1  |  1   | var  |  2   |
 	//      +-----+-----+-----+------+------+------+
 	//
-	// Note: Size is in bytes
+
+	BOOL isVersion4Socks = (self.proxyType == IRCConnectionSocketSocks4ProxyType);
+
+	/* Resolve the destination address here, rather than on the proxy, then
+	 modify the buffer size based on the type of address. */
+	const struct sockaddr *destinationAddress = [self socksProxyResolvedAddress];
+
+	if (destinationAddress == NULL) {
+		[self closeSocketWithError:@"Error: Unable to resolve destination address"];
+
+		return; // Cancel this operation...
+	}
+
+	struct sockaddr_in destinationAddress4;
+	struct sockaddr_in6 destinationAddress6;
+
+	BOOL destinationAddressIsIPv6 = (destinationAddress->sa_family == AF_INET6);
+
+	if (destinationAddressIsIPv6) {
+		memcpy(&destinationAddress6, destinationAddress, sizeof(destinationAddress6));
+	} else {
+		memcpy(&destinationAddress4, destinationAddress, sizeof(destinationAddress4));
+	}
+
+	/* SOCKS4 does not support IPv6 address space, so we must disconnect
+	 if we only have an IPv6 address for the end user to access. */
+	if (destinationAddressIsIPv6) {
+		if (isVersion4Socks) {
+			[self closeSocketWithError:@"SOCKS4 Error: Cannot use an IPv6 address with a SOCKS4 proxy"];
+
+			return; // Cancel this operation...
+		}
+	}
+
+	/* Assemble the packet of data that will be sent */
+	NSMutableData *packetData = [NSMutableData data];
+
+	/* SOCKS version to use */
+	if (isVersion4Socks) {
+		[packetData appendBytes:"\x04" length:1];
+	} else {
+		[packetData appendBytes:"\x05" length:1];
+	}
+
+	/* Type of connection (the command) */
+	[packetData appendBytes:"\x01" length:1];
+
+	/* Reserved value that must be 0 for SOCKS5 */
+	if (isVersion4Socks == NO) {
+		[packetData appendBytes:"\x00" length:1];
+	}
+
+	/* The address type for our destination */
+	/* We resolve our DNS before reaching this point so our
+	 address type will either be IPv4 or IPv6, not domain. */
+	if (isVersion4Socks == NO) {
+		if (destinationAddressIsIPv6) {
+			[packetData appendBytes:"\x04" length:1];
+		} else {
+			[packetData appendBytes:"\x01" length:1];
+		}
+	}
+
+	if (isVersion4Socks) {
+		/* Complete write out for SOCKS4 connections. */
+		[packetData appendBytes:&destinationAddress4.sin_port length:2];
+		[packetData appendBytes:&destinationAddress4.sin_addr length:4];
+
+		[packetData appendBytes:"\x00" length:1];
+	} else {
+		/* Complete write out for SOCKS5 connections. */
+		if (destinationAddressIsIPv6) {
+			[packetData appendBytes:&destinationAddress6.sin6_addr length:16];
+		} else {
+			[packetData appendBytes:&destinationAddress4.sin_addr.s_addr length:4];
+		}
+
+		[packetData appendBytes:&destinationAddress4.sin_port length:2];
+	}
+
+	/* Write the packet to the socket */
+	[self.socketConnection writeData:packetData withTimeout:(-1) tag:SOCKS_PROXY_CONNECT_TAG];
+
 	//
-	// Version      = 5 (for SOCKS5)
-	// Command      = 1 (for Connect)
-	// Reserved     = 0
-	// Address Type = 3 (1=IPv4, 3=DomainName 4=IPv6)
-	// Address      = P:D (P=LengthOfDomain D=DomainWithoutNullTermination)
-	// Port         = 0
-
-	NSUInteger hostLength = [self.serverAddress length];
-
-	NSData *hostData = [self.serverAddress dataUsingEncoding:NSUTF8StringEncoding];
-
-	NSUInteger byteBufferLength = (uint)(4 + 1 + hostLength + 2);
-
-	uint8_t *byteBuffer = malloc((byteBufferLength * sizeof(uint8_t)));
-
-	NSUInteger offset = 0;
-
-	// VER
-	uint8_t version = 0x05;
-	byteBuffer[0] = version;
-	offset++;
-
-	/* CMD
-	 o  CONNECT X'01'
-	 o  BIND X'02'
-	 o  UDP ASSOCIATE X'03'
-	 */
-	uint8_t command = 0x01;
-	byteBuffer[offset] = command;
-	offset++;
-
-	byteBuffer[offset] = 0x00; // Reserved, must be 0
-	offset++;
-
-	/* ATYP
-	 o  IP V4 address: X'01'
-	 o  DOMAINNAME: X'03'
-	 o  IP V6 address: X'04'
-	 */
-	uint8_t addressType = 0x03;
-	byteBuffer[offset] = addressType;
-	offset++;
-
-	/* ADDR
-	 o  X'01' - the address is a version-4 IP address, with a length of 4 octets
-	 o  X'03' - the address field contains a fully-qualified domain name.  The first
-	 octet of the address field contains the number of octets of name that
-	 follow, there is no terminating NUL octet.
-	 o  X'04' - the address is a version-6 IP address, with a length of 16 octets.
-	 */
-	byteBuffer[offset] = hostLength;
-	offset++;
-
-	memcpy((byteBuffer + offset), [hostData bytes], hostLength);
-	offset += hostLength;
-
-	uint16_t port = htons((uint16_t)self.serverPort);
-	NSUInteger portLength = 2;
-	memcpy((byteBuffer + offset), &port, portLength);
-	offset += portLength;
-
-	NSData *data = [NSData dataWithBytesNoCopy:byteBuffer length:byteBufferLength freeWhenDone:YES];
-
-	[self.socketConnection writeData:data withTimeout:(-1) tag:SOCKS_PROXY_CONNECT_TAG];
-
+	// Packet layout for SOCKS4 connect response:
+	//
+	//	    +----+----+----+----+----+----+----+----+
+	// NAME | VN | CD | DSTPORT |      DSTIP        |
+	//      +----+----+----+----+----+----+----+----+
+	// SIZE    1    1      2              4
+	//
+	// Packet layout for SOCKS5 connect response:
+	//
 	//      +-----+-----+-----+------+------+------+
 	// NAME | VER | REP | RSV | ATYP | ADDR | PORT |
 	//      +-----+-----+-----+------+------+------+
 	// SIZE |  1  |  1  |  1  |  1   | var  |  2   |
 	//      +-----+-----+-----+------+------+------+
 	//
-	// Note: Size is in bytes
-	//
-	// Version      = 5 (for SOCKS5)
-	// Reply        = 0 (0=Succeeded, X=ErrorCode)
-	// Reserved     = 0
-	// Address Type = 3 (1=IPv4, 3=DomainName 4=IPv6)
-	// Address      = P:D (P=LengthOfDomain D=DomainWithoutNullTermination)
-	// Port         = 0
-	//
-	// It is expected that the SOCKS server will return the same address given in the connect request.
-	// But according to XEP-65 this is only marked as a SHOULD and not a MUST.
-	// So just in case, we'll read up to the address length now, and then read in the address+port next.
 
-	[self.socketConnection readDataToLength:5 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
+	/* Wait for a response from the SOCKS server */
+	if (isVersion4Socks) {
+		[self.socketConnection readDataToLength:8 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
+	} else {
+		[self.socketConnection readDataToLength:5 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
+	}
 }
 
-- (BOOL)socksProxyDidReadData:(NSData *)data withTag:(long)tag
+- (BOOL)socks4ProxyDidReadData:(NSData *)data withTag:(long)tag
+{
+	if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
+	{
+		NSAssert(([data length] == 8), @"SOCKS_CONNECT_REPLY_1 length must be 8");
+
+		uint8_t *bytes = (uint8_t*)[data bytes];
+
+		uint8_t rep = bytes[1];
+
+		if (rep == 0x5a) {
+			[self onSocketConnectedToHost];
+		} else if (rep == 0x5b) {
+			[self closeSocketWithError:@"SOCKS4 Error: Request rejected or failed"];
+		} else if (rep == 0x5c) {
+			[self closeSocketWithError:@"SOCKS4 Error: Request failed because client is not running an identd (or not reachable from server)"];
+		} else if (rep == 0x5d) {
+			[self closeSocketWithError:@"SOCKS4 Error: Request failed because client's identd could not confirm the user ID string in the request"];
+		} else {
+			[self closeSocketWithError:@"SOCKS4 Error: Server replied with unknown status code"];
+		}
+
+		return YES;
+	}
+	else
+	{
+		return NO;
+	}
+}
+
+- (BOOL)socks5ProxyDidReadData:(NSData *)data withTag:(long)tag
 {
 	if (tag == SOCKS_PROXY_OPEN_TAG)
 	{
-		NSAssert(([data length] == 2), @"SOCKS_OPEN reply length must be 2!");
+		NSAssert(([data length] == 2), @"SOCKS_OPEN reply length must be 2");
 
 		uint8_t *bytes = (uint8_t*)[data bytes];
 
@@ -724,22 +774,31 @@
 		uint8_t method = bytes[1];
 
 		if (version == 5) {
-			if (method == 0) { // No Auth
+			if (method == 0)
+			{
 				[self socksProxyConnect];
-			} else if (method == 2) { // Username / password
-				[self socksProxyUserPassAuth];
-			} else {
-				[self closeSocket];
+			}
+			else if (method == 2)
+			{
+				if ([self socksProxyCanAuthenticate]) {
+					[self socks5ProxyUserPassAuth];
+				} else {
+					[self closeSocketWithError:@"SOCKS5 Error: Server requested that we authenticate but a username and/or password is not configured."];
+				}
+			}
+			else
+			{
+				[self closeSocketWithError:@"SOCKS5 Error: Server requested authentication method that is not supported"];
 			}
 		} else {
-			[self closeSocket];
+			[self closeSocketWithError:@"SOCKS5 Error: Server greeting reply contained incorrect version number"];
 		}
 
 		return YES;
 	}
 	else if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
 	{
-		NSAssert(([data length] == 5), @"SOCKS_CONNECT_REPLY_1 length must be 5!");
+		NSAssert(([data length] == 5), @"SOCKS_CONNECT_REPLY_1 length must be 5");
 
 		uint8_t *bytes = (uint8_t*)[data bytes];
 
@@ -748,15 +807,6 @@
 
 		if (ver == 5 && rep == 0)
 		{
-			// We read in 5 bytes which we expect to be:
-			// 0: ver  = 5
-			// 1: rep  = 0
-			// 2: rsv  = 0
-			// 3: atyp = 3
-			// 4: size = size of addr field
-			//
-			// However, some servers don't follow the protocol, and send a atyp value of 0.
-
 			uint8_t addressType = bytes[3];
 			uint8_t portLength = 2;
 
@@ -778,12 +828,29 @@
 
 				[self.socketConnection readDataToLength:1 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_2_TAG];
 			} else {
-				[self closeSocket];
+				[self closeSocketWithError:@"SOCKS5 Error: Server responded with an unknown address type"];
 			}
 		}
 		else
 		{
-			[self closeSocket];
+#define _dr(cda, reason)			cda: { failureReason = (reason); break; }
+
+			NSString *failureReason = nil;
+			
+			switch (rep) {
+				_dr(case 1,  @"SOCKS5 Error: General SOCKS server failure")
+				_dr(case 2,  @"SOCKS5 Error: Connection not allowed by ruleset")
+				_dr(case 3,  @"SOCKS5 Error: Network unreachable")
+				_dr(case 4,  @"SOCKS5 Error: Host unreachable")
+				_dr(case 5,  @"SOCKS5 Error: Connection refused")
+				_dr(case 6,  @"SOCKS5 Error: Time to live (TTL) expired")
+				_dr(case 7,  @"SOCKS5 Error: Command not supported")
+				_dr(case 8,  @"SOCKS5 Error: Address type not supported")
+				_dr(default, @"SOCKS5 Error: Unknown SOCKS error")
+			}
+
+			[self closeSocketWithError:failureReason];
+#undef _dr
 		}
 
 		return YES;
@@ -813,10 +880,10 @@
 			if (status == 0x00) {
 				[self socksProxyConnect];
 			} else {
-				[self closeSocket];
+				[self closeSocketWithError:@"SOCKS5 Error: Authentication failed for unknown reason"];
 			}
 		} else {
-			[self closeSocket];
+			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 		}
 
 		return YES;
@@ -825,6 +892,84 @@
 	{
 		return NO;
 	}
+}
+
+- (void)socks5ProxySendGreeting
+{
+	//
+	// Packet layout for SOCKS5 greeting:
+	//
+	//      +-----+-----------+---------+
+	// NAME | VER | NMETHODS  | METHODS |
+	//      +-----+-----------+---------+
+	// SIZE |  1  |    1      | 1 - 255 |
+	//      +-----+-----------+---------+
+	//
+
+	/* Assemble the packet of data that will be sent */
+	NSData *packetData = nil;
+
+	if ([self socksProxyCanAuthenticate] == NO) {
+		/* Send instructions that we are asking for version 5 of the SOCKS protocol
+		 with one authentication method: anonymous access */
+
+		packetData = [NSData dataWithBytes:"\x05\x01\x00" length:3];
+	} else {
+		/* Send instructions that we are asking for version 5 of the SOCKS protocol 
+		 with two authentication methods: anonymous access and password based. */
+
+		packetData = [NSData dataWithBytes:"\x05\x02\x00\x02" length:4];
+	}
+
+	/* Write the packet to the socket */
+	[self.socketConnection writeData:packetData withTimeout:(-1) tag:SOCKS_PROXY_OPEN_TAG];
+
+	//
+	// Packet layout for SOCKS5 greeting response:
+	//
+	//      +-----+--------+
+	// NAME | VER | METHOD |
+	//      +-----+--------+
+	// SIZE |  1  |   1    |
+	//      +-----+--------+
+	//
+
+	/* Wait for a response from the SOCKS server */
+	[self.socketConnection readDataToLength:2 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
+}
+
+/*
+ For username/password authentication the client's authentication request is
+
+ field 1: version number, 1 byte (must be 0x01)
+ field 2: username length, 1 byte
+ field 3: username
+ field 4: password length, 1 byte
+ field 5: password
+ */
+
+- (void)socks5ProxyUserPassAuth
+{
+	/* Assemble the packet of data that will be sent */
+	NSData *usernameData = [self.proxyUsername dataUsingEncoding:NSUTF8StringEncoding];
+	NSData *passwordData = [self.proxyPassword dataUsingEncoding:NSUTF8StringEncoding];
+
+	uint8_t usernameLength = (uint8_t)[usernameData length];
+	uint8_t passwordLength = (uint8_t)[passwordData length];
+
+	NSMutableData *authData = [NSMutableData dataWithCapacity:(1 + 1 + usernameLength + 1 + passwordLength)];
+
+	[authData appendBytes:"\x01" length:1];
+	[authData appendBytes:&usernameLength length:1];
+	[authData appendBytes:[usernameData bytes] length:usernameLength];
+	[authData appendBytes:&passwordLength length:1];
+	[authData appendBytes:[passwordData bytes] length:passwordLength];
+
+	/* Write the packet to the socket */
+	[self.socketConnection writeData:authData withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
+
+	/* Wait for a response from the SOCKS server */
+	[self.socketConnection readDataToLength:2 withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
 }
 
 @end
