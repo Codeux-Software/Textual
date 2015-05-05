@@ -122,6 +122,8 @@
 		} else {
 			connectedUsingProxy = YES;
 
+			[self tpcClientWillConnectToProxy:self.proxyAddress port:self.proxyPort];
+
 			[self performConnectToHost:self.proxyAddress onPort:self.proxyPort];
 		}
 	}

@@ -75,6 +75,7 @@
 @required
 
 - (void)ircConnectionDidConnect:(IRCConnection *)sender;
+- (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort;
 - (void)ircConnectionDidDisconnect:(IRCConnection *)sender withError:(NSError *)distcError;
 - (void)ircConnectionDidError:(NSString *)error;
 - (void)ircConnectionDidReceive:(NSString *)data;

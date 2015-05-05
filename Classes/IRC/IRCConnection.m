@@ -235,6 +235,11 @@
 	[self.associatedClient ircConnectionDidConnect:self];
 }
 
+- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
+{
+	[self.associatedClient ircConnectionWillConnectToProxy:proxyHost port:proxyPort];
+}
+
 - (void)tcpClientDidError:(NSString *)error
 {
 	[self clearSendQueue];

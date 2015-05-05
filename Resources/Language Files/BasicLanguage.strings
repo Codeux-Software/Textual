@@ -417,8 +417,8 @@
 "BasicLanguage[1138]" = "%.0f minutes have elapsed since last response from this connection. It is possible the connection is timing out.";
 "BasicLanguage[1139]" = "Message(%1$d): %2$@";
 "BasicLanguage[1140]" = "Connecting to [%1$@] on port %2$ld";
-"BasicLanguage[1141]" = "Connecting to [%1$@] on port %2$ld with the proxy [%3$@] on port %4$ld";
-"BasicLanguage[1142]" = "Connecting to [%1$@] on port %2$ld with the system-wide SOCKS proxy";
+"BasicLanguage[1141]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$ld";
+"BasicLanguage[1142]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$ld";
 "BasicLanguage[1143]" = "Reconnecting…";
 "BasicLanguage[1144]" = "Retrying…";
 "BasicLanguage[1145]" = "\002%1$@\002 sets mode \002%2$@\002";

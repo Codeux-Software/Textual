@@ -3888,6 +3888,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[mainWindow() reloadTreeGroup:self];
 }
 
+- (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
+{
+	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType) {
+		[self printDebugInformationToConsole:BLS(1141, proxyHost, proxyPort)];
+	} else if (self.socket.proxyType == IRCConnectionSocketSocks5ProxyType) {
+		[self printDebugInformationToConsole:BLS(1142, proxyHost, proxyPort)];
+	}
+}
+
 - (void)ircConnectionDidReceivedAnInsecureCertificate
 {
 	[self setDisconnectType:IRCClientDisconnectBadSSLCertificateMode];
@@ -8059,26 +8068,18 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	self.socket.proxyType = self.config.proxyType;
 
-	if (self.socket.proxyType == IRCConnectionSocketSystemSocksProxyType)
-	{
-		[self printDebugInformationToConsole:BLS(1142, socketAddress, socketPort)];
-	}
-	else if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			 self.socket.proxyType == IRCConnectionSocketSocks5ProxyType ||
-			 self.socket.proxyType == IRCConnectionSocketHTTPProxyType ||
-			 self.socket.proxyType == IRCConnectionSocketHTTPSProxyType)
+	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType ||
+		self.socket.proxyType == IRCConnectionSocketSocks5ProxyType ||
+		self.socket.proxyType == IRCConnectionSocketHTTPProxyType ||
+		self.socket.proxyType == IRCConnectionSocketHTTPSProxyType)
 	{
 		self.socket.proxyPort = self.config.proxyPort;
 		self.socket.proxyAddress = self.config.proxyAddress;
 		self.socket.proxyPassword = self.config.proxyPassword;
 		self.socket.proxyUsername = self.config.proxyUsername;
+	}
 
-		[self printDebugInformationToConsole:BLS(1141, socketAddress, socketPort, self.socket.proxyAddress, self.socket.proxyPort)];
-	}
-	else
-	{
-		[self printDebugInformationToConsole:BLS(1140, socketAddress, socketPort)];
-	}
+	[self printDebugInformationToConsole:BLS(1140, socketAddress, socketPort)];
 
 	self.socket.connectionUsesOutgoingFloodControl = self.config.isOutgoingFloodControlEnabled;
 

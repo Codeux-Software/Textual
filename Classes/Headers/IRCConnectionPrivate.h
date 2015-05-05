@@ -47,6 +47,7 @@
 @property (nonatomic, copy) NSError *alternateDisconnectError;
 
 - (void)tcpClientDidConnect;
+- (void)tpcClientWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort;
 - (void)tcpClientDidError:(NSString *)error;
 - (void)tcpClientDidDisconnect:(NSError *)distcError;
 - (void)tcpClientDidReceiveData:(NSString *)data;
