@@ -42,12 +42,15 @@
 #define _descriptionIncludesAdditionalInformation			1
 
 @interface TVCQueuedCertificateTrustPanel ()
-/* Each entry is stored as an array with index 0 containing
- the trustRef and index 1 containing the completion block. */
 @property (nonatomic, strong) NSMutableArray *queuedEntries;
 @property (nonatomic, strong) SFCertificateTrustPanel *currentPanel;
 @property (nonatomic, weak) id activeSocket; // The current, open sheet
 @property (nonatomic, assign) BOOL doNotInvokeCompletionBlockNextPass;
+@end
+
+@interface TVCQueuedCertificateTrustPanelObject : NSObject
+@property (nonatomic, strong) id socketHandler;
+@property (nonatomic, copy) TVCQueuedCertificateTrustPanelCompletionBlock completionBlock;
 @end
 
 @implementation TVCQueuedCertificateTrustPanel
@@ -63,29 +66,16 @@
 	return nil;
 }
 
-- (void)enqueue:(SecTrustRef)trustRef withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock forSocket:(id)socket
+- (void)enqueue:(id)socket withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
 {
-	/* Add new entry. */
-	if (completionBlock == nil) {
-		NSAssert(NO, @"'completionBlock' cannot be nil");
-	}
+	TVCQueuedCertificateTrustPanelObject *newObject = [TVCQueuedCertificateTrustPanelObject new];
 
-	if (trustRef == NULL) {
-		NSAssert(NO, @"'trustRef' cannot be NULL");
-	}
+	[newObject setSocketHandler:socket];
 
-	if (socket == nil) {
-		NSAssert(NO, @"'socket' cannot be nil");
-	}
-
-	if ([socket isKindOfClass:[GCDAsyncSocket class]] == NO) {
-		NSAssert(NO, @"'socket' is not kind of class 'GCDAsyncSocket'");
-	}
-
-	NSArray *newEntry = @[(__bridge id)(trustRef), [completionBlock copy], socket];
+	[newObject setCompletionBlock:completionBlock];
 	
 	@synchronized(self.queuedEntries) {
-		[self.queuedEntries addObject:newEntry];
+		[self.queuedEntries addObject:newObject];
 
 		if ([self.queuedEntries count] == 1) {
 			[self presentNextQueuedEntry];
@@ -108,17 +98,19 @@
 			}
 		} else {
 			@synchronized(self.queuedEntries) {
-				NSArray *_entries = [self.queuedEntries copy];
+				__block NSInteger matchedIndex = -1;
 
-				[_entries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-					id _socket = obj[2];
-
-					if (_socket == socket) {
-						[self.queuedEntries removeObjectAtIndex:idx];
+				[self.queuedEntries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+					if ([obj socketHandler] == socket) {
+						matchedIndex = idx;
 
 						*stop = YES;
 					}
 				}];
+
+				if (matchedIndex > -1) {
+					[self.queuedEntries removeObjectAtIndex:matchedIndex];
+				}
 			}
 		}
 	}
@@ -129,11 +121,13 @@
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		/* Gather information. */
 		/* The oldest entry will be at index 0. */
-		NSArray *contextInfo = self.queuedEntries[0];
+		TVCQueuedCertificateTrustPanelObject *contextInfo = self.queuedEntries[0];
 
-		[self setActiveSocket:contextInfo[2]];
+		self.activeSocket = [contextInfo socketHandler];
 
 		/* Build panel. */
+		SecTrustRef trustInfo = [self.activeSocket sslCertificateTrustInformation];
+
 		NSString *certificateHost = [self.activeSocket sslCertificateTrustPolicyName];
 
 #if _descriptionIncludesAdditionalInformation == 1
@@ -162,25 +156,25 @@
 							 modalDelegate:self
 							didEndSelector:@selector(_certificateSheetDidEnd_stage1:returnCode:contextInfo:)
 							   contextInfo:(__bridge void *)(contextInfo)
-									 trust:(__bridge SecTrustRef)(contextInfo[0])
+									 trust:trustInfo
 								   message:TXTLS(@"BasicLanguage[1229][1]", certificateHost)];
 	});
 }
 
 - (void)_certificateSheetDidEnd_stage1:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	NSArray *contextArray = (__bridge NSArray *)contextInfo;
+	TVCQueuedCertificateTrustPanelObject *contextObject = (__bridge TVCQueuedCertificateTrustPanelObject *)contextInfo;
 
-	[self _certificateSheetDidEnd_stage2:sheet returnCode:returnCode contextInfo:contextArray];
+	[self _certificateSheetDidEnd_stage2:sheet returnCode:returnCode contextInfo:contextObject];
 }
 
-- (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(NSArray *)contextInfo
+- (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(TVCQueuedCertificateTrustPanelObject *)contextInfo
 {
 	/* Inform callback of result. */
 	if (self.doNotInvokeCompletionBlockNextPass == NO) {
 		BOOL isTrusted = (returnCode == NSModalResponseOK);
 
-		((TVCQueuedCertificateTrustPanelCompletionBlock)contextInfo[1])(isTrusted); // Perform the completion block
+		[contextInfo completionBlock](isTrusted);
 	} else {
 		self.doNotInvokeCompletionBlockNextPass = NO;
 	}
@@ -192,14 +186,15 @@
 	[self setDoNotInvokeCompletionBlockNextPass:NO];
 
 	@synchronized(self.queuedEntries) {
-		/* Remove entry. */
 		[self.queuedEntries removeObjectAtIndex:0];
 
-		/* Maybe show next window. */
 		if ([self.queuedEntries count] > 0) {
 			[self presentNextQueuedEntry];
 		}
 	}
 }
 
+@end
+
+@implementation TVCQueuedCertificateTrustPanelObject
 @end

@@ -303,7 +303,7 @@
 			if (result == kSecTrustResultUnspecified || result == kSecTrustResultProceed) {
 				completionHandler(YES);
 			} else if (result == kSecTrustResultRecoverableTrustFailure) {
-				[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:trust withCompletionBlock:completionHandler forSocket:self.socketConnection];
+				[[TXSharedApplication sharedQueuedCertificateTrustPanel] enqueue:self.socketConnection withCompletionBlock:completionHandler];
 			} else {
 				completionHandler(NO);
 			}
