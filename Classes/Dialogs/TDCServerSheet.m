@@ -1355,19 +1355,21 @@
 			[self.mutableHighlightList addObject:match];
 		}
 	} else {
-		NSArray *ignoreList = [self.mutableHighlightList copy];
-		
-		for (TDCHighlightEntryMatchCondition *g in ignoreList) {
-			if ([[g itemUUID] isEqualToString:[match itemUUID]]) {
-				NSInteger index = [ignoreList indexOfObject:g];
-				
-				if (emptyKeyword) {
-					[self.mutableHighlightList removeObjectAtIndex:index];
-				} else {
-					(self.mutableHighlightList)[index] = match;
-				}
-				
-				break;
+		__block NSInteger matchedIndex = -1;
+
+		[self.mutableHighlightList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if ([[obj itemUUID] isEqualToString:[match itemUUID]]) {
+				matchedIndex = idx;
+
+				*stop = YES;
+			}
+		}];
+
+		if (matchedIndex > -1) {
+			if (emptyKeyword) {
+				[self.mutableHighlightList removeObjectAtIndex:matchedIndex];
+			} else {
+				(self.mutableHighlightList)[matchedIndex] = match;
 			}
 		}
 	}
@@ -1474,19 +1476,21 @@
 			[self.mutableChannelList addObject:config];
 		}
 	} else {
-		NSArray *channelList = [self.mutableChannelList copy];
-		
-		for (IRCChannelConfig *c in channelList) {
-			if ([[c itemUUID] isEqualToString:[config itemUUID]]) {
-				NSInteger index = [channelList indexOfObject:c];
-				
-				if (emptyName) {
-					[self.mutableChannelList removeObjectAtIndex:index];
-				} else {
-					(self.mutableChannelList)[index] = config;
-				}
-				
-				break;
+		__block NSInteger matchedIndex = -1;
+
+		[self.mutableChannelList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if ([[obj itemUUID] isEqualToString:[config itemUUID]]) {
+				matchedIndex = idx;
+
+				*stop = YES;
+			}
+		}];
+
+		if (matchedIndex > -1) {
+			if (emptyName) {
+				[self.mutableChannelList removeObjectAtIndex:matchedIndex];
+			} else {
+				(self.mutableChannelList)[matchedIndex] = config;
 			}
 		}
 	}
@@ -1604,19 +1608,21 @@
 			[self.mutableIgnoreList addObject:ignore];
 		}
 	} else {
-		NSArray *ignoreList = [self.mutableIgnoreList copy];
-		
-		for (IRCAddressBookEntry *g in ignoreList) {
-			if ([[g itemUUID] isEqualToString:[ignore itemUUID]]) {
-				NSInteger index = [ignoreList indexOfObject:g];
-				
-				if (emptyHost) {
-					[self.mutableIgnoreList removeObjectAtIndex:index];
-				} else {
-					(self.mutableIgnoreList)[index] = ignore;
-				}
-				
-				break;
+		__block NSInteger matchedIndex = -1;
+
+		[self.mutableIgnoreList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if ([[obj itemUUID] isEqualToString:[ignore itemUUID]]) {
+				matchedIndex = idx;
+
+				*stop = YES;
+			}
+		}];
+
+		if (matchedIndex > -1) {
+			if (emptyHost) {
+				[self.mutableIgnoreList removeObjectAtIndex:matchedIndex];
+			} else {
+				(self.mutableIgnoreList)[matchedIndex] = ignore;
 			}
 		}
 	}
