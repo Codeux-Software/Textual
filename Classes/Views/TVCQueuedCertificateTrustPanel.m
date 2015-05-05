@@ -49,7 +49,7 @@
 @end
 
 @interface TVCQueuedCertificateTrustPanelObject : NSObject
-@property (nonatomic, strong) id socketHandler;
+@property (nonatomic, weak) id socketHandler;
 @property (nonatomic, copy) TVCQueuedCertificateTrustPanelCompletionBlock completionBlock;
 @end
 
