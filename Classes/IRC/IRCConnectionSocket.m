@@ -541,7 +541,7 @@
 - (BOOL)socksProxyPopulateSystemSocksProxy:(NSString **)errorString
 {
 	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType) {
-		NSDictionary *settings = (__bridge NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
+		NSDictionary *settings = (__bridge_transfer NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
 
 		if ([settings boolForKey:@"SOCKSEnable"]) {
 			id socksProxyHost = [settings objectForKey:@"SOCKSProxy"];
