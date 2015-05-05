@@ -109,9 +109,24 @@
 
 	[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
 
+	/* Attempt to connect using a configured proxy */
+	BOOL connectedUsingProxy = NO;
+
 	if ([self usesSocksProxy]) {
-		[self performConnectToHost:self.proxyAddress onPort:self.proxyPort];
-	} else {
+		NSString *proxyPopulateError = nil;
+
+		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
+			if (proxyPopulateError) {
+				[self closeSocketWithError:proxyPopulateError];
+			}
+		} else {
+			connectedUsingProxy = YES;
+
+			[self performConnectToHost:self.proxyAddress onPort:self.proxyPort];
+		}
+	}
+
+	if (connectedUsingProxy == NO) {
 		[self performConnectToHost:self.serverAddress onPort:self.serverPort];
 	}
 }
@@ -510,7 +525,7 @@
 
 - (BOOL)usesSocksProxy
 {
-	return (/*	self.proxyType == IRCConnectionSocketSystemSocksProxyType	|| */ // Not supported yet
+	return (	self.proxyType == IRCConnectionSocketSystemSocksProxyType	||
 				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
 				self.proxyType == IRCConnectionSocketSocks5ProxyType);
 }
@@ -521,33 +536,67 @@
 			NSObjectIsNotEmpty(self.proxyPassword));
 }
 
-- (void)socksProxyPopulateSystemSocksProxy
+- (BOOL)socksProxyPopulateSystemSocksProxy:(NSString **)errorString
 {
 	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType) {
-		CFDictionaryRef settings = SCDynamicStoreCopyProxies(NULL);
+		NSDictionary *settings = (__bridge NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
 
-		CFNumberRef isEnabledRef = CFDictionaryGetValue(settings, (id)kSCPropNetProxiesSOCKSEnable);
+		if ([settings boolForKey:@"SOCKSEnable"]) {
+			id socksProxyHost = [settings objectForKey:@"SOCKSProxy"];
+			id socksProxyPort = [settings objectForKey:@"SOCKSPort"];
 
-		if (isEnabledRef && CFGetTypeID(isEnabledRef) == CFNumberGetTypeID()) {
-			NSInteger isEnabledInt = 0;
+			id socksProxyUsername = [settings objectForKey:@"SOCKSUser"];
+			id socksProxyPassword = nil;
 
-			CFNumberGetValue(isEnabledRef, kCFNumberIntType, &isEnabledInt);
+			if (socksProxyHost && socksProxyPort) {
+				/* Search keychain for a password related to this SOCKS proxy */
+				if (socksProxyUsername) {
+					NSDictionary *keychainSearchDict = @{
+						(id)kSecClass : (id)kSecClassInternetPassword,
+						(id)kSecAttrServer : socksProxyHost,
+						(id)kSecAttrProtocol : (id)kSecAttrProtocolSOCKS,
+						(id)kSecReturnData : (id)kCFBooleanTrue,
+						(id)kSecMatchLimit : (id)kSecMatchLimitOne
+					};
 
-			if (isEnabledInt == 1) {
-				if (CFDictionaryGetValueIfPresent(settings, (id)kCFStreamPropertySOCKSProxyHost, NULL)) {
-					// TODO: Implement
+					CFDataRef result = nil;
+
+					OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)keychainSearchDict, (CFTypeRef *)&result);
+
+					if (status == noErr) {
+						NSData *passwordData = (__bridge_transfer NSData *)result;
+
+						if (NSObjectIsEmpty(passwordData) == NO) {
+							socksProxyPassword = [NSString stringWithData:passwordData encoding:NSUTF8StringEncoding];
+						}
+					} else {
+						*errorString = @"SOCKS Error: Textual encountered a problem trying to retrieve the SOCKS proxy password from System Preferences";
+
+						return NO;
+					}
 				}
+
+				/* Assign results to the local keys */
+				self.proxyAddress = socksProxyHost;
+				self.proxyPort = [socksProxyPort integerValue];
+
+				self.proxyType = IRCConnectionSocketSocks5ProxyType;
+				
+				self.proxyUsername = socksProxyUsername;
+				self.proxyPassword = socksProxyPassword;
+
+				return YES; // Successful result
 			}
 		}
 
-		CFRelease(settings);
+		return NO; // Tell caller that this request failed
+	} else {
+		return YES;
 	}
 }
 
 - (void)socksProxyOpen
 {
-	[self socksProxyPopulateSystemSocksProxy];
-
 	if (self.proxyType == IRCConnectionSocketSocks4ProxyType) {
 		[self socks4ProxyOpen];
 	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
