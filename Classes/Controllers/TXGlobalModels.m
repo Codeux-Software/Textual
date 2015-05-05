@@ -166,6 +166,37 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 	return nil;
 }
 
+NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail)
+{
+	NSDateFormatter *formatter = [NSDateFormatter new];
+
+	[formatter setDoesRelativeDateFormatting:YES];
+	[formatter setLenient:YES];
+
+	[formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+
+	[formatter setDateStyle:NSDateFormatterLongStyle];
+	[formatter setTimeStyle:NSDateFormatterLongStyle];
+
+	NSString *timeInfo = nil;
+
+	if ([dateTime isKindOfClass:[NSString class]]) {
+		timeInfo = [formatter stringForObjectValue:dateTime];
+	} else if ([dateTime isKindOfClass:[NSDate class]]) {
+		timeInfo = [formatter stringFromDate:dateTime];
+	}
+
+	if (timeInfo) {
+		return timeInfo;
+	} else {
+		if (returnOriginalOnFail) {
+			return dateTime;
+		} else {
+			return nil;
+		}
+	}
+}
+
 NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 {
 	static NSDateFormatter *_isoStandardDateFormatter;

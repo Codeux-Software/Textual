@@ -51,6 +51,10 @@ TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOO
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
+// Pass dateTime through NSDateFormatter with style NSDateFormatterLongStyle and
+// return the result or nil, or optionally return the original if result is nil.
+TEXTUAL_EXTERN NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail);
+
 /* Grand Central Dispatch. */
 TEXTUAL_EXTERN void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
 

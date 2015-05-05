@@ -6354,13 +6354,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *text = nil;
 
 			if (self.inUserInvokedWhowasRequest) {
-				NSDateFormatter *formatter = [NSDateFormatter new];
-
-				[formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-				[formatter setDateStyle:NSDateFormatterLongStyle];
-				[formatter setTimeStyle:NSDateFormatterLongStyle];
-
-				NSString *timeInfo = [formatter stringForObjectValue:serverInfo];
+				NSString *timeInfo = TXFormatDateTimeStringToCommonFormat(serverInfo, YES);
 				
 				text = BLS(1169, nickname, serverHost, timeInfo);
 			} else {
@@ -6385,10 +6379,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *connTime = [m paramAt:3];
 
 			idleTime = TXHumanReadableTimeInterval([idleTime doubleValue], NO, 0);
-			
-			connTime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[connTime doubleValue]]
-													  dateStyle:NSDateFormatterLongStyle
-													  timeStyle:NSDateFormatterLongStyle];
+
+			NSDate *connTimeDate = [NSDate dateWithTimeIntervalSince1970:[connTime doubleValue]];
+
+			connTime = TXFormatDateTimeStringToCommonFormat(connTimeDate, NO);
 
 			NSString *text = BLS(1168, nickname, connTime, idleTime);
 			
@@ -6493,9 +6487,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			topicow = [topicow nicknameFromHostmask];
 
-			settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[settime doubleValue]]
-													 dateStyle:NSDateFormatterLongStyle
-													 timeStyle:NSDateFormatterLongStyle];
+			NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+
+			settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
 
 			IRCChannel *c = [self findChannel:channel];
 
@@ -6971,9 +6965,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				banowner = [m paramAt:3];
 				settime = [m paramAt:4];
 
-				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[settime doubleValue]]
-														 dateStyle:NSDateFormatterLongStyle
-														 timeStyle:NSDateFormatterLongStyle];
+				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+
+				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
 			}
 
             TDChanBanSheet *chanBanListSheet = [menuController() windowFromWindowList:@"TDChanBanSheet"];
@@ -7035,9 +7029,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				banowner = [m paramAt:3];
 				settime = [m paramAt:4];
 
-				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[settime doubleValue]]
-														 dateStyle:NSDateFormatterLongStyle
-														 timeStyle:NSDateFormatterLongStyle];
+				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+
+				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
 			}
 
             TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController() windowFromWindowList:@"TDChanInviteExceptionSheet"];
@@ -7099,9 +7093,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				banowner = [m paramAt:3];
 				settime = [m paramAt:4];
 
-				settime = [NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[settime doubleValue]]
-														 dateStyle:NSDateFormatterLongStyle
-														 timeStyle:NSDateFormatterLongStyle];
+				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+
+				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
 			}
 
             TDChanBanExceptionSheet *banExceptionSheet = [menuController() windowFromWindowList:@"TDChanBanExceptionSheet"];
