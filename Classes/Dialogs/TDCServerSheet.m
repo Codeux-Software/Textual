@@ -121,6 +121,8 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewIdentity;
 @property (nonatomic, strong) IBOutlet NSView *contentViewNetworkSocket;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServer;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerInputView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerAutomaticView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewClientCertificate;
 @property (nonatomic, strong) IBOutlet NSView *contentViewZncBouncer;
 @property (nonatomic, strong) NSMutableArray *mutableChannelList;
@@ -1074,12 +1076,17 @@
 - (void)proxyTypeChanged:(id)sender
 {
 	NSInteger tag = [self.proxyTypeButton selectedTag];
-	
+
+	BOOL isSystemSocksEnabled = (tag == IRCConnectionSocketSystemSocksProxyType);
+
 	BOOL httpsEnabled = (tag == IRCConnectionSocketHTTPProxyType || tag == IRCConnectionSocketHTTPSProxyType);
 	BOOL socksEnabled = (tag == IRCConnectionSocketSocks4ProxyType || tag == IRCConnectionSocketSocks5ProxyType);
 	
 	BOOL enabled = (httpsEnabled || socksEnabled);
-	
+
+	[self.contentViewProxyServerAutomaticView setHidden:(isSystemSocksEnabled == NO)];
+	[self.contentViewProxyServerInputView setHidden:isSystemSocksEnabled];
+
 	[self.proxyAddressTextField	setEnabled:enabled];
 	[self.proxyPortTextField setEnabled:enabled];
 	[self.proxyUsernameTextField setEnabled:socksEnabled];
