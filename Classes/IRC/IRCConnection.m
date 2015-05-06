@@ -84,9 +84,6 @@
 
 - (void)close
 {
-	self.isConnected = NO;
-	self.isConnecting = NO;
-
 	self.isSending = NO;
 
 	self.floodControlCurrentMessageCount = 0;
