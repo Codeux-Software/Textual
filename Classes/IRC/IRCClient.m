@@ -662,7 +662,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (BOOL)connectionIsSecured
 {
 	if (self.socket) {
-		return self.socket.connectionPrefersSecuredConnection;
+		return self.socket.isSecured;
 	} else {
 		return NO;
 	}
@@ -8444,7 +8444,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)presentCertificateTrustInformation
 {
-	if (	 self.socket.isConnected) {
+	if (     self.socket.isSecured) {
 		if ( self.socket.connectionPrefersSecuredConnection) {
 			[self.socket openSSLCertificateTrustDialog];
 		}
