@@ -1079,6 +1079,8 @@
 
 	BOOL isSystemSocksEnabled = (tag == IRCConnectionSocketSystemSocksProxyType);
 
+	BOOL supportsAuthentication = (tag == IRCConnectionSocketSocks5ProxyType);
+
 	BOOL httpsEnabled = (tag == IRCConnectionSocketHTTPProxyType || tag == IRCConnectionSocketHTTPSProxyType);
 	BOOL socksEnabled = (tag == IRCConnectionSocketSocks4ProxyType || tag == IRCConnectionSocketSocks5ProxyType);
 	
@@ -1089,8 +1091,9 @@
 
 	[self.proxyAddressTextField	setEnabled:enabled];
 	[self.proxyPortTextField setEnabled:enabled];
-	[self.proxyUsernameTextField setEnabled:socksEnabled];
-	[self.proxyPasswordTextField setEnabled:socksEnabled];
+
+	[self.proxyUsernameTextField setEnabled:(socksEnabled && supportsAuthentication)];
+	[self.proxyPasswordTextField setEnabled:(socksEnabled && supportsAuthentication)];
 	
 	[self.proxyAddressTextField performValidation];
 	[self.proxyPortTextField performValidation];
