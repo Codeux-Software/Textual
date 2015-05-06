@@ -101,7 +101,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 			 @"zncIgnoreConfiguredAutojoin" : @(NO),
 			 @"zncIgnorePlaybackNotifications" : @(YES),
 
-			 @"proxyType" : @(IRCConnectionSocketNoProxyType),
+			 @"proxyType" : @(IRCConnectionSocketSystemSocksProxyType),
 			 @"proxyPort" : @(IRCConnectionDefaultProxyPort),
 
 			 @"primaryEncoding" : @(TXDefaultPrimaryStringEncoding),
