@@ -246,7 +246,7 @@
 
 - (NSString *)connectedAddress
 {
-	if ([self usesSocksProxy]) {
+	if ([self socksProxyInUse]) {
 		return nil;
 	} else {
 		return [self.socketConnection connectedHost];
@@ -358,7 +358,7 @@
 
 - (void)socket:(id)sock didConnectToHost:(NSString *)host port:(UInt16)port
 {
-	if ([self usesSocksProxy]) {
+	if ([self socksProxyInUse]) {
 		[self socksProxyOpen];
 	} else {
 		[self onSocketConnectedToHost];
@@ -451,7 +451,7 @@
 
 - (void)socket:(id)sock didReadData:(NSData *)data withTag:(long)tag
 {
-	if ([self usesSocksProxy]) {
+	if ([self socksProxyInUse]) {
 		if ([self socksProxyDidReadData:data withTag:tag] == NO) {
 			[self didReadNormalData:data];
 		}
@@ -534,6 +534,12 @@
 	return (	self.proxyType == IRCConnectionSocketSystemSocksProxyType	||
 				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
 				self.proxyType == IRCConnectionSocketSocks5ProxyType);
+}
+
+- (BOOL)socksProxyInUse
+{
+	return (self.proxyType == IRCConnectionSocketSocks4ProxyType ||
+			self.proxyType == IRCConnectionSocketSocks5ProxyType);
 }
 
 - (BOOL)socksProxyCanAuthenticate
