@@ -117,7 +117,7 @@
 
 		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
 			if (proxyPopulateError) {
-				[self closeSocketWithError:proxyPopulateError];
+				LogToConsole(@"%@", proxyPopulateError);
 			}
 		} else {
 			connectedUsingProxy = YES;
