@@ -179,6 +179,8 @@
 	
 	self.isConnected = NO;
 	self.isConnecting = NO;
+
+	self.isSecured = NO;
 }
 
 - (void)tearDownQueuedCertificateTrustDialog
@@ -467,6 +469,8 @@
 
 - (void)socketDidSecure:(id)sock
 {
+	self.isSecured = YES;
+
 	XRPerformBlockSynchronouslyOnMainQueue(^{
 		[self tcpClientDidSecureConnection];
 	});

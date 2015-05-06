@@ -41,10 +41,11 @@
 @interface IRCConnection : NSObject
 @property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, strong) TLOTimer *floodTimer;
-@property (nonatomic, assign) BOOL isConnected;
-@property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isReadyToSend;
-@property (nonatomic, assign) BOOL isSending;
+@property (readonly, assign) BOOL isConnected;
+@property (readonly, assign) BOOL isConnecting;
+@property (readonly, assign) BOOL isSending;
+@property (readonly, assign) BOOL isSecured;
+@property (readonly, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 @property (nonatomic, assign) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign) BOOL connectionUsesOutgoingFloodControl;
@@ -58,7 +59,6 @@
 @property (nonatomic, copy) NSString *proxyUsername;
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
-@property (nonatomic, assign) BOOL isConnectedWithClientSideCertificate; // Consider this readonly
 
 - (void)open;
 - (void)close;

@@ -38,6 +38,11 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection ()
+@property (nonatomic, assign) BOOL isConnected;
+@property (nonatomic, assign) BOOL isConnecting;
+@property (nonatomic, assign) BOOL isSending;
+@property (readwrite, assign) BOOL isSecured;
+@property (readwrite, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
 @property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
 @property (nonatomic, strong) dispatch_queue_t dispatchQueue;
