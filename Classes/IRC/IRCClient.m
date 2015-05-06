@@ -201,7 +201,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.serverRedirectPortTemporaryStore = 0;
 
 		 self.reconnectTimer = [TLOTimer new];
-		[self.reconnectTimer setReqeatTimer:NO];
+		[self.reconnectTimer setReqeatTimer:YES];
 		[self.reconnectTimer setDelegate:self];
 		[self.reconnectTimer setSelector:@selector(onReconnectTimer:)];
 
@@ -7666,20 +7666,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)onReconnectTimer:(id)sender
 {
 	if ([self isHostReachable] == NO) {
-		/* If the host is not reachable at the time of connect,
-		 then inform the user. */
 		if (self.config.hideNetworkUnavailabilityNotices == NO) {
 			[self printDebugInformationToConsole:BLS(1032, @(_reconnectInterval))];
 		}
+	} else {
+		[self connect:IRCClientConnectReconnectMode];
 
-		/* Restart timer. */
-		[self startReconnectTimer];
-
-		return; // Break chain.
+		[self cancelReconnect];
 	}
-
-	/* Perform actual reconnect attempt. */
-	[self connect:IRCClientConnectReconnectMode];
 }
 
 - (void)startRetryTimer
