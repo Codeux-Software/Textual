@@ -38,9 +38,9 @@
 #import "TextualApplication.h"
 
 @interface IRCConnection ()
-@property (nonatomic, assign) BOOL isConnected;
-@property (nonatomic, assign) BOOL isConnecting;
-@property (nonatomic, assign) BOOL isSending;
+@property (readwrite, assign) BOOL isConnected;
+@property (readwrite, assign) BOOL isConnecting;
+@property (readwrite, assign) BOOL isSending;
 @property (readwrite, assign) BOOL isSecured;
 @property (readwrite, assign) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, strong) NSMutableArray *sendQueue;
