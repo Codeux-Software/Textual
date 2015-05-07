@@ -244,11 +244,7 @@ NSString *BLS(NSInteger key, ...)
 
 NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
-	NSString *languageString  = [TLOLanguagePreferences localizedStringWithKey:key from:bundle];
-
-	NSString *formattedString = [[NSString alloc] initWithFormat:languageString arguments:args];
-
-	return formattedString;
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];
 }
 
 NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)

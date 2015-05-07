@@ -41,22 +41,38 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:@"BasicLanguage"];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:@"BasicLanguage" arguments:NULL];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:table];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:table arguments:NULL];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:RZMainBundle() table:@"BasicLanguage"];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:@"BasicLanguage" arguments:NULL];
+}
+
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle arguments:(va_list)arguments
+{
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:@"BasicLanguage" arguments:arguments];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table
 {
-	return [bundle localizedStringForKey:key value:NSStringEmptyPlaceholder table:table];
+	return [self localizedStringWithKey:key from:bundle table:table arguments:NULL];
+}
+
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments
+{
+	NSString *localValue = [bundle localizedStringForKey:key value:NSStringEmptyPlaceholder table:table];
+
+	if (arguments) {
+		return [[NSString alloc] initWithFormat:localValue arguments:arguments];
+	} else {
+		return localValue;
+	}
 }
 
 @end

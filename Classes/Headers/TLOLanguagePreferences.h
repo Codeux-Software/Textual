@@ -41,5 +41,7 @@
 + (NSString *)localizedStringWithKey:(NSString *)key;
 + (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle arguments:(va_list)arguments;
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
++ (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
 @end
