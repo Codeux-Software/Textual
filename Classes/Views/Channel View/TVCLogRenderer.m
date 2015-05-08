@@ -498,7 +498,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	/* Normal keyword matching. Partial and absolute. */
 	BOOL foundKeyword = NO;
 
-	for (__strong NSString *keyword in keywrods) {
+	for (NSString *keyword in keywrods) {
 		NSInteger start = 0;
 		NSInteger length = [_body length];
 
