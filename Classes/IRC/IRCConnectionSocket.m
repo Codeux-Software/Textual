@@ -338,6 +338,20 @@
 			settings[(id)kCFStreamSSLCertificates] = (id)localCertData;
 		}
 
+		BOOL enforceCipherSuites = [RZUserDefaults() boolForKey:@"Socket -> Secured Connection -> Enforce Allowed Cipher Suites"];
+
+		if (enforceCipherSuites) {
+			NSDictionary *permittedCipherSuites = [RZUserDefaults() dictionaryForKey:@"Socket -> Secured Connection -> Allowed Cipher Suites"];
+
+			NSMutableArray *cipherSuiteArray = [NSMutableArray arrayWithCapacity:[permittedCipherSuites count]];
+
+			[permittedCipherSuites enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				[cipherSuiteArray addObject:obj];
+			}];
+
+			settings[GCDAsyncSocketSSLCipherSuites] = cipherSuiteArray;
+		}
+
 		[self.socketConnection startTLS:settings];
 	}
 }
