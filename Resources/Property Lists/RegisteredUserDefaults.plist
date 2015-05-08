@@ -135,28 +135,18 @@
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
 	<false/>
 	<key>Socket -&gt; Secured Connection -&gt; Allowed Cipher Suites</key>
-	<dict>
-		<key>TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256</key>
+	<array>
 		<integer>49195</integer>
-		<key>TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</key>
 		<integer>49199</integer>
-		<key>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA</key>
 		<integer>49162</integer>
-		<key>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA</key>
 		<integer>49161</integer>
-		<key>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA</key>
 		<integer>49172</integer>
-		<key>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA</key>
 		<integer>49171</integer>
-		<key>TLS_DHE_RSA_WITH_AES_256_CBC_SHA</key>
 		<integer>57</integer>
-		<key>TLS_DHE_RSA_WITH_AES_128_CBC_SHA</key>
 		<integer>51</integer>
-		<key>TLS_RSA_WITH_AES_256_CBC_SHA</key>
 		<integer>53</integer>
-		<key>TLS_RSA_WITH_AES_128_CBC_SHA</key>
 		<integer>47</integer>
-	</dict>
+	</array>
 	<key>SwipeMinimumLength</key>
 	<integer>30</integer>
 	<key>SyncPreferencesToTheCloud</key>
