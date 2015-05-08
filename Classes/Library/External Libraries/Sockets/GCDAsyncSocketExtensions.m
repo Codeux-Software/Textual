@@ -71,27 +71,34 @@
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error
 {
 	if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
-		static NSArray *errorCodes = nil;
+		BOOL isBadCertError = NO;
 
-		if (errorCodes == nil) {
-			errorCodes = @[
-				@(errSSLBadCert),
-				@(errSSLNoRootCert),
-				@(errSSLCertExpired),
-				@(errSSLPeerBadCert),
-				@(errSSLPeerCertRevoked),
-				@(errSSLPeerCertExpired),
-				@(errSSLPeerCertUnknown),
-				@(errSSLUnknownRootCert),
-				@(errSSLCertNotYetValid),
-				@(errSSLXCertChainInvalid),
-				@(errSSLPeerUnsupportedCert),
-				@(errSSLPeerUnknownCA),
-				@(errSSLHostNameMismatch
-			)];
+		switch ([error code]) {
+			case errSSLBadCert:
+			case errSSLNoRootCert:
+			case errSSLCertExpired:
+			case errSSLPeerBadCert:
+			case errSSLPeerCertRevoked:
+			case errSSLPeerCertExpired:
+			case errSSLPeerCertUnknown:
+			case errSSLUnknownRootCert:
+			case errSSLCertNotYetValid:
+			case errSSLXCertChainInvalid:
+			case errSSLPeerUnsupportedCert:
+			case errSSLPeerUnknownCA:
+			case errSSLHostNameMismatch:
+			{
+				isBadCertError = YES;
+
+				break;
+			}
+			default:
+			{
+				break;
+			}
 		}
 
-		return [errorCodes containsObject:@([error code])];
+		return isBadCertError;
 	}
 
 	return NO;
