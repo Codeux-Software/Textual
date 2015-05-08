@@ -2458,26 +2458,22 @@
 
 - (void)openHelpMenuLinkItem:(id)sender
 {
-	static NSDictionary *_helpMenuLinks = nil;
-	
-	if (_helpMenuLinks == nil) {
-		_helpMenuLinks = @{
-		   @(101) : @"https://www.codeux.com/textual/help/3rd-Party-Addons.kb",
-		   @(102) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
-		   @(103) : @"https://www.codeux.com/textual/help/home.kb",
-		   @(104) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
-		   @(105) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
-		   @(106) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
-		   @(107) : @"https://www.codeux.com/textual/help/Support.kb",
-		   @(108) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
-		   @(109) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
-		   @(110) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
-		   @(111) : @"https://www.codeux.com/textual/help/Styles.kb",
-		   @(112) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
-		   @(113) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
-		   @(114) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
-		};
-	}
+	NSDictionary *_helpMenuLinks = @{
+	   @(101) : @"https://www.codeux.com/textual/help/3rd-Party-Addons.kb",
+	   @(102) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
+	   @(103) : @"https://www.codeux.com/textual/help/home.kb",
+	   @(104) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
+	   @(105) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
+	   @(106) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
+	   @(107) : @"https://www.codeux.com/textual/help/Support.kb",
+	   @(108) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
+	   @(109) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
+	   @(110) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
+	   @(111) : @"https://www.codeux.com/textual/help/Styles.kb",
+	   @(112) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
+	   @(113) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
+	   @(114) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
+	};
 	
 	NSString *linkloc = _helpMenuLinks[@([sender tag])];
 	
