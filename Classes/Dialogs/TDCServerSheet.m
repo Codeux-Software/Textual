@@ -178,7 +178,7 @@
 		[RZMainBundle() loadNibNamed:@"TDCServerSheet" owner:self topLevelObjects:nil];
 		
 		/* Load the list of available IRC networks. */
-		self.serverList = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
+		self.serverList = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
 
 		/* Populate the navigation tree. */
 		[self populateTabViewList];

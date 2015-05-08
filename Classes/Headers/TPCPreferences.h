@@ -284,8 +284,6 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 
 + (void)initPreferences;
 
-+ (id)loadContentsOfPropertyListInResourcesFolderNamed:(NSString *)name;
-
 + (BOOL)textFieldAutomaticSpellCheck;
 + (void)setTextFieldAutomaticSpellCheck:(BOOL)value;
 

@@ -207,7 +207,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
 
 	if (migratedOldKeys == nil) {
-		NSDictionary *remappedKeys = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+		NSDictionary *remappedKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
 
 		[remappedKeys enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 			id oldValue = [RZUserDefaults() objectForKey:key];

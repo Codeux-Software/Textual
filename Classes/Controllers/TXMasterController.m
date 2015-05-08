@@ -179,7 +179,7 @@
 - (void)prepareThirdPartyServiceHockeyAppFramework
 {
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	NSDictionary *hockeyAppData = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreHockeyAppFramework"];
+	NSDictionary *hockeyAppData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreHockeyAppFramework"];
 
 	NSString *applicationIdentifier = hockeyAppData[@"Application Identifier"];
 
@@ -191,7 +191,7 @@
 - (void)prepareThirdPartyServiceSparkleFramework
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSDictionary *sparkleData = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
+	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
 
 	NSString *feedURL = [sparkleData objectForKey:@"SUFeedURL"];
 

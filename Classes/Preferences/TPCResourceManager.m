@@ -77,6 +77,15 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	/* We're done here for now... */
 }
 
++ (id)loadContentsOfPropertyListInResourcesFolderNamed:(NSString *)name
+{
+	NSString *defaultsPath = [RZMainBundle() pathForResource:name ofType:@"plist"];
+
+	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
+
+	return localDefaults;
+}
+
 @end
 
 @implementation TPCResourceManagerDocumentTypeImporter

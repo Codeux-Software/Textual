@@ -852,18 +852,9 @@ static NSMutableArray *excludeKeywords = nil;
 #pragma mark -
 #pragma mark Initialization
 
-+ (id)loadContentsOfPropertyListInResourcesFolderNamed:(NSString *)name
-{
-	NSString *defaultsPath = [RZMainBundle() pathForResource:name ofType:@"plist"];
-
-	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
-
-	return localDefaults;
-}
-
 + (NSDictionary *)defaultPreferences
 {
-	return [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaults"];
+	return [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaults"];
 }
 
 + (void)initPreferences
