@@ -47,6 +47,36 @@
 			<string>userserv</string>
 		</array>
 	</dict>
+	<key>THOPluginManager List of Forbidden Commands</key>
+	<array>
+		<string>connect</string>
+		<string>die</string>
+		<string>error</string>
+		<string>info</string>
+		<string>kill</string>
+		<string>links</string>
+		<string>lusers</string>
+		<string>motd</string>
+		<string>names</string>
+		<string>oper</string>
+		<string>pass</string>
+		<string>ping</string>
+		<string>pong</string>
+		<string>rehash</string>
+		<string>restart</string>
+		<string>server</string>
+		<string>service</string>
+		<string>servlist</string>
+		<string>squery</string>
+		<string>squit</string>
+		<string>stats</string>
+		<string>time</string>
+		<string>trace</string>
+		<string>userhost</string>
+		<string>users</string>
+		<string>version</string>
+		<string>whowas</string>
+	</array>
 	<key>THOPluginManager List of Reserved Commands</key>
 	<array>
 		<string>apps</string>

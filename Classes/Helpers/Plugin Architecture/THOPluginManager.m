@@ -193,20 +193,22 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	for ( NSString *path in scriptPaths) {
 		NSArray *resourceFiles = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
-		for (__strong NSString *file in resourceFiles) {
+		for (NSString *file in resourceFiles) {
 			NSString *fullpath = [path stringByAppendingPathComponent:file];
 
-			NSString *extens = NSStringEmptyPlaceholder;
+			NSString *nameWoExtension = [file stringByDeletingPathExtension];
+			NSString *fileExtension = [file pathExtension];
 
-			if ([file contains:@"."]) {
-				NSArray *nameParts = [file componentsSeparatedByString:@"."];
+			if ([scriptExtensions containsObject:fileExtension] == NO) {
+				LogToConsole(@"WARNING: File “%@“ found in unsupervised script folder but it does not have a file extension recognized by Textual. It will be ignored.", file);
 
-				file = nameParts[0];
-				extens = nameParts[1];
+				continue;
+			}
 
-				if ([scriptExtensions containsObject:extens] == NO) {
-					continue;
-				}
+			if ([[self listOfForbiddenCommandNames] containsObject:[nameWoExtension lowercaseString]]) {
+				LogToConsole(@"WARNING: The command “%@“ exists as a script file, but it is being ignored because the command name is forbidden.", nameWoExtension);
+
+				continue;
 			}
 
 			if (returnPathInfo) {
@@ -218,6 +220,23 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	}
 
 	return returnData;
+}
+
+- (NSArray *)listOfForbiddenCommandNames
+{
+	/* List of commands that cannot be used as the name of a script 
+	 because they would conflict with the commands defined by one or
+	 more standard (RFC) */
+
+	static NSArray *_reservedNames = nil;
+
+	if (_reservedNames == nil) {
+		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		_reservedNames = [[staticValues arrayForKey:@"THOPluginManager List of Forbidden Commands"] copy];
+	}
+
+	return _reservedNames;
 }
 
 #pragma mark -
