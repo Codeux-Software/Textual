@@ -1004,15 +1004,21 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (NSDictionary *)listOfNicknamesToDisallowEncryption
 {
 	/* Add entries as lowercase because thats how they are compared. */
-	static NSDictionary *_blockedNames = nil;
+	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+								  @"IRCClient -> IRCClient List of Nicknames that Encryption Forbids"];
 
-	if (_blockedNames == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		_blockedNames = [[staticValues dictionaryForKey:@"IRCClient List of Nicknames that Encryption Forbids"] copy];
+		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"IRCClient List of Nicknames that Encryption Forbids"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"IRCClient -> IRCClient List of Nicknames that Encryption Forbids"];
+
+		cachedValues = _blockedNames;
 	}
 
-	return _blockedNames;
+	return cachedValues;
 }
 
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
@@ -4211,28 +4217,40 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSArray *)nickServSupportedNeedIdentificationTokens
 {
-	static NSArray *__reservedData = nil;
+	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+							 @"IRCClient -> IRCClient List of NickServ Needs Identification Tokens"];
 
-	if (__reservedData == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		__reservedData = [[staticValues arrayForKey:@"IRCClient List of NickServ Needs Identification Tokens"] copy];
+		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Needs Identification Tokens"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"IRCClient -> IRCClient List of NickServ Needs Identification Tokens"];
+
+		cachedValues = _blockedNames;
 	}
 
-	return __reservedData;
+	return cachedValues;
 }
 
 - (NSArray *)nickServSupportedSuccessfulIdentificationTokens
 {
-	static NSArray *__reservedData = nil;
+	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+							 @"IRCClient -> IRCClient List of NickServ Successfully Identified Tokens"];
 
-	if (__reservedData == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		__reservedData = [[staticValues arrayForKey:@"IRCClient List of NickServ Successfully Identified Tokens"] copy];
+		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Successfully Identified Tokens"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"IRCClient -> IRCClient List of NickServ Successfully Identified Tokens"];
+
+		cachedValues = _blockedNames;
 	}
 
-	return __reservedData;
+	return cachedValues;
 }
 
 #pragma mark -

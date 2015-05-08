@@ -228,15 +228,21 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	 because they would conflict with the commands defined by one or
 	 more standard (RFC) */
 
-	static NSArray *_reservedNames = nil;
+	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+							 @"THOPluginManager -> THOPluginManager List of Forbidden Commands"];
 
-	if (_reservedNames == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		_reservedNames = [[staticValues arrayForKey:@"THOPluginManager List of Forbidden Commands"] copy];
+		NSArray *_blockedNames = [staticValues arrayForKey:@"THOPluginManager List of Forbidden Commands"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"THOPluginManager -> THOPluginManager List of Forbidden Commands"];
+
+		cachedValues = _blockedNames;
 	}
 
-	return _reservedNames;
+	return cachedValues;
 }
 
 #pragma mark -
@@ -247,15 +253,21 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	/* List of scripts that are available as downloadable
 	 content from the codeux.com website. */
 
-	static NSArray *_reservedNames = nil;
+	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+							 @"THOPluginManager -> THOPluginManager List of Reserved Commands"];
 
-	if (_reservedNames == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-		_reservedNames = [[staticValues arrayForKey:@"THOPluginManager List of Reserved Commands"] copy];
+		NSArray *_blockedNames = [staticValues arrayForKey:@"THOPluginManager List of Reserved Commands"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"THOPluginManager -> THOPluginManager List of Reserved Commands"];
+
+		cachedValues = _blockedNames;
 	}
 
-	return _reservedNames;
+	return cachedValues;
 }
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command

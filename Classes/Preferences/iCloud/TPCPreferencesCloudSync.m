@@ -331,15 +331,19 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	/* It was at the point that I wrote this method that I realized how
 	 fucking stupid Textual's implementation of iCloud is. */
 
-	static NSDictionary *_keypair = nil;
+	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+								  @"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
 
-	if (_keypair == nil) {
-		NSDictionary *staticValues = [TPCPreferences loadContentsOfPropertyListInResourcesFolderNamed:@"AppleCloudMappedKeys"];
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"AppleCloudMappedKeys"];
 
-		_keypair = [staticValues copy];
+		[[masterController() sharedApplicationCacheObject] setObject:staticValues forKey:
+		 @"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
+
+		cachedValues = staticValues;
 	}
 
-	return _keypair[key];
+	return [cachedValues objectForKey:key];
 }
 
 - (BOOL)keyIsPermittedToBeRemovedThroughCloud:(NSString *)key
