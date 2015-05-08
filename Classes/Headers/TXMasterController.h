@@ -54,6 +54,7 @@
 @property (nonatomic, assign) NSInteger terminatingClientCount;
 @property (nonatomic, strong) IBOutlet TVCMainWindow *mainWindow;
 @property (nonatomic, weak) IBOutlet TXMenuController *menuController;
+@property (nonatomic, strong) NSCache *sharedApplicationCacheObject;
 
 /* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */
 - (void)performAwakeningBeforeMainWindowDidLoad;

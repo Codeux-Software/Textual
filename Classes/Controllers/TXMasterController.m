@@ -54,6 +54,8 @@
     if ((self = [super init])) {
 		[NSObject setGlobalMasterControllerClassReference:self];
 
+		self.sharedApplicationCacheObject = [NSCache new];
+
 #if defined(DEBUG)
 		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
 #else
@@ -396,6 +398,8 @@
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	[sharedCloudManager() closeCloudSyncSession];
 #endif
+
+	[self.sharedApplicationCacheObject removeAllObjects];
 	
 	[NSApp replyToApplicationShouldTerminate:YES];
 }
