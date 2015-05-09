@@ -57,14 +57,11 @@
 #define SOCKS_PROXY_OPEN_TAG					10100
 #define SOCKS_PROXY_CONNECT_TAG					10200
 #define SOCKS_PROXY_CONNECT_REPLY_1_TAG			10300
-#define SOCKS_PROXY_CONNECT_REPLY_2_TAG			10400
 #define SOCKS_PROXY_AUTH_USERPASS_TAG			10500
 
 #define SOCKS_PROXY_READ_TIMEOUT			30.00
 
 #define CONNECT_TIMEOUT						30.0
-
-#warning IRCConnectionSocket TODO: Fix TLS negotiation in SOCKS proxy mode. It is prone to failure, very commonly.
 
 @implementation IRCConnection (IRCConnectionSocket)
 
@@ -794,18 +791,18 @@
 	//
 
 	/* Wait for a response from the SOCKS server */
-	if (isVersion4Socks) {
-		[self.socketConnection readDataToLength:8 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
-	} else {
-		[self.socketConnection readDataToLength:5 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
-	}
+	[self.socketConnection readDataWithTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_1_TAG];
 }
 
 - (BOOL)socks4ProxyDidReadData:(NSData *)data withTag:(long)tag
 {
 	if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
 	{
-		NSAssert(([data length] == 8), @"SOCKS_CONNECT_REPLY_1 length must be 8");
+		if (NSDissimilarObjects([data length], 8)) {
+			[self closeSocketWithError:@"SOCKS4 Error: Server responded with a malformed packet"];
+
+			return YES; // Do not continue operation...
+		}
 
 		uint8_t *bytes = (uint8_t*)[data bytes];
 
@@ -835,9 +832,13 @@
 {
 	if (tag == SOCKS_PROXY_OPEN_TAG)
 	{
-		NSAssert(([data length] == 2), @"SOCKS_OPEN reply length must be 2");
+		if (NSDissimilarObjects([data length], 2)) {
+			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-		uint8_t *bytes = (uint8_t*)[data bytes];
+			return YES; // Do not continue operation...
+		}
+
+		uint8_t *bytes = (uint8_t *)[data bytes];
 
 		uint8_t version = bytes[0];
 		uint8_t method = bytes[1];
@@ -852,7 +853,7 @@
 				if ([self socksProxyCanAuthenticate]) {
 					[self socks5ProxyUserPassAuth];
 				} else {
-					[self closeSocketWithError:@"SOCKS5 Error: Server requested that we authenticate but a username and/or password is not configured."];
+					[self closeSocketWithError:@"SOCKS5 Error: Server requested that we authenticate but a username and/or password is not configured"];
 				}
 			}
 			else
@@ -867,38 +868,20 @@
 	}
 	else if (tag == SOCKS_PROXY_CONNECT_REPLY_1_TAG)
 	{
-		NSAssert(([data length] == 5), @"SOCKS_CONNECT_REPLY_1 length must be 5");
+		if ([data length] <= 8) { // first 4 bytes + 2 for port
+			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-		uint8_t *bytes = (uint8_t*)[data bytes];
+			return YES; // Do not continue operation...
+		}
+
+		uint8_t *bytes = (uint8_t *)[data bytes];
 
 		uint8_t ver = bytes[0];
 		uint8_t rep = bytes[1];
 
 		if (ver == 5 && rep == 0)
 		{
-			uint8_t addressType = bytes[3];
-			uint8_t portLength = 2;
-
-			if (addressType == 1) { // IPv4
-									// only need to read 3 address bytes instead of 4 + portlength because we read an extra byte already
-
-				[self.socketConnection readDataToLength:(3 + portLength) withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_2_TAG];
-			}
-			else if (addressType == 3) // Domain name
-			{
-				uint8_t addrLength = bytes[4];
-
-				[self.socketConnection readDataToLength:(addrLength+portLength) withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_2_TAG];
-			} else if (addressType == 4) { // IPv6
-				[self.socketConnection readDataToLength:(16 + portLength) withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_2_TAG];
-			} else if (addressType == 0) {
-				// The size field was actually the first byte of the port field
-				// We just have to read in that last byte
-
-				[self.socketConnection readDataToLength:1 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_CONNECT_REPLY_2_TAG];
-			} else {
-				[self closeSocketWithError:@"SOCKS5 Error: Server responded with an unknown address type"];
-			}
+			[self onSocketConnectedToHost];
 		}
 		else
 		{
@@ -921,12 +904,6 @@
 			[self closeSocketWithError:failureReason];
 #undef _dr
 		}
-
-		return YES;
-	}
-	else if (tag == SOCKS_PROXY_CONNECT_REPLY_2_TAG)
-	{
-		[self onSocketConnectedToHost];
 
 		return YES;
 	}
@@ -1004,7 +981,7 @@
 	//
 
 	/* Wait for a response from the SOCKS server */
-	[self.socketConnection readDataToLength:2 withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
+	[self.socketConnection readDataWithTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
 }
 
 /*
@@ -1038,7 +1015,7 @@
 	[self.socketConnection writeData:authData withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
 
 	/* Wait for a response from the SOCKS server */
-	[self.socketConnection readDataToLength:2 withTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
+	[self.socketConnection readDataWithTimeout:(-1) tag:SOCKS_PROXY_AUTH_USERPASS_TAG];
 }
 
 @end
