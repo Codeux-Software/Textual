@@ -47,7 +47,8 @@ typedef enum TXConnectionProxyType : NSInteger {
 	IRCConnectionSocketSocks4ProxyType = 4,
 	IRCConnectionSocketSocks5ProxyType = 5,
 	IRCConnectionSocketHTTPProxyType = 6,
-	IRCConnectionSocketHTTPSProxyType = 7
+	IRCConnectionSocketHTTPSProxyType = 7,
+	IRCConnectionSocketTorBrowserType = 8
 } IRCConnectionSocketProxyType;
 
 @interface IRCClientConfig : NSObject <NSCopying>

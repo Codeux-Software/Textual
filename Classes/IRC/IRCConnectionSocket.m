@@ -63,6 +63,9 @@
 
 #define CONNECT_TIMEOUT						30.0
 
+NSString * const IRCConnectionSocketTorBrowserTypeProxyAddress = @"127.0.0.1";
+NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
+
 @implementation IRCConnection (IRCConnectionSocket)
 
 #pragma mark -
@@ -538,7 +541,8 @@
 {
 	return (	self.proxyType == IRCConnectionSocketSystemSocksProxyType	||
 				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
-				self.proxyType == IRCConnectionSocketSocks5ProxyType);
+				self.proxyType == IRCConnectionSocketSocks5ProxyType		||
+				self.proxyType == IRCConnectionSocketTorBrowserType);
 }
 
 - (BOOL)socksProxyInUse
@@ -555,7 +559,8 @@
 
 - (BOOL)socksProxyPopulateSystemSocksProxy:(NSString **)errorString
 {
-	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType) {
+	if (self.proxyType == IRCConnectionSocketSystemSocksProxyType)
+	{
 		NSDictionary *settings = (__bridge_transfer NSDictionary *)(SCDynamicStoreCopyProxies(NULL));
 
 		if ([settings boolForKey:@"SOCKSEnable"]) {
@@ -607,7 +612,21 @@
 		}
 
 		return NO; // Tell caller that this request failed
-	} else {
+	}
+	else if (self.proxyType == IRCConnectionSocketTorBrowserType)
+	{
+		self.proxyType = IRCConnectionSocketSocks5ProxyType;
+
+		self.proxyAddress = IRCConnectionSocketTorBrowserTypeProxyAddress;
+		self.proxyPort = IRCConnectionSocketTorBrowserTypeProxyPort;
+
+		self.proxyUsername = nil;
+		self.proxyPassword = nil;
+
+		return YES; // Successful result
+	}
+	else
+	{
 		return YES;
 	}
 }

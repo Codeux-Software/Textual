@@ -122,7 +122,8 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewNetworkSocket;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServer;
 @property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerInputView;
-@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerAutomaticView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerSystemSocksView;
+@property (nonatomic, strong) IBOutlet NSView *contentViewProxyServerTorBrowserView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewClientCertificate;
 @property (nonatomic, strong) IBOutlet NSView *contentViewZncBouncer;
 @property (nonatomic, strong) NSMutableArray *mutableChannelList;
@@ -1077,7 +1078,8 @@
 {
 	NSInteger tag = [self.proxyTypeButton selectedTag];
 
-	BOOL isSystemSocksEnabled = (tag == IRCConnectionSocketSystemSocksProxyType);
+	BOOL isSystemSocksProxyEnabled = (tag == IRCConnectionSocketSystemSocksProxyType);
+	bool isTorBrowserProxyEnabled = (tag == IRCConnectionSocketTorBrowserType);
 
 	BOOL supportsAuthentication = (tag == IRCConnectionSocketSocks5ProxyType);
 
@@ -1086,8 +1088,9 @@
 	
 	BOOL enabled = (httpsEnabled || socksEnabled);
 
-	[self.contentViewProxyServerAutomaticView setHidden:(isSystemSocksEnabled == NO)];
-	[self.contentViewProxyServerInputView setHidden:isSystemSocksEnabled];
+	[self.contentViewProxyServerTorBrowserView setHidden:(isTorBrowserProxyEnabled == NO)];
+	[self.contentViewProxyServerSystemSocksView setHidden:(isSystemSocksProxyEnabled == NO)];
+	[self.contentViewProxyServerInputView setHidden:(httpsEnabled == NO || socksEnabled == NO)];
 
 	[self.proxyAddressTextField	setEnabled:enabled];
 	[self.proxyPortTextField setEnabled:enabled];

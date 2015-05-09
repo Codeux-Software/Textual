@@ -42,8 +42,9 @@
                 <outlet property="contentViewIdentity" destination="1563" id="J9a-mN-3KM"/>
                 <outlet property="contentViewNetworkSocket" destination="2488" id="x1c-Rp-XjX"/>
                 <outlet property="contentViewProxyServer" destination="1887" id="Y6r-hB-Lvd"/>
-                <outlet property="contentViewProxyServerAutomaticView" destination="GFp-Qd-4ck" id="JU7-gi-FkG"/>
                 <outlet property="contentViewProxyServerInputView" destination="KJ6-gu-xq3" id="KFA-jY-wHm"/>
+                <outlet property="contentViewProxyServerSystemSocksView" destination="GFp-Qd-4ck" id="i2R-4V-oBi"/>
+                <outlet property="contentViewProxyServerTorBrowserView" destination="yql-kd-PP5" id="uIe-fo-kbw"/>
                 <outlet property="contentViewZncBouncer" destination="2542" id="qzo-1Y-6rw"/>
                 <outlet property="deleteChannelButton" destination="1796" id="1948"/>
                 <outlet property="deleteHighlightButton" destination="2447" id="2477"/>
@@ -1008,7 +1009,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1804">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
@@ -1155,7 +1156,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
-                        <rect key="frame" x="404.90499999999997" y="17" width="15" height="154"/>
+                        <rect key="frame" x="405.09500000000003" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
@@ -1235,7 +1236,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1849">
-                        <rect key="frame" x="294.27800000000002" y="16.555999999999983" width="15" height="340"/>
+                        <rect key="frame" x="294.22199999999998" y="16.555999999999983" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
@@ -1469,6 +1470,7 @@ Gw
                                 <menuItem title="Automatic" tag="1" id="1909"/>
                                 <menuItem title="SOCKS 4 Proxy" tag="4" id="1911"/>
                                 <menuItem title="SOCKS 5 Proxy" tag="5" id="1910"/>
+                                <menuItem title="Tor Anonymity Network" tag="8" id="YN2-z6-RkW"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
@@ -1484,6 +1486,25 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="yql-kd-PP5">
+                    <rect key="frame" x="56" y="76" width="417" height="155"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8N-qI-sG7">
+                            <rect key="frame" x="18" y="64" width="381" height="51"/>
+                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="voS-R3-3c7">
+                                <font key="font" metaFont="system"/>
+                                <string key="title">Textual will attempt to connect to the Tor anonymity network using the SOCKS5 proxy on port 9150 that is open when the “Tor Browser” application is running.</string>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="P8N-qI-sG7" firstAttribute="leading" secondItem="yql-kd-PP5" secondAttribute="leading" constant="20" symbolic="YES" id="41L-Ce-28r"/>
+                        <constraint firstAttribute="trailing" secondItem="P8N-qI-sG7" secondAttribute="trailing" constant="20" symbolic="YES" id="EW6-oO-kob"/>
+                        <constraint firstItem="P8N-qI-sG7" firstAttribute="top" secondItem="yql-kd-PP5" secondAttribute="top" constant="40" id="f2j-TY-Sgh"/>
+                    </constraints>
+                </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="KJ6-gu-xq3">
                     <rect key="frame" x="56" y="76" width="418" height="155"/>
                     <subviews>
@@ -1627,6 +1648,7 @@ Gw
                 </customView>
             </subviews>
             <constraints>
+                <constraint firstItem="yql-kd-PP5" firstAttribute="bottom" secondItem="GFp-Qd-4ck" secondAttribute="bottom" id="0fN-EY-0Kp"/>
                 <constraint firstAttribute="bottom" secondItem="8Hx-ai-LFR" secondAttribute="bottom" constant="20" symbolic="YES" id="BR2-IM-FWl"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="56" id="CpL-Gt-61S"/>
                 <constraint firstItem="1978" firstAttribute="top" secondItem="1905" secondAttribute="bottom" constant="4" id="GUE-IQ-UO2"/>
@@ -1634,6 +1656,7 @@ Gw
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="centerY" secondItem="1887" secondAttribute="centerY" id="JHg-Yr-ao5"/>
                 <constraint firstItem="8Hx-ai-LFR" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="46" id="LFt-zg-EBY"/>
                 <constraint firstItem="8Hx-ai-LFR" firstAttribute="top" secondItem="KJ6-gu-xq3" secondAttribute="bottom" constant="6" id="Qyv-93-5LK"/>
+                <constraint firstItem="yql-kd-PP5" firstAttribute="leading" secondItem="GFp-Qd-4ck" secondAttribute="leading" id="SH6-1c-FF1"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="bottom" secondItem="GFp-Qd-4ck" secondAttribute="bottom" id="TC6-ki-RqW"/>
                 <constraint firstItem="GFp-Qd-4ck" firstAttribute="trailing" secondItem="KJ6-gu-xq3" secondAttribute="trailing" id="Vqz-O5-xwb"/>
                 <constraint firstItem="1978" firstAttribute="leading" secondItem="1887" secondAttribute="leading" constant="210" id="WQq-8D-l6i"/>
@@ -1644,9 +1667,10 @@ Gw
                 <constraint firstItem="1896" firstAttribute="centerY" secondItem="1905" secondAttribute="centerY" id="oJT-WS-Oqx"/>
                 <constraint firstItem="8Hx-ai-LFR" firstAttribute="centerX" secondItem="GFp-Qd-4ck" secondAttribute="centerX" id="pNU-Kc-bOH"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="top" secondItem="GFp-Qd-4ck" secondAttribute="top" id="uaw-uP-yJ4"/>
+                <constraint firstItem="yql-kd-PP5" firstAttribute="top" secondItem="KJ6-gu-xq3" secondAttribute="top" id="vMm-41-sVv"/>
                 <constraint firstItem="KJ6-gu-xq3" firstAttribute="leading" secondItem="GFp-Qd-4ck" secondAttribute="leading" id="wRn-bM-x2k"/>
             </constraints>
-            <point key="canvasLocation" x="360" y="-5.5"/>
+            <point key="canvasLocation" x="6" y="204.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2078" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="530" height="336"/>
