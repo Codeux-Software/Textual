@@ -1090,7 +1090,7 @@
 
 	[self.contentViewProxyServerTorBrowserView setHidden:(isTorBrowserProxyEnabled == NO)];
 	[self.contentViewProxyServerSystemSocksView setHidden:(isSystemSocksProxyEnabled == NO)];
-	[self.contentViewProxyServerInputView setHidden:(httpsEnabled == NO || socksEnabled == NO)];
+	[self.contentViewProxyServerInputView setHidden:(httpsEnabled == NO && socksEnabled == NO)];
 
 	[self.proxyAddressTextField	setEnabled:enabled];
 	[self.proxyPortTextField setEnabled:enabled];
