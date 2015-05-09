@@ -2013,7 +2013,7 @@ Gw
                                 <size key="minSize" width="460" height="66"/>
                                 <size key="maxSize" width="480" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment content="Several IRC networks provide the ability to identify to NickServ services using a self-signed client-side ">
+                                    <fragment content="Many networks provide the ability to identify to NickServ services without a password using a client-side ">
                                         <attributes>
                                             <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2026,7 +2026,8 @@ Gw
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=" when connecting with SSL. Click the button below to change the certificate which is sent on your behalf during connect.">
+                                    <fragment>
+                                        <string key="content"> when connecting through a secured connection. Click the button below to change the certificate which is sent on your behalf during connect.</string>
                                         <attributes>
                                             <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
