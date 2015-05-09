@@ -212,9 +212,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			}
 
 			if (returnPathInfo) {
-				[returnData setObjectWithoutOverride:fullpath forKey:file];
+				[returnData setObjectWithoutOverride:fullpath forKey:nameWoExtension];
 			} else {
-				[returnData addObjectWithoutDuplication:file];
+				[returnData addObjectWithoutDuplication:nameWoExtension];
 			}
 		}
 	}
