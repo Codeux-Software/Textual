@@ -3900,6 +3900,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self printDebugInformationToConsole:BLS(1141, proxyHost, proxyPort)];
 	} else if (self.socket.proxyType == IRCConnectionSocketSocks5ProxyType) {
 		[self printDebugInformationToConsole:BLS(1142, proxyHost, proxyPort)];
+	} else if (self.socket.proxyType == IRCConnectionSocketHTTPProxyType) {
+		[self printDebugInformationToConsole:BLS(1273, proxyHost, proxyPort)];
 	}
 }
 

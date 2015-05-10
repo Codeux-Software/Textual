@@ -1470,6 +1470,7 @@ Gw
                                 <menuItem title="Automatic" tag="1" id="1909"/>
                                 <menuItem title="SOCKS 4 Proxy" tag="4" id="1911"/>
                                 <menuItem title="SOCKS 5 Proxy" tag="5" id="1910"/>
+                                <menuItem title="HTTP Proxy (Anonymous)" tag="6" id="Fud-O2-fHR"/>
                                 <menuItem title="Tor Anonymity Network" tag="8" id="YN2-z6-RkW"/>
                             </items>
                         </menu>

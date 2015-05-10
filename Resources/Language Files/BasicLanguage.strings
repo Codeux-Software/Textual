@@ -419,6 +419,7 @@
 "BasicLanguage[1140]" = "Connecting to [%1$@] on port %2$ld";
 "BasicLanguage[1141]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$ld";
 "BasicLanguage[1142]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$ld";
+"BasicLanguage[1273]" = "Connecting using HTTP proxy [%1$@] on port %2$ld";
 "BasicLanguage[1143]" = "Reconnecting…";
 "BasicLanguage[1144]" = "Retrying…";
 "BasicLanguage[1145]" = "\002%1$@\002 sets mode \002%2$@\002";
@@ -711,6 +712,6 @@
 
 
 
-/* Next unusued key: 1273 */
+/* Next unusued key: 1274 */
 
 

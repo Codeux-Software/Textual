@@ -63,6 +63,8 @@
 
 #define CONNECT_TIMEOUT						30.0
 
+#define _httpHeaderResponseStatusRegularExpression		@"^HTTP\\/1.([0-9]{1})\\s([0-9]{3,4})\\s(.*)$"
+
 NSString * const IRCConnectionSocketTorBrowserTypeProxyAddress = @"127.0.0.1";
 NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
@@ -542,13 +544,15 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	return (	self.proxyType == IRCConnectionSocketSystemSocksProxyType	||
 				self.proxyType == IRCConnectionSocketSocks4ProxyType		||
 				self.proxyType == IRCConnectionSocketSocks5ProxyType		||
+				self.proxyType == IRCConnectionSocketHTTPProxyType			||
 				self.proxyType == IRCConnectionSocketTorBrowserType);
 }
 
 - (BOOL)socksProxyInUse
 {
 	return (self.proxyType == IRCConnectionSocketSocks4ProxyType ||
-			self.proxyType == IRCConnectionSocketSocks5ProxyType);
+			self.proxyType == IRCConnectionSocketSocks5ProxyType ||
+			self.proxyType == IRCConnectionSocketHTTPProxyType);
 }
 
 - (BOOL)socksProxyCanAuthenticate
@@ -637,6 +641,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		[self socks4ProxyOpen];
 	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
 		[self socks5ProxyOpen];
+	} else if (self.proxyType == IRCConnectionSocketHTTPProxyType) {
+		[self httpProxyOpen];
 	}
 }
 
@@ -646,6 +652,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		return [self socks4ProxyDidReadData:data withTag:tag];
 	} else if (self.proxyType == IRCConnectionSocketSocks5ProxyType) {
 		return [self socks5ProxyDidReadData:data withTag:tag];
+	} else if (self.proxyType == IRCConnectionSocketHTTPProxyType) {
+		return [self httpProxyDidReadData:data withTag:tag];
 	} else {
 		return NO;
 	}
@@ -677,6 +685,136 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 
 	return NULL;
+}
+
+- (BOOL)socksProxyResolvedAddress:(NSString **)resolvedAddress resolvedPort:(uint16_t *)resolvedPort resolvedAddressIsIPv6:(BOOL *)resolvedAddressIsIPv6
+{
+	const struct sockaddr *destinationAddress = [self socksProxyResolvedAddress];
+
+	if (destinationAddress == NULL) {
+		return NO;
+	}
+
+	NSData *destinationAddressData = [NSData dataWithBytes:destinationAddress length:destinationAddress->sa_len];
+
+	NSString *connectionAddress = [GCDAsyncSocket hostFromAddress:destinationAddressData];
+
+	uint16_t connectionPort = [GCDAsyncSocket portFromAddress:destinationAddressData];
+
+	if ( resolvedAddress) {
+		*resolvedAddress = connectionAddress;
+	}
+
+	if ( resolvedPort) {
+		*resolvedPort = connectionPort;
+	}
+
+	if ( resolvedAddressIsIPv6) {
+		*resolvedAddressIsIPv6 = (destinationAddress->sa_family == AF_INET6);
+	}
+
+	return YES;
+}
+
+- (void)httpProxyOpen
+{
+	/* Build connect command that will be sent to the HTTP server */
+	NSString *connectionAddress = nil;
+
+	uint16_t connectionPort = 0;
+
+	BOOL connectUsingIPv6 = NO;
+
+	if ([self socksProxyResolvedAddress:&connectionAddress resolvedPort:&connectionPort resolvedAddressIsIPv6:&connectUsingIPv6] == NO) {
+		[self closeSocketWithError:@"Error: Unable to resolve destination address"];
+
+		return; // Cancel this operation...
+	}
+
+	NSString *combinedDestinationAddress = nil;
+
+	if (connectUsingIPv6) {
+		combinedDestinationAddress = [NSString stringWithFormat:@"[%@]:%hu", connectionAddress, connectionPort];
+	} else {
+		combinedDestinationAddress = [NSString stringWithFormat:@"%@:%hu", connectionAddress, connectionPort];
+	}
+
+	NSString *connectCommand = [NSString stringWithFormat:@"CONNECT %@:%lu HTTP/1.1\x0d\x0a\x0d\x0a", combinedDestinationAddress];
+
+	/* Pass the data along to the HTTP server */
+	NSData *connectCommandData = [connectCommand dataUsingEncoding:NSASCIIStringEncoding];
+
+	[self.socketConnection writeData:connectCommandData withTimeout:(-1) tag:SOCKS_PROXY_OPEN_TAG];
+
+	/* Read until the end of the HTTP header response */
+	NSData *responseTerminatorData = [@"\x0d\x0a\x0d\x0a" dataUsingEncoding:NSASCIIStringEncoding];
+
+	[self.socketConnection readDataToData:responseTerminatorData withTimeout:SOCKS_PROXY_READ_TIMEOUT tag:SOCKS_PROXY_OPEN_TAG];
+}
+
+- (BOOL)httpProxyDidReadData:(NSData *)data withTag:(long)tag
+{
+	if (tag == SOCKS_PROXY_OPEN_TAG) {
+		/* Given data, turn it into string and perform basic validation */
+		NSString *dataAsString = [NSString stringWithData:data encoding:NSUTF8StringEncoding];
+
+		NSArray *headerComponents = [dataAsString componentsSeparatedByString:@"\x0d\x0a"];
+
+		if ([headerComponents count] <= 2) {
+			[self closeSocketWithError:@"HTTP Error: Server responded with a malformed packet"];
+
+			return YES; // Tell caller we handled the data...
+		}
+
+		/* Try our best to extract the status code from the response */
+		NSString *statusResponse = headerComponents[0];
+
+		// It is possible to split the response into its components using
+		// the space character but by using regular expression we are not
+		// only getting the components, we are also validating its format.
+		NSRange statusResponseRegexRange = NSMakeRange(0, [statusResponse length]);
+
+		NSRegularExpression *statusResponseRegex = [NSRegularExpression regularExpressionWithPattern:_httpHeaderResponseStatusRegularExpression options:0 error:NULL];
+
+		NSTextCheckingResult *statusResponseRegexResult = [statusResponseRegex firstMatchInString:statusResponse options:0 range:statusResponseRegexRange];
+
+		if ([statusResponseRegexResult numberOfRanges] == 4) {
+			//
+			// Index values:
+			//
+			// Complete Line		(0): HTTP/1.1 200 Connection established
+			// Protocol Version		(1): 1
+			// Status Code			(2): 200
+			// Status Message		(3): Connection established
+			//
+
+			NSRange statusCodeRange = [statusResponseRegexResult rangeAtIndex:2];
+			NSRange statusMessageRange = [statusResponseRegexResult rangeAtIndex:3];
+
+			NSString *statusCode = [statusResponse substringWithRange:statusCodeRange];
+			NSString *statusMessage = [statusResponse substringWithRange:statusMessageRange];
+
+			if ([statusCode integerValue] == 200) {
+				[self onSocketConnectedToHost];
+			} else {
+				NSString *errorMessage = [NSString stringWithFormat:@"HTTP Error: HTTP proxy server returned status code %@ with the message “%@“", statusCode, statusMessage];
+
+				[self closeSocketWithError:errorMessage];
+			}
+
+			return YES;
+		} else {
+			[self closeSocketWithError:@"HTTP Error: Server responded with a malformed packet"];
+
+			return YES; // Tell caller we handled the data...
+		}
+
+#undef _httpHeaderResponseStatusRegularExpression
+	}
+	else
+	{
+		return NO;
+	}
 }
 
 - (void)socks4ProxyOpen
@@ -820,7 +958,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		if (NSDissimilarObjects([data length], 8)) {
 			[self closeSocketWithError:@"SOCKS4 Error: Server responded with a malformed packet"];
 
-			return YES; // Do not continue operation...
+			return YES; // Tell caller we handled the data...
 		}
 
 		uint8_t *bytes = (uint8_t*)[data bytes];
@@ -854,7 +992,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		if (NSDissimilarObjects([data length], 2)) {
 			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-			return YES; // Do not continue operation...
+			return YES; // Tell caller we handled the data...
 		}
 
 		uint8_t *bytes = (uint8_t *)[data bytes];
@@ -890,7 +1028,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 		if ([data length] <= 8) { // first 4 bytes + 2 for port
 			[self closeSocketWithError:@"SOCKS5 Error: Server responded with a malformed packet"];
 
-			return YES; // Do not continue operation...
+			return YES; // Tell caller we handled the data...
 		}
 
 		uint8_t *bytes = (uint8_t *)[data bytes];
