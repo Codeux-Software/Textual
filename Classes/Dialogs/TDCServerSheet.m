@@ -871,9 +871,15 @@
 	self.config.fallbackEncoding = fallbackEncoding;
 	
 	/* Proxy Server */
+	NSInteger proxyPortValue = [self.proxyPortTextField integerValue];
+
+	if (proxyPortValue == 0) {
+		proxyPortValue = IRCConnectionDefaultProxyPort;
+	}
+
 	self.config.proxyType = [self.proxyTypeButton selectedTag];
 	self.config.proxyAddress = [self.proxyAddressTextField lowercaseValue];
-	self.config.proxyPort = [self.proxyPortTextField integerValue];
+	self.config.proxyPort = proxyPortValue;
 	self.config.proxyUsername = [self.proxyUsernameTextField firstTokenStringValue];
 	self.config.proxyPassword = [self.proxyPasswordTextField trimmedStringValue];
 
