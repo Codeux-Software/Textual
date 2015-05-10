@@ -63,7 +63,7 @@
 
 #define CONNECT_TIMEOUT						30.0
 
-#define _httpHeaderResponseStatusRegularExpression		@"^HTTP\\/1.([0-9]{1})\\s([0-9]{3,4})\\s(.*)$"
+#define _httpHeaderResponseStatusRegularExpression		@"^HTTP\\/([1-2]{1})(\\.([0-2]{1}))?\\s([0-9]{3,4})\\s(.*)$"
 
 NSString * const IRCConnectionSocketTorBrowserTypeProxyAddress = @"127.0.0.1";
 NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
@@ -778,18 +778,20 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		NSTextCheckingResult *statusResponseRegexResult = [statusResponseRegex firstMatchInString:statusResponse options:0 range:statusResponseRegexRange];
 
-		if ([statusResponseRegexResult numberOfRanges] == 4) {
+		if ([statusResponseRegexResult numberOfRanges] == 6) {
 			//
 			// Index values:
 			//
 			// Complete Line		(0): HTTP/1.1 200 Connection established
-			// Protocol Version		(1): 1
-			// Status Code			(2): 200
-			// Status Message		(3): Connection established
+			// Major Version		(1): 1
+			// Minor Version		(2): .1
+			// Minor Version		(3): 1
+			// Status Code			(4): 200
+			// Status Message		(5): Connection established
 			//
 
-			NSRange statusCodeRange = [statusResponseRegexResult rangeAtIndex:2];
-			NSRange statusMessageRange = [statusResponseRegexResult rangeAtIndex:3];
+			NSRange statusCodeRange = [statusResponseRegexResult rangeAtIndex:4];
+			NSRange statusMessageRange = [statusResponseRegexResult rangeAtIndex:5];
 
 			NSString *statusCode = [statusResponse substringWithRange:statusCodeRange];
 			NSString *statusMessage = [statusResponse substringWithRange:statusMessageRange];
