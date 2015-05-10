@@ -174,7 +174,7 @@
 
 - (void)sendData:(NSString *)dataToSend removeFromQueue:(BOOL)removeFromQueue
 {
-	NSString *firstItem = [dataToSend stringByAppendingFormat:@"%c%c", 0x0d, 0x0a];
+	NSString *firstItem = [dataToSend stringByAppendingString:@"\x0d\x0a"];
 
 	if (removeFromQueue) {
 		[self.sendQueue removeObjectAtIndex:0];
