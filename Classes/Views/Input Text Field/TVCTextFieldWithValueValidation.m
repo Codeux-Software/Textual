@@ -70,6 +70,12 @@
 			stringValue = [stringValue trim];
 		}
 	}
+
+	if ([stringValue length] == 0) {
+		if (       self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
+			return self.defualtValue;
+		}
+	}
 	
 	return stringValue;
 }
@@ -87,6 +93,11 @@
 - (NSInteger)integerValue
 {
 	return [[self value] integerValue];
+}
+
+- (void)setIntegerValue:(NSInteger)integerValue
+{
+	[self setStringValue:[NSString stringWithInteger:integerValue]];
 }
 
 - (BOOL)valueIsEmpty

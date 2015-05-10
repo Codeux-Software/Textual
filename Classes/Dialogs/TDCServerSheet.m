@@ -361,6 +361,8 @@
 		[self.proxyPortTextField setStringValueUsesOnlyFirstToken:NO];
 		
 		[self.proxyPortTextField setPerformValidationWhenEmpty:YES];
+
+		[self.proxyPortTextField setDefualtValue:[NSString stringWithInteger:IRCConnectionDefaultProxyPort]];
 		
 		[self.proxyPortTextField setValidationBlock:^BOOL(NSString *currentValue) {
 			NSInteger proxyType = [self.proxyTypeButton selectedTag];
@@ -682,7 +684,7 @@
 		[self.serverAddressComboBox setStringValue:networkName];
 	}
 
-	[self.serverPortTextField setStringValue:[NSString stringWithInteger:self.config.serverPort]];
+	[self.serverPortTextField setIntegerValue:self.config.serverPort];
 
 	[self.prefersSecuredConnectionCheck setState:self.config.prefersSecuredConnection];
 
@@ -755,7 +757,7 @@
 	[self.proxyAddressTextField setStringValue:self.config.proxyAddress];
 	[self.proxyUsernameTextField setStringValue:self.config.proxyUsername];
 	[self.proxyPasswordTextField setStringValue:self.config.proxyPassword];
-	[self.proxyPortTextField setStringValue:[NSString stringWithInteger:self.config.proxyPort]];
+	[self.proxyPortTextField setIntegerValue:self.config.proxyPort];
 
 	/* Connect Commands */
 	[self.setInvisibleModeOnConnectCheck setState:self.config.setInvisibleModeOnConnect];

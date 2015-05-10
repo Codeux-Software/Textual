@@ -49,12 +49,11 @@
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, assign) BOOL performValidationWhenEmpty;
 @property (nonatomic, weak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
+@property (nonatomic, copy) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
 
 @property (readonly, copy) NSString *value; /* The current value. */
 @property (readonly, copy) NSString *lowercaseValue;
 @property (readonly, copy) NSString *uppercaseValue;
-
-@property (readonly) NSInteger integerValue;
 
 @property (readonly) BOOL valueIsEmpty;
 @property (readonly) BOOL valueIsValid;
