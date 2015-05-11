@@ -12,7 +12,7 @@ Please do not abuse the power to build Textual in order to freely distribute it 
 
 ## Note Regarding Support
 
-Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, if you do succeed in building it, then you will not be turned away when asking for support using the application itself.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. If you do succeed in building Textual, then you will not be turned away when asking for support using the application itself.
 
 ## Note Regarding Downloading Textual
 
