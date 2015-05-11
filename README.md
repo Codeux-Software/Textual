@@ -12,23 +12,41 @@ Please do not abuse the power to build Textual in order to freely distribute it 
 
 ## Note Regarding Support
 
-Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, once built, [basic support](https://www.codeux.com/textual/help/Support.kb) for easy to answer questions related to the use of the application is still available.
+Please be aware that while it is within your right to compile Textual, **we will not provide support for the building process as it encourages use of potentially unstable code**. However, if you do succeed in building it, then you will not be turned away when asking for support using the application itself.
+
+## Note Regarding Downloading Textual
+
+Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Downlaod ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the follow of commands in Terminal:
+
+```
+git clone https://github.com/Codeux-Software/Textual.git Textual
+cd Textual
+git submodule update --init --recursive
+```
+
+Failing to follow these steps will result in several "file not found" errors resulting in the inablity for Textual to successfully build.
 
 ## Note Regarding Code Signing
 
 **It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment. 
 
-For example, Textual uses security scoped bookmarks issued by the kernel to access certain resources outside of its sandbox. These bookmarks rely on the kernel knowing whether the copy of Textual that you are running is the same assigned to the bookmark. The kernel makes its judgements using identity defined by the certificate used for code signing. Therefore, if disabled, certain features such as logging to disk will never work because Textual wont be able to save the bookmark to the specified logging location.
+**TEXTUAL DOES NOT REQUIRE A CERTIFICATE ISSUED BY APPLE TO BUILD** which means there is absolutely no reason to turn code signing off.
 
 ## Building Textual
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 6.1 or newer on OS X Yosemite. **Building on OS X Mavericks and earlier is not possible.**
 
-If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will do fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
+If you are an Apple registered developer, then obtaining a signing certificate is not very difficult. However, if you are not, a self-signed certificate for "code signing" will work fine. The steps to produce one of these self-signed certificates is very simple to find using Google.
 
 Once you have your code signing certificate, **do not modify the Build Settings of Textual through Xcode**. Instead,    modify the file at the path: **Resources ➜ Build Configurations ➜ Code Signing Identity.xcconfig** — The contents of this file define the name of the certificate which will be used for code signing.
 
 After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
+
+When you build Textual for the frist time, a framework that Textual that is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
+
+The build process can take up to a minute or more to complete because in addition to building Textual itself, Xcode has to build these open source libraries as well.
+
+If the build succeeds and it typically will, then the final product can be found in the **Build Results** folder located at the root path of the project.
 
 ## Original Limechat License
 
