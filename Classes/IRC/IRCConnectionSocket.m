@@ -326,8 +326,6 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		settings[GCDAsyncSocketManuallyEvaluateTrust] = @(YES);
 
-		settings[GCDAsyncSocketSSLSessionOptionFalseStart] = @(NO);
-
 		settings[GCDAsyncSocketSSLProtocolVersionMin] = @(kTLSProtocol1);
 
 		settings[(id)kCFStreamSSLIsServer] = (id)kCFBooleanFalse;
