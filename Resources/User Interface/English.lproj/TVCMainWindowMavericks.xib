@@ -1136,7 +1136,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="pIl-hm-fnb">
-                                            <rect key="frame" x="10" y="85" width="414" height="51"/>
+                                            <rect key="frame" x="0.0" y="85" width="434" height="51"/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="R4b-jc-8Bn">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <string key="title">However, as this is a trial version, it will disconnect you from any IRC server that you are connected to every twelve hours. 
@@ -1181,7 +1181,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="pIl-hm-fnb" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="12" id="1DS-e7-tu1"/>
+                                        <constraint firstItem="pIl-hm-fnb" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="2" id="1DS-e7-tu1"/>
                                         <constraint firstItem="TRd-At-ffY" firstAttribute="leading" secondItem="xwj-qd-MUV" secondAttribute="leading" constant="55" id="2a2-ot-S0P"/>
                                         <constraint firstItem="jrh-HM-Lgv" firstAttribute="top" secondItem="TRd-At-ffY" secondAttribute="bottom" constant="15" id="6Xx-nk-jMI"/>
                                         <constraint firstAttribute="centerX" secondItem="Kbz-6A-Zah" secondAttribute="centerX" id="78P-zp-4XS"/>
@@ -1197,7 +1197,7 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstItem="DQC-nt-yOZ" firstAttribute="top" secondItem="TRd-At-ffY" secondAttribute="bottom" constant="15" id="g2x-YL-mhk"/>
                                         <constraint firstAttribute="trailing" secondItem="wSc-Fj-0wO" secondAttribute="trailing" constant="141" id="gPt-bc-Vxw"/>
                                         <constraint firstItem="DQC-nt-yOZ" firstAttribute="leading" secondItem="jrh-HM-Lgv" secondAttribute="trailing" constant="12" id="kw7-Jx-zGY"/>
-                                        <constraint firstAttribute="trailing" secondItem="pIl-hm-fnb" secondAttribute="trailing" constant="12" id="r5h-N4-Jmb"/>
+                                        <constraint firstAttribute="trailing" secondItem="pIl-hm-fnb" secondAttribute="trailing" constant="2" id="r5h-N4-Jmb"/>
                                         <constraint firstItem="DQC-nt-yOZ" firstAttribute="leading" secondItem="jrh-HM-Lgv" secondAttribute="trailing" constant="12" id="rJp-f1-8eH"/>
                                         <constraint firstAttribute="trailing" secondItem="DQC-nt-yOZ" secondAttribute="trailing" constant="59" id="raB-Wi-Fcv"/>
                                         <constraint firstAttribute="trailing" secondItem="TRd-At-ffY" secondAttribute="trailing" constant="55" id="swn-qA-P7s"/>
