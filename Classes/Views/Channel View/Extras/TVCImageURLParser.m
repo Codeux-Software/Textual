@@ -204,13 +204,13 @@
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://img.ly/show/large/%@", s];
 		}
-	} else if ([host isEqualToString:@"leetfil.es"]) {
-		NSObjectIsEmptyAssertReturn(path, nil);
+	} else if ([host hasSuffix:@"leetfil.es"]) {
+		if ([path hasPrefix:@"/image/"]) {
+			NSString *s = [path substringFromIndex:7];
 
-		NSString *s = [path substringFromIndex:1];
-
-		if ([s isAlphabeticNumericOnly]) {
-			return [NSString stringWithFormat:@"http://i.leetfil.es/%@", s];
+			if ([s isAlphabeticNumericOnly]) {
+				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+			}
 		}
 	} else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
