@@ -1097,7 +1097,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)decryptMessage:(NSString *)messageBody referenceMessage:(IRCMessage *)referenceMessage decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	if ([referenceMessage senderIsServer]) {
+	NSString *target = [referenceMessage paramAt:0];
+
+	if ([referenceMessage senderIsServer] || [target isChannelName:self]) {
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
 		}
