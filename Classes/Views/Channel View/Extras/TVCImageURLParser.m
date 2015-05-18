@@ -206,12 +206,19 @@
 		}
 	} else if ([host hasSuffix:@"leetfil.es"]) {
 		if ([path hasPrefix:@"/image/"]) {
-			NSString *s = [path substringFromIndex:7];
-
-			if ([s isAlphabeticNumericOnly]) {
-				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
-			}
+            		NSString *s = [path substringFromIndex:7];
+            
+            		if ([s isAlphabeticNumericOnly]) {
+                		return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+            		}
 		}
+        	else if ([path hasPrefix:@"/video/"]) {
+            		NSString *vid = [path substringFromIndex:7];
+            
+            		if ([vid isAlphabeticNumericOnly]) {
+                		return [NSString stringWithFormat:@"https://leetfil.es/vid/%@_thumb.png", vid];
+            		}
+        	}
 	} else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
 			NSString *s = [path substringFromIndex:5];
