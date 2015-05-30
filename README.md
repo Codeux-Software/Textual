@@ -16,7 +16,7 @@ Please be aware that while it is within your right to compile Textual, **we will
 
 ## Note Regarding Downloading Textual
 
-Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Downlaod ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the follow of commands in Terminal:
+Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Download ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the follow of commands in Terminal:
 
 ```
 git clone https://github.com/Codeux-Software/Textual.git Textual
@@ -24,7 +24,7 @@ cd Textual
 git submodule update --init --recursive
 ```
 
-Failing to follow these steps will result in several "file not found" errors resulting in the inablity for Textual to successfully build.
+Failing to follow these steps will result in several "file not found" errors resulting in the inability for Textual to successfully build.
 
 ## Note Regarding Code Signing
 
@@ -42,7 +42,7 @@ Once you have your code signing certificate, **do not modify the Build Settings 
 
 After defining your code signing certificate, build Textual using the "Standard Release" build scheme.
 
-When you build Textual for the frist time, a framework that Textual that is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
+When you build Textual for the first time, a framework that Textual that is dependent on (Encryption Kit) will download several open source libraries (libgpg-error, libgcrypt, and libotr) from the Internet which means if you do not have an active Internet connection, these files will not download and the build will fail.
 
 The build process can take up to a minute or more to complete because in addition to building Textual itself, Xcode has to build these open source libraries as well.
 
