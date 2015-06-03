@@ -624,6 +624,12 @@
 		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C699C631B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */; };
+		4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */; };
+		4C699C661B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */; };
+		4C699C671B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */; };
+		4C699C701B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */ = {isa = PBXBuildFile; fileRef = 4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */; };
+		4C699C711B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */ = {isa = PBXBuildFile; fileRef = 4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */; };
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77661D19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2191,6 +2197,9 @@
 		4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = SecureTransportErrorCodes.strings; path = "Resources/Language Files/SecureTransportErrorCodes.strings"; sourceTree = SOURCE_ROOT; };
 		4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewMavericksUserInterace.h; sourceTree = "<group>"; };
 		4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewYosemiteUserInterace.h; sourceTree = "<group>"; };
+		4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLicenseManager.m; path = Library/TLOLicenseManager.m; sourceTree = "<group>"; };
+		4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOLicenseManager.h; sourceTree = "<group>"; };
+		4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RemoteLicenseSystemPublicKey.pub; path = "Resources/License Manager/RemoteLicenseSystemPublicKey.pub"; sourceTree = SOURCE_ROOT; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListYosemiteUserInterface.h; sourceTree = "<group>"; };
 		4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListMavericksUserInterface.h; sourceTree = "<group>"; };
@@ -2757,6 +2766,7 @@
 				4C46F3C11943A654004CA8BA /* Images */,
 				4C46CCA4158043A300846B64 /* JavaScript */,
 				4C51B8B7196ACDBB00003A87 /* Language Files */,
+				4C699C681B1FB04D001CD1C3 /* License Manager */,
 				4C46CCA31580437B00846B64 /* Property Lists */,
 				4CCC6B60158E8C48003A102B /* Scripts */,
 				4C52379115C0E0CA00414852 /* Styles */,
@@ -2994,6 +3004,15 @@
 			name = Styles;
 			sourceTree = "<group>";
 		};
+		4C699C681B1FB04D001CD1C3 /* License Manager */ = {
+			isa = PBXGroup;
+			children = (
+				4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */,
+			);
+			name = "License Manager";
+			path = "../Classes/License Manager";
+			sourceTree = "<group>";
+		};
 		4C7766271978CECA00759774 /* Black */ = {
 			isa = PBXGroup;
 			children = (
@@ -3117,6 +3136,7 @@
 				4C8AF571158E99520026668C /* TLOInputHistory.h */,
 				4C8AF572158E99520026668C /* TLOKeyEventHandler.h */,
 				4C8AF573158E99520026668C /* TLOLanguagePreferences.h */,
+				4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */,
 				4C8AF574158E99520026668C /* TLOLinkParser.h */,
 				4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */,
 				4C8AF576158E99520026668C /* TLOpenLink.h */,
@@ -3308,6 +3328,7 @@
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */,
+				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
 				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C8AF5E0158E99520026668C /* TLOpenLink.m */,
@@ -3961,6 +3982,7 @@
 				4C5BA42216F1302F00A96CA2 /* TDCListDialog.h in Headers */,
 				4C5BA42316F1302F00A96CA2 /* TDCModeSheet.h in Headers */,
 				4C5BA42416F1302F00A96CA2 /* TDCNickSheet.h in Headers */,
+				4C699C661B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C5BA42516F1302F00A96CA2 /* TDCPreferencesController.h in Headers */,
 				4C5BA42616F1302F00A96CA2 /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C5BA42716F1302F00A96CA2 /* TDCPreferencesSoundWrapper.h in Headers */,
@@ -4117,6 +4139,7 @@
 				4C8AF655158E99520026668C /* TDCListDialog.h in Headers */,
 				4C8AF656158E99520026668C /* TDCModeSheet.h in Headers */,
 				4C8AF657158E99520026668C /* TDCNickSheet.h in Headers */,
+				4C699C671B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C8AF658158E99520026668C /* TDCPreferencesController.h in Headers */,
 				4C8AF659158E99520026668C /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C8AF65A158E99520026668C /* TDCPreferencesSoundWrapper.h in Headers */,
@@ -4788,6 +4811,7 @@
 				4CF40F181AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
 				4CF40F381AC1A59500A26BE0 /* TDCInviteSheet.xib in Resources */,
 				4CCFA6901ABCF36A0083620F /* TPWTB_Style.png in Resources */,
+				4C699C711B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */,
 				4CC164B41943B17100B0D4B6 /* DIGreenBadgeCenterYosemite.png in Resources */,
 				4C46F4771943A654004CA8BA /* FormattingColor_Rainbow.tif in Resources */,
 				4CCFA6941ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
@@ -4998,6 +5022,7 @@
 				4C7766451978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CF40F431AC1A59500A26BE0 /* TDCNickSheet.xib in Resources */,
 				4CCFA68B1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
+				4C699C701B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */,
 				4C46F45E1943A654004CA8BA /* FormattingColor_11.png in Resources */,
 				4C7A219A1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
 				4C77663B1978CECA00759774 /* MavericksDarkServerCellSelection.tif in Resources */,
@@ -5311,6 +5336,7 @@
 				4C0445A316F1603C00EBB665 /* IRCConnectionSocket.m in Sources */,
 				4C0445A416F1603C00EBB665 /* IRCExtras.m in Sources */,
 				4C0445A516F1603C00EBB665 /* IRCISupportInfo.m in Sources */,
+				4C699C631B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
 				4CF40DEF1AC1A4AC00A26BE0 /* TVCLogControllerOperationQueue.m in Sources */,
 				4CF40E4F1AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
@@ -5587,6 +5613,7 @@
 				4C8AF6AB158E99520026668C /* IRCISupportInfo.m in Sources */,
 				4C8AF6AC158E99520026668C /* IRCMessage.m in Sources */,
 				4C8AF6AD158E99520026668C /* IRCModeInfo.m in Sources */,
+				4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
 				4CF40DF01AC1A4AC00A26BE0 /* TVCLogControllerOperationQueue.m in Sources */,
 				4CF40E501AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
