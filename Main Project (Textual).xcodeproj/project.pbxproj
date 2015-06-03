@@ -741,6 +741,10 @@
 		4C7E4DBC1A9116FA00EBE11B /* Growl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCF2EE1158046F9006FFE21 /* Growl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C7E4DBD1A9116FA00EBE11B /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; };
 		4C7E4DBE1A9116FA00EBE11B /* HockeySDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDB24A018CAB914007EF6DE /* HockeySDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C8223721B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C8223731B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C8223741B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */; };
+		4C8223771B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */; };
 		4C8AF609158E99520026668C /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -2226,6 +2230,8 @@
 		4C7E0F9619AC25900084173D /* GRMustacheTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplate.h; sourceTree = "<group>"; };
 		4C7E0F9719AC25900084173D /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		4C7E0F9819AC25900084173D /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
+		4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreHockeyAppFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreHockeyAppFramework.plist"; sourceTree = SOURCE_ROOT; };
+		4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreSparkleFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreSparkleFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
@@ -2826,6 +2832,8 @@
 		4C46CCA31580437B00846B64 /* Property Lists */ = {
 			isa = PBXGroup;
 			children = (
+				4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */,
+				4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */,
 				4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */,
 				4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */,
 				4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */,
@@ -4647,6 +4655,7 @@
 				4C0BA5201990798800857343 /* FormattingColor_Rainbow.tif in Resources */,
 				4CCFA6921ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
 				4C0BA5221990798800857343 /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
+				4C8223721B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
 				4CF40F5A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib in Resources */,
 				4C0BA5241990798800857343 /* FormattingColor_15.png in Resources */,
 				4C0BA5251990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
@@ -4783,6 +4792,7 @@
 				4C46F4771943A654004CA8BA /* FormattingColor_Rainbow.tif in Resources */,
 				4CCFA6941ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
 				4C7766461978CECA00759774 /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
+				4C8223731B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
 				4CF40F5C1AC1A59500A26BE0 /* TVCInputPromptDialog.xib in Resources */,
 				4C46F4651943A654004CA8BA /* FormattingColor_15.png in Resources */,
 				4C77664A1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
@@ -5020,6 +5030,7 @@
 				4CDFA4141996EAB2007EA46E /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CDFA4151996EAB2007EA46E /* DIGreenBadgeLeftMavericks.png in Resources */,
 				4CF40F691AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */,
+				4C8223771B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4CDFA4171996EAB2007EA46E /* channelRoomStatusIconYosemiteLightActive@2x.tif in Resources */,
 				4CF40F611AC1A59500A26BE0 /* TVCMainWindowMavericks.xib in Resources */,
 				4CDFA4181996EAB2007EA46E /* DIGreenBadgeLeftYosemite.png in Resources */,
@@ -5055,6 +5066,7 @@
 				4CDFA42E1996EAB2007EA46E /* FormattingColor_Rainbow.tif in Resources */,
 				4CCFA6951ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
 				4CDFA42F1996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
+				4C8223741B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
 				4CF40F5D1AC1A59500A26BE0 /* TVCInputPromptDialog.xib in Resources */,
 				4CDFA4301996EAB2007EA46E /* FormattingColor_15.png in Resources */,
 				4CDFA4311996EAB2007EA46E /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
