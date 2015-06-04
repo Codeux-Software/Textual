@@ -71,6 +71,10 @@
 {
 	NSString *cachesFolder = [TPCPathInfo applicationGroupContainerApplicationSupportPath];
 
+	if (cachesFolder == nil) {
+		return nil;
+	}
+
 	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Encryption Components/"];
 
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
