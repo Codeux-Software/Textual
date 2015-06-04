@@ -103,6 +103,33 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 	}
 }
 
+NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(NSData *licenseContents)
+{
+	/* The contents of the user license is /supposed/ to be a properly formatted
+	 property list as sent from the license system hosted on www.codeux.com */
+
+	if (NSObjectIsEmpty(licenseContents)) {
+		return nil;
+	} else {
+		NSError *readError = nil;
+
+		id licenseDictionary = [NSPropertyListSerialization propertyListWithData:licenseContents
+																		 options:NSPropertyListImmutable
+																		  format:NULL
+																		   error:&readError];
+
+		if (licenseDictionary == nil || [licenseDictionary isKindOfClass:[NSDictionary class]] == NO) {
+			if (readError) {
+				LogToConsole(@"Failed to convert contents of user license into dictionary. Error: %@", [readError localizedDescription]);
+			}
+
+			return nil;
+		} else {
+			return licenseDictionary;
+		}
+	}
+}
+
 NSData *TLOLicenseManagerPublicKeyContents(void)
 {
 	/* Find where public key is */
