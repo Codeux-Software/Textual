@@ -67,8 +67,7 @@ static SecKeyRef TLOLicenseManagerPublicKey;
 const NSString * TLOLicenseManagerHashOfGenuinePublicKey = @"b2f40b8fe032156ac8f56c68877f9359620d5f3fccffda741494e7fc72375ab0";
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
-NSData *TLOLicenseManagerUserLicenseFileContents(void);
-NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(void);
+NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists);
 NSData *TLOLicenseManagerPublicKeyContents(void);
 BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
@@ -83,7 +82,7 @@ NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 #pragma mark -
 #pragma mark Implementation
 
-BOOL TLOLicenseManagerVerifyLicenseSignature(void)
+BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists)
 {
 
 }
@@ -101,7 +100,7 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 	return [NSURL fileURLWithPath:dest isDirectory:NO];
 }
 
-NSData *TLOLicenseManagerUserLicenseFileContents(void)
+NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists)
 {
 	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
 
@@ -111,7 +110,17 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 		return nil;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:[licenseFilePath path]]) {
+	BOOL isDirectory = NO;
+
+	BOOL fileExists = [RZFileManager() fileExistsAtPath:[licenseFilePath path] isDirectory:&isDirectory];
+
+	BOOL validUserLicenseFileExists = (fileExists && isDirectory == NO);
+
+	if ( userLicenseFileExists) {
+		*userLicenseFileExists = validUserLicenseFileExists;
+	}
+
+	if (validUserLicenseFileExists) {
 		NSError *readError = nil;
 
 		NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
@@ -128,12 +137,12 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 	}
 }
 
-NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(void)
+NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(BOOL *userLicenseFileExists)
 {
 	/* The contents of the user license is /supposed/ to be a properly formatted
 	 property list as sent from the license system hosted on www.codeux.com */
 
-	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents();
+	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents(userLicenseFileExists);
 
 	if (NSObjectIsEmpty(licenseContents)) {
 		return nil;
