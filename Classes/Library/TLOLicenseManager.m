@@ -76,6 +76,33 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 	return [NSURL fileURLWithPath:dest isDirectory:NO];
 }
 
+NSData *TLOLicenseManagerUserLicenseFileContents(void)
+{
+	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
+
+	if (licenseFilePath == nil) {
+		LogToConsole(@"Unable to determine the path to retrieve license information from.");
+
+		return nil;
+	}
+
+	if ([RZFileManager() fileExistsAtPath:[licenseFilePath path]]) {
+		NSError *readError = nil;
+
+		NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
+
+		if (licenseContents == nil) {
+			LogToConsole(@"Unable to read user license file. Error: %@", [readError localizedDescription]);
+
+			return nil;
+		} else {
+			return licenseContents;
+		}
+	} else {
+		return nil;
+	}
+}
+
 NSData *TLOLicenseManagerPublicKeyContents(void)
 {
 	/* Find where public key is */
