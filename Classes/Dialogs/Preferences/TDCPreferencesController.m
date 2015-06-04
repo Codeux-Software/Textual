@@ -1126,7 +1126,7 @@
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPath]];
+	[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
 }
 
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT

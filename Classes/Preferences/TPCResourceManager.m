@@ -53,7 +53,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	
 	/* Add a system link for the unsupervised scripts folder if it exists. */
 	NSString *sourePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
-	NSString *destnPath = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	NSString *destnPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
 	
 	if ([RZFileManager() fileExistsAtPath:sourePath] &&
 		[RZFileManager() fileExistsAtPath:destnPath] == NO)
@@ -64,7 +64,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 	/* Add a system link for the iCloud folder if the iCloud folder exists. */
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
-		destnPath = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
+		destnPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
 		
 		sourePath = [sharedCloudManager() ubiquitousContainerURLPath];
 		
