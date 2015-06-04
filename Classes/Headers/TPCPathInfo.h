@@ -44,11 +44,13 @@
 + (void)startUsingLogLocationSecurityScopedBookmark;
 
 + (NSString *)applicationBundlePath;
-+ (NSString *)applicationSupportFolderPath;
 + (NSString *)applicationTemporaryFolderPath;
 + (NSString *)applicationCachesFolderPath;
 + (NSString *)applicationResourcesFolderPath;
 + (NSString *)applicationGroupContainerPath;
+
++ (NSString *)applicationGroupContainerApplicationSupportPath;
++ (NSString *)applicationLocalContainerApplicationSupportPath;
 
 + (NSString *)localUserDiagnosticReportsFolderPath;
 + (NSString *)systemDiagnosticReportsFolderPath;

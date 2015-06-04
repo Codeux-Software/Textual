@@ -69,7 +69,7 @@
 
 - (NSString *)pathToStoreEncryptionSecrets
 {
-	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPath];
+	NSString *cachesFolder = [TPCPathInfo applicationGroupContainerApplicationSupportPath];
 
 	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Encryption Components/"];
 

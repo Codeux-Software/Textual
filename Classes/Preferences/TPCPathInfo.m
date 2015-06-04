@@ -79,7 +79,24 @@
 	return [url relativePath];
 }
 
-+ (NSString *)applicationSupportFolderPath
++ (NSString *)applicationLocalContainerApplicationSupportPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Textual/"];
+
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return basePath;
+	}
+
+	return nil;
+}
+
++ (NSString *)applicationGroupContainerApplicationSupportPath
 {
 	NSString *dest = [TPCPathInfo applicationGroupContainerPath];
 	
@@ -110,7 +127,7 @@
 
 + (NSString *)customThemeFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];
+	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Styles/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -121,7 +138,7 @@
 
 + (NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
+	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Extensions/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
