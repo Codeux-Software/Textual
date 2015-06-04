@@ -88,10 +88,12 @@ NSData *TLOLicenseManagerPublicKeyContents(void)
 	}
 
 	/* Load contents of the public key */
-	NSData *publicKeyContents = [NSData dataWithContentsOfURL:publicKeyPath];
+	NSError *readError = nil;
+
+	NSData *publicKeyContents = [NSData dataWithContentsOfURL:publicKeyPath options:0 error:&readError];
 
 	if (publicKeyContents == nil) {
-		LogToConsole(@"Unable to read contents of the public key used for verifying signatures.");
+		LogToConsole(@"Unable to read contents of the public key used for verifying signatures. Error: %@", [readError localizedDescription]);
 
 		return nil;
 	}
@@ -166,4 +168,3 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 		return NO;
 	}
 }
-
