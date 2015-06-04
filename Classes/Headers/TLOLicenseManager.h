@@ -37,4 +37,14 @@
 
 #import "TextualApplication.h"
 
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey;
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey;
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey;
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey;
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
+TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(void);
+
+TEXTUAL_EXTERN NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(void);
