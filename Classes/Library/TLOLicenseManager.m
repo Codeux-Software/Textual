@@ -59,6 +59,8 @@
 *
  */
 
+static SecKeyRef TLOLicenseManagerPublicKey;
+
 const NSString * TLOLicenseManagerHashOfGenuinePublicKey = @"b2f40b8fe032156ac8f56c68877f9359620d5f3fccffda741494e7fc72375ab0";
 
 NSData *TLOLicenseManagerPublicKeyContents(void)
@@ -67,7 +69,7 @@ NSData *TLOLicenseManagerPublicKeyContents(void)
 	NSURL *publicKeyPath = [RZMainBundle() URLForResource:@"RemoteLicenseSystemPublicKey" withExtension:@"pub"];
 
 	if (publicKeyPath == nil) {
-		LogToConsole(@"Unable to find the public key for verifying signatures.");
+		LogToConsole(@"Unable to find the public key used for verifying signatures.");
 
 		return nil;
 	}
@@ -100,3 +102,55 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
 		return NO;
 	}
 }
+
+BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
+{
+	if (PointerIsEmpty(TLOLicenseManagerPublicKey) == NO) {
+		return YES; // Do not import public key once we already imported it...
+	}
+
+	NSData *publicKeyContents = TLOLicenseManagerPublicKeyContents();
+
+	if (publicKeyContents == nil) {
+		return NO;
+	}
+
+	SecItemImportExportKeyParameters importParameters;
+
+	importParameters.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
+	importParameters.flags = kSecKeyNoAccessControl;
+
+	importParameters.passphrase = NULL;
+	importParameters.alertTitle = NULL;
+	importParameters.alertPrompt = NULL;
+	importParameters.accessRef = NULL;
+
+	importParameters.keyUsage = NULL;
+	importParameters.keyAttributes = NULL;
+
+	SecExternalItemType itemType = kSecItemTypePublicKey;
+
+	SecExternalFormat externalFormat = kSecFormatPEMSequence;
+
+	int flags = 0;
+
+	CFArrayRef tempArray = NULL;
+
+	OSStatus operationStatus =
+		SecItemImport((__bridge CFDataRef)(publicKeyContents), NULL, &externalFormat, &itemType, flags, &importParameters, NULL, &tempArray);
+
+	if (operationStatus == noErr) {
+		TLOLicenseManagerPublicKey = (SecKeyRef)CFArrayGetValueAtIndex(tempArray, 0);
+
+		CFRetain(TLOLicenseManagerPublicKey);
+
+		CFRelease(tempArray);
+
+		return YES;
+	} else {
+		LogToConsole(@"SecItemImport() failed to import public key with status codeL %i", operationStatus);
+
+		return NO;
+	}
+}
+
