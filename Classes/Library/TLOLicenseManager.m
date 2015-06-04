@@ -59,9 +59,34 @@
 *
  */
 
+#pragma mark -
+#pragma mark Private Implementation
+
 static SecKeyRef TLOLicenseManagerPublicKey;
 
 const NSString * TLOLicenseManagerHashOfGenuinePublicKey = @"b2f40b8fe032156ac8f56c68877f9359620d5f3fccffda741494e7fc72375ab0";
+
+NSURL *TLOLicenseManagerUserLicenseFilePath(void);
+NSData *TLOLicenseManagerUserLicenseFileContents(void);
+NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(void);
+NSData *TLOLicenseManagerPublicKeyContents(void);
+BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
+BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
+
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
+NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
+
+#pragma mark -
+#pragma mark Implementation
+
+BOOL TLOLicenseManagerVerifyLicenseSignature(void)
+{
+
+}
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 {
@@ -103,10 +128,12 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 	}
 }
 
-NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(NSData *licenseContents)
+NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(void)
 {
 	/* The contents of the user license is /supposed/ to be a properly formatted
 	 property list as sent from the license system hosted on www.codeux.com */
+
+	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents();
 
 	if (NSObjectIsEmpty(licenseContents)) {
 		return nil;
