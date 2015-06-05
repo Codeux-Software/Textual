@@ -57,7 +57,14 @@
 *  3. At no time shall the license manager make an attempt to lock a user out of
 *     application. At most, limit functionality to trial-mode level.
 *
- */
+*/
+
+/* 
+ *	This source file does not contain source code from, but is designed
+ *	around concepts of, the open source project known as "AquaticPrime"
+ *
+ *	<https://github.com/bdrister/AquaticPrime>
+*/
 
 #pragma mark -
 #pragma mark Private Implementation
@@ -84,7 +91,114 @@ NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 
 BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists)
 {
+	/* Attempt to populate public key information. */
+	if (TLOLicenseManagerPopulatePublicKeyRef() == NO) {
+		return NO;
+	}
 
+	/* Attempt to load the license information or fail on missing file. */
+	/* We point to _userLicenseFileExists in place of userLicenseFileExists
+	 because we do not want to rely on the caller to pass a pointer for 
+	 internal usage by this method. */
+	BOOL _userLicenseFileExists = NO;
+
+	NSDictionary *licenseDictionary = TLOLicenseManagerDictionaryFromUserLicenseData(&_userLicenseFileExists);
+
+	if ( userLicenseFileExists) {
+		*userLicenseFileExists = _userLicenseFileExists;
+	}
+
+	if (_userLicenseFileExists == NO) {
+		return NO;
+	} else {
+		if (licenseDictionary == nil) {
+			LogToConsole(@"Reading license dictionary failed. Returned nil result.");
+
+			return NO;
+		}
+	}
+
+	/* Retrieve license signature information */
+	NSData *licenseSignature = [licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
+
+	if (licenseSignature == nil) {
+		LogToConsole(@"Missing license signature in license dictionary");
+
+		return NO;
+	}
+
+	CFDataRef cfLicenseSignature = (__bridge CFDataRef)(licenseSignature);
+
+	/* Combine all contents of the dictionary, in sorted order, excluding
+	 the license dictinoary signature because thats used for comparison. */
+	NSMutableData *combinedLicenseData = [NSMutableData data];
+
+	NSArray *sortedLicenseDictionaryKeys = [licenseDictionary sortedDictionaryKeys];
+
+	for (NSString *key in sortedLicenseDictionaryKeys) {
+		/* Do not add the signature to the combined data object */
+		if (NSObjectsAreEqual(key, TLOLicenseManagerLicenseDictionaryLicenseSignatureKey)) {
+			continue;
+		}
+
+		id obj = licenseDictionary[key];
+
+		/* Do not factor in anything other that string-based values */
+		if ([obj isKindOfClass:[NSString class]] == NO) {
+			continue;
+		}
+
+		/* Convert the string value into a data object and append it */
+		NSData *dataObject = [obj dataUsingEncoding:NSUTF8StringEncoding];
+
+		if (dataObject) {
+			[combinedLicenseData appendBytes:[dataObject bytes] length:[dataObject length]];
+		}
+	};
+
+	if ([combinedLicenseData length] <= 0) {
+		LogToConsole(@"Legnth of combinedLicenseData is below or equal to zero (0)");
+
+		return NO;
+	}
+
+	CFDataRef cfCombinedLicenseData = (__bridge CFDataRef)(combinedLicenseData);
+
+	/* Setup transform function for verifying signature */
+	SecTransformRef verifyFunction = SecVerifyTransformCreate(TLOLicenseManagerPublicKey, cfLicenseSignature, NULL);
+
+	if (verifyFunction == NULL) {
+		LogToConsole(@"Failed to create transform using SecVerifyTransformCreate()");
+
+		return NO;
+	}
+
+	/* Setup transform attributes */
+	if (SecTransformSetAttribute(verifyFunction, kSecTransformInputAttributeName, cfCombinedLicenseData, NULL)		== false ||
+		SecTransformSetAttribute(verifyFunction, kSecDigestTypeAttribute, kSecDigestSHA2, NULL)						== false ||
+		SecTransformSetAttribute(verifyFunction, kSecDigestLengthAttribute, (__bridge CFNumberRef)@(256), NULL)		== false)
+	{
+		CFRelease(verifyFunction);
+
+		LogToConsole(@"Failed to modify transform attributes using SecTransformSetAttribute()");
+
+		return NO;
+	}
+
+	/* Perform signature verification */
+	CFTypeRef cfVerifyResult = SecTransformExecute(verifyFunction, NULL);
+
+	CFRelease(verifyFunction);
+
+	if (CFGetTypeID(cfVerifyResult) == CFBooleanGetTypeID()) {
+		if (cfVerifyResult == kCFBooleanTrue) {
+			return YES;
+		}
+	} else {
+		LogToConsole(@"SecTransformExecute() returned a result that is not of type: CFBooleanRef");
+	}
+
+	return NO;
 }
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void)
@@ -144,7 +258,7 @@ NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(BOOL *userLicenseFi
 
 	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents(userLicenseFileExists);
 
-	if (NSObjectIsEmpty(licenseContents)) {
+	if (licenseContents == nil) {
 		return nil;
 	} else {
 		NSError *readError = nil;
