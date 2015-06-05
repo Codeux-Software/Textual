@@ -45,6 +45,12 @@ TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNa
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
-TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists);
 
-TEXTUAL_EXTERN NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(BOOL *userLicenseFileExists);
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists); // Alias for TLOLicenseManagerVerifyLicenseSignatureFromFile
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(BOOL *userLicenseFileExists);
+
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents);
+
+TEXTUAL_EXTERN NSDictionary *TLOLicenseManagerLicenseDictionary(void);
+
+TEXTUAL_EXTERN NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists);

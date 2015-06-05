@@ -78,6 +78,7 @@ NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists);
 NSData *TLOLicenseManagerPublicKeyContents(void);
 BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
+NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
 
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -91,18 +92,18 @@ NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 
 BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists)
 {
-	/* Attempt to populate public key information. */
-	if (TLOLicenseManagerPopulatePublicKeyRef() == NO) {
-		return NO;
-	}
+	return TLOLicenseManagerVerifyLicenseSignatureFromFile(userLicenseFileExists);
+}
 
+BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(BOOL *userLicenseFileExists)
+{
 	/* Attempt to load the license information or fail on missing file. */
 	/* We point to _userLicenseFileExists in place of userLicenseFileExists
-	 because we do not want to rely on the caller to pass a pointer for 
+	 because we do not want to rely on the caller to pass a pointer for
 	 internal usage by this method. */
 	BOOL _userLicenseFileExists = NO;
 
-	NSDictionary *licenseDictionary = TLOLicenseManagerDictionaryFromUserLicenseData(&_userLicenseFileExists);
+	NSData *licenseFileContents = TLOLicenseManagerUserLicenseFileContents(&_userLicenseFileExists);
 
 	if ( userLicenseFileExists) {
 		*userLicenseFileExists = _userLicenseFileExists;
@@ -111,11 +112,30 @@ BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists)
 	if (_userLicenseFileExists == NO) {
 		return NO;
 	} else {
-		if (licenseDictionary == nil) {
+		if (licenseFileContents == nil) {
 			LogToConsole(@"Reading license dictionary failed. Returned nil result.");
 
 			return NO;
 		}
+	}
+
+	return TLOLicenseManagerVerifyLicenseSignatureWithData(licenseFileContents);
+}
+
+BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents)
+{
+	/* Attempt to populate public key information. */
+	if (TLOLicenseManagerPopulatePublicKeyRef() == NO) {
+		return NO;
+	}
+
+	/* Perform basic validation and convert license data into dictionary */
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseFileContents);
+
+	if (licenseDictionary == nil) {
+		LogToConsole(@"Reading license dictionary failed. Returned nil result.");
+
+		return NO;
 	}
 
 	/* Retrieve license signature information */
@@ -251,13 +271,18 @@ NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists)
 	}
 }
 
-NSDictionary *TLOLicenseManagerDictionaryFromUserLicenseData(BOOL *userLicenseFileExists)
+NSDictionary *TLOLicenseManagerLicenseDictionary(void)
+{
+	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents(NULL);
+
+	return TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
+}
+
+NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents)
 {
 	/* The contents of the user license is /supposed/ to be a properly formatted
 	 property list as sent from the license system hosted on www.codeux.com */
-
-	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents(userLicenseFileExists);
-
+	
 	if (licenseContents == nil) {
 		return nil;
 	} else {
