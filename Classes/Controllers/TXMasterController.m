@@ -79,6 +79,11 @@
 - (void)awakeFromNib
 {
 	static BOOL _awakeFromNibCalled = NO;
+
+
+
+	BOOL verify = TLOLicenseManagerVerifyLicenseSignature(NULL);
+
 	
 	if (_awakeFromNibCalled == NO) {
 		_awakeFromNibCalled = YES;
