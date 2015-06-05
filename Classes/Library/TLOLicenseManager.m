@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "TLOLicenseManager.h"
+
 /* 
 *
 *  TLOLicenseManager is designed to enforce remote license signatures, but
@@ -71,14 +73,17 @@
 
 static SecKeyRef TLOLicenseManagerPublicKey;
 
+static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
+
 const NSString * TLOLicenseManagerHashOfGenuinePublicKey = @"b2f40b8fe032156ac8f56c68877f9359620d5f3fccffda741494e7fc72375ab0";
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
-NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists);
+NSData *TLOLicenseManagerUserLicenseFileContents(void);
 NSData *TLOLicenseManagerPublicKeyContents(void);
 BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
+BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
 
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -90,48 +95,33 @@ NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 #pragma mark -
 #pragma mark Implementation
 
-BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists)
+BOOL TLOLicenseManagerVerifyLicenseSignature(void)
 {
-	return TLOLicenseManagerVerifyLicenseSignatureFromFile(userLicenseFileExists);
+	return TLOLicenseManagerVerifyLicenseSignatureFromFile();
 }
 
-BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(BOOL *userLicenseFileExists)
+BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(void)
 {
-	/* Attempt to load the license information or fail on missing file. */
-	/* We point to _userLicenseFileExists in place of userLicenseFileExists
-	 because we do not want to rely on the caller to pass a pointer for
-	 internal usage by this method. */
-	BOOL _userLicenseFileExists = NO;
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
 
-	NSData *licenseFileContents = TLOLicenseManagerUserLicenseFileContents(&_userLicenseFileExists);
-
-	if ( userLicenseFileExists) {
-		*userLicenseFileExists = _userLicenseFileExists;
-	}
-
-	if (_userLicenseFileExists == NO) {
-		return NO;
-	} else {
-		if (licenseFileContents == nil) {
-			LogToConsole(@"Reading license dictionary failed. Returned nil result.");
-
-			return NO;
-		}
-	}
-
-	return TLOLicenseManagerVerifyLicenseSignatureWithData(licenseFileContents);
+	return TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary);
 }
 
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents)
+{
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseFileContents);
+
+	return TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary);
+}
+
+BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary)
 {
 	/* Attempt to populate public key information. */
 	if (TLOLicenseManagerPopulatePublicKeyRef() == NO) {
 		return NO;
 	}
 
-	/* Perform basic validation and convert license data into dictionary */
-	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseFileContents);
-
+	/* Perform basic validation */
 	if (licenseDictionary == nil) {
 		LogToConsole(@"Reading license dictionary failed. Returned nil result.");
 
@@ -234,7 +224,22 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 	return [NSURL fileURLWithPath:dest isDirectory:NO];
 }
 
-NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists)
+BOOL TLOLicenseManagerUserLicenseFileExists(void)
+{
+	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
+
+	if (licenseFilePath == nil) {
+		return NO;
+	} else {
+		BOOL isDirectory = NO;
+
+		BOOL fileExists = [RZFileManager() fileExistsAtPath:[licenseFilePath path] isDirectory:&isDirectory];
+
+		return (fileExists && isDirectory == NO);
+	}
+}
+
+NSData *TLOLicenseManagerUserLicenseFileContents(void)
 {
 	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
 
@@ -244,17 +249,9 @@ NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists)
 		return nil;
 	}
 
-	BOOL isDirectory = NO;
-
-	BOOL fileExists = [RZFileManager() fileExistsAtPath:[licenseFilePath path] isDirectory:&isDirectory];
-
-	BOOL validUserLicenseFileExists = (fileExists && isDirectory == NO);
-
-	if ( userLicenseFileExists) {
-		*userLicenseFileExists = validUserLicenseFileExists;
-	}
-
-	if (validUserLicenseFileExists) {
+	if (TLOLicenseManagerUserLicenseFileExists() == NO) {
+		return nil;
+	} else {
 		NSError *readError = nil;
 
 		NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
@@ -266,16 +263,20 @@ NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists)
 		} else {
 			return licenseContents;
 		}
-	} else {
-		return nil;
 	}
 }
 
 NSDictionary *TLOLicenseManagerLicenseDictionary(void)
 {
-	NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents(NULL);
+	if (TLOLicenseManagerCachedLicenseDictionary == nil) {
+		NSData *licenseContents = TLOLicenseManagerUserLicenseFileContents();
 
-	return TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
+		NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
+
+		TLOLicenseManagerCachedLicenseDictionary = [licenseDictionary copy];
+	}
+
+	return TLOLicenseManagerCachedLicenseDictionary;
 }
 
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents)
@@ -303,6 +304,11 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 			return licenseDictionary;
 		}
 	}
+}
+
+void TLOLicenseManagerResetLicenseDictionaryCache(void)
+{
+	TLOLicenseManagerCachedLicenseDictionary = nil;
 }
 
 NSData *TLOLicenseManagerPublicKeyContents(void)
@@ -395,5 +401,48 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 		LogToConsole(@"SecItemImport() failed to import public key with status codeL %i", operationStatus);
 
 		return NO;
+	}
+}
+
+NSString *TLOLicenseManagerLicenseOwnerName(void)
+{
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
+
+	if (licenseDictionary == nil) {
+		return nil;
+	} else {
+		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey];
+	}
+}
+
+NSString *TLOLicenseManagerLicenseOwnerContactAddress(void)
+{
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
+
+	if (licenseDictionary == nil) {
+		return nil;
+	} else {
+		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey];
+	}
+}
+
+NSString *TLOLicenseManagerLicenseKey(void)
+{
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
+
+	if (licenseDictionary == nil) {
+		return nil;
+	} else {
+		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
+	}}
+
+NSString *TLOLicenseManagerLicenseActivationToken(void)
+{
+	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
+
+	if (licenseDictionary == nil) {
+		return nil;
+	} else {
+		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey];
 	}
 }

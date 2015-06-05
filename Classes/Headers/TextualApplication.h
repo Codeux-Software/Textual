@@ -106,7 +106,6 @@
 	@class TLOInputHistoryObject;
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
-	@class TLOLicenseManager;
 	@class TLOLinkParser;
 	@class TLONicknameCompletionStatus;
 	@class TLOpenLink;
@@ -314,7 +313,6 @@
 	#import "TLOInputHistory.h"
 	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
-	#import "TLOLicenseManager.h"
 	#import "TLOLinkParser.h"
 	#import "TLONicknameCompletionStatus.h"
 	#import "TLOPopupPrompts.h"

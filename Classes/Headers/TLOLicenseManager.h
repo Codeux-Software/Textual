@@ -44,13 +44,25 @@ TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerCo
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
 
+TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 
-TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(BOOL *userLicenseFileExists); // Alias for TLOLicenseManagerVerifyLicenseSignatureFromFile
-TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(BOOL *userLicenseFileExists);
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(void); // Alias for TLOLicenseManagerVerifyLicenseSignatureFromFile
+TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents);
 
 TEXTUAL_EXTERN NSDictionary *TLOLicenseManagerLicenseDictionary(void);
 
-TEXTUAL_EXTERN NSData *TLOLicenseManagerUserLicenseFileContents(BOOL *userLicenseFileExists);
+TEXTUAL_EXTERN NSData *TLOLicenseManagerUserLicenseFileContents(void);
+
+TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseActivationToken(void);
+TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseKey(void);
+TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerContactAddress(void);
+TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerName(void);
+
+/* Operations related to the user license file cache the license file the first time 
+ that it is accessed. The following method allows this cache to be reset to a blank 
+ state to allow a new file to be loaded next time an operation is performed. */
+TEXTUAL_EXTERN void TLOLicenseManagerResetLicenseDictionaryCache(void);
