@@ -262,7 +262,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1246][2]", [self name])
 												 title:TXTLS(@"BasicLanguage[1246][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1246][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:suppressionKey
 									   suppressionText:nil];

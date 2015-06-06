@@ -237,7 +237,7 @@
 	if (timeSpent > _betaTesterMaxApplicationLifespan) {
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1243][2]")
 												 title:TXTLS(@"BasicLanguage[1243][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1243][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:nil
 									   suppressionText:nil];
@@ -251,7 +251,7 @@
 
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
 												 title:TXTLS(@"BasicLanguage[1242][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1242][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:nil
 									   suppressionText:nil];
