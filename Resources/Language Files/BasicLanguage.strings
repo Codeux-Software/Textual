@@ -703,6 +703,10 @@
 
 
 
+/* License Manager */
+"BasicLanguage[1274][1]" = "This copy of Textual is not genuine";
+"BasicLanguage[1274][2]" = "It appears that you may be using a copy of Textual that is not genuine.\n\nTextual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available. ";
+"BasicLanguage[1274][3]" = "View Source Code";
 
 
 
@@ -712,6 +716,6 @@
 
 
 
-/* Next unusued key: 1274 */
+/* Next unusued key: 1275 */
 
 
