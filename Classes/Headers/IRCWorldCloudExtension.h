@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudDeletedClientsStorageKey;
 TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientEntryKeyPrefix;
 

@@ -158,7 +158,7 @@
 - (void)serverSheetOnOK:(TDCServerSheet *)sender;
 - (void)serverSheetWillClose:(TDCServerSheet *)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender;
 #endif
 @end

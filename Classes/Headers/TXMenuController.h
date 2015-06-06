@@ -151,7 +151,7 @@
 @property (nonatomic, weak) IBOutlet NSMenu *tcopyURLMenu;
 @property (nonatomic, weak) IBOutlet NSMenu *userControlMenu;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (nonatomic, weak) IBOutlet NSMenu *encryptionManagerStatusMenu;
 #endif
 
@@ -309,7 +309,7 @@
 - (IBAction)importPreferences:(id)sender;
 - (IBAction)exportPreferences:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;
 - (IBAction)encryptionStartPrivateConversation:(id)sender;
 - (IBAction)encryptionRefreshPrivateConversation:(id)sender;

@@ -167,7 +167,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 	self.connectionPrefersIPv6		= [defaults boolForKey:@"connectionPrefersIPv6"];
 	self.prefersSecuredConnection	= [defaults boolForKey:@"prefersSecuredConnection"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	self.excludedFromCloudSyncing	= [defaults boolForKey:@"excludedFromCloudSyncing"];
 #endif
 
@@ -485,7 +485,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 
 	[dic assignBoolTo:&_autojoinWaitsForNickServ				forKey:@"autojoinWaitsForNickServ"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[dic assignBoolTo:&_excludedFromCloudSyncing				forKey:@"excludedFromCloudSyncing"];
 #endif
 
@@ -631,7 +631,7 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 
 	[dic setBool:self.autojoinWaitsForNickServ			forKey:@"autojoinWaitsForNickServ"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[dic setBool:self.excludedFromCloudSyncing			forKey:@"excludedFromCloudSyncing"];
 #endif
 

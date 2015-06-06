@@ -71,7 +71,7 @@
 + (NSArray *)buildPathArray:(NSString *)path, ...;
 + (NSArray *)buildPathArrayWithPaths:(NSArray *)paths;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (NSString *)applicationUbiquitousContainerPath;
 
 + (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.
