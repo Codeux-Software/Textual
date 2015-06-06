@@ -75,7 +75,7 @@ static SecKeyRef TLOLicenseManagerPublicKey;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
 
-NSString const * TLOLicenseManagerHashOfGenuinePublicKey = @"b2f40b8fe032156ac8f56c68877f9359620d5f3fccffda741494e7fc72375ab0";
+NSString const * TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e6732fb37029406a57024517b10ec794aaa88dac82087624";
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 NSData *TLOLicenseManagerUserLicenseFileContents(void);
