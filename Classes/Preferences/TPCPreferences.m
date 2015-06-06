@@ -156,7 +156,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (BOOL)textEncryptionIsOpportunistic
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
@@ -899,7 +899,7 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
 #endif
 
-#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
 #else
 	if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
@@ -915,7 +915,7 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with License Manager Backend"];
 #endif
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	[RZUserDefaults() setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #else
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];

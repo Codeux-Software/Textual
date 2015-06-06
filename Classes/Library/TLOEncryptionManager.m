@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
 @property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end

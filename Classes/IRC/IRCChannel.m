@@ -222,7 +222,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[self reopenLogFileIfNeeded];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (OTRKitMessageState)encryptionState
 {
 	if ([TPCPreferences textEncryptionIsEnabled]) {
@@ -314,7 +314,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)deactivate
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	if ([self isPrivateMessage]) {
 		[self closeOpenEncryptionSessions];
 	}

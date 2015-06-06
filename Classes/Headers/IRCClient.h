@@ -78,7 +78,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #import "TLOEncryptionManager.h" // typdef enum
 #endif
 
@@ -202,7 +202,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;

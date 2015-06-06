@@ -225,7 +225,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self.isonTimer setDelegate:self];
 		[self.isonTimer setSelector:@selector(onISONTimer:)];
 
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 		 self.trialPeriodTimer = [TLOTimer new];
 		[self.trialPeriodTimer setReqeatTimer:NO];
 		[self.trialPeriodTimer setDelegate:self];
@@ -250,7 +250,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self.reconnectTimer setDelegate:nil];
 	[self.commandQueueTimer setDelegate:nil];
 
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 	[self.trialPeriodTimer stop];
 
 	[self.trialPeriodTimer setDelegate:nil];
@@ -281,13 +281,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)updateConfigFromTheCloud:(IRCClientConfig *)seed
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == [seed excludedFromCloudSyncing]);
 #endif
 
 	[self updateConfig:seed withSelectionUpdate:YES isImportingFromCloud:YES];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (syncToCloudIsSame == NO) {
 			if (self.config.excludedFromCloudSyncing == NO) {
@@ -617,7 +617,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (NSString *)encryptionAccountNameForLocalUser
 {
 	return [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
@@ -1021,7 +1021,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return cachedValues;
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname
 {
 	PointerIsEmptyAssertReturn(nickname, NO)
@@ -1070,7 +1070,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
@@ -1082,7 +1082,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			injectionCallback(messageBody);
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		return; // Do not continue with this operation...
 	}
 
@@ -1110,7 +1110,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
@@ -1118,7 +1118,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			decodingCallback(messageBody, NO);
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		return; // Do not continue with this operation...
 	}
 
@@ -3846,7 +3846,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self.printingQueue cancelAllOperations];
 
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 	[self stopTrialPeriodTimer];
 #endif
 
@@ -6011,7 +6011,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
 {
 	/* Manage timers. */
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 	[self startTrialPeriodTimer];
 #endif
 	
@@ -7728,7 +7728,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Trial Period Timer
 
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 
 - (void)startTrialPeriodTimer
 {

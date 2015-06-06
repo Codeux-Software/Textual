@@ -134,7 +134,7 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (NSString *)IRCopDefaultGlineMessage;
 + (NSString *)IRCopDefaultShunMessage;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (BOOL)textEncryptionIsOpportunistic;
 + (BOOL)textEncryptionIsRequired;
 + (BOOL)textEncryptionIsEnabled;

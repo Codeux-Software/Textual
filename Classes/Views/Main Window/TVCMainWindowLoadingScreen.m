@@ -57,7 +57,7 @@
 - (void)popWelcomeAddServerView
 {
 	if (self.stackLocked == NO) {
-#ifdef TEXTUAL_TRIAL_BINARY
+#if TEXTUAL_TRIAL_BINARY == 1
 		[self displayView:self.welcomeAddServerTrialView];
 #else
 		[self displayView:self.welcomeAddServerNormalView];

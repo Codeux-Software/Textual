@@ -134,7 +134,7 @@
 @property (nonatomic, strong) TDChannelSheet *channelSheet;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *connectCommandsField;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL requestCloudDeletionOnClose;
 #endif
 
@@ -142,7 +142,7 @@
 - (IBAction)floodControlChanged:(id)sender;
 - (IBAction)toggleAdvancedEncodings:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (IBAction)toggleCloudSyncExclusion:(id)sender;
 #endif
 
@@ -694,7 +694,7 @@
 	[self.autoReconnectCheck setState:self.config.autoReconnect];
 	[self.autoDisconnectOnSleepCheck setState:self.config.autoSleepModeDisconnect];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[self.excludedFromCloudSyncingCheck setState:self.config.excludedFromCloudSyncing];
 #endif
 
@@ -817,7 +817,7 @@
 	self.config.autoReconnect = [self.autoReconnectCheck state];
 	self.config.autoSleepModeDisconnect = [self.autoDisconnectOnSleepCheck state];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	self.config.excludedFromCloudSyncing = [self.excludedFromCloudSyncingCheck state];
 #endif
 
@@ -1040,7 +1040,7 @@
 		[self.delegate serverSheetOnOK:self];
 	}
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (self.requestCloudDeletionOnClose) {
 		if ([self.delegate respondsToSelector:@selector(serverSheetRequestedCloudExclusionByDeletion:)]) {
 			[self.delegate serverSheetRequestedCloudExclusionByDeletion:self];
@@ -1137,7 +1137,7 @@
 	[self.fallbackEncodingButton selectItemWithTitle:selectedFallback];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)toggleCloudSyncExclusion:(id)sender
 {
 	if ([self.excludedFromCloudSyncingCheck state] == NSOnState) {

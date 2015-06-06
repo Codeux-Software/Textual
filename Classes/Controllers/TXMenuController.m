@@ -493,7 +493,7 @@
             return YES;
         }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
 		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
 		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
@@ -1310,7 +1310,7 @@
 	
 	NSString *warningToken = @"BasicLanguage[1198][2]";
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([_serverCurrentConfig excludedFromCloudSyncing] == NO) {
 			warningToken = @"BasicLanguage[1198][3]";
@@ -1392,7 +1392,7 @@
 	[worldController() save];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender
 {
 	[worldController() addClientToListOfDeletedClients:[[sender config] itemUUID]];
@@ -2674,7 +2674,7 @@
 #pragma mark -
 #pragma mark Encryption 
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define _encryptionNotEnabled		([TPCPreferences textEncryptionIsEnabled] == NO)
 
 - (void)encryptionStartPrivateConversation:(id)sender

@@ -39,7 +39,7 @@
 
 @implementation TPCPreferences (TPCPreferencesCloudSyncExtension)
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey						= @"SyncPreferencesToTheCloud";
 NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey		= @"SyncPreferencesToTheCloudLimitedToServers";
 

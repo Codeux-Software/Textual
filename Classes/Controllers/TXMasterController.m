@@ -45,7 +45,7 @@
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 #import "BuildConfig.h"
 
 #define _betaTesterMaxApplicationLifespan			5184000 // 60 days
@@ -102,7 +102,7 @@
 
 - (void)performAwakeningBeforeMainWindowDidLoad
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
 
@@ -224,7 +224,7 @@
 	[self prepareThirdPartyServiceSparkleFramework];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 - (void)presentBetaTesterDialog
 {
 	NSTimeInterval currentTime = [NSDate unixTime];
@@ -261,7 +261,7 @@
 
 - (void)applicationDidFinishLaunching
 {
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 	[self presentBetaTesterDialog];
 
 	[mainWindow() makeKeyAndOrderFront:nil];
@@ -341,7 +341,7 @@
 
 - (BOOL)isNotSafeToPerformApplicationTermination
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (sharedCloudManager()) {
 		return (
 				/* Clients are still disconnecting. */
@@ -375,11 +375,11 @@
 	
 	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	[sharedEncryptionManager() prepareForApplicationTermination];
 #endif
 
@@ -403,7 +403,7 @@
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() closeCloudSyncSession];
 #endif
 

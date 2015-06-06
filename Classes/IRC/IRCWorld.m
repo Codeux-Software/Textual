@@ -724,7 +724,7 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 		[u prepareForPermanentDestruction];
 	}
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {
 		[self destroyClientInCloud:u];
 	}

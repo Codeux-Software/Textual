@@ -1071,7 +1071,7 @@
 	}
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)titlebarAccessoryViewLockButtonClicked:(id)sender
 {
 	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
@@ -1086,7 +1086,7 @@
 {
 	IRCClient *u = self.selectedClient;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	IRCChannel *c = self.selectedChannel;
 
 	BOOL updateEncryption = ([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]);
@@ -1120,7 +1120,7 @@
 			[self.titlebarAccessoryView setHidden:YES];
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	}
 
 	if ([self.titlebarAccessoryView isHidden] == NO) {

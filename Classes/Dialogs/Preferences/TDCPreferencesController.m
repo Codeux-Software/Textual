@@ -67,7 +67,7 @@
 #define _toolbarItemIndexDefualtIRCopMessages		117
 #define _toolbarItemIndexExperimentalSettings		119
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define _toolbarItemIndexOffRecordMessaging		    121
 #endif
 
@@ -105,7 +105,7 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
 #endif
 
@@ -115,7 +115,7 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 #endif
 
@@ -141,7 +141,7 @@
 - (IBAction)onChangedAlertNotification:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 
@@ -180,7 +180,7 @@
 
 - (IBAction)onSelectNewFont:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)offRecordMessagingPolicyChanged:(id)sender;
 #endif
 @end
@@ -268,7 +268,7 @@
 								   name:TPCThemeControllerThemeListDidChangeNotification
 								 object:nil];
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
@@ -355,7 +355,7 @@
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		_de(_toolbarItemIndexOffRecordMessaging,	[self contentViewOffRecordMessaging],		_toolbarItemIndexAdvanced)
 #endif
 
@@ -978,7 +978,7 @@
 #pragma mark -
 #pragma mark Actions
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
 	[sharedEncryptionManager() updatePolicy];
@@ -1040,7 +1040,7 @@
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +h"];
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +v"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +y"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +q"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +a"];
@@ -1056,7 +1056,7 @@
 {
 	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
 #endif
 	
@@ -1119,7 +1119,7 @@
 
 - (void)onOpenPathToCloudFolder:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TPCPathInfo openApplicationUbiquitousContainer];
 #endif
 }
@@ -1129,7 +1129,7 @@
 	[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onManageiCloudButtonClicked:(id)sender
 {
 	[self firstPane:[self contentViewICloud] selectedItem:_toolbarItemIndexAdvanced];
@@ -1252,7 +1252,7 @@
 
 		BOOL copyingToCloud = NO;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			copyingToCloud = YES;
 		}
@@ -1272,7 +1272,7 @@
 		NSString *dialogMessage = nil;
 		NSString *copyButton = nil;
 		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			dialogMessage = @"TDCPreferencesController[1011]";
 			copyButton = @"TDCPreferencesController[1009]";
@@ -1282,7 +1282,7 @@
 			dialogMessage = @"TDCPreferencesController[1010]";
 			copyButton = @"TDCPreferencesController[1008]";
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		}
 #endif
 
@@ -1300,7 +1300,7 @@
 		
 		return;
     } else {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		BOOL containerAvlb = [sharedCloudManager() ubiquitousContainerIsAvailable];
 		
 		if (containerAvlb) {

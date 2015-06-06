@@ -223,6 +223,22 @@
 		#define TEXTUAL_BUILT_WITH_LICENSE_MANAGER 0
 	#endif
 
+	#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		#define TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT 0
+	#endif
+
+	#ifndef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+		#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 0
+	#endif
+
+	#ifndef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+		#define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 0
+	#endif
+
+	#ifndef TEXTUAL_TRIAL_BINARY
+		#define TEXTUAL_TRIAL_BINARY 0
+	#endif
+
 	/* Protocol defenitions. (see file) */
 	#import "TDCSharedProtocolDefinitions.h"
 

@@ -140,7 +140,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 {
 	return ([key isEqualToString:IRCWorldControllerDefaultsStorageKey] ||
 			
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 			[key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] ||
 			
 			[key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
@@ -221,7 +221,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 		IRCClient *u = [worldController() findClientById:[config itemUUID]];
 		
 		/* Handle cloud sync logic. */
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if (isCloudImport) {
 			if (u && u.config.excludedFromCloudSyncing) {
 				return;
