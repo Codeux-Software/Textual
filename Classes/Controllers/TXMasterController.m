@@ -134,7 +134,7 @@
 		[TPCResourceManager copyResourcesToCustomAddonsFolder];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-		TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog();
+		TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog();
 #endif
 	}];
 
