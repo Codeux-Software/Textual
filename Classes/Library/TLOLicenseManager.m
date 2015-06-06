@@ -71,6 +71,7 @@
 #pragma mark -
 #pragma mark Private Implementation
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 static SecKeyRef TLOLicenseManagerPublicKey;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
@@ -91,10 +92,12 @@ NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"license
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
 NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
+#endif
 
 #pragma mark -
 #pragma mark Implementation
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 BOOL TLOLicenseManagerVerifyLicenseSignature(void)
 {
 	return TLOLicenseManagerVerifyLicenseSignatureFromFile();
@@ -469,3 +472,4 @@ NSString *TLOLicenseManagerLicenseActivationToken(void)
 		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey];
 	}
 }
+#endif

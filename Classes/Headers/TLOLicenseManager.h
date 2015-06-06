@@ -37,6 +37,7 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey;
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey;
 TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey;
@@ -68,3 +69,4 @@ TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerName(void);
  that it is accessed. The following method allows this cache to be reset to a blank 
  state to allow a new file to be loaded next time an operation is performed. */
 TEXTUAL_EXTERN void TLOLicenseManagerResetLicenseDictionaryCache(void);
+#endif

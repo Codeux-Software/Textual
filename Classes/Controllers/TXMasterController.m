@@ -38,7 +38,9 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import "TLOLicenseManager.h"
+#endif
 
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
@@ -131,7 +133,9 @@
 	[self performBlockOnGlobalQueue:^{
 		[TPCResourceManager copyResourcesToCustomAddonsFolder];
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 		TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog();
+#endif
 	}];
 
 	[self prepareThirdPartyServices];
