@@ -219,6 +219,10 @@
 		#import <Sparkle/Sparkle.h>
 	#endif
 
+	#ifndef TEXTUAL_BUILT_WITH_LICENSE_MANAGER
+		#define TEXTUAL_BUILT_WITH_LICENSE_MANAGER 0
+	#endif
+
 	/* Protocol defenitions. (see file) */
 	#import "TDCSharedProtocolDefinitions.h"
 

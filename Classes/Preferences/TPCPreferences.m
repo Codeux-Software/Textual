@@ -909,6 +909,12 @@ static NSMutableArray *excludeKeywords = nil;
 	}
 #endif
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[RZUserDefaults() setBool:YES forKey:@"System -> Built with License Manager Backend"];
+#else
+	[RZUserDefaults() setBool:NO forKey:@"System -> Built with License Manager Backend"];
+#endif
+
 #ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
 	[RZUserDefaults() setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #else
