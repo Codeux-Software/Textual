@@ -49,7 +49,7 @@ TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 
-TEXTUAL_EXTERN void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog(void);
+TEXTUAL_EXTERN void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(void); // Alias for TLOLicenseManagerVerifyLicenseSignatureFromFile
 TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(void);

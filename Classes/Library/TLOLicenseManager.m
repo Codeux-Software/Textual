@@ -356,9 +356,9 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
 	}
 }
 
-void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog(void)
+void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
 {
-	/* TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog() is expected
+	/* TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog() is expected
 	 to be called from the global queue to avoid overhead of hashing the
 	 public key file, which means we have to present dialog on main thread. */
 	BOOL publicKeyIsGenuine = TLOLicenseManagerPublicKeyIsGenuine();
