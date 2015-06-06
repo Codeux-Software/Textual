@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TLOLicenseManager.h"
+
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
@@ -128,6 +130,8 @@
 
 	[self performBlockOnGlobalQueue:^{
 		[TPCResourceManager copyResourcesToCustomAddonsFolder];
+
+		TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog();
 	}];
 
 	[self prepareThirdPartyServices];

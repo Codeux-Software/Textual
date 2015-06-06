@@ -353,6 +353,29 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
 	}
 }
 
+void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog(void)
+{
+	/* TLOLicenseManagerMaybeDisplayPublicKeyIsGenuinDialog() is expected
+	 to be called from the global queue to avoid overhead of hashing the
+	 public key file, which means we have to present dialog on main thread. */
+	BOOL publicKeyIsGenuine = TLOLicenseManagerPublicKeyIsGenuine();
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		if (publicKeyIsGenuine) {
+			BOOL userAction = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1274][2]")
+																 title:TXTLS(@"BasicLanguage[1274][1]")
+														 defaultButton:TXTLS(@"BasicLanguage[1186]")
+													   alternateButton:TXTLS(@"BasicLanguage[1274][3]")
+														suppressionKey:@"license_manager_public_key_is_not_genuine"
+													   suppressionText:nil];
+
+			if (userAction == NO) { // NO = secondary button ("View Source Code")
+				[TLOpenLink openWithString:@"https://github.com/Codeux-Software/Textual"];
+			}
+		}
+	});
+}
+
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 {
 	if (PointerIsEmpty(TLOLicenseManagerPublicKey) == NO) {
