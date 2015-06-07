@@ -47,6 +47,8 @@ TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatu
 
 TEXTUAL_EXTERN void TLOLicenseManagerSetup(void);
 
+TEXTUAL_EXTERN BOOL TLOLicenseManagerIsTrialMode(void);
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
