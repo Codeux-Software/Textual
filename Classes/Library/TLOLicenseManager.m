@@ -72,7 +72,7 @@
 #pragma mark Private Implementation
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-static SecKeyRef TLOLicenseManagerPublicKey;
+static SecKeyRef TLOLicenseManagerPublicKey = NULL;
 static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
@@ -89,6 +89,7 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
+void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -102,6 +103,20 @@ NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 #pragma mark Implementation
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+void TLOLicenseManagerSetup(void)
+{
+	static BOOL _setupComplete = NO;
+
+	if (_setupComplete == NO) {
+		_setupComplete = YES;
+
+		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
+			(void)TLOLicenseManagerPopulatePublicKeyRef();
+			
+			TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog();
+		});
+	}
+}
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
 {
 	if (licenseDictionary == nil) {
@@ -150,7 +165,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary)
 {
 	/* Attempt to populate public key information. */
-	if (TLOLicenseManagerPopulatePublicKeyRef() == NO) {
+	if (TLOLicenseManagerPublicKey == NULL) {
 		return NO;
 	}
 
