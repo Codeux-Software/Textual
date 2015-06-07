@@ -38,12 +38,12 @@
 #import "TextualApplication.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey;
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey;
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey;
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey;
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
-TEXTUAL_EXTERN NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
+TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
 

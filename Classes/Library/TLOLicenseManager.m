@@ -76,7 +76,7 @@ static SecKeyRef TLOLicenseManagerPublicKey;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
 
-NSString const * TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e6732fb37029406a57024517b10ec794aaa88dac82087624";
+NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e6732fb37029406a57024517b10ec794aaa88dac82087624";
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 NSData *TLOLicenseManagerUserLicenseFileContents(void);
@@ -86,12 +86,12 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
 
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
-NSString const * TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
 #endif
 
 #pragma mark -
