@@ -110,9 +110,9 @@ void TLOLicenseManagerSetup(void)
 	if (_setupComplete == NO) {
 		_setupComplete = YES;
 
+		(void)TLOLicenseManagerPopulatePublicKeyRef();
+
 		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
-			(void)TLOLicenseManagerPopulatePublicKeyRef();
-			
 			TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog();
 		});
 	}

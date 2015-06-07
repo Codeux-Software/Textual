@@ -132,11 +132,11 @@
 
 	[self performBlockOnGlobalQueue:^{
 		[TPCResourceManager copyResourcesToCustomAddonsFolder];
+	}];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-		TLOLicenseManagerSetup();
+	TLOLicenseManagerSetup();
 #endif
-	}];
 
 	[self prepareThirdPartyServices];
 	
