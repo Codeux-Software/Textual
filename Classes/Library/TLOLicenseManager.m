@@ -117,6 +117,21 @@ void TLOLicenseManagerSetup(void)
 		});
 	}
 }
+
+BOOL TLOLicenseManagerIsTrialMode(void)
+{
+	/* "trial" mode is designed to last forever. Instead of locking the user out after X days,
+	 we instead just limit access to certain features. */
+
+	if (TLOLicenseManagerPublicKeyIsGenuineResult == NO) {
+		return YES;
+	} else if (TLOLicenseManagerUserLicenseFileExists() == NO) {
+		return YES;
+	} else {
+		return (TLOLicenseManagerVerifyLicenseSignature() == NO);
+	}
+}
+
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
 {
 	if (licenseDictionary == nil) {
