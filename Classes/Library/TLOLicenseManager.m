@@ -73,6 +73,7 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 static SecKeyRef TLOLicenseManagerPublicKey;
+static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
 
@@ -379,10 +380,12 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
 	NSString *actualPublicKeyHash = [publicKeyContents sha256];
 
 	if (NSObjectsAreEqual(TLOLicenseManagerHashOfGenuinePublicKey, actualPublicKeyHash)) {
-		return YES;
+		TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 	} else {
-		return NO;
+		TLOLicenseManagerPublicKeyIsGenuineResult = NO;
 	}
+
+	return TLOLicenseManagerPublicKeyIsGenuineResult;
 }
 
 void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
