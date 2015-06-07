@@ -45,11 +45,11 @@ TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerCo
 TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey;
 TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey;
 
+TEXTUAL_EXTERN void TLOLicenseManagerSetup(void);
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
-
-TEXTUAL_EXTERN void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignature(void); // Alias for TLOLicenseManagerVerifyLicenseSignatureFromFile
 TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(void);
