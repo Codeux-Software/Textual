@@ -78,6 +78,8 @@ static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
 
 NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e6732fb37029406a57024517b10ec794aaa88dac82087624";
 
+NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
+
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 NSData *TLOLicenseManagerUserLicenseFileContents(void);
 NSData *TLOLicenseManagerPublicKeyContents(void);
@@ -85,6 +87,7 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
+BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -98,6 +101,32 @@ NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"li
 #pragma mark Implementation
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
+{
+	if (licenseDictionary == nil) {
+		return NO;
+	}
+
+	if ([licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey] == nil ||
+		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey] == nil ||
+		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey] == nil)
+	{
+		return NO;
+	}
+
+	NSString *licenseKey = [licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
+
+	if (licenseKey == nil) {
+		return NO;
+	}
+
+	if ([XRRegularExpression string:licenseKey isMatchedByRegex:TLOLicenseManagerLicenseKeyRegularExpression withoutCase:YES] == NO) {
+		return NO;
+	}
+
+	return YES;
+}
+
 BOOL TLOLicenseManagerVerifyLicenseSignature(void)
 {
 	return TLOLicenseManagerVerifyLicenseSignatureFromFile();
@@ -125,7 +154,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	}
 
 	/* Perform basic validation */
-	if (licenseDictionary == nil) {
+	if (TLOLicenseManagerLicenseDictionaryIsValid(licenseDictionary) == NO) {
 		LogToConsole(@"Reading license dictionary failed. Returned nil result.");
 
 		return NO;
