@@ -682,21 +682,19 @@
 + (NSString *)operatingSystemName
 {
 	NSString *productVersion = [XRSystemInformation systemStandardVersion];
-	
-	if ([productVersion hasPrefix:@"10.7"]) {
-		return TPILocalizedString(@"BasicLanguage[1015]");
-	}
-	
-	if ([productVersion hasPrefix:@"10.8"]) {
-		return TPILocalizedString(@"BasicLanguage[1016]");
-	}
 
-	if ([productVersion hasPrefix:@"10.9"]) {
-		return TPILocalizedString(@"BasicLanguage[1017]");
-	}
-
-	if ([productVersion hasPrefix:@"10.10"]) {
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		return TPILocalizedString(@"BasicLanguage[1053]");
+	} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		return TPILocalizedString(@"BasicLanguage[1052]");
+	} else if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		return TPILocalizedString(@"BasicLanguage[1017]");
+	} else if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
+		return TPILocalizedString(@"BasicLanguage[1016]");
+	} else if ([XRSystemInformation isUsingOSXLionOrLater]) {
+		return TPILocalizedString(@"BasicLanguage[1015]");
+	} else {
+		return TPILocalizedString(@"BasicLanguage[1054]");
 	}
 	
 	return nil;

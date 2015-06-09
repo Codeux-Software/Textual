@@ -57,6 +57,8 @@
 "BasicLanguage[1016]" = "Mountain Lion";
 "BasicLanguage[1017]" = "Mavericks";
 "BasicLanguage[1052]" = "Yosemite";
+"BasicLanguage[1053]" = "El Capitan";
+"BasicLanguage[1054]" = "Unknown Operating System Version";
 
 "BasicLanguage[1018]" = "%.2f GHz";
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
