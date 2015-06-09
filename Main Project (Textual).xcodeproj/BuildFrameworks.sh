@@ -2,6 +2,8 @@
 
 BUILD_DESTINATION_FOLDER="${PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks"
 
+rm -rf "${BUILD_DESTINATION_FOLDER}"
+
 mkdir -p "${BUILD_DESTINATION_FOLDER}"
 
 cd "${PROJECT_DIR}/Frameworks/Auto Hyperlinks/"
