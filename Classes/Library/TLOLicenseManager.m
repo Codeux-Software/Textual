@@ -90,6 +90,8 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
 void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
+BOOL TLOLicenseManagerGenerateNewKeyPair(void);
+CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPublicKey);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -486,9 +488,96 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 
 		return YES;
 	} else {
-		LogToConsole(@"SecItemImport() failed to import public key with status codeL %i", operationStatus);
+		LogToConsole(@"SecItemImport() failed to import public key with status code: %i", operationStatus);
 
 		return NO;
+	}
+}
+
+BOOL TLOLicenseManagerGenerateNewKeyPair(void)
+{
+	const int _generatedKeyPairKeySize =		4096;
+
+	CFNumberRef keyBitSizeNum = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &_generatedKeyPairKeySize);
+
+	CFMutableDictionaryRef parameters = CFDictionaryCreateMutable(kCFAllocatorDefault,
+																  0,
+																  &kCFTypeDictionaryKeyCallBacks,
+																  &kCFTypeDictionaryValueCallBacks);
+
+	CFDictionarySetValue(parameters, kSecAttrKeyType, kSecAttrKeyTypeRSA);
+
+	CFDictionarySetValue(parameters, kSecAttrKeySizeInBits, keyBitSizeNum);
+
+	SecKeyRef publicKeyRef = NULL;
+	SecKeyRef privateKeyRef = NULL;
+
+	OSStatus operationStatus = SecKeyGeneratePair(parameters, &publicKeyRef, &privateKeyRef);
+
+	if (operationStatus == noErr) {
+		CFDataRef publicKeyData = TLOLicenseManagerExportContentsOfKeyRef(publicKeyRef, YES);
+		CFDataRef privateKeyData = TLOLicenseManagerExportContentsOfKeyRef(privateKeyRef, NO);
+
+		NSString *publicKeyString = [NSString stringWithData:(__bridge NSData *)(publicKeyData) encoding:NSASCIIStringEncoding];
+		NSString *privateKeyString = [NSString stringWithData:(__bridge NSData *)(privateKeyData) encoding:NSASCIIStringEncoding];
+
+		// Insert breakpoint here...
+
+#pragma unused(publicKeyString)
+#pragma unused(privateKeyString)
+
+		return YES;
+	} else {
+		LogToConsole(@"SecKeyGeneratePair() failed to generate key pair with status code: %i", operationStatus);
+
+		return NO;
+	}
+}
+
+CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPublicKey)
+{
+	if (theKeyRef == NULL) {
+		return NULL;
+	}
+
+	SecItemImportExportKeyParameters exportParameters;
+
+	exportParameters.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
+	exportParameters.flags = 0;
+
+	exportParameters.passphrase = NULL;
+	exportParameters.alertTitle = NULL;
+	exportParameters.alertPrompt = NULL;
+	exportParameters.accessRef = NULL;
+
+	CFMutableArrayRef keyUsage = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+
+	if (isPublicKey) {
+		CFArrayAppendValue(keyUsage, kSecAttrCanDecrypt);
+		CFArrayAppendValue(keyUsage, kSecAttrCanVerify);
+	} else {
+		CFArrayAppendValue(keyUsage, kSecAttrCanSign);
+	}
+
+	CFMutableArrayRef keyAttributes = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+
+	exportParameters.keyUsage = keyUsage;
+	exportParameters.keyAttributes = keyAttributes;
+
+	SecExternalFormat externalFormat = kSecFormatPEMSequence;
+
+	int flags = 0;
+
+	CFDataRef pkdata = NULL;
+
+	OSStatus operationStatus = SecItemExport(theKeyRef, externalFormat,flags, &exportParameters, &pkdata);
+
+	if (operationStatus == noErr) {
+		return pkdata;
+	} else {
+		LogToConsole(@"SecItemExport() failed to export key contents with status code: %i", operationStatus);
+
+		return NULL;
 	}
 }
 
@@ -522,7 +611,8 @@ NSString *TLOLicenseManagerLicenseKey(void)
 		return nil;
 	} else {
 		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
-	}}
+	}
+}
 
 NSString *TLOLicenseManagerLicenseActivationToken(void)
 {
