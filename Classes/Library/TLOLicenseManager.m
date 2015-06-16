@@ -289,6 +289,27 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 	return [NSURL fileURLWithPath:dest isDirectory:NO];
 }
 
+BOOL TLOLicenseManagerDeleteUserLicenseFile(void)
+{
+	if (TLOLicenseManagerUserLicenseFileExists() == NO) {
+		return NO;
+	} else {
+		NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
+
+		NSError *deleteError = nil;
+
+		if ([RZFileManager() removeItemAtURL:licenseFilePath error:&deleteError] == NO) {
+			LogToConsole(@"Failed to delete user license file with error: %@", [deleteError localizedDescription]);
+
+			return NO;
+		} else {
+			TLOLicenseManagerResetLicenseDictionaryCache(); // Flush existing cache...
+
+			return YES;
+		}
+	}
+}
+
 BOOL TLOLicenseManagerUserLicenseFileExists(void)
 {
 	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
