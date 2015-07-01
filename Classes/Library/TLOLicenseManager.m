@@ -81,7 +81,6 @@ NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e67
 
 NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
 
-NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 NSData *TLOLicenseManagerUserLicenseFileContents(void);
 NSData *TLOLicenseManagerPublicKeyContents(void);
 BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
@@ -291,11 +290,14 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 
 BOOL TLOLicenseManagerDeleteUserLicenseFile(void)
 {
-	if (TLOLicenseManagerUserLicenseFileExists() == NO) {
-		return NO;
-	} else {
-		NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
+	return TLOLicenseManagerUserLicenseWriteFileContents(nil);
+}
 
+BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
+{
+	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
+
+	if (TLOLicenseManagerUserLicenseFileExists()) {
 		NSError *deleteError = nil;
 
 		if ([RZFileManager() removeItemAtURL:licenseFilePath error:&deleteError] == NO) {
@@ -304,9 +306,21 @@ BOOL TLOLicenseManagerDeleteUserLicenseFile(void)
 			return NO;
 		} else {
 			TLOLicenseManagerResetLicenseDictionaryCache(); // Flush existing cache...
-
-			return YES;
 		}
+	}
+
+	if (newContents == nil) {
+		return YES;
+	}
+
+	NSError *writeFileError = nil;
+
+	if ([newContents writeToURL:licenseFilePath options:NSDataWritingAtomic error:&writeFileError] == NO) {
+		LogToConsole(@"Failed to write user license file with error: %@", [writeFileError localizedDescription]);
+
+		return NO;
+	} else {
+		return YES;
 	}
 }
 
