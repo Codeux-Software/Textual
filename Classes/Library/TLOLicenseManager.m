@@ -77,7 +77,7 @@ static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
 static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
 
-NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"a6970e52865bc004e6732fb37029406a57024517b10ec794aaa88dac82087624";
+NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"8acb7d1af60c5f366ce2303c65fb095482da915c556be5665665fafaa7d9f785";
 
 NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
 
@@ -463,7 +463,7 @@ void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
 	BOOL publicKeyIsGenuine = TLOLicenseManagerPublicKeyIsGenuine();
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		if (publicKeyIsGenuine) {
+		if (publicKeyIsGenuine == NO) {
 			BOOL userAction = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1274][2]")
 																 title:TXTLS(@"BasicLanguage[1274][1]")
 														 defaultButton:TXTLS(@"BasicLanguage[1186]")
