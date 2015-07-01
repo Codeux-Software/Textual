@@ -49,6 +49,8 @@ TEXTUAL_EXTERN void TLOLicenseManagerSetup(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerIsTrialMode(void);
 
+TEXTUAL_EXTERN NSURL *TLOLicenseManagerUserLicenseFilePath(void);
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseFileExists(void);
 TEXTUAL_EXTERN BOOL TLOLicenseManagerDeleteUserLicenseFile(void);
 
@@ -62,6 +64,7 @@ TEXTUAL_EXTERN BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *lice
 TEXTUAL_EXTERN NSDictionary *TLOLicenseManagerLicenseDictionary(void);
 
 TEXTUAL_EXTERN NSData *TLOLicenseManagerUserLicenseFileContents(void);
+TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents);
 
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseActivationToken(void);
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseKey(void);
