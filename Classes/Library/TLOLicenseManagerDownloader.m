@@ -41,8 +41,8 @@
 
 typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 	TLOLicenseManagerDownloaderRequestActivationType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithoutType,
+	TLOLicenseManagerDownloaderRequestDeactivationWithTokenType,
+	TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
 	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
 } TLOLicenseManagerDownloaderRequestType;
@@ -68,12 +68,17 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusSuccess = 200; /
 NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 503; // Service Unavailable
 
 /* Private header */
-@interface TLOLicenseManagerDownloader ()
+@interface TLOLicenseManagerDownloaderConnection : NSObject <NSURLConnectionDelegate>
 @property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType;
 @property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
 @property (nonatomic, copy) NSString *requestLicenseKey;
 @property (nonatomic, copy) NSString *requestContextInfo; // Additional, optional info such as activation token
+@property (nonatomic, strong) NSMutableData *responseData;
+@property (nonatomic, strong) NSURLConnection *requestConnection;
+@property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
 @end
+
+#define _connectionTimeoutInterval			30.9
 
 @implementation TLOLicenseManagerDownloader
 
@@ -103,6 +108,185 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 - (void)convertMacAppStorePurcahse:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
 {
 
+}
+
+@end
+
+#pragma mark -
+#pragma mark Connection Assistant
+
+@implementation TLOLicenseManagerDownloaderConnection
+
+- (NSURL *)requestURL
+{
+	NSString *requestURLString = nil;
+
+	switch (self.requestType) {
+		case TLOLicenseManagerDownloaderRequestActivationType:
+		{
+			requestURLString = TLOLicenseManagerDownloaderLicenseAPIActivationURL;
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestDeactivationWithTokenType:
+		{
+			requestURLString = TLOLicenseManagerDownloaderLicenseAPIDeactivationWithTokenURL;
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType:
+		{
+			requestURLString = TLOLicenseManagerDownloaderLicenseAPIDeactivationWithoutTokenURL;
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestSendLostLicenseType:
+		{
+			requestURLString = TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL;
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestConvertMASReceiptType:
+		{
+			requestURLString = TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL;
+
+			break;
+		}
+	}
+
+	if (requestURLString) {
+		return [NSURL URLWithString:requestURLString];
+	} else {
+		return nil;
+	}
+}
+
+- (BOOL)populateRequestPostData:(NSMutableURLRequest *)connectionRequest
+{
+	/* Post paramater(s) defined by this method are subjec to change at
+	 any time because obviously, the license API is not public interface */
+
+	/* Perform basic validation on our host object. */
+	if (connectionRequest == nil) {
+		return NO; // Cancel operation...
+	}
+
+	NSString *encodedLicenseKey = nil;
+
+	NSString *encodedContextInfo = nil;
+
+	if (self.requestType == TLOLicenseManagerDownloaderRequestActivationType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType)
+	{
+		if (NSObjectIsEmpty(self.requestLicenseKey)) {
+			return NO; // Cancel operation...
+		} else {
+			encodedLicenseKey = [self.requestLicenseKey encodeURIComponent];
+		}
+	}
+
+	if (self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
+ 		self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType)
+	{
+		if (NSObjectIsEmpty(self.requestContextInfo)) {
+			return NO; // Cancel operation...
+		} else {
+			encodedContextInfo = [self.requestContextInfo encodeURIComponent];
+		}
+	}
+
+	/* Post data is sent as form values with key/value pairs. */
+	NSString *requestBodyString = nil;
+
+	switch (self.requestType) {
+		case TLOLicenseManagerDownloaderRequestActivationType:
+		{
+			requestBodyString = [NSString stringWithFormat:@"l=%@", encodedLicenseKey];
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestDeactivationWithTokenType:
+		{
+			requestBodyString = [NSString stringWithFormat:@"l=%@&a_t=%@", encodedLicenseKey, encodedContextInfo];
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType:
+		{
+			requestBodyString = [NSString stringWithFormat:@"l=%@", encodedLicenseKey];
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestSendLostLicenseType:
+		{
+			requestBodyString = [NSString stringWithFormat:@"lo=%@", encodedContextInfo];
+
+			break;
+		}
+		case TLOLicenseManagerDownloaderRequestConvertMASReceiptType:
+		{
+			// Not defined, yet...
+
+			break;
+		}
+	}
+
+	if (requestBodyString) {
+		NSData *requestBodyData = [requestBodyString dataUsingEncoding:NSASCIIStringEncoding];
+
+		[connectionRequest setHTTPMethod:@"POST"];
+
+		[connectionRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+
+		[connectionRequest setHTTPBody:requestBodyData];
+
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
+- (void)destroyConnectionRequest
+{
+	if ( self.requestConnection) {
+		[self.requestConnection cancel];
+	}
+
+	self.requestConnection = nil;
+	self.requestResponse = nil;
+
+	self.responseData = nil;
+}
+
+- (BOOL)setupConnectionRequest
+{
+	/* Destroy any cached data that may be defined. */
+	[self destroyConnectionRequest];
+
+	/* Setup request including HTTP POST data. Return NO on failure. */
+	NSURL *requestURL = [self requestURL];
+
+	if (requestURL == nil) {
+		return NO;
+	}
+
+	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:requestURL
+															   cachePolicy:NSURLRequestReloadIgnoringCacheData
+														   timeoutInterval:_connectionTimeoutInterval];
+
+	if ([self populateRequestPostData:baseRequest] == NO) {
+		return NO;
+	}
+
+	/* Create the connection and start it. */
+	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
+
+	[self.requestConnection start];
+
+	/* Return a successful result */
+	return YES;
 }
 
 @end
