@@ -678,7 +678,7 @@
 "BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat.";
 "BasicLanguage[1254][12]" = "Off-the-Record Messaging: Received a general error from the Off-the-Record Messaging library.";
 "BasicLanguage[1254][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
-"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized ";
+"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized";
 "BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
 "BasicLanguage[1263]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not in session.";
@@ -701,18 +701,22 @@
 
 
 /* License Manager */
-"BasicLanguage[1274][1]" = "This copy of Textual is not genuine";
-"BasicLanguage[1274][2]" = "It appears that you may be using a copy of Textual that is not genuine.\n\nTextual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available. ";
+"BasicLanguage[1274][1]" = "It appears that you may be using a copy of Textual that is not genuine.";
+"BasicLanguage[1274][2]" = "Textual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available.";
 "BasicLanguage[1274][3]" = "View Source Code";
 
+"BasicLanguage[1275][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
+"BasicLanguage[1275][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
+"BasicLanguage[1275][3]" = "Contact Support";
+
+"BasicLanguage[1276][1]" = "The following error was returned while processing request:";
+"BasicLanguage[1276][2]" = "%@"; // Blank but can filled in at a later time...
 
 
 
 
 
 
-
-
-/* Next unusued key: 1275 */
+/* Next unusued key: 1277 */
 
 

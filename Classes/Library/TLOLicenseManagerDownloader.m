@@ -39,28 +39,12 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 
-typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
-	TLOLicenseManagerDownloaderRequestActivationType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithTokenType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType,
-	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
-	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
-} TLOLicenseManagerDownloaderRequestType;
-
 /* URLs for performing certain actions with license keys. */
-NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"http://www.codeux.com/textual/private/fastspring/license-api/activateLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIDeactivationWithTokenURL			= @"http://www.codeux.com/textual/private/fastspring/license-api/deactivateLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIDeactivationWithoutTokenURL		= @"http://www.codeux.com/textual/private/fastspring/license-api/deactivateLicenseRequest.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"http://www.codeux.com/textual/private/fastspring/license-api/sendLostLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL				= @"http://www.codeux.com/textual/private/fastspring/license-api/convertReceiptToLicense.cs";
-
-/* The license API sets HTTP header status codes on failure, but it also populates the contents of the
- response body with plain text for specific error conditions. The following constants defines the exact
- plain text response for known API replies. These response bodies are only checked for if the API server
- returns a non-200 OK status code. */
-NSString * const TLOLicenseManagerDownloaderRequestResponseBodyGenericError					= @"-500-";
-NSString * const TLOLicenseManagerDownloaderRequestResponseBodyTryAgainLater				= @"-501-";
-NSString * const TLOLicenseManagerDownloaderRequestResponseBodyTooManyActivations			= @"-502-";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://www.codeux.com/textual/private/fastspring/license-api/activateLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIDeactivationWithTokenURL			= @"https://www.codeux.com/textual/private/fastspring/license-api/deactivateLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIDeactivationWithoutTokenURL		= @"https://www.codeux.com/textual/private/fastspring/license-api/deactivateLicenseRequest.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://www.codeux.com/textual/private/fastspring/license-api/sendLostLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL				= @"https://www.codeux.com/textual/private/fastspring/license-api/convertReceiptToLicense.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status code will inform
  Textual if it the license API has been overwhelmed. */
@@ -69,45 +53,141 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 
 /* Private header */
 @interface TLOLicenseManagerDownloaderConnection : NSObject <NSURLConnectionDelegate>
-@property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType;
-@property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
-@property (nonatomic, copy) NSString *requestLicenseKey;
-@property (nonatomic, copy) NSString *requestContextInfo; // Additional, optional info such as activation token
-@property (nonatomic, strong) NSMutableData *responseData;
-@property (nonatomic, strong) NSURLConnection *requestConnection;
-@property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
+@property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType; // To be set by caller
+@property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock; // To be set by caller
+@property (nonatomic, copy) NSString *requestLicenseKey; // To be set by caller
+@property (nonatomic, copy) NSString *requestContextInfo; // Additional, optional info such as activation token to be set by caller
+@property (nonatomic, strong) NSMutableData *responseData; // Will be set by the object, readonly
+@property (nonatomic, strong) NSURLConnection *requestConnection; // Will be set by the object, readonly
+@property (nonatomic, strong) NSHTTPURLResponse *requestResponse; // Will be set by the object, readonly
+
+- (BOOL)setupConnectionRequest;
 @end
 
-#define _connectionTimeoutInterval			30.9
+@interface TLOLicenseManagerDownloader ()
+@property (nonatomic, strong) TLOLicenseManagerDownloaderConnection *activeConnection;
+@end
+
+#define _connectionTimeoutInterval			30.0
 
 @implementation TLOLicenseManagerDownloader
 
 #pragma mark -
 #pragma mark Public Interface
 
-- (void)activateLicense:(NSString *)licenseKey completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
+- (void)activateLicense:(NSString *)licenseKey
+{
+	if (PointerIsEmpty(self.activeConnection) == NO) {
+		return; // An action is already active...
+	}
+
+	/* Setup connection object for activating a license key. */
+	TLOLicenseManagerDownloaderConnection *connectionObject = [TLOLicenseManagerDownloaderConnection new];
+
+	[connectionObject setRequestLicenseKey:licenseKey];
+
+	[connectionObject setRequestType:TLOLicenseManagerDownloaderRequestActivationType];
+
+	[connectionObject setCompletionBlock:^(id sender, TLOLicenseManagerDownloaderRequestType requestType, TLOLicenseManagerDownloaderResult requestResult, NSData *requestContents) {
+		__weak TLOLicenseManagerDownloader *weakSelf = (id)self;
+
+		if (requestResult == TLOLicenseManagerDownloaderResultSuccessful) {
+			(void)TLOLicenseManagerUserLicenseWriteFileContents(requestContents);
+		} else if (requestResult == TLOLicenseManagerDownloaderResultGenericError) {
+			[weakSelf presentGenericErrorWithContents:requestContents];
+		} else if (requestResult == TLOLicenseManagerDownloaderResultNetworkError ||
+				   requestResult == TLOLicenseManagerDownloaderResultTryAgainLaterError)
+		{
+			[weakSelf presentFatalNetworkErrorDialog];
+		}
+
+		if ([weakSelf completionBlock]) {
+			[weakSelf completionBlock](self, requestType, requestResult, requestContents);
+		}
+
+		[weakSelf setActiveConnection:nil];
+	}];
+
+	[self setActiveConnection:connectionObject];
+
+	(void)[connectionObject setupConnectionRequest];
+}
+
+- (void)deactivateLicense:(NSString *)licenseKey withActivationToken:(NSString *)activationToken
 {
 
 }
 
-- (void)deactivateLicense:(NSString *)licenseKey withActivationToken:(NSString *)activationToken completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
+- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey
 {
 
 }
 
-- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
+- (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress
 {
 
 }
 
-- (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
+- (void)convertMacAppStorePurcahse
 {
 
 }
 
-- (void)convertMacAppStorePurcahse:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock
+- (void)presentGenericErrorWithContents:(NSData *)requestContents
 {
+	/* The license API returns content as property lists, including errors. This method
+	 will try to convert the returned contents into an NSDictionary (assuming its a valid
+	 property list). If that fails, then the method shows generic failure reason and
+	 logs to the console that the contents could not parsed. */
 
+	if (NSObjectIsEmpty(requestContents) == NO) {
+		NSError *readError = nil;
+
+		id propertyList = [NSPropertyListSerialization propertyListWithData:requestContents
+																	options:NSPropertyListImmutable
+																	 format:NULL
+																	  error:&readError];
+
+		if (propertyList == nil || [propertyList isKindOfClass:[NSDictionary class]] == NO) {
+			if (readError) {
+				LogToConsole(@"Failed to convert contents of request into dictionary. Error: %@", [readError localizedDescription]);
+			}
+		} else {
+			NSString *errorMessage = [propertyList objectForKey:@"Error Message"];
+
+			if (NSObjectIsEmpty(errorMessage) == NO) {
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1276][2]", errorMessage)
+														 title:TXTLS(@"BasicLanguage[1276][1]")
+												 defaultButton:TXTLS(@"BasicLanguage[1186]")
+											   alternateButton:nil
+												suppressionKey:nil
+											   suppressionText:nil];
+
+				return; // Cancel further action...
+			}
+		}
+	}
+
+	[self presentFatalNetworkErrorDialog];
+}
+
+- (void)presentFatalNetworkErrorDialog
+{
+	BOOL userResponse = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1275][2]")
+														   title:TXTLS(@"BasicLanguage[1275][1]")
+												   defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 alternateButton:TXTLS(@"BasicLanguage[1275][3]")
+												  suppressionKey:nil
+												 suppressionText:nil];
+
+	if (userResponse == NO) { // NO = alternate button
+		[self contactSupport];
+	}
+}
+
+- (void)contactSupport
+{
+	[TLOpenLink openWithString:@"mailto:support@codeux.com"];
 }
 
 @end
@@ -179,22 +259,14 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
 		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType)
 	{
-		if (NSObjectIsEmpty(self.requestLicenseKey)) {
-			return NO; // Cancel operation...
-		} else {
-			encodedLicenseKey = [self.requestLicenseKey encodeURIComponent];
-		}
+		encodedLicenseKey = [self.requestLicenseKey encodeURIComponent];
 	}
 
 	if (self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
  		self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType ||
 		self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType)
 	{
-		if (NSObjectIsEmpty(self.requestContextInfo)) {
-			return NO; // Cancel operation...
-		} else {
-			encodedContextInfo = [self.requestContextInfo encodeURIComponent];
-		}
+		encodedContextInfo = [self.requestContextInfo encodeURIComponent];
 	}
 
 	/* Post data is sent as form values with key/value pairs. */
@@ -262,6 +334,25 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 
 - (BOOL)setupConnectionRequest
 {
+	/* Validate object configuration */
+	if (self.requestType == TLOLicenseManagerDownloaderRequestActivationType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType)
+	{
+		if (NSObjectIsEmpty(self.requestLicenseKey)) {
+			return NO; // Cancel operation...
+		}
+	}
+
+	if (self.requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType ||
+		self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType)
+	{
+		if (NSObjectIsEmpty(self.requestContextInfo)) {
+			return NO; // Cancel operation...
+		}
+	}
+
 	/* Destroy any cached data that may be defined. */
 	[self destroyConnectionRequest];
 
@@ -281,12 +372,65 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 	}
 
 	/* Create the connection and start it. */
+	self.responseData = [NSMutableData data];
+
 	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
 	[self.requestConnection start];
 
 	/* Return a successful result */
 	return YES;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+	NSInteger statusCode = [self.requestResponse statusCode];
+
+	NSData *responseDataCopy = [self.responseData copy];
+
+	TLOLicenseManagerDownloaderResult resultType = 0;
+
+	if (statusCode == TLOLicenseManagerDownloaderRequestResponseStatusSuccess) {
+		resultType = TLOLicenseManagerDownloaderResultSuccessful;
+	} else if (statusCode == TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater) {
+		LogToConsole(@"License API is currently overloaded and cannot accept requests at this time.");
+
+		resultType = TLOLicenseManagerDownloaderResultTryAgainLaterError;
+	} else {
+		resultType = TLOLicenseManagerDownloaderResultGenericError;
+	}
+
+	[self destroyConnectionRequest];
+
+	if (self.completionBlock) {
+		self.completionBlock(self, self.requestType, resultType, responseDataCopy);
+	}
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+	[self destroyConnectionRequest]; // Destroy the existing request.
+
+	LogToConsole(@"Failed to complete connection request with error: %@", [error localizedDescription]);
+
+	if (self.completionBlock) {
+		self.completionBlock(self, self.requestType, TLOLicenseManagerDownloaderResultNetworkError, nil);
+	}
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+	[self.responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+	self.requestResponse = (id)response;
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+{
+	return nil;
 }
 
 @end

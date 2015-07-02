@@ -40,28 +40,36 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import "TLOLicenseManager.h"
 
-/* TLOLicenseManagerDownloader is not only responsible for communicating with the
- license API hosted at www.codeux.com, it also presents error dialogs for the end
- user on failure. It also communicates with TLOLicenseManager so that for specific
- request types, the caller does not need to do so itself. The only thing the caller
- needs to know is when the request completes with an optional completion block. */
+/* By design, TLOLicenseManagerDownloader can only perform one action at a time.
+ Trying to perform an action while another is active will result in nothing. */
 
-typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL successfulResult);
+typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
+	TLOLicenseManagerDownloaderRequestActivationType,
+	TLOLicenseManagerDownloaderRequestDeactivationWithTokenType,
+	TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType,
+	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
+	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
+} TLOLicenseManagerDownloaderRequestType;
+
+typedef enum TLOLicenseManagerDownloaderResult : NSInteger {
+	TLOLicenseManagerDownloaderResultSuccessful			= 10,
+	TLOLicenseManagerDownloaderResultNetworkError,
+	TLOLicenseManagerDownloaderResultGenericError,
+	TLOLicenseManagerDownloaderResultTryAgainLaterError
+} TLOLicenseManagerDownloaderResult;
+
+typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(id sender, TLOLicenseManagerDownloaderRequestType requestType, TLOLicenseManagerDownloaderResult requestResult, NSData *requestContents);
 
 @interface TLOLicenseManagerDownloader : NSObject
-- (void)activateLicense:(NSString *)licenseKey
-		completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock;
+@property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
 
-- (void)deactivateLicense:(NSString *)licenseKey
-	  withActivationToken:(NSString *)activationToken
-		  completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock;
+- (void)activateLicense:(NSString *)licenseKey;
 
-- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey
-								completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock;
+- (void)deactivateLicense:(NSString *)licenseKey withActivationToken:(NSString *)activationToken;
+- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey;
 
-- (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress
-							   completionBlock:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock;
+- (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 
-- (void)convertMacAppStorePurcahse:(TLOLicenseManagerDownloaderCompletionBlock)completionBlock;
+- (void)convertMacAppStorePurcahse;
 @end
 #endif
