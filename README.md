@@ -16,7 +16,7 @@ Please be aware that while it is within your right to compile Textual, **we will
 
 ## Note Regarding Downloading Textual
 
-Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Download ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the follow of commands in Terminal:
+Textual is dependent on several other projects to build. This repository is automatically linked against these other projects using what are known as "submodules" — Clicking the "Download ZIP" button to build a copy of Textual will not download a copy of these projects that Textual depends on. Therefore, to properly build Textual, Textual must be cloned using [Github for Mac](https://mac.github.com/) or by using the following commands in Terminal:
 
 ```
 git clone https://github.com/Codeux-Software/Textual.git Textual
