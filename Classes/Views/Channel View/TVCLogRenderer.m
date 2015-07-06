@@ -181,7 +181,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	UniChar dest[length];
 	UniChar source[length];
 
-	CFStringGetCharacters((__bridge CFStringRef)_body, CFRangeMake(0, length), source);
+	for (NSInteger i = 0; i < length; i++) {
+		source[i] = [_body characterAtIndex:i];
+	}
 
 	for (NSInteger i = 0; i < length; i++) {
 		UniChar c = source[i];
