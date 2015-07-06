@@ -270,30 +270,33 @@ NSInteger const TLOLicenseManagerDownloaderRequestResponseStatusTryAgainLater = 
 	}
 
 	/* Post data is sent as form values with key/value pairs. */
+
+	NSString *currentUserLanguage = [[NSLocale currentLocale] localeIdentifier];
+
 	NSString *requestBodyString = nil;
 
 	switch (self.requestType) {
 		case TLOLicenseManagerDownloaderRequestActivationType:
 		{
-			requestBodyString = [NSString stringWithFormat:@"l=%@", encodedLicenseKey];
+			requestBodyString = [NSString stringWithFormat:@"l=%@&lang=%@", encodedLicenseKey, currentUserLanguage];
 
 			break;
 		}
 		case TLOLicenseManagerDownloaderRequestDeactivationWithTokenType:
 		{
-			requestBodyString = [NSString stringWithFormat:@"l=%@&a_t=%@", encodedLicenseKey, encodedContextInfo];
+			requestBodyString = [NSString stringWithFormat:@"l=%@&a_t=%@&lang=%@", encodedLicenseKey, encodedContextInfo, currentUserLanguage];
 
 			break;
 		}
 		case TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType:
 		{
-			requestBodyString = [NSString stringWithFormat:@"l=%@", encodedLicenseKey];
+			requestBodyString = [NSString stringWithFormat:@"l=%@&lang=%@", encodedLicenseKey, currentUserLanguage];
 
 			break;
 		}
 		case TLOLicenseManagerDownloaderRequestSendLostLicenseType:
 		{
-			requestBodyString = [NSString stringWithFormat:@"lo=%@", encodedContextInfo];
+			requestBodyString = [NSString stringWithFormat:@"lo=%@&lang=%@", encodedContextInfo, currentUserLanguage];
 
 			break;
 		}
