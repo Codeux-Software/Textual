@@ -709,7 +709,7 @@
 "BasicLanguage[1275][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
 "BasicLanguage[1275][3]" = "Contact Support";
 
-"BasicLanguage[1276][1]" = "The following error was returned while processing request:";
+"BasicLanguage[1276][1]" = "%@";
 "BasicLanguage[1276][2]" = "%@"; // Blank but can filled in at a later time...
 
 

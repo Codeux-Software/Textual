@@ -2496,6 +2496,15 @@
 			path = Black;
 			sourceTree = "<group>";
 		};
+		4C80A4E01B46BFD100F9891B /* License Manager */ = {
+			isa = PBXGroup;
+			children = (
+				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
+				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
+			);
+			name = "License Manager";
+			sourceTree = "<group>";
+		};
 		4C86B4A8181FB40A0043C544 /* Entitlements */ = {
 			isa = PBXGroup;
 			children = (
@@ -2783,6 +2792,7 @@
 		4C950BFD16D68DD700A93D8D /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				4C80A4E01B46BFD100F9891B /* License Manager */,
 				4C8AF5C7158E99520026668C /* Color Formatting */,
 				4C8AF5C9158E99520026668C /* External Libraries */,
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
@@ -2791,8 +2801,6 @@
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */,
-				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
-				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
 				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C8AF5E0158E99520026668C /* TLOpenLink.m */,
