@@ -65,8 +65,8 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(id sender, TLOLicense
 
 - (void)activateLicense:(NSString *)licenseKey;
 
-- (void)deactivateLicense:(NSString *)licenseKey withActivationToken:(NSString *)activationToken;
-- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey;
+- (void)deactivateLicense;
+- (void)requestLicenseDeactivationForLicenseKey:(NSString *)licenseKey;
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 

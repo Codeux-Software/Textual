@@ -75,22 +75,24 @@
 static SecKeyRef TLOLicenseManagerPublicKey = NULL;
 static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
-static NSDictionary *TLOLicenseManagerCachedLicenseDictionary;
+static NSDictionary *TLOLicenseManagerCachedLicenseDictionary = nil;
 
-NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"8acb7d1af60c5f366ce2303c65fb095482da915c556be5665665fafaa7d9f785";
+NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"28ba4e6e179fd849363f44876a89c61923665d95edba43ede369552f58cdb435";
 
 NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
 
-NSData *TLOLicenseManagerUserLicenseFileContents(void);
-NSData *TLOLicenseManagerPublicKeyContents(void);
-BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
-BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
-NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
-BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary);
-BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
-void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
+BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
+BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
+BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
+BOOL TLOLicenseManagerUserLicenseFileExists(void);
 CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPublicKey);
+NSData *TLOLicenseManagerPublicKeyContents(void);
+NSData *TLOLicenseManagerUserLicenseFileContents(void);
+NSDictionary *TLOLicenseManagerLicenseDictionary(void);
+NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
+NSURL *TLOLicenseManagerUserLicenseFilePath(void);
+void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
@@ -98,6 +100,8 @@ NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"license
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
+
+#define _includePublicKeyGenerator				0
 #endif
 
 #pragma mark -
@@ -121,15 +125,28 @@ void TLOLicenseManagerSetup(void)
 
 BOOL TLOLicenseManagerIsTrialMode(void)
 {
-	/* "trial" mode is designed to last forever. Instead of locking the user out after X days,
-	 we instead just limit access to certain features. */
+	/* "trial" mode is designed to last forever. Instead of locking the user 
+	 out after X days, we instead just limit access to certain features. */
 
 	if (TLOLicenseManagerPublicKeyIsGenuineResult == NO) {
 		return YES;
 	} else if (TLOLicenseManagerUserLicenseFileExists() == NO) {
 		return YES;
 	} else {
-		return (TLOLicenseManagerVerifyLicenseSignature() == NO);
+		return (TLOLicenseManagerLicenseDictionary() == nil);
+	}
+}
+
+BOOL TLOLicenseManagerLicenseKeyIsValid(NSString *licenseKey)
+{
+	if (NSObjectIsEmpty(licenseKey)) {
+		return NO;
+	}
+
+	if ([XRRegularExpression string:licenseKey isMatchedByRegex:TLOLicenseManagerLicenseKeyRegularExpression withoutCase:YES] == NO) {
+		return NO;
+	} else {
+		return YES;
 	}
 }
 
@@ -148,34 +165,11 @@ BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
 
 	NSString *licenseKey = [licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
 
-	if (licenseKey == nil) {
-		return NO;
-	}
-
-	if ([XRRegularExpression string:licenseKey isMatchedByRegex:TLOLicenseManagerLicenseKeyRegularExpression withoutCase:YES] == NO) {
+	if (TLOLicenseManagerLicenseKeyIsValid(licenseKey) == NO) {
 		return NO;
 	}
 
 	return YES;
-}
-
-BOOL TLOLicenseManagerVerifyLicenseSignature(void)
-{
-	return TLOLicenseManagerVerifyLicenseSignatureFromFile();
-}
-
-BOOL TLOLicenseManagerVerifyLicenseSignatureFromFile(void)
-{
-	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
-
-	return TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary);
-}
-
-BOOL TLOLicenseManagerVerifyLicenseSignatureWithData(NSData *licenseFileContents)
-{
-	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseFileContents);
-
-	return TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary);
 }
 
 BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *licenseDictionary)
@@ -297,6 +291,20 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 {
 	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
 
+	NSDictionary *licenseDictionary = nil;
+
+	if (newContents) {
+		NSDictionary *ls_licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(newContents);
+
+		if (TLOLicenseManagerVerifyLicenseSignatureWithDictionary(ls_licenseDictionary) == NO) {
+			LogToConsole(@"Verify for new license file contents failed");
+
+			return NO;
+		} else {
+			licenseDictionary = ls_licenseDictionary;
+		}
+	}
+
 	if (TLOLicenseManagerUserLicenseFileExists()) {
 		NSError *deleteError = nil;
 
@@ -304,12 +312,12 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 			LogToConsole(@"Failed to delete user license file with error: %@", [deleteError localizedDescription]);
 
 			return NO;
-		} else {
-			TLOLicenseManagerResetLicenseDictionaryCache(); // Flush existing cache...
 		}
 	}
 
 	if (newContents == nil) {
+		TLOLicenseManagerCachedLicenseDictionary = nil;
+
 		return YES;
 	}
 
@@ -320,6 +328,8 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 
 		return NO;
 	} else {
+		TLOLicenseManagerCachedLicenseDictionary = [licenseDictionary copy];
+
 		return YES;
 	}
 }
@@ -373,6 +383,12 @@ NSDictionary *TLOLicenseManagerLicenseDictionary(void)
 
 		NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
 
+		if (TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary) == NO) {
+			LogToConsole(@"Cannot load license dictionary because it did not pass validation");
+
+			return nil;
+		}
+
 		TLOLicenseManagerCachedLicenseDictionary = [licenseDictionary copy];
 	}
 
@@ -404,11 +420,6 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 			return licenseDictionary;
 		}
 	}
-}
-
-void TLOLicenseManagerResetLicenseDictionaryCache(void)
-{
-	TLOLicenseManagerCachedLicenseDictionary = nil;
 }
 
 NSData *TLOLicenseManagerPublicKeyContents(void)
@@ -472,7 +483,7 @@ void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
 													   suppressionText:nil];
 
 			if (userAction == NO) { // NO = secondary button ("View Source Code")
-				[TLOpenLink openWithString:@"https://github.com/Codeux-Software/Textual"];
+				[TLOpenLink openWithString:@"https://www.github.com/Codeux-Software/Textual"];
 			}
 		}
 	});
@@ -529,6 +540,7 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 	}
 }
 
+#if _includePublicKeyGenerator == 1
 BOOL TLOLicenseManagerGenerateNewKeyPair(void)
 {
 	const int _generatedKeyPairKeySize =		4096;
@@ -615,6 +627,7 @@ CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPu
 		return NULL;
 	}
 }
+#endif
 
 NSString *TLOLicenseManagerLicenseOwnerName(void)
 {

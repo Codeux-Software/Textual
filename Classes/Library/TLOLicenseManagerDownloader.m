@@ -100,12 +100,12 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 	}
 }
 
-- (void)deactivateLicense:(NSString *)licenseKey withActivationToken:(NSString *)activationToken
+- (void)deactivateLicense
 {
 
 }
 
-- (void)deactivateLicenseWithoutActivationToken:(NSString *)licenseKey
+- (void)requestLicenseDeactivationForLicenseKey:(NSString *)licenseKey
 {
 
 }
@@ -152,7 +152,8 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 				LogToConsole(@"Failed to convert contents of request into dictionary. Error: %@", [readError localizedDescription]);
 			}
 		} else {
-			BOOL isLicenseActivationEvent = (requestType == TLOLicenseManagerDownloaderRequestActivationType && requestResult == TLOLicenseManagerDownloaderResultSuccessful);
+			BOOL isLicenseActivationEvent		= (requestType == TLOLicenseManagerDownloaderRequestActivationType				&& requestResult == TLOLicenseManagerDownloaderResultSuccessful);
+			BOOL isLicenseDeactivationEvent		= (requestType == TLOLicenseManagerDownloaderRequestDeactivationWithTokenType	&& requestResult == TLOLicenseManagerDownloaderResultSuccessful);
 
 			id statusTitle = [propertyList objectForKey:@"Status Title"];
 			id statusMessage = [propertyList objectForKey:@"Status Message"];
