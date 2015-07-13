@@ -176,6 +176,34 @@
 
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
+/* License Manager */
+"TLOLicenseManager[1000][1]" = "It appears that you may be using a copy of Textual that is not genuine.";
+"TLOLicenseManager[1000][2]" = "Textual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available.";
+"TLOLicenseManager[1000][3]" = "View Source Code";
+
+"TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
+"TLOLicenseManager[1001][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
+"TLOLicenseManager[1001][3]" = "Contact Support";
+
+"TLOLicenseManager[1002][1]" = "The license key “%@“ cannot be activated because it has already been activated too many times.";
+"TLOLicenseManager[1002][2]" = "Contact support by clicking the button presented below for further assistance.";
+"TLOLicenseManager[1002][3]" = "Contact Support";
+
+"TLOLicenseManager[1003][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1003][2]" = "Improperly formatted e-mail address";
+
+"TLOLicenseManager[1007][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1007][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
+
+"TLOLicenseManager[1004][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1004][2]" = "Unknown or improperly formatted license key";
+
+"TLOLicenseManager[1005][1]" = "Successfully queued e-mail for %@";
+"TLOLicenseManager[1005][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing all license keys owned by this e-mail address.";
+
+"TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
+"TLOLicenseManager[1006][2]" = "All limitations of your unregistered copy of Textual have been lifted.";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
@@ -700,17 +728,9 @@
 
 
 
-/* License Manager */
-"BasicLanguage[1274][1]" = "It appears that you may be using a copy of Textual that is not genuine.";
-"BasicLanguage[1274][2]" = "Textual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available.";
-"BasicLanguage[1274][3]" = "View Source Code";
 
-"BasicLanguage[1275][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
-"BasicLanguage[1275][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
-"BasicLanguage[1275][3]" = "Contact Support";
 
-"BasicLanguage[1276][1]" = "%@";
-"BasicLanguage[1276][2]" = "%@"; // Blank but can filled in at a later time...
+
 
 
 
