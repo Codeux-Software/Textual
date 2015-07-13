@@ -40,25 +40,13 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import "TLOLicenseManager.h"
 
-/* By design, TLOLicenseManagerDownloader can only perform one action at a time.
- Trying to perform an action while another is active will result in nothing. */
-
 typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 	TLOLicenseManagerDownloaderRequestActivationType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithTokenType,
-	TLOLicenseManagerDownloaderRequestDeactivationWithoutTokenType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
 	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
 } TLOLicenseManagerDownloaderRequestType;
 
-typedef enum TLOLicenseManagerDownloaderResult : NSInteger {
-	TLOLicenseManagerDownloaderResultSuccessful			= 10,
-	TLOLicenseManagerDownloaderResultNetworkError,
-	TLOLicenseManagerDownloaderResultGenericError,
-	TLOLicenseManagerDownloaderResultTryAgainLaterError
-} TLOLicenseManagerDownloaderResult;
-
-typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(id sender, TLOLicenseManagerDownloaderRequestType requestType, TLOLicenseManagerDownloaderResult requestResult, NSData *requestContents);
+typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(void);
 
 @interface TLOLicenseManagerDownloader : NSObject
 @property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
@@ -66,7 +54,6 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(id sender, TLOLicense
 - (void)activateLicense:(NSString *)licenseKey;
 
 - (void)deactivateLicense;
-- (void)requestLicenseDeactivationForLicenseKey:(NSString *)licenseKey;
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 

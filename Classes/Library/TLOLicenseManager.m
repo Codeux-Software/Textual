@@ -94,9 +94,9 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
-NSString * const TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey		= @"licenseActivationToken";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
+NSString * const TLOLicenseManagerLicenseDictionaryLicenseProductNameKey			= @"licenseProductName";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerContactAddressKey	= @"licenseOwnerContactAddress";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseOwnerNameKey				= @"licenseOwnerName";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseSignatureKey				= @"licenseSignature";
@@ -156,7 +156,7 @@ BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
 		return NO;
 	}
 
-	if ([licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey] == nil ||
+	if ([licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseProductNameKey] == nil ||
 		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey] == nil ||
 		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey] == nil)
 	{
@@ -475,10 +475,10 @@ void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
 
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		if (publicKeyIsGenuine == NO) {
-			BOOL userAction = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1274][2]")
-																 title:TXTLS(@"BasicLanguage[1274][1]")
+			BOOL userAction = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1000][2]")
+																 title:TXTLS(@"TLOLicenseManager[1000][1]")
 														 defaultButton:TXTLS(@"BasicLanguage[1186]")
-													   alternateButton:TXTLS(@"BasicLanguage[1274][3]")
+													   alternateButton:TXTLS(@"TLOLicenseManager[1000][3]")
 														suppressionKey:@"license_manager_public_key_is_not_genuine"
 													   suppressionText:nil];
 
@@ -662,14 +662,15 @@ NSString *TLOLicenseManagerLicenseKey(void)
 	}
 }
 
-NSString *TLOLicenseManagerLicenseActivationToken(void)
+NSString *TLOLicenseManagerLicenseCreationDate(void)
 {
 	NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
 
 	if (licenseDictionary == nil) {
 		return nil;
 	} else {
-		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseActivationTokenKey];
+		return licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey];
 	}
 }
+
 #endif
