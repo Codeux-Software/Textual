@@ -151,6 +151,8 @@
 	IRCChannel *c = [mainWindow() selectedChannel];
 
 	switch (tag) {
+		case 102: // "Preferences…"
+		case 103: // "Manage license…"
 		case 2433: // "Sort Channel List"
 		case 32345: // "Mark Scrollback"
 		case 32346: // "Scrollback Marker"
@@ -2817,6 +2819,29 @@
 
 	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
+
+#pragma mark -
+#pragma mark License Manager
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)manageLicense:(id)sender
+{
+	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
+
+	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
+
+	[licensePanel setDelegate:self];
+
+	[licensePanel show];
+
+	[self addWindowToWindowList:licensePanel];
+}
+
+- (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
+{
+	[self removeWindowFromWindowList:@"TDCLicenseManagerDialog"];
+}
+#endif
 
 #pragma mark -
 #pragma mark Developer Tools
