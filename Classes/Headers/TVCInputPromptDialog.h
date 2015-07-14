@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-/* This diaog is not designed to be called directly. See
- TLOPopupPrompts.h for methods used to run such dialogs. */
-
 @interface TVCInputPromptDialog : NSWindowController
 - (void)alertWithMessageTitle:(NSString *)messageTitle
 				defaultButton:(NSString *)defaultButtonTitle
@@ -47,5 +44,4 @@
 			  informativeText:(NSString *)informativeText
 			 defaultUserInput:(NSString *)userInputText
 			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock;
-
 @end
