@@ -46,6 +46,8 @@
 	from one tag to another as they have none. They are simply
 	a unique way to identify a specific menu item.
 
+	102: "Preferences…"
+	103: "Manager license…"
 	2001: "Get Info (Whois)"
 	2002: "Private Message (Query)"
 	2005: "Invite To…"
@@ -139,7 +141,14 @@
 	990003: "Previous Highlight"
  */
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TDCLicenseManagerDialog.h"
+
+@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
+#else
 @interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+#endif
+
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, weak) IBOutlet NSMenu *navigationChannelList;
@@ -323,6 +332,10 @@
 
 - (IBAction)toggleMuteOnNotificationSounds:(id)sender;
 - (IBAction)toggleMuteOnAllNotifcations:(id)sender;
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (IBAction)manageLicense:(id)sender;
+#endif
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
