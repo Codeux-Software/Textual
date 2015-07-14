@@ -673,4 +673,36 @@ NSString *TLOLicenseManagerLicenseCreationDate(void)
 	}
 }
 
+NSString *TLOLicenseManagerLicenseCreationDateFormatted(void)
+{
+	NSString *creationDateString = TLOLicenseManagerLicenseCreationDate();
+
+	if (creationDateString == nil) {
+		return nil;
+	}
+
+	NSDateFormatter *dateFormatter = [NSDateFormatter new];
+
+	[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+
+	NSDate *creationDate = [dateFormatter dateFromString:creationDateString];
+
+	NSString *formattedCreationDate = nil;
+
+	if (creationDate == nil) {
+		formattedCreationDate = creationDateString;
+	} else {
+		[dateFormatter setDateFormat:nil];
+
+		[dateFormatter setDoesRelativeDateFormatting:YES];
+
+		[dateFormatter setDateStyle:NSDateFormatterLongStyle];
+		[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+
+		formattedCreationDate = [dateFormatter stringFromDate:creationDate];
+	}
+
+	return formattedCreationDate;
+}
+
 #endif
