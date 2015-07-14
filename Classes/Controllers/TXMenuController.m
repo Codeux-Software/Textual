@@ -2484,7 +2484,7 @@
 
 - (void)openMacAppStoreDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.textualapp.com/"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/"];
 }
 
 - (void)processNavigationItem:(id)sender

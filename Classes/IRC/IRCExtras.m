@@ -130,7 +130,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
-			[TLOpenLink openWithString:@"http://www.textualapp.com/"];
+			[TLOpenLink openWithString:@"https://www.textualapp.com/"];
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
 		{
