@@ -171,9 +171,8 @@ NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalO
 	NSDateFormatter *formatter = [NSDateFormatter new];
 
 	[formatter setDoesRelativeDateFormatting:YES];
-	[formatter setLenient:YES];
 
-	[formatter setFormatterBehavior:NSDateFormatterBehavior10_4];
+	[formatter setLenient:YES];
 
 	[formatter setDateStyle:NSDateFormatterLongStyle];
 	[formatter setTimeStyle:NSDateFormatterLongStyle];

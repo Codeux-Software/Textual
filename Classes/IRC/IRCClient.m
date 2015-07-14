@@ -3261,7 +3261,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
-				[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Command-Reference.kb?command=defaults"];
+				[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Command-Reference.kb#cr=defaults"];
 			}
 			else if (NSObjectsAreEqual(section1, @"enable"))
 			{
