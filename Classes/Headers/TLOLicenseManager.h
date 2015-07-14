@@ -55,6 +55,7 @@ TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newCon
 TEXTUAL_EXTERN BOOL TLOLicenseManagerLicenseKeyIsValid(NSString *licenseKey);
 
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseCreationDate(void);
+TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseCreationDateFormatted(void);
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseKey(void);
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerContactAddress(void);
 TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerName(void);
