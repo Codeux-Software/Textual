@@ -129,6 +129,10 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 	 property list). If that fails, then the method shows generic failure reason and
 	 logs to the console that the contents could not parsed. */
 
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self setActiveConnection:nil];
+	});
+
 	TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 #define _performCompletionBlockAndReturn()					if (self.completionBlock) {				\
