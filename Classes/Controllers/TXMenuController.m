@@ -2823,9 +2823,9 @@
 #pragma mark -
 #pragma mark License Manager
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)manageLicense:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
 
 	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
@@ -2835,8 +2835,10 @@
 	[licensePanel show];
 
 	[self addWindowToWindowList:licensePanel];
+#endif
 }
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
 {
 	[self removeWindowFromWindowList:@"TDCLicenseManagerDialog"];

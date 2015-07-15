@@ -46,7 +46,7 @@ typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
 } TLOLicenseManagerDownloaderRequestType;
 
-typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(void);
+typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
 
 @interface TLOLicenseManagerDownloader : NSObject
 @property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;

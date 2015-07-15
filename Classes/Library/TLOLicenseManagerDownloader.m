@@ -90,7 +90,11 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 - (void)deactivateLicense
 {
+	BOOL operationResult = TLOLicenseManagerDeleteUserLicenseFile();
 
+	if (self.completionBlock) {
+		self.completionBlock(operationResult);
+	}
 }
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress
@@ -135,13 +139,17 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 	TLOLicenseManagerDownloaderConnectionSelected = NO;
 
-#define _performCompletionBlockAndReturn()					if (self.completionBlock) {				\
-																self.completionBlock();				\
-															}										\
-																									\
-															return;
+#define _performCompletionBlockAndReturn(operationResult)				if (self.completionBlock) {								\
+																			self.completionBlock((operationResult));			\
+																		}														\
+																																\
+																		return;
 
 	/* Attempt to convert contents into a property list dictionary */
+	if (requestContents == nil) {
+		_performCompletionBlockAndReturn(NO)
+	}
+
 	NSError *readError = nil;
 
 	id propertyList = [NSPropertyListSerialization propertyListWithData:requestContents
@@ -193,7 +201,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 												suppressionKey:nil
 											   suppressionText:nil];
 
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(YES)
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType)
 			{
@@ -218,7 +226,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 												suppressionKey:nil
 											   suppressionText:nil];
 				
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(YES)
 			}
 		}
 		else // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
@@ -233,7 +241,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 												suppressionKey:nil
 											   suppressionText:nil];
 
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(NO)
 			}
 			else if (statusCodeInt == 6500001)
 			{
@@ -262,7 +270,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					[self contactSupport];
 				}
 
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(NO)
 			}
 			else if (statusCodeInt == 6400000)
 			{
@@ -273,7 +281,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 												suppressionKey:nil
 											   suppressionText:nil];
 
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(NO)
 			}
 			else if (statusCodeInt == 6400001)
 			{
@@ -298,7 +306,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 												suppressionKey:nil
 											   suppressionText:nil];
 
-				_performCompletionBlockAndReturn()
+				_performCompletionBlockAndReturn(NO)
 			}
 		}
 	}
@@ -306,7 +314,9 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 present_fatal_error:
 	[self presentTryAgainLaterErrorDialog];
 
-	_performCompletionBlockAndReturn()
+	_performCompletionBlockAndReturn(NO)
+
+#undef _performCompletionBlockAndReturn
 }
 
 - (void)presentTryAgainLaterErrorDialog
