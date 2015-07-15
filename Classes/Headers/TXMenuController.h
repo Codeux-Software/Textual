@@ -333,9 +333,7 @@
 - (IBAction)toggleMuteOnNotificationSounds:(id)sender;
 - (IBAction)toggleMuteOnAllNotifcations:(id)sender;
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (IBAction)manageLicense:(id)sender;
-#endif
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;

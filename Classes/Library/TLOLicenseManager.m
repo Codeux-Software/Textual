@@ -81,6 +81,8 @@ NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"28ba4e6e179fd849363
 
 NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})\\-([a-z]{1,12})\\-([a-z]{1,12})\\-([0-9]{1,35})$";
 
+NSInteger const TLOLicenseManagerLicenseKeyExpectedLength = 45;
+
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
@@ -140,6 +142,10 @@ BOOL TLOLicenseManagerIsTrialMode(void)
 BOOL TLOLicenseManagerLicenseKeyIsValid(NSString *licenseKey)
 {
 	if (NSObjectIsEmpty(licenseKey)) {
+		return NO;
+	}
+
+	if ([licenseKey length] != TLOLicenseManagerLicenseKeyExpectedLength) {
 		return NO;
 	}
 

@@ -60,6 +60,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewRecoveryLostLicenseButton;
 @property (nonatomic, strong) TDCProgressInformationSheet *progressSheet;
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
+@property (nonatomic, assign) BOOL textualIsRegistered;
 
 - (IBAction)unregisteredViewLicenseKeyValueChanged:(id)sender;
 
@@ -93,7 +94,9 @@
 {
 	NSView *contentView = nil;
 
-	if (TLOLicenseManagerIsTrialMode() == NO) {
+		self.textualIsRegistered = (TLOLicenseManagerIsTrialMode() == NO);
+
+	if (self.textualIsRegistered) {
 		NSString *licenseKey = TLOLicenseManagerLicenseKey();
 
 		NSString *licenseKeyOwner = TLOLicenseManagerLicenseOwnerName();
@@ -116,20 +119,36 @@
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj
-{
-	[self unregisteredViewLicenseKeyValueChanged:nil];
-}
-
 - (void)unregisteredViewLicenseKeyValueChanged:(id)sender
 {
+	if (self.textualIsRegistered) {
+		return; // Cancel operation...
+	}
+
 	NSString *licenseKeyValue = [self.unregisteredViewLicenseKeyTextField stringValue];
 
-	if (TLOLicenseManagerLicenseKeyIsValid(licenseKeyValue) == NO) {
-
-	} else {
-
+	if (TLOLicenseManagerLicenseKeyIsValid(licenseKeyValue)) {
+		[self attemptToActivateLicenseKey:licenseKeyValue];
 	}
+}
+
+- (void)attemptToActivateLicenseKey:(NSString *)licenseKey
+{
+	[self beginProgressIndicator];
+
+	__weak TDCLicenseManagerDialog *weakSelf = self;
+
+	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+		[weakSelf licenseManagerDownloaderCompletionBlock];
+
+		if (operationSuccessful) {
+			[self.unregisteredViewLicenseKeyTextField setStringValue:NSStringEmptyPlaceholder];
+		}
+	}];
+
+	[self.licenseManagerDownloader activateLicense:licenseKey];
 }
 
 - (void)unregisteredViewPurchaseTextual:(id)sender
@@ -144,8 +163,60 @@
 
 - (void)registeredViewDeactivateTextual:(id)sender
 {
+	/* License deactivation does not use a progress indicator because
+	 it does not have to touch the network. It will only delete a file
+	 on the hard drive which is typically instant. */
+	__weak TDCLicenseManagerDialog *weakSelf = self;
 
+	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+		[weakSelf licenseManagerDownloaderCompletionBlock];
+	}];
+
+	[self.licenseManagerDownloader deactivateLicense];
 }
+
+#pragma mark -
+#pragma mark NSTextField Delegate
+
+- (void)controlTextDidChange:(NSNotification *)obj
+{
+	if ([obj object] == self.unregisteredViewLicenseKeyTextField) {
+		[self unregisteredViewLicenseKeyValueChanged:nil];
+	}
+}
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (void)licenseManagerDownloaderCompletionBlock
+{
+	self.licenseManagerDownloader = nil;
+
+	[self endProgressIndicator];
+
+	[self updateSelectedPane];
+}
+
+- (void)beginProgressIndicator
+{
+	 self.progressSheet = [TDCProgressInformationSheet new];
+
+	[self.progressSheet startWithWindow:[self window]];
+}
+
+- (void)endProgressIndicator
+{
+	if ( self.progressSheet) {
+		[self.progressSheet stop];
+
+		 self.progressSheet = nil;
+	}
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
 
 - (void)windowWillClose:(NSNotification *)note
 {
