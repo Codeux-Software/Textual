@@ -81,7 +81,7 @@
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5sL-Iu-af0">
                                 <rect key="frame" x="131" y="12" width="177" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="165" id="jaS-dw-iHs"/>
+                                    <constraint firstAttribute="width" constant="165" id="ROq-oy-4DP"/>
                                 </constraints>
                                 <animations/>
                                 <buttonCell key="cell" type="push" title="Purchase Textual" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H46-cr-ZNe">
@@ -95,7 +95,7 @@
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TTE-cf-kks">
                                 <rect key="frame" x="304" y="12" width="177" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="165" id="liK-qj-2ie"/>
+                                    <constraint firstAttribute="width" constant="165" id="ioC-DO-P1C"/>
                                 </constraints>
                                 <animations/>
                                 <buttonCell key="cell" type="push" title="Recover Lost License" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YUi-FT-dkT">
@@ -128,32 +128,23 @@
                         <animations/>
                     </view>
                     <constraints>
-                        <constraint firstItem="5sL-Iu-af0" firstAttribute="leading" secondItem="r5f-lY-n0L" secondAttribute="leading" constant="137" id="914-Cz-1Ks"/>
-                        <constraint firstItem="5sL-Iu-af0" firstAttribute="baseline" secondItem="TTE-cf-kks" secondAttribute="baseline" id="EUk-BT-fXC"/>
-                        <constraint firstItem="TTE-cf-kks" firstAttribute="leading" secondItem="5sL-Iu-af0" secondAttribute="trailing" constant="8" id="Hmx-Ye-aIc"/>
-                        <constraint firstItem="5sL-Iu-af0" firstAttribute="top" secondItem="97b-8z-U0T" secondAttribute="bottom" constant="14" id="pbK-kl-amA"/>
-                        <constraint firstItem="TBD-pk-7Hh" firstAttribute="top" secondItem="r5f-lY-n0L" secondAttribute="top" constant="16" id="q38-Ve-8GC"/>
-                        <constraint firstItem="97b-8z-U0T" firstAttribute="top" secondItem="TBD-pk-7Hh" secondAttribute="bottom" constant="10" id="qCJ-cb-ig1"/>
-                        <constraint firstItem="97b-8z-U0T" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="rHu-Th-BPL"/>
-                        <constraint firstItem="TBD-pk-7Hh" firstAttribute="leading" secondItem="97b-8z-U0T" secondAttribute="leading" id="sMK-Xs-U9Q"/>
+                        <constraint firstItem="5sL-Iu-af0" firstAttribute="top" secondItem="97b-8z-U0T" secondAttribute="bottom" constant="14" id="F30-tP-V4K"/>
+                        <constraint firstItem="97b-8z-U0T" firstAttribute="top" secondItem="TBD-pk-7Hh" secondAttribute="bottom" constant="10" id="GKW-oV-fbY"/>
+                        <constraint firstItem="TBD-pk-7Hh" firstAttribute="leading" secondItem="97b-8z-U0T" secondAttribute="leading" id="bl9-X9-esY"/>
+                        <constraint firstItem="TTE-cf-kks" firstAttribute="leading" secondItem="5sL-Iu-af0" secondAttribute="trailing" constant="8" id="hcT-qE-5FB"/>
+                        <constraint firstItem="97b-8z-U0T" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="tp1-k8-Y7s"/>
+                        <constraint firstItem="5sL-Iu-af0" firstAttribute="leading" secondItem="r5f-lY-n0L" secondAttribute="leading" constant="137" id="yAQ-Nv-zQi"/>
+                        <constraint firstItem="TBD-pk-7Hh" firstAttribute="top" secondItem="r5f-lY-n0L" secondAttribute="top" constant="16" id="z3I-Fn-POQ"/>
+                        <constraint firstItem="TTE-cf-kks" firstAttribute="baseline" secondItem="5sL-Iu-af0" secondAttribute="baseline" id="zPv-dl-LkZ"/>
                     </constraints>
                     <animations/>
                     <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0241231274" colorSpace="calibratedWhite"/>
                 </box>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ZG-XH-hwK">
-                    <rect key="frame" x="61" y="204" width="491" height="17"/>
-                    <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Your license key can be found in the e-mail sent to you after purchasing Textual. " id="GtL-M7-gxj">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K8H-ao-m2X">
                     <rect key="frame" x="20" y="152" width="572" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="GZW-W5-JNi"/>
+                        <constraint firstAttribute="height" constant="35" id="Ujt-jN-fDO"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="relieved-red-mallard-100000000000000000000000" drawsBackground="YES" id="nhz-5X-qsg">
@@ -165,22 +156,31 @@
                         <outlet property="delegate" destination="-2" id="CX4-jV-3Fb"/>
                     </connections>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RE7-tg-Cwo">
+                    <rect key="frame" x="62" y="204" width="494" height="17"/>
+                    <animations/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your license key can be found in the e-mail sent to you after purchasing Textual. " id="OVT-tZ-YTi">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="T2j-Wl-Y0T" firstAttribute="top" secondItem="K8H-ao-m2X" secondAttribute="bottom" constant="20" id="7Gc-op-Y3h"/>
-                <constraint firstAttribute="trailing" secondItem="T2j-Wl-Y0T" secondAttribute="trailing" constant="5" id="8D2-Or-8jw"/>
-                <constraint firstItem="K8H-ao-m2X" firstAttribute="top" secondItem="3ZG-XH-hwK" secondAttribute="bottom" constant="17" id="CJf-nn-Rh3"/>
-                <constraint firstItem="K8H-ao-m2X" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="Gnm-jk-TbQ"/>
-                <constraint firstItem="3ZG-XH-hwK" firstAttribute="centerX" secondItem="PEh-r3-f7O" secondAttribute="centerX" id="L1Y-hw-bN8"/>
-                <constraint firstItem="K8H-ao-m2X" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" constant="20" symbolic="YES" id="Lqc-QK-Qhx"/>
-                <constraint firstItem="T2j-Wl-Y0T" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" id="Xot-K1-fWf"/>
-                <constraint firstItem="PEh-r3-f7O" firstAttribute="top" secondItem="4KV-5w-jf1" secondAttribute="top" constant="20" symbolic="YES" id="bbr-TZ-akt"/>
-                <constraint firstItem="3ZG-XH-hwK" firstAttribute="top" secondItem="PEh-r3-f7O" secondAttribute="bottom" constant="8" symbolic="YES" id="ceu-8u-F4m"/>
-                <constraint firstItem="K8H-ao-m2X" firstAttribute="centerX" secondItem="3ZG-XH-hwK" secondAttribute="centerX" id="cjb-OA-0Ob"/>
-                <constraint firstAttribute="trailing" secondItem="K8H-ao-m2X" secondAttribute="trailing" constant="20" symbolic="YES" id="lde-LJ-zGV"/>
-                <constraint firstItem="r5f-lY-n0L" firstAttribute="leading" secondItem="T2j-Wl-Y0T" secondAttribute="leading" id="mrw-rI-hox"/>
-                <constraint firstAttribute="bottom" secondItem="r5f-lY-n0L" secondAttribute="bottom" id="qFE-3p-d5Z"/>
-                <constraint firstItem="r5f-lY-n0L" firstAttribute="top" secondItem="T2j-Wl-Y0T" secondAttribute="bottom" id="tMX-kZ-87O"/>
+                <constraint firstItem="r5f-lY-n0L" firstAttribute="leading" secondItem="T2j-Wl-Y0T" secondAttribute="leading" id="BDb-Gn-7Iw"/>
+                <constraint firstAttribute="trailing" secondItem="K8H-ao-m2X" secondAttribute="trailing" constant="20" symbolic="YES" id="Cq1-0p-pnL"/>
+                <constraint firstItem="T2j-Wl-Y0T" firstAttribute="top" secondItem="K8H-ao-m2X" secondAttribute="bottom" constant="20" id="ETF-XM-TeD"/>
+                <constraint firstAttribute="bottom" secondItem="r5f-lY-n0L" secondAttribute="bottom" id="MWX-Kr-tDH"/>
+                <constraint firstItem="PEh-r3-f7O" firstAttribute="top" secondItem="4KV-5w-jf1" secondAttribute="top" constant="20" symbolic="YES" id="ZQ3-FZ-nEn"/>
+                <constraint firstItem="K8H-ao-m2X" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="a2h-6G-m5O"/>
+                <constraint firstItem="r5f-lY-n0L" firstAttribute="top" secondItem="T2j-Wl-Y0T" secondAttribute="bottom" id="a6A-qN-uNq"/>
+                <constraint firstItem="K8H-ao-m2X" firstAttribute="centerX" secondItem="PEh-r3-f7O" secondAttribute="centerX" id="d51-2G-fiN"/>
+                <constraint firstItem="K8H-ao-m2X" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" constant="20" symbolic="YES" id="i0q-73-LBv"/>
+                <constraint firstItem="r5f-lY-n0L" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" id="llX-MF-d3E"/>
+                <constraint firstItem="RE7-tg-Cwo" firstAttribute="top" secondItem="PEh-r3-f7O" secondAttribute="bottom" constant="8" symbolic="YES" id="s3Y-g3-FqW"/>
+                <constraint firstItem="RE7-tg-Cwo" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" constant="64" id="uFB-2U-5j7"/>
+                <constraint firstItem="K8H-ao-m2X" firstAttribute="top" secondItem="RE7-tg-Cwo" secondAttribute="bottom" constant="17" id="uJt-ft-eKF"/>
+                <constraint firstAttribute="trailing" secondItem="T2j-Wl-Y0T" secondAttribute="trailing" constant="5" id="wcN-Ku-m1W"/>
             </constraints>
             <animations/>
             <point key="canvasLocation" x="341" y="379.5"/>
