@@ -60,6 +60,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewRecoveryLostLicenseButton;
 @property (nonatomic, strong) TDCProgressInformationSheet *progressSheet;
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
+@property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 
 - (IBAction)unregisteredViewLicenseKeyValueChanged:(id)sender;
@@ -158,7 +159,37 @@
 
 - (void)unregisteredViewRecoveryLostLicense:(id)sender
 {
+	 self.recoverLostLicenseSheet = [TDCLicenseManagerRecoverLostLicenseSheet new];
 
+	[self.recoverLostLicenseSheet setWindow:[self window]];
+
+	[self.recoverLostLicenseSheet setDelegate:self];
+
+	[self.recoverLostLicenseSheet start];
+}
+
+- (void)licenseManagerRecoverLostLicense:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress
+{
+	__weak TDCLicenseManagerDialog *weakSelf = self;
+
+	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+		[weakSelf licenseManagerDownloaderCompletionBlock];
+	}];
+
+	[self.licenseManagerDownloader requestLostLicenseKeyForContactAddress:contactAddress];
+}
+
+- (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender
+{
+	self.recoverLostLicenseSheet = nil;
+
+	/* When the recovery sheet closes, if the downloader is active,
+	 then show our progress indicator, even if brief. */
+	if (self.licenseManagerDownloader) {
+		[self beginProgressIndicator];
+	}
 }
 
 - (void)registeredViewDeactivateTextual:(id)sender
@@ -192,6 +223,7 @@
 
 - (void)licenseManagerDownloaderCompletionBlock
 {
+	/* This block is a catch all for all downloader operations. */
 	self.licenseManagerDownloader = nil;
 
 	[self endProgressIndicator];

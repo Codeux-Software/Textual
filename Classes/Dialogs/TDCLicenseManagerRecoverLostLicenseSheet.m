@@ -40,6 +40,60 @@
 #import "TDCLicenseManagerRecoverLostLicenseSheet.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+@interface TDCLicenseManagerRecoverLostLicenseSheet ()
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *contactAddressTextField;
+@end
+
 @implementation TDCLicenseManagerRecoverLostLicenseSheet
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[RZMainBundle() loadNibNamed:@"TDCLicenseManagerRecoverLostLicenseSheet" owner:self topLevelObjects:nil];
+	}
+
+	return self;
+}
+
+- (void)start
+{
+	[self.contactAddressTextField setStringValueIsInvalidOnEmpty:YES];
+	[self.contactAddressTextField setStringValueUsesOnlyFirstToken:YES];
+
+	[self.contactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
+
+	[self.contactAddressTextField setTextDidChangeCallback:self];
+
+	[self validatedTextFieldTextDidChange:self.contactAddressTextField];
+
+	[self startSheet];
+}
+
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	[self.okButton setEnabled:[self.contactAddressTextField valueIsValid]];
+}
+
+- (void)ok:(id)sender
+{
+	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicense:onOk:)]) {
+		NSString *contactAddress = [self.contactAddressTextField value];
+
+		[self.delegate licenseManagerRecoverLostLicense:self onOk:contactAddress];
+	}
+
+	[super ok:sender];
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicenseSheetWillClose:)]) {
+		[self.delegate licenseManagerRecoverLostLicenseSheetWillClose:self];
+	}
+}
+
 @end
 #endif

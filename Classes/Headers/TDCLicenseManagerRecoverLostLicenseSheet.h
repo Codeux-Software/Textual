@@ -39,5 +39,13 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @interface TDCLicenseManagerRecoverLostLicenseSheet : TDCSheetBase
+- (void)start;
+@end
+
+@protocol TDCLicenseManagerRecoverLostLicenseSheet <NSObject>
+@required
+
+- (void)licenseManagerRecoverLostLicense:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress;
+- (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender;
 @end
 #endif
