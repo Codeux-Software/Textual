@@ -65,6 +65,11 @@
 	<string>TXCMainMenu</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.8.3</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.com.codeux.irc.textual5</key>
