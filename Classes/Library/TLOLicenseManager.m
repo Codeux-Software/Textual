@@ -125,17 +125,19 @@ void TLOLicenseManagerSetup(void)
 	}
 }
 
-BOOL TLOLicenseManagerIsTrialMode(void)
+BOOL TLOLicenseManagerTextualIsRegistered(void)
 {
 	/* "trial" mode is designed to last forever. Instead of locking the user 
 	 out after X days, we instead just limit access to certain features. */
 
 	if (TLOLicenseManagerPublicKeyIsGenuineResult == NO) {
-		return YES;
+		return NO;
 	} else if (TLOLicenseManagerUserLicenseFileExists() == NO) {
-		return YES;
+		return NO;
 	} else {
-		return (TLOLicenseManagerLicenseDictionary() == nil);
+		NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionary();
+
+		return NSDissimilarObjects(licenseDictionary, nil);
 	}
 }
 
