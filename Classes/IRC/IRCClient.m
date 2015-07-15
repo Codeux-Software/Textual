@@ -80,6 +80,8 @@
 
 #import "TextualApplication.h"
 
+#import "TLOLicenseManager.h"
+
 #import <objc/message.h>
 
 #define _isonCheckInterval			30
@@ -88,7 +90,6 @@
 #define _reconnectInterval			20
 #define _retryInterval				240
 #define _timeoutInterval			360
-#define _trialPeriodInterval		43200 // 12 HOURS
 
 #define _maximumChannelCountPerWhoBatchRequest		5
 
@@ -121,7 +122,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
-@property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacitiesPending;
 @property (nonatomic, strong) NSMutableArray *channels;
@@ -224,13 +224,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self.isonTimer setReqeatTimer:YES];
 		[self.isonTimer setDelegate:self];
 		[self.isonTimer setSelector:@selector(onISONTimer:)];
-
-#if TEXTUAL_TRIAL_BINARY == 1
-		 self.trialPeriodTimer = [TLOTimer new];
-		[self.trialPeriodTimer setReqeatTimer:NO];
-		[self.trialPeriodTimer setDelegate:self];
-		[self.trialPeriodTimer setSelector:@selector(onTrialPeriodTimer:)];
-#endif
 	}
 	
 	return self;
@@ -238,23 +231,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)dealloc
 {
+	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
-	[self.retryTimer stop];
 	[self.reconnectTimer stop];
-	[self.commandQueueTimer stop];
+	[self.retryTimer stop];
 
+	[self.commandQueueTimer setDelegate:nil];
 	[self.isonTimer	setDelegate:nil];
 	[self.pongTimer	setDelegate:nil];
-	[self.retryTimer setDelegate:nil];
 	[self.reconnectTimer setDelegate:nil];
-	[self.commandQueueTimer setDelegate:nil];
-
-#if TEXTUAL_TRIAL_BINARY == 1
-	[self.trialPeriodTimer stop];
-
-	[self.trialPeriodTimer setDelegate:nil];
-#endif
+	[self.retryTimer setDelegate:nil];
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -3846,10 +3833,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self.printingQueue cancelAllOperations];
 
-#if TEXTUAL_TRIAL_BINARY == 1
-	[self stopTrialPeriodTimer];
-#endif
-
 	if (self.reconnectEnabled) {
 		[self startReconnectTimer];
 	}
@@ -3862,7 +3845,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		disconnectMessages = @{
 			@(IRCClientDisconnectNormalMode) :				@(1136),
 			@(IRCClientDisconnectComputerSleepMode) :		@(1131),
-			@(IRCClientDisconnectTrialPeriodMode) :			@(1134),
 			@(IRCClientDisconnectBadSSLCertificateMode) :	@(1133),
 			@(IRCClientDisconnectServerRedirectMode) :		@(1132),
 			@(IRCClientDisconnectReachabilityChangeMode) :	@(1135)
@@ -6011,10 +5993,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
 {
 	/* Manage timers. */
-#if TEXTUAL_TRIAL_BINARY == 1
-	[self startTrialPeriodTimer];
-#endif
-	
 	[self startPongTimer];
 	[self stopRetryTimer];
 
@@ -7724,36 +7702,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		};
 	}];
 }
-
-#pragma mark -
-#pragma mark Trial Period Timer
-
-#if TEXTUAL_TRIAL_BINARY == 1
-
-- (void)startTrialPeriodTimer
-{
-	if ( self.trialPeriodTimer.timerIsActive == NO) {
-		[self.trialPeriodTimer start:_trialPeriodInterval];
-	}
-}
-
-- (void)stopTrialPeriodTimer
-{
-	if ( self.trialPeriodTimer.timerIsActive) {
-		[self.trialPeriodTimer stop];
-	}
-}
-
-- (void)onTrialPeriodTimer:(id)sender
-{
-	if (self.isLoggedIn) {
-		self.disconnectType = IRCClientDisconnectTrialPeriodMode;
-
-		[self quit];
-	}
-}
-
-#endif
 
 #pragma mark -
 #pragma mark Plugins and Scripts
