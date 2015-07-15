@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCHighlightListSheet">
@@ -28,12 +29,13 @@
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="246">
                         <rect key="frame" x="0.0" y="41" width="650" height="247"/>
                         <clipView key="contentView" id="xsl-1y-XOT">
-                            <rect key="frame" x="1" y="17" width="791" height="246"/>
+                            <rect key="frame" x="1" y="0.0" width="648" height="246"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="281" viewBased="YES" id="255" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="648.5" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="649" height="223"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -57,6 +59,7 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a2j-l0-XuC">
                                                             <rect key="frame" x="0.0" y="0.0" width="97" height="17"/>
+                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="81x-z5-fVG">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -64,6 +67,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                     </subviews>
+                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="a2j-l0-XuC" id="hua-YF-yl6"/>
                                                     </connections>
@@ -89,6 +93,7 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4NS-3M-szX">
                                                             <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                                                            <animations/>
                                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="tu1-iW-sWg">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -101,6 +106,7 @@
                                                         <constraint firstItem="4NS-3M-szX" firstAttribute="leading" secondItem="EgS-Pq-f28" secondAttribute="leading" constant="2" id="GK1-od-It4"/>
                                                         <constraint firstItem="4NS-3M-szX" firstAttribute="top" secondItem="EgS-Pq-f28" secondAttribute="top" id="j6S-Sa-HcC"/>
                                                     </constraints>
+                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="4NS-3M-szX" id="R6J-wU-tvK"/>
                                                     </connections>
@@ -126,6 +132,7 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5km-53-sUf">
                                                             <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="fvp-ca-N2k">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -133,6 +140,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                     </subviews>
+                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="5km-53-sUf" id="vCE-iI-gqx"/>
                                                     </connections>
@@ -146,23 +154,29 @@
                                     </connections>
                                 </tableView>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="254">
+                        <animations/>
+                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="254">
                             <rect key="frame" x="1" y="249" width="893" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="253">
-                            <rect key="frame" x="764" y="16.52600000000001" width="15" height="230"/>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="253">
+                            <rect key="frame" x="764" y="16" width="15" height="230"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="281">
-                            <rect key="frame" x="0.0" y="0.0" width="791" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="649" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </tableHeaderView>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="247">
-                        <rect key="frame" x="461" y="3" width="99" height="32"/>
+                        <rect key="frame" x="464" y="3" width="97" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Clear List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="252">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -172,7 +186,8 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="248">
-                        <rect key="frame" x="560" y="3" width="76" height="32"/>
+                        <rect key="frame" x="561" y="3" width="75" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="251">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -185,7 +200,8 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="249">
-                        <rect key="frame" x="18" y="301" width="179" height="17"/>
+                        <rect key="frame" x="18" y="301" width="178" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -193,7 +209,8 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="277">
-                        <rect key="frame" x="18" y="13" width="348" height="17"/>
+                        <rect key="frame" x="18" y="13" width="344" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Messages starting with a bullet (•) respresent an action." id="278">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -215,11 +232,12 @@ Gw
                     <constraint firstItem="247" firstAttribute="top" secondItem="246" secondAttribute="bottom" constant="10" id="qys-dq-XwC"/>
                     <constraint firstItem="246" firstAttribute="leading" secondItem="244" secondAttribute="leading" id="ypx-IL-Ez0"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="1232" y="225.5"/>
+            <point key="canvasLocation" x="867" y="307.5"/>
         </window>
     </objects>
 </document>
