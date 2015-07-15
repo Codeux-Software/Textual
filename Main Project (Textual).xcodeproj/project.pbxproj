@@ -2819,9 +2819,9 @@
 		4C950BFD16D68DD700A93D8D /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				4C80A4E01B46BFD100F9891B /* License Manager */,
 				4C8AF5C7158E99520026668C /* Color Formatting */,
 				4C8AF5C9158E99520026668C /* External Libraries */,
+				4C80A4E01B46BFD100F9891B /* License Manager */,
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5D8158E99520026668C /* TLOFileLogger.m */,
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,

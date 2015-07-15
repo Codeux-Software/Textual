@@ -146,20 +146,20 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 																		return;
 
 	/* Attempt to convert contents into a property list dictionary */
-	if (requestContents == nil) {
-		_performCompletionBlockAndReturn(NO)
-	}
+	id propertyList = nil;
 
-	NSError *readError = nil;
+	if (NSDissimilarObjects(requestContents, nil)) {
+		NSError *readError = nil;
 
-	id propertyList = [NSPropertyListSerialization propertyListWithData:requestContents
-																options:NSPropertyListImmutable
-																 format:NULL
-																  error:&readError];
+		propertyList = [NSPropertyListSerialization propertyListWithData:requestContents
+																 options:NSPropertyListImmutable
+																  format:NULL
+																   error:&readError];
 
-	if (propertyList == nil || [propertyList isKindOfClass:[NSDictionary class]] == NO) {
-		if (readError) {
-			LogToConsole(@"Failed to convert contents of request into dictionary. Error: %@", [readError localizedDescription]);
+		if (propertyList == nil || [propertyList isKindOfClass:[NSDictionary class]] == NO) {
+			if (readError) {
+				LogToConsole(@"Failed to convert contents of request into dictionary. Error: %@", [readError localizedDescription]);
+			}
 		}
 	}
 
