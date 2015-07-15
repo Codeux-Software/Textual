@@ -157,7 +157,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RE7-tg-Cwo">
-                    <rect key="frame" x="62" y="204" width="494" height="17"/>
+                    <rect key="frame" x="59" y="204" width="494" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your license key can be found in the e-mail sent to you after purchasing Textual. " id="OVT-tZ-YTi">
                         <font key="font" metaFont="system"/>
@@ -170,6 +170,7 @@
                 <constraint firstItem="r5f-lY-n0L" firstAttribute="leading" secondItem="T2j-Wl-Y0T" secondAttribute="leading" id="BDb-Gn-7Iw"/>
                 <constraint firstAttribute="trailing" secondItem="K8H-ao-m2X" secondAttribute="trailing" constant="20" symbolic="YES" id="Cq1-0p-pnL"/>
                 <constraint firstItem="T2j-Wl-Y0T" firstAttribute="top" secondItem="K8H-ao-m2X" secondAttribute="bottom" constant="20" id="ETF-XM-TeD"/>
+                <constraint firstItem="RE7-tg-Cwo" firstAttribute="centerX" secondItem="4KV-5w-jf1" secondAttribute="centerX" id="JlG-WX-RAs"/>
                 <constraint firstAttribute="bottom" secondItem="r5f-lY-n0L" secondAttribute="bottom" id="MWX-Kr-tDH"/>
                 <constraint firstItem="PEh-r3-f7O" firstAttribute="top" secondItem="4KV-5w-jf1" secondAttribute="top" constant="20" symbolic="YES" id="ZQ3-FZ-nEn"/>
                 <constraint firstItem="K8H-ao-m2X" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="a2h-6G-m5O"/>
@@ -178,7 +179,6 @@
                 <constraint firstItem="K8H-ao-m2X" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" constant="20" symbolic="YES" id="i0q-73-LBv"/>
                 <constraint firstItem="r5f-lY-n0L" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" id="llX-MF-d3E"/>
                 <constraint firstItem="RE7-tg-Cwo" firstAttribute="top" secondItem="PEh-r3-f7O" secondAttribute="bottom" constant="8" symbolic="YES" id="s3Y-g3-FqW"/>
-                <constraint firstItem="RE7-tg-Cwo" firstAttribute="leading" secondItem="4KV-5w-jf1" secondAttribute="leading" constant="64" id="uFB-2U-5j7"/>
                 <constraint firstItem="K8H-ao-m2X" firstAttribute="top" secondItem="RE7-tg-Cwo" secondAttribute="bottom" constant="17" id="uJt-ft-eKF"/>
                 <constraint firstAttribute="trailing" secondItem="T2j-Wl-Y0T" secondAttribute="trailing" constant="5" id="wcN-Ku-m1W"/>
             </constraints>
