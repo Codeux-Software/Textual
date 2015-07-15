@@ -903,6 +903,8 @@
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
+		4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA110CC1955AA4A0062EC4E /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */; };
@@ -1900,6 +1902,7 @@
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = ".tmp/SharedBuildProducts-Extensions/SystemProfiler.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = ".tmp/SharedBuildProducts-Extensions/ZNCAdditions.bundle"; sourceTree = SOURCE_ROOT; };
+		4C9E85B41B561AAC00B2670D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCQueuedCertificateTrustPanel.h; sourceTree = "<group>"; };
 		4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginItem.m; path = "Plugin Architecture/THOPluginItem.m"; sourceTree = "<group>"; };
 		4CA110CB1955AA4A0062EC4E /* THOPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginManager.m; path = "Plugin Architecture/THOPluginManager.m"; sourceTree = "<group>"; };
@@ -2293,6 +2296,7 @@
 				4CF40EF61AC1A59500A26BE0 /* TDCHighlightListSheet.xib */,
 				4CF40EF81AC1A59500A26BE0 /* TDCInviteSheet.xib */,
 				4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */,
+				4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */,
 				4CF40EFA1AC1A59500A26BE0 /* TDCListDialog.xib */,
 				4CF40EFC1AC1A59500A26BE0 /* TDCModeSheet.xib */,
 				4CF40EFE1AC1A59500A26BE0 /* TDCNickSheet.xib */,
@@ -4117,6 +4121,7 @@
 				4C46F4571943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C77664E1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4CB229621978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
+				4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CCFA6701ABCF36A0083620F /* TPWTB_General.png in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
 				4C46F46F1943A654004CA8BA /* FormattingColor_6.png in Resources */,
@@ -4261,6 +4266,7 @@
 				4C46F4701943A654004CA8BA /* FormattingColor_6.png in Resources */,
 				4CF40F2F1AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib in Resources */,
 				4CB229471978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
+				4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CF40F271AC1A59500A26BE0 /* TDChanInviteExceptionSheet.xib in Resources */,
 				4CF40F4B1AC1A59500A26BE0 /* TDCProgressInformationSheet.xib in Resources */,
 				4CF40F1B1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
@@ -4909,6 +4915,14 @@
 				4C2ECBF41B50893A00DC5276 /* English */,
 			);
 			name = TDCLicenseManagerDialog.xib;
+			sourceTree = "<group>";
+		};
+		4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C9E85B41B561AAC00B2670D /* English */,
+			);
+			name = TDCLicenseManagerRecoverLostLicenseSheet.xib;
 			sourceTree = "<group>";
 		};
 		4CF40EE61AC1A59500A26BE0 /* TDCAboutPanel.xib */ = {

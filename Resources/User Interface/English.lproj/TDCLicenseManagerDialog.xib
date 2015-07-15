@@ -33,6 +33,24 @@
                 <rect key="frame" x="0.0" y="0.0" width="610" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="oDs-48-rhy">
+                        <rect key="frame" x="599" y="255" width="11" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="11" id="EbC-QQ-NS5"/>
+                            <constraint firstAttribute="height" constant="15" id="aSA-Zy-lrY"/>
+                        </constraints>
+                        <animations/>
+                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="FNL-gv-V6X">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="performClose:" target="tBl-Uw-jZv" id="Gad-Gv-Xob"/>
+                        </connections>
+                    </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="UWM-nP-jqk">
                         <rect key="frame" x="0.0" y="0.0" width="610" height="270"/>
                         <constraints>
@@ -44,9 +62,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="UWM-nP-jqk" firstAttribute="top" secondItem="FoU-2F-dJN" secondAttribute="top" id="3qz-Cp-f99"/>
+                    <constraint firstItem="oDs-48-rhy" firstAttribute="top" secondItem="FoU-2F-dJN" secondAttribute="top" id="9F6-7V-bMf"/>
                     <constraint firstAttribute="trailing" secondItem="UWM-nP-jqk" secondAttribute="trailing" id="lJM-e8-ldG"/>
                     <constraint firstAttribute="bottom" secondItem="UWM-nP-jqk" secondAttribute="bottom" id="sRu-zk-hJS"/>
                     <constraint firstItem="UWM-nP-jqk" firstAttribute="leading" secondItem="FoU-2F-dJN" secondAttribute="leading" id="ue3-lh-Pzr"/>
+                    <constraint firstAttribute="trailing" secondItem="oDs-48-rhy" secondAttribute="trailing" id="xFH-Nx-oVE"/>
                 </constraints>
                 <animations/>
             </view>
@@ -93,7 +113,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TTE-cf-kks">
-                                <rect key="frame" x="304" y="12" width="177" height="32"/>
+                                <rect key="frame" x="308" y="12" width="177" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="165" id="ioC-DO-P1C"/>
                                 </constraints>
@@ -131,7 +151,7 @@
                         <constraint firstItem="5sL-Iu-af0" firstAttribute="top" secondItem="97b-8z-U0T" secondAttribute="bottom" constant="14" id="F30-tP-V4K"/>
                         <constraint firstItem="97b-8z-U0T" firstAttribute="top" secondItem="TBD-pk-7Hh" secondAttribute="bottom" constant="10" id="GKW-oV-fbY"/>
                         <constraint firstItem="TBD-pk-7Hh" firstAttribute="leading" secondItem="97b-8z-U0T" secondAttribute="leading" id="bl9-X9-esY"/>
-                        <constraint firstItem="TTE-cf-kks" firstAttribute="leading" secondItem="5sL-Iu-af0" secondAttribute="trailing" constant="8" id="hcT-qE-5FB"/>
+                        <constraint firstItem="TTE-cf-kks" firstAttribute="leading" secondItem="5sL-Iu-af0" secondAttribute="trailing" constant="12" id="hcT-qE-5FB"/>
                         <constraint firstItem="97b-8z-U0T" firstAttribute="centerX" secondItem="r5f-lY-n0L" secondAttribute="centerX" id="tp1-k8-Y7s"/>
                         <constraint firstItem="5sL-Iu-af0" firstAttribute="leading" secondItem="r5f-lY-n0L" secondAttribute="leading" constant="137" id="yAQ-Nv-zQi"/>
                         <constraint firstItem="TBD-pk-7Hh" firstAttribute="top" secondItem="r5f-lY-n0L" secondAttribute="top" constant="16" id="z3I-Fn-POQ"/>
