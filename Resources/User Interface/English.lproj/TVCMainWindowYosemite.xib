@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -29,6 +30,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="1ir-ed-Ia3"/>
                                 </constraints>
+                                <animations/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="l5w-Kh-b34" customClass="TVCMainWindowSegmentedControllerCell">
                                     <font key="font" metaFont="system"/>
                                     <segments>
@@ -56,6 +58,7 @@
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" grammarChecking="YES" smartInsertDelete="YES" id="Ub5-no-pBU" customClass="TVCMainWindowTextView">
                                                     <rect key="frame" x="0.0" y="0.0" width="624" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                                    <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
@@ -73,15 +76,19 @@
                                                     </connections>
                                                 </textView>
                                             </subviews>
+                                            <animations/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="CHU-gl-rY2">
+                                        <animations/>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="CHU-gl-rY2">
                                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="kWB-tP-6YF">
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kWB-tP-6YF">
                                             <rect key="frame" x="481" y="1" width="16" height="13"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
@@ -91,6 +98,7 @@
                                     <constraint firstItem="xnK-JZ-PNd" firstAttribute="top" secondItem="nbK-l5-9k5" secondAttribute="top" constant="3" id="lXH-1e-q4x"/>
                                     <constraint firstAttribute="trailing" secondItem="xnK-JZ-PNd" secondAttribute="trailing" constant="10" id="xYw-C2-alv"/>
                                 </constraints>
+                                <animations/>
                             </customView>
                         </subviews>
                         <constraints>
@@ -102,11 +110,12 @@
                             <constraint firstAttribute="bottom" secondItem="nbK-l5-9k5" secondAttribute="bottom" constant="6" id="hXg-Rj-6BH"/>
                             <constraint firstAttribute="bottom" secondItem="Q9x-Ny-Yn4" secondAttribute="bottom" constant="7" id="v8w-4Y-Bsd"/>
                         </constraints>
+                        <animations/>
                     </customView>
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-2U-X51" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
                         <subviews>
-                            <visualEffectView blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="KgM-JY-9PC">
+                            <visualEffectView blendingMode="behindWindow" state="followsWindowActiveState" id="KgM-JY-9PC">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -119,6 +128,7 @@
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="2" outlineTableColumn="4h6-Uy-Vo9" id="MLD-Aa-PLM" customClass="TVCServerList">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
                                                     <size key="intercellSpacing" width="3" height="0.0"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -145,6 +155,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="17" id="9Yk-87-EWm"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="fBN-3b-ksS" customClass="TVCServerListCellYosemiteTextFieldInterior">
                                                                                 <font key="font" metaFont="systemBold"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,6 +168,7 @@
                                                                         <constraint firstAttribute="trailing" secondItem="wBU-6B-7f4" secondAttribute="trailing" constant="3" id="Ygw-F2-KHY"/>
                                                                         <constraint firstAttribute="bottom" secondItem="wBU-6B-7f4" secondAttribute="bottom" constant="3" id="dcK-p5-FXI"/>
                                                                     </constraints>
+                                                                    <animations/>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="wBU-6B-7f4" id="jkE-JW-N5b"/>
                                                                         <outlet property="textField" destination="wBU-6B-7f4" id="k8D-pD-vfn"/>
@@ -172,10 +184,12 @@
                                                                                 <constraint firstAttribute="width" constant="16" id="EBt-4R-RlY"/>
                                                                                 <constraint firstAttribute="height" constant="16" id="UIZ-VB-Xyc"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="L7W-3b-gZZ"/>
                                                                         </imageView>
                                                                         <textField horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="YvY-15-HQ3">
                                                                             <rect key="frame" x="25" y="2" width="91" height="16"/>
+                                                                            <animations/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Table View Cell" id="aWH-di-A9U" customClass="TVCServerListCellYosemiteTextFieldInterior">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -187,6 +201,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="14" id="SMf-ml-CNa"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="AgO-Mi-Fwf"/>
                                                                         </imageView>
                                                                     </subviews>
@@ -200,6 +215,7 @@
                                                                         <constraint firstItem="YvY-15-HQ3" firstAttribute="leading" secondItem="68i-pd-Me5" secondAttribute="trailing" constant="8" id="tLx-Q1-geB"/>
                                                                         <constraint firstItem="Ybi-Bk-q6V" firstAttribute="top" secondItem="AKs-o3-7CO" secondAttribute="top" constant="1" id="zDv-Ef-pSt"/>
                                                                     </constraints>
+                                                                    <animations/>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="YvY-15-HQ3" id="9HX-hd-ONy"/>
                                                                         <outlet property="imageView" destination="68i-pd-Me5" id="cX3-Mq-zsK"/>
@@ -217,15 +233,19 @@
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
+                                            <animations/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="e4Y-GC-Kwt">
+                                        <animations/>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="e4Y-GC-Kwt">
                                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Dao-ye-Bbf">
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Dao-ye-Bbf">
                                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
@@ -237,6 +257,7 @@
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="uvA-9N-e8z"/>
                                     <constraint firstAttribute="bottom" secondItem="KbE-36-qMw" secondAttribute="bottom" id="wz5-y8-8kq"/>
                                 </constraints>
+                                <animations/>
                             </visualEffectView>
                             <box boxType="custom" borderType="none" titlePosition="noTitle" id="9mT-cT-dVF" userLabel="Chat Box - Title">
                                 <rect key="frame" x="151" y="0.0" width="498" height="439"/>
@@ -244,15 +265,17 @@
                                 <view key="contentView">
                                     <rect key="frame" x="0.0" y="0.0" width="498" height="439"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <animations/>
                                 </view>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="fl7-av-sWz"/>
                                 </constraints>
+                                <animations/>
                                 <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <accessibility description="Channel view"/>
                             </box>
-                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" material="appearanceBased" state="followsWindowActiveState" id="2k7-ax-6YE">
+                            <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" state="followsWindowActiveState" id="2k7-ax-6YE">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
@@ -265,6 +288,7 @@
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" rowHeight="20" viewBased="YES" floatsGroupRows="NO" outlineTableColumn="GQk-WB-FLe" id="wUC-XW-0WV" customClass="TVCMemberList">
                                                     <rect key="frame" x="0.0" y="0.0" width="149" height="0.0"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <animations/>
                                                     <size key="intercellSpacing" width="2" height="0.0"/>
                                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -292,6 +316,7 @@
                                                                                 <constraint firstAttribute="height" constant="17" id="iaM-0i-luX"/>
                                                                                 <constraint firstAttribute="width" constant="20" id="kGD-1q-Ohs"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="FormattingColor_2" id="BUR-Kw-QiD"/>
                                                                         </imageView>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dg2-9M-ak9">
@@ -299,6 +324,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="ey9-hk-PaU"/>
                                                                             </constraints>
+                                                                            <animations/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Kxh-ox-Uqw" customClass="TVCMemberListCellYosemiteTextFieldInterior">
                                                                                 <font key="font" metaFont="cellTitle"/>
                                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -313,6 +339,7 @@
                                                                         <constraint firstAttribute="bottom" secondItem="Dg2-9M-ak9" secondAttribute="bottom" constant="2" id="Cah-m2-5WT"/>
                                                                         <constraint firstItem="Dg2-9M-ak9" firstAttribute="leading" secondItem="YQC-cI-hLS" secondAttribute="trailing" constant="6" id="qZA-VK-3EU"/>
                                                                     </constraints>
+                                                                    <animations/>
                                                                     <connections>
                                                                         <outlet property="cellTextField" destination="Dg2-9M-ak9" id="DR8-cE-RR4"/>
                                                                         <outlet property="imageView" destination="YQC-cI-hLS" id="6y0-VB-fEW"/>
@@ -328,15 +355,19 @@
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
+                                            <animations/>
                                             <nil key="backgroundColor"/>
                                         </clipView>
-                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="n7L-yI-VW6">
+                                        <animations/>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="n7L-yI-VW6">
                                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="I1L-OQ-DQc">
+                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="I1L-OQ-DQc">
                                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
@@ -348,11 +379,13 @@
                                     <constraint firstAttribute="bottom" secondItem="BB4-Tt-eGZ" secondAttribute="bottom" id="Wxm-GD-qou"/>
                                     <constraint firstItem="BB4-Tt-eGZ" firstAttribute="leading" secondItem="2k7-ax-6YE" secondAttribute="leading" id="knT-Sl-68M"/>
                                 </constraints>
+                                <animations/>
                             </visualEffectView>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="XJm-Dd-FjI"/>
                         </constraints>
+                        <animations/>
                         <holdingPriorities>
                             <real value="335"/>
                             <real value="250"/>
@@ -382,10 +415,12 @@
                                                 <constraint firstAttribute="height" constant="152" id="AiM-Os-mKc"/>
                                                 <constraint firstAttribute="width" constant="152" id="iRh-KL-Oxe"/>
                                             </constraints>
+                                            <animations/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="jlS-Wi-kab"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JGg-mN-MbL">
-                                            <rect key="frame" x="83" y="206" width="268" height="36"/>
+                                            <rect key="frame" x="83" y="206" width="269" height="36"/>
+                                            <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual" id="bzV-SS-Lb7">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -394,6 +429,7 @@
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="HWd-Yd-CTf">
                                             <rect key="frame" x="34" y="145" width="366" height="51"/>
+                                            <animations/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="5sk-Op-lRl">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">This version of Textual is designed to demonstrate the features, performance, reliability, and usability of Textual without having to purchase it. </string>
@@ -403,6 +439,7 @@
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="GFq-C3-MHQ">
                                             <rect key="frame" x="10" y="85" width="414" height="51"/>
+                                            <animations/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="WSn-mu-tnL">
                                                 <font key="font" metaFont="systemBold"/>
                                                 <string key="title">However, as this is a trial version, it will disconnect you from any IRC server that you are connected to every twelve hours. 
@@ -413,6 +450,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="VcA-aM-HdY">
                                             <rect key="frame" x="53" y="42" width="328" height="34"/>
+                                            <animations/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="We hope that this glimpse of Textual will help show that it is worth its low sale price." id="xm4-ZA-Xf8">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -424,6 +462,7 @@ There are no other limits. What you see, is what you get.</string>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="152" id="bmn-mi-moV"/>
                                             </constraints>
+                                            <animations/>
                                             <buttonCell key="cell" type="push" title="Begin Trial" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="SUt-jx-3kt">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -437,6 +476,7 @@ There are no other limits. What you see, is what you get.</string>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="152" id="nFr-0x-Jo5"/>
                                             </constraints>
+                                            <animations/>
                                             <buttonCell key="cell" type="push" title="Purchase Textual" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="cIp-2N-uj1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -470,6 +510,7 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstItem="HWd-Yd-CTf" firstAttribute="top" secondItem="JGg-mN-MbL" secondAttribute="bottom" constant="10" id="v0f-Rb-ecP"/>
                                         <constraint firstItem="63y-tE-Fa5" firstAttribute="leading" secondItem="wGo-s9-W80" secondAttribute="leading" constant="141" id="y3Z-lm-3Zd"/>
                                     </constraints>
+                                    <animations/>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hV-Px-fjE" userLabel="Welcome, Add Server.">
                                     <rect key="frame" x="159" y="21" width="482" height="396"/>
@@ -484,10 +525,12 @@ There are no other limits. What you see, is what you get.</string>
                                                 <constraint firstAttribute="height" constant="152" id="g9Q-EB-ZdT"/>
                                                 <constraint firstAttribute="width" constant="152" id="oIN-2n-3ej"/>
                                             </constraints>
+                                            <animations/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="JiD-hU-EwZ"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="spu-WD-Kde">
-                                            <rect key="frame" x="109" y="198" width="264" height="36"/>
+                                            <rect key="frame" x="109" y="198" width="265" height="36"/>
+                                            <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="aIb-aM-sre">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -496,6 +539,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9GT-ck-dw6">
                                             <rect key="frame" x="31" y="142" width="420" height="51"/>
+                                            <animations/>
                                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="saT-mF-f7z">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Textual is a powerful, yet lightweight, IRC client built exclusively for the Mac. To get started, Textual will walk you through adding your first server. Click the button below to continue.</string>
@@ -505,6 +549,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </textField>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BJS-LN-5F5">
                                             <rect key="frame" x="159" y="99" width="164" height="32"/>
+                                            <animations/>
                                             <buttonCell key="cell" type="push" title="Continue" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="C6i-Qy-qFQ">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -515,12 +560,14 @@ There are no other limits. What you see, is what you get.</string>
                                         </button>
                                         <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="0Ov-pd-3u7">
                                             <rect key="frame" x="38" y="83" width="406" height="5"/>
+                                            <animations/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XEc-oF-lgr">
                                             <rect key="frame" x="152" y="7" width="178" height="32"/>
+                                            <animations/>
                                             <buttonCell key="cell" type="push" title="Migrate from Textual 4" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="8td-TE-hqx">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -531,6 +578,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </button>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wDr-fm-SYg">
                                             <rect key="frame" x="160" y="50" width="162" height="17"/>
+                                            <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Are you a Textual 4 user?" id="Xz7-2Z-OHt">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -562,12 +610,14 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstAttribute="height" constant="396" id="i2r-dX-Wun"/>
                                         <constraint firstAttribute="trailing" secondItem="BJS-LN-5F5" secondAttribute="trailing" constant="165" id="yz9-yQ-tZD"/>
                                     </constraints>
+                                    <animations/>
                                 </customView>
                                 <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y3v-lS-079" userLabel="Loading View Content.">
                                     <rect key="frame" x="237" y="97" width="326" height="244"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fz8-Wh-g0h">
-                                            <rect key="frame" x="31" y="38" width="264" height="36"/>
+                                            <rect key="frame" x="31" y="38" width="265" height="36"/>
+                                            <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="f6F-uK-l7k">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -576,6 +626,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E2G-N5-yqM">
                                             <rect key="frame" x="71" y="13" width="158" height="17"/>
+                                            <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="Loading Configuration …" id="5ke-cK-ja2">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -584,6 +635,7 @@ There are no other limits. What you see, is what you get.</string>
                                         </textField>
                                         <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="dL3-du-sfE">
                                             <rect key="frame" x="237" y="13" width="16" height="16"/>
+                                            <animations/>
                                         </progressIndicator>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="CO7-Vv-WsQ">
                                             <rect key="frame" x="88" y="82" width="150" height="150"/>
@@ -591,6 +643,7 @@ There are no other limits. What you see, is what you get.</string>
                                                 <constraint firstAttribute="height" constant="150" id="GSt-08-Iwi"/>
                                                 <constraint firstAttribute="width" constant="150" id="idc-9A-2n9"/>
                                             </constraints>
+                                            <animations/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="5xB-av-btS"/>
                                         </imageView>
                                     </subviews>
@@ -610,8 +663,10 @@ There are no other limits. What you see, is what you get.</string>
                                         <constraint firstAttribute="trailing" secondItem="dL3-du-sfE" secondAttribute="trailing" constant="73" id="u82-rb-cT4"/>
                                         <constraint firstItem="E2G-N5-yqM" firstAttribute="top" secondItem="fz8-Wh-g0h" secondAttribute="bottom" constant="8" id="yYd-k0-4an"/>
                                     </constraints>
+                                    <animations/>
                                 </customView>
                             </subviews>
+                            <animations/>
                         </view>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="wGo-s9-W80" secondAttribute="centerY" id="16Q-3D-glg"/>
@@ -623,6 +678,7 @@ There are no other limits. What you see, is what you get.</string>
                             <constraint firstAttribute="centerX" secondItem="8hV-Px-fjE" secondAttribute="centerX" id="Yns-4V-gNK"/>
                             <constraint firstAttribute="centerX" secondItem="Y3v-lS-079" secondAttribute="centerX" id="uv9-r0-Oxb"/>
                         </constraints>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <connections>
@@ -650,6 +706,7 @@ There are no other limits. What you see, is what you get.</string>
                     <constraint firstItem="phB-0r-qij" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="qin-63-ACL"/>
                     <constraint firstItem="ub4-hV-1Sb" firstAttribute="top" secondItem="2" secondAttribute="top" id="svd-gi-MxE"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="channelViewBox" destination="9mT-cT-dVF" id="ajz-y3-RFg"/>
@@ -667,13 +724,14 @@ There are no other limits. What you see, is what you get.</string>
             <point key="canvasLocation" x="6105" y="1193.5"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2965" userLabel="User Info Popover View">
-            <rect key="frame" x="0.0" y="0.0" width="333" height="134"/>
+            <rect key="frame" x="0.0" y="0.0" width="351" height="134"/>
             <userGuides>
                 <userLayoutGuide location="395" affinity="minX"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2989">
-                    <rect key="frame" x="95" y="70" width="231" height="16"/>
+                    <rect key="frame" x="96" y="70" width="248" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2990">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -681,7 +739,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MUG-Yv-LiF">
-                    <rect key="frame" x="95" y="50" width="231" height="16"/>
+                    <rect key="frame" x="93" y="50" width="251" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="Tcg-Vx-hyl">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -689,7 +748,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2991">
-                    <rect key="frame" x="95" y="30" width="231" height="16"/>
+                    <rect key="frame" x="97" y="30" width="247" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2992">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -697,7 +757,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
-                    <rect key="frame" x="95" y="10" width="231" height="16"/>
+                    <rect key="frame" x="96" y="10" width="248" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -706,6 +767,7 @@ There are no other limits. What you see, is what you get.</string>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CiH-kG-t5w">
                     <rect key="frame" x="21" y="110" width="74" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="59B-t9-R34">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -713,7 +775,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jIV-Th-xbm">
-                    <rect key="frame" x="20" y="90" width="75" height="17"/>
+                    <rect key="frame" x="20" y="90" width="76" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="7Na-1R-gmg">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -721,7 +784,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-JU-NU4">
-                    <rect key="frame" x="19" y="50" width="78" height="17"/>
+                    <rect key="frame" x="19" y="50" width="76" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="rAb-ds-4lA">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -729,7 +793,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-2b-G9I">
-                    <rect key="frame" x="23" y="30" width="72" height="17"/>
+                    <rect key="frame" x="23" y="30" width="74" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Privileges:" id="d8b-Oo-eQc">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -737,7 +802,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OJS-rH-GO8">
-                    <rect key="frame" x="34" y="70" width="62" height="17"/>
+                    <rect key="frame" x="34" y="70" width="63" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Address:" id="LZ5-NL-XEb">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -745,7 +811,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4m-I3-8kS">
-                    <rect key="frame" x="8" y="10" width="88" height="17"/>
+                    <rect key="frame" x="8" y="10" width="89" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away status:" id="sfH-4y-JSY">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -753,7 +820,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2987">
-                    <rect key="frame" x="95" y="90" width="231" height="16"/>
+                    <rect key="frame" x="96" y="90" width="248" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2988">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -761,7 +829,8 @@ There are no other limits. What you see, is what you get.</string>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2985">
-                    <rect key="frame" x="95" y="110" width="231" height="16"/>
+                    <rect key="frame" x="95" y="110" width="249" height="16"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2986">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -801,6 +870,7 @@ There are no other limits. What you see, is what you get.</string>
                 <constraint firstAttribute="trailing" secondItem="FDn-T9-61V" secondAttribute="trailing" constant="9" id="x9Z-la-kXN"/>
                 <constraint firstItem="CiH-kG-t5w" firstAttribute="top" secondItem="2965" secondAttribute="top" constant="7" id="xUo-RL-23b"/>
             </constraints>
+            <animations/>
             <point key="canvasLocation" x="361.5" y="487"/>
         </customView>
         <popover id="iYh-l7-KsB" userLabel="User Info Popover" customClass="TVCMemberListUserInfoPopover">
@@ -828,20 +898,44 @@ There are no other limits. What you see, is what you get.</string>
                             <fragment content="Bold">
                                 <attributes>
                                     <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
-                                            <textTab alignment="left" location="36"/>
-                                            <textTab alignment="left" location="72"/>
-                                            <textTab alignment="left" location="108"/>
-                                            <textTab alignment="left" location="144"/>
-                                            <textTab alignment="left" location="180"/>
-                                            <textTab alignment="left" location="216"/>
-                                            <textTab alignment="left" location="252"/>
-                                            <textTab alignment="left" location="288"/>
-                                            <textTab alignment="left" location="324"/>
-                                            <textTab alignment="left" location="360"/>
-                                            <textTab alignment="left" location="396"/>
-                                            <textTab alignment="left" location="432"/>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
                                         </tabStops>
                                     </paragraphStyle>
                                 </attributes>
@@ -856,20 +950,44 @@ There are no other limits. What you see, is what you get.</string>
                             <fragment content="Italics">
                                 <attributes>
                                     <font key="NSFont" size="14" name="Helvetica-Oblique"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
-                                            <textTab alignment="left" location="36"/>
-                                            <textTab alignment="left" location="72"/>
-                                            <textTab alignment="left" location="108"/>
-                                            <textTab alignment="left" location="144"/>
-                                            <textTab alignment="left" location="180"/>
-                                            <textTab alignment="left" location="216"/>
-                                            <textTab alignment="left" location="252"/>
-                                            <textTab alignment="left" location="288"/>
-                                            <textTab alignment="left" location="324"/>
-                                            <textTab alignment="left" location="360"/>
-                                            <textTab alignment="left" location="396"/>
-                                            <textTab alignment="left" location="432"/>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
                                         </tabStops>
                                     </paragraphStyle>
                                 </attributes>
@@ -885,20 +1003,44 @@ There are no other limits. What you see, is what you get.</string>
                             <fragment content="Underline">
                                 <attributes>
                                     <font key="NSFont" size="14" name="Helvetica"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
-                                            <textTab alignment="left" location="36"/>
-                                            <textTab alignment="left" location="72"/>
-                                            <textTab alignment="left" location="108"/>
-                                            <textTab alignment="left" location="144"/>
-                                            <textTab alignment="left" location="180"/>
-                                            <textTab alignment="left" location="216"/>
-                                            <textTab alignment="left" location="252"/>
-                                            <textTab alignment="left" location="288"/>
-                                            <textTab alignment="left" location="324"/>
-                                            <textTab alignment="left" location="360"/>
-                                            <textTab alignment="left" location="396"/>
-                                            <textTab alignment="left" location="432"/>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
                                         </tabStops>
                                     </paragraphStyle>
                                     <integer key="NSUnderline" value="1"/>
@@ -1029,20 +1171,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="12" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1051,20 +1217,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1073,20 +1263,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1095,20 +1309,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1117,20 +1355,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.67843137249999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1139,20 +1401,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1161,20 +1447,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1183,20 +1493,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.50196078430000002" green="0.0" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1327,20 +1661,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="12" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1349,20 +1707,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1371,20 +1753,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1393,20 +1799,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1415,20 +1845,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.67843137249999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1437,20 +1891,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1459,20 +1937,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1481,20 +1983,44 @@ There are no other limits. What you see, is what you get.</string>
                                             <attributes>
                                                 <color key="NSColor" red="0.50196078430000002" green="0.0" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" size="14" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural">
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
-                                                        <textTab alignment="left" location="36"/>
-                                                        <textTab alignment="left" location="72"/>
-                                                        <textTab alignment="left" location="108"/>
-                                                        <textTab alignment="left" location="144"/>
-                                                        <textTab alignment="left" location="180"/>
-                                                        <textTab alignment="left" location="216"/>
-                                                        <textTab alignment="left" location="252"/>
-                                                        <textTab alignment="left" location="288"/>
-                                                        <textTab alignment="left" location="324"/>
-                                                        <textTab alignment="left" location="360"/>
-                                                        <textTab alignment="left" location="396"/>
-                                                        <textTab alignment="left" location="432"/>
+                                                        <textTab alignment="left" location="36">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="72">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="108">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="144">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="180">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="216">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="252">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="288">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="324">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="360">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="396">
+                                                            <options/>
+                                                        </textTab>
+                                                        <textTab alignment="left" location="432">
+                                                            <options/>
+                                                        </textTab>
                                                     </tabStops>
                                                 </paragraphStyle>
                                             </attributes>
@@ -1523,10 +2049,11 @@ There are no other limits. What you see, is what you get.</string>
         </customObject>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="asp-kn-ubA" customClass="TVCMainWindowTitlebarAccessoryView">
-            <rect key="frame" x="-1" y="0.0" width="183" height="20"/>
+            <rect key="frame" x="0.0" y="0.0" width="183" height="20"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">
-                    <rect key="frame" x="81" y="-1" width="99" height="19"/>
+                    <rect key="frame" x="82" y="-1" width="98" height="19"/>
+                    <animations/>
                     <buttonCell key="cell" type="recessed" title="Not Private" bezelStyle="recessed" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HaN-Sj-wDl">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -1540,6 +2067,7 @@ There are no other limits. What you see, is what you get.</string>
                 <constraint firstItem="eFh-15-nxS" firstAttribute="top" secondItem="asp-kn-ubA" secondAttribute="top" constant="2" id="MbB-ck-7Wh"/>
                 <constraint firstAttribute="trailing" secondItem="eFh-15-nxS" secondAttribute="trailing" constant="3" id="Ref-Vz-BjG"/>
             </constraints>
+            <animations/>
             <point key="canvasLocation" x="4084.5" y="1156"/>
         </customView>
         <viewController id="Yr8-XA-FFO" customClass="TVCMainWindowTitlebarAccessoryViewController">

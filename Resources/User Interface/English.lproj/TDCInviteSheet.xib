@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCInviteSheet">
@@ -30,6 +31,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="mib-o8-e3E"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Invite" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="20">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -46,6 +48,7 @@ DQ
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="Q3e-cM-uUk"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="21">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -59,6 +62,7 @@ Gw
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="31">
                         <rect key="frame" x="58" y="57" width="185" height="26"/>
+                        <animations/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="32">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -67,6 +71,7 @@ Gw
                     </popUpButton>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="37">
                         <rect key="frame" x="18" y="98" width="264" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Invite nick to:" id="38">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -86,11 +91,12 @@ Gw
                     <constraint firstItem="9" firstAttribute="trailing" secondItem="37" secondAttribute="trailing" id="kfv-9Y-9NT"/>
                     <constraint firstItem="31" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="60" id="u88-Ov-0Wz"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="42"/>
             </connections>
-            <point key="canvasLocation" x="320" y="111.5"/>
+            <point key="canvasLocation" x="508" y="212.5"/>
         </window>
     </objects>
 </document>

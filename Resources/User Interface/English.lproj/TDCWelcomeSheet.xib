@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCWelcomeSheet">
@@ -23,14 +24,15 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="143">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="821" y="627" width="376" height="468"/>
+            <rect key="contentRect" x="821" y="627" width="385" height="468"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="144">
-                <rect key="frame" x="0.0" y="0.0" width="376" height="468"/>
+                <rect key="frame" x="0.0" y="0.0" width="385" height="468"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="146">
-                        <rect key="frame" x="109" y="287" width="240" height="22"/>
+                        <rect key="frame" x="109" y="287" width="249" height="22"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" drawsBackground="YES" usesSingleLineMode="YES" id="178">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -41,19 +43,20 @@
                         </connections>
                     </textField>
                     <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="149">
-                        <rect key="frame" x="109" y="168" width="240" height="112"/>
+                        <rect key="frame" x="109" y="168" width="249" height="112"/>
                         <clipView key="contentView" id="UXg-Uw-XfU">
-                            <rect key="frame" x="1" y="1" width="231" height="110"/>
+                            <rect key="frame" x="1" y="1" width="247" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="238" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="247" height="110"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="235" minWidth="40" maxWidth="1000" id="174">
+                                        <tableColumn width="244" minWidth="40" maxWidth="1000" id="174">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -74,15 +77,19 @@
                                     </connections>
                                 </tableView>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="171">
+                        <animations/>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="171">
                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="172">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="172">
                             <rect key="frame" x="224" y="0.0" width="15" height="119"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="150">
@@ -90,6 +97,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="62" id="O6B-2L-ar8"/>
                         </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Channels:" id="170">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -101,6 +109,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="Xpt-2B-Ogw"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="166">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -114,6 +123,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="dRq-y5-dze"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="165">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -123,10 +133,11 @@
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="157">
-                        <rect key="frame" x="136" y="425" width="193" height="23"/>
+                        <rect key="frame" x="136" y="425" width="202" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
                         </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
                             <font key="font" metaFont="systemBold" size="19"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -134,13 +145,15 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="159">
-                        <rect key="frame" x="20" y="355" width="336" height="5"/>
+                        <rect key="frame" x="20" y="355" width="345" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="216">
-                        <rect key="frame" x="109" y="313" width="243" height="26"/>
+                        <rect key="frame" x="109" y="313" width="252" height="26"/>
+                        <animations/>
                         <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" numberOfVisibleItems="5" id="217">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -152,7 +165,8 @@
                         </connections>
                     </comboBox>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="145">
-                        <rect key="frame" x="33" y="289" width="70" height="17"/>
+                        <rect key="frame" x="35" y="289" width="68" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nickname:" id="179">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -160,16 +174,18 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="201">
-                        <rect key="frame" x="20" y="59" width="336" height="5"/>
+                        <rect key="frame" x="20" y="59" width="345" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="151">
-                        <rect key="frame" x="212" y="144" width="139" height="18"/>
+                        <rect key="frame" x="212" y="144" width="148" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="wvg-X2-tes"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Connect on launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -177,10 +193,12 @@
                     </button>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="zqh-Vb-fjj">
                         <rect key="frame" x="20" y="379" width="69" height="69"/>
+                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="0YK-op-vRE"/>
                     </imageView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="152">
-                        <rect key="frame" x="236" y="13" width="126" height="32"/>
+                        <rect key="frame" x="245" y="13" width="126" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Start Chatting" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="168">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -190,7 +208,8 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="153">
-                        <rect key="frame" x="153" y="13" width="83" height="32"/>
+                        <rect key="frame" x="163" y="13" width="82" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="167">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -203,10 +222,11 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I1L-Fi-uaP">
-                        <rect key="frame" x="107" y="375" width="251" height="42"/>
+                        <rect key="frame" x="107" y="375" width="260" height="42"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="LmS-Nk-P30"/>
                         </constraints>
+                        <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="UqM-De-aP8">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">To get started, select a network to connect to using the the control labeled “Destination” or manually enter the desired server address. </string>
@@ -215,7 +235,8 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="148">
-                        <rect key="frame" x="25" y="318" width="78" height="17"/>
+                        <rect key="frame" x="26" y="317" width="77" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Destination:" id="176">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -223,7 +244,8 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="160">
-                        <rect key="frame" x="106" y="79" width="242" height="56"/>
+                        <rect key="frame" x="106" y="79" width="239" height="56"/>
+                        <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by right clicking the connection and selecting "Server Properties."</string>
@@ -281,6 +303,7 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="I1L-Fi-uaP" secondAttribute="trailing" constant="20" symbolic="YES" id="yp5-tZ-kSO"/>
                     <constraint firstItem="149" firstAttribute="trailing" secondItem="151" secondAttribute="trailing" id="yws-s2-0IA"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="213"/>
