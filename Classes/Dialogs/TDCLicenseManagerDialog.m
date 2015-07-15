@@ -95,7 +95,7 @@
 {
 	NSView *contentView = nil;
 
-		self.textualIsRegistered = (TLOLicenseManagerTextualIsRegistered() == NO);
+		self.textualIsRegistered = TLOLicenseManagerTextualIsRegistered();
 
 	if (self.textualIsRegistered) {
 		NSString *licenseKey = TLOLicenseManagerLicenseKey();
