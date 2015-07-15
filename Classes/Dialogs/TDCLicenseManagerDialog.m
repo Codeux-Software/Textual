@@ -144,7 +144,7 @@
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		if (operationSuccessful) {
-			[self.unregisteredViewLicenseKeyTextField setStringValue:NSStringEmptyPlaceholder];
+			[[weakSelf unregisteredViewLicenseKeyTextField] setStringValue:NSStringEmptyPlaceholder];
 		}
 	}];
 
