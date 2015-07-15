@@ -39,7 +39,6 @@
 
 @interface TVCMainWindowLoadingScreenView ()
 @property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
-@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerTrialView;
 @property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
 @property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
 @property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
@@ -57,11 +56,7 @@
 - (void)popWelcomeAddServerView
 {
 	if (self.stackLocked == NO) {
-#if TEXTUAL_TRIAL_BINARY == 1
-		[self displayView:self.welcomeAddServerTrialView];
-#else
 		[self displayView:self.welcomeAddServerNormalView];
-#endif
 	}
 }
 
@@ -198,8 +193,7 @@
 
 	return @[
 		self.loadingConfigurationView,
-		self.welcomeAddServerNormalView,
-		self.welcomeAddServerTrialView
+		self.welcomeAddServerNormalView
 	];
 }
 

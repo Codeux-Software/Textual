@@ -45,7 +45,6 @@ typedef enum IRCClientConnectMode : NSInteger {
 
 typedef enum IRCClientDisconnectMode : NSInteger {
 	IRCClientDisconnectNormalMode,
-	IRCClientDisconnectTrialPeriodMode,
 	IRCClientDisconnectComputerSleepMode,
 	IRCClientDisconnectBadSSLCertificateMode,
 	IRCClientDisconnectReachabilityChangeMode,
