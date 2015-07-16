@@ -207,6 +207,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return NO;
 }
 
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 + (void)migrateKeyValuesAwayFromGroupContainer
 {
 	/* Discussion:
@@ -229,95 +230,119 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	 would be a burden to write our own complete implementation of NSUserDefaults
 	 just to have custom paths.
 
-	 To solve this problem, this method first reads all keys from the Mac App Store
-	 path if it exists so we know the existing preferences. Once we have those values,
-	 we delete the Mac App Store preferences file. Next, we create a symbolic link from
-	 the Mac App Store version to the non-Mac App Store version.
-
-	 Once all this is complete, we write the values in memory to the new location. The
-	 symbolic link, though related to a sandboxed application, works as expected (at least
-	 when tested against El Capitan when writing this comment). */
+	 To solve this problem, this method does the following:
+		1) Read the contents of original preferences file and saves it within memory
+		2) Erase the existing preferences file
+			1) If step #1 fails, then the method exits and does not attempt
+			   migration to prevent certain edge cases.
+		3) Create a symbolic link from the original file to new location.
+			1) Step #3 is allowed to fail. If it fails, we still have the original
+			   values stored in memory and we can use those at the new location.
+		4) Apply values in memory to new location 
+	 */
 
 	/* Determine whether Textual has previously performed a group container migration. */
-	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8288"];
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8230"];
 
 	if (migratedOldKeys) {
 		return; // Cancel operation...
 	}
 
-	/* Determine whether container preferences file exists. */
-	NSString *containerPath = [TPCPathInfo applicationGroupContainerPath];
+	/* The following paths are hardcoded because the bundle identifier for Textual
+	 may change in the future, but these paths in the past will not be effected by
+	 the bundle identifier change, which means they will always remain the same. */
+	/* Each path is relative to the user's home directory. Not filesystem root. */
+	/* Files are listed in priority from least important to most important. If a
+	 file with higher priority has a key thats already defined, then that file
+	 overrides the previously defined value. */
+	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
-	if (containerPath == nil) {
-		return; // Cancel operation...
+	NSArray *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
+
+	for (NSDictionary *pathToMigrateDict in pathsToMigrate) {
+		NSString *pathToMigrateFromAbsolutePath = [pathToMigrateDict[@"source"] stringByExpandingTildeInPath];
+
+		NSString *pathToMigrateToAbsolutePath = [pathToMigrateDict[@"destination"] stringByExpandingTildeInPath];
+
+		[TPCPreferencesUserDefaults migrateKeyValuesWithPath:pathToMigrateFromAbsolutePath
+													  toPath:pathToMigrateToAbsolutePath];
 	}
 
-	NSString *groupContainerPreferencesFilename = [NSString stringWithFormat:@"/Library/Preferences/%@.plist", TXBundleBuildGroupContainerIdentifier];
+	/* Inform future calls to method not to perform migration again. */
+	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8230"];
+}
 
-	NSString *groupContainerPreferencesFilePath = [containerPath stringByAppendingPathComponent:groupContainerPreferencesFilename];
++ (void)migrateKeyValuesWithPath:(NSString *)sourceMigrationPath toPath:(NSString *)destinationMigrationPath
+{
+	/* Build absolute path from relative path. */
+	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
 
-	if ([RZFileManager() fileExistsAtPath:groupContainerPreferencesFilePath] == NO) {
-		return; // Cancel operation...
-	}
+	NSDictionary *preferencesToMigrate = nil;
 
-	/* Load contents of relevant dictionaries. */
-	NSDictionary *groupContainerPreferences = [NSDictionary dictionaryWithContentsOfFile:groupContainerPreferencesFilePath];
+	NSDictionary *remappedPreferenceKeys = nil;
 
-	NSDictionary *remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+	if (sourceMigrationPathExists) {
+		/* Retrieve values from property list. */
+		preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourceMigrationPath];
 
-	if (groupContainerPreferences == nil || remappedPreferenceKeys == nil) {
-		LogToConsole(@"'groupContainerPreferences' or 'remappedPreferenceKeys' is nil");
+		remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
 
-		return; // Cancel operation...
-	}
+		if (preferencesToMigrate == nil || remappedPreferenceKeys == nil) {
+			LogToConsole(@"'preferencesToMigrate' or 'remappedPreferenceKeys' is nil");
 
-	/* We delete the existing group container preferences file and 
-	 replace it with a symbolic link. Doing this way ensures that the 
-	 new path (non-sandboxed path) can be accessed by the Mac App Store 
-	 version so that they are wrote to at the same path. */
-	NSString *userPreferencesPath = [TPCPathInfo userPreferencesFolderPath];
+			return; // Cancel operation...
+		}
 
-	NSString *localPreferencesFilename = [NSString stringWithFormat:@"%@.plist", [TPCApplicationInfo applicationBundleIdentifier]];
+		/* We delete the existing group container preferences file and
+		 replace it with a symbolic link. Doing this way ensures that the
+		 new path (non-sandboxed path) can be accessed by the Mac App Store
+		 version so that they are wrote to at the same path. */
+		if ([RZFileManager() removeItemAtPath:sourceMigrationPath error:NULL] == NO) {
+			LogToConsole(@"Failed to remove group container preferences file.");
 
-	NSString *localPreferencesFilePath = [userPreferencesPath stringByAppendingPathComponent:localPreferencesFilename];
-
-	if ([RZFileManager() removeItemAtPath:groupContainerPreferencesFilePath error:NULL] == NO) {
-		LogToConsole(@"Failed to remove group container preferences file.");
-
-		return; // Cancel operation...
+			return; // Cancel operation...
+		}
 	}
 
 	/* We do not return if the creation of the symbolic link fails. 
 	 If it fails, we still write the keys in memory so that we can at 
 	 least have the user preferences on disk somewhere, they just wont
 	 be read by the Mac App Store without symbolic link. */
-	(void)[RZFileManager() createSymbolicLinkAtPath:groupContainerPreferencesFilePath withDestinationPath:localPreferencesFilePath error:NULL];
+	if (sourceMigrationPathExists == NO) {
+		NSString *sourceMigrationPathOwner = [sourceMigrationPath stringByDeletingLastPathComponent];
+
+		if ([RZFileManager() fileExistsAtPath:sourceMigrationPathOwner] == NO) {
+			[RZFileManager() createDirectoryAtPath:sourceMigrationPathOwner withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+	}
+
+	(void)[RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL];
 
 	/* Begin migrating group container values. */
-	[groupContainerPreferences enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		/* Determine whether a key is remapped to new name. */
-		NSString *mappedKey = key;
+	if (sourceMigrationPathExists) {
+		[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			/* Determine whether a key is remapped to new name. */
+			NSString *mappedKey = key;
 
-		NSString *remappedKey = remappedPreferenceKeys[key];
+			NSString *remappedKey = remappedPreferenceKeys[key];
 
-		if (remappedKey) {
-			mappedKey = remappedKey;
-		}
+			if (remappedKey) {
+				mappedKey = remappedKey;
+			}
 
-		/* Determine whether the key already exists. If so, override. */
-		id existingValue = [RZUserDefaults() objectForKey:mappedKey];
+			/* Determine whether the key already exists. If so, override. */
+			id existingValue = [RZUserDefaults() objectForKey:mappedKey];
 
-		if (existingValue) {
-			[RZUserDefaults() removeObjectForKey:mappedKey];
-		}
+			if (existingValue) {
+				[RZUserDefaults() removeObjectForKey:mappedKey];
+			}
 
-		/* Set new value to non-group container. */
-		[RZUserDefaults() setObject:obj forKey:mappedKey];
-	}];
-
-	/* Inform future calls to method not to perform migration again. */
-	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8288"];
+			/* Set new value to non-group container. */
+			[RZUserDefaults() setObject:obj forKey:mappedKey];
+		}];
+	}
 }
+#endif
 
 @end
 

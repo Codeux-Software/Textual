@@ -2,6 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>TPCPreferencesUserDefaults Paths to Migrate</key>
+	<array>
+		<dict>
+			<key>source</key>
+			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/com.codeux.irc.textual5.plist</string>
+			<key>destination</key>
+			<string>~/Library/Preferences/com.codeux.irc.textual5.plist</string>
+		</dict>
+		<dict>
+			<key>source</key>
+			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
+			<key>destination</key>
+			<string>~/Library/Preferences/com.codeux.irc.textual5.plist</string>
+		</dict>
+		<dict>
+			<key>source</key>
+			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
+			<key>destination</key>
+			<string>~/Library/Preferences/com.codeux.irc.textual5.plist</string>
+		</dict>
+	</array>
 	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
 	<dict>
 		<key>NS</key>
