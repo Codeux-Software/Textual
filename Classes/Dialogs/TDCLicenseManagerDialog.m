@@ -194,6 +194,17 @@
 
 - (void)registeredViewDeactivateTextual:(id)sender
 {
+	BOOL deactivateCopy = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1007][2]")
+															 title:TXTLS(@"TLOLicenseManager[1007][1]")
+													 defaultButton:TXTLS(@"BasicLanguage[1219]")
+												   alternateButton:TXTLS(@"BasicLanguage[1182]")
+													suppressionKey:nil
+												   suppressionText:nil];
+
+	if (deactivateCopy == NO) {
+		return; // Cancel operation...
+	}
+
 	/* License deactivation does not use a progress indicator because
 	 it does not have to touch the network. It will only delete a file
 	 on the hard drive which is typically instant. */
