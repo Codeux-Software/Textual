@@ -60,7 +60,7 @@
 	if ([searchArray count]) {
 		NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
 		
-		NSString *basePath = [searchArray[0] stringByAppendingString:endPath];
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:endPath];
 		
 		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
 			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -74,9 +74,27 @@
 
 + (NSString *)applicationGroupContainerPath
 {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
 
 	return [url relativePath];
+#else
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
+
+		NSString *dest = [searchArray[0] stringByAppendingPathComponent:endPath];
+
+		if (dest) {
+			if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+				[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+			}
+
+			return dest;
+		}
+	}
+#endif
 }
 
 + (NSString *)applicationLocalContainerApplicationSupportPath
@@ -259,6 +277,17 @@
 	}
 	
 	return nil;
+}
+
++ (NSString *)userPreferencesFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Preferences/"];
+
+		return basePath;
+	}
 }
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox
