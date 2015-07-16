@@ -46,6 +46,8 @@ TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewFont;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
 
+TEXTUAL_EXTERN NSInteger const TPCPreferencesDictionaryVersion;
+
 #define TXDefaultTextualTimestampFormat				TLOFileLoggerTwentyFourHourClockFormat
 
 typedef enum TXNicknameHighlightMatchType : NSInteger {

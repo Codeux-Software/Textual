@@ -46,6 +46,8 @@ NSString * const TXDefaultTextualChannelViewFont				= @"Lucida Grande";
 NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
 NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
 
+NSInteger const TPCPreferencesDictionaryVersion		= 100;
+
 @implementation TPCPreferences
 
 #pragma mark -
@@ -863,7 +865,9 @@ static NSMutableArray *excludeKeywords = nil;
 
 	// ====================================================== //
 
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
+#endif
 
 	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
 
@@ -919,6 +923,8 @@ static NSMutableArray *excludeKeywords = nil;
 #else
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #endif
+
+	[RZUserDefaults() setInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
 
 	/* Setup loggin. */
 	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
