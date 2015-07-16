@@ -94,6 +94,8 @@
 			return dest;
 		}
 	}
+
+	return nil;
 #endif
 }
 
@@ -112,6 +114,11 @@
 	}
 
 	return nil;
+}
+
++ (NSString *)applicationSupportFolderPath
+{
+	return [TPCPathInfo applicationGroupContainerApplicationSupportPath];
 }
 
 + (NSString *)applicationGroupContainerApplicationSupportPath
