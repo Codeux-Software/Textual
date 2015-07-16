@@ -204,6 +204,9 @@
 "TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
 "TLOLicenseManager[1006][2]" = "All limitations of your unregistered copy of Textual have been lifted.";
 
+"TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
+"TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
