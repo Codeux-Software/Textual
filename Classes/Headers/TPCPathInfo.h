@@ -67,6 +67,7 @@
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox;
 + (NSString *)userDownloadFolderPath;
++ (NSString *)userPreferencesFolderPath;
 
 + (NSArray *)buildPathArray:(NSString *)path, ...;
 + (NSArray *)buildPathArrayWithPaths:(NSArray *)paths;

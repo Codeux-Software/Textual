@@ -2,6 +2,65 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
+	<dict>
+		<key>NS</key>
+		<string>PREFIX</string>
+		<key>SGT</key>
+		<string>PREFIX</string>
+		<key>Apple</key>
+		<string>PREFIX</string>
+		<key>WebKit</key>
+		<string>PREFIX</string>
+		<key>com.apple.</key>
+		<string>PREFIX</string>
+		<key>DataDetectorsSettings</key>
+		<string>PREFIX</string>
+		<key>METAL_</key>
+		<string>PREFIX</string>
+		<key>HockeySDK</key>
+		<string>PREFIX</string>
+		<key>TXRunCount</key>
+		<string>=</string>
+		<key>TXRunTime</key>
+		<string>=</string>
+		<key>TextField</key>
+		<string>PREFIX</string>
+		<key>System -&gt;</key>
+		<string>PREFIX</string>
+		<key>Security -&gt;</key>
+		<string>PREFIX</string>
+		<key>Window -&gt; Main Window</key>
+		<string>PREFIX</string>
+		<key>Private Extension Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v2) —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
+		<key>Text Input Prompt Suppression -&gt;</key>
+		<string>PREFIX</string>
+		<key>Textual Five Migration Tool -&gt;</key>
+		<string>PREFIX</string>
+		<key>Internal Theme Settings Key-value Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>TPCPreferencesUserDefaults</key>
+		<string>PREFIX</string>
+		<key>TDCPreferencesControllerDidShowMountainLionDeprecationWarning</key>
+		<string>=</string>
+		<key>File Transfers -&gt; File Transfer Download Folder Bookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark_5</key>
+		<string>=</string>
+		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+	</dict>
 	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
 	<array>
 		<string>now recognized</string>

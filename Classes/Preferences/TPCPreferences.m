@@ -863,8 +863,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	// ====================================================== //
 
-	[TPCPreferencesUserDefaults migrateValuesToGroupContainer];
-	[TPCPreferencesUserDefaults migrateOldKeyValues];
+	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
 
 	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
 
@@ -880,7 +879,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	/* Sandbox Check */
 
-	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]							forKey:@"Security -> Sandbox Enabled"];
+	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXLionOrLater]				forKey:@"System -> Running Mac OS Lion Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];

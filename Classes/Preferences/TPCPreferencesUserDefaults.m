@@ -39,7 +39,7 @@
 
 #import "BuildConfig.h"
 
-#import <objc/runtime.h>
+#import <objc/message.h>
 
 NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferencesUserDefaultsDidChangeNotification";
 
@@ -74,7 +74,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 - (id)protectedInit
 {
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+#else
+		return [super initWithSuiteName:nil];
+#endif
 	} else {
 		return [super initWithUser:nil];
 	}
@@ -165,89 +169,154 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
 {
-	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"Apple"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"WebKit"] ||										/* Apple owned prefix. */
-		[key hasPrefix:@"com.apple."] ||									/* Apple owned prefix. */
-		[key hasPrefix:@"DataDetectorsSettings"] ||							/* Apple owned prefix. */
-		
-		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
-		
-		[key isEqualToString:@"TXRunCount"] ||								/* Textual owned prefix. */
-		[key isEqualToString:@"TXRunTime"] ||								/* Textual owned prefix. */
-		
-		[key hasPrefix:@"TextField"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"System ->"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
-		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
-		[key hasPrefix:@"Private Extension Store -> "] ||					/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal (v3) -> "] ||		/* Textual owned prefix. */
-		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
-		[key hasPrefix:@"TPCPreferencesUserDefaults"] ||					/* Textual owned prefix. */
+	/* Find cached list of excluded keys or build from disk. */
+	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+								  @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
 
-		[key isEqualToString:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"])
-	{
-		return YES;
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
+
+		cachedValues = _blockedNames;
 	}
-	else
-	{
-		return NO;
-	}
-}
 
-/* Perform a one time migration of old keys to new keys. */
-+ (void)migrateOldKeyValues
-{
-	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
+	/* Using cached list of excluded keys, perform comparison on each. */
+	for (NSString *blockedName in cachedValues) {
+		NSString *comparisonOperator = cachedValues[blockedName];
 
-	if (migratedOldKeys == nil) {
-		NSDictionary *remappedKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
-
-		[remappedKeys enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			id oldValue = [RZUserDefaults() objectForKey:key];
-
-			if (oldValue) {
-				DebugLogToConsole(@"Remapped '%@' to '%@'", key, obj);
-
-				[RZUserDefaults() removeObjectForKey:key];
-
-				[RZUserDefaults() setObject:oldValue forKey:obj];
+		if ([comparisonOperator isEqualToString:@"="]) {
+			if ([key isEqualToString:blockedName]) {
+				return YES;
 			}
-		}];
-	}
-
-	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
-}
-
-/* Performs a one time migration of sandbox level keys to the group container
- if they were previously used on a system that did not have a group container. */
-+ (void)migrateValuesToGroupContainer
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		id usesGroupContainer = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
-
-		if (usesGroupContainer) { // make sure the key even exists (non-nil)
-			if ([usesGroupContainer boolValue] == NO) {
-				NSDictionary *localDictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-
-				[localDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-					if ([RZUserDefaults() objectForKey:key] == nil) {
-						[RZUserDefaults() setObject:obj forKey:key];
-					}
-				}];
+		} else if ([comparisonOperator isEqualToString:@"PREFIX"]) {
+			if ([key hasPrefix:blockedName]) {
+				return YES;
+			}
+		} else if ([comparisonOperator isEqualToString:@"SUFFIX"]) {
+			if ([key hasSuffix:blockedName]) {
+				return YES;
 			}
 		}
-
-		[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
-	} else {
-		[RZUserDefaults() setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
 	}
+
+	/* Default to the key not being excluded. */
+	return NO;
+}
+
++ (void)migrateKeyValuesAwayFromGroupContainer
+{
+	/* Discussion:
+
+	 To make the non-Mac App Store and Mac App Store version the best possible 
+	 experience, the user should have their preferences migrated the moment the 
+	 application opens, before anything happens so they never suspect there is 
+	 any difference. This is very difficult because one is sandboxed, another is 
+	 not. Each writes to their own respective paths for preferences.
+
+	 This method works to merge paths into one:
+		The Mac App Store version of Textual writes to the following path:
+			~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist
+
+		The non-Mac App Store version of Textual writes to the following path:
+			~/Library/Preferences/com.codeux.irc.textual5.plist
+
+	 So whats the best way to handle the difference? NSUserDefaults does not allow an
+	 application to specify the exact write path so that is out of the question and it
+	 would be a burden to write our own complete implementation of NSUserDefaults
+	 just to have custom paths.
+
+	 To solve this problem, this method first reads all keys from the Mac App Store
+	 path if it exists so we know the existing preferences. Once we have those values,
+	 we delete the Mac App Store preferences file. Next, we create a symbolic link from
+	 the Mac App Store version to the non-Mac App Store version.
+
+	 Once all this is complete, we write the values in memory to the new location. The
+	 symbolic link, though related to a sandboxed application, works as expected (at least
+	 when tested against El Capitan when writing this comment). */
+
+	/* Determine whether Textual has previously performed a group container migration. */
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8288"];
+
+	if (migratedOldKeys) {
+		return; // Cancel operation...
+	}
+
+	/* Determine whether container preferences file exists. */
+	NSString *containerPath = [TPCPathInfo applicationGroupContainerPath];
+
+	if (containerPath == nil) {
+		return; // Cancel operation...
+	}
+
+	NSString *groupContainerPreferencesFilename = [NSString stringWithFormat:@"/Library/Preferences/%@.plist", TXBundleBuildGroupContainerIdentifier];
+
+	NSString *groupContainerPreferencesFilePath = [containerPath stringByAppendingPathComponent:groupContainerPreferencesFilename];
+
+	if ([RZFileManager() fileExistsAtPath:groupContainerPreferencesFilePath] == NO) {
+		return; // Cancel operation...
+	}
+
+	/* Load contents of relevant dictionaries. */
+	NSDictionary *groupContainerPreferences = [NSDictionary dictionaryWithContentsOfFile:groupContainerPreferencesFilePath];
+
+	NSDictionary *remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+
+	if (groupContainerPreferences == nil || remappedPreferenceKeys == nil) {
+		LogToConsole(@"'groupContainerPreferences' or 'remappedPreferenceKeys' is nil");
+
+		return; // Cancel operation...
+	}
+
+	/* We delete the existing group container preferences file and 
+	 replace it with a symbolic link. Doing this way ensures that the 
+	 new path (non-sandboxed path) can be accessed by the Mac App Store 
+	 version so that they are wrote to at the same path. */
+	NSString *userPreferencesPath = [TPCPathInfo userPreferencesFolderPath];
+
+	NSString *localPreferencesFilename = [NSString stringWithFormat:@"%@.plist", [TPCApplicationInfo applicationBundleIdentifier]];
+
+	NSString *localPreferencesFilePath = [userPreferencesPath stringByAppendingPathComponent:localPreferencesFilename];
+
+	if ([RZFileManager() removeItemAtPath:groupContainerPreferencesFilePath error:NULL] == NO) {
+		LogToConsole(@"Failed to remove group container preferences file.");
+
+		return; // Cancel operation...
+	}
+
+	/* We do not return if the creation of the symbolic link fails. 
+	 If it fails, we still write the keys in memory so that we can at 
+	 least have the user preferences on disk somewhere, they just wont
+	 be read by the Mac App Store without symbolic link. */
+	(void)[RZFileManager() createSymbolicLinkAtPath:groupContainerPreferencesFilePath withDestinationPath:localPreferencesFilePath error:NULL];
+
+	/* Begin migrating group container values. */
+	[groupContainerPreferences enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		/* Determine whether a key is remapped to new name. */
+		NSString *mappedKey = key;
+
+		NSString *remappedKey = remappedPreferenceKeys[key];
+
+		if (remappedKey) {
+			mappedKey = remappedKey;
+		}
+
+		/* Determine whether the key already exists. If so, override. */
+		id existingValue = [RZUserDefaults() objectForKey:mappedKey];
+
+		if (existingValue) {
+			[RZUserDefaults() removeObjectForKey:mappedKey];
+		}
+
+		/* Set new value to non-group container. */
+		[RZUserDefaults() setObject:obj forKey:mappedKey];
+	}];
+
+	/* Inform future calls to method not to perform migration again. */
+	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8288"];
 }
 
 @end
