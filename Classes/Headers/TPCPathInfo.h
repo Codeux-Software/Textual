@@ -49,6 +49,7 @@
 + (NSString *)applicationResourcesFolderPath;
 + (NSString *)applicationGroupContainerPath;
 
++ (NSString *)applicationSupportFolderPath TEXTUAL_DEPRECATED("Use -applicationGroupContainerApplicationSupportPath; instead");
 + (NSString *)applicationGroupContainerApplicationSupportPath;
 + (NSString *)applicationLocalContainerApplicationSupportPath;
 
