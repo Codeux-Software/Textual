@@ -873,8 +873,10 @@
 	[[self themeSelectionButton] removeAllItems];
 	
 	NSDictionary *allThemes = [themeController() dictionaryOfAllThemes];
+
+	NSArray *allThemesKeys = [allThemes sortedDictionaryKeys];
 	
-	for (NSString *themeName in allThemes) {
+	for (NSString *themeName in allThemesKeys) {
 		NSString *themeType = allThemes[themeName];
 		
 		NSMenuItem *cell = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
