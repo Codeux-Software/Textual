@@ -300,7 +300,7 @@
 		self.settingsKeyValueStoreName	= [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
 		
 		/* Disable indentation? */
-		if (self.indentationOffset <= 0.0) {
+		if (self.indentationOffset < 0.0) {
 			self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
 		}
 
