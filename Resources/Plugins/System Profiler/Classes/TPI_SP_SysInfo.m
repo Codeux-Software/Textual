@@ -282,7 +282,9 @@
 		if (_realModel) {
 			_exact_model = _realModel;
 		} else {
-			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
+			NSString *_all_models_path = [_bundle pathForResource:@"MacintoshModels" ofType:@"plist"];
+
+			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:_all_models_path];
 
 			if (NSObjectIsEmpty(_all_models)) {
 				NSAssert(NO, @"_all_models");
