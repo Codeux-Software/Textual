@@ -63,6 +63,7 @@
 		/* These are the default values. Any class using this one is expected
 		 to define their own values at some point. */
 		[self setPreferredFont:[NSFont systemFontOfSize:12.0]];
+		
 		[self setPreferredFontColor:[NSColor blueColor]];
     }
 	
@@ -71,10 +72,8 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	/* Make ourself the first responder. */
     [[self window] makeFirstResponder:self];
 
-	/* Pass event to super. */
     [super mouseDown:theEvent];
 }
 
@@ -135,24 +134,19 @@
 
 - (void)setAttributedStringValue:(NSAttributedString *)string
 {
-	/* Wipe any undo actions already stored. */
 	[[self undoManager] removeAllActions];
-	
-	/* Set new value. */
+
 	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
 
     [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
 
-	/* Inform others of the change. */
 	[self didChangeText];
 }
 
 - (void)setStringValue:(NSString *)string
 {
-	/* Set new value. */
     [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
-	
-	/* Inform others of the change. */
+
 	[self didChangeText];
 }
 
@@ -205,7 +199,6 @@
 		[self resetTypeSetterAttributes];
 	}
 
-	/* Internal text did change notification. */
 	if ([self respondsToSelector:@selector(internalTextDidChange:)]) {
 		[self performSelector:@selector(internalTextDidChange:) withObject:aNotification];
 	}
@@ -218,6 +211,7 @@
 	CGFloat newPointSize = [self.preferredFont pointSize];
 
     [[self textStorage] beginEditing];
+
     [[self textStorage] enumerateAttribute:NSFontAttributeName
 								inRange:[self fullSelectionRange]
 								options:0
@@ -248,9 +242,7 @@
 	} else {
 		_preferredFont = [preferredFont copy];
 
-		[self setTypingAttributes:@{NSFontAttributeName : _preferredFont}];
-
-		[self setFont:_preferredFont];
+		[self modifyTypingAttributes:@{NSFontAttributeName : _preferredFont}];
 	}
 }
 
@@ -261,9 +253,8 @@
 	} else {
 		_preferredFontColor = [preferredFontColor copy];
 
-		[self setTypingAttributes:@{NSForegroundColorAttributeName : _preferredFontColor}];
+		[self modifyTypingAttributes:@{NSForegroundColorAttributeName : _preferredFontColor}];
 
-		[self setTextColor:_preferredFontColor];
 		[self setInsertionPointColor:_preferredFontColor];
 	}
 }
@@ -272,13 +263,27 @@
 {
 	[self setTypingAttributes:@{
 		NSFontAttributeName : self.preferredFont,
+
 		NSForegroundColorAttributeName : self.preferredFontColor
 	}];
 }
 
+- (void)modifyTypingAttributes:(NSDictionary *)typingAttributes
+{
+	NSMutableDictionary *existingAttributes = [[self typingAttributes] mutableCopy];
+
+	[existingAttributes addEntriesFromDictionary:typingAttributes];
+
+	[self setTypingAttributes:existingAttributes];
+}
+
 - (void)resetTextColorInRange:(NSRange)range
 {
-	[self setTextColor:self.preferredFontColor range:range];
+	NSDictionary *newAttributes = @{
+		NSForegroundColorAttributeName : self.preferredFontColor
+	};
+
+	[[self textStorage] setAttributes:newAttributes range:range];
 }
 
 #pragma mark -
