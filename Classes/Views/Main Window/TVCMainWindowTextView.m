@@ -68,7 +68,6 @@
 
 - (void)awakeFromNib
 {
-	/* Observe certain keys. */
 	for (NSString *key in _KeyObservingArray) {
 		[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 	}
@@ -78,7 +77,6 @@
 
 - (void)dealloc
 {
-	/* Stop observing keys. */
 	for (NSString *key in _KeyObservingArray) {
 		[RZUserDefaults() removeObserver:self forKeyPath:key];
 	}
@@ -86,9 +84,7 @@
 
 - (void)updateBackgroundColor
 {
-	/* Set background appearance. */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		/* Update button appearance. */
 		if ([mainWindow() isUsingVibrantDarkAppearance]) {
 			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
@@ -100,12 +96,13 @@
 		[self.backgroundView setNeedsDisplay:YES];
 	}
 
-	/* Use font color depending on appearance. */
 	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
 	
 	[self setPreferredFontColor:preferredFontColor];
 
 	[self updateTextBoxCachedPreferredFontSize];
+
+	[self updateAllFontColorsToMatchTheDefaultFont];
 }
 
 - (void)windowDidChangeKeyState
@@ -118,28 +115,21 @@
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	/* Do not pass mouse events with sheet open. */
 	TVCMainWindowNegateActionWithAttachedSheet();
 
-	/* Pass event. */
 	[super rightMouseDown:theEvent];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	/* Do not pass mouse events with sheet open. */
 	TVCMainWindowNegateActionWithAttachedSheet();
 
-	/* Don't know why control click is broken in the text field. 
-	 Possibly because of how hacked together it is... anyways, this
-	 is a quick fix for control click to open the right click menu. */
 	if ([NSEvent modifierFlags] & NSControlKeyMask) {
 		[super rightMouseDown:theEvent];
 
 		return;
 	}
-	
-	/* Pass event. */
+
 	[super mouseDown:theEvent];
 }
 
@@ -212,50 +202,48 @@
 }
 
 #pragma mark -
-#pragma mark Everything Else.
+#pragma mark Everything Else
+
+- (void)updateAllFontColorsToMatchTheDefaultFont
+{
+	static NSArray *colorsToReset = nil;
+
+	if (colorsToReset == nil) {
+		colorsToReset = @[
+			[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPrimaryTextColor],
+			[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor],
+			[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPlaceholderTextColor],
+			[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor]
+		];
+	}
+
+	NSColor *preferredColor = [self preferredFontColor];
+
+	[[self textStorage] beginEditing];
+
+	[[self textStorage] enumerateAttribute:NSForegroundColorAttributeName
+								   inRange:[self fullSelectionRange]
+								   options:0
+								usingBlock:^(id value, NSRange range, BOOL *stop)
+	 {
+		 if ([value isEqual:preferredColor] == NO) {
+			 for (NSColor *color in colorsToReset) {
+				 if ([value isEqual:color]) {
+					 [self resetTextColorInRange:range];
+				 }
+			 }
+		 }
+	 }];
+
+	[[self textStorage] endEditing];
+}
 
 - (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
 {
+	[super setAttributedStringValue:attributedStringValue];
+
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		if (attributedStringValue) {
-			NSMutableAttributedString *mutableCopy = [attributedStringValue mutableCopy];
-			
-			NSRange textRange = NSMakeRange(0, [mutableCopy length]);
-			
-			static NSArray *colorsToReset = nil;
-  
-			if (colorsToReset == nil) {
-				colorsToReset = @[
-				   [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPrimaryTextColor],
-				   [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor],
-				   [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPlaceholderTextColor],
-				   [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor]
-				];
-			}
-			
-			NSColor *preferredColor = [self preferredFontColor];
-			
-			[mutableCopy enumerateAttribute:NSForegroundColorAttributeName
-									inRange:textRange
-									options:0
-								 usingBlock:^(id value, NSRange range, BOOL *stop) {
-									 if ([value isEqual:preferredColor] == NO) {
-										 for (NSColor *color in colorsToReset) {
-											 if ([value isEqual:color]) {
-												 [mutableCopy removeAttribute:NSForegroundColorAttributeName range:range];
-												 
-												 [mutableCopy addAttribute:NSForegroundColorAttributeName value:preferredColor range:range];
-											 }
-										 }
-									 }
-								 }];
-			
-			[super setAttributedStringValue:mutableCopy];
-		} else {
-			[super setAttributedStringValue:attributedStringValue];
-		}
-	} else {
-		[super setAttributedStringValue:attributedStringValue];
+		[self updateAllFontColorsToMatchTheDefaultFont];
 	}
 }
 
@@ -329,44 +317,46 @@
 - (void)updateTextBoxCachedPreferredFontSize
 {
 	/* Update the font. */
-	self.cachedFontSize = [TPCPreferences mainTextViewFontSize];
+	TVCMainWindowTextViewFontSize newFontSize = [TPCPreferences mainTextViewFontSize];
 
-	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
-		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
-		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
-	} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
-		[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:24.0]];
+	if (NSDissimilarObjects(self.cachedFontSize, newFontSize)) {
+		self.cachedFontSize = newFontSize;
+
+		if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
+		} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
+		} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
+		} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
+			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:24.0]];
+		}
+
+		/* Update the placeholder string. */
+		NSDictionary *attrs = @{
+			NSFontAttributeName				: [self preferredFont],
+
+			NSForegroundColorAttributeName	: [self placeholderTextFontColor]
+		};
+		
+		self.placeholderString = nil;
+		self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
+
+		/* Prepare draw. */
+		[self setNeedsDisplay:YES];
 	}
-
-	/* Update the placeholder string. */
-	NSDictionary *attrs = @{
-		NSFontAttributeName				: [self preferredFont],
-		NSForegroundColorAttributeName	: [self placeholderTextFontColor]
-	};
-	
-	self.placeholderString = nil;
-	self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
-
-	/* Prepare draw. */
-	[self setNeedsDisplay:YES];
 }
 
 - (void)updateTextBoxBasedOnPreferredFontSize
 {
 	TVCMainWindowTextViewFontSize cachedFontSize = self.cachedFontSize;
 
-	/* Update actual cache. */
 	[self updateTextBoxCachedPreferredFontSize];
 
-	/* We only update the font sizes if there was a chagne. */
 	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
 		[self updateAllFontSizesToMatchTheDefaultFont];
 	}
 
-	/* Reset frames. */
 	[self resetTextFieldCellSize:YES];
 }
 
