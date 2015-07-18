@@ -71,10 +71,9 @@ NSInteger const IRCConnectionDefaultProxyPort = 1080;
 			 @"autoReconnect" : @(NO),
 			 @"autoSleepModeDisconnect" : @(YES),
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			 @"autojoinWaitsForNickServ" : @([TPCPreferences autojoinWaitsForNickServ]),
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 
 			 @"connectionPrefersIPv6" : @(NO),
 			 @"prefersSecuredConnection" : @(NO),

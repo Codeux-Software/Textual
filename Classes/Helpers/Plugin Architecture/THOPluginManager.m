@@ -445,7 +445,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 					if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag]) {
 						[[plugin primaryClass] userInputCommandInvokedOnClient:client commandString:cmdUpper messageString:message];
 					} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 						[[plugin primaryClass] messageSentByUser:client message:message command:cmdUpper];
+TEXTUAL_IGNORE_DEPRECATION_END
 					}
 				}
 			}
@@ -485,7 +487,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 					if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag]) {
 						[[plugin primaryClass] didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
 					} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 						[[plugin primaryClass] messageReceivedByServer:client sender:senderData message:messageData];
+TEXTUAL_IGNORE_DEPRECATION_END
 					}
 				}
 			}

@@ -40,7 +40,7 @@
 
 #import "TVCLogView.h" // @protocol
 
-@interface TVCLogController : NSObject <TVCLogViewDelegate>
+@interface TVCLogController : NSObject <TVCLogViewDelegate, WebFrameLoadDelegate, WebResourceLoadDelegate>
 @property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, weak) IRCChannel *associatedChannel;
 @property (nonatomic, strong) TVCLogView *webView;

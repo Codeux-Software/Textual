@@ -69,37 +69,6 @@
 	return nil;
 }
 
-- (NSInteger)integerForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
-{
-	return [dict integerForKey:key];
-}
-
-- (double)doubleForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
-{
-	return [dict doubleForKey:key];
-}
-
-- (NSDictionary *)dictionaryForKeys:(NSString *)key fromDictionary:(NSDictionary *)dict
-{
-	return [dict dictionaryForKey:key];
-}
-
-- (NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
-{
-	NSString *hexValue = dict[key];
-
-	if ([hexValue length] == 0) {
-		return nil;
-	}
-	
-	return hexValue;
-}
-
-- (BOOL)boolForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
-{
-	return [dict boolForKey:key];
-}
-
 - (NSFont *)fontForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
 	NSDictionary *fontDict = [dict dictionaryForKey:key];
@@ -288,24 +257,32 @@
 		/* Parse the dictionary values. */
 		self.channelViewFont			= [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
-		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
+		self.nicknameFormat				= [styleSettings stringForKey:@"Nickname Format"];
+		self.timestampFormat			= [styleSettings stringForKey:@"Timestamp Format"];
 
-		self.forceInvertSidebarColors	= [self boolForKey:@"Force Invert Sidebars" fromDictionary:styleSettings];
+		self.forceInvertSidebarColors	= [styleSettings boolForKey:@"Force Invert Sidebars"];
 
 		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
-		self.indentationOffset			= [self doubleForKey:@"Indentation Offset" fromDictionary:styleSettings];
-
-		self.settingsKeyValueStoreName	= [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
+		self.settingsKeyValueStoreName	= [styleSettings stringForKey:@"Key-value Store Name"];
 		
 		/* Disable indentation? */
-		if (self.indentationOffset < 0.0) {
+		id indentationOffset = [styleSettings objectForKey:@"Indentation Offset"];
+
+		if (indentationOffset == nil) {
 			self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
+		} else {
+			double indentationOffsetDouble = [indentationOffset doubleValue];
+
+			if (indentationOffsetDouble < 0.0) {
+				self.indentationOffset = TPCThemeSettingsDisabledIndentationOffset;
+			} else {
+				self.indentationOffset = indentationOffsetDouble;
+			}
 		}
 
 		/* Get style template version. */
-		NSDictionary *templateVersions = [self dictionaryForKeys:@"Template Engine Versions" fromDictionary:styleSettings];
+		NSDictionary *templateVersions = [styleSettings dictionaryForKey:@"Template Engine Versions"];
 
 		if (templateVersions) {
 			NSInteger targetVersion = [templateVersions integerForKey:[TPCApplicationInfo applicationVersionShort]];

@@ -295,6 +295,8 @@
 
 		return basePath;
 	}
+
+	return nil;
 }
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox

@@ -540,8 +540,7 @@
 
 #define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 			NSArray *nicknames = [self selectedMembers:nil];
 
@@ -584,7 +583,7 @@
 
 			return NO;
 
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 
 #undef _ui
 

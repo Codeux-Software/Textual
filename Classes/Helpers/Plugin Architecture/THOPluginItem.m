@@ -109,8 +109,10 @@
 		if (supportsNewFeature) {
 			[self.primaryClass pluginLoadedIntoMemory];
 		} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			[self.primaryClass pluginLoadedIntoMemory:worldController()];
-			
+TEXTUAL_IGNORE_DEPRECATION_END
+
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginLoadedIntoMemory:", self.primaryClass);
 		}
 	}
@@ -141,7 +143,7 @@
 	/* Does the bundle have a preference pane?... */
 	supportsOldFeature = ([self.primaryClass respondsToSelector:@selector(preferencesMenuItemName)] &&
 						  [self.primaryClass respondsToSelector:@selector(preferencesView)]);
-	
+
 	supportsNewFeature = ([self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
 						  [self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)]);
 	
@@ -154,8 +156,10 @@
 			itemView = [self.primaryClass pluginPreferencesPaneView];
 			itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
 		} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			itemView = [self.primaryClass preferencesView];
 			itemName = [self.primaryClass preferencesMenuItemName];
+TEXTUAL_IGNORE_DEPRECATION_END
 			
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesMenuItemName", self.primaryClass);
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -preferencesView", self.primaryClass);
@@ -184,8 +188,10 @@
 		if (supportsNewFeature) {
 			spdcmds = [self.primaryClass subscribedUserInputCommands];
 		} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			spdcmds = [self.primaryClass pluginSupportsUserInputCommands];
-			
+TEXTUAL_IGNORE_DEPRECATION_END
+
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageSentByUser:message:command:", self.primaryClass);
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsUserInputCommands", self.primaryClass);
 		}
@@ -225,8 +231,10 @@
 		if (supportsNewFeature) {
 			spdcmds = [self.primaryClass subscribedServerInputCommands];
 		} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			spdcmds = [self.primaryClass pluginSupportsServerInputCommands];
-			
+TEXTUAL_IGNORE_DEPRECATION_END
+
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -messageReceivedByServer:sender:message:", self.primaryClass);
 			LogToConsole(@"DEPRECATED: Primary class %@ uses deprecated -pluginSupportsServerInputCommands", self.primaryClass);
 		}
@@ -282,7 +290,9 @@
 - (void)sendDealloc
 {
 	if ([self.primaryClass respondsToSelector:@selector(pluginUnloadedFromMemory)]) {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 		[self.primaryClass pluginUnloadedFromMemory];
+TEXTUAL_IGNORE_DEPRECATION_END
 	} else if ([self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)]) {
 		[self.primaryClass pluginWillBeUnloadedFromMemory];
 	}
@@ -324,7 +334,9 @@
 	if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag]) {
 		return [self.primaryClass pluginPreferencesPaneView];
 	} else if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag]) {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 		return [self.primaryClass preferencesView];
+TEXTUAL_IGNORE_DEPRECATION_END
 	} else {
 		return nil;
 	}
@@ -335,7 +347,9 @@
 	if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag]) {
 		return [self.primaryClass pluginPreferencesPaneMenuItemName];
 	} else if ([self supportsFeature:THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag]) {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 		return [self.primaryClass preferencesMenuItemName];
+TEXTUAL_IGNORE_DEPRECATION_END
 	} else {
 		return nil;
 	}

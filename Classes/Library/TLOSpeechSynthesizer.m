@@ -124,10 +124,9 @@
 					self.isWaitingForSystemToStopSpeaking = YES;
 
 					/* Start waiting for system to finish. */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 					[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 				}
 
 				/* Do not continue. */
