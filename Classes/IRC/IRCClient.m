@@ -111,6 +111,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
+@property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
@@ -193,6 +194,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.trackedUsers = [NSMutableDictionary dictionary];
 
 		self.preAwayNickname = nil;
+
+		self.successfulConnects = 0;
 
 		self.lastMessageReceived = 0;
 
@@ -5991,6 +5994,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.cachedLocalNickname = [m paramAt:0];
 	
 	self.tryingNicknameSentNickname = [m paramAt:0];
+
+	self.successfulConnects += 1;
 	
 	/* Post event. */
 	[self postEventToViewController:@"serverConnected"];
@@ -6009,7 +6014,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* Request playback since the last seen message when previously connected. */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-		if ([TPCPreferences logToDiskIsEnabled] && self.lastMessageServerTime > 0) {
+		/* For our first connect, only playback using timestamp if logging was enabled. */
+		/* For all other connects, then playback timestamp regardless of logging. */
+
+		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDiskIsEnabled])) && self.lastMessageServerTime > 0) {
 			NSString *timetosend = [NSString stringWithFormat:@"%.0f", self.lastMessageServerTime];
 
 			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", timetosend, nil];
