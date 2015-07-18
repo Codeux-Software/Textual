@@ -195,7 +195,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.preAwayNickname = nil;
 
 		self.lastMessageReceived = 0;
-		self.lastMessageServerTime = 0;
 
 		self.serverRedirectAddressTemporaryStore = nil;
 		self.serverRedirectPortTemporaryStore = 0;
@@ -629,21 +628,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (NSTimeInterval)lastMessageServerTime
 {
 	return self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
-}
-
-- (NSTimeInterval)lastMessageServerTimeWithCachedValue
-{
-	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (fabs(self.lastMessageServerTime) == 0) {
-			double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
-
-			if (storedTime) {
-				self.lastMessageServerTime = storedTime;
-			}
-		}
-	}
-
-	return self.lastMessageServerTime;
 }
 
 - (BOOL)connectionIsSecured
@@ -4031,7 +4015,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if ([m isHistoric]) {
 				NSTimeInterval serverTime = [[m receivedAt] timeIntervalSince1970];
 				
-				if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
+				if (serverTime > self.lastMessageServerTime) {
 					/* If znc playback module is in use, then all messages are
 					 set as historic so we set any lines above our current reference
 					 date as not historic to avoid collisions. */
@@ -6025,14 +6009,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* Request playback since the last seen message when previously connected. */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-		NSTimeInterval interval = [self lastMessageServerTimeWithCachedValue];
-		
-		if (fabs(interval) == 0) {
-			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
-		} else {
-			NSString *timetosend = [NSString stringWithFormat:@"%.0f", interval];
-			
+		if ([TPCPreferences logToDiskIsEnabled] && self.lastMessageServerTime > 0) {
+			NSString *timetosend = [NSString stringWithFormat:@"%.0f", self.lastMessageServerTime];
+
 			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", timetosend, nil];
+		} else {
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
 		}
 	}
 
