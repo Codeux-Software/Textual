@@ -33,24 +33,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="610" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="oDs-48-rhy">
-                        <rect key="frame" x="599" y="255" width="11" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="11" id="EbC-QQ-NS5"/>
-                            <constraint firstAttribute="height" constant="15" id="aSA-Zy-lrY"/>
-                        </constraints>
-                        <animations/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" transparent="YES" imageScaling="proportionallyDown" inset="2" id="FNL-gv-V6X">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="performClose:" target="tBl-Uw-jZv" id="Gad-Gv-Xob"/>
-                        </connections>
-                    </button>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="UWM-nP-jqk">
                         <rect key="frame" x="0.0" y="0.0" width="610" height="270"/>
                         <constraints>
@@ -62,11 +44,9 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstItem="UWM-nP-jqk" firstAttribute="top" secondItem="FoU-2F-dJN" secondAttribute="top" id="3qz-Cp-f99"/>
-                    <constraint firstItem="oDs-48-rhy" firstAttribute="top" secondItem="FoU-2F-dJN" secondAttribute="top" id="9F6-7V-bMf"/>
                     <constraint firstAttribute="trailing" secondItem="UWM-nP-jqk" secondAttribute="trailing" id="lJM-e8-ldG"/>
                     <constraint firstAttribute="bottom" secondItem="UWM-nP-jqk" secondAttribute="bottom" id="sRu-zk-hJS"/>
                     <constraint firstItem="UWM-nP-jqk" firstAttribute="leading" secondItem="FoU-2F-dJN" secondAttribute="leading" id="ue3-lh-Pzr"/>
-                    <constraint firstAttribute="trailing" secondItem="oDs-48-rhy" secondAttribute="trailing" id="xFH-Nx-oVE"/>
                 </constraints>
                 <animations/>
             </view>
@@ -127,7 +107,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TBD-pk-7Hh">
-                                <rect key="frame" x="67" y="98" width="107" height="17"/>
+                                <rect key="frame" x="67" y="98" width="106" height="17"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Need a license?" id="yUQ-2D-YgK">
                                     <font key="font" metaFont="systemBold"/>
@@ -267,7 +247,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cfn-IY-dQv">
-                    <rect key="frame" x="73" y="125" width="87" height="17"/>
+                    <rect key="frame" x="74" y="125" width="86" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="License Key:" id="Sqv-hD-I9t">
                         <font key="font" metaFont="systemBold"/>

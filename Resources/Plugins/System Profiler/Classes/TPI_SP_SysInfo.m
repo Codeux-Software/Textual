@@ -151,8 +151,7 @@
 
 		const char *fsRep = [fullpath fileSystemRepresentation];
 		
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 		if ((FSPathMakeRef((const UInt8 *)fsRep, &fsRef, NULL) == 0) == NO) {
 			continue;
 		}
@@ -160,7 +159,7 @@
 		if ((FSGetCatalogInfo(&fsRef, kFSCatInfoParentDirID, &catalogInfo, NULL, NULL, NULL) == 0) == NO) {
 			continue;
 		}
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 		
 		BOOL isVolume = (catalogInfo.parentDirID == fsRtParID);
 
@@ -685,15 +684,15 @@
 {
 	NSString *productVersion = [XRSystemInformation systemStandardVersion];
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if ([productVersion hasPrefix:@"10.11"]) {
 		return TPILocalizedString(@"BasicLanguage[1053]");
-	} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	} else if ([productVersion hasPrefix:@"10.10"]) {
 		return TPILocalizedString(@"BasicLanguage[1052]");
-	} else if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	} else if ([productVersion hasPrefix:@"10.9"]) {
 		return TPILocalizedString(@"BasicLanguage[1017]");
-	} else if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
+	} else if ([productVersion hasPrefix:@"10.8"]) {
 		return TPILocalizedString(@"BasicLanguage[1016]");
-	} else if ([XRSystemInformation isUsingOSXLionOrLater]) {
+	} else if ([productVersion hasPrefix:@"10.7"]) {
 		return TPILocalizedString(@"BasicLanguage[1015]");
 	} else {
 		return TPILocalizedString(@"BasicLanguage[1054]");

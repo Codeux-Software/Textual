@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogPolicy : NSObject
+@interface TVCLogPolicy : NSObject <WebPolicyDelegate, WebUIDelegate>
 @property (nonatomic, copy) NSString *anchorURL;
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;

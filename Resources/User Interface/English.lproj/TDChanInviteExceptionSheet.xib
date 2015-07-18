@@ -53,7 +53,6 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" ascending="NO"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="setby" editable="NO" width="102.36099243164062" minWidth="40" maxWidth="1000" id="19">
@@ -67,7 +66,6 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" ascending="NO"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                         <tableColumn identifier="bandate" editable="NO" width="110" minWidth="10" maxWidth="3.4028234663852886e+38" id="18">
@@ -81,7 +79,6 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" ascending="NO"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>
@@ -125,7 +122,7 @@ DQ
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="18" y="282" width="165" height="17"/>
+                        <rect key="frame" x="18" y="282" width="163" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Invite Exceptions for %@" id="12">
                             <font key="font" metaFont="systemBold"/>

@@ -117,6 +117,11 @@ typedef void (^TXEmtpyBlockDataType)(void);
 
 #define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED(reason)
 
+#define TEXTUAL_IGNORE_DEPRECATION_BEGIN		_Pragma("clang diagnostic push")									\
+												_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+
+#define TEXTUAL_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
+
 /* Defines for script support instead of importing the
  entire Carbon framework for three items. */
 #ifndef kASAppleScriptSuite
