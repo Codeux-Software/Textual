@@ -463,11 +463,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	/* Archive server-time timestamp if certain conditions are met. */
 	self.isTerminating = YES;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
-		if ([TPCPreferences logToDiskIsEnabled]) {
-			if (self.lastMessageServerTime > 0) {
-				self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
-			}
+	if ([TPCPreferences logToDiskIsEnabled]) {
+		if (self.lastMessageServerTime > 0) {
+			self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
 		}
 	}
 	
