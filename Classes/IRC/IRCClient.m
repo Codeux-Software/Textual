@@ -460,16 +460,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)prepareForApplicationTermination
 {
-	/* Archive server-time timestamp if certain conditions are met. */
 	self.isTerminating = YES;
 
-	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (self.lastMessageServerTime > 0) {
-			self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
-		}
-	}
-	
-	/* Perform normal operations. */
 	[self quit];
 	
 	[self closeDialogs];
@@ -627,6 +619,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (BOOL)isReconnecting
 {
 	return self.reconnectTimer.timerIsActive;
+}
+
+- (void)setLastMessageServerTime:(NSTimeInterval)lastMessageServerTime
+{
+	self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = lastMessageServerTime;
+}
+
+- (NSTimeInterval)lastMessageServerTime
+{
+	return self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 }
 
 - (NSTimeInterval)lastMessageServerTimeWithCachedValue
