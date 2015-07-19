@@ -49,6 +49,11 @@ NSString * const TLOFileLoggerNoticeNicknameFormat		= @"-%n-";
 NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"; // 2008-07-09T16:13:30+12:00
 NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
+@interface TLOFileLogger ()
+@property (readonly, copy) NSURL *fileWritePath;
+@property (nonatomic, strong) NSFileHandle *file;
+@end
+
 @implementation TLOFileLogger
 
 #pragma mark -
@@ -91,21 +96,25 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 		 self.file = nil;
 	}
 
-	self.filename = nil;
-
 	[RZNotificationCenter() removeObserver:self name:IRCWorldDateHasChangedNotification object:nil];
 }
 
 - (void)dateChanged:(id)sender
 {
+	[self close];
+
 	[self open];
+}
+
+- (void)reopenIfNeeded
+{
+	if (self.file == nil) {
+		[self open];
+	}
 }
 
 - (void)open
 {
-	/* Reset everything. */
-	[self close];
-
 	/* Where are we writing to? */
 	NSURL *path = [self fileWritePath];
 
@@ -115,14 +124,14 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 	/* What will the filename be? The filename
 	 includes the folder being written to. */
-	self.filename = [self buildFileName];
+	NSURL *filename = [self buildFileName];
 
 	/* Make sure the folder being written to exists. */
 	/* We extract the folder from self.filename for this
 	 check instead of using "path" because the generation
 	 of self.filename may have added extra directories to 
 	 the structure of the path beyond what "path" provided. */
-	NSURL *folder = [self.filename URLByDeletingLastPathComponent];
+	NSURL *folder = [filename URLByDeletingLastPathComponent];
 
 	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
 		NSError *fmerr = nil;
@@ -139,10 +148,10 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	}
 
 	/* Does the file exist? */
-	if ([RZFileManager() fileExistsAtPath:[self.filename path]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:[filename path]] == NO) {
 		NSError *fcerr = nil;
 
-		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
+		[NSStringEmptyPlaceholder writeToURL:filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 
 		if (fcerr) {
 			DebugLogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
@@ -154,7 +163,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	}
 
 	/* Open our file handle. */
-	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[self.filename path]];
+	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[filename path]];
 
 	if ( self.file) {
 		[self.file seekToEndOfFile];
