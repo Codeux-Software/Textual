@@ -68,6 +68,8 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 - (void)writePlainTextLine:(NSString *)s
 {
+	[self reopenIfNeeded];
+
 	if (self.file) {
 		NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
 		
