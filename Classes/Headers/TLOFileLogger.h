@@ -53,9 +53,6 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerTwentyFourHourClockFormat;
 @interface TLOFileLogger : NSObject
 @property (nonatomic, weak) IRCClient *client;
 @property (nonatomic, weak) IRCChannel *channel;
-@property (nonatomic, copy) NSURL *filename;
-@property (readonly, copy) NSURL *fileWritePath;
-@property (nonatomic, strong) NSFileHandle *file;
 
 - (void)open;
 - (void)close;

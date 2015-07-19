@@ -3170,12 +3170,12 @@
 				4CF40DBE1AC1A4AC00A26BE0 /* Input Text Field */,
 				4CF40DC51AC1A4AC00A26BE0 /* Main Window */,
 				4CF40DCC1AC1A4AC00A26BE0 /* Server List */,
+				4CF40DD91AC1A4AC00A26BE0 /* User List */,
 				4CF40DD41AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m */,
 				4CF40DD51AC1A4AC00A26BE0 /* TVCBasicTableView.m */,
 				4CF40DD61AC1A4AC00A26BE0 /* TVCDockIcon.m */,
 				4CF40DD71AC1A4AC00A26BE0 /* TVCInputPromptDialog.m */,
 				4CF40DD81AC1A4AC00A26BE0 /* TVCQueuedCertificateTrustPanel.m */,
-				4CF40DD91AC1A4AC00A26BE0 /* User List */,
 			);
 			path = Views;
 			sourceTree = "<group>";

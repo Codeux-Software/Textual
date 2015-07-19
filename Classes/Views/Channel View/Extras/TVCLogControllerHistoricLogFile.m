@@ -44,10 +44,6 @@
 #define _maximumRowCountPerClient			1000
 
 @interface TVCLogControllerHistoricLogFile ()
-#if _usesBackgroundActivityTask == 1
-@property (nonatomic, strong) id backgroundTimer;
-#endif
-
 @property (nonatomic, strong) NSFileHandle *fileHandle;
 @property (nonatomic, assign) BOOL truncationTimerScheduled;
 @end
@@ -87,9 +83,6 @@
 
 - (void)open
 {
-	/* Reset everything. */
-	[self close];
-
 	/* Where are we writing to? */
 	NSString *rawpath = [self writePath];
 
