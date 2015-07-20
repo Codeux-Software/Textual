@@ -373,29 +373,21 @@ static const char *kMacNames[] = {
 
 #define _append(store, index)	[resultString appendString:[NSString stringWithUTF8String:(store)[(index)]]];
 
-// -
-
 			_append(kKeyExchangeNames, (cs.encoded >> 8))
 
 			[resultString appendString:@"-"];
 
-// -
-
 			_append(kCipherNames, ((cs.encoded >> 3) & 0x1f));
-
-			[resultString appendString:@"-"];
-
-// -
 
 			NSInteger macIndex = (cs.encoded & 0x7);
 
 			if (macIndex == kAEADMACValue) {
-				macIndex = 0; // Default to NULL
+				;
+			} else {
+				[resultString appendString:@"-"];
+
+				_append(kMacNames, macIndex);
 			}
-
-			_append(kMacNames, macIndex);
-
-// -
 
 #undef _append
 
