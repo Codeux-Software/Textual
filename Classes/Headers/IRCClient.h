@@ -181,8 +181,6 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 
-@property (readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
-
 - (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname;
 - (NSString *)nicknameWithZNCUserPrefix:(NSString *)nickname;
 
