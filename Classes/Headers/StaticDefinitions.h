@@ -39,12 +39,8 @@
 #define TXLoadMacOSVersionSpecificFeatures		1
 
 #if TXLoadMacOSVersionSpecificFeatures
- 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_9_AND_LATER)
- 		#define TXSystemIsMacOSMavericksOrNewer
-	#endif
-
-	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_10_AND_LATER)
-		#define TXSystemIsMacOSYosemiteOrNewer
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_11_AND_LATER)
+		#define TXSystemIsOSXElCapitanOrLater
 	#endif
 #endif
 
