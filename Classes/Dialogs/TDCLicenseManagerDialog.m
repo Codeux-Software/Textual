@@ -56,17 +56,20 @@
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicenseOwnerTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicensePurchaseDateTextField;
 @property (nonatomic, weak) IBOutlet NSButton *registeredViewDeactivateTextualButton;
-@property (nonatomic, weak) IBOutlet NSButton *unregisteredViewPurchaseTextualButton;
+@property (nonatomic, weak) IBOutlet NSButton *unregisteredViewActivateTextualButton;
+@property (nonatomic, weak) IBOutlet NSButton *unregisteredViewCancelButton;
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewRecoveryLostLicenseButton;
+@property (nonatomic, weak) IBOutlet NSImageView *unregisteredViewMacAppStoreIconImageView;
 @property (nonatomic, strong) TDCProgressInformationSheet *progressSheet;
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 
-- (IBAction)unregisteredViewLicenseKeyValueChanged:(id)sender;
-
+- (IBAction)unregisteredViewCancel:(id)sender;
+- (IBAction)unregisteredViewActivateTextual:(id)sender;
 - (IBAction)unregisteredViewPurchaseTextual:(id)sender;
 - (IBAction)unregisteredViewRecoveryLostLicense:(id)sender;
+- (IBAction)unregisteredViewMigrateMacAppStorePurchase:(id)sender;
 
 - (IBAction)registeredViewDeactivateTextual:(id)sender;
 @end
@@ -88,7 +91,26 @@
 
 	[[self window] makeKeyAndOrderFront:nil];
 
+	[self populateMacAppStoreIconImageView];
+
 	[self updateSelectedPane];
+}
+
+- (void)populateMacAppStoreIconImageView
+{
+	/* Read the app store icon image from the actual App Store app so 
+	 that we do not have to update it if Apple does. */
+	NSBundle *appStoreApplication = [NSBundle bundleWithPath:@"/Applications/App Store.app"];
+
+	if (appStoreApplication) {
+		NSString *appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];
+
+		if (appStoreIconPath) {
+			NSImage *appStoreIconImage = [[NSImage alloc] initWithContentsOfFile:appStoreIconPath];
+
+			[self.unregisteredViewMacAppStoreIconImageView setImage:appStoreIconImage];
+		}
+	}
 }
 
 - (void)updateSelectedPane
@@ -120,7 +142,12 @@
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
-- (void)unregisteredViewLicenseKeyValueChanged:(id)sender
+- (void)unregisteredViewCancel:(id)sender
+{
+	[[self window] close];
+}
+
+- (void)updateUnregisteredViewActivationButton
 {
 	if (self.textualIsRegistered) {
 		return; // Cancel operation...
@@ -129,8 +156,17 @@
 	NSString *licenseKeyValue = [self.unregisteredViewLicenseKeyTextField stringValue];
 
 	if (TLOLicenseManagerLicenseKeyIsValid(licenseKeyValue)) {
-		[self attemptToActivateLicenseKey:licenseKeyValue];
+		[self.unregisteredViewActivateTextualButton setEnabled:YES];
+	} else {
+		[self.unregisteredViewActivateTextualButton setEnabled:NO];
 	}
+}
+
+- (void)unregisteredViewActivateTextual:(id)sender
+{
+	NSString *licenseKeyValue = [self.unregisteredViewLicenseKeyTextField stringValue];
+
+	[self attemptToActivateLicenseKey:licenseKeyValue];
 }
 
 - (void)attemptToActivateLicenseKey:(NSString *)licenseKey
@@ -219,13 +255,18 @@
 	[self.licenseManagerDownloader deactivateLicense];
 }
 
+- (void)unregisteredViewMigrateMacAppStorePurchase:(id)sender
+{
+	;
+}
+
 #pragma mark -
 #pragma mark NSTextField Delegate
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
 	if ([obj object] == self.unregisteredViewLicenseKeyTextField) {
-		[self unregisteredViewLicenseKeyValueChanged:nil];
+		[self updateUnregisteredViewActivationButton];
 	}
 }
 
@@ -240,6 +281,8 @@
 	[self endProgressIndicator];
 
 	[self updateSelectedPane];
+
+	[self updateUnregisteredViewActivationButton];
 }
 
 - (void)beginProgressIndicator
