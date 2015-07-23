@@ -35,14 +35,15 @@
 
  *********************************************************************** */
 
+#import "TLOLicenseManager.h"
 #import "TLOLicenseManagerDownloader.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 
 /* URLs for performing certain actions with license keys. */
-NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://www.codeux.com/textual/private/fastspring/license-api/activateLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://www.codeux.com/textual/private/fastspring/license-api/sendLostLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL				= @"https://www.codeux.com/textual/private/fastspring/license-api/convertReceiptToLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/activateLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/sendLostLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/convertReceiptToLicense.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status 
  code will inform Textual if it the license API has been overwhelmed. */

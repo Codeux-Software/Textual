@@ -38,8 +38,6 @@
 #import "TextualApplication.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TLOLicenseManager.h"
-
 typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 	TLOLicenseManagerDownloaderRequestActivationType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
