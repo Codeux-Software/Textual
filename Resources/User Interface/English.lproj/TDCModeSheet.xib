@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCModeSheet">
@@ -291,7 +291,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="63">
-                        <rect key="frame" x="207" y="82" width="92" height="22"/>
+                        <rect key="frame" x="206" y="82" width="93" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="214">
                             <font key="font" metaFont="system"/>
@@ -322,7 +322,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="83">
-                        <rect key="frame" x="18" y="83" width="183" height="18"/>
+                        <rect key="frame" x="18" y="83" width="182" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="Limit number of users (+l):" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="218">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -358,7 +358,7 @@
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="192">
-                        <rect key="frame" x="18" y="218" width="237" height="18"/>
+                        <rect key="frame" x="18" y="218" width="236" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="No external channel messages (+n)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="221">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

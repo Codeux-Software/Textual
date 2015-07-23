@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -1613,7 +1613,7 @@
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="rVN-qv-5o0"/>
                                         </imageView>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oUM-ya-bcb">
-                                            <rect key="frame" x="109" y="198" width="265" height="36"/>
+                                            <rect key="frame" x="109" y="198" width="264" height="36"/>
                                             <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="JBc-QO-7M0">
                                                 <font key="font" metaFont="system" size="30"/>
@@ -1700,7 +1700,7 @@
                                     <rect key="frame" x="237" y="97" width="326" height="244"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ufd-37-aMI">
-                                            <rect key="frame" x="31" y="38" width="265" height="36"/>
+                                            <rect key="frame" x="31" y="38" width="264" height="36"/>
                                             <animations/>
                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Welcome to Textual" id="LRW-p3-IVK">
                                                 <font key="font" metaFont="system" size="30"/>
@@ -1835,7 +1835,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F3x-ve-32O">
-                    <rect key="frame" x="95" y="67" width="249" height="16"/>
+                    <rect key="frame" x="96" y="67" width="248" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="UUY-Vf-SbY">
                         <font key="font" size="12" name="LucidaGrande"/>
@@ -1898,7 +1898,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="THG-b6-koq">
-                    <rect key="frame" x="38" y="67" width="58" height="16"/>
+                    <rect key="frame" x="38" y="67" width="59" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Address:" id="Qf0-a5-Fjf">
                         <font key="font" size="12" name="LucidaGrande-Bold"/>
