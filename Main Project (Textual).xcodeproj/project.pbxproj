@@ -674,6 +674,8 @@
 		4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */; };
+		4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */; };
 		4C7A21931979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
 		4C7A21941979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
 		4C7A21951979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */; };
@@ -1723,6 +1725,7 @@
 		4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif; sourceTree = "<group>"; };
 		4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
+		4C79EDD71B6140AC00CA60C8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerConvertMASReceiptSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconActive.tif; sourceTree = "<group>"; };
 		4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif"; sourceTree = "<group>"; };
 		4C7A21911979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconInactive.tif; sourceTree = "<group>"; };
@@ -2296,6 +2299,7 @@
 				4CF40EF41AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib */,
 				4CF40EF61AC1A59500A26BE0 /* TDCHighlightListSheet.xib */,
 				4CF40EF81AC1A59500A26BE0 /* TDCInviteSheet.xib */,
+				4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */,
 				4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */,
 				4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */,
 				4CF40EFA1AC1A59500A26BE0 /* TDCListDialog.xib */,
@@ -4180,6 +4184,7 @@
 				4CCFA6641ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229421978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
+				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F201AC1A59500A26BE0 /* TDChanBanExceptionSheet.xib in Resources */,
 				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4317,6 +4322,7 @@
 				4CCFA6631ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229431978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229451978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
+				4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */,
 				4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F1F1AC1A59500A26BE0 /* TDChanBanExceptionSheet.xib in Resources */,
@@ -4917,6 +4923,14 @@
 				4C2ECBF41B50893A00DC5276 /* English */,
 			);
 			name = TDCLicenseManagerDialog.xib;
+			sourceTree = "<group>";
+		};
+		4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C79EDD71B6140AC00CA60C8 /* English */,
+			);
+			name = TDCLicenseManagerConvertMASReceiptSheet.xib;
 			sourceTree = "<group>";
 		};
 		4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */ = {

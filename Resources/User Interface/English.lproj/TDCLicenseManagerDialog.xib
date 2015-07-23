@@ -147,7 +147,7 @@ Gw
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="unregisteredViewPurchaseTextual:" target="-2" id="t7g-eT-m2w"/>
+                                    <action selector="unregisteredViewMigrateMacAppStorePurchase:" target="-2" id="WB2-rx-giw"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x6V-ip-XZY">

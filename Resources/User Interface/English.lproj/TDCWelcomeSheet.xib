@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCWelcomeSheet">
@@ -49,7 +49,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="247" height="110"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="247" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -132,18 +132,6 @@
                             <action selector="onDeleteChannel:" target="-2" id="188"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="157">
-                        <rect key="frame" x="136" y="425" width="202" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
-                        </constraints>
-                        <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
-                            <font key="font" metaFont="systemBold" size="19"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="159">
                         <rect key="frame" x="20" y="355" width="345" height="5"/>
                         <animations/>
@@ -244,12 +232,24 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="160">
-                        <rect key="frame" x="106" y="79" width="239" height="56"/>
+                        <rect key="frame" x="106" y="79" width="238" height="56"/>
                         <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by right clicking the connection and selecting "Server Properties."</string>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="157">
+                        <rect key="frame" x="132" y="425" width="210" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
+                        </constraints>
+                        <animations/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
+                            <font key="font" metaFont="systemBold" size="19"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
@@ -260,10 +260,10 @@ Gw
                     <constraint firstItem="201" firstAttribute="top" secondItem="160" secondAttribute="bottom" constant="17" id="4Ka-gn-MEO"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="top" secondItem="157" secondAttribute="bottom" constant="8" symbolic="YES" id="4ux-vF-Sv4"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="trailing" secondItem="159" secondAttribute="trailing" id="5hf-Ma-RBA"/>
-                    <constraint firstItem="I1L-Fi-uaP" firstAttribute="centerX" secondItem="157" secondAttribute="centerX" id="5m7-md-hlA"/>
                     <constraint firstItem="216" firstAttribute="baseline" secondItem="148" secondAttribute="baseline" id="8r3-zP-C52"/>
                     <constraint firstItem="145" firstAttribute="baseline" secondItem="146" secondAttribute="baseline" id="9GA-ey-Vmk"/>
                     <constraint firstItem="216" firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="9k9-aN-VbD"/>
+                    <constraint firstItem="157" firstAttribute="centerX" secondItem="I1L-Fi-uaP" secondAttribute="centerX" id="AeX-eL-VrR"/>
                     <constraint firstItem="157" firstAttribute="top" secondItem="zqh-Vb-fjj" secondAttribute="top" id="Ew8-R2-Nrk"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="leading" secondItem="144" secondAttribute="leading" constant="20" symbolic="YES" id="G9n-VJ-9Fk"/>
                     <constraint firstItem="159" firstAttribute="trailing" secondItem="201" secondAttribute="trailing" id="Gov-4M-K01"/>
@@ -282,7 +282,6 @@ Gw
                     <constraint firstItem="159" firstAttribute="leading" secondItem="201" secondAttribute="leading" id="ZaD-on-nMC"/>
                     <constraint firstItem="152" firstAttribute="leading" secondItem="153" secondAttribute="trailing" constant="12" symbolic="YES" id="Zbg-YD-ohs"/>
                     <constraint firstItem="152" firstAttribute="trailing" secondItem="201" secondAttribute="trailing" id="ZtO-eu-lbm"/>
-                    <constraint firstItem="157" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="49" id="bDq-5u-d6d"/>
                     <constraint firstItem="160" firstAttribute="leading" secondItem="154" secondAttribute="leading" id="bxC-0W-SNX"/>
                     <constraint firstAttribute="bottom" secondItem="153" secondAttribute="bottom" constant="20" symbolic="YES" id="czd-Bb-LUm"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="leading" secondItem="216" secondAttribute="leading" id="dhZ-oY-Vg2"/>
@@ -300,6 +299,7 @@ Gw
                     <constraint firstItem="150" firstAttribute="top" secondItem="145" secondAttribute="bottom" constant="11" id="vb7-R4-Hds"/>
                     <constraint firstItem="149" firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="vrw-p5-TaU"/>
                     <constraint firstItem="153" firstAttribute="baseline" secondItem="152" secondAttribute="baseline" id="wCJ-F8-Aw5"/>
+                    <constraint firstItem="157" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="45" id="wRe-OP-Aas"/>
                     <constraint firstAttribute="trailing" secondItem="I1L-Fi-uaP" secondAttribute="trailing" constant="20" symbolic="YES" id="yp5-tZ-kSO"/>
                     <constraint firstItem="149" firstAttribute="trailing" secondItem="151" secondAttribute="trailing" id="yws-s2-0IA"/>
                 </constraints>
