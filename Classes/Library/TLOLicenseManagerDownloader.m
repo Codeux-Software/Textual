@@ -61,7 +61,7 @@ NSInteger const TLOLicenseManagerDownloaderRequestStatusCodeTryAgainLater = 1000
 @interface TLOLicenseManagerDownloaderConnection : NSObject <NSURLConnectionDelegate>
 @property (nonatomic, strong) TLOLicenseManagerDownloader *delegate; // To be set by caller
 @property (nonatomic, assign) TLOLicenseManagerDownloaderRequestType requestType; // To be set by caller
-@property (nonatomic, copy) NSString *requestContextInfo; // Information set by caller such as license key or e-mail address
+@property (nonatomic, copy) NSDictionary *requestContextInfo; // Information set by caller such as license key or e-mail address
 @property (nonatomic, strong) NSMutableData *responseData; // Will be set by the object, readonly
 @property (nonatomic, strong) NSURLConnection *requestConnection; // Will be set by the object, readonly
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse; // Will be set by the object, readonly
@@ -86,7 +86,13 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 - (void)activateLicense:(NSString *)licenseKey
 {
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestActivationType context:licenseKey];
+	if (NSObjectIsEmpty(licenseKey)) {
+		return; // Cancel operation...
+	}
+
+	NSDictionary *contextInfo = @{@"licenseKey" : licenseKey};
+
+	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestActivationType context:contextInfo];
 }
 
 - (void)deactivateLicense
@@ -100,7 +106,13 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress
 {
-	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestSendLostLicenseType context:contactAddress];
+	if (NSObjectIsEmpty(contactAddress)) {
+		return; // Cancel operation...
+	}
+
+	NSDictionary *contextInfo = @{@"licenseOwnerContactAddress" : contactAddress};
+
+	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestSendLostLicenseType context:contextInfo];
 }
 
 - (void)convertMacAppStorePurcahse
@@ -108,7 +120,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 }
 
-- (void)setupNewActionWithRequestType:(TLOLicenseManagerDownloaderRequestType)requestType context:(NSString *)requestContext
+- (void)setupNewActionWithRequestType:(TLOLicenseManagerDownloaderRequestType)requestType context:(NSDictionary *)requestContext
 {
 	if (TLOLicenseManagerDownloaderConnectionSelected == NO) {
 		TLOLicenseManagerDownloaderConnectionSelected = YES;
@@ -376,15 +388,17 @@ present_fatal_error:
 	}
 
 	/* Post data is sent as form values with key/value pairs. */
-	NSString *encodedContextInfo = [self.requestContextInfo encodeURIComponent];
-
 	NSString *currentUserLanguage = [[NSLocale currentLocale] localeIdentifier];
 
 	NSString *requestBodyString = nil;
 
 	if (self.requestType == TLOLicenseManagerDownloaderRequestActivationType) {
+		NSString *encodedContextInfo = [self.requestContextInfo[@"licenseKey"] encodeURIComponent];
+
 		requestBodyString = [NSString stringWithFormat:@"l=%@&lang=%@", encodedContextInfo, currentUserLanguage];
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType) {
+		NSString *encodedContextInfo = [self.requestContextInfo[@"licenseOwnerContactAddress"] encodeURIComponent];
+
 		requestBodyString = [NSString stringWithFormat:@"lo=%@&lang=%@", encodedContextInfo, currentUserLanguage];
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType) {
 		;
@@ -424,11 +438,6 @@ present_fatal_error:
 
 - (BOOL)setupConnectionRequest
 {
-	/* Validate object configuration */
-	if (NSObjectIsEmpty(self.requestContextInfo)) {
-		return NO; // Cancel operation...
-	}
-
 	/* Destroy any cached data that may be defined. */
 	[self destroyConnectionRequest];
 
