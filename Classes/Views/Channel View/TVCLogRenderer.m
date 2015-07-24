@@ -858,11 +858,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if ([_controller inlineImagesEnabledForView]) {
 				NSDictionary *urlMatches = [_outputDictionary dictionaryForKey:TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute];
 
-				NSString *hashedValue = [templateTokens[@"anchorLocation"] md5];
+				for (NSString *hashedValue in urlMatches) {
+					NSString *anchorLink = urlMatches[hashedValue];
 
-				if ([urlMatches containsKey:hashedValue]) {
-					templateTokens[@"anchorInlineImageAvailable"] = @(YES);
-					templateTokens[@"anchorInlineImageUniqueID"] = hashedValue;
+					if (NSObjectsAreEqual(anchorLink, templateTokens[@"anchorLocation"])) {
+						templateTokens[@"anchorInlineImageAvailable"] = @(YES);
+						templateTokens[@"anchorInlineImageUniqueID"] = hashedValue;
+
+						break;
+					}
 				}
 			}
 		}
