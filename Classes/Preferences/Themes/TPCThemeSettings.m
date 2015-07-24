@@ -57,6 +57,17 @@
  are redundant because NSDictionaryHelper already handles them, but it
  is better to be safe than sorry. */
 
+- (NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
+{
+	NSString *hexValue = dict[key];
+
+	if ([hexValue length] == 0) {
+		return nil;
+	}
+
+	return hexValue;
+}
+
 - (NSColor *)colorForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
 {
 	NSString *hexValue = dict[key];
@@ -257,14 +268,14 @@
 		/* Parse the dictionary values. */
 		self.channelViewFont			= [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.nicknameFormat				= [styleSettings stringForKey:@"Nickname Format"];
-		self.timestampFormat			= [styleSettings stringForKey:@"Timestamp Format"];
+		self.nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
+		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
 		self.forceInvertSidebarColors	= [styleSettings boolForKey:@"Force Invert Sidebars"];
 
 		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
-		self.settingsKeyValueStoreName	= [styleSettings stringForKey:@"Key-value Store Name"];
+		self.settingsKeyValueStoreName	= [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
 		
 		/* Disable indentation? */
 		id indentationOffset = [styleSettings objectForKey:@"Indentation Offset"];
