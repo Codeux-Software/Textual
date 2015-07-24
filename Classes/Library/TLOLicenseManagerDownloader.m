@@ -43,7 +43,7 @@
 /* URLs for performing certain actions with license keys. */
 NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/activateLicense.cs";
 NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/sendLostLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/convertReceiptToLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/convertReceiptToLicense.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status 
  code will inform Textual if it the license API has been overwhelmed. */
@@ -115,9 +115,21 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestSendLostLicenseType context:contextInfo];
 }
 
-- (void)convertMacAppStorePurcahse
+- (void)migrateMacAppStorePurcahse:(NSString *)receiptData withContactAddress:(NSString *)contactAddress
 {
+	NSString *macAddress = [XRSystemInformation formattedEthernetMacAddress];
 
+	if (NSObjectIsEmpty(receiptData) || NSObjectIsEmpty(contactAddress) || NSObjectIsEmpty(macAddress)) {
+		return; // Cancel operation...
+	}
+
+	NSDictionary *contextInfo = @{
+		@"receiptData" : receiptData,
+		@"licenseOwnerMacAddress" : macAddress,
+		@"licenseOwnerContactAddress" : contactAddress
+	};
+
+	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestMigrateAppStoreType context:contextInfo];
 }
 
 - (void)setupNewActionWithRequestType:(TLOLicenseManagerDownloaderRequestType)requestType context:(NSDictionary *)requestContext
@@ -241,10 +253,35 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 				
 				_performCompletionBlockAndReturn(YES)
 			}
+			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType)
+			{
+				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+					LogToConsole(@"'Status Context' is nil or not of kind 'NSDictionary'");
+
+					goto present_fatal_error;
+				}
+
+				NSString *licenseOwnerContactAddress = [statusContext objectForKey:@"licenseOwnerContactAddress"];
+
+				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
+					LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
+
+					goto present_fatal_error;
+				}
+
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1010][2]", licenseOwnerContactAddress)
+														 title:TXTLS(@"TLOLicenseManager[1010][1]", licenseOwnerContactAddress)
+												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+											   alternateButton:nil
+												suppressionKey:nil
+											   suppressionText:nil];
+
+				_performCompletionBlockAndReturn(YES)
+			}
 		}
 		else // TLOLicenseManagerDownloaderRequestStatusCodeSuccess
 		{
-			/* Handle failrue status codes */
+			/* Errors related to license activation. */
 			if (statusCodeInt == 6500000)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1004][2]")
@@ -285,6 +322,8 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				_performCompletionBlockAndReturn(NO)
 			}
+
+			/* Errors related to lost license recovery. */
 			else if (statusCodeInt == 6400000)
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1003][2]")
@@ -314,6 +353,50 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1007][2]", originalInput)
 														 title:TXTLS(@"TLOLicenseManager[1007][1]")
+												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+											   alternateButton:nil
+												suppressionKey:nil
+											   suppressionText:nil];
+
+				_performCompletionBlockAndReturn(NO)
+			}
+
+			/* Error messages related to Mac App Store migration. */
+			else if (statusCodeInt == 6600002)
+			{
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1012][2]")
+														 title:TXTLS(@"TLOLicenseManager[1012][1]")
+												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+											   alternateButton:nil
+												suppressionKey:nil
+											   suppressionText:nil];
+
+				_performCompletionBlockAndReturn(NO)
+			}
+			else if (statusCodeInt == 6600003)
+			{
+				/* We do not present a custom dialog for this error, but we still log
+				 the contents of the context to the console to help diagnose issues. */
+				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+					LogToConsole(@"'Status Context' kind is not of 'NSDictionary'");
+
+					goto present_fatal_error;
+				}
+
+				NSString *errorMessage = [statusContext objectForKey:@"Error Message"];
+
+				if (NSObjectIsEmpty(errorMessage)) {
+					LogToConsole(@"'errorMessage' is nil or of zero length");
+
+					goto present_fatal_error;
+				}
+
+				LogToConsole(@"Receipt validation failed: %@", errorMessage);
+			}
+			else if (statusCodeInt == 6600004)
+			{
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1011][2]")
+														 title:TXTLS(@"TLOLicenseManager[1011][1]")
 												 defaultButton:TXTLS(@"BasicLanguage[1011]")
 											   alternateButton:nil
 												suppressionKey:nil
@@ -366,8 +449,8 @@ present_fatal_error:
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPIActivationURL;
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType) {
 		requestURLString = TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL;
-	} else if (self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType) {
-		requestURLString = TLOLicenseManagerDownloaderLicenseAPIConvertMASReceiptURL;
+	} else if (self.requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType) {
+		requestURLString = TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL;
 	}
 
 	if (requestURLString) {
@@ -375,6 +458,11 @@ present_fatal_error:
 	} else {
 		return nil;
 	}
+}
+
+- (NSString *)encodedRequestContextValue:(NSString *)contextKey
+{
+	return [self.requestContextInfo[contextKey] encodeURIComponent];
 }
 
 - (BOOL)populateRequestPostData:(NSMutableURLRequest *)connectionRequest
@@ -393,15 +481,20 @@ present_fatal_error:
 	NSString *requestBodyString = nil;
 
 	if (self.requestType == TLOLicenseManagerDownloaderRequestActivationType) {
-		NSString *encodedContextInfo = [self.requestContextInfo[@"licenseKey"] encodeURIComponent];
+		NSString *encodedContextInfo = [self encodedRequestContextValue:@"licenseKey"];
 
-		requestBodyString = [NSString stringWithFormat:@"l=%@&lang=%@", encodedContextInfo, currentUserLanguage];
+		requestBodyString = [NSString stringWithFormat:@"licenseKey=%@&lang=%@", encodedContextInfo, currentUserLanguage];
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType) {
-		NSString *encodedContextInfo = [self.requestContextInfo[@"licenseOwnerContactAddress"] encodeURIComponent];
+		NSString *encodedContextInfo = [self encodedRequestContextValue:@"licenseOwnerContactAddress"];
 
-		requestBodyString = [NSString stringWithFormat:@"lo=%@&lang=%@", encodedContextInfo, currentUserLanguage];
-	} else if (self.requestType == TLOLicenseManagerDownloaderRequestConvertMASReceiptType) {
-		;
+		requestBodyString = [NSString stringWithFormat:@"licenseOwnerContactAddress=%@&lang=%@", encodedContextInfo, currentUserLanguage];
+	} else if (self.requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType) {
+		NSString *receiptData = [self encodedRequestContextValue:@"receiptData"];
+
+		NSString *licenseOwnerMacAddress = [self encodedRequestContextValue:@"licenseOwnerMacAddress"];
+		NSString *licenseOwnerContactAddress = [self encodedRequestContextValue:@"licenseOwnerContactAddress"];
+
+		requestBodyString = [NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&licenseOwnerContactAddress=%@&lang=%@", receiptData, licenseOwnerMacAddress, licenseOwnerContactAddress, currentUserLanguage];
 	}
 
 	if (requestBodyString) {

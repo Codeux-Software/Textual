@@ -37,63 +37,15 @@
 
 #import "TextualApplication.h"
 
-#import "TDCLicenseManagerRecoverLostLicenseSheet.h"
-
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-@interface TDCLicenseManagerRecoverLostLicenseSheet ()
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *contactAddressTextField;
+@interface TDCLicenseManagerMigrateAppStoreSheet : TDCSheetBase
+- (void)presentOpenDialog;
 @end
 
-@implementation TDCLicenseManagerRecoverLostLicenseSheet
+@protocol TDCLicenseManagerMigrateAppStoreSheetDelegate <NSObject>
+@required
 
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCLicenseManagerRecoverLostLicenseSheet" owner:self topLevelObjects:nil];
-	}
-
-	return self;
-}
-
-- (void)start
-{
-	[self.contactAddressTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.contactAddressTextField setStringValueUsesOnlyFirstToken:YES];
-
-	[self.contactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
-
-	[self.contactAddressTextField setTextDidChangeCallback:self];
-
-	[self validatedTextFieldTextDidChange:self.contactAddressTextField];
-
-	[self startSheet];
-}
-
-- (void)validatedTextFieldTextDidChange:(id)sender
-{
-	[self.okButton setEnabled:[self.contactAddressTextField valueIsValid]];
-}
-
-- (void)ok:(id)sender
-{
-	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicenseSheet:onOk:)]) {
-		NSString *contactAddress = [self.contactAddressTextField value];
-
-		[self.delegate licenseManagerRecoverLostLicenseSheet:self onOk:contactAddress];
-	}
-
-	[super ok:sender];
-}
-
-#pragma mark -
-#pragma mark NSWindow Delegate
-
-- (void)windowWillClose:(NSNotification *)note
-{
-	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicenseSheetWillClose:)]) {
-		[self.delegate licenseManagerRecoverLostLicenseSheetWillClose:self];
-	}
-}
-
+- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender convertReceipt:(NSString *)receiptData withContactAddress:(NSString *)contactAddress;
+- (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender;
 @end
 #endif

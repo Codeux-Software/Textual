@@ -453,6 +453,10 @@
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C36091A18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
+		4C361B161B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
+		4C361B1C1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */; };
+		4C361B1D1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */; };
 		4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3E729717C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -674,8 +678,8 @@
 		4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */; };
-		4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */; };
+		4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
+		4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
 		4C7A21931979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
 		4C7A21941979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
 		4C7A21951979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */; };
@@ -1654,6 +1658,8 @@
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
+		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
+		4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerMigrateAppStoreSheet.h; sourceTree = "<group>"; };
 		4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSharedProtocolDefinitions.h; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
 		4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerHistoricLogFile.h; sourceTree = "<group>"; };
@@ -1725,7 +1731,7 @@
 		4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif; sourceTree = "<group>"; };
 		4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
-		4C79EDD71B6140AC00CA60C8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerConvertMASReceiptSheet.xib"; sourceTree = SOURCE_ROOT; };
+		4C79EDD71B6140AC00CA60C8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerMigrateAppStoreSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconActive.tif; sourceTree = "<group>"; };
 		4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif"; sourceTree = "<group>"; };
 		4C7A21911979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconInactive.tif; sourceTree = "<group>"; };
@@ -2299,7 +2305,7 @@
 				4CF40EF41AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib */,
 				4CF40EF61AC1A59500A26BE0 /* TDCHighlightListSheet.xib */,
 				4CF40EF81AC1A59500A26BE0 /* TDCInviteSheet.xib */,
-				4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */,
+				4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */,
 				4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */,
 				4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */,
 				4CF40EFA1AC1A59500A26BE0 /* TDCListDialog.xib */,
@@ -2504,6 +2510,7 @@
 			isa = PBXGroup;
 			children = (
 				4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */,
+				4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */,
 				4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */,
 			);
 			name = "License Manager";
@@ -2620,6 +2627,7 @@
 				4C8AF55E158E99520026668C /* TDCHighlightListSheet.h */,
 				4C8AF55F158E99520026668C /* TDCInviteSheet.h */,
 				4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */,
+				4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */,
 				4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */,
 				4C8AF560158E99520026668C /* TDCListDialog.h */,
 				4C8AF561158E99520026668C /* TDCModeSheet.h */,
@@ -3535,6 +3543,7 @@
 				4C5BA44D16F1302F00A96CA2 /* TVCMemberListCell.h in Headers */,
 				4C5BA44E16F1302F00A96CA2 /* TVCServerList.h in Headers */,
 				4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */,
+				4C361B1C1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */,
 				4C5BA45016F1302F00A96CA2 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C5BA45116F1302F00A96CA2 /* TVCTextFormatterMenu.h in Headers */,
 				4C5BA45216F1302F00A96CA2 /* TVCMainWindowSplitView.h in Headers */,
@@ -3695,6 +3704,7 @@
 				4C8AF683158E99520026668C /* TVCMemberListCell.h in Headers */,
 				4C8AF684158E99520026668C /* TVCServerList.h in Headers */,
 				4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */,
+				4C361B1D1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */,
 				4C8AF686158E99520026668C /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C8AF687158E99520026668C /* TVCTextFormatterMenu.h in Headers */,
 				4C8AF688158E99520026668C /* TVCMainWindowSplitView.h in Headers */,
@@ -4184,7 +4194,7 @@
 				4CCFA6641ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229421978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */,
+				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F201AC1A59500A26BE0 /* TDChanBanExceptionSheet.xib in Resources */,
 				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
@@ -4322,7 +4332,7 @@
 				4CCFA6631ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229431978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229451978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib in Resources */,
+				4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
 				4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F1F1AC1A59500A26BE0 /* TDChanBanExceptionSheet.xib in Resources */,
@@ -4526,6 +4536,7 @@
 				4C699C631B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C0445A616F1603C00EBB665 /* IRCMessage.m in Sources */,
 				4CF40DEF1AC1A4AC00A26BE0 /* TVCLogControllerOperationQueue.m in Sources */,
+				4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4CF40E4F1AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
 				4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */,
 				4CF40E871AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
@@ -4806,6 +4817,7 @@
 				4C699C641B1FAF38001CD1C3 /* TLOLicenseManager.m in Sources */,
 				4C8AF6AE158E99520026668C /* IRCPrefix.m in Sources */,
 				4CF40DF01AC1A4AC00A26BE0 /* TVCLogControllerOperationQueue.m in Sources */,
+				4C361B161B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4CF40E501AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
 				4C8AF6AF158E99520026668C /* IRCSendingMessage.m in Sources */,
 				4CF40E881AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
@@ -4925,12 +4937,12 @@
 			name = TDCLicenseManagerDialog.xib;
 			sourceTree = "<group>";
 		};
-		4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerConvertMASReceiptSheet.xib */ = {
+		4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4C79EDD71B6140AC00CA60C8 /* English */,
 			);
-			name = TDCLicenseManagerConvertMASReceiptSheet.xib;
+			name = TDCLicenseManagerMigrateAppStoreSheet.xib;
 			sourceTree = "<group>";
 		};
 		4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */ = {
