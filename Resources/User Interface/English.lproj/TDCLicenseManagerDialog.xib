@@ -52,6 +52,9 @@
                 </constraints>
                 <animations/>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="8r8-0s-Y4L"/>
+            </connections>
             <point key="canvasLocation" x="852" y="308"/>
         </window>
         <view id="bea-Wk-5YZ" userLabel="Content View Unregistered Textual View">
