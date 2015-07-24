@@ -207,6 +207,20 @@
 "TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
 "TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
 
+"TLOLicenseManager[1008]" = "Select a copy of Textual 5 installed through the Mac App Store to receive a free license key.";
+
+"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or was not downloaded through the Mac App Store.";
+"TLOLicenseManager[1009][2]" = "Select another application and try again.";
+
+"TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase to new license system";
+"TLOLicenseManager[1010][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing your new, free license key.";
+
+"TLOLicenseManager[1011][1]" = "Cannot migrate Mac App Store purchase because it has already been migrated to the new license system.";
+"TLOLicenseManager[1011][2]" = "To receive a copy of your license key, click the “Recover Lost License” button in the “Manage License” window and enter the e-mail address used when your purchase was originally migrated.";
+
+"TLOLicenseManager[1012][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 

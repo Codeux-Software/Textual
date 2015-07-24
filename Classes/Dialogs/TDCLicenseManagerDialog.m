@@ -42,6 +42,7 @@
 
 #import "TDCLicenseManagerDialog.h"
 
+#import "TDCLicenseManagerMigrateAppStoreSheet.h"
 #import "TDCLicenseManagerRecoverLostLicenseSheet.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
@@ -62,6 +63,7 @@
 @property (nonatomic, weak) IBOutlet NSImageView *unregisteredViewMacAppStoreIconImageView;
 @property (nonatomic, strong) TDCProgressInformationSheet *progressSheet;
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
+@property (nonatomic, strong) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 
@@ -75,6 +77,9 @@
 @end
 
 @implementation TDCLicenseManagerDialog
+
+#pragma mark -
+#pragma mark Dialog Foundation
 
 - (instancetype)init
 {
@@ -142,6 +147,14 @@
 		   adjustedHeightConstraint:self.contentViewHeightConstraint];
 }
 
+#pragma mark -
+#pragma mark Activate License
+
+- (void)unregisteredViewPurchaseTextual:(id)sender
+{
+	[TLOpenLink openWithString:@"https://www.textualapp.com/"];
+}
+
 - (void)unregisteredViewCancel:(id)sender
 {
 	[[self window] close];
@@ -188,10 +201,8 @@
 	[self.licenseManagerDownloader activateLicense:licenseKey];
 }
 
-- (void)unregisteredViewPurchaseTextual:(id)sender
-{
-	[TLOpenLink openWithString:@"https://www.textualapp.com/"];
-}
+#pragma mark -
+#pragma mark Recover Lost License
 
 - (void)unregisteredViewRecoveryLostLicense:(id)sender
 {
@@ -204,7 +215,7 @@
 	[self.recoverLostLicenseSheet start];
 }
 
-- (void)licenseManagerRecoverLostLicense:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress
+- (void)licenseManagerRecoverLostLicenseSheet:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
@@ -221,12 +232,13 @@
 {
 	self.recoverLostLicenseSheet = nil;
 
-	/* When the recovery sheet closes, if the downloader is active,
-	 then show our progress indicator, even if brief. */
 	if (self.licenseManagerDownloader) {
 		[self beginProgressIndicator];
 	}
 }
+
+#pragma mark -
+#pragma mark Deactivate License
 
 - (void)registeredViewDeactivateTextual:(id)sender
 {
@@ -255,9 +267,40 @@
 	[self.licenseManagerDownloader deactivateLicense];
 }
 
+#pragma mark -
+#pragma mark Mac App Store Receipt Processing
+
 - (void)unregisteredViewMigrateMacAppStorePurchase:(id)sender
 {
-	;
+	 self.migrateAppStoreSheet = [TDCLicenseManagerMigrateAppStoreSheet new];
+
+	[self.migrateAppStoreSheet setWindow:[self window]];
+
+	[self.migrateAppStoreSheet setDelegate:self];
+
+	[self.migrateAppStoreSheet presentOpenDialog];
+}
+
+- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender convertReceipt:(NSString *)receiptData withContactAddress:(NSString *)contactAddress
+{
+	__weak TDCLicenseManagerDialog *weakSelf = self;
+
+	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+		[weakSelf licenseManagerDownloaderCompletionBlock];
+	}];
+
+	[self.licenseManagerDownloader migrateMacAppStorePurcahse:receiptData withContactAddress:contactAddress];
+}
+
+- (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender
+{
+	self.migrateAppStoreSheet = nil;
+
+	if (self.licenseManagerDownloader) {
+		[self beginProgressIndicator];
+	}
 }
 
 #pragma mark -
@@ -275,7 +318,6 @@
 
 - (void)licenseManagerDownloaderCompletionBlock
 {
-	/* This block is a catch all for all downloader operations. */
 	self.licenseManagerDownloader = nil;
 
 	[self endProgressIndicator];

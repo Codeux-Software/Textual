@@ -45,7 +45,7 @@
 @protocol TDCLicenseManagerRecoverLostLicenseSheet <NSObject>
 @required
 
-- (void)licenseManagerRecoverLostLicense:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress;
+- (void)licenseManagerRecoverLostLicenseSheet:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress;
 - (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender;
 @end
 #endif

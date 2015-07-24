@@ -41,7 +41,7 @@
 typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 	TLOLicenseManagerDownloaderRequestActivationType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
-	TLOLicenseManagerDownloaderRequestConvertMASReceiptType
+	TLOLicenseManagerDownloaderRequestMigrateAppStoreType
 } TLOLicenseManagerDownloaderRequestType;
 
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
@@ -55,6 +55,6 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 
-- (void)convertMacAppStorePurcahse;
+- (void)migrateMacAppStorePurcahse:(NSString *)receiptData withContactAddress:(NSString *)contactAddress;
 @end
 #endif
