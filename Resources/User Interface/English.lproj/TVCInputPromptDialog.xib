@@ -56,6 +56,9 @@
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
                         <rect key="frame" x="105" y="61" width="295" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="f32-0D-7gM"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="16">
                             <font key="font" metaFont="system"/>

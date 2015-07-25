@@ -106,7 +106,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <constraint firstItem="xlp-dS-uye" firstAttribute="centerX" secondItem="bpz-tg-K62" secondAttribute="centerX" id="q5E-MT-S8r"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="363.5" y="280.5"/>
+            <point key="canvasLocation" x="633.5" y="262.5"/>
         </customView>
         <arrayController avoidsEmptySelection="NO" id="4310" userLabel="Keywords">
             <declaredKeys>
@@ -502,6 +502,7 @@ DQ
                     <rect key="frame" x="228" y="115" width="207" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="207" id="Po5-Y1-3WM"/>
+                        <constraint firstAttribute="height" constant="19" id="wVi-K3-Vp7"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="nac-sO-8FC">
@@ -532,6 +533,9 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="at5-lc-f2l">
                     <rect key="frame" x="228" y="61" width="207" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="g9t-lO-0yA"/>
+                    </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="w3H-Pj-6CW">
                         <font key="font" metaFont="smallSystem"/>
@@ -558,6 +562,9 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rPf-TF-oTQ">
                     <rect key="frame" x="228" y="34" width="207" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="cCL-YV-WAj"/>
+                    </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="kmu-Ey-2Qm">
                         <font key="font" metaFont="smallSystem"/>
@@ -575,6 +582,9 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QKU-rN-vv7">
                     <rect key="frame" x="228" y="88" width="207" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="19" id="eTG-er-O4l"/>
+                    </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="cXo-4f-9dY">
                         <font key="font" metaFont="smallSystem"/>
@@ -1393,6 +1403,9 @@ DQ
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
                                         <rect key="frame" x="178" y="220" width="179" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="rq9-Y9-W1h"/>
+                                        </constraints>
                                         <animations/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="LOL" drawsBackground="YES" id="Yeq-PY-2Ot">
                                             <font key="font" metaFont="smallSystem"/>
@@ -1425,18 +1438,18 @@ DQ
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="37" width="357" height="12"/>
+                                        <rect key="frame" x="109" y="33" width="357" height="16"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="12"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="16"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
-                                                    <rect key="frame" x="0.0" y="107" width="357" height="13"/>
+                                                    <rect key="frame" x="0.0" y="107" width="357" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="357" height="12"/>
+                                                    <size key="minSize" width="357" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1526,7 +1539,7 @@ DQ
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="357" height="12"/>
+                                                    <size key="minSize" width="357" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1604,25 +1617,6 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="9Mc-kW-Pp0"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3t-Zc-ibz">
-                                        <rect key="frame" x="235" y="159" width="60" height="19"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="PrT-72-uaX"/>
-                                        </constraints>
-                                        <animations/>
-                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" usesSingleLineMode="YES" id="Il0-37-RpB">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <connections>
-                                            <binding destination="-2" name="value" keyPath="inlineImageMaxWidth" id="QFs-dh-NJA">
-                                                <dictionary key="options">
-                                                    <bool key="NSValidatesImmediately" value="YES"/>
-                                                </dictionary>
-                                            </binding>
-                                        </connections>
-                                    </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hcX-lJ-xzY">
                                         <rect key="frame" x="47" y="186" width="299" height="16"/>
                                         <animations/>
@@ -1633,24 +1627,12 @@ DQ
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wl7-rC-tc6">
-                                        <rect key="frame" x="47" y="162" width="182" height="16"/>
+                                        <rect key="frame" x="47" y="162" width="176" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="178" id="4a7-bf-TOa"/>
+                                            <constraint firstAttribute="width" constant="172" id="4a7-bf-TOa"/>
                                         </constraints>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Scale images to a maximum of" id="r9g-yT-X7C">
-                                            <font key="font" metaFont="cellTitle"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oFw-CB-MXL">
-                                        <rect key="frame" x="301" y="162" width="73" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="69" id="PWG-3U-sDg"/>
-                                        </constraints>
-                                        <animations/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="pixels wide" id="0VM-z4-zPp">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1678,6 +1660,7 @@ DQ
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WQz-kC-1Jj">
                                         <rect key="frame" x="341" y="103" width="60" height="19"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="i2U-ml-TBd"/>
                                             <constraint firstAttribute="width" constant="60" id="iQ3-eN-hlL"/>
                                         </constraints>
                                         <animations/>
@@ -1876,6 +1859,38 @@ DQ
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.InlineMediaMaximumFilesize" id="Krh-7c-CA9"/>
                                         </connections>
                                     </popUpButton>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3t-Zc-ibz">
+                                        <rect key="frame" x="229" y="159" width="60" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="19" id="6uJ-Ej-miR"/>
+                                            <constraint firstAttribute="width" constant="60" id="PrT-72-uaX"/>
+                                        </constraints>
+                                        <animations/>
+                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" title="300" drawsBackground="YES" usesSingleLineMode="YES" id="Il0-37-RpB">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <connections>
+                                            <binding destination="-2" name="value" keyPath="inlineImageMaxWidth" id="QFs-dh-NJA">
+                                                <dictionary key="options">
+                                                    <bool key="NSValidatesImmediately" value="YES"/>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </textField>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oFw-CB-MXL">
+                                        <rect key="frame" x="295" y="162" width="73" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="69" id="PWG-3U-sDg"/>
+                                        </constraints>
+                                        <animations/>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="pixels wide" id="0VM-z4-zPp">
+                                            <font key="font" metaFont="cellTitle"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="9pY-ld-U6y" firstAttribute="leading" secondItem="WQz-kC-1Jj" secondAttribute="trailing" constant="8" symbolic="YES" id="0lx-sD-LsB"/>
@@ -2048,6 +2063,7 @@ DQ
                                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z2q-8o-VzU">
                                         <rect key="frame" x="187" y="284" width="225" height="21"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="lWc-dX-gxj"/>
                                             <constraint firstAttribute="width" constant="222" id="vQe-bF-TBm"/>
                                         </constraints>
                                         <animations/>
@@ -2077,6 +2093,9 @@ DQ
                                     </comboBox>
                                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZLg-nc-ynI">
                                         <rect key="frame" x="187" y="233" width="225" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="9vM-zr-8ka"/>
+                                        </constraints>
                                         <animations/>
                                         <comboBoxCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" title="[%H:%M:%S]" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" numberOfVisibleItems="100" id="Mbr-ah-TIe">
                                             <font key="font" metaFont="system" size="10"/>
@@ -2230,6 +2249,7 @@ DQ
                                         <rect key="frame" x="250" y="49" width="117" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="114" id="gII-sj-yBK"/>
+                                            <constraint firstAttribute="height" constant="16" id="ifa-mG-PwK"/>
                                         </constraints>
                                         <animations/>
                                         <comboBoxCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" numberOfVisibleItems="5" id="gNG-Mo-WuY">
@@ -2648,7 +2668,7 @@ DQ
                 <constraint firstItem="ckK-Ko-G8O" firstAttribute="top" secondItem="b4u-EN-XAj" secondAttribute="bottom" constant="10" id="xKi-Wf-Xhb"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="258.5" y="-603.5"/>
+            <point key="canvasLocation" x="348.5" y="-607.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="589" height="282"/>
@@ -3222,11 +3242,11 @@ DQ
                     <tabViewItems>
                         <tabViewItem label="Keyboard &amp; Mouse" identifier="1" id="SL3-8G-t51">
                             <view key="view" id="4ZT-mV-qxZ">
-                                <rect key="frame" x="10" y="25" width="557" height="415"/>
+                                <rect key="frame" x="10" y="25" width="557" height="414"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="nsU-oF-11h">
-                                        <rect key="frame" x="30" y="223" width="213" height="18"/>
+                                        <rect key="frame" x="30" y="222" width="213" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="LIs-Yh-0cu"/>
                                         </constraints>
@@ -3244,7 +3264,7 @@ DQ
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="tem-fj-U6Q">
-                                        <rect key="frame" x="30" y="139" width="192" height="18"/>
+                                        <rect key="frame" x="30" y="138" width="192" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="daT-Iu-RHj"/>
                                         </constraints>
@@ -3258,7 +3278,7 @@ DQ
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Qqp-Rw-jY7">
-                                        <rect key="frame" x="30" y="195" width="244" height="18"/>
+                                        <rect key="frame" x="30" y="194" width="244" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="4N5-b2-Ztq"/>
                                         </constraints>
@@ -3272,7 +3292,7 @@ DQ
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="YRR-9J-n7G">
-                                        <rect key="frame" x="31" y="86" width="308" height="20"/>
+                                        <rect key="frame" x="31" y="86" width="308" height="19"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Copy selected text when mouse button is released" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="uSz-ME-EyF">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3283,7 +3303,7 @@ DQ
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="TIz-dH-HBF">
-                                        <rect key="frame" x="31" y="357" width="311" height="18"/>
+                                        <rect key="frame" x="31" y="356" width="311" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="aHN-6X-btb"/>
                                         </constraints>
@@ -3297,7 +3317,7 @@ DQ
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="sGF-Q4-JiC">
-                                        <rect key="frame" x="30" y="167" width="183" height="18"/>
+                                        <rect key="frame" x="30" y="166" width="183" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="gEk-JA-m7Z"/>
                                         </constraints>
@@ -3311,14 +3331,14 @@ DQ
                                         </connections>
                                     </button>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="JFd-1Y-9jH">
-                                        <rect key="frame" x="46" y="120" width="478" height="5"/>
+                                        <rect key="frame" x="46" y="119" width="478" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rd9-Tz-a8b">
-                                        <rect key="frame" x="84" y="307" width="136" height="16"/>
+                                        <rect key="frame" x="84" y="306" width="136" height="16"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Double clicking a user:" id="NhJ-3F-Unb">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3327,7 +3347,7 @@ DQ
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ykv-44-sRE">
-                                        <rect key="frame" x="64" y="277" width="156" height="16"/>
+                                        <rect key="frame" x="64" y="276" width="156" height="16"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Command + W key action:" id="4oC-Tr-qfm">
                                             <font key="font" metaFont="cellTitle"/>
@@ -3336,21 +3356,21 @@ DQ
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dJl-5C-foA">
-                                        <rect key="frame" x="46" y="255" width="478" height="5"/>
+                                        <rect key="frame" x="46" y="254" width="478" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ZHD-P3-6vN">
-                                        <rect key="frame" x="46" y="338" width="478" height="5"/>
+                                        <rect key="frame" x="46" y="337" width="478" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfq-lx-1BD">
-                                        <rect key="frame" x="223" y="302" width="282" height="24"/>
+                                        <rect key="frame" x="223" y="301" width="282" height="24"/>
                                         <animations/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="FX8-ei-qeg">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3370,7 +3390,7 @@ DQ
                                         </connections>
                                     </popUpButton>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-afW">
-                                        <rect key="frame" x="223" y="273" width="282" height="22"/>
+                                        <rect key="frame" x="223" y="272" width="282" height="22"/>
                                         <animations/>
                                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="qna-h9-Sw2">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -3620,6 +3640,7 @@ DQ
                                         <rect key="frame" x="175" y="28" width="62" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="62" id="IlQ-BD-Epm"/>
+                                            <constraint firstAttribute="height" constant="19" id="kWs-ra-w6i"/>
                                         </constraints>
                                         <animations/>
                                         <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="ydh-1p-3xf">
@@ -4795,6 +4816,7 @@ DQ
                     <rect key="frame" x="249" y="289" width="177" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="177" id="RdV-TY-H8S"/>
+                        <constraint firstAttribute="height" constant="19" id="c1n-2e-TH7"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="127.0.0.1" drawsBackground="YES" usesSingleLineMode="YES" id="26x-nD-BMT">
@@ -4828,6 +4850,7 @@ DQ
                     <rect key="frame" x="215" y="247" width="74" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="74" id="DGK-aS-c0S"/>
+                        <constraint firstAttribute="height" constant="19" id="bMr-0C-hiS"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="1096" drawsBackground="YES" usesSingleLineMode="YES" id="gYx-RF-0hc">
@@ -4846,6 +4869,7 @@ DQ
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wbn-z6-T9m">
                     <rect key="frame" x="318" y="247" width="74" height="19"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="19" id="HDL-ks-kLF"/>
                         <constraint firstAttribute="width" constant="74" id="rgw-jA-toY"/>
                     </constraints>
                     <animations/>

@@ -32,6 +32,9 @@
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="146">
                         <rect key="frame" x="109" y="287" width="249" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="xcy-3h-buk"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" drawsBackground="YES" usesSingleLineMode="YES" id="178">
                             <font key="font" metaFont="system"/>
@@ -141,6 +144,9 @@
                     </box>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="216">
                         <rect key="frame" x="109" y="313" width="252" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="cd5-vs-Wxp"/>
+                        </constraints>
                         <animations/>
                         <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" drawsBackground="YES" usesSingleLineMode="YES" completes="NO" numberOfVisibleItems="5" id="217">
                             <font key="font" metaFont="system"/>

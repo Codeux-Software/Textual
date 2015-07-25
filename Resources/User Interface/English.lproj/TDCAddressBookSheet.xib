@@ -187,6 +187,9 @@ DQ
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="540" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="88" y="249" width="265" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="biA-rd-gTx"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter any nickname to track" drawsBackground="YES" usesSingleLineMode="YES" id="543" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
@@ -229,7 +232,7 @@ DQ
             <connections>
                 <outlet property="delegate" destination="-2" id="561"/>
             </connections>
-            <point key="canvasLocation" x="299.5" y="254.5"/>
+            <point key="canvasLocation" x="503.5" y="274.5"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -247,6 +250,9 @@ DQ
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="93" y="380" width="413" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="NhJ-Fz-bJp"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter a hostmask to ignore" drawsBackground="YES" usesSingleLineMode="YES" id="299" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
