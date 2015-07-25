@@ -916,20 +916,20 @@ Gw
                                 <attributedString key="textStorage">
                                     <fragment content="The following settings will automatically take effect when Textual detects that it is connecting to a ">
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="ZNC">
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <url key="NSLink" string="http://znc.in/"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="-based bouncer.">
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1093,7 +1093,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1251,7 +1251,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1338,7 +1338,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -2206,13 +2206,13 @@ Gw
                                 <attributedString key="textStorage">
                                     <fragment content="Many networks provide the ability to identify to NickServ services without a password using a client-side ">
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="certificate">
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <url key="NSLink" string="http://en.wikipedia.org/wiki/Public_key_certificate"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -2220,7 +2220,7 @@ Gw
                                     <fragment>
                                         <string key="content"> when connecting through a secured connection. Click the button below to change the certificate which is sent on your behalf during connect.</string>
                                         <attributes>
-                                            <font key="NSFont" size="13" metaFont="system"/>
+                                            <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -2246,7 +2246,7 @@ Gw
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vOo-Hg-7M0">
-                    <rect key="frame" x="33" y="172" width="120" height="17"/>
+                    <rect key="frame" x="33" y="172" width="119" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Certificate Name:" id="pxF-PC-Aax">
                         <font key="font" metaFont="systemBold"/>
@@ -2264,7 +2264,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdC-a6-iNA">
-                    <rect key="frame" x="33" y="135" width="126" height="17"/>
+                    <rect key="frame" x="33" y="135" width="125" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="SHA-1 Fingerprint:" id="jhF-Ix-th5">
                         <font key="font" metaFont="systemBold"/>

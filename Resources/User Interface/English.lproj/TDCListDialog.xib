@@ -102,7 +102,7 @@
                             <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="116">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </tableHeaderView>
@@ -133,7 +133,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
-                        <rect key="frame" x="18" y="269" width="109" height="17"/>
+                        <rect key="frame" x="18" y="269" width="108" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>

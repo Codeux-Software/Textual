@@ -1497,7 +1497,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="bold">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -1725,7 +1725,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="zero (0)">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -1739,7 +1739,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="Enabling this feature will require Textual to asynchronously download each image posted">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -1753,7 +1753,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="1440 is a recommended value.">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -1803,7 +1803,7 @@ DQ
                                                         </fragment>
                                                         <fragment content="Channel Properties">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -2123,14 +2123,14 @@ DQ
                                                     <rect key="frame" x="0.0" y="107" width="296" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
-                                                    <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="minSize" width="296" height="16"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Symbols:">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
@@ -5039,7 +5039,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0n-R7-U4w">
-                    <rect key="frame" x="103" y="242" width="383" height="28"/>
+                    <rect key="frame" x="103.5" y="242" width="383" height="28"/>
                     <animations/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When enabled, this copy of Textual will synchronize only the configured connections and disregard all other preferences." id="qaR-hH-FZI">
                         <font key="font" metaFont="smallSystem"/>
@@ -5116,7 +5116,7 @@ DQ
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-xX-3cD">
-                    <rect key="frame" x="254" y="140" width="80" height="18"/>
+                    <rect key="frame" x="255" y="140" width="79" height="18"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Erase Data" id="9Gr-za-Ofr">
                         <font key="font" metaFont="systemBold" size="14"/>
