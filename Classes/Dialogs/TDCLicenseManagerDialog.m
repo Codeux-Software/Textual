@@ -281,7 +281,10 @@
 	[self.migrateAppStoreSheet start];
 }
 
-- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender convertReceipt:(NSString *)receiptData withContactAddress:(NSString *)contactAddress
+- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
+							convertReceipt:(NSString *)receiptData
+						  licenseOwnerName:(NSString *)licenseOwnerName
+				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
@@ -291,7 +294,9 @@
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 	}];
 
-	[self.licenseManagerDownloader migrateMacAppStorePurcahse:receiptData withContactAddress:contactAddress];
+	[self.licenseManagerDownloader migrateMacAppStorePurcahse:receiptData
+											 licenseOwnerName:licenseOwnerName
+								   licenseOwnerContactAddress:licenseOwnerContactAddress];
 }
 
 - (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender

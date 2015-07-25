@@ -55,6 +55,8 @@ typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful
 
 - (void)requestLostLicenseKeyForContactAddress:(NSString *)contactAddress;
 
-- (void)migrateMacAppStorePurcahse:(NSString *)receiptData withContactAddress:(NSString *)contactAddress;
+- (void)migrateMacAppStorePurcahse:(NSString *)receiptData
+				  licenseOwnerName:(NSString *)licenseOwnerName
+		licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
 @end
 #endif

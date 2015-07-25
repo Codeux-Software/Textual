@@ -48,8 +48,12 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import <CoreServices/CoreServices.h>
 
+#define _licenseOwnerNameMaximumLength						125
+#define _licenseOwnerContactAddressMaximumLength			125
+
 @interface TDCLicenseManagerMigrateAppStoreSheet ()
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *contactAddressTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *licenseOwnerNameTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *licenseOwnerContactAddressTextField;
 @property (nonatomic, copy) NSString *cachedReceiptData;
 @end
 
@@ -69,31 +73,58 @@
 
 - (void)startContactAddressSheet
 {
-	[self.contactAddressTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.contactAddressTextField setStringValueUsesOnlyFirstToken:YES];
+	/* E-mail address text field configuration. */
+	[self.licenseOwnerContactAddressTextField setStringValueIsInvalidOnEmpty:YES];
+	[self.licenseOwnerContactAddressTextField setStringValueUsesOnlyFirstToken:YES];
 
-	[self.contactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
+	[self.licenseOwnerContactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
 
-	[self.contactAddressTextField setTextDidChangeCallback:self];
+	[self.licenseOwnerContactAddressTextField setTextDidChangeCallback:self];
 
-	[self.contactAddressTextField setStringValue:[XRAddressBook emailAddressOfLocalUser]];
+	[self.licenseOwnerContactAddressTextField setStringValue:[XRAddressBook myEmailAddress]];
 
+	[self.licenseOwnerContactAddressTextField setValidationBlock:^BOOL(NSString *currentValue) {
+		return ([currentValue length] < _licenseOwnerContactAddressMaximumLength);
+	}];
+
+	/* First & last name text field configuration. */
+	[self.licenseOwnerNameTextField setStringValueIsInvalidOnEmpty:YES];
+	[self.licenseOwnerNameTextField setStringValueUsesOnlyFirstToken:NO];
+
+	[self.licenseOwnerNameTextField setOnlyShowStatusIfErrorOccurs:YES];
+
+	[self.licenseOwnerNameTextField setTextDidChangeCallback:self];
+
+	[self.licenseOwnerNameTextField setStringValue:[XRAddressBook myName]];
+
+	[self.licenseOwnerNameTextField setValidationBlock:^BOOL(NSString *currentValue) {
+		return ([currentValue length] < _licenseOwnerNameMaximumLength);
+	}];
+
+	/* Begin sheet... */
 	[self startSheet];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self.okButton setEnabled:[self.contactAddressTextField valueIsValid]];
+	[self.okButton setEnabled:
+		([self.licenseOwnerNameTextField valueIsValid] &&
+		 [self.licenseOwnerContactAddressTextField valueIsValid])];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerMigrateAppStoreSheet:convertReceipt:withContactAddress:)]) {
+	if ([self.delegate respondsToSelector:@selector(licenseManagerMigrateAppStoreSheet:convertReceipt:licenseOwnerName:licenseOwnerContactAddress:)]) {
 		NSString *receiptData = self.cachedReceiptData;
 
-		NSString *contactAddress = [self.contactAddressTextField value];
+		NSString *licenseOwnerName = [self.licenseOwnerNameTextField value];
 
-		[self.delegate licenseManagerMigrateAppStoreSheet:self convertReceipt:receiptData withContactAddress:contactAddress];
+		NSString *licenseOwnerContactAddress = [self.licenseOwnerContactAddressTextField value];
+
+		[self.delegate licenseManagerMigrateAppStoreSheet:self
+										   convertReceipt:receiptData
+										 licenseOwnerName:licenseOwnerName
+							   licenseOwnerContactAddress:licenseOwnerContactAddress];
 	}
 
 	[super ok:sender];
