@@ -147,7 +147,7 @@
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="GroupView" id="LOI-ud-jS4" customClass="TVCServerListCellGroupItem">
-                                                                    <rect key="frame" x="1" y="0.0" width="147" height="17"/>
+                                                                    <rect key="frame" x="1" y="0.0" width="139" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wBU-6B-7f4">
@@ -576,7 +576,7 @@
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2989">
-                    <rect key="frame" x="95" y="70" width="249" height="16"/>
+                    <rect key="frame" x="96" y="70" width="248" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2990">
                         <font key="font" metaFont="cellTitle"/>
@@ -585,7 +585,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MUG-Yv-LiF">
-                    <rect key="frame" x="92" y="50" width="252" height="16"/>
+                    <rect key="frame" x="93" y="50" width="251" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="Tcg-Vx-hyl">
                         <font key="font" metaFont="cellTitle"/>
@@ -594,7 +594,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2991">
-                    <rect key="frame" x="96" y="30" width="248" height="16"/>
+                    <rect key="frame" x="97" y="30" width="247" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2992">
                         <font key="font" metaFont="cellTitle"/>
@@ -603,7 +603,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
-                    <rect key="frame" x="94" y="10" width="250" height="16"/>
+                    <rect key="frame" x="95" y="10" width="249" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
                         <font key="font" metaFont="cellTitle"/>
@@ -612,7 +612,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CiH-kG-t5w">
-                    <rect key="frame" x="21" y="110" width="73" height="17"/>
+                    <rect key="frame" x="21" y="110" width="74" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="59B-t9-R34">
                         <font key="font" metaFont="systemBold"/>
@@ -621,7 +621,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jIV-Th-xbm">
-                    <rect key="frame" x="20" y="90" width="75" height="17"/>
+                    <rect key="frame" x="20" y="90" width="76" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Username:" id="7Na-1R-gmg">
                         <font key="font" metaFont="systemBold"/>
@@ -630,7 +630,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-JU-NU4">
-                    <rect key="frame" x="19" y="50" width="75" height="17"/>
+                    <rect key="frame" x="19" y="50" width="76" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="rAb-ds-4lA">
                         <font key="font" metaFont="systemBold"/>
@@ -639,7 +639,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-2b-G9I">
-                    <rect key="frame" x="23" y="30" width="73" height="17"/>
+                    <rect key="frame" x="23" y="30" width="74" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Privileges:" id="d8b-Oo-eQc">
                         <font key="font" metaFont="systemBold"/>
@@ -648,7 +648,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OJS-rH-GO8">
-                    <rect key="frame" x="34" y="70" width="62" height="17"/>
+                    <rect key="frame" x="34" y="70" width="63" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Address:" id="LZ5-NL-XEb">
                         <font key="font" metaFont="systemBold"/>
@@ -657,7 +657,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e4m-I3-8kS">
-                    <rect key="frame" x="8" y="10" width="87" height="17"/>
+                    <rect key="frame" x="8" y="10" width="88" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away status:" id="sfH-4y-JSY">
                         <font key="font" metaFont="systemBold"/>
@@ -666,7 +666,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2987">
-                    <rect key="frame" x="95" y="90" width="249" height="16"/>
+                    <rect key="frame" x="96" y="90" width="248" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2988">
                         <font key="font" metaFont="cellTitle"/>
@@ -675,7 +675,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2985">
-                    <rect key="frame" x="94" y="110" width="250" height="16"/>
+                    <rect key="frame" x="95" y="110" width="249" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2986">
                         <font key="font" metaFont="cellTitle"/>

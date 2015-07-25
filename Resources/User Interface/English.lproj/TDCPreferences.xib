@@ -198,7 +198,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             <rect key="frame" x="12" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -590,24 +590,6 @@ DQ
                         </binding>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJ6-fr-Jwe">
-                    <rect key="frame" x="125" y="91" width="97" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="nlg-4Q-gCw">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V8Y-l0-wxx">
-                    <rect key="frame" x="173" y="82" width="47" height="11"/>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="XrP-5S-ciu">
-                        <font key="font" metaFont="miniSystem"/>
-                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t35-1P-MUO">
                     <rect key="frame" x="151" y="36" width="71" height="16"/>
                     <animations/>
@@ -623,6 +605,24 @@ DQ
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="The following information will be filled in when creating a new connection." id="DJW-g4-9G4">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJ6-fr-Jwe">
+                    <rect key="frame" x="125" y="91" width="97" height="16"/>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Away Nickname:" id="nlg-4Q-gCw">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V8Y-l0-wxx">
+                    <rect key="frame" x="173" y="82" width="47" height="11"/>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="XrP-5S-ciu">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
@@ -2328,17 +2328,6 @@ DQ
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="Ldq-4s-vGV">
-                    <rect key="frame" x="85" y="68" width="163" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Log transcripts to folder:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Yh4-3q-f6X">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogTranscript" id="uqm-Rw-J1g"/>
-                    </connections>
-                </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZeM-Wr-wwc">
                     <rect key="frame" x="100" y="31" width="379" height="28"/>
                     <animations/>
@@ -2349,8 +2338,19 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Ldq-4s-vGV">
+                    <rect key="frame" x="96" y="67" width="163" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Log transcripts to folder:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Yh4-3q-f6X">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogTranscript" id="uqm-Rw-J1g"/>
+                    </connections>
+                </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H7x-dV-MZS">
-                    <rect key="frame" x="257" y="65" width="231" height="22"/>
+                    <rect key="frame" x="262" y="64" width="231" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="225" id="TyP-De-3TR"/>
                     </constraints>
@@ -2384,12 +2384,12 @@ DQ
                 </popUpButton>
             </subviews>
             <constraints>
-                <constraint firstItem="H7x-dV-MZS" firstAttribute="top" secondItem="DPg-Nu-HcZ" secondAttribute="top" constant="33" id="Gym-EU-CtS"/>
+                <constraint firstItem="H7x-dV-MZS" firstAttribute="top" secondItem="DPg-Nu-HcZ" secondAttribute="top" constant="34" id="Gym-EU-CtS"/>
                 <constraint firstItem="Ldq-4s-vGV" firstAttribute="baseline" secondItem="H7x-dV-MZS" secondAttribute="baseline" id="OGB-kw-xNt"/>
-                <constraint firstItem="ZeM-Wr-wwc" firstAttribute="top" secondItem="H7x-dV-MZS" secondAttribute="bottom" constant="9" id="V9v-B0-nVm"/>
+                <constraint firstItem="ZeM-Wr-wwc" firstAttribute="top" secondItem="H7x-dV-MZS" secondAttribute="bottom" constant="8" id="V9v-B0-nVm"/>
                 <constraint firstItem="ZeM-Wr-wwc" firstAttribute="leading" secondItem="DPg-Nu-HcZ" secondAttribute="leading" constant="102" id="mT6-ID-zaJ"/>
-                <constraint firstItem="Ldq-4s-vGV" firstAttribute="leading" secondItem="DPg-Nu-HcZ" secondAttribute="leading" constant="87" id="msZ-qJ-w0Y"/>
-                <constraint firstItem="H7x-dV-MZS" firstAttribute="leading" secondItem="Ldq-4s-vGV" secondAttribute="trailing" constant="14" id="nj1-qH-ubW"/>
+                <constraint firstItem="Ldq-4s-vGV" firstAttribute="leading" secondItem="DPg-Nu-HcZ" secondAttribute="leading" constant="98" id="msZ-qJ-w0Y"/>
+                <constraint firstItem="H7x-dV-MZS" firstAttribute="leading" secondItem="Ldq-4s-vGV" secondAttribute="trailing" constant="8" id="nj1-qH-ubW"/>
             </constraints>
             <animations/>
             <point key="canvasLocation" x="394.5" y="-805.5"/>
@@ -5039,7 +5039,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0n-R7-U4w">
-                    <rect key="frame" x="103.5" y="242" width="383" height="28"/>
+                    <rect key="frame" x="103" y="242" width="383" height="28"/>
                     <animations/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When enabled, this copy of Textual will synchronize only the configured connections and disregard all other preferences." id="qaR-hH-FZI">
                         <font key="font" metaFont="smallSystem"/>
@@ -5116,7 +5116,7 @@ DQ
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-xX-3cD">
-                    <rect key="frame" x="255" y="140" width="79" height="18"/>
+                    <rect key="frame" x="254" y="140" width="80" height="18"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Erase Data" id="9Gr-za-Ofr">
                         <font key="font" metaFont="systemBold" size="14"/>

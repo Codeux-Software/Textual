@@ -70,7 +70,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="9c6-9f-bCg"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
-                    <rect key="frame" x="109" y="352" width="317" height="17"/>
+                    <rect key="frame" x="109" y="352" width="321" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To activate Textual, enter your license key below" id="6U9-rS-tAa">
                         <font key="font" metaFont="systemBold"/>
@@ -166,7 +166,7 @@ Gw
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x6V-ip-XZY">
-                                <rect key="frame" x="105" y="113" width="211" height="17"/>
+                                <rect key="frame" x="105" y="113" width="213" height="17"/>
                                 <animations/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Migrate from the Mac App Store" id="UVC-M1-5Bi">
                                     <font key="font" metaFont="systemBold"/>
@@ -375,7 +375,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cfn-IY-dQv">
-                    <rect key="frame" x="74" y="125" width="86" height="17"/>
+                    <rect key="frame" x="73" y="125" width="87" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="License Key:" id="Sqv-hD-I9t">
                         <font key="font" metaFont="systemBold"/>

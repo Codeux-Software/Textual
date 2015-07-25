@@ -2246,7 +2246,7 @@ Gw
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vOo-Hg-7M0">
-                    <rect key="frame" x="33" y="172" width="119" height="17"/>
+                    <rect key="frame" x="33" y="172" width="120" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Certificate Name:" id="pxF-PC-Aax">
                         <font key="font" metaFont="systemBold"/>
@@ -2264,7 +2264,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdC-a6-iNA">
-                    <rect key="frame" x="33" y="135" width="125" height="17"/>
+                    <rect key="frame" x="33" y="135" width="126" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="SHA-1 Fingerprint:" id="jhF-Ix-th5">
                         <font key="font" metaFont="systemBold"/>

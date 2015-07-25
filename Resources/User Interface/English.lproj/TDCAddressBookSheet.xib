@@ -276,7 +276,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="95" y="335" width="62" height="14"/>
+                        <rect key="frame" x="96" y="335" width="61" height="14"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
