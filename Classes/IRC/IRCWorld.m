@@ -380,7 +380,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 							  userInfo:nil
 							  repeats:NO];
 
-	[midnightTimer setTolerance:0.0];
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		[midnightTimer setTolerance:0.0];
+	}
 
 	/* Schedule the timer on the run loop which will retain reference. */
 	[RZCurrentRunLoop() addTimer:midnightTimer forMode:NSDefaultRunLoopMode];
