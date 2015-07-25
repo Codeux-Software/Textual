@@ -930,7 +930,6 @@
 		4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
 		4CA8EC631B63C2970087BF72 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
 		4CA8EC681B63C2AB0087BF72 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
-		4CA8EC691B63C2BB0087BF72 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA8EC621B63C2970087BF72 /* CoreServices.framework */; };
 		4CABE85A1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CABE85B1840615A002FE4B8 /* TDCProgressInformationSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB229241978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4CB228F81978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif */; };
@@ -2117,7 +2116,6 @@
 				4CF76A5A1A9115670088BF9A /* AutoHyperlinks.framework in Frameworks */,
 				4C0BA6271990798800857343 /* Cocoa.framework in Frameworks */,
 				4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */,
-				4CA8EC691B63C2BB0087BF72 /* CoreServices.framework in Frameworks */,
 				4C8F2F621AAE647D007821CC /* EncryptionKit.framework in Frameworks */,
 				4C0BA6281990798800857343 /* Foundation.framework in Frameworks */,
 				4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */,
