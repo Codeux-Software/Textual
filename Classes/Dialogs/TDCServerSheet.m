@@ -314,7 +314,7 @@
 		
 		[self.serverPortTextField setOnlyShowStatusIfErrorOccurs:YES];
 		
-		[self.serverPortTextField setStringValueIsInvalidOnEmpty:NO];
+		[self.serverPortTextField setStringValueIsInvalidOnEmpty:YES];
 		[self.serverPortTextField setStringValueIsTrimmed:YES];
 		[self.serverPortTextField setStringValueUsesOnlyFirstToken:NO];
 		

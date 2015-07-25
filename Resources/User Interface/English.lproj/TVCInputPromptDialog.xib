@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TVCInputPromptDialog">
@@ -29,6 +29,8 @@
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3">
                         <rect key="frame" x="20" y="67" width="65" height="65"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="9GO-fq-JK2"/>
+                            <constraint firstAttribute="height" constant="65" id="brw-ee-Ghm"/>
                             <constraint firstAttribute="width" constant="65" id="jJy-qZ-1jH"/>
                         </constraints>
                         <animations/>
@@ -62,7 +64,10 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sOY-pD-RXm">
-                        <rect key="frame" x="325" y="13" width="81" height="32"/>
+                        <rect key="frame" x="324" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="WFY-Wb-E4F"/>
+                        </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZnT-qL-fJQ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -73,7 +78,10 @@ DQ
                         </buttonCell>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2g-gZ-J37">
-                        <rect key="frame" x="244" y="13" width="81" height="32"/>
+                        <rect key="frame" x="242" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="13E-bP-0so"/>
+                        </constraints>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNN-1n-0Ux">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -95,7 +103,6 @@ Gw
                     <constraint firstItem="15" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="MHW-Po-cAE"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="Qn8-8i-FjC"/>
                     <constraint firstItem="7" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="T34-8q-XTa"/>
-                    <constraint firstAttribute="bottom" secondItem="3" secondAttribute="bottom" constant="67" id="YLh-Xe-sMC"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="20" id="fIP-7X-SUb"/>
                     <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="mih-ux-ZZo"/>
                     <constraint firstItem="15" firstAttribute="trailing" secondItem="7" secondAttribute="trailing" id="rgS-K0-L8H"/>

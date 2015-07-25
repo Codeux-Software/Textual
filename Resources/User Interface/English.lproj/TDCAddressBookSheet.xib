@@ -115,7 +115,7 @@ DQ
                                         <fragment content="Info:">
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                <font key="NSFont" size="11" metaFont="smallSystemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -131,7 +131,6 @@ DQ
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="smallSystemBold"/>
-                                                <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
@@ -144,8 +143,8 @@ DQ
                                         </fragment>
                                         <fragment content="WATCH">
                                             <attributes>
-                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>

@@ -198,7 +198,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             <rect key="frame" x="12" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -317,7 +317,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                             <rect key="frame" x="17" y="16" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1167,21 +1167,21 @@ DQ
                                     <fragment content="Disable alert when the ">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="/away">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" command is set">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1498,7 +1498,7 @@ DQ
                                                         <fragment content="bold">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1562,7 +1562,7 @@ DQ
                                     <constraint firstItem="WiQ-md-lej" firstAttribute="top" secondItem="wbm-Z3-lDn" secondAttribute="bottom" constant="18" id="JWD-qd-gtX"/>
                                     <constraint firstItem="EES-Ba-O9N" firstAttribute="leading" secondItem="7LB-4e-2Po" secondAttribute="leading" id="Nje-0O-SIC"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="leading" secondItem="bCO-56-p1h" secondAttribute="leading" constant="39" id="PN0-BS-7mJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="zLU-Yb-c2r" secondAttribute="bottom" constant="37" id="PxO-yL-0wm"/>
+                                    <constraint firstAttribute="bottom" secondItem="zLU-Yb-c2r" secondAttribute="bottom" constant="33" id="PxO-yL-0wm"/>
                                     <constraint firstItem="RCg-fG-WEB" firstAttribute="leading" secondItem="WiQ-md-lej" secondAttribute="trailing" constant="9" id="TXc-Ct-Aro"/>
                                     <constraint firstItem="EES-Ba-O9N" firstAttribute="top" secondItem="I3x-2t-PYn" secondAttribute="bottom" constant="11" id="VbD-Nc-eA7"/>
                                     <constraint firstItem="WiQ-md-lej" firstAttribute="baseline" secondItem="RCg-fG-WEB" secondAttribute="baseline" id="Ymq-Gf-aPq"/>
@@ -1576,7 +1576,7 @@ DQ
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="leading" secondItem="nPR-cs-1aS" secondAttribute="leading" id="lYi-4x-jUf"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="top" secondItem="wmq-Ee-waL" secondAttribute="bottom" constant="22" id="m6x-XQ-qgb"/>
                                     <constraint firstItem="7LB-4e-2Po" firstAttribute="top" secondItem="Gtt-qs-5mz" secondAttribute="bottom" constant="14" id="oM8-mv-BMN"/>
-                                    <constraint firstItem="zLU-Yb-c2r" firstAttribute="top" secondItem="EES-Ba-O9N" secondAttribute="bottom" constant="8" symbolic="YES" id="pMj-bC-WQN"/>
+                                    <constraint firstItem="zLU-Yb-c2r" firstAttribute="top" secondItem="EES-Ba-O9N" secondAttribute="bottom" constant="12" id="pMj-bC-WQN"/>
                                     <constraint firstItem="nPR-cs-1aS" firstAttribute="centerX" secondItem="bCO-56-p1h" secondAttribute="centerX" id="pPY-Aa-0LN"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="trailing" secondItem="nPR-cs-1aS" secondAttribute="trailing" id="q7q-Pg-VSm"/>
                                     <constraint firstItem="jNN-n9-eyu" firstAttribute="leading" secondItem="bCO-56-p1h" secondAttribute="leading" constant="95" id="ruU-wB-O4n"/>
@@ -1726,7 +1726,7 @@ DQ
                                                         <fragment content="zero (0)">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1740,7 +1740,7 @@ DQ
                                                         <fragment content="Enabling this feature will require Textual to asynchronously download each image posted">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1754,7 +1754,7 @@ DQ
                                                         <fragment content="1440 is a recommended value.">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -1804,7 +1804,7 @@ DQ
                                                         <fragment content="Channel Properties">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -2131,7 +2131,7 @@ DQ
                                                         <fragment content="Symbols:">
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                                                <font key="NSFont" metaFont="smallSystemBold"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -2194,7 +2194,6 @@ DQ
                                                             <attributes>
                                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
-                                                                <font key="NSOriginalFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -2203,7 +2202,6 @@ DQ
                                                                 <color key="NSColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" metaFont="smallSystem"/>
                                                                 <url key="NSLink" string="http://opengroup.org/onlinepubs/007908799/xsh/strftime.html"/>
-                                                                <font key="NSOriginalFont" metaFont="smallSystem"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -3071,8 +3069,7 @@ DQ
                                     <fragment content="There is absolutely no harm in using them.">
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3130,7 +3127,6 @@ DQ
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3145,7 +3141,6 @@ DQ
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3160,7 +3155,6 @@ DQ
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -3910,7 +3904,7 @@ DQ
                                     </slider>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="90" id="1RT-RW-76a"/>
+                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="86" id="1RT-RW-76a"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="top" secondItem="Gmu-Oh-Krb" secondAttribute="bottom" constant="14" id="1yE-Lm-UNE"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="top" secondItem="Fdc-sn-QgS" secondAttribute="bottom" constant="14" id="2wX-CW-lVs"/>
                                     <constraint firstItem="6Uk-IU-HIb" firstAttribute="leading" secondItem="lSR-7V-PDD" secondAttribute="trailing" constant="5" id="6my-i2-fCG"/>
@@ -3931,7 +3925,7 @@ DQ
                                     <constraint firstAttribute="trailing" secondItem="lQi-te-LwT" secondAttribute="trailing" constant="72" id="gdj-hN-n2p"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="leading" secondItem="wa5-Rg-5aD" secondAttribute="leading" id="gtB-xG-IGR"/>
                                     <constraint firstItem="v8u-aO-cik" firstAttribute="leading" secondItem="Ht3-ub-Duo" secondAttribute="leading" constant="40" id="jeH-aw-bck"/>
-                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="91" id="k8N-TL-t3h"/>
+                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="87" id="k8N-TL-t3h"/>
                                     <constraint firstItem="wa5-Rg-5aD" firstAttribute="top" secondItem="v8u-aO-cik" secondAttribute="bottom" constant="17" id="m9L-oI-wIi"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="leading" secondItem="Gmu-Oh-Krb" secondAttribute="leading" id="mlg-G7-aRq"/>
                                     <constraint firstItem="hDx-CA-NhV" firstAttribute="top" secondItem="pbE-2M-fRW" secondAttribute="bottom" constant="18" id="ocI-pl-aNw"/>
@@ -4314,14 +4308,14 @@ DQ
                                     <fragment content="/nick">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" applies to all active connections">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4401,7 +4395,7 @@ DQ
                                     <fragment content="/amsg">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4415,7 +4409,7 @@ DQ
                                     <fragment content="and">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4429,14 +4423,14 @@ DQ
                                     <fragment content="/ame">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" applies to all active connections">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4494,14 +4488,14 @@ DQ
                                     <fragment content="/away">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" applies to all active connections">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4558,14 +4552,14 @@ DQ
                                     <fragment content="/clearall">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" only applies to active connection">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -4608,22 +4602,21 @@ DQ
                                     <fragment content="Give focus to the destination of the ">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="/msg">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" metaFont="systemBold" size="12"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" command">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>

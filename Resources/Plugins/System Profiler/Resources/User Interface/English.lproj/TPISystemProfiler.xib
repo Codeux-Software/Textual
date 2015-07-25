@@ -172,7 +172,6 @@
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -215,23 +214,21 @@
                                     <fragment content="Select each item to show as part of the ">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
+											<paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="/sysinfo">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" size="12" metaFont="systemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content=" command:">
                                         <attributes>
                                             <color key="NSColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
