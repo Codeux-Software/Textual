@@ -64,7 +64,7 @@
 
 	[self.contactAddressTextField setTextDidChangeCallback:self];
 
-	[self validatedTextFieldTextDidChange:self.contactAddressTextField];
+	[self.contactAddressTextField setStringValue:[XRAddressBook emailAddressOfLocalUser]];
 
 	[self startSheet];
 }

@@ -39,8 +39,6 @@
 
 #import "TDCLicenseManagerMigrateAppStoreSheet.h"
 
-#import <CoreServices/CoreServices.h>
-
 /* 
  * TDCLicenseManagerMigrateAppStoreSheet presents an open dialog to
  * find a copy of Textual with a receipt then presents a sheet asking
@@ -48,6 +46,8 @@
  */
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import <CoreServices/CoreServices.h>
+
 @interface TDCLicenseManagerMigrateAppStoreSheet ()
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *contactAddressTextField;
 @property (nonatomic, copy) NSString *cachedReceiptData;
@@ -76,7 +76,7 @@
 
 	[self.contactAddressTextField setTextDidChangeCallback:self];
 
-	[self validatedTextFieldTextDidChange:self.contactAddressTextField];
+	[self.contactAddressTextField setStringValue:[XRAddressBook emailAddressOfLocalUser]];
 
 	[self startSheet];
 }
