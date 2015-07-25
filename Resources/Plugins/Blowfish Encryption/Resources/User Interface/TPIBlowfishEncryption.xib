@@ -30,7 +30,7 @@
                                 <attributedString key="textStorage">
                                     <fragment content="“FiSH” refers to a type of text based encryption that many applications support for peer-to-peer communications.">
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -77,21 +77,20 @@
                                 <attributedString key="textStorage">
                                     <fragment content="WARNING: ">
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" size="12" metaFont="systemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
                                         <string key="content">The encryption that FiSH provides is very dated compared to modern cryptography. FiSH is prone to attack, lacks forward secrecy, lacks deniable authentication, and its </string>
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="encryption keys are limited to a length of 56 characters.">
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" size="12" metaFont="systemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -100,20 +99,19 @@
 Cgo
 </string>
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="WARNING: ">
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
-                                            <font key="NSOriginalFont" size="12" name=".HelveticaNeueDeskInterface-Bold"/>
+                                            <font key="NSFont" size="12" metaFont="systemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="With FiSH encryption enabled, use of Off-the-Record Messaging (OTR) is disabled.">
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>

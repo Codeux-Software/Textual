@@ -38,7 +38,7 @@
                                     <fragment>
                                         <string key="content">The Smiley Converter can be used to automatically convert each emoticon (e.g. “:-)”) in a message to their emoji equivalent, which are visible only to you.</string>
                                         <attributes>
-                                            <font key="NSFont" size="12" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="12" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>

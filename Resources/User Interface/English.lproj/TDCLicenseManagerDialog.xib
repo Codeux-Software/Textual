@@ -248,7 +248,7 @@ Gw
                                 <attributedString key="textStorage">
                                     <fragment content="Privacy Policy">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <url key="NSLink" string="https://www.codeux.com/textual/help/Privacy-Policy.kb"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>

@@ -2873,14 +2873,4 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[menuController() openWelcomeSheet:sender];
 }
 
-- (void)openMigrationAssistantDownloadPage:(id)sender
-{
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/downloads/migrationAssistant.download"];
-}
-
-- (void)openMacAppStoreDownloadPage:(id)sender
-{
-	[menuController() openMacAppStoreDownloadPage:sender];
-}
-
 @end

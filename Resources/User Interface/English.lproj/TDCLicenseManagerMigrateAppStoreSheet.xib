@@ -55,17 +55,6 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I9Q-2o-VpB">
-                        <rect key="frame" x="104" y="13" width="82" height="32"/>
-                        <animations/>
-                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="0Fx-4n-nf9">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-Gw
-</string>
-                        </buttonCell>
-                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jam-O7-WoM">
                         <rect key="frame" x="186" y="13" width="166" height="32"/>
                         <animations/>
@@ -96,19 +85,17 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="I9Q-2o-VpB" firstAttribute="leading" secondItem="caz-XB-TnX" secondAttribute="leading" id="9uK-fS-hzI"/>
+                    <constraint firstItem="Jam-O7-WoM" firstAttribute="leading" secondItem="caz-XB-TnX" secondAttribute="trailing" constant="12" symbolic="YES" id="Cr4-yz-R69"/>
+                    <constraint firstItem="caz-XB-TnX" firstAttribute="baseline" secondItem="Jam-O7-WoM" secondAttribute="baseline" id="EVb-M6-qZy"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="top" secondItem="F12-H0-P9Z" secondAttribute="bottom" constant="12" id="KZx-0D-8bj"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="top" secondItem="gBo-7N-KkR" secondAttribute="top" constant="20" symbolic="YES" id="Nql-yA-Hcd"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="leading" secondItem="gBo-7N-KkR" secondAttribute="leading" constant="20" symbolic="YES" id="OYh-0s-QKS"/>
                     <constraint firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" constant="20" symbolic="YES" id="QtE-I4-hZa"/>
-                    <constraint firstItem="I9Q-2o-VpB" firstAttribute="baseline" secondItem="caz-XB-TnX" secondAttribute="baseline" id="Qzg-n6-VsP"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="leading" secondItem="NZa-CW-72p" secondAttribute="trailing" constant="8" symbolic="YES" id="aB1-Qu-2uN"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="Jam-O7-WoM" secondAttribute="trailing" id="aWq-ee-3gi"/>
-                    <constraint firstItem="I9Q-2o-VpB" firstAttribute="baseline" secondItem="Jam-O7-WoM" secondAttribute="baseline" id="dk5-Io-Yjg"/>
                     <constraint firstAttribute="bottom" secondItem="caz-XB-TnX" secondAttribute="bottom" constant="20" symbolic="YES" id="l6T-xi-uEb"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" id="l71-yV-9hf"/>
                     <constraint firstItem="NZa-CW-72p" firstAttribute="leading" secondItem="F12-H0-P9Z" secondAttribute="leading" id="maJ-cn-hT5"/>
-                    <constraint firstItem="Jam-O7-WoM" firstAttribute="leading" secondItem="I9Q-2o-VpB" secondAttribute="trailing" constant="12" symbolic="YES" id="p6K-wn-bSW"/>
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="centerY" secondItem="NZa-CW-72p" secondAttribute="centerY" id="r6w-c7-uM0"/>
                 </constraints>
                 <animations/>

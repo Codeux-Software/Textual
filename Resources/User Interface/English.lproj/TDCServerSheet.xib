@@ -278,7 +278,7 @@ Gw
                 <outlet property="delegate" destination="-2" id="2302"/>
                 <outlet property="initialFirstResponder" destination="1456" id="1467"/>
             </connections>
-            <point key="canvasLocation" x="374.5" y="262"/>
+            <point key="canvasLocation" x="515.5" y="270"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1469" userLabel="General View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
@@ -916,20 +916,20 @@ Gw
                                 <attributedString key="textStorage">
                                     <fragment content="The following settings will automatically take effect when Textual detects that it is connecting to a ">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="ZNC">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <url key="NSLink" string="http://znc.in/"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="-based bouncer.">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1093,7 +1093,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1251,7 +1251,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1338,7 +1338,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1672,7 +1672,7 @@ Gw
                             </textFieldCell>
                         </textField>
                         <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1902">
-                            <rect key="frame" x="146" y="30" width="220" height="24"/>
+                            <rect key="frame" x="146" y="32" width="220" height="22"/>
                             <animations/>
                             <secureTextFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="1915">
                                 <font key="font" metaFont="system"/>
@@ -1710,7 +1710,7 @@ Gw
                         <constraint firstItem="1902" firstAttribute="leading" secondItem="1899" secondAttribute="trailing" constant="8" symbolic="YES" id="t1S-1c-Zdt"/>
                         <constraint firstItem="1903" firstAttribute="centerY" secondItem="1898" secondAttribute="centerY" id="tpK-Ep-V48"/>
                         <constraint firstItem="1903" firstAttribute="leading" secondItem="1904" secondAttribute="leading" id="wxt-Vk-VJ2"/>
-                        <constraint firstAttribute="bottom" secondItem="1902" secondAttribute="bottom" constant="30" id="z2c-Rx-heZ"/>
+                        <constraint firstAttribute="bottom" secondItem="1902" secondAttribute="bottom" constant="32" id="z2c-Rx-heZ"/>
                         <constraint firstItem="1903" firstAttribute="leading" secondItem="1901" secondAttribute="leading" id="zHN-he-cYC"/>
                     </constraints>
                     <animations/>
@@ -1756,7 +1756,6 @@ Gw
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1771,7 +1770,6 @@ Gw
                                         <attributes>
                                             <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="smallSystemBold"/>
-                                            <font key="NSOriginalFont" metaFont="smallSystemBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -1829,7 +1827,7 @@ Gw
                 <constraint firstItem="yql-kd-PP5" firstAttribute="centerY" secondItem="1887" secondAttribute="centerY" id="zUd-wI-FhX"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="6" y="204.5"/>
+            <point key="canvasLocation" x="281" y="229.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2078" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="530" height="336"/>
@@ -2114,7 +2112,7 @@ Gw
    When enabled, IPv4 is not used as a fallback for failed IPv6 connections.</string>
                                         <attributes>
                                             <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0">
                                                 <tabStops/>
                                             </paragraphStyle>
@@ -2208,13 +2206,13 @@ Gw
                                 <attributedString key="textStorage">
                                     <fragment content="Many networks provide the ability to identify to NickServ services without a password using a client-side ">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="certificate">
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <url key="NSLink" string="http://en.wikipedia.org/wiki/Public_key_certificate"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
@@ -2222,7 +2220,7 @@ Gw
                                     <fragment>
                                         <string key="content"> when connecting through a secured connection. Click the button below to change the certificate which is sent on your behalf during connect.</string>
                                         <attributes>
-                                            <font key="NSFont" size="13" name=".HelveticaNeueDeskInterface-Regular"/>
+                                            <font key="NSFont" size="13" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
