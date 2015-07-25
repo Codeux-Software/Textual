@@ -351,8 +351,8 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1007][2]", originalInput)
-														 title:TXTLS(@"TLOLicenseManager[1007][1]")
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1013][2]", originalInput)
+														 title:TXTLS(@"TLOLicenseManager[1013][1]")
 												 defaultButton:TXTLS(@"BasicLanguage[1011]")
 											   alternateButton:nil
 												suppressionKey:nil

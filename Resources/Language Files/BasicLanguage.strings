@@ -192,9 +192,6 @@
 "TLOLicenseManager[1003][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1003][2]" = "Improperly formatted e-mail address";
 
-"TLOLicenseManager[1007][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1007][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
-
 "TLOLicenseManager[1004][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1004][2]" = "Unknown or improperly formatted license key";
 
@@ -220,6 +217,9 @@
 
 "TLOLicenseManager[1012][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address";
+
+"TLOLicenseManager[1013][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1013][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
 
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
