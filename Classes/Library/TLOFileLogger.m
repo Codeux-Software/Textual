@@ -63,8 +63,6 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 - (void)writePlainTextLine:(NSString *)s
 {
-	[self reopenIfNeeded];
-
 	if (self.file) {
 		NSString *writeString = [NSString stringWithFormat:@"%@%@", s, NSStringNewlinePlaceholder];
 		
@@ -94,17 +92,13 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	}
 
 	self.filename = nil;
+
+	[RZNotificationCenter() removeObserver:self name:IRCWorldDateHasChangedNotification object:nil];
 }
 
-- (void)reopenIfNeeded
+- (void)dateChanged:(id)sender
 {
-	/* This call is designed to reopen the file pointer when using 
-	 the date as the filename. When the date changes, the log path
-	 will have to change as well. This handles that. */
-
-	if ([[self buildFileName] isEqual:self.filename] == NO) {
-		[self open];
-	}
+	[self open];
 }
 
 - (void)open
@@ -165,6 +159,9 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	if ( self.file) {
 		[self.file seekToEndOfFile];
 	}
+
+	/* Observe notification for when date changes to change filename of log. */
+	[RZNotificationCenter() addObserver:self selector:@selector(dateChanged:) name:IRCWorldDateHasChangedNotification object:nil];
 }
 
 #pragma mark -
