@@ -74,6 +74,18 @@ Textual.viewPositionMovedToHistoryIndicator 	= function() {};
 Textual.viewPositionMovedToLine 				= function(lineNumber) {};
 Textual.viewPositionMovedToTop 					= function() {};
 
+/* This function is called when two conditions are met:
+	1. The day has changed by reaching midnight
+	2. The system clock has changed
+
+   For the first case (#1), the timer that handles the observation of
+   midnight understands Daylight Saving Time (DST) and other oddities.
+
+   For the second case (#2), Textual does not make an effort to compare
+   if the day has in-fact changed. It is merely passing the change down
+   to the style to inform it that the system clock changed.  */
+Textual.dateChanged								= function(dayYear, dayMonth, dayDay) {};
+
 /* This function is not called by Textual itself, but by WebKit. It is appended
    to <body> as the function to call during onload phase. It is used by the newer
    templates to replace viewDidFinishLoading as the function responsible for

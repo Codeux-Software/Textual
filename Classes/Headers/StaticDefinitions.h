@@ -52,6 +52,7 @@
 #define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
 #define RZAppearaneCurrentController()			[NSAppearance currentAppearance]
 #define RZAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define RZCurrentCalender()						[NSCalendar currentCalendar]
 #define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 #define RZDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
 #define RZFileManager()							[NSFileManager defaultManager]
