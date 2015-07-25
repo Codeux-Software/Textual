@@ -278,7 +278,7 @@
 
 	[self.migrateAppStoreSheet setDelegate:self];
 
-	[self.migrateAppStoreSheet presentOpenDialog];
+	[self.migrateAppStoreSheet start];
 }
 
 - (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender convertReceipt:(NSString *)receiptData withContactAddress:(NSString *)contactAddress
