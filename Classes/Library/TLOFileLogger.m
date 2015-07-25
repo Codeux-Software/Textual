@@ -51,6 +51,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 @interface TLOFileLogger ()
 @property (readonly, copy) NSURL *fileWritePath;
+@property (nonatomic, copy) NSURL *filename;
 @property (nonatomic, strong) NSFileHandle *file;
 @end
 
@@ -98,19 +99,16 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 		 self.file = nil;
 	}
 
-	[RZNotificationCenter() removeObserver:self name:IRCWorldDateHasChangedNotification object:nil];
-}
-
-- (void)dateChanged:(id)sender
-{
-	[self close];
-
-	[self open];
+	self.filename = nil;
 }
 
 - (void)reopenIfNeeded
 {
-	if (self.file == nil) {
+	/* This call is designed to reopen the file pointer when using
+	 the date as the filename. When the date changes, the log path
+	 will have to change as well. This handles that. */
+
+	if ([[self buildFileName] isEqual:self.filename] == NO) {
 		[self open];
 	}
 }
@@ -126,14 +124,14 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 	/* What will the filename be? The filename
 	 includes the folder being written to. */
-	NSURL *filename = [self buildFileName];
+	self.filename = [self buildFileName];
 
 	/* Make sure the folder being written to exists. */
 	/* We extract the folder from self.filename for this
 	 check instead of using "path" because the generation
 	 of self.filename may have added extra directories to 
 	 the structure of the path beyond what "path" provided. */
-	NSURL *folder = [filename URLByDeletingLastPathComponent];
+	NSURL *folder = [self.filename URLByDeletingLastPathComponent];
 
 	if ([RZFileManager() fileExistsAtPath:[folder path] isDirectory:NULL] == NO) {
 		NSError *fmerr = nil;
@@ -150,10 +148,10 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	}
 
 	/* Does the file exist? */
-	if ([RZFileManager() fileExistsAtPath:[filename path]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:[self.filename path]] == NO) {
 		NSError *fcerr = nil;
 
-		[NSStringEmptyPlaceholder writeToURL:filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
+		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 
 		if (fcerr) {
 			DebugLogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
@@ -165,14 +163,11 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 	}
 
 	/* Open our file handle. */
-	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[filename path]];
+	self.file = [NSFileHandle fileHandleForUpdatingAtPath:[self.filename path]];
 
 	if ( self.file) {
 		[self.file seekToEndOfFile];
 	}
-
-	/* Observe notification for when date changes to change filename of log. */
-	[RZNotificationCenter() addObserver:self selector:@selector(dateChanged:) name:IRCWorldDateHasChangedNotification object:nil];
 }
 
 #pragma mark -
