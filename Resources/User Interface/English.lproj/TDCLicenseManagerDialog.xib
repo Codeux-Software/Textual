@@ -99,6 +99,9 @@
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kAU-WO-mIJ">
                     <rect key="frame" x="196" y="259" width="374" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="c0i-vs-fYF"/>
+                    </constraints>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="relieved-red-mallard-100000000000000000000000" drawsBackground="YES" id="gYL-gB-e0X">
                         <font key="font" size="13" name="Courier"/>

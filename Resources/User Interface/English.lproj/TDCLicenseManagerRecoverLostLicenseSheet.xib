@@ -25,7 +25,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="379" height="149"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-s0-jEO">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-s0-jEO">
                         <rect key="frame" x="18" y="95" width="343" height="34"/>
                         <animations/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Enter the e-mail address used when purchasing Textual to recover your license key(s)." id="v6x-ej-Sxw">
@@ -34,8 +34,11 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RLC-SX-HOX" customClass="TVCTextFieldWithValueValidation">
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RLC-SX-HOX" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="130" y="61" width="222" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="aU0-EM-PLg"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="PKO-ZT-PPs" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
@@ -49,7 +52,7 @@
                             <outlet property="delegate" destination="-2" id="N64-jt-SMG"/>
                         </connections>
                     </textField>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-Hq-LJS">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="l4F-Hq-LJS">
                         <rect key="frame" x="24" y="64" width="100" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="E-mail Address:" id="Cbk-SL-qTh">
@@ -58,7 +61,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3wc-zV-dNO">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3wc-zV-dNO">
                         <rect key="frame" x="196" y="13" width="169" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Recover Lost License" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="N4b-7q-PPZ">
@@ -72,7 +75,7 @@ DQ
                             <action selector="ok:" target="-2" id="HJy-bC-hmd"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GuT-8v-aNV">
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GuT-8v-aNV">
                         <rect key="frame" x="114" y="13" width="82" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="KNw-Jq-eAB">
@@ -87,6 +90,19 @@ Gw
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="3wc-zV-dNO" firstAttribute="leading" secondItem="GuT-8v-aNV" secondAttribute="trailing" constant="12" symbolic="YES" id="15w-2z-PZq"/>
+                    <constraint firstItem="3wc-zV-dNO" firstAttribute="baseline" secondItem="GuT-8v-aNV" secondAttribute="baseline" id="65z-on-n1I"/>
+                    <constraint firstItem="BdN-s0-jEO" firstAttribute="top" secondItem="Lpx-CQ-7HY" secondAttribute="top" constant="20" symbolic="YES" id="Mu4-N2-5yu"/>
+                    <constraint firstItem="RLC-SX-HOX" firstAttribute="top" secondItem="BdN-s0-jEO" secondAttribute="bottom" constant="12" id="Prg-Eg-dBB"/>
+                    <constraint firstItem="l4F-Hq-LJS" firstAttribute="centerY" secondItem="RLC-SX-HOX" secondAttribute="centerY" id="Qhz-IK-djK"/>
+                    <constraint firstAttribute="bottom" secondItem="GuT-8v-aNV" secondAttribute="bottom" constant="20" symbolic="YES" id="REI-nJ-XQE"/>
+                    <constraint firstAttribute="trailing" secondItem="RLC-SX-HOX" secondAttribute="trailing" constant="27" id="WLR-Lc-YFZ"/>
+                    <constraint firstItem="3wc-zV-dNO" firstAttribute="trailing" secondItem="BdN-s0-jEO" secondAttribute="trailing" id="Y7C-aO-Aou"/>
+                    <constraint firstItem="BdN-s0-jEO" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="20" symbolic="YES" id="ad4-im-3Ms"/>
+                    <constraint firstItem="l4F-Hq-LJS" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="26" id="jEZ-Fz-CFl"/>
+                    <constraint firstItem="RLC-SX-HOX" firstAttribute="leading" secondItem="l4F-Hq-LJS" secondAttribute="trailing" constant="8" symbolic="YES" id="oYP-Lh-Ux1"/>
+                </constraints>
                 <animations/>
             </view>
             <connections>

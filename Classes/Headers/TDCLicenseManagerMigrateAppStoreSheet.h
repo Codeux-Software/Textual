@@ -45,7 +45,11 @@
 @protocol TDCLicenseManagerMigrateAppStoreSheetDelegate <NSObject>
 @required
 
-- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender convertReceipt:(NSString *)receiptData withContactAddress:(NSString *)contactAddress;
+- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
+							convertReceipt:(NSString *)receiptData
+						  licenseOwnerName:(NSString *)licenseOwnerName
+				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
+
 - (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender;
 @end
 #endif

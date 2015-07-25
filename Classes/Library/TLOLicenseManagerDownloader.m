@@ -115,18 +115,23 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestSendLostLicenseType context:contextInfo];
 }
 
-- (void)migrateMacAppStorePurcahse:(NSString *)receiptData withContactAddress:(NSString *)contactAddress
+- (void)migrateMacAppStorePurcahse:(NSString *)receiptData licenseOwnerName:(NSString *)licenseOwnerName licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
 {
 	NSString *macAddress = [XRSystemInformation formattedEthernetMacAddress];
 
-	if (NSObjectIsEmpty(receiptData) || NSObjectIsEmpty(contactAddress) || NSObjectIsEmpty(macAddress)) {
+	if (NSObjectIsEmpty(receiptData) ||
+		NSObjectIsEmpty(licenseOwnerName) ||
+		NSObjectIsEmpty(licenseOwnerContactAddress) ||
+		NSObjectIsEmpty(macAddress))
+	{
 		return; // Cancel operation...
 	}
 
 	NSDictionary *contextInfo = @{
 		@"receiptData" : receiptData,
 		@"licenseOwnerMacAddress" : macAddress,
-		@"licenseOwnerContactAddress" : contactAddress
+		@"licenseOwnerName"	: licenseOwnerName,
+		@"licenseOwnerContactAddress" : licenseOwnerContactAddress
 	};
 
 	[self setupNewActionWithRequestType:TLOLicenseManagerDownloaderRequestMigrateAppStoreType context:contextInfo];
@@ -491,10 +496,14 @@ present_fatal_error:
 	} else if (self.requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType) {
 		NSString *receiptData = [self encodedRequestContextValue:@"receiptData"];
 
-		NSString *licenseOwnerMacAddress = [self encodedRequestContextValue:@"licenseOwnerMacAddress"];
+		NSString *licenseOwnerName = [self encodedRequestContextValue:@"licenseOwnerName"];
+
 		NSString *licenseOwnerContactAddress = [self encodedRequestContextValue:@"licenseOwnerContactAddress"];
 
-		requestBodyString = [NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&licenseOwnerContactAddress=%@&lang=%@", receiptData, licenseOwnerMacAddress, licenseOwnerContactAddress, currentUserLanguage];
+		NSString *licenseOwnerMacAddress = [self encodedRequestContextValue:@"licenseOwnerMacAddress"];
+
+		requestBodyString = [NSString stringWithFormat:@"receiptData=%@&licenseOwnerMacAddress=%@&licenseOwnerContactAddress=%@&licenseOwnerName=%@&lang=%@",
+							 receiptData, licenseOwnerMacAddress, licenseOwnerContactAddress, licenseOwnerName, currentUserLanguage];
 	}
 
 	if (requestBodyString) {
