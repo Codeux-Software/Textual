@@ -128,6 +128,7 @@ DQ
                     <rect key="frame" x="93" y="212" width="212" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="212" id="cFa-vZ-Byo"/>
+                        <constraint firstAttribute="height" constant="22" id="elf-Yf-UCA"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="129">
@@ -148,6 +149,7 @@ DQ
                     <rect key="frame" x="93" y="242" width="212" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="212" id="Cgb-nt-TtE"/>
+                        <constraint firstAttribute="height" constant="22" id="nl8-XD-eC7"/>
                     </constraints>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="#example" usesSingleLineMode="YES" id="130" customClass="TVCTextFieldWithValueValidationCell">
@@ -318,6 +320,9 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="250">
                     <rect key="frame" x="77" y="53" width="228" height="66"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="66" id="jhC-2M-Ecm"/>
+                    </constraints>
                     <animations/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="270">
                         <font key="font" metaFont="system"/>

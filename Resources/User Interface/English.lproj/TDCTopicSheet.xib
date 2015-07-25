@@ -60,6 +60,9 @@
                             <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="94" id="hRn-mc-ROH"/>
+                        </constraints>
                         <animations/>
                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="39">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
