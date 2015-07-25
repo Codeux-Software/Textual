@@ -39,6 +39,8 @@
 
 #import "TDCLicenseManagerMigrateAppStoreSheet.h"
 
+#import <CoreServices/CoreServices.h>
+
 /* 
  * TDCLicenseManagerMigrateAppStoreSheet presents an open dialog to
  * find a copy of Textual with a receipt then presents a sheet asking
@@ -123,6 +125,38 @@
 	}
 }
 
+- (void)start
+{
+	[self findTextualUsingLaucnhServices];
+}
+
+- (void)findTextualUsingLaucnhServices
+{
+	CFURLRef searchScopeURL = (__bridge CFURLRef)[NSURL URLWithString:@"textual://knowledge-base"];
+
+	NSArray *matchedApplications = (__bridge NSArray *)LSCopyApplicationURLsForURL(searchScopeURL, kLSRolesViewer);
+
+	NSURL *matchedCopy = nil;
+
+	if (matchedApplications) {
+		for (NSURL *applicationURL in matchedApplications) {
+			if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
+				matchedCopy = applicationURL;
+
+				LogToConsole(@"Automatically detected App Store Textual 5 at the following path: %@", [matchedCopy path]);
+
+				break;
+			}
+		}
+	}
+
+	if (matchedCopy == nil) {
+		[self presentOpenDialog];
+	} else {
+		[self haveApplicationAtURL:matchedCopy];
+	}
+}
+
 - (void)presentOpenDialog
 {
 	NSOpenPanel *d = [NSOpenPanel openPanel];
@@ -148,27 +182,31 @@
 	[d setMessage:TXTLS(@"TLOLicenseManager[1008]")];
 
 	[d beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
-		NSString *receiptData = nil;
-
 		if (result == NSModalResponseOK) {
-			receiptData = [self receiptDataForApplicationAtURL:[d URL]];
-		}
-
-		if (receiptData) {
-			[self haveReceiptData:receiptData];
+			[self haveApplicationAtURL:[d URL]];
 		} else {
-			[self windowWillClose:nil];
+			[self haveApplicationAtURL:nil];
 		}
 	}];
 }
 
-- (void)haveReceiptData:(NSString *)receiptData
+- (void)haveApplicationAtURL:(NSURL *)applicationURL
 {
-	self.cachedReceiptData = receiptData;
+	NSString *receiptData = nil;
 
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self startContactAddressSheet];
-	});
+	if (applicationURL) {
+		receiptData = [self receiptDataForApplicationAtURL:applicationURL];
+	}
+
+	if (receiptData) {
+		self.cachedReceiptData = receiptData;
+
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			[self startContactAddressSheet];
+		});
+	} else {
+		[self windowWillClose:nil];
+	}
 }
 
 #pragma mark -

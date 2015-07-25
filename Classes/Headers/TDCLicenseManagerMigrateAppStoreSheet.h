@@ -39,7 +39,7 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @interface TDCLicenseManagerMigrateAppStoreSheet : TDCSheetBase
-- (void)presentOpenDialog;
+- (void)start;
 @end
 
 @protocol TDCLicenseManagerMigrateAppStoreSheetDelegate <NSObject>
