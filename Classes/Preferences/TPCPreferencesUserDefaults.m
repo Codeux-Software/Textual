@@ -223,7 +223,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 			~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist
 
 		The non-Mac App Store version of Textual writes to the following path:
-			~/Library/Preferences/com.codeux.irc.textual5.plist
+			~/Library/Preferences/com.codeux.apps.textual.plist
 
 	 So whats the best way to handle the difference? NSUserDefaults does not allow an
 	 application to specify the exact write path so that is out of the question and it
@@ -242,7 +242,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	 */
 
 	/* Determine whether Textual has previously performed a group container migration. */
-	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8230"];
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330"];
 
 	if (migratedOldKeys) {
 		return; // Cancel operation...
@@ -260,23 +260,106 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	NSArray *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
 
 	for (NSDictionary *pathToMigrateDict in pathsToMigrate) {
-		NSString *pathToMigrateFromAbsolutePath = [pathToMigrateDict[@"source"] stringByExpandingTildeInPath];
+		@autoreleasepool {
+			/* Define context variables for migration action. */
+			NSString *pathToMigrateFromAbsolutePath = [pathToMigrateDict[@"sourcePath"] stringByExpandingTildeInPath];
 
-		NSString *pathToMigrateToAbsolutePath = [pathToMigrateDict[@"destination"] stringByExpandingTildeInPath];
+			NSString *pathToMigrateToAbsolutePath = [pathToMigrateDict[@"destinationPath"] stringByExpandingTildeInPath];
 
-		[TPCPreferencesUserDefaults migrateKeyValuesWithPath:pathToMigrateFromAbsolutePath
-													  toPath:pathToMigrateToAbsolutePath];
+			NSString *migrationPathType = pathToMigrateDict[@"pathType"];
+
+			BOOL hideOriginalOnMigration = [pathToMigrateDict boolForKey:@"hideOriginalOnMigration"];
+
+			BOOL createSourceIfMissing = [pathToMigrateDict boolForKey:@"createSourceIfMissing"];
+
+			/* Perform migration action. */
+			if (NSObjectsAreEqual(migrationPathType, @"folder"))
+			{
+				[TPCPreferencesUserDefaults migrateFolderWithPath:pathToMigrateFromAbsolutePath
+														   toPath:pathToMigrateToAbsolutePath
+										  hideOriginalOnMigration:hideOriginalOnMigration
+											createSourceIfMissing:createSourceIfMissing];
+			}
+			else if (NSObjectsAreEqual(migrationPathType, @"file-propertyList"))
+			{
+				[TPCPreferencesUserDefaults migrateKeyValuesWithPath:pathToMigrateFromAbsolutePath
+															  toPath:pathToMigrateToAbsolutePath
+											 hideOriginalOnMigration:hideOriginalOnMigration
+											   createSourceIfMissing:createSourceIfMissing];
+			}
+		}
 	}
 
 	/* Inform future calls to method not to perform migration again. */
-	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8230"];
+	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330"];
 }
 
-+ (void)migrateKeyValuesWithPath:(NSString *)sourceMigrationPath toPath:(NSString *)destinationMigrationPath
++ (void)migrateFolderWithPath:(NSString *)sourceMigrationPath
+					   toPath:(NSString *)destinationMigrationPath
+	  hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
+		createSourceIfMissing:(BOOL)createSourceIfMissing
 {
-	/* Build absolute path from relative path. */
+	/* If the destination folder already exists, cancel operation. */
+	if ([RZFileManager() directoryExistsAtPath:destinationMigrationPath]) {
+		return; // Cancel operation...
+	}
+
+	/* Perform migration action for path. */
 	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
 
+	if (sourceMigrationPathExists == NO && createSourceIfMissing == NO) {
+		return; // Cancel operation...
+	}
+
+	/* Move source path to new path. */
+	if (sourceMigrationPathExists) {
+		NSError *moveSourcePathError = nil;
+
+		if ([RZFileManager() moveItemAtPath:sourceMigrationPath toPath:destinationMigrationPath error:&moveSourcePathError] == NO) {
+			LogToConsole(@"Failed to move migration source path during migration: %@", [moveSourcePathError localizedDescription]);
+
+			return; // Cancel operation...
+		}
+	} else {
+		NSError *createSourcePathError = nil;
+
+		if ([RZFileManager() createDirectoryAtPath:sourceMigrationPath withIntermediateDirectories:YES attributes:nil error:&createSourcePathError] == NO) {
+			LogToConsole(@"Failed to create source migration path when missing: %@", [createSourcePathError localizedDescription]);
+
+			return; // Cancel operation...
+		}
+	}
+
+	/* Create symbolic link from source path to new path. */
+	NSError *createSymbolicLinkError = nil;
+
+	if ([RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL] == NO) {
+		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
+	}
+
+	/* Maybe hide original path. */
+	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:YES];
+
+	NSError *modifySourcePathAttributesError = nil;
+
+	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+	}
+}
+
++ (void)migrateKeyValuesWithPath:(NSString *)sourceMigrationPath
+						  toPath:(NSString *)destinationMigrationPath
+		 hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
+		   createSourceIfMissing:(BOOL)createSourceIfMissing
+{
+	/* Exit if the source migration path does not exist. */
+	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
+
+	if (sourceMigrationPathExists == NO && createSourceIfMissing == NO) {
+		return; // Cancel operation...
+	}
+
+	/* Retrieve values from property list. */
 	NSDictionary *preferencesToMigrate = nil;
 
 	NSDictionary *remappedPreferenceKeys = nil;
@@ -297,26 +380,47 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 		 replace it with a symbolic link. Doing this way ensures that the
 		 new path (non-sandboxed path) can be accessed by the Mac App Store
 		 version so that they are wrote to at the same path. */
-		if ([RZFileManager() removeItemAtPath:sourceMigrationPath error:NULL] == NO) {
-			LogToConsole(@"Failed to remove group container preferences file.");
+		NSError *removeSourcePathError = nil;
+
+		if ([RZFileManager() removeItemAtPath:sourceMigrationPath error:&removeSourcePathError] == NO) {
+			LogToConsole(@"Failed to erase the migration source file: %@", [removeSourcePathError localizedDescription]);
 
 			return; // Cancel operation...
 		}
 	}
-
+	
 	/* We do not return if the creation of the symbolic link fails. 
 	 If it fails, we still write the keys in memory so that we can at 
 	 least have the user preferences on disk somewhere, they just wont
 	 be read by the Mac App Store without symbolic link. */
-	if (sourceMigrationPathExists == NO) {
+	if (sourceMigrationPathExists == NO && createSourceIfMissing) {
 		NSString *sourceMigrationPathOwner = [sourceMigrationPath stringByDeletingLastPathComponent];
 
+		NSError *createSourcePathError = nil;
+
 		if ([RZFileManager() fileExistsAtPath:sourceMigrationPathOwner] == NO) {
-			[RZFileManager() createDirectoryAtPath:sourceMigrationPathOwner withIntermediateDirectories:YES attributes:nil error:NULL];
+			if ([RZFileManager() createDirectoryAtPath:sourceMigrationPathOwner withIntermediateDirectories:YES attributes:nil error:&createSourcePathError] == NO) {
+				LogToConsole(@"Failed to create source migration path when missing: %@", [createSourcePathError localizedDescription]);
+
+				return; // Cancel operation...
+			}
 		}
 	}
 
-	(void)[RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL];
+	NSError *createSymbolicLinkError = nil;
+
+	if ([RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL] == NO) {
+		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
+	}
+
+	/* Maybe hide original path. */
+	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:NO];
+
+	NSError *modifySourcePathAttributesError = nil;
+
+	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+	}
 
 	/* Begin migrating group container values. */
 	if (sourceMigrationPathExists) {
