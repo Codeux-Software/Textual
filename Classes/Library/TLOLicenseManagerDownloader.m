@@ -396,7 +396,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				LogToConsole(@"Receipt validation failed: %@", errorMessage);
+				LogToConsole(@"Receipt validation failed:\n%@", errorMessage);
 			}
 			else if (statusCodeInt == 6600004)
 			{
