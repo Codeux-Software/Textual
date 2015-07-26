@@ -211,7 +211,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.irc.textual.extension.WikiStyleLinkParser;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-WikiStyleLinkParser";
 			};
 			name = Debug;
 		};
@@ -219,7 +219,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.irc.textual.extension.WikiStyleLinkParser;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-WikiStyleLinkParser";
 			};
 			name = Release;
 		};

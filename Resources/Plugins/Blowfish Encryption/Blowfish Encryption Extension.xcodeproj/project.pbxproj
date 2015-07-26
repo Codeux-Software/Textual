@@ -284,7 +284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.irc.textual5.extension.BlowfishEncryption;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Debug;
 		};
@@ -292,7 +292,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.irc.textual5.extension.BlowfishEncryption;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Release;
 		};
