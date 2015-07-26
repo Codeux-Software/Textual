@@ -92,7 +92,7 @@
                     <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="9WE-Gi-yuN">
                         <font key="font" metaFont="system"/>
-                        <string key="title">If you have already purchased Textual 5, then enter your license key below to activate this copy of Textual. Your license key can be found in the e-mail sent to you after purchasing Textual. </string>
+                        <string key="title">If you have already purchased Textual, then enter your license key below to activate this copy of Textual. Your license key can be found in the e-mail sent to you after purchasing Textual. </string>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -314,7 +314,7 @@ Gw
                 <constraint firstItem="3vL-kf-6VZ" firstAttribute="leading" secondItem="bea-Wk-5YZ" secondAttribute="leading" id="wUw-ox-LMO"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="779" y="470.5"/>
+            <point key="canvasLocation" x="438" y="218.5"/>
         </view>
         <view id="JQ9-UV-o9c">
             <rect key="frame" x="0.0" y="0.0" width="548" height="199"/>
