@@ -1636,15 +1636,16 @@
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXSharedApplication.h; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
-		4C0BA6D91990798800857343 /* Textual 5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Textual 5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = applicationIconYosemite.icns; path = Application/Yosemite/applicationIconYosemite.icns; sourceTree = "<group>"; };
 		4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Application/birthdayIcon.icns; sourceTree = "<group>"; };
 		4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSync.h; path = Classes/Headers/TPCPreferencesCloudSync.h; sourceTree = SOURCE_ROOT; };
+		4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualAppStore.entitlements; path = Resources/Sandbox/Entitlements/TextualAppStore.entitlements; sourceTree = SOURCE_ROOT; };
 		4C1893F217980F460091D173 /* TVCImageURLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLoader.h; sourceTree = "<group>"; };
 		4C195A8C1ABBC72E0009BCB6 /* NSViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSViewHelper.m; sourceTree = "<group>"; };
 		4C195A921ABBC7590009BCB6 /* NSViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSViewHelper.h; sourceTree = "<group>"; };
 		4C1CFADD199D72A3002A3C0E /* IRCConnectionPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCConnectionPrivate.h; sourceTree = "<group>"; };
-		4C1DC5521580420500A47BC9 /* Textual 5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Textual 5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C1DC5521580420500A47BC9 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1ED4A016CEA081006DD0CA /* IRCConnectionSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCConnectionSocket.h; path = Classes/Headers/IRCConnectionSocket.h; sourceTree = SOURCE_ROOT; };
 		4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCConnectionSocket.m; path = IRC/IRCConnectionSocket.m; sourceTree = "<group>"; };
 		4C211D5615BF21BA00E218DA /* libmustache.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmustache.a; path = "Frameworks/Mustache Templates/libmustache.a"; sourceTree = "<group>"; };
@@ -1702,7 +1703,7 @@
 		4C58B570186011AC00834882 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgments.pdf; sourceTree = SOURCE_ROOT; };
 		4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesImportExport.m; sourceTree = "<group>"; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesImportExport.h; sourceTree = "<group>"; };
-		4C5BA4E616F1302F00A96CA2 /* Textual 5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Textual 5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = SecureTransportErrorCodes.strings; path = "Resources/Language Files/SecureTransportErrorCodes.strings"; sourceTree = SOURCE_ROOT; };
 		4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewMavericksUserInterace.h; sourceTree = "<group>"; };
 		4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewYosemiteUserInterace.h; sourceTree = "<group>"; };
@@ -2057,8 +2058,6 @@
 		4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListSharedUserInterface.m; sourceTree = "<group>"; };
 		4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListUserInfoPopover.m; sourceTree = "<group>"; };
 		4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Entitlements/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4CF40E9E1AC1A4ED00A26BE0 /* TextualWithCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithCloud.entitlements; path = Resources/Sandbox/Entitlements/TextualWithCloud.entitlements; sourceTree = SOURCE_ROOT; };
-		4CF40E9F1AC1A4ED00A26BE0 /* TextualWithoutCloud.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutCloud.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutCloud.entitlements; sourceTree = SOURCE_ROOT; };
 		4CF40EAF1AC1A52D00A26BE0 /* core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Styles/JavaScript/API/core.js; sourceTree = SOURCE_ROOT; };
 		4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = corePrivate.js; path = Resources/Styles/JavaScript/API/corePrivate.js; sourceTree = SOURCE_ROOT; };
 		4CF40EB11AC1A52D00A26BE0 /* liveresize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = liveresize.js; path = Resources/Styles/JavaScript/API/liveresize.js; sourceTree = SOURCE_ROOT; };
@@ -2235,9 +2234,9 @@
 		4C1DC5531580420500A47BC9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C1DC5521580420500A47BC9 /* Textual 5.app */,
-				4C5BA4E616F1302F00A96CA2 /* Textual 5.app */,
-				4C0BA6D91990798800857343 /* Textual 5.app */,
+				4C1DC5521580420500A47BC9 /* Textual.app */,
+				4C5BA4E616F1302F00A96CA2 /* Textual.app */,
+				4C0BA6D91990798800857343 /* Textual.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2556,8 +2555,7 @@
 			isa = PBXGroup;
 			children = (
 				4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */,
-				4CF40E9E1AC1A4ED00A26BE0 /* TextualWithCloud.entitlements */,
-				4CF40E9F1AC1A4ED00A26BE0 /* TextualWithoutCloud.entitlements */,
+				4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */,
 			);
 			name = Entitlements;
 			sourceTree = "<group>";
@@ -3806,7 +3804,7 @@
 			);
 			name = "Textual (App Store)";
 			productName = Textual;
-			productReference = 4C0BA6D91990798800857343 /* Textual 5.app */;
+			productReference = 4C0BA6D91990798800857343 /* Textual.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4C1DC5511580420500A47BC9 /* Textual (Standard Release) */ = {
@@ -3832,7 +3830,7 @@
 			);
 			name = "Textual (Standard Release)";
 			productName = Textual;
-			productReference = 4C1DC5521580420500A47BC9 /* Textual 5.app */;
+			productReference = 4C1DC5521580420500A47BC9 /* Textual.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4C5BA37216F1302F00A96CA2 /* Textual (Debug) */ = {
@@ -3854,7 +3852,7 @@
 			);
 			name = "Textual (Debug)";
 			productName = Textual;
-			productReference = 4C5BA4E616F1302F00A96CA2 /* Textual 5.app */;
+			productReference = 4C5BA4E616F1302F00A96CA2 /* Textual.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -5221,12 +5219,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = .tmp/Info.plist;
-				PRODUCT_NAME = "Textual 5";
+				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUILD_SCHEME_TOKEN = debug;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5237,12 +5235,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = .tmp/Info.plist;
-				PRODUCT_NAME = "Textual 5";
+				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUILD_SCHEME_TOKEN = devid;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
+				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
+				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -5293,7 +5291,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = .tmp/Info.plist;
-				PRODUCT_NAME = "Textual 5";
+				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
 				TEXTUAL_BUILD_SCHEME_TOKEN = appstore;

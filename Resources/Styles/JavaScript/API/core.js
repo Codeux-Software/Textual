@@ -99,7 +99,7 @@ Textual.viewBodyDidLoad						= function() {};
 
 /* A style can retrieve the value of preferences using the retrievePreferencesWithMethodName() function.
    The key supplied to this function corresponds to the Objective-C method name defined in the TPCPreferences.h
-   header file located at the path "Textual 5.app/Contents/Headers" — calling a particular method name instead of
+   header file located at the path "Textual.app/Contents/Headers" — calling a particular method name instead of
    the raw key name was picked because it was a more uniform approach. */
 // app.retrievePreferencesWithMethodName(name)		— Retrieve particular value from preferences
 

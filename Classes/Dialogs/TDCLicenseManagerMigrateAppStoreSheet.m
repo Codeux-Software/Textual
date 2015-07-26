@@ -174,7 +174,7 @@
 			if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
 				matchedCopy = applicationURL;
 
-				LogToConsole(@"Automatically detected App Store Textual 5 at the following path: %@", [matchedCopy path]);
+				LogToConsole(@"Automatically detected Mac App Store Textual 5 at the following path: %@", [matchedCopy path]);
 
 				break;
 			}
