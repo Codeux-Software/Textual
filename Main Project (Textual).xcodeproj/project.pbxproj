@@ -2248,7 +2248,6 @@
 		4C1DC5551580420500A47BC9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CA8EC621B63C2970087BF72 /* CoreServices.framework */,
 				4C46CCCC158046BE00846B64 /* External Frameworks */,
 				4C211D3F15BF1F5E00E218DA /* External Libraries */,
 				4C46CCB91580469200846B64 /* System Frameworks */,
@@ -2415,6 +2414,7 @@
 				4C46CCBB1580469E00846B64 /* AppKit.framework */,
 				4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */,
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
+				4CA8EC621B63C2970087BF72 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
 				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,
@@ -5155,7 +5155,6 @@
 		4C01B9FE1580C592007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -5163,7 +5162,6 @@
 		4C01B9FF1580C592007E2DAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -5171,7 +5169,6 @@
 		4C01BA001580C592007E2DAF /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release (App Store)";
@@ -5179,7 +5176,6 @@
 		4C01BA0615810DD8007E2DAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -5187,8 +5183,6 @@
 		4C01BA0715810DD8007E2DAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_USE_OPTIMIZATION_PROFILE = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -5196,8 +5190,6 @@
 		4C01BA0815810DD8007E2DAF /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_USE_OPTIMIZATION_PROFILE = YES;
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release (App Store)";
@@ -5207,7 +5199,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "cb8d0671-a7a0-4af0-af89-b5c13af6ddca";
 			};
 			name = Debug;
 		};
@@ -5216,7 +5207,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "cb8d0671-a7a0-4af0-af89-b5c13af6ddca";
 			};
 			name = Release;
 		};
@@ -5225,7 +5215,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "cb8d0671-a7a0-4af0-af89-b5c13af6ddca";
 			};
 			name = "Release (App Store)";
 		};
@@ -5264,7 +5253,6 @@
 		4C1DC5711580420500A47BC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Debug;
@@ -5272,7 +5260,6 @@
 		4C1DC5721580420500A47BC9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = Release;
@@ -5320,7 +5307,6 @@
 		4CCF2F9115804987006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 			};
 			name = "Release (App Store)";
@@ -5328,7 +5314,6 @@
 		4CCF301215804DCE006FFE21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -5336,7 +5321,6 @@
 		4CCF301315804DCE006FFE21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -5344,7 +5328,6 @@
 		4CCF301415804DCE006FFE21 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = "Release (App Store)";
