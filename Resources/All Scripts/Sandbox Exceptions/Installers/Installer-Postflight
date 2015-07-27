@@ -13,9 +13,7 @@
 
 	function mergeDirectories($oldDirectory, $newDirectory)
 	{
-		if (is_dir($oldDirectory) === FALSE &&
-			is_link($oldDirectory) === FALSE) 
-		{
+		if (file_exists($oldDirectory) === FALSE) {
 			symlink($newDirectory, $oldDirectory);
 		} else {
 			$newDirectoryContents = scandir($newDirectory);
@@ -29,9 +27,7 @@
 						
 						/* If file does not already exist in the old path, create
 						a symbolic link from the old path to the new path. */
-						if (is_file($oldDirectoryFilePath) === FALSE && 
-							is_link($oldDirectoryFilePath) === FALSE) 
-						{
+						if (file_exists($oldDirectoryFilePath) === FALSE) {
 							$newDirectoryFilePath = "{$newDirectory}/{$filename}";
 							
 							symlink($newDirectoryFilePath, $oldDirectoryFilePath);
@@ -48,6 +44,29 @@
 	$oldApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.irc.textual5";
 	$newApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.apps.textual";
 	
-	mergeDirectories($oldApplicationScriptsPath, $newApplicationScriptsPath);
+	if (file_exists($newApplicationScriptsPath) === TRUE) {
+		mergeDirectories($oldApplicationScriptsPath, $newApplicationScriptsPath);
+	}
 
+	/* Perform migration of Extensions folder. */
+	$oldGroupContainerPath = "{$userHomeDirectoryPath}/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual";
+	$newGroupContainerPath = "{$userHomeDirectoryPath}/Library/Group Containers/com.codeux.apps.textual";
+	
+	$oldTextualExtensionsPath = "{$oldGroupContainerPath}/Library/Application Support/Textual/Extensions";
+	$newTextualExtensionsPath = "{$newGroupContainerPath}/Library/Application Support/Textual/Extensions";
+
+	if (file_exists($newTextualExtensionsPath) === TRUE) {
+		if (file_exists($oldGroupContainerPath) === FALSE) {
+			symlink($newGroupContainerPath, $oldGroupContainerPath);
+		} else {
+			if (file_exists($oldTextualExtensionsPath) === FALSE) {
+				mkdir($oldTextualExtensionsPath, 0700, TRUE); // Recursively create path....
+			}
+			
+			mergeDirectories($oldTextualExtensionsPath, $newTextualExtensionsPath);
+		}
+	}
+
+	exit(0);
+	
 ?>
