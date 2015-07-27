@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8152.3" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8152.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -721,13 +721,13 @@ CQ
                                     <action selector="showAcknowledgments:" target="267" id="2556"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1661"/>
-                            <menuItem title="3rd-party Addons" tag="101" id="1710">
+                            <menuItem title="Privacy Policy" tag="101" id="1710">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="openHelpMenuLinkItem:" target="267" id="1711"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1661"/>
                             <menuItem title="Frequently Asked Questions" tag="102" id="gkX-Of-Y5Q">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
