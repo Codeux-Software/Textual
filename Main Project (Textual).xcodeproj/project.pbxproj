@@ -1124,6 +1124,9 @@
 		4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEE916F1B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
+		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
+		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF09D1B195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
@@ -2013,6 +2016,7 @@
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
 		4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
+		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLoader.m; sourceTree = "<group>"; };
 		4CF40DB41AC1A4AC00A26BE0 /* TVCImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLParser.m; sourceTree = "<group>"; };
@@ -2259,6 +2263,7 @@
 				4C46CCA21580437400846B64 /* Documentation */,
 				4C46CCA6158043BB00846B64 /* Extensions */,
 				4C46F3C11943A654004CA8BA /* Images */,
+				4C69E3571B65C266002782D4 /* Installers */,
 				4C46CCA4158043A300846B64 /* JavaScript */,
 				4C51B8B7196ACDBB00003A87 /* Language Files */,
 				4C699C681B1FB04D001CD1C3 /* License Manager */,
@@ -2509,6 +2514,14 @@
 			);
 			name = "License Manager";
 			path = "../Classes/License Manager";
+			sourceTree = "<group>";
+		};
+		4C69E3571B65C266002782D4 /* Installers */ = {
+			isa = PBXGroup;
+			children = (
+				4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */,
+			);
+			name = Installers;
 			sourceTree = "<group>";
 		};
 		4C74FBB91B557A6200DD1615 /* License Manager */ = {
@@ -4010,6 +4023,7 @@
 				4C0BA51A1990798800857343 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4CF40F261AC1A59500A26BE0 /* TDChanInviteExceptionSheet.xib in Resources */,
 				4CF40F4A1AC1A59500A26BE0 /* TDCProgressInformationSheet.xib in Resources */,
+				4CEE916F1B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4CF40F1A1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
 				4C0BA51B1990798800857343 /* FormattingColor_13.png in Resources */,
 				4C0BA51C1990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
@@ -4176,6 +4190,7 @@
 				4C77663E1978CECA00759774 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2293C1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive@2x.tif in Resources */,
 				4CC164BC1943B17100B0D4B6 /* DIRedBadgeLeftMavericks.png in Resources */,
+				4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4591943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C1383241AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */,
 				4C46F4711943A654004CA8BA /* FormattingColor_7.png in Resources */,
@@ -4318,6 +4333,7 @@
 				4C46F45A1943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C1383231AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */,
 				4C46F4721943A654004CA8BA /* FormattingColor_7.png in Resources */,
+				4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4681943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4CB2296B1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2292B1978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
