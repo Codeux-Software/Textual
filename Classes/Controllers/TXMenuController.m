@@ -2460,7 +2460,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	NSDictionary *_helpMenuLinks = @{
-	   @(101) : @"https://www.codeux.com/textual/help/3rd-Party-Addons.kb",
+	   @(101) : @"https://www.codeux.com/textual/help/Privacy-Policy.kb",
 	   @(102) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
 	   @(103) : @"https://www.codeux.com/textual/help/home.kb",
 	   @(104) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
