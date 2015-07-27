@@ -1,0 +1,53 @@
+#!/usr/bin/php
+<?php
+
+	/* 
+		If $oldDirectory does not exist, then mergeDirectories()
+		creates a symbolic link from $oldDirectory to $newDirectory
+		
+		mergeDirectories() scans the contents of $newDirectory and
+		collects all filenames. If a file in $newDirectory does
+		not exist in $oldDirectory, then a symbolic is link is
+		created in $oldDirectory to the $newDirectory location. 
+	*/
+
+	function mergeDirectories($oldDirectory, $newDirectory)
+	{
+		if (is_dir($oldDirectory) === FALSE &&
+			is_link($oldDirectory) === FALSE) 
+		{
+			symlink($newDirectory, $oldDirectory);
+		} else {
+			$newDirectoryContents = scandir($newDirectory);
+			
+			if (is_array($newDirectoryContents)) {
+				foreach ($newDirectoryContents as $filename) {
+					if ($filename === '.' || $filename === '..') {
+						continue;
+					} else {
+						$oldDirectoryFilePath = "{$oldDirectory}/{$filename}";
+						
+						/* If file does not already exist in the old path, create
+						a symbolic link from the old path to the new path. */
+						if (is_file($oldDirectoryFilePath) === FALSE && 
+							is_link($oldDirectoryFilePath) === FALSE) 
+						{
+							$newDirectoryFilePath = "{$newDirectory}/{$filename}";
+							
+							symlink($newDirectoryFilePath, $oldDirectoryFilePath);
+						}
+					} 
+				} // foreach
+			} // is_arry
+		} // is_dir
+	} // function
+	
+	/* Perform migration of Application Scripts folder. */
+	$userHomeDirectoryPath = getenv("HOME");
+	
+	$oldApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.irc.textual5";
+	$newApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.apps.textual";
+	
+	mergeDirectories($oldApplicationScriptsPath, $newApplicationScriptsPath);
+
+?>

@@ -653,10 +653,9 @@
 "BasicLanguage[1234]" = "None";
 
 /* Reserved commands */
-"BasicLanguage[1236][1]" = "Reserved Command";
-"BasicLanguage[1236][2]" = "The command performed (“%@”) is available by installing the “Textual 5 Extras” package that can be downloaded from www.codeux.com\n\nWould you like to download it?";
-"BasicLanguage[1236][3]" = "Download";
-"BasicLanguage[1236][4]" = "Send Command to Server";
+"BasicLanguage[1236][1]" = "The “Textual Extras” package must be installed to perform the command “%@”";
+"BasicLanguage[1236][2]" = "Would you like to launch the installer?";
+"BasicLanguage[1236][3]" = "Launch Installer";
 
 /* Check for other copies of Textual running */
 "BasicLanguage[1237][1]" = "More than one copy of Textual is currently in use";
