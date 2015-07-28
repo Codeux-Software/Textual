@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -215,7 +215,7 @@ DQ
                     <constraint firstItem="531" firstAttribute="top" secondItem="cib-aW-lDk" secondAttribute="bottom" constant="18" id="LD7-yH-xnD"/>
                     <constraint firstAttribute="bottom" secondItem="530" secondAttribute="bottom" constant="20" symbolic="YES" id="NOC-GF-ukb"/>
                     <constraint firstItem="531" firstAttribute="trailing" secondItem="566" secondAttribute="trailing" id="Na2-6Y-5je"/>
-                    <constraint firstItem="540" firstAttribute="baseline" secondItem="541" secondAttribute="baseline" id="R15-96-WrE"/>
+                    <constraint firstItem="540" firstAttribute="baseline" secondItem="541" secondAttribute="baseline" constant="-1" id="R15-96-WrE"/>
                     <constraint firstAttribute="trailing" secondItem="529" secondAttribute="trailing" constant="20" symbolic="YES" id="T2U-sC-OFF"/>
                     <constraint firstItem="563" firstAttribute="top" secondItem="539" secondAttribute="bottom" constant="18" id="WYl-yw-Thm"/>
                     <constraint firstItem="cib-aW-lDk" firstAttribute="centerX" secondItem="566" secondAttribute="centerX" id="Xst-H4-awN"/>
@@ -282,7 +282,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="96" y="335" width="61" height="14"/>
+                        <rect key="frame" x="95" y="335" width="62" height="14"/>
                         <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
@@ -473,7 +473,7 @@ DQ
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
                     <constraint firstItem="482" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="76" id="0rX-P1-qmK"/>
                     <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="479" secondAttribute="bottom" constant="14" id="293-dY-bqb"/>
-                    <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" id="2M6-Zr-1e8"/>
+                    <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
                     <constraint firstItem="632" firstAttribute="leading" secondItem="PQp-5W-SVj" secondAttribute="leading" id="2Uz-Lb-DpF"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="3K7-Fz-KM8"/>
                     <constraint firstItem="480" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="51B-Ip-WYq"/>
