@@ -49,6 +49,9 @@ TEXTUAL_EXTERN void TLOLicenseManagerSetup(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerTextualIsRegistered(void);
 
+TEXTUAL_EXTERN BOOL TLOLicenseManagerIsTrialExpired(void);
+TEXTUAL_EXTERN NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void);
+
 TEXTUAL_EXTERN BOOL TLOLicenseManagerDeleteUserLicenseFile(void);
 TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents);
 

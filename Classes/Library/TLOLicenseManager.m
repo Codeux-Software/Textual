@@ -83,6 +83,8 @@ NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})
 
 NSInteger const TLOLicenseManagerLicenseKeyExpectedLength = 45;
 
+NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = 2592000; // 30 days in seconds
+
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
@@ -93,6 +95,7 @@ NSData *TLOLicenseManagerPublicKeyContents(void);
 NSData *TLOLicenseManagerUserLicenseFileContents(void);
 NSDictionary *TLOLicenseManagerLicenseDictionary(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
+NSURL *TLOLicenseManagerTrialModeInformationFilePath(void);
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
 void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
@@ -125,11 +128,11 @@ void TLOLicenseManagerSetup(void)
 	}
 }
 
+#pragma mark -
+#pragma mark Trial Mode
+
 BOOL TLOLicenseManagerTextualIsRegistered(void)
 {
-	/* "trial" mode is designed to last forever. Instead of locking the user 
-	 out after X days, we instead just limit access to certain features. */
-
 	if (TLOLicenseManagerPublicKeyIsGenuineResult == NO) {
 		return NO;
 	} else if (TLOLicenseManagerUserLicenseFileExists() == NO) {
@@ -140,6 +143,122 @@ BOOL TLOLicenseManagerTextualIsRegistered(void)
 		return NSDissimilarObjects(licenseDictionary, nil);
 	}
 }
+
+BOOL TLOLicenseManagerIsTrialExpired(void)
+{
+	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
+
+	return (timeLeft == 0);
+}
+
+NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
+{
+	/* Determine where trial information will be stored on disk. */
+	NSURL *trialInformationFilePath = TLOLicenseManagerTrialModeInformationFilePath();
+
+	if (trialInformationFilePath == nil) {
+		return 0;
+	}
+
+	/* If the trial information file does not exist yet, then create a new
+	 one which will define when the trial period began. */
+	/* NSPropertyListSerialization is used by this function, in place of the built
+	 in NSData read & write methods, for better error reporting. */
+	if ([RZFileManager() fileExistsAtPath:[trialInformationFilePath path]] == NO)
+	{
+		NSDictionary *trialInformation = @{
+			@"trialPeriodStartDate" : [NSDate date]
+		};
+
+		NSError *trialInformationPropertyListError = nil;
+
+		NSData *trialInformationPropertyList =
+		[NSPropertyListSerialization dataWithPropertyList:trialInformation
+												   format:NSPropertyListBinaryFormat_v1_0
+												  options:0
+													error:&trialInformationPropertyListError];
+
+		if (trialInformationPropertyList == nil) {
+			LogToConsole(@"Failed to create trial information property list: %@", [trialInformationPropertyListError localizedDescription]);
+
+			return 0; // Cannot continue function...
+		}
+
+		NSError *trialInformationWriteError = nil;
+
+		if ([trialInformationPropertyList writeToURL:trialInformationFilePath options:NSDataWritingAtomic error:&trialInformationWriteError] == NO) {
+			LogToConsole(@"Failed to write trial information to disk: %@", trialInformationWriteError);
+
+			return 0; // Cannot continue function...
+		}
+
+		NSError *modifyTrialInformationAttributesError = nil;
+
+		if ([trialInformationFilePath setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifyTrialInformationAttributesError] == NO) {
+			LogToConsole(@"Failed to modify attributes of trial information file: %@", [modifyTrialInformationAttributesError localizedDescription]);
+			
+			return 0; // Cannot continue function...
+		}
+	}
+
+	/* Read trial information from disk. */
+	NSError *trialInformationDataReadError = nil;
+
+	NSData *trialInformationData = [NSData dataWithContentsOfURL:trialInformationFilePath options:0 error:&trialInformationDataReadError];
+
+	if (trialInformationData == nil) {
+		LogToConsole(@"Failed to read contents of trial information file: %@", [trialInformationDataReadError localizedDescription]);
+
+		return 0; // Cannot continue function...
+	}
+
+	NSError *trialInformationPropertyListError = nil;
+
+	NSDictionary *trialInformation =
+	[NSPropertyListSerialization propertyListWithData:trialInformationData
+											  options:NSPropertyListImmutable
+											   format:NULL
+												error:&trialInformationPropertyListError];
+
+	if (trialInformation == nil) {
+		LogToConsole(@"Failed to convert property list to NSDictionary: %@", [trialInformationPropertyListError localizedDescription]);
+
+		return 0; // Cannot continue function...
+	}
+
+	/* Given dictionary, get start date of trial and return time left. */
+	NSDate *trialPeriodStartDate = [trialInformation objectForKey:@"trialPeriodStartDate"];
+
+	if (trialPeriodStartDate == nil || [trialPeriodStartDate isKindOfClass:[NSDate class]] == NO) {
+		LogToConsole(@"The value of 'trialPeriodStartDate' is nil or not of kind 'NSDate'");
+
+		return 0; // Cannot continue function...
+	}
+
+	NSTimeInterval trialPeriodStartInterval = [trialPeriodStartDate timeIntervalSinceNow];
+
+	if (trialPeriodStartInterval > TLOLicenseManagerTrialModeMaximumLifespan) {
+		return 0;
+	} else {
+		return (TLOLicenseManagerTrialModeMaximumLifespan - trialPeriodStartInterval);
+	}
+}
+
+NSURL *TLOLicenseManagerTrialModeInformationFilePath(void)
+{
+	NSString *cachesFolder = [TPCPathInfo applicationLocalContainerApplicationSupportPath];
+
+	if (cachesFolder == nil) {
+		return nil;
+	}
+
+	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Textual_Trial_Information.plist"];
+
+	return [NSURL fileURLWithPath:dest isDirectory:NO];
+}
+
+#pragma mark -
+#pragma mark User License File Validation
 
 BOOL TLOLicenseManagerLicenseKeyIsValid(NSString *licenseKey)
 {
@@ -277,6 +396,9 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	return NO;
 }
 
+#pragma mark -
+#pragma mark Reading & Writing User License File
+
 NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 {
 	NSString *cachesFolder = [TPCPathInfo applicationLocalContainerApplicationSupportPath];
@@ -285,7 +407,7 @@ NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 		return nil;
 	}
 
-	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Textual5UserLicense.plist"];
+	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Textual_User_License.plist"];
 
 	return [NSURL fileURLWithPath:dest isDirectory:NO];
 }
@@ -430,6 +552,9 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 	}
 }
 
+#pragma mark -
+#pragma mark Public Key Access
+
 NSData *TLOLicenseManagerPublicKeyContents(void)
 {
 	/* Find where public key is */
@@ -548,6 +673,9 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 	}
 }
 
+#pragma mark -
+#pragma mark License File Signature Key Generator
+
 #if _includePublicKeyGenerator == 1
 BOOL TLOLicenseManagerGenerateNewKeyPair(void)
 {
@@ -636,6 +764,9 @@ CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPu
 	}
 }
 #endif
+
+#pragma mark -
+#pragma mark User License File Information
 
 NSString *TLOLicenseManagerLicenseOwnerName(void)
 {
