@@ -139,6 +139,10 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
+	if ([themeSettings() postPreferencesDidChangesNotification] == NO) {
+		return; // Cancel operation...
+	}
+
 	if (self.preferencesDidChangeTimerIsActive == NO) {
 		self.preferencesDidChangeTimerIsActive = YES;
 
