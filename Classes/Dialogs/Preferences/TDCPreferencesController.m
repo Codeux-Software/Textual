@@ -1073,8 +1073,6 @@
 - (void)onChangedSidebarColorInversion:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
-
-	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
 
 - (void)onChangedStyle:(id)sender
