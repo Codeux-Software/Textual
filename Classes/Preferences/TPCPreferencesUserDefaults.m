@@ -104,6 +104,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
+	[self setObject:value forKey:defaultName postNotification:YES];
+}
+
+- (void)setObject:(id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification
+{
 	[self willChangeValueForKey:defaultName];
 
 	if (value == nil) {
@@ -118,7 +123,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 	[self didChangeValueForKey:defaultName];
 
-	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
+	if (postNotification) {
+		[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
+	}
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
@@ -291,7 +298,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	}
 
 	/* Inform future calls to method not to perform migration again. */
-	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330"];
+	[RZUserDefaults() setObject:@(YES) forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330" postNotification:NO];
 }
 
 + (void)migrateFolderWithPath:(NSString *)sourceMigrationPath
@@ -442,7 +449,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 			}
 
 			/* Set new value to non-group container. */
-			[RZUserDefaults() setObject:obj forKey:mappedKey];
+			[RZUserDefaults() setObject:obj forKey:mappedKey postNotification:NO];
 		}];
 	}
 }

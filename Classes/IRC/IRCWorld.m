@@ -128,9 +128,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
-	[self performBlockOnMainThread:^{
-		[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
-	}];
+	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
 }
 
 - (void)informViewsThatTheSidebarInversionPreferenceDidChange
