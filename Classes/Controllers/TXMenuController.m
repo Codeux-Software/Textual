@@ -2815,8 +2815,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 	
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
-
-	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
 
 #pragma mark -

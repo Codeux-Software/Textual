@@ -48,6 +48,10 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
 
+@interface IRCWorld ()
+@property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
+@end
+
 @implementation IRCWorld
 
 #pragma mark -
@@ -59,9 +63,16 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		self.clients = [NSMutableArray new];
 		
 		self.textSizeMultiplier = 1.0;
+
+		self.preferencesDidChangeTimerIsActive = NO;
 	}
 	
 	return self;
+}
+
+- (void)dealloc
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 #pragma mark -
@@ -128,12 +139,18 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
-	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+	if (self.preferencesDidChangeTimerIsActive == NO) {
+		self.preferencesDidChangeTimerIsActive = YES;
+
+		[self performSelector:@selector(informaAllViewsUserDefaultsDidChange) withObject:nil afterDelay:1.0];
+	}
 }
 
-- (void)informViewsThatTheSidebarInversionPreferenceDidChange
+- (void)informaAllViewsUserDefaultsDidChange
 {
-	[self executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
+	self.preferencesDidChangeTimerIsActive = NO;
+
+	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
 }
 
 #pragma mark -

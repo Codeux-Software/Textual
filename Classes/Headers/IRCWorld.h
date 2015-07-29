@@ -107,8 +107,6 @@ TEXTUAL_EXTERN NSString * const IRCWorldDateHasChangedNotification;
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args; // Defaults to onQueue YES
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue;
 
-- (void)informViewsThatTheSidebarInversionPreferenceDidChange;
-
 - (void)logKeyDown:(NSEvent *)e;
 
 - (void)clearContentsOfClient:(IRCClient *)u;
