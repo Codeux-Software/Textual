@@ -505,7 +505,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (TXUnsignedLongLong)inlineImagesMaxFilesize
 {
-	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"inlineImageMaxFilesize"];
+	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"InlineMediaMaximumFilesize"];
 
 	switch (filesizeTag) {
 		case 1: { return			(TXUnsignedLongLong)1048576;			} // 1 MB
@@ -518,7 +518,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 		case 8: { return			(TXUnsignedLongLong)20971520;			} // 20 MB
 		case 9: { return			(TXUnsignedLongLong)52428800;			} // 50 MB
 		case 10: { return			(TXUnsignedLongLong)104857600;			} // 100 MB
-		default: { return			(TXUnsignedLongLong)104857600;			} // 10 MB
+		default: { return			(TXUnsignedLongLong)2097152;			} // 2 MB
 	}
 }
 
