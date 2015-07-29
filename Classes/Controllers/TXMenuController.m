@@ -2868,6 +2868,21 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 @implementation TXMenuControllerMainWindowProxy
 
+- (void)openFastSpringStoreWebpage:(id)sender
+{
+
+}
+
+- (void)openMacAppStoreWebpage:(id)sender
+{
+
+}
+
+- (void)manageLicense:(id)sender
+{
+	
+}
+
 - (void)openWelcomeSheet:(id)sender
 {
 	[menuController() openWelcomeSheet:sender];

@@ -349,4 +349,9 @@
 
 @interface TXMenuControllerMainWindowProxy : NSObject
 - (IBAction)openWelcomeSheet:(id)sender;
+
+- (IBAction)manageLicense:(id)sender;
+
+- (IBAction)openFastSpringStoreWebpage:(id)sender;
+- (IBAction)openMacAppStoreWebpage:(id)sender;
 @end

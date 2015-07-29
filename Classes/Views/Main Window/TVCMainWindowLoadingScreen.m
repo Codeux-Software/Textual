@@ -40,8 +40,8 @@
 @interface TVCMainWindowLoadingScreenView ()
 @property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
 @property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
+@property (nonatomic, weak) IBOutlet NSView *trialExpiredView;
 @property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
@@ -68,6 +68,13 @@
 		[self.loadingConfigurationViewPI startAnimation:nil];
 		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
 	}	
+}
+
+- (void)popTrialExpiredView
+{
+	if (self.stackLocked == NO) {
+		[self displayView:self.trialExpiredView];
+	}
 }
 
 #pragma mark -
@@ -100,6 +107,18 @@
 }
 
 - (void)hideWelcomeAddServerView:(BOOL)animate
+{
+	[self hideAll:animate];
+}
+
+#pragma mark -
+
+- (void)hideTrialExpiredView
+{
+	[self hideAll:YES];
+}
+
+- (void)hideTrialExpiredView:(BOOL)animate
 {
 	[self hideAll:animate];
 }
@@ -193,7 +212,8 @@
 
 	return @[
 		self.loadingConfigurationView,
-		self.welcomeAddServerNormalView
+		self.welcomeAddServerNormalView,
+		self.trialExpiredView
 	];
 }
 
@@ -205,7 +225,6 @@
 	[mainWindowTextField() updateSegmentedController];
 	
 	[[mainWindow() contentSplitView] setHidden:YES];
-
 }
 
 - (void)enableBackgroundControls
