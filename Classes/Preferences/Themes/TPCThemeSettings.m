@@ -266,17 +266,19 @@
 		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 
 		/* Parse the dictionary values. */
-		self.channelViewFont			= [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
+		self.channelViewFont = [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.nicknameFormat				= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
-		self.timestampFormat			= [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
+		self.nicknameFormat	= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
+		self.timestampFormat = [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
-		self.forceInvertSidebarColors	= [styleSettings boolForKey:@"Force Invert Sidebars"];
+		self.forceInvertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
 
-		self.underlyingWindowColor		= [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
+		self.underlyingWindowColor = [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
-		self.settingsKeyValueStoreName	= [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
-		
+		self.settingsKeyValueStoreName = [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
+
+		self.postPreferencesDidChangesNotification = [styleSettings boolForKey:@"Post preferencesDidChange() Notifications"];
+
 		/* Disable indentation? */
 		id indentationOffset = [styleSettings objectForKey:@"Indentation Offset"];
 
