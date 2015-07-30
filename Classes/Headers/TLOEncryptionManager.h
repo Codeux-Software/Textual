@@ -44,11 +44,11 @@
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
 
-#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			9930 // "Start Private Conversation"
-#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		9931 // "Refresh Private Conversation"
-#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			9932 // "End Private Conversation"
-#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			9933 // "Authenticate Chat Partner"
-#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			9934 // "View List of Fingerprints"
+#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			1401 // "Start Private Conversation"
+#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		1402 // "Refresh Private Conversation"
+#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			1403 // "End Private Conversation"
+#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			1404 // "Authenticate Chat Partner"
+#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			1405 // "View List of Fingerprints"
 #endif
 
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
