@@ -465,105 +465,6 @@ CA
                         <action selector="emptyAction:" target="267" id="xcw-D5-3ZG"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Window" tag="7" id="19">
-                    <menu key="submenu" title="Window" systemMenu="window" id="24">
-                        <items>
-                            <menuItem title="Minimize" tag="800" keyEquivalent="m" id="23">
-                                <connections>
-                                    <action selector="performMiniaturize:" target="-1" id="37"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Zoom" tag="801" id="1364">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="performZoom:" target="-1" id="1377"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="477"/>
-                            <menuItem title="Toggle Visibility of Member List" tag="802" keyEquivalent="u" id="qom-q3-cE2">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleMemberListVisibility:" target="267" id="BE4-sJ-zAs"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Toggle Visibility of Server List" tag="803" keyEquivalent="s" id="6od-OR-qNS">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                <connections>
-                                    <action selector="toggleServerListVisibility:" target="267" id="QZ5-GG-Vjc"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Toggle Window Appearance" tag="804" keyEquivalent="D" id="FMz-pu-hpN">
-                                <connections>
-                                    <action selector="toggleMainWindowAppearance:" target="267" id="zCO-93-Kgg"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="Jza-lS-TTR"/>
-                            <menuItem title="Sort Channel List" tag="805" keyEquivalent="r" id="1306">
-                                <connections>
-                                    <action selector="sortChannelListNames:" target="267" id="2579"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="EnE-LZ-pWA"/>
-                            <menuItem title="Center Main Window" tag="806" id="1524">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="centerMainWindow:" target="267" id="2554"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Reset Window to Default Size" tag="807" id="3096">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="resetWindowSize:" target="267" id="3097"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1308"/>
-                            <menuItem title="Main Window" tag="808" keyEquivalent="1" id="1309">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showMainWindow:" target="267" id="2578"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Address Book" tag="809" keyEquivalent="2" id="1310">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showChannelIgnoreList:" target="267" id="2576"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Ignore List" tag="810" keyEquivalent="3" id="1451">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showChannelIgnoreList:" target="267" id="2577"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="View Logs" tag="811" keyEquivalent="4" id="1378">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="openLogLocation:" target="267" id="2574"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Highlight List" tag="812" keyEquivalent="5" id="2268">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showHighlightSheet:" target="267" id="2272"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="File Transfers" tag="813" keyEquivalent="6" id="CDY-3R-NUL">
-                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
-                                <connections>
-                                    <action selector="showFileTransfersDialog:" target="267" id="wVQ-9Q-HNj"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="92">
-                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                            </menuItem>
-                            <menuItem title="Bring All to Front" tag="814" id="5">
-                                <connections>
-                                    <action selector="arrangeInFront:" target="-1" id="39"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
                 <menuItem title="Navigation" tag="8" id="1542">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Navigation" id="1543">
@@ -698,6 +599,105 @@ CQ
                                         </menuItem>
                                     </items>
                                 </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" tag="7" id="19">
+                    <menu key="submenu" title="Window" systemMenu="window" id="24">
+                        <items>
+                            <menuItem title="Minimize" tag="800" keyEquivalent="m" id="23">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" tag="801" id="1364">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="1377"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="477"/>
+                            <menuItem title="Toggle Visibility of Member List" tag="802" keyEquivalent="u" id="qom-q3-cE2">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleMemberListVisibility:" target="267" id="BE4-sJ-zAs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Toggle Visibility of Server List" tag="803" keyEquivalent="s" id="6od-OR-qNS">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleServerListVisibility:" target="267" id="QZ5-GG-Vjc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Toggle Window Appearance" tag="804" keyEquivalent="D" id="FMz-pu-hpN">
+                                <connections>
+                                    <action selector="toggleMainWindowAppearance:" target="267" id="zCO-93-Kgg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Jza-lS-TTR"/>
+                            <menuItem title="Sort Channel List" tag="805" keyEquivalent="r" id="1306">
+                                <connections>
+                                    <action selector="sortChannelListNames:" target="267" id="2579"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="EnE-LZ-pWA"/>
+                            <menuItem title="Center Main Window" tag="806" id="1524">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="centerMainWindow:" target="267" id="2554"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Reset Window to Default Size" tag="807" id="3096">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="resetWindowSize:" target="267" id="3097"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1308"/>
+                            <menuItem title="Main Window" tag="808" keyEquivalent="1" id="1309">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showMainWindow:" target="267" id="2578"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Address Book" tag="809" keyEquivalent="2" id="1310">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showChannelIgnoreList:" target="267" id="2576"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Ignore List" tag="810" keyEquivalent="3" id="1451">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showChannelIgnoreList:" target="267" id="2577"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="View Logs" tag="811" keyEquivalent="4" id="1378">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="openLogLocation:" target="267" id="2574"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Highlight List" tag="812" keyEquivalent="5" id="2268">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showHighlightSheet:" target="267" id="2272"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="File Transfers" tag="813" keyEquivalent="6" id="CDY-3R-NUL">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="showFileTransfersDialog:" target="267" id="wVQ-9Q-HNj"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="92">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Bring All to Front" tag="814" id="5">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="39"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>
