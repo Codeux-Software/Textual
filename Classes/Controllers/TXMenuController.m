@@ -210,7 +210,7 @@
 			BOOL isTrialExpired = NO;
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-			if (TLOLicenseManagerIsTrialExpired()) {
+			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				if (tag != 900 &&		// "Acknowledgements"
 					tag != 901)			// "Privacy Policy"
 				{

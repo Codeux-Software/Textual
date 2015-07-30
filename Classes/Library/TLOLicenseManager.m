@@ -83,7 +83,7 @@ NSString * const TLOLicenseManagerLicenseKeyRegularExpression = @"^([a-z]{1,12})
 
 NSInteger const TLOLicenseManagerLicenseKeyExpectedLength = 45;
 
-NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = 2592000; // 30 days in seconds
+NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = (-2592000); // 30 days in seconds
 
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
@@ -235,9 +235,14 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		return 0; // Cannot continue function...
 	}
 
+	/* trialPeriodStartInterval will be negative because it is in the past. */
 	NSTimeInterval trialPeriodStartInterval = [trialPeriodStartDate timeIntervalSinceNow];
 
-	if (trialPeriodStartInterval > TLOLicenseManagerTrialModeMaximumLifespan) {
+	if (trialPeriodStartInterval > 0) {
+		/* Return expired date for those who try to be clever by setting future time. */
+
+		return 0;
+	} else if (trialPeriodStartInterval < TLOLicenseManagerTrialModeMaximumLifespan) {
 		return 0;
 	} else {
 		return (TLOLicenseManagerTrialModeMaximumLifespan - trialPeriodStartInterval);
