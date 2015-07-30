@@ -92,8 +92,6 @@
 
 - (void)show
 {
-	[[self window] restoreWindowStateForClass:[self class]];
-
 	[[self window] makeKeyAndOrderFront:nil];
 
 	[self populateMacAppStoreIconImageView];
@@ -353,8 +351,6 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[[self window] saveWindowStateForClass:[self class]];
-
 	if ([self.delegate respondsToSelector:@selector(licenseManagerDialogWillClose:)]) {
 		[self.delegate licenseManagerDialogWillClose:self];
 	}
