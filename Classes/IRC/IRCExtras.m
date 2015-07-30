@@ -130,7 +130,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
-			[TLOpenLink openWithString:@"https://www.textualapp.com/"];
+			[menuController() openMacAppStoreDownloadPage:nil];
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
 		{

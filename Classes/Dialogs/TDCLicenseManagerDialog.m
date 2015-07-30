@@ -152,7 +152,7 @@
 
 - (void)unregisteredViewPurchaseTextual:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/"];
+	[menuController() openFastSpringStoreWebpage:nil];
 }
 
 - (void)unregisteredViewCancel:(id)sender

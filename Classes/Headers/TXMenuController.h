@@ -408,6 +408,7 @@
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;
 
+- (IBAction)openFastSpringStoreWebpage:(id)sender;
 - (IBAction)openMacAppStoreDownloadPage:(id)sender;
 
 - (IBAction)toggleFullscreen:(id)sender;
