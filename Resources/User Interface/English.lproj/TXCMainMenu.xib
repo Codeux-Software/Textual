@@ -848,7 +848,7 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Open &quot;Welcome to Textual&quot; Dialog" id="3103">
+                                        <menuItem title="Open &quot;Welcome to Textual&quot; Dialog" tag="921" id="3103">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="267" id="h8B-I6-6M2"/>
@@ -859,7 +859,7 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" id="2725">
+                                        <menuItem title="Reset &quot;Don't Ask Me&quot; Warnings" tag="922" id="2725">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="resetDoNotAskMePopupWarnings:" target="267" id="2729"/>
@@ -870,7 +870,7 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Simulate a Crash" id="DCt-W4-lfW">
+                                        <menuItem title="Simulate a Crash" tag="923" id="DCt-W4-lfW">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="simulateCrash:" target="267" id="Rcz-bc-3ac"/>
@@ -899,7 +899,7 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Export Preferences" id="3088">
+                                        <menuItem title="Export Preferences" tag="924" id="3088">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPreferences:" target="267" id="3091"/>
@@ -910,7 +910,7 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Import Preferences" id="3086">
+                                        <menuItem title="Import Preferences" tag="925" id="3086">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>

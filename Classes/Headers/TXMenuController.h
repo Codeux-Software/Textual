@@ -181,6 +181,11 @@
 	918: "Connect to Testing Channel"
 	919: "Developer Resources"
 	920: "Enable Developer Mode"
+	921: "Open 'Welcome to Textual' Dialog"
+	922: "Reset 'Don't Ask Me' Warnings"
+	923: "Simulate a Crash"
+	924: "Export Preferences"
+	925: "Import Preferences"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
