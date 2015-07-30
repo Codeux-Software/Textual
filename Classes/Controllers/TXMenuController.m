@@ -165,16 +165,30 @@
 					case 805: // "Sort Channel List"
 					case 806: // "Center Main Window"
 					case 807: // "Reset Window to Default Size"
+					case 808: // "Main Window"
 					case 809: // "Address Book"
 					case 810: // "Ignore List"
 					case 811: // "View Logs"
 					case 812: // "Highlight List"
 					case 813: // "File Transfers"
 					{
-						if (isMainWindowKey == NO) {
-							[item setHidden:YES];
-						} else {
-							[item setHidden:NO];
+						/* Hide "Main Window" if Main Window is key. */
+						/* Hide all other items when Main Window is NOT key. */
+
+						if (tag == 808) { // "Main Window"
+							if (isMainWindowKey) {
+								[item setHidden:YES];
+							} else {
+								[item setHidden:NO];
+							}
+						}
+						else // tag == 808
+						{
+							if (isMainWindowKey == NO) {
+								[item setHidden:YES];
+							} else {
+								[item setHidden:NO];
+							}
 						}
 					}
 				} // switch
@@ -224,6 +238,7 @@
 					case 101: // "Preferences…"
 					case 102: // "Manage license…"
 					case 103: // "Check for updates…"
+					case 808: // "Main Window"
 					{
 						returnValue = YES;
 					}
