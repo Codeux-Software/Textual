@@ -268,6 +268,13 @@
 	[mainWindow() makeKeyAndOrderFront:nil];
 #endif
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	if (TLOLicenseManagerIsTrialExpired()) {
+		[mainWindowLoadingScreen() hideAll:NO];
+		[mainWindowLoadingScreen() popTrialExpiredView];
+	} else
+#endif
+
 	if ([worldController() clientCount] < 1) {
 		[mainWindowLoadingScreen() hideAll:NO];
 		[mainWindowLoadingScreen() popWelcomeAddServerView];
