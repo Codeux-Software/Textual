@@ -2581,7 +2581,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)openMacAppStoreDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
+}
+
+- (void)openFastSpringStoreWebpage:(id)sender
+{
+	[TLOpenLink openWithString:@"https://www.textualapp.com/fastspring-store"];
 }
 
 - (void)processNavigationItem:(id)sender
@@ -2966,17 +2971,17 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)openFastSpringStoreWebpage:(id)sender
 {
-
+	[menuController() openFastSpringStoreWebpage:sender];
 }
 
 - (void)openMacAppStoreWebpage:(id)sender
 {
-
+	[menuController() openMacAppStoreDownloadPage:sender];
 }
 
 - (void)manageLicense:(id)sender
 {
-	
+	[menuController() manageLicense:sender];
 }
 
 - (void)openWelcomeSheet:(id)sender
