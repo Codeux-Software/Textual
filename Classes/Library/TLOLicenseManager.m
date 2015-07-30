@@ -199,6 +199,14 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 			
 			return 0; // Cannot continue function...
 		}
+
+		NSError *lockTrialInformationFileError = nil;
+
+		if ([RZFileManager() lockItemAtPath:[trialInformationFilePath path] error:&lockTrialInformationFileError] == NO) {
+			LogToConsole(@"Failed to lock the trial information file: %@", lockTrialInformationFileError);
+
+			return 0; // Cannot continue function...
+		}
 	}
 
 	/* Read trial information from disk. */
