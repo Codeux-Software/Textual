@@ -755,17 +755,25 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	for (IRCClient *u in [worldController() clientList]) {
 		/* Create a menu item for the client title. */
-		NSMenuItem *newItem = [NSMenuItem menuItemWithTitle:BLS(1183, [u name]) target:nil action:nil];
+		NSMenuItem *serverNewMenuItem = [NSMenuItem new];
 
-		[self.navigationChannelList addItem:newItem];
+		[serverNewMenuItem setTitle:BLS(1183, [u name])];
+
+		NSMenu *serverNewMenu = [NSMenu new];
+
+		[serverNewMenuItem setSubmenu:serverNewMenu];
+
+		[self.navigationChannelList addItem:serverNewMenuItem];
 
 		/* Begin populating channels. */
 		for (IRCChannel *c in [u channelList]) {
 			/* Create the menu item. Only first ten items get a key combo. */
+			NSMenuItem *channelNewMenuItem = nil;
+
 			if (channelCount >= 10) {
-				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
-												 target:self
-												 action:@selector(navigateToSpecificChannelInNavigationList:)];
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
+															target:self
+															action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
 				NSInteger keyboardIndex = (channelCount + 1);
 
@@ -773,20 +781,20 @@ TEXTUAL_IGNORE_DEPRECATION_END
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
-												 target:self
-												 action:@selector(navigateToSpecificChannelInNavigationList:)
-										  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
-									  keyEquivalentMask:NSCommandKeyMask];
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
+															target:self
+															action:@selector(navigateToSpecificChannelInNavigationList:)
+													 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
+												 keyEquivalentMask:NSCommandKeyMask];
 			}
 
 			/* The tag identifies each item. */
-			[newItem setUserInfo:[worldController() pasteboardStringForItem:c]];
+			[channelNewMenuItem setUserInfo:[worldController() pasteboardStringForItem:c]];
 			
-			[newItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
+			[channelNewMenuItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
 
 			/* Add to the actaul navigation list. */
-			[self.navigationChannelList addItem:newItem];
+			[serverNewMenu addItem:channelNewMenuItem];
 
 			/* Bump the count... */
 			channelCount += 1;
