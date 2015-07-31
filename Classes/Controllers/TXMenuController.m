@@ -227,9 +227,9 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-				if (tag != 900 &&		// "Acknowledgements"
-					tag != 901)			// "Privacy Policy"
-				{
+				/* Disable everything by default except tag 900 through 916. These are various
+				 help menu links. See TXMenuController.h for complete list of tags. */
+				if (tag < 900 || tag > 916) {
 					returnValue = NO;
 				}
 
@@ -254,7 +254,6 @@
 					case 101: // "Preferences…"
 					case 102: // "Manage license…"
 					case 103: // "Check for updates…"
-					case 808: // "Main Window"
 					{
 						returnValue = YES;
 					}
@@ -287,10 +286,9 @@
 					case 407: // "Toggle Fullscreen"
 					case 800: // "Minimize"
 					case 801: // "Zoom"
+					case 808: // "Main Window"
 					case 814: // "Bring All to Front"
 					{
-						[item setHidden:NO];
-
 						returnValue = YES;
 					} // case
 				} // switch
