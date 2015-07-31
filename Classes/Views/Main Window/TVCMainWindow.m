@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TLOLicenseManager.h"
+#endif
+
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
@@ -1047,16 +1051,31 @@
 #pragma mark -
 #pragma mark Loading Screen
 
-- (void)reloadLoadingScreen
+- (BOOL)reloadLoadingScreen
 {
+	/* This method returns YES (success) if the loading screen is dismissed
+	 when called. NO indicates an error that resulted in it staying on screen. */
+
 	if ([worldController() isPopulatingSeeds] == NO) {
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+		if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
+			[mainWindowLoadingScreen() hideAll:NO];
+			[mainWindowLoadingScreen() popTrialExpiredView];
+		} else
+#endif
+
 		if ([worldController() clientCount] <= 0) {
 			[self.loadingScreen hideAll:NO];
 			[self.loadingScreen popWelcomeAddServerView];
 		} else {
 			[self.loadingScreen hideAll:YES];
+
+			return YES;
 		}
 	}
+
+	return NO;
 }
 
 #pragma mark -
