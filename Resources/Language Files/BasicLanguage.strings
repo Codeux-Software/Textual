@@ -521,7 +521,7 @@
 
 /* Channel list navigation menu entries.*/
 "BasicLanguage[1183]" = "%@";
-"BasicLanguage[1184]" = "   %@";
+"BasicLanguage[1184]" = "%@";
 
 /* Default sleep message */
 "BasicLanguage[1185]" = "My %@ has gone to sleep. ZZZzzz…";
