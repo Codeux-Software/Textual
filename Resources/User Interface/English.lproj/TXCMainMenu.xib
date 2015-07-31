@@ -617,7 +617,7 @@ CQ
                                     <action selector="performZoom:" target="-1" id="1377"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="477"/>
+                            <menuItem isSeparatorItem="YES" tag="815" id="477"/>
                             <menuItem title="Toggle Visibility of Member List" tag="802" keyEquivalent="u" id="qom-q3-cE2">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
@@ -635,13 +635,13 @@ CQ
                                     <action selector="toggleMainWindowAppearance:" target="267" id="zCO-93-Kgg"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="Jza-lS-TTR"/>
+                            <menuItem isSeparatorItem="YES" tag="816" id="Jza-lS-TTR"/>
                             <menuItem title="Sort Channel List" tag="805" keyEquivalent="r" id="1306">
                                 <connections>
                                     <action selector="sortChannelListNames:" target="267" id="2579"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="EnE-LZ-pWA"/>
+                            <menuItem isSeparatorItem="YES" tag="817" id="EnE-LZ-pWA"/>
                             <menuItem title="Center Main Window" tag="806" id="1524">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
@@ -654,7 +654,7 @@ CQ
                                     <action selector="resetWindowSize:" target="267" id="3097"/>
                                 </connections>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="1308"/>
+                            <menuItem isSeparatorItem="YES" tag="818" id="1308"/>
                             <menuItem title="Main Window" tag="808" keyEquivalent="1" id="1309">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                                 <connections>

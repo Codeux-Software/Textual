@@ -172,9 +172,25 @@
 					case 812: // "Highlight List"
 					case 813: // "File Transfers"
 					{
+						/* Modify separator items for the first item in switch. */
+						if (tag == 802) {
+							if (isMainWindowKey == NO) {
+								[item setHidden:YES];
+
+								[[[item menu] itemWithTag:816] setHidden:YES]; // Menu Separator
+								[[[item menu] itemWithTag:817] setHidden:YES]; // Menu Separator
+								[[[item menu] itemWithTag:818] setHidden:YES]; // Menu Separator
+							} else {
+								[item setHidden:NO];
+
+								[[[item menu] itemWithTag:816] setHidden:NO]; // Menu Separator
+								[[[item menu] itemWithTag:817] setHidden:NO]; // Menu Separator
+								[[[item menu] itemWithTag:818] setHidden:NO]; // Menu Separator
+							}
+						}
+
 						/* Hide "Main Window" if Main Window is key. */
 						/* Hide all other items when Main Window is NOT key. */
-
 						if (tag == 808) { // "Main Window"
 							if (isMainWindowKey) {
 								[item setHidden:YES];
@@ -284,7 +300,6 @@
 
 	return returnValue;
 }
-
 
 - (BOOL)validateSpecificMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
