@@ -653,7 +653,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		}
 	}
 
-	[mainWindow() reloadLoadingScreen];
+	(void)[mainWindow() reloadLoadingScreen];
 
 	[menuController() populateNavgiationChannelList];
 	
@@ -830,7 +830,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		[mainWindow() adjustSelection];
 	}
 
-	[mainWindow() reloadLoadingScreen];
+	(void)[mainWindow() reloadLoadingScreen];
 
 	[menuController() populateNavgiationChannelList];
 }

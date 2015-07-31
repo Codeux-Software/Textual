@@ -221,7 +221,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	[worldController() setIsPopulatingSeeds:NO];
 
-	[mainWindow() reloadLoadingScreen];
+	(void)[mainWindow() reloadLoadingScreen];
 }
 
 #pragma mark -

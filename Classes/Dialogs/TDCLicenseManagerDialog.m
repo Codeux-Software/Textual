@@ -193,6 +193,8 @@
 
 		if (operationSuccessful) {
 			[[weakSelf unregisteredViewLicenseKeyTextField] setStringValue:NSStringEmptyPlaceholder];
+
+			[weakSelf reloadMainWindowLoadingScreen];
 		}
 	}];
 
@@ -260,6 +262,8 @@
 
 	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
+
+		[weakSelf reloadMainWindowLoadingScreen];
 	}];
 
 	[self.licenseManagerDownloader deactivateLicense];
@@ -318,6 +322,11 @@
 
 #pragma mark -
 #pragma mark Helper Methods
+
+- (void)reloadMainWindowLoadingScreen
+{
+	(void)[mainWindow() reloadLoadingScreen];
+}
 
 - (void)licenseManagerDownloaderCompletionBlock
 {

@@ -88,7 +88,7 @@ typedef enum TVCServerListNavigationSelectionType : NSInteger {
 
 - (void)setupTree;
 
-- (void)reloadLoadingScreen;
+- (BOOL)reloadLoadingScreen;
 
 - (void)updateTitle;
 - (void)updateTitleFor:(id)item;

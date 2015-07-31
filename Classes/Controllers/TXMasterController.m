@@ -268,19 +268,7 @@
 	[mainWindow() makeKeyAndOrderFront:nil];
 #endif
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-	if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-		[mainWindowLoadingScreen() hideAll:NO];
-		[mainWindowLoadingScreen() popTrialExpiredView];
-	} else
-#endif
-
-	if ([worldController() clientCount] < 1) {
-		[mainWindowLoadingScreen() hideAll:NO];
-		[mainWindowLoadingScreen() popWelcomeAddServerView];
-	} else {
-		[mainWindowLoadingScreen() hideLoadingConfigurationView];
-
+	if ([mainWindow() reloadLoadingScreen]) {
 		[worldController() autoConnectAfterWakeup:NO];
 	}
 
