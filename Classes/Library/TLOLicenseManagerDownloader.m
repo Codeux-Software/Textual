@@ -327,6 +327,33 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				_performCompletionBlockAndReturn(NO)
 			}
+			else if (statusCodeInt == 6500002)
+			{
+				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+					LogToConsole(@"'Status Context' kind is not of 'NSDictionary'");
+
+					goto present_fatal_error;
+				}
+
+				NSString *licenseKey = [statusContext objectForKey:@"licenseKey"];
+
+				if (NSObjectIsEmpty(licenseKey)) {
+					LogToConsole(@"'licenseKey' is nil or of zero length");
+
+					goto present_fatal_error;
+				}
+
+				NSInteger licenseKeyActivationLimit = [statusContext integerForKey:@"licenseKeyActivationLimit"];
+
+				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1014][2]", licenseKeyActivationLimit)
+														 title:TXTLS(@"TLOLicenseManager[1014][1]", licenseKey)
+												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+											   alternateButton:nil
+												suppressionKey:nil
+											   suppressionText:nil];
+
+				_performCompletionBlockAndReturn(NO)
+			}
 
 			/* Errors related to lost license recovery. */
 			else if (statusCodeInt == 6400000)
