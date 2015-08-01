@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -118,6 +118,7 @@ Gw
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="centerY" secondItem="NZa-CW-72p" secondAttribute="centerY" id="5rF-tM-Jer"/>
                     <constraint firstItem="Jam-O7-WoM" firstAttribute="baseline" secondItem="caz-XB-TnX" secondAttribute="baseline" id="6Rq-7H-NUS"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="rVI-TX-GRu" secondAttribute="leading" id="6v2-ba-prQ"/>
+                    <constraint firstAttribute="trailing" secondItem="Jam-O7-WoM" secondAttribute="trailing" constant="20" id="Csy-gA-e4q"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="leading" secondItem="jNw-4C-0KS" secondAttribute="trailing" constant="8" symbolic="YES" id="Hnn-fY-i1J"/>
                     <constraint firstItem="JL9-wh-1Zp" firstAttribute="centerY" secondItem="jNw-4C-0KS" secondAttribute="centerY" id="IHp-Cs-31p"/>
                     <constraint firstAttribute="trailing" secondItem="F12-H0-P9Z" secondAttribute="trailing" constant="20" symbolic="YES" id="KwJ-66-7q0"/>
@@ -129,7 +130,6 @@ Gw
                     <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" id="g4X-xm-dMs"/>
                     <constraint firstAttribute="bottom" secondItem="caz-XB-TnX" secondAttribute="bottom" constant="20" symbolic="YES" id="hQc-YA-T5i"/>
                     <constraint firstItem="F12-H0-P9Z" firstAttribute="trailing" secondItem="JL9-wh-1Zp" secondAttribute="trailing" id="iav-s2-gJT"/>
-                    <constraint firstItem="rVI-TX-GRu" firstAttribute="trailing" secondItem="Jam-O7-WoM" secondAttribute="trailing" id="oVb-fW-bN8"/>
                 </constraints>
                 <animations/>
             </view>
