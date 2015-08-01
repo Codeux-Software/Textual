@@ -221,6 +221,9 @@
 "TLOLicenseManager[1013][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1013][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
 
+"TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit.";
+"TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
