@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -47,6 +47,7 @@
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="144" y="61" width="139" height="22"/>
                         <constraints>
+                            <constraint firstAttribute="width" constant="139" id="rcS-1l-gUG"/>
                             <constraint firstAttribute="height" constant="22" id="wSI-rb-WEF"/>
                         </constraints>
                         <animations/>
@@ -103,7 +104,6 @@ Gw
                 <constraints>
                     <constraint firstItem="9" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="12" id="13B-gY-mOA"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="27c-E9-ufp"/>
-                    <constraint firstItem="15" firstAttribute="trailing" secondItem="9" secondAttribute="trailing" id="9wB-re-zoI"/>
                     <constraint firstItem="8" firstAttribute="leading" secondItem="9" secondAttribute="leading" id="Ac8-dD-bzp"/>
                     <constraint firstItem="7" firstAttribute="baseline" secondItem="8" secondAttribute="baseline" id="CYf-oM-dL1"/>
                     <constraint firstAttribute="bottom" secondItem="16" secondAttribute="bottom" constant="20" symbolic="YES" id="E50-GB-hm8"/>
@@ -111,10 +111,10 @@ Gw
                     <constraint firstItem="8" firstAttribute="trailing" secondItem="9" secondAttribute="trailing" id="Wg9-Ko-oj2"/>
                     <constraint firstItem="15" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="12" symbolic="YES" id="XYJ-sy-iuP"/>
                     <constraint firstItem="8" firstAttribute="leading" secondItem="7" secondAttribute="trailing" constant="8" symbolic="YES" id="aLZ-fS-edB"/>
-                    <constraint firstItem="15" firstAttribute="leading" secondItem="9" secondAttribute="leading" id="aaq-Z1-CxS"/>
                     <constraint firstItem="15" firstAttribute="baseline" secondItem="16" secondAttribute="baseline" id="fY9-hf-tQM"/>
                     <constraint firstAttribute="trailing" secondItem="8" secondAttribute="trailing" constant="20" symbolic="YES" id="fxG-kj-mQo"/>
                     <constraint firstItem="10" firstAttribute="centerY" secondItem="9" secondAttribute="centerY" id="mbj-pf-3fb"/>
+                    <constraint firstAttribute="trailing" secondItem="15" secondAttribute="trailing" constant="20" id="rac-Pu-47B"/>
                 </constraints>
                 <animations/>
             </view>
