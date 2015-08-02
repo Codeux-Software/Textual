@@ -257,19 +257,6 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	}
 }
 
-NSString *TLOLicenseManagerTimeReaminingInTrialFormattedMessage(void)
-{
-	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
-
-	if (timeLeft == 0) {
-		return TXTLS(@"TLOLicenseManager[1016]");
-	} else {
-		NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
-
-		return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
-	}
-}
-
 NSURL *TLOLicenseManagerTrialModeInformationFilePath(void)
 {
 	NSString *cachesFolder = [TPCPathInfo applicationLocalContainerApplicationSupportPath];

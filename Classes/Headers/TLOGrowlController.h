@@ -78,8 +78,4 @@ TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogAlternativeActionForma
 	  userInfo:(NSDictionary *)eventContext;
 
 - (void)dismissNotificationsInNotificationCenterForClient:(IRCClient *)client channel:(IRCChannel *)channel;
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-- (void)scheduleTimeRemainingInTrialNotification;
-#endif
 @end
