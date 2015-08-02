@@ -53,6 +53,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSTextField *unregisteredViewLicenseKeyTextField;
+@property (nonatomic, weak) IBOutlet NSTextField *unregisteredViewTrialInformationTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicenseKeyTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicenseOwnerTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *registeredViewLicensePurchaseDateTextField;
@@ -138,6 +139,10 @@
 		contentView = self.contentViewRegisteredTextualView;
 	} else {
 		contentView = self.contentViewUnregisteredTextualView;
+
+		NSString *formattedTrialInformation = TLOLicenseManagerTimeReaminingInTrialFormattedMessage();
+
+		[self.unregisteredViewTrialInformationTextField setStringValue:formattedTrialInformation];
 	}
 
 	[self.contentView attachSubview:contentView
