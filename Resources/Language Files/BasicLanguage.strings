@@ -227,6 +227,9 @@
 "TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
 "TLOLicenseManager[1016]" = "Your trial of Textual is expired.";
 
+"TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
+"TLOLicenseManager[1017][3]" = "More Info";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
