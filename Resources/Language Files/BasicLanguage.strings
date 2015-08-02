@@ -224,6 +224,9 @@
 "TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit.";
 "TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
 
+"TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
+"TLOLicenseManager[1016]" = "Your trial of Textual is expired.";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
