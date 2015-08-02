@@ -470,34 +470,4 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	}
 }
 
-#pragma mark -
-#pragma mark License Manager
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-
-- (void)scheduleTimeRemainingInTrialNotification
-{
-	NSString *formattedNotificationTitle = TLOLicenseManagerTimeReaminingInTrialFormattedMessage();
-
-	NSUserNotification *notification = [NSUserNotification new];
-
-	[notification setTitle:formattedNotificationTitle];
-
-	[notification setInformativeText:TXTLS(@"TLOLicenseManager[1017][2]")];
-
-	[notification setDeliveryDate:[NSDate date]];
-
-	[notification setUserInfo:@{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)}];
-
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		[notification setValue:@(YES) forKey:@"_showsButtons"];
-
-		[notification setActionButtonTitle:TXTLS(@"TLOLicenseManager[1017][3]")];
-	}
-
-	[RZUserNotificationCenter() scheduleNotification:notification];
-}
-
-#endif
-
 @end

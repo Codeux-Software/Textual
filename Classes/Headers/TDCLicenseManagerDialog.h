@@ -42,6 +42,8 @@
 @property (nonatomic, weak) id delegate;
 
 - (void)show;
+
++ (void)scheduleTimeRemainingInTrialNotification;
 @end
 
 @protocol TDCLicenseManagerDialogDelegate <NSObject>

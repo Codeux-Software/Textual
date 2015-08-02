@@ -140,7 +140,7 @@
 	} else {
 		contentView = self.contentViewUnregisteredTextualView;
 
-		NSString *formattedTrialInformation = TLOLicenseManagerTimeReaminingInTrialFormattedMessage();
+		NSString *formattedTrialInformation = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
 
 		[self.unregisteredViewTrialInformationTextField setStringValue:formattedTrialInformation];
 	}
@@ -358,6 +358,49 @@
 
 		 self.progressSheet = nil;
 	}
+}
+
+#pragma mark -
+#pragma mark Notification Center
+
++ (NSString *)timeRemainingInTrialFormattedMessage
+{
+	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
+
+	if (timeLeft == 0) {
+		return TXTLS(@"TLOLicenseManager[1016]");
+	} else {
+		NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
+
+		return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
+	}
+}
+
++ (void)scheduleTimeRemainingInTrialNotification
+{
+	if (TLOLicenseManagerTextualIsRegistered() || TLOLicenseManagerIsTrialExpired()) {
+		return; // Do not schedule notification...
+	}
+
+	NSString *formattedNotificationTitle = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
+
+	NSUserNotification *notification = [NSUserNotification new];
+
+	[notification setTitle:formattedNotificationTitle];
+
+	[notification setInformativeText:TXTLS(@"TLOLicenseManager[1017][2]")];
+
+	[notification setDeliveryDate:[NSDate date]];
+
+	[notification setUserInfo:@{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)}];
+
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		[notification setValue:@(YES) forKey:@"_showsButtons"];
+
+		[notification setActionButtonTitle:TXTLS(@"TLOLicenseManager[1017][3]")];
+	}
+
+	[RZUserNotificationCenter() scheduleNotification:notification];
 }
 
 #pragma mark -

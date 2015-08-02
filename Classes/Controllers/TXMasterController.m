@@ -136,6 +136,8 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	TLOLicenseManagerSetup();
+
+	[TDCLicenseManagerDialog scheduleTimeRemainingInTrialNotification];
 #endif
 
 	[self prepareThirdPartyServices];
@@ -178,8 +180,6 @@
 			break;
 		}
 	}
-
-
 }
 
 #pragma mark -
