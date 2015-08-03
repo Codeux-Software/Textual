@@ -146,6 +146,8 @@
 
 - (void)displayView:(NSView *)view
 {
+	[self disableBackgroundControlsStepOne];
+
 	NSRect viewFrame = [view frame];
 	
 	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
@@ -161,7 +163,7 @@
 	
 	[self displayIfNeeded];
 
-	[self disableBackgroundControls];
+	[self disableBackgroundControlsStepTwo];
 }
 
 #pragma mark -
@@ -173,6 +175,8 @@
 	 it to 0.0 alpha. If only the alpha is changed, then the underlying WebView will not be
 	 able to register mouse movements over elements because the views are invisible and on
 	 top of the WebView it_ */
+
+	[self enableBackgroundControlsStepOne];
 	
 	[self.loadingScreenMinimumWidthConstraint setConstant:0];
 	[self.loadingScreenMinimumHeightConstraint setConstant:0];
@@ -184,7 +188,7 @@
 
 		[self setAlphaValue:0.0];
 
-		[self enableBackgroundControls];
+		[self enableBackgroundControlsStepTwo];
 	} else {
 		[RZAnimationCurrentContext() setDuration:0.8];
 
@@ -199,7 +203,7 @@
 
 			self.stackLocked = NO;
 
-			[self enableBackgroundControls];
+			[self enableBackgroundControlsStepTwo];
 		}];
 	}
 }
@@ -212,24 +216,30 @@
 	return ([self isHidden] == NO || self.stackLocked);
 }
 
-- (void)disableBackgroundControls
+- (void)disableBackgroundControlsStepOne
+{
+	[[mainWindow() contentSplitView] setHidden:YES];
+}
+
+- (void)disableBackgroundControlsStepTwo
 {
 	[mainWindowTextField() setEditable:NO];
 	[mainWindowTextField() setSelectable:NO];
 	
 	[mainWindowTextField() updateSegmentedController];
-	
-	[[mainWindow() contentSplitView] setHidden:YES];
 }
 
-- (void)enableBackgroundControls
+- (void)enableBackgroundControlsStepOne
+{
+	[[mainWindow() contentSplitView] setHidden:NO];
+}
+
+- (void)enableBackgroundControlsStepTwo
 {
 	[mainWindowTextField() setEditable:YES];
 	[mainWindowTextField() setSelectable:YES];
 	
 	[mainWindowTextField() updateSegmentedController];
-	
-	[[mainWindow() contentSplitView] setHidden:NO];
 }
 
 @end
