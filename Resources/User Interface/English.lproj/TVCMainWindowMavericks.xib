@@ -1596,128 +1596,98 @@
                             <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dRL-KG-BCp" userLabel="Trial Expired">
-                                    <rect key="frame" x="160" y="-32" width="480" height="502"/>
+                                <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qAL-J6-fow" userLabel="Trial Expired">
+                                    <rect key="frame" x="160" y="-3" width="480" height="444"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fbc-h5-CDp">
-                                            <rect key="frame" x="27" y="304" width="426" height="36"/>
+                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="z5g-nn-uR2">
+                                            <rect key="frame" x="27" y="246" width="426" height="36"/>
                                             <animations/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Your trial of Textual has expired!" id="Gas-fM-Zzm">
+                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Your trial of Textual has expired!" id="gyi-Rc-8RN">
                                                 <font key="font" metaFont="system" size="30"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6G6-JV-pFC">
-                                            <rect key="frame" x="50" y="194" width="380" height="102"/>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5b-Hf-lZT">
+                                            <rect key="frame" x="50" y="136" width="365" height="102"/>
                                             <animations/>
-                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="CDI-rw-440">
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="vbc-qs-WGF">
                                                 <font key="font" metaFont="system"/>
                                                 <string key="title">Thank you for trying Textual for the past 30 days. 
 
-To continue using Textual, you will need to purchase it.
+To continue using Textual, you will need to purchase it. 
 
-Textual can be purchased directly from Codeux Software or through the Mac App Store for the low price of 4.99 USD</string>
+Textual can be purchased for the low price of 4.99 USD by clicking the button presented below.</string>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-Ko-mrZ">
-                                            <rect key="frame" x="177" y="154" width="127" height="32"/>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pfS-mQ-kGx">
+                                            <rect key="frame" x="177" y="96" width="127" height="32"/>
                                             <animations/>
-                                            <buttonCell key="cell" type="push" title="Purchase Now" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="cvP-gU-Q47">
+                                            <buttonCell key="cell" type="push" title="Purchase Now" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="t3E-1O-wZZ">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
-                                            <connections>
-                                                <action selector="openFastSpringStoreWebpage:" target="oRw-Te-R5j" id="s2G-rH-MAq"/>
-                                            </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2i-O8-27a">
-                                            <rect key="frame" x="138" y="98" width="204" height="32"/>
+                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="be0-qc-Z4Y">
+                                            <rect key="frame" x="164" y="290" width="152" height="152"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="152" id="JdC-qg-F0G"/>
+                                                <constraint firstAttribute="width" constant="152" id="lkK-Oy-Je3"/>
+                                            </constraints>
                                             <animations/>
-                                            <buttonCell key="cell" type="push" title="Continue to Mac App Store" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="NKH-aI-D0C">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="openMacAppStoreWebpage:" target="oRw-Te-R5j" id="B6k-dA-C5a"/>
-                                            </connections>
-                                        </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E30-OB-6dm">
-                                            <rect key="frame" x="231" y="136" width="18" height="17"/>
-                                            <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="or" id="UxQ-Ph-PSq">
-                                                <font key="font" metaFont="systemBold"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="KSl-pP-6zK">
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="ETr-vK-rWC"/>
+                                        </imageView>
+                                        <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1yY-o9-6LP">
                                             <rect key="frame" x="33" y="83" width="414" height="4"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" id="tI0-fS-ePv"/>
+                                                <constraint firstAttribute="height" id="g48-If-8fi"/>
                                             </constraints>
                                             <animations/>
                                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AgT-Zl-WvL">
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2b8-pr-Jam">
                                             <rect key="frame" x="144" y="53" width="192" height="17"/>
                                             <animations/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual?" id="LWW-uW-Nvf">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Already own a copy of Textual?" id="6N2-Zv-9zs">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="451-Nc-L2q">
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nls-AL-Ptc">
                                             <rect key="frame" x="172" y="13" width="137" height="32"/>
                                             <animations/>
-                                            <buttonCell key="cell" type="push" title="Activate Textual" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="e4a-lp-ZZc">
+                                            <buttonCell key="cell" type="push" title="Activate Textual" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="WGZ-1I-T49">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
-                                            <connections>
-                                                <action selector="manageLicense:" target="oRw-Te-R5j" id="XhE-aw-WMD"/>
-                                            </connections>
                                         </button>
-                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="iXJ-9L-L4x">
-                                            <rect key="frame" x="164" y="348" width="152" height="152"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="152" id="1Q0-bP-LUo"/>
-                                                <constraint firstAttribute="height" constant="152" id="JHL-V9-pef"/>
-                                            </constraints>
-                                            <animations/>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="Qi9-iz-zPG"/>
-                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="iXJ-9L-L4x" firstAttribute="leading" secondItem="dRL-KG-BCp" secondAttribute="leading" constant="164" id="3xy-EZ-we4"/>
-                                        <constraint firstItem="AgT-Zl-WvL" firstAttribute="top" secondItem="KSl-pP-6zK" secondAttribute="bottom" constant="15" id="4Ll-ZX-nhA"/>
-                                        <constraint firstItem="6G6-JV-pFC" firstAttribute="leading" secondItem="dRL-KG-BCp" secondAttribute="leading" constant="52" id="4hy-90-OL3"/>
-                                        <constraint firstItem="KSl-pP-6zK" firstAttribute="centerX" secondItem="AgT-Zl-WvL" secondAttribute="centerX" id="67r-qa-UQI"/>
-                                        <constraint firstItem="KSl-pP-6zK" firstAttribute="leading" secondItem="dRL-KG-BCp" secondAttribute="leading" constant="33" id="8Dl-Px-lho"/>
-                                        <constraint firstItem="m2i-O8-27a" firstAttribute="centerX" secondItem="E30-OB-6dm" secondAttribute="centerX" id="9xG-xm-FKD"/>
-                                        <constraint firstItem="iXJ-9L-L4x" firstAttribute="top" secondItem="dRL-KG-BCp" secondAttribute="top" constant="2" id="DNn-Dw-ZKm"/>
-                                        <constraint firstAttribute="bottom" secondItem="451-Nc-L2q" secondAttribute="bottom" constant="20" symbolic="YES" id="FZ1-aR-Dct"/>
-                                        <constraint firstItem="E30-OB-6dm" firstAttribute="top" secondItem="vrY-Ko-mrZ" secondAttribute="bottom" constant="8" symbolic="YES" id="I1E-dJ-cfJ"/>
-                                        <constraint firstAttribute="centerX" secondItem="fbc-h5-CDp" secondAttribute="centerX" id="Xfx-22-vKh"/>
-                                        <constraint firstAttribute="width" constant="480" id="a1c-1F-aza"/>
-                                        <constraint firstAttribute="trailing" secondItem="vrY-Ko-mrZ" secondAttribute="trailing" constant="182" id="ada-e5-T16"/>
-                                        <constraint firstAttribute="trailing" secondItem="6G6-JV-pFC" secondAttribute="trailing" constant="52" id="b5x-bF-3Di"/>
-                                        <constraint firstItem="451-Nc-L2q" firstAttribute="top" secondItem="AgT-Zl-WvL" secondAttribute="bottom" constant="12" id="cB7-3n-dR3"/>
-                                        <constraint firstAttribute="trailing" secondItem="iXJ-9L-L4x" secondAttribute="trailing" constant="164" id="d0e-TA-4AF"/>
-                                        <constraint firstItem="vrY-Ko-mrZ" firstAttribute="leading" secondItem="dRL-KG-BCp" secondAttribute="leading" constant="183" id="d4N-D4-z3T"/>
-                                        <constraint firstItem="vrY-Ko-mrZ" firstAttribute="top" secondItem="6G6-JV-pFC" secondAttribute="bottom" constant="12" id="eTL-cg-YpQ"/>
-                                        <constraint firstItem="KSl-pP-6zK" firstAttribute="centerX" secondItem="vrY-Ko-mrZ" secondAttribute="centerX" id="gT2-ph-fgv"/>
-                                        <constraint firstItem="m2i-O8-27a" firstAttribute="top" secondItem="E30-OB-6dm" secondAttribute="bottom" constant="10" id="iQ9-Fb-Wok"/>
-                                        <constraint firstItem="6G6-JV-pFC" firstAttribute="top" secondItem="fbc-h5-CDp" secondAttribute="bottom" constant="8" id="lec-gc-2WA"/>
-                                        <constraint firstItem="AgT-Zl-WvL" firstAttribute="centerX" secondItem="451-Nc-L2q" secondAttribute="centerX" id="nJb-UA-FYZ"/>
-                                        <constraint firstAttribute="height" constant="502" id="ni7-T1-5Gv"/>
-                                        <constraint firstItem="fbc-h5-CDp" firstAttribute="top" secondItem="iXJ-9L-L4x" secondAttribute="bottom" constant="8" id="uF9-7a-3AV"/>
-                                        <constraint firstItem="E30-OB-6dm" firstAttribute="centerX" secondItem="vrY-Ko-mrZ" secondAttribute="centerX" id="vVl-E5-2Pz"/>
+                                        <constraint firstItem="pfS-mQ-kGx" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="183" id="3ZP-9G-Tgc"/>
+                                        <constraint firstAttribute="width" constant="480" id="3h3-ho-3a5"/>
+                                        <constraint firstAttribute="bottom" secondItem="Nls-AL-Ptc" secondAttribute="bottom" constant="20" symbolic="YES" id="9oD-Ki-b4L"/>
+                                        <constraint firstAttribute="height" constant="444" id="CCQ-rt-bQH"/>
+                                        <constraint firstItem="1yY-o9-6LP" firstAttribute="centerX" secondItem="pfS-mQ-kGx" secondAttribute="centerX" id="D6T-Ou-zGk"/>
+                                        <constraint firstItem="Nls-AL-Ptc" firstAttribute="top" secondItem="2b8-pr-Jam" secondAttribute="bottom" constant="12" id="GAz-4t-Vsi"/>
+                                        <constraint firstAttribute="trailing" secondItem="X5b-Hf-lZT" secondAttribute="trailing" constant="67" id="IWB-Ku-Qby"/>
+                                        <constraint firstItem="z5g-nn-uR2" firstAttribute="top" secondItem="be0-qc-Z4Y" secondAttribute="bottom" constant="8" id="K54-8M-YNo"/>
+                                        <constraint firstItem="1yY-o9-6LP" firstAttribute="centerX" secondItem="2b8-pr-Jam" secondAttribute="centerX" id="M12-cE-xln"/>
+                                        <constraint firstItem="be0-qc-Z4Y" firstAttribute="top" secondItem="qAL-J6-fow" secondAttribute="top" constant="2" id="Mgn-3f-Akn"/>
+                                        <constraint firstItem="be0-qc-Z4Y" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="164" id="Mgz-YP-Efd"/>
+                                        <constraint firstItem="2b8-pr-Jam" firstAttribute="centerX" secondItem="Nls-AL-Ptc" secondAttribute="centerX" id="NC1-KK-9Rk"/>
+                                        <constraint firstAttribute="trailing" secondItem="pfS-mQ-kGx" secondAttribute="trailing" constant="182" id="SYZ-8m-LkK"/>
+                                        <constraint firstAttribute="trailing" secondItem="be0-qc-Z4Y" secondAttribute="trailing" constant="164" id="YgF-Ni-xVa"/>
+                                        <constraint firstItem="X5b-Hf-lZT" firstAttribute="top" secondItem="z5g-nn-uR2" secondAttribute="bottom" constant="8" id="htt-Uo-mIO"/>
+                                        <constraint firstItem="X5b-Hf-lZT" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="52" id="jQy-97-UlD"/>
+                                        <constraint firstItem="2b8-pr-Jam" firstAttribute="top" secondItem="1yY-o9-6LP" secondAttribute="bottom" constant="15" id="kro-I4-jeP"/>
+                                        <constraint firstAttribute="centerX" secondItem="z5g-nn-uR2" secondAttribute="centerX" id="sgf-wT-nTZ"/>
+                                        <constraint firstItem="1yY-o9-6LP" firstAttribute="leading" secondItem="qAL-J6-fow" secondAttribute="leading" constant="33" id="uT6-Lz-0BQ"/>
+                                        <constraint firstItem="pfS-mQ-kGx" firstAttribute="top" secondItem="X5b-Hf-lZT" secondAttribute="bottom" constant="12" id="vEl-8V-0Yj"/>
                                     </constraints>
                                     <animations/>
                                 </customView>
@@ -1841,10 +1811,10 @@ Textual can be purchased directly from Codeux Software or through the Mac App St
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="3Bn-VB-mZR"/>
                             <constraint firstAttribute="centerX" secondItem="x8f-Op-1pT" secondAttribute="centerX" id="OvG-I9-9Dt"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="WCF-du-2lE"/>
+                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="Ylp-OT-oOC"/>
                             <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="aDP-0D-kmr"/>
-                            <constraint firstItem="dRL-KG-BCp" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="c3w-qK-IlT"/>
+                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="fDx-Yq-mqi"/>
                             <constraint firstAttribute="centerY" secondItem="x8f-Op-1pT" secondAttribute="centerY" constant="-0.5" id="mJY-dd-3jN"/>
-                            <constraint firstItem="dRL-KG-BCp" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="pXN-hQ-qMM"/>
                             <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="yYa-Ck-cOW"/>
                         </constraints>
                         <animations/>
@@ -1855,7 +1825,6 @@ Textual can be purchased directly from Codeux Software or through the Mac App St
                             <outlet property="loadingConfigurationViewPI" destination="Xrm-5i-DXu" id="Ygb-KN-a7w"/>
                             <outlet property="loadingScreenMinimumHeightConstraint" destination="WCF-du-2lE" id="rVJ-7F-dhG"/>
                             <outlet property="loadingScreenMinimumWidthConstraint" destination="3Bn-VB-mZR" id="xIk-7p-6k7"/>
-                            <outlet property="trialExpiredView" destination="dRL-KG-BCp" id="QZb-Sx-gsd"/>
                             <outlet property="welcomeAddServerNormalView" destination="wHu-Jd-5VZ" id="dcg-Rx-atP"/>
                             <outlet property="welcomeAddServerViewButton" destination="VG0-ab-tMk" id="RSJ-Fy-aq5"/>
                         </connections>
