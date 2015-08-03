@@ -133,7 +133,7 @@
 - (void)hideAll:(BOOL)animate
 {
 	if (self.stackLocked == NO) {
-		for (NSView *alv in [self allViews]) {
+		for (NSView *alv in [[self contentView] subviews]) {
 			if ([alv isHidden] == NO) {
 				[self hideView:alv animate:animate];
 			}
@@ -150,16 +150,18 @@
 	
 	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
 	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
-	
-	[self disableBackgroundControls];
 
 	[view setHidden:NO];
+
 	[view setAlphaValue:1.0];
 	
 	[self setHidden:NO];
+
 	[self setAlphaValue:1.0];
 	
 	[self displayIfNeeded];
+
+	[self disableBackgroundControls];
 }
 
 #pragma mark -
@@ -172,8 +174,6 @@
 	 able to register mouse movements over elements because the views are invisible and on
 	 top of the WebView it_ */
 	
-	[self enableBackgroundControls];
-	
 	[self.loadingScreenMinimumWidthConstraint setConstant:0];
 	[self.loadingScreenMinimumHeightConstraint setConstant:0];
 	
@@ -181,7 +181,10 @@
 		[view setHidden:YES];
 	
 		[self setHidden:YES];
+
 		[self setAlphaValue:0.0];
+
+		[self enableBackgroundControls];
 	} else {
 		[RZAnimationCurrentContext() setDuration:0.8];
 
@@ -191,9 +194,12 @@
 			[[self animator] setAlphaValue:0.0];
 		} completionHandler:^{
 			[view setHidden:YES];
+
 			[self setHidden:YES];
 
 			self.stackLocked = NO;
+
+			[self enableBackgroundControls];
 		}];
 	}
 }
@@ -204,17 +210,6 @@
 - (BOOL)viewIsVisible
 {
 	return ([self isHidden] == NO || self.stackLocked);
-}
-
-- (NSArray *)allViews
-{
-	/* For future expansion. */
-
-	return @[
-		self.loadingConfigurationView,
-		self.welcomeAddServerNormalView,
-		self.trialExpiredView
-	];
 }
 
 - (void)disableBackgroundControls
