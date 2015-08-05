@@ -92,6 +92,10 @@
 	<string>MacBook Pro (15-inch, Retina, Late 2013)</string>
 	<key>MacBookPro11,3</key>
 	<string>MacBook Pro (15-inch, Retina, Late 2013)</string>
+	<key>MacBookPro11,4</key>
+	<string>MacBook Pro (15-inch, Retina, Mid-2015)</string>
+	<key>MacBookPro11,5</key>
+	<string>MacBook Pro (15-inch, Retina, Mid-2015)</string>
 	<key>MacBookPro12,1</key>
 	<string>MacBook Pro (13-inch, Retina, Early 2015)</string>
 	<key>MacPro1,1*</key>
