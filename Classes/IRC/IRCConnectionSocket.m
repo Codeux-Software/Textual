@@ -233,6 +233,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 {
 	if (self.isConnected) {
 		[self.socketConnection writeData:data withTimeout:(-1) tag:0];
+
+		[self.socketConnection readDataWithTimeout:(-1) tag:0];
 	}
 }
 
