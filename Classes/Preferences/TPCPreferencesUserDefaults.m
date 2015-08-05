@@ -287,12 +287,15 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 										  hideOriginalOnMigration:hideOriginalOnMigration
 											createSourceIfMissing:createSourceIfMissing];
 			}
-			else if (NSObjectsAreEqual(migrationPathType, @"file-propertyList"))
+			else if ([migrationPathType hasPrefix:@"file-"])
 			{
-				[TPCPreferencesUserDefaults migrateKeyValuesWithPath:pathToMigrateFromAbsolutePath
-															  toPath:pathToMigrateToAbsolutePath
-											 hideOriginalOnMigration:hideOriginalOnMigration
-											   createSourceIfMissing:createSourceIfMissing];
+				BOOL isPropertyList = NSObjectsAreEqual(migrationPathType, @"file-propertyList");
+
+				[TPCPreferencesUserDefaults migrateFileWithPath:pathToMigrateFromAbsolutePath
+														 toPath:pathToMigrateToAbsolutePath
+										hideOriginalOnMigration:hideOriginalOnMigration
+										  createSourceIfMissing:createSourceIfMissing
+												 isPropertyList:isPropertyList];
 			}
 		}
 	}
@@ -354,10 +357,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	}
 }
 
-+ (void)migrateKeyValuesWithPath:(NSString *)sourceMigrationPath
-						  toPath:(NSString *)destinationMigrationPath
-		 hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
-		   createSourceIfMissing:(BOOL)createSourceIfMissing
++ (void)migrateFileWithPath:(NSString *)sourceMigrationPath
+					 toPath:(NSString *)destinationMigrationPath
+	hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
+	  createSourceIfMissing:(BOOL)createSourceIfMissing
+			 isPropertyList:(BOOL)isPropertyList
 {
 	/* Exit if the source migration path does not exist. */
 	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
@@ -372,15 +376,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	NSDictionary *remappedPreferenceKeys = nil;
 
 	if (sourceMigrationPathExists) {
-		/* Retrieve values from property list. */
-		preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourceMigrationPath];
+		if (isPropertyList) {
+			/* Retrieve values from property list. */
+			preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourceMigrationPath];
 
-		remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+			remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
 
-		if (preferencesToMigrate == nil || remappedPreferenceKeys == nil) {
-			LogToConsole(@"'preferencesToMigrate' or 'remappedPreferenceKeys' is nil");
+			if (preferencesToMigrate == nil || remappedPreferenceKeys == nil) {
+				LogToConsole(@"'preferencesToMigrate' or 'remappedPreferenceKeys' is nil");
 
-			return; // Cancel operation...
+				return; // Cancel operation...
+			}
 		}
 
 		/* We delete the existing group container preferences file and
@@ -395,9 +401,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 			return; // Cancel operation...
 		}
 	}
-	
-	/* We do not return if the creation of the symbolic link fails. 
-	 If it fails, we still write the keys in memory so that we can at 
+
+	/* We do not return if the creation of the symbolic link fails.
+	 If it fails, we still write the keys in memory so that we can at
 	 least have the user preferences on disk somewhere, they just wont
 	 be read by the Mac App Store without symbolic link. */
 	if (sourceMigrationPathExists == NO && createSourceIfMissing) {
@@ -430,27 +436,29 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	}
 
 	/* Begin migrating group container values. */
-	if (sourceMigrationPathExists) {
-		[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			/* Determine whether a key is remapped to new name. */
-			NSString *mappedKey = key;
+	if (isPropertyList) {
+		if (sourceMigrationPathExists) {
+			[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				/* Determine whether a key is remapped to new name. */
+				NSString *mappedKey = key;
 
-			NSString *remappedKey = remappedPreferenceKeys[key];
+				NSString *remappedKey = remappedPreferenceKeys[key];
 
-			if (remappedKey) {
-				mappedKey = remappedKey;
-			}
+				if (remappedKey) {
+					mappedKey = remappedKey;
+				}
 
-			/* Determine whether the key already exists. If so, override. */
-			id existingValue = [RZUserDefaults() objectForKey:mappedKey];
+				/* Determine whether the key already exists. If so, override. */
+				id existingValue = [RZUserDefaults() objectForKey:mappedKey];
 
-			if (existingValue) {
-				[RZUserDefaults() removeObjectForKey:mappedKey];
-			}
+				if (existingValue) {
+					[RZUserDefaults() removeObjectForKey:mappedKey];
+				}
 
-			/* Set new value to non-group container. */
-			[RZUserDefaults() setObject:obj forKey:mappedKey postNotification:NO];
-		}];
+				/* Set new value to non-group container. */
+				[RZUserDefaults() setObject:obj forKey:mappedKey postNotification:NO];
+			}];
+		}
 	}
 }
 #endif

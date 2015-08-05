@@ -22,9 +22,9 @@
 			<key>hideOriginalOnMigration</key>
 			<true/>
 			<key>destinationPath</key>
-			<string>~/Library/Group Containers/com.codeux.apps.textual/</string>
+			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/</string>
 			<key>sourcePath</key>
-			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/</string>
+			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/</string>
 			<key>pathType</key>
 			<string>folder</string>
 		</dict>
@@ -50,7 +50,7 @@
 			<key>sourcePath</key>
 			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Custom Scripts/</string>
 			<key>pathType</key>
-			<string>file-propertyList</string>
+			<string>file-softLink</string>
 		</dict>
 		<dict>
 			<key>createSourceIfMissing</key>
