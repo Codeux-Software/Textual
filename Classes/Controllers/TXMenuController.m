@@ -142,7 +142,28 @@
 
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
-	BOOL isMainWindowKey = [mainWindow() isKeyWindow];
+	BOOL frontmostWindowIsMainWindow = NO;
+
+	NSArray *windowList = [NSWindow windowNumbersWithOptions:0];
+
+	for (NSNumber *windowNumber in windowList) {
+		/* windowList is looped through because it may contain the menu
+		 bar so we return the first window that NSApp sees as an actual 
+		 window owned by the application. */
+		NSWindow *window = [NSApp windowWithWindowNumber:[windowNumber integerValue]];
+
+		if (window) {
+			if (window == mainWindow()) {
+				frontmostWindowIsMainWindow = YES;
+			}
+
+			break;
+		}
+	}
+
+	BOOL mainWindowNoSheet = ([mainWindow() attachedSheet] == nil);
+
+	BOOL isMainWindowKey = (frontmostWindowIsMainWindow && mainWindowNoSheet);
 
 	BOOL windowIsSheet = [[NSApp keyWindow] isSheet];
 
