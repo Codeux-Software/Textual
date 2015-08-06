@@ -104,11 +104,7 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
-#endif
-
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
@@ -121,6 +117,8 @@
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSView *shareDataBetweenDevicesView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
@@ -141,7 +139,6 @@
 - (IBAction)onChangedAlertNotification:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 
@@ -150,7 +147,6 @@
 - (IBAction)onManageiCloudButtonClicked:(id)sender;
 - (IBAction)onPurgeOfCloudDataRequested:(id)sender;
 - (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
-#endif
 
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
@@ -290,6 +286,16 @@
 			[self firstPane:[self mountainLionDeprecationWarningView] selectedItem:_toolbarItemIndexGeneral];
 		}
 	}
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
+	/* Hide "Share data between devices" when iCloud support is not enabled
+	 by setting the subview height to 0. Set height before calling firstPane: 
+	 so that firstPane: can calculate the correct total height. */
+
+	[[self shareDataBetweenDevicesViewHeightConstraint] setConstant:0.0];
+
+	[[self contentViewGeneral] layoutSubtreeIfNeeded];
+#endif
 
 	if ([self mountainLionDeprecationWarningIsVisible] == NO) {
 		[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
@@ -1129,14 +1135,16 @@
 	[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
 }
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onManageiCloudButtonClicked:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[self firstPane:[self contentViewICloud] selectedItem:_toolbarItemIndexAdvanced];
+#endif
 }
 
 - (void)onChangedCloudSyncingServices:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"TDCPreferencesController[1000][2]")
@@ -1155,10 +1163,12 @@
 		[sharedCloudManager() syncEverythingNextSync];
 		[sharedCloudManager() synchronizeFromCloud];
 	}
+#endif
 }
 
 - (void)onChangedCloudSyncingServicesServersOnly:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
 			[RZUbiquitousKeyValueStore() synchronize];
@@ -1166,8 +1176,10 @@
 			[sharedCloudManager() synchronizeFromCloud];
 		}
 	}
+#endif
 }
 
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
@@ -1207,9 +1219,11 @@
 		// metadata query will do that for us once we change the direcoty by deleting.
 	}
 }
+#endif
 
 - (void)onPurgeOfCloudFilesRequested:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1001][2]")
 									 title:TXTLS(@"TDCPreferencesController[1001][1]")
@@ -1221,10 +1235,12 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudFilesRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
+#endif
 }
 
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1002][2]")
 									 title:TXTLS(@"TDCPreferencesController[1002][1]")
@@ -1236,8 +1252,8 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
-}
 #endif
+}
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
