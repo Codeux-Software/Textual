@@ -38,7 +38,7 @@
 #import "TextualApplication.h"
 
 /* Hard limits. */
-#define TXMaximumIRCBodyLength						512
+#define TXMaximumIRCBodyLength						510
 #define TXMaximumIRCNicknameLength					50
 #define TXMaximumIRCUsernameLength					40
 
