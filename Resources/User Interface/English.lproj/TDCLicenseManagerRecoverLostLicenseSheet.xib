@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -28,7 +28,7 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BdN-s0-jEO">
                         <rect key="frame" x="18" y="95" width="343" height="34"/>
                         <animations/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Enter the e-mail address used when purchasing Textual to recover your license key(s)." id="v6x-ej-Sxw">
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the e-mail address used when purchasing Textual to recover your license key(s)." id="v6x-ej-Sxw">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -48,6 +48,7 @@
                                 <outlet property="parentField" destination="RLC-SX-HOX" id="GSt-jS-JRB"/>
                             </connections>
                         </textFieldCell>
+                        <accessibility description="E-mail address associated with order"/>
                         <connections>
                             <outlet property="delegate" destination="-2" id="N64-jt-SMG"/>
                         </connections>
@@ -71,6 +72,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Recover Lost License"/>
                         <connections>
                             <action selector="ok:" target="-2" id="HJy-bC-hmd"/>
                         </connections>
@@ -85,6 +87,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="mpA-Xl-LMf"/>
                         </connections>

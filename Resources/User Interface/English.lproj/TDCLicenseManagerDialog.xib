@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -69,11 +69,12 @@
                     </constraints>
                     <animations/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="9c6-9f-bCg"/>
+                    <accessibility description="Textual Logo"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uu0-L6-ebd">
                     <rect key="frame" x="109" y="302" width="317" height="17"/>
                     <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To activate Textual, enter your license key below" id="6U9-rS-tAa">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="To activate Textual, enter your license key below" id="6U9-rS-tAa">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -91,7 +92,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxy-E2-Vas">
                     <rect key="frame" x="109" y="243" width="463" height="51"/>
                     <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="9WE-Gi-yuN">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="9WE-Gi-yuN">
                         <font key="font" metaFont="system"/>
                         <string key="title">If you have already purchased Textual, then enter your license key below to activate this copy of Textual. Your license key can be found in the e-mail sent to you after purchasing Textual. </string>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -104,12 +105,13 @@
                         <constraint firstAttribute="height" constant="22" id="c0i-vs-fYF"/>
                     </constraints>
                     <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="relieved-red-mallard-100000000000000000000000" drawsBackground="YES" id="gYL-gB-e0X">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="gYL-gB-e0X">
                         <font key="font" size="13" name="Courier"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="SKZ-Sh-8aW" id="zdg-zh-VsH"/>
                         <outlet property="delegate" destination="-2" id="zgj-VN-7dM"/>
                     </connections>
                 </textField>
@@ -123,6 +125,7 @@
 DQ
 </string>
                     </buttonCell>
+                    <accessibility description="Activate Textual"/>
                     <connections>
                         <action selector="unregisteredViewActivateTextual:" target="-2" id="kRg-rx-FHU"/>
                     </connections>
@@ -137,6 +140,7 @@ DQ
 Gw
 </string>
                     </buttonCell>
+                    <accessibility description="Close"/>
                     <connections>
                         <action selector="unregisteredViewCancel:" target="-2" id="bnG-2K-cqj"/>
                     </connections>
@@ -154,6 +158,7 @@ Gw
                                 </constraints>
                                 <animations/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="applicationIconYosemite" id="Nw3-hE-vWZ"/>
+                                <accessibility description="Mac App Store Logo"/>
                             </imageView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fil-u7-1Jf">
                                 <rect key="frame" x="207" y="12" width="177" height="32"/>
@@ -165,6 +170,7 @@ Gw
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <accessibility description="Request Free License"/>
                                 <connections>
                                     <action selector="unregisteredViewMigrateMacAppStorePurchase:" target="-2" id="WB2-rx-giw"/>
                                 </connections>
@@ -172,7 +178,7 @@ Gw
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x6V-ip-XZY">
                                 <rect key="frame" x="105" y="113" width="211" height="17"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Migrate from the Mac App Store" id="UVC-M1-5Bi">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Migrate from the Mac App Store" id="UVC-M1-5Bi">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -181,7 +187,7 @@ Gw
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LBa-p3-Krv">
                                 <rect key="frame" x="105" y="54" width="471" height="51"/>
                                 <animations/>
-                                <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="QVB-9e-QPb">
+                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="QVB-9e-QPb">
                                     <font key="font" metaFont="system"/>
                                     <string key="title">Own Textual 5 in the Mac App Store? If you do, you can request a free license key. In order to request a license key, a copy of Textual installed through the Mac App Store must be somewhere on your Mac.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -225,6 +231,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Recover Lost License"/>
                     <connections>
                         <action selector="unregisteredViewRecoveryLostLicense:" target="-2" id="3C7-JU-Wr0"/>
                     </connections>
@@ -245,7 +252,7 @@ Gw
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pho-XN-fdp">
                                 <rect key="frame" x="14" y="11" width="248" height="19"/>
                                 <animations/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Your trial of Textual expires in %@" id="b62-vg-HHg">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Your trial of Textual expires in %@" id="b62-vg-HHg">
                                     <font key="font" metaFont="system" size="16"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -258,6 +265,7 @@ Gw
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <accessibility description="Purchase Textual"/>
                                 <connections>
                                     <action selector="unregisteredViewPurchaseTextual:" target="-2" id="d2I-v9-B1X"/>
                                 </connections>

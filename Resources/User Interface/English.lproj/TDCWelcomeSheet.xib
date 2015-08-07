@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -42,10 +42,11 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
+                            <accessibilityConnection property="title" destination="145" id="5Xq-Kg-kdi"/>
                             <outlet property="delegate" destination="-2" id="180"/>
                         </connections>
                     </textField>
-                    <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="149">
+                    <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="149">
                         <rect key="frame" x="109" y="168" width="249" height="112"/>
                         <clipView key="contentView" id="UXg-Uw-XfU">
                             <rect key="frame" x="1" y="1" width="247" height="110"/>
@@ -69,6 +70,7 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <accessibility description="Channel Name"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
@@ -94,6 +96,9 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </scroller>
+                        <connections>
+                            <accessibilityConnection property="title" destination="150" id="DgH-Xk-Dmu"/>
+                        </connections>
                     </scrollView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="150">
                         <rect key="frame" x="37" y="261" width="66" height="17"/>
@@ -117,6 +122,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Add Channel"/>
                         <connections>
                             <action selector="onAddChannel:" target="-2" id="189"/>
                         </connections>
@@ -131,6 +137,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Remove Selected Channel(s)"/>
                         <connections>
                             <action selector="onDeleteChannel:" target="-2" id="188"/>
                         </connections>
@@ -154,6 +161,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </comboBoxCell>
                         <connections>
+                            <accessibilityConnection property="title" destination="148" id="SFX-7P-Cs7"/>
                             <action selector="onServerAddressChanged:" target="-2" id="219"/>
                             <outlet property="delegate" destination="-2" id="220"/>
                         </connections>
@@ -185,11 +193,6 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                     </button>
-                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="zqh-Vb-fjj">
-                        <rect key="frame" x="20" y="379" width="69" height="69"/>
-                        <animations/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="0YK-op-vRE"/>
-                    </imageView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="152">
                         <rect key="frame" x="245" y="13" width="126" height="32"/>
                         <animations/>
@@ -197,6 +200,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Finish Setup"/>
                         <connections>
                             <action selector="ok:" target="-2" id="210"/>
                         </connections>
@@ -211,17 +215,18 @@
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="209"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I1L-Fi-uaP">
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I1L-Fi-uaP">
                         <rect key="frame" x="107" y="375" width="260" height="42"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="LmS-Nk-P30"/>
                         </constraints>
                         <animations/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="UqM-De-aP8">
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="UqM-De-aP8">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">To get started, select a network to connect to using the the control labeled “Destination” or manually enter the desired server address. </string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -253,12 +258,18 @@ Gw
                             <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
                         </constraints>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
                             <font key="font" metaFont="systemBold" size="19"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <imageView translatesAutoresizingMaskIntoConstraints="NO" id="zqh-Vb-fjj">
+                        <rect key="frame" x="20" y="379" width="69" height="69"/>
+                        <animations/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="0YK-op-vRE"/>
+                        <accessibility description="Textual Logo"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="151" firstAttribute="leading" secondItem="154" secondAttribute="trailing" constant="85" id="0YJ-tg-lgt"/>

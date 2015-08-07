@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65">
                         <rect key="frame" x="0.0" y="47" width="600" height="210"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="JRG-2W-GCG">
                             <rect key="frame" x="1" y="0.0" width="598" height="209"/>
@@ -51,8 +51,10 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <accessibility description="Channel Name"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <accessibility description="Channel Name"/>
                                         </tableColumn>
                                         <tableColumn identifier="count" editable="NO" width="88" minWidth="40" maxWidth="1000" id="71">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Member Count">
@@ -64,8 +66,10 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <accessibility description="Member Count"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <accessibility description="Member Count"/>
                                         </tableColumn>
                                         <tableColumn identifier="topic" editable="NO" width="377" minWidth="10" maxWidth="3.4028234663852886e+38" id="78">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Topic">
@@ -77,8 +81,10 @@
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <accessibility description="Topic"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <accessibility description="Topic"/>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -106,6 +112,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </tableHeaderView>
+                        <accessibility description="Channel List"/>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74">
                         <rect key="frame" x="511" y="6" width="75" height="32"/>
@@ -117,6 +124,7 @@
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Close"/>
                         <connections>
                             <action selector="onClose:" target="-2" id="123"/>
                         </connections>
@@ -128,6 +136,7 @@ Gw
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Update List"/>
                         <connections>
                             <action selector="onUpdate:" target="-2" id="122"/>
                         </connections>
@@ -135,7 +144,7 @@ Gw
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
                         <rect key="frame" x="18" y="269" width="108" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -148,6 +157,7 @@ Gw
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Join Selected Channels"/>
                         <connections>
                             <action selector="onJoinChannels:" target="-2" id="142"/>
                         </connections>
@@ -163,6 +173,7 @@ Gw
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </searchFieldCell>
+                        <accessibility description="Channel List Search"/>
                         <connections>
                             <action selector="onSearchFieldChange:" target="-2" id="124"/>
                             <outlet property="delegate" destination="-2" id="105"/>

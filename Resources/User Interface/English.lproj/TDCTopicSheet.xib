@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -74,6 +74,9 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </scroller>
+                        <connections>
+                            <accessibilityConnection property="title" destination="26" id="ow9-Js-qRF"/>
+                        </connections>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
                         <rect key="frame" x="457" y="13" width="124" height="32"/>
@@ -85,6 +88,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Change Topic"/>
                         <connections>
                             <action selector="ok:" target="-2" id="50"/>
                         </connections>
@@ -99,6 +103,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="49"/>
                         </connections>

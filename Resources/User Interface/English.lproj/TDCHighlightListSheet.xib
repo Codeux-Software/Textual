@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -26,14 +26,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="650" height="331"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="246">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="246">
                         <rect key="frame" x="0.0" y="41" width="650" height="247"/>
                         <clipView key="contentView" id="xsl-1y-XOT">
                             <rect key="frame" x="1" y="0.0" width="648" height="246"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="281" viewBased="YES" id="255" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="649" height="223"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="648.5" height="223"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -65,6 +65,7 @@
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <accessibility description="Channel Name"/>
                                                         </textField>
                                                     </subviews>
                                                     <animations/>
@@ -73,6 +74,7 @@
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
+                                            <accessibility description="Channel Name"/>
                                         </tableColumn>
                                         <tableColumn identifier="messageContents" width="420" minWidth="10" maxWidth="3.4028234663852886e+38" id="264">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Message">
@@ -99,6 +101,7 @@
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <accessibility description="Original Message"/>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -112,6 +115,7 @@
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
+                                            <accessibility description="Original Message"/>
                                         </tableColumn>
                                         <tableColumn identifier="timeValue" editable="NO" width="119.56134033203125" minWidth="10" maxWidth="3.4028234663852886e+38" id="259">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Time">
@@ -138,6 +142,7 @@
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
+                                                            <accessibility description="Time"/>
                                                         </textField>
                                                     </subviews>
                                                     <animations/>
@@ -146,6 +151,7 @@
                                                     </connections>
                                                 </tableCellView>
                                             </prototypeCellViews>
+                                            <accessibility description="Time"/>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
@@ -169,10 +175,11 @@
                             <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="281">
-                            <rect key="frame" x="0.0" y="0.0" width="649" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="648.5" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </tableHeaderView>
+                        <accessibility description="Highlight List"/>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="247">
                         <rect key="frame" x="463" y="3" width="98" height="32"/>
@@ -181,6 +188,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Clear List"/>
                         <connections>
                             <action selector="onClearList:" target="-2" id="284"/>
                         </connections>
@@ -195,6 +203,7 @@
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Close"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="282"/>
                         </connections>
@@ -202,7 +211,7 @@ Gw
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="249">
                         <rect key="frame" x="18" y="301" width="175" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="List of Highlights for &quot;%@&quot;" id="250">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -211,7 +220,7 @@ Gw
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="277">
                         <rect key="frame" x="18" y="13" width="343" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Messages starting with a bullet (•) respresent an action." id="278">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Messages starting with a bullet (•) respresent an action." id="278">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -237,7 +246,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="867" y="307.5"/>
+            <point key="canvasLocation" x="1152" y="314.5"/>
         </window>
     </objects>
 </document>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -172,6 +172,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </scroller>
+                        <accessibility description="Navigation"/>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1455">
                         <rect key="frame" x="605" y="3" width="96" height="32"/>
@@ -186,6 +187,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Save"/>
                         <connections>
                             <action selector="ok:" target="-2" id="1466"/>
                         </connections>
@@ -203,6 +205,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="1465"/>
                         </connections>
@@ -216,6 +219,7 @@ Gw
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="3Sc-SW-qku">
                                     <rect key="frame" x="4" y="4" width="519" height="304"/>
                                     <animations/>
+                                    <accessibility description="Content View"/>
                                 </customView>
                             </subviews>
                             <animations/>
@@ -247,11 +251,12 @@ Gw
                             <constraint firstAttribute="width" constant="310" id="Pog-8K-iNf"/>
                         </constraints>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="One or more values are misconfigured" id="h9P-9e-22w">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" title="One or more values are misconfigured" id="h9P-9e-22w">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" white="0.0" alpha="0.86000001430511475" colorSpace="calibratedWhite"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Error Description"/>
                     </textField>
                 </subviews>
                 <constraints>
@@ -328,6 +333,9 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1544" id="RNc-08-gOk"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1544">
                     <rect key="frame" x="95" y="136" width="109" height="17"/>
@@ -361,6 +369,9 @@ Gw
                             <outlet property="parentField" destination="1548" id="zsu-EP-rrz"/>
                         </connections>
                     </comboBoxCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1540" id="Vek-86-p4Z"/>
+                    </connections>
                 </comboBox>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2250">
                     <rect key="frame" x="144" y="48" width="286" height="18"/>
@@ -393,6 +404,9 @@ Gw
                             <outlet property="parentField" destination="1539" id="I7s-Or-pOr"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1538" id="TQ6-9b-XVp"/>
+                    </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="dLD-ut-ncd">
                     <rect key="frame" x="144" y="28" width="293" height="18"/>
@@ -437,6 +451,7 @@ Gw
                         </connections>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="1542" id="15n-da-FwL"/>
                         <outlet property="delegate" destination="-2" id="1560"/>
                     </connections>
                 </textField>
@@ -520,6 +535,7 @@ Gw
                         </connections>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="1596" id="DbG-3n-Xx2"/>
                         <outlet property="delegate" destination="-2" id="1620"/>
                     </connections>
                 </textField>
@@ -547,6 +563,9 @@ Gw
                             <outlet property="parentField" destination="1597" id="7QU-DC-W27"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1598" id="YBC-KR-Lno"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1598">
                     <rect key="frame" x="155" y="171" width="70" height="17"/>
@@ -571,6 +590,9 @@ Gw
                             <outlet property="parentField" destination="1599" id="QU9-Iv-nrH"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1600" id="Y9Q-hW-UWv"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1602">
                     <rect key="frame" x="231" y="247" width="187" height="22"/>
@@ -583,11 +605,14 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1603" id="8Cw-4R-Knw"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1603">
-                    <rect key="frame" x="145" y="252" width="80" height="17"/>
+                    <rect key="frame" x="81" y="252" width="144" height="17"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Alternatives:" id="1611">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Alternative Nicknames:" id="1611">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -596,11 +621,14 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1604">
                     <rect key="frame" x="275" y="230" width="143" height="13"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="This field is space separated" id="1610">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="This field is space separated" id="1610">
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="1602" id="Pgs-P5-4s5"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1606">
                     <rect key="frame" x="176" y="275" width="47" height="11"/>
@@ -625,6 +653,9 @@ Gw
                             <outlet property="parentField" destination="2335" id="ElP-6n-a1u"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="2336" id="eN3-Ll-UUN"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2336">
                     <rect key="frame" x="122" y="286" width="103" height="17"/>
@@ -662,6 +693,9 @@ Gw
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1623" id="9pE-K8-oT9"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1623">
                     <rect key="frame" x="102" y="77" width="122" height="17"/>
@@ -791,6 +825,9 @@ Gw
                             <outlet property="parentField" destination="2290" id="HyZ-bh-uDV"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1656" id="9XF-4w-7xl"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2294" customClass="TVCTextFieldWithValueValidation">
                     <rect key="frame" x="63" y="62" width="431" height="57"/>
@@ -807,6 +844,9 @@ Gw
                             <outlet property="parentField" destination="2294" id="GzN-d2-ypd"/>
                         </connections>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1671" id="y7q-o0-o8y"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
@@ -837,6 +877,9 @@ Gw
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1715"/>
                     </popUpButtonCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1687" id="0mM-Zf-1Gq"/>
+                    </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1685">
                     <rect key="frame" x="174" y="144" width="243" height="26"/>
@@ -846,6 +889,9 @@ Gw
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1693"/>
                     </popUpButtonCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1686" id="DVJ-X7-jMy"/>
+                    </connections>
                 </popUpButton>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1687">
                     <rect key="frame" x="105" y="180" width="65" height="17"/>
@@ -900,25 +946,20 @@ Gw
                 <userLayoutGuide location="265" affinity="minY"/>
             </userGuides>
             <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="2580">
-                    <rect key="frame" x="66" y="181" width="313" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Do not post notifications for the playback buffer" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2581">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2590">
                     <rect key="frame" x="84" y="146" width="367" height="29"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="Xng-fT-ptW"/>
                     </constraints>
                     <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Do not show notification bubbles or play sounds for messages that are part of the ZNC playback buffer." id="2591">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not show notification bubbles or play sounds for messages that are part of the ZNC playback buffer." id="2591">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="2580" id="cxc-qX-cGi"/>
+                    </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="75N-79-v1S">
                     <rect key="frame" x="66" y="209" width="301" height="18"/>
@@ -988,12 +1029,20 @@ Gw
                         <constraint firstAttribute="width" constant="292" id="dlf-bQ-fxK"/>
                     </constraints>
                     <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These features target version 1.2 of ZNC and later." id="2600">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These features target version 1.2 of ZNC and later." id="2600">
                         <font key="font" metaFont="smallSystemBold"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2580">
+                    <rect key="frame" x="66" y="181" width="313" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Do not post notifications for the playback buffer" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2581">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="2599" secondAttribute="bottom" constant="23" id="0k8-tY-4Kk"/>
@@ -1029,6 +1078,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Edit Selected Channel"/>
                     <connections>
                         <action selector="editChannel:" target="-2" id="1816"/>
                     </connections>
@@ -1043,11 +1093,12 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Remove Selected Channel"/>
                     <connections>
                         <action selector="deleteChannel:" target="-2" id="1814"/>
                     </connections>
                 </button>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1793">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1793">
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
@@ -1071,8 +1122,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Channel Name"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Channel Name"/>
                                     </tableColumn>
                                     <tableColumn identifier="pass" editable="NO" width="122" minWidth="10" maxWidth="1000" id="1807">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Password">
@@ -1084,8 +1137,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Channel Password"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Channel Password"/>
                                     </tableColumn>
                                     <tableColumn identifier="join" editable="NO" width="29.1845703125" minWidth="10" maxWidth="1000" id="1806">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Join">
@@ -1096,8 +1151,10 @@ Gw
                                         <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="only" alignment="left" inset="2" id="1811">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
+                                            <accessibility description="Join Channel on Connect"/>
                                         </buttonCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Join Channel on Connect"/>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
@@ -1125,6 +1182,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
+                    <accessibility description="Channel List"/>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1794">
                     <rect key="frame" x="54" y="24" width="30" height="23"/>
@@ -1137,6 +1195,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Add Channel"/>
                     <connections>
                         <action selector="addChannel:" target="-2" id="1815"/>
                     </connections>
@@ -1172,6 +1231,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Add Highlight Match"/>
                     <connections>
                         <action selector="addHighlight:" target="-2" id="2481"/>
                     </connections>
@@ -1186,6 +1246,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Edit Selected Highlight Match"/>
                     <connections>
                         <action selector="editHighlight:" target="-2" id="2482"/>
                     </connections>
@@ -1200,6 +1261,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Remove Selected Highlight Match"/>
                     <connections>
                         <action selector="deleteHighlight:" target="-2" id="2483"/>
                     </connections>
@@ -1228,8 +1290,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Highlight Keyword"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Highlight Keyword"/>
                                     </tableColumn>
                                     <tableColumn identifier="type" editable="NO" width="82" minWidth="10" maxWidth="1000" id="2457" userLabel="Table Column - Entry Type">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Entry Type">
@@ -1241,8 +1305,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Highlight Match Type"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Highlight Match Type"/>
                                     </tableColumn>
                                     <tableColumn identifier="channel" editable="NO" width="133.7266845703125" minWidth="10" maxWidth="1000" id="2455">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel">
@@ -1254,8 +1320,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Channel Highlight Match is Restricted To"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Channel Highlight Match is Restricted To"/>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
@@ -1283,6 +1351,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
+                    <accessibility description="Highlight Match Table"/>
                 </scrollView>
             </subviews>
             <constraints>
@@ -1304,7 +1373,7 @@ Gw
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1817" userLabel="Ignores View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1842">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1842">
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
@@ -1328,8 +1397,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Address Book Entry"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Address Book Entry"/>
                                     </tableColumn>
                                     <tableColumn identifier="type" width="109.5" minWidth="10" maxWidth="3.4028234663852886e+38" id="1982">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Entry Type">
@@ -1341,8 +1412,10 @@ Gw
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Address Book Entry Type"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <accessibility description="Address Book Entry Type"/>
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
@@ -1370,11 +1443,12 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
+                    <accessibility description="Address Book List"/>
                 </scrollView>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2358">
                     <rect key="frame" x="52" y="265" width="223" height="17"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1391,6 +1465,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Add Address Book Entry"/>
                     <connections>
                         <action selector="showAddIgnoreMenu:" target="-2" id="1999"/>
                     </connections>
@@ -1405,6 +1480,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Edit Selected Address Book Entry"/>
                     <connections>
                         <action selector="editIgnore:" target="-2" id="1857"/>
                     </connections>
@@ -1419,6 +1495,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Remove Selected Address Book Entry"/>
                     <connections>
                         <action selector="deleteIgnore:" target="-2" id="1855"/>
                     </connections>
@@ -1456,23 +1533,26 @@ Gw
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1881">
                     <rect key="frame" x="55" y="251" width="199" height="17"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Perform commands on connect:" id="1882">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Perform commands on connect:" id="1882">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fNI-3k-yzt">
-                    <rect key="frame" x="345" y="251" width="130" height="13"/>
+                    <rect key="frame" x="344" y="251" width="131" height="13"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="126" id="Ipf-3v-yFl"/>
+                        <constraint firstAttribute="width" constant="127" id="Ipf-3v-yFl"/>
                     </constraints>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="This field is line seperated" id="Mnf-Uj-ov2">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="right" title="This field is line seperated" id="Mnf-Uj-ov2">
                         <font key="font" metaFont="system" size="10"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="2310" id="6AF-OO-L3i"/>
+                    </connections>
                 </textField>
                 <scrollView focusRingType="exterior" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2309">
                     <rect key="frame" x="57" y="62" width="416" height="183"/>
@@ -1500,7 +1580,7 @@ Gw
                         <constraint firstAttribute="height" constant="183" id="Wxf-7j-fsj"/>
                     </constraints>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2311">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2311">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -1510,11 +1590,14 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
+                    <connections>
+                        <accessibilityConnection property="title" destination="1881" id="LJb-a8-u9c"/>
+                    </connections>
                 </scrollView>
             </subviews>
             <constraints>
                 <constraint firstItem="2309" firstAttribute="trailing" secondItem="fNI-3k-yzt" secondAttribute="trailing" id="1GV-Oo-pC3"/>
-                <constraint firstItem="fNI-3k-yzt" firstAttribute="leading" secondItem="1881" secondAttribute="trailing" constant="95" id="8vj-wF-Fo0"/>
+                <constraint firstItem="fNI-3k-yzt" firstAttribute="leading" secondItem="1881" secondAttribute="trailing" constant="94" id="8vj-wF-Fo0"/>
                 <constraint firstItem="1881" firstAttribute="top" secondItem="1860" secondAttribute="top" constant="39" id="Tfy-S7-pFp"/>
                 <constraint firstItem="2309" firstAttribute="centerX" secondItem="1860" secondAttribute="centerX" id="VpQ-sW-Esu"/>
                 <constraint firstItem="2309" firstAttribute="top" secondItem="1881" secondAttribute="bottom" constant="6" id="Z6v-sY-lJc"/>
@@ -1561,6 +1644,7 @@ Gw
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="1896" id="1gR-pC-1ht"/>
                         <action selector="proxyTypeChanged:" target="-2" id="2289"/>
                     </connections>
                 </popUpButton>
@@ -1579,7 +1663,7 @@ Gw
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P8N-qI-sG7">
                             <rect key="frame" x="18" y="64" width="375" height="51"/>
                             <animations/>
-                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="voS-R3-3c7">
+                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" id="voS-R3-3c7">
                                 <font key="font" metaFont="system"/>
                                 <string key="title">Textual will attempt to connect to the Tor anonymity network using the SOCKS5 proxy on port 9150 that is open when the “Tor Browser” application is running.</string>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1601,7 +1685,7 @@ Gw
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fFG-yi-lT4">
                             <rect key="frame" x="18" y="64" width="382" height="51"/>
                             <animations/>
-                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" id="R86-j6-hCz">
+                            <textFieldCell key="cell" controlSize="mini" selectable="YES" sendsActionOnEndEditing="YES" id="R86-j6-hCz">
                                 <font key="font" metaFont="system"/>
                                 <string key="title">When enabled, the SOCKS proxy that can be configured through the Network section of System Preferences will be used with the “Automatic”  proxy type selected.</string>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1663,7 +1747,7 @@ Gw
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1899">
-                            <rect key="frame" x="74" y="35" width="66" height="19"/>
+                            <rect key="frame" x="74" y="37" width="66" height="17"/>
                             <animations/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="1918">
                                 <font key="font" metaFont="system"/>
@@ -1672,7 +1756,7 @@ Gw
                             </textFieldCell>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mMU-2K-G3N">
-                            <rect key="frame" x="91" y="24" width="47" height="11"/>
+                            <rect key="frame" x="91" y="26" width="47" height="11"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="11" id="gKQ-aj-Bgs"/>
                             </constraints>
@@ -1697,6 +1781,9 @@ Gw
                                     <outlet property="parentField" destination="1901" id="6jj-TG-Ml9"/>
                                 </connections>
                             </textFieldCell>
+                            <connections>
+                                <accessibilityConnection property="title" destination="1897" id="rwX-Bu-Yk3"/>
+                            </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1903" customClass="TVCTextFieldWithValueValidation">
                             <rect key="frame" x="146" y="96" width="120" height="21"/>
@@ -1713,6 +1800,9 @@ Gw
                                     <outlet property="parentField" destination="1903" id="IFt-Ky-dJW"/>
                                 </connections>
                             </textFieldCell>
+                            <connections>
+                                <accessibilityConnection property="title" destination="1898" id="DSz-Am-kbS"/>
+                            </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1904">
                             <rect key="frame" x="146" y="64" width="220" height="22"/>
@@ -1725,6 +1815,9 @@ Gw
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
+                            <connections>
+                                <accessibilityConnection property="title" destination="1900" id="cyI-uw-QY9"/>
+                            </connections>
                         </textField>
                         <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1902">
                             <rect key="frame" x="146" y="32" width="220" height="22"/>
@@ -1740,6 +1833,9 @@ Gw
                                     <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                 </allowedInputSourceLocales>
                             </secureTextFieldCell>
+                            <connections>
+                                <accessibilityConnection property="title" destination="1899" id="qu4-r8-JTc"/>
+                            </connections>
                         </secureTextField>
                     </subviews>
                     <constraints>
@@ -1749,7 +1845,7 @@ Gw
                         <constraint firstItem="mMU-2K-G3N" firstAttribute="leading" secondItem="3qG-nC-FHd" secondAttribute="leading" id="7WG-F8-rCH"/>
                         <constraint firstItem="3qG-nC-FHd" firstAttribute="top" secondItem="1900" secondAttribute="bottom" id="DBc-kd-MAn"/>
                         <constraint firstItem="1900" firstAttribute="leading" secondItem="KJ6-gu-xq3" secondAttribute="leading" constant="72" id="FBR-rO-OTf"/>
-                        <constraint firstAttribute="bottom" secondItem="mMU-2K-G3N" secondAttribute="bottom" constant="24" id="FHR-IR-85D"/>
+                        <constraint firstAttribute="bottom" secondItem="mMU-2K-G3N" secondAttribute="bottom" constant="26" id="FHR-IR-85D"/>
                         <constraint firstItem="1904" firstAttribute="leading" secondItem="3qG-nC-FHd" secondAttribute="trailing" constant="10" id="MYR-RC-JLz"/>
                         <constraint firstAttribute="trailing" secondItem="1901" secondAttribute="trailing" constant="52" id="MgX-hQ-TOw"/>
                         <constraint firstItem="1901" firstAttribute="leading" secondItem="1897" secondAttribute="trailing" constant="8" symbolic="YES" id="Ou9-Lw-vd8"/>
@@ -1773,7 +1869,7 @@ Gw
                     </constraints>
                     <animations/>
                 </customView>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CGs-VH-G07">
+                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CGs-VH-G07">
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
@@ -1862,7 +1958,7 @@ Gw
                 <constraint firstItem="yql-kd-PP5" firstAttribute="centerY" secondItem="1887" secondAttribute="centerY" id="zUd-wI-FhX"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="454" y="208.5"/>
+            <point key="canvasLocation" x="316" y="199.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2078" userLabel="Flood Control">
             <rect key="frame" x="0.0" y="0.0" width="530" height="336"/>
@@ -1885,6 +1981,9 @@ Gw
                             <rect key="frame" x="32" y="161" width="434" height="25"/>
                             <animations/>
                             <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2173"/>
+                            <connections>
+                                <accessibilityConnection property="title" destination="2174" id="qvg-sR-2Oh"/>
+                            </connections>
                         </slider>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2174">
                             <rect key="frame" x="18" y="192" width="103" height="17"/>
@@ -1953,6 +2052,9 @@ Gw
                             <rect key="frame" x="32" y="75" width="434" height="25"/>
                             <animations/>
                             <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="2" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2211"/>
+                            <connections>
+                                <accessibilityConnection property="title" destination="2195" id="iEn-8A-B6a"/>
+                            </connections>
                         </slider>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2195">
                             <rect key="frame" x="18" y="106" width="80" height="17"/>
@@ -2125,14 +2227,14 @@ Gw
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="BvM-lk-kI4">
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="BvM-lk-kI4">
                     <rect key="frame" x="49" y="163" width="446" height="54"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="bZM-Rf-rgn">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" baseWritingDirection="leftToRight" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="8lV-2X-EIW">
-                                <rect key="frame" x="0.0" y="0.0" width="669" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="892" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
@@ -2173,6 +2275,9 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
+                    <connections>
+                        <accessibilityConnection property="link" destination="2530" id="G14-mH-hsZ"/>
+                    </connections>
                 </scrollView>
             </subviews>
             <constraints>
@@ -2207,6 +2312,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Select Certificate"/>
                     <connections>
                         <action selector="onClientCertificateChangeRequested:" target="-2" id="WPP-H2-sBy"/>
                     </connections>
@@ -2221,6 +2327,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Reset Certificate"/>
                     <connections>
                         <action selector="onClientCertificateResetRequested:" target="-2" id="hl9-sg-Zmd"/>
                     </connections>
@@ -2297,6 +2404,9 @@ Gw
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="vOo-Hg-7M0" id="7hz-E0-Nax"/>
+                    </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdC-a6-iNA">
                     <rect key="frame" x="33" y="135" width="125" height="17"/>
@@ -2315,6 +2425,9 @@ Gw
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="fdC-a6-iNA" id="e2A-FB-NXb"/>
+                    </connections>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="758-2B-Ka3">
                     <rect key="frame" x="422" y="125" width="73" height="32"/>
@@ -2326,6 +2439,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Copy SHA-1 Fingerprint"/>
                     <connections>
                         <action selector="onClientCertificateFingerprintSHA1CopyRequested:" target="-2" id="vD0-Eo-j0y"/>
                     </connections>
@@ -2350,6 +2464,9 @@ Gw
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="h8M-bR-Uth" id="FA4-lA-8bN"/>
+                    </connections>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9F-WF-ubf">
                     <rect key="frame" x="422" y="88" width="72" height="32"/>
@@ -2358,6 +2475,7 @@ Gw
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Copy MD5 Fingerprint"/>
                     <connections>
                         <action selector="onClientCertificateFingerprintMD5CopyRequested:" target="-2" id="55B-xe-zVH"/>
                     </connections>

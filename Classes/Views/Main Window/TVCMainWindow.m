@@ -1257,6 +1257,9 @@
 	
 	/* Set final title. */
 	[self setTitle:title];
+
+	[self accessibilitySetOverrideValue:TXTLS(@"BasicLanguage[1281]")
+						   forAttribute:NSAccessibilityTitleAttribute];
 }
 
 #pragma mark -
@@ -1722,7 +1725,10 @@
 	}
 	
 	/* Begin work on text field. */
-	[self.inputTextField focus];
+	if ([XRAccessibility isVoiceOverEnabled] == NO) {
+		[self.inputTextField focus];
+	}
+
 	[self.inputTextField updateSegmentedController];
 	
 	/* Setup text field value with history item when we have

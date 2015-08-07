@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -29,7 +29,7 @@
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F12-H0-P9Z">
                         <rect key="frame" x="18" y="125" width="330" height="34"/>
                         <animations/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Enter the name and e-mail address that you would like to be associated with your free license key. " id="fYJ-sf-Wdh">
+                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Enter the name and e-mail address that you would like to be associated with your free license key. " id="fYJ-sf-Wdh">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -49,6 +49,7 @@
                                 <outlet property="parentField" destination="rVI-TX-GRu" id="NhQ-qD-J03"/>
                             </connections>
                         </textFieldCell>
+                        <accessibility description="E-mail address to assosciate with license key"/>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="NZa-CW-72p">
                         <rect key="frame" x="18" y="64" width="100" height="17"/>
@@ -69,6 +70,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Request License Key"/>
                         <connections>
                             <action selector="ok:" target="-2" id="ybn-O3-2hr"/>
                         </connections>
@@ -83,6 +85,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="qaw-bq-7JX"/>
                         </connections>
@@ -101,6 +104,7 @@ Gw
                                 <outlet property="parentField" destination="JL9-wh-1Zp" id="apZ-8a-clr"/>
                             </connections>
                         </textFieldCell>
+                        <accessibility description="Name to assosicate with license key"/>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jNw-4C-0KS">
                         <rect key="frame" x="74" y="94" width="44" height="17"/>

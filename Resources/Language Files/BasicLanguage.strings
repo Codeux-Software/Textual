@@ -749,6 +749,20 @@
 "BasicLanguage[1265][2]" = "Encrypted & Unverified";
 "BasicLanguage[1265][3]" = "Encrypted & Verified";
 
+/* Accessiblity descriptions */
+"BasicLanguage[1277]" = "User %@ in User List";
+
+"BasicLanguage[1278][1]" = "Connection %@, Connected";
+"BasicLanguage[1278][2]" = "Connection %@, Disconnected";
+
+"BasicLanguage[1279][1]" = "Channel %@, Channel Joined";
+"BasicLanguage[1279][2]" = "Channel %@, Channel Not Joined";
+
+"BasicLanguage[1280]" = "Query with User %@";
+
+"BasicLanguage[1281]" = "Main Window"; // Main window title description
+
+"BasicLanguage[1282]" = "Chat View";
 
 
 
@@ -756,11 +770,6 @@
 
 
 
-
-
-
-
-
-/* Next unusued key: 1277 */
+/* Next unusued key: 1283 */
 
 

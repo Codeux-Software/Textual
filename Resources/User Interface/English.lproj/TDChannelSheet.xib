@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -41,20 +41,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="325" height="384"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
-                        <rect key="frame" x="89" y="345" width="147" height="20"/>
-                        <animations/>
-                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
-                            <font key="font" metaFont="titleBar" size="12"/>
-                            <segments>
-                                <segment label="General" width="71" selected="YES"/>
-                                <segment label="Defaults" tag="1"/>
-                            </segments>
-                        </segmentedCell>
-                        <connections>
-                            <action selector="onMenuBarItemChanged:" target="-2" id="353"/>
-                        </connections>
-                    </segmentedControl>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="187">
                         <rect key="frame" x="0.0" y="61" width="325" height="285"/>
                         <constraints>
@@ -73,6 +59,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Save"/>
                         <connections>
                             <action selector="ok:" target="-2" id="hND-Ui-7Ux"/>
                         </connections>
@@ -84,6 +71,7 @@ DQ
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="z8V-Ah-QUU"/>
                         </connections>
@@ -95,6 +83,21 @@ DQ
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
+                    <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
+                        <rect key="frame" x="89" y="345" width="147" height="20"/>
+                        <animations/>
+                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
+                            <font key="font" metaFont="titleBar" size="12"/>
+                            <segments>
+                                <segment label="General" width="71" selected="YES"/>
+                                <segment label="Defaults" tag="1"/>
+                            </segments>
+                        </segmentedCell>
+                        <accessibility description="Navigation Bar"/>
+                        <connections>
+                            <action selector="onMenuBarItemChanged:" target="-2" id="353"/>
+                        </connections>
+                    </segmentedControl>
                 </subviews>
                 <constraints>
                     <constraint firstItem="4TH-0i-MkY" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="12" id="1oU-wq-hfV"/>
@@ -136,6 +139,7 @@ DQ
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="Optional Channel Password"/>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="122">
                     <rect key="frame" x="23" y="153" width="119" height="18"/>
@@ -160,6 +164,7 @@ DQ
                             <outlet property="parentField" destination="123" id="w2f-eL-yzY"/>
                         </connections>
                     </textFieldCell>
+                    <accessibility description="Channel Name"/>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="112">
                     <rect key="frame" x="23" y="125" width="199" height="18"/>
@@ -306,18 +311,6 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="251">
-                    <rect key="frame" x="77" y="21" width="228" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="O1P-Su-Zm1"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="269">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="250">
                     <rect key="frame" x="77" y="53" width="228" height="66"/>
                     <constraints>
@@ -329,6 +322,7 @@ DQ
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="Default topic to set if channel is empty when joined."/>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="253">
                     <rect key="frame" x="18" y="23" width="53" height="17"/>
@@ -342,11 +336,24 @@ DQ
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="S13-Uc-xNq">
                     <rect key="frame" x="18" y="135" width="241" height="17"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Values to apply if the channel is empty:" id="Yvg-62-eMH">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Values to apply if the channel is empty:" id="Yvg-62-eMH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="251">
+                    <rect key="frame" x="77" y="21" width="228" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="O1P-Su-Zm1"/>
+                    </constraints>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="269">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <accessibility description="Default set of modes to apply if channel is empty when joined."/>
                 </textField>
             </subviews>
             <constraints>
