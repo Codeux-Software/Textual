@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -38,11 +38,14 @@
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8">
                         <rect key="frame" x="142" y="95" width="143" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nickname" id="22">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Nickname" id="22">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="7" id="vl7-Yc-7VP"/>
+                        </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="144" y="61" width="139" height="22"/>
@@ -60,6 +63,7 @@
                             </connections>
                         </textFieldCell>
                         <connections>
+                            <accessibilityConnection property="title" destination="10" id="0D2-UX-54T"/>
                             <outlet property="delegate" destination="-2" id="35"/>
                         </connections>
                     </textField>
@@ -73,6 +77,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Change Nickname"/>
                         <connections>
                             <action selector="ok:" target="-2" id="30"/>
                         </connections>
@@ -87,6 +92,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="31"/>
                         </connections>
@@ -121,7 +127,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="36"/>
             </connections>
-            <point key="canvasLocation" x="363.5" y="425"/>
+            <point key="canvasLocation" x="262.5" y="248"/>
         </window>
     </objects>
 </document>

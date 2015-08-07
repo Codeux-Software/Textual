@@ -95,6 +95,17 @@
 	}
 		
 	[self updateUserMarkBadge:isSelected];
+
+	[self populateAccessibilityDescriptions];
+}
+
+- (void)populateAccessibilityDescriptions
+{
+	IRCUser *associatedUser = [self memberPointer];
+
+	NSString *nickname = [associatedUser nickname];
+
+	[[[self textField] cell] setAccessibilityValueDescription:BLS(1277, nickname)];
 }
 
 #pragma mark -
@@ -575,7 +586,7 @@
     [userInfoPopover showRelativeToRect:cellFrame
                                  ofView:mainWindowMemberList()
                           preferredEdge:NSMaxXEdge];
-	
+
 	[mainWindowTextField() focus]; // Add focus back to text field.
 }
 

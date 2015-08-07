@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -1200,6 +1200,7 @@
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="608" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
+                                                    <accessibility description="Main Text Field"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
                                                         <outlet property="segmentedController" destination="Ijw-SU-h2Z" id="L11-W6-6qN"/>
@@ -1254,6 +1255,7 @@
                                         </segment>
                                     </segments>
                                 </segmentedCell>
+                                <accessibility description="Main Window Segmented Controller"/>
                             </segmentedControl>
                         </subviews>
                         <constraints>
@@ -1391,6 +1393,7 @@
                                                                         </prototypeCellViews>
                                                                     </tableColumn>
                                                                 </tableColumns>
+                                                                <accessibility description="Server List"/>
                                                                 <connections>
                                                                     <outlet property="backgroundView" destination="2Vr-x4-oub" id="RCl-Ol-fqb"/>
                                                                 </connections>
@@ -1449,7 +1452,7 @@
                                 <animations/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <accessibility description="Channel view"/>
+                                <accessibility description="Chat View"/>
                             </box>
                             <customView id="VPt-er-ffg">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
@@ -1530,6 +1533,7 @@
                                                                         </prototypeCellViews>
                                                                     </tableColumn>
                                                                 </tableColumns>
+                                                                <accessibility description="User List"/>
                                                                 <connections>
                                                                     <outlet property="backgroundView" destination="03i-f2-qEP" id="Cdn-0M-e96"/>
                                                                     <outlet property="memberListUserInfoPopover" destination="hCd-Nn-UE3" id="9rd-t5-379"/>
@@ -1629,6 +1633,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Purchase Textual"/>
                                         </button>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="be0-qc-Z4Y">
                                             <rect key="frame" x="164" y="290" width="152" height="152"/>
@@ -1729,6 +1734,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Begin Setup"/>
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="oRw-Te-R5j" id="wpE-fh-Njz"/>
                                             </connections>
@@ -1857,7 +1863,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <outlet property="titlebarAccessoryView" destination="8Pz-wu-9PV" id="wtn-6H-hnV"/>
                 <outlet property="titlebarAccessoryViewLockButton" destination="N9S-CI-zgv" id="BLp-fo-3Ue"/>
             </connections>
-            <point key="canvasLocation" x="3732" y="547.5"/>
+            <point key="canvasLocation" x="3948" y="542.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>
@@ -1890,6 +1896,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="4i1-uo-Dia" id="The-0f-b6o"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F3x-ve-32O">
                     <rect key="frame" x="96" y="67" width="248" height="16"/>
@@ -1899,6 +1908,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="THG-b6-koq" id="eY9-UE-u4q"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j7n-34-pDc">
                     <rect key="frame" x="97" y="48" width="247" height="16"/>
@@ -1908,6 +1920,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="nUG-D4-c4O" id="Y4L-rI-5mo"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AD1-CZ-DVv">
                     <rect key="frame" x="95" y="29" width="249" height="16"/>
@@ -1917,6 +1932,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="etD-7i-Rqz" id="HNS-rP-b2h"/>
+                    </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4i1-uo-Dia">
                     <rect key="frame" x="27" y="105" width="69" height="16"/>
@@ -1980,6 +1998,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="aqW-pw-yTe" id="gCE-hk-Kba"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sdv-Wa-gJ9">
                     <rect key="frame" x="95" y="10" width="249" height="16"/>
@@ -1989,6 +2010,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="XQQ-6b-hiM" id="kQT-2t-dRP"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
@@ -2024,6 +2048,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <constraint firstItem="aqW-pw-yTe" firstAttribute="top" secondItem="4i1-uo-Dia" secondAttribute="bottom" constant="3" id="zjM-A3-SnS"/>
             </constraints>
             <animations/>
+            <accessibility description="User Information Popover"/>
             <point key="canvasLocation" x="284" y="314"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">

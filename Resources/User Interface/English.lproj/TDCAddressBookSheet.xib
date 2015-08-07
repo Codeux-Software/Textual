@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -61,6 +61,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="589"/>
                         </connections>
@@ -78,6 +79,7 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Save"/>
                         <connections>
                             <action selector="ok:" target="-2" id="586"/>
                         </connections>
@@ -97,7 +99,7 @@ DQ
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cib-aW-lDk">
+                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cib-aW-lDk">
                         <rect key="frame" x="23" y="80" width="323" height="81"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LME-Ik-P6C">
                             <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -199,6 +201,9 @@ DQ
                                 <outlet property="parentField" destination="540" id="XMM-dO-upa"/>
                             </connections>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="541" id="TiN-Rr-XgG"/>
+                        </connections>
                     </textField>
                 </subviews>
                 <constraints>
@@ -262,6 +267,9 @@ DQ
                                 <outlet property="parentField" destination="298" id="R3N-FX-jSA"/>
                             </connections>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="296" id="orM-OL-W3d"/>
+                        </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="300">
                         <rect key="frame" x="159" y="351" width="205" height="14"/>
@@ -271,6 +279,7 @@ DQ
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Format for Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="594">
                         <rect key="frame" x="110" y="351" width="47" height="14"/>
@@ -298,6 +307,7 @@ DQ
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="306">
                         <rect key="frame" x="159" y="322" width="316" height="14"/>
@@ -307,6 +317,7 @@ DQ
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="308">
                         <rect key="frame" x="159" y="309" width="304" height="14"/>
@@ -316,6 +327,7 @@ DQ
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="309">
                         <rect key="frame" x="159" y="296" width="265" height="14"/>
@@ -325,6 +337,7 @@ DQ
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="314">
                         <rect key="frame" x="38" y="275" width="450" height="5"/>
@@ -340,6 +353,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Private Notices from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
                         <rect key="frame" x="74" y="157" width="171" height="18"/>
@@ -348,6 +362,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
                         <rect key="frame" x="74" y="185" width="158" height="18"/>
@@ -356,6 +371,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Highlights by User in a Channel"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
                         <rect key="frame" x="280" y="213" width="129" height="18"/>
@@ -364,6 +380,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Private Messages from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
                         <rect key="frame" x="74" y="213" width="124" height="18"/>
@@ -372,14 +389,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="617">
-                        <rect key="frame" x="74" y="78" width="251" height="18"/>
-                        <animations/>
-                        <buttonCell key="cell" type="check" title="Hide messages that mention this user" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
+                        <accessibility description="Ignore Public Messages from User"/>
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="632">
                         <rect key="frame" x="38" y="110" width="450" height="5"/>
@@ -402,6 +412,7 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore File Transfer Requests from User"/>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="484">
                         <rect key="frame" x="342" y="13" width="85" height="32"/>
@@ -441,23 +452,25 @@ DQ
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Highlights by User in a Private Message"/>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
                         <rect key="frame" x="36" y="244" width="454" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="477">
+                    <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
                         <rect key="frame" x="280" y="129" width="172" height="18"/>
                         <animations/>
                         <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="296">
                         <rect key="frame" x="18" y="382" width="69" height="17"/>
@@ -468,6 +481,15 @@ DQ
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="617">
+                        <rect key="frame" x="74" y="78" width="251" height="18"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Hide messages that mention this user" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Hide messages that mention the ignored user."/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>

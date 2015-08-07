@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -292,6 +292,9 @@
                                 <string>or_IN</string>
                             </allowedInputSourceLocales>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="82" id="92W-GN-JbE"/>
+                        </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="63">
                         <rect key="frame" x="206" y="82" width="93" height="22"/>
@@ -308,6 +311,7 @@
                             </allowedInputSourceLocales>
                         </textFieldCell>
                         <connections>
+                            <accessibilityConnection property="title" destination="83" id="1mD-ow-koR"/>
                             <binding destination="-2" name="value" keyPath="self.channelUserLimitMode" id="H6I-sV-jvk">
                                 <dictionary key="options">
                                     <bool key="NSValidatesImmediately" value="YES"/>
@@ -416,6 +420,7 @@
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="235"/>
                         </connections>
@@ -430,6 +435,7 @@ Gw
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Save"/>
                         <connections>
                             <action selector="ok:" target="-2" id="236"/>
                         </connections>

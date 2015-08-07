@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -45,6 +45,7 @@
                                         </segment>
                                     </segments>
                                 </segmentedCell>
+                                <accessibility description="Main Window Segmented Controller"/>
                             </segmentedControl>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="nbK-l5-9k5" customClass="TVCMainWindowTextViewBackground">
                                 <rect key="frame" x="170" y="6" width="620" height="25"/>
@@ -65,6 +66,7 @@
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <size key="minSize" width="610" height="19"/>
                                                     <size key="maxSize" width="629" height="10000000"/>
+                                                    <accessibility description="Main Text Field"/>
                                                     <connections>
                                                         <outlet property="backgroundView" destination="nbK-l5-9k5" id="9hb-sC-ujn"/>
                                                         <outlet property="contentView" destination="phB-0r-qij" id="q5a-XP-rcM"/>
@@ -228,6 +230,7 @@
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <accessibility description="Server List"/>
                                                     <connections>
                                                         <outlet property="visualEffectView" destination="KgM-JY-9PC" id="lPH-Qx-Yg2"/>
                                                     </connections>
@@ -273,7 +276,7 @@
                                 <animations/>
                                 <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <accessibility description="Channel view"/>
+                                <accessibility description="Chat View"/>
                             </box>
                             <visualEffectView appearanceType="vibrantDark" blendingMode="behindWindow" state="followsWindowActiveState" id="2k7-ax-6YE">
                                 <rect key="frame" x="650" y="0.0" width="150" height="439"/>
@@ -349,6 +352,7 @@
                                                             </prototypeCellViews>
                                                         </tableColumn>
                                                     </tableColumns>
+                                                    <accessibility description="User List"/>
                                                     <connections>
                                                         <outlet property="memberListUserInfoPopover" destination="iYh-l7-KsB" id="tdZ-ZT-PaZ"/>
                                                         <outlet property="visualEffectView" destination="2k7-ax-6YE" id="3ak-f9-liW"/>
@@ -435,6 +439,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Purchase Textual"/>
                                             <connections>
                                                 <action selector="openFastSpringStoreWebpage:" target="U6M-jc-NbT" id="7Hf-dQ-R5J"/>
                                             </connections>
@@ -594,6 +599,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Begin Setup"/>
                                             <connections>
                                                 <action selector="openWelcomeSheet:" target="U6M-jc-NbT" id="1XC-Cy-mVc"/>
                                             </connections>
@@ -671,7 +677,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <outlet property="titlebarAccessoryViewController" destination="Yr8-XA-FFO" id="3cU-yb-0Yx"/>
                 <outlet property="titlebarAccessoryViewLockButton" destination="eFh-15-nxS" id="izN-Fu-EpE"/>
             </connections>
-            <point key="canvasLocation" x="6116" y="1046.5"/>
+            <point key="canvasLocation" x="6336" y="1020.5"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2965" userLabel="User Info Popover View">
             <rect key="frame" x="0.0" y="0.0" width="351" height="134"/>
@@ -687,33 +693,33 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="OJS-rH-GO8" id="XbZ-Dd-995"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MUG-Yv-LiF">
-                    <rect key="frame" x="92" y="50" width="252" height="16"/>
+                    <rect key="frame" x="95" y="50" width="250" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="Tcg-Vx-hyl">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="0fc-JU-NU4" id="Q2Y-l0-UtB"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2991">
-                    <rect key="frame" x="96" y="30" width="248" height="16"/>
+                    <rect key="frame" x="94" y="30" width="250" height="16"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="2992">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
-                    <rect key="frame" x="94" y="10" width="250" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="sD4-2b-G9I" id="y0H-Pa-rer"/>
+                    </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CiH-kG-t5w">
                     <rect key="frame" x="21" y="110" width="73" height="17"/>
@@ -734,7 +740,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0fc-JU-NU4">
-                    <rect key="frame" x="19" y="50" width="75" height="17"/>
+                    <rect key="frame" x="20" y="50" width="75" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Real name:" id="rAb-ds-4lA">
                         <font key="font" metaFont="systemBold"/>
@@ -743,7 +749,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sD4-2b-G9I">
-                    <rect key="frame" x="23" y="30" width="73" height="17"/>
+                    <rect key="frame" x="22" y="30" width="73" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Privileges:" id="d8b-Oo-eQc">
                         <font key="font" metaFont="systemBold"/>
@@ -777,6 +783,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="jIV-Th-xbm" id="J2K-aR-HDo"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2985">
                     <rect key="frame" x="94" y="110" width="250" height="16"/>
@@ -786,21 +795,36 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="CiH-kG-t5w" id="ZFX-r1-SRv"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FDn-T9-61V">
+                    <rect key="frame" x="95" y="10" width="249" height="16"/>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="################################" id="jvH-0Q-SL4">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="e4m-I3-8kS" id="6Kb-32-XeT"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="0fc-JU-NU4" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="21" id="0iB-7Z-HVo"/>
+                <constraint firstItem="0fc-JU-NU4" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="22" id="0iB-7Z-HVo"/>
                 <constraint firstItem="2987" firstAttribute="leading" secondItem="jIV-Th-xbm" secondAttribute="trailing" constant="4" id="2cV-4l-Buh"/>
                 <constraint firstItem="FDn-T9-61V" firstAttribute="top" secondItem="2991" secondAttribute="bottom" constant="4" id="3Vi-8h-UQj"/>
                 <constraint firstAttribute="trailing" secondItem="2991" secondAttribute="trailing" constant="9" id="4BL-DB-3Bj"/>
                 <constraint firstItem="MUG-Yv-LiF" firstAttribute="top" secondItem="2989" secondAttribute="bottom" constant="4" id="5x2-Me-z8Y"/>
                 <constraint firstItem="0fc-JU-NU4" firstAttribute="top" secondItem="OJS-rH-GO8" secondAttribute="bottom" constant="3" id="6eV-G8-7QF"/>
-                <constraint firstItem="sD4-2b-G9I" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="25" id="7dH-sU-Y5w"/>
+                <constraint firstItem="sD4-2b-G9I" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="24" id="7dH-sU-Y5w"/>
                 <constraint firstItem="2985" firstAttribute="leading" secondItem="CiH-kG-t5w" secondAttribute="trailing" constant="4" id="8S5-Sw-mZ6"/>
                 <constraint firstItem="e4m-I3-8kS" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="10" id="K98-Ew-MM4"/>
                 <constraint firstItem="sD4-2b-G9I" firstAttribute="top" secondItem="0fc-JU-NU4" secondAttribute="bottom" constant="3" id="N1C-tV-4wV"/>
-                <constraint firstItem="FDn-T9-61V" firstAttribute="leading" secondItem="e4m-I3-8kS" secondAttribute="trailing" constant="3" id="Szv-9X-fvR"/>
-                <constraint firstAttribute="trailing" secondItem="MUG-Yv-LiF" secondAttribute="trailing" constant="9" id="UDQ-CN-CA4"/>
+                <constraint firstItem="FDn-T9-61V" firstAttribute="leading" secondItem="e4m-I3-8kS" secondAttribute="trailing" constant="4" id="Szv-9X-fvR"/>
+                <constraint firstAttribute="trailing" secondItem="MUG-Yv-LiF" secondAttribute="trailing" constant="8" id="UDQ-CN-CA4"/>
                 <constraint firstItem="2989" firstAttribute="leading" secondItem="OJS-rH-GO8" secondAttribute="trailing" constant="3" id="W2x-XM-mFq"/>
                 <constraint firstItem="jIV-Th-xbm" firstAttribute="leading" secondItem="2965" secondAttribute="leading" constant="22" id="WEW-RF-jsQ"/>
                 <constraint firstAttribute="trailing" secondItem="2989" secondAttribute="trailing" constant="9" id="WFw-FX-6zx"/>
@@ -814,13 +838,14 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <constraint firstItem="2985" firstAttribute="top" secondItem="2965" secondAttribute="top" constant="8" id="fQ3-Yp-aWe"/>
                 <constraint firstItem="2991" firstAttribute="top" secondItem="MUG-Yv-LiF" secondAttribute="bottom" constant="4" id="iff-PE-lck"/>
                 <constraint firstItem="2989" firstAttribute="top" secondItem="2987" secondAttribute="bottom" constant="4" id="nyL-Fh-ag7"/>
-                <constraint firstItem="2991" firstAttribute="leading" secondItem="sD4-2b-G9I" secondAttribute="trailing" constant="4" id="pm4-Iz-1zv"/>
-                <constraint firstItem="MUG-Yv-LiF" firstAttribute="leading" secondItem="0fc-JU-NU4" secondAttribute="trailing" constant="2" id="riU-9T-onf"/>
+                <constraint firstItem="2991" firstAttribute="leading" secondItem="sD4-2b-G9I" secondAttribute="trailing" constant="3" id="pm4-Iz-1zv"/>
+                <constraint firstItem="MUG-Yv-LiF" firstAttribute="leading" secondItem="0fc-JU-NU4" secondAttribute="trailing" constant="4" id="riU-9T-onf"/>
                 <constraint firstItem="jIV-Th-xbm" firstAttribute="top" secondItem="CiH-kG-t5w" secondAttribute="bottom" constant="3" id="sJK-br-0cb"/>
                 <constraint firstAttribute="trailing" secondItem="FDn-T9-61V" secondAttribute="trailing" constant="9" id="x9Z-la-kXN"/>
                 <constraint firstItem="CiH-kG-t5w" firstAttribute="top" secondItem="2965" secondAttribute="top" constant="7" id="xUo-RL-23b"/>
             </constraints>
             <animations/>
+            <accessibility description="User Information Popover"/>
             <point key="canvasLocation" x="361.5" y="487"/>
         </customView>
         <popover id="iYh-l7-KsB" userLabel="User Info Popover" customClass="TVCMemberListUserInfoPopover">

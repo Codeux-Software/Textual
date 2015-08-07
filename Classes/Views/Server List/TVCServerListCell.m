@@ -87,6 +87,38 @@
 	} else {
 		[self updateDrawingForMavericks:interfaceObject];
 	}
+
+	[self populateAccessibilityDescriptions];
+}
+
+- (void)populateAccessibilityDescriptions
+{
+	IRCTreeItem *cellItem = [self cellItem];
+
+	NSDictionary *drawingContext = [self drawingContext];
+
+	BOOL isActive = [drawingContext boolForKey:@"isActive"];
+	BOOL isGroupItem = [drawingContext boolForKey:@"isGroupItem"];
+
+	if (isGroupItem) {
+		if (isActive) {
+			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][1]", [cellItem label])];
+		} else {
+			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][2]", [cellItem label])];
+		}
+	} else {
+		if ([cellItem isPrivateMessage]) {
+			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1280]", [cellItem label])];
+		} else {
+			if (isActive) {
+				[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][1]", [cellItem label])];
+			} else {
+				[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][2]", [cellItem label])];
+			}
+		}
+	}
+
+	[[[self imageView] cell] setAccessibilityLabel:nil];
 }
 
 - (void)updateTextFieldValue

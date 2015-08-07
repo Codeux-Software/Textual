@@ -63,7 +63,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xlp-dS-uye">
                     <rect key="frame" x="75" y="71" width="438" height="136"/>
                     <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="CDw-Dk-BKh">
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="CDw-Dk-BKh">
                         <font key="font" metaFont="system"/>
                         <string key="title">Support for OS X Mountain Lion is nearing an end in Textual.
 
@@ -84,6 +84,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Hide Warning"/>
                     <connections>
                         <action selector="onHideMountainLionDeprecationWarning:" target="-2" id="Jz4-HU-ods"/>
                     </connections>
@@ -91,7 +92,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Md-6x-kAW">
                     <rect key="frame" x="86" y="227" width="416" height="30"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Mountain Lion End-of-life Warning" id="w7B-Fr-kO8">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Mountain Lion End-of-life Warning" id="w7B-Fr-kO8">
                         <font key="font" metaFont="systemBold" size="25"/>
                         <color key="textColor" white="0.0" alpha="0.86000001429999995" colorSpace="calibratedWhite"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -197,7 +198,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
                         <popUpButton key="view" tag="108" id="J0J-90-PIH">
-                            <rect key="frame" x="12" y="14" width="55" height="35"/>
+                            <rect key="frame" x="2" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                             <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
@@ -306,6 +307,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <accessibility description="Advanced Navigation Destinations"/>
                         </popUpButton>
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="73o-gm-Tci"/>
@@ -316,10 +318,10 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                         <size key="minSize" width="55" height="35"/>
                         <size key="maxSize" width="55" height="35"/>
                         <popUpButton key="view" tag="107" id="yuI-3m-esZ">
-                            <rect key="frame" x="17" y="16" width="55" height="35"/>
+                            <rect key="frame" x="0.0" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -338,6 +340,7 @@ DQ
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <accessibility description="Addons Navigation Destinations"/>
                         </popUpButton>
                         <connections>
                             <action selector="onPrefPaneSelected:" target="-2" id="yNd-wk-5x5"/>
@@ -487,6 +490,7 @@ DQ
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
+                            <accessibility description="Manage iCloud"/>
                             <connections>
                                 <action selector="onManageiCloudButtonClicked:" target="-2" id="Sq6-WR-zOm"/>
                                 <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.System -&gt; Built with iCloud Support" id="GyO-Rq-W7e"/>
@@ -525,7 +529,7 @@ DQ
                 <constraint firstItem="xLO-uz-XOC" firstAttribute="leading" secondItem="Lkb-Lh-vGq" secondAttribute="leading" id="ynG-Bo-oF6"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="507.5" y="-412"/>
+            <point key="canvasLocation" x="602.5" y="-421"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="d6J-SH-Xgl" userLabel="Default Identity">
             <rect key="frame" x="0.0" y="0.0" width="589" height="206"/>
@@ -648,7 +652,7 @@ DQ
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="H70-fl-X2H">
                     <rect key="frame" x="71" y="160" width="447" height="16"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="The following information will be filled in when creating a new connection." id="DJW-g4-9G4">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="The following information will be filled in when creating a new connection." id="DJW-g4-9G4">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -749,12 +753,13 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="Highlight Match Type"/>
                     <connections>
                         <action selector="onChangedHighlightType:" target="-2" id="IuQ-DS-Bb1"/>
                         <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.NicknameHighlightMatchingType" id="oS6-Kq-Pds"/>
                     </connections>
                 </popUpButton>
-                <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-hL-16n">
+                <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-hL-16n">
                     <rect key="frame" x="49" y="59" width="229" height="154"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="227" height="152"/>
@@ -778,8 +783,10 @@ DQ
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Highlight Keyword"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                        <accessibility description="Highlight Keyword"/>
                                         <connections>
                                             <binding destination="4310" name="value" keyPath="arrangedObjects.string" id="Skl-Fi-N4r"/>
                                         </connections>
@@ -807,8 +814,11 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
+                    <connections>
+                        <accessibilityConnection property="title" destination="DPo-1x-FIa" id="bZe-oE-ca7"/>
+                    </connections>
                 </scrollView>
-                <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIx-e4-L5V">
+                <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIx-e4-L5V">
                     <rect key="frame" x="290" y="59" width="251" height="154"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="227" height="152"/>
@@ -832,8 +842,10 @@ DQ
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Excluded Keyword"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                        <accessibility description="Excluded Keyword"/>
                                         <connections>
                                             <binding destination="4313" name="value" keyPath="arrangedObjects.string" id="2pO-4M-Fmc"/>
                                         </connections>
@@ -863,6 +875,9 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
+                    <connections>
+                        <accessibilityConnection property="title" destination="jN5-O0-8cZ" id="lLB-i5-bGT"/>
+                    </connections>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KgU-fm-1CL">
                     <rect key="frame" x="290" y="33" width="30" height="23"/>
@@ -874,7 +889,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
-                    <accessibility description="New exclude word"/>
+                    <accessibility description="Add Excluded Keyword"/>
                     <connections>
                         <action selector="onAddExcludeKeyword:" target="-2" id="grA-d2-jxL"/>
                         <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="wq6-zN-RSs">
@@ -928,7 +943,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
-                    <accessibility description="Remove highlight word"/>
+                    <accessibility description="Remove Selected Highlight Keyword"/>
                     <connections>
                         <action selector="remove:" target="4310" id="itS-hv-Fdw"/>
                         <binding destination="4310" name="enabled" keyPath="canRemove" id="P3L-bL-EfP"/>
@@ -945,7 +960,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
-                    <accessibility description="New highlight word"/>
+                    <accessibility description="Add Highlight Keyword"/>
                     <connections>
                         <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
                     </connections>
@@ -960,7 +975,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="miniSystem"/>
                     </buttonCell>
-                    <accessibility description="Remove exclude word"/>
+                    <accessibility description="Remove Selected Excluded Keyword"/>
                     <connections>
                         <action selector="remove:" target="4313" id="eKI-75-HAW"/>
                         <binding destination="4313" name="enabled2" keyPath="canRemove" previousBinding="Qeh-dN-yl0" id="Ycy-TD-1k0">
@@ -1061,6 +1076,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="P5a-0i-uW9" id="4Q6-13-Bbo"/>
                         <action selector="onChangedAlertDisableWhileAway:" target="-2" id="iay-m2-0sX"/>
                     </connections>
                 </button>
@@ -1094,6 +1110,7 @@ DQ
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="0Hy-Fo-BoC" id="oOJ-2n-ngN"/>
                         <action selector="onChangedAlertSound:" target="-2" id="eU1-DB-IBY"/>
                     </connections>
                 </popUpButton>
@@ -1143,11 +1160,14 @@ DQ
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O82-On-A00">
                     <rect key="frame" x="135" y="279" width="282" height="14"/>
                     <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="9fD-5A-S0y">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Growl is running. Notifications will be forwarded to it." id="9fD-5A-S0y">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="fyC-tf-kOI" id="8OW-Qm-Opk"/>
+                    </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="yuH-wc-F3c">
                     <rect key="frame" x="63" y="65" width="464" height="5"/>
@@ -1185,20 +1205,10 @@ DQ
                         </menu>
                     </popUpButtonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="1jd-UU-VQN" id="JCY-pL-ecg"/>
                         <action selector="onChangedAlertType:" target="-2" id="e3C-JF-AXp"/>
                     </connections>
                 </popUpButton>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="fyC-tf-kOI">
-                    <rect key="frame" x="117" y="299" width="179" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Display notification for alert" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="kuK-CY-8vo">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onChangedAlertNotification:" target="-2" id="c1S-wp-lbA"/>
-                    </connections>
-                </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="P5a-0i-uW9">
                     <rect key="frame" x="132" y="227" width="294" height="14"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LXm-IM-sSG">
@@ -1256,6 +1266,17 @@ DQ
                         <animations/>
                     </scroller>
                 </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="fyC-tf-kOI">
+                    <rect key="frame" x="117" y="299" width="179" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Display notification for alert" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="kuK-CY-8vo">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertNotification:" target="-2" id="c1S-wp-lbA"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="SM5-3p-JK0" secondAttribute="trailing" constant="65" id="2ua-2c-6ms"/>
@@ -1328,6 +1349,7 @@ DQ
                                             <font key="font" metaFont="smallSystem"/>
                                             <menu key="menu" title="OtherViews" id="vmB-ra-bu8"/>
                                         </popUpButtonCell>
+                                        <accessibility description="Current Style"/>
                                         <connections>
                                             <action selector="onChangedTheme:" target="-2" id="kdC-TU-kR6"/>
                                         </connections>
@@ -1391,6 +1413,7 @@ DQ
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
+                                        <accessibility description="Change Content Font"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="19a-B6-iEv" id="Ikc-qO-S3F"/>
                                             <action selector="onSelectNewFont:" target="-2" id="Q0K-AD-1dQ"/>
@@ -1407,6 +1430,7 @@ DQ
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
                                         </buttonCell>
+                                        <accessibility description="View files associated with the current style"/>
                                         <connections>
                                             <action selector="onOpenPathToThemes:" target="-2" id="ltk-wa-6fV"/>
                                         </connections>
@@ -1439,11 +1463,14 @@ DQ
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
                                         <rect key="frame" x="111" y="86" width="239" height="14"/>
                                         <animations/>
-                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <accessibilityConnection property="link" destination="7LB-4e-2Po" id="Bd1-he-n9U"/>
+                                        </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
                                         <rect key="frame" x="178" y="220" width="179" height="19"/>
@@ -1456,6 +1483,7 @@ DQ
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <accessibility description="Current Content Font"/>
                                         <connections>
                                             <binding destination="-2" name="displayPatternValue1" keyPath="themeChannelViewFontName" id="fff-gw-2Dg">
                                                 <dictionary key="options">
@@ -1482,18 +1510,18 @@ DQ
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="33" width="357" height="16"/>
+                                        <rect key="frame" x="109" y="33" width="357" height="20"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="16"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="20"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
-                                                    <rect key="frame" x="0.0" y="107" width="357" height="16"/>
+                                                    <rect key="frame" x="0.0" y="107" width="357" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="357" height="16"/>
+                                                    <size key="minSize" width="357" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -1583,7 +1611,7 @@ DQ
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="357" height="16"/>
+                                                    <size key="minSize" width="357" height="20"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -1601,6 +1629,9 @@ DQ
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </scroller>
+                                        <connections>
+                                            <accessibilityConnection property="link" destination="EES-Ba-O9N" id="sKL-mY-qir"/>
+                                        </connections>
                                     </scrollView>
                                 </subviews>
                                 <constraints>
@@ -1713,6 +1744,7 @@ DQ
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <accessibility description="Maximum Inline Image Height"/>
                                         <connections>
                                             <binding destination="-2" name="value" keyPath="inlineImageMaxHeight" id="oha-AK-w7w">
                                                 <dictionary key="options">
@@ -1862,6 +1894,9 @@ DQ
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </scroller>
+                                        <connections>
+                                            <accessibilityConnection property="link" destination="MVd-EC-hxF" id="uDq-s8-K9L"/>
+                                        </connections>
                                     </scrollView>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9pY-ld-U6y">
                                         <rect key="frame" x="407" y="106" width="38" height="16"/>
@@ -1899,6 +1934,7 @@ DQ
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <accessibility description="Maxium File Size for Inline Images"/>
                                         <connections>
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.InlineMediaMaximumFilesize" id="Krh-7c-CA9"/>
                                         </connections>
@@ -1915,6 +1951,7 @@ DQ
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <accessibility description="Inline Image Scaled by Width"/>
                                         <connections>
                                             <binding destination="-2" name="value" keyPath="inlineImageMaxWidth" id="QFs-dh-NJA">
                                                 <dictionary key="options">
@@ -2380,7 +2417,7 @@ DQ
                 <constraint firstAttribute="bottom" secondItem="lpz-77-UDw" secondAttribute="bottom" constant="20" symbolic="YES" id="rVc-XZ-WD8"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="334.5" y="-881.5"/>
+            <point key="canvasLocation" x="467.5" y="-880.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="DPg-Nu-HcZ" userLabel="Log Location">
             <rect key="frame" x="0.0" y="0.0" width="589" height="119"/>
@@ -2438,6 +2475,7 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="Log Transcript Folder"/>
                     <connections>
                         <action selector="onChangedTranscriptFolder:" target="-2" id="LYi-hQ-pgj"/>
                         <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.LogTranscript" id="nTX-GF-Bpv"/>
@@ -2463,7 +2501,7 @@ DQ
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <scrollView focusRingType="none" appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
+                <scrollView focusRingType="none" appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ca-ja-B6d">
                     <rect key="frame" x="59" y="130" width="471" height="210"/>
                     <clipView key="contentView" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
@@ -2488,8 +2526,10 @@ DQ
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <accessibility description="Script Name"/>
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                        <accessibility description="Script Name"/>
                                     </tableColumn>
                                 </tableColumns>
                                 <accessibility description="Installed Addons"/>
@@ -2554,6 +2594,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <accessibility description="Open Custom Addons Location in Finder"/>
                     <connections>
                         <action selector="onOpenPathToScripts:" target="-2" id="0gm-KQ-Hgc"/>
                     </connections>
@@ -2576,7 +2617,7 @@ DQ
                 <constraint firstAttribute="trailing" secondItem="Pxa-Um-3pA" secondAttribute="trailing" constant="58" id="ybz-td-8Gh"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="313.5" y="-695.5"/>
+            <point key="canvasLocation" x="407.5" y="-721"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Pkr-Na-yb0" userLabel="IRCop Messages">
             <rect key="frame" x="0.0" y="0.0" width="589" height="349"/>
@@ -2834,6 +2875,7 @@ DQ
                     <animations/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" doubleValue="120" tickMarkPosition="below" numberOfTickMarks="51" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
+                        <accessibilityConnection property="title" destination="wcy-2K-Z0C" id="cW8-Bg-bLX"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TrackUserAwayStatusMaximumChannelSize" id="R7b-3V-IUf"/>
                     </connections>
                 </slider>
@@ -3083,6 +3125,7 @@ DQ
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="cwh-JV-tWi" id="mwW-YL-K72"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
                     </connections>
                 </textField>
@@ -3252,6 +3295,9 @@ DQ
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
+                    <connections>
+                        <accessibilityConnection property="link" destination="VGL-Zb-9Bk" id="Rj2-9T-tzo"/>
+                    </connections>
                 </scrollView>
             </subviews>
             <constraints>
@@ -3433,6 +3479,7 @@ DQ
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <accessibility description="Command W Keyboard Action"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="ykv-44-sRE" id="3a8-Ce-LYA"/>
                                             <accessibilityConnection property="title" destination="ykv-44-sRE" id="HUb-6q-lnK"/>
@@ -3451,6 +3498,9 @@ DQ
                                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <connections>
+                                            <accessibilityConnection property="link" destination="YRR-9J-n7G" id="9Jx-rB-82K"/>
+                                        </connections>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfq-lx-1BD">
                                         <rect key="frame" x="223" y="301" width="282" height="24"/>
@@ -3466,6 +3516,7 @@ DQ
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <accessibility description="Double Clicking on a User Action"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="Rd9-Tz-a8b" id="dYG-vi-Rv0"/>
                                             <accessibilityConnection property="title" destination="Rd9-Tz-a8b" id="kHb-PD-iAe"/>
@@ -3637,7 +3688,7 @@ DQ
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-JA-Thc">
-                                        <rect key="frame" x="323" y="30" width="195" height="15"/>
+                                        <rect key="frame" x="325" y="30" width="193" height="15"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Label" id="Q2m-Lf-iMp">
                                             <font key="font" metaFont="smallSystem"/>
@@ -3653,9 +3704,9 @@ DQ
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ggk-WY-GPx">
-                                        <rect key="frame" x="267" y="30" width="52" height="15"/>
+                                        <rect key="frame" x="267" y="30" width="54" height="15"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="48" id="O3c-bs-59a"/>
+                                            <constraint firstAttribute="width" constant="50" id="O3c-bs-59a"/>
                                         </constraints>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Preview:" id="Mfg-SH-a2v">
@@ -3695,7 +3746,7 @@ DQ
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <accessibility help="Suffix to place after result when using the tab key to autocomplete a value."/>
+                                        <accessibility description="Tab Key Autocompletion Suffix" help="Suffix to place after result when using the tab key to autocomplete a value."/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="gEg-D9-LJK" id="bYn-Eb-G1a"/>
                                             <accessibilityConnection property="title" destination="gEg-D9-LJK" id="oZ8-I3-VTZ"/>
@@ -3745,6 +3796,7 @@ DQ
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <accessibility description="Main Text Field Text Size"/>
                                         <connections>
                                             <action selector="onChangedMainInputTextFieldFontSize:" target="-2" id="qEr-YF-hyd"/>
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Main Input Text Field -&gt; Font Size" id="BAj-Y5-IIX"/>
@@ -3767,6 +3819,7 @@ DQ
                                                 <accessibilityConnection property="title" destination="G5s-ZV-vl4" id="Ayt-NL-FFi"/>
                                             </connections>
                                         </popUpButtonCell>
+                                        <accessibility description="Tab Key Action"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="G5s-ZV-vl4" id="Q2N-xl-bDn"/>
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Keyboard -&gt; Tab Key Action" id="J4g-ex-7PH"/>
@@ -3967,6 +4020,7 @@ DQ
                                         <rect key="frame" x="222" y="90" width="200" height="15"/>
                                         <animations/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="4bQ-HS-Zy3"/>
+                                        <accessibility description="Main Window Transparency Percent"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="wa5-Rg-5aD" id="LIf-mV-7Qb"/>
                                             <action selector="onChangedTransparency:" target="-2" id="Gaw-Ji-di5"/>
@@ -3975,7 +4029,7 @@ DQ
                                     </slider>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="86" id="1RT-RW-76a"/>
+                                    <constraint firstAttribute="bottom" secondItem="lQi-te-LwT" secondAttribute="bottom" constant="90" id="1RT-RW-76a"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="top" secondItem="Gmu-Oh-Krb" secondAttribute="bottom" constant="14" id="1yE-Lm-UNE"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="top" secondItem="Fdc-sn-QgS" secondAttribute="bottom" constant="14" id="2wX-CW-lVs"/>
                                     <constraint firstItem="6Uk-IU-HIb" firstAttribute="leading" secondItem="lSR-7V-PDD" secondAttribute="trailing" constant="5" id="6my-i2-fCG"/>
@@ -3996,7 +4050,7 @@ DQ
                                     <constraint firstAttribute="trailing" secondItem="lQi-te-LwT" secondAttribute="trailing" constant="72" id="gdj-hN-n2p"/>
                                     <constraint firstItem="tNs-id-cdg" firstAttribute="leading" secondItem="wa5-Rg-5aD" secondAttribute="leading" id="gtB-xG-IGR"/>
                                     <constraint firstItem="v8u-aO-cik" firstAttribute="leading" secondItem="Ht3-ub-Duo" secondAttribute="leading" constant="40" id="jeH-aw-bck"/>
-                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="87" id="k8N-TL-t3h"/>
+                                    <constraint firstAttribute="bottom" secondItem="wa5-Rg-5aD" secondAttribute="bottom" constant="91" id="k8N-TL-t3h"/>
                                     <constraint firstItem="wa5-Rg-5aD" firstAttribute="top" secondItem="v8u-aO-cik" secondAttribute="bottom" constant="17" id="m9L-oI-wIi"/>
                                     <constraint firstItem="Fdc-sn-QgS" firstAttribute="leading" secondItem="Gmu-Oh-Krb" secondAttribute="leading" id="mlg-G7-aRq"/>
                                     <constraint firstItem="hDx-CA-NhV" firstAttribute="top" secondItem="pbE-2M-fRW" secondAttribute="bottom" constant="18" id="ocI-pl-aNw"/>
@@ -4025,6 +4079,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="aSj-pP-pk3" id="Y4p-bJ-NC4"/>
                                             <action selector="onChangedServerListUnreadBadgeColor:" target="-2" id="ldT-Rr-QPH"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Server List Unread Message Count Badge Colors -&gt; Highlight" id="zLJ-MW-QPi">
                                                 <dictionary key="options">
@@ -4043,6 +4098,7 @@ DQ
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <accessibility description="Reset Background Color for Unread Badge with Highlight"/>
                                         <connections>
                                             <action selector="onResetServerListUnreadBadgeColorsToDefault:" target="-2" id="gd5-H0-ojf"/>
                                         </connections>
@@ -4089,6 +4145,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="um4-jh-YFM" id="f5O-5Q-vXU"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="IXq-I3-M72"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +y" id="GzY-Ki-kDQ">
                                                 <dictionary key="options">
@@ -4114,6 +4171,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="hfA-Bg-ot8" id="PR8-bt-DGd"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="meL-e3-Oab"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +q" id="jNB-MT-zjP">
                                                 <dictionary key="options">
@@ -4139,6 +4197,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="QgH-Fh-Jts" id="2Gm-P1-Hsu"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="qyJ-DW-aTf"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +a" id="OpN-Q4-qQT">
                                                 <dictionary key="options">
@@ -4164,6 +4223,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="S7K-Fn-yaj" id="cnp-k2-7gH"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="d9J-XE-tNi"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +o" id="Dbp-qa-FSS">
                                                 <dictionary key="options">
@@ -4189,6 +4249,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="FS5-lg-ZQk" id="Xb2-zS-4A4"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="Y7e-RA-FfC"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +h" id="AnD-Pz-Jld">
                                                 <dictionary key="options">
@@ -4211,6 +4272,7 @@ DQ
                                         <animations/>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
+                                            <accessibilityConnection property="title" destination="XeX-Ma-9Hc" id="AGo-nH-LHA"/>
                                             <action selector="onChangedUserListModeColor:" target="-2" id="jdM-Ar-u3T"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.User List Mode Badge Colors -&gt; +v" id="LGN-uw-k3a">
                                                 <dictionary key="options">
@@ -4231,7 +4293,7 @@ DQ
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaQ-rf-529">
                                         <rect key="frame" x="78" y="307" width="365" height="32"/>
                                         <animations/>
-                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These colors represent the various user modes shown on the user list for each channel." id="2QW-Qh-FdK">
+                                        <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These colors represent the various user modes shown on the user list for each channel." id="2QW-Qh-FdK">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -4261,6 +4323,7 @@ DQ
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <accessibility description="Reset User List Colors to Default Values"/>
                                         <connections>
                                             <action selector="onResetUserListModeColorsToDefaults:" target="-2" id="aNk-h8-cQO"/>
                                         </connections>
@@ -4343,6 +4406,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="eNc-BO-Kmr" id="vT5-5F-F2O"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; amsg" id="0Yq-6N-mMv"/>
                     </connections>
                 </button>
@@ -4358,6 +4422,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="jpk-VZ-jWK" id="nyc-cp-9Fi"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; nick" id="pON-XZ-8rv"/>
                     </connections>
                 </button>
@@ -4419,6 +4484,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="fPg-jm-hQt" id="OFY-lo-jmu"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.FocusSelectionOnMessageCommandExecution" id="O7w-61-9Do"/>
                     </connections>
                 </button>
@@ -4538,6 +4604,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="Sfr-Eg-Gsq" id="B4V-bw-XEq"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; away" id="TCq-6o-7SS"/>
                     </connections>
                 </button>
@@ -4602,6 +4669,7 @@ DQ
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
+                        <accessibilityConnection property="title" destination="USP-zA-6Oz" id="tLg-AX-9ff"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplyCommandToAllConnections -&gt; clearall" id="bKs-W3-GMH"/>
                     </connections>
                 </button>
@@ -4831,6 +4899,7 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="Action to Perform when File Transfer Request is Recieved"/>
                     <connections>
                         <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer Request Reply Action" id="O4f-48-hv4"/>
                     </connections>
@@ -4857,6 +4926,7 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="IP Address Detection Method"/>
                     <connections>
                         <action selector="onFileTransferIPAddressDetectionMethodChanged:" target="-2" id="ajo-mq-IKh"/>
                         <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer IP Address Detection Method" id="319-Hu-T0p"/>
@@ -4874,6 +4944,7 @@ DQ
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="Manually Specified IP Address"/>
                     <connections>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.File Transfers -&gt; File Transfer Manually Entered IP Address" id="kE8-pr-Cxw"/>
                     </connections>
@@ -4908,6 +4979,7 @@ DQ
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="File Transfer Port Range First Port"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="fileTransferPortRangeStart" id="OhQ-WJ-Fp3">
                             <dictionary key="options">
@@ -4928,6 +5000,7 @@ DQ
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <accessibility description="File Transfer Port Range Last Port"/>
                     <connections>
                         <binding destination="-2" name="value" keyPath="fileTransferPortRangeEnd" id="97R-Ud-cN4">
                             <dictionary key="options">
@@ -4993,6 +5066,9 @@ DQ
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="bHX-CZ-mFi" id="a0g-qB-GbK"/>
+                    </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="hGW-2b-Xie">
                     <rect key="frame" x="71" y="32" width="307" height="18"/>
@@ -5038,6 +5114,7 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <accessibility description="File Transfer Download Destination Folder"/>
                     <connections>
                         <action selector="onFileTransferDownloadDestinationFolderChanged:" target="-2" id="cPZ-J7-Gsr"/>
                     </connections>
@@ -5120,6 +5197,9 @@ DQ
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="Dyl-yk-tUI" id="Gwp-Dr-iAP"/>
+                    </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="HX9-HF-6ub">
                     <rect key="frame" x="74" y="221" width="442" height="5"/>
@@ -5150,6 +5230,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
+                    <accessibility description="Open iCloud Custom Addons Location in Finder"/>
                     <connections>
                         <action selector="onOpenPathToCloudFolder:" target="-2" id="ooI-JL-AmW"/>
                     </connections>
@@ -5164,6 +5245,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Erase iCloud Custom Addons Files"/>
                     <connections>
                         <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="ISp-Lm-NzJ"/>
                     </connections>
@@ -5185,6 +5267,7 @@ DQ
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Erase iCloud Data"/>
                     <connections>
                         <action selector="onPurgeOfCloudDataRequested:" target="-2" id="oOt-dw-jXL"/>
                     </connections>
@@ -5277,6 +5360,9 @@ DQ
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="uSb-WR-Mph" id="9gI-fO-CqF"/>
+                    </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="qfG-DF-6ev">
                     <rect key="frame" x="104" y="136" width="329" height="18"/>
@@ -5351,6 +5437,9 @@ DQ
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="link" destination="c2f-dF-OoT" id="Qq7-Bw-LEp"/>
+                    </connections>
                 </textField>
             </subviews>
             <constraints>
