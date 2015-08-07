@@ -73,8 +73,6 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		}
 	}
 #endif
-
-	/* We're done here for now... */
 }
 
 + (id)loadContentsOfPropertyListInResourcesFolderNamed:(NSString *)name
@@ -93,16 +91,14 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
 	PointerIsEmptyAssertReturn(url, NO);
-	
-	/* Is it a script? */
+
 	if ([[url absoluteString] hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		[self performImportOfScriptFile:url];
 		
 		return YES;
 	}
-	
-	/* Is it a plugin? */
-	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"]; // It's a folder...
+
+	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"];
 	
 	if ([[url absoluteString] hasSuffix:pluginSuffix]) {
 		[self performImportOfPluginFile:url];
@@ -120,7 +116,6 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 {
 	PointerIsEmptyAssert(url);
 
-	/* Establish install path. */
 	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
@@ -136,12 +131,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		return; // Do not install.
 	}
 
-	/* Try to import. */
 	NSString *newPath = [[TPCPathInfo customExtensionFolderPath] stringByAppendingPathComponent:filename];
 
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
-	
-	/* Was it successful? */
+
 	if (didImport) {
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1189][2]", [filename stringByDeletingPathExtension])
 										   title:TXTLS(@"BasicLanguage[1189][1]")
@@ -176,7 +169,6 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (void)performImportOfScriptFile:(NSURL *)url
 {
-	/* Establish install path. */
 	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
@@ -191,24 +183,26 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	if (performInstall) {
 		return; // Do not install.
 	}
-	
-	/* Script install. */
-	NSSavePanel *d = [NSSavePanel savePanel];
-	
-	/* First we need to check which folder exists where. We are going to try
-	 and bring users to the actual scripts folder, but if that does not exist,
-	 then we bring them to the root folder for them to create it. */
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+	NSString *newPath = [[TPCPathInfo systemUnsupervisedScriptFolderPath] stringByAppendingPathComponent:filename];
+
+	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
+
+	if (didImport) {
+		[self performImportOfScriptFilePostflight:filename];
+	}
+#else
 	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderPath] isDirectory:YES];
 
-	BOOL scriptsFolderExists = NO;
-
-	if ([RZFileManager() fileExistsAtPath:[folderRep relativePath] isDirectory:&scriptsFolderExists] == NO) {
-		folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderRootPath] isDirectory:YES];
+	if ([RZFileManager() fileExistsAtPath:[folderRep relativePath]] == NO) {
+		folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderRootPath]];
 	}
 
 	NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];
-	
-	/* Show save panel to user. */
+
+	NSSavePanel *d = [NSSavePanel savePanel];
+
 	[d setDelegate:self];
 
 	[d setCanCreateDirectories:YES];
@@ -222,26 +216,24 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[d setShowsTagField:NO];
 	}
-	
-	/* Complete the import. */
+
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {
 			if ([self import:url into:[d URL]]) {
-				/* Script was successfully installed. */
 				NSString *filename = [[d URL] lastPathComponent];
-	
-				/* Perform after a delay to allow sheet to close. */
-				[self performSelector:@selector(performImportOfScriptFilePostflight:)
-						   withObject:[filename stringByDeletingPathExtension]
-						   afterDelay:0.5];
+
+				XRPerformBlockAsynchronouslyOnMainQueue(^{
+					[self performImportOfScriptFilePostflight:filename];
+				});
 			}
 		}
 	}];
+#endif
 }
 
 - (void)performImportOfScriptFilePostflight:(NSString *)filename
 {
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1188][2]", filename)
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1188][2]", [filename stringByDeletingPathExtension])
 									   title:TXTLS(@"BasicLanguage[1188][1]")
 							   defaultButton:BLS(1186)
 							 alternateButton:nil
@@ -258,8 +250,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	PointerIsEmptyAssertReturn(destination, NO);
 	
 	NSError *instError = nil;
-	
-	/* Try to remove the existing item before continuing. */
+
 	if ([destination checkResourceIsReachableAndReturnError:NULL]) {
 		BOOL trashed = [RZFileManager() trashItemAtURL:destination resultingItemURL:nil error:&instError];
 		
@@ -269,8 +260,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 			return NO;
 		}
 	}
-	
-	/* Move the new item into place. */
+
 	[RZFileManager() copyItemAtURL:url toURL:destination error:&instError];
 	
 	if (instError) {
