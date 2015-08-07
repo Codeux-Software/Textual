@@ -13,6 +13,6 @@
 	<key>SUEnableSystemProfiling</key>
 	<false/>
 	<key>SUScheduledCheckInterval</key>
-	<string>1728000</string>
+	<string>345600</string>
 </dict>
 </plist>
