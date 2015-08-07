@@ -267,9 +267,21 @@
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-		
+
 	if ([searchArray count]) {
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		return searchArray[0];
+#else
+		NSString *basePath = searchArray[0];
+
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return basePath;
+#endif
+
 	}
 	
 	return nil;
