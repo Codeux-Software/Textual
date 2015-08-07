@@ -294,8 +294,8 @@
 "BasicLanguage[1030]" = "1d Shunned";
 
 /* Network not available messages */
-"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the server and click \002Connect\002.";
-"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the server and select \002Cancel Reconnect\002.";
+"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the connection and click \002Connect\002.";
+"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the unavailability of the local network. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the connection and click \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the connection and click \002Cancel Reconnect\002.";
 
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
@@ -311,8 +311,8 @@
 "BasicLanguage[1034][09]" = " ";
 "BasicLanguage[1034][10]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
 
-"BasicLanguage[1035]" = "Cannot enable the feature “%@” as it is not supported";
-"BasicLanguage[1036]" = "Cannot disable the feature “%@” as it is not supported";
+"BasicLanguage[1035]" = "Cannot enable the feature “%@” because it is not supported";
+"BasicLanguage[1036]" = "Cannot disable the feature “%@” because it is not supported";
 
 "BasicLanguage[1037]" = "Enabled Feature: %@";
 "BasicLanguage[1038]" = "Disabled Feature: %@";
@@ -510,7 +510,7 @@
 
 /* Raw mode messages */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the server in the OS X ”Console” application. Raw mode will remain enabled until the connection to this server is disconnected. To disable raw mode before a disconnection occurs, execute “/debug raw off”";
+"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the server in the OS X ”Console” application. Raw mode will remain enabled until the connection to this server is disconnected. To disable raw mode before a disconnect occurs, execute “/debug raw off”";
 "BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
 "BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
 
