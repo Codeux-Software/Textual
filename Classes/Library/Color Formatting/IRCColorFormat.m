@@ -142,7 +142,7 @@
 
 #define	_textTruncationPRIVMSGCommandConstant				14
 #define _textTruncationNOTICECommandConstant				14
-#define	_textTruncationACTIONCommandConstant				8
+#define	_textTruncationACTIONCommandConstant				30
 
 #define _textTruncationHostmaskConstant						15 // Used if local user host is unknown
 
