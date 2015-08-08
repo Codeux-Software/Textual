@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCListDialog">
             <connections>
+                <outlet property="channelListController" destination="gJL-Lo-AKT" id="NLh-Wh-ISB"/>
                 <outlet property="channelListTable" destination="68" id="136"/>
                 <outlet property="networkNameTextField" destination="132" id="GUU-qy-Vpo"/>
                 <outlet property="searchTextField" destination="103" id="m09-ig-hTb"/>
@@ -27,9 +28,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65">
+                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="65">
                         <rect key="frame" x="0.0" y="47" width="600" height="210"/>
-                        <clipView key="contentView" copiesOnScroll="NO" id="JRG-2W-GCG">
+                        <clipView key="contentView" id="JRG-2W-GCG">
                             <rect key="frame" x="1" y="0.0" width="598" height="209"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -41,7 +42,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="chname" editable="NO" width="124" minWidth="40" maxWidth="1000" id="70">
+                                        <tableColumn identifier="channelName" editable="NO" width="124" minWidth="40" maxWidth="1000" id="70">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Channel Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -53,10 +54,18 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <accessibility description="Channel Name"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelName"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <accessibility description="Channel Name"/>
+                                            <connections>
+                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelName" id="s2Q-gB-Fxg">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="count" editable="NO" width="88" minWidth="40" maxWidth="1000" id="71">
+                                        <tableColumn identifier="channelMemberCount" editable="NO" width="88" minWidth="40" maxWidth="1000" id="71">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Member Count">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -68,10 +77,18 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <accessibility description="Member Count"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelMemberCount"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <accessibility description="Member Count"/>
+                                            <connections>
+                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelMemberCount" id="mUO-q8-fsM">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="topic" editable="NO" width="377" minWidth="10" maxWidth="3.4028234663852886e+38" id="78">
+                                        <tableColumn identifier="channelTopic" editable="NO" width="377" minWidth="10" maxWidth="3.4028234663852886e+38" id="78">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Topic">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -83,11 +100,21 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <accessibility description="Topic"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelTopicUnformatted"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <accessibility description="Topic"/>
+                                            <connections>
+                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelTopicFormatted" id="6CU-tu-XwT">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="Aan-3r-Y2r"/>
+                                        <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="Aan-3r-Y2r" id="GTh-ic-2Zn"/>
                                         <outlet property="dataSource" destination="-2" id="84"/>
                                         <outlet property="delegate" destination="-2" id="96"/>
                                     </connections>
@@ -176,6 +203,12 @@ Gw
                         <accessibility description="Channel List Search"/>
                         <connections>
                             <action selector="onSearchFieldChange:" target="-2" id="124"/>
+                            <binding destination="gJL-Lo-AKT" name="predicate" keyPath="filterPredicate" id="fXf-13-lil">
+                                <dictionary key="options">
+                                    <string key="NSDisplayName">predicate</string>
+                                    <string key="NSPredicateFormat">(channelName contains $value OR channelTopicUnformatted contains $value)</string>
+                                </dictionary>
+                            </binding>
                             <outlet property="delegate" destination="-2" id="105"/>
                         </connections>
                     </searchField>
@@ -201,7 +234,15 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="118"/>
             </connections>
-            <point key="canvasLocation" x="554" y="384.5"/>
+            <point key="canvasLocation" x="804" y="364"/>
         </window>
+        <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
+            <declaredKeys>
+                <string>channelName</string>
+                <string>channelMemberCount</string>
+                <string>channelTopicFormatted</string>
+                <string>channelTopicUnformatted</string>
+            </declaredKeys>
+        </arrayController>
     </objects>
 </document>
