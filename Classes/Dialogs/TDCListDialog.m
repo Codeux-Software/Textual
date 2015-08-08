@@ -39,17 +39,12 @@
 #import "TextualApplication.h"
 
 @interface TDCListDialog ()
-@property (nonatomic, assign) BOOL waitingForReload;
+@property (nonatomic, strong) NSMutableArray *queuedWrites;
 @property (nonatomic, weak) IBOutlet NSButton *updateButton;
 @property (nonatomic, weak) IBOutlet NSSearchField *searchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *networkNameTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelListTable;
-@property (nonatomic, strong) NSMutableArray *unfilteredList;
-@property (nonatomic, strong) NSMutableArray *filteredList;
-@property (nonatomic, readonly) NSMutableArray *activeList; // Proxies one of the two above.
-@property (nonatomic, readonly) NSInteger listCount; // Proxies one of the two above.
-@property (nonatomic, assign) NSComparisonResult sortOrder;
-@property (nonatomic, assign) NSInteger sortKey;
+@property (nonatomic, strong) IBOutlet NSArrayController *channelListController;
 
 - (IBAction)onClose:(id)sender;
 
@@ -64,11 +59,6 @@
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadNibNamed:@"TDCListDialog" owner:self topLevelObjects:nil];
-
-		self.unfilteredList = [NSMutableArray new];
-
-		self.sortKey = 1;
-		self.sortOrder = NSOrderedDescending;
 	}
 
 	return self;
@@ -77,6 +67,10 @@
 - (void)start
 {
 	[self.channelListTable setDoubleAction:@selector(onJoin:)];
+
+	[self.channelListTable setSortDescriptors:@[
+		[NSSortDescriptor sortDescriptorWithKey:@"channelMemberCount" ascending:NO selector:@selector(compare:)]
+	]];
 
 	[self show];
 }
@@ -94,8 +88,6 @@
 
 - (void)close
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
 	[[self window] close];
 }
 
@@ -107,11 +99,9 @@
 
 - (void)clear
 {
-	[self.unfilteredList removeAllObjects];
+	[self.channelListController setContent:nil];
 
-	 self.filteredList = nil;
-
-	[self reloadTable];
+	[self updateDialogTitle];
 }
 
 - (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic
@@ -119,90 +109,62 @@
 	if ([channel isChannelName]) {
 		NSAttributedString *renderedTopic = [topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		NSArray *item = @[channel, @(count), topic, renderedTopic];
+		NSDictionary *newEntry = @{
+			@"channelName" : channel,
+			@"channelMemberCount" : @(count),
+			@"channelTopicUnformatted" : topic,
+			@"channelTopicFormatted" : renderedTopic
+		 };
 
-		NSString *filter = [self.searchTextField stringValue];
+		/* If you try to insert an entry into NSArryController when a predicate
+		 is configured and the inserted entry does not evaulate against the 
+		 predicate, then NSArryController will throw an exception. To workaround
+		 this, we queue entries in another array and write those to the array
+		 controller when the predicate becomes empty. */
+		NSPredicate *filterPredicate = [self.channelListController filterPredicate];
 
-		if ([filter length] > 0) {
-			if (self.filteredList == nil) {
-				self.filteredList = [NSMutableArray new];
+		if (filterPredicate && [filterPredicate evaluateWithObject:newEntry] == NO) {
+			if (self.queuedWrites == nil) {
+				self.queuedWrites = [NSMutableArray array];
 			}
 
-			NSInteger tr = [topic stringPositionIgnoringCase:filter];
-			NSInteger cr = [channel stringPositionIgnoringCase:filter];
-
-			if (tr > -1 || cr > -1) {
-				[self.filteredList insertSortedObject:item usingComparator:[self sortComparator]];
+			@synchronized(self.queuedWrites) {
+				[self.queuedWrites addObject:newEntry];
 			}
+		} else {
+			[self.channelListController addObject:newEntry];
+
+			[self updateDialogTitle];
 		}
-
-		[self.unfilteredList insertSortedObject:item usingComparator:[self sortComparator]];
-
-        /* Reload table instantly until we reach at least 200 channels. 
-         At that point we begin reloading every 2.0 seconds. For networks
-         large as freenode with 12,000 channels. This is much better than 
-         a reload for each. */
-        
-        if (self.listCount < 200) {
-            [self reloadTable];
-        } else {
-            if (self.waitingForReload == NO) {
-                self.waitingForReload = YES;
-                
-                [self performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
-            }
-        }
 	}
 }
 
-- (void)reloadTable
+- (void)controlTextDidChange:(NSNotification *)obj
 {
-    self.waitingForReload = NO;
+	if ([obj object] == self.searchTextField) {
+		NSString *currentSearchValue = [self.searchTextField stringValue];
 
-	NSString *titleCount = nil;
+		if ([currentSearchValue length] == 0) {
+			if (self.queuedWrites) {
+				@synchronized(self.queuedWrites) {
+					[self.channelListController addObjects:self.queuedWrites];
 
-	NSString *count1 = TXFormattedNumber([self.unfilteredList count]);
-	NSString *count2 = TXFormattedNumber([self.filteredList count]);
-	
-	NSString *filterText = [self.searchTextField stringValue];
+					self.queuedWrites = nil;
+				}
+			}
+		}
 
-	if ([filterText length] > 0 && [count1 isEqual:count2] == NO) {
-		titleCount = TXTLS(@"TDCListDialog[1003]", count1, count2);
-	} else {
-		titleCount = TXTLS(@"TDCListDialog[1002]", count1);
+		[self updateDialogTitle];
 	}
-
-	[self.window setTitle:TXTLS(@"TDCListDialog[1001]", titleCount)];
-
-	[self.channelListTable reloadData];
 }
 
-- (NSComparator)sortComparator
+- (void)updateDialogTitle
 {
-	return [^(NSArray *obj1, NSArray *obj2)
-	{
-		NSString *str1 = obj1[self.sortKey];
-		NSString *str2 = obj2[self.sortKey];
-		
-		NSComparisonResult result;
-		
-		if (self.sortKey == 1) {
-			result = [str1 compare:str2];
-		} else {
-			result = [str1 caseInsensitiveCompare:str2];
-		}
-		
-		if (self.sortOrder == NSOrderedDescending) {
-			return (NSComparisonResult) -(result);
-		} else {
-			return (NSComparisonResult)   result;
-		}
-	} copy];
-}
+	id arrangedObjects = [self.channelListController arrangedObjects];
 
-- (void)sort
-{
-	[self.unfilteredList sortUsingComparator:[self sortComparator]];
+	NSString *arrangedObjectsCount = TXFormattedNumber([arrangedObjects count]);
+
+	[self.window setTitle:TXTLS(@"TDCListDialog[1001]", arrangedObjectsCount)];
 }
 
 #pragma mark -
@@ -231,116 +193,19 @@
 /* onJoin: is a legacy method. It handles join on double click. */
 - (void)onJoin:(id)sender
 {
-	NSIndexSet *indexes = [self.channelListTable selectedRowIndexes];
-	
-	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-		NSUInteger i = [index unsignedIntegerValue];
-		
-		NSArray *item = self.activeList[i];
-		
+	NSArray *selectedRows = [self.channelListTable selectedRows];
+
+	for (NSNumber *indexNumber in selectedRows) {
+		NSInteger index = [indexNumber unsignedIntegerValue];
+
+		NSDictionary *channelEntry = [self.channelListController arrangedObjects][index];
+
 		if ([self.delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-			[self.delegate listDialogOnJoin:self channel:item[0]];
+			[self.delegate listDialogOnJoin:self channel:channelEntry[@"channelName"]];
 		}
 	}
-}
 
-- (void)onSearchFieldChange:(id)sender
-{
-	self.filteredList = nil;
-
-	NSString *filter = [self.searchTextField stringValue];
-
-	if ([filter length] > 0) {
-		NSMutableArray *ary = [NSMutableArray new];
-
-		for (NSArray *item in self.unfilteredList) {
-			NSString *channel = item[0];
-			NSString *topicva = item[2];
-
-			NSInteger tr = [topicva stringPositionIgnoringCase:filter];
-			NSInteger cr = [channel stringPositionIgnoringCase:filter];
-
-			if (tr >= 0 || cr >= 0) {
-				[ary addObject:item];
-			}
-		}
-
-		self.filteredList = [ary mutableCopy];
-	}
-
-	[self reloadTable];
-}
-
-#pragma mark -
-#pragma mark NSTableView Delegate
-
-- (NSInteger)listCount
-{
-	if (	    self.filteredList) {
-		return [self.filteredList count];
-	} else {
-		return [self.unfilteredList count];
-	}
-}
-
-- (NSArray *)activeList
-{
-	if (	   self.filteredList) {
-		return self.filteredList;
-	} else {
-		return self.unfilteredList;
-	}
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
-{
-	return self.listCount;
-}
-
-- (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
-{
-	NSArray *item = self.activeList[row];
-
-	if ([[column identifier] isEqualToString:@"chname"]) {
-		return item[0];
-	} else if ([[column identifier] isEqualToString:@"count"]) {
-		return item[1];
-	} else {
-		return item[3];
-	}
-}
-
-- (void)tableView:(NSTableView *)tableView didClickTableColumn:(NSTableColumn *)column
-{
-	NSInteger i = 0;
-
-	if ([[column identifier] isEqualToString:@"chname"]) {
-		i = 0;
-	} else if ([[column identifier] isEqualToString:@"count"]) {
-		i = 1;
-	} else {
-		i = 2;
-	}
-
-	if (self.sortKey == i) {
-		self.sortOrder = -(self.sortOrder);
-	} else {
-		self.sortKey = i;
-
-        if (self.sortKey == 1) {
-            self.sortOrder = NSOrderedDescending;
-        } else {
-            self.sortOrder = NSOrderedAscending;
-        }
-	}
-
-	[self sort];
-
-	if (self.filteredList) {
-		[self onSearchFieldChange:nil];
-	}
-
-	[self reloadTable];
+	[self.channelListTable deselectAll:nil];
 }
 
 #pragma mark -

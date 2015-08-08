@@ -98,9 +98,7 @@
 
 /* Channel list dialog */
 "TDCListDialog[1000]" = "Channel List for “%@”";
-"TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
-"TDCListDialog[1002]" = "%@ Public Channels";
-"TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
+"TDCListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
 
 /* Invite dialog */
 "TDCInviteSheet[1000]" = "%d users";
