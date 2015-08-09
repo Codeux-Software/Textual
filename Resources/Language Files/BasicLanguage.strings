@@ -231,6 +231,11 @@
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
 
+/* Ban/ban exception/invite exception sheet */
+"TDChannelBanListSheet[1000]" = "Bans for %@";
+"TDChannelBanListSheet[1001]" = "Ban Exceptions for %@";
+"TDChannelBanListSheet[1002]" = "Invite Exceptions for %@";
+
 /* Application terminating confirmation dialog */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any server that you are connected to until you restart Textual.";
 "BasicLanguage[1000][2]" = "Do you want to quit Textual?";

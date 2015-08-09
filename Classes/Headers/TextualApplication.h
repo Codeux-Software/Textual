@@ -77,9 +77,7 @@
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDChanBanExceptionSheet;
-	@class TDChanBanSheet;
-	@class TDChanInviteExceptionSheet;
+	@class TDChannelBanListSheet;
 	@class TDChannelSheet;
 	@class TDCHighlightEntrySheet;
 	@class TDCHighlightEntryMatchCondition;
@@ -311,9 +309,7 @@
 	#import "TDCServerSheet.h"
 	#import "TDCTopicSheet.h"
 	#import "TDCWelcomeSheet.h"
-	#import "TDChanBanExceptionSheet.h"
-	#import "TDChanBanSheet.h"
-	#import "TDChanInviteExceptionSheet.h"
+	#import "TDChannelBanListSheet.h"
 	#import "TDChannelSheet.h"
 
 	/* Helpers. */

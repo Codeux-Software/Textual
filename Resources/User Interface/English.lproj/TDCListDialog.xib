@@ -35,7 +35,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="116" viewBased="YES" id="68" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -144,7 +144,7 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 <accessibility description="Topic"/>
                                             </textFieldCell>
-                                            <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelTopicUnformatted"/>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="channelTopic"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="Rj4-Hq-RWw">
@@ -269,11 +269,10 @@ Gw
                         </searchFieldCell>
                         <accessibility description="Channel List Search"/>
                         <connections>
-                            <action selector="onSearchFieldChange:" target="-2" id="124"/>
-                            <binding destination="gJL-Lo-AKT" name="predicate" keyPath="filterPredicate" id="fXf-13-lil">
+                            <binding destination="gJL-Lo-AKT" name="predicate" keyPath="filterPredicate" id="wAJ-2T-bDW">
                                 <dictionary key="options">
                                     <string key="NSDisplayName">predicate</string>
-                                    <string key="NSPredicateFormat">(channelName contains $value OR channelTopicUnformatted contains $value)</string>
+                                    <string key="NSPredicateFormat">(channelName contains[c] $value OR channelTopicUnformatted contains[c] $value)</string>
                                 </dictionary>
                             </binding>
                             <outlet property="delegate" destination="-2" id="105"/>
@@ -301,7 +300,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="118"/>
             </connections>
-            <point key="canvasLocation" x="804" y="364"/>
+            <point key="canvasLocation" x="942" y="364"/>
         </window>
         <arrayController objectClassName="TDCListDialogEntry" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
             <declaredKeys>

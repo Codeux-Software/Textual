@@ -37,14 +37,22 @@
 
 #import "TextualApplication.h"
 
-@interface TDChanBanExceptionSheet : TDCSheetBase
+typedef enum TDChannelBanListSheetEntryType : NSInteger {
+	TDChannelBanListSheetBanEntryType,
+	TDChannelBanListSheetBanExceptionEntryType,
+	TDChannelBanListSheetInviteExceptionEntryType
+} TDChannelBanListSheetEntryType;
+
+@interface TDChannelBanListSheet : TDCSheetBase
+@property (nonatomic, assign) TDChannelBanListSheetEntryType entryType;
+@property (nonatomic, copy, readonly) NSArray *changeModeList;
+@property (nonatomic, copy, readonly) NSString *mode;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
-@property (nonatomic, copy) NSArray *changeModeList;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
 
 - (void)show;
 - (void)clear;
 
-- (void)addException:(NSString *)host tset:(NSString *)timeSet setby:(NSString *)owner;
+- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSString *)entryCreationDate;
 @end

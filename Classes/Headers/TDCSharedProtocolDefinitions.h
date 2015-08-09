@@ -54,29 +54,12 @@
 
 #pragma mark -
 
-@protocol TDChanBanExceptionSheetDelegate <NSObject>
+@protocol TDChannelBanListSheetDelegate <NSObject>
 @required
 
-- (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender;
-- (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender;
-@end
 
-#pragma mark -
-
-@protocol TDChanBanSheetDelegate <NSObject>
-@required
-
-- (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender;
-- (void)chanBanDialogWillClose:(TDChanBanSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDChanInviteExceptionSheetDelegate <NSObject>
-@required
-
-- (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender;
-- (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender;
+- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender;
+- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender;
 @end
 
 #pragma mark -
