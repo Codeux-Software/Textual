@@ -6949,47 +6949,62 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			break;
 		}
 		case 367: // RPL_BANLIST
+		case 346: // RPL_INVITELIST
+		case 348: // RPL_EXCEPTLIST
 		{
 			NSAssertReturnLoopBreak([m paramsCount] > 2);
 
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
+			NSString *channelName = [m paramAt:1];
 
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
+			NSString *entryMask = [m paramAt:2];
+			NSString *entryAuthor = BLS(1218);
+			NSString *entryCreationDate = BLS(1218);
 
 			BOOL extendedLine = ([m paramsCount] > 4);
 
 			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
+				NSDate *entryCreationDateDate = [NSDate dateWithTimeIntervalSince1970:[[m paramAt:4] doubleValue]];
 
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+				entryCreationDate = TXFormatDateTimeStringToCommonFormat(entryCreationDateDate, NO);
 
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
+				entryAuthor = [[m paramAt:3] nicknameFromHostmask];
 			}
 
-            TDChanBanSheet *chanBanListSheet = [menuController() windowFromWindowList:@"TDChanBanSheet"];
+			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
 
-            if (chanBanListSheet) {
-				if ([chanBanListSheet contentAlreadyReceived]) {
-					[chanBanListSheet clear];
+            if (listSheet) {
+				if ([listSheet contentAlreadyReceived]) {
+					[listSheet clear];
 
-					[chanBanListSheet setContentAlreadyReceived:NO];
+					[listSheet setContentAlreadyReceived:NO];
 				}
 
-				[chanBanListSheet addBan:hostmask tset:settime setby:banowner];
+				[listSheet addEntry:entryMask setBy:entryAuthor creationDate:entryCreationDate];
 			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
+				NSString *languageKey = nil;
+
+				if (n == 367) { // RPL_BANLIST
+					languageKey = @"1230";
+				} else if (n == 346) { // RPL_INVITELIST
+					languageKey = @"1231";
+				} else if (n == 348) { // RPL_EXCEPTLIST
+					languageKey = @"1232";
+				}
+
+				if (extendedLine) {
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][1]", languageKey];
+				} else {
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][2]", languageKey];
+				}
 
 				NSString *text = nil;
 
 				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
+					text = TXTLS(languageKey, channelName, entryMask, entryAuthor, entryCreationDate);
 				} else {
-					text = TXTLS(@"BasicLanguage[1230][2]", channel, hostmask);
+					text = TXTLS(languageKey, channelName, entryMask);
 				}
-				
+
 				[self print:nil
 					   type:TVCLogLineDebugType
 				   nickname:nil
@@ -7001,139 +7016,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			break;
 		}
 		case 368: // RPL_ENDOFBANLIST
-		{
-			TDChanBanSheet *chanBanListSheet = [menuController() windowFromWindowList:@"TDChanBanSheet"];
-
-			if (chanBanListSheet) {
-				[chanBanListSheet setContentAlreadyReceived:YES];
-			} else {
-				[self printReply:m];
-			}
-
-			break;
-		}
-		case 346: // RPL_INVITELIST
-		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
-
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
-
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
-
-			BOOL extendedLine = ([m paramsCount] > 4);
-
-			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
-
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
-
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
-			}
-
-            TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController() windowFromWindowList:@"TDChanInviteExceptionSheet"];
-
-			if (inviteExceptionSheet) {
-				if ([inviteExceptionSheet contentAlreadyReceived]) {
-					[inviteExceptionSheet clear];
-
-					[inviteExceptionSheet setContentAlreadyReceived:NO];
-				}
-
-				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
-			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
-
-				NSString *text = nil;
-
-				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
-				} else {
-					text = TXTLS(@"BasicLanguage[1231][2]", channel, hostmask);
-				}
-				
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:text
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-			}
-
-			break;
-		}
 		case 347: // RPL_ENDOFINVITELIST
-		{
-			TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController() windowFromWindowList:@"TDChanInviteExceptionSheet"];
-
-			if (inviteExceptionSheet) {
-				[inviteExceptionSheet setContentAlreadyReceived:YES];
-			} else {
-				[self printReply:m];
-			}
-
-			break;
-		}
-		case 348: // RPL_EXCEPTLIST
-		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
-
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
-
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
-
-			BOOL extendedLine = ([m paramsCount] > 4);
-
-			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
-
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
-
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
-			}
-
-            TDChanBanExceptionSheet *banExceptionSheet = [menuController() windowFromWindowList:@"TDChanBanExceptionSheet"];
-
-			if (banExceptionSheet) {
-				if ([banExceptionSheet contentAlreadyReceived]) {
-					[banExceptionSheet clear];
-
-					[banExceptionSheet setContentAlreadyReceived:NO];
-				}
-
-				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
-			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
-
-				NSString *text = nil;
-
-				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
-				} else {
-					text = TXTLS(@"BasicLanguage[1232][2]", channel, hostmask);
-				}
-				
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:text
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-			}
-
-			break;
-		}
 		case 349: // RPL_ENDOFEXCEPTLIST
 		{
-			TDChanBanExceptionSheet *banExceptionSheet = [menuController() windowFromWindowList:@"TDChanBanExceptionSheet"];
+			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
 
-			if (banExceptionSheet) {
-				[banExceptionSheet setContentAlreadyReceived:YES];
+			if ( listSheet) {
+				[listSheet setContentAlreadyReceived:YES];
 			} else {
 				[self printReply:m];
 			}
@@ -9038,7 +8927,22 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Channel Ban List Dialog
 
-- (void)createChanBanListDialog
+- (void)createChannelInviteExceptionListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetInviteExceptionEntryType];
+}
+
+- (void)createChannelBanExceptionListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetBanExceptionEntryType];
+}
+
+- (void)createChannelBanListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetBanEntryType];
+}
+
+- (void)createChannelBanListSheet:(TDChannelBanListSheetEntryType)entryType
 {
     [menuController() popWindowSheetIfExists];
     
@@ -9048,140 +8952,45 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     PointerIsEmptyAssert(u);
     PointerIsEmptyAssert(c);
 
-    TDChanBanSheet *chanBanListSheet = [TDChanBanSheet new];
-	
-	[chanBanListSheet setDelegate:self];
-	[chanBanListSheet setWindow:mainWindow()];
-	
-	[chanBanListSheet setClientID:[u uniqueIdentifier]];
-	[chanBanListSheet setChannelID:[c uniqueIdentifier]];
+	TDChannelBanListSheet *listSheet = [TDChannelBanListSheet new];
 
-	[chanBanListSheet show];
+	[listSheet setEntryType:entryType];
 
-    [menuController() addWindowToWindowList:chanBanListSheet];
+	[listSheet setDelegate:self];
+	[listSheet setWindow:mainWindow()];
+	
+	[listSheet setClientID:[u uniqueIdentifier]];
+	[listSheet setChannelID:[c uniqueIdentifier]];
+
+	[listSheet show];
+
+    [menuController() addWindowToWindowList:listSheet];
 }
 
-- (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender
+- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 
 	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
+		NSString *modeSend = [NSString stringWithFormat:@"+%@", [sender mode]];
+
+		[self send:IRCPrivateCommandIndex("mode"), [c name], modeSend, nil];
 	}
 }
 
-- (void)chanBanDialogWillClose:(TDChanBanSheet *)sender
+- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 	
 	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
+		NSArray *changedModes = [sender changeModeList];
 		
 		for (NSString *mode in changedModes) {
 			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
 		}
 	}
 
-    [menuController() removeWindowFromWindowList:@"TDChanBanSheet"];
-}
-
-#pragma mark -
-#pragma mark Channel Invite Exception List Dialog
-
-- (void)createChanInviteExceptionListDialog
-{
-	[menuController() popWindowSheetIfExists];
-	
-	IRCClient *u = [mainWindow() selectedClient];
-	IRCChannel *c = [mainWindow() selectedChannel];
-
-    PointerIsEmptyAssert(u);
-    PointerIsEmptyAssert(c);
-
-    TDChanInviteExceptionSheet *inviteExceptionSheet = [TDChanInviteExceptionSheet new];
-
-	[inviteExceptionSheet setDelegate:self];
-	[inviteExceptionSheet setWindow:mainWindow()];
-	
-	[inviteExceptionSheet setClientID:[u uniqueIdentifier]];
-	[inviteExceptionSheet setChannelID:[c uniqueIdentifier]];
-
-    [inviteExceptionSheet show];
-
-    [menuController() addWindowToWindowList:inviteExceptionSheet];
-}
-
-- (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
-	}
-}
-
-- (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
-		
-		for (NSString *mode in changedModes) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
-		}
-	}
-	
-    [menuController() removeWindowFromWindowList:@"TDChanInviteExceptionSheet"];
-}
-
-#pragma mark -
-#pragma mark Chan Ban Exception List Dialog
-
-- (void)createChanBanExceptionListDialog
-{
-	[menuController() popWindowSheetIfExists];
-	
-	IRCClient *u = [mainWindow() selectedClient];
-	IRCChannel *c = [mainWindow() selectedChannel];
-
-    PointerIsEmptyAssert(u);
-    PointerIsEmptyAssert(c);
-
-    TDChanBanExceptionSheet *banExceptionSheet = [TDChanBanExceptionSheet new];
-
-	[banExceptionSheet setDelegate:self];
-	[banExceptionSheet setWindow:mainWindow()];
-	
-	[banExceptionSheet setClientID:[u uniqueIdentifier]];
-	[banExceptionSheet setChannelID:[c uniqueIdentifier]];
-	[banExceptionSheet show];
-
-    [menuController() addWindowToWindowList:banExceptionSheet];
-}
-
-- (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
-	}
-}
-
-- (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
-		
-		for (NSString *mode in changedModes) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
-		}
-	}
-	
-    [menuController() removeWindowFromWindowList:@"TDChanBanExceptionSheet"];
+    [menuController() removeWindowFromWindowList:@"TDChannelBanListSheet"];
 }
 
 #pragma mark -
@@ -9189,8 +8998,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)listDialogWindowKey
 {
-	/* Create a different window so each client can have its own window open. */
-
 	return [NSString stringWithFormat:@"TDCListDialog -> %@", [self uniqueIdentifier]];
 }
 

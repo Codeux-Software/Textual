@@ -2579,7 +2579,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	[u createChanBanListDialog];
+	[u createChannelBanListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
 }
@@ -2593,7 +2593,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	[u createChanBanExceptionListDialog];
+	[u createChannelBanExceptionListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
 }
@@ -2607,7 +2607,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	[u createChanInviteExceptionListDialog];
+	[u createChannelInviteExceptionListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
 }

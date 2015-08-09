@@ -340,9 +340,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelSheet",
 																	 @"TDCTopicSheet",
 																	 @"TDCModeSheet",
-																	 @"TDChanInviteExceptionSheet",
-																	 @"TDChanBanSheet",
-																	 @"TDChanBanExceptionSheet"]];
+																	 @"TDChannelBanSheet"]];
 	
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject channelID], [self uniqueIdentifier])) {

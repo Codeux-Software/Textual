@@ -81,7 +81,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 #import "TLOEncryptionManager.h" // typdef enum
 #endif
 
-@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
+@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChannelBanListSheetDelegate, TDCListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
@@ -241,9 +241,9 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason;
 
 - (void)createChannelListDialog;
-- (void)createChanBanListDialog;
-- (void)createChanBanExceptionListDialog;
-- (void)createChanInviteExceptionListDialog;
+- (void)createChannelInviteExceptionListSheet;
+- (void)createChannelBanExceptionListSheet;
+- (void)createChannelBanListSheet;
 
 - (void)presentCertificateTrustInformation;
 
