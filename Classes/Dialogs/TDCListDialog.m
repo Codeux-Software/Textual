@@ -38,7 +38,15 @@
 
 #import "TextualApplication.h"
 
+@interface TDCListDialogEntry : NSObject
+@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSNumber *channelMemberCount;
+@property (nonatomic, copy) NSString *channelTopicUnformatted;
+@property (nonatomic, copy) NSAttributedString *channelTopicFormatted;
+@end
+
 @interface TDCListDialog ()
+@property (nonatomic, assign) BOOL isWaitingForWrites;
 @property (nonatomic, strong) NSMutableArray *queuedWrites;
 @property (nonatomic, weak) IBOutlet NSButton *updateButton;
 @property (nonatomic, weak) IBOutlet NSSearchField *searchTextField;
@@ -50,7 +58,6 @@
 
 - (IBAction)onUpdate:(id)sender;
 - (IBAction)onJoinChannels:(id)sender;
-- (IBAction)onSearchFieldChange:(id)sender;
 @end
 
 @implementation TDCListDialog
@@ -59,6 +66,8 @@
 {
 	if ((self = [super init])) {
 		[RZMainBundle() loadNibNamed:@"TDCListDialog" owner:self topLevelObjects:nil];
+
+		self.queuedWrites = [NSMutableArray array];
 	}
 
 	return self;
@@ -109,34 +118,63 @@
 	if ([channel isChannelName]) {
 		NSAttributedString *renderedTopic = [topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		NSDictionary *newEntry = @{
-			@"channelName" : channel,
-			@"channelMemberCount" : @(count),
-			@"channelTopicUnformatted" : topic,
-			@"channelTopicFormatted" : renderedTopic
-		 };
+		TDCListDialogEntry *newEntry = [TDCListDialogEntry new];
 
-		/* If you try to insert an entry into NSArryController when a predicate
-		 is configured and the inserted entry does not evaulate against the 
-		 predicate, then NSArryController will throw an exception. To workaround
-		 this, we queue entries in another array and write those to the array
-		 controller when the predicate becomes empty. */
-		NSPredicate *filterPredicate = [self.channelListController filterPredicate];
+		[newEntry setChannelName:channel];
 
-		if (filterPredicate && [filterPredicate evaluateWithObject:newEntry] == NO) {
-			if (self.queuedWrites == nil) {
-				self.queuedWrites = [NSMutableArray array];
-			}
+		[newEntry setChannelMemberCount:@(count)];
 
-			@synchronized(self.queuedWrites) {
-				[self.queuedWrites addObject:newEntry];
-			}
-		} else {
-			[self.channelListController addObject:newEntry];
+		[newEntry setChannelTopicUnformatted:topic];
+		[newEntry setChannelTopicFormatted:renderedTopic];
 
-			[self updateDialogTitle];
+		@synchronized(self.queuedWrites) {
+			[self.queuedWrites addObject:newEntry];
+		}
+
+		if (self.isWaitingForWrites == NO) {
+			self.isWaitingForWrites = YES;
+
+			[self performSelector:@selector(queuedWritesTimer) withObject:nil afterDelay:1.0];
 		}
 	}
+}
+
+- (void)queuedWritesTimer
+{
+	[self writeQueuedWrites];
+
+	self.isWaitingForWrites = NO;
+}
+
+- (void)writeQueuedWrites
+{
+	@synchronized(self.queuedWrites) {
+		if ([self.queuedWrites count] == 0) {
+			return; // Cancel write...
+		}
+
+		NSPredicate *filterPredicate = [self.channelListController filterPredicate];
+
+		if (filterPredicate) {
+			NSMutableArray *queuedWrites = [NSMutableArray array];
+
+			for (TDCListDialogEntry *queuedWrite in self.queuedWrites) {
+				if ([filterPredicate evaluateWithObject:queuedWrite]) {
+					[queuedWrites addObject:queuedWrite];
+				}
+			}
+
+			[self.channelListController addObjects:queuedWrites];
+
+			[self.queuedWrites removeObjectsInArray:queuedWrites];
+		} else {
+			[self.channelListController addObjects:self.queuedWrites];
+
+			[self.queuedWrites removeAllObjects];
+		}
+	}
+
+	[self updateDialogTitle];
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
@@ -145,16 +183,8 @@
 		NSString *currentSearchValue = [self.searchTextField stringValue];
 
 		if ([currentSearchValue length] == 0) {
-			if (self.queuedWrites) {
-				@synchronized(self.queuedWrites) {
-					[self.channelListController addObjects:self.queuedWrites];
-
-					self.queuedWrites = nil;
-				}
-			}
+			[self writeQueuedWrites];
 		}
-
-		[self updateDialogTitle];
 	}
 }
 
@@ -198,10 +228,10 @@
 	for (NSNumber *indexNumber in selectedRows) {
 		NSInteger index = [indexNumber unsignedIntegerValue];
 
-		NSDictionary *channelEntry = [self.channelListController arrangedObjects][index];
+		TDCListDialogEntry *channelEntry = [self.channelListController arrangedObjects][index];
 
 		if ([self.delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-			[self.delegate listDialogOnJoin:self channel:channelEntry[@"channelName"]];
+			[self.delegate listDialogOnJoin:self channel:[channelEntry channelName]];
 		}
 	}
 
@@ -222,4 +252,9 @@
 	}
 }
 
+@end
+
+#pragma mark -
+
+@implementation TDCListDialogEntry
 @end

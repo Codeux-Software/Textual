@@ -34,8 +34,8 @@
                             <rect key="frame" x="1" y="0.0" width="598" height="209"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" headerView="116" id="68" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="186"/>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="116" viewBased="YES" id="68" customClass="TVCBasicTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -56,14 +56,36 @@
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelName"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="ZaB-VD-KCR">
+                                                    <rect key="frame" x="1" y="1" width="124" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vDn-ey-QTL">
+                                                            <rect key="frame" x="0.0" y="0.0" width="124" height="17"/>
+                                                            <animations/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="bAo-xK-qeb">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="ZaB-VD-KCR" name="value" keyPath="objectValue.channelName" id="myv-cT-OpW"/>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="vDn-ey-QTL" firstAttribute="top" secondItem="ZaB-VD-KCR" secondAttribute="top" id="FBe-uE-5Qk"/>
+                                                        <constraint firstItem="vDn-ey-QTL" firstAttribute="leading" secondItem="ZaB-VD-KCR" secondAttribute="leading" constant="2" id="QWR-fc-l3v"/>
+                                                        <constraint firstAttribute="trailing" secondItem="vDn-ey-QTL" secondAttribute="trailing" constant="2" id="g4Y-cR-Kp1"/>
+                                                    </constraints>
+                                                    <animations/>
+                                                    <connections>
+                                                        <outlet property="textField" destination="vDn-ey-QTL" id="BAW-q6-bMw"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
                                             <accessibility description="Channel Name"/>
-                                            <connections>
-                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelName" id="s2Q-gB-Fxg">
-                                                    <dictionary key="options">
-                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </tableColumn>
                                         <tableColumn identifier="channelMemberCount" editable="NO" width="88" minWidth="40" maxWidth="1000" id="71">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Member Count">
@@ -79,14 +101,36 @@
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelMemberCount"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="FcK-bp-len">
+                                                    <rect key="frame" x="128" y="1" width="88" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gnr-BE-kNx">
+                                                            <rect key="frame" x="0.0" y="0.0" width="88" height="17"/>
+                                                            <animations/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Mq5-qO-kdn">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="FcK-bp-len" name="value" keyPath="objectValue.channelMemberCount" id="ymm-u9-JTh"/>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="gnr-BE-kNx" firstAttribute="top" secondItem="FcK-bp-len" secondAttribute="top" id="Mbs-1u-jRg"/>
+                                                        <constraint firstItem="gnr-BE-kNx" firstAttribute="leading" secondItem="FcK-bp-len" secondAttribute="leading" constant="2" id="jyv-BE-3ni"/>
+                                                        <constraint firstAttribute="trailing" secondItem="gnr-BE-kNx" secondAttribute="trailing" constant="2" id="riQ-f8-KjW"/>
+                                                    </constraints>
+                                                    <animations/>
+                                                    <connections>
+                                                        <outlet property="textField" destination="gnr-BE-kNx" id="Vrc-F8-0nu"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
                                             <accessibility description="Member Count"/>
-                                            <connections>
-                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelMemberCount" id="mUO-q8-fsM">
-                                                    <dictionary key="options">
-                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </tableColumn>
                                         <tableColumn identifier="channelTopic" editable="NO" width="377" minWidth="10" maxWidth="3.4028234663852886e+38" id="78">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Topic">
@@ -102,19 +146,42 @@
                                             </textFieldCell>
                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="channelTopicUnformatted"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="Rj4-Hq-RWw">
+                                                    <rect key="frame" x="219" y="1" width="377" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7s1-nc-Gl0">
+                                                            <rect key="frame" x="0.0" y="0.0" width="377" height="17"/>
+                                                            <animations/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="urJ-pM-ab7">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="Rj4-Hq-RWw" name="value" keyPath="objectValue.channelTopicFormatted" id="cpi-Da-f1M"/>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="7s1-nc-Gl0" secondAttribute="trailing" constant="2" id="RLv-gv-yJp"/>
+                                                        <constraint firstItem="7s1-nc-Gl0" firstAttribute="leading" secondItem="Rj4-Hq-RWw" secondAttribute="leading" constant="2" id="hSX-8h-Q0F"/>
+                                                        <constraint firstItem="7s1-nc-Gl0" firstAttribute="top" secondItem="Rj4-Hq-RWw" secondAttribute="top" id="iPk-Pm-Cg7"/>
+                                                    </constraints>
+                                                    <animations/>
+                                                    <connections>
+                                                        <outlet property="textField" destination="7s1-nc-Gl0" id="lZ0-Vd-lHO"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
                                             <accessibility description="Topic"/>
-                                            <connections>
-                                                <binding destination="gJL-Lo-AKT" name="value" keyPath="arrangedObjects.channelTopicFormatted" id="6CU-tu-XwT">
-                                                    <dictionary key="options">
-                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
                                         <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="Aan-3r-Y2r"/>
-                                        <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="Aan-3r-Y2r" id="GTh-ic-2Zn"/>
+                                        <binding destination="gJL-Lo-AKT" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="Aan-3r-Y2r" id="xWt-Eu-bKV"/>
+                                        <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="xWt-Eu-bKV" id="I1D-lf-EMM"/>
                                         <outlet property="dataSource" destination="-2" id="84"/>
                                         <outlet property="delegate" destination="-2" id="96"/>
                                     </connections>
@@ -236,7 +303,7 @@ Gw
             </connections>
             <point key="canvasLocation" x="804" y="364"/>
         </window>
-        <arrayController selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
+        <arrayController objectClassName="TDCListDialogEntry" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
             <declaredKeys>
                 <string>channelName</string>
                 <string>channelMemberCount</string>
