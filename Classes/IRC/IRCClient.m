@@ -174,7 +174,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.serverHasNickServ = NO;
 		self.timeoutWarningShownToUser = NO;
 
-		self.cachedHighlights = @[];
+		self.cachedHighlights = nil;
 
 		self.lastSelectedChannel = nil;
 		
@@ -509,7 +509,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
 																	 @"TDCNickSheet",
 																	 @"TDCInviteSheet",
-																	 @"TDCHighlightSheetList"]];
+																	 @"TDCHighlightListSheet"]];
 
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
@@ -645,7 +645,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Highlights
 
-- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
+- (void)clearCachedHighlights
+{
+	@synchronized(self.cachedHighlights) {
+		self.cachedHighlights = nil;
+	}
+}
+
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
 {
 	PointerIsEmptyAssert(channel);
 	PointerIsEmptyAssert(logLine);
@@ -653,6 +660,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
 		NSString *messageBody = nil;
+
 		NSString *nicknameBody = [logLine formattedNickname:channel];
 		
 		if ([logLine lineType] == TVCLogLineActionType) {
@@ -668,20 +676,32 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		/* Create entry. */
 		NSAttributedString *renderedMessage = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		NSArray *entry = @[channel.name, @([NSDate unixTime]), renderedMessage];
-		
+		TDCHighlightListSheetEntry *newEntry = [TDCHighlightListSheetEntry new];
+
+		[newEntry setChannelName:[channel name]];
+
+		[newEntry setRenderedMessage:renderedMessage];
+
+		[newEntry setTimeLogged:[NSDate date]];
+
 		/* We insert at head so that latest is always on top. */
-		NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
-		
-		[highlightData insertObject:entry atIndex:0];
-		
-		self.cachedHighlights = highlightData; // Setter will perform copy.
+		@synchronized(self.cachedHighlights) {
+			if (self.cachedHighlights == nil) {
+				self.cachedHighlights = @[];
+			}
+
+			NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
+
+			[highlightData insertObject:newEntry atIndex:0];
+
+			self.cachedHighlights = highlightData;
+		}
 		
 		/* Reload table if the window is open. */
-		id highlightSheet = [menuController() windowFromWindowList:@"TDCHighlightListSheet"];
+		TDCHighlightListSheet *highlightSheet = [menuController() windowFromWindowList:@"TDCHighlightListSheet"];
 		
-		if (highlightSheet) {
-			[highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
+		if ( highlightSheet) {
+			[highlightSheet addEntry:newEntry];
 		}
 	}
 }

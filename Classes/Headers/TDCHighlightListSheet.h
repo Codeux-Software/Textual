@@ -42,5 +42,12 @@
 
 - (void)show;
 
-- (void)reloadTable;
+- (void)addEntry:(id)newEntry;
+@end
+
+@interface TDCHighlightListSheetEntry : NSObject
+@property (nonatomic, copy) NSAttributedString *renderedMessage;
+@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSDate *timeLogged;
+@property (nonatomic, copy, readonly) NSString *timeLoggedFormatted;
 @end

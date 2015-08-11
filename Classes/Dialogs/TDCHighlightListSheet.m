@@ -37,10 +37,12 @@
 
 #import "TextualApplication.h"
 
+#define _renderedMessageTextFieldLeftRightPadding		2
+
 @interface TDCHighlightListSheet ()
-@property (nonatomic, copy) NSArray *highlightList;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
+@property (nonatomic, strong) IBOutlet NSArrayController *highlightListController;
 
 - (IBAction)onClearList:(id)sender;
 @end
@@ -51,93 +53,75 @@
 {
     if ((self = [super init])) {
 		[RZMainBundle() loadNibNamed:@"TDCHighlightListSheet" owner:self topLevelObjects:nil];
-    }
+
+		[self.highlightListTable setSortDescriptors:@[
+			[NSSortDescriptor sortDescriptorWithKey:@"timeLoggedFormatted" ascending:NO selector:@selector(caseInsensitiveCompare:)],
+			[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
+		]];
+	}
     
     return self;
-}
-
-- (void)releaseTableViewDataSourceBeforeSheetClosure
-{
-	[self.highlightListTable setDelegate:nil];
-	[self.highlightListTable setDataSource:nil];
 }
 
 - (void)show
 {
 	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
 
-	NSString *network = [currentNetwork altNetworkName];
+	NSString *unformattedHeaderTitle = [self.headerTitleTextField stringValue];
 
-	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], network];
+	NSString *headerTitle = [NSString stringWithFormat:unformattedHeaderTitle, [currentNetwork altNetworkName]];
 
 	[self.headerTitleTextField setStringValue:headerTitle];
 
-	[self.highlightListTable setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
-	
     [self startSheet];
-	[self reloadTable];
+
+	[self addEntry:[currentNetwork cachedHighlights]]; // Populate current cache...
+}
+
+- (void)addEntry:(id)newEntry
+{
+	if (newEntry && [newEntry isKindOfClass:[NSArray class]])
+	{
+		for (id arrayObject in newEntry) {
+			[self addEntry:arrayObject];
+		}
+	}
+	else if (newEntry && [newEntry isKindOfClass:[TDCHighlightListSheetEntry class]])
+	{
+		[self.highlightListController addObject:newEntry];
+	}
 }
 
 - (void)onClearList:(id)sender
 {
-	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
-	
-	[currentNetwork setCachedHighlights:@[]];
+	[self.highlightListController setContent:nil];
 
-    [self reloadTable];
+	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
+
+	[currentNetwork clearCachedHighlights];
 }
 
 #pragma mark -
 #pragma mark NSTableView Delegate
 
-- (void)reloadTable
-{
-	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
-
-	[self setHighlightList:[currentNetwork cachedHighlights]];
-	
-    [self.highlightListTable reloadData];
-}
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
-{
-	return [self.highlightList count];
-}
-
 - (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
 {
-	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"messageContents"];
+	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"renderedMessage"];
 
 	NSTableCellView *cellView = (id)[self tableView:aTableView viewForTableColumn:tableColumn row:row];
 
-	NSCell *cellViewTextFieldCell = [[cellView textField] cell];
+	NSRect textFieldFrame = [[cellView textField] frame];
 
-	NSSize matchedSize = [cellViewTextFieldCell cellSizeForBounds:NSMakeRect(0, 0, [tableColumn width], CGFLOAT_MAX)];
+	TDCHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
-	return MAX(matchedSize.height, [aTableView rowHeight]);
+	CGFloat calculatedHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
+
+	return (ceilf(calculatedHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
 	NSTableCellView *result = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
-
-	NSArray *item = self.highlightList[row];
-
-	NSString *stringValue = nil;
-
-	if ([[tableColumn identifier] isEqualToString:@"channelName"]) {
-		stringValue = item[0];
-	} else if ([[tableColumn identifier] isEqualToString:@"timeValue"]) {
-		NSInteger timeInterval = [item integerAtIndex:1];
-
-		NSString *timestring = TXHumanReadableTimeInterval([NSDate secondsSinceUnixTimestamp:timeInterval], YES, 0);
-
-		stringValue = BLS(1216, timestring);
-	} else {
-		stringValue = item[2];
-	}
-
-	[[result textField] setStringValue:stringValue];
 
 	return result;
 }
@@ -147,11 +131,31 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self releaseTableViewDataSourceBeforeSheetClosure];
+	[self.highlightListTable setDelegate:nil];
+	[self.highlightListTable setDataSource:nil];
 
 	if ([self.delegate respondsToSelector:@selector(highlightListSheetWillClose:)]) {
 		[self.delegate highlightListSheetWillClose:self];
 	}
+}
+
+@end
+
+#pragma mark -
+
+@implementation TDCHighlightListSheetEntry
+
+- (NSString *)timeLoggedFormatted
+{
+	if (self.timeLogged == nil) {
+		return nil; // What to do with nil?...
+	}
+
+	NSTimeInterval timeInterval = [self.timeLogged timeIntervalSinceNow];
+
+	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
+
+	return BLS(1216, formattedTimeInterval);
 }
 
 @end

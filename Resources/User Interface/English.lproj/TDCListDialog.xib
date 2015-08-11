@@ -28,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="65">
+                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="65">
                         <rect key="frame" x="0.0" y="47" width="600" height="210"/>
                         <clipView key="contentView" id="JRG-2W-GCG">
                             <rect key="frame" x="1" y="0.0" width="598" height="209"/>
@@ -182,8 +182,6 @@
                                         <binding destination="gJL-Lo-AKT" name="content" keyPath="arrangedObjects" id="Aan-3r-Y2r"/>
                                         <binding destination="gJL-Lo-AKT" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="Aan-3r-Y2r" id="xWt-Eu-bKV"/>
                                         <binding destination="gJL-Lo-AKT" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="xWt-Eu-bKV" id="I1D-lf-EMM"/>
-                                        <outlet property="dataSource" destination="-2" id="84"/>
-                                        <outlet property="delegate" destination="-2" id="96"/>
                                     </connections>
                                 </tableView>
                             </subviews>

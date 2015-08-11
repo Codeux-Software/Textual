@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="cancelButton" destination="248" id="283"/>
                 <outlet property="headerTitleTextField" destination="249" id="TUM-zE-uVx"/>
+                <outlet property="highlightListController" destination="5mx-Dm-tKI" id="cnS-P6-nfo"/>
                 <outlet property="highlightListTable" destination="255" id="286"/>
                 <outlet property="okButton" destination="248" id="287"/>
                 <outlet property="sheet" destination="243" id="288"/>
@@ -26,13 +27,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="650" height="331"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="246">
+                    <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="246">
                         <rect key="frame" x="0.0" y="41" width="650" height="247"/>
                         <clipView key="contentView" id="xsl-1y-XOT">
                             <rect key="frame" x="1" y="0.0" width="648" height="246"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="281" viewBased="YES" id="255" customClass="TVCBasicTableView">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="281" viewBased="YES" id="255" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="648.5" height="223"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -51,9 +52,10 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="channelName"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView identifier="channelName" id="PzI-yP-71o">
+                                                <tableCellView id="PzI-yP-71o">
                                                     <rect key="frame" x="1" y="1" width="100" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
@@ -66,6 +68,9 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <accessibility description="Channel Name"/>
+                                                            <connections>
+                                                                <binding destination="PzI-yP-71o" name="value" keyPath="objectValue.channelName" id="IRo-Fj-e9u"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <animations/>
@@ -76,7 +81,7 @@
                                             </prototypeCellViews>
                                             <accessibility description="Channel Name"/>
                                         </tableColumn>
-                                        <tableColumn identifier="messageContents" width="420" minWidth="10" maxWidth="3.4028234663852886e+38" id="264">
+                                        <tableColumn identifier="renderedMessage" width="420" minWidth="10" maxWidth="3.4028234663852886e+38" id="264">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Message">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -89,19 +94,26 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView identifier="messageContents" id="EgS-Pq-f28">
+                                                <tableCellView identifier="renderedMessage" id="EgS-Pq-f28">
                                                     <rect key="frame" x="104" y="1" width="420" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4NS-3M-szX">
                                                             <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="416" id="AJf-pb-ObN"/>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="416" id="KOO-4k-FBc"/>
+                                                            </constraints>
                                                             <animations/>
-                                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Table View Cell" id="tu1-iW-sWg">
+                                                            <textFieldCell key="cell" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="tu1-iW-sWg">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <accessibility description="Original Message"/>
+                                                            <connections>
+                                                                <binding destination="EgS-Pq-f28" name="value" keyPath="objectValue.renderedMessage" id="LvU-FV-bn6"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
                                                     <constraints>
@@ -117,7 +129,7 @@
                                             </prototypeCellViews>
                                             <accessibility description="Original Message"/>
                                         </tableColumn>
-                                        <tableColumn identifier="timeValue" editable="NO" width="119.56134033203125" minWidth="10" maxWidth="3.4028234663852886e+38" id="259">
+                                        <tableColumn identifier="timeLogged" editable="NO" width="119.56134033203125" minWidth="10" maxWidth="3.4028234663852886e+38" id="259">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Time">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -128,14 +140,15 @@
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="timeLoggedFormatted"/>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
-                                                <tableCellView identifier="timeValue" id="HW9-VK-fBZ">
+                                                <tableCellView id="HW9-VK-fBZ">
                                                     <rect key="frame" x="527" y="1" width="120" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5km-53-sUf">
-                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="17"/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="5km-53-sUf">
+                                                            <rect key="frame" x="0.0" y="0.0" width="120" height="17"/>
                                                             <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="fvp-ca-N2k">
                                                                 <font key="font" metaFont="system"/>
@@ -143,8 +156,16 @@
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <accessibility description="Time"/>
+                                                            <connections>
+                                                                <binding destination="HW9-VK-fBZ" name="value" keyPath="objectValue.timeLoggedFormatted" id="yFW-sb-DFV"/>
+                                                            </connections>
                                                         </textField>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="5km-53-sUf" firstAttribute="top" secondItem="HW9-VK-fBZ" secondAttribute="top" id="Hci-4P-abe"/>
+                                                        <constraint firstItem="5km-53-sUf" firstAttribute="leading" secondItem="HW9-VK-fBZ" secondAttribute="leading" constant="2" id="jih-nP-kyk"/>
+                                                        <constraint firstAttribute="trailing" secondItem="5km-53-sUf" secondAttribute="trailing" constant="2" id="xEX-78-WMe"/>
+                                                    </constraints>
                                                     <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="5km-53-sUf" id="vCE-iI-gqx"/>
@@ -155,6 +176,9 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <binding destination="5mx-Dm-tKI" name="content" keyPath="arrangedObjects" id="M5g-wY-hdp"/>
+                                        <binding destination="5mx-Dm-tKI" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="M5g-wY-hdp" id="rvL-gc-QAb"/>
+                                        <binding destination="5mx-Dm-tKI" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="rvL-gc-QAb" id="per-fb-UTI"/>
                                         <outlet property="dataSource" destination="-2" id="275"/>
                                         <outlet property="delegate" destination="-2" id="276"/>
                                     </connections>
@@ -246,7 +270,14 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="289"/>
             </connections>
-            <point key="canvasLocation" x="1152" y="314.5"/>
+            <point key="canvasLocation" x="949" y="181.5"/>
         </window>
+        <arrayController objectClassName="TDCHighlightListSheetEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
+            <declaredKeys>
+                <string>channelName</string>
+                <string>renderedMessage</string>
+                <string>timeLoggedFormatted</string>
+            </declaredKeys>
+        </arrayController>
     </objects>
 </document>
