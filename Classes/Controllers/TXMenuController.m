@@ -2004,7 +2004,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	NSObjectIsEmptyAssert(channels);
 	NSObjectIsEmptyAssert(nicknames);
 
-	TDCInviteSheet *inviteSheet = [TDCInviteSheet new];
+	TDChannelInviteSheet *inviteSheet = [TDChannelInviteSheet new];
 	
 	[inviteSheet setDelegate:self];
 	[inviteSheet setWindow:mainWindow()];
@@ -2017,7 +2017,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:inviteSheet];
 }
 
-- (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName
+- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
 
@@ -2030,9 +2030,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 }
 
-- (void)inviteSheetWillClose:(TDCInviteSheet *)sender
+- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCInviteSheet"];
+	[self removeWindowFromWindowList:@"TDChannelInviteSheet"];
 }
 
 #pragma mark -
