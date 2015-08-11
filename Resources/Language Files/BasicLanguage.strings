@@ -39,58 +39,58 @@
 "TDCAboutDialog[1000]" = "Version %@";
 
 /* Server properties Address Book entry types */
-"TDCServerSheet[1000]" = "User Ignore";
-"TDCServerSheet[1001]" = "User Tracking";
+"TDCServerPropertiesSheet[1000]" = "User Ignore";
+"TDCServerPropertiesSheet[1001]" = "User Tracking";
 
 /* Server properties iCloud options */
-"TDCServerSheet[1002][1]" = "iCloud Sharing Disabled";
-"TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
+"TDCServerPropertiesSheet[1002][1]" = "iCloud Sharing Disabled";
+"TDCServerPropertiesSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
 
-"TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
-"TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
+"TDCServerPropertiesSheet[1003][1]" = "iCloud Sharing Enabled";
+"TDCServerPropertiesSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
 /* Server specific highlight entry things */
-"TDCServerSheet[1004]" = "All Channels";
-"TDCServerSheet[1005]" = "Exclude";
-"TDCServerSheet[1006]" = "Match";
+"TDCServerPropertiesSheet[1004]" = "All Channels";
+"TDCServerPropertiesSheet[1005]" = "Exclude";
+"TDCServerPropertiesSheet[1006]" = "Match";
 
 /* Server properties navigation menu */
-"TDCServerSheet[1007][01]" = "Channel List";
-"TDCServerSheet[1007][02]" = "Connect Commands";
-"TDCServerSheet[1007][03]" = "Encoding";
-"TDCServerSheet[1007][04]" = "Flood Control";
-"TDCServerSheet[1007][05]" = "General";
-"TDCServerSheet[1007][06]" = "Identity";
-"TDCServerSheet[1007][07]" = "Address Book";
-"TDCServerSheet[1007][08]" = "Messages";
-"TDCServerSheet[1007][09]" = "Miscellaneous";
-"TDCServerSheet[1007][10]" = "Proxy Server";
-"TDCServerSheet[1007][11]" = "Client Certificate";
-"TDCServerSheet[1007][12]" = "Highlights";
-"TDCServerSheet[1007][13]" = "Network Socket";
-"TDCServerSheet[1007][14]" = "ZNC Bouncer";
-"TDCServerSheet[1007][15]" = "Basic Settings";
-"TDCServerSheet[1007][16]" = "Vendor Specific";
-"TDCServerSheet[1007][17]" = "Advanced";
+"TDCServerPropertiesSheet[1007][01]" = "Channel List";
+"TDCServerPropertiesSheet[1007][02]" = "Connect Commands";
+"TDCServerPropertiesSheet[1007][03]" = "Encoding";
+"TDCServerPropertiesSheet[1007][04]" = "Flood Control";
+"TDCServerPropertiesSheet[1007][05]" = "General";
+"TDCServerPropertiesSheet[1007][06]" = "Identity";
+"TDCServerPropertiesSheet[1007][07]" = "Address Book";
+"TDCServerPropertiesSheet[1007][08]" = "Messages";
+"TDCServerPropertiesSheet[1007][09]" = "Miscellaneous";
+"TDCServerPropertiesSheet[1007][10]" = "Proxy Server";
+"TDCServerPropertiesSheet[1007][11]" = "Client Certificate";
+"TDCServerPropertiesSheet[1007][12]" = "Highlights";
+"TDCServerPropertiesSheet[1007][13]" = "Network Socket";
+"TDCServerPropertiesSheet[1007][14]" = "ZNC Bouncer";
+"TDCServerPropertiesSheet[1007][15]" = "Basic Settings";
+"TDCServerPropertiesSheet[1007][16]" = "Vendor Specific";
+"TDCServerPropertiesSheet[1007][17]" = "Advanced";
 
 /* Error localizations */
-"TDCServerSheet[1010][01]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][02]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][03]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][04]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][05]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][06]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][07]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][08]" = "Misconfigured value in Proxy Server setion";
-"TDCServerSheet[1010][09]" = "Misconfigured value in Proxy Server setion";
-"TDCServerSheet[1010][10]" = "Misconfigured value in Messages setion";
-"TDCServerSheet[1010][11]" = "Misconfigured value in Messages setion";
+"TDCServerPropertiesSheet[1010][01]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][02]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][03]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][04]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][05]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][06]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][07]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][08]" = "Misconfigured value in Proxy Server setion";
+"TDCServerPropertiesSheet[1010][09]" = "Misconfigured value in Proxy Server setion";
+"TDCServerPropertiesSheet[1010][10]" = "Misconfigured value in Messages setion";
+"TDCServerPropertiesSheet[1010][11]" = "Misconfigured value in Messages setion";
 
 /* Custom client-side certificate selection */
-"TDCServerSheet[1008]" = "No Certificate Selected";
+"TDCServerPropertiesSheet[1008]" = "No Certificate Selected";
 
-"TDCServerSheet[1009][1]" = "Select Identity";
-"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
+"TDCServerPropertiesSheet[1009][1]" = "Select Identity";
+"TDCServerPropertiesSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
 
 /* Welcome sheet help channel prompt for freenode servers */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";

@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCServerSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCServerPropertiesSheet">
             <connections>
                 <outlet property="addChannelButton" destination="1794" id="1947"/>
                 <outlet property="addHighlightButton" destination="2449" id="2478"/>
@@ -1580,7 +1580,7 @@ Gw
                         <constraint firstAttribute="height" constant="183" id="Wxf-7j-fsj"/>
                     </constraints>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2311">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="2311">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -2240,7 +2240,7 @@ Gw
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="892" height="10000000"/>
+                                <size key="maxSize" width="1115" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
                                         <string key="content">• If a DNS lookup returns an IPv4 address, then Textual uses IPv4.
@@ -2258,7 +2258,7 @@ Gw
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="892" height="10000000"/>
+                                <size key="maxSize" width="1115" height="10000000"/>
                             </textView>
                         </subviews>
                         <animations/>

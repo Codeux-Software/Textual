@@ -38,16 +38,16 @@
 
 #import "TextualApplication.h"
 
-typedef enum TDCServerSheetNavigationSelection : NSInteger {
-	TDCServerSheetDefaultNavigationSelection	= 0,
-	TDCServerSheetAddressBookNavigationSelection,
-	TDCServerSheetFloodControlNavigationSelection,
-	TDCServerSheetNewIgnoreEntryNavigationSelection
-} TDCServerSheetNavigationSelection;
+typedef enum TDCServerPropertiesSheetNavigationSelection : NSInteger {
+	TDCServerPropertiesSheetDefaultNavigationSelection	= 0,
+	TDCServerPropertiesSheetAddressBookNavigationSelection,
+	TDCServerPropertiesSheetFloodControlNavigationSelection,
+	TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
+} TDCServerPropertiesSheetNavigationSelection;
 
-@interface TDCServerSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDCHighlightEntrySheetDelegate, TDChannelPropertiesSheetDelegate>
+@interface TDCServerPropertiesSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDCHighlightEntrySheetDelegate, TDChannelPropertiesSheetDelegate>
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) IRCClientConfig *config;
 
-- (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context;
+- (void)start:(TDCServerPropertiesSheetNavigationSelection)viewToken withContext:(NSString *)context;
 @end

@@ -1414,7 +1414,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	[self popWindowSheetIfExists];
 	
-	TDCServerSheet *d = [TDCServerSheet new];
+	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1422,7 +1422,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[d setClientID:nil];
 	[d setConfig:[IRCClientConfig new]];
 
-	[d start:TDCServerSheetDefaultNavigationSelection withContext:nil];
+	[d start:TDCServerPropertiesSheetDefaultNavigationSelection withContext:nil];
 
 	[self addWindowToWindowList:d];
 }
@@ -1492,7 +1492,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 #pragma mark -
 #pragma mark Server Properties
 
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerPropertiesSheetNavigationSelection)viewType andContext:(NSString *)context
 {
 	if (_noClient) {
 		return;
@@ -1500,7 +1500,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[self popWindowSheetIfExists];
 	
-	TDCServerSheet *d = [TDCServerSheet new];
+	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1516,11 +1516,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)showServerPropertiesDialog:(id)sender
 {
 	[self showServerPropertyDialog:[mainWindow() selectedClient]
-				   withDefaultView:TDCServerSheetDefaultNavigationSelection
+				   withDefaultView:TDCServerPropertiesSheetDefaultNavigationSelection
 						andContext:nil];
 }
 
-- (void)serverSheetOnOK:(TDCServerSheet *)sender
+- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender
 {
 	if ([sender clientID] == nil) {
 		[worldController() createClient:[sender config] reload:YES];
@@ -1549,15 +1549,15 @@ TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender
+- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender
 {
 	[worldController() addClientToListOfDeletedClients:[[sender config] itemUUID]];
 }
 #endif
 
-- (void)serverSheetWillClose:(TDCServerSheet *)sender
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCServerSheet"];
+	[self removeWindowFromWindowList:@"TDCServerPropertiesSheet"];
 }
 
 #pragma mark -
@@ -2171,7 +2171,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 - (void)showChannelIgnoreList:(id)sender
 {
 	[self showServerPropertyDialog:[mainWindow() selectedClient]
-					withDefaultView:TDCServerSheetAddressBookNavigationSelection
+					withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection
 						andContext:nil];
 }
 
