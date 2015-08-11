@@ -89,11 +89,11 @@
 	@class TDCProgressInformationSheet;
 	@class TDCServerSheet;
 	@class TDCSheetBase;
-	@class TDCTopicSheet;
 	@class TDCWelcomeSheet;
 	@class TDChannelBanListSheet;
 	@class TDChannelInviteSheet;
 	@class TDChannelModifyModesSheet;
+	@class TDChannelModifyTopicSheet;
 	@class TDChannelPropertiesSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
@@ -306,11 +306,11 @@
 	#import "TDCPreferencesScriptWrapper.h"
 	#import "TDCPreferencesSoundWrapper.h"
 	#import "TDCServerSheet.h"
-	#import "TDCTopicSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
 	#import "TDChannelInviteSheet.h"
 	#import "TDChannelModifyModesSheet.h"
+	#import "TDChannelModifyTopicSheet.h"
 	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */
