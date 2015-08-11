@@ -82,7 +82,6 @@
 	@class TDCHighlightListSheet;
 	@class TDCHighlightListSheetEntry;
 	@class TDCListDialog;
-	@class TDCModeSheet;
 	@class TDCNickSheet;
 	@class TDCPreferencesController;
 	@class TDCPreferencesScriptWrapper;
@@ -94,6 +93,7 @@
 	@class TDCWelcomeSheet;
 	@class TDChannelBanListSheet;
 	@class TDChannelInviteSheet;
+	@class TDChannelModifyModesSheet;
 	@class TDChannelPropertiesSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
@@ -301,7 +301,6 @@
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"
 	#import "TDCListDialog.h"
-	#import "TDCModeSheet.h"
 	#import "TDCNickSheet.h"
 	#import "TDCPreferencesController.h"
 	#import "TDCPreferencesScriptWrapper.h"
@@ -311,6 +310,7 @@
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
 	#import "TDChannelInviteSheet.h"
+	#import "TDChannelModifyModesSheet.h"
 	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */

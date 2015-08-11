@@ -109,11 +109,11 @@
 
 #pragma mark -
 
-@protocol TDCModeSheetDelegate <NSObject>
+@protocol TDChannelModifyModesSheetDelegate <NSObject>
 @required
 
-- (void)modeSheetOnOK:(TDCModeSheet *)sender;
-- (void)modeSheetWillClose:(TDCModeSheet *)sender;
+- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender;
+- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender;
 @end
 
 #pragma mark -

@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCModeSheet : TDCSheetBase
+@interface TDChannelModifyModesSheet : TDCSheetBase
 @property (nonatomic, copy) IRCChannelMode *mode;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
