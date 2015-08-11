@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCNickSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCServerChangeNicknameSheet">
             <connections>
                 <outlet property="cancelButton" destination="16" id="41"/>
                 <outlet property="okButton" destination="15" id="29"/>

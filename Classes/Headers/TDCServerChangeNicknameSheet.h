@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCNickSheet : TDCSheetBase
+@interface TDCServerChangeNicknameSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
 
 - (void)start:(NSString *)nickname;

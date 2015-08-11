@@ -82,11 +82,11 @@
 	@class TDCHighlightListSheet;
 	@class TDCHighlightListSheetEntry;
 	@class TDCListDialog;
-	@class TDCNickSheet;
 	@class TDCPreferencesController;
 	@class TDCPreferencesScriptWrapper;
 	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
+	@class TDCServerChangeNicknameSheet;
 	@class TDCServerSheet;
 	@class TDCSheetBase;
 	@class TDCWelcomeSheet;
@@ -301,10 +301,10 @@
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"
 	#import "TDCListDialog.h"
-	#import "TDCNickSheet.h"
 	#import "TDCPreferencesController.h"
 	#import "TDCPreferencesScriptWrapper.h"
 	#import "TDCPreferencesSoundWrapper.h"
+	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"

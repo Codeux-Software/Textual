@@ -38,17 +38,17 @@
 
 #import "TextualApplication.h"
 
-@interface TDCNickSheet ()
+@interface TDCServerChangeNicknameSheet ()
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *toldNicknameTextField;
 @end
 
-@implementation TDCNickSheet
+@implementation TDCServerChangeNicknameSheet
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCNickSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCServerChangeNicknameSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;
@@ -83,10 +83,10 @@
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(nickSheet:didInputNickname:)]) {
+	if ([self.delegate respondsToSelector:@selector(serverChangeNicknameSheet:didInputNickname:)]) {
 		NSString *newNickname = [self.tnewNicknameTextField value];
-		
-		[self.delegate nickSheet:self didInputNickname:newNickname];
+
+		[self.delegate serverChangeNicknameSheet:self didInputNickname:newNickname];
 	}
 	
 	[super ok:sender];
@@ -97,8 +97,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(nickSheetWillClose:)]) {
-		[self.delegate nickSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(serverChangeNicknameSheetWillClose:)]) {
+		[self.delegate serverChangeNicknameSheetWillClose:self];
 	}
 }
 

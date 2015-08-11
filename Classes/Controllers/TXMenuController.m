@@ -1366,7 +1366,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 
-	TDCNickSheet *nickSheet = [TDCNickSheet new];
+	TDCServerChangeNicknameSheet *nickSheet = [TDCServerChangeNicknameSheet new];
 
 	[nickSheet setDelegate:self];
 	[nickSheet setWindow:mainWindow()];
@@ -1378,7 +1378,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:nickSheet];
 }
 
-- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
 	
@@ -1389,9 +1389,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[u changeNickname:nickname];
 }
 
-- (void)nickSheetWillClose:(TDCNickSheet *)sender
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCNickSheet"];
+	[self removeWindowFromWindowList:@"TDCServerChangeNicknameSheet"];
 }
 
 #pragma mark -

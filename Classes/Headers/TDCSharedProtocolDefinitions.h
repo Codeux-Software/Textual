@@ -118,11 +118,11 @@
 
 #pragma mark -
 
-@protocol TDCNickSheetDelegate <NSObject>
+@protocol TDCServerChangeNicknameSheetDelegate <NSObject>
 @required
 
-- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname;
-- (void)nickSheetWillClose:(TDCNickSheet *)sender;
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname;
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender;
 @end
 
 #pragma mark -
