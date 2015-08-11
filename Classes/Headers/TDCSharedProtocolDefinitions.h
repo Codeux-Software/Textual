@@ -90,11 +90,11 @@
 
 #pragma mark -
 
-@protocol TDCInviteSheetDelegate <NSObject>
+@protocol TDChannelInviteSheetDelegate <NSObject>
 @required
 
-- (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName;
-- (void)inviteSheetWillClose:(TDCInviteSheet *)sender;
+- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
+- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender;
 @end
 
 #pragma mark -

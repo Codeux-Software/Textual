@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCInviteSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDChannelInviteSheet">
             <connections>
                 <outlet property="cancelButton" destination="10" id="jMs-mJ-IVv"/>
                 <outlet property="channelListPopup" destination="31" id="44"/>

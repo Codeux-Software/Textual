@@ -38,9 +38,67 @@
 
 #import "TextualApplication.h"
 
-@interface TDCInviteSheet : TDCSheetBase
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) NSArray *nicknames;
+@interface TDChannelInviteSheet ()
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
+@end
 
-- (void)startWithChannels:(NSArray *)channels;
+@implementation TDChannelInviteSheet
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[RZMainBundle() loadNibNamed:@"TDChannelInviteSheet" owner:self topLevelObjects:nil];
+	}
+
+	return self;
+}
+
+- (void)startWithChannels:(NSArray *)channels
+{
+	NSString *target = nil;
+	
+	NSInteger nicknameCount = [self.nicknames count];
+	
+	if (nicknameCount == 1) {
+		target = self.nicknames[0];
+	} else if (nicknameCount == 2) {
+		NSString *firstn = self.nicknames[0];
+		NSString *second = self.nicknames[1];
+		
+		target = TXTLS(@"TDChannelInviteSheet[1002]", firstn, second);
+	} else {
+		target = TXTLS(@"TDChannelInviteSheet[1000]", nicknameCount);
+	}
+	
+	[self.headerTitleTextField setStringValue:TXTLS(@"TDChannelInviteSheet[1001]", target)];
+	
+	for (NSString *s in channels) {
+		[self.channelListPopup addItemWithTitle:s];
+	}
+	
+	[self startSheet];
+}
+
+- (void)ok:(id)sender
+{
+	NSString *channelName = [self.channelListPopup titleOfSelectedItem];
+	
+	if ([self.delegate respondsToSelector:@selector(channelInviteSheet:onSelectChannel:)]) {
+		[self.delegate channelInviteSheet:self onSelectChannel:channelName];
+	}
+
+	[super ok:nil];
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(channelInviteSheetWillClose:)]) {
+		[self.delegate channelInviteSheetWillClose:self];
+	}
+}
+
 @end

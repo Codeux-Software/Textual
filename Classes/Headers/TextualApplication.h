@@ -77,13 +77,10 @@
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDChannelBanListSheet;
-	@class TDChannelPropertiesSheet;
-	@class TDCHighlightEntrySheet;
 	@class TDCHighlightEntryMatchCondition;
+	@class TDCHighlightEntrySheet;
 	@class TDCHighlightListSheet;
 	@class TDCHighlightListSheetEntry;
-	@class TDCInviteSheet;
 	@class TDCListDialog;
 	@class TDCModeSheet;
 	@class TDCNickSheet;
@@ -95,6 +92,9 @@
 	@class TDCSheetBase;
 	@class TDCTopicSheet;
 	@class TDCWelcomeSheet;
+	@class TDChannelBanListSheet;
+	@class TDChannelInviteSheet;
+	@class TDChannelPropertiesSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
 	@class THOUnicodeHelper;
@@ -300,7 +300,6 @@
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCHighlightListSheet.h"
-	#import "TDCInviteSheet.h"
 	#import "TDCListDialog.h"
 	#import "TDCModeSheet.h"
 	#import "TDCNickSheet.h"
@@ -311,6 +310,7 @@
 	#import "TDCTopicSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
+	#import "TDChannelInviteSheet.h"
 	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */

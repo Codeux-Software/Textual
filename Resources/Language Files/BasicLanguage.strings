@@ -101,9 +101,9 @@
 "TDCListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
 
 /* Invite dialog */
-"TDCInviteSheet[1000]" = "%d users";
-"TDCInviteSheet[1001]" = "Invite %@ to:";
-"TDCInviteSheet[1002]" = "%1$@ and %2$@";
+"TDChannelInviteSheet[1000]" = "%d users";
+"TDChannelInviteSheet[1001]" = "Invite %@ to:";
+"TDChannelInviteSheet[1002]" = "%1$@ and %2$@";
 
 /* Preferences window iCloud options */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";

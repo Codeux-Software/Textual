@@ -508,7 +508,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
 																	 @"TDCNickSheet",
-																	 @"TDCInviteSheet",
+																	 @"TDChannelInviteSheet",
 																	 @"TDCHighlightListSheet"]];
 
 	for (id windowObject in openWindows) {
