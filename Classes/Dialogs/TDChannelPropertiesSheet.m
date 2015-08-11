@@ -37,10 +37,10 @@
 
 #import "TextualApplication.h"
 
-@interface TDChannelSheet ()
+@interface TDChannelPropertiesSheet ()
 /* Each entry of the array is an array with index 0 equal to the
  view and index 1 equal to the first responder wanted in that view. */
-@property (nonatomic, strong) NSArray *navigationTree;
+@property (nonatomic, copy) NSArray *navigationTree;
 @property (nonatomic, weak) IBOutlet NSButton *autoJoinCheck;
 @property (nonatomic, weak) IBOutlet NSButton *disableInlineImagesCheck;
 @property (nonatomic, weak) IBOutlet NSButton *enableInlineImagesCheck;
@@ -62,12 +62,12 @@
 - (IBAction)onMenuBarItemChanged:(id)sender;
 @end
 
-@implementation TDChannelSheet
+@implementation TDChannelPropertiesSheet
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDChannelSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDChannelPropertiesSheet" owner:self topLevelObjects:nil];
 
 		self.navigationTree = @[
 			//		view								first responder
@@ -257,8 +257,8 @@
 	
 	[self save];
 	
-	if ([self.delegate respondsToSelector:@selector(channelSheetOnOK:)]) {
-		[self.delegate channelSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheetOnOK:)]) {
+		[self.delegate channelPropertiesSheetOnOK:self];
 	}
 	
 	[super ok:nil];
@@ -271,8 +271,8 @@
 {
 	[self.sheet makeFirstResponder:nil];
 
-	if ([self.delegate respondsToSelector:@selector(channelSheetWillClose:)]) {
-		[self.delegate channelSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(channelPropertiesSheetWillClose:)]) {
+		[self.delegate channelPropertiesSheetWillClose:self];
 	}
 }
 

@@ -1734,7 +1734,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	TDChannelSheet *d = [TDChannelSheet new];
+	TDChannelPropertiesSheet *d = [TDChannelPropertiesSheet new];
 
 	[d setNewItem:YES];
 	
@@ -1790,7 +1790,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	TDChannelSheet *d = [TDChannelSheet new];
+	TDChannelPropertiesSheet *d = [TDChannelPropertiesSheet new];
 
 	[d setNewItem:NO];
 	[d setObserveChanges:YES];
@@ -1808,7 +1808,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:d];
 }
 
-- (void)channelSheetOnOK:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
 {
 	if ([sender newItem]) {
 		IRCClient *u = [worldController() findClientById:[sender clientID]];
@@ -1835,9 +1835,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[worldController() save];
 }
 
-- (void)channelSheetWillClose:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelSheet"];
+	[self removeWindowFromWindowList:@"TDChannelPropertiesSheet"];
 }
 
 #pragma mark -

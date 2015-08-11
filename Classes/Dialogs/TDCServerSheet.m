@@ -131,7 +131,7 @@
 @property (nonatomic, strong) NSMutableArray *mutableIgnoreList;
 @property (nonatomic, strong) TDCAddressBookSheet *ignoreSheet;
 @property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
-@property (nonatomic, strong) TDChannelSheet *channelSheet;
+@property (nonatomic, strong) TDChannelPropertiesSheet *channelSheet;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *connectCommandsField;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -1441,7 +1441,7 @@
 	}
 	
 	self.channelSheet = nil;
-	self.channelSheet = [TDChannelSheet new];
+	self.channelSheet = [TDChannelPropertiesSheet new];
 	
 	self.channelSheet.newItem = YES;
 	self.channelSheet.observeChanges = NO;
@@ -1465,7 +1465,7 @@
 	IRCChannelConfig *c = self.mutableChannelList[sel];
 	
 	self.channelSheet = nil;
-	self.channelSheet = [TDChannelSheet new];
+	self.channelSheet = [TDChannelPropertiesSheet new];
 	
 	self.channelSheet.newItem = NO;
 	self.channelSheet.observeChanges = NO;
@@ -1480,7 +1480,7 @@
 	[self.channelSheet start];
 }
 
-- (void)channelSheetOnOK:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
 {
 	IRCChannelConfig *config = [sender config];
 	
@@ -1513,7 +1513,7 @@
 	[self reloadChannelTable];
 }
 
-- (void)channelSheetWillClose:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender
 {
 	self.channelSheet = nil;
 }

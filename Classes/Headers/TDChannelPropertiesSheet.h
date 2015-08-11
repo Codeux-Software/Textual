@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDChannelSheet : TDCSheetBase
+@interface TDChannelPropertiesSheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
 @property (nonatomic, assign) BOOL observeChanges;
 @property (nonatomic, copy) NSString *clientID;
