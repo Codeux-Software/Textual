@@ -59,7 +59,6 @@
 		4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */; };
 		4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
 		4C0444FC16F1603B00EBB665 /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
@@ -237,7 +236,6 @@
 		4C0BA5B51990798800857343 /* TDChannelModifyModesSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF561158E99520026668C /* TDChannelModifyModesSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5B61990798800857343 /* TDCServerChangeNicknameSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF562158E99520026668C /* TDCServerChangeNicknameSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5B71990798800857343 /* TDCPreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF563158E99520026668C /* TDCPreferencesController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C0BA5B81990798800857343 /* TDCPreferencesScriptWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5B91990798800857343 /* TDCPreferencesSoundWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5BA1990798800857343 /* TDCServerSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF566158E99520026668C /* TDCServerSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5BB1990798800857343 /* TDCSheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF567158E99520026668C /* TDCSheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -336,7 +334,6 @@
 		4C0BA63A1990798800857343 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0BA63B1990798800857343 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C0BA63C1990798800857343 /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C0BA63D1990798800857343 /* TDCPreferencesScriptWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */; };
 		4C0BA63E1990798800857343 /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
 		4C0BA63F1990798800857343 /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C0BA6401990798800857343 /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
@@ -561,7 +558,6 @@
 		4C5BA42316F1302F00A96CA2 /* TDChannelModifyModesSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF561158E99520026668C /* TDChannelModifyModesSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA42416F1302F00A96CA2 /* TDCServerChangeNicknameSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF562158E99520026668C /* TDCServerChangeNicknameSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA42516F1302F00A96CA2 /* TDCPreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF563158E99520026668C /* TDCPreferencesController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA42616F1302F00A96CA2 /* TDCPreferencesScriptWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA42716F1302F00A96CA2 /* TDCPreferencesSoundWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA42816F1302F00A96CA2 /* TDCServerSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF566158E99520026668C /* TDCServerSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA42916F1302F00A96CA2 /* TDCSheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF567158E99520026668C /* TDCSheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -735,7 +731,6 @@
 		4C8AF60A158E99520026668C /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C8AF60B158E99520026668C /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
 		4C8AF60C158E99520026668C /* TDCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF515158E99520026668C /* TDCPreferencesController.m */; };
-		4C8AF60D158E99520026668C /* TDCPreferencesScriptWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */; };
 		4C8AF60E158E99520026668C /* TDCPreferencesSoundWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */; };
 		4C8AF60F158E99520026668C /* TDCAboutDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF518158E99520026668C /* TDCAboutDialog.m */; };
 		4C8AF610158E99520026668C /* TDCAddressBookSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF519158E99520026668C /* TDCAddressBookSheet.m */; };
@@ -781,7 +776,6 @@
 		4C8AF656158E99520026668C /* TDChannelModifyModesSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF561158E99520026668C /* TDChannelModifyModesSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF657158E99520026668C /* TDCServerChangeNicknameSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF562158E99520026668C /* TDCServerChangeNicknameSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF658158E99520026668C /* TDCPreferencesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF563158E99520026668C /* TDCPreferencesController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF659158E99520026668C /* TDCPreferencesScriptWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF65A158E99520026668C /* TDCPreferencesSoundWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF65B158E99520026668C /* TDCServerSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF566158E99520026668C /* TDCServerSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF65C158E99520026668C /* TDCSheetBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF567158E99520026668C /* TDCSheetBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1747,7 +1741,6 @@
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
 		4C8AF515158E99520026668C /* TDCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesController.m; sourceTree = "<group>"; };
-		4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesScriptWrapper.m; sourceTree = "<group>"; };
 		4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesSoundWrapper.m; sourceTree = "<group>"; };
 		4C8AF518158E99520026668C /* TDCAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAboutDialog.m; path = Dialogs/TDCAboutDialog.m; sourceTree = "<group>"; };
 		4C8AF519158E99520026668C /* TDCAddressBookSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAddressBookSheet.m; path = Dialogs/TDCAddressBookSheet.m; sourceTree = "<group>"; };
@@ -1793,7 +1786,6 @@
 		4C8AF561158E99520026668C /* TDChannelModifyModesSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDChannelModifyModesSheet.h; sourceTree = "<group>"; };
 		4C8AF562158E99520026668C /* TDCServerChangeNicknameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCServerChangeNicknameSheet.h; sourceTree = "<group>"; };
 		4C8AF563158E99520026668C /* TDCPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCPreferencesController.h; sourceTree = "<group>"; };
-		4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCPreferencesScriptWrapper.h; sourceTree = "<group>"; };
 		4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCPreferencesSoundWrapper.h; sourceTree = "<group>"; };
 		4C8AF566158E99520026668C /* TDCServerSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCServerSheet.h; sourceTree = "<group>"; };
 		4C8AF567158E99520026668C /* TDCSheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSheetBase.h; sourceTree = "<group>"; };
@@ -2575,7 +2567,6 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF515158E99520026668C /* TDCPreferencesController.m */,
-				4C8AF516158E99520026668C /* TDCPreferencesScriptWrapper.m */,
 				4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */,
 			);
 			name = Preferences;
@@ -2630,7 +2621,6 @@
 				4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */,
 				4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */,
 				4C8AF563158E99520026668C /* TDCPreferencesController.h */,
-				4C8AF564158E99520026668C /* TDCPreferencesScriptWrapper.h */,
 				4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */,
 				4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */,
 				4C8AF562158E99520026668C /* TDCServerChangeNicknameSheet.h */,
@@ -3376,7 +3366,6 @@
 				4C0BA5B51990798800857343 /* TDChannelModifyModesSheet.h in Headers */,
 				4C0BA5B61990798800857343 /* TDCServerChangeNicknameSheet.h in Headers */,
 				4C0BA5B71990798800857343 /* TDCPreferencesController.h in Headers */,
-				4C0BA5B81990798800857343 /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C0BA5B91990798800857343 /* TDCPreferencesSoundWrapper.h in Headers */,
 				4C0BA5BA1990798800857343 /* TDCServerSheet.h in Headers */,
 				4C0BA5BB1990798800857343 /* TDCSheetBase.h in Headers */,
@@ -3533,7 +3522,6 @@
 				4C5BA42416F1302F00A96CA2 /* TDCServerChangeNicknameSheet.h in Headers */,
 				4C699C661B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C5BA42516F1302F00A96CA2 /* TDCPreferencesController.h in Headers */,
-				4C5BA42616F1302F00A96CA2 /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C5BA42716F1302F00A96CA2 /* TDCPreferencesSoundWrapper.h in Headers */,
 				4C5BA42816F1302F00A96CA2 /* TDCServerSheet.h in Headers */,
 				4C5BA42916F1302F00A96CA2 /* TDCSheetBase.h in Headers */,
@@ -3692,7 +3680,6 @@
 				4C8AF657158E99520026668C /* TDCServerChangeNicknameSheet.h in Headers */,
 				4C699C671B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C8AF658158E99520026668C /* TDCPreferencesController.h in Headers */,
-				4C8AF659158E99520026668C /* TDCPreferencesScriptWrapper.h in Headers */,
 				4C8AF65A158E99520026668C /* TDCPreferencesSoundWrapper.h in Headers */,
 				4C8AF65B158E99520026668C /* TDCServerSheet.h in Headers */,
 				4C8AF65C158E99520026668C /* TDCSheetBase.h in Headers */,
@@ -4509,7 +4496,6 @@
 				4CF40E271AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
 				4CF40E5F1AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
 				4C0444F916F1603B00EBB665 /* TDCPreferencesController.m in Sources */,
-				4C0444FA16F1603B00EBB665 /* TDCPreferencesScriptWrapper.m in Sources */,
 				4C0444FB16F1603B00EBB665 /* TDCPreferencesSoundWrapper.m in Sources */,
 				4C0444FC16F1603B00EBB665 /* TDCAboutDialog.m in Sources */,
 				4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */,
@@ -4645,7 +4631,6 @@
 				4C0BA63B1990798800857343 /* TXMenuController.m in Sources */,
 				4CF40E6A1AC1A4AC00A26BE0 /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C0BA63C1990798800857343 /* TDCPreferencesController.m in Sources */,
-				4C0BA63D1990798800857343 /* TDCPreferencesScriptWrapper.m in Sources */,
 				4CF40E261AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
 				4CF40E5E1AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
 				4C0BA63E1990798800857343 /* TDCPreferencesSoundWrapper.m in Sources */,
@@ -4782,7 +4767,6 @@
 				4C8AF60B158E99520026668C /* TXMenuController.m in Sources */,
 				4CF40E6C1AC1A4AC00A26BE0 /* TVCQueuedCertificateTrustPanel.m in Sources */,
 				4C8AF60C158E99520026668C /* TDCPreferencesController.m in Sources */,
-				4C8AF60D158E99520026668C /* TDCPreferencesScriptWrapper.m in Sources */,
 				4CF40E281AC1A4AC00A26BE0 /* TVCMainWindow.m in Sources */,
 				4CF40E601AC1A4AC00A26BE0 /* TVCBasicTableView.m in Sources */,
 				4C8AF60E158E99520026668C /* TDCPreferencesSoundWrapper.m in Sources */,

@@ -122,10 +122,10 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
-@property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
 @property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
+@property (nonatomic, assign) BOOL newKeywordsTableRowAddedByUser;
 
 - (IBAction)onPrefPaneSelected:(id)sender;
 
@@ -197,8 +197,6 @@
 
 - (void)show
 {
-	[self setScriptsController:[TDCPreferencesScriptWrapper new]];
-
 	NSMutableArray *alertSounds = [NSMutableArray new];
 
 	// self.alertSounds treats anything that is not a TDCPreferencesSoundWrapper as
@@ -242,11 +240,6 @@
 	}
 
 	// Complete startup of preferences.
-	[[self scriptsController] populateData];
-
-	[[self installedScriptsTable] setDataSource:[self scriptsController]];
-	[[self installedScriptsTable] reloadData];
-
 	[self setUpToolbarItemsAndMenus];
 
 	[self updateThemeSelection];
@@ -258,6 +251,10 @@
 	[self onChangedHighlightType:nil];
 	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
+
+	[[self installedScriptsTable] setSortDescriptors:@[
+		[NSSortDescriptor sortDescriptorWithKey:@"string" ascending:YES selector:@selector(caseInsensitiveCompare:)]
+	]];
 
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
@@ -402,6 +399,16 @@
 
 #pragma mark -
 #pragma mark KVC Properties
+
+- (NSArray *)installedScripts
+{
+	NSMutableArray *scriptsInstalled = [NSMutableArray array];
+
+	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
+	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
+
+	return [scriptsInstalled stringArryControllerObjects];
+}
 
 - (NSString *)maxLogLines
 {
@@ -1013,30 +1020,35 @@
     }
 	
 	[[self addExcludeKeywordButton] setEnabled:YES];
+
 	[[self excludeKeywordsTable] setEnabled:YES];
 }
 
-- (void)editTable:(NSTableView *)table
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	NSInteger row = ([table numberOfRows] - 1);
+	if (tableView == [self keywordsTable] || tableView == [self excludeKeywordsTable]) {
+		if ([self newKeywordsTableRowAddedByUser]) {
+			[self setNewKeywordsTableRowAddedByUser:NO];
 
-	[table scrollRowToVisible:row];
+			[tableView scrollRowToVisible:row];
 
-	[table editColumn:0 row:row withEvent:nil select:YES];
+			[tableView editColumn:0 row:row withEvent:nil select:YES];
+		}
+	}
 }
 
 - (void)onAddKeyword:(id)sender
 {
-	[[self matchKeywordsArrayController] add:nil];
+	[self setNewKeywordsTableRowAddedByUser:YES];
 
-	[self performSelector:@selector(editTable:) withObject:[self keywordsTable] afterDelay:0.3];
+	[[self matchKeywordsArrayController] add:nil];
 }
 
 - (void)onAddExcludeKeyword:(id)sender
 {
-	[[self excludeKeywordsArrayController] add:nil];
+	[self setNewKeywordsTableRowAddedByUser:YES];
 
-	[self performSelector:@selector(editTable:) withObject:[self excludeKeywordsTable] afterDelay:0.3];
+	[[self excludeKeywordsArrayController] add:nil];
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
@@ -1378,18 +1390,15 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	/* Stop observing notifications. */
 	[RZNotificationCenter() removeObserver:self];
 
-	/* Reset the frame back to that of General before saving the existing position. */
+	[TPCPreferences cleanUpHighlightKeywords];
+
 	[[self window] setAlphaValue:0.0];
 
-	[self firstPane:[self contentViewGeneral] selectedItem:-1];
+	[self firstPane:[self contentViewGeneral] selectedItem:(-1)];
 
 	[[self window] saveWindowStateForClass:[self class]];
-
-	/* Clean up highlight keywords. */
-	[TPCPreferences cleanUpHighlightKeywords];
 
 	if ([[self delegate] respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[[self delegate] preferencesDialogWillClose:self];
