@@ -71,7 +71,7 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TDCAboutPanel;
+	@class TDCAboutDialog;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
 	@class TDCFileTransferDialogRemoteAddressLookup;
@@ -292,7 +292,7 @@
 
 	/* Dialogs. */
 	#import "TDCSheetBase.h"
-	#import "TDCAboutPanel.h"
+	#import "TDCAboutDialog.h"
 	#import "TDCAddressBookSheet.h"
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogTableCell.h"

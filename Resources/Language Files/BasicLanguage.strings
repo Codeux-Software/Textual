@@ -36,7 +36,7 @@
  *********************************************************************** */
 
 /* About window version info */
-"TDCAboutPanel[1000]" = "Version %@";
+"TDCAboutDialog[1000]" = "Version %@";
 
 /* Server properties Address Book entry types */
 "TDCServerSheet[1000]" = "User Ignore";

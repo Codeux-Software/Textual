@@ -260,9 +260,9 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import "TDCLicenseManagerDialog.h"
 
-@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelPropertiesSheetDelegate, TDCHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
 #else
-@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelPropertiesSheetDelegate, TDCHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
 #endif
 
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
