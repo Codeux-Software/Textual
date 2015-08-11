@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCTopicSheet : TDCSheetBase
+@interface TDChannelModifyTopicSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;
 

@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCTopicSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDChannelModifyTopicSheet">
             <connections>
                 <outlet property="cancelButton" destination="10" id="48"/>
                 <outlet property="headerTitleTextField" destination="26" id="ewf-vi-fnG"/>

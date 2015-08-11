@@ -1637,7 +1637,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 
-	TDCTopicSheet *t = [TDCTopicSheet new];
+	TDChannelModifyTopicSheet *t = [TDChannelModifyTopicSheet new];
 
 	[t setDelegate:self];
 	[t setWindow:mainWindow()];
@@ -1650,7 +1650,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:t];
 }
 
-- (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic
+- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
 												   channelId:[sender channelID]];
@@ -1664,9 +1664,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[u send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 }
 
-- (void)topicSheetWillClose:(TDCTopicSheet *)sender
+- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCTopicSheet"];
+	[self removeWindowFromWindowList:@"TDChannelModifyTopicSheet"];
 }
 
 #pragma mark -

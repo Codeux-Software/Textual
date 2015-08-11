@@ -148,11 +148,11 @@
 
 #pragma mark -
 
-@protocol TDCTopicSheetDelegate <NSObject>
+@protocol TDChannelModifyTopicSheetDelegate <NSObject>
 @required
 
-- (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic;
-- (void)topicSheetWillClose:(TDCTopicSheet *)sender;
+- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic;
+- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender;
 @end
 
 #pragma mark -

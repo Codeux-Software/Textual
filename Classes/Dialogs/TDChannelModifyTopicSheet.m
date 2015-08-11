@@ -38,17 +38,17 @@
 
 #import "TextualApplication.h"
 
-@interface TDCTopicSheet ()
+@interface TDChannelModifyTopicSheet ()
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
 
-@implementation TDCTopicSheet
+@implementation TDChannelModifyTopicSheet
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCTopicSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDChannelModifyTopicSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;
@@ -93,13 +93,13 @@
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(topicSheet:onOK:)]) {
+	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheet:onOK:)]) {
 		NSString *formattedTopic = [[self.topicValueTextField attributedStringValue] attributedStringToASCIIFormatting];
 
 		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
 																				   withString:NSStringWhitespacePlaceholder];
 
-		[self.delegate topicSheet:self onOK:topicWithoutNewlines];
+		[self.delegate channelModifyTopicSheet:self onOK:topicWithoutNewlines];
 	}
 	
 	[super ok:nil];
@@ -112,8 +112,8 @@
 {
 	[[mainWindow() formattingMenu] enableWindowField:mainWindowTextField()];
 	
-	if ([self.delegate respondsToSelector:@selector(topicSheetWillClose:)]) {
-		[self.delegate topicSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheetWillClose:)]) {
+		[self.delegate channelModifyTopicSheetWillClose:self];
 	}
 }
 
