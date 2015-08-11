@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCListDialog : NSWindowController
+@interface TDCServerChannelListDialog : NSWindowController
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;

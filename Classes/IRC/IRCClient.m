@@ -6912,7 +6912,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 321: // RPL_LISTSTART
 		{
-            TDCListDialog *channelListDialog = [self listDialog];
+            TDCServerChannelListDialog *channelListDialog = [self listDialog];
 
 			if ( channelListDialog) {
 				[channelListDialog clear];
@@ -6930,7 +6930,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *uscount = [m paramAt:2];
 			NSString *topicva = [m sequence:3];
 
-            TDCListDialog *channelListDialog = [self listDialog];
+            TDCServerChannelListDialog *channelListDialog = [self listDialog];
 
 			if (channelListDialog) {
 				[channelListDialog addChannel:channel count:[uscount integerValue] topic:topicva];
@@ -6940,7 +6940,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 323: // RPL_LISTEND
 		{
-			TDCListDialog *channelListDialog = [self listDialog];
+			TDCServerChannelListDialog *channelListDialog = [self listDialog];
 			
 			if ( channelListDialog) {
 				[channelListDialog setContentAlreadyReceived:YES];
@@ -9018,10 +9018,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)listDialogWindowKey
 {
-	return [NSString stringWithFormat:@"TDCListDialog -> %@", [self uniqueIdentifier]];
+	return [NSString stringWithFormat:@"TDCServerChannelListDialog -> %@", [self uniqueIdentifier]];
 }
 
-- (TDCListDialog *)listDialog
+- (TDCServerChannelListDialog *)listDialog
 {
     return [menuController() windowFromWindowList:[self listDialogWindowKey]];
 }
@@ -9032,7 +9032,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return; // The window was brought forward already.
 	}
 
-    TDCListDialog *channelListDialog = [TDCListDialog new];
+    TDCServerChannelListDialog *channelListDialog = [TDCServerChannelListDialog new];
 
 	[channelListDialog setClientID:[self uniqueIdentifier]];
 	
@@ -9043,19 +9043,19 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     [menuController() addWindowToWindowList:channelListDialog withKeyValue:[self listDialogWindowKey]];
 }
 
-- (void)listDialogOnUpdate:(TDCListDialog *)sender
+- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender
 {
 	[self sendLine:IRCPrivateCommandIndex("list")];
 }
 
-- (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel
+- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel
 {
 	self.inUserInvokedJoinRequest = YES;
 	
 	[self joinUnlistedChannel:channel];
 }
 
-- (void)listDialogWillClose:(TDCListDialog *)sender
+- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender
 {
     [menuController() removeWindowFromWindowList:[self listDialogWindowKey]];
 }

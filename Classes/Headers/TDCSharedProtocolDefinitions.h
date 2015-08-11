@@ -99,12 +99,12 @@
 
 #pragma mark -
 
-@protocol TDCListDialogDelegate <NSObject>
+@protocol TDCServerChannelListDialogDelegate <NSObject>
 @required
 
-- (void)listDialogOnUpdate:(TDCListDialog *)sender;
-- (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel;
-- (void)listDialogWillClose:(TDCListDialog *)sender;
+- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
+- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel;
+- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
 @end
 
 #pragma mark -

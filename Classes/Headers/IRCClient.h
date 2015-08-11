@@ -81,7 +81,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 #import "TLOEncryptionManager.h" // typdef enum
 #endif
 
-@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChannelBanListSheetDelegate, TDCListDialogDelegate>
+@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChannelBanListSheetDelegate, TDCServerChannelListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;

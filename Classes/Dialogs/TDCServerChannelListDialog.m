@@ -38,14 +38,14 @@
 
 #import "TextualApplication.h"
 
-@interface TDCListDialogEntry : NSObject
+@interface TDCServerChannelListDialogEntry : NSObject
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSNumber *channelMemberCount;
 @property (nonatomic, copy) NSString *channelTopicUnformatted;
 @property (nonatomic, copy) NSAttributedString *channelTopicFormatted;
 @end
 
-@interface TDCListDialog ()
+@interface TDCServerChannelListDialog ()
 @property (nonatomic, assign) BOOL isWaitingForWrites;
 @property (nonatomic, strong) NSMutableArray *queuedWrites;
 @property (nonatomic, weak) IBOutlet NSButton *updateButton;
@@ -60,12 +60,12 @@
 - (IBAction)onJoinChannels:(id)sender;
 @end
 
-@implementation TDCListDialog
+@implementation TDCServerChannelListDialog
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCListDialog" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCServerChannelListDialog" owner:self topLevelObjects:nil];
 
 		self.queuedWrites = [NSMutableArray array];
 	}
@@ -88,7 +88,7 @@
 {
 	IRCClient *client = [worldController() findClientById:self.clientID];
 
-    [self.networkNameTextField setStringValue:TXTLS(@"TDCListDialog[1000]", [client altNetworkName])];
+    [self.networkNameTextField setStringValue:TXTLS(@"TDCServerChannelListDialog[1000]", [client altNetworkName])];
 
 	[[self window] restoreWindowStateForClass:[self class]];
 	
@@ -112,7 +112,7 @@
 	if ([channel isChannelName]) {
 		NSAttributedString *renderedTopic = [topic attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		TDCListDialogEntry *newEntry = [TDCListDialogEntry new];
+		TDCServerChannelListDialogEntry *newEntry = [TDCServerChannelListDialogEntry new];
 
 		[newEntry setChannelName:channel];
 
@@ -152,7 +152,7 @@
 		if (filterPredicate) {
 			NSMutableArray *queuedWrites = [NSMutableArray array];
 
-			for (TDCListDialogEntry *queuedWrite in self.queuedWrites) {
+			for (TDCServerChannelListDialogEntry *queuedWrite in self.queuedWrites) {
 				if ([filterPredicate evaluateWithObject:queuedWrite]) {
 					[queuedWrites addObject:queuedWrite];
 				}
@@ -188,7 +188,7 @@
 
 	NSString *arrangedObjectsCount = TXFormattedNumber([arrangedObjects count]);
 
-	[self.window setTitle:TXTLS(@"TDCListDialog[1001]", arrangedObjectsCount)];
+	[self.window setTitle:TXTLS(@"TDCServerChannelListDialog[1001]", arrangedObjectsCount)];
 }
 
 #pragma mark -
@@ -203,8 +203,8 @@
 {
 	[self clear];
 
-	if ([self.delegate respondsToSelector:@selector(listDialogOnUpdate:)]) {
-		[self.delegate listDialogOnUpdate:self];
+	if ([self.delegate respondsToSelector:@selector(serverChannelListDialogOnUpdate:)]) {
+		[self.delegate serverChannelListDialogOnUpdate:self];
 	}
 }
 
@@ -222,10 +222,10 @@
 	for (NSNumber *indexNumber in selectedRows) {
 		NSInteger index = [indexNumber unsignedIntegerValue];
 
-		TDCListDialogEntry *channelEntry = [self.channelListController arrangedObjects][index];
+		TDCServerChannelListDialogEntry *channelEntry = [self.channelListController arrangedObjects][index];
 
-		if ([self.delegate respondsToSelector:@selector(listDialogOnJoin:channel:)]) {
-			[self.delegate listDialogOnJoin:self channel:[channelEntry channelName]];
+		if ([self.delegate respondsToSelector:@selector(serverChannelListDialogOnJoin:channel:)]) {
+			[self.delegate serverChannelListDialogOnJoin:self channel:[channelEntry channelName]];
 		}
 	}
 
@@ -239,8 +239,8 @@
 {
 	[[self window] saveWindowStateForClass:[self class]];
 	
-	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {
-		[self.delegate listDialogWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(serverChannelDialogWillClose:)]) {
+		[self.delegate serverChannelDialogWillClose:self];
 	}
 }
 
@@ -248,5 +248,5 @@
 
 #pragma mark -
 
-@implementation TDCListDialogEntry
+@implementation TDCServerChannelListDialogEntry
 @end
