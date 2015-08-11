@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCModeSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDChannelModifyModesSheet">
             <connections>
                 <outlet property="cancelButton" destination="64" id="231"/>
                 <outlet property="iCheck" destination="195" id="207"/>

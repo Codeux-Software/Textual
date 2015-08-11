@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCModeSheet ()
+@interface TDChannelModifyModesSheet ()
 @property (nonatomic, weak) IBOutlet NSButton *sCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pCheck;
 @property (nonatomic, weak) IBOutlet NSButton *nCheck;
@@ -53,12 +53,12 @@
 - (IBAction)onChangeCheck:(id)sender;
 @end
 
-@implementation TDCModeSheet
+@implementation TDChannelModifyModesSheet
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCModeSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDChannelModifyModesSheet" owner:self topLevelObjects:nil];
 	}
 
 	return self;
@@ -164,8 +164,8 @@
 		[[self.mode modeInfoFor:@"l"] setModeParamater:@"0"];
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(modeSheetOnOK:)]) {
-		[self.delegate modeSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheetOnOK:)]) {
+		[self.delegate channelModifyModesSheetOnOK:self];
 	}
 	
 	[super ok:nil];
@@ -176,8 +176,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(modeSheetWillClose:)]) {
-		[self.delegate modeSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(channelModifyModesSheetWillClose:)]) {
+		[self.delegate channelModifyModesSheetWillClose:self];
 	}
 }
 

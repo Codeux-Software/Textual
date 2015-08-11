@@ -1683,7 +1683,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	TDCModeSheet *m = [TDCModeSheet new];
+	TDChannelModifyModesSheet *m = [TDChannelModifyModesSheet new];
 	
 	[m setDelegate:self];
 	[m setWindow:mainWindow()];
@@ -1698,7 +1698,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:m];
 }
 
-- (void)modeSheetOnOK:(TDCModeSheet *)sender
+- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
 												   channelId:[sender channelID]];
@@ -1716,9 +1716,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], changeStr]];
 }
 
-- (void)modeSheetWillClose:(TDCModeSheet *)sender
+- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCModeSheet"];
+	[self removeWindowFromWindowList:@"TDChannelModifyModesSheet"];
 }
 
 #pragma mark -
