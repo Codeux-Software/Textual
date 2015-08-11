@@ -78,7 +78,7 @@
 	[self.channelListTable setDoubleAction:@selector(onJoin:)];
 
 	[self.channelListTable setSortDescriptors:@[
-		[NSSortDescriptor sortDescriptorWithKey:@"channelMemberCount" ascending:NO selector:@selector(caseInsensitiveCompare:)]
+		[NSSortDescriptor sortDescriptorWithKey:@"channelMemberCount" ascending:NO selector:@selector(compare:)]
 	]];
 
 	[self show];
