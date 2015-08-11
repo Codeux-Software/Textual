@@ -39,7 +39,7 @@
 
 #define _renderedMessageTextFieldLeftRightPadding		2
 
-@interface TDCHighlightListSheet ()
+@interface TDCServerHighlightListSheet ()
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *highlightListController;
@@ -47,12 +47,12 @@
 - (IBAction)onClearList:(id)sender;
 @end
 
-@implementation TDCHighlightListSheet
+@implementation TDCServerHighlightListSheet
 
 - (instancetype)init
 {
     if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCHighlightListSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCServerHighlightListSheet" owner:self topLevelObjects:nil];
 
 		[self.highlightListTable setSortDescriptors:@[
 			[NSSortDescriptor sortDescriptorWithKey:@"timeLoggedFormatted" ascending:NO selector:@selector(caseInsensitiveCompare:)],
@@ -86,7 +86,7 @@
 			[self addEntry:arrayObject];
 		}
 	}
-	else if (newEntry && [newEntry isKindOfClass:[TDCHighlightListSheetEntry class]])
+	else if (newEntry && [newEntry isKindOfClass:[TDCServerHighlightListSheetEntry class]])
 	{
 		[self.highlightListController addObject:newEntry];
 	}
@@ -112,7 +112,7 @@
 
 	NSRect textFieldFrame = [[cellView textField] frame];
 
-	TDCHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+	TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
 	CGFloat calculatedHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
 
@@ -134,8 +134,8 @@
 	[self.highlightListTable setDelegate:nil];
 	[self.highlightListTable setDataSource:nil];
 
-	if ([self.delegate respondsToSelector:@selector(highlightListSheetWillClose:)]) {
-		[self.delegate highlightListSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(serverHighlightListSheetWillClose:)]) {
+		[self.delegate serverHighlightListSheetWillClose:self];
 	}
 }
 
@@ -143,7 +143,7 @@
 
 #pragma mark -
 
-@implementation TDCHighlightListSheetEntry
+@implementation TDCServerHighlightListSheetEntry
 
 - (NSString *)timeLoggedFormatted
 {

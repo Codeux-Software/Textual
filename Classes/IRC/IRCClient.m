@@ -506,10 +506,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[listDialog close];
 	}
 	
-	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
+	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelInviteSheet",
+																	 @"TDCServerSheet",
 																	 @"TDCServerChangeNicknameSheet",
-																	 @"TDChannelInviteSheet",
-																	 @"TDCHighlightListSheet"]];
+																	 @"TDCServerHighlightListSheet"]];
 
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
@@ -676,7 +676,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		/* Create entry. */
 		NSAttributedString *renderedMessage = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		TDCHighlightListSheetEntry *newEntry = [TDCHighlightListSheetEntry new];
+		TDCServerHighlightListSheetEntry *newEntry = [TDCServerHighlightListSheetEntry new];
 
 		[newEntry setChannelName:[channel name]];
 
@@ -698,7 +698,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		
 		/* Reload table if the window is open. */
-		TDCHighlightListSheet *highlightSheet = [menuController() windowFromWindowList:@"TDCHighlightListSheet"];
+		TDCServerHighlightListSheet *highlightSheet = [menuController() windowFromWindowList:@"TDCServerHighlightListSheet"];
 		
 		if ( highlightSheet) {
 			[highlightSheet addEntry:newEntry];

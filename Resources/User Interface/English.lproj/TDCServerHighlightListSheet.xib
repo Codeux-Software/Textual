@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCHighlightListSheet">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCServerHighlightListSheet">
             <connections>
                 <outlet property="cancelButton" destination="248" id="283"/>
                 <outlet property="headerTitleTextField" destination="249" id="TUM-zE-uVx"/>
@@ -272,7 +272,7 @@ Gw
             </connections>
             <point key="canvasLocation" x="949" y="181.5"/>
         </window>
-        <arrayController objectClassName="TDCHighlightListSheetEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
+        <arrayController objectClassName="TDCServerHighlightListSheetEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
             <declaredKeys>
                 <string>channelName</string>
                 <string>renderedMessage</string>

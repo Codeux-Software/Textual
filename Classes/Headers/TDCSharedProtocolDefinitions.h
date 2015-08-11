@@ -82,10 +82,10 @@
 
 #pragma mark -
 
-@protocol TDCHighlightListSheetDelegate <NSObject>
+@protocol TDCServerHighlightListSheetDelegate <NSObject>
 @required
 
-- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender;
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender;
 @end
 
 #pragma mark -
