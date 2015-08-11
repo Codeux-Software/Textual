@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCListDialog">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCServerChannelListDialog">
             <connections>
                 <outlet property="channelListController" destination="gJL-Lo-AKT" id="NLh-Wh-ISB"/>
                 <outlet property="channelListTable" destination="68" id="136"/>
@@ -300,7 +300,7 @@ Gw
             </connections>
             <point key="canvasLocation" x="942" y="364"/>
         </window>
-        <arrayController objectClassName="TDCListDialogEntry" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
+        <arrayController objectClassName="TDCServerChannelListDialogEntry" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" automaticallyRearrangesObjects="YES" id="gJL-Lo-AKT">
             <declaredKeys>
                 <string>channelName</string>
                 <string>channelMemberCount</string>

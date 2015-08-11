@@ -97,8 +97,8 @@
 "TDCWelcomeSheet[1000][2]" = "The support channel for Textual is located on freenode. Would you like to add this channel?";
 
 /* Channel list dialog */
-"TDCListDialog[1000]" = "Channel List for “%@”";
-"TDCListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
+"TDCServerChannelListDialog[1000]" = "Channel List for “%@”";
+"TDCServerChannelListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
 
 /* Invite dialog */
 "TDChannelInviteSheet[1000]" = "%d users";
