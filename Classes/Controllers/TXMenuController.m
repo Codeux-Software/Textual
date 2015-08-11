@@ -1606,7 +1606,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 	
-	TDCHighlightListSheet *d = [TDCHighlightListSheet new];
+	TDCServerHighlightListSheet *d = [TDCServerHighlightListSheet new];
 	
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1618,9 +1618,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:d];
 }
 
-- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCHighlightListSheet"];
+	[self removeWindowFromWindowList:@"TDCServerHighlightListSheet"];
 }
 
 #pragma mark -

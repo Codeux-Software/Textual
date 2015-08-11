@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCHighlightListSheet : TDCSheetBase
+@interface TDCServerHighlightListSheet : TDCSheetBase
 @property (nonatomic, copy) NSString *clientID;
 
 - (void)show;
@@ -45,7 +45,7 @@
 - (void)addEntry:(id)newEntry;
 @end
 
-@interface TDCHighlightListSheetEntry : NSObject
+@interface TDCServerHighlightListSheetEntry : NSObject
 @property (nonatomic, copy) NSAttributedString *renderedMessage;
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSDate *timeLogged;

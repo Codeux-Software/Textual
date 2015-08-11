@@ -79,14 +79,14 @@
 	@class TDCFileTransferDialogTransferController;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
-	@class TDCHighlightListSheet;
-	@class TDCHighlightListSheetEntry;
 	@class TDCPreferencesController;
 	@class TDCPreferencesScriptWrapper;
 	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
 	@class TDCServerChangeNicknameSheet;
 	@class TDCServerChannelListDialog;
+	@class TDCServerHighlightListSheet;
+	@class TDCServerHighlightListSheetEntry;
 	@class TDCServerSheet;
 	@class TDCSheetBase;
 	@class TDCWelcomeSheet;
@@ -299,12 +299,12 @@
 	#import "TDCFileTransferDialogTransferController.h"
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
-	#import "TDCHighlightListSheet.h"
 	#import "TDCPreferencesController.h"
 	#import "TDCPreferencesScriptWrapper.h"
 	#import "TDCPreferencesSoundWrapper.h"
 	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerChannelListDialog.h"
+	#import "TDCServerHighlightListSheet.h"
 	#import "TDCServerSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
