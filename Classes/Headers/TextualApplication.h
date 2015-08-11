@@ -80,7 +80,6 @@
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
 	@class TDCPreferencesController;
-	@class TDCPreferencesScriptWrapper;
 	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
 	@class TDCServerChangeNicknameSheet;
@@ -300,7 +299,6 @@
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
 	#import "TDCPreferencesController.h"
-	#import "TDCPreferencesScriptWrapper.h"
 	#import "TDCPreferencesSoundWrapper.h"
 	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerChannelListDialog.h"
