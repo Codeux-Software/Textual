@@ -78,7 +78,7 @@
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
 	@class TDChannelBanListSheet;
-	@class TDChannelSheet;
+	@class TDChannelPropertiesSheet;
 	@class TDCHighlightEntrySheet;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightListSheet;
@@ -311,7 +311,7 @@
 	#import "TDCTopicSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
-	#import "TDChannelSheet.h"
+	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */
 	#import "THOPluginItem.h"

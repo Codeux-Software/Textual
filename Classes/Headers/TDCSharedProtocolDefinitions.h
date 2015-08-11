@@ -64,11 +64,11 @@
 
 #pragma mark -
 
-@protocol TDChannelSheetDelegate <NSObject>
+@protocol TDChannelPropertiesSheetDelegate <NSObject>
 @required
 
-- (void)channelSheetOnOK:(TDChannelSheet *)sender;
-- (void)channelSheetWillClose:(TDChannelSheet *)sender;
+- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender;
+- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender;
 @end
 
 #pragma mark -
