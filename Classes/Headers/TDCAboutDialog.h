@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface TDCAboutPanel : NSWindowController
+@interface TDCAboutDialog : NSWindowController
 @property (nonatomic, weak) id delegate;
 
 - (void)show;

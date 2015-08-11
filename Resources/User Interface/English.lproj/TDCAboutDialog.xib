@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="TDCAboutPanel">
+        <customObject id="-2" userLabel="File's Owner" customClass="TDCAboutDialog">
             <connections>
                 <outlet property="versionInfoTextField" destination="7" id="ag2-GR-UdV"/>
                 <outlet property="window" destination="1" id="25"/>

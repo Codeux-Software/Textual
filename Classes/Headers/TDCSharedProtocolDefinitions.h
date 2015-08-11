@@ -37,10 +37,10 @@
 
 #import "TextualApplication.h"
 
-@protocol TDCAboutPanelDelegate <NSObject>
+@protocol TDCAboutDialogDelegate <NSObject>
 @required
 
-- (void)aboutPanelWillClose:(TDCAboutPanel *)sender;
+- (void)aboutDialogWillClose:(TDCAboutDialog *)sender;
 @end
 
 #pragma mark -

@@ -2215,9 +2215,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showAboutWindow:(id)sender
 {
-	_popWindowViewIfExists(@"TDCAboutPanel");
+	_popWindowViewIfExists(@"TDCAboutDialog");
 	
-	TDCAboutPanel *aboutPanel = [TDCAboutPanel new];
+	TDCAboutDialog *aboutPanel = [TDCAboutDialog new];
 
 	[aboutPanel setDelegate:self];
 
@@ -2226,9 +2226,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[self addWindowToWindowList:aboutPanel];
 }
 
-- (void)aboutPanelWillClose:(TDCAboutPanel *)sender
+- (void)aboutDialogWillClose:(TDCAboutDialog *)sender
 {
-	[self removeWindowFromWindowList:@"TDCAboutPanel"];
+	[self removeWindowFromWindowList:@"TDCAboutDialog"];
 }
 
 #pragma mark -

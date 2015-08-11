@@ -37,18 +37,18 @@
 
 #import "TextualApplication.h"
 
-@interface TDCAboutPanel ()
+@interface TDCAboutDialog ()
 @property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
 
 - (IBAction)displayAcknowledgments:(id)sender;
 @end
 
-@implementation TDCAboutPanel
+@implementation TDCAboutDialog
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCAboutPanel" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCAboutDialog" owner:self topLevelObjects:nil];
 	}
 
 	return self;
@@ -58,7 +58,7 @@
 {
 	NSString *bundleVersion = [TPCApplicationInfo applicationVersionShort];
 	
-	[self.versionInfoTextField setStringValue:TXTLS(@"TDCAboutPanel[1000]", bundleVersion)];
+	[self.versionInfoTextField setStringValue:TXTLS(@"TDCAboutDialog[1000]", bundleVersion)];
 
 	[[self window] restoreWindowStateForClass:[self class]];
 	
@@ -76,8 +76,8 @@
 {
 	[[self window] saveWindowStateForClass:[self class]];
 	
-	if ([self.delegate respondsToSelector:@selector(aboutPanelWillClose:)]) {
-		[self.delegate aboutPanelWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(aboutDialogWillClose:)]) {
+		[self.delegate aboutDialogWillClose:self];
 	}
 }
 
