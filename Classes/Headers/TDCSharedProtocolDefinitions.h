@@ -135,14 +135,14 @@
 
 #pragma mark -
 
-@protocol TDCServerSheetDelegate <NSObject>
+@protocol TDCServerPropertiesSheetDelegate <NSObject>
 @required
 
-- (void)serverSheetOnOK:(TDCServerSheet *)sender;
-- (void)serverSheetWillClose:(TDCServerSheet *)sender;
+- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender;
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender;
+- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender;
 #endif
 @end
 

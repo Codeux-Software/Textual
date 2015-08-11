@@ -507,9 +507,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 	
 	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelInviteSheet",
-																	 @"TDCServerSheet",
 																	 @"TDCServerChangeNicknameSheet",
-																	 @"TDCServerHighlightListSheet"]];
+																	 @"TDCServerHighlightListSheet",
+																	 @"TDCServerPropertiesSheet"]];
 
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
@@ -2597,9 +2597,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
 				if (isIgnoreCommand) {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nil];
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nil];
 				} else {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
 				}
 			} else {
 				NSString *nickname = [s getTokenAsString];
@@ -2608,9 +2608,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				
 				if (user == nil) {
 					if (isIgnoreCommand) {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nickname];
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nickname];
 					} else {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
 					}
 					
 					return;
@@ -5471,7 +5471,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     } else if (returnType == TLOPopupPromptReturnSecondaryType) {
         [self cancelReconnect];
     } else {
-		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetFloodControlNavigationSelection andContext:nil];
+		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetFloodControlNavigationSelection andContext:nil];
     }
 }
 

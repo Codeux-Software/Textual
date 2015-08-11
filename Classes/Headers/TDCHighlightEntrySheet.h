@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-/* TDCHighlightEntrySheet handles management of highlights inside TDCServerSheet. */
+/* TDCHighlightEntrySheet handles management of highlights inside TDCServerPropertiesSheet. */
 /* It should not be mistaken for TDCServerHighlightListSheet which shows the actual list 
  of highlights for a server by using Command+5 or the actual Windows menu bar item. */
 @interface TDCHighlightEntrySheet : TDCSheetBase

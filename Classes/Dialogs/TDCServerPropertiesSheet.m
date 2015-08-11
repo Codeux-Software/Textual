@@ -46,7 +46,7 @@
 #define _forcedPreferencePaneViewFrameHeight		304
 #define _forcedPreferencePaneViewFrameWidth			529
 
-@interface TDCServerSheet ()
+@interface TDCServerPropertiesSheet ()
 @property (nonatomic, copy) NSArray *navigationTreeMatrix;
 @property (nonatomic, copy) NSDictionary *encodingList;
 @property (nonatomic, copy) NSDictionary *serverList;
@@ -170,13 +170,13 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
-@implementation TDCServerSheet
+@implementation TDCServerPropertiesSheet
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
 		/* Load our views. */
-		[RZMainBundle() loadNibNamed:@"TDCServerSheet" owner:self topLevelObjects:nil];
+		[RZMainBundle() loadNibNamed:@"TDCServerPropertiesSheet" owner:self topLevelObjects:nil];
 		
 		/* Load the list of available IRC networks. */
 		self.serverList = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"IRCNetworks"];
@@ -398,33 +398,33 @@
 	NSMutableArray *navigationTreeMatrix = [NSMutableArray array];
 	
 	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerSheet[1007][15]"),
+		@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][15]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][07]"),	@"view" : self.contentViewAddressBook},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][01]"),	@"view" : self.contentViewAutojoin},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][02]"),	@"view" : self.contentViewConnectCommands},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][03]"),	@"view" : self.contentViewEncoding},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][05]"),	@"view" : self.contentViewGeneral},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][06]"),	@"view" : self.contentViewIdentity},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][12]"),	@"view" : self.contentViewHighlights},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][08]"),	@"view" : self.contentViewDisconnectMessages},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][07]"),	@"view" : self.contentViewAddressBook},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][01]"),	@"view" : self.contentViewAutojoin},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][02]"),	@"view" : self.contentViewConnectCommands},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][03]"),	@"view" : self.contentViewEncoding},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][05]"),	@"view" : self.contentViewGeneral},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][06]"),	@"view" : self.contentViewIdentity},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][12]"),	@"view" : self.contentViewHighlights},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][08]"),	@"view" : self.contentViewDisconnectMessages},
 		]
 	}];
 	
 	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerSheet[1007][16]"),
+		@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][16]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][14]"),	@"view" : self.contentViewZncBouncer},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][14]"),	@"view" : self.contentViewZncBouncer},
 		]
 	}];
 	
 	[navigationTreeMatrix addObject:@{
-		@"name" : TXTLS(@"TDCServerSheet[1007][17]"),
+		@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][17]"),
 		@"children" : @[
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][11]"),	@"view" : self.contentViewClientCertificate},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][04]"),	@"view" : self.contentViewFloodControl},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][13]"),	@"view" : self.contentViewNetworkSocket},
-			@{@"name" : TXTLS(@"TDCServerSheet[1007][10]"),	@"view" : self.contentViewProxyServer},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][11]"),	@"view" : self.contentViewClientCertificate},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][04]"),	@"view" : self.contentViewFloodControl},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][13]"),	@"view" : self.contentViewNetworkSocket},
+			@{@"name" : TXTLS(@"TDCServerPropertiesSheet[1007][10]"),	@"view" : self.contentViewProxyServer},
 		]
 	}];
 
@@ -539,7 +539,7 @@
 #pragma mark -
 #pragma mark Initalization Handler
 
-- (void)start:(TDCServerSheetNavigationSelection)viewToken withContext:(NSString *)context
+- (void)start:(TDCServerPropertiesSheetNavigationSelection)viewToken withContext:(NSString *)context
 {
 	[self.channelTable setTarget:self];
 	[self.channelTable setDoubleAction:@selector(tableViewDoubleClicked:)];
@@ -555,11 +555,11 @@
 	
 	[self load];
 	
-	if (viewToken == TDCServerSheetFloodControlNavigationSelection) {
+	if (viewToken == TDCServerPropertiesSheetFloodControlNavigationSelection) {
 		[self showWithDefaultView:_navigationIndexForFloodControl];
-	} else if (viewToken == TDCServerSheetAddressBookNavigationSelection) {
+	} else if (viewToken == TDCServerPropertiesSheetAddressBookNavigationSelection) {
 		[self showWithDefaultView:_navigationIndexForAddressBook];
-	} else if (viewToken == TDCServerSheetNewIgnoreEntryNavigationSelection) {
+	} else if (viewToken == TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection) {
 		[self showWithDefaultView:_navigationIndexForAddressBook];
 
 		IRCAddressBookEntry *newIgnore = [IRCAddressBookEntry newIgnoreEntry];
@@ -939,7 +939,7 @@
 		id field = fieldToCheck[@"field"];
 
 		if ([field valueIsValid] == NO) {
-			errorReason = [NSString stringWithFormat:@"TDCServerSheet[1010][%@]", fieldToCheck[@"errorLocalizationNumeric"]];
+			errorReason = [NSString stringWithFormat:@"TDCServerPropertiesSheet[1010][%@]", fieldToCheck[@"errorLocalizationNumeric"]];
 
 			break;
 		}
@@ -1036,14 +1036,14 @@
 
 	[self save];
 
-	if ([self.delegate respondsToSelector:@selector(serverSheetOnOK:)]) {
-		[self.delegate serverSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(serverPropertiesSheetOnOK:)]) {
+		[self.delegate serverPropertiesSheetOnOK:self];
 	}
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (self.requestCloudDeletionOnClose) {
-		if ([self.delegate respondsToSelector:@selector(serverSheetRequestedCloudExclusionByDeletion:)]) {
-			[self.delegate serverSheetRequestedCloudExclusionByDeletion:self];
+		if ([self.delegate respondsToSelector:@selector(serverPropertiesSheetRequestedCloudExclusionByDeletion:)]) {
+			[self.delegate serverPropertiesSheetRequestedCloudExclusionByDeletion:self];
 		}
 	}
 #endif
@@ -1142,8 +1142,8 @@
 {
 	if ([self.excludedFromCloudSyncingCheck state] == NSOnState) {
 		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-										  body:TXTLS(@"TDCServerSheet[1002][2]")
-										 title:TXTLS(@"TDCServerSheet[1002][1]")
+										  body:TXTLS(@"TDCServerPropertiesSheet[1002][2]")
+										 title:TXTLS(@"TDCServerPropertiesSheet[1002][1]")
 								 defaultButton:TXTLS(@"BasicLanguage[1182]")
 							   alternateButton:TXTLS(@"BasicLanguage[1219]")
 								   otherButton:nil
@@ -1158,8 +1158,8 @@
 							   }];
 	} else {
 		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-										  body:TXTLS(@"TDCServerSheet[1003][2]")
-										 title:TXTLS(@"TDCServerSheet[1003][1]")
+										  body:TXTLS(@"TDCServerPropertiesSheet[1003][2]")
+										 title:TXTLS(@"TDCServerPropertiesSheet[1003][1]")
 								 defaultButton:TXTLS(@"BasicLanguage[1186]")
 							   alternateButton:nil
 								   otherButton:nil
@@ -1232,10 +1232,10 @@
 	BOOL hasNoCert = NSObjectIsEmpty(commonName);
 	
 	if (hasNoCert) {
-		[self.clientCertificateCommonNameField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
+		[self.clientCertificateCommonNameField setStringValue:TXTLS(@"TDCServerPropertiesSheet[1008]")];
 		
-		[self.clientCertificateSHA1FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
-		[self.clientCertificateMD5FingerprintField setStringValue:TXTLS(@"TDCServerSheet[1008]")];
+		[self.clientCertificateSHA1FingerprintField setStringValue:TXTLS(@"TDCServerPropertiesSheet[1008]")];
+		[self.clientCertificateMD5FingerprintField setStringValue:TXTLS(@"TDCServerPropertiesSheet[1008]")];
 	} else {
 		[self.clientCertificateCommonNameField setStringValue:commonName];
 		
@@ -1273,12 +1273,12 @@
 	if (querystatus == noErr) {
 		SFChooseIdentityPanel *panel = [SFChooseIdentityPanel sharedChooseIdentityPanel];
 		
-		[panel setInformativeText:TXTLS(@"TDCServerSheet[1009][2]")];
+		[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[1009][2]")];
 		
 		[panel setAlternateButtonTitle:BLS(1009)];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
-													message:TXTLS(@"TDCServerSheet[1009][1]")];
+													message:TXTLS(@"TDCServerPropertiesSheet[1009][1]")];
 
 		if (returnCode == NSModalResponseOK) {
 			SecIdentityRef identity = [panel identity];
@@ -1697,7 +1697,7 @@
 			return [c matchKeyword];
 		} else if ([columnId isEqualToString:@"channel"]) {
 			if ([c matchChannelID] == nil) {
-				return TXTLS(@"TDCServerSheet[1004]");
+				return TXTLS(@"TDCServerPropertiesSheet[1004]");
 			} else {
 				IRCChannelConfig *channel = nil;
 				
@@ -1710,14 +1710,14 @@
 				if (channel) {
 					return [channel channelName];
 				} else {
-					return TXTLS(@"TDCServerSheet[1004]");
+					return TXTLS(@"TDCServerPropertiesSheet[1004]");
 				}
 			}
 		} else if ([columnId isEqualToString:@"type"]) {
 			if ([c matchIsExcluded]) {
-				return TXTLS(@"TDCServerSheet[1005]");
+				return TXTLS(@"TDCServerPropertiesSheet[1005]");
 			} else {
-				return TXTLS(@"TDCServerSheet[1006]");
+				return TXTLS(@"TDCServerPropertiesSheet[1006]");
 			}
 		}
 	}
@@ -1728,9 +1728,9 @@
 		
 		if ([columnId isEqualToString:@"type"]) {
 			if ([g entryType] == IRCAddressBookIgnoreEntryType) {
-				return TXTLS(@"TDCServerSheet[1000]");
+				return TXTLS(@"TDCServerPropertiesSheet[1000]");
 			} else {
-				return TXTLS(@"TDCServerSheet[1001]");
+				return TXTLS(@"TDCServerPropertiesSheet[1001]");
 			}
 		} else {
 			return [g hostmask];
@@ -1861,8 +1861,8 @@
 
 	[self.channelTable unregisterDraggedTypes];
 	
-	if ([self.delegate respondsToSelector:@selector(serverSheetWillClose:)]) {
-		[self.delegate serverSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(serverPropertiesSheetWillClose:)]) {
+		[self.delegate serverPropertiesSheetWillClose:self];
 	}
 }
 

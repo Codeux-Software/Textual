@@ -86,7 +86,7 @@
 	@class TDCServerChannelListDialog;
 	@class TDCServerHighlightListSheet;
 	@class TDCServerHighlightListSheetEntry;
-	@class TDCServerSheet;
+	@class TDCServerPropertiesSheet;
 	@class TDCSheetBase;
 	@class TDCWelcomeSheet;
 	@class TDChannelBanListSheet;
@@ -303,7 +303,7 @@
 	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerChannelListDialog.h"
 	#import "TDCServerHighlightListSheet.h"
-	#import "TDCServerSheet.h"
+	#import "TDCServerPropertiesSheet.h"
 	#import "TDCWelcomeSheet.h"
 	#import "TDChannelBanListSheet.h"
 	#import "TDChannelInviteSheet.h"
