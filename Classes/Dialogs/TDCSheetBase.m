@@ -74,4 +74,9 @@
 	[self endSheet];
 }
 
+- (void)close
+{
+	[self cancel:nil];
+}
+
 @end

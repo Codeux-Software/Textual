@@ -100,12 +100,6 @@
 	[[self window] close];
 }
 
-- (void)releaseTableViewDataSourceBeforeClosure
-{
-	[self.channelListTable setDelegate:nil];
-	[self.channelListTable setDataSource:nil];
-}
-
 - (void)clear
 {
 	[self.channelListController setContent:nil];
@@ -243,8 +237,6 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self releaseTableViewDataSourceBeforeClosure];
-
 	[[self window] saveWindowStateForClass:[self class]];
 	
 	if ([self.delegate respondsToSelector:@selector(listDialogWillClose:)]) {

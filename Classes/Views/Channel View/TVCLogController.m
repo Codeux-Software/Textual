@@ -1046,8 +1046,8 @@
 					@synchronized(self.highlightedLineNumbers) {
 						[self.highlightedLineNumbers addObject:lineNumber];
 					}
-					
-					[self.associatedClient addHighlightInChannel:self.associatedChannel withLogLine:logLine];
+
+					[self.associatedClient cacheHighlightInChannel:self.associatedChannel withLogLine:logLine];
 				}
 
 				/* Do the actual append to WebKit. */

@@ -82,6 +82,7 @@
 	@class TDCHighlightEntrySheet;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightListSheet;
+	@class TDCHighlightListSheetEntry;
 	@class TDCInviteSheet;
 	@class TDCListDialog;
 	@class TDCModeSheet;

@@ -2286,7 +2286,6 @@
 				4CF40EE81AC1A59500A26BE0 /* TDCAddressBookSheet.xib */,
 				4CF40EF21AC1A59500A26BE0 /* TDChannelSheet.xib */,
 				4CF40EF41AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib */,
-				4CF40EF61AC1A59500A26BE0 /* TDCHighlightListSheet.xib */,
 				4CF40EF81AC1A59500A26BE0 /* TDCInviteSheet.xib */,
 				4CF40EFC1AC1A59500A26BE0 /* TDCModeSheet.xib */,
 				4CF40EFE1AC1A59500A26BE0 /* TDCNickSheet.xib */,
@@ -2535,8 +2534,9 @@
 			children = (
 				4CF40EE61AC1A59500A26BE0 /* TDCAboutPanel.xib */,
 				4CF40EEA1AC1A59500A26BE0 /* TDCFileTransferDialog.xib */,
-				4CF40F0A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib */,
+				4CF40EF61AC1A59500A26BE0 /* TDCHighlightListSheet.xib */,
 				4CF40F001AC1A59500A26BE0 /* TDCPreferences.xib */,
+				4CF40F0A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib */,
 				4CF40F0C1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib */,
 				4CF40F0E1AC1A59500A26BE0 /* TVCMainWindowYosemite.xib */,
 			);

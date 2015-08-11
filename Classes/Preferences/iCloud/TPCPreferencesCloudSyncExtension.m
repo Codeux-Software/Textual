@@ -268,7 +268,7 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	if ((reloadAction & TPCPreferencesKeyReloadHighlightLoggingAction) == TPCPreferencesKeyReloadHighlightLoggingAction) {
 		if ([TPCPreferences logHighlights] == NO) {
 			for (IRCClient *u in [worldController() clientList]) {
-				[u setCachedHighlights:@[]];
+				[u setCachedHighlights:nil];
 			}
 		}
 	}
