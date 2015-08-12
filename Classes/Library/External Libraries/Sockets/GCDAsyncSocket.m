@@ -28,69 +28,74 @@
 #import <sys/uio.h>
 #import <unistd.h>
 
-#if ! __has_feature(objc_arc)
-#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
-// For more information see: https://github.com/robbiehanson/CocoaAsyncSocket/wiki/ARC
-#endif
-
-
+/* Logging main */
 #ifndef GCDAsyncSocketLoggingEnabled
 #define GCDAsyncSocketLoggingEnabled 0
 #endif
 
 #if GCDAsyncSocketLoggingEnabled
 
-// Logging Enabled - See log level below
+#import <CocoaLumberjack/CocoaLumberjack.h>
 
-// Logging uses the CocoaLumberjack framework (which is also GCD based).
-// https://github.com/robbiehanson/CocoaLumberjack
-//
-// It allows us to do a lot of logging without significantly slowing down the code.
-#import "DDLog.h"
+#define LogError		DDLogError
+#define LogWarn			DDLogWarn
+#define LogInfo			DDLogInfo
+#define LogVerbose		DDLogVerbose
 
-#define LogAsync   YES
-#define LogContext GCDAsyncSocketLoggingContext
+#define LogTrace()      DDLogVerbose(@"Trace: %@", THIS_METHOD)
 
-#define LogObjc(flg, frmt, ...) LOG_OBJC_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
-#define LogC(flg, frmt, ...)    LOG_C_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
-
-#define LogError(frmt, ...)     LogObjc(LOG_FLAG_ERROR,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogWarn(frmt, ...)      LogObjc(LOG_FLAG_WARN,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogInfo(frmt, ...)      LogObjc(LOG_FLAG_INFO,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogVerbose(frmt, ...)   LogObjc(LOG_FLAG_VERBOSE, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-
-#define LogCError(frmt, ...)    LogC(LOG_FLAG_ERROR,   (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCWarn(frmt, ...)     LogC(LOG_FLAG_WARN,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCInfo(frmt, ...)     LogC(LOG_FLAG_INFO,    (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-#define LogCVerbose(frmt, ...)  LogC(LOG_FLAG_VERBOSE, (@"%@: " frmt), THIS_FILE, ##__VA_ARGS__)
-
-#define LogTrace()              LogObjc(LOG_FLAG_VERBOSE, @"%@: %@", THIS_FILE, THIS_METHOD)
-#define LogCTrace()             LogC(LOG_FLAG_VERBOSE, @"%@: %s", THIS_FILE, __FUNCTION__)
-
-#ifndef GCDAsyncSocketLogLevel
-#define GCDAsyncSocketLogLevel LOG_LEVEL_VERBOSE
-#endif
-
-// Log levels : off, error, warn, info, verbose
-static const int logLevel = GCDAsyncSocketLogLevel;
+static const DDLogLevel ddLogLevel = DDLogLevelAll;
 
 #else
-
-// Logging Disabled
 
 #define LogError(frmt, ...)     {}
 #define LogWarn(frmt, ...)      {}
 #define LogInfo(frmt, ...)      {}
 #define LogVerbose(frmt, ...)   {}
 
-#define LogCError(frmt, ...)    {}
-#define LogCWarn(frmt, ...)     {}
-#define LogCInfo(frmt, ...)     {}
-#define LogCVerbose(frmt, ...)  {}
-
 #define LogTrace()              {}
-#define LogCTrace(frmt, ...)    {}
 
+#endif
+
+/* Logging legacy */
+#define LogCError(frmt, ...)     {}
+#define LogCWarn(frmt, ...)      {}
+#define LogCInfo(frmt, ...)      {}
+#define LogCVerbose(frmt, ...)   {}
+
+#define LogCTrace()              {}
+
+/* Logging formatter */
+#if GCDAsyncSocketLoggingEnabled
+@interface GCDAsyncSocketLogFileFormatter : NSObject <DDLogFormatter>
+@end
+
+@implementation GCDAsyncSocketLogFileFormatter
+
+- (NSString *)formatLogMessage:(DDLogMessage *)logMessage
+{
+	NSString *logLevel;
+
+	switch ([logMessage flag])
+	{
+		case DDLogFlagDebug:    { logLevel = @"D"; break; }
+		case DDLogFlagError:    { logLevel = @"E"; break; }
+		case DDLogFlagWarning:  { logLevel = @"W"; break; }
+		case DDLogFlagInfo:     { logLevel = @"I"; break; }
+
+		default:				{ logLevel = @"V"; break; }
+	}
+
+	return [NSString stringWithFormat:@"[%@] %@ %@ %@ [Line %ld]: %@",
+			[[logMessage timestamp] description],
+			[logMessage threadID],
+			logLevel,
+			[logMessage function],
+			[logMessage line],
+			[logMessage message]];
+}
+
+@end
 #endif
 
 /**
@@ -909,6 +914,22 @@ static dispatch_queue_t cfstreamThreadSetupQueue; // setup & teardown
 	
 	id userData;
 }
+
+#if GCDAsyncSocketLoggingEnabled
++ (void)load
+{
+	DDFileLogger *fileLogger = [DDFileLogger new];
+
+	[fileLogger setMaximumFileSize:256000000];
+	[fileLogger setRollingFrequency:86400];
+
+	[fileLogger setLogFormatter:[GCDAsyncSocketLogFileFormatter new]];
+
+	[DDLog addLogger:fileLogger];
+
+	NSLog(@"Now logging to: %@", [[fileLogger currentLogFileInfo] filePath]);
+}
+#endif
 
 - (id)init
 {
