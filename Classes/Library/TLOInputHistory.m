@@ -81,6 +81,12 @@ NSString * const _inputHistoryGlobalObjectKey	= @"TLOInputHistoryDefaultObject";
 
 	if ([TPCPreferences inputHistoryIsChannelSpecific]) {
 		@synchronized(self.historyObjects) {
+			if ([treeItem isClient]) {
+				for (id childTreeItem in [treeItem channelList]) {
+					[self destroy:childTreeItem];
+				}
+			}
+
 			[self.historyObjects removeObjectForKey:[treeItem uniqueIdentifier]];
 		}
 	}

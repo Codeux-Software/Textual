@@ -60,7 +60,4 @@
 @interface EKBlowfishEncryptionBase : NSObject
 + (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding;
 + (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount;
-
-+ (NSInteger)estimatedLengthForECBEncryptedLength:(NSInteger)length;
-+ (NSInteger)estimatedLengthForCBCEncryptedLength:(NSInteger)length;
 @end

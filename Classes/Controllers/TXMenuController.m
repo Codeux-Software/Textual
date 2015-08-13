@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TLOLicenseManager.h"
+#endif
+
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
 #define _connected					(u && [u isConnected])
@@ -54,8 +58,6 @@
 #define _serverCurrentConfig		[u config]
 
 #define _channelConfig				[c config]
-
-#define _disableInSheet(c)			[self changeConditionInSheet:c]
 
 #define	_popWindowViewIfExists(c)	if ([self popWindowViewIfExists:(c)]) {		\
 										return;									\
@@ -106,13 +108,6 @@
 	[self.fileTransferController clearCachedIPAddress];
 }
 
-- (BOOL)changeConditionInSheet:(BOOL)condition
-{
-	TVCMainWindowNegateActionWithAttachedSheetR(NO);
-
-	return condition;
-}
-
 - (void)mainWindowSelectionDidChange
 {
 	[self forceAllChildrenElementsOfMenuToValidate:[NSApp mainMenu] recursively:YES];
@@ -147,90 +142,238 @@
 
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
+	BOOL frontmostWindowIsMainWindow = NO;
+
+	NSArray *windowList = [NSWindow windowNumbersWithOptions:0];
+
+	for (NSNumber *windowNumber in windowList) {
+		/* windowList is looped through because it may contain the menu
+		 bar so we return the first window that NSApp sees as an actual 
+		 window owned by the application. */
+		NSWindow *window = [NSApp windowWithWindowNumber:[windowNumber integerValue]];
+
+		if (window) {
+			if (window == mainWindow()) {
+				frontmostWindowIsMainWindow = YES;
+			}
+
+			break;
+		}
+	}
+
+	BOOL mainWindowNoSheet = ([mainWindow() attachedSheet] == nil);
+
+	BOOL isMainWindowKey = (frontmostWindowIsMainWindow && mainWindowNoSheet);
+
+	BOOL windowIsSheet = [[NSApp keyWindow] isSheet];
+
+	BOOL returnValue = [self validateSpecificMenuItemTag:tag forItem:item];
+
+	switch (tag)
+	{
+		/* 100 through 999 matches all main menu, menu items.
+		See TXMenuController.h for list of valid tags. */
+		case 100 ... 999:
+		case 1700 ... 1799:
+		{
+			/* Menu items part of the Window menu that should
+			 be hidden under certain conditions. */
+			if (tag >= 800 && tag <= 899) {
+				switch (tag) {
+					case 802: // "Toggle Visiblity of Member List"
+					case 803: // "Toggle Visiblity of Server List"
+					case 804: // "Toggle Window Appearance"
+					case 805: // "Sort Channel List"
+					case 806: // "Center Main Window"
+					case 807: // "Reset Window to Default Size"
+					case 808: // "Main Window"
+					case 809: // "Address Book"
+					case 810: // "Ignore List"
+					case 811: // "View Logs"
+					case 812: // "Highlight List"
+					case 813: // "File Transfers"
+					{
+						/* Modify separator items for the first item in switch. */
+						if (tag == 802) {
+							if (isMainWindowKey == NO) {
+								[item setHidden:YES];
+
+								[[[item menu] itemWithTag:816] setHidden:YES]; // Menu Separator
+								[[[item menu] itemWithTag:817] setHidden:YES]; // Menu Separator
+								[[[item menu] itemWithTag:818] setHidden:YES]; // Menu Separator
+							} else {
+								[item setHidden:NO];
+
+								[[[item menu] itemWithTag:816] setHidden:NO]; // Menu Separator
+								[[[item menu] itemWithTag:817] setHidden:NO]; // Menu Separator
+								[[[item menu] itemWithTag:818] setHidden:NO]; // Menu Separator
+							}
+						}
+
+						/* Hide "Main Window" if Main Window is key. */
+						/* Hide all other items when Main Window is NOT key. */
+						if (tag == 808) { // "Main Window"
+							if (isMainWindowKey) {
+								[item setHidden:YES];
+							} else {
+								[item setHidden:NO];
+							}
+						}
+						else // tag == 808
+						{
+							if (isMainWindowKey == NO) {
+								[item setHidden:YES];
+							} else {
+								[item setHidden:NO];
+							}
+						}
+					}
+				} // switch
+			} // if 800 <> 899
+
+			/* When the main window is not the focused window or when we are
+			 in a sheet, most items can be disabled which means at this point
+			 we will default to disabled and allow the bottom logic to enable
+			 only the bare essentials. */
+			BOOL defaultToNoForSheet = (windowIsSheet == YES || isMainWindowKey == NO);
+
+			if (defaultToNoForSheet) {
+				if (tag < 900) { // Do not disable "Help" menu
+					returnValue = NO;
+				}
+			}
+
+			/* If trial is expired, default everything to disabled. */
+			BOOL isTrialExpired = NO;
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
+				/* Disable everything by default except tag 900 through 916. These are various
+				 help menu links. See TXMenuController.h for complete list of tags. */
+				if (tag < 900 || tag > 916) {
+					returnValue = NO;
+				}
+
+				/* Enable specific items after it has been disabled. */
+				/* Other always-required items are enabled further 
+				 below this switch statement. */
+				if (tag == 102) { // "Manage license…"
+					[item setHidden:NO];
+
+					returnValue = YES;
+				}
+
+				isTrialExpired = YES;
+			}
+#endif
+
+			/* If certain items are hidden because of sheet but not because of
+			 the trial being expired, then enable additional items. */
+			if (returnValue == NO && defaultToNoForSheet == YES && isTrialExpired == NO) {
+				switch (tag) {
+					case 100: // "About Textual"
+					case 101: // "Preferences…"
+					case 102: // "Manage license…"
+					case 103: // "Check for updates…"
+					{
+						returnValue = YES;
+					}
+				}
+			}
+
+			/* These are the bare minimium of menu items that must be enabled
+			 at all times because they are essential to the entire application. */
+			if (returnValue == NO) {
+				switch (tag) {
+					case 100: // "About Textual"
+					case 104: // "Services"
+					case 105: // "Hide Textual"
+					case 106: // "Hide Others"
+					case 107: // "Show All"
+					case 108: // "Quit Textual & IRC"
+					case 202: // "Print"
+					case 203: // "Close Window"
+					case 300: // "Undo"
+					case 301: // "Redo"
+					case 302: // "Cut"
+					case 303: // "Copy"
+					case 304: // "Paste"
+					case 305: // "Delete"
+					case 306: // "Select All"
+					case 311: // "Spelling"
+					case 312: // "Spelling…"
+					case 313: // "Check Spelling"
+					case 314: // "Check Spelling as You Type"
+					case 407: // "Toggle Fullscreen"
+					case 800: // "Minimize"
+					case 801: // "Zoom"
+					case 808: // "Main Window"
+					case 814: // "Bring All to Front"
+					{
+						returnValue = YES;
+					} // case
+				} // switch
+			} // if returnValue == NO
+		} // case 100 ... 999
+	} // switch
+
+	return returnValue;
+}
+
+- (BOOL)validateSpecificMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
+{
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
 
 	switch (tag) {
-		case 2433: // "Sort Channel List"
-		case 32345: // "Mark Scrollback"
-		case 32346: // "Scrollback Marker"
-		case 32347: // "Mark All As Read"
-		case 32348: // "Clear Scrollback"
-		case 32349: // "Increase Font Size"
-		case 32350: // "Decrease Font Size"
-		case 4564: // "Find…"
-		case 4565: // "Find Next"
-		case 4566: // "Find Previous"
-		case 50001: // "Next Server"
-		case 50002: // "Previous Server"
-		case 50003: // "Next Active Server"
-		case 50004: // "Previous Active Server"
-		case 50005: // "Next Channel"
-		case 50006: // "Previous Channel"
-		case 50007: // "Next Active Channel"
-		case 50008: // "Previous Active Channel"
-		case 50009: // "Next Unread Channel"
-		case 50010: // "Previous Unread Channel"
-		case 50011: // "Previous Selection"
-		case 50012: // "Move Forward"
-		case 50013: // "Move Backward"
-		case 521: // "Add Server…"
-		case 5675: // "Connect to Help Channel"
-		case 5676: // "Connect to Testing Channel"
-		case 6666: // "Disable All Notification Sounds"
-		case 6667: // "Disable All Notifications"
-		case 6876: // "Topic"
-		case 6877: // "Ban List"
-		case 6878: // "Ban Exceptions"
-		case 6879: // "Invite Exceptions"
-		case 6880: // "General Settings"
-		case 6881: // "Moderated (+m)"
-		case 6882: // "Unmoderated (-m)"
-		case 6883: // "Invite Only (+i)"
-		case 6884: // "Anyone Can Join (-i)"
-		case 6885: // "Manage All Modes"
-		case 7306: // "Print"
-		case 51065: // "Toggle Visbility of Server List"
-		case 64611: // "Channel List…"
-		case 52694: // "Send file…"
-		case 504910 ... 504912: // User, right click menu, + mode changes
-		case 504810 ... 504812: // User, right click menu, - mode changes
-		{
-			return _disableInSheet(YES);
-		}
-		case 51066: // "Toggle Visbility of Member List"
-		{
-			return _disableInSheet(_isChannel);
-		}
-		case 331: // "Search on Google"
+		case 315: // "Search in Google"
+		case 1601: // "Search on Google"
 		{
 			TVCLogView *web = [self currentWebView];
 
 			PointerIsEmptyAssertReturn(web, NO);
-			
-			return _disableInSheet([web hasSelection]);
+
+			return [web hasSelection];
 		}
-		case 542: // "Logs"
+		case 802: // "Toggle Visiblity of Member List"
+		{
+			return _isChannel;
+		}
+		case 606: // "Query Logs"
+		case 1606: // "Query Logs"
+		{
+			if (_isQuery) {
+				[item setHidden:NO];
+
+				return [TPCPreferences logToDiskIsEnabled];
+			} else {
+				[item setHidden:YES];
+
+				return NO;
+			}
+		}
+		case 608: // "View Logs"
+		case 811: // "View Logs"
 		{
 			BOOL condition = [TPCPreferences logToDiskIsEnabled];
 
 			return condition;
 		}
-		case 5422: // "Channel Properties"
+		case 607: // "Channel Properties"
 		{
 			BOOL condition = _isChannel;
 
 			[item setHidden:(condition == NO)];
 
-			return _disableInSheet(condition);
+			return condition;
 		}
-		case 5423: // "Channel" (submenu) (main menu)
-		case 5424: // "Channel" (submenu) (webkit)
+		case 006: // "Channel" (Main Menu)
+		case 1607: // "Channel" (WebView)
 		{
-#define _channelMenuSeparatorTag_1			935
-#define _channelMenuSeparatorTag_2			936
-#define _channelMenuSeparatorTag_3			937
-#define _channelWebkitMenuTag				5424
+#define _channelMenuSeparatorTag_1			602
+#define _channelMenuSeparatorTag_2			605
+#define _channelMenuSeparatorTag_3			1605
+#define _channelWebkitMenuTag				1607
 
 			NSMenu *hostMenu = nil;
 
@@ -257,7 +400,7 @@
 
 			return YES;
 		}
-		case 501: // "Connect"
+		case 500: // "Connect"
 		{
 			if (_noClient) {
 				return NO;
@@ -291,45 +434,41 @@
 				[item setAction:@selector(connectPreferringIPv4:)];
 			}
 
-			return _disableInSheet((condition == NO && [u isQuitting] == NO));
+			return (condition == NO && [u isQuitting] == NO);
 		}
-		case 502: // "Disconnect"
+		case 501: // "Disconnect"
 		{
 			BOOL condition = (_connected || [u isConnecting]);
 			
 			[item setHidden:(condition == NO)];
 			
-			return _disableInSheet(condition);
+			return condition;
 		}
-		case 503: // "Cancel Reconnect"
+		case 502: // "Cancel Reconnect"
 		{
 			BOOL condition = [u isReconnecting];
 			
 			[item setHidden:(condition == NO)];
 			
-			return _disableInSheet(condition);
+			return condition;
 		}
-		case 511: // "Change Nickname…"
-		case 519: // "Channel List…"
+		case 503: // "Change Nickname…"
+		case 504: // "Channel List…"
 		{
-			return _disableInSheet(_connectionLoggedIn);
+			return _connectionLoggedIn;
 		}
-		case 523: // "Delete Server"
+		case 507: // "Delete Server"
 		{
-			return _disableInSheet(_notConnected);
+			return _notConnected;
 		}
-		case 522: // "Duplicate Server"
-		case 541: // "Server Properties…"
-		case 590: // "Address Book"
-		case 591: // "Ignore List"
+		case 506: // "Duplicate Server"
+		case 509: // "Server Properties…"
+		case 809: // "Address Book"
+		case 810: // "Ignore List"
 		{
-			return _disableInSheet(_noClient == NO);
+			return (_noClient == NO);
 		}
-		case 592: // "Textual Logs"
-		{
-			return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
-		}
-		case 601: // "Join Channel"
+		case 600: // "Join Channel"
 		{
 			if (_isQuery) {
 				[item setHidden:YES];
@@ -344,10 +483,10 @@
 					[item setHidden:NO];
 				}
 				
-				return _disableInSheet(condition);
+				return condition;
 			}
 		}
-		case 602: // "Leave Channel"
+		case 601: // "Leave Channel"
 		{
 			if (_isQuery) {
 				[item setHidden:YES];
@@ -356,10 +495,10 @@
 			} else {
 				[item setHidden:_notActive];
 				
-				return _disableInSheet(_activate);
+				return _activate;
 			}
 		}
-		case 651: // "Add Channel…"
+		case 603: // "Add Channel…"
 		{
 			if (_isQuery) {
 				[item setHidden:YES];
@@ -368,26 +507,26 @@
 			} else {
 				[item setHidden:NO];
 				
-				return _disableInSheet(_noClient == NO);
+				return (_noClient == NO);
 			}
 		}
-		case 652: // "Delete Channel"
+		case 604: // "Delete Channel"
 		{
 			if (_isQuery) {
 				[item setTitle:BLS(1025)];
 				
-				return _disableInSheet(YES);
+				return YES;
 			} else {
 				[item setTitle:BLS(1024)];
 				
-				return _disableInSheet(_isChannel);
+				return _isChannel;
 			}
 		}
-		case 691: // "Add Channel…" - Server Menu
+		case 1201: // "Add Channel…" - Server Menu
 		{
-			return _disableInSheet(_noClient == NO);
+			return (_noClient == NO);
 		}
-		case 2005: // "Invite To…"
+		case 1500: // "Invite To…"
 		{
 			if (_connectionNotLoggedIn || [self checkSelectedMembers:item] == NO) {
 				return NO;
@@ -401,19 +540,7 @@
 				}
 			}
 			
-			return _disableInSheet((count > 0));
-		}
-		case 5421: // "Query Logs"
-		{
-			if (_isQuery) {
-				[item setHidden:NO];
-				
-				return _disableInSheet([TPCPreferences logToDiskIsEnabled]);
-			} else {
-				[item setHidden:YES];
-				
-				return NO;
-			}
+			return (count > 0);
 		}
 		case 9631: // "Close Window"
 		{
@@ -478,11 +605,11 @@
 			
 			return YES;
 		}
-		case 593: // "Highlight List"
+		case 812: // "Highlight List"
 		{
-			return _disableInSheet([TPCPreferences logHighlights] && _connectionLoggedIn);
+			return ([TPCPreferences logHighlights] && _connectionLoggedIn);
 		}
-        case 54092: // Developer Mode
+        case 920: // Developer Mode
         {
             if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken] == YES) {
                 [item setState:NSOnState];
@@ -493,7 +620,7 @@
             return YES;
         }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
 		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
 		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
@@ -519,27 +646,26 @@
 		}
 #endif
 
-		case 504813: // "All Modes Given"
+		case 1506: // "All Modes Given"
 		{
 			return NO;
 		}
-		case 504913: // "All Modes Taken"
+		case 1510: // "All Modes Taken"
 		{
-#define _userControlsMenuAllModesTakenMenuTag		504813
-#define _userControlsMenuAllModesGivenMenuTag		504913
+#define _userControlsMenuAllModesGivenMenuTag		1506
+#define _userControlsMenuAllModesTakenMenuTag		1510
 			
-#define _userControlsMenuGiveModeOMenuTag			504910
-#define _userControlsMenuGiveModeHMenuTag			504911
-#define _userControlsMenuGiveModeVMenuTag			504912
+#define _userControlsMenuGiveModeOMenuTag			1503
+#define _userControlsMenuGiveModeHMenuTag			1504
+#define _userControlsMenuGiveModeVMenuTag			1505
 			
-#define _userControlsMenuTakeModeOMenuTag			504810
-#define _userControlsMenuTakeModeHMenuTag			504811
-#define _userControlsMenuTakeModeVMenuTag			504812
+#define _userControlsMenuTakeModeOMenuTag			1507
+#define _userControlsMenuTakeModeHMenuTag			1508
+#define _userControlsMenuTakeModeVMenuTag			1509
 
 #define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 			NSArray *nicknames = [self selectedMembers:nil];
 
@@ -582,7 +708,7 @@
 
 			return NO;
 
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 
 #undef _ui
 
@@ -597,17 +723,37 @@
 #undef _userControlsMenuTakeModeHMenuTag
 #undef _userControlsMenuTakeModeVMenuTag
 		}
-		case 990002: // "Next Highlight"
+		case 715: // "Next Highlight"
 		{
 			TVCLogController *currentView = [mainWindow() selectedViewController];
 
-			return _disableInSheet([currentView highlightAvailable:NO]);
+			return ([currentView highlightAvailable:NO]);
 		}
-		case 990003: // "Previous Highlight"
+		case 716: // "Previous Highlight"
 		{
 			TVCLogController *currentView = [mainWindow() selectedViewController];
 
-			return _disableInSheet([currentView highlightAvailable:YES]);
+			return ([currentView highlightAvailable:YES]);
+		}
+		case 304: // "Paste"
+		{
+			if ([mainWindow() isKeyWindow]) {
+				return ([mainWindowTextField() isEditable]);
+			} else {
+				id firstResponder = [[NSApp keyWindow] firstResponder];
+
+				if ([firstResponder respondsToSelector:@selector(isEditable)]) {
+					return [firstResponder isEditable];
+				} else {
+					return NO;
+				}
+			}
+		}
+		case 804: // "Toggle Window Appearance"
+		{
+			BOOL condition = [RZUserDefaults() boolForKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+
+			return condition;
 		}
 		default:
 		{
@@ -633,7 +779,7 @@
 
 - (void)populateNavgiationChannelList
 {
-#define _channelNavigationMenuEntryMenuTag		64611
+#define _channelNavigationMenuEntryMenuTag		717
 	
 	/* Remove all previous entries. */
 	[self.navigationChannelList removeAllItems];
@@ -643,17 +789,25 @@
 
 	for (IRCClient *u in [worldController() clientList]) {
 		/* Create a menu item for the client title. */
-		NSMenuItem *newItem = [NSMenuItem menuItemWithTitle:BLS(1183, [u name]) target:nil action:nil];
+		NSMenuItem *serverNewMenuItem = [NSMenuItem new];
 
-		[self.navigationChannelList addItem:newItem];
+		[serverNewMenuItem setTitle:BLS(1183, [u name])];
+
+		NSMenu *serverNewMenu = [NSMenu new];
+
+		[serverNewMenuItem setSubmenu:serverNewMenu];
+
+		[self.navigationChannelList addItem:serverNewMenuItem];
 
 		/* Begin populating channels. */
 		for (IRCChannel *c in [u channelList]) {
 			/* Create the menu item. Only first ten items get a key combo. */
+			NSMenuItem *channelNewMenuItem = nil;
+
 			if (channelCount >= 10) {
-				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
-												 target:self
-												 action:@selector(navigateToSpecificChannelInNavigationList:)];
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
+															target:self
+															action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
 				NSInteger keyboardIndex = (channelCount + 1);
 
@@ -661,20 +815,20 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				newItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
-												 target:self
-												 action:@selector(navigateToSpecificChannelInNavigationList:)
-										  keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
-									  keyEquivalentMask:NSCommandKeyMask];
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:BLS(1184, [c name])
+															target:self
+															action:@selector(navigateToSpecificChannelInNavigationList:)
+													 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
+												 keyEquivalentMask:NSCommandKeyMask];
 			}
 
 			/* The tag identifies each item. */
-			[newItem setUserInfo:[worldController() pasteboardStringForItem:c]];
+			[channelNewMenuItem setUserInfo:[worldController() pasteboardStringForItem:c]];
 			
-			[newItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
+			[channelNewMenuItem setTag:_channelNavigationMenuEntryMenuTag]; // Use same tag for each to disable during sheets.
 
 			/* Add to the actaul navigation list. */
-			[self.navigationChannelList addItem:newItem];
+			[serverNewMenu addItem:channelNewMenuItem];
 
 			/* Bump the count... */
 			channelCount += 1;
@@ -903,8 +1057,8 @@
 
 - (void)showFindPanel:(id)sender
 {
-#define _findPanelOpenPanelMenuTag		4564
-#define _findPanelMoveForwardMenuTag	4565
+#define _findPanelOpenPanelMenuTag		308
+#define _findPanelMoveForwardMenuTag	309
 
 	if ([sender tag] == _findPanelOpenPanelMenuTag || NSObjectIsEmpty(self.currentSearchPhrase)) {
 		[self internalOpenFindPanel:sender];
@@ -1019,22 +1173,24 @@
 
 - (void)paste:(id)sender
 {
-    NSWindow *keyWindow = [NSApp keyWindow];
-
-    if ([keyWindow isEqual:mainWindow()]) {
+	if ([mainWindow() isKeyWindow]) {
 		[mainWindowTextField() focus];
-		
+
 		[mainWindowTextField() paste:sender];
-    } else {
-        if ([[keyWindow firstResponder] respondsToSelector:@selector(paste:)]) {
-            [[keyWindow firstResponder] performSelector:@selector(paste:) withObject:nil];
-        }
-    }
+	} else {
+		if ([[[NSApp keyWindow] firstResponder] respondsToSelector:@selector(paste:)]) {
+			[[[NSApp keyWindow] firstResponder] performSelector:@selector(paste:) withObject:nil];
+		}
+	}
 }
 
 - (void)print:(id)sender
 {
-	[[self currentWebView] print:sender];
+	if ([mainWindow() isKeyWindow] == NO) {
+		[[NSApp keyWindow] print:sender];
+	} else {
+		[[self currentWebView] print:sender];
+	}
 }
 
 - (void)closeWindow:(id)sender
@@ -1210,7 +1366,7 @@
 		return;
 	}
 
-	TDCNickSheet *nickSheet = [TDCNickSheet new];
+	TDCServerChangeNicknameSheet *nickSheet = [TDCServerChangeNicknameSheet new];
 
 	[nickSheet setDelegate:self];
 	[nickSheet setWindow:mainWindow()];
@@ -1222,7 +1378,7 @@
 	[self addWindowToWindowList:nickSheet];
 }
 
-- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
 	
@@ -1233,9 +1389,9 @@
 	[u changeNickname:nickname];
 }
 
-- (void)nickSheetWillClose:(TDCNickSheet *)sender
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCNickSheet"];
+	[self removeWindowFromWindowList:@"TDCServerChangeNicknameSheet"];
 }
 
 #pragma mark -
@@ -1258,7 +1414,7 @@
 {
 	[self popWindowSheetIfExists];
 	
-	TDCServerSheet *d = [TDCServerSheet new];
+	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1266,7 +1422,7 @@
 	[d setClientID:nil];
 	[d setConfig:[IRCClientConfig new]];
 
-	[d start:TDCServerSheetDefaultNavigationSelection withContext:nil];
+	[d start:TDCServerPropertiesSheetDefaultNavigationSelection withContext:nil];
 
 	[self addWindowToWindowList:d];
 }
@@ -1310,7 +1466,7 @@
 	
 	NSString *warningToken = @"BasicLanguage[1198][2]";
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([_serverCurrentConfig excludedFromCloudSyncing] == NO) {
 			warningToken = @"BasicLanguage[1198][3]";
@@ -1336,7 +1492,7 @@
 #pragma mark -
 #pragma mark Server Properties
 
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerPropertiesSheetNavigationSelection)viewType andContext:(NSString *)context
 {
 	if (_noClient) {
 		return;
@@ -1344,7 +1500,7 @@
 
 	[self popWindowSheetIfExists];
 	
-	TDCServerSheet *d = [TDCServerSheet new];
+	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1360,11 +1516,11 @@
 - (void)showServerPropertiesDialog:(id)sender
 {
 	[self showServerPropertyDialog:[mainWindow() selectedClient]
-				   withDefaultView:TDCServerSheetDefaultNavigationSelection
+				   withDefaultView:TDCServerPropertiesSheetDefaultNavigationSelection
 						andContext:nil];
 }
 
-- (void)serverSheetOnOK:(TDCServerSheet *)sender
+- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender
 {
 	if ([sender clientID] == nil) {
 		[worldController() createClient:[sender config] reload:YES];
@@ -1392,16 +1548,16 @@
 	[worldController() save];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender
 {
 	[worldController() addClientToListOfDeletedClients:[[sender config] itemUUID]];
 }
 #endif
 
-- (void)serverSheetWillClose:(TDCServerSheet *)sender
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCServerSheet"];
+	[self removeWindowFromWindowList:@"TDCServerPropertiesSheet"];
 }
 
 #pragma mark -
@@ -1450,7 +1606,7 @@
 		return;
 	}
 	
-	TDCHighlightListSheet *d = [TDCHighlightListSheet new];
+	TDCServerHighlightListSheet *d = [TDCServerHighlightListSheet new];
 	
 	[d setDelegate:self];
 	[d setWindow:mainWindow()];
@@ -1462,9 +1618,9 @@
 	[self addWindowToWindowList:d];
 }
 
-- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCHighlightListSheet"];
+	[self removeWindowFromWindowList:@"TDCServerHighlightListSheet"];
 }
 
 #pragma mark -
@@ -1481,7 +1637,7 @@
 		return;
 	}
 
-	TDCTopicSheet *t = [TDCTopicSheet new];
+	TDChannelModifyTopicSheet *t = [TDChannelModifyTopicSheet new];
 
 	[t setDelegate:self];
 	[t setWindow:mainWindow()];
@@ -1494,7 +1650,7 @@
 	[self addWindowToWindowList:t];
 }
 
-- (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic
+- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
 												   channelId:[sender channelID]];
@@ -1508,9 +1664,9 @@
 	[u send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
 }
 
-- (void)topicSheetWillClose:(TDCTopicSheet *)sender
+- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCTopicSheet"];
+	[self removeWindowFromWindowList:@"TDChannelModifyTopicSheet"];
 }
 
 #pragma mark -
@@ -1527,7 +1683,7 @@
 		return;
 	}
 	
-	TDCModeSheet *m = [TDCModeSheet new];
+	TDChannelModifyModesSheet *m = [TDChannelModifyModesSheet new];
 	
 	[m setDelegate:self];
 	[m setWindow:mainWindow()];
@@ -1542,7 +1698,7 @@
 	[self addWindowToWindowList:m];
 }
 
-- (void)modeSheetOnOK:(TDCModeSheet *)sender
+- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
 												   channelId:[sender channelID]];
@@ -1560,9 +1716,9 @@
 	[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], changeStr]];
 }
 
-- (void)modeSheetWillClose:(TDCModeSheet *)sender
+- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCModeSheet"];
+	[self removeWindowFromWindowList:@"TDChannelModifyModesSheet"];
 }
 
 #pragma mark -
@@ -1578,7 +1734,7 @@
 		return;
 	}
 	
-	TDChannelSheet *d = [TDChannelSheet new];
+	TDChannelPropertiesSheet *d = [TDChannelPropertiesSheet new];
 
 	[d setNewItem:YES];
 	
@@ -1634,7 +1790,7 @@
 		return;
 	}
 	
-	TDChannelSheet *d = [TDChannelSheet new];
+	TDChannelPropertiesSheet *d = [TDChannelPropertiesSheet new];
 
 	[d setNewItem:NO];
 	[d setObserveChanges:YES];
@@ -1652,7 +1808,7 @@
 	[self addWindowToWindowList:d];
 }
 
-- (void)channelSheetOnOK:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
 {
 	if ([sender newItem]) {
 		IRCClient *u = [worldController() findClientById:[sender clientID]];
@@ -1679,9 +1835,9 @@
 	[worldController() save];
 }
 
-- (void)channelSheetWillClose:(TDChannelSheet *)sender
+- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelSheet"];
+	[self removeWindowFromWindowList:@"TDChannelPropertiesSheet"];
 }
 
 #pragma mark -
@@ -1848,7 +2004,7 @@
 	NSObjectIsEmptyAssert(channels);
 	NSObjectIsEmptyAssert(nicknames);
 
-	TDCInviteSheet *inviteSheet = [TDCInviteSheet new];
+	TDChannelInviteSheet *inviteSheet = [TDChannelInviteSheet new];
 	
 	[inviteSheet setDelegate:self];
 	[inviteSheet setWindow:mainWindow()];
@@ -1861,7 +2017,7 @@
 	[self addWindowToWindowList:inviteSheet];
 }
 
-- (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName
+- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
 	IRCClient *u = [worldController() findClientById:[sender clientID]];
 
@@ -1874,9 +2030,9 @@
 	}
 }
 
-- (void)inviteSheetWillClose:(TDCInviteSheet *)sender
+- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCInviteSheet"];
+	[self removeWindowFromWindowList:@"TDChannelInviteSheet"];
 }
 
 #pragma mark -
@@ -2015,7 +2171,7 @@
 - (void)showChannelIgnoreList:(id)sender
 {
 	[self showServerPropertyDialog:[mainWindow() selectedClient]
-					withDefaultView:TDCServerSheetAddressBookNavigationSelection
+					withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection
 						andContext:nil];
 }
 
@@ -2059,9 +2215,9 @@
 
 - (void)showAboutWindow:(id)sender
 {
-	_popWindowViewIfExists(@"TDCAboutPanel");
+	_popWindowViewIfExists(@"TDCAboutDialog");
 	
-	TDCAboutPanel *aboutPanel = [TDCAboutPanel new];
+	TDCAboutDialog *aboutPanel = [TDCAboutDialog new];
 
 	[aboutPanel setDelegate:self];
 
@@ -2070,9 +2226,9 @@
 	[self addWindowToWindowList:aboutPanel];
 }
 
-- (void)aboutPanelWillClose:(TDCAboutPanel *)sender
+- (void)aboutDialogWillClose:(TDCAboutDialog *)sender
 {
-	[self removeWindowFromWindowList:@"TDCAboutPanel"];
+	[self removeWindowFromWindowList:@"TDCAboutDialog"];
 }
 
 #pragma mark -
@@ -2423,7 +2579,7 @@
 		return;
 	}
 	
-	[u createChanBanListDialog];
+	[u createChannelBanListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
 }
@@ -2437,7 +2593,7 @@
 		return;
 	}
 	
-	[u createChanBanExceptionListDialog];
+	[u createChannelBanExceptionListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
 }
@@ -2451,7 +2607,7 @@
 		return;
 	}
 	
-	[u createChanInviteExceptionListDialog];
+	[u createChannelInviteExceptionListSheet];
 	
 	[u send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
 }
@@ -2459,20 +2615,20 @@
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	NSDictionary *_helpMenuLinks = @{
-	   @(101) : @"https://www.codeux.com/textual/help/3rd-Party-Addons.kb",
-	   @(102) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
-	   @(103) : @"https://www.codeux.com/textual/help/home.kb",
-	   @(104) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
-	   @(105) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
-	   @(106) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
-	   @(107) : @"https://www.codeux.com/textual/help/Support.kb",
-	   @(108) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
-	   @(109) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
-	   @(110) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
-	   @(111) : @"https://www.codeux.com/textual/help/Styles.kb",
-	   @(112) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
-	   @(113) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
-	   @(114) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
+	   @(901) : @"https://www.codeux.com/textual/help/Privacy-Policy.kb",
+	   @(902) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
+	   @(905) : @"https://www.codeux.com/textual/help/home.kb",
+	   @(906) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
+	   @(907) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
+	   @(908) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
+	   @(909) : @"https://www.codeux.com/textual/help/Support.kb",
+	   @(910) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
+	   @(911) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
+	   @(912) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
+	   @(913) : @"https://www.codeux.com/textual/help/Styles.kb",
+	   @(914) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
+	   @(915) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
+	   @(916) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
 	};
 	
 	NSString *linkloc = _helpMenuLinks[@([sender tag])];
@@ -2482,25 +2638,30 @@
 
 - (void)openMacAppStoreDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.textualapp.com/"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
+}
+
+- (void)openFastSpringStoreWebpage:(id)sender
+{
+	[TLOpenLink openWithString:@"https://www.textualapp.com/fastspring-store"];
 }
 
 - (void)processNavigationItem:(id)sender
 {
 	switch ([sender tag]) {
-		case 50001: { [mainWindow() selectNextServer:nil];					break;		}
-		case 50002: { [mainWindow() selectPreviousServer:nil];				break;		}
-		case 50003: { [mainWindow() selectNextActiveServer:nil];			break;		}
-		case 50004: { [mainWindow() selectPreviousActiveServer:nil];		break;		}
-		case 50005: { [mainWindow() selectNextChannel:nil];					break;		}
-		case 50006: { [mainWindow() selectPreviousChannel:nil];				break;		}
-		case 50007: { [mainWindow() selectNextActiveChannel:nil];			break;		}
-		case 50008: { [mainWindow() selectPreviousActiveChannel:nil];		break;		}
-		case 50009: { [mainWindow() selectNextUnreadChannel:nil];			break;		}
-		case 50010: { [mainWindow() selectPreviousUnreadChannel:nil];		break;		}
-		case 50011: { [mainWindow() selectPreviousSelection:nil];			break;		}
-		case 50012: { [mainWindow() selectNextWindow:nil];					break;		}
-		case 50013: { [mainWindow() selectPreviousWindow:nil];				break;		}
+		case 701: { [mainWindow() selectNextServer:nil];					break;		}
+		case 702: { [mainWindow() selectPreviousServer:nil];				break;		}
+		case 703: { [mainWindow() selectNextActiveServer:nil];				break;		}
+		case 704: { [mainWindow() selectPreviousActiveServer:nil];			break;		}
+		case 706: { [mainWindow() selectNextChannel:nil];					break;		}
+		case 707: { [mainWindow() selectPreviousChannel:nil];				break;		}
+		case 708: { [mainWindow() selectNextActiveChannel:nil];				break;		}
+		case 709: { [mainWindow() selectPreviousActiveChannel:nil];			break;		}
+		case 710: { [mainWindow() selectNextUnreadChannel:nil];				break;		}
+		case 711: { [mainWindow() selectPreviousUnreadChannel:nil];			break;		}
+		case 712: { [mainWindow() selectPreviousWindow:nil];				break;		}
+		case 713: { [mainWindow() selectNextWindow:nil];					break;		}
+		case 714: { [mainWindow() selectPreviousSelection:nil];				break;		}
 	}
 }
 
@@ -2565,7 +2726,7 @@
 
 - (void)toggleChannelModerationMode:(id)sender
 {
-#define _toggleChannelModerationModeOffTag		6882
+#define _toggleChannelModerationModeOffTag		612
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2589,7 +2750,7 @@
 
 - (void)toggleChannelInviteMode:(id)sender
 {
-#define _toggleChannelInviteStatusModeOffTag		6884
+#define _toggleChannelInviteStatusModeOffTag		614
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -2655,7 +2816,7 @@
 
 - (void)toggleFullscreen:(id)sender
 {
-	[mainWindow() toggleFullScreen:sender];
+	[[NSApp keyWindow] toggleFullScreen:sender];
 }
 
 #pragma mark -
@@ -2674,7 +2835,7 @@
 #pragma mark -
 #pragma mark Encryption 
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define _encryptionNotEnabled		([TPCPreferences textEncryptionIsEnabled] == NO)
 
 - (void)encryptionStartPrivateConversation:(id)sender
@@ -2814,9 +2975,32 @@
 	}
 	
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
-
-	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
+
+#pragma mark -
+#pragma mark License Manager
+
+- (void)manageLicense:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
+
+	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
+
+	[licensePanel setDelegate:self];
+
+	[licensePanel show];
+
+	[self addWindowToWindowList:licensePanel];
+#endif
+}
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
+{
+	[self removeWindowFromWindowList:@"TDCLicenseManagerDialog"];
+}
+#endif
 
 #pragma mark -
 #pragma mark Developer Tools
@@ -2842,19 +3026,24 @@
 
 @implementation TXMenuControllerMainWindowProxy
 
+- (void)openFastSpringStoreWebpage:(id)sender
+{
+	[menuController() openFastSpringStoreWebpage:sender];
+}
+
+- (void)openMacAppStoreWebpage:(id)sender
+{
+	[menuController() openMacAppStoreDownloadPage:sender];
+}
+
+- (void)manageLicense:(id)sender
+{
+	[menuController() manageLicense:sender];
+}
+
 - (void)openWelcomeSheet:(id)sender
 {
 	[menuController() openWelcomeSheet:sender];
-}
-
-- (void)openMigrationAssistantDownloadPage:(id)sender
-{
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/downloads/migrationAssistant.download"];
-}
-
-- (void)openMacAppStoreDownloadPage:(id)sender
-{
-	[menuController() openMacAppStoreDownloadPage:sender];
 }
 
 @end

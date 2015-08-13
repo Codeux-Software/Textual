@@ -226,7 +226,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Blowfish Encryption Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -284,6 +284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Debug;
 		};
@@ -291,6 +292,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Release;
 		};
@@ -301,6 +303,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
+				SDKROOT = macosx10.10;
 			};
 			name = Debug;
 		};
@@ -311,6 +314,7 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
+				SDKROOT = macosx10.10;
 			};
 			name = Release;
 		};

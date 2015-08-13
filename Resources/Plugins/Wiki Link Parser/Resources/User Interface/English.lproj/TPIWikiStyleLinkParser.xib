@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikiStyleLinkParser">
@@ -35,8 +35,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="61">
-                                <rect key="frame" x="0.0" y="0.0" width="468" height="136"/>
+                                <rect key="frame" x="0.0" y="0.0" width="468" height="124.21017456054688"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <animations/>
                                 <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="468" height="124"/>
@@ -89,19 +90,24 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                                 <size key="maxSize" width="488" height="10000000"/>
                             </textView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
+                    <animations/>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
                         <rect key="frame" x="452" y="0.0" width="16" height="136"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </scroller>
                 </scrollView>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                    <rect key="frame" x="66" y="250" width="107" height="18"/>
+                    <rect key="frame" x="66" y="250" width="105" height="18"/>
+                    <animations/>
                     <buttonCell key="cell" type="check" title="Enable parser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -111,7 +117,8 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="68">
-                    <rect key="frame" x="50" y="221" width="87" height="17"/>
+                    <rect key="frame" x="50" y="221" width="85" height="17"/>
+                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -121,12 +128,13 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="273">
                     <rect key="frame" x="50" y="62" width="494" height="151"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
-                        <rect key="frame" x="1" y="17" width="492" height="114"/>
+                        <rect key="frame" x="1" y="0.0" width="492" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="492" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="492" height="127"/>
                                 <autoresizingMask key="autoresizingMask"/>
+                                <animations/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -165,19 +173,24 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                                 </connections>
                             </tableView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="275">
+                    <animations/>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="275">
                         <rect key="frame" x="1" y="153" width="492" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="277">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="277">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="276">
-                        <rect key="frame" x="0.0" y="0.0" width="492" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="492" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="284">
@@ -186,6 +199,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <constraint firstAttribute="width" constant="30" id="6Um-NM-fY7"/>
                         <constraint firstAttribute="height" constant="21" id="Bhk-Kl-RYh"/>
                     </constraints>
+                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -200,6 +214,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="JD4-dx-9J2"/>
                     </constraints>
+                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -229,6 +244,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                 <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50" id="zLt-zA-ewf"/>
                 <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="33" id="zN0-NR-ONh"/>
             </constraints>
+            <animations/>
             <point key="canvasLocation" x="412.5" y="458.5"/>
         </customView>
         <window title="New Condition" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
@@ -241,7 +257,8 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="242">
-                        <rect key="frame" x="17" y="90" width="115" height="17"/>
+                        <rect key="frame" x="17" y="90" width="114" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Use the link prefix" id="243">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -249,7 +266,11 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="244">
-                        <rect key="frame" x="138" y="88" width="291" height="22"/>
+                        <rect key="frame" x="137" y="88" width="292" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="NqI-hi-F20"/>
+                        </constraints>
+                        <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="https://en.wikipedia.org/wiki/" drawsBackground="YES" id="245">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -265,6 +286,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <constraints>
                             <constraint firstAttribute="width" constant="87" id="x7z-wW-vxi"/>
                         </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="247">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -273,6 +295,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="262">
                         <rect key="frame" x="112" y="58" width="318" height="26"/>
+                        <animations/>
                         <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" id="263">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -287,6 +310,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <constraints>
                             <constraint firstAttribute="width" constant="83" id="BFA-Xv-MbU"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="259">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -303,6 +327,7 @@ DQ
                         <constraints>
                             <constraint firstAttribute="width" constant="83" id="Bdl-yp-mfK"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="261">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -331,6 +356,7 @@ Gw
                     <constraint firstItem="260" firstAttribute="baseline" secondItem="258" secondAttribute="baseline" id="qhq-pI-9ag"/>
                     <constraint firstItem="242" firstAttribute="leading" secondItem="246" secondAttribute="leading" id="vTh-ip-cbp"/>
                 </constraints>
+                <animations/>
             </view>
         </window>
         <userDefaultsController id="ak5-9U-7uX" customClass="TPCPreferencesUserDefaultsController"/>

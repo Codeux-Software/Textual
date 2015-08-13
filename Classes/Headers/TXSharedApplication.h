@@ -67,7 +67,7 @@
 + (TPCThemeController *)sharedThemeController;
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (TLOEncryptionManager *)sharedEncryptionManager;
 #endif
 
@@ -79,7 +79,7 @@
 + (dispatch_queue_t)sharedMutableSynchronizationSerialQueue;
 + (void)releaseSharedMutableSynchronizationSerialQueue;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (TPCPreferencesCloudSync *)sharedCloudSyncManager;
 #endif
 @end

@@ -49,6 +49,12 @@ NSString * const TLOFileLoggerNoticeNicknameFormat		= @"-%n-";
 NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"; // 2008-07-09T16:13:30+12:00
 NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
+@interface TLOFileLogger ()
+@property (readonly, copy) NSURL *fileWritePath;
+@property (nonatomic, copy) NSURL *filename;
+@property (nonatomic, strong) NSFileHandle *file;
+@end
+
 @implementation TLOFileLogger
 
 #pragma mark -
@@ -98,7 +104,7 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 - (void)reopenIfNeeded
 {
-	/* This call is designed to reopen the file pointer when using 
+	/* This call is designed to reopen the file pointer when using
 	 the date as the filename. When the date changes, the log path
 	 will have to change as well. This handles that. */
 
@@ -109,9 +115,6 @@ NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 - (void)open
 {
-	/* Reset everything. */
-	[self close];
-
 	/* Where are we writing to? */
 	NSURL *path = [self fileWritePath];
 

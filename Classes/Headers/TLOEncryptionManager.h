@@ -41,20 +41,20 @@
  plugins. Please use higher up APIs in IRCClient and elsewhere for 
  sending encrypted messages to one or more users. */
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
 
-#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			9930 // "Start Private Conversation"
-#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		9931 // "Refresh Private Conversation"
-#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			9932 // "End Private Conversation"
-#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			9933 // "Authenticate Chat Partner"
-#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			9934 // "View List of Fingerprints"
+#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			1401 // "Start Private Conversation"
+#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		1402 // "Refresh Private Conversation"
+#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			1403 // "End Private Conversation"
+#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			1404 // "Authenticate Chat Partner"
+#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			1405 // "View List of Fingerprints"
 #endif
 
 typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager : NSObject <OTRKitDelegate, OTRKitFingerprintManagerDialogDelegate>
 /* Returns unique "account name" used for messageFrom and messageTo parameters. */
 - (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;

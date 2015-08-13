@@ -41,6 +41,8 @@
 TEXTUAL_EXTERN NSString * const IRCWorldControllerDefaultsStorageKey;
 TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; // the key within world controller maintaining the client list
 
+TEXTUAL_EXTERN NSString * const IRCWorldDateHasChangedNotification;
+
 @interface IRCWorld : NSObject
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;
@@ -104,8 +106,6 @@ TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; 
 
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args; // Defaults to onQueue YES
 - (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue;
-
-- (void)informViewsThatTheSidebarInversionPreferenceDidChange;
 
 - (void)logKeyDown:(NSEvent *)e;
 

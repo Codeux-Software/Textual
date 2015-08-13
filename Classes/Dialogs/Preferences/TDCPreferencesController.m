@@ -67,7 +67,7 @@
 #define _toolbarItemIndexDefualtIRCopMessages		117
 #define _toolbarItemIndexExperimentalSettings		119
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #define _toolbarItemIndexOffRecordMessaging		    121
 #endif
 
@@ -104,30 +104,28 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
-
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 @property (nonatomic, strong) IBOutlet NSView *contentViewICloud;
-#endif
-
 @property (nonatomic, strong) IBOutlet NSView *contentViewDefaultIRCopMessages;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIncomingData;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInstalledAddons;
 @property (nonatomic, strong) IBOutlet NSView *contentViewInterface;
 @property (nonatomic, strong) IBOutlet NSView *contentViewLogLocation;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (nonatomic, strong) IBOutlet NSView *contentViewOffRecordMessaging;
 #endif
 
 @property (nonatomic, strong) IBOutlet NSView *contentViewStyle;
 @property (nonatomic, strong) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSView *shareDataBetweenDevicesView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *shareDataBetweenDevicesViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, strong) IBOutlet NSView *mountainLionDeprecationWarningView;
-@property (nonatomic, strong) TDCPreferencesScriptWrapper *scriptsController;
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
 @property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
+@property (nonatomic, assign) BOOL newKeywordsTableRowAddedByUser;
 
 - (IBAction)onPrefPaneSelected:(id)sender;
 
@@ -141,7 +139,6 @@
 - (IBAction)onChangedAlertNotification:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (IBAction)onChangedCloudSyncingServices:(id)sender;
 - (IBAction)onChangedCloudSyncingServicesServersOnly:(id)sender;
 
@@ -150,7 +147,6 @@
 - (IBAction)onManageiCloudButtonClicked:(id)sender;
 - (IBAction)onPurgeOfCloudDataRequested:(id)sender;
 - (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
-#endif
 
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
@@ -180,7 +176,7 @@
 
 - (IBAction)onSelectNewFont:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)offRecordMessagingPolicyChanged:(id)sender;
 #endif
 @end
@@ -201,8 +197,6 @@
 
 - (void)show
 {
-	[self setScriptsController:[TDCPreferencesScriptWrapper new]];
-
 	NSMutableArray *alertSounds = [NSMutableArray new];
 
 	// self.alertSounds treats anything that is not a TDCPreferencesSoundWrapper as
@@ -246,11 +240,6 @@
 	}
 
 	// Complete startup of preferences.
-	[[self scriptsController] populateData];
-
-	[[self installedScriptsTable] setDataSource:[self scriptsController]];
-	[[self installedScriptsTable] reloadData];
-
 	[self setUpToolbarItemsAndMenus];
 
 	[self updateThemeSelection];
@@ -263,12 +252,16 @@
 	
 	[self onFileTransferIPAddressDetectionMethodChanged:nil];
 
+	[[self installedScriptsTable] setSortDescriptors:@[
+		[NSSortDescriptor sortDescriptorWithKey:@"string" ascending:YES selector:@selector(caseInsensitiveCompare:)]
+	]];
+
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCThemeControllerThemeListDidChangeNotification
 								 object:nil];
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
 								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
@@ -290,6 +283,16 @@
 			[self firstPane:[self mountainLionDeprecationWarningView] selectedItem:_toolbarItemIndexGeneral];
 		}
 	}
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
+	/* Hide "Share data between devices" when iCloud support is not enabled
+	 by setting the subview height to 0. Set height before calling firstPane: 
+	 so that firstPane: can calculate the correct total height. */
+
+	[[self shareDataBetweenDevicesViewHeightConstraint] setConstant:0.0];
+
+	[[self contentViewGeneral] layoutSubtreeIfNeeded];
+#endif
 
 	if ([self mountainLionDeprecationWarningIsVisible] == NO) {
 		[self firstPane:[self contentViewGeneral] selectedItem:_toolbarItemIndexGeneral];
@@ -355,7 +358,7 @@
 		_de(_toolbarItemIndexDefaultIdentity,		[self contentViewDefaultIdentity],			_toolbarItemIndexAdvanced)
 		_de(_toolbarItemIndexDefualtIRCopMessages,	[self contentViewDefaultIRCopMessages],		_toolbarItemIndexAdvanced)
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		_de(_toolbarItemIndexOffRecordMessaging,	[self contentViewOffRecordMessaging],		_toolbarItemIndexAdvanced)
 #endif
 
@@ -396,6 +399,16 @@
 
 #pragma mark -
 #pragma mark KVC Properties
+
+- (NSArray *)installedScripts
+{
+	NSMutableArray *scriptsInstalled = [NSMutableArray array];
+
+	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
+	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
+
+	return [scriptsInstalled stringArryControllerObjects];
+}
 
 - (NSString *)maxLogLines
 {
@@ -873,8 +886,10 @@
 	[[self themeSelectionButton] removeAllItems];
 	
 	NSDictionary *allThemes = [themeController() dictionaryOfAllThemes];
+
+	NSArray *allThemesKeys = [allThemes sortedDictionaryKeys];
 	
-	for (NSString *themeName in allThemes) {
+	for (NSString *themeName in allThemesKeys) {
 		NSString *themeType = allThemes[themeName];
 		
 		NSMenuItem *cell = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
@@ -978,7 +993,7 @@
 #pragma mark -
 #pragma mark Actions
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)offRecordMessagingPolicyChanged:(id)sender
 {
 	[sharedEncryptionManager() updatePolicy];
@@ -1005,30 +1020,35 @@
     }
 	
 	[[self addExcludeKeywordButton] setEnabled:YES];
+
 	[[self excludeKeywordsTable] setEnabled:YES];
 }
 
-- (void)editTable:(NSTableView *)table
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	NSInteger row = ([table numberOfRows] - 1);
+	if (tableView == [self keywordsTable] || tableView == [self excludeKeywordsTable]) {
+		if ([self newKeywordsTableRowAddedByUser]) {
+			[self setNewKeywordsTableRowAddedByUser:NO];
 
-	[table scrollRowToVisible:row];
+			[tableView scrollRowToVisible:row];
 
-	[table editColumn:0 row:row withEvent:nil select:YES];
+			[tableView editColumn:0 row:row withEvent:nil select:YES];
+		}
+	}
 }
 
 - (void)onAddKeyword:(id)sender
 {
-	[[self matchKeywordsArrayController] add:nil];
+	[self setNewKeywordsTableRowAddedByUser:YES];
 
-	[self performSelector:@selector(editTable:) withObject:[self keywordsTable] afterDelay:0.3];
+	[[self matchKeywordsArrayController] add:nil];
 }
 
 - (void)onAddExcludeKeyword:(id)sender
 {
-	[[self excludeKeywordsArrayController] add:nil];
+	[self setNewKeywordsTableRowAddedByUser:YES];
 
-	[self performSelector:@selector(editTable:) withObject:[self excludeKeywordsTable] afterDelay:0.3];
+	[[self excludeKeywordsArrayController] add:nil];
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
@@ -1040,7 +1060,7 @@
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +h"];
 	[RZUserDefaults() setObject:nil forKey:@"User List Mode Badge Colors -> +v"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +y"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +q"];
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"User List Mode Badge Colors -> +a"];
@@ -1056,7 +1076,7 @@
 {
 	[RZUserDefaults() setObject:nil forKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() removeObjectForKeyNextUpstreamSync:@"Server List Unread Message Count Badge Colors -> Highlight"];
 #endif
 	
@@ -1071,8 +1091,6 @@
 - (void)onChangedSidebarColorInversion:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
-
-	[worldController() informViewsThatTheSidebarInversionPreferenceDidChange];
 }
 
 - (void)onChangedStyle:(id)sender
@@ -1119,24 +1137,26 @@
 
 - (void)onOpenPathToCloudFolder:(id)sender
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TPCPathInfo openApplicationUbiquitousContainer];
 #endif
 }
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPath]];
+	[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
 - (void)onManageiCloudButtonClicked:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[self firstPane:[self contentViewICloud] selectedItem:_toolbarItemIndexAdvanced];
+#endif
 }
 
 - (void)onChangedCloudSyncingServices:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"TDCPreferencesController[1000][2]")
@@ -1155,10 +1175,12 @@
 		[sharedCloudManager() syncEverythingNextSync];
 		[sharedCloudManager() synchronizeFromCloud];
 	}
+#endif
 }
 
 - (void)onChangedCloudSyncingServicesServersOnly:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
 			[RZUbiquitousKeyValueStore() synchronize];
@@ -1166,8 +1188,10 @@
 			[sharedCloudManager() synchronizeFromCloud];
 		}
 	}
+#endif
 }
 
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
@@ -1207,9 +1231,11 @@
 		// metadata query will do that for us once we change the direcoty by deleting.
 	}
 }
+#endif
 
 - (void)onPurgeOfCloudFilesRequested:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1001][2]")
 									 title:TXTLS(@"TDCPreferencesController[1001][1]")
@@ -1221,10 +1247,12 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudFilesRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
+#endif
 }
 
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1002][2]")
 									 title:TXTLS(@"TDCPreferencesController[1002][1]")
@@ -1236,8 +1264,8 @@
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
 							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
 						   }];
-}
 #endif
+}
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
@@ -1252,7 +1280,7 @@
 
 		BOOL copyingToCloud = NO;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			copyingToCloud = YES;
 		}
@@ -1272,7 +1300,7 @@
 		NSString *dialogMessage = nil;
 		NSString *copyButton = nil;
 		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			dialogMessage = @"TDCPreferencesController[1011]";
 			copyButton = @"TDCPreferencesController[1009]";
@@ -1282,7 +1310,7 @@
 			dialogMessage = @"TDCPreferencesController[1010]";
 			copyButton = @"TDCPreferencesController[1008]";
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		}
 #endif
 
@@ -1300,7 +1328,7 @@
 		
 		return;
     } else {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		BOOL containerAvlb = [sharedCloudManager() ubiquitousContainerIsAvailable];
 		
 		if (containerAvlb) {
@@ -1362,18 +1390,15 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	/* Stop observing notifications. */
 	[RZNotificationCenter() removeObserver:self];
 
-	/* Reset the frame back to that of General before saving the existing position. */
+	[TPCPreferences cleanUpHighlightKeywords];
+
 	[[self window] setAlphaValue:0.0];
 
-	[self firstPane:[self contentViewGeneral] selectedItem:-1];
+	[self firstPane:[self contentViewGeneral] selectedItem:(-1)];
 
 	[[self window] saveWindowStateForClass:[self class]];
-
-	/* Clean up highlight keywords. */
-	[TPCPreferences cleanUpHighlightKeywords];
 
 	if ([[self delegate] respondsToSelector:@selector(preferencesDialogWillClose:)]) {
 		[[self delegate] preferencesDialogWillClose:self];

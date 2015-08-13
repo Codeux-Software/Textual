@@ -57,6 +57,8 @@
 "BasicLanguage[1016]" = "Mountain Lion";
 "BasicLanguage[1017]" = "Mavericks";
 "BasicLanguage[1052]" = "Yosemite";
+"BasicLanguage[1053]" = "El Capitan";
+"BasicLanguage[1054]" = "Unknown Operating System Version";
 
 "BasicLanguage[1018]" = "%.2f GHz";
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
@@ -77,9 +79,9 @@
 "BasicLanguage[1028]" = "Error: Unable to locate any network statistics.";
 
 /* /style/ command. */
-"BasicLanguage[1033]" = "\002Current Style:\002 %@ — \002Enviornment:\002 ";
-"BasicLanguage[1034]" = "\002Current Style:\002 %@ (Custom) — \002Enviornment:\002 ";
-"BasicLanguage[1035]" = "\002Current Style:\002 %@ (iCloud) — \002Enviornment:\002 ";
+"BasicLanguage[1033]" = "\002Current Style:\002 %@ — \002Environment:\002 ";
+"BasicLanguage[1034]" = "\002Current Style:\002 %@ (Custom) — \002Environment:\002 ";
+"BasicLanguage[1035]" = "\002Current Style:\002 %@ (iCloud) — \002Environment:\002 ";
 "BasicLanguage[1036]" = "Light mode in Textual, ";
 "BasicLanguage[1037]" = "Dark mode in Textual, ";
 "BasicLanguage[1038]" = "system wide aqua";

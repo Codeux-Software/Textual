@@ -54,4 +54,6 @@
 
 - (IBAction)ok:(id)sender;
 - (IBAction)cancel:(id)sender;
+
+- (void)close;
 @end

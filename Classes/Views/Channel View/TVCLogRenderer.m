@@ -181,7 +181,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	UniChar dest[length];
 	UniChar source[length];
 
-	CFStringGetCharacters((__bridge CFStringRef)_body, CFRangeMake(0, length), source);
+	for (NSInteger i = 0; i < length; i++) {
+		source[i] = [_body characterAtIndex:i];
+	}
 
 	for (NSInteger i = 0; i < length; i++) {
 		UniChar c = source[i];
@@ -377,6 +379,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	if (renderLinks) {
 		NSMutableDictionary *urlAry = [NSMutableDictionary dictionary];
 
+		NSMutableArray *matchedEntries = [NSMutableArray array];
+
 		NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:_body];
 
 		for (NSArray *rn in urlAryRanges) {
@@ -391,13 +395,19 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				/* Build unique list of URLs by using them as keys. */
 				NSString *matchedURL = rn[1];
 
-				NSString *hashedValue = [matchedURL md5];
+				if ([matchedEntries containsObject:matchedURL] == NO) {
+					[matchedEntries addObject:matchedURL];
 
-				if (urlAry[hashedValue] == nil) {
-					urlAry[hashedValue] = matchedURL;
+					NSString *hashedValue = [NSString stringWithUUID];
+
+					if (urlAry[hashedValue] == nil) {
+						urlAry[hashedValue] = matchedURL;
+					}
 				}
 			}
 		}
+
+		matchedEntries = nil;
 
 		_outputDictionary[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] = urlAryRanges;
 		_outputDictionary[TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute] = urlAry;
@@ -848,11 +858,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			if ([_controller inlineImagesEnabledForView]) {
 				NSDictionary *urlMatches = [_outputDictionary dictionaryForKey:TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute];
 
-				NSString *hashedValue = [templateTokens[@"anchorLocation"] md5];
+				for (NSString *hashedValue in urlMatches) {
+					NSString *anchorLink = urlMatches[hashedValue];
 
-				if ([urlMatches containsKey:hashedValue]) {
-					templateTokens[@"anchorInlineImageAvailable"] = @(YES);
-					templateTokens[@"anchorInlineImageUniqueID"] = hashedValue;
+					if (NSObjectsAreEqual(anchorLink, templateTokens[@"anchorLocation"])) {
+						templateTokens[@"anchorInlineImageAvailable"] = @(YES);
+						templateTokens[@"anchorInlineImageUniqueID"] = hashedValue;
+
+						break;
+					}
 				}
 			}
 		}

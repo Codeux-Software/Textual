@@ -36,76 +36,74 @@
  *********************************************************************** */
 
 /* About window version info */
-"TDCAboutPanel[1000]" = "Version %@";
+"TDCAboutDialog[1000]" = "Version %@";
 
 /* Server properties Address Book entry types */
-"TDCServerSheet[1000]" = "User Ignore";
-"TDCServerSheet[1001]" = "User Tracking";
+"TDCServerPropertiesSheet[1000]" = "User Ignore";
+"TDCServerPropertiesSheet[1001]" = "User Tracking";
 
 /* Server properties iCloud options */
-"TDCServerSheet[1002][1]" = "iCloud Sharing Disabled";
-"TDCServerSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
+"TDCServerPropertiesSheet[1002][1]" = "iCloud Sharing Disabled";
+"TDCServerPropertiesSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
 
-"TDCServerSheet[1003][1]" = "iCloud Sharing Enabled";
-"TDCServerSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
+"TDCServerPropertiesSheet[1003][1]" = "iCloud Sharing Enabled";
+"TDCServerPropertiesSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
 
 /* Server specific highlight entry things */
-"TDCServerSheet[1004]" = "All Channels";
-"TDCServerSheet[1005]" = "Exclude";
-"TDCServerSheet[1006]" = "Match";
+"TDCServerPropertiesSheet[1004]" = "All Channels";
+"TDCServerPropertiesSheet[1005]" = "Exclude";
+"TDCServerPropertiesSheet[1006]" = "Match";
 
 /* Server properties navigation menu */
-"TDCServerSheet[1007][01]" = "Channel List";
-"TDCServerSheet[1007][02]" = "Connect Commands";
-"TDCServerSheet[1007][03]" = "Encoding";
-"TDCServerSheet[1007][04]" = "Flood Control";
-"TDCServerSheet[1007][05]" = "General";
-"TDCServerSheet[1007][06]" = "Identity";
-"TDCServerSheet[1007][07]" = "Address Book";
-"TDCServerSheet[1007][08]" = "Messages";
-"TDCServerSheet[1007][09]" = "Miscellaneous";
-"TDCServerSheet[1007][10]" = "Proxy Server";
-"TDCServerSheet[1007][11]" = "Client Certificate";
-"TDCServerSheet[1007][12]" = "Highlights";
-"TDCServerSheet[1007][13]" = "Network Socket";
-"TDCServerSheet[1007][14]" = "ZNC Bouncer";
-"TDCServerSheet[1007][15]" = "Basic Settings";
-"TDCServerSheet[1007][16]" = "Vendor Specific";
-"TDCServerSheet[1007][17]" = "Advanced";
+"TDCServerPropertiesSheet[1007][01]" = "Channel List";
+"TDCServerPropertiesSheet[1007][02]" = "Connect Commands";
+"TDCServerPropertiesSheet[1007][03]" = "Encoding";
+"TDCServerPropertiesSheet[1007][04]" = "Flood Control";
+"TDCServerPropertiesSheet[1007][05]" = "General";
+"TDCServerPropertiesSheet[1007][06]" = "Identity";
+"TDCServerPropertiesSheet[1007][07]" = "Address Book";
+"TDCServerPropertiesSheet[1007][08]" = "Messages";
+"TDCServerPropertiesSheet[1007][09]" = "Miscellaneous";
+"TDCServerPropertiesSheet[1007][10]" = "Proxy Server";
+"TDCServerPropertiesSheet[1007][11]" = "Client Certificate";
+"TDCServerPropertiesSheet[1007][12]" = "Highlights";
+"TDCServerPropertiesSheet[1007][13]" = "Network Socket";
+"TDCServerPropertiesSheet[1007][14]" = "ZNC Bouncer";
+"TDCServerPropertiesSheet[1007][15]" = "Basic Settings";
+"TDCServerPropertiesSheet[1007][16]" = "Vendor Specific";
+"TDCServerPropertiesSheet[1007][17]" = "Advanced";
 
 /* Error localizations */
-"TDCServerSheet[1010][01]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][02]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][03]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][04]" = "Misconfigured value in Identity setion";
-"TDCServerSheet[1010][05]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][06]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][07]" = "Misconfigured value in General setion";
-"TDCServerSheet[1010][08]" = "Misconfigured value in Proxy Server setion";
-"TDCServerSheet[1010][09]" = "Misconfigured value in Proxy Server setion";
-"TDCServerSheet[1010][10]" = "Misconfigured value in Messages setion";
-"TDCServerSheet[1010][11]" = "Misconfigured value in Messages setion";
+"TDCServerPropertiesSheet[1010][01]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][02]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][03]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][04]" = "Misconfigured value in Identity setion";
+"TDCServerPropertiesSheet[1010][05]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][06]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][07]" = "Misconfigured value in General setion";
+"TDCServerPropertiesSheet[1010][08]" = "Misconfigured value in Proxy Server setion";
+"TDCServerPropertiesSheet[1010][09]" = "Misconfigured value in Proxy Server setion";
+"TDCServerPropertiesSheet[1010][10]" = "Misconfigured value in Messages setion";
+"TDCServerPropertiesSheet[1010][11]" = "Misconfigured value in Messages setion";
 
 /* Custom client-side certificate selection */
-"TDCServerSheet[1008]" = "No Certificate Selected";
+"TDCServerPropertiesSheet[1008]" = "No Certificate Selected";
 
-"TDCServerSheet[1009][1]" = "Select Identity";
-"TDCServerSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
+"TDCServerPropertiesSheet[1009][1]" = "Select Identity";
+"TDCServerPropertiesSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
 
 /* Welcome sheet help channel prompt for freenode servers */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
 "TDCWelcomeSheet[1000][2]" = "The support channel for Textual is located on freenode. Would you like to add this channel?";
 
 /* Channel list dialog */
-"TDCListDialog[1000]" = "Channel List for “%@”";
-"TDCListDialog[1001]" = "Channel List — %@"; // %@ = channel count.
-"TDCListDialog[1002]" = "%@ Public Channels";
-"TDCListDialog[1003]" = "%@ Public Channels - %@ Search Results";
+"TDCServerChannelListDialog[1000]" = "Channel List for “%@”";
+"TDCServerChannelListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
 
 /* Invite dialog */
-"TDCInviteSheet[1000]" = "%d users";
-"TDCInviteSheet[1001]" = "Invite %@ to:";
-"TDCInviteSheet[1002]" = "%1$@ and %2$@";
+"TDChannelInviteSheet[1000]" = "%d users";
+"TDChannelInviteSheet[1001]" = "Invite %@ to:";
+"TDChannelInviteSheet[1002]" = "%1$@ and %2$@";
 
 /* Preferences window iCloud options */
 "TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
@@ -176,8 +174,67 @@
 
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
+/* License Manager */
+"TLOLicenseManager[1000][1]" = "It appears that you may be using a copy of Textual that is not genuine.";
+"TLOLicenseManager[1000][2]" = "Textual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available.";
+"TLOLicenseManager[1000][3]" = "View Source Code";
+
+"TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
+"TLOLicenseManager[1001][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
+"TLOLicenseManager[1001][3]" = "Contact Support";
+
+"TLOLicenseManager[1002][1]" = "The license key “%@“ cannot be activated because it has already been activated too many times.";
+"TLOLicenseManager[1002][2]" = "Contact support by clicking the button presented below for further assistance.";
+"TLOLicenseManager[1002][3]" = "Contact Support";
+
+"TLOLicenseManager[1003][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1003][2]" = "Improperly formatted e-mail address";
+
+"TLOLicenseManager[1004][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1004][2]" = "Unknown or improperly formatted license key";
+
+"TLOLicenseManager[1005][1]" = "Successfully queued e-mail for %@";
+"TLOLicenseManager[1005][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing all license keys owned by this e-mail address.";
+
+"TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
+"TLOLicenseManager[1006][2]" = "All limitations of your unregistered copy of Textual have been lifted.";
+
+"TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
+"TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
+
+"TLOLicenseManager[1008]" = "Select a copy of Textual 5 installed through the Mac App Store to receive a free license key.";
+
+"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or was not downloaded through the Mac App Store.";
+"TLOLicenseManager[1009][2]" = "Select another application and try again.";
+
+"TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase to new license system";
+"TLOLicenseManager[1010][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing your new, free license key.";
+
+"TLOLicenseManager[1011][1]" = "Cannot migrate Mac App Store purchase because it has already been migrated to the new license system.";
+"TLOLicenseManager[1011][2]" = "To receive a copy of your license key, click the “Recover Lost License” button in the “Manage License” window and enter the e-mail address used when your purchase was originally migrated.";
+
+"TLOLicenseManager[1012][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address";
+
+"TLOLicenseManager[1013][1]" = "The following error was returned while processing request:";
+"TLOLicenseManager[1013][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
+
+"TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit.";
+"TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
+
+"TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
+"TLOLicenseManager[1016]" = "Your trial of Textual is expired.";
+
+"TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
+"TLOLicenseManager[1017][3]" = "More Info";
+
 /* Main window text field placeholder */
 "TDCMainWindow[1000]" = "Send message…";
+
+/* Ban/ban exception/invite exception sheet */
+"TDChannelBanListSheet[1000]" = "Bans for %@";
+"TDChannelBanListSheet[1001]" = "Ban Exceptions for %@";
+"TDChannelBanListSheet[1002]" = "Invite Exceptions for %@";
 
 /* Application terminating confirmation dialog */
 "BasicLanguage[1000][1]" = "Quitting will disconnect you from any server that you are connected to until you restart Textual.";
@@ -240,8 +297,8 @@
 "BasicLanguage[1030]" = "1d Shunned";
 
 /* Network not available messages */
-"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the server and click \002Connect\002.";
-"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the local network is currently unavailable. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the server and select \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the server and select \002Cancel Reconnect\002.";
+"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the connection and click \002Connect\002.";
+"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the unavailability of the local network. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the connection and click \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the connection and click \002Cancel Reconnect\002.";
 
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
@@ -257,8 +314,8 @@
 "BasicLanguage[1034][09]" = " ";
 "BasicLanguage[1034][10]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
 
-"BasicLanguage[1035]" = "Cannot enable the feature “%@” as it is not supported";
-"BasicLanguage[1036]" = "Cannot disable the feature “%@” as it is not supported";
+"BasicLanguage[1035]" = "Cannot enable the feature “%@” because it is not supported";
+"BasicLanguage[1036]" = "Cannot disable the feature “%@” because it is not supported";
 
 "BasicLanguage[1037]" = "Enabled Feature: %@";
 "BasicLanguage[1038]" = "Disabled Feature: %@";
@@ -410,7 +467,6 @@
 "BasicLanguage[1131]" = "Disconnect for Sleep Mode";
 "BasicLanguage[1132]" = "Disconnected for server redirect";
 "BasicLanguage[1133]" = "Disconnected from server because of an untrusted certificate";
-"BasicLanguage[1134]" = "Disconnected from server due to trial period limit. Please consider purchasing Textual to continue or simply reconnect.";
 "BasicLanguage[1135]" = "Disconnected from server because the Internet is not reachable";
 "BasicLanguage[1136]" = "Disconnected";
 "BasicLanguage[1137]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
@@ -457,7 +513,7 @@
 
 /* Raw mode messages */
 "BasicLanguage[1174]" = "Raw mode has been disabled. Textual will no longer output raw data.";
-"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the server in the OS X ”Console” application. Raw mode will remain enabled until the connection to this server is disconnected. To disable raw mode before a disconnection occurs, execute “/debug raw off”";
+"BasicLanguage[1175]" = "Raw mode has been enabled. Textual will now output all data that it receives from and sends to the server in the OS X ”Console” application. Raw mode will remain enabled until the connection to this server is disconnected. To disable raw mode before a disconnect occurs, execute “/debug raw off”";
 "BasicLanguage[1176]" = "------------- End Raw Mode Session -------------";
 "BasicLanguage[1177]" = "------------- Begin Raw Mode Session -------------";
 
@@ -477,7 +533,7 @@
 
 /* Channel list navigation menu entries.*/
 "BasicLanguage[1183]" = "%@";
-"BasicLanguage[1184]" = "   %@";
+"BasicLanguage[1184]" = "%@";
 
 /* Default sleep message */
 "BasicLanguage[1185]" = "My %@ has gone to sleep. ZZZzzz…";
@@ -609,10 +665,9 @@
 "BasicLanguage[1234]" = "None";
 
 /* Reserved commands */
-"BasicLanguage[1236][1]" = "Reserved Command";
-"BasicLanguage[1236][2]" = "The command performed (“%@”) is available by installing the “Textual 5 Extras” package that can be downloaded from www.codeux.com\n\nWould you like to download it?";
-"BasicLanguage[1236][3]" = "Download";
-"BasicLanguage[1236][4]" = "Send Command to Server";
+"BasicLanguage[1236][1]" = "The “Textual Extras” package must be installed to perform the command “%@”";
+"BasicLanguage[1236][2]" = "Would you like to launch the installer?";
+"BasicLanguage[1236][3]" = "Launch Installer";
 
 /* Check for other copies of Textual running */
 "BasicLanguage[1237][1]" = "More than one copy of Textual is currently in use";
@@ -635,17 +690,14 @@
 /* Incompatible style warning dialog */
 "BasicLanguage[1246][1]" = "Incompatible Style";
 "BasicLanguage[1246][2]" = "The style named “%1$@” is not designed to work with this version of Textual. Continued use of this style may result in undefined behavior resulting in some features of Textual not functioning as expected.";
-"BasicLanguage[1246][3]" = "OK";
 
 /* Beta warning dialog. */
 "BasicLanguage[1242][1]" = "Thank you for beta testing Textual";
 "BasicLanguage[1242][2]" = "This copy of Textual will expire in %@. Once expired, it can no longer be used.";
-"BasicLanguage[1242][3]" = "OK";
 
 /* Beta warning dialog. */
 "BasicLanguage[1243][1]" = "Thank you for beta testing Textual";
 "BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
-"BasicLanguage[1243][3]" = "OK";
 
 /* Certificate conext command dialog */
 "BasicLanguage[1247][1]" = "Textual is using an encrypted connection to “%@“";
@@ -681,7 +733,7 @@
 "BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat.";
 "BasicLanguage[1254][12]" = "Off-the-Record Messaging: Received a general error from the Off-the-Record Messaging library.";
 "BasicLanguage[1254][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
-"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized ";
+"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized";
 "BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
 "BasicLanguage[1263]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not in session.";
@@ -700,6 +752,20 @@
 "BasicLanguage[1265][2]" = "Encrypted & Unverified";
 "BasicLanguage[1265][3]" = "Encrypted & Verified";
 
+/* Accessiblity descriptions */
+"BasicLanguage[1277]" = "User %@ in User List";
+
+"BasicLanguage[1278][1]" = "Connection %@, Connected";
+"BasicLanguage[1278][2]" = "Connection %@, Disconnected";
+
+"BasicLanguage[1279][1]" = "Channel %@, Channel Joined";
+"BasicLanguage[1279][2]" = "Channel %@, Channel Not Joined";
+
+"BasicLanguage[1280]" = "Query with User %@";
+
+"BasicLanguage[1281]" = "Main Window"; // Main window title description
+
+"BasicLanguage[1282]" = "Chat View";
 
 
 
@@ -707,11 +773,6 @@
 
 
 
-
-
-
-
-
-/* Next unusued key: 1274 */
+/* Next unusued key: 1283 */
 
 

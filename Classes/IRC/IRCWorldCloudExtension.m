@@ -39,7 +39,7 @@
 
 #import "IRCWorldPrivate.h"
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 NSString * const IRCWorldControllerCloudDeletedClientsStorageKey	= @"World Controller -> Cloud Deleted Clients";
 NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controller -> Cloud Synced Client -> ";
 

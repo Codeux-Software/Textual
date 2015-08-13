@@ -47,7 +47,6 @@
 @property (nonatomic, assign) NSInteger floodControlCurrentMessageCount;
 @property (nonatomic, strong) dispatch_queue_t dispatchQueue;
 @property (nonatomic, strong) dispatch_queue_t socketQueue;
-@property (nonatomic, copy) NSData *bufferOverflowString;
 @property (nonatomic, strong) id socketConnection;
 @property (nonatomic, copy) NSError *alternateDisconnectError;
 

@@ -38,10 +38,14 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TLOLicenseManager.h"
+#endif
+
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 #import "BuildConfig.h"
 
 #define _betaTesterMaxApplicationLifespan			5184000 // 60 days
@@ -79,7 +83,7 @@
 - (void)awakeFromNib
 {
 	static BOOL _awakeFromNibCalled = NO;
-	
+
 	if (_awakeFromNibCalled == NO) {
 		_awakeFromNibCalled = YES;
 
@@ -98,7 +102,7 @@
 
 - (void)performAwakeningBeforeMainWindowDidLoad
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
 
@@ -130,6 +134,12 @@
 		[TPCResourceManager copyResourcesToCustomAddonsFolder];
 	}];
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	TLOLicenseManagerSetup();
+
+	[TDCLicenseManagerDialog scheduleTimeRemainingInTrialNotification];
+#endif
+
 	[self prepareThirdPartyServices];
 	
 	[self applicationDidFinishLaunching];
@@ -140,7 +150,8 @@
 	BOOL foundOneMatchForSelf = NO;
 
 	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
-		if ([[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual"] ||
+		if ([[application bundleIdentifier] isEqualToString:@"com.codeux.apps.textual"] ||
+			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual"] ||
 			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5"] ||
 			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5.trial"])
 		{
@@ -169,8 +180,6 @@
 			break;
 		}
 	}
-
-
 }
 
 #pragma mark -
@@ -216,7 +225,7 @@
 	[self prepareThirdPartyServiceSparkleFramework];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 - (void)presentBetaTesterDialog
 {
 	NSTimeInterval currentTime = [NSDate unixTime];
@@ -229,7 +238,7 @@
 	if (timeSpent > _betaTesterMaxApplicationLifespan) {
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1243][2]")
 												 title:TXTLS(@"BasicLanguage[1243][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1243][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:nil
 									   suppressionText:nil];
@@ -243,7 +252,7 @@
 
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
 												 title:TXTLS(@"BasicLanguage[1242][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1242][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:nil
 									   suppressionText:nil];
@@ -253,18 +262,13 @@
 
 - (void)applicationDidFinishLaunching
 {
-#ifdef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+#if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 	[self presentBetaTesterDialog];
 
 	[mainWindow() makeKeyAndOrderFront:nil];
 #endif
 
-	if ([worldController() clientCount] < 1) {
-		[mainWindowLoadingScreen() hideAll:NO];
-		[mainWindowLoadingScreen() popWelcomeAddServerView];
-	} else {
-		[mainWindowLoadingScreen() hideLoadingConfigurationView];
-
+	if ([mainWindow() reloadLoadingScreen]) {
 		[worldController() autoConnectAfterWakeup:NO];
 	}
 
@@ -333,7 +337,7 @@
 
 - (BOOL)isNotSafeToPerformApplicationTermination
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (sharedCloudManager()) {
 		return (
 				/* Clients are still disconnecting. */
@@ -367,11 +371,11 @@
 	
 	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() setApplicationIsTerminating:YES];
 #endif
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	[sharedEncryptionManager() prepareForApplicationTermination];
 #endif
 
@@ -395,7 +399,7 @@
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() closeCloudSyncSession];
 #endif
 

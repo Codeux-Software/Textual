@@ -193,7 +193,7 @@
 
 - (NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	if ([TPCPreferences textEncryptionIsEnabled]) {
 		BOOL allowWithOTR = [sharedEncryptionManager() safeToContinueFileTransferTo:[client encryptionAccountNameForUser:nickname]
 																			   from:[client encryptionAccountNameForLocalUser]
@@ -252,7 +252,7 @@
 
 - (NSString *)addSenderForClient:(IRCClient *)client nickname:(NSString *)nickname path:(NSString *)completePath autoOpen:(BOOL)autoOpen
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	if ([TPCPreferences textEncryptionIsEnabled]) {
 		/* Ask whether we should be allowed to add the file. */
 		BOOL allowWithOTR = [sharedEncryptionManager() safeToContinueFileTransferTo:[client encryptionAccountNameForUser:nickname]

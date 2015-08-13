@@ -39,10 +39,9 @@
 
 @interface TVCMainWindowLoadingScreenView ()
 @property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
-@property (nonatomic, weak) IBOutlet NSView *welcomeAddServerTrialView;
 @property (nonatomic, weak) IBOutlet NSView *loadingConfigurationView;
+@property (nonatomic, weak) IBOutlet NSView *trialExpiredView;
 @property (nonatomic, weak) IBOutlet NSButton *welcomeAddServerViewButton;
-@property (nonatomic, weak) IBOutlet NSButton *welcomePurchaseTextualButton;
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
@@ -57,11 +56,7 @@
 - (void)popWelcomeAddServerView
 {
 	if (self.stackLocked == NO) {
-#ifdef TEXTUAL_TRIAL_BINARY
-		[self displayView:self.welcomeAddServerTrialView];
-#else
 		[self displayView:self.welcomeAddServerNormalView];
-#endif
 	}
 }
 
@@ -73,6 +68,13 @@
 		[self.loadingConfigurationViewPI startAnimation:nil];
 		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
 	}	
+}
+
+- (void)popTrialExpiredView
+{
+	if (self.stackLocked == NO) {
+		[self displayView:self.trialExpiredView];
+	}
 }
 
 #pragma mark -
@@ -111,6 +113,18 @@
 
 #pragma mark -
 
+- (void)hideTrialExpiredView
+{
+	[self hideAll:YES];
+}
+
+- (void)hideTrialExpiredView:(BOOL)animate
+{
+	[self hideAll:animate];
+}
+
+#pragma mark -
+
 - (void)hideAll
 {
 	[self hideAll:YES];
@@ -119,7 +133,7 @@
 - (void)hideAll:(BOOL)animate
 {
 	if (self.stackLocked == NO) {
-		for (NSView *alv in [self allViews]) {
+		for (NSView *alv in [[self contentView] subviews]) {
 			if ([alv isHidden] == NO) {
 				[self hideView:alv animate:animate];
 			}
@@ -132,20 +146,24 @@
 
 - (void)displayView:(NSView *)view
 {
+	[self disableBackgroundControlsStepOne];
+
 	NSRect viewFrame = [view frame];
 	
 	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
 	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
-	
-	[self disableBackgroundControls];
 
 	[view setHidden:NO];
+
 	[view setAlphaValue:1.0];
 	
 	[self setHidden:NO];
+
 	[self setAlphaValue:1.0];
 	
 	[self displayIfNeeded];
+
+	[self disableBackgroundControlsStepTwo];
 }
 
 #pragma mark -
@@ -157,8 +175,8 @@
 	 it to 0.0 alpha. If only the alpha is changed, then the underlying WebView will not be
 	 able to register mouse movements over elements because the views are invisible and on
 	 top of the WebView it_ */
-	
-	[self enableBackgroundControls];
+
+	[self enableBackgroundControlsStepOne];
 	
 	[self.loadingScreenMinimumWidthConstraint setConstant:0];
 	[self.loadingScreenMinimumHeightConstraint setConstant:0];
@@ -167,7 +185,10 @@
 		[view setHidden:YES];
 	
 		[self setHidden:YES];
+
 		[self setAlphaValue:0.0];
+
+		[self enableBackgroundControlsStepTwo];
 	} else {
 		[RZAnimationCurrentContext() setDuration:0.8];
 
@@ -177,9 +198,12 @@
 			[[self animator] setAlphaValue:0.0];
 		} completionHandler:^{
 			[view setHidden:YES];
+
 			[self setHidden:YES];
 
 			self.stackLocked = NO;
+
+			[self enableBackgroundControlsStepTwo];
 		}];
 	}
 }
@@ -192,36 +216,30 @@
 	return ([self isHidden] == NO || self.stackLocked);
 }
 
-- (NSArray *)allViews
+- (void)disableBackgroundControlsStepOne
 {
-	/* For future expansion. */
-
-	return @[
-		self.loadingConfigurationView,
-		self.welcomeAddServerNormalView,
-		self.welcomeAddServerTrialView
-	];
+	[[mainWindow() contentSplitView] setHidden:YES];
 }
 
-- (void)disableBackgroundControls
+- (void)disableBackgroundControlsStepTwo
 {
 	[mainWindowTextField() setEditable:NO];
 	[mainWindowTextField() setSelectable:NO];
 	
 	[mainWindowTextField() updateSegmentedController];
-	
-	[[mainWindow() contentSplitView] setHidden:YES];
-
 }
 
-- (void)enableBackgroundControls
+- (void)enableBackgroundControlsStepOne
+{
+	[[mainWindow() contentSplitView] setHidden:NO];
+}
+
+- (void)enableBackgroundControlsStepTwo
 {
 	[mainWindowTextField() setEditable:YES];
 	[mainWindowTextField() setSelectable:YES];
 	
 	[mainWindowTextField() updateSegmentedController];
-	
-	[[mainWindow() contentSplitView] setHidden:NO];
 }
 
 @end

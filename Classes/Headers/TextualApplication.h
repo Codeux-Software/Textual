@@ -71,31 +71,29 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TDCAboutPanel;
+	@class TDCAboutDialog;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDChanBanExceptionSheet;
-	@class TDChanBanSheet;
-	@class TDChanInviteExceptionSheet;
-	@class TDChannelSheet;
-	@class TDCHighlightEntrySheet;
 	@class TDCHighlightEntryMatchCondition;
-	@class TDCHighlightListSheet;
-	@class TDCInviteSheet;
-	@class TDCListDialog;
-	@class TDCModeSheet;
-	@class TDCNickSheet;
+	@class TDCHighlightEntrySheet;
 	@class TDCPreferencesController;
-	@class TDCPreferencesScriptWrapper;
 	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
-	@class TDCServerSheet;
+	@class TDCServerChangeNicknameSheet;
+	@class TDCServerChannelListDialog;
+	@class TDCServerHighlightListSheet;
+	@class TDCServerHighlightListSheetEntry;
+	@class TDCServerPropertiesSheet;
 	@class TDCSheetBase;
-	@class TDCTopicSheet;
 	@class TDCWelcomeSheet;
+	@class TDChannelBanListSheet;
+	@class TDChannelInviteSheet;
+	@class TDChannelModifyModesSheet;
+	@class TDChannelModifyTopicSheet;
+	@class TDChannelPropertiesSheet;
 	@class THOPluginItem;
 	@class THOPluginManager;
 	@class THOUnicodeHelper;
@@ -219,6 +217,22 @@
 		#import <Sparkle/Sparkle.h>
 	#endif
 
+	#ifndef TEXTUAL_BUILT_WITH_LICENSE_MANAGER
+		#define TEXTUAL_BUILT_WITH_LICENSE_MANAGER 0
+	#endif
+
+	#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+		#define TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT 0
+	#endif
+
+	#ifndef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+		#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 0
+	#endif
+
+	#ifndef TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+		#define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 0
+	#endif
+
 	/* Protocol defenitions. (see file) */
 	#import "TDCSharedProtocolDefinitions.h"
 
@@ -277,28 +291,25 @@
 
 	/* Dialogs. */
 	#import "TDCSheetBase.h"
-	#import "TDCAboutPanel.h"
+	#import "TDCAboutDialog.h"
 	#import "TDCAddressBookSheet.h"
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
-	#import "TDCHighlightListSheet.h"
-	#import "TDCInviteSheet.h"
-	#import "TDCListDialog.h"
-	#import "TDCModeSheet.h"
-	#import "TDCNickSheet.h"
 	#import "TDCPreferencesController.h"
-	#import "TDCPreferencesScriptWrapper.h"
 	#import "TDCPreferencesSoundWrapper.h"
-	#import "TDCServerSheet.h"
-	#import "TDCTopicSheet.h"
+	#import "TDCServerChangeNicknameSheet.h"
+	#import "TDCServerChannelListDialog.h"
+	#import "TDCServerHighlightListSheet.h"
+	#import "TDCServerPropertiesSheet.h"
 	#import "TDCWelcomeSheet.h"
-	#import "TDChanBanExceptionSheet.h"
-	#import "TDChanBanSheet.h"
-	#import "TDChanInviteExceptionSheet.h"
-	#import "TDChannelSheet.h"
+	#import "TDChannelBanListSheet.h"
+	#import "TDChannelInviteSheet.h"
+	#import "TDChannelModifyModesSheet.h"
+	#import "TDChannelModifyTopicSheet.h"
+	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */
 	#import "THOPluginItem.h"

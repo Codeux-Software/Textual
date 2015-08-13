@@ -51,104 +51,71 @@
 							<array>
 								<dict>
 									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Application Support</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
 									<array>
 										<dict>
 											<key>CHILDREN</key>
 											<array>
 												<dict>
 													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/flip.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/reverse.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/shell.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/uuid.php</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
+													<array/>
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>._private-9ecc43fb-a68c-4eca-bea5-9f7f256cb362</string>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/flip.scpt</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>1</integer>
 													<key>PERMISSIONS</key>
 													<integer>493</integer>
 													<key>TYPE</key>
-													<integer>2</integer>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/reverse.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/shell.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/uuid.php</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
 													<key>UID</key>
 													<integer>0</integer>
 												</dict>
@@ -156,7 +123,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
+											<string>com.codeux.apps.textual</string>
 											<key>PATH_TYPE</key>
 											<integer>0</integer>
 											<key>PERMISSIONS</key>
@@ -170,13 +137,29 @@
 									<key>GID</key>
 									<integer>0</integer>
 									<key>PATH</key>
-									<string>Caches</string>
+									<string>Application Scripts</string>
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
 									<integer>493</integer>
 									<key>TYPE</key>
 									<integer>2</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array/>
+									<key>GID</key>
+									<integer>80</integer>
+									<key>PATH</key>
+									<string>Application Support</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>1</integer>
 									<key>UID</key>
 									<integer>0</integer>
 								</dict>
@@ -573,7 +556,7 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>Installer-PostflightScripts</string>
+					<string>Installer-Postflight</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
@@ -583,13 +566,13 @@
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
-				<true/>
+				<false/>
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual.extraAddonsInstaller.ml108UtilityScripts.pkg</string>
+				<string>com.codeux.app-extensions.textual-ml108UtilityScripts-installer</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -597,7 +580,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.1</string>
+				<string>1.2</string>
 			</dict>
 			<key>UUID</key>
 			<string>23651F27-6601-4F49-9BE2-8EFF3E4D7A21</string>
@@ -665,73 +648,6 @@
 								</dict>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array>
-												<dict>
-													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Extensions/WikiStyleLinkParser.tar.gz</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
-													<key>GID</key>
-													<integer>0</integer>
-													<key>PATH</key>
-													<string>._private-455CE157-E3B7-43D0-8540-F2261A3C446A</string>
-													<key>PATH_TYPE</key>
-													<integer>0</integer>
-													<key>PERMISSIONS</key>
-													<integer>493</integer>
-													<key>TYPE</key>
-													<integer>2</integer>
-													<key>UID</key>
-													<integer>0</integer>
-												</dict>
-											</array>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>2</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Caches</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>2</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
 									<array/>
 									<key>GID</key>
 									<integer>0</integer>
@@ -775,6 +691,124 @@
 									<integer>493</integer>
 									<key>TYPE</key>
 									<integer>1</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array>
+										<dict>
+											<key>CHILDREN</key>
+											<array>
+												<dict>
+													<key>CHILDREN</key>
+													<array>
+														<dict>
+															<key>CHILDREN</key>
+															<array>
+																<dict>
+																	<key>CHILDREN</key>
+																	<array>
+																		<dict>
+																			<key>CHILDREN</key>
+																			<array>
+																				<dict>
+																					<key>CHILDREN</key>
+																					<array/>
+																					<key>GID</key>
+																					<integer>0</integer>
+																					<key>PATH</key>
+																					<string>../Installation Hierarchy/com.codeux.apps.textual/Extensions/WikiStyleLinkParser.bundle</string>
+																					<key>PATH_TYPE</key>
+																					<integer>1</integer>
+																					<key>PERMISSIONS</key>
+																					<integer>493</integer>
+																					<key>TYPE</key>
+																					<integer>3</integer>
+																					<key>UID</key>
+																					<integer>0</integer>
+																				</dict>
+																			</array>
+																			<key>GID</key>
+																			<integer>0</integer>
+																			<key>PATH</key>
+																			<string>Extensions</string>
+																			<key>PATH_TYPE</key>
+																			<integer>0</integer>
+																			<key>PERMISSIONS</key>
+																			<integer>493</integer>
+																			<key>TYPE</key>
+																			<integer>2</integer>
+																			<key>UID</key>
+																			<integer>0</integer>
+																		</dict>
+																	</array>
+																	<key>GID</key>
+																	<integer>0</integer>
+																	<key>PATH</key>
+																	<string>Textual</string>
+																	<key>PATH_TYPE</key>
+																	<integer>0</integer>
+																	<key>PERMISSIONS</key>
+																	<integer>493</integer>
+																	<key>TYPE</key>
+																	<integer>2</integer>
+																	<key>UID</key>
+																	<integer>0</integer>
+																</dict>
+															</array>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>Application Support</string>
+															<key>PATH_TYPE</key>
+															<integer>0</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>2</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+													</array>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>Library</string>
+													<key>PATH_TYPE</key>
+													<integer>0</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>2</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+											</array>
+											<key>GID</key>
+											<integer>0</integer>
+											<key>PATH</key>
+											<string>com.codeux.apps.textual</string>
+											<key>PATH_TYPE</key>
+											<integer>0</integer>
+											<key>PERMISSIONS</key>
+											<integer>493</integer>
+											<key>TYPE</key>
+											<integer>2</integer>
+											<key>UID</key>
+											<integer>0</integer>
+										</dict>
+									</array>
+									<key>GID</key>
+									<integer>0</integer>
+									<key>PATH</key>
+									<string>Group Containers</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>2</integer>
 									<key>UID</key>
 									<integer>0</integer>
 								</dict>
@@ -1120,13 +1154,6 @@
 			</dict>
 			<key>PACKAGE_SCRIPTS</key>
 			<dict>
-				<key>POSTINSTALL_PATH</key>
-				<dict>
-					<key>PATH</key>
-					<string>Installer-PostflightExtensions</string>
-					<key>PATH_TYPE</key>
-					<integer>1</integer>
-				</dict>
 				<key>PREINSTALL_PATH</key>
 				<dict/>
 				<key>RESOURCES</key>
@@ -1135,11 +1162,11 @@
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
-				<true/>
+				<false/>
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual5.extraAddonsInstaller.WikiStyleLinkParser.pkg</string>
+				<string>com.codeux.app-extensions.textual-WikiStyleLinkParser-installer</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -1147,7 +1174,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>1.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -1201,56 +1228,151 @@
 							<array>
 								<dict>
 									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Application Support</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
 									<array>
 										<dict>
 											<key>CHILDREN</key>
 											<array>
 												<dict>
 													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Extensions/TXTunes.tar.gz</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
+													<array/>
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>._private-73146A9A-04B9-41A1-8A3F-96277831DCE9</string>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/hermes.scpt</string>
 													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
 													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/instacast.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
 													<key>PERMISSIONS</key>
 													<integer>493</integer>
 													<key>TYPE</key>
-													<integer>2</integer>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/music.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/np.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/qt.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/radium.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/rdio.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/spotify.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/vlc.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
 													<key>UID</key>
 													<integer>0</integer>
 												</dict>
@@ -1258,7 +1380,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
+											<string>com.codeux.apps.textual</string>
 											<key>PATH_TYPE</key>
 											<integer>0</integer>
 											<key>PERMISSIONS</key>
@@ -1272,13 +1394,29 @@
 									<key>GID</key>
 									<integer>0</integer>
 									<key>PATH</key>
-									<string>Caches</string>
+									<string>Application Scripts</string>
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
 									<integer>493</integer>
 									<key>TYPE</key>
 									<integer>2</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array/>
+									<key>GID</key>
+									<integer>80</integer>
+									<key>PATH</key>
+									<string>Application Support</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>1</integer>
 									<key>UID</key>
 									<integer>0</integer>
 								</dict>
@@ -1675,1255 +1813,23 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>Installer-PostflightExtensions</string>
+					<string>Installer-Postflight</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
-				<key>PREINSTALL_PATH</key>
-				<dict/>
 				<key>RESOURCES</key>
 				<array/>
 			</dict>
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
-				<true/>
-				<key>CONCLUSION_ACTION</key>
-				<integer>0</integer>
-				<key>IDENTIFIER</key>
-				<string>de.incnet.TXTunes.installer</string>
-				<key>LOCATION</key>
-				<integer>0</integer>
-				<key>NAME</key>
-				<string>TXTunes Extension</string>
-				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
-				<key>VERSION</key>
-				<string>1.0</string>
-			</dict>
-			<key>TYPE</key>
-			<integer>0</integer>
-			<key>UUID</key>
-			<string>1808A657-CEE1-402A-864E-912A0E865FC7</string>
-		</dict>
-		<dict>
-			<key>PACKAGE_FILES</key>
-			<dict>
-				<key>DEFAULT_INSTALL_LOCATION</key>
-				<string>/</string>
-				<key>HIERARCHY</key>
-				<dict>
-					<key>CHILDREN</key>
-					<array>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Utilities</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>80</integer>
-							<key>PATH</key>
-							<string>Applications</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>509</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Application Support</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array>
-												<dict>
-													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Extensions/TXURLDumper.tar.gz</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
-													<key>GID</key>
-													<integer>0</integer>
-													<key>PATH</key>
-													<string>._private-35769194-123E-41A6-AE37-BD20C85F21F9</string>
-													<key>PATH_TYPE</key>
-													<integer>0</integer>
-													<key>PERMISSIONS</key>
-													<integer>493</integer>
-													<key>TYPE</key>
-													<integer>2</integer>
-													<key>UID</key>
-													<integer>0</integer>
-												</dict>
-											</array>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>2</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Caches</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>2</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Documentation</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Filesystems</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Frameworks</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Input Methods</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Internet Plug-Ins</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>LaunchAgents</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>LaunchDaemons</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>PreferencePanes</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Preferences</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Printers</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>PrivilegedHelperTools</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>QuickLook</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>QuickTime</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Screen Savers</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Scripts</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Services</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Widgets</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>0</integer>
-							<key>PATH</key>
-							<string>Library</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array/>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>Extensions</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>1</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Library</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>0</integer>
-							<key>PATH</key>
-							<string>System</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Shared</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>1023</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>80</integer>
-							<key>PATH</key>
-							<string>Users</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-					</array>
-					<key>GID</key>
-					<integer>0</integer>
-					<key>PATH</key>
-					<string>/</string>
-					<key>PATH_TYPE</key>
-					<integer>0</integer>
-					<key>PERMISSIONS</key>
-					<integer>493</integer>
-					<key>TYPE</key>
-					<integer>1</integer>
-					<key>UID</key>
-					<integer>0</integer>
-				</dict>
-				<key>PAYLOAD_TYPE</key>
-				<integer>0</integer>
-				<key>VERSION</key>
-				<integer>2</integer>
-			</dict>
-			<key>PACKAGE_SCRIPTS</key>
-			<dict>
-				<key>POSTINSTALL_PATH</key>
-				<dict>
-					<key>PATH</key>
-					<string>Installer-PostflightExtensions</string>
-					<key>PATH_TYPE</key>
-					<integer>1</integer>
-				</dict>
-				<key>PREINSTALL_PATH</key>
-				<dict/>
-				<key>RESOURCES</key>
-				<array/>
-			</dict>
-			<key>PACKAGE_SETTINGS</key>
-			<dict>
-				<key>AUTHENTICATION</key>
-				<true/>
-				<key>CONCLUSION_ACTION</key>
-				<integer>0</integer>
-				<key>IDENTIFIER</key>
-				<string>de.incnet.txurldumper.installer</string>
-				<key>LOCATION</key>
-				<integer>0</integer>
-				<key>NAME</key>
-				<string>TXURLDumper Extension</string>
-				<key>OVERWRITE_PERMISSIONS</key>
-				<false/>
-				<key>VERSION</key>
-				<string>1.1</string>
-			</dict>
-			<key>TYPE</key>
-			<integer>0</integer>
-			<key>UUID</key>
-			<string>DAABF26F-B880-467B-9DD9-201D59EA4324</string>
-		</dict>
-		<dict>
-			<key>PACKAGE_FILES</key>
-			<dict>
-				<key>DEFAULT_INSTALL_LOCATION</key>
-				<string>/</string>
-				<key>HIERARCHY</key>
-				<dict>
-					<key>CHILDREN</key>
-					<array>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Utilities</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>80</integer>
-							<key>PATH</key>
-							<string>Applications</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>509</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Application Support</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array>
-												<dict>
-													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/hermes.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/instacast.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/music.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/np.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/qt.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/radium.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/rdio.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/spotify.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/vlc.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
-													<key>GID</key>
-													<integer>0</integer>
-													<key>PATH</key>
-													<string>._private-952cfb3d-77bc-4511-804a-3296c527b1a8</string>
-													<key>PATH_TYPE</key>
-													<integer>0</integer>
-													<key>PERMISSIONS</key>
-													<integer>493</integer>
-													<key>TYPE</key>
-													<integer>2</integer>
-													<key>UID</key>
-													<integer>0</integer>
-												</dict>
-											</array>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>2</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Caches</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>2</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Documentation</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Filesystems</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Frameworks</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Input Methods</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Internet Plug-Ins</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>LaunchAgents</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>LaunchDaemons</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>PreferencePanes</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Preferences</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Printers</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>PrivilegedHelperTools</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>QuickLook</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>QuickTime</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Screen Savers</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Scripts</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Services</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Widgets</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>0</integer>
-							<key>PATH</key>
-							<string>Library</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array/>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>Extensions</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>1</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Library</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>0</integer>
-							<key>PATH</key>
-							<string>System</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-						<dict>
-							<key>CHILDREN</key>
-							<array>
-								<dict>
-									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Shared</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>1023</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-							</array>
-							<key>GID</key>
-							<integer>80</integer>
-							<key>PATH</key>
-							<string>Users</string>
-							<key>PATH_TYPE</key>
-							<integer>0</integer>
-							<key>PERMISSIONS</key>
-							<integer>493</integer>
-							<key>TYPE</key>
-							<integer>1</integer>
-							<key>UID</key>
-							<integer>0</integer>
-						</dict>
-					</array>
-					<key>GID</key>
-					<integer>0</integer>
-					<key>PATH</key>
-					<string>/</string>
-					<key>PATH_TYPE</key>
-					<integer>0</integer>
-					<key>PERMISSIONS</key>
-					<integer>493</integer>
-					<key>TYPE</key>
-					<integer>1</integer>
-					<key>UID</key>
-					<integer>0</integer>
-				</dict>
-				<key>PAYLOAD_TYPE</key>
-				<integer>0</integer>
-				<key>VERSION</key>
-				<integer>2</integer>
-			</dict>
-			<key>PACKAGE_SCRIPTS</key>
-			<dict>
-				<key>POSTINSTALL_PATH</key>
-				<dict>
-					<key>PATH</key>
-					<string>Installer-PostflightScripts</string>
-					<key>PATH_TYPE</key>
-					<integer>1</integer>
-				</dict>
-				<key>RESOURCES</key>
-				<array/>
-			</dict>
-			<key>PACKAGE_SETTINGS</key>
-			<dict>
-				<key>AUTHENTICATION</key>
-				<true/>
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual.extraAddonsInstaller.ml108AudioVideoScripts.pkg</string>
+				<string>com.codeux.app-extensions.textual-ml108AudioVideoScripts-installer</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -2931,7 +1837,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.1</string>
+				<string>1.2</string>
 			</dict>
 			<key>UUID</key>
 			<string>719D167D-59C0-4C8B-B3F6-BB701D7E6738</string>
@@ -2983,136 +1889,103 @@
 							<array>
 								<dict>
 									<key>CHILDREN</key>
-									<array/>
-									<key>GID</key>
-									<integer>80</integer>
-									<key>PATH</key>
-									<string>Application Support</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>1</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
 									<array>
 										<dict>
 											<key>CHILDREN</key>
 											<array>
 												<dict>
 													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/apps.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/banhammer.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/ffuu.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/o_o.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/page.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Scripts/slap.scpt</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>493</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
+													<array/>
 													<key>GID</key>
 													<integer>0</integer>
 													<key>PATH</key>
-													<string>._private-08e0abbc-c628-44bc-96d0-bad8bb1be89d</string>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/apps.scpt</string>
 													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
 													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/banhammer.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/ffuu.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
 													<key>PERMISSIONS</key>
 													<integer>493</integer>
 													<key>TYPE</key>
-													<integer>2</integer>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/o_o.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/page.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>420</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+												<dict>
+													<key>CHILDREN</key>
+													<array/>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>../Installation Hierarchy/com.codeux.apps.textual/Scripts/slap.scpt</string>
+													<key>PATH_TYPE</key>
+													<integer>1</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>3</integer>
 													<key>UID</key>
 													<integer>0</integer>
 												</dict>
@@ -3120,7 +1993,7 @@
 											<key>GID</key>
 											<integer>0</integer>
 											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
+											<string>com.codeux.apps.textual</string>
 											<key>PATH_TYPE</key>
 											<integer>0</integer>
 											<key>PERMISSIONS</key>
@@ -3134,13 +2007,29 @@
 									<key>GID</key>
 									<integer>0</integer>
 									<key>PATH</key>
-									<string>Caches</string>
+									<string>Application Scripts</string>
 									<key>PATH_TYPE</key>
 									<integer>0</integer>
 									<key>PERMISSIONS</key>
 									<integer>493</integer>
 									<key>TYPE</key>
 									<integer>2</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array/>
+									<key>GID</key>
+									<integer>80</integer>
+									<key>PATH</key>
+									<string>Application Support</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>1</integer>
 									<key>UID</key>
 									<integer>0</integer>
 								</dict>
@@ -3537,7 +2426,7 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>Installer-PostflightScripts</string>
+					<string>Installer-Postflight</string>
 					<key>PATH_TYPE</key>
 					<integer>1</integer>
 				</dict>
@@ -3547,13 +2436,13 @@
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
-				<true/>
+				<false/>
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>FOLLOW_SYMBOLIC_LINKS</key>
 				<false/>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual.extraAddonsInstaller.ml108ComedicScripts.pkg</string>
+				<string>com.codeux.app-extensions.textual-ml108ComedicScripts-installer</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -3561,7 +2450,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.1</string>
+				<string>1.2</string>
 			</dict>
 			<key>UUID</key>
 			<string>E4EF2B08-3095-41A7-B346-66A935014EBB</string>
@@ -3629,73 +2518,6 @@
 								</dict>
 								<dict>
 									<key>CHILDREN</key>
-									<array>
-										<dict>
-											<key>CHILDREN</key>
-											<array>
-												<dict>
-													<key>CHILDREN</key>
-													<array>
-														<dict>
-															<key>CHILDREN</key>
-															<array/>
-															<key>GID</key>
-															<integer>0</integer>
-															<key>PATH</key>
-															<string>../Installation Hierarchy/com.codeux.irc.textual5/Extensions/BlowfishEncryption.tar.gz</string>
-															<key>PATH_TYPE</key>
-															<integer>1</integer>
-															<key>PERMISSIONS</key>
-															<integer>420</integer>
-															<key>TYPE</key>
-															<integer>3</integer>
-															<key>UID</key>
-															<integer>0</integer>
-														</dict>
-													</array>
-													<key>GID</key>
-													<integer>0</integer>
-													<key>PATH</key>
-													<string>._private-0CDFC530-379B-4E99-8FC2-8BAF3C260667</string>
-													<key>PATH_TYPE</key>
-													<integer>0</integer>
-													<key>PERMISSIONS</key>
-													<integer>493</integer>
-													<key>TYPE</key>
-													<integer>2</integer>
-													<key>UID</key>
-													<integer>0</integer>
-												</dict>
-											</array>
-											<key>GID</key>
-											<integer>0</integer>
-											<key>PATH</key>
-											<string>com.codeux.irc.textual5</string>
-											<key>PATH_TYPE</key>
-											<integer>0</integer>
-											<key>PERMISSIONS</key>
-											<integer>493</integer>
-											<key>TYPE</key>
-											<integer>2</integer>
-											<key>UID</key>
-											<integer>0</integer>
-										</dict>
-									</array>
-									<key>GID</key>
-									<integer>0</integer>
-									<key>PATH</key>
-									<string>Caches</string>
-									<key>PATH_TYPE</key>
-									<integer>0</integer>
-									<key>PERMISSIONS</key>
-									<integer>493</integer>
-									<key>TYPE</key>
-									<integer>2</integer>
-									<key>UID</key>
-									<integer>0</integer>
-								</dict>
-								<dict>
-									<key>CHILDREN</key>
 									<array/>
 									<key>GID</key>
 									<integer>0</integer>
@@ -3739,6 +2561,124 @@
 									<integer>493</integer>
 									<key>TYPE</key>
 									<integer>1</integer>
+									<key>UID</key>
+									<integer>0</integer>
+								</dict>
+								<dict>
+									<key>CHILDREN</key>
+									<array>
+										<dict>
+											<key>CHILDREN</key>
+											<array>
+												<dict>
+													<key>CHILDREN</key>
+													<array>
+														<dict>
+															<key>CHILDREN</key>
+															<array>
+																<dict>
+																	<key>CHILDREN</key>
+																	<array>
+																		<dict>
+																			<key>CHILDREN</key>
+																			<array>
+																				<dict>
+																					<key>CHILDREN</key>
+																					<array/>
+																					<key>GID</key>
+																					<integer>0</integer>
+																					<key>PATH</key>
+																					<string>../Installation Hierarchy/com.codeux.apps.textual/Extensions/BlowfishEncryption.bundle</string>
+																					<key>PATH_TYPE</key>
+																					<integer>1</integer>
+																					<key>PERMISSIONS</key>
+																					<integer>493</integer>
+																					<key>TYPE</key>
+																					<integer>3</integer>
+																					<key>UID</key>
+																					<integer>0</integer>
+																				</dict>
+																			</array>
+																			<key>GID</key>
+																			<integer>0</integer>
+																			<key>PATH</key>
+																			<string>Extensions</string>
+																			<key>PATH_TYPE</key>
+																			<integer>0</integer>
+																			<key>PERMISSIONS</key>
+																			<integer>493</integer>
+																			<key>TYPE</key>
+																			<integer>2</integer>
+																			<key>UID</key>
+																			<integer>0</integer>
+																		</dict>
+																	</array>
+																	<key>GID</key>
+																	<integer>0</integer>
+																	<key>PATH</key>
+																	<string>Textual</string>
+																	<key>PATH_TYPE</key>
+																	<integer>0</integer>
+																	<key>PERMISSIONS</key>
+																	<integer>493</integer>
+																	<key>TYPE</key>
+																	<integer>2</integer>
+																	<key>UID</key>
+																	<integer>0</integer>
+																</dict>
+															</array>
+															<key>GID</key>
+															<integer>0</integer>
+															<key>PATH</key>
+															<string>Application Support</string>
+															<key>PATH_TYPE</key>
+															<integer>0</integer>
+															<key>PERMISSIONS</key>
+															<integer>493</integer>
+															<key>TYPE</key>
+															<integer>2</integer>
+															<key>UID</key>
+															<integer>0</integer>
+														</dict>
+													</array>
+													<key>GID</key>
+													<integer>0</integer>
+													<key>PATH</key>
+													<string>Library</string>
+													<key>PATH_TYPE</key>
+													<integer>0</integer>
+													<key>PERMISSIONS</key>
+													<integer>493</integer>
+													<key>TYPE</key>
+													<integer>2</integer>
+													<key>UID</key>
+													<integer>0</integer>
+												</dict>
+											</array>
+											<key>GID</key>
+											<integer>0</integer>
+											<key>PATH</key>
+											<string>com.codeux.apps.textual</string>
+											<key>PATH_TYPE</key>
+											<integer>0</integer>
+											<key>PERMISSIONS</key>
+											<integer>493</integer>
+											<key>TYPE</key>
+											<integer>2</integer>
+											<key>UID</key>
+											<integer>0</integer>
+										</dict>
+									</array>
+									<key>GID</key>
+									<integer>0</integer>
+									<key>PATH</key>
+									<string>Group Containers</string>
+									<key>PATH_TYPE</key>
+									<integer>0</integer>
+									<key>PERMISSIONS</key>
+									<integer>493</integer>
+									<key>TYPE</key>
+									<integer>2</integer>
 									<key>UID</key>
 									<integer>0</integer>
 								</dict>
@@ -4084,13 +3024,6 @@
 			</dict>
 			<key>PACKAGE_SCRIPTS</key>
 			<dict>
-				<key>POSTINSTALL_PATH</key>
-				<dict>
-					<key>PATH</key>
-					<string>Installer-PostflightExtensions</string>
-					<key>PATH_TYPE</key>
-					<integer>1</integer>
-				</dict>
 				<key>PREINSTALL_PATH</key>
 				<dict/>
 				<key>RESOURCES</key>
@@ -4099,11 +3032,11 @@
 			<key>PACKAGE_SETTINGS</key>
 			<dict>
 				<key>AUTHENTICATION</key>
-				<true/>
+				<false/>
 				<key>CONCLUSION_ACTION</key>
 				<integer>0</integer>
 				<key>IDENTIFIER</key>
-				<string>com.codeux.irc.textual5.extraAddonsInstaller.BlowfishEncryption.pkg</string>
+				<string>com.codeux.app-extensions.textual-BlowfishEncryption-installer</string>
 				<key>LOCATION</key>
 				<integer>0</integer>
 				<key>NAME</key>
@@ -4111,7 +3044,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0</string>
+				<string>1.1</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -4358,80 +3291,6 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>This 3rd-party extension created by Tobias Pollmann allows greater control of now playing information coming from iTunes.</string>
-											</dict>
-										</array>
-										<key>OPTIONS</key>
-										<dict>
-											<key>HIDDEN</key>
-											<false/>
-											<key>STATE</key>
-											<integer>2</integer>
-										</dict>
-										<key>PACKAGE_UUID</key>
-										<string>1808A657-CEE1-402A-864E-912A0E865FC7</string>
-										<key>REQUIREMENTS</key>
-										<array/>
-										<key>TITLE</key>
-										<array>
-											<dict>
-												<key>LANGUAGE</key>
-												<string>English</string>
-												<key>VALUE</key>
-												<string>iTunes Controller</string>
-											</dict>
-										</array>
-										<key>TOOLTIP</key>
-										<array/>
-										<key>TYPE</key>
-										<integer>0</integer>
-										<key>UUID</key>
-										<string>B6AA450F-E63C-4127-8ED9-6B118EC836C5</string>
-									</dict>
-									<dict>
-										<key>DESCRIPTION</key>
-										<array>
-											<dict>
-												<key>LANGUAGE</key>
-												<string>English</string>
-												<key>VALUE</key>
-												<string>This 3rd-party extension created by Tobias Pollmann provides the ability to track every URL that passes through Textual.</string>
-											</dict>
-										</array>
-										<key>OPTIONS</key>
-										<dict>
-											<key>HIDDEN</key>
-											<false/>
-											<key>STATE</key>
-											<integer>2</integer>
-										</dict>
-										<key>PACKAGE_UUID</key>
-										<string>DAABF26F-B880-467B-9DD9-201D59EA4324</string>
-										<key>REQUIREMENTS</key>
-										<array/>
-										<key>TITLE</key>
-										<array>
-											<dict>
-												<key>LANGUAGE</key>
-												<string>English</string>
-												<key>VALUE</key>
-												<string>URL Dumper</string>
-											</dict>
-										</array>
-										<key>TOOLTIP</key>
-										<array/>
-										<key>TYPE</key>
-										<integer>0</integer>
-										<key>UUID</key>
-										<string>8E9D0342-6EE8-47DE-BF36-350428D8B57F</string>
-									</dict>
-									<dict>
-										<key>DESCRIPTION</key>
-										<array>
-											<dict>
-												<key>LANGUAGE</key>
-												<string>English</string>
-												<key>VALUE</key>
 												<string>The Wiki-style Link Parser automatically replaces [[&lt;title&gt;]] text blocks with the actual link that they represent. The parser can be configured on a per-channel basis from its included preference pane.</string>
 											</dict>
 										</array>
@@ -4608,7 +3467,7 @@
 						<key>LANGUAGE</key>
 						<string>English</string>
 						<key>VALUE</key>
-						<string>Textual 5 Extras</string>
+						<string>Textual Extras</string>
 					</dict>
 				</array>
 			</dict>
@@ -4639,7 +3498,7 @@
 							<key>LANGUAGE</key>
 							<string>English</string>
 							<key>VALUE</key>
-							<string>The ability for addons to be executed outside of the Mac OS sandbox was not introduced until Mountain Lion. Installing these addons on an earlier version of Mac OS will result in them doing absolutely nothing.</string>
+							<string>The ability for addons to be executed outside of the OS X sandbox was not introduced until Mountain Lion. Installing these addons on an earlier version of OS X will result in them doing absolutely nothing.</string>
 						</dict>
 					</array>
 					<key>NAME</key>
@@ -4661,7 +3520,7 @@
 		<dict>
 			<key>ADVANCED_OPTIONS</key>
 			<dict>
-				<key>installer-script.domains:enable_localSystem</key>
+				<key>installer-script.domains:enable_currentUserHome</key>
 				<true/>
 			</dict>
 			<key>BUILD_FORMAT</key>
@@ -4849,7 +3708,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>Textual 5 Extras</string>
+			<string>Textual Extras</string>
 		</dict>
 	</dict>
 	<key>TYPE</key>

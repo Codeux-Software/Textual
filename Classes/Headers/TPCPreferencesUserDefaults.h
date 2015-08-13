@@ -57,8 +57,9 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
 
 /* Do not call the following method from a plugin. */
-+ (void)migrateOldKeyValues;
-+ (void)migrateValuesToGroupContainer;
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
++ (void)migrateKeyValuesAwayFromGroupContainer;
+#endif
 @end
 
 /* Trying to create a new instance of TPCPreferencesUserDefaultsController will

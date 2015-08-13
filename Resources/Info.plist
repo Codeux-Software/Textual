@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>5.1.4</string>
+	<string>5.2.0b4</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.1.4</string>
+	<string>5.2.0b4</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 - 2015 Codeux Software, LLC. All rights reserved.</string>
 	<key>CFBundleDocumentTypes</key>
@@ -65,6 +65,11 @@
 	<string>TXCMainMenu</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.8.3</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.com.codeux.irc.textual5</key>

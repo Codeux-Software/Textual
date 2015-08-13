@@ -44,11 +44,14 @@
 + (void)startUsingLogLocationSecurityScopedBookmark;
 
 + (NSString *)applicationBundlePath;
-+ (NSString *)applicationSupportFolderPath;
 + (NSString *)applicationTemporaryFolderPath;
 + (NSString *)applicationCachesFolderPath;
 + (NSString *)applicationResourcesFolderPath;
 + (NSString *)applicationGroupContainerPath;
+
++ (NSString *)applicationSupportFolderPath TEXTUAL_DEPRECATED("Use -applicationGroupContainerApplicationSupportPath; instead");
++ (NSString *)applicationGroupContainerApplicationSupportPath;
++ (NSString *)applicationLocalContainerApplicationSupportPath;
 
 + (NSString *)localUserDiagnosticReportsFolderPath;
 + (NSString *)systemDiagnosticReportsFolderPath;
@@ -65,11 +68,12 @@
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox;
 + (NSString *)userDownloadFolderPath;
++ (NSString *)userPreferencesFolderPath;
 
 + (NSArray *)buildPathArray:(NSString *)path, ...;
 + (NSArray *)buildPathArrayWithPaths:(NSArray *)paths;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (NSString *)applicationUbiquitousContainerPath;
 
 + (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.

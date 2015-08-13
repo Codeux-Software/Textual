@@ -46,6 +46,8 @@ NSString * const TXDefaultTextualChannelViewFont				= @"Lucida Grande";
 NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
 NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
 
+NSInteger const TPCPreferencesDictionaryVersion		= 100;
+
 @implementation TPCPreferences
 
 #pragma mark -
@@ -156,7 +158,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 	return [RZUserDefaults() boolForKey:@"ApplyCommandToAllConnections -> clearall"];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (BOOL)textEncryptionIsOpportunistic
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
@@ -503,7 +505,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 
 + (TXUnsignedLongLong)inlineImagesMaxFilesize
 {
-	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"inlineImageMaxFilesize"];
+	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"InlineMediaMaximumFilesize"];
 
 	switch (filesizeTag) {
 		case 1: { return			(TXUnsignedLongLong)1048576;			} // 1 MB
@@ -516,7 +518,7 @@ NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name
 		case 8: { return			(TXUnsignedLongLong)20971520;			} // 20 MB
 		case 9: { return			(TXUnsignedLongLong)52428800;			} // 50 MB
 		case 10: { return			(TXUnsignedLongLong)104857600;			} // 100 MB
-		default: { return			(TXUnsignedLongLong)104857600;			} // 10 MB
+		default: { return			(TXUnsignedLongLong)2097152;			} // 2 MB
 	}
 }
 
@@ -863,8 +865,9 @@ static NSMutableArray *excludeKeywords = nil;
 
 	// ====================================================== //
 
-	[TPCPreferencesUserDefaults migrateValuesToGroupContainer];
-	[TPCPreferencesUserDefaults migrateOldKeyValues];
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
+#endif
 
 	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
 
@@ -880,7 +883,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	/* Sandbox Check */
 
-	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]							forKey:@"Security -> Sandbox Enabled"];
+	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXLionOrLater]				forKey:@"System -> Running Mac OS Lion Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
@@ -899,7 +902,7 @@ static NSMutableArray *excludeKeywords = nil;
 	[RZUserDefaults() setBool:NO forKey:@"System -> 3rd-party Services -> Built with Sparkle Framework"];
 #endif
 
-#ifndef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 0
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with iCloud Support"];
 #else
 	if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
@@ -909,11 +912,19 @@ static NSMutableArray *excludeKeywords = nil;
 	}
 #endif
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+	[RZUserDefaults() setBool:YES forKey:@"System -> Built with License Manager Backend"];
+#else
+	[RZUserDefaults() setBool:NO forKey:@"System -> Built with License Manager Backend"];
+#endif
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	[RZUserDefaults() setBool:YES forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #else
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #endif
+
+	[RZUserDefaults() setInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
 
 	/* Setup loggin. */
 	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];

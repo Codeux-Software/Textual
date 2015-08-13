@@ -40,8 +40,6 @@
 
 #define _minimumSplitViewWidth			120
 
-#define _userDefaults					[NSUserDefaults standardUserDefaults]
-
 NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindowSplitView";
 
 @interface TVCMainWindowSplitView ()
@@ -298,12 +296,12 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 		@"memberList" : @(memberListPosition),
 	};
 	
-	[_userDefaults setObject:newFrames forKey:_userDefaultsKey];
+	[RZUserDefaults() setObject:newFrames forKey:_userDefaultsKey];
 }
 
 - (NSDictionary *)savedFrames
 {
-	return [_userDefaults objectForKey:_userDefaultsKey];
+	return [RZUserDefaults() objectForKey:_userDefaultsKey];
 }
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldSize

@@ -39,12 +39,8 @@
 #define TXLoadMacOSVersionSpecificFeatures		1
 
 #if TXLoadMacOSVersionSpecificFeatures
- 	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_9_AND_LATER)
- 		#define TXSystemIsMacOSMavericksOrNewer
-	#endif
-
-	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_10_AND_LATER)
-		#define TXSystemIsMacOSYosemiteOrNewer
+	#if defined(AVAILABLE_MAC_OS_X_VERSION_10_11_AND_LATER)
+		#define TXSystemIsOSXElCapitanOrLater
 	#endif
 #endif
 
@@ -52,6 +48,7 @@
 #define RZAnimationCurrentContext()				[NSAnimationContext	currentContext]
 #define RZAppearaneCurrentController()			[NSAppearance currentAppearance]
 #define RZAppleEventManager()					[NSAppleEventManager sharedAppleEventManager]
+#define RZCurrentCalender()						[NSCalendar currentCalendar]
 #define RZCurrentRunLoop()						[NSRunLoop currentRunLoop]
 #define RZDistributedNotificationCenter()		[NSDistributedNotificationCenter defaultCenter]
 #define RZFileManager()							[NSFileManager defaultManager]
@@ -97,10 +94,10 @@ typedef unsigned long long						TXUnsignedLongLong;
 typedef void (^TXEmtpyBlockDataType)(void);
 
 /* Include a forced lifespan for beta builds. */
-// #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN
+// #define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 1
 
 /* Include Off-the-Record Messaging (OTR) support */
-#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
 
 /* Standard out logging. */
 /* It is recommended to always use these calls above plain-ol' NSLog. */
@@ -116,6 +113,11 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #define TEXTUAL_EXTERN							extern
 
 #define TEXTUAL_DEPRECATED(reason)				COCOA_EXTENSIONS_DEPRECATED(reason)
+
+#define TEXTUAL_IGNORE_DEPRECATION_BEGIN		_Pragma("clang diagnostic push")									\
+												_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+
+#define TEXTUAL_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
 
 /* Defines for script support instead of importing the
  entire Carbon framework for three items. */

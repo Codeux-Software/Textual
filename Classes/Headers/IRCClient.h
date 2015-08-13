@@ -45,7 +45,6 @@ typedef enum IRCClientConnectMode : NSInteger {
 
 typedef enum IRCClientDisconnectMode : NSInteger {
 	IRCClientDisconnectNormalMode,
-	IRCClientDisconnectTrialPeriodMode,
 	IRCClientDisconnectComputerSleepMode,
 	IRCClientDisconnectBadSSLCertificateMode,
 	IRCClientDisconnectReachabilityChangeMode,
@@ -78,11 +77,11 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 #import "IRCConnection.h" // @protocol
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 #import "TLOEncryptionManager.h" // typdef enum
 #endif
 
-@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChanBanExceptionSheetDelegate, TDChanBanSheetDelegate, TDChanInviteExceptionSheetDelegate, TDCListDialogDelegate>
+@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChannelBanListSheetDelegate, TDCServerChannelListDialogDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;
@@ -180,9 +179,8 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (void)selectFirstChannelInChannelList;
 
-- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
-
-@property (readonly) NSTimeInterval lastMessageServerTimeWithCachedValue;
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
+- (void)clearCachedHighlights;
 
 - (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname;
 - (NSString *)nicknameWithZNCUserPrefix:(NSString *)nickname;
@@ -202,7 +200,7 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
@@ -244,9 +242,9 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 - (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason;
 
 - (void)createChannelListDialog;
-- (void)createChanBanListDialog;
-- (void)createChanBanExceptionListDialog;
-- (void)createChanInviteExceptionListDialog;
+- (void)createChannelInviteExceptionListSheet;
+- (void)createChannelBanExceptionListSheet;
+- (void)createChannelBanListSheet;
 
 - (void)presentCertificateTrustInformation;
 

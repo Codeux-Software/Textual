@@ -2,6 +2,154 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>TPCPreferencesUserDefaults Paths to Migrate</key>
+	<array>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
+			<key>sourcePath</key>
+			<string>~/Library/Application Scripts/com.codeux.irc.textual5/</string>
+			<key>pathType</key>
+			<string>folder</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/</string>
+			<key>sourcePath</key>
+			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/</string>
+			<key>pathType</key>
+			<string>folder</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
+			<key>sourcePath</key>
+			<string>~/Library/Preferences/com.codeux.irc.textual5.plist</string>
+			<key>pathType</key>
+			<string>file-propertyList</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
+			<key>sourcePath</key>
+			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Custom Scripts/</string>
+			<key>pathType</key>
+			<string>file-softLink</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
+			<key>sourcePath</key>
+			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
+			<key>pathType</key>
+			<string>file-propertyList</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<true/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
+			<key>sourcePath</key>
+			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
+			<key>pathType</key>
+			<string>file-propertyList</string>
+		</dict>
+		<dict>
+			<key>createSourceIfMissing</key>
+			<false/>
+			<key>hideOriginalOnMigration</key>
+			<true/>
+			<key>destinationPath</key>
+			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
+			<key>sourcePath</key>
+			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/com.codeux.irc.textual5.plist</string>
+			<key>pathType</key>
+			<string>file-propertyList</string>
+		</dict>
+	</array>
+	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
+	<dict>
+		<key>NS</key>
+		<string>PREFIX</string>
+		<key>SGT</key>
+		<string>PREFIX</string>
+		<key>Apple</key>
+		<string>PREFIX</string>
+		<key>WebKit</key>
+		<string>PREFIX</string>
+		<key>com.apple.</key>
+		<string>PREFIX</string>
+		<key>DataDetectorsSettings</key>
+		<string>PREFIX</string>
+		<key>METAL_</key>
+		<string>PREFIX</string>
+		<key>HockeySDK</key>
+		<string>PREFIX</string>
+		<key>TXRunCount</key>
+		<string>=</string>
+		<key>TXRunTime</key>
+		<string>=</string>
+		<key>TextField</key>
+		<string>PREFIX</string>
+		<key>System -&gt;</key>
+		<string>PREFIX</string>
+		<key>Security -&gt;</key>
+		<string>PREFIX</string>
+		<key>Window -&gt; Main Window</key>
+		<string>PREFIX</string>
+		<key>Private Extension Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v2) —&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State —&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
+		<key>Saved Window State -&gt; Internal (v3) -&gt;</key>
+		<string>PREFIX</string>
+		<key>Text Input Prompt Suppression -&gt;</key>
+		<string>PREFIX</string>
+		<key>Textual Five Migration Tool -&gt;</key>
+		<string>PREFIX</string>
+		<key>Internal Theme Settings Key-value Store -&gt;</key>
+		<string>PREFIX</string>
+		<key>TPCPreferencesUserDefaults</key>
+		<string>PREFIX</string>
+		<key>TDCPreferencesControllerDidShowMountainLionDeprecationWarning</key>
+		<string>=</string>
+		<key>File Transfers -&gt; File Transfer Download Folder Bookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark</key>
+		<string>=</string>
+		<key>LogTranscriptDestinationSecurityBookmark_5</key>
+		<string>=</string>
+		<key>Theme -&gt; Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+		<key>Theme -&gt; Font Name -&gt; Did Not Exist During Last Sync</key>
+		<string>=</string>
+	</dict>
 	<key>IRCClient List of NickServ Successfully Identified Tokens</key>
 	<array>
 		<string>now recognized</string>

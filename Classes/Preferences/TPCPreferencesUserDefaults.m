@@ -39,7 +39,7 @@
 
 #import "BuildConfig.h"
 
-#import <objc/runtime.h>
+#import <objc/message.h>
 
 NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferencesUserDefaultsDidChangeNotification";
 
@@ -74,7 +74,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 - (id)protectedInit
 {
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		return [super initWithSuiteName:TXBundleBuildGroupContainerIdentifier];
+#else
+		return [super initWithSuiteName:nil];
+#endif
 	} else {
 		return [super initWithUser:nil];
 	}
@@ -100,6 +104,11 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)setObject:(id)value forKey:(NSString *)defaultName
 {
+	[self setObject:value forKey:defaultName postNotification:YES];
+}
+
+- (void)setObject:(id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification
+{
 	[self willChangeValueForKey:defaultName];
 
 	if (value == nil) {
@@ -114,7 +123,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 	[self didChangeValueForKey:defaultName];
 
-	[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
+	if (postNotification) {
+		[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
+	}
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
@@ -165,90 +176,292 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
 {
-	if ([key hasPrefix:@"NS"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"SGT"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"Apple"] ||											/* Apple owned prefix. */
-		[key hasPrefix:@"WebKit"] ||										/* Apple owned prefix. */
-		[key hasPrefix:@"com.apple."] ||									/* Apple owned prefix. */
-		[key hasPrefix:@"DataDetectorsSettings"] ||							/* Apple owned prefix. */
-		
-		[key hasPrefix:@"HockeySDK"] ||										/* HockeyApp owned prefix. */
-		
-		[key isEqualToString:@"TXRunCount"] ||								/* Textual owned prefix. */
-		[key isEqualToString:@"TXRunTime"] ||								/* Textual owned prefix. */
-		
-		[key hasPrefix:@"TextField"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"System —>"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"System ->"] ||										/* Textual owned prefix. */
-		[key hasPrefix:@"Security ->"] ||									/* Textual owned prefix. */
-		[key hasPrefix:@"Window -> Main Window"] ||							/* Textual owned prefix. */
-		[key hasPrefix:@"Private Extension Store -> "] ||					/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal —> "] ||			/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal (v2) —> "] ||		/* Textual owned prefix. */
-		[key hasPrefix:@"Saved Window State —> Internal (v3) -> "] ||		/* Textual owned prefix. */
-		[key hasPrefix:@"Text Input Prompt Suppression -> "] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Textual Five Migration Tool ->"] ||				/* Textual owned prefix. */
-		[key hasPrefix:@"Internal Theme Settings Key-value Store -> "] ||	/* Textual owned prefix. */
-		[key hasPrefix:@"TPCPreferencesUserDefaults"] ||					/* Textual owned prefix. */
+	/* Find cached list of excluded keys or build from disk. */
+	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+								  @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
 
-		[key isEqualToString:@"TDCPreferencesControllerDidShowMountainLionDeprecationWarning"])
-	{
-		return YES;
+	if (cachedValues == nil) {
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
+
+		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		 @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
+
+		cachedValues = _blockedNames;
 	}
-	else
-	{
-		return NO;
-	}
-}
 
-/* Perform a one time migration of old keys to new keys. */
-+ (void)migrateOldKeyValues
-{
-	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
+	/* Using cached list of excluded keys, perform comparison on each. */
+	for (NSString *blockedName in cachedValues) {
+		NSString *comparisonOperator = cachedValues[blockedName];
 
-	if (migratedOldKeys == nil) {
-		NSDictionary *remappedKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
-
-		[remappedKeys enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			id oldValue = [RZUserDefaults() objectForKey:key];
-
-			if (oldValue) {
-				DebugLogToConsole(@"Remapped '%@' to '%@'", key, obj);
-
-				[RZUserDefaults() removeObjectForKey:key];
-
-				[RZUserDefaults() setObject:oldValue forKey:obj];
+		if ([comparisonOperator isEqualToString:@"="]) {
+			if ([key isEqualToString:blockedName]) {
+				return YES;
 			}
-		}];
+		} else if ([comparisonOperator isEqualToString:@"PREFIX"]) {
+			if ([key hasPrefix:blockedName]) {
+				return YES;
+			}
+		} else if ([comparisonOperator isEqualToString:@"SUFFIX"]) {
+			if ([key hasSuffix:blockedName]) {
+				return YES;
+			}
+		}
 	}
 
-	[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_7276"];
+	/* Default to the key not being excluded. */
+	return NO;
 }
 
-/* Performs a one time migration of sandbox level keys to the group container
- if they were previously used on a system that did not have a group container. */
-+ (void)migrateValuesToGroupContainer
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
++ (void)migrateKeyValuesAwayFromGroupContainer
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		id usesGroupContainer = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+	/* Discussion:
 
-		if (usesGroupContainer) { // make sure the key even exists (non-nil)
-			if ([usesGroupContainer boolValue] == NO) {
-				NSDictionary *localDictionary = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+	 To make the non-Mac App Store and Mac App Store version the best possible 
+	 experience, the user should have their preferences migrated the moment the 
+	 application opens, before anything happens so they never suspect there is 
+	 any difference. This is very difficult because one is sandboxed, another is 
+	 not. Each writes to their own respective paths for preferences.
 
-				[localDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-					if ([RZUserDefaults() objectForKey:key] == nil) {
-						[RZUserDefaults() setObject:obj forKey:key];
-					}
-				}];
+	 This method works to merge paths into one:
+		The Mac App Store version of Textual writes to the following path:
+			~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist
+
+		The non-Mac App Store version of Textual writes to the following path:
+			~/Library/Preferences/com.codeux.apps.textual.plist
+
+	 So whats the best way to handle the difference? NSUserDefaults does not allow an
+	 application to specify the exact write path so that is out of the question and it
+	 would be a burden to write our own complete implementation of NSUserDefaults
+	 just to have custom paths.
+
+	 To solve this problem, this method does the following:
+		1) Read the contents of original preferences file and saves it within memory
+		2) Erase the existing preferences file
+			1) If step #1 fails, then the method exits and does not attempt
+			   migration to prevent certain edge cases.
+		3) Create a symbolic link from the original file to new location.
+			1) Step #3 is allowed to fail. If it fails, we still have the original
+			   values stored in memory and we can use those at the new location.
+		4) Apply values in memory to new location 
+	 */
+
+	/* Determine whether Textual has previously performed a group container migration. */
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330"];
+
+	if (migratedOldKeys) {
+		return; // Cancel operation...
+	}
+
+	/* The following paths are hardcoded because the bundle identifier for Textual
+	 may change in the future, but these paths in the past will not be effected by
+	 the bundle identifier change, which means they will always remain the same. */
+	/* Each path is relative to the user's home directory. Not filesystem root. */
+	/* Files are listed in priority from least important to most important. If a
+	 file with higher priority has a key thats already defined, then that file
+	 overrides the previously defined value. */
+	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+	NSArray *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
+
+	for (NSDictionary *pathToMigrateDict in pathsToMigrate) {
+		@autoreleasepool {
+			/* Define context variables for migration action. */
+			NSString *pathToMigrateFromAbsolutePath = [pathToMigrateDict[@"sourcePath"] stringByExpandingTildeInPath];
+
+			NSString *pathToMigrateToAbsolutePath = [pathToMigrateDict[@"destinationPath"] stringByExpandingTildeInPath];
+
+			NSString *migrationPathType = pathToMigrateDict[@"pathType"];
+
+			BOOL hideOriginalOnMigration = [pathToMigrateDict boolForKey:@"hideOriginalOnMigration"];
+
+			BOOL createSourceIfMissing = [pathToMigrateDict boolForKey:@"createSourceIfMissing"];
+
+			/* Perform migration action. */
+			if (NSObjectsAreEqual(migrationPathType, @"folder"))
+			{
+				[TPCPreferencesUserDefaults migrateFolderWithPath:pathToMigrateFromAbsolutePath
+														   toPath:pathToMigrateToAbsolutePath
+										  hideOriginalOnMigration:hideOriginalOnMigration
+											createSourceIfMissing:createSourceIfMissing];
+			}
+			else if ([migrationPathType hasPrefix:@"file-"])
+			{
+				BOOL isPropertyList = NSObjectsAreEqual(migrationPathType, @"file-propertyList");
+
+				[TPCPreferencesUserDefaults migrateFileWithPath:pathToMigrateFromAbsolutePath
+														 toPath:pathToMigrateToAbsolutePath
+										hideOriginalOnMigration:hideOriginalOnMigration
+										  createSourceIfMissing:createSourceIfMissing
+												 isPropertyList:isPropertyList];
+			}
+		}
+	}
+
+	/* Inform future calls to method not to perform migration again. */
+	[RZUserDefaults() setObject:@(YES) forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330" postNotification:NO];
+}
+
++ (void)migrateFolderWithPath:(NSString *)sourceMigrationPath
+					   toPath:(NSString *)destinationMigrationPath
+	  hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
+		createSourceIfMissing:(BOOL)createSourceIfMissing
+{
+	/* If the destination folder already exists, cancel operation. */
+	if ([RZFileManager() directoryExistsAtPath:destinationMigrationPath]) {
+		return; // Cancel operation...
+	}
+
+	/* Perform migration action for path. */
+	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
+
+	if (sourceMigrationPathExists == NO && createSourceIfMissing == NO) {
+		return; // Cancel operation...
+	}
+
+	/* Move source path to new path. */
+	if (sourceMigrationPathExists) {
+		NSError *moveSourcePathError = nil;
+
+		if ([RZFileManager() moveItemAtPath:sourceMigrationPath toPath:destinationMigrationPath error:&moveSourcePathError] == NO) {
+			LogToConsole(@"Failed to move migration source path during migration: %@", [moveSourcePathError localizedDescription]);
+
+			return; // Cancel operation...
+		}
+	} else {
+		NSError *createSourcePathError = nil;
+
+		if ([RZFileManager() createDirectoryAtPath:sourceMigrationPath withIntermediateDirectories:YES attributes:nil error:&createSourcePathError] == NO) {
+			LogToConsole(@"Failed to create source migration path when missing: %@", [createSourcePathError localizedDescription]);
+
+			return; // Cancel operation...
+		}
+	}
+
+	/* Create symbolic link from source path to new path. */
+	NSError *createSymbolicLinkError = nil;
+
+	if ([RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL] == NO) {
+		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
+	}
+
+	/* Maybe hide original path. */
+	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:YES];
+
+	NSError *modifySourcePathAttributesError = nil;
+
+	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+	}
+}
+
++ (void)migrateFileWithPath:(NSString *)sourceMigrationPath
+					 toPath:(NSString *)destinationMigrationPath
+	hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
+	  createSourceIfMissing:(BOOL)createSourceIfMissing
+			 isPropertyList:(BOOL)isPropertyList
+{
+	/* Exit if the source migration path does not exist. */
+	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
+
+	if (sourceMigrationPathExists == NO && createSourceIfMissing == NO) {
+		return; // Cancel operation...
+	}
+
+	/* Retrieve values from property list. */
+	NSDictionary *preferencesToMigrate = nil;
+
+	NSDictionary *remappedPreferenceKeys = nil;
+
+	if (sourceMigrationPathExists) {
+		if (isPropertyList) {
+			/* Retrieve values from property list. */
+			preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourceMigrationPath];
+
+			remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+
+			if (preferencesToMigrate == nil || remappedPreferenceKeys == nil) {
+				LogToConsole(@"'preferencesToMigrate' or 'remappedPreferenceKeys' is nil");
+
+				return; // Cancel operation...
 			}
 		}
 
-		[RZUserDefaults() setBool:YES forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
-	} else {
-		[RZUserDefaults() setBool:NO forKey:@"TPCPreferencesUserDefaultsLastUsedOperatingSystemSupportedGroupContainers"];
+		/* We delete the existing group container preferences file and
+		 replace it with a symbolic link. Doing this way ensures that the
+		 new path (non-sandboxed path) can be accessed by the Mac App Store
+		 version so that they are wrote to at the same path. */
+		NSError *removeSourcePathError = nil;
+
+		if ([RZFileManager() removeItemAtPath:sourceMigrationPath error:&removeSourcePathError] == NO) {
+			LogToConsole(@"Failed to erase the migration source file: %@", [removeSourcePathError localizedDescription]);
+
+			return; // Cancel operation...
+		}
+	}
+
+	/* We do not return if the creation of the symbolic link fails.
+	 If it fails, we still write the keys in memory so that we can at
+	 least have the user preferences on disk somewhere, they just wont
+	 be read by the Mac App Store without symbolic link. */
+	if (sourceMigrationPathExists == NO && createSourceIfMissing) {
+		NSString *sourceMigrationPathOwner = [sourceMigrationPath stringByDeletingLastPathComponent];
+
+		NSError *createSourcePathError = nil;
+
+		if ([RZFileManager() fileExistsAtPath:sourceMigrationPathOwner] == NO) {
+			if ([RZFileManager() createDirectoryAtPath:sourceMigrationPathOwner withIntermediateDirectories:YES attributes:nil error:&createSourcePathError] == NO) {
+				LogToConsole(@"Failed to create source migration path when missing: %@", [createSourcePathError localizedDescription]);
+
+				return; // Cancel operation...
+			}
+		}
+	}
+
+	NSError *createSymbolicLinkError = nil;
+
+	if ([RZFileManager() createSymbolicLinkAtPath:sourceMigrationPath withDestinationPath:destinationMigrationPath error:NULL] == NO) {
+		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
+	}
+
+	/* Maybe hide original path. */
+	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:NO];
+
+	NSError *modifySourcePathAttributesError = nil;
+
+	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+	}
+
+	/* Begin migrating group container values. */
+	if (isPropertyList) {
+		if (sourceMigrationPathExists) {
+			[preferencesToMigrate enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+				/* Determine whether a key is remapped to new name. */
+				NSString *mappedKey = key;
+
+				NSString *remappedKey = remappedPreferenceKeys[key];
+
+				if (remappedKey) {
+					mappedKey = remappedKey;
+				}
+
+				/* Determine whether the key already exists. If so, override. */
+				id existingValue = [RZUserDefaults() objectForKey:mappedKey];
+
+				if (existingValue) {
+					[RZUserDefaults() removeObjectForKey:mappedKey];
+				}
+
+				/* Set new value to non-group container. */
+				[RZUserDefaults() setObject:obj forKey:mappedKey postNotification:NO];
+			}];
+		}
 	}
 }
+#endif
 
 @end
 

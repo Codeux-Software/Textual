@@ -74,6 +74,18 @@ Textual.viewPositionMovedToHistoryIndicator 	= function() {};
 Textual.viewPositionMovedToLine 				= function(lineNumber) {};
 Textual.viewPositionMovedToTop 					= function() {};
 
+/* This function is called when two conditions are met:
+	1. The day has changed by reaching midnight
+	2. The system clock has changed
+
+   For the first case (#1), the timer that handles the observation of
+   midnight understands Daylight Saving Time (DST) and other oddities.
+
+   For the second case (#2), Textual does not make an effort to compare
+   if the day has in-fact changed. It is merely passing the change down
+   to the style to inform it that the system clock changed.  */
+Textual.dateChanged								= function(dayYear, dayMonth, dayDay) {};
+
 /* This function is not called by Textual itself, but by WebKit. It is appended
    to <body> as the function to call during onload phase. It is used by the newer
    templates to replace viewDidFinishLoading as the function responsible for
@@ -87,26 +99,24 @@ Textual.viewBodyDidLoad						= function() {};
 
 /* A style can retrieve the value of preferences using the retrievePreferencesWithMethodName() function.
    The key supplied to this function corresponds to the Objective-C method name defined in the TPCPreferences.h
-   header file located at the path "Textual 5.app/Contents/Headers" — calling a particular method name instead of
+   header file located at the path "Textual.app/Contents/Headers" — calling a particular method name instead of
    the raw key name was picked because it was a more uniform approach. */
 // app.retrievePreferencesWithMethodName(name)		— Retrieve particular value from preferences
 
 /* No key is supplied to preferencesDidChange() because it is preferred that the style maintain a cached state
    of any values that they wish to monitor and update accordingly. */
-/* This callback is called very frequently. Up to a dozen times a second. Make sure your code is efficient. */
+/* A boolean entry with key name "Post preferencesDidChange() Notifications" must be added to styleSettings.plist
+   in order to enable the use of this callback. */
+/* This callback is rate-limit at one call per-second, per-view. */
 Textual.preferencesDidChange						= function() {};
 
 /* Checks whether inline images are enabled for this particular view. Inline images can be enabled and disabled
    on a per-view basis so querying preferences alone for the value will only give the global value. */
 // app.inlineImagesEnabledForView()					— Returns true when inline images are enabled for view.
 
-/* Allows a style to respond to the user switching between light and dark mode. */
-Textual.sidebarInversionPreferenceChanged			= function() {};
-
-/* When switching styles, the sidebarInversionPreferenceChanged() function is not called, but a style may force the
-   sidebar color to dark (a.k.a inverted). Therefore, it is important to use the app.sidebarInversionIsEnabled()
-   function call at some point to update your style logic if it depends on the value. */
-// app.sidebarInversionIsEnabled()					- Returns true if the sidebar colors are inverted (dark mode).
+/* Returns true if the sidebar colors are inverted (dark mode). The preferencesDidChange() callback can
+   be used to monitor changes to the value of this function. */
+// app.sidebarInversionIsEnabled()
 
 /* *********************************************************************** */
 /*						Event Handling									   */

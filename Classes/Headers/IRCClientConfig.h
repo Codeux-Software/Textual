@@ -58,7 +58,7 @@ typedef enum TXConnectionProxyType : NSInteger {
 @property (nonatomic, assign) BOOL autojoinWaitsForNickServ;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 #endif
 

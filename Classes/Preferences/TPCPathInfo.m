@@ -60,7 +60,7 @@
 	if ([searchArray count]) {
 		NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
 		
-		NSString *basePath = [searchArray[0] stringByAppendingString:endPath];
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:endPath];
 		
 		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
 			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -74,12 +74,54 @@
 
 + (NSString *)applicationGroupContainerPath
 {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
 
 	return [url relativePath];
+#else
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
+
+		NSString *dest = [searchArray[0] stringByAppendingPathComponent:endPath];
+
+		if (dest) {
+			if ([RZFileManager() fileExistsAtPath:dest] == NO) {
+				[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+			}
+
+			return dest;
+		}
+	}
+
+	return nil;
+#endif
+}
+
++ (NSString *)applicationLocalContainerApplicationSupportPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Textual/"];
+
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return basePath;
+	}
+
+	return nil;
 }
 
 + (NSString *)applicationSupportFolderPath
+{
+	return [TPCPathInfo applicationGroupContainerApplicationSupportPath];
+}
+
++ (NSString *)applicationGroupContainerApplicationSupportPath
 {
 	NSString *dest = [TPCPathInfo applicationGroupContainerPath];
 	
@@ -110,7 +152,7 @@
 
 + (NSString *)customThemeFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Styles/"];
+	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Styles/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -121,7 +163,7 @@
 
 + (NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationSupportFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
+	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Extensions/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -130,7 +172,7 @@
 	return dest;
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (NSString *)applicationUbiquitousContainerPath
 {
 	return [sharedCloudManager() ubiquitousContainerURLPath];
@@ -225,9 +267,21 @@
 + (NSString *)systemUnsupervisedScriptFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-		
+
 	if ([searchArray count]) {
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 		return searchArray[0];
+#else
+		NSString *basePath = searchArray[0];
+
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return basePath;
+#endif
+
 	}
 	
 	return nil;
@@ -241,6 +295,19 @@
 		return searchArray[0];
 	}
 	
+	return nil;
+}
+
++ (NSString *)userPreferencesFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Preferences/"];
+
+		return basePath;
+	}
+
 	return nil;
 }
 

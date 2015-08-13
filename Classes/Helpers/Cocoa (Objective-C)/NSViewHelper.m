@@ -37,7 +37,21 @@
 
 #import "TextualApplication.h"
 
+#import <objc/runtime.h>
+
 @implementation NSView (TXViewHelper)
+
+static void *internal_tx_contentViewSubviewConstraints = nil;
+
+- (NSArray *)tx_contentViewSubviewConstraints
+{
+	return objc_getAssociatedObject(self, internal_tx_contentViewSubviewConstraints);
+}
+
+- (void)setTx_contentViewSubviewConstraints:(NSArray *)tx_contentViewSubviewConstraints
+{
+	objc_setAssociatedObject(self, internal_tx_contentViewSubviewConstraints, tx_contentViewSubviewConstraints, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
 
 - (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint
 {
@@ -50,6 +64,8 @@
 	if ([contentSubviews count] > 0) {
 		[contentSubviews[0] removeFromSuperview];
 	}
+
+	[self addSubview:subview];
 
 	/* Adjust constraints of parent view to maintain the same size
 	 of the subview that is being added. */
@@ -66,29 +82,37 @@
 		[parentViewHeightConstraint setConstant:subviewFrameHeight];
 	}
 
-	/* Create a width and height constraint for the subview so that 
-	 auto layout works properly when added as a subview. */
-	NSLayoutConstraint *subviewWidthConstraint =
-	[NSLayoutConstraint constraintWithItem:subview
-								 attribute:NSLayoutAttributeWidth
-								 relatedBy:NSLayoutRelationEqual
-									toItem:nil
-								 attribute:NSLayoutAttributeNotAnAttribute
-								multiplier:1.0
-								  constant:subviewFrameWidth];
+	/* Remove all constraints that already exists related to margins. */
+	if (self.tx_contentViewSubviewConstraints) {
+		[self removeConstraints:self.tx_contentViewSubviewConstraints];
+	}
 
-	NSLayoutConstraint *subviewHeightConstraint =
-	[NSLayoutConstraint constraintWithItem:subview
-								 attribute:NSLayoutAttributeHeight
-								 relatedBy:NSLayoutRelationEqual
-									toItem:nil
-								 attribute:NSLayoutAttributeNotAnAttribute
-								multiplier:1.0
-								  constant:subviewFrameHeight];
+	/* Add new constraints. */
+	NSMutableArray *constraints = [NSMutableArray array];
 
-	[subview addConstraints:@[subviewWidthConstraint, subviewHeightConstraint]];
+	[constraints addObject:
+	 [NSLayoutConstraint constraintWithItem:subview
+								  attribute:NSLayoutAttributeWidth
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:nil
+								  attribute:NSLayoutAttributeNotAnAttribute
+								 multiplier:1.0
+								   constant:subviewFrameWidth]
+	 ];
 
-	[self addSubview:subview];
+	[constraints addObject:
+	 [NSLayoutConstraint constraintWithItem:subview
+								  attribute:NSLayoutAttributeHeight
+								  relatedBy:NSLayoutRelationEqual
+									 toItem:nil
+								  attribute:NSLayoutAttributeNotAnAttribute
+								 multiplier:1.0
+								   constant:subviewFrameHeight]
+	 ];
+
+	self.tx_contentViewSubviewConstraints = constraints;
+
+	[subview addConstraints:self.tx_contentViewSubviewConstraints];
 }
 
 @end

@@ -164,7 +164,7 @@
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
 	/* Cache last known state of encryption. */
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	if (self.associatedChannel) {
 		self.viewIsEncrypted = [self.associatedChannel encryptionStateIsEncrypted];
 	} else {
@@ -172,7 +172,7 @@
 
 		self.viewIsEncrypted = NO;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	}
 #endif
 
@@ -1046,8 +1046,8 @@
 					@synchronized(self.highlightedLineNumbers) {
 						[self.highlightedLineNumbers addObject:lineNumber];
 					}
-					
-					[self.associatedClient addHighlightInChannel:self.associatedChannel withLogLine:logLine];
+
+					[self.associatedClient cacheHighlightInChannel:self.associatedChannel withLogLine:logLine];
 				}
 
 				/* Do the actual append to WebKit. */

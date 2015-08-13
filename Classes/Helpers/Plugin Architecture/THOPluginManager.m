@@ -324,8 +324,8 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command
 {
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]", command)
-													   title:TXTLS(@"BasicLanguage[1236][1]")
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]")
+													   title:TXTLS(@"BasicLanguage[1236][1]", command)
 											   defaultButton:TXTLS(@"BasicLanguage[1236][3]")
 											 alternateButton:BLS(1009)
 											  suppressionKey:@"plugin_manager_reserved_command_dialog"
@@ -338,11 +338,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)openExtrasInstallerDownloadURL
 {
-	NSString *currentVersion = [TPCApplicationInfo applicationVersion];
+	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras" ofType:@"pkg"];
 
-	NSString *urlToOpen = [NSString stringWithFormat:@"https://www.codeux.com/textual/downloads/latestExtrasInstaller.download?version=%@", [currentVersion encodeURIFragment]];
-
-	[RZWorkspace() openURL:[NSURL URLWithString:urlToOpen]];
+	if (installerURL) {
+		[RZWorkspace() openFile:installerURL withApplication:@"Installer"];
+	}
 }
 
 #pragma mark -
@@ -445,7 +445,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 					if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag]) {
 						[[plugin primaryClass] userInputCommandInvokedOnClient:client commandString:cmdUpper messageString:message];
 					} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 						[[plugin primaryClass] messageSentByUser:client message:message command:cmdUpper];
+TEXTUAL_IGNORE_DEPRECATION_END
 					}
 				}
 			}
@@ -485,7 +487,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 					if ([plugin supportsFeature:THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag]) {
 						[[plugin primaryClass] didReceiveServerInputOnClient:client senderInformation:senderData messageInformation:messageData];
 					} else {
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 						[[plugin primaryClass] messageReceivedByServer:client sender:senderData message:messageData];
+TEXTUAL_IGNORE_DEPRECATION_END
 					}
 				}
 			}
