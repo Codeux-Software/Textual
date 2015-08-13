@@ -37,10 +37,10 @@
 
 #import "TextualApplication.h"
 
-@protocol TDCAboutPanelDelegate <NSObject>
+@protocol TDCAboutDialogDelegate <NSObject>
 @required
 
-- (void)aboutPanelWillClose:(TDCAboutPanel *)sender;
+- (void)aboutDialogWillClose:(TDCAboutDialog *)sender;
 @end
 
 #pragma mark -
@@ -54,38 +54,21 @@
 
 #pragma mark -
 
-@protocol TDChanBanExceptionSheetDelegate <NSObject>
+@protocol TDChannelBanListSheetDelegate <NSObject>
 @required
 
-- (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender;
-- (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender;
+
+- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender;
+- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender;
 @end
 
 #pragma mark -
 
-@protocol TDChanBanSheetDelegate <NSObject>
+@protocol TDChannelPropertiesSheetDelegate <NSObject>
 @required
 
-- (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender;
-- (void)chanBanDialogWillClose:(TDChanBanSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDChanInviteExceptionSheetDelegate <NSObject>
-@required
-
-- (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender;
-- (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDChannelSheetDelegate <NSObject>
-@required
-
-- (void)channelSheetOnOK:(TDChannelSheet *)sender;
-- (void)channelSheetWillClose:(TDChannelSheet *)sender;
+- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender;
+- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender;
 @end
 
 #pragma mark -
@@ -99,47 +82,47 @@
 
 #pragma mark -
 
-@protocol TDCHighlightListSheetDelegate <NSObject>
+@protocol TDCServerHighlightListSheetDelegate <NSObject>
 @required
 
-- (void)highlightListSheetWillClose:(TDCHighlightListSheet *)sender;
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender;
 @end
 
 #pragma mark -
 
-@protocol TDCInviteSheetDelegate <NSObject>
+@protocol TDChannelInviteSheetDelegate <NSObject>
 @required
 
-- (void)inviteSheet:(TDCInviteSheet *)sender onSelectChannel:(NSString *)channelName;
-- (void)inviteSheetWillClose:(TDCInviteSheet *)sender;
+- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
+- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender;
 @end
 
 #pragma mark -
 
-@protocol TDCListDialogDelegate <NSObject>
+@protocol TDCServerChannelListDialogDelegate <NSObject>
 @required
 
-- (void)listDialogOnUpdate:(TDCListDialog *)sender;
-- (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel;
-- (void)listDialogWillClose:(TDCListDialog *)sender;
+- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
+- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel;
+- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
 @end
 
 #pragma mark -
 
-@protocol TDCModeSheetDelegate <NSObject>
+@protocol TDChannelModifyModesSheetDelegate <NSObject>
 @required
 
-- (void)modeSheetOnOK:(TDCModeSheet *)sender;
-- (void)modeSheetWillClose:(TDCModeSheet *)sender;
+- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender;
+- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender;
 @end
 
 #pragma mark -
 
-@protocol TDCNickSheetDelegate <NSObject>
+@protocol TDCServerChangeNicknameSheetDelegate <NSObject>
 @required
 
-- (void)nickSheet:(TDCNickSheet *)sender didInputNickname:(NSString *)nickname;
-- (void)nickSheetWillClose:(TDCNickSheet *)sender;
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname;
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender;
 @end
 
 #pragma mark -
@@ -152,24 +135,24 @@
 
 #pragma mark -
 
-@protocol TDCServerSheetDelegate <NSObject>
+@protocol TDCServerPropertiesSheetDelegate <NSObject>
 @required
 
-- (void)serverSheetOnOK:(TDCServerSheet *)sender;
-- (void)serverSheetWillClose:(TDCServerSheet *)sender;
+- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender;
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
-- (void)serverSheetRequestedCloudExclusionByDeletion:(TDCServerSheet *)sender;
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender;
 #endif
 @end
 
 #pragma mark -
 
-@protocol TDCTopicSheetDelegate <NSObject>
+@protocol TDChannelModifyTopicSheetDelegate <NSObject>
 @required
 
-- (void)topicSheet:(TDCTopicSheet *)sender onOK:(NSString *)topic;
-- (void)topicSheetWillClose:(TDCTopicSheet *)sender;
+- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic;
+- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender;
 @end
 
 #pragma mark -

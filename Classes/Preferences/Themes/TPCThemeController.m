@@ -135,7 +135,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	{
 		NSString *path = nil;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		if ([filekind isEqualToString:TPCThemeControllerCloudThemeNameBasicPrefix]) {
 			/* Does the theme exist in the cloud? */
 			if (ignoreCloudCache) {
@@ -262,7 +262,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1246][2]", [self name])
 												 title:TXTLS(@"BasicLanguage[1246][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1246][3]")
+										 defaultButton:TXTLS(@"BasicLanguage[1186]")
 									   alternateButton:nil
 										suppressionKey:suppressionKey
 									   suppressionText:nil];
@@ -533,14 +533,14 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	};
 	
 	/* File paths are ordered by priority. Top-most will be most important. */
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	checkPath([TPCPathInfo cloudCustomThemeCachedFolderPath], TPCThemeControllerCloudThemeNameCompletePrefix);
 #endif
 	
 	checkPath([TPCPathInfo customThemeFolderPath], TPCThemeControllerCustomThemeNameCompletePrefix);
 	checkPath([TPCPathInfo bundledThemeFolderPath], TPCThemeControllerBundledThemeNameCompletePrefix);
 	
-	return [allThemes sortedDictionary];
+	return allThemes;
 }
 
 void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
@@ -670,7 +670,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	void *callbackInfo = NULL;
 	
 	NSArray *pathsToWatch = @[
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 		[TPCPathInfo cloudCustomThemeCachedFolderPath],
 #endif
 							  
@@ -742,14 +742,14 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	/* Define which path we are copying to. */
 	NSString *destinationPath = nil;
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	BOOL isCloudCopy = NO;
 #endif
 	
 	if ([self destinationLocation] == TPCThemeControllerStorageCustomLocation) {
 		destinationPath = [TPCPathInfo customThemeFolderPath];
 		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	} else if ([self destinationLocation] == TPCThemeControllerStorageCloudLocation) {
 		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
 			isCloudCopy = YES;
@@ -775,7 +775,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	/* Now that we know where the files will go, we can begin copying them. */
 	NSURL *destinationURL = [NSURL fileURLWithPath:destinationPath];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* If we are copying to the cloud, then we take special precautions. */
 	if (isCloudCopy) {
 		/* While we are doing cloud related work, we pause metadata updates. */
@@ -805,7 +805,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		
 		/* Perform deletion operation */
 		if ([RZFileManager() trashItemAtURL:destinationURL resultingItemURL:NULL error:&deletionError] == NO) {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 			if (isCloudCopy) {
 				[sharedCloudManager() resumeCloudContainerMetadataUpdates];
 			}
@@ -821,7 +821,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	
 	/* It is important to resume the metadata updates before performin the
 	 copying or the theme will never get copied to the cache and update. */
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (isCloudCopy) {
 		[sharedCloudManager() resumeCloudContainerMetadataUpdates];
 	}
@@ -830,7 +830,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	/* Perform copy operation. */
 	NSError *copyError = nil;
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (isCloudCopy) {
 		/* When copying to iCloud, we copy the style to a temporary folder then have OS X 
 		 handle the transfer of said folder to iCloud on our behalf. */
@@ -856,7 +856,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 			[self cancelOperationAndReportError:copyError];
 		}
 		
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	}
 #endif
 	
@@ -869,7 +869,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 	NSString *comparisonPath = nil;
 	
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([self destinationLocation] == TPCThemeControllerStorageCloudLocation) {
 		comparisonPath = [TPCPathInfo cloudCustomThemeCachedFolderPath];
 	} else {
@@ -877,7 +877,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		
 		comparisonPath = [TPCPathInfo customThemeFolderPath];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	}
 #endif
 	

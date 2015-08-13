@@ -56,8 +56,7 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 	if ([commandString isEqualToString:@"BRAG"]) {
 		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
@@ -161,7 +160,7 @@
 				 channel:selectedChannel];
 	}
 
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 - (NSArray *)subscribedUserInputCommands

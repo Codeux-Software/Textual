@@ -44,7 +44,7 @@
 #define _WebMenuItemTagInspectElementLion			2024
 #define _WebMenuItemTagInspectElementMountainLion	2025
 
-#define _WebMenuItemTagIRCopServices	42354
+#define _WebMenuItemTagIRCopServices	1522
 
 @implementation TVCLogPolicy
 

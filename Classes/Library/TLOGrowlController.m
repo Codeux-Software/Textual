@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TLOLicenseManager.h"
+#endif
+
 #define _clickInterval			2
 
 NSString * const TXNotificationDialogStandardNicknameFormat		= @"%@ %@";
@@ -255,7 +259,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 							   clickContext:eventContext];
 }
 
-/* NSUserNotificationCenter */
+#pragma mark -
+#pragma mark Notification Cetner Delegate
 
 - (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center
 	 shouldPresentNotification:(NSUserNotification *)notification
@@ -272,17 +277,17 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
 			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
 
-			[self growlNotificationWasClicked:[notification userInfo]
-							   activationType:[notification activationType]
-							 withReplyMessage:replyMessage];
+			[self notificationWasClicked:[notification userInfo]
+						  activationType:[notification activationType]
+						withReplyMessage:replyMessage];
 
 			return; // Do not continue this method.
 		}
 	}
-	
-	[self growlNotificationWasClicked:[notification userInfo]
-					   activationType:[notification activationType]
-					 withReplyMessage:nil];
+
+	[self notificationWasClicked:[notification userInfo]
+				  activationType:[notification activationType]
+				withReplyMessage:nil];
 }
 
 - (void)dismissNotificationsInNotificationCenterForClient:(IRCClient *)client channel:(IRCChannel *)channel
@@ -303,7 +308,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	}
 }
 
-/* Growl delegate */
+#pragma mark -
+#pragma mark Growl delegate
 
 - (NSString *)applicationNameForGrowl
 {
@@ -339,10 +345,18 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 - (void)growlNotificationWasClicked:(NSDictionary *)context
 {
-	[self growlNotificationWasClicked:context activationType:0 withReplyMessage:nil];
+	[self notificationWasClicked:context activationType:0 withReplyMessage:nil];
 }
 
-- (void)growlNotificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
+- (BOOL)hasNetworkClientEntitlement 
+{
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Notification Callback
+
+- (void)notificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
 {
 	NSTimeInterval now = [NSDate unixTime];
 	
@@ -370,9 +384,23 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	}
 
 	if ([context isKindOfClass:[NSDictionary class]]) {
-		BOOL isFileTransferNotification = [context boolForKey:@"isFileTransferNotification"];
-		
-		if (isFileTransferNotification)
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+		/* Handle a notification that was clicked related to a warnings about
+		 the trial of Textual preparing to expire. */
+		if ([context boolForKey:@"isLicenseManagerTimeRemainingInTrialNotification"])
+		{
+			if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
+			{
+				[menuController() manageLicense:nil];
+			}
+		}
+		else
+#endif
+
+		/* Handle file transfer notifications allowing the user to start a 
+		 file transfer directly through the notification's action button. */
+		if ([context boolForKey:@"isFileTransferNotification"])
 		{
 			NSInteger alertType = [context integerForKey:@"fileTransferNotificationType"];
 			
@@ -400,6 +428,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			
 			[[menuController() fileTransferController] show:YES restorePosition:NO];
 		}
+
+		/* Handle all other IRC related notifications. */
 		else
 		{
 			NSString *uid = context[@"client"];
@@ -438,11 +468,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			}
 		}
 	}
-}
-
-- (BOOL)hasNetworkClientEntitlement 
-{
-    return YES;
 }
 
 @end

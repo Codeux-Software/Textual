@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
@@ -38,12 +39,14 @@
                 <subviews>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="539">
                         <rect key="frame" x="18" y="228" width="333" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="531">
                         <rect key="frame" x="18" y="59" width="333" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -53,10 +56,12 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="82" id="mZU-SC-ob8"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="551">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                         <connections>
                             <action selector="cancel:" target="-2" id="589"/>
                         </connections>
@@ -66,6 +71,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="82" id="kiu-FV-GFB"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="552">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -73,12 +79,14 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Save"/>
                         <connections>
                             <action selector="ok:" target="-2" id="586"/>
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="563">
-                        <rect key="frame" x="27" y="196" width="312" height="18"/>
+                        <rect key="frame" x="27" y="196" width="306" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Display message when user becomes available" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="564">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -86,11 +94,12 @@ DQ
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="566">
                         <rect key="frame" x="18" y="177" width="333" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cib-aW-lDk">
+                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="cib-aW-lDk">
                         <rect key="frame" x="23" y="80" width="323" height="81"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LME-Ik-P6C">
                             <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -99,16 +108,17 @@ DQ
                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="TVw-lr-Mo6">
                                     <rect key="frame" x="0.0" y="0.0" width="223" height="133"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                    <animations/>
+                                    <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="323" height="81"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment content="Info:">
                                             <attributes>
-                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" metaFont="smallSystemBold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                         <fragment>
@@ -116,36 +126,35 @@ DQ
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="smallSystem"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                         <fragment content="ISON">
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="smallSystemBold"/>
-                                                <font key="NSOriginalFont" metaFont="smallSystemBold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                         <fragment content=" or ">
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="smallSystem"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                         <fragment content="WATCH">
                                             <attributes>
-                                                <color key="NSColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="11" name=".HelveticaNeueDeskInterface-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <font key="NSFont" metaFont="smallSystemBold"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                         <fragment content=" to check for the user that you specify, even if you are not in the same channel.">
                                             <attributes>
                                                 <color key="NSColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <font key="NSFont" metaFont="smallSystem"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                             </attributes>
                                         </fragment>
                                     </attributedString>
@@ -154,19 +163,24 @@ DQ
                                     <size key="maxSize" width="463" height="10000000"/>
                                 </textView>
                             </subviews>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gki-G1-LfW">
+                        <animations/>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gki-G1-LfW">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="JIv-3f-fW9">
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="JIv-3f-fW9">
                             <rect key="frame" x="224" y="1" width="15" height="133"/>
                             <autoresizingMask key="autoresizingMask"/>
+                            <animations/>
                         </scroller>
                     </scrollView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="541">
-                        <rect key="frame" x="14" y="251" width="70" height="17"/>
+                        <rect key="frame" x="14" y="251" width="68" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nickname:" id="542">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -174,7 +188,11 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="540" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="90" y="249" width="263" height="22"/>
+                        <rect key="frame" x="88" y="249" width="265" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="biA-rd-gTx"/>
+                        </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter any nickname to track" drawsBackground="YES" usesSingleLineMode="YES" id="543" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -183,6 +201,9 @@ DQ
                                 <outlet property="parentField" destination="540" id="XMM-dO-upa"/>
                             </connections>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="541" id="TiN-Rr-XgG"/>
+                        </connections>
                     </textField>
                 </subviews>
                 <constraints>
@@ -199,7 +220,7 @@ DQ
                     <constraint firstItem="531" firstAttribute="top" secondItem="cib-aW-lDk" secondAttribute="bottom" constant="18" id="LD7-yH-xnD"/>
                     <constraint firstAttribute="bottom" secondItem="530" secondAttribute="bottom" constant="20" symbolic="YES" id="NOC-GF-ukb"/>
                     <constraint firstItem="531" firstAttribute="trailing" secondItem="566" secondAttribute="trailing" id="Na2-6Y-5je"/>
-                    <constraint firstItem="540" firstAttribute="baseline" secondItem="541" secondAttribute="baseline" id="R15-96-WrE"/>
+                    <constraint firstItem="540" firstAttribute="baseline" secondItem="541" secondAttribute="baseline" constant="-1" id="R15-96-WrE"/>
                     <constraint firstAttribute="trailing" secondItem="529" secondAttribute="trailing" constant="20" symbolic="YES" id="T2U-sC-OFF"/>
                     <constraint firstItem="563" firstAttribute="top" secondItem="539" secondAttribute="bottom" constant="18" id="WYl-yw-Thm"/>
                     <constraint firstItem="cib-aW-lDk" firstAttribute="centerX" secondItem="566" secondAttribute="centerX" id="Xst-H4-awN"/>
@@ -211,11 +232,12 @@ DQ
                     <constraint firstItem="cib-aW-lDk" firstAttribute="leading" secondItem="522" secondAttribute="leading" constant="23" id="tpB-i8-FrX"/>
                     <constraint firstItem="529" firstAttribute="leading" secondItem="530" secondAttribute="trailing" constant="12" symbolic="YES" id="xPS-99-XYL"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="561"/>
             </connections>
-            <point key="canvasLocation" x="299.5" y="254.5"/>
+            <point key="canvasLocation" x="503.5" y="274.5"/>
         </window>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -232,7 +254,11 @@ DQ
                 </userGuides>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="94" y="380" width="412" height="22"/>
+                        <rect key="frame" x="93" y="380" width="413" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="NhJ-Fz-bJp"/>
+                        </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter a hostmask to ignore" drawsBackground="YES" usesSingleLineMode="YES" id="299" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -241,17 +267,23 @@ DQ
                                 <outlet property="parentField" destination="298" id="R3N-FX-jSA"/>
                             </connections>
                         </textFieldCell>
+                        <connections>
+                            <accessibilityConnection property="title" destination="296" id="orM-OL-W3d"/>
+                        </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                        <rect key="frame" x="165" y="351" width="204" height="14"/>
+                        <rect key="frame" x="159" y="351" width="205" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Format for Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="594">
-                        <rect key="frame" x="117" y="351" width="46" height="14"/>
+                        <rect key="frame" x="110" y="351" width="47" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -259,7 +291,8 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="101" y="335" width="62" height="14"/>
+                        <rect key="frame" x="95" y="335" width="62" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -267,109 +300,126 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="165" y="335" width="305" height="14"/>
+                        <rect key="frame" x="159" y="335" width="309" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="306">
-                        <rect key="frame" x="165" y="322" width="310" height="14"/>
+                        <rect key="frame" x="159" y="322" width="316" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="308">
-                        <rect key="frame" x="165" y="309" width="301" height="14"/>
+                        <rect key="frame" x="159" y="309" width="304" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                        <rect key="frame" x="165" y="296" width="264" height="14"/>
+                        <rect key="frame" x="159" y="296" width="265" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                        <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="314">
                         <rect key="frame" x="38" y="275" width="450" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
-                        <rect key="frame" x="281" y="157" width="129" height="18"/>
+                        <rect key="frame" x="280" y="157" width="127" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Notice Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Private Notices from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
-                        <rect key="frame" x="74" y="157" width="172" height="18"/>
+                        <rect key="frame" x="74" y="157" width="171" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Client-to-Client Protocol" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
-                        <rect key="frame" x="74" y="185" width="160" height="18"/>
+                        <rect key="frame" x="74" y="185" width="158" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Highlights in Channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Highlights by User in a Channel"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
-                        <rect key="frame" x="281" y="213" width="131" height="18"/>
+                        <rect key="frame" x="280" y="213" width="129" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Private Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Private Messages from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
-                        <rect key="frame" x="74" y="213" width="127" height="18"/>
+                        <rect key="frame" x="74" y="213" width="124" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Public Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
-                    </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="617">
-                        <rect key="frame" x="74" y="78" width="255" height="18"/>
-                        <buttonCell key="cell" type="check" title="Hide messages that mention this user" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
+                        <accessibility description="Ignore Public Messages from User"/>
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="632">
                         <rect key="frame" x="38" y="110" width="450" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="636">
                         <rect key="frame" x="38" y="59" width="450" height="5"/>
+                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="rur-OE-BUc">
-                        <rect key="frame" x="74" y="129" width="159" height="18"/>
+                        <rect key="frame" x="74" y="129" width="157" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="File Transfer Requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore File Transfer Requests from User"/>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="484">
                         <rect key="frame" x="342" y="13" width="85" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="73" id="o4H-oh-EqI"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="487">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -383,6 +433,7 @@ DQ
                         <constraints>
                             <constraint firstAttribute="width" constant="73" id="rND-Mc-x8P"/>
                         </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="486">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -395,41 +446,56 @@ DQ
                         </connections>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
-                        <rect key="frame" x="281" y="185" width="150" height="18"/>
+                        <rect key="frame" x="280" y="185" width="149" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Highlights by User in a Private Message"/>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
                         <rect key="frame" x="36" y="244" width="454" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
+                        <animations/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="477">
-                        <rect key="frame" x="281" y="129" width="175" height="18"/>
+                    <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
+                        <rect key="frame" x="280" y="129" width="172" height="18"/>
+                        <animations/>
                         <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="296">
-                        <rect key="frame" x="18" y="382" width="70" height="17"/>
+                        <rect key="frame" x="18" y="382" width="69" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="617">
+                        <rect key="frame" x="74" y="78" width="251" height="18"/>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Hide messages that mention this user" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Hide messages that mention the ignored user."/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
                     <constraint firstItem="482" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="76" id="0rX-P1-qmK"/>
                     <constraint firstItem="rur-OE-BUc" firstAttribute="top" secondItem="479" secondAttribute="bottom" constant="14" id="293-dY-bqb"/>
-                    <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" id="2M6-Zr-1e8"/>
+                    <constraint firstItem="298" firstAttribute="baseline" secondItem="296" secondAttribute="baseline" constant="-1" id="2M6-Zr-1e8"/>
                     <constraint firstItem="632" firstAttribute="leading" secondItem="PQp-5W-SVj" secondAttribute="leading" id="2Uz-Lb-DpF"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="477" secondAttribute="leading" id="3K7-Fz-KM8"/>
                     <constraint firstItem="480" firstAttribute="leading" secondItem="479" secondAttribute="leading" id="51B-Ip-WYq"/>
@@ -480,6 +546,7 @@ DQ
                     <constraint firstItem="308" firstAttribute="leading" secondItem="309" secondAttribute="leading" id="yi4-Qh-uRn"/>
                     <constraint firstItem="636" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="z4I-5F-L4Z"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>

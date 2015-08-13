@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TLOLicenseManager.h"
+#endif
+
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
@@ -1047,16 +1051,31 @@
 #pragma mark -
 #pragma mark Loading Screen
 
-- (void)reloadLoadingScreen
+- (BOOL)reloadLoadingScreen
 {
+	/* This method returns YES (success) if the loading screen is dismissed
+	 when called. NO indicates an error that resulted in it staying on screen. */
+
 	if ([worldController() isPopulatingSeeds] == NO) {
+
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+		if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
+			[mainWindowLoadingScreen() hideAll:NO];
+			[mainWindowLoadingScreen() popTrialExpiredView];
+		} else
+#endif
+
 		if ([worldController() clientCount] <= 0) {
 			[self.loadingScreen hideAll:NO];
 			[self.loadingScreen popWelcomeAddServerView];
 		} else {
 			[self.loadingScreen hideAll:YES];
+
+			return YES;
 		}
 	}
+
+	return NO;
 }
 
 #pragma mark -
@@ -1071,7 +1090,7 @@
 	}
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)titlebarAccessoryViewLockButtonClicked:(id)sender
 {
 	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
@@ -1086,7 +1105,7 @@
 {
 	IRCClient *u = self.selectedClient;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	IRCChannel *c = self.selectedChannel;
 
 	BOOL updateEncryption = ([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]);
@@ -1120,7 +1139,7 @@
 			[self.titlebarAccessoryView setHidden:YES];
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	}
 
 	if ([self.titlebarAccessoryView isHidden] == NO) {
@@ -1238,6 +1257,9 @@
 	
 	/* Set final title. */
 	[self setTitle:title];
+
+	[self accessibilitySetOverrideValue:TXTLS(@"BasicLanguage[1281]")
+						   forAttribute:NSAccessibilityTitleAttribute];
 }
 
 #pragma mark -
@@ -1703,7 +1725,10 @@
 	}
 	
 	/* Begin work on text field. */
-	[self.inputTextField focus];
+	if ([XRAccessibility isVoiceOverEnabled] == NO) {
+		[self.inputTextField focus];
+	}
+
 	[self.inputTextField updateSegmentedController];
 	
 	/* Setup text field value with history item when we have

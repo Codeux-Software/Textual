@@ -151,8 +151,7 @@
 
 		const char *fsRep = [fullpath fileSystemRepresentation];
 		
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+TEXTUAL_IGNORE_DEPRECATION_BEGIN
 		if ((FSPathMakeRef((const UInt8 *)fsRep, &fsRef, NULL) == 0) == NO) {
 			continue;
 		}
@@ -160,7 +159,7 @@
 		if ((FSGetCatalogInfo(&fsRef, kFSCatInfoParentDirID, &catalogInfo, NULL, NULL, NULL) == 0) == NO) {
 			continue;
 		}
-#pragma clang diagnostic pop
+TEXTUAL_IGNORE_DEPRECATION_END
 		
 		BOOL isVolume = (catalogInfo.parentDirID == fsRtParID);
 
@@ -282,7 +281,9 @@
 		if (_realModel) {
 			_exact_model = _realModel;
 		} else {
-			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:[_bundle pathForResource:@"MacintoshModels" ofType:@"plist"]];
+			NSString *_all_models_path = [_bundle pathForResource:@"MacintoshModels" ofType:@"plist"];
+
+			NSDictionary *_all_models = [NSDictionary dictionaryWithContentsOfFile:_all_models_path];
 
 			if (NSObjectIsEmpty(_all_models)) {
 				NSAssert(NO, @"_all_models");
@@ -682,21 +683,19 @@
 + (NSString *)operatingSystemName
 {
 	NSString *productVersion = [XRSystemInformation systemStandardVersion];
-	
-	if ([productVersion hasPrefix:@"10.7"]) {
-		return TPILocalizedString(@"BasicLanguage[1015]");
-	}
-	
-	if ([productVersion hasPrefix:@"10.8"]) {
-		return TPILocalizedString(@"BasicLanguage[1016]");
-	}
 
-	if ([productVersion hasPrefix:@"10.9"]) {
-		return TPILocalizedString(@"BasicLanguage[1017]");
-	}
-
-	if ([productVersion hasPrefix:@"10.10"]) {
+	if ([productVersion hasPrefix:@"10.11"]) {
+		return TPILocalizedString(@"BasicLanguage[1053]");
+	} else if ([productVersion hasPrefix:@"10.10"]) {
 		return TPILocalizedString(@"BasicLanguage[1052]");
+	} else if ([productVersion hasPrefix:@"10.9"]) {
+		return TPILocalizedString(@"BasicLanguage[1017]");
+	} else if ([productVersion hasPrefix:@"10.8"]) {
+		return TPILocalizedString(@"BasicLanguage[1016]");
+	} else if ([productVersion hasPrefix:@"10.7"]) {
+		return TPILocalizedString(@"BasicLanguage[1015]");
+	} else {
+		return TPILocalizedString(@"BasicLanguage[1054]");
 	}
 	
 	return nil;

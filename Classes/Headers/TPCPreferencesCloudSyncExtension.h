@@ -57,13 +57,13 @@ typedef enum TPCPreferencesKeyReloadActionMask : NSInteger {
 	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction		= 1 << 16
 } TPCPreferencesKeyReloadActionMask;
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDefaultsKey;
 #endif
 
 @interface TPCPreferences (TPCPreferencesCloudSyncExtension)
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (BOOL)syncPreferencesToTheCloud;
 + (BOOL)syncPreferencesToTheCloudLimitedToServers;
 #endif

@@ -130,7 +130,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
-			[TLOpenLink openWithString:@"http://www.textualapp.com/"];
+			[menuController() openMacAppStoreDownloadPage:nil];
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
 		{
@@ -161,7 +161,7 @@
 		else if ([serverAddress isEqualToString:@"icloud-style-folder"] ||
 				 [serverAddress isEqualToString:@"icloud-styles-folder"])
 		{
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 			[TPCPathInfo openCloudCustomThemeFolder];
 #endif
 		}

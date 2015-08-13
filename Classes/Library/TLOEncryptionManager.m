@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
 @property (nonatomic, strong) OTRKitFingerprintManagerDialog *fingerprintManagerDialog;
 @end
@@ -69,7 +69,11 @@
 
 - (NSString *)pathToStoreEncryptionSecrets
 {
-	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPath];
+	NSString *cachesFolder = [TPCPathInfo applicationGroupContainerApplicationSupportPath];
+
+	if (cachesFolder == nil) {
+		return nil;
+	}
 
 	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Encryption Components/"];
 

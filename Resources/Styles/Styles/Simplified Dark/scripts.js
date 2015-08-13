@@ -1,4 +1,4 @@
-/* Defined in: "Textual 5.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
+/* Defined in: "Textual.app -> Contents -> Resources -> JavaScript -> API -> core.js" */
 
 var mappedSelectedUsers = new Array();
 

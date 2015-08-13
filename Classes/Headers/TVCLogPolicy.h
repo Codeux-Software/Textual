@@ -38,7 +38,12 @@
 
 #import "TextualApplication.h"
 
+#ifdef TXSystemIsOSXElCapitanOrLater
+@interface TVCLogPolicy : NSObject <WebPolicyDelegate, WebUIDelegate>
+#else
 @interface TVCLogPolicy : NSObject
+#endif
+
 @property (nonatomic, copy) NSString *anchorURL;
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;

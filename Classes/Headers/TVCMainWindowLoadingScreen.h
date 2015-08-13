@@ -41,6 +41,7 @@
 @interface TVCMainWindowLoadingScreenView : NSBox
 - (void)popWelcomeAddServerView;
 - (void)popLoadingConfigurationView;
+- (void)popTrialExpiredView;
 
 @property (readonly) BOOL viewIsVisible;
 
@@ -52,4 +53,7 @@
 
 - (void)hideLoadingConfigurationView;
 - (void)hideLoadingConfigurationView:(BOOL)animate;
+
+- (void)hideTrialExpiredView;
+- (void)hideTrialExpiredView:(BOOL)animate;
 @end

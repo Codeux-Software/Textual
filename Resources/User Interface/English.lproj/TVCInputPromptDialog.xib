@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TVCInputPromptDialog">
@@ -23,17 +24,22 @@
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="420" height="152"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="3">
                         <rect key="frame" x="20" y="67" width="65" height="65"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="65" id="9GO-fq-JK2"/>
+                            <constraint firstAttribute="height" constant="65" id="brw-ee-Ghm"/>
                             <constraint firstAttribute="width" constant="65" id="jJy-qZ-1jH"/>
                         </constraints>
+                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="4"/>
+                        <accessibility description="Textual Logo"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                         <rect key="frame" x="103" y="115" width="299" height="17"/>
+                        <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="#infoTitle" id="6">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -42,6 +48,7 @@
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7">
                         <rect key="frame" x="103" y="93" width="299" height="14"/>
+                        <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="#test" id="8">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -50,6 +57,10 @@
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="15">
                         <rect key="frame" x="105" y="61" width="295" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="f32-0D-7gM"/>
+                        </constraints>
+                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="16">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -58,6 +69,10 @@
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sOY-pD-RXm">
                         <rect key="frame" x="324" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="WFY-Wb-E4F"/>
+                        </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZnT-qL-fJQ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -65,9 +80,14 @@
 DQ
 </string>
                         </buttonCell>
+                        <accessibility description="Continue"/>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m2g-gZ-J37">
                         <rect key="frame" x="242" y="13" width="82" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="13E-bP-0so"/>
+                        </constraints>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vNN-1n-0Ux">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -75,6 +95,7 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <accessibility description="Cancel"/>
                     </button>
                 </subviews>
                 <constraints>
@@ -88,7 +109,6 @@ Gw
                     <constraint firstItem="15" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="MHW-Po-cAE"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="7" secondAttribute="leading" id="Qn8-8i-FjC"/>
                     <constraint firstItem="7" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="T34-8q-XTa"/>
-                    <constraint firstAttribute="bottom" secondItem="3" secondAttribute="bottom" constant="67" id="YLh-Xe-sMC"/>
                     <constraint firstItem="5" firstAttribute="leading" secondItem="3" secondAttribute="trailing" constant="20" id="fIP-7X-SUb"/>
                     <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="mih-ux-ZZo"/>
                     <constraint firstItem="15" firstAttribute="trailing" secondItem="7" secondAttribute="trailing" id="rgS-K0-L8H"/>
@@ -96,11 +116,12 @@ Gw
                     <constraint firstItem="sOY-pD-RXm" firstAttribute="leading" secondItem="m2g-gZ-J37" secondAttribute="trailing" constant="12" symbolic="YES" id="w0D-iC-IN9"/>
                     <constraint firstItem="15" firstAttribute="top" secondItem="7" secondAttribute="bottom" constant="10" id="ymo-Vz-Kt7"/>
                 </constraints>
+                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="oOP-yg-MAc"/>
             </connections>
-            <point key="canvasLocation" x="273" y="267"/>
+            <point key="canvasLocation" x="356" y="300"/>
         </window>
     </objects>
     <resources>

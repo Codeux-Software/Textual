@@ -47,7 +47,7 @@
 @property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
 @property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
 
-- (instancetype)initWithLine:(NSString *)line NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLine:(NSString *)line;
 
 - (void)parseLine:(NSString *)line;
 - (void)parseLine:(NSString *)line forClient:(IRCClient *)client;

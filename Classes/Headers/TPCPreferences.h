@@ -46,6 +46,8 @@ TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewFont;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
 
+TEXTUAL_EXTERN NSInteger const TPCPreferencesDictionaryVersion;
+
 #define TXDefaultTextualTimestampFormat				TLOFileLoggerTwentyFourHourClockFormat
 
 typedef enum TXNicknameHighlightMatchType : NSInteger {
@@ -134,7 +136,7 @@ typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
 + (NSString *)IRCopDefaultGlineMessage;
 + (NSString *)IRCopDefaultShunMessage;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (BOOL)textEncryptionIsOpportunistic;
 + (BOOL)textEncryptionIsRequired;
 + (BOOL)textEncryptionIsEnabled;

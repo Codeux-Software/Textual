@@ -80,6 +80,8 @@
 
 #import "TextualApplication.h"
 
+#import "TLOLicenseManager.h"
+
 #import <objc/message.h>
 
 #define _isonCheckInterval			30
@@ -88,7 +90,6 @@
 #define _reconnectInterval			20
 #define _retryInterval				240
 #define _timeoutInterval			360
-#define _trialPeriodInterval		43200 // 12 HOURS
 
 #define _maximumChannelCountPerWhoBatchRequest		5
 
@@ -110,6 +111,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
+@property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
@@ -121,7 +123,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, strong) TLOTimer *pongTimer;
 @property (nonatomic, strong) TLOTimer *reconnectTimer;
 @property (nonatomic, strong) TLOTimer *retryTimer;
-@property (nonatomic, strong) TLOTimer *trialPeriodTimer;
 @property (nonatomic, strong) TLOTimer *commandQueueTimer;
 @property (nonatomic, assign) ClientIRCv3SupportedCapacities capacitiesPending;
 @property (nonatomic, strong) NSMutableArray *channels;
@@ -173,7 +174,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.serverHasNickServ = NO;
 		self.timeoutWarningShownToUser = NO;
 
-		self.cachedHighlights = @[];
+		self.cachedHighlights = nil;
 
 		self.lastSelectedChannel = nil;
 		
@@ -194,8 +195,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		self.preAwayNickname = nil;
 
+		self.successfulConnects = 0;
+
 		self.lastMessageReceived = 0;
-		self.lastMessageServerTime = 0;
 
 		self.serverRedirectAddressTemporaryStore = nil;
 		self.serverRedirectPortTemporaryStore = 0;
@@ -224,13 +226,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[self.isonTimer setReqeatTimer:YES];
 		[self.isonTimer setDelegate:self];
 		[self.isonTimer setSelector:@selector(onISONTimer:)];
-
-#ifdef TEXTUAL_TRIAL_BINARY
-		 self.trialPeriodTimer = [TLOTimer new];
-		[self.trialPeriodTimer setReqeatTimer:NO];
-		[self.trialPeriodTimer setDelegate:self];
-		[self.trialPeriodTimer setSelector:@selector(onTrialPeriodTimer:)];
-#endif
 	}
 	
 	return self;
@@ -238,23 +233,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)dealloc
 {
+	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
-	[self.retryTimer stop];
 	[self.reconnectTimer stop];
-	[self.commandQueueTimer stop];
+	[self.retryTimer stop];
 
+	[self.commandQueueTimer setDelegate:nil];
 	[self.isonTimer	setDelegate:nil];
 	[self.pongTimer	setDelegate:nil];
-	[self.retryTimer setDelegate:nil];
 	[self.reconnectTimer setDelegate:nil];
-	[self.commandQueueTimer setDelegate:nil];
-
-#ifdef TEXTUAL_TRIAL_BINARY
-	[self.trialPeriodTimer stop];
-
-	[self.trialPeriodTimer setDelegate:nil];
-#endif
+	[self.retryTimer setDelegate:nil];
 
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -281,13 +270,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)updateConfigFromTheCloud:(IRCClientConfig *)seed
 {
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	BOOL syncToCloudIsSame = (self.config.excludedFromCloudSyncing == [seed excludedFromCloudSyncing]);
 #endif
 
 	[self updateConfig:seed withSelectionUpdate:YES isImportingFromCloud:YES];
 
-#ifdef TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (syncToCloudIsSame == NO) {
 			if (self.config.excludedFromCloudSyncing == NO) {
@@ -473,18 +462,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)prepareForApplicationTermination
 {
-	/* Archive server-time timestamp if certain conditions are met. */
 	self.isTerminating = YES;
 
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
-		if ([TPCPreferences logToDiskIsEnabled]) {
-			if (self.lastMessageServerTime > 0) {
-				self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = self.lastMessageServerTime;
-			}
-		}
-	}
-	
-	/* Perform normal operations. */
 	[self quit];
 	
 	[self closeDialogs];
@@ -527,10 +506,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[listDialog close];
 	}
 	
-	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDCServerSheet",
-																	 @"TDCNickSheet",
-																	 @"TDCInviteSheet",
-																	 @"TDCHighlightSheetList"]];
+	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelInviteSheet",
+																	 @"TDCServerChangeNicknameSheet",
+																	 @"TDCServerHighlightListSheet",
+																	 @"TDCServerPropertiesSheet"]];
 
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
@@ -617,7 +596,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (NSString *)encryptionAccountNameForLocalUser
 {
 	return [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
@@ -644,19 +623,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return self.reconnectTimer.timerIsActive;
 }
 
-- (NSTimeInterval)lastMessageServerTimeWithCachedValue
+- (void)setLastMessageServerTime:(NSTimeInterval)lastMessageServerTime
 {
-	if ([TPCPreferences logToDiskIsEnabled]) {
-		if (fabs(self.lastMessageServerTime) == 0) {
-			double storedTime = self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
+	self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = lastMessageServerTime;
+}
 
-			if (storedTime) {
-				self.lastMessageServerTime = storedTime;
-			}
-		}
-	}
-
-	return self.lastMessageServerTime;
+- (NSTimeInterval)lastMessageServerTime
+{
+	return self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
 }
 
 - (BOOL)connectionIsSecured
@@ -671,7 +645,14 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Highlights
 
-- (void)addHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
+- (void)clearCachedHighlights
+{
+	@synchronized(self.cachedHighlights) {
+		self.cachedHighlights = nil;
+	}
+}
+
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
 {
 	PointerIsEmptyAssert(channel);
 	PointerIsEmptyAssert(logLine);
@@ -679,6 +660,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
 		NSString *messageBody = nil;
+
 		NSString *nicknameBody = [logLine formattedNickname:channel];
 		
 		if ([logLine lineType] == TVCLogLineActionType) {
@@ -694,20 +676,32 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		/* Create entry. */
 		NSAttributedString *renderedMessage = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		NSArray *entry = @[channel.name, @([NSDate unixTime]), renderedMessage];
-		
+		TDCServerHighlightListSheetEntry *newEntry = [TDCServerHighlightListSheetEntry new];
+
+		[newEntry setChannelName:[channel name]];
+
+		[newEntry setRenderedMessage:renderedMessage];
+
+		[newEntry setTimeLogged:[NSDate date]];
+
 		/* We insert at head so that latest is always on top. */
-		NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
-		
-		[highlightData insertObject:entry atIndex:0];
-		
-		self.cachedHighlights = highlightData; // Setter will perform copy.
+		@synchronized(self.cachedHighlights) {
+			if (self.cachedHighlights == nil) {
+				self.cachedHighlights = @[];
+			}
+
+			NSMutableArray *highlightData = [self.cachedHighlights mutableCopy];
+
+			[highlightData insertObject:newEntry atIndex:0];
+
+			self.cachedHighlights = highlightData;
+		}
 		
 		/* Reload table if the window is open. */
-		id highlightSheet = [menuController() windowFromWindowList:@"TDCHighlightListSheet"];
+		TDCServerHighlightListSheet *highlightSheet = [menuController() windowFromWindowList:@"TDCServerHighlightListSheet"];
 		
-		if (highlightSheet) {
-			[highlightSheet performSelector:@selector(reloadTable) withObject:nil afterDelay:2.0];
+		if ( highlightSheet) {
+			[highlightSheet addEntry:newEntry];
 		}
 	}
 }
@@ -1021,7 +1015,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	return cachedValues;
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname
 {
 	PointerIsEmptyAssertReturn(nickname, NO)
@@ -1070,7 +1064,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
@@ -1082,7 +1076,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			injectionCallback(messageBody);
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		return; // Do not continue with this operation...
 	}
 
@@ -1110,7 +1104,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)decryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	/* Check if we are accepting encryption from this user. */
 	if ([self encryptionAllowedForNickname:messageTo] == NO) {
 #endif
@@ -1118,7 +1112,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			decodingCallback(messageBody, NO);
 		}
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		return; // Do not continue with this operation...
 	}
 
@@ -2603,9 +2597,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
 				if (isIgnoreCommand) {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nil];
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nil];
 				} else {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
 				}
 			} else {
 				NSString *nickname = [s getTokenAsString];
@@ -2614,9 +2608,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				
 				if (user == nil) {
 					if (isIgnoreCommand) {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetNewIgnoreEntryNavigationSelection andContext:nickname];
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nickname];
 					} else {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetAddressBookNavigationSelection andContext:nil];
+						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
 					}
 					
 					return;
@@ -3261,7 +3255,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
-				[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Command-Reference.kb?command=defaults"];
+				[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Command-Reference.kb#cr=defaults"];
 			}
 			else if (NSObjectsAreEqual(section1, @"enable"))
 			{
@@ -3846,10 +3840,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self.printingQueue cancelAllOperations];
 
-#ifdef TEXTUAL_TRIAL_BINARY
-	[self stopTrialPeriodTimer];
-#endif
-
 	if (self.reconnectEnabled) {
 		[self startReconnectTimer];
 	}
@@ -3862,7 +3852,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		disconnectMessages = @{
 			@(IRCClientDisconnectNormalMode) :				@(1136),
 			@(IRCClientDisconnectComputerSleepMode) :		@(1131),
-			@(IRCClientDisconnectTrialPeriodMode) :			@(1134),
 			@(IRCClientDisconnectBadSSLCertificateMode) :	@(1133),
 			@(IRCClientDisconnectServerRedirectMode) :		@(1132),
 			@(IRCClientDisconnectReachabilityChangeMode) :	@(1135)
@@ -4049,7 +4038,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			if ([m isHistoric]) {
 				NSTimeInterval serverTime = [[m receivedAt] timeIntervalSince1970];
 				
-				if (serverTime > [self lastMessageServerTimeWithCachedValue]) {
+				if (serverTime > self.lastMessageServerTime) {
 					/* If znc playback module is in use, then all messages are
 					 set as historic so we set any lines above our current reference
 					 date as not historic to avoid collisions. */
@@ -5482,7 +5471,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     } else if (returnType == TLOPopupPromptReturnSecondaryType) {
         [self cancelReconnect];
     } else {
-		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerSheetFloodControlNavigationSelection andContext:nil];
+		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetFloodControlNavigationSelection andContext:nil];
     }
 }
 
@@ -6011,10 +6000,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)receiveInit:(IRCMessage *)m // Raw numeric = 001
 {
 	/* Manage timers. */
-#ifdef TEXTUAL_TRIAL_BINARY
-	[self startTrialPeriodTimer];
-#endif
-	
 	[self startPongTimer];
 	[self stopRetryTimer];
 
@@ -6029,6 +6014,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.cachedLocalNickname = [m paramAt:0];
 	
 	self.tryingNicknameSentNickname = [m paramAt:0];
+
+	self.successfulConnects += 1;
 	
 	/* Post event. */
 	[self postEventToViewController:@"serverConnected"];
@@ -6047,14 +6034,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* Request playback since the last seen message when previously connected. */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
-		NSTimeInterval interval = [self lastMessageServerTimeWithCachedValue];
-		
-		if (fabs(interval) == 0) {
-			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
-		} else {
-			NSString *timetosend = [NSString stringWithFormat:@"%.0f", interval];
-			
+		/* For our first connect, only playback using timestamp if logging was enabled. */
+		/* For all other connects, then playback timestamp regardless of logging. */
+
+		if ((self.successfulConnects > 1 || (self.successfulConnects == 1 && [TPCPreferences logToDiskIsEnabled])) && self.lastMessageServerTime > 0) {
+			NSString *timetosend = [NSString stringWithFormat:@"%.0f", self.lastMessageServerTime];
+
 			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", timetosend, nil];
+		} else {
+			[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"playback"], @"play", @"*", @"0", nil];
 		}
 	}
 
@@ -6924,7 +6912,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 321: // RPL_LISTSTART
 		{
-            TDCListDialog *channelListDialog = [self listDialog];
+            TDCServerChannelListDialog *channelListDialog = [self listDialog];
 
 			if ( channelListDialog) {
 				[channelListDialog clear];
@@ -6942,7 +6930,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *uscount = [m paramAt:2];
 			NSString *topicva = [m sequence:3];
 
-            TDCListDialog *channelListDialog = [self listDialog];
+            TDCServerChannelListDialog *channelListDialog = [self listDialog];
 
 			if (channelListDialog) {
 				[channelListDialog addChannel:channel count:[uscount integerValue] topic:topicva];
@@ -6952,7 +6940,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 323: // RPL_LISTEND
 		{
-			TDCListDialog *channelListDialog = [self listDialog];
+			TDCServerChannelListDialog *channelListDialog = [self listDialog];
 			
 			if ( channelListDialog) {
 				[channelListDialog setContentAlreadyReceived:YES];
@@ -6981,47 +6969,62 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			break;
 		}
 		case 367: // RPL_BANLIST
+		case 346: // RPL_INVITELIST
+		case 348: // RPL_EXCEPTLIST
 		{
 			NSAssertReturnLoopBreak([m paramsCount] > 2);
 
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
+			NSString *channelName = [m paramAt:1];
 
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
+			NSString *entryMask = [m paramAt:2];
+			NSString *entryAuthor = BLS(1218);
+			NSString *entryCreationDate = BLS(1218);
 
 			BOOL extendedLine = ([m paramsCount] > 4);
 
 			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
+				NSDate *entryCreationDateDate = [NSDate dateWithTimeIntervalSince1970:[[m paramAt:4] doubleValue]];
 
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
+				entryCreationDate = TXFormatDateTimeStringToCommonFormat(entryCreationDateDate, NO);
 
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
+				entryAuthor = [[m paramAt:3] nicknameFromHostmask];
 			}
 
-            TDChanBanSheet *chanBanListSheet = [menuController() windowFromWindowList:@"TDChanBanSheet"];
+			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
 
-            if (chanBanListSheet) {
-				if ([chanBanListSheet contentAlreadyReceived]) {
-					[chanBanListSheet clear];
+            if (listSheet) {
+				if ([listSheet contentAlreadyReceived]) {
+					[listSheet clear];
 
-					[chanBanListSheet setContentAlreadyReceived:NO];
+					[listSheet setContentAlreadyReceived:NO];
 				}
 
-				[chanBanListSheet addBan:hostmask tset:settime setby:banowner];
+				[listSheet addEntry:entryMask setBy:entryAuthor creationDate:entryCreationDate];
 			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
+				NSString *languageKey = nil;
+
+				if (n == 367) { // RPL_BANLIST
+					languageKey = @"1230";
+				} else if (n == 346) { // RPL_INVITELIST
+					languageKey = @"1231";
+				} else if (n == 348) { // RPL_EXCEPTLIST
+					languageKey = @"1232";
+				}
+
+				if (extendedLine) {
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][1]", languageKey];
+				} else {
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][2]", languageKey];
+				}
 
 				NSString *text = nil;
 
 				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1230][1]", channel, hostmask, nick, settime);
+					text = TXTLS(languageKey, channelName, entryMask, entryAuthor, entryCreationDate);
 				} else {
-					text = TXTLS(@"BasicLanguage[1230][2]", channel, hostmask);
+					text = TXTLS(languageKey, channelName, entryMask);
 				}
-				
+
 				[self print:nil
 					   type:TVCLogLineDebugType
 				   nickname:nil
@@ -7033,139 +7036,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			break;
 		}
 		case 368: // RPL_ENDOFBANLIST
-		{
-			TDChanBanSheet *chanBanListSheet = [menuController() windowFromWindowList:@"TDChanBanSheet"];
-
-			if (chanBanListSheet) {
-				[chanBanListSheet setContentAlreadyReceived:YES];
-			} else {
-				[self printReply:m];
-			}
-
-			break;
-		}
-		case 346: // RPL_INVITELIST
-		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
-
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
-
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
-
-			BOOL extendedLine = ([m paramsCount] > 4);
-
-			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
-
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
-
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
-			}
-
-            TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController() windowFromWindowList:@"TDChanInviteExceptionSheet"];
-
-			if (inviteExceptionSheet) {
-				if ([inviteExceptionSheet contentAlreadyReceived]) {
-					[inviteExceptionSheet clear];
-
-					[inviteExceptionSheet setContentAlreadyReceived:NO];
-				}
-
-				[inviteExceptionSheet addException:hostmask tset:settime setby:banowner];
-			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
-
-				NSString *text = nil;
-
-				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1231][1]", channel, hostmask, nick, settime);
-				} else {
-					text = TXTLS(@"BasicLanguage[1231][2]", channel, hostmask);
-				}
-				
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:text
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-			}
-
-			break;
-		}
 		case 347: // RPL_ENDOFINVITELIST
-		{
-			TDChanInviteExceptionSheet *inviteExceptionSheet = [menuController() windowFromWindowList:@"TDChanInviteExceptionSheet"];
-
-			if (inviteExceptionSheet) {
-				[inviteExceptionSheet setContentAlreadyReceived:YES];
-			} else {
-				[self printReply:m];
-			}
-
-			break;
-		}
-		case 348: // RPL_EXCEPTLIST
-		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
-
-			NSString *channel = [m paramAt:1];
-			NSString *hostmask = [m paramAt:2];
-
-			NSString *banowner = BLS(1218);
-			NSString *settime = BLS(1218);
-
-			BOOL extendedLine = ([m paramsCount] > 4);
-
-			if (extendedLine) {
-				banowner = [m paramAt:3];
-				settime = [m paramAt:4];
-
-				NSDate *settimeDate = [NSDate dateWithTimeIntervalSince1970:[settime doubleValue]];
-
-				settime = TXFormatDateTimeStringToCommonFormat(settimeDate, NO);
-			}
-
-            TDChanBanExceptionSheet *banExceptionSheet = [menuController() windowFromWindowList:@"TDChanBanExceptionSheet"];
-
-			if (banExceptionSheet) {
-				if ([banExceptionSheet contentAlreadyReceived]) {
-					[banExceptionSheet clear];
-
-					[banExceptionSheet setContentAlreadyReceived:NO];
-				}
-
-				[banExceptionSheet addException:hostmask tset:settime setby:banowner];
-			} else {
-				NSString *nick = [banowner nicknameFromHostmask];
-
-				NSString *text = nil;
-
-				if (extendedLine) {
-					text = TXTLS(@"BasicLanguage[1232][1]", channel, hostmask, nick, settime);
-				} else {
-					text = TXTLS(@"BasicLanguage[1232][2]", channel, hostmask);
-				}
-				
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:text
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-			}
-
-			break;
-		}
 		case 349: // RPL_ENDOFEXCEPTLIST
 		{
-			TDChanBanExceptionSheet *banExceptionSheet = [menuController() windowFromWindowList:@"TDChanBanExceptionSheet"];
+			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
 
-			if (banExceptionSheet) {
-				[banExceptionSheet setContentAlreadyReceived:YES];
+			if ( listSheet) {
+				[listSheet setContentAlreadyReceived:YES];
 			} else {
 				[self printReply:m];
 			}
@@ -7724,36 +7601,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		};
 	}];
 }
-
-#pragma mark -
-#pragma mark Trial Period Timer
-
-#ifdef TEXTUAL_TRIAL_BINARY
-
-- (void)startTrialPeriodTimer
-{
-	if ( self.trialPeriodTimer.timerIsActive == NO) {
-		[self.trialPeriodTimer start:_trialPeriodInterval];
-	}
-}
-
-- (void)stopTrialPeriodTimer
-{
-	if ( self.trialPeriodTimer.timerIsActive) {
-		[self.trialPeriodTimer stop];
-	}
-}
-
-- (void)onTrialPeriodTimer:(id)sender
-{
-	if (self.isLoggedIn) {
-		self.disconnectType = IRCClientDisconnectTrialPeriodMode;
-
-		[self quit];
-	}
-}
-
-#endif
 
 #pragma mark -
 #pragma mark Plugins and Scripts
@@ -9100,7 +8947,22 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 #pragma mark -
 #pragma mark Channel Ban List Dialog
 
-- (void)createChanBanListDialog
+- (void)createChannelInviteExceptionListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetInviteExceptionEntryType];
+}
+
+- (void)createChannelBanExceptionListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetBanExceptionEntryType];
+}
+
+- (void)createChannelBanListSheet
+{
+	[self createChannelBanListSheet:TDChannelBanListSheetBanEntryType];
+}
+
+- (void)createChannelBanListSheet:(TDChannelBanListSheetEntryType)entryType
 {
     [menuController() popWindowSheetIfExists];
     
@@ -9110,140 +8972,45 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     PointerIsEmptyAssert(u);
     PointerIsEmptyAssert(c);
 
-    TDChanBanSheet *chanBanListSheet = [TDChanBanSheet new];
-	
-	[chanBanListSheet setDelegate:self];
-	[chanBanListSheet setWindow:mainWindow()];
-	
-	[chanBanListSheet setClientID:[u uniqueIdentifier]];
-	[chanBanListSheet setChannelID:[c uniqueIdentifier]];
+	TDChannelBanListSheet *listSheet = [TDChannelBanListSheet new];
 
-	[chanBanListSheet show];
+	[listSheet setEntryType:entryType];
 
-    [menuController() addWindowToWindowList:chanBanListSheet];
+	[listSheet setDelegate:self];
+	[listSheet setWindow:mainWindow()];
+	
+	[listSheet setClientID:[u uniqueIdentifier]];
+	[listSheet setChannelID:[c uniqueIdentifier]];
+
+	[listSheet show];
+
+    [menuController() addWindowToWindowList:listSheet];
 }
 
-- (void)chanBanDialogOnUpdate:(TDChanBanSheet *)sender
+- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 
 	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+b", nil];
+		NSString *modeSend = [NSString stringWithFormat:@"+%@", [sender mode]];
+
+		[self send:IRCPrivateCommandIndex("mode"), [c name], modeSend, nil];
 	}
 }
 
-- (void)chanBanDialogWillClose:(TDChanBanSheet *)sender
+- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender
 {
 	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
 	
 	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
+		NSArray *changedModes = [sender changeModeList];
 		
 		for (NSString *mode in changedModes) {
 			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
 		}
 	}
 
-    [menuController() removeWindowFromWindowList:@"TDChanBanSheet"];
-}
-
-#pragma mark -
-#pragma mark Channel Invite Exception List Dialog
-
-- (void)createChanInviteExceptionListDialog
-{
-	[menuController() popWindowSheetIfExists];
-	
-	IRCClient *u = [mainWindow() selectedClient];
-	IRCChannel *c = [mainWindow() selectedChannel];
-
-    PointerIsEmptyAssert(u);
-    PointerIsEmptyAssert(c);
-
-    TDChanInviteExceptionSheet *inviteExceptionSheet = [TDChanInviteExceptionSheet new];
-
-	[inviteExceptionSheet setDelegate:self];
-	[inviteExceptionSheet setWindow:mainWindow()];
-	
-	[inviteExceptionSheet setClientID:[u uniqueIdentifier]];
-	[inviteExceptionSheet setChannelID:[c uniqueIdentifier]];
-
-    [inviteExceptionSheet show];
-
-    [menuController() addWindowToWindowList:inviteExceptionSheet];
-}
-
-- (void)chanInviteExceptionDialogOnUpdate:(TDChanInviteExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+I", nil];
-	}
-}
-
-- (void)chanInviteExceptionDialogWillClose:(TDChanInviteExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
-		
-		for (NSString *mode in changedModes) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
-		}
-	}
-	
-    [menuController() removeWindowFromWindowList:@"TDChanInviteExceptionSheet"];
-}
-
-#pragma mark -
-#pragma mark Chan Ban Exception List Dialog
-
-- (void)createChanBanExceptionListDialog
-{
-	[menuController() popWindowSheetIfExists];
-	
-	IRCClient *u = [mainWindow() selectedClient];
-	IRCChannel *c = [mainWindow() selectedChannel];
-
-    PointerIsEmptyAssert(u);
-    PointerIsEmptyAssert(c);
-
-    TDChanBanExceptionSheet *banExceptionSheet = [TDChanBanExceptionSheet new];
-
-	[banExceptionSheet setDelegate:self];
-	[banExceptionSheet setWindow:mainWindow()];
-	
-	[banExceptionSheet setClientID:[u uniqueIdentifier]];
-	[banExceptionSheet setChannelID:[c uniqueIdentifier]];
-	[banExceptionSheet show];
-
-    [menuController() addWindowToWindowList:banExceptionSheet];
-}
-
-- (void)chanBanExceptionDialogOnUpdate:(TDChanBanExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		[self send:IRCPrivateCommandIndex("mode"), [c name], @"+e", nil];
-	}
-}
-
-- (void)chanBanExceptionDialogWillClose:(TDChanBanExceptionSheet *)sender
-{
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
-	
-	if (c) {
-		NSArray *changedModes = [NSArray arrayWithArray:[sender changeModeList]];
-		
-		for (NSString *mode in changedModes) {
-			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
-		}
-	}
-	
-    [menuController() removeWindowFromWindowList:@"TDChanBanExceptionSheet"];
+    [menuController() removeWindowFromWindowList:@"TDChannelBanListSheet"];
 }
 
 #pragma mark -
@@ -9251,12 +9018,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (NSString *)listDialogWindowKey
 {
-	/* Create a different window so each client can have its own window open. */
-
-	return [NSString stringWithFormat:@"TDCListDialog -> %@", [self uniqueIdentifier]];
+	return [NSString stringWithFormat:@"TDCServerChannelListDialog -> %@", [self uniqueIdentifier]];
 }
 
-- (TDCListDialog *)listDialog
+- (TDCServerChannelListDialog *)listDialog
 {
     return [menuController() windowFromWindowList:[self listDialogWindowKey]];
 }
@@ -9267,7 +9032,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return; // The window was brought forward already.
 	}
 
-    TDCListDialog *channelListDialog = [TDCListDialog new];
+    TDCServerChannelListDialog *channelListDialog = [TDCServerChannelListDialog new];
 
 	[channelListDialog setClientID:[self uniqueIdentifier]];
 	
@@ -9278,19 +9043,19 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     [menuController() addWindowToWindowList:channelListDialog withKeyValue:[self listDialogWindowKey]];
 }
 
-- (void)listDialogOnUpdate:(TDCListDialog *)sender
+- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender
 {
 	[self sendLine:IRCPrivateCommandIndex("list")];
 }
 
-- (void)listDialogOnJoin:(TDCListDialog *)sender channel:(NSString *)channel
+- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel
 {
 	self.inUserInvokedJoinRequest = YES;
 	
 	[self joinUnlistedChannel:channel];
 }
 
-- (void)listDialogWillClose:(TDCListDialog *)sender
+- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender
 {
     [menuController() removeWindowFromWindowList:[self listDialogWindowKey]];
 }

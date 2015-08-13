@@ -235,6 +235,13 @@
 {
 	self.userPopoverLastKnonwnLocalPoint = localPoint;
 
+	if ([XRAccessibility isVoiceOverEnabled]) {
+		/* For the best accessiblity, it is best to disable the user
+		 information popover entirely with Voice Over enabled. */
+
+		return;
+	}
+
 	if (ignoreTimer == NO && self.userPopoverTimerIsActive) {
 		return; // Only allow the timer to pop it.
 	}

@@ -222,7 +222,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[self reopenLogFileIfNeeded];
 }
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (OTRKitMessageState)encryptionState
 {
 	if ([TPCPreferences textEncryptionIsEnabled]) {
@@ -314,7 +314,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)deactivate
 {
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	if ([self isPrivateMessage]) {
 		[self closeOpenEncryptionSessions];
 	}
@@ -337,12 +337,10 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	
 	[self.config destroyKeychains];
 	
-	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelSheet",
-																	 @"TDCTopicSheet",
-																	 @"TDCModeSheet",
-																	 @"TDChanInviteExceptionSheet",
-																	 @"TDChanBanSheet",
-																	 @"TDChanBanExceptionSheet"]];
+	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelPropertiesSheet",
+																	 @"TDChannelModifyTopicSheet",
+																	 @"TDChannelModifyModesSheet",
+																	 @"TDChannelBanListSheet"]];
 	
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject channelID], [self uniqueIdentifier])) {

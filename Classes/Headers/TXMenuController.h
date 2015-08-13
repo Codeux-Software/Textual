@@ -40,106 +40,231 @@
 
 /*
 	Tag Reference:
+ 
+	The following tags apply to the main menu:
 
-	The tag used for each menu item was usually randomly picked
-	during development. Do not try and look for any relation
-	from one tag to another as they have none. They are simply
-	a unique way to identify a specific menu item.
+	001: "Textual"
+	002: "File"
+	003: "Edit"
+	004: "View"
+	005: "Server"
+	006: "Channel"
+	007: "Navigate"
+	008: "Window"
+	009: "Help"
 
-	2001: "Get Info (Whois)"
-	2002: "Private Message (Query)"
-	2005: "Invite To…"
-	2024: "Look Up In Dictionary"
-	2433: "Sort Channel List"
-	3001: "Copy URL"
-	313: "Paste"
-	32345: "Mark Scrollback"
-	32346: "Scrollback Marker"
-	32347: "Mark All As Read"
-	32348: "Clear Scrollback"
-	32349: "Increase Font Size"
-	32350: "Decrease Font Size"
-	3301: "Join Channel"
-	331: "Search on Google"
-	4564: "Find…"
-	4565: "Find Next"
-	4566: "Find Previous"
-	50001: "Next Server"
-	50002: "Previous Server"
-	50003: "Next Active Server"
-	50004: "Previous Active Server"
-	50005: "Next Channel"
-	50006: "Previous Channel"
-	50007: "Next Active Channel"
-	50008: "Previous Active Channel"
-	50009: "Next Unread Channel"
-	50010: "Previous Unread Channel"
-	50011: "Previous Selection"
-	50012: "Move Forward"
-	50013: "Move Backward"
-	52694: "Send file…"
-	501: "Connect"
-	502: "Disconnect"
-	503: "Cancel Reconnect"
-	504810: "Take Op (-o)"
-	504811: "Take Halfop (-h)"
-	504812: "Take Voice (-v)"
-	504813: "All Modes Taken"
-	504910: "Give Op (+o)"
-	504911: "Give Halfop (+h)"
-	504912: "Give Voice (+v)"
-	504913: "All Modes Given"
-	51065: "Toggle Visbility of Server List"
-	51066: "Toggle Visbility of Member List"
-	511: "Change Nickname…"
-	519: "Channel List…"
-	521: "Add Server…"
-	522: "Duplicate Server"
-	523: "Delete Server…"
-	54092: "Enable Developer Mode"
-	541: "Server Properties…"
-	5421: "Query Logs"
-	5422: "Channel Properties" (Submenu)
-	5423: "Channel" (Submenu) (menu bar)
-	5424: "Channel" (Submenu) (webkit)
-	542: "Logs"
-	549: "Copy"
-	5675: "Connect to Help Channel"
-	5676: "Connect to Testing Channel"
-	589: "Main Window"
-	590: "Address Book"
-	591: "Ignore List"
-	592: "Textual Logs"
-	593: "Highlight List"
-	594: "File Transfers"
-	601: "Join Channel"
-	602: "Leave Channel"
-	64611: "Channel List…"
-	651: "Add Channel…"
-	652: "Delete Channel"
-	6666: "Disable All Notification Sounds"
-	6667: "Disable All Notifications"
-	6876: "Topic"
-	6877: "Ban List"
-	6878: "Ban Exceptions"
-	6879: "Invite Exceptions"
-	6880: "General Settings"
-	6881: "Moderated (+m)"
-	6882: "Unmoderated (-m)"
-	6883: "Invite Only (+i)"
-	6884: "Anyone Can Join (-i)"
-	6885: "Manage All Modes"
-	691: "Add Channel…"
-	7306: "Print"
-	935: Menu Separator
-	936: Menu Separator
-	937: Menu Separator
-	9631: "Close Window"
-	990002: "Next Highlight"
-	990003: "Previous Highlight"
+	100: "About Textual"
+	101: "Preferences…"
+	102: "Manage license…"
+	103: "Check for updates…"
+	104: "Services"
+	105: "Hide Textual"
+	106: "Hide Others"
+	107: "Show All"
+	108: "Quit Textual & IRC"
+ 
+	200: "Disable All Notifications"
+	201: "Disable All Notification Sounds"
+	202: "Print"
+	203: "Close Window"
+
+	300: "Undo"
+	301: "Redo"
+	302: "Cut"
+	303: "Copy"
+	304: "Paste"
+	305: "Delete"
+	306: "Select All"
+	307: "Find"
+	308: "Find…"
+	309: "Find Next"
+	310: "Find Previous"
+	311: "Spelling"
+	312: "Spelling…"
+	313: "Check Spelling"
+	314: "Check Spelling as You Type"
+	315: "Search in Google"
+
+	400: "Mark Scrollback"
+	401: "Scrollback Marker"
+	402: "Mark All as Read"
+	403: "Clear Scrollback"
+	405: "Increase Font Size"
+	406: "Decrease Font Size"
+	407: "Toggle Fullscreen"
+
+	500: "Connect"
+	501: "Disconnect"
+	502: "Cancel Reconnect"
+	503: "Channel List…"
+	504: "Change Nickname…"
+	505: "Add Server…"
+	506: "Duplicate Server"
+	507: "Delete Server…"
+	508: "Add Channel…"
+	509: "Server Properties…"
+
+	600: "Join Channel"
+	601: "Leave Channel"
+	602: "-"
+	603: "Add Channel…"
+	604: "Delete Channel"
+	605: "-"
+	606: "Query Logs"
+	607: "Channel Properties"
+	608: "View Logs"
+	609: "Modify Topic"
+	610: "Modes"
+	611: "Moderated (+m)"
+	612: "Unmoderated (-m)"
+	613: "Invite Only (+i)"
+	614: "Anyone Can Join (-i)"
+	615: "Manage All Modes"
+	616: "List of Bans"
+	617: "List of Ban Exceptions"
+	618: "List of Invite Exceptions"
+	619: "Channel Properties"
+
+	700: "Servers"
+	701: "Next Server"
+	702: "Previous Server"
+	703: "Next Active Server"
+	704: "Previous Active Server"
+	705: "Channels"
+	706: "Next Channel"
+	707: "Previous Channel"
+	708: "Next Active Channel"
+	709: "Previous Active Channel"
+	710: "Next Unread Channel"
+	711: "Previous Unread Channel"
+	712: "Move Backward"
+	713: "Move Forward"
+	714: "Previous Selection"
+	715: "Next Highlight"
+	716: "Previous Highlight"
+	717: "Channel List…"
+
+	800: "Minimize"
+	801: "Zoom"
+	815: "-"
+	802: "Toggle Visiblity of Member List"
+	803: "Toggle Visiblity of Server List"
+	804: "Toggle Window Appearance"
+	816: "-"
+	805: "Sort Channel List"
+	817: "-"
+	806: "Center Main Window"
+	807: "Reset Window to Default Size"
+	818: "-"
+	808: "Main Window"
+	809: "Address Book"
+	810: "Ignore List"
+	811: "View Logs"
+	812: "Highlight List"
+	813: "File Transfers"
+	819: "-"
+	814: "Bring All to Front"
+
+	900: "Acknowledgements"
+	901: "Privacy Policy"
+	902: "Frequently Asked Questions"
+	903: "Introduction to Writing Scripts"
+	904: "Other Helpful Resources"
+	905: "Knowledge Base Home"
+	906: "Using iCloud with Textual"
+	907: "Chat Encryption"
+	908: "Command Reference"
+	909: "Feature Requests"
+	910: "Keyboard Shortcuts"
+	911: "Memory Management"
+	912: "Text Formatting"
+	913: "Styling Information"
+	914: "Connecting with Certificate"
+	915: "Connecting to a ZNC Bouncer"
+	916: "DCC File Transfer Information"
+	917: "Connect to Help Channel"
+	918: "Connect to Testing Channel"
+	919: "Developer Resources"
+	920: "Enable Developer Mode"
+	921: "Open 'Welcome to Textual' Dialog"
+	922: "Reset 'Don't Ask Me' Warnings"
+	923: "Simulate a Crash"
+	924: "Export Preferences"
+	925: "Import Preferences"
+ 
+	The following tags apply to the "Join Channel" menu:
+	1000: "Join Channel"
+ 
+	The following tags apply to the "Open URL" menu:
+	1100: "Copy URL"
+ 
+	The following tags apply to the "Segmented Controller" menu:
+	1200: "Add Server…"
+	1201: "Add Channel…"
+ 
+	The following tags apply to the "Add Server" menu:
+	1300: "Add Server…"
+ 
+	The following tags apply to the "Encryption Manager" menu:
+	1400: "What is this?"
+	1401: "Start Private Conversation"
+	1402: "Refresh Private Conversation"
+	1403: "End Private Conversation"
+	1404: "Authenticate Chat Partner"
+	1405: "View List of Fingerprints"
+ 
+	The following tags apply to the "User Control" menu:
+	1500: "Invite to…"
+	1501: "Get Info (Whois)"
+	1502: "Private Message (Query)"
+	1503: "Give Op (+o)"
+	1504: "Give Halfop (+h)"
+	1505: "Give Voice (+v)"
+	1506: "All Modes Given"
+	1507: "Take Op (-o)"
+	1508: "Take Halfop (-h)"
+	1509: "Take Voice (-v)"
+	1510: "All Modes Taken"
+	1511: "Ban"
+	1512: "Kick"
+	1513: "Ban and Kick"
+	1514: "Client-to-Client"
+	1515: "Send file…"
+	1516: "Lag (PING)"
+	1517: "Local Time (TIME)"
+	1518: "Client Version (VERSION)"
+	1519: "Client Information (CLIENTINFO)"
+	1520: "User Information (FINGER)"
+	1521: "User Information (USERINFO)"
+	1522: "IRC Operator"
+	1523: "Set Virtual Host (vHost)"
+	1524: "Kill from Server"
+	1525: "Shun on Server"
+	1526: "Ban from Server (G:Line)"
+ 
+	The following tags apply to the "Channel View" menu:
+	1600: "Change Nickname…"
+	1601: "Search on Google"
+	1602: "Look Up In Dictionary"
+	1603: "Copy"
+	1604: "Paste"
+	1605: "-"
+	1606: "Query Logs"
+	1607: "Channel"
+
+	The following tags apply to the "Dock" menu:
+	1700: "Disable All Notifications"
+	1701: "Disable All Notification Sounds"
  */
 
-@interface TXMenuController : NSObject <TDCAboutPanelDelegate, TDChannelSheetDelegate, TDCHighlightListSheetDelegate, TDCInviteSheetDelegate, TDCModeSheetDelegate, TDCNickSheetDelegate, TDCPreferencesControllerDelegate, TDCServerSheetDelegate, TDCTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+#import "TDCLicenseManagerDialog.h"
+
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
+#else
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+#endif
+
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
 @property (nonatomic, weak) IBOutlet NSMenu *navigationChannelList;
@@ -151,7 +276,7 @@
 @property (nonatomic, weak) IBOutlet NSMenu *tcopyURLMenu;
 @property (nonatomic, weak) IBOutlet NSMenu *userControlMenu;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @property (nonatomic, weak) IBOutlet NSMenu *encryptionManagerStatusMenu;
 #endif
 
@@ -212,7 +337,7 @@
 
 - (IBAction)openWelcomeSheet:(id)sender;
 
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerSheetNavigationSelection)viewType andContext:(NSString *)context;
+- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerPropertiesSheetNavigationSelection)viewType andContext:(NSString *)context;
 
 - (IBAction)markScrollback:(id)sender;
 - (IBAction)clearScrollback:(id)sender;
@@ -293,6 +418,7 @@
 - (IBAction)showChannelBanExceptionList:(id)sender;
 - (IBAction)showChannelInviteExceptionList:(id)sender;
 
+- (IBAction)openFastSpringStoreWebpage:(id)sender;
 - (IBAction)openMacAppStoreDownloadPage:(id)sender;
 
 - (IBAction)toggleFullscreen:(id)sender;
@@ -309,7 +435,7 @@
 - (IBAction)importPreferences:(id)sender;
 - (IBAction)exportPreferences:(id)sender;
 
-#ifdef TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;
 - (IBAction)encryptionStartPrivateConversation:(id)sender;
 - (IBAction)encryptionRefreshPrivateConversation:(id)sender;
@@ -323,6 +449,8 @@
 
 - (IBAction)toggleMuteOnNotificationSounds:(id)sender;
 - (IBAction)toggleMuteOnAllNotifcations:(id)sender;
+
+- (IBAction)manageLicense:(id)sender;
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
@@ -339,6 +467,8 @@
 @interface TXMenuControllerMainWindowProxy : NSObject
 - (IBAction)openWelcomeSheet:(id)sender;
 
-- (IBAction)openMacAppStoreDownloadPage:(id)sender;
-- (IBAction)openMigrationAssistantDownloadPage:(id)sender;
+- (IBAction)manageLicense:(id)sender;
+
+- (IBAction)openFastSpringStoreWebpage:(id)sender;
+- (IBAction)openMacAppStoreWebpage:(id)sender;
 @end
