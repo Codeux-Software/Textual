@@ -193,55 +193,17 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 #pragma mark -
 #pragma mark Socket Read & Write
 
-- (NSData *)readLineFromMutableData:(NSMutableData * __autoreleasing *)refString
-{
-	NSObjectIsEmptyAssertReturn(*refString, nil);
-	
-	NSInteger messageSubstringIndex = 0;
-	NSInteger messageDeleteIndex = 0;
-
-	NSRange _LFRange = [*refString rangeOfData:[NSData lineFeed] options:0 range:NSMakeRange(0, [*refString length])];
-	NSRange _CRRange = [*refString rangeOfData:[NSData carriageReturn] options:0 range:NSMakeRange(0, [*refString length])];
-
-	if (_LFRange.location == NSNotFound) {
-		/* If we do not have any line end for this fragment and the refString is not
-		 empty, then we save the remaining fragment for processing once we have more
-		 information. */
-
-		NSObjectIsEmptyAssertReturn(*refString, nil);
-
-		self.bufferOverflowString = *refString;
-	
-		return nil;
-	}
-
-	messageSubstringIndex = _LFRange.location;
-	messageDeleteIndex = (_LFRange.location + 1);
-
-	if ((_LFRange.location - 1) == _CRRange.location) {
-		messageSubstringIndex -= 1;
-	}
-	
-	NSData *readLine = [*refString subdataWithRange:NSMakeRange(0, messageSubstringIndex)];
-
-	[*refString replaceBytesInRange:NSMakeRange(0, messageDeleteIndex) withBytes:NULL length:0];
-
-	return readLine;
-}
-
 - (void)writeDataToSocket:(NSData *)data
 {
 	if (self.isConnected) {
 		[self.socketConnection writeData:data withTimeout:(-1) tag:0];
-
-		[self.socketConnection readDataWithTimeout:(-1) tag:0];
 	}
 }
 
 - (void)waitForData
 {
 	if (self.isConnected) {
-		[self.socketConnection readDataWithTimeout:(-1) tag:0];
+		[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:-1 tag:0];
 	}
 }
 
@@ -419,37 +381,33 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (void)completeReadForNormalData:(NSData *)data
 {
-	NSMutableData *readBuffer = nil;
+	id readData = data;
 
-	BOOL hasOverflowPrefix = ([self.bufferOverflowString length] > 0);
+	NSUInteger readDataTrimLength = 0;
 
-	if (hasOverflowPrefix) {
-		readBuffer = [self.bufferOverflowString mutableCopy];
-
-		self.bufferOverflowString = nil; // Destroy old overflow;
-
-		[readBuffer appendBytes:[data bytes] length:[data length]];
-	} else {
-		readBuffer = [data mutableCopy];
+	if ([data hasSuffixBytes:"\x0D\x0A" length:2]) {
+		readDataTrimLength = 2;
+	} else if ([data hasSuffixBytes:"\x0D" length:1]) {
+		readDataTrimLength = 1;
 	}
 
-	while (1 == 1) {
-		NSData *rdata = [self readLineFromMutableData:&readBuffer];
+	if (readDataTrimLength > 0) {
+		NSMutableData *mutableReadData = [readData mutableCopy];
 
-		if (rdata == nil) {
-			break;
-		}
+		[mutableReadData setLength:([mutableReadData length] - readDataTrimLength)];
 
-		NSString *sdata = [self convertFromCommonEncoding:rdata];
-
-		if (sdata == nil) {
-			break;
-		}
-
-		XRPerformBlockSynchronouslyOnMainQueue(^{
-			[self tcpClientDidReceiveData:sdata];
-		});
+		readData = mutableReadData;
 	}
+
+	NSString *sdata = [self convertFromCommonEncoding:readData];
+
+	if (sdata == nil) {
+		return;
+	}
+
+	XRPerformBlockSynchronouslyOnMainQueue(^{
+		[self tcpClientDidReceiveData:sdata];
+	});
 }
 
 - (void)didReadNormalData:(NSData *)data
