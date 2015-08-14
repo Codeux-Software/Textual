@@ -55,7 +55,7 @@
 		[RZMainBundle() loadNibNamed:@"TDCServerHighlightListSheet" owner:self topLevelObjects:nil];
 
 		[self.highlightListTable setSortDescriptors:@[
-			[NSSortDescriptor sortDescriptorWithKey:@"timeLoggedFormatted" ascending:NO selector:@selector(caseInsensitiveCompare:)],
+			[NSSortDescriptor sortDescriptorWithKey:@"timeLogged" ascending:NO selector:@selector(compare:)],
 			[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
 		]];
 	}
