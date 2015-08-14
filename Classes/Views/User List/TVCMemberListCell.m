@@ -105,7 +105,7 @@
 
 	NSString *nickname = [associatedUser nickname];
 
-	[[[self textField] cell] setAccessibilityValueDescription:BLS(1277, nickname)];
+	[XRAccessibility setAccessibilityValueDescription:BLS(1277, nickname) forObject:[[self textField] cell]];
 }
 
 #pragma mark -

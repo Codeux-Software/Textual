@@ -1258,8 +1258,7 @@
 	/* Set final title. */
 	[self setTitle:title];
 
-	[self accessibilitySetOverrideValue:TXTLS(@"BasicLanguage[1281]")
-						   forAttribute:NSAccessibilityTitleAttribute];
+	[XRAccessibility setAccessibilityTitle:TXTLS(@"BasicLanguage[1281]") forObject:self];
 }
 
 #pragma mark -
