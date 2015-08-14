@@ -102,23 +102,23 @@
 
 	if (isGroupItem) {
 		if (isActive) {
-			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][1]", [cellItem label])];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][1]", [cellItem label]) forObject:[[self textField] cell]];
 		} else {
-			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][2]", [cellItem label])];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1278][2]", [cellItem label]) forObject:[[self textField] cell]];
 		}
 	} else {
 		if ([cellItem isPrivateMessage]) {
-			[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1280]", [cellItem label])];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1280]", [cellItem label]) forObject:[[self textField] cell]];
 		} else {
 			if (isActive) {
-				[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][1]", [cellItem label])];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][1]", [cellItem label]) forObject:[[self textField] cell]];
 			} else {
-				[[[self textField] cell] setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][2]", [cellItem label])];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1279][2]", [cellItem label]) forObject:[[self textField] cell]];
 			}
 		}
 	}
 
-	[[[self imageView] cell] setAccessibilityLabel:nil];
+	[XRAccessibility setAccessibilityLabel:nil forObject:[[self imageView] cell]];
 }
 
 - (void)updateTextFieldValue
