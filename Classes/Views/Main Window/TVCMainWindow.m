@@ -1060,8 +1060,8 @@
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 		if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-			[mainWindowLoadingScreen() hideAll:NO];
-			[mainWindowLoadingScreen() popTrialExpiredView];
+			[self.loadingScreen hideAll:NO];
+			[self.loadingScreen popTrialExpiredView];
 		} else
 #endif
 
