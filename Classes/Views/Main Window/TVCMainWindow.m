@@ -1777,26 +1777,22 @@
 
 - (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
 {
-	/* Validate dragging index. */
 	if (index < 0) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate pasteboard types. */
+
 	NSPasteboard *pboard = [info draggingPasteboard];
 	
 	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate pasteboard contents. */
+
 	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
 	
 	if (infoStr == nil) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate selection. */
+
 	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
 	
 	if (i == nil) {
@@ -1808,14 +1804,12 @@
 			return NSDragOperationNone;
 		}
 	} else {
-		/* Validate input. */
 		if (item == nil) {
 			return NSDragOperationNone;
 		}
 		
 		IRCChannel *c = (IRCChannel *)i;
-		
-		/* Do not allow dragging between clients. */
+
 		if (NSDissimilarObjects(item, [c associatedClient])) {
 			return NSDragOperationNone;
 		}
@@ -1823,128 +1817,113 @@
 		IRCClient *toClient = (IRCClient *)item;
 		
 		NSArray *ary = [toClient channelList];
-		
-		/* Get list of items below and above insertion point. */
+
 		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
 		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
-		
-		/* Remove item from copies. */
+
 		[low removeObjectIdenticalTo:c];
 		[high removeObjectIdenticalTo:c];
-		
-		/* Validate drop positions based on simple logic. */
+
+		IRCChannel *nextItem = nil;
+		IRCChannel *previousItem = nil;
+
+		if ([low count] > 0) {
+			previousItem = [low lastObject];
+		}
+
+		if ([high count] > 0) {
+			nextItem = high[0];
+		}
+
 		if ([c isChannel]) {
-			if ([low count] > 0) {
-				IRCChannel *prev = [low lastObject];
-				
-				if ([prev isChannel] == NO) {
-					return NSDragOperationNone;
-				}
+			if (previousItem && [previousItem isChannel] == NO) {
+				return NSDragOperationNone;
 			}
 		} else {
-			if ([high count] > 0) {
-				IRCChannel *next = high[0];
-				
-				if ([next isChannel]) {
-					return NSDragOperationNone;
-				}
+			if ([nextItem isChannel]) {
+				return NSDragOperationNone;
 			}
 		}
 	}
-	
+
 	return NSDragOperationGeneric;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
 {
-	/* Validate dragging index. */
 	if (index < 0) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate pasteboard types. */
+
 	NSPasteboard *pboard = [info draggingPasteboard];
 	
 	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate pasteboard contents. */
+
 	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
 	
 	if (infoStr == nil) {
 		return NSDragOperationNone;
 	}
-	
-	/* Validate selection. */
+
 	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
 	
 	if (i == nil) {
 		return NSDragOperationNone;
 	}
-	
+
 	if ([i isClient]) {
 		if (item) {
 			return NO;
 		}
-		
-		/* Get client list as we are rearranging servers. */
+
 		NSArray *ary = [worldController() clientList];
-		
-		/* Split array up. */
+
 		NSMutableArray *mutary = [ary mutableCopy];
 		
 		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
 		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
-		
-		/* Log important info. */
+
 		NSInteger originalIndex = [ary indexOfObject:i];
-		
-		/* Remove any mentions of object. */
+
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
-		
-		/* Clear the butter. */
+
 		[mutary removeAllObjects];
-		
-		/* Build new array. */
+
 		[mutary addObjectsFromArray:low];
 		[mutary addObject:i];
 		[mutary addObjectsFromArray:high];
 		
 		[worldController() setClientList:mutary];
 
-		/* Move the item. */
-		[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex: index inParent:nil];
+		if (originalIndex < index) {
+			[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex:(index - 1) inParent:nil];
+		} else {
+			[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex: index inParent:nil];
+		}
 	}
 	else
 	{
-		/* Perform some basic validation. */
 		if (item == nil || NSDissimilarObjects(item, [i associatedClient])) {
 			return NO;
 		}
-		
-		/* We are client. */
+
 		IRCClient *u = (IRCClient *)item;
-		
-		/* Some comment that is supposed to tell you whats happening. */
+
 		NSArray *ary = [u channelList];
 		
 		NSMutableArray *mutary = [ary mutableCopy];
-		
-		/* Another comment talking about stuff nobody cares about. */
+
 		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
 		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
-		
-		/* :) */
+
 		NSInteger originalIndex = [ary indexOfObject:i];
-		
-		/* Something, something... */
+
 		[low removeObjectIdenticalTo:i];
 		[high removeObjectIdenticalTo:i];
-		
-		/* Clinteger if you are reading this, then I hope France
-		 flops hard in the World Cup. Go Germany? */
+
 		[mutary removeAllObjects];
 		
 		[mutary addObjectsFromArray:low];
@@ -1952,26 +1931,22 @@
 		[mutary addObjectsFromArray:high];
 		
 		[u setChannelList:mutary];
-		
-		/* And I just want this refacotring to be over with. */
+
 		if (originalIndex < index) {
 			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex:(index - 1) inParent:u];
 		} else {
 			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex: index inParent:u];
 		}
 	}
-	
-	/* Update selection. */
+
 	NSInteger n = [self.serverList rowForItem:self.selectedItem];
 	
 	if (n > -1) {
 		[self.serverList selectItemAtIndex:n];
 	}
-	
-	/* Order changed so should our keyboard shortcuts. */
+
 	[menuController() populateNavgiationChannelList];
-	
-	/* Conclude drag operation. */
+
 	return YES;
 }
 
