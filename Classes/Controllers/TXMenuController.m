@@ -142,7 +142,6 @@
 
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
-	BOOL isMainWindowKey = [mainWindow() isKeyWindow];
 	BOOL isMainWindowMain = [mainWindow() isMainWindow];
 
 	BOOL mainWindowHasSheet = ([mainWindow() attachedSheet] != nil);
@@ -171,9 +170,7 @@
 					case 808: // "Main Window"
 					case 809: // "Address Book"
 					case 810: // "Ignore List"
-					case 811: // "View Logs"
 					case 812: // "Highlight List"
-					case 813: // "File Transfers"
 					{
 						/* Modify separator items for the first item in switch. */
 						if (tag == 802) {
@@ -195,7 +192,7 @@
 						/* Hide "Main Window" if Main Window is key. */
 						/* Hide all other items when Main Window is NOT key. */
 						if (tag == 808) { // "Main Window"
-							if (isMainWindowKey) {
+							if (isMainWindowMain) {
 								[item setHidden:YES];
 							} else {
 								[item setHidden:NO];
