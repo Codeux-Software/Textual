@@ -142,30 +142,12 @@
 
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item
 {
-	BOOL frontmostWindowIsMainWindow = NO;
+	BOOL isMainWindowKey = [mainWindow() isKeyWindow];
+	BOOL isMainWindowMain = [mainWindow() isMainWindow];
 
-	NSArray *windowList = [NSWindow windowNumbersWithOptions:0];
+	BOOL mainWindowHasSheet = ([mainWindow() attachedSheet] != nil);
 
-	for (NSNumber *windowNumber in windowList) {
-		/* windowList is looped through because it may contain the menu
-		 bar so we return the first window that NSApp sees as an actual 
-		 window owned by the application. */
-		NSWindow *window = [NSApp windowWithWindowNumber:[windowNumber integerValue]];
-
-		if (window) {
-			if (window == mainWindow()) {
-				frontmostWindowIsMainWindow = YES;
-			}
-
-			break;
-		}
-	}
-
-	BOOL mainWindowNoSheet = ([mainWindow() attachedSheet] == nil);
-
-	BOOL isMainWindowKey = (frontmostWindowIsMainWindow && mainWindowNoSheet);
-
-	BOOL windowIsSheet = [[NSApp keyWindow] isSheet];
+	BOOL frontmostWindowIsMainWindow = [mainWindow() isBeneathMouse];
 
 	BOOL returnValue = [self validateSpecificMenuItemTag:tag forItem:item];
 
@@ -195,7 +177,7 @@
 					{
 						/* Modify separator items for the first item in switch. */
 						if (tag == 802) {
-							if (isMainWindowKey == NO) {
+							if (isMainWindowMain == NO) {
 								[item setHidden:YES];
 
 								[[[item menu] itemWithTag:816] setHidden:YES]; // Menu Separator
@@ -221,7 +203,7 @@
 						}
 						else // tag == 808
 						{
-							if (isMainWindowKey == NO) {
+							if (isMainWindowMain == NO) {
 								[item setHidden:YES];
 							} else {
 								[item setHidden:NO];
@@ -235,7 +217,7 @@
 			 in a sheet, most items can be disabled which means at this point
 			 we will default to disabled and allow the bottom logic to enable
 			 only the bare essentials. */
-			BOOL defaultToNoForSheet = (windowIsSheet == YES || isMainWindowKey == NO);
+			BOOL defaultToNoForSheet = (mainWindowHasSheet || (frontmostWindowIsMainWindow == NO && isMainWindowMain == NO));
 
 			if (defaultToNoForSheet) {
 				if (tag < 900) { // Do not disable "Help" menu
