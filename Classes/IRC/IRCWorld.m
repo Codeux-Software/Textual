@@ -62,7 +62,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
 		
-		self.textSizeMultiplier = 1.0;
+		self.textSizeMultiplier = 1.0f;
 
 		self.preferencesDidChangeTimerIsActive = NO;
 	}
@@ -549,7 +549,7 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	} else {
 		newMultiplier /= ZoomMultiplierRatio;
 		
-		if (self.textSizeMultiplier < MinimumZoomMultiplier) {
+		if (newMultiplier < MinimumZoomMultiplier) {
 			return; // Do not perform an action.
 		} else {
 			self.textSizeMultiplier = newMultiplier;
