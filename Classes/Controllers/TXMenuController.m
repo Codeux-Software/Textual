@@ -59,8 +59,8 @@
 
 #define _channelConfig				[c config]
 
-#define	_popWindowViewIfExists(c)	if ([self popWindowViewIfExists:(c)]) {		\
-										return;									\
+#define	_popWindowViewIfExists(c)	if ([windowController() maybeBringWindowForward:(c)]) {		\
+										return;													\
 									}
 
 @interface TXMenuController ()
@@ -73,8 +73,6 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.openWindowList = [NSMutableDictionary dictionary];
-		
 		self.currentSearchPhrase = NSStringEmptyPlaceholder;
 	}
 	
@@ -90,16 +88,6 @@
 
 - (void)prepareForApplicationTermination
 {
-	[self popWindowSheetIfExists];
-	
-	[self.openWindowList enumerateKeysAndObjectsUsingBlock:^(id windowKey, id windowObject, BOOL *stop) {
-		if ([[windowObject class] isSubclassOfClass:[NSWindowController class]]) {
-			[windowObject close];
-		}
-	}];
-	
-	self.openWindowList = nil;
-	
 	[self.fileTransferController prepareForApplicationTermination];
 }
 
@@ -896,110 +884,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 #pragma mark -
-#pragma mark Window List
-
-- (void)addWindowToWindowList:(id)window
-{
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
-
-	NSString *key = NSStringFromClass([window class]);
-
-	[self addWindowToWindowList:window
-				   withKeyValue:key];
-}
-
-- (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key
-{
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
-
-	@synchronized(self.openWindowList) {
-		[self.openWindowList setObjectWithoutOverride:window forKey:key];
-	}
-}
-
-- (id)windowFromWindowList:(NSString *)windowClass
-{
-	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), nil);
-
-	@synchronized(self.openWindowList) {
-		return self.openWindowList[windowClass];
-	}
-}
-
-- (NSArray *)windowsFromWindowList:(NSArray *)windowClasses
-{
-	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), nil);
-
-	@synchronized(self.openWindowList) {
-		NSMutableArray *returnedValues = [NSMutableArray array];
-		
-		for (NSString *windowClass in windowClasses) {
-			id windowObject = self.openWindowList[windowClass];
-			
-			if (windowObject) {
-				[returnedValues addObject:windowObject];
-			}
-		}
-		
-		return [returnedValues copy];
-	}
-}
-
-- (void)removeWindowFromWindowList:(NSString *)windowClass
-{
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
-
-	@synchronized(self.openWindowList) {
-		[self.openWindowList removeObjectForKey:windowClass];
-	}
-}
-
-- (BOOL)popWindowViewIfExists:(NSString *)windowClass
-{
-	NSAssertReturnR(([masterController() applicationIsTerminating] == NO), NO);
-
-	id windowObject = [self windowFromWindowList:windowClass];
-
-	if (windowObject) {
-		NSWindow *window = [windowObject window];
-		
-		[window makeKeyAndOrderFront:nil];
-
-		return YES;
-	}
-
-	return NO;
-}
-
-- (void)popWindowSheetIfExists
-{
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
-
-	/* Close any existing sheet by canceling the previous instance of it. */
-	NSWindow *attachedSheet = [mainWindow() attachedSheet];
-	
-	if (attachedSheet) {
-		@synchronized(self.openWindowList) {
-			for (NSString *windowKey in self.openWindowList) {
-				id windowObject = self.openWindowList[windowKey];
-
-				if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
-					NSWindow *ownedWindow = (id)[windowObject sheet];
-					
-					if ([ownedWindow isEqual:attachedSheet]) {
-						[windowObject cancel:nil];
-						
-						return; // No need to continue.
-					}
-				}
-			}
-		}
-	}
-	
-	[attachedSheet close];
-}
-
-#pragma mark -
 #pragma mark Find Panel
 
 - (void)internalOpenFindPanel:(id)sender
@@ -1013,7 +897,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 				  alternateButton:BLS(1009)
 				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
 				 defaultUserInput:self.currentSearchPhrase
-				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
+				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {
 						  if (NSObjectIsEmpty(resultString)) {
 							  self.currentSearchPhrase = NSStringEmptyPlaceholder;
@@ -1028,10 +912,10 @@ TEXTUAL_IGNORE_DEPRECATION_END
 						  }
 					  }
 
-					  [self removeWindowFromWindowList:@"TXMenuControllerFindPanel"];
+					  [windowController() removeWindowFromWindowList:@"TXMenuControllerFindPanel"];
 				  }];
 
-	[self addWindowToWindowList:dialog withKeyValue:@"TXMenuControllerFindPanel"];
+	[windowController() addWindowToWindowList:dialog withDescription:@"TXMenuControllerFindPanel"];
 }
 
 - (void)showFindPanel:(id)sender
@@ -1132,14 +1016,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	
 	[pc show];
 
-	[self addWindowToWindowList:pc];
+	[windowController() addWindowToWindowList:pc];
 }
 
 - (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
 {
 	[worldController() preferencesChanged];
 
-	[self removeWindowFromWindowList:@"TDCPreferencesController"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1337,7 +1221,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showNicknameChangeDialog:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
@@ -1354,7 +1238,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[nickSheet start:[u localNickname]];
 
-	[self addWindowToWindowList:nickSheet];
+	[windowController() addWindowToWindowList:nickSheet];
 }
 
 - (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
@@ -1370,7 +1254,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCServerChangeNicknameSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1391,7 +1275,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)addServer:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
@@ -1403,7 +1287,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[d start:TDCServerPropertiesSheetDefaultNavigationSelection withContext:nil];
 
-	[self addWindowToWindowList:d];
+	[windowController() addWindowToWindowList:d];
 }
 
 - (void)copyServer:(id)sender
@@ -1477,7 +1361,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return;
 	}
 
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	TDCServerPropertiesSheet *d = [TDCServerPropertiesSheet new];
 
@@ -1489,7 +1373,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	
 	[d start:viewType withContext:context];
 
-	[self addWindowToWindowList:d];
+	[windowController() addWindowToWindowList:d];
 }
 
 - (void)showServerPropertiesDialog:(id)sender
@@ -1536,7 +1420,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCServerPropertiesSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1577,7 +1461,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showHighlightSheet:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
@@ -1594,12 +1478,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	
 	[d show];
 
-	[self addWindowToWindowList:d];
+	[windowController() addWindowToWindowList:d];
 }
 
 - (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCServerHighlightListSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1607,7 +1491,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showChannelTopicDialog:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1626,7 +1510,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[t start:[c topic]];
 
-	[self addWindowToWindowList:t];
+	[windowController() addWindowToWindowList:t];
 }
 
 - (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic
@@ -1645,7 +1529,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelModifyTopicSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1653,7 +1537,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showChannelModeDialog:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1674,7 +1558,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[m start];
 
-	[self addWindowToWindowList:m];
+	[windowController() addWindowToWindowList:m];
 }
 
 - (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender
@@ -1697,7 +1581,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelModifyModesSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1705,7 +1589,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)addChannel:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	IRCClient *u = [mainWindow() selectedClient];
 	
@@ -1727,7 +1611,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[d start];
 
-	[self addWindowToWindowList:d];
+	[windowController() addWindowToWindowList:d];
 }
 
 - (void)deleteChannel:(id)sender
@@ -1760,7 +1644,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)showChannelPropertiesDialog:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1784,7 +1668,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[d start];
 
-	[self addWindowToWindowList:d];
+	[windowController() addWindowToWindowList:d];
 }
 
 - (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
@@ -1816,7 +1700,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelPropertiesSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -1958,7 +1842,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)memberSendInvite:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
@@ -1993,7 +1877,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[inviteSheet startWithChannels:channels];
 
-	[self addWindowToWindowList:inviteSheet];
+	[windowController() addWindowToWindowList:inviteSheet];
 }
 
 - (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
@@ -2011,7 +1895,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDChannelInviteSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -2159,7 +2043,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)openWelcomeSheet:(id)sender
 {
-	[self popWindowSheetIfExists];
+	[windowController() popMainWindowSheetIfExists];
 	
 	TDCWelcomeSheet *welcomeSheet = [TDCWelcomeSheet new];
 	
@@ -2167,8 +2051,8 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[welcomeSheet setWindow:mainWindow()];
 	
 	[welcomeSheet show];
-	
-	[self addWindowToWindowList:welcomeSheet];
+
+	[windowController() addWindowToWindowList:welcomeSheet];
 }
 
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config
@@ -2186,7 +2070,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender
 {
-	[self removeWindowFromWindowList:@"TDCWelcomeSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -2202,12 +2086,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[aboutPanel show];
 
-	[self addWindowToWindowList:aboutPanel];
+	[windowController() addWindowToWindowList:sender];
 }
 
 - (void)aboutDialogWillClose:(TDCAboutDialog *)sender
 {
-	[self removeWindowFromWindowList:@"TDCAboutDialog"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -2522,14 +2406,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	NSString *windowToken = [NSString stringWithFormat:@"TXMenuControllerSetUserVhostPanel-%@", [NSString stringWithUUID]];
-	
 	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1228][1]")
 					defaultButton:BLS(1186)
 				  alternateButton:BLS(1009)
 				  informativeText:TXTLS(@"BasicLanguage[1228][2]")
 				 defaultUserInput:nil
-				  completionBlock:^(BOOL defaultButtonClicked, NSString *resultString) {
+				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {
 						  if (NSObjectIsNotEmpty(resultString)) {
 							  for (NSString *nickname in nicknames) {
@@ -2538,10 +2420,10 @@ TEXTUAL_IGNORE_DEPRECATION_END
 						  }
 					  }
 					  
-					  [self removeWindowFromWindowList:windowToken];
+					  [windowController() removeWindowFromWindowList:sender];
 				  }];
 	
-	[self addWindowToWindowList:dialog withKeyValue:windowToken];
+	[windowController() addWindowToWindowList:dialog];
 }
 
 - (void)showSetVhostPrompt:(id)sender
@@ -2970,14 +2852,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[licensePanel show];
 
-	[self addWindowToWindowList:licensePanel];
+	[windowController() addWindowToWindowList:licensePanel];
 #endif
 }
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 - (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender
 {
-	[self removeWindowFromWindowList:@"TDCLicenseManagerDialog"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 #endif
 

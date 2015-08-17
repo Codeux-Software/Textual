@@ -336,11 +336,11 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[self closeLogFile];
 	
 	[self.config destroyKeychains];
-	
-	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelPropertiesSheet",
-																	 @"TDChannelModifyTopicSheet",
-																	 @"TDChannelModifyModesSheet",
-																	 @"TDChannelBanListSheet"]];
+
+	NSArray *openWindows = [windowController() windowsFromWindowList:@[@"TDChannelPropertiesSheet",
+																	   @"TDChannelModifyTopicSheet",
+																	   @"TDChannelModifyModesSheet",
+																	   @"TDChannelBanListSheet"]];
 	
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject channelID], [self uniqueIdentifier])) {

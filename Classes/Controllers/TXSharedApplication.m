@@ -59,6 +59,7 @@ _defineSharedInstance(sharedNicknameCompletionStatus, TLONicknameCompletionStatu
 _defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel)
 _defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer)
 _defineSharedInstance(sharedThemeController, TPCThemeController)
+_defineSharedInstance(sharedWindowController, TXWindowController)
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 _defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
@@ -74,11 +75,11 @@ _defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
 		sharedSelf = [OELReachability reachabilityForInternetConnection];
 		
 		[sharedSelf setReachableBlock:^(OELReachability *reachability) {
-			[[NSObject worldController] reachabilityChanged:YES];
+			[worldController() reachabilityChanged:YES];
 		}];
 		
 		[sharedSelf setUnreachableBlock:^(OELReachability *reachability) {
-			[[NSObject worldController] reachabilityChanged:NO];
+			[worldController() reachabilityChanged:NO];
 		}];
 	});
 	

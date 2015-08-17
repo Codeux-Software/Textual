@@ -666,6 +666,12 @@
 		4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C790FC91B82706400EB318C /* TXWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C790FC81B82706400EB318C /* TXWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C790FCA1B82706400EB318C /* TXWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C790FC81B82706400EB318C /* TXWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C790FCB1B82706400EB318C /* TXWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C790FC81B82706400EB318C /* TXWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C790FCC1B82725C00EB318C /* TXWindowController.m */; };
+		4C790FCE1B82725C00EB318C /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C790FCC1B82725C00EB318C /* TXWindowController.m */; };
+		4C790FCF1B82725C00EB318C /* TXWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C790FCC1B82725C00EB318C /* TXWindowController.m */; };
 		4C79EDD81B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
 		4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C79EDD61B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib */; };
 		4C7A21931979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */; };
@@ -1713,6 +1719,8 @@
 		4C7766351978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif; sourceTree = "<group>"; };
 		4C77FF1A1991F01F00E8A7B8 /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
 		4C77FF231991F02E00E8A7B8 /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
+		4C790FC81B82706400EB318C /* TXWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXWindowController.h; sourceTree = "<group>"; };
+		4C790FCC1B82725C00EB318C /* TXWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXWindowController.m; sourceTree = "<group>"; };
 		4C79EDD71B6140AC00CA60C8 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerMigrateAppStoreSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C7A218F1979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = VibrantDarkServerListViewPrivateMessageUserIconActive.tif; sourceTree = "<group>"; };
 		4C7A21901979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif"; sourceTree = "<group>"; };
@@ -2558,6 +2566,7 @@
 				4C8AF512158E99520026668C /* TXMenuController.m */,
 				4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */,
 				4C9234AA195330D30009AAAE /* TXUserInterface.m */,
+				4C790FCC1B82725C00EB318C /* TXWindowController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2703,6 +2712,7 @@
 				4C8AF597158E99520026668C /* TXMenuController.h */,
 				4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */,
 				4C9234B2195330E30009AAAE /* TXUserInterface.h */,
+				4C790FC81B82706400EB318C /* TXWindowController.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -3464,6 +3474,7 @@
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
+				4C790FC91B82706400EB318C /* TXWindowController.h in Headers */,
 				4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */,
 				4CE8683E1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h in Headers */,
@@ -3612,6 +3623,7 @@
 				4C7E0FA619AC25900084173D /* GRMustacheContentType.h in Headers */,
 				4C77662019789F9A00759774 /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
+				4C790FCA1B82706400EB318C /* TXWindowController.h in Headers */,
 				4C77661D19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -3778,6 +3790,7 @@
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
+				4C790FCB1B82706400EB318C /* TXWindowController.h in Headers */,
 				4CC2DC671A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4C77FF241991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C992DD51AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
@@ -4530,6 +4543,7 @@
 				4C74FBBF1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
 				4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */,
+				4C790FCE1B82725C00EB318C /* TXWindowController.m in Sources */,
 				4CF40E1F1AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */,
 				4C77FF1C1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,
 				4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */,
@@ -4660,6 +4674,7 @@
 				4C0BA6631990798800857343 /* GTMEncodeURL.m in Sources */,
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
+				4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */,
 				4CF40E0A1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0BA6671990798800857343 /* IRCChannel.m in Sources */,
 				4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */,
@@ -4805,6 +4820,7 @@
 				4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */,
 				4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */,
+				4C790FCF1B82725C00EB318C /* TXWindowController.m in Sources */,
 				4CF40E201AC1A4AC00A26BE0 /* TVCTextFormatterMenu.m in Sources */,
 				4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */,
 				4C77FF1B1991F01F00E8A7B8 /* NSObjectHelper.m in Sources */,

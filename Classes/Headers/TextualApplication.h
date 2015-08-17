@@ -196,6 +196,7 @@
 	@class TXMenuControllerMainWindowProxy;
 	@class TXSharedApplication;
 	@class TXUserInterface;
+	@class TXWindowController;
 
 	/* Static Defeinitions. */
 	#import "StaticDefinitions.h"
@@ -393,6 +394,7 @@
 	#import "TXMenuController.h"
 	#import "TXSharedApplication.h"
 	#import "TXUserInterface.h"
+	#import "TXWindowController.h"
 #endif
 
 /* @end */
