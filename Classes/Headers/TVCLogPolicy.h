@@ -44,6 +44,8 @@
 @interface TVCLogPolicy : NSObject
 #endif
 
+@property (nonatomic, weak) TVCLogController *logController;
+
 @property (nonatomic, copy) NSString *anchorURL;
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;
