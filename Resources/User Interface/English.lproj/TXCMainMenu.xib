@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A235d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -87,6 +87,9 @@
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="PN0-yW-wXe"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="File" tag="2" id="1746">
@@ -117,6 +120,9 @@
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="8Zc-LU-lCE"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="Edit" tag="3" id="163">
@@ -216,6 +222,9 @@
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="pzx-a1-eZs"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="View" tag="4" id="1782">
@@ -263,6 +272,9 @@
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="KNu-aN-liG"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="Server" tag="5" id="286">
@@ -338,6 +350,9 @@ CA
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="avb-uE-N81"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="Channel" tag="6" id="276">
@@ -460,6 +475,9 @@ CA
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="yiG-92-xdd"/>
+                        </connections>
                     </menu>
                     <connections>
                         <action selector="emptyAction:" target="267" id="xcw-D5-3ZG"/>
@@ -601,6 +619,9 @@ CQ
                                 </menu>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="J7w-cr-zAC"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="Window" tag="7" id="19">
@@ -700,6 +721,9 @@ CQ
                                 </connections>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="rv3-p3-nIU"/>
+                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="Help" tag="9" id="1384">
@@ -925,9 +949,15 @@ CQ
                                 </menu>
                             </menuItem>
                         </items>
+                        <connections>
+                            <outlet property="delegate" destination="267" id="TOJ-Yu-JHk"/>
+                        </connections>
                     </menu>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="Mt0-YV-PA3"/>
+            </connections>
         </menu>
         <customObject id="196" userLabel="AppController" customClass="TXMasterController">
             <connections>
@@ -996,6 +1026,9 @@ CQ
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="FYn-JF-r2v"/>
+            </connections>
             <point key="canvasLocation" x="94" y="581.5"/>
         </menu>
         <menu title="Menu" id="327" userLabel="User Controls Menu">
@@ -1181,6 +1214,9 @@ CQ
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="oPr-nd-Yxd"/>
+            </connections>
         </menu>
         <menu title="Menu" id="2953" userLabel="Segmented Controller Menu">
             <items>
@@ -1197,6 +1233,9 @@ CQ
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="e4U-Ty-iAr"/>
+            </connections>
         </menu>
         <menu title="Menu" id="374" userLabel="Channel View Menu">
             <items>
@@ -1357,6 +1396,9 @@ CA
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="L6h-v2-qwT"/>
+            </connections>
             <point key="canvasLocation" x="111.5" y="315.5"/>
         </menu>
         <menu title="Menu" showsStateColumn="NO" id="426" userLabel="Open URL Menu">
@@ -1367,6 +1409,9 @@ CA
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="n8y-YA-LIK"/>
+            </connections>
         </menu>
         <menu showsStateColumn="NO" id="963" userLabel="Join Channel Menu">
             <items>
@@ -1377,6 +1422,9 @@ CA
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="267" id="Up9-R6-U8F"/>
+            </connections>
         </menu>
         <menuItem title="File" tag="2" id="DYg-n3-mPQ" userLabel="Menu Item - Dock Menu">
             <modifierMask key="keyEquivalentModifierMask"/>
@@ -1394,6 +1442,9 @@ CA
                         </connections>
                     </menuItem>
                 </items>
+                <connections>
+                    <outlet property="delegate" destination="267" id="2RV-vm-dLp"/>
+                </connections>
             </menu>
         </menuItem>
     </objects>
