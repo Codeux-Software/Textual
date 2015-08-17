@@ -500,16 +500,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)closeDialogs
 {
-	id listDialog = [menuController() windowFromWindowList:[self listDialogWindowKey]];
+	id listDialog = [windowController() windowFromWindowList:[self listDialogWindowKey]];
 	
 	if (listDialog) {
 		[listDialog close];
 	}
 	
-	NSArray *openWindows = [menuController() windowsFromWindowList:@[@"TDChannelInviteSheet",
-																	 @"TDCServerChangeNicknameSheet",
-																	 @"TDCServerHighlightListSheet",
-																	 @"TDCServerPropertiesSheet"]];
+	NSArray *openWindows = [windowController() windowsFromWindowList:@[@"TDChannelInviteSheet",
+																	   @"TDCServerChangeNicknameSheet",
+																	   @"TDCServerHighlightListSheet",
+																	   @"TDCServerPropertiesSheet"]];
 
 	for (id windowObject in openWindows) {
 		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
@@ -698,7 +698,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		
 		/* Reload table if the window is open. */
-		TDCServerHighlightListSheet *highlightSheet = [menuController() windowFromWindowList:@"TDCServerHighlightListSheet"];
+		TDCServerHighlightListSheet *highlightSheet = [windowController() windowFromWindowList:@"TDCServerHighlightListSheet"];
 		
 		if ( highlightSheet) {
 			[highlightSheet addEntry:newEntry];
@@ -6990,7 +6990,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				entryAuthor = [[m paramAt:3] nicknameFromHostmask];
 			}
 
-			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
+			TDChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDChannelBanListSheet"];
 
             if (listSheet) {
 				if ([listSheet contentAlreadyReceived]) {
@@ -7039,7 +7039,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		case 347: // RPL_ENDOFINVITELIST
 		case 349: // RPL_ENDOFEXCEPTLIST
 		{
-			TDChannelBanListSheet *listSheet = [menuController() windowFromWindowList:@"TDChannelBanListSheet"];
+			TDChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDChannelBanListSheet"];
 
 			if ( listSheet) {
 				[listSheet setContentAlreadyReceived:YES];
@@ -8964,8 +8964,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)createChannelBanListSheet:(TDChannelBanListSheetEntryType)entryType
 {
-    [menuController() popWindowSheetIfExists];
-    
+	[windowController() popMainWindowSheetIfExists];
+
     IRCClient *u = [mainWindow() selectedClient];
     IRCChannel *c = [mainWindow() selectedChannel];
     
@@ -8984,7 +8984,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[listSheet show];
 
-    [menuController() addWindowToWindowList:listSheet];
+	[windowController() addWindowToWindowList:listSheet];
 }
 
 - (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
@@ -9010,7 +9010,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-    [menuController() removeWindowFromWindowList:@"TDChannelBanListSheet"];
+	[windowController() removeWindowFromWindowList:sender];
 }
 
 #pragma mark -
@@ -9023,12 +9023,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (TDCServerChannelListDialog *)listDialog
 {
-    return [menuController() windowFromWindowList:[self listDialogWindowKey]];
+	return [windowController() windowFromWindowList:[self listDialogWindowKey]];
 }
 
 - (void)createChannelListDialog
 {
-	if ([menuController() popWindowViewIfExists:[self listDialogWindowKey]]) {
+	if ([windowController() maybeBringWindowForward:[self listDialogWindowKey]]) {
 		return; // The window was brought forward already.
 	}
 
@@ -9040,7 +9040,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
     
     [channelListDialog start];
 
-    [menuController() addWindowToWindowList:channelListDialog withKeyValue:[self listDialogWindowKey]];
+	[windowController() addWindowToWindowList:channelListDialog withDescription:[self listDialogWindowKey]];
 }
 
 - (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender
@@ -9057,7 +9057,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender
 {
-    [menuController() removeWindowFromWindowList:[self listDialogWindowKey]];
+	[windowController() removeWindowFromWindowList:[self listDialogWindowKey]];
 }
 
 @end

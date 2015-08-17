@@ -38,8 +38,9 @@
 #import "TextualApplication.h"
 
 #define masterController()			[self masterController]
-#define menuController()			[self menuController]
-#define worldController()			[self worldController]
+#define menuController()			[masterController() menuController]
+#define worldController()			[masterController() world]
+#define windowController()			[TXSharedApplication sharedWindowController]
 
 #define mainWindow()				[masterController() mainWindow]
 
@@ -58,6 +59,7 @@
 #define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
 @interface TXSharedApplication : NSObject
++ (TXWindowController *)sharedWindowController;
 + (OELReachability *)sharedNetworkReachabilityObject;
 + (THOPluginManager *)applicationPluginManager;
 + (TLOGrowlController *)sharedGrowlController;
@@ -87,12 +89,6 @@
 @interface NSObject (TXSharedApplicationObjectExtension)
 - (TXMasterController *)masterController;
 + (TXMasterController *)masterController;
-
-- (IRCWorld *)worldController;
-+ (IRCWorld *)worldController;
-
-- (TXMenuController *)menuController;
-+ (TXMenuController *)menuController;
 
 + (void)setGlobalMasterControllerClassReference:(id)masterController;
 @end

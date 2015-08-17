@@ -301,18 +301,6 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)item;
 - (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item;
 
-- (void)addWindowToWindowList:(id)window;
-- (void)addWindowToWindowList:(id)window withKeyValue:(NSString *)key;
-
-- (void)removeWindowFromWindowList:(NSString *)windowClass;
-
-- (id)windowFromWindowList:(NSString *)windowClass;
-
-- (NSArray *)windowsFromWindowList:(NSArray *)windowClasses;
-
-- (BOOL)popWindowViewIfExists:(NSString *)windowClass;
-- (void)popWindowSheetIfExists; // Only applies to main window.
-
 - (IBAction)showPreferencesDialog:(id)sender;
 
 - (IBAction)paste:(id)sender;

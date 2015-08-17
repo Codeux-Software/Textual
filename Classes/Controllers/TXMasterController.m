@@ -394,7 +394,9 @@
 	}
 
 	[sharedPluginManager() unloadPlugins];
-	
+
+	[windowController() prepareForApplicationTermination];
+
 	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
