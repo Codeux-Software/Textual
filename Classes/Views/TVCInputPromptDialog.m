@@ -45,7 +45,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *informationalText;
 @property (nonatomic, weak) IBOutlet NSTextField *informationalTitle;
 @property (nonatomic, weak) IBOutlet NSTextField *informationalInput;
-@property (nonatomic, copy) void (^completionBlock)(BOOL defaultButtonClicked, NSString *resultString);
+@property (nonatomic, copy) TVCInputPromptDialogCompletionBlock completionBlock;
 @property (nonatomic, assign) BOOL defaultButtonClicked;
 
 - (IBAction)modalDidCloseWithDefaultButton:(id)sender;
@@ -59,7 +59,7 @@
 			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
 			 defaultUserInput:(NSString *)userInputText
-			  completionBlock:(void (^)(BOOL defaultButtonClicked, NSString *resultString))callbackBlock
+			  completionBlock:(TVCInputPromptDialogCompletionBlock)completionBlock
 {
 	[RZMainBundle() loadNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
 
@@ -78,7 +78,7 @@
 	[self.informationalText	setStringValue:informativeText];
 	[self.informationalTitle setStringValue:messageTitle];
 
-	self.completionBlock = callbackBlock;
+	self.completionBlock = completionBlock;
 
 	[[self window] makeKeyAndOrderFront:nil];
 }
@@ -100,7 +100,7 @@
 - (void)windowWillClose:(NSNotification *)note
 {
 	if (self.completionBlock) {
-		self.completionBlock(self.defaultButtonClicked, [self.informationalInput stringValue]);
+		self.completionBlock(self, self.defaultButtonClicked, [self.informationalInput stringValue]);
 	}
 }
 
