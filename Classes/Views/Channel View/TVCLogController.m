@@ -142,6 +142,7 @@
 	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
 	 self.webViewPolicy = [TVCLogPolicy new];
+	[self.webViewPolicy setLogController:self];
 	
 	[self.webView setPreferences:_preferencesInitd];
 	
