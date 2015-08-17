@@ -92,7 +92,7 @@
 /* /screens/ command. */
 "BasicLanguage[1040]" = "\002Screen Resolution:\002 %1$.0f x %2$.0f";
 "BasicLanguage[1041]" = "\002Screen Resolutions:\002 Monitor %1$ld: %2$.0f x %3$.0f";
-"BasicLanguage[1042]" = "; Monitor %1$ld: %2$.0f x %2$.0f";
+"BasicLanguage[1042]" = "; Monitor %1$ld: %2$.0f x %3$.0f";
 "BasicLanguage[1043]" = " (HiDPI Mode)";
 
 /* Misc., one line commands. */
