@@ -305,12 +305,12 @@ TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 
 /* ------ */
 - (void)printToWebView:(id)channel													// An IRCChannel or nil for the console.
-				  type:(TVCLogLineType)type											// The time the message was received at for the timestamp.
-			   command:(NSString *)command											// The line type. See TVCLogLine.h
+				  type:(TVCLogLineType)type											// The line type. See TVCLogLine.h
+			   command:(NSString *)command											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — TVCLogLineDefaultRawCommandValue = internal debug command.
 			  nickname:(NSString *)nickname											// The nickname associated with the print.
 		   messageBody:(NSString *)messageBody										// The actual text being printed.
 		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
-			receivedAt:(NSDate *)receivedAt											// Can be the actual command (PRIVMSG, NOTICE, etc.) or a raw numeric (001, 002, etc.) — TVCLogLineDefaultRawCommandValue = internal debug command.
+			receivedAt:(NSDate *)receivedAt											// The time the message was received at for the timestamp.
 	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
 	   completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
