@@ -7961,7 +7961,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	if (afterWakeUp) {
 		[self autoConnectAfterWakeUp];
 	} else {
-		[self performSelector:@selector(connect) withObject:nil afterDelay:self.connectDelay];
+		if (self.connectDelay <= 0) {
+			[self connect];
+		} else {
+			[self performSelector:@selector(connect) withObject:nil afterDelay:self.connectDelay];
+		}
 	}
 }
 
@@ -7971,7 +7975,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return;
 	}
 
-	if ([self isHostReachable]) {
+	if (self.connectDelay <= 0 || [self isHostReachable]) {
 		[self connect:IRCClientConnectReconnectMode];
 	} else {
 		[self printDebugInformationToConsole:BLS(1031, @(self.connectDelay))];
