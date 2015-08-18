@@ -297,8 +297,9 @@
 "BasicLanguage[1030]" = "1d Shunned";
 
 /* Network not available messages */
-"BasicLanguage[1031]" = "Delaying auto connect after waking up for %1$@ seconds due to the unavailability of the local network. To force connect at any time, control-click the connection and click \002Connect\002.";
-"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the unavailability of the local network. Another attempt will be performed in %@ seconds. To force connect at any time, control-click the connection and click \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the connection and click \002Cancel Reconnect\002.";
+"BasicLanguage[1031]" = "Delaying auto connect after waking up for %ld seconds due to the unavailability of the local network. To force connect at any time, control-click the connection and click \002Connect\002.";
+"BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the unavailability of the local network. Another attempt will be performed in %ld seconds. To force connect at any time, control-click the connection and click \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the connection and click \002Cancel Reconnect\002.";
+"BasicLanguage[1283]" = "Textual has cancelled automatic reconnect after trying %ld times.";
 
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
@@ -323,11 +324,6 @@
 /* DCC console messages */
 "BasicLanguage[1039]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
 "BasicLanguage[1040]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
-
-/* Excess flood disconnect warning sheet */
-"BasicLanguage[1041][1]" = "Excess Flood";
-"BasicLanguage[1041][2]" = "A disconnection has occured due to excess flood. Reconnect?";
-"BasicLanguage[1041][3]" = "Configure Flood Control";
 
 /* /mode/ command error */
 "BasicLanguage[1042]" = "The half-op (+h) mode is not supported on this server";
@@ -773,6 +769,6 @@
 
 
 
-/* Next unusued key: 1283 */
+/* Next unusued key: 1284 */
 
 

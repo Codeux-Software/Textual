@@ -89,6 +89,8 @@
 #define _retryInterval				240
 #define _timeoutInterval			360
 
+#define _reconnectTimerMaximumAttempts		100
+
 #define _maximumChannelCountPerWhoBatchRequest		5
 
 enum {
@@ -109,6 +111,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) BOOL timeoutWarningShownToUser;
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
+@property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
+@property (nonatomic, assign) NSInteger reconnectAttempts;
 @property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -168,9 +172,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 		self.autojoinInProgress = NO;
 		self.rawModeEnabled = NO;
-		self.reconnectEnabled = NO;
 		self.serverHasNickServ = NO;
 		self.timeoutWarningShownToUser = NO;
+
+		self.reconnectEnabled = NO;
+		self.reconnectAttempts = 100;
 
 		self.cachedHighlights = nil;
 
@@ -3796,10 +3802,11 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	
 	self.autojoinInProgress = NO;
 	self.rawModeEnabled = NO;
-	self.reconnectEnabled = NO;
 	self.serverHasNickServ = NO;
 	self.timeoutWarningShownToUser = NO;
-	
+
+	self.reconnectEnabled = NO;
+
 	self.lagCheckDestinationChannel = nil;
 	
 	self.lastLagCheck = 0;
@@ -3929,7 +3936,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.isLoggedIn	= NO;
 	self.isConnected = YES;
 	self.isConnecting = NO;
-	self.reconnectEnabled = YES;
 
 	self.cachedLocalNickname = self.config.nickname;
 	
@@ -5462,49 +5468,21 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 }
 
-- (void)receiveErrorExcessFloodWarningPopupCallback:(TLOPopupPromptReturnType)returnType withOriginalAlert:(NSAlert *)originalAlert
-{
-    if (returnType == TLOPopupPromptReturnPrimaryType) {
-        [self startReconnectTimer];
-    } else if (returnType == TLOPopupPromptReturnSecondaryType) {
-        [self cancelReconnect];
-    } else {
-		[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetFloodControlNavigationSelection andContext:nil];
-    }
-}
-
 - (void)receiveError:(IRCMessage *)m
 {
 	NSString *message = [m sequence];
 
-    /* This match is pretty general, but it works in most situations. */
     if (([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Excess Flood)"]) ||
 		([message hasPrefix:@"Closing Link:"] && [message hasSuffix:@"(Max SendQ exceeded)"]))
 	{
-		[mainWindow() select:self]; // Bring server to attention before popping view.
-		
-		/* Cancel any active reconnect before asking if the user wants to do it. */
 		__weak IRCClient *weakSelf = self;
 		
 		self.disconnectCallback = ^{
 			[weakSelf cancelReconnect];
 		};
-		
-        /* Prompt user about disconnect. */
-		[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
-										  body:TXTLS(@"BasicLanguage[1041][2]")
-										 title:TXTLS(@"BasicLanguage[1041][1]")
-								 defaultButton:BLS(1219)
-							   alternateButton:BLS(1182)
-								   otherButton:TXTLS(@"BasicLanguage[1041][3]")
-								suppressionKey:nil
-							   suppressionText:nil
-							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
-								   [self receiveErrorExcessFloodWarningPopupCallback:buttonClicked withOriginalAlert:originalAlert];
-							   }];
-    } else {
-		[self printError:message forCommand:[m command]];
-    }
+	}
+
+	[self printError:message forCommand:[m command]];
 }
 
 #pragma mark -
@@ -6002,6 +5980,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self stopRetryTimer];
 
 	/* Manage local variables. */
+	self.reconnectAttempts = 0;
+	self.reconnectEnabledBecauseOfSleepMode = NO;
+
 	self.supportInfo.networkAddress = [m senderHostmask];
 
 	self.isLoggedIn = YES;
@@ -7546,7 +7527,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)startReconnectTimer
 {
-	if (self.config.autoReconnect) {
+	if ((self.reconnectEnabledBecauseOfSleepMode	   && self.config.autoSleepModeDisconnect) ||
+		(self.reconnectEnabledBecauseOfSleepMode == NO && self.config.autoReconnect))
+	{
 		if ( self.reconnectTimer.timerIsActive == NO) {
 			[self.reconnectTimer start:_reconnectInterval];
 		}
@@ -7562,14 +7545,22 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)onReconnectTimer:(id)sender
 {
-	if ([self isHostReachable] == NO) {
-		if (self.config.hideNetworkUnavailabilityNotices == NO) {
-			[self printDebugInformationToConsole:BLS(1032, @(_reconnectInterval))];
-		}
-	} else {
-		[self connect:IRCClientConnectReconnectMode];
+	if (self.reconnectAttempts >= _reconnectTimerMaximumAttempts) {
+		[self printDebugInformationToConsole:BLS(1283, self.reconnectAttempts)];
 
 		[self cancelReconnect];
+
+		return; // Nothing left here to do...
+	} else if ([self isHostReachable] == NO) {
+		if (self.config.hideNetworkUnavailabilityNotices == NO) {
+			[self printDebugInformationToConsole:BLS(1032, _reconnectInterval)];
+		}
+	} else {
+		if (self.isConnected == NO) {
+			self.reconnectAttempts += 1;
+
+			[self connect:IRCClientConnectReconnectMode];
+		}
 	}
 }
 
@@ -7879,6 +7870,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.disconnectType = IRCClientDisconnectNormalMode;
 
 	self.isConnecting = YES;
+
 	self.reconnectEnabled = YES;
 
 	/* Begin populating configuration. */
@@ -7975,10 +7967,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return;
 	}
 
+	self.reconnectEnabledBecauseOfSleepMode = YES;
+
 	if (self.connectDelay <= 0 || [self isHostReachable]) {
 		[self connect:IRCClientConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:BLS(1031, @(self.connectDelay))];
+		[self printDebugInformationToConsole:BLS(1031, self.connectDelay)];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -8011,11 +8005,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)quit:(NSString *)comment
 {
-	/* If we are already quitting... derp. */
     if (self.isQuitting) {
         return;
-    }
+	}
 	
+	[self cancelReconnect];
+
 	/* If isLoggedIn is NO, then it means that the socket
 	 was just opened and we haven't received the welcome 
 	 message from the IRCd yet. We do not have to gracefully
@@ -8026,17 +8021,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return;
 	}
 
-	/* Post status event. */
     [self postEventToViewController:@"serverDisconnecting"];
 
-	/* Update status. */
 	self.isQuitting	= YES;
-	self.reconnectEnabled = NO;
 
-	/* Clear any existing send operations. */
 	[self.socket clearSendQueue];
 
-	/* Send quit message. */
 	if (NSObjectIsEmpty(comment)) {
 		comment = self.config.normalLeavingComment;
 	}
@@ -8051,7 +8041,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)cancelReconnect
 {
 	self.reconnectEnabled = NO;
-	
+	self.reconnectEnabledBecauseOfSleepMode = NO;
+
+	self.reconnectAttempts = 0;
+
 	[self stopReconnectTimer];
 }
 

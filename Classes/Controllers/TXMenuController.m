@@ -1202,7 +1202,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 	
 	[u quit];
-	[u cancelReconnect];
 }
 
 - (void)cancelReconnection:(id)sender
