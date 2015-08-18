@@ -6,9 +6,11 @@
 	<array>
 		<dict>
 			<key>createSourceIfMissing</key>
-			<false/>
+			<true/>
 			<key>hideOriginalOnMigration</key>
 			<true/>
+			<key>lockSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
 			<key>sourcePath</key>
@@ -18,9 +20,11 @@
 		</dict>
 		<dict>
 			<key>createSourceIfMissing</key>
-			<false/>
+			<true/>
 			<key>hideOriginalOnMigration</key>
 			<true/>
+			<key>lockSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/</string>
 			<key>sourcePath</key>
@@ -33,6 +37,8 @@
 			<false/>
 			<key>hideOriginalOnMigration</key>
 			<true/>
+			<key>lockSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
 			<key>sourcePath</key>
@@ -45,6 +51,8 @@
 			<false/>
 			<key>hideOriginalOnMigration</key>
 			<true/>
+			<key>lockSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
 			<key>sourcePath</key>
@@ -54,25 +62,15 @@
 		</dict>
 		<dict>
 			<key>createSourceIfMissing</key>
+			<true/>
+			<key>hideOriginalOnMigration</key>
 			<false/>
-			<key>hideOriginalOnMigration</key>
+			<key>lockSource</key>
 			<true/>
 			<key>destinationPath</key>
 			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
 			<key>sourcePath</key>
-			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
-			<key>pathType</key>
-			<string>file-propertyList</string>
-		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<true/>
-			<key>hideOriginalOnMigration</key>
-			<true/>
-			<key>destinationPath</key>
-			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
-			<key>sourcePath</key>
-			<string>~/Library/Containers/com.codeux.irc.textual5/Data/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
+			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Preferences/8482Q6EPL6.com.codeux.irc.textual.plist</string>
 			<key>pathType</key>
 			<string>file-propertyList</string>
 		</dict>
@@ -81,6 +79,8 @@
 			<false/>
 			<key>hideOriginalOnMigration</key>
 			<true/>
+			<key>lockSource</key>
+			<false/>
 			<key>destinationPath</key>
 			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
 			<key>sourcePath</key>
