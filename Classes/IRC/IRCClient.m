@@ -176,7 +176,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.timeoutWarningShownToUser = NO;
 
 		self.reconnectEnabled = NO;
-		self.reconnectAttempts = 100;
+		self.reconnectAttempts = 0;
 
 		self.cachedHighlights = nil;
 
