@@ -2086,7 +2086,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[aboutPanel show];
 
-	[windowController() addWindowToWindowList:sender];
+	[windowController() addWindowToWindowList:aboutPanel];
 }
 
 - (void)aboutDialogWillClose:(TDCAboutDialog *)sender
