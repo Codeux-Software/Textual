@@ -119,6 +119,8 @@
 		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
 
 		[masterController() performAwakeningAfterMainWindowDidLoad];
+
+		[self observeNotifications];
 	}
 }
 
@@ -130,6 +132,13 @@
 	[self.serverList setDataSource:nil];
 	
 	[self.serverList setKeyDelegate:nil];
+}
+
+- (void)observeNotifications
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(accessibilityDisplayOptionsDidChange:) name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification object:nil];
+	}
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
@@ -146,6 +155,11 @@
 	if ([self isInFullscreenMode] == NO) {
 		[self toggleFullScreen:nil];
 	}
+}
+
+- (void)accessibilityDisplayOptionsDidChange:(NSNotification *)aNote
+{
+	[self updateBackgroundColor];
 }
 
 - (void)updateBackgroundColor
@@ -188,6 +202,8 @@
 
 - (void)prepareForApplicationTermination
 {
+	[RZNotificationCenter() removeObserver:self];
+
 	[self saveWindowState];
 
 	[self setDelegate:nil];
