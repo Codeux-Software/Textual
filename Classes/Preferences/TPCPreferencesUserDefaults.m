@@ -249,7 +249,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	 */
 
 	/* Determine whether Textual has previously performed a group container migration. */
-	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330"];
+	id migratedOldKeys = [RZUserDefaults() objectForKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380"];
 
 	if (migratedOldKeys) {
 		return; // Cancel operation...
@@ -275,6 +275,8 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 			NSString *migrationPathType = pathToMigrateDict[@"pathType"];
 
+			BOOL lockSource = [pathToMigrateDict boolForKey:@"lockSource"];
+
 			BOOL hideOriginalOnMigration = [pathToMigrateDict boolForKey:@"hideOriginalOnMigration"];
 
 			BOOL createSourceIfMissing = [pathToMigrateDict boolForKey:@"createSourceIfMissing"];
@@ -285,7 +287,8 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 				[TPCPreferencesUserDefaults migrateFolderWithPath:pathToMigrateFromAbsolutePath
 														   toPath:pathToMigrateToAbsolutePath
 										  hideOriginalOnMigration:hideOriginalOnMigration
-											createSourceIfMissing:createSourceIfMissing];
+											createSourceIfMissing:createSourceIfMissing
+													   lockSource:lockSource];
 			}
 			else if ([migrationPathType hasPrefix:@"file-"])
 			{
@@ -295,19 +298,21 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 														 toPath:pathToMigrateToAbsolutePath
 										hideOriginalOnMigration:hideOriginalOnMigration
 										  createSourceIfMissing:createSourceIfMissing
-												 isPropertyList:isPropertyList];
+												 isPropertyList:isPropertyList
+													 lockSource:lockSource];
 			}
 		}
 	}
 
 	/* Inform future calls to method not to perform migration again. */
-	[RZUserDefaults() setObject:@(YES) forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8330" postNotification:NO];
+	[RZUserDefaults() setObject:@(YES) forKey:@"TPCPreferencesUserDefaultsMigratedOldKeysToNewKeys_8380" postNotification:NO];
 }
 
 + (void)migrateFolderWithPath:(NSString *)sourceMigrationPath
 					   toPath:(NSString *)destinationMigrationPath
 	  hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
 		createSourceIfMissing:(BOOL)createSourceIfMissing
+				   lockSource:(BOOL)lockSource
 {
 	/* If the destination folder already exists, cancel operation. */
 	if ([RZFileManager() directoryExistsAtPath:destinationMigrationPath]) {
@@ -347,13 +352,23 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
 	}
 
-	/* Maybe hide original path. */
+	/* Modify source attributes */
 	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:YES];
 
-	NSError *modifySourcePathAttributesError = nil;
+	if (hideOriginalOnMigration) {
+		NSError *modifySourcePathAttributesError = nil;
 
-	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
-		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+			LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		}
+	}
+
+	if (lockSource) {
+		NSError *modifySourcePathAttributesError = nil;
+
+		if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
+			LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		}
 	}
 }
 
@@ -362,6 +377,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	hideOriginalOnMigration:(BOOL)hideOriginalOnMigration
 	  createSourceIfMissing:(BOOL)createSourceIfMissing
 			 isPropertyList:(BOOL)isPropertyList
+				 lockSource:(BOOL)lockSource
 {
 	/* Exit if the source migration path does not exist. */
 	BOOL sourceMigrationPathExists = [RZFileManager() fileExistsAtPath:sourceMigrationPath];
@@ -426,13 +442,23 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 		LogToConsole(@"Failed to create symbolic link to destination path: %@", [createSymbolicLinkError localizedDescription]);
 	}
 
-	/* Maybe hide original path. */
+	/* Modify source attributes */
 	NSURL *sourceMigrationPathURL = [NSURL fileURLWithPath:sourceMigrationPath isDirectory:NO];
 
-	NSError *modifySourcePathAttributesError = nil;
+	if (hideOriginalOnMigration) {
+		NSError *modifySourcePathAttributesError = nil;
 
-	if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
-		LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
+			LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		}
+	}
+
+	if (lockSource) {
+		NSError *modifySourcePathAttributesError = nil;
+
+		if ([sourceMigrationPathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
+			LogToConsole(@"Failed to modify attributes of source migration path: %@", [modifySourcePathAttributesError localizedDescription]);
+		}
 	}
 
 	/* Begin migrating group container values. */
