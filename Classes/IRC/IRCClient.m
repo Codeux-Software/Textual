@@ -80,8 +80,6 @@
 
 #import "TextualApplication.h"
 
-#import "TLOLicenseManager.h"
-
 #import <objc/message.h>
 
 #define _isonCheckInterval			30
