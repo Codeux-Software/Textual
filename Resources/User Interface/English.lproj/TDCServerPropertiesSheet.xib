@@ -1178,7 +1178,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1347,7 +1347,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1439,7 +1439,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
