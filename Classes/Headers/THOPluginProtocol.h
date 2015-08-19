@@ -116,7 +116,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  defined by a script. If a script and a plugin both share the same command, then
  *  neither will be executed and an error will be printed to the OS X console.
  */
-- (NSArray *)subscribedUserInputCommands;
+@property (nonatomic, readonly, copy) NSArray *subscribedUserInputCommands;
 
 /*!
  * @brief Method invoked when a subscribed user input command requires processing.
@@ -136,7 +136,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @discussion If a raw numeric (a number) is being asked for, then insert it into
  *  the array as an NSString.
  */
-- (NSArray *)subscribedServerInputCommands;
+@property (nonatomic, readonly, copy) NSArray *subscribedServerInputCommands;
 
 /*!
  * @brief Method invoked when a subscribed server input command requires processing.
@@ -285,13 +285,13 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
  *  is not enforced, but having a view with a width lower than this magic
  *  number will result in one or more toolbar items not fitting on screen.
  */
-- (NSView *)pluginPreferencesPaneView;
+@property (nonatomic, readonly, strong) NSView *pluginPreferencesPaneView;
 
 /*!
  * @brief Defines an NSString which is used by the Preferences window of
  *  Textual to create a new entry in its navigation list.
  */
-- (NSString *)pluginPreferencesPaneMenuItemName;
+@property (nonatomic, readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
 
 #pragma mark -
 #pragma mark Renderer Events
@@ -510,7 +510,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /* The behavior of this method call is undefined. It exists for internal
  purposes for the plugins packaged with Textual by default. It is not
  recommended to use it, or try to understand it. */
-- (NSDictionary *)pluginOutputDisplayRules;
+@property (nonatomic, readonly, copy) NSDictionary *pluginOutputDisplayRules;
 
 #pragma mark -
 #pragma mark Deprecated
