@@ -117,9 +117,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
 @property (nonatomic, assign) NSTimeInterval lastLagCheck;
-@property (nonatomic, strong) NSString *cachedLocalHostmask;
-@property (nonatomic, strong) NSString *cachedLocalNickname;
-@property (nonatomic, strong) NSString *tryingNicknameSentNickname;
+@property (nonatomic, copy) NSString *cachedLocalHostmask;
+@property (nonatomic, copy) NSString *cachedLocalNickname;
+@property (nonatomic, copy) NSString *tryingNicknameSentNickname;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -1052,7 +1052,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 
 		/* Look up rules for all networks */
-		NSArray *defaultsData = [exceptionRules objectForKey:@"-default-"];
+		NSArray *defaultsData = exceptionRules[@"-default-"];
 
 		if (defaultsData) {
 			if ([defaultsData containsObject:lowercaseNickname]) {

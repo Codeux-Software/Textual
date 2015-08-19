@@ -226,7 +226,7 @@
 
 	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 		if (NSObjectsAreEqual(defaults[key], obj) == NO) {
-			[ndic setObject:obj forKey:key];
+			ndic[key] = obj;
 		}
 	}];
 

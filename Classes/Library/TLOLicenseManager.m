@@ -235,7 +235,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	}
 
 	/* Given dictionary, get start date of trial and return time left. */
-	NSDate *trialPeriodStartDate = [trialInformation objectForKey:@"trialPeriodStartDate"];
+	NSDate *trialPeriodStartDate = trialInformation[@"trialPeriodStartDate"];
 
 	if (trialPeriodStartDate == nil || [trialPeriodStartDate isKindOfClass:[NSDate class]] == NO) {
 		LogToConsole(@"The value of 'trialPeriodStartDate' is nil or not of kind 'NSDate'");
@@ -296,14 +296,14 @@ BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary)
 		return NO;
 	}
 
-	if ([licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseProductNameKey] == nil ||
-		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey] == nil ||
-		[licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey] == nil)
+	if (licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseProductNameKey] == nil ||
+		licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey] == nil ||
+		licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseSignatureKey] == nil)
 	{
 		return NO;
 	}
 
-	NSString *licenseKey = [licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
+	NSString *licenseKey = licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseKeyKey];
 
 	if (TLOLicenseManagerLicenseKeyIsValid(licenseKey) == NO) {
 		return NO;
@@ -327,7 +327,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	}
 
 	/* Retrieve license signature information */
-	NSData *licenseSignature = [licenseDictionary objectForKey:TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
+	NSData *licenseSignature = licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
 
 	if (licenseSignature == nil) {
 		LogToConsole(@"Missing license signature in license dictionary");

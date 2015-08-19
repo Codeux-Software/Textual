@@ -195,9 +195,9 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 	/* Process resulting property list (if it was successful) */
 	if (propertyList) {
-		id statusCode = [propertyList objectForKey:@"Status Code"];
+		id statusCode = propertyList[@"Status Code"];
 
-		id statusContext = [propertyList objectForKey:@"Status Context"];
+		id statusContext = propertyList[@"Status Context"];
 
 		if (statusCode == nil || [statusCode isKindOfClass:[NSNumber class]] == NO) {
 			LogToConsole(@"'Status Code' is nil or not of kind 'NSNumber'");
@@ -241,7 +241,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *licenseOwnerContactAddress = [statusContext objectForKey:@"licenseOwnerContactAddress"];
+				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
 				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
 					LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
@@ -266,7 +266,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *licenseOwnerContactAddress = [statusContext objectForKey:@"licenseOwnerContactAddress"];
+				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
 
 				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
 					LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
@@ -306,7 +306,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *licenseKey = [statusContext objectForKey:@"licenseKey"];
+				NSString *licenseKey = statusContext[@"licenseKey"];
 
 				if (NSObjectIsEmpty(licenseKey)) {
 					LogToConsole(@"'licenseKey' is nil or of zero length");
@@ -335,7 +335,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *licenseKey = [statusContext objectForKey:@"licenseKey"];
+				NSString *licenseKey = statusContext[@"licenseKey"];
 
 				if (NSObjectIsEmpty(licenseKey)) {
 					LogToConsole(@"'licenseKey' is nil or of zero length");
@@ -375,7 +375,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *originalInput = [statusContext objectForKey:@"originalInput"];
+				NSString *originalInput = statusContext[@"originalInput"];
 
 				if (NSObjectIsEmpty(originalInput)) {
 					LogToConsole(@"'originalInput' is nil or of zero length");
@@ -415,7 +415,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				NSString *errorMessage = [statusContext objectForKey:@"Error Message"];
+				NSString *errorMessage = statusContext[@"Error Message"];
 
 				if (NSObjectIsEmpty(errorMessage)) {
 					LogToConsole(@"'errorMessage' is nil or of zero length");
