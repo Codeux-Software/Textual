@@ -93,7 +93,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 		/* Before we do anything at all, we create a backup of the old configuration. */
 		/* We refuse to continue unless that wrote successfully. */
 		/* These are stored in the home directory of our container. */
-		NSString *basePath = [NSString stringWithFormat:@"/importBackup-%@.plist", [NSString stringWithUUID]];
+		NSString *basePath = [NSString stringWithFormat:@"/Textual-importBackup-%@.plist", [NSString stringWithUUID]];
 		
 		NSString *backupPath = [NSHomeDirectory() stringByAppendingPathComponent:basePath];
 		
@@ -241,19 +241,19 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 {
 	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
 
-	if (removeJunk) {
-		NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
+	NSDictionary *defaults = [TPCPreferences defaultPreferences];
 
-		[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			if ([self isKeyNameSupposedToBeIgnored:key] == NO) {
-				fnlsettings[key] = obj;
-			}
-		}];
+	NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
 
-		return fnlsettings;
-	}
+	[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if (((removeJunk && [self isKeyNameSupposedToBeIgnored:key] == NO) || removeJunk == NO) &&
+			NSObjectsAreEqual(obj, defaults[key]) == NO)
+		{
+			fnlsettings[key] = obj;
+		}
+	}];
 
-	return settings;
+	return fnlsettings;
 }
 
 /* +exportPostflightForURL: handles the actual export. */
