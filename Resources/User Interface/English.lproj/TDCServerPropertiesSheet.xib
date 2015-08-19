@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A263e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -162,12 +162,12 @@
                             <nil key="backgroundColor"/>
                         </clipView>
                         <animations/>
-                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mUA-9Q-xgn">
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mUA-9Q-xgn">
                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="6Es-gk-o64">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6Es-gk-o64">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
@@ -1012,12 +1012,12 @@ Gw
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="5aN-9T-pUi">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="5aN-9T-pUi">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="4F7-mN-S31">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="4F7-mN-S31">
                         <rect key="frame" x="224" y="1" width="15" height="133"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -1167,18 +1167,18 @@ Gw
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1803">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1803">
                         <rect key="frame" x="1" y="115" width="419" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="1804">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1804">
                         <rect key="frame" x="405" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1336,18 +1336,18 @@ Gw
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2452">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2452">
                         <rect key="frame" x="1" y="115" width="419" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2453">
                         <rect key="frame" x="405" y="17" width="15" height="154"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1428,18 +1428,18 @@ Gw
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1850">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1850">
                         <rect key="frame" x="-100" y="-100" width="308" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="1849">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1849">
                         <rect key="frame" x="294" y="16" width="15" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1585,7 +1585,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="2312">
+                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="2312">
                         <rect key="frame" x="399" y="1" width="16" height="181"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -1923,12 +1923,12 @@ Gw
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="POy-MI-Qzw">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="POy-MI-Qzw">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="nDR-Ag-7ot">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="nDR-Ag-7ot">
                         <rect key="frame" x="224" y="1" width="15" height="133"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -1961,10 +1961,10 @@ Gw
             <point key="canvasLocation" x="316" y="199.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2078" userLabel="Flood Control">
-            <rect key="frame" x="0.0" y="0.0" width="530" height="336"/>
+            <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2170">
-                    <rect key="frame" x="25" y="300" width="144" height="18"/>
+                    <rect key="frame" x="25" y="271" width="144" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Enable flood control" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="2171">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1974,19 +1974,21 @@ Gw
                         <action selector="floodControlChanged:" target="-2" id="2225"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2178">
+                    <rect key="frame" x="44" y="209" width="434" height="56"/>
+                    <animations/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2179">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Flood control works to help prevent disconnection from an excessive amount of data being sent to the configured server. It works by counting the number of messages being sent. If the total number of messages exceeds the defined maximum before our delay timer has fired, then flood control is activated.</string>
+                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="2226">
-                    <rect key="frame" x="7" y="0.0" width="516" height="238"/>
+                    <rect key="frame" x="7" y="0.0" width="516" height="209"/>
                     <subviews>
-                        <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2172">
-                            <rect key="frame" x="32" y="161" width="434" height="25"/>
-                            <animations/>
-                            <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2173"/>
-                            <connections>
-                                <accessibilityConnection property="title" destination="2174" id="qvg-sR-2Oh"/>
-                            </connections>
-                        </slider>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2174">
-                            <rect key="frame" x="18" y="192" width="103" height="17"/>
+                            <rect key="frame" x="34" y="151" width="103" height="17"/>
                             <animations/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Message Count:" id="2175">
                                 <font key="font" metaFont="system"/>
@@ -1994,70 +1996,17 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2180">
-                            <rect key="frame" x="37" y="143" width="10" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="1" id="2181">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2184">
-                            <rect key="frame" x="96" y="143" width="17" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="10" id="2185">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2186">
-                            <rect key="frame" x="164" y="143" width="18" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="20" id="2187">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2188">
-                            <rect key="frame" x="235" y="144" width="18" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="30" id="2189">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2190">
-                            <rect key="frame" x="306" y="143" width="19" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="40" id="2191">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2192">
-                            <rect key="frame" x="374" y="143" width="22" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title=" 50" id="2193">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2194">
-                            <rect key="frame" x="32" y="75" width="434" height="25"/>
+                            <rect key="frame" x="44" y="59" width="418" height="25"/>
                             <animations/>
                             <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="2" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2211"/>
                             <connections>
                                 <accessibilityConnection property="title" destination="2195" id="iEn-8A-B6a"/>
+                                <binding destination="-2" name="value" keyPath="self.floodControlDelayTimerSliderTempValue" id="ocG-4b-PES"/>
                             </connections>
                         </slider>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2195">
-                            <rect key="frame" x="18" y="106" width="80" height="17"/>
+                            <rect key="frame" x="34" y="90" width="80" height="17"/>
                             <animations/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Delay Timer:" id="2210">
                                 <font key="font" metaFont="system"/>
@@ -2065,35 +2014,8 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2212">
-                            <rect key="frame" x="18" y="57" width="51" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="1 second" id="2213">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2214">
-                            <rect key="frame" x="423" y="57" width="65" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="60 seconds" id="2215">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2216">
-                            <rect key="frame" x="211" y="57" width="66" height="14"/>
-                            <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="30 seconds" id="2217">
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2229">
-                            <rect key="frame" x="20" y="220" width="476" height="5"/>
+                            <rect key="frame" x="20" y="191" width="476" height="5"/>
                             <animations/>
                             <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                             <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2108,81 +2030,129 @@ Gw
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2182">
-                            <rect key="frame" x="445" y="143" width="21" height="14"/>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="2216">
+                            <rect key="frame" x="402" y="90" width="80" height="14"/>
                             <animations/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="…" id="2183">
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Current Value:" id="2217">
                                 <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="displayPatternValue1" keyPath="self.floodControlDelayTimerSliderTempValue" id="U0d-ZG-Epd">
+                                    <dictionary key="options">
+                                        <string key="NSDisplayPattern">Current Value: %{value1}@</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-Ej-AUs">
+                            <rect key="frame" x="402" y="151" width="80" height="14"/>
+                            <animations/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Current Value:" id="7IG-Bg-sEW">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="displayPatternValue1" keyPath="self.floodControlMessageCountSliderTempValue" id="Bc9-ax-TxH">
+                                    <dictionary key="options">
+                                        <string key="NSDisplayPattern">Current Value: %{value1}@</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zl7-LN-CmX">
+                            <rect key="frame" x="32" y="68" width="10" height="14"/>
+                            <animations/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="1" id="fPA-GM-ESz">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SnT-2y-xz3">
+                            <rect key="frame" x="466" y="68" width="19" height="14"/>
+                            <animations/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="60" id="tsZ-PF-yHP">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2172">
+                            <rect key="frame" x="44" y="120" width="418" height="25"/>
+                            <animations/>
+                            <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="2173"/>
+                            <connections>
+                                <accessibilityConnection property="title" destination="2174" id="qvg-sR-2Oh"/>
+                                <binding destination="-2" name="value" keyPath="self.floodControlMessageCountSliderTempValue" id="cgk-ji-bCC"/>
+                            </connections>
+                        </slider>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5mZ-N1-wrp">
+                            <rect key="frame" x="30" y="129" width="10" height="14"/>
+                            <animations/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="1" id="kqn-3j-FLO">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GP0-tT-Km5">
+                            <rect key="frame" x="466" y="129" width="19" height="14"/>
+                            <animations/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="60" id="SKy-8F-ggs">
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="2174" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="20" symbolic="YES" id="1AW-Jg-RgU"/>
-                        <constraint firstAttribute="height" constant="238" id="1cp-M8-RzC"/>
-                        <constraint firstItem="2172" firstAttribute="trailing" secondItem="2182" secondAttribute="trailing" id="4Dl-oF-otf"/>
-                        <constraint firstItem="2182" firstAttribute="trailing" secondItem="2194" secondAttribute="trailing" id="5PS-5w-Zgv"/>
-                        <constraint firstItem="2212" firstAttribute="baseline" secondItem="2216" secondAttribute="baseline" id="6n9-mX-aVJ"/>
-                        <constraint firstItem="2184" firstAttribute="leading" secondItem="2180" secondAttribute="trailing" constant="53" id="APN-f3-FwG"/>
-                        <constraint firstItem="2192" firstAttribute="leading" secondItem="2190" secondAttribute="trailing" constant="53" id="Af8-li-9Zj"/>
-                        <constraint firstItem="2186" firstAttribute="baseline" secondItem="2190" secondAttribute="baseline" id="BBi-sc-MZ7"/>
-                        <constraint firstAttribute="width" constant="516" id="DxJ-QH-P56"/>
-                        <constraint firstItem="8Ow-z4-Ur7" firstAttribute="top" secondItem="2216" secondAttribute="bottom" constant="23" id="FXM-jN-hJu"/>
-                        <constraint firstItem="2214" firstAttribute="centerX" secondItem="2182" secondAttribute="centerX" id="Ftx-Lk-H19"/>
-                        <constraint firstItem="2194" firstAttribute="top" secondItem="2195" secondAttribute="bottom" constant="8" symbolic="YES" id="IB7-b4-CNg"/>
-                        <constraint firstItem="2172" firstAttribute="leading" secondItem="2194" secondAttribute="leading" id="IcI-K0-OLH"/>
-                        <constraint firstAttribute="trailing" secondItem="2214" secondAttribute="trailing" constant="30" id="IzR-EK-rTl"/>
-                        <constraint firstAttribute="trailing" secondItem="2172" secondAttribute="trailing" constant="52" id="KGi-pV-3zt"/>
-                        <constraint firstItem="2212" firstAttribute="top" secondItem="2194" secondAttribute="bottom" constant="5" id="LJw-00-72y"/>
-                        <constraint firstItem="2188" firstAttribute="leading" secondItem="2186" secondAttribute="trailing" constant="57" id="PtO-rr-N3X"/>
-                        <constraint firstItem="2190" firstAttribute="leading" secondItem="2188" secondAttribute="trailing" constant="57" id="Pwb-FQ-phH"/>
-                        <constraint firstItem="2172" firstAttribute="top" secondItem="2174" secondAttribute="bottom" constant="8" symbolic="YES" id="Q1J-oJ-ddj"/>
-                        <constraint firstItem="2180" firstAttribute="top" secondItem="2172" secondAttribute="bottom" constant="5" id="RJ4-h1-1YD"/>
-                        <constraint firstItem="2229" firstAttribute="centerX" secondItem="2226" secondAttribute="centerX" id="Sa4-4M-Bsp"/>
-                        <constraint firstItem="2195" firstAttribute="leading" secondItem="2174" secondAttribute="leading" id="T98-Al-fvk"/>
-                        <constraint firstItem="2214" firstAttribute="baseline" secondItem="2216" secondAttribute="baseline" id="Tqr-FH-r6y"/>
-                        <constraint firstItem="2186" firstAttribute="baseline" secondItem="2184" secondAttribute="baseline" id="UWf-Si-O4z"/>
-                        <constraint firstItem="2172" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="34" id="UYz-21-DB8"/>
-                        <constraint firstItem="8Ow-z4-Ur7" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="105" id="bSa-qY-5NL"/>
-                        <constraint firstItem="2195" firstAttribute="top" secondItem="2180" secondAttribute="bottom" constant="20" id="cLe-bf-SxX"/>
-                        <constraint firstItem="2184" firstAttribute="baseline" secondItem="2180" secondAttribute="baseline" id="dC7-Dc-gNQ"/>
-                        <constraint firstAttribute="bottom" secondItem="8Ow-z4-Ur7" secondAttribute="bottom" constant="20" symbolic="YES" id="gv3-8U-B82"/>
-                        <constraint firstItem="2180" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="39" id="hCh-yF-a2O"/>
-                        <constraint firstItem="2174" firstAttribute="leading" secondItem="2229" secondAttribute="leading" id="hFl-6p-4hP"/>
-                        <constraint firstItem="2190" firstAttribute="baseline" secondItem="2192" secondAttribute="baseline" id="hQ2-Oc-SbA"/>
-                        <constraint firstItem="2182" firstAttribute="leading" secondItem="2192" secondAttribute="trailing" constant="53" id="hjb-YE-ohE"/>
-                        <constraint firstItem="2192" firstAttribute="baseline" secondItem="2182" secondAttribute="baseline" id="iRg-rS-5Gt"/>
-                        <constraint firstItem="2216" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="213" id="jEp-Py-MXd"/>
-                        <constraint firstItem="2212" firstAttribute="leading" secondItem="2195" secondAttribute="leading" id="jfU-eA-JmQ"/>
-                        <constraint firstItem="2186" firstAttribute="leading" secondItem="2184" secondAttribute="trailing" constant="55" id="lhv-o0-Bpz"/>
-                        <constraint firstItem="2174" firstAttribute="top" secondItem="2229" secondAttribute="bottom" constant="13" id="n8m-6A-ryG"/>
-                        <constraint firstItem="2188" firstAttribute="top" secondItem="2172" secondAttribute="bottom" constant="4" id="xIk-v9-mXD"/>
+                        <constraint firstItem="7wh-Ej-AUs" firstAttribute="baseline" secondItem="2174" secondAttribute="baseline" id="25H-sf-RAr"/>
+                        <constraint firstItem="2172" firstAttribute="top" secondItem="2174" secondAttribute="bottom" constant="8" symbolic="YES" id="2eP-Bj-jHH"/>
+                        <constraint firstItem="2194" firstAttribute="top" secondItem="2195" secondAttribute="bottom" constant="8" symbolic="YES" id="3kH-Zz-7dA"/>
+                        <constraint firstItem="2229" firstAttribute="centerX" secondItem="2172" secondAttribute="centerX" constant="5" id="7OM-ay-A3l"/>
+                        <constraint firstItem="GP0-tT-Km5" firstAttribute="baseline" secondItem="5mZ-N1-wrp" secondAttribute="baseline" id="7bU-2R-7ny"/>
+                        <constraint firstItem="2194" firstAttribute="leading" secondItem="zl7-LN-CmX" secondAttribute="trailing" constant="6" id="ALZ-vK-sFc"/>
+                        <constraint firstItem="2194" firstAttribute="trailing" secondItem="2172" secondAttribute="trailing" id="DJo-81-LBK"/>
+                        <constraint firstItem="8Ow-z4-Ur7" firstAttribute="top" secondItem="2194" secondAttribute="bottom" constant="26" id="EfT-HV-5QX"/>
+                        <constraint firstItem="SnT-2y-xz3" firstAttribute="baseline" secondItem="zl7-LN-CmX" secondAttribute="baseline" id="HhE-VU-X5y"/>
+                        <constraint firstAttribute="trailing" secondItem="7wh-Ej-AUs" secondAttribute="trailing" constant="36" id="I2E-Ph-Ix6"/>
+                        <constraint firstAttribute="trailing" secondItem="2216" secondAttribute="trailing" constant="36" id="J3a-8O-xVU"/>
+                        <constraint firstItem="2194" firstAttribute="centerX" secondItem="8Ow-z4-Ur7" secondAttribute="centerX" constant="-5.5" id="NgN-lD-9PI"/>
+                        <constraint firstItem="2172" firstAttribute="leading" secondItem="2194" secondAttribute="leading" id="OMM-G0-Nfm"/>
+                        <constraint firstItem="5mZ-N1-wrp" firstAttribute="top" secondItem="2172" secondAttribute="top" id="Wj5-F7-ZRc"/>
+                        <constraint firstItem="2195" firstAttribute="baseline" secondItem="2216" secondAttribute="baseline" id="XNo-T6-wHe"/>
+                        <constraint firstAttribute="bottom" secondItem="8Ow-z4-Ur7" secondAttribute="bottom" constant="20" symbolic="YES" id="YBF-Q3-xRg"/>
+                        <constraint firstItem="2229" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="20" id="b5W-er-paO"/>
+                        <constraint firstItem="GP0-tT-Km5" firstAttribute="leading" secondItem="2172" secondAttribute="trailing" constant="8" symbolic="YES" id="bJm-9g-aIe"/>
+                        <constraint firstItem="2174" firstAttribute="top" secondItem="2229" secondAttribute="bottom" constant="25" id="eAe-dT-GIj"/>
+                        <constraint firstItem="2195" firstAttribute="top" secondItem="2172" secondAttribute="bottom" constant="14" id="gyU-a6-6g5"/>
+                        <constraint firstItem="GP0-tT-Km5" firstAttribute="leading" secondItem="SnT-2y-xz3" secondAttribute="leading" id="hCY-lg-5Sy"/>
+                        <constraint firstItem="zl7-LN-CmX" firstAttribute="top" secondItem="2194" secondAttribute="top" id="n3l-YJ-csl"/>
+                        <constraint firstItem="2172" firstAttribute="leading" secondItem="5mZ-N1-wrp" secondAttribute="trailing" constant="8" symbolic="YES" id="rtT-Ku-u8P"/>
+                        <constraint firstItem="2174" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="36" id="ueO-8d-hcH"/>
+                        <constraint firstItem="2174" firstAttribute="leading" secondItem="2195" secondAttribute="leading" id="vAD-4k-G4F"/>
+                        <constraint firstItem="2172" firstAttribute="leading" secondItem="2226" secondAttribute="leading" constant="46" id="vhj-Nm-V37"/>
+                        <constraint firstItem="8Ow-z4-Ur7" firstAttribute="centerX" secondItem="2226" secondAttribute="centerX" id="yC7-ea-hb4"/>
                     </constraints>
                     <animations/>
                 </customView>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2178">
-                    <rect key="frame" x="44" y="238" width="434" height="56"/>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="2179">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">Flood control works to help prevent disconnection from an excessive amount of data being sent to the configured server. It works by counting the number of messages being sent. If the total number of messages exceeds the defined maximum before our delay timer has fired, then flood control is activated.</string>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="2226" firstAttribute="centerX" secondItem="2078" secondAttribute="centerX" id="G6N-Cn-mzh"/>
-                <constraint firstItem="2178" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="46" id="RTj-TJ-Wcg"/>
-                <constraint firstItem="2170" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="27" id="UST-tO-qfU"/>
-                <constraint firstItem="2178" firstAttribute="top" secondItem="2170" secondAttribute="bottom" constant="8" symbolic="YES" id="ZDv-y2-enI"/>
-                <constraint firstAttribute="bottom" secondItem="2226" secondAttribute="bottom" id="dM2-54-awK"/>
-                <constraint firstItem="2170" firstAttribute="top" secondItem="2078" secondAttribute="top" constant="20" symbolic="YES" id="jEb-dE-KGf"/>
-                <constraint firstAttribute="trailing" secondItem="2178" secondAttribute="trailing" constant="54" id="q2n-9Q-U5h"/>
+                <constraint firstAttribute="bottom" secondItem="2226" secondAttribute="bottom" id="15Q-Sb-SmM"/>
+                <constraint firstItem="2170" firstAttribute="top" secondItem="2078" secondAttribute="top" constant="20" symbolic="YES" id="22B-SZ-5iT"/>
+                <constraint firstAttribute="trailing" secondItem="2178" secondAttribute="trailing" constant="54" id="9Oa-rn-guO"/>
+                <constraint firstItem="2226" firstAttribute="top" secondItem="2178" secondAttribute="bottom" id="HDC-Dp-0WX"/>
+                <constraint firstItem="2226" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="7" id="Saj-MY-qDP"/>
+                <constraint firstItem="2178" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="46" id="UN8-q6-GCx"/>
+                <constraint firstItem="2178" firstAttribute="top" secondItem="2170" secondAttribute="bottom" constant="8" symbolic="YES" id="b2D-7m-TYo"/>
+                <constraint firstItem="2170" firstAttribute="leading" secondItem="2078" secondAttribute="leading" constant="27" id="bYO-gx-nfm"/>
+                <constraint firstItem="2226" firstAttribute="centerX" secondItem="2078" secondAttribute="centerX" id="eWg-eg-29V"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="401" y="245"/>
+            <point key="canvasLocation" x="401" y="244.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2488" userLabel="Networking View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
@@ -2234,13 +2204,13 @@ Gw
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" baseWritingDirection="leftToRight" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="8lV-2X-EIW">
-                                <rect key="frame" x="0.0" y="0.0" width="892" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1115" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="1115" height="10000000"/>
+                                <size key="maxSize" width="1338" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
                                         <string key="content">• If a DNS lookup returns an IPv4 address, then Textual uses IPv4.
@@ -2258,19 +2228,19 @@ Gw
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="1115" height="10000000"/>
+                                <size key="maxSize" width="1338" height="10000000"/>
                             </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WkZ-2H-1d6">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WkZ-2H-1d6">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="enb-Kq-iY9">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="enb-Kq-iY9">
                         <rect key="frame" x="224" y="1" width="15" height="133"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -2376,12 +2346,12 @@ Gw
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WJR-EI-P4T">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WJR-EI-P4T">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Buc-PK-7HA">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Buc-PK-7HA">
                         <rect key="frame" x="224" y="1" width="15" height="133"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -2531,6 +2501,7 @@ Gw
             <point key="canvasLocation" x="328.5" y="557.5"/>
         </menu>
         <userDefaultsController id="iuc-Sg-eeB" customClass="TPCPreferencesUserDefaultsController"/>
+        <userDefaultsController representsSharedInstance="YES" id="wVF-lJ-wzZ"/>
     </objects>
     <resources>
         <image name="ErroneousTextFieldValueIndicator" width="80" height="80"/>

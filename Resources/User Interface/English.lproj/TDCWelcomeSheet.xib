@@ -24,14 +24,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="143">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="821" y="627" width="385" height="468"/>
+            <rect key="contentRect" x="821" y="627" width="380" height="468"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="144">
-                <rect key="frame" x="0.0" y="0.0" width="385" height="468"/>
+                <rect key="frame" x="0.0" y="0.0" width="380" height="468"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="146">
-                        <rect key="frame" x="109" y="287" width="249" height="22"/>
+                        <rect key="frame" x="109" y="287" width="244" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="xcy-3h-buk"/>
                         </constraints>
@@ -47,20 +47,20 @@
                         </connections>
                     </textField>
                     <scrollView focusRingType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="149">
-                        <rect key="frame" x="109" y="168" width="249" height="112"/>
+                        <rect key="frame" x="109" y="168" width="244" height="112"/>
                         <clipView key="contentView" id="UXg-Uw-XfU">
-                            <rect key="frame" x="1" y="1" width="247" height="110"/>
+                            <rect key="frame" x="1" y="1" width="242" height="110"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="247" height="19"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="242" height="110"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn width="244" minWidth="40" maxWidth="1000" id="174">
+                                        <tableColumn width="239" minWidth="40" maxWidth="1000" id="174">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -116,6 +116,7 @@
                         <rect key="frame" x="108" y="142" width="21" height="23"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="Xpt-2B-Ogw"/>
+                            <constraint firstAttribute="height" constant="21" id="Ydf-kY-0lt"/>
                         </constraints>
                         <animations/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="166">
@@ -130,6 +131,7 @@
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="155">
                         <rect key="frame" x="128" y="142" width="21" height="23"/>
                         <constraints>
+                            <constraint firstAttribute="height" constant="21" id="4Nq-GV-efh"/>
                             <constraint firstAttribute="width" constant="21" id="dRq-y5-dze"/>
                         </constraints>
                         <animations/>
@@ -143,14 +145,14 @@
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="159">
-                        <rect key="frame" x="20" y="355" width="345" height="5"/>
+                        <rect key="frame" x="20" y="355" width="341" height="5"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="216">
-                        <rect key="frame" x="109" y="313" width="252" height="26"/>
+                        <rect key="frame" x="109" y="313" width="247" height="26"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="cd5-vs-Wxp"/>
                         </constraints>
@@ -176,25 +178,14 @@
                         </textFieldCell>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="201">
-                        <rect key="frame" x="20" y="59" width="345" height="5"/>
+                        <rect key="frame" x="20" y="59" width="341" height="5"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="151">
-                        <rect key="frame" x="212" y="144" width="148" height="18"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="14" id="wvg-X2-tes"/>
-                        </constraints>
-                        <animations/>
-                        <buttonCell key="cell" type="check" title="Connect on launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="152">
-                        <rect key="frame" x="245" y="13" width="126" height="32"/>
+                        <rect key="frame" x="241" y="13" width="126" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Start Chatting" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="168">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -206,7 +197,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="153">
-                        <rect key="frame" x="163" y="13" width="82" height="32"/>
+                        <rect key="frame" x="159" y="13" width="82" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="167">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -221,7 +212,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I1L-Fi-uaP">
-                        <rect key="frame" x="107" y="375" width="260" height="42"/>
+                        <rect key="frame" x="107" y="375" width="256" height="42"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="LmS-Nk-P30"/>
                         </constraints>
@@ -243,17 +234,21 @@ Gw
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="160">
-                        <rect key="frame" x="106" y="79" width="238" height="56"/>
+                        <rect key="frame" x="106" y="79" width="248" height="56"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="56" id="UTe-zf-Olq"/>
+                            <constraint firstAttribute="width" constant="244" id="j1U-fF-7Xo"/>
+                        </constraints>
                         <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by right clicking the connection and selecting "Server Properties."</string>
+                            <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by control clicking the connection and selecting "Server Properties."</string>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="157">
-                        <rect key="frame" x="132" y="425" width="210" height="23"/>
+                        <rect key="frame" x="132" y="425" width="206" height="23"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
                         </constraints>
@@ -270,9 +265,19 @@ Gw
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="0YK-op-vRE"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="151">
+                        <rect key="frame" x="220" y="144" width="136" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="wvg-X2-tes"/>
+                        </constraints>
+                        <animations/>
+                        <buttonCell key="cell" type="check" title="Connect on launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="151" firstAttribute="leading" secondItem="154" secondAttribute="trailing" constant="85" id="0YJ-tg-lgt"/>
                     <constraint firstItem="153" firstAttribute="top" secondItem="201" secondAttribute="bottom" constant="20" symbolic="YES" id="1jf-HW-1zw"/>
                     <constraint firstItem="201" firstAttribute="top" secondItem="160" secondAttribute="bottom" constant="17" id="4Ka-gn-MEO"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="top" secondItem="157" secondAttribute="bottom" constant="8" symbolic="YES" id="4ux-vF-Sv4"/>
@@ -283,10 +288,10 @@ Gw
                     <constraint firstItem="157" firstAttribute="centerX" secondItem="I1L-Fi-uaP" secondAttribute="centerX" id="AeX-eL-VrR"/>
                     <constraint firstItem="157" firstAttribute="top" secondItem="zqh-Vb-fjj" secondAttribute="top" id="Ew8-R2-Nrk"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="leading" secondItem="144" secondAttribute="leading" constant="20" symbolic="YES" id="G9n-VJ-9Fk"/>
+                    <constraint firstItem="155" firstAttribute="leading" secondItem="154" secondAttribute="trailing" constant="-1" id="GC0-Ih-L75"/>
                     <constraint firstItem="159" firstAttribute="trailing" secondItem="201" secondAttribute="trailing" id="Gov-4M-K01"/>
                     <constraint firstItem="146" firstAttribute="leading" secondItem="216" secondAttribute="leading" id="H7i-xj-wsc"/>
                     <constraint firstItem="149" firstAttribute="top" secondItem="146" secondAttribute="bottom" constant="7" id="IQG-6X-Iil"/>
-                    <constraint firstItem="151" firstAttribute="leading" secondItem="155" secondAttribute="trailing" constant="65" id="Jol-nI-pZU"/>
                     <constraint firstItem="155" firstAttribute="top" secondItem="154" secondAttribute="top" id="JpD-ta-xRk"/>
                     <constraint firstItem="154" firstAttribute="top" secondItem="149" secondAttribute="bottom" constant="4" id="KZG-vF-2r4"/>
                     <constraint firstItem="150" firstAttribute="leading" secondItem="144" secondAttribute="leading" constant="39" id="LG8-4D-ggG"/>
@@ -295,6 +300,7 @@ Gw
                     <constraint firstItem="160" firstAttribute="top" secondItem="154" secondAttribute="bottom" constant="8" symbolic="YES" id="PAZ-KZ-nKy"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="leading" secondItem="159" secondAttribute="leading" id="Qag-pM-JBI"/>
                     <constraint firstItem="154" firstAttribute="leading" secondItem="149" secondAttribute="leading" constant="-1" id="Vjh-uO-hSF"/>
+                    <constraint firstItem="151" firstAttribute="trailing" secondItem="173" secondAttribute="trailing" constant="2" id="Vjr-iU-nsy"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="top" secondItem="144" secondAttribute="top" constant="20" symbolic="YES" id="YYR-g5-4dQ"/>
                     <constraint firstItem="159" firstAttribute="leading" secondItem="201" secondAttribute="leading" id="ZaD-on-nMC"/>
                     <constraint firstItem="152" firstAttribute="leading" secondItem="153" secondAttribute="trailing" constant="12" symbolic="YES" id="Zbg-YD-ohs"/>
@@ -305,27 +311,26 @@ Gw
                     <constraint firstItem="216" firstAttribute="leading" secondItem="148" secondAttribute="trailing" constant="8" symbolic="YES" id="euG-ow-KfW"/>
                     <constraint firstItem="146" firstAttribute="leading" secondItem="145" secondAttribute="trailing" constant="8" symbolic="YES" id="fMZ-XH-bdY"/>
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="20" id="fdZ-Sf-J1U"/>
-                    <constraint firstItem="151" firstAttribute="top" secondItem="149" secondAttribute="bottom" constant="8" symbolic="YES" id="gWx-Mi-wKb"/>
                     <constraint firstItem="159" firstAttribute="top" secondItem="zqh-Vb-fjj" secondAttribute="bottom" constant="21" id="iGO-Y1-phc"/>
                     <constraint firstItem="146" firstAttribute="top" secondItem="216" secondAttribute="bottom" constant="8" symbolic="YES" id="nOZ-ao-VlC"/>
+                    <constraint firstItem="151" firstAttribute="top" secondItem="173" secondAttribute="bottom" constant="9" id="nXA-Tw-e9m"/>
                     <constraint firstItem="216" firstAttribute="top" secondItem="159" secondAttribute="bottom" constant="20" id="nvD-jf-HKA"/>
                     <constraint firstItem="149" firstAttribute="leading" secondItem="150" secondAttribute="trailing" constant="8" symbolic="YES" id="owA-Jz-rrE"/>
-                    <constraint firstItem="155" firstAttribute="centerY" secondItem="151" secondAttribute="centerY" id="q0E-VH-c0c"/>
                     <constraint firstItem="149" firstAttribute="leading" secondItem="146" secondAttribute="leading" id="qYx-86-d0I"/>
                     <constraint firstItem="160" firstAttribute="top" secondItem="155" secondAttribute="bottom" constant="8" symbolic="YES" id="sUc-jL-m4q"/>
                     <constraint firstItem="150" firstAttribute="top" secondItem="145" secondAttribute="bottom" constant="11" id="vb7-R4-Hds"/>
                     <constraint firstItem="149" firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="vrw-p5-TaU"/>
                     <constraint firstItem="153" firstAttribute="baseline" secondItem="152" secondAttribute="baseline" id="wCJ-F8-Aw5"/>
                     <constraint firstItem="157" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="45" id="wRe-OP-Aas"/>
-                    <constraint firstAttribute="trailing" secondItem="I1L-Fi-uaP" secondAttribute="trailing" constant="20" symbolic="YES" id="yp5-tZ-kSO"/>
-                    <constraint firstItem="149" firstAttribute="trailing" secondItem="151" secondAttribute="trailing" id="yws-s2-0IA"/>
+                    <constraint firstAttribute="trailing" secondItem="I1L-Fi-uaP" secondAttribute="trailing" constant="19" id="yp5-tZ-kSO"/>
+                    <constraint firstItem="149" firstAttribute="trailing" secondItem="151" secondAttribute="trailing" constant="-1" id="yws-s2-0IA"/>
                 </constraints>
                 <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="213"/>
             </connections>
-            <point key="canvasLocation" x="402" y="246.5"/>
+            <point key="canvasLocation" x="401" y="246"/>
         </window>
     </objects>
     <resources>

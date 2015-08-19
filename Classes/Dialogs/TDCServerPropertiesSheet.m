@@ -133,6 +133,8 @@
 @property (nonatomic, strong) TDCHighlightEntrySheet *highlightSheet;
 @property (nonatomic, strong) TDChannelPropertiesSheet *channelSheet;
 @property (nonatomic, unsafe_unretained) IBOutlet NSTextView *connectCommandsField;
+@property (nonatomic, assign) NSInteger floodControlDelayTimerSliderTempValue;
+@property (nonatomic, assign) NSInteger floodControlMessageCountSliderTempValue;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 @property (nonatomic, assign) BOOL requestCloudDeletionOnClose;
@@ -769,8 +771,8 @@
 	/* Flood Control */
 	[self.isOutgoingFloodControlEnabledCheck setState:self.config.isOutgoingFloodControlEnabled];
 
-	[self.floodControlDelayTimerSlider setIntegerValue:self.config.floodControlDelayTimerInterval];
-	[self.floodControlMessageCountSlider setIntegerValue:self.config.floodControlMaximumMessages];
+	self.floodControlDelayTimerSliderTempValue = self.config.floodControlDelayTimerInterval;
+	self.floodControlMessageCountSliderTempValue = self.config.floodControlMaximumMessages;
 
 	/* Mutable Stores */
 	[self.mutableChannelList setArray:self.config.channelList];
