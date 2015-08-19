@@ -199,7 +199,7 @@
                             <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="281">
-                            <rect key="frame" x="0.0" y="0.0" width="648.5" height="23"/>
+                            <rect key="frame" x="0.0" y="0.0" width="648.5" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </tableHeaderView>
