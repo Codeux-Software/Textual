@@ -324,8 +324,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
   
 	if ([self isChannel]) {
 		[self.associatedClient postEventToViewController:@"channelParted" forChannel:self];
-		
-		[[self viewController] setTopic:nil];
     }
 }
 
