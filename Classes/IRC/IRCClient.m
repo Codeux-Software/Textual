@@ -3871,6 +3871,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				[c deactivate];
 
 				[self printDebugInformation:BLS([disconnectMessage integerValue]) channel:c];
+			} else {
+				[c setErrorOnLastJoinAttempt:NO];
 			}
 		}
 	}
