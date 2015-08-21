@@ -125,7 +125,6 @@
 @property (nonatomic, strong) IBOutlet NSToolbar *navigationToolbar;
 @property (nonatomic, strong) IBOutlet NSMenu *installedAddonsMenu;
 @property (nonatomic, assign) BOOL mountainLionDeprecationWarningIsVisible;
-@property (nonatomic, assign) BOOL newKeywordsTableRowAddedByUser;
 
 - (IBAction)onPrefPaneSelected:(id)sender;
 
@@ -1024,31 +1023,31 @@
 	[[self excludeKeywordsTable] setEnabled:YES];
 }
 
-- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+- (void)editTableView:(NSTableView *)tableView
 {
-	if (tableView == [self keywordsTable] || tableView == [self excludeKeywordsTable]) {
-		if ([self newKeywordsTableRowAddedByUser]) {
-			[self setNewKeywordsTableRowAddedByUser:NO];
+	NSInteger rowSelection = ([tableView numberOfRows] - 1);
 
-			[tableView scrollRowToVisible:row];
+	[tableView scrollRowToVisible:rowSelection];
 
-			[tableView editColumn:0 row:row withEvent:nil select:YES];
-		}
-	}
+	[tableView editColumn:0 row:rowSelection withEvent:nil select:YES];
 }
 
 - (void)onAddKeyword:(id)sender
 {
-	[self setNewKeywordsTableRowAddedByUser:YES];
-
 	[[self matchKeywordsArrayController] add:nil];
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self editTableView:[self keywordsTable]];
+	});
 }
 
 - (void)onAddExcludeKeyword:(id)sender
 {
-	[self setNewKeywordsTableRowAddedByUser:YES];
-
 	[[self excludeKeywordsArrayController] add:nil];
+
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self editTableView:[self excludeKeywordsTable]];
+	});
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
