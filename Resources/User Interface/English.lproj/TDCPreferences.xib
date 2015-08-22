@@ -672,7 +672,7 @@ DQ
                     </textFieldCell>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="IVv-zw-dDv">
-                    <rect key="frame" x="280" y="287" width="175" height="18"/>
+                    <rect key="frame" x="280" y="268" width="175" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Highlight current nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9of-Kp-Asv">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -685,7 +685,7 @@ DQ
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8oP-r2-z2R">
                     <rect key="frame" x="50" y="275" width="185" height="22"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="179" id="YbM-Vb-ela"/>
+                        <constraint firstAttribute="width" constant="179" id="7vc-yQ-CCP"/>
                     </constraints>
                     <animations/>
                     <popUpButtonCell key="cell" type="push" title="Partial Matches" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" inset="2" selectedItem="dnX-v4-Rf4" id="j6z-4b-d9v">
@@ -712,7 +712,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
-                                <rect key="frame" x="0.0" y="0.0" width="227" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="227" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -750,9 +750,6 @@ DQ
                         <animations/>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="154" id="KtT-bH-H2X"/>
-                    </constraints>
                     <animations/>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="nvB-TS-JzJ">
                         <rect key="frame" x="-100" y="-100" width="181" height="15"/>
@@ -775,7 +772,7 @@ DQ
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
-                                <rect key="frame" x="0.0" y="0.0" width="249" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="249" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -836,7 +833,7 @@ DQ
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KgU-fm-1CL">
                     <rect key="frame" x="290" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="ARm-gc-zqe"/>
+                        <constraint firstAttribute="width" constant="30" id="FwJ-It-zxe"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9PI-h7-aCh">
@@ -854,7 +851,7 @@ DQ
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="xJN-JU-VGr">
-                    <rect key="frame" x="280" y="268" width="216" height="18"/>
+                    <rect key="frame" x="280" y="288" width="216" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Log highlights to separate window" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="z4k-RQ-V0s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -865,21 +862,6 @@ DQ
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogHighlights" id="b05-J5-F0K"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jN5-O0-8cZ">
-                    <rect key="frame" x="288" y="221" width="90" height="14"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="14" id="zyo-kD-hNz"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Exclude words:" id="oKh-Ma-cAV">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="E0J-R4-TJF"/>
-                    </connections>
-                </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="faY-0p-PJo">
                     <rect key="frame" x="62" y="250" width="465" height="5"/>
                     <animations/>
@@ -890,7 +872,7 @@ DQ
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G7B-Kp-Af8">
                     <rect key="frame" x="78" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="2oH-iC-FVU"/>
+                        <constraint firstAttribute="width" constant="30" id="u6c-t2-kLl"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pYZ-UH-gZy">
@@ -906,8 +888,8 @@ DQ
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-81-VCV">
                     <rect key="frame" x="49" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="4yR-sJ-oSG"/>
-                        <constraint firstAttribute="width" constant="30" id="KVF-0u-QcL"/>
+                        <constraint firstAttribute="width" constant="30" id="PVO-sT-CxY"/>
+                        <constraint firstAttribute="height" constant="21" id="m7a-8J-mkj"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zrw-3F-rh2">
@@ -922,7 +904,7 @@ DQ
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qcU-SW-8KI">
                     <rect key="frame" x="318" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="lHK-nw-ZWc"/>
+                        <constraint firstAttribute="width" constant="30" id="GqB-2N-Ljh"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="q8O-20-DrL">
@@ -943,39 +925,55 @@ DQ
                         <binding destination="-2" name="enabled" keyPath="self.excludeKeywordsTable.enabled" id="Qeh-dN-yl0"/>
                     </connections>
                 </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jN5-O0-8cZ">
+                    <rect key="frame" x="288" y="221" width="90" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="14" id="iG0-cm-hoK"/>
+                    </constraints>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Exclude words:" id="oKh-Ma-cAV">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="E0J-R4-TJF"/>
+                    </connections>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="dIx-e4-L5V" secondAttribute="trailing" constant="48" id="1Ov-k6-YQW"/>
-                <constraint firstItem="G7B-Kp-Af8" firstAttribute="top" secondItem="KgU-fm-1CL" secondAttribute="top" id="1tB-gB-uTL"/>
-                <constraint firstItem="faY-0p-PJo" firstAttribute="centerX" secondItem="Jdv-gk-kj9" secondAttribute="centerX" id="4vw-qZ-GUg"/>
-                <constraint firstItem="IVv-zw-dDv" firstAttribute="top" secondItem="Jdv-gk-kj9" secondAttribute="top" constant="33" id="5dX-1J-PYz"/>
-                <constraint firstItem="G7B-Kp-Af8" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="78" id="7Tf-PU-vp2"/>
-                <constraint firstAttribute="bottom" secondItem="Nqu-81-VCV" secondAttribute="bottom" constant="34" id="7Y5-VT-sqg"/>
-                <constraint firstItem="Nqu-81-VCV" firstAttribute="top" secondItem="dtR-hL-16n" secondAttribute="bottom" constant="4" id="9hV-Bl-0Qh"/>
-                <constraint firstItem="DPo-1x-FIa" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="48" id="Aif-UE-E9B"/>
-                <constraint firstItem="jN5-O0-8cZ" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="290" id="DPJ-9L-rNv"/>
-                <constraint firstItem="IVv-zw-dDv" firstAttribute="leading" secondItem="8oP-r2-z2R" secondAttribute="trailing" constant="50" id="E9K-iU-gYc"/>
-                <constraint firstItem="dtR-hL-16n" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="49" id="FZ6-SJ-31b"/>
-                <constraint firstItem="faY-0p-PJo" firstAttribute="top" secondItem="8oP-r2-z2R" secondAttribute="bottom" constant="25" id="GWQ-wj-UlR"/>
-                <constraint firstItem="dIx-e4-L5V" firstAttribute="bottom" secondItem="dtR-hL-16n" secondAttribute="bottom" id="Gi1-jf-bCi"/>
-                <constraint firstItem="Nqu-81-VCV" firstAttribute="leading" secondItem="dtR-hL-16n" secondAttribute="leading" id="IIa-V4-dz4"/>
-                <constraint firstItem="xJN-JU-VGr" firstAttribute="leading" secondItem="IVv-zw-dDv" secondAttribute="leading" id="Jot-C4-ZTH"/>
-                <constraint firstItem="G7B-Kp-Af8" firstAttribute="baseline" secondItem="Nqu-81-VCV" secondAttribute="baseline" id="KUO-rH-3tX"/>
-                <constraint firstItem="KgU-fm-1CL" firstAttribute="leading" secondItem="dIx-e4-L5V" secondAttribute="leading" id="MMh-UT-hbL"/>
-                <constraint firstItem="qcU-SW-8KI" firstAttribute="baseline" secondItem="KgU-fm-1CL" secondAttribute="baseline" id="NA1-gP-OWF"/>
-                <constraint firstItem="DPo-1x-FIa" firstAttribute="top" secondItem="faY-0p-PJo" secondAttribute="bottom" constant="17" id="NQa-0j-zS6"/>
-                <constraint firstItem="dIx-e4-L5V" firstAttribute="top" secondItem="jN5-O0-8cZ" secondAttribute="bottom" constant="8" symbolic="YES" id="STg-eJ-ZkI"/>
-                <constraint firstItem="G7B-Kp-Af8" firstAttribute="top" secondItem="Nqu-81-VCV" secondAttribute="top" id="Tfi-Gk-EUM"/>
-                <constraint firstItem="8oP-r2-z2R" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="53" id="ZZd-nJ-vc4"/>
-                <constraint firstItem="faY-0p-PJo" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="62" id="eDJ-gw-SZV"/>
-                <constraint firstItem="qcU-SW-8KI" firstAttribute="centerX" secondItem="jN5-O0-8cZ" secondAttribute="centerX" id="ejq-DN-ZQD"/>
-                <constraint firstItem="faY-0p-PJo" firstAttribute="top" secondItem="xJN-JU-VGr" secondAttribute="bottom" constant="17" id="giZ-qh-uCd"/>
-                <constraint firstItem="qcU-SW-8KI" firstAttribute="top" secondItem="KgU-fm-1CL" secondAttribute="top" id="kie-Nh-aBa"/>
-                <constraint firstItem="dIx-e4-L5V" firstAttribute="leading" secondItem="dtR-hL-16n" secondAttribute="trailing" constant="12" id="oWs-Xb-mzg"/>
-                <constraint firstItem="jN5-O0-8cZ" firstAttribute="top" secondItem="DPo-1x-FIa" secondAttribute="top" id="qHw-mF-cDl"/>
-                <constraint firstItem="dIx-e4-L5V" firstAttribute="top" secondItem="dtR-hL-16n" secondAttribute="top" id="tgV-Lc-OWA"/>
-                <constraint firstItem="KgU-fm-1CL" firstAttribute="baseline" secondItem="G7B-Kp-Af8" secondAttribute="baseline" id="tyf-14-YIg"/>
-                <constraint firstItem="jN5-O0-8cZ" firstAttribute="leading" secondItem="dIx-e4-L5V" secondAttribute="leading" id="xdJ-Fm-aFy"/>
+                <constraint firstItem="dIx-e4-L5V" firstAttribute="leading" secondItem="KgU-fm-1CL" secondAttribute="leading" id="1LG-BJ-P5j"/>
+                <constraint firstItem="dtR-hL-16n" firstAttribute="leading" secondItem="Nqu-81-VCV" secondAttribute="leading" id="3ba-PO-mxR"/>
+                <constraint firstItem="G7B-Kp-Af8" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="78" id="As4-wf-p44"/>
+                <constraint firstItem="faY-0p-PJo" firstAttribute="centerX" secondItem="Jdv-gk-kj9" secondAttribute="centerX" id="Ds8-mH-vsj"/>
+                <constraint firstItem="DPo-1x-FIa" firstAttribute="top" secondItem="jN5-O0-8cZ" secondAttribute="top" id="FaD-IK-XSJ"/>
+                <constraint firstItem="dtR-hL-16n" firstAttribute="bottom" secondItem="dIx-e4-L5V" secondAttribute="bottom" id="GOa-FB-nbm"/>
+                <constraint firstItem="KgU-fm-1CL" firstAttribute="baseline" secondItem="G7B-Kp-Af8" secondAttribute="baseline" id="HxI-Z8-l22"/>
+                <constraint firstItem="faY-0p-PJo" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="62" id="L8D-F8-85W"/>
+                <constraint firstItem="KgU-fm-1CL" firstAttribute="top" secondItem="qcU-SW-8KI" secondAttribute="top" id="LHz-fS-aSY"/>
+                <constraint firstItem="Nqu-81-VCV" firstAttribute="baseline" secondItem="G7B-Kp-Af8" secondAttribute="baseline" id="Pus-6i-AGt"/>
+                <constraint firstItem="xJN-JU-VGr" firstAttribute="leading" secondItem="IVv-zw-dDv" secondAttribute="leading" id="Qg2-hS-g3O"/>
+                <constraint firstItem="faY-0p-PJo" firstAttribute="top" secondItem="IVv-zw-dDv" secondAttribute="bottom" constant="17" id="SJB-Gf-70N"/>
+                <constraint firstItem="xJN-JU-VGr" firstAttribute="leading" secondItem="8oP-r2-z2R" secondAttribute="trailing" constant="50" id="UiM-Hf-CWJ"/>
+                <constraint firstItem="KgU-fm-1CL" firstAttribute="top" secondItem="G7B-Kp-Af8" secondAttribute="top" id="WbD-KY-0eN"/>
+                <constraint firstItem="DPo-1x-FIa" firstAttribute="top" secondItem="faY-0p-PJo" secondAttribute="bottom" constant="17" id="YKN-eY-r7f"/>
+                <constraint firstItem="dtR-hL-16n" firstAttribute="top" secondItem="dIx-e4-L5V" secondAttribute="top" id="bUj-Ff-NFj"/>
+                <constraint firstAttribute="bottom" secondItem="Nqu-81-VCV" secondAttribute="bottom" constant="34" id="cO3-KW-c5u"/>
+                <constraint firstItem="8oP-r2-z2R" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="53" id="cZa-EU-4qm"/>
+                <constraint firstItem="jN5-O0-8cZ" firstAttribute="leading" secondItem="dIx-e4-L5V" secondAttribute="leading" id="f0h-GR-57c"/>
+                <constraint firstItem="dtR-hL-16n" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="49" id="fcP-Rd-U4Q"/>
+                <constraint firstItem="Nqu-81-VCV" firstAttribute="top" secondItem="dtR-hL-16n" secondAttribute="bottom" constant="4" id="j4T-y0-LPM"/>
+                <constraint firstItem="DPo-1x-FIa" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="48" id="kjV-4S-Mgf"/>
+                <constraint firstItem="jN5-O0-8cZ" firstAttribute="centerX" secondItem="qcU-SW-8KI" secondAttribute="centerX" id="nga-FU-A31"/>
+                <constraint firstAttribute="trailing" secondItem="dIx-e4-L5V" secondAttribute="trailing" constant="48" id="ntB-Ax-rEO"/>
+                <constraint firstItem="IVv-zw-dDv" firstAttribute="top" secondItem="xJN-JU-VGr" secondAttribute="bottom" constant="6" symbolic="YES" id="oZL-YH-NfE"/>
+                <constraint firstItem="dIx-e4-L5V" firstAttribute="top" secondItem="jN5-O0-8cZ" secondAttribute="bottom" constant="8" symbolic="YES" id="op2-tN-czq"/>
+                <constraint firstItem="qcU-SW-8KI" firstAttribute="baseline" secondItem="KgU-fm-1CL" secondAttribute="baseline" id="qbT-sK-gsO"/>
+                <constraint firstItem="G7B-Kp-Af8" firstAttribute="top" secondItem="Nqu-81-VCV" secondAttribute="top" id="r1v-xl-5CC"/>
+                <constraint firstItem="jN5-O0-8cZ" firstAttribute="leading" secondItem="Jdv-gk-kj9" secondAttribute="leading" constant="290" id="sCF-wL-MxU"/>
+                <constraint firstItem="dIx-e4-L5V" firstAttribute="leading" secondItem="dtR-hL-16n" secondAttribute="trailing" constant="12" id="skP-HI-fnV"/>
+                <constraint firstItem="xJN-JU-VGr" firstAttribute="top" secondItem="Jdv-gk-kj9" secondAttribute="top" constant="32" id="u1O-q5-fO7"/>
+                <constraint firstItem="faY-0p-PJo" firstAttribute="top" secondItem="8oP-r2-z2R" secondAttribute="bottom" constant="25" id="zEs-RL-Poi"/>
             </constraints>
             <animations/>
             <point key="canvasLocation" x="501.5" y="-679"/>
@@ -4395,7 +4393,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="93" y="162" width="234" height="18"/>
+                                        <rect key="frame" x="93" y="157" width="234" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4406,21 +4404,21 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="39" y="255" width="443" height="5"/>
+                                        <rect key="frame" x="39" y="250" width="443" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="39" y="199" width="443" height="5"/>
+                                        <rect key="frame" x="39" y="194" width="443" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="90" y="221" width="85" height="17"/>
+                                        <rect key="frame" x="90" y="216" width="85" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81" id="N8e-ht-JrX"/>
                                         </constraints>
@@ -4432,7 +4430,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="366" y="220" width="63" height="19"/>
+                                        <rect key="frame" x="366" y="215" width="63" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="pvM-eT-of4"/>
                                         </constraints>
@@ -4449,7 +4447,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="93" y="106" width="198" height="18"/>
+                                        <rect key="frame" x="93" y="101" width="198" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="194" id="4QV-C4-d1n"/>
                                         </constraints>
@@ -4463,7 +4461,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-qs-5mz">
-                                        <rect key="frame" x="93" y="134" width="286" height="18"/>
+                                        <rect key="frame" x="93" y="129" width="286" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="miK-Q1-Ozt">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4474,7 +4472,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="111" y="86" width="239" height="14"/>
+                                        <rect key="frame" x="111" y="81" width="239" height="14"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
@@ -4486,7 +4484,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="178" y="220" width="179" height="19"/>
+                                        <rect key="frame" x="178" y="215" width="179" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="rq9-Y9-W1h"/>
                                         </constraints>
@@ -4512,7 +4510,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="EES-Ba-O9N">
-                                        <rect key="frame" x="93" y="59" width="274" height="18"/>
+                                        <rect key="frame" x="93" y="54" width="274" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sG9-0L-YQ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4523,18 +4521,18 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="33" width="357" height="16"/>
+                                        <rect key="frame" x="109" y="29" width="357" height="15"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="16"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="15"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
-                                                    <rect key="frame" x="0.0" y="107" width="357" height="16"/>
+                                                    <rect key="frame" x="0.0" y="107" width="357" height="15"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="357" height="16"/>
+                                                    <size key="minSize" width="357" height="15"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -4624,7 +4622,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="357" height="16"/>
+                                                    <size key="minSize" width="357" height="15"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -4647,7 +4645,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                         </connections>
                                     </scrollView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="326" y="276" width="140" height="19"/>
+                                        <rect key="frame" x="326" y="275" width="140" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="Wsr-bT-Xxy"/>
                                         </constraints>
@@ -4684,7 +4682,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <constraint firstItem="WiQ-md-lej" firstAttribute="baseline" secondItem="RCg-fG-WEB" secondAttribute="baseline" id="Ymq-Gf-aPq"/>
                                     <constraint firstAttribute="trailing" secondItem="wmq-Ee-waL" secondAttribute="trailing" constant="55" id="YrC-bz-FWb"/>
                                     <constraint firstItem="nPR-cs-1aS" firstAttribute="top" secondItem="WiQ-md-lej" secondAttribute="bottom" constant="18" id="e4Y-iX-Gh1"/>
-                                    <constraint firstItem="ICa-wc-PBy" firstAttribute="baseline" secondItem="wmq-Ee-waL" secondAttribute="baseline" constant="1" id="gAj-6P-sL6"/>
+                                    <constraint firstItem="ICa-wc-PBy" firstAttribute="baseline" secondItem="wmq-Ee-waL" secondAttribute="baseline" id="gAj-6P-sL6"/>
                                     <constraint firstItem="jNN-n9-eyu" firstAttribute="top" secondItem="nPR-cs-1aS" secondAttribute="bottom" constant="23" id="gmd-cT-q5k"/>
                                     <constraint firstItem="19a-B6-iEv" firstAttribute="top" secondItem="wbm-Z3-lDn" secondAttribute="bottom" constant="19" id="h1O-QP-rmO"/>
                                     <constraint firstItem="wmq-Ee-waL" firstAttribute="trailing" secondItem="zLU-Yb-c2r" secondAttribute="trailing" id="iY1-7p-5Cu"/>
