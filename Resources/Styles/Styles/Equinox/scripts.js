@@ -5,8 +5,8 @@
 
 /* Theme-wide preferences, as per milky's request */
 var Equinox = {
-  fadeNicks: false,            // fade out nicknames when they appear multiple times in a row
-  fadeNicksFreq: 10           // how frequently to display a nick if they have fadeNickCounts lines in a row
+  fadeNicks: true,            // fade out nicknames when they appear multiple times in a row
+  fadeNicksFreq: 6           // how frequently to display a nick if they have fadeNickCounts lines in a row
 };
 
 /* Set the default statuses for everything tracked in the roomState */
