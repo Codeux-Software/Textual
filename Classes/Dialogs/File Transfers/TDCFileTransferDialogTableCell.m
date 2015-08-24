@@ -37,10 +37,10 @@
  *********************************************************************** */
 
 #define _filenameFieldWithProgressBarYCord				4
-#define _filenameFieldWithoutProgressBarYCord			13
+#define _filenameFieldWithoutProgressBarYCord			12
 
 #define _transferInfoFieldWithProgressBarYCord			6
-#define _transferInfoFieldWithoutProgressBarYCord		15
+#define _transferInfoFieldWithoutProgressBarYCord		16
 
 #import "TextualApplication.h"
 
@@ -103,6 +103,8 @@
 				[self.filenameTextFieldConstraint setConstant:_filenameFieldWithoutProgressBarYCord];
 
 				[self.transferProgressTextFieldConstraint setConstant:_transferInfoFieldWithoutProgressBarYCord];
+
+				[self layoutSubtreeIfNeeded];
 			}
 		} else {
 			if ([self.progressIndicator isHidden]) {
@@ -111,6 +113,8 @@
 				[self.filenameTextFieldConstraint setConstant:_filenameFieldWithProgressBarYCord];
 
 				[self.transferProgressTextFieldConstraint setConstant:_transferInfoFieldWithProgressBarYCord];
+
+				[self layoutSubtreeIfNeeded];
 			}
 		}
 		
