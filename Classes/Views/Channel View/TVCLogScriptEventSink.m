@@ -314,36 +314,34 @@
 	return result;
 }
 
-- (id)retrievePreferencesWithMethodName:(NSString *)name
+- (id)retrievePreferencesWithMethodName:(id)name
 {
-	if ([name length] <= 1) {
+	if ([name isKindOfClass:[NSString class]] == NO) {
+		[self throwJavaScriptException:@"The value provided to retrievePreferencesWithMethodName must be a string"];
+	} else if ([name length] <= 1) {
 		[self throwJavaScriptException:@"Length of value supplied to retrievePreferencesWithMethodName is less than or equal to zero (0)"];
 	} else {
-		if ([name isKindOfClass:[NSString class]] == NO) {
-			[self throwJavaScriptException:@"The value provided to retrievePreferencesWithMethodName must be a string"];
-		} else {
-			SEL realSelector = NSSelectorFromString(name);
-			
-			NSArray *resultErrors = nil;
-			
-			id returnValue = [TPCPreferences performSelector:realSelector
-											   withArguments:nil
-										   returnsPrimitives:YES
-											usesTypeChecking:NO
-													   error:&resultErrors];
-			
-			if (resultErrors) {
-				for (NSDictionary *error in resultErrors) {
-					if ([error boolForKey:@"isWarning"]) {
-						[self logToJavaScriptConsole:error[@"errorMessage"]];
-					} else {
-						[self throwJavaScriptException:error[@"errorMessage"]];
-					}
+		SEL realSelector = NSSelectorFromString(name);
+		
+		NSArray *resultErrors = nil;
+		
+		id returnValue = [TPCPreferences performSelector:realSelector
+										   withArguments:nil
+									   returnsPrimitives:YES
+										usesTypeChecking:NO
+												   error:&resultErrors];
+		
+		if (resultErrors) {
+			for (NSDictionary *error in resultErrors) {
+				if ([error boolForKey:@"isWarning"]) {
+					[self logToJavaScriptConsole:error[@"errorMessage"]];
+				} else {
+					[self throwJavaScriptException:error[@"errorMessage"]];
 				}
 			}
-			
-			return returnValue;
 		}
+		
+		return returnValue;
 	}
 	
 	return nil;
