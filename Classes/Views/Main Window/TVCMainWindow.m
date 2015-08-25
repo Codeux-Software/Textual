@@ -1740,10 +1740,6 @@
 	}
 	
 	/* Begin work on text field. */
-	if ([XRAccessibility isVoiceOverEnabled] == NO) {
-		[self.inputTextField focus];
-	}
-
 	[self.inputTextField updateSegmentedController];
 	
 	/* Setup text field value with history item when we have
