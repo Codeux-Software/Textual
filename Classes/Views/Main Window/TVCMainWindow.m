@@ -1740,6 +1740,12 @@
 	}
 	
 	/* Begin work on text field. */
+	BOOL autoFocusInputTextField = [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+
+	if (autoFocusInputTextField && [XRAccessibility isVoiceOverEnabled] == NO) {
+		[self.inputTextField focus];
+	}
+
 	[self.inputTextField updateSegmentedController];
 	
 	/* Setup text field value with history item when we have

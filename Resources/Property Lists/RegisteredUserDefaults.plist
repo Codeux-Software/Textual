@@ -70,6 +70,8 @@
 	<true/>
 	<key>Main Input Text Field -&gt; Font Size</key>
 	<integer>1</integer>
+	<key>Main Input Text Field -&gt; Focus When Changing Views</key>
+	<true/>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
 	<key>NicknameHighlightMatchingType</key>
