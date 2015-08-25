@@ -100,6 +100,8 @@
 		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 		
 		[self.contentSplitView restorePositions];
+
+		[self collapseMemberListForHiddenPreference];
 		
 		[self registerKeyHandlers];
 		
@@ -1053,6 +1055,17 @@
 
 #pragma mark -
 #pragma mark Split View
+
+- (void)collapseMemberListForHiddenPreference
+{
+	BOOL collapseMemberList = [RZUserDefaults() boolForKey:@"UserListHideOnLaunch"];
+
+	if (collapseMemberList) {
+		[self.memberList setIsHiddenByUser:YES];
+
+		[self.contentSplitView collapseMemberList];
+	}
+}
 
 - (BOOL)isMemberListVisible
 {
