@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A263e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
@@ -1215,12 +1215,12 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </clipView>
                                         <animations/>
-                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="eIA-9M-JaU">
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="eIA-9M-JaU">
                                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                         </scroller>
-                                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="iKt-3c-baO">
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="iKt-3c-baO">
                                             <rect key="frame" x="481" y="1" width="16" height="13"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
@@ -1403,12 +1403,12 @@
                                                         <nil key="backgroundColor"/>
                                                     </clipView>
                                                     <animations/>
-                                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="2Z6-rF-4Ts">
+                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2Z6-rF-4Ts">
                                                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <animations/>
                                                     </scroller>
-                                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="goR-cc-Dsz">
+                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="goR-cc-Dsz">
                                                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <animations/>
@@ -1544,12 +1544,12 @@
                                                         <nil key="backgroundColor"/>
                                                     </clipView>
                                                     <animations/>
-                                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="bX0-f9-HBj">
+                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="bX0-f9-HBj">
                                                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <animations/>
                                                     </scroller>
-                                                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="oWg-xJ-TeO">
+                                                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="oWg-xJ-TeO">
                                                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <animations/>
@@ -2052,10 +2052,10 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
             <point key="canvasLocation" x="284" y="314"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="20"/>
+            <rect key="frame" x="0.0" y="0.0" width="124" height="20"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-CI-zgv" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">
-                    <rect key="frame" x="79" y="-1" width="98" height="19"/>
+                    <rect key="frame" x="3" y="-1" width="98" height="19"/>
                     <animations/>
                     <buttonCell key="cell" type="recessed" title="Not Private" bezelStyle="recessed" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WDX-xV-mcZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2063,17 +2063,21 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                     </buttonCell>
                     <connections>
                         <action selector="titlebarAccessoryViewLockButtonClicked:" target="Yum-Vp-Zoi" id="EIC-U3-eH2"/>
+                        <outlet property="lockButtonLeftMarginConstraint" destination="u9u-AA-MDx" id="aC6-hj-Q7g"/>
+                        <outlet property="lockButtonRightMarginConstraint" destination="dGz-pi-g2g" id="vQ8-Bt-RMP"/>
+                        <outlet property="lockButtonSuperviewWidthConstraint" destination="KB0-7s-cpH" id="28E-y6-hmV"/>
                     </connections>
                 </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="width" constant="124" id="KB0-7s-cpH"/>
                 <constraint firstItem="N9S-CI-zgv" firstAttribute="top" secondItem="8Pz-wu-9PV" secondAttribute="top" constant="2" id="M2Z-qG-tIo"/>
                 <constraint firstAttribute="height" constant="20" id="cYT-t8-8HD"/>
                 <constraint firstAttribute="trailing" secondItem="N9S-CI-zgv" secondAttribute="trailing" constant="23" id="dGz-pi-g2g"/>
-                <constraint firstAttribute="width" constant="200" id="ySq-jU-5W2"/>
+                <constraint firstItem="N9S-CI-zgv" firstAttribute="leading" secondItem="8Pz-wu-9PV" secondAttribute="leading" constant="3" id="u9u-AA-MDx"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="3546.5" y="899"/>
+            <point key="canvasLocation" x="2481" y="982"/>
         </customView>
     </objects>
     <resources>
