@@ -47,16 +47,21 @@
 	return (contentRect.size.height > frameRect.size.height);
 }
 
-- (void)forceFrameRedraw
+- (void)maybeForceFrameRedraw
 {
 	/* WebKit uses layered compositing for position: fixed elements as of Yosemite.
 	 However, there are some issues related to this change which results in position
 	 fixed elements flickering while scrolling. This has been filed as radar #18211024
 	 but in the meantime, we redraw the WebView on scroll to workaround this issue. */
-	
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		[[self.webFrame documentView] setNeedsDisplay:YES];
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] && [XRSystemInformation isUsingOSXElCapitanOrLater] == NO) {
+		[self forceFrameRedraw];
 	}
+}
+
+- (void)forceFrameRedraw
+{
+	[[self.webFrame documentView] setNeedsDisplay:YES];
 }
 
 - (void)webViewDidChangeBounds:(NSNotification *)aNotification
@@ -69,7 +74,7 @@
 	
 	self.lastVisibleRect = [clipView.documentView visibleRect];
 
-	[self forceFrameRedraw];
+	[self maybeForceFrameRedraw];
 }
 
 - (void)webViewDidChangeFrame:(NSNotification *)aNotification
