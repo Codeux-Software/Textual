@@ -1157,11 +1157,11 @@
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	}
+#endif
 
 	if ([self.titlebarAccessoryView isHidden] == NO) {
 		[self.titlebarAccessoryViewLockButton sizeToFit];
 	}
-#endif
 }
 
 - (void)addAccessoryViewsToTitlebar
