@@ -37,7 +37,7 @@
 
 #import "TextualApplication.h"
 
-/* This class is used by both Mavericks and Yosemite, but only the Mavericks
+/* This class is used by both Mavericks and Yosemite, but only the Yosemite
  version does any drawing. */
 
 @implementation TVCMainWindowTitlebarAccessoryView
@@ -48,9 +48,41 @@
 
 @interface TVCMainWindowTitlebarAccessoryViewLockButton ()
 @property (nonatomic, assign) BOOL drawCustomBackgroundColor;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonLeftMarginConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonRightMarginConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
 @end
 
 @implementation TVCMainWindowTitlebarAccessoryViewLockButton
+
+- (void)sizeToFit
+{
+	[super sizeToFit];
+
+	/* NSTitlebarAccessoryViewController is not very friendly when it comes
+	 to allowing us to specify an NSLayoutConstraint based width for our view
+	 and updating the width of its clip view based on changes to that. Lucky
+	 us that NSTitlebarAccessoryViewController at least monitors the frame 
+	 value for its associated view which means if we manually specify the 
+	 width in its frame, then we can at least force a resize then. */
+
+	NSInteger buttonWidth = NSWidth([self frame]);
+
+	CGFloat buttonLeftMargin = [self.lockButtonLeftMarginConstraint constant];
+	CGFloat buttonRightMargin = [self.lockButtonRightMarginConstraint constant];
+
+	NSInteger totalViewWidth = (lrintf(buttonLeftMargin) + buttonWidth + lrintf(buttonRightMargin));
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		NSRect superviewFrame = [[self superview] frame];
+
+		superviewFrame.size.width = totalViewWidth;
+
+		[[self superview] setFrame:superviewFrame];
+	} else {
+		[self.lockButtonSuperviewWidthConstraint setConstant:(CGFloat)totalViewWidth];
+	}
+}
 
 - (void)awakeFromNib
 {
