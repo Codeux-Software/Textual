@@ -75,9 +75,9 @@
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([TXUserInterface systemWideDarkModeEnabledInYosemite]) {
-			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]")];
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]", [XRSystemInformation systemOperatingSystemName])];
 		} else {
-			[resultString appendString:TPILocalizedString(@"BasicLanguage[1050]")];
+			[resultString appendString:TPILocalizedString(@"BasicLanguage[1050]", [XRSystemInformation systemOperatingSystemName])];
 		}
 	}
 
@@ -362,10 +362,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	if (_show_os_version) {
 		/* Operating System. */
-		NSString *osname = [TPI_SP_SysInfo operatingSystemName];
-
 		_new = TPILocalizedString(@"BasicLanguage[1012]",
-					  [XRSystemInformation systemStandardVersion], osname,
+					  [XRSystemInformation systemOperatingSystemName],
+					  [XRSystemInformation systemStandardVersion],
 					  [XRSystemInformation systemBuildVersion]);
 
 		sysinfo = [sysinfo stringByAppendingString:_new];
@@ -677,27 +676,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		return [self formattedCPUFrequency:clockrate];
 	}
 
-	return nil;
-}
-
-+ (NSString *)operatingSystemName
-{
-	NSString *productVersion = [XRSystemInformation systemStandardVersion];
-
-	if ([productVersion hasPrefix:@"10.11"]) {
-		return TPILocalizedString(@"BasicLanguage[1053]");
-	} else if ([productVersion hasPrefix:@"10.10"]) {
-		return TPILocalizedString(@"BasicLanguage[1052]");
-	} else if ([productVersion hasPrefix:@"10.9"]) {
-		return TPILocalizedString(@"BasicLanguage[1017]");
-	} else if ([productVersion hasPrefix:@"10.8"]) {
-		return TPILocalizedString(@"BasicLanguage[1016]");
-	} else if ([productVersion hasPrefix:@"10.7"]) {
-		return TPILocalizedString(@"BasicLanguage[1015]");
-	} else {
-		return TPILocalizedString(@"BasicLanguage[1054]");
-	}
-	
 	return nil;
 }
 
