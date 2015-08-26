@@ -2498,12 +2498,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)openMacAppStoreDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
+	[TLOpenLink openWithString:@"http://www.textualapp.com/mac-app-store"];
 }
 
 - (void)openFastSpringStoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.textualapp.com/fastspring-store"];
+	[TLOpenLink openWithString:@"http://www.textualapp.com/fastspring-store"];
 }
 
 - (void)processNavigationItem:(id)sender
