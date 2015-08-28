@@ -40,7 +40,8 @@
 @interface TDChannelBanListSheetEntry : NSObject
 @property (nonatomic, copy) NSString *entryMask;
 @property (nonatomic, copy) NSString *entryAuthor;
-@property (nonatomic, copy) NSString *entryCreationDate;
+@property (nonatomic, copy, readonly) NSString *entryCreationDateString;
+@property (nonatomic, copy) NSDate *entryCreationDate;
 @end
 
 @interface TDChannelBanListSheet ()
@@ -60,7 +61,7 @@
 		[RZMainBundle() loadNibNamed:@"TDChannelBanListSheet" owner:self topLevelObjects:nil];
 
 		[self.entryTable setSortDescriptors:@[
-			[NSSortDescriptor sortDescriptorWithKey:@"entryCreationDate" ascending:NO selector:@selector(caseInsensitiveCompare:)]
+			[NSSortDescriptor sortDescriptorWithKey:@"entryCreationDate" ascending:NO selector:@selector(compare:)]
 		]];
     }
     
@@ -91,7 +92,7 @@
 	[self.entryTableController setContent:nil];
 }
 
-- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSString *)entryCreationDate
+- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSDate *)entryCreationDate
 {
 	TDChannelBanListSheetEntry *newEntry = [TDChannelBanListSheetEntry new];
 
@@ -193,4 +194,14 @@
 #pragma mark -
 
 @implementation TDChannelBanListSheetEntry
+
+- (NSString *)entryCreationDateString
+{
+	if (self.entryCreationDate == nil) {
+		return BLS(1218); // "Unknown"
+	} else {
+		return TXFormatDateTimeStringToCommonFormat(self.entryCreationDate, NO);
+	}
+}
+
 @end

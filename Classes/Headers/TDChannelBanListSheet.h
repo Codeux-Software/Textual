@@ -54,5 +54,5 @@ typedef enum TDChannelBanListSheetEntryType : NSInteger {
 - (void)show;
 - (void)clear;
 
-- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSString *)entryCreationDate;
+- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSDate *)entryCreationDate;
 @end
