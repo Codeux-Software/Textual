@@ -58,8 +58,6 @@
 + (NSUInteger)processorVirtualCoreCount;
 + (NSString *)processorClockSpeed;
 
-+ (NSString *)operatingSystemName;
-
 + (NSInteger)systemUptime;
 + (NSInteger)applicationUptime;
 
