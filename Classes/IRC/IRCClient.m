@@ -6959,14 +6959,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			NSString *entryMask = [m paramAt:2];
 			NSString *entryAuthor = BLS(1218);
-			NSString *entryCreationDate = BLS(1218);
 
 			BOOL extendedLine = ([m paramsCount] > 4);
 
-			if (extendedLine) {
-				NSDate *entryCreationDateDate = [NSDate dateWithTimeIntervalSince1970:[[m paramAt:4] doubleValue]];
+			NSDate *entryCreationDate = nil;
 
-				entryCreationDate = TXFormatDateTimeStringToCommonFormat(entryCreationDateDate, NO);
+			if (extendedLine) {
+				entryCreationDate = [NSDate dateWithTimeIntervalSince1970:[[m paramAt:4] doubleValue]];
 
 				entryAuthor = [[m paramAt:3] nicknameFromHostmask];
 			}
