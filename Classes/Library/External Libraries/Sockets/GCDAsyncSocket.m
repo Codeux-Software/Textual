@@ -3553,12 +3553,19 @@ static dispatch_queue_t cfstreamThreadSetupQueue; // setup & teardown
 		strongSelf->socketFDBytesAvailable = dispatch_source_get_data(strongSelf->readSource);
 		LogVerbose(@"socketFDBytesAvailable: %lu", strongSelf->socketFDBytesAvailable);
 
+#if defined(DEBUG)
 		BOOL zeroBytesAreEOF = [[NSUserDefaults standardUserDefaults] boolForKey:@"GCDAsyncSocket -> Treat Zero Read Bytes as EOF"];
-		if (zeroBytesAreEOF == NO || strongSelf->socketFDBytesAvailable > 0)
+
+		if (strongSelf->socketFDBytesAvailable > 0 || zeroBytesAreEOF == NO) {
+#else
+		if (strongSelf->socketFDBytesAvailable > 0) {
+#endif
+
 			[strongSelf doReadData];
-		else
+		} else {
 			[strongSelf doReadEOF];
-		
+		}
+
 #pragma clang diagnostic pop
 	}});
 	
