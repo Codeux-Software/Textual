@@ -38,12 +38,12 @@
 
 #import "TextualApplication.h"
 
-typedef enum TDCServerPropertiesSheetNavigationSelection : NSInteger {
+typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
 	TDCServerPropertiesSheetDefaultNavigationSelection	= 0,
 	TDCServerPropertiesSheetAddressBookNavigationSelection,
 	TDCServerPropertiesSheetFloodControlNavigationSelection,
 	TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
-} TDCServerPropertiesSheetNavigationSelection;
+};
 
 @interface TDCServerPropertiesSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDCHighlightEntrySheetDelegate, TDChannelPropertiesSheetDelegate>
 @property (nonatomic, copy) NSString *clientID;

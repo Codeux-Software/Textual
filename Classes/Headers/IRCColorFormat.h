@@ -38,13 +38,13 @@
 
 #import "TVCTextViewWithIRCFormatter.h" // superclass
 
-typedef enum IRCTextFormatterEffectType : NSInteger {
+typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
 	IRCTextFormatterUnderlineEffect,
 	IRCTextFormatterForegroundColorEffect,
 	IRCTextFormatterBackgroundColorEffect,
-} IRCTextFormatterEffectType;
+};
 
 #define IRCTextFormatterColorEffectCharacter			0x03
 #define IRCTextFormatterBoldEffectCharacter				0x02

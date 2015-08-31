@@ -43,7 +43,7 @@
 
 // OldStyle = deprecated class names
 // NewStyle = current class names for THOPluginProtocol
-typedef enum THOPluginItemSupportedFeaturesFlags : NSInteger {
+typedef NS_ENUM(NSUInteger, THOPluginItemSupportedFeaturesFlags) {
 	THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag						= 1 << 0,
 	THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag		= 1 << 1,
 	THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag		= 1 << 2,
@@ -56,7 +56,7 @@ typedef enum THOPluginItemSupportedFeaturesFlags : NSInteger {
 	THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag		= 1 << 9,
 	THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag		= 1 << 10,
 	THOPluginItemSupportedFeatureOutputSuppressionRulesFlag						= 1 << 11
-} THOPluginItemSupportedFeaturesFlags;
+};
 
 @interface THOPluginItem : NSObject
 @property (nonatomic, strong) id primaryClass;

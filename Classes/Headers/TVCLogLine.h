@@ -46,7 +46,7 @@ TEXTUAL_EXTERN NSString * const TVCLogLineSpecialNoticeMessageFormat;
 
 TEXTUAL_EXTERN NSString * const TVCLogLineDefaultRawCommandValue;
 
-typedef enum TVCLogLineType : NSInteger {
+typedef NS_ENUM(NSUInteger, TVCLogLineType) {
 	TVCLogLineUndefinedType					= 0,
 	TVCLogLineActionType,
 	TVCLogLineActionNoHighlightType, // Used internally, avoid
@@ -69,12 +69,12 @@ typedef enum TVCLogLineType : NSInteger {
 	TVCLogLineQuitType,
 	TVCLogLineTopicType,
 	TVCLogLineWebsiteType,
-} TVCLogLineType;
+};
 
-typedef enum TVCLogLineMemberType : NSInteger {
+typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 	TVCLogLineMemberNormalType,
 	TVCLogLineMemberLocalUserType,
-} TVCLogLineMemberType;
+};
 
 #define IRCCommandFromLineType(t)		[TVCLogLine lineTypeString:t]
 

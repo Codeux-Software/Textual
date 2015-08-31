@@ -37,10 +37,10 @@
 
 #import "TextualApplication.h"
 
-typedef enum IRCAddressBookEntryType : NSInteger {
+typedef NS_ENUM(NSUInteger, IRCAddressBookEntryType) {
 	IRCAddressBookIgnoreEntryType,
 	IRCAddressBookUserTrackingEntryType
-} IRCAddressBookEntryType;
+};
 
 /* Keys that can be accessed by -dictionaryValue. It is recommended to only access
  these keys as any other are used internally and may change without notice. */

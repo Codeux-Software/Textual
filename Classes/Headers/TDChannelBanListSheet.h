@@ -37,11 +37,11 @@
 
 #import "TextualApplication.h"
 
-typedef enum TDChannelBanListSheetEntryType : NSInteger {
+typedef NS_ENUM(NSUInteger, TDChannelBanListSheetEntryType) {
 	TDChannelBanListSheetBanEntryType,
 	TDChannelBanListSheetBanExceptionEntryType,
 	TDChannelBanListSheetInviteExceptionEntryType
-} TDChannelBanListSheetEntryType;
+};
 
 @interface TDChannelBanListSheet : TDCSheetBase
 @property (nonatomic, assign) TDChannelBanListSheetEntryType entryType;

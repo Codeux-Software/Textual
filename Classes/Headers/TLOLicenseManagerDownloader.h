@@ -38,11 +38,11 @@
 #import "TextualApplication.h"
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
+typedef NS_ENUM(NSUInteger, TLOLicenseManagerDownloaderRequestType) {
 	TLOLicenseManagerDownloaderRequestActivationType,
 	TLOLicenseManagerDownloaderRequestSendLostLicenseType,
 	TLOLicenseManagerDownloaderRequestMigrateAppStoreType
-} TLOLicenseManagerDownloaderRequestType;
+};
 
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
 
