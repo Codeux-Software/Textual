@@ -2862,11 +2862,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[licensePanel show];
 
 	if (licenseKey) {
-		if (licenseKeyPassedByArgument) {
-			[licensePanel setIsSilentOnSuccess:YES];
+		[licensePanel setIsSilentOnSuccess:licenseKeyPassedByArgument];
 
-			[licensePanel activateLicenseKey:licenseKey];
-		}
+		[licensePanel activateLicenseKey:licenseKey];
 	}
 
 	[windowController() addWindowToWindowList:licensePanel];
