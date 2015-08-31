@@ -40,10 +40,13 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @interface TDCLicenseManagerDialog : NSWindowController
 @property (nonatomic, weak) id delegate;
+@property (nonatomic, assign) BOOL isSilentOnSuccess;
 
 - (void)show;
 
-+ (void)scheduleTimeRemainingInTrialNotification;
+- (void)activateLicenseKey:(NSString *)licenseKey;
+
++ (void)applicationDidFinishLaunching;
 @end
 
 @protocol TDCLicenseManagerDialogDelegate <NSObject>

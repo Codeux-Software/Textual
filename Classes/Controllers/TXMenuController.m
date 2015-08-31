@@ -2842,6 +2842,16 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)manageLicense:(id)sender
 {
+	[self manageLicense:sender activateLicenseKey:nil licenseKeyPassedByArgument:NO];
+}
+
+- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey
+{
+	[self manageLicense:sender activateLicenseKey:licenseKey licenseKeyPassedByArgument:NO];
+}
+
+- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument
+{
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 	_popWindowViewIfExists(@"TDCLicenseManagerDialog");
 
@@ -2850,6 +2860,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[licensePanel setDelegate:self];
 
 	[licensePanel show];
+
+	if (licenseKey) {
+		if (licenseKeyPassedByArgument) {
+			[licensePanel setIsSilentOnSuccess:YES];
+
+			[licensePanel activateLicenseKey:licenseKey];
+		}
+	}
 
 	[windowController() addWindowToWindowList:licensePanel];
 #endif

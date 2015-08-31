@@ -100,6 +100,11 @@
 	[self updateSelectedPane];
 }
 
++ (void)applicationDidFinishLaunching
+{
+	[self activateLicenseKeyUsingArgumentDictionary];
+}
+
 - (void)populateMacAppStoreIconImageView
 {
 	/* Read the app store icon image from the actual App Store app so 
@@ -185,6 +190,33 @@
 	[self attemptToActivateLicenseKey:licenseKeyValue];
 }
 
++ (void)activateLicenseKeyUsingArgumentDictionary
+{
+	if (TLOLicenseManagerTextualIsRegistered()) {
+		return; // Nothing to do here...
+	}
+
+	NSDictionary *commandLineArguments = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];;
+
+	NSString *argumentLicenseKey = commandLineArguments[@"-licenseKey"];
+
+	if (argumentLicenseKey) {
+		[menuController() manageLicense:nil activateLicenseKey:argumentLicenseKey licenseKeyPassedByArgument:YES];
+	} else {
+		[self scheduleTimeRemainingInTrialNotification];
+	}
+}
+
+- (void)activateLicenseKey:(NSString *)licenseKey
+{
+	/* This method is allowed to be invoked by another class in order
+	 to activate a license. It is not invoked by this class on its own. */
+
+	if (TLOLicenseManagerLicenseKeyIsValid(licenseKey)) {
+		[self attemptToActivateLicenseKey:licenseKey];
+	}
+}
+
 - (void)attemptToActivateLicenseKey:(NSString *)licenseKey
 {
 	[self beginProgressIndicator];
@@ -192,6 +224,8 @@
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
 
 	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
@@ -225,6 +259,8 @@
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
 	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
 
 	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
@@ -265,6 +301,8 @@
 
 	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
+	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
+
 	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
@@ -296,6 +334,8 @@
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+
+	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
 
 	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
@@ -342,6 +382,9 @@
 	[self updateSelectedPane];
 
 	[self updateUnregisteredViewActivationButton];
+
+	self.isSilentOnSuccess = NO; // Reset flag regardless of state.
+								 // This flag is one-time use.
 }
 
 - (void)beginProgressIndicator
@@ -378,7 +421,7 @@
 
 + (void)scheduleTimeRemainingInTrialNotification
 {
-	if (TLOLicenseManagerTextualIsRegistered() || TLOLicenseManagerIsTrialExpired()) {
+	if (TLOLicenseManagerIsTrialExpired()) {
 		return; // Do not schedule notification...
 	}
 

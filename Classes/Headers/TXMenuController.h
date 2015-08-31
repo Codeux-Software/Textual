@@ -439,6 +439,8 @@
 - (IBAction)toggleMuteOnAllNotifcations:(id)sender;
 
 - (IBAction)manageLicense:(id)sender;
+- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey;
+- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument;
 
 - (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
