@@ -46,11 +46,11 @@ TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;
  will always return YES for suppressed alerts so make sure that is the value you want. */
 TEXTUAL_EXTERN NSString * const TLOPopupPromptSpecialSuppressionTextValue;
 
-typedef enum TLOPopupPromptReturnType : NSInteger {
+typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
 	TLOPopupPromptReturnPrimaryType,
 	TLOPopupPromptReturnSecondaryType,
 	TLOPopupPromptReturnOtherType,
-} TLOPopupPromptReturnType;
+};
 
 typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert);
 

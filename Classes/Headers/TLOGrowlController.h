@@ -40,7 +40,7 @@
 
 #import <Growl/Growl.h>
 
-typedef enum TXNotificationType : NSInteger {
+typedef NS_ENUM(NSUInteger, TXNotificationType) {
 	TXNotificationHighlightType							= 1000,
 	TXNotificationNewPrivateMessageType					= 1001,
 	TXNotificationChannelMessageType					= 1002,
@@ -57,7 +57,7 @@ typedef enum TXNotificationType : NSInteger {
 	TXNotificationFileTransferSendFailedType			= 1013,
 	TXNotificationFileTransferReceiveFailedType			= 1014,
 	TXNotificationFileTransferReceiveRequestedType		= 1015,
-} TXNotificationType;
+};
 
 TEXTUAL_EXTERN NSString * const TXNotificationDialogStandardNicknameFormat;
 TEXTUAL_EXTERN NSString * const TXNotificationDialogActionNicknameFormat;

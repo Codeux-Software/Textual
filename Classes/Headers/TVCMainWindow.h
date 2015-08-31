@@ -44,17 +44,17 @@
 #define TVCMainWindowNegateActionWithAttachedSheet()		if ([mainWindow() attachedSheet]) { return; }
 #define TVCMainWindowNegateActionWithAttachedSheetR(r)		if ([mainWindow() attachedSheet]) { return r; }
 
-typedef enum TVCServerListNavigationMovementType : NSInteger {
+typedef NS_ENUM(NSUInteger, TVCServerListNavigationMovementType) {
 	TVCServerListNavigationMovementAllType,     // Move to next item.
 	TVCServerListNavigationMovementActiveType,  // Move to next active item.
 	TVCServerListNavigationMovementUnreadType,  // Move to next unread item.
-} TVCServerListNavigationMovementType;
+};
 
-typedef enum TVCServerListNavigationSelectionType : NSInteger {
+typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 	TVCServerListNavigationSelectionAnyType,		// Move to next item.
 	TVCServerListNavigationSelectionChannelType,	// Move to next channel item.
 	TVCServerListNavigationSelectionServerType,		// Move to next server item.
-} TVCServerListNavigationSelectionType;
+};
 
 #import "TVCMemberList.h" // @protocol
 #import "TVCServerList.h" // @protocol

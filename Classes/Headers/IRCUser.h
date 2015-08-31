@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum IRCUserRank : NSInteger {
+typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 	IRCUserNoRank				= 1 << 0,	// nothing
 	IRCUserIRCopByModeRank		= 1 << 1,	// +y/+Y
 	IRCUserChannelOwnerRank		= 1 << 2,	// +q
@@ -46,7 +46,7 @@ typedef enum IRCUserRank : NSInteger {
 	IRCUserNormalOperatorRank	= 1 << 4,	// +o
 	IRCUserHalfOperatorRank		= 1 << 5,	// +h
 	IRCUserVoicedRank			= 1 << 6	// +v
-} IRCUserRank;
+};
 
 @interface IRCUser : NSObject <NSCopying>
 @property (nonatomic, copy) NSString *nickname;

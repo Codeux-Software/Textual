@@ -50,61 +50,61 @@ TEXTUAL_EXTERN NSInteger const TPCPreferencesDictionaryVersion;
 
 #define TXDefaultTextualTimestampFormat				TLOFileLoggerTwentyFourHourClockFormat
 
-typedef enum TXNicknameHighlightMatchType : NSInteger {
+typedef NS_ENUM(NSUInteger, TXNicknameHighlightMatchType) {
 	TXNicknameHighlightPartialMatchType = 0,
 	TXNicknameHighlightExactMatchType,
     TXNicknameHighlightRegularExpressionMatchType,
-} TXNicknameHighlightMatchType;
+};
 
-typedef enum TXTabKeyAction : NSInteger {
+typedef NS_ENUM(NSUInteger, TXTabKeyAction) {
 	TXTabKeyNickCompleteAction = 0,
 	TXTabKeyUnreadChannelAction,
 	TXTabKeyNoneTypeAction = 100,
-} TXTabKeyAction;
+};
 
-typedef enum TXUserDoubleClickAction : NSInteger {
+typedef NS_ENUM(NSUInteger, TXUserDoubleClickAction) {
 	TXUserDoubleClickWhoisAction = 100,
 	TXUserDoubleClickPrivateMessageAction = 200,
 	TXUserDoubleClickInsertTextFieldAction = 300,
-} TXUserDoubleClickAction;
+};
 
-typedef enum TXNoticeSendLocationType : NSInteger {
+typedef NS_ENUM(NSUInteger, TXNoticeSendLocationType) {
 	TXNoticeSendServerConsoleType = 0,
 	TXNoticeSendCurrentChannelType = 1,
 	TXNoticeSendToQueryDestinationType = 2,
-} TXNoticeSendLocationType;
+};
 
-typedef enum TXCommandWKeyAction : NSInteger {
+typedef NS_ENUM(NSUInteger, TXCommandWKeyAction) {
 	TXCommandWKeyCloseWindowAction = 0,
 	TXCommandWKeyPartChannelAction = 1,
 	TXCommandWKeyDisconnectAction = 2,
 	TXCommandWKeyTerminateAction = 3,
-} TXCommandWKeyAction;
+};
 
-typedef enum TXHostmaskBanFormat : NSInteger {
+typedef NS_ENUM(NSUInteger, TXHostmaskBanFormat) {
 	TXHostmaskBanWHNINFormat  = 0, // With Hostmask, No Username/Nickname
 	TXHostmaskBanWHAINNFormat = 1, // With Hostmask and Username, No Nickname
 	TXHostmaskBanWHANNIFormat = 2, // With Hostmask and Nickname, No Username
 	TXHostmaskBanExactFormat  = 3, // Exact Match
-} TXHostmaskBanFormat;
+};
 
-typedef enum TVCMainWindowTextViewFontSize : NSInteger {
+typedef NS_ENUM(NSUInteger, TVCMainWindowTextViewFontSize) {
 	TVCMainWindowTextViewFontNormalSize			= 1,
 	TVCMainWindowTextViewFontLargeSize			= 2,
 	TVCMainWindowTextViewFontExtraLargeSize		= 3,
 	TVCMainWindowTextViewFontHumongousSize		= 4,
-} TVCMainWindowTextViewFontSize;
+};
 
-typedef enum TXFileTransferRequestReplyAction : NSInteger {
+typedef NS_ENUM(NSUInteger, TXFileTransferRequestReplyAction) {
 	TXFileTransferRequestReplyIgnoreAction						= 1,
 	TXFileTransferRequestReplyOpenDialogAction					= 2,
 	TXFileTransferRequestReplyAutomaticallyDownloadAction		= 3,
-} TXFileTransferRequestReplyAction;
+} ;
 
-typedef enum TXFileTransferIPAddressDetectionMethod : NSInteger {
+typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 	TXFileTransferIPAddressAutomaticDetectionMethod			= 1,
 	TXFileTransferIPAddressManualDetectionMethod			= 2,
-} TXFileTransferIPAddressDetectionMethod;
+};
 
 @interface TPCPreferences : NSObject
 + (NSString *)masqueradeCTCPVersion;

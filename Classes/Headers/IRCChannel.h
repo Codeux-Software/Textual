@@ -38,12 +38,12 @@
 
 #import "IRCTreeItem.h" // superclass
 
-typedef enum IRCChannelStatus : NSInteger {
+typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 	IRCChannelStatusParted,
 	IRCChannelStatusJoining,
 	IRCChannelStatusJoined,
 	IRCChannelStatusTerminated,
-} IRCChannelStatus;
+};
 
 TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 

@@ -38,7 +38,7 @@
 
 #import "TextualApplication.h"
 
-typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
+typedef NS_ENUM(NSUInteger, TDCFileTransferDialogTransferStatus) {
 	TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus,
 	TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus,
 	TDCFileTransferDialogTransferMappingListeningPortStatus,
@@ -51,13 +51,13 @@ typedef enum TDCFileTransferDialogTransferStatus : NSInteger {
 	TDCFileTransferDialogTransferReceivingStatus,
 	TDCFileTransferDialogTransferSendingStatus,
 	TDCFileTransferDialogTransferCompleteStatus
-} TDCFileTransferDialogTransferStatus;
+};
 
-typedef enum TDCFileTransferDialogNavigationControllerSelectedTab : NSInteger {
+typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationControllerSelectedTab) {
 	TDCFileTransferDialogNavigationControllerAllSelectedTab			= 0,
 	TDCFileTransferDialogNavigationControllerSendingSelectedTab		= 1,
 	TDCFileTransferDialogNavigationControllerReceivingSelectedTab	= 2
-} TDCFileTransferDialogNavigationControllerSelectedTab;
+};
 
 #import "TDCFileTransferDialogRemoteAddressLookup.h" // @protocol
 

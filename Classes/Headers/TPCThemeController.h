@@ -49,12 +49,12 @@ TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameCompletePrefix
 
 TEXTUAL_EXTERN NSString * const TPCThemeControllerThemeListDidChangeNotification;
 
-typedef enum TPCThemeControllerStorageLocation : NSInteger {
+typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 	TPCThemeControllerStorageBundleLocation,
 	TPCThemeControllerStorageCustomLocation,
 	TPCThemeControllerStorageCloudLocation,
 	TPCThemeControllerStorageUnknownLocation
-} TPCThemeControllerStorageLocation;
+};
 
 @interface TPCThemeController : NSObject
 @property (nonatomic, copy) NSURL *baseURL;
