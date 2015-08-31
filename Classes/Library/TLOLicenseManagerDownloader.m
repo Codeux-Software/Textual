@@ -224,62 +224,68 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 					goto present_fatal_error;
 				}
 
-				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1006][2]")
-														 title:TXTLS(@"TLOLicenseManager[1006][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
-											   alternateButton:nil
-												suppressionKey:nil
-											   suppressionText:nil];
+				if (self.isSilentOnSuccess == NO) {
+					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1006][2]")
+															 title:TXTLS(@"TLOLicenseManager[1006][1]")
+													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												   alternateButton:nil
+													suppressionKey:nil
+												   suppressionText:nil];
+				}
 
 				_performCompletionBlockAndReturn(YES)
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestSendLostLicenseType)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsole(@"'Status Context' is nil or not of kind 'NSDictionary'");
+				if (self.isSilentOnSuccess == NO) {
+					if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+						LogToConsole(@"'Status Context' is nil or not of kind 'NSDictionary'");
 
-					goto present_fatal_error;
+						goto present_fatal_error;
+					}
+
+					NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
+
+					if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
+						LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
+
+						goto present_fatal_error;
+					}
+
+					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1005][2]", licenseOwnerContactAddress)
+															 title:TXTLS(@"TLOLicenseManager[1005][1]", licenseOwnerContactAddress)
+													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												   alternateButton:nil
+													suppressionKey:nil
+												   suppressionText:nil];
 				}
-
-				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
-
-				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
-					LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
-
-					goto present_fatal_error;
-				}
-
-				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1005][2]", licenseOwnerContactAddress)
-														 title:TXTLS(@"TLOLicenseManager[1005][1]", licenseOwnerContactAddress)
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
-											   alternateButton:nil
-												suppressionKey:nil
-											   suppressionText:nil];
 				
 				_performCompletionBlockAndReturn(YES)
 			}
 			else if (requestType == TLOLicenseManagerDownloaderRequestMigrateAppStoreType)
 			{
-				if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
-					LogToConsole(@"'Status Context' is nil or not of kind 'NSDictionary'");
+				if (self.isSilentOnSuccess == NO) {
+					if (statusContext == nil || [statusContext isKindOfClass:[NSDictionary class]] == NO) {
+						LogToConsole(@"'Status Context' is nil or not of kind 'NSDictionary'");
 
-					goto present_fatal_error;
+						goto present_fatal_error;
+					}
+
+					NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
+
+					if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
+						LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
+
+						goto present_fatal_error;
+					}
+
+					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1010][2]", licenseOwnerContactAddress)
+															 title:TXTLS(@"TLOLicenseManager[1010][1]", licenseOwnerContactAddress)
+													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												   alternateButton:nil
+													suppressionKey:nil
+												   suppressionText:nil];
 				}
-
-				NSString *licenseOwnerContactAddress = statusContext[@"licenseOwnerContactAddress"];
-
-				if (NSObjectIsEmpty(licenseOwnerContactAddress)) {
-					LogToConsole(@"'licenseOwnerContactAddress' is nil or of zero length");
-
-					goto present_fatal_error;
-				}
-
-				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1010][2]", licenseOwnerContactAddress)
-														 title:TXTLS(@"TLOLicenseManager[1010][1]", licenseOwnerContactAddress)
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
-											   alternateButton:nil
-												suppressionKey:nil
-											   suppressionText:nil];
 
 				_performCompletionBlockAndReturn(YES)
 			}

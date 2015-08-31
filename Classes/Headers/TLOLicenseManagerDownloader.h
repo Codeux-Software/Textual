@@ -47,6 +47,7 @@ typedef enum TLOLicenseManagerDownloaderRequestType : NSInteger {
 typedef void (^TLOLicenseManagerDownloaderCompletionBlock)(BOOL resultSuccessful);
 
 @interface TLOLicenseManagerDownloader : NSObject
+@property (nonatomic, assign) BOOL isSilentOnSuccess;
 @property (nonatomic, copy) TLOLicenseManagerDownloaderCompletionBlock completionBlock;
 
 - (void)activateLicense:(NSString *)licenseKey;
