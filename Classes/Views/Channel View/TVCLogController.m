@@ -1324,7 +1324,7 @@
 	[pluginDictionary maybeSetObject:[line nickname] forKey:THOPluginProtocolDidPostNewMessageSenderNicknameAttribute];
 	[pluginDictionary maybeSetObject:[line receivedAt] forKey:THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute];
 	
-	[pluginDictionary maybeSetObject:newLinenNumber forKey:THOPluginProtocolDidPostNewMessageLineTypeAttribute];
+	[pluginDictionary maybeSetObject:newLinenNumber forKey:THOPluginProtocolDidPostNewMessageLineNumberAttribute];
 	
 	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute];
 	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfUsersAttribute];
