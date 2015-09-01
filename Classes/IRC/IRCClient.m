@@ -6254,6 +6254,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			break;
 		}
+		case 275: // RPL_WHOISSECURE (bahamut)
 		case 276: // RPL_WHOIS? — (is using a client certificate, hybrid)
 		case 307: // RPL_WHOISREGNICK
 		case 310: // RPL_WHOISHELPOP
