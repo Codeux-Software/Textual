@@ -44,7 +44,6 @@
 
 /* Private stuff. =) */
 @interface TVCImageURLoader ()
-@property (nonatomic, weak) TVCLogController *requestOwner;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, copy) NSString *requestImageUniqeID;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
@@ -57,6 +56,11 @@
 #pragma mark -
 #pragma mark Public API
 
+- (void)dealloc
+{
+	self.delegate = nil;
+}
+
 - (void)destroyConnectionRequest
 {
 	if ( self.requestConnection) {
@@ -66,15 +70,13 @@
 	self.requestImageUniqeID = nil;
 	self.requestConnection = nil;
 	self.requestResponse = nil;
-	self.requestOwner = nil;
+
 	self.responseData = nil;
 }
 
-- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID forController:(TVCLogController *)controller
+- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID
 {
 	/* Validate input. */
-	PointerIsEmptyAssert(controller);
-
 	NSObjectIsEmptyAssert(baseURL);
 	NSObjectIsEmptyAssert(uniqueID);
 
@@ -103,7 +105,6 @@
 
 	/* Send the actual request off. */
 	self.requestImageUniqeID = uniqueID;
-	self.requestOwner = controller;
 
 	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self];
 
@@ -141,30 +142,29 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	/* Yay! It finished loading. Time to check the data out. :-D */
-	BOOL isValidResponse = ([self.requestResponse statusCode] == 200); // Setting as a var incase I end up adding more conditions down the line.
+	BOOL isSafeToLoadImage = NO;
+
+	BOOL isValidResponse = ([self.requestResponse statusCode] == 200);
 
     if (isValidResponse) {
-		if (self.isInRequestWithCheckForMaximumHeight) { // Are we checking the actual image size?
+		if (self.isInRequestWithCheckForMaximumHeight) {
 			if (self.responseData == nil) {
-				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+				goto destroy_connection;
 			}
 			
 			CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)self.responseData, NULL);
 			
 			if (PointerIsEmpty(imageSource)) {
-				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+				goto destroy_connection;
 			}
 			
 			CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
 		
 			if (PointerIsEmpty(properties)) {
 				CFRelease(imageSource);
-				
-				return [self destroyConnectionRequest]; // Destroy and return for bad input.
+
+				goto destroy_connection;
 			}
-			
-			NSNumber *orientation = CFDictionaryGetValue(properties, kCGImagePropertyOrientation);
 
 			NSNumber *width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
 			NSNumber *height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
@@ -172,25 +172,25 @@
 			CFRelease(imageSource);
 			CFRelease(properties);
 
-			if ([height integerValue] > [TPCPreferences inlineImagesMaxHeight] || [width integerValue] > _imageMaximumImageWidth) { // So what's up with the size?
-				return [self destroyConnectionRequest]; // Destroy local vars.
+			if ([height integerValue] <= [TPCPreferences inlineImagesMaxHeight] && [width integerValue] <= _imageMaximumImageWidth) {
+				isSafeToLoadImage = YES;
 			}
-
-			/* Post the image. */
-			if ( self.requestOwner) {
-				[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:[orientation integerValue]];
-			}
-
-			return;
-		}
-
-		/* Send the information off. We will validate the information higher up. */
-		if ( self.requestOwner) {
-			[self.requestOwner imageLoaderFinishedLoadingForImageWithID:self.requestImageUniqeID orientation:(-1)];
+		} else {
+			isSafeToLoadImage = YES;
 		}
 	}
 
-	/* Cleaning. */
+destroy_connection:
+	if (isValidResponse && isSafeToLoadImage) {
+		if ([self.delegate respondsToSelector:@selector(isSafeToPresentImageWithID:)]) {
+			[self.delegate isSafeToPresentImageWithID:self.requestImageUniqeID];
+		}
+	} else {
+		if ([self.delegate respondsToSelector:@selector(isNotSafeToPresentImageWithID:)]) {
+			[self.delegate isNotSafeToPresentImageWithID:self.requestImageUniqeID];
+		}
+	}
+
 	[self destroyConnectionRequest];
 }
 

@@ -1079,7 +1079,9 @@
 				for (NSString *uniqueKey in inlineImageMatches) {
 					TVCImageURLoader *loader = [TVCImageURLoader new];
 
-					[loader assesURL:inlineImageMatches[uniqueKey] withID:uniqueKey forController:self];
+					[loader setDelegate:self];
+
+					[loader assesURL:inlineImageMatches[uniqueKey] withID:uniqueKey];
 				}
 				
 				/* Log this log line. */
@@ -1351,11 +1353,9 @@
 	return html;
 }
 
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID orientation:(NSInteger)orientationIndex
+- (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
-	if (uniqueID) {
-		[self.webViewScriptSink toggleInlineImage:uniqueID withKeyCheck:NO orientation:orientationIndex];
-	}
+	[self.webViewScriptSink toggleInlineImage:uniqueID];
 }
 
 #pragma mark -
