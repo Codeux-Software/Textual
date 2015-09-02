@@ -43,7 +43,7 @@
 
 // OldStyle = deprecated class names
 // NewStyle = current class names for THOPluginProtocol
-typedef NS_ENUM(NSUInteger, THOPluginItemSupportedFeaturesFlags) {
+typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeaturesFlags) {
 	THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag						= 1 << 0,
 	THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag		= 1 << 1,
 	THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag		= 1 << 2,
