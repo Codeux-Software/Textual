@@ -40,5 +40,7 @@
 @interface TVCImageURLParser : NSObject
 + (NSArray *)validImageContentTypes;
 
++ (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL;
+
 + (NSString *)imageURLFromBase:(NSString *)url;
 @end
