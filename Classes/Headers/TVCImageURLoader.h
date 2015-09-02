@@ -37,13 +37,17 @@
 
 #import "TextualApplication.h"
 
-#import "TVCLogController.h" // for class extension
+@protocol TVCImageURLoaderDelegate;
 
-/* Do not call this crap with a plugin. Okay? */
 @interface TVCImageURLoader : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
-- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID forController:(TVCLogController *)controller;
+@property (nonatomic, unsafe_unretained) id <TVCImageURLoaderDelegate> delegate;
+
+- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID;
 @end
 
-@interface TVCLogController (TVCImageURLoaderControllerExtension)
-- (void)imageLoaderFinishedLoadingForImageWithID:(NSString *)uniqueID orientation:(NSInteger)orientationIndex;
+@protocol TVCImageURLoaderDelegate <NSObject>
+@required
+
+- (void)isSafeToPresentImageWithID:(NSString *)uniqueID;
+- (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID;
 @end

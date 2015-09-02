@@ -139,11 +139,6 @@
 
 - (void)toggleInlineImage:(NSString *)object
 {
-	[self toggleInlineImage:object withKeyCheck:YES orientation:(-1)];
-}
-
-- (void)toggleInlineImage:(NSString *)object withKeyCheck:(BOOL)checkShiftKey orientation:(NSInteger)orientationIndex
-{
 	/* Do we have a properly formatted ID? */
 	if ([object hasPrefix:@"inlineImage-"] == NO) {
 		object = [@"inlineImage-" stringByAppendingString:object];
