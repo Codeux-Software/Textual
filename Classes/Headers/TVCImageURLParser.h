@@ -40,7 +40,10 @@
 @interface TVCImageURLParser : NSObject
 + (NSArray *)validImageContentTypes;
 
-+ (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL;
+/* The absolute only reason -URLFromWebViewPasteboard: is
+ deprecated is to bother a user named "Alex`" who complains
+ that I deprecate too much, for no good reason. */
++ (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL TEXTUAL_DEPRECATED("Use -[NSString URLUsingWebKitPasteboard] instead");
 
 + (NSString *)imageURLFromBase:(NSString *)url;
 @end
