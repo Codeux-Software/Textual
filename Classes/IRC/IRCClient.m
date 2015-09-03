@@ -5556,7 +5556,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case ClientIRCv3SupportedCapacityUserhostInNames:
 		{
-			stringValue = @"away-notify";
+			stringValue = @"userhost-in-names";
 			
 			break;
 		}
