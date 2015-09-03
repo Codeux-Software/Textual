@@ -114,7 +114,16 @@
 		if ([s isNumericOnly]) {
 			return [@"http://instacod.es/file/" stringByAppendingString:s];
 		}
-	} else if ([host hasPrefix:@"docs.google.com"]) {
+	} else if ([host isEqualToString:@"pbs.twimg.com"]) {
+		NSObjectIsEmptyAssertReturn(path, nil);
+
+		path = [path stringByReplacingOccurrencesOfString:@"\\:(large|medium|orig|small|thumb)$"
+											   withString:NSStringEmptyPlaceholder
+												  options:NSRegularExpressionSearch
+													range:[path range]];
+
+		return [NSString stringWithFormat:@"https://pbs.twimg.com/%@:orig", path];
+	} else if ([host isEqualToString:@"docs.google.com"]) {
 		if ([path hasPrefix:@"/file/d/"]) {
 			NSArray *parts = [path componentsSeparatedByString:@"/"];
 
@@ -189,19 +198,18 @@
 		}
 	} else if ([host hasSuffix:@"leetfil.es"]) {
 		if ([path hasPrefix:@"/image/"]) {
-            		NSString *s = [path substringFromIndex:7];
+			NSString *s = [path substringFromIndex:7];
             
-            		if ([s isAlphabeticNumericOnly]) {
-                		return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
-            		}
+            if ([s isAlphabeticNumericOnly]) {
+				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
+			}
+		} else if ([path hasPrefix:@"/video/"]) {
+			NSString *vid = [path substringFromIndex:7];
+            
+			if ([vid isAlphabeticNumericOnly]) {
+				return [NSString stringWithFormat:@"https://leetfil.es/vid/%@_thumb.png", vid];
+			}
 		}
-        	else if ([path hasPrefix:@"/video/"]) {
-            		NSString *vid = [path substringFromIndex:7];
-            
-            		if ([vid isAlphabeticNumericOnly]) {
-                		return [NSString stringWithFormat:@"https://leetfil.es/vid/%@_thumb.png", vid];
-            		}
-        	}
 	} else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
 			NSString *s = [path substringFromIndex:5];
@@ -232,36 +240,12 @@
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://puu.sh/%@.jpg", s];
 		}
-	/* } else if ([host hasSuffix:@"imgur.com"]) {
-		if ([path hasPrefix:@"/gallery/"]) {
-			NSString *s = [path substringFromIndex:9];
-
-			if ([s isAlphabeticNumericOnly]) {
-				return [NSString stringWithFormat:@"http://i.imgur.com/%@.png", s];
-			}
-		} */
-	} else if ([host hasSuffix:@"ubuntuone.com"]) {
-		if ([path hasPrefix:@"/"]) {
-			NSString *s = [path substringFromIndex:1];
-
-			if ([s isAlphabeticNumericOnly] && [s length] == 22) {
-				return url;
-			}
-		}
 	} else if ([host hasSuffix:@"d.pr"]) {
 		if ([path hasPrefix:@"/i/"]) {
 			NSString *s = [path substringFromIndex:3];
 
 			if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"http://d.pr/i/%@.png", s];
-			}
-		}
-	} else if ([host hasSuffix:@"mediacru.sh"]) {
-		if ([path hasPrefix:@"/"] && [path length] == 13) {
-			NSString *s = [path substringFromIndex:1];
-
-			if ([s onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
-				return [NSString stringWithFormat:@"https://cdn.mediacru.sh/%@.jpg", s];
 			}
 		}
 	} else if ([host hasSuffix:@"youtube.com"] || [host isEqualToString:@"youtu.be"]) {
