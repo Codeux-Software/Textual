@@ -41,35 +41,24 @@
 
 + (NSArray *)validImageContentTypes
 {
-	/* List based off https://en.wikipedia.org/wiki/Internet_media_type#Type_image */
-
 	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml", @"image/tiff", @"image/x-ms-bmp"];
 }
 
-/* Takes URL, places it on a pasteboard, and hands off to a WebView instance.
- Doing so is a dead simple hack to convert IDN domains to ASCII. */
 + (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL
 {
-	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
-	
-	[pasteboard setStringContent:baseURL];
-
-	NSURL *u = [WebView URLFromPasteboard:pasteboard];
-
-	/* For some users, u returns nil for valid URLs. There is no
-	 explanation for this so for now we fallback to classic NSURL
-	 if it does do this to hack around a fix. */
-	if (u == nil) {
-		u = [NSURL URLWithString:baseURL];
-	}
-
-	return u;
+	return [baseURL URLUsingWebKitPasteboard];
 }
 
 + (NSString *)imageURLFromBase:(NSString *)url
 {
 	/* Convert URL. */
-	NSURL *u = [TVCImageURLParser URLFromWebViewPasteboard:url];
+	NSURL *u = [url URLUsingWebKitPasteboard];
+
+	NSString *plguinResult = [sharedPluginManager() processInlineMediaContentURL:[u absoluteString]];
+
+	if (plguinResult) {
+		return plguinResult;
+	}
 
 	NSString *scheme = [u scheme];
 
@@ -83,28 +72,18 @@
 	NSString *host = [[u host] lowercaseString];
 
 	NSString *path = [[u path] encodeURIFragment];
+
 	NSString *query = [[u query] encodeURIFragment];
-    
-    if (query) {
-        path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
-    }
-
-
-	NSString *plguinResult = [sharedPluginManager() processInlineMediaContentURL:[u absoluteString]];
-
-	if (plguinResult) {
-		return plguinResult;
-	}
 
 	BOOL hadExtension = NO;
 
-	if ([path hasSuffixIgnoringCase:@".jpg"]	||
-		[path hasSuffixIgnoringCase:@".jpeg"]	||
-		[path hasSuffixIgnoringCase:@".png"]	||
-		[path hasSuffixIgnoringCase:@".gif"]	||
-		[path hasSuffixIgnoringCase:@".tif"]	||
-		[path hasSuffixIgnoringCase:@".tiff"]	||
-		[path hasSuffixIgnoringCase:@".bmp"])
+	if ([path hasSuffixIgnoringCase:@".jpg"]	|| [query hasSuffixIgnoringCase:@".jpg"] ||
+		[path hasSuffixIgnoringCase:@".jpeg"]	|| [query hasSuffixIgnoringCase:@".jpeg"] ||
+		[path hasSuffixIgnoringCase:@".png"]	|| [query hasSuffixIgnoringCase:@".png"] ||
+		[path hasSuffixIgnoringCase:@".gif"]	|| [query hasSuffixIgnoringCase:@".gif"] ||
+		[path hasSuffixIgnoringCase:@".tif"]	|| [query hasSuffixIgnoringCase:@".tif"] ||
+		[path hasSuffixIgnoringCase:@".tiff"]	|| [query hasSuffixIgnoringCase:@".tiff"] ||
+		[path hasSuffixIgnoringCase:@".bmp"]	|| [query hasSuffixIgnoringCase:@".bmp"])
 	{
 		hadExtension = YES;
 
@@ -117,6 +96,10 @@
 		} else {
 			return [u absoluteString];
 		}
+	}
+
+	if (query) {
+		path = [[path stringByAppendingString:@"?"] stringByAppendingString:query];
 	}
 
 	if ([host hasSuffix:@"dropbox.com"]) {
