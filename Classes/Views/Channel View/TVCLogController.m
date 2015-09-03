@@ -53,6 +53,8 @@
 @property (strong) NSMutableArray *highlightedLineNumbers;
 @end
 
+NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogControllerViewFinishedLoadingNotification";
+
 @implementation TVCLogController
 
 #pragma mark -
@@ -1494,6 +1496,8 @@
 		viewType = [self.associatedChannel channelTypeString];
 	}
 
+	self.isLoaded = YES;
+
 	[self executeQuickScriptCommand:@"viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
 		 NSDictionaryNilValue([self.associatedClient uniqueIdentifier]),
@@ -1507,7 +1511,7 @@
 		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
 	}
 
-	self.isLoaded = YES;
+	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
 
 	[self setUpScroller];
 

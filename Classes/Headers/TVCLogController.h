@@ -40,6 +40,8 @@
 
 #import "TVCLogView.h" // @protocol
 
+TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
+
 #ifdef TXSystemIsOSXElCapitanOrLater
 @interface TVCLogController : NSObject <TVCLogViewDelegate, TVCImageURLoaderDelegate, WebFrameLoadDelegate, WebResourceLoadDelegate>
 #else
