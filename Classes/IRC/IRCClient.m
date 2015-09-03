@@ -3198,9 +3198,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 			for (IRCClient *client in [worldController() clientList]) {
 				for (IRCChannel *channel in [client channelList]) {
-					NSString *name = [[channel name] stringByDeletingAllCharactersNotInSet:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet];
-
-					CGFloat score = [name compareWithWord:uncutInput lengthPenaltyWeight:0.1];
+					CGFloat score = [[channel name] compareWithWord:uncutInput lengthPenaltyWeight:0.1];
 
 					if (score > bestScore) {
 						bestMatch = channel;
