@@ -42,6 +42,8 @@
 @interface TVCImageURLoader : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 @property (nonatomic, unsafe_unretained) id <TVCImageURLoaderDelegate> delegate;
 
++ (void)invalidateInternalCache;
+
 - (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID;
 @end
 

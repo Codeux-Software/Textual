@@ -363,6 +363,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 		[TVCDockIcon updateDockIcon];
 	}
+
+	[TVCImageURLoader invalidateInternalCache];
 }
 
 - (void)setupMidnightTimer
