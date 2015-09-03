@@ -121,15 +121,9 @@
 	}
 	else if (self.nickname)
 	{
-		BOOL isIRCop = [[self.logController associatedClient] hasIRCopAccess];
-
 		NSMenu *memberMenu = [menuController() userControlMenu];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
-			if ([item tag] == _WebMenuItemTagIRCopServices && isIRCop == NO) {
-				continue;
-			}
-			
 			NSMenuItem *newitem = [item copy];
 			
 			[newitem setUserInfo:self.nickname recursively:YES];
