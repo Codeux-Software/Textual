@@ -77,12 +77,13 @@
 
 	BOOL hadExtension = NO;
 
-	if ([path hasSuffixIgnoringCase:@".jpg"]	|| [query hasSuffixIgnoringCase:@".jpg"] ||
-		[path hasSuffixIgnoringCase:@".jpeg"]	|| [query hasSuffixIgnoringCase:@".jpeg"] ||
-		[path hasSuffixIgnoringCase:@".png"]	|| [query hasSuffixIgnoringCase:@".png"] ||
-		[path hasSuffixIgnoringCase:@".gif"]	|| [query hasSuffixIgnoringCase:@".gif"] ||
-		[path hasSuffixIgnoringCase:@".tif"]	|| [query hasSuffixIgnoringCase:@".tif"] ||
-		[path hasSuffixIgnoringCase:@".tiff"]	|| [query hasSuffixIgnoringCase:@".tiff"] ||
+	if ([path hasSuffixIgnoringCase:@".jpg"]	|| [query hasSuffixIgnoringCase:@".jpg"]	||
+		[path hasSuffixIgnoringCase:@".jpeg"]	|| [query hasSuffixIgnoringCase:@".jpeg"]	||
+		[path hasSuffixIgnoringCase:@".png"]	|| [query hasSuffixIgnoringCase:@".png"]	||
+		[path hasSuffixIgnoringCase:@".gif"]	|| [query hasSuffixIgnoringCase:@".gif"]	||
+		[path hasSuffixIgnoringCase:@".tif"]	|| [query hasSuffixIgnoringCase:@".tif"]	||
+		[path hasSuffixIgnoringCase:@".tiff"]	|| [query hasSuffixIgnoringCase:@".tiff"]	||
+		[path hasSuffixIgnoringCase:@".svg"]	|| [query hasSuffixIgnoringCase:@".svg"]	||
 		[path hasSuffixIgnoringCase:@".bmp"]	|| [query hasSuffixIgnoringCase:@".bmp"])
 	{
 		hadExtension = YES;
