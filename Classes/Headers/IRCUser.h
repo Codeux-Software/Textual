@@ -91,6 +91,11 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 
 @property (readonly, copy) NSString *mark; // Returns mode symbol for highest rank (-modes)
 
+/* -presentAwayMessageFor301 keeps track of the last time raw numeric 
+ 301 (away message) is recieved and will return YES if the message
+ should be presented, NO otherwise. */
+@property (readonly) BOOL presentAwayMessageFor301;
+
 - (void)outgoingConversation;
 - (void)incomingConversation;
 - (void)conversation;

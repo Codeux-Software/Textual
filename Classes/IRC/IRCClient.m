@@ -6218,7 +6218,19 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
             if (ac == nil) {
 				ac = [mainWindow() selectedChannelOn:self];
-            }
+			} else {
+				IRCUser *user = [ac findMember:awaynick];
+
+				if ( user) {
+					[user setIsAway:YES];
+
+					if ([user presentAwayMessageFor301] == NO) {
+						break;
+					}
+
+					break;
+				}
+			}
 			
 			[self print:ac
 				   type:TVCLogLineDebugType
