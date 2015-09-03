@@ -6227,8 +6227,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					if ([user presentAwayMessageFor301] == NO) {
 						break;
 					}
-
-					break;
 				}
 			}
 			
