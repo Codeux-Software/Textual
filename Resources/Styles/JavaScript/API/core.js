@@ -65,7 +65,6 @@ Textual.historyIndicatorRemovedFromView 	= function() {};
 
 Textual.topicBarValueChanged 				= function(newTopic) {};
 
-Textual.viewContentsBeingCleared 				= function() {};
 Textual.viewFinishedLoading 					= function() {};
 Textual.viewFinishedReload 						= function() {};
 Textual.viewFontSizeChanged						= function(bigger) {};
