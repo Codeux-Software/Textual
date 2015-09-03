@@ -44,7 +44,7 @@
 #define _WebMenuItemTagInspectElementLion			2024
 #define _WebMenuItemTagInspectElementMountainLion	2025
 
-#define _WebMenuItemTagIRCopServices	1522
+#define _WebMenuItemTagSearchInGoogle		1601 // Tag for Textual's menu, not WebKit
 
 @implementation TVCLogPolicy
 
@@ -175,14 +175,12 @@
 		}
 		
 		for (NSMenuItem *item in [menu itemArray]) {
-			if ([item tag] == _WebMenuItemTagInspectElementLion ||
-				[item tag] == _WebMenuItemTagInspectElementMountainLion)
-			{
+			[ary addObject:[item copy]];
+
+			if ([item tag] == _WebMenuItemTagSearchInGoogle) {
 				if (lookupInDictionaryItem) {
-					[ary addObject:[lookupInDictionaryItem copy]];
+					[ary addObject:lookupInDictionaryItem];
 				}
-			} else {
-				[ary addObject:[item copy]];
 			}
 		}
 		
