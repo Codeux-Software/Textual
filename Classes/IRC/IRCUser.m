@@ -40,8 +40,11 @@
 
 #define _colorNumberMax				 30
 
+#define _presentAwayMessageFor301Threshold			300.0f
+
 @interface IRCUser ()
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
+@property (nonatomic, assign) CFAbsoluteTime presentAwayMessageFor301LastEvent;
 @end
 
 @implementation IRCUser
@@ -75,6 +78,36 @@
 	[newUser setNickname:nickname];
 	
 	return newUser;
+}
+
+- (void)setIsAway:(BOOL)isAway
+{
+	if (NSDissimilarObjects(isAway, _isAway)) {
+		_isAway = isAway;
+
+		if (_isAway == NO) {
+			if (self.presentAwayMessageFor301LastEvent > 0.0) {
+				self.presentAwayMessageFor301LastEvent = 0.0f;
+			}
+		}
+	}
+}
+
+- (BOOL)presentAwayMessageFor301
+{
+	if (self.isAway == NO) {
+		return NO;
+	}
+
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+
+	if ((self.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301LastEvent) < now) {
+		 self.presentAwayMessageFor301LastEvent = now;
+
+		return YES;
+	} else {
+		return NO;
+	}
 }
 
 - (NSString *)hostmask
