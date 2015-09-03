@@ -29,13 +29,6 @@
 
 #import <SystemConfiguration/SystemConfiguration.h>
 
-#import <sys/socket.h>
-#import <netinet/in.h>
-#import <netinet6/in6.h>
-#import <arpa/inet.h>
-#import <ifaddrs.h>
-#import <netdb.h>
-
 @interface OELReachability ()
 @property (nonatomic, assign) SCNetworkReachabilityRef reachabilityRef;
 
@@ -51,27 +44,15 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 @implementation OELReachability
 
-+ (OELReachability *)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress
-{
-    SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);
-
-	if (ref) {
-        return [[self alloc] initWithReachabilityRef:ref];
-    }
-
-    return nil;
-}
-
 + (OELReachability *)reachabilityForInternetConnection
 {
-    struct sockaddr_in zeroAddress;
+	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "localhost");
 
-    bzero(&zeroAddress, sizeof(zeroAddress));
-
-    zeroAddress.sin_len = sizeof(zeroAddress);
-    zeroAddress.sin_family = AF_INET;
-
-    return [self reachabilityWithAddress:&zeroAddress];
+	if (ref) {
+		return [[self alloc] initWithReachabilityRef:ref];
+	} else {
+		return nil;
+	}
 }
 
 - (OELReachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref
