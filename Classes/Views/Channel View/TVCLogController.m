@@ -549,7 +549,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Reload Scrollback
 
-- (void)appendHistoricMessageFragmentToBody:(NSString *)html
+- (void)appendHistoricMessageFragment:(NSString *)html toHistoricMessagesDiv:(BOOL)toHistoricMessagesDiv
 {
 	/* This method looks for #historic_messages and appends to that if it
 	 exists. If it does not exist, then it looks for #body_home. This div 
@@ -561,13 +561,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	DOMDocument *doc = [self mainFrameDocument];
 	PointerIsEmptyAssert(doc);
 
-	DOMElement *body = [doc getElementById:@"historic_messages"];
+	DOMElement *body = nil;
+
+	if (toHistoricMessagesDiv) {
+		body = [doc getElementById:@"historic_messages"];
+	}
 
 	if (body == nil) {
 		body = [self documentBody];
-
-		PointerIsEmptyAssert(body);
 	}
+
+	PointerIsEmptyAssert(body);
 
 	DOMNodeList *childNodes = [body childNodes];
 
@@ -638,7 +642,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	/* Update WebKit. */
 	[self performBlockOnMainThread:^{
-		[self appendHistoricMessageFragmentToBody:patchedAppend];
+		[self appendHistoricMessageFragment:patchedAppend toHistoricMessagesDiv:markHistoric];
 
 		[self mark];
 
