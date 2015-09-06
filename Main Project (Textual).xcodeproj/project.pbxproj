@@ -514,7 +514,6 @@
 		4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */; };
 		4C5BA38D16F1302F00A96CA2 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
 		4C5BA3CB16F1302F00A96CA2 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C5BA3CC16F1302F00A96CA2 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
@@ -727,6 +726,7 @@
 		4C7E0FD119AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7E0FD219AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7E0FD319AC25900084173D /* GRMustacheVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7E0F9819AC25900084173D /* GRMustacheVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7E61E11B9C84A700C35BC9 /* TPCPreferencesImportExport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */; };
 		4C8083261B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */; };
 		4C8083271B43911100746327 /* TLOLicenseManagerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */; };
 		4C80832D1B43914100746327 /* TLOLicenseManagerDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C80832C1B43914100746327 /* TLOLicenseManagerDownloader.h */; };
@@ -1686,7 +1686,6 @@
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
 		4C58B570186011AC00834882 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgments.pdf; sourceTree = SOURCE_ROOT; };
-		4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPreferencesImportExport.m; sourceTree = "<group>"; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = SecureTransportErrorCodes.strings; path = "Resources/Language Files/SecureTransportErrorCodes.strings"; sourceTree = SOURCE_ROOT; };
@@ -2257,15 +2256,6 @@
 				4C211D5615BF21BA00E218DA /* libmustache.a */,
 			);
 			name = "External Libraries";
-			sourceTree = "<group>";
-		};
-		4C3D0B7A1594909500567623 /* Migration Assistant */ = {
-			isa = PBXGroup;
-			children = (
-				4C5A0310170C2C010016BB1A /* TPCPreferencesImportExport.m */,
-			);
-			name = "Migration Assistant";
-			path = Preferences;
 			sourceTree = "<group>";
 		};
 		4C46CB001580429D00846B64 /* Source Code */ = {
@@ -3185,7 +3175,6 @@
 			children = (
 				4CA110D31955AA6F0062EC4E /* iCloud */,
 				4C92FEC217A8C8BD003888F4 /* Resource Management */,
-				4C3D0B7A1594909500567623 /* Migration Assistant */,
 				4C8AF5EB158E99520026668C /* Theme */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
 				4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */,
@@ -4494,8 +4483,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C7E61E11B9C84A700C35BC9 /* TPCPreferencesImportExport.m in Sources */,
 				4CF40E431AC1A4AC00A26BE0 /* TVCServerListCell.m in Sources */,
-				4C5A0319170C31110016BB1A /* TPCPreferencesImportExport.m in Sources */,
 				4C0879D4187061BF0034F5EB /* TDCFileTransferDialogTableCell.m in Sources */,
 				4CF40E371AC1A4AC00A26BE0 /* TVCMainWindowTextView.m in Sources */,
 				4CF40E331AC1A4AC00A26BE0 /* TVCMainWindowSplitView.m in Sources */,
