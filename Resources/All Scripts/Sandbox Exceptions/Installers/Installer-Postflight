@@ -1,69 +1,76 @@
 #!/usr/bin/php
 <?php
+	
+	define('BUILT_FOR_MAC_APP_STORE', TRUE);
 
-	/* 
-		If $oldDirectory does not exist, then mergeDirectories()
-		creates a symbolic link from $oldDirectory to $newDirectory
-		
-		mergeDirectories() scans the contents of $newDirectory and
-		collects all filenames. If a file in $newDirectory does
-		not exist in $oldDirectory, then a symbolic is link is
-		created in $oldDirectory to the $newDirectory location. 
-	*/
+	if (BUILT_FOR_MAC_APP_STORE === FALSE) {
+		exit(0);
+	}
+	
+	/* When BUILT_FOR_MAC_APP_STORE === TRUE, then we replace the contents of the
+	Mac App Store installation location as long as the file being copied from one
+	folder to another is not older than the new location. */
+	$userHomeDirectoryPath = getenv("HOME");
+
+	mergeDirectories(
+	"{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.apps.textual",
+	"{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.irc.textual5");
+
+	mergeDirectories(
+	"{$userHomeDirectoryPath}/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Extensions",
+	"{$userHomeDirectoryPath}/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/Application Support/Textual/Extensions");
 
 	function mergeDirectories($oldDirectory, $newDirectory)
 	{
+		$currentUsername = (string)getenv("USER");
+
 		if (file_exists($oldDirectory) === FALSE) {
-			symlink($newDirectory, $oldDirectory);
-		} else {
-			$newDirectoryContents = scandir($newDirectory);
-			
-			if (is_array($newDirectoryContents)) {
-				foreach ($newDirectoryContents as $filename) {
-					if ($filename === '.' || $filename === '..') {
-						continue;
-					} else {
-						$oldDirectoryFilePath = "{$oldDirectory}/{$filename}";
-						
-						/* If file does not already exist in the old path, create
-						a symbolic link from the old path to the new path. */
-						if (file_exists($oldDirectoryFilePath) === FALSE) {
-							$newDirectoryFilePath = "{$newDirectory}/{$filename}";
-							
-							symlink($newDirectoryFilePath, $oldDirectoryFilePath);
-						}
-					} 
-				} // foreach
-			} // is_arry
-		} // is_dir
-	} // function
-	
-	/* Perform migration of Application Scripts folder. */
-	$userHomeDirectoryPath = getenv("HOME");
-	
-	$oldApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.irc.textual5";
-	$newApplicationScriptsPath = "{$userHomeDirectoryPath}/Library/Application Scripts/com.codeux.apps.textual";
-	
-	if (file_exists($newApplicationScriptsPath) === TRUE) {
-		mergeDirectories($oldApplicationScriptsPath, $newApplicationScriptsPath);
-	}
+			return FALSE;
+		}
+		
+		if (file_exists($newDirectory) && is_link($newDirectory)) {
+			if (unlink($newDirectory) === FALSE) {
+				return FALSE;
+			}
+		}
 
-	/* Perform migration of Extensions folder. */
-	$oldGroupContainerPath = "{$userHomeDirectoryPath}/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual";
-	$newGroupContainerPath = "{$userHomeDirectoryPath}/Library/Group Containers/com.codeux.apps.textual";
-	
-	$oldTextualExtensionsPath = "{$oldGroupContainerPath}/Library/Application Support/Textual/Extensions";
-	$newTextualExtensionsPath = "{$newGroupContainerPath}/Library/Application Support/Textual/Extensions";
-
-	if (file_exists($newTextualExtensionsPath) === TRUE) {
-		if (file_exists($oldGroupContainerPath) === FALSE) {
-			symlink($newGroupContainerPath, $oldGroupContainerPath);
-		} else {
-			if (file_exists($oldTextualExtensionsPath) === FALSE) {
-				mkdir($oldTextualExtensionsPath, 0700, TRUE); // Recursively create path....
+		if (file_exists($newDirectory) === FALSE) {
+			if (mkdir($newDirectory, 0700, TRUE) === FALSE) {
+				return FALSE;
 			}
 			
-			mergeDirectories($oldTextualExtensionsPath, $newTextualExtensionsPath);
+			if (chown($newDirectory, $currentUsername) === FALSE) {
+				return FALSE;
+			}
+		}
+
+		$oldDirectoryContents = scandir($oldDirectory);
+
+		if (is_array($oldDirectoryContents)) {
+			foreach ($oldDirectoryContents as $filename) {
+				if ($filename === '.' || $filename === '..') {
+					continue;
+				} else {
+					$oldDirectoryFilePath = "{$oldDirectory}/{$filename}";
+					$newDirectoryFilePath = "{$newDirectory}/{$filename}";
+					
+					if (is_dir($oldDirectoryFilePath)) {
+						mergeDirectories($oldDirectoryFilePath, $newDirectoryFilePath);
+					} else {
+						$newDirectoryFilePath = "{$newDirectory}/{$filename}";
+						
+						if (file_exists($newDirectoryFilePath) === TRUE) {
+							if (filemtime($oldDirectoryFilePath) <= filemtime($newDirectoryFilePath)) {
+								continue;
+							}
+						}
+						
+						if (copy($oldDirectoryFilePath, $newDirectoryFilePath)) {
+							chown($newDirectoryFilePath, $currentUsername);
+						}
+					}
+				} 
+			}
 		}
 	}
 

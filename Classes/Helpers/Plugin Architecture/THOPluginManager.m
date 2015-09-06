@@ -338,7 +338,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)openExtrasInstallerDownloadURL
 {
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras-MAS" ofType:@"pkg"];
+#else
 	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras" ofType:@"pkg"];
+#endif
 
 	if (installerURL) {
 		[RZWorkspace() openFile:installerURL withApplication:@"Installer"];
