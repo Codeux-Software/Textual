@@ -974,6 +974,7 @@
 		4CB26C7119529003005F927C /* IRCCommandIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB26C6F19529003005F927C /* IRCCommandIndex.m */; };
 		4CB26C7319529016005F927C /* IRCCommandIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB26C7219529016005F927C /* IRCCommandIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB26C7419529016005F927C /* IRCCommandIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB26C7219529016005F927C /* IRCCommandIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB295471B9CB88C002B7972 /* Textual-Extras-MAS.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */; settings = {ASSET_TAGS = (); }; };
 		4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
@@ -1112,7 +1113,6 @@
 		4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CEE916F1B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1934,6 +1934,7 @@
 		4CB229211978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = YosemiteDarkServerListViewDisclosureUp.tif; sourceTree = "<group>"; };
 		4CB26C6F19529003005F927C /* IRCCommandIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCCommandIndex.m; path = Classes/IRC/IRCCommandIndex.m; sourceTree = SOURCE_ROOT; };
 		4CB26C7219529016005F927C /* IRCCommandIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCCommandIndex.h; sourceTree = "<group>"; };
+		4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras-MAS.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras-MAS.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCAnimatedContentNavigationOutlineView.h; sourceTree = "<group>"; };
 		4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOUnicodeHelper.m; path = Helpers/THOUnicodeHelper.m; sourceTree = "<group>"; };
 		4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListUserInfoPopover.h; sourceTree = "<group>"; };
@@ -2470,6 +2471,7 @@
 			isa = PBXGroup;
 			children = (
 				4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */,
+				4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */,
 			);
 			name = Installers;
 			sourceTree = "<group>";
@@ -4023,7 +4025,6 @@
 				4CF40F2E1AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib in Resources */,
 				4C0BA51A1990798800857343 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4CF40F4A1AC1A59500A26BE0 /* TDCProgressInformationSheet.xib in Resources */,
-				4CEE916F1B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4CF40F1A1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
 				4C0BA51B1990798800857343 /* FormattingColor_13.png in Resources */,
 				4C0BA51C1990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
@@ -4057,6 +4058,7 @@
 				4C0BA5371990798800857343 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
 				4C0BA5381990798800857343 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C0BA5391990798800857343 /* FormattingColor_3.png in Resources */,
+				4CB295471B9CB88C002B7972 /* Textual-Extras-MAS.pkg in Resources */,
 				4CF40EDA1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
 				4C0BA53B1990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C0BA53C1990798800857343 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
