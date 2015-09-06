@@ -8,62 +8,6 @@
 			<key>createSourceIfMissing</key>
 			<true/>
 			<key>hideOriginalOnMigration</key>
-			<true/>
-			<key>lockSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
-			<key>sourcePath</key>
-			<string>~/Library/Application Scripts/com.codeux.irc.textual5/</string>
-			<key>pathType</key>
-			<string>folder</string>
-		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<true/>
-			<key>hideOriginalOnMigration</key>
-			<true/>
-			<key>lockSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/</string>
-			<key>sourcePath</key>
-			<string>~/Library/Group Containers/8482Q6EPL6.com.codeux.irc.textual/Library/</string>
-			<key>pathType</key>
-			<string>folder</string>
-		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<false/>
-			<key>hideOriginalOnMigration</key>
-			<true/>
-			<key>lockSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Preferences/com.codeux.apps.textual.plist</string>
-			<key>sourcePath</key>
-			<string>~/Library/Preferences/com.codeux.irc.textual5.plist</string>
-			<key>pathType</key>
-			<string>file-propertyList</string>
-		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<false/>
-			<key>hideOriginalOnMigration</key>
-			<true/>
-			<key>lockSource</key>
-			<false/>
-			<key>destinationPath</key>
-			<string>~/Library/Application Scripts/com.codeux.apps.textual/</string>
-			<key>sourcePath</key>
-			<string>~/Library/Group Containers/com.codeux.apps.textual/Library/Application Support/Textual/Custom Scripts/</string>
-			<key>pathType</key>
-			<string>file-softLink</string>
-		</dict>
-		<dict>
-			<key>createSourceIfMissing</key>
-			<true/>
-			<key>hideOriginalOnMigration</key>
 			<false/>
 			<key>lockSource</key>
 			<true/>
