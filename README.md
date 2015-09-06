@@ -6,7 +6,7 @@ Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, 
 
 ## Supporting Textual
 
-Those wishing to support Textual can [buy a copy](http://www.textualapp.com/) of it on the Mac App Store for 4.99 USD.
+Those wishing to support Textual can [buy a copy](http://www.textualapp.com/mac-app-store) of it on the Mac App Store or directly through [FastSpring](http://textualapp.com/fastspring-store) for 4.99 USD (plus applicable sales tax).
 
 Please do not abuse the power to build Textual in order to freely distribute it to hundreds of users. The copy of Textual in the Mac App Store helps fund the project. Therefore, what is asked, is asked out of respect so that the project can continue to thrive.
 
