@@ -72,7 +72,9 @@
 		[RZUserDefaults() addObserver:self forKeyPath:key options:(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew) context:NULL];
 	}
 
-	[self performSelector:@selector(resetTypeSetterAttributes) withObject:nil afterDelay:1.0];
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self resetTypeSetterAttributes];
+	});
 }
 
 - (void)dealloc
@@ -158,9 +160,9 @@
 	
 	/* There seems to be a slight delay while the constraints are updated
 	 so we set a very small timer to resize the text field. */
-	if (resetSize) {
-		[self performSelector:@selector(resetTextFieldCellSize:) withObject:@(YES) afterDelay:1.0];
-	}
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		[self resetTextFieldCellSize:YES];
+	});
 }
 
 - (void)reloadSegmentedControllerOrigin
