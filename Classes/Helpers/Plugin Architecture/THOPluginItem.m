@@ -143,6 +143,9 @@
 		id itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
 
 		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
+			self.pluginPreferencesPaneView = itemView;
+			self.pluginPreferencesPaneMenuItemName = itemName;
+
 			supportedFeatures |= THOPluginItemSupportsPreferencePane;
 		}
 	}
