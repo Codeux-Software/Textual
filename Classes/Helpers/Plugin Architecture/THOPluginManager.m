@@ -508,9 +508,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 					continue;
 				}
 
-				if ([plugin respondsToSelector:@selector(didReceiveServerInput:onClient:)]) {
+				if ([[plugin primaryClass] respondsToSelector:@selector(didReceiveServerInput:onClient:)]) {
 					[[plugin primaryClass] didReceiveServerInput:messageObject onClient:client];
-				} else if ([plugin respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
+				} else if ([[plugin primaryClass] respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]) {
 
 TEXTUAL_IGNORE_DEPRECATION_BEGIN
 					if (senderData == nil) {
@@ -627,9 +627,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		for (THOPluginItem *plugin in self.allLoadedPlugins)
 		{
 			if ([plugin supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-				if ([plugin respondsToSelector:@selector(didPostNewMessage:forViewController:)]) {
+				if ([[plugin primaryClass] respondsToSelector:@selector(didPostNewMessage:forViewController:)]) {
 					[[plugin primaryClass] didPostNewMessage:messageObject forViewController:viewController];
-				} else if ([plugin respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)]) {
+				} else if ([[plugin primaryClass] respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)]) {
 					NSMutableDictionary *pluginDictionary  = [[NSMutableDictionary alloc] initWithCapacity:9];
 
 TEXTUAL_IGNORE_DEPRECATION_BEGIN
