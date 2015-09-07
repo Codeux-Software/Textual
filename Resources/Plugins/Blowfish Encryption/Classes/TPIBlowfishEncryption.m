@@ -116,17 +116,16 @@
 						   completionBlock:nil];
 }
 
-- (void)didReceiveServerInputOnClient:(IRCClient *)client
-					senderInformation:(NSDictionary *)senderDict
-				   messageInformation:(NSDictionary *)messageDict
+- (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
 {
 	if ([self isPluginEnabled] == NO) {
 		return; // Cancel operation...
 	}
 
 	[self performBlockOnMainThread:^{
-		NSString *person  = senderDict[THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
-		NSString *message = messageDict[THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute];
+		NSString *person = [inputObject senderNickname];
+
+		NSString *message = [inputObject messageSequence];
 
 		if ([message hasPrefix:@"+"]) {
 			message = [message substringFromIndex:1];

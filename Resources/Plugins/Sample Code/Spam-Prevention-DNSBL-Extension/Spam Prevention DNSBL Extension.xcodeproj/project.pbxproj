@@ -22,7 +22,7 @@
 		4C4EAD1A1AEABD4A006E0E15 /* TPI_SpamPrevention.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_SpamPrevention.m; path = Classes/TPI_SpamPrevention.m; sourceTree = "<group>"; };
 		4C4EAD1C1AEABD73006E0E15 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = "<group>"; };
 		4C51BE9312D0471600E79CEB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		4C9EF80F199F7EDE00820A5D /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = "/Applications/Textual 5.app/Contents/Headers"; sourceTree = "<absolute>"; };
+		4C8B33901B9D262F0070E9B0 /* Headers */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Headers; path = /Applications/Textual.app/Contents/Headers; sourceTree = "<absolute>"; };
 		8D576316048677EA00EA77CD /* DNSBLAutomaticSpamPrevention.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DNSBLAutomaticSpamPrevention.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -72,7 +72,7 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				4C9EF80F199F7EDE00820A5D /* Headers */,
+				4C8B33901B9D262F0070E9B0 /* Headers */,
 				4C4EAD191AEABD4A006E0E15 /* TPI_SpamPrevention.h */,
 				4C4EAD1A1AEABD4A006E0E15 /* TPI_SpamPrevention.m */,
 			);
@@ -138,7 +138,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Spam Prevention DNSBL Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -187,10 +187,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-AutomaticSpamPrevention";
 				PRODUCT_NAME = DNSBLAutomaticSpamPrevention;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -201,8 +200,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-AutomaticSpamPrevention";
 				PRODUCT_NAME = DNSBLAutomaticSpamPrevention;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -210,21 +209,19 @@
 		1DEB911F08733D790010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "/Applications/Textual 5.app/Contents/MacOS/Textual 5";
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual 5.app/Contents/Frameworks/**\"";
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = "\"/Applications/Textual 5.app/Contents/Headers/**\"";
+				HEADER_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Headers/**\"";
 			};
 			name = Debug;
 		};
 		1DEB912008733D790010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "/Applications/Textual 5.app/Contents/MacOS/Textual 5";
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual 5.app/Contents/Frameworks/**\"";
-				HEADER_SEARCH_PATHS = "\"/Applications/Textual 5.app/Contents/Headers/**\"";
+				BUNDLE_LOADER = /Applications/Textual.app/Contents/MacOS/Textual;
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Frameworks/**\"";
+				HEADER_SEARCH_PATHS = "\"/Applications/Textual.app/Contents/Headers/**\"";
 			};
 			name = Release;
 		};
