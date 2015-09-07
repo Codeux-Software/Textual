@@ -6629,10 +6629,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 		case 315: // RPL_ENDOFWHO
 		{
-			NSString *channel = [m paramAt:1];
-
-			IRCChannel *c = [self findChannel:channel];
-			
 			if (self.inUserInvokedWhoRequest) {
 				[self printUnknownReply:m];
 
