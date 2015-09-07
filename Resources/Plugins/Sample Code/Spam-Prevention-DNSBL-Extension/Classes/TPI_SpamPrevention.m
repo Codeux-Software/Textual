@@ -17,24 +17,24 @@
 #pragma mark Incoming Server Data
 
 #if INCLUDE_AUTOMATIC_LOOKUP_ROUTINE == 1
-- (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict
+- (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
 {
 	[self performBlockOnGlobalQueue:^{
-		NSString *channelName = messageDict[THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute][0];
+		NSString *channelName = [inputObject messageParamaters][0];
 		
 		//if ([channelName isEqualIgnoringCase:@"#textual"] ||
 		//	[channelName isEqualIgnoringCase:@"#textual-dev"] ||
 		//	[channelName isEqualIgnoringCase:@"#textual-unregistered"])
 		//{
-			NSString *userAddress = senderDict[THOPluginProtocolDidReceiveServerInputSenderAddressAttribute];
-			
+			NSString *userAddress = [inputObject senderAddress];
+
 			DebugLogToConsole(@"Attempting to resolve address: %@", userAddress);
 			
 			if (userAddress) {
 				NSDictionary *lookupResults = [self resolveBlacklistEntryFromAddress:userAddress];
 				
 				if (lookupResults) {
-					NSString *userNickname = senderDict[THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
+					NSString *userNickname = [inputObject senderNickname];
 					
 					[self performBlockOnMainThread:^{
 						IRCChannel *destination = [client findChannel:channelName];
