@@ -3883,6 +3883,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self resetAllPropertyValues];
 
 	[mainWindow() reloadTreeGroup:self];
+	[mainWindow() updateTitleFor:self];
 }
 
 - (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
@@ -5206,11 +5207,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 
-	if (myself) {
-		[mainWindow() reloadTreeGroup:self];
+	if (myself == NO) {
+		[mainWindow() updateTitleFor:self];
 	}
-
-	[mainWindow() updateTitle];
 }
 
 - (void)receiveKill:(IRCMessage *)m
@@ -6030,12 +6029,13 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		for (IRCChannel *c in self.channels) {
 			if ([c isPrivateMessage]) {
 				[c activate];
+
+				[mainWindow() reloadTreeItem:c];
 			}
 		}
 	}
 
-	[mainWindow() reloadTreeGroup:self];
-    [mainWindow() updateTitle];
+	[mainWindow() updateTitleFor:self];
 
 	[mainWindowTextField() updateSegmentedController];
 
@@ -6093,8 +6093,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			NSString *configRep = [self.supportInfo buildConfigurationRepresentationForLastEntry];
 
 			[self printDebugInformationToConsole:configRep forCommand:[m command]];
-
-			[mainWindow() reloadTreeGroup:self];
 
 			break;
 		}
@@ -6640,8 +6638,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 				self.inUserInvokedWhoRequest = NO;
 			}
-
-            [mainWindow() updateTitleFor:c];
 
 			break;
 		}
@@ -7951,9 +7947,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* Try to establish connection. */
 	[self.socket open];
-
-	/* Update visible status. */
-	[mainWindow() reloadTreeGroup:self];
 }
 
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp
