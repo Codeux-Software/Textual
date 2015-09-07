@@ -192,7 +192,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 	[dic assignStringTo:&_itemUUID						forKey:@"uniqueIdentifier"];
 
-	[dic assignIntegerTo:&_entryType						forKey:@"entryType"];
+	[dic assignUnsignedIntegerTo:&_entryType			forKey:@"entryType"];
 
 	/* Cannot use assign* on self.hostmask because it uses a custom setter. */
 	self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
