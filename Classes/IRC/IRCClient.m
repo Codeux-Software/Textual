@@ -965,30 +965,25 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (BOOL)outputRuleMatchedInMessage:(NSString *)raw inChannel:(IRCChannel *)chan withLineType:(TVCLogLineType)type
 {
 	NSObjectIsEmptyAssertReturn(raw, NO);
-	
+
 	if ([TPCPreferences removeAllFormatting] == NO) {
 		raw = [raw stripIRCEffects];
 	}
 
-	NSArray *rules = [sharedPluginManager() outputRulesForCommand:IRCCommandFromLineType(type)];
+	NSArray *rules = [sharedPluginManager() pluginOutputSuppressionRules];
 
-	for (NSArray *ruleData in rules) {
-		NSString *ruleRegex = ruleData[0];
-
-		if ([XRRegularExpression string:raw isMatchedByRegex:ruleRegex]) {
-			BOOL console = [ruleData boolAtIndex:0];
-			BOOL channel = [ruleData boolAtIndex:1];
-			BOOL queries = [ruleData boolAtIndex:2];
-
-			if ([chan isKindOfClass:[IRCChannel class]]) {
-				if ((chan.isClient && console) ||
-					(chan.isChannel && channel) ||
-					(chan.isPrivateMessage && queries)) {
-
+	for (THOPluginOutputSuppressionRule *ruleData in rules) {
+		if ([XRRegularExpression string:raw isMatchedByRegex:[ruleData match]]) {
+			if (chan) {
+				if (([chan isChannel] && [ruleData restrictChannel]) ||
+					([chan isPrivateMessage] && [ruleData restrictPrivateMessage]))
+				{
 					return YES;
 				}
 			} else {
-				return console;
+				if ([ruleData restrictConsole]) {
+					return YES;
+				}
 			}
 		}
 	}
@@ -3764,7 +3759,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = BLS(1139, [m numericReply], [m sequence]);
+	NSString *text = BLS(1139, [m commandNumeric], [m sequence]);
 
 	[self printToWebView:channel type:TVCLogLineDebugType command:[m command] nickname:nil messageBody:text isEncrypted:NO receivedAt:[m receivedAt] referenceMessage:nil completionBlock:nil];
 }
@@ -4057,8 +4052,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-	if ([m numericReply] > 0) {
 		[self receiveNumericReply:m];
+	if ([m commandNumeric] > 0) {
 	} else {
 		NSInteger switchNumeric = [IRCCommandIndex indexOfIRCommand:[m command] publicSearch:NO];
 
@@ -5510,7 +5505,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (NSString *)stringValueOfCapacity:(ClientIRCv3SupportedCapacities)capacity
 {
 	NSString *stringValue = nil;
-	
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wswitch"
+
 	switch (capacity) {
 		case ClientIRCv3SupportedCapacityAwayNotify:
 		{
@@ -5589,6 +5587,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			break;
 		}
 	}
+
+#pragma clang diagnostic pop
 	
 	return stringValue;
 }
@@ -6063,7 +6063,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)receiveNumericReply:(IRCMessage *)m
 {
-	NSInteger n = [m numericReply];
+	NSInteger n = [m commandNumeric];
 
 	if (400 <= n && n < 600 && (n == 403) == NO && (n == 422) == NO) {
 		return [self receiveErrorNumericReply:m];
@@ -6240,7 +6240,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		case 305: // RPL_UNAWAY
 		case 306: // RPL_NOWAWAY
 		{
-			self.isAway = ([m numericReply] == 306);
+			self.isAway = (n == 306);
 
 			[self printUnknownReply:m];
             
@@ -7250,7 +7250,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)receiveErrorNumericReply:(IRCMessage *)m
 {
-	NSInteger n = [m numericReply];
+	NSInteger n = [m commandNumeric];
 
 	switch (n) {
 		case 401: // ERR_NOSUCHNICK

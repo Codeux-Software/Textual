@@ -37,6 +37,9 @@
 
 #import "TextualApplication.h"
 
+@class THOPluginDidReceiveServerInputConcreteObject;
+@class THOPluginDidPostNewMessageConcreteObject;
+
 /* All THOPluginProtocol messages are called within the primary class of a plugin and
  no where else. The primary class can be defined in the Info.plist of your bundle. The
  primary class acts similiar to an application delegate whereas it is responsible for 
@@ -141,117 +144,12 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 /*!
  * @brief Method invoked when a subscribed server input command requires processing.
  *
- * @discussion The dictionaries sent as part of this method are guaranteed to always contain 
- *  the same key pair. When a specific key does not have a value, NSNull is used as its value.
- *
+ * @param inputObject An instance of THOPluginDidReceiveServerInputConcreteObject
  * @param client The client responsible for the event
- * @param senderDict A dictionary which contains information related to the sender
- * @param messageDict A dictionary which contains information related to the incoming data
  *
- * @see THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute
- *  THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute
- *  THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute
- *  THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute
- *  THOPluginProtocolDidReceiveServerInputSenderAddressAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageCommandAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute
- *  THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute
+ * @see THOPluginDidReceiveServerInputConcreteObject
  */
-- (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict;
-
-/*!
- * @brief Whether the input was from a regular user or from the server itself.
- *
- * @return NSNumber (BOOL)
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute;
-
-/*!
- * @brief The combined hostmask of the sender.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute;
-
-/*!
- * @brief The nickname portion of the sender's hostmask.
- * 
- * @discussion If THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute is YES, then the
- *  value of this field is the address of the server.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute;
-
-/*!
- * @brief The username (ident) portion of the sender's hostmask.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute;
-
-/*!
- * @brief The address portion of the sender's hostmask.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute;
-
-/*!
- * @brief The date & time during which the input was received.
- *
- * @return NSDate
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute;
-
-/*!
- * @brief The input, split into sections using the space character.
- *
- * @return NSArray
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute;
-
-/*!
- * @brief The input's command
- *
- * @return
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute;
-
-/*!
- * @brief The value of THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute, as an integer.
- *
- * @return NSNumber (NSInteger)
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute;
-
-/*!
- * @brief The input itself
- *
- * @return NSString 
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute;
-
-/*!
- * @brief The server address of the IRC network 
- * 
- * @discussion The value of this attribute is the address of the server that Textual is 
- *  currently connected to and does not equal the sender of the input.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute;
-
-/*!
- * @brief The name of the IRC network or NSNull if unknown.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute;
+- (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client;
 
 #pragma mark -
 #pragma mark Initialization
@@ -299,105 +197,23 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNet
 /*!
  * @brief Method invoked when the Document Object Model (DOM) of a view has been modified.
  *
- * @discussion This method is invoked when a message has been added to the Document
- *  Object Model (DOM) of logController
+ * @discussion This method is invoked when a message has been added to the Document Object 
+ *  Model (DOM) of logController
  *
- * Depending on the type of message added, the set of keys available within the messageInfo
- *  dictionary will vary.
+ * @warning It is NOT recommended to do any heavy work when the -isProcessedInBulk property
+ *  of the posted message is set to YES because thousand of other messages may be processing
+ *  at the same time which can overload the user's Mac if you work on each message.
  *
- * @warning It is NOT recommended to do any heavy work when isThemeReload or isHistoryReload
- *  is YES as these events have thousands of messages being processed at the same time.
- * 
- * @warning This method is invoked on an asynchronous background dispatch queue. Not the 
+ * @warning This method is invoked on an asynchronous background dispatch queue. Not the
  *  main thread. It is extremely important to remember this because WebKit will throw an
  *  exception if it is not interacted with on the main thread.
  *
+ * @param messageObject An instance of THOPluginDidPostNewMessageConcreteObject
  * @param logController The view responsible for the event
- * @param messageInfo A dictionary which contains information about the message
- * @param isThemeReload Whether or not the message was posted as part of a theme reload
- * @param isHistoryReload Whether or not the message was posted as part of playback on application start
  *
- * @see THOPluginProtocolDidPostNewMessageLineNumberAttribute
- *  THOPluginProtocolDidPostNewMessageSenderNicknameAttribute
- *  THOPluginProtocolDidPostNewMessageLineTypeAttribute
- *  THOPluginProtocolDidPostNewMessageMemberTypeAttribute
- *  THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute
- *  THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute
- *  THOPluginProtocolDidPostNewMessageListOfUsersAttribute
- *  THOPluginProtocolDidPostNewMessageMessageBodyAttribute
- *  THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute
-*/
-- (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload;
-
-/*!
- * @brief The ID of the message that can be used to access it using getElementByID()
- *
- * @return NSString
+ * @see THOPluginDidPostNewMessageConcreteObject
  */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute;
-
-/*!
- * @brief The nickname of the person and/or server responsible for producing the message.
- * This value may be empty. Not every event on IRC will have a sender value.
- *
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute;
-
-/*!
- * @brief Integer representation of TVCLogLineType
- * 
- * @return NSNumber (NSInteger)
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute;
-
-/*!
- * @brief Integer representation of TVCLogLineMemberType
- *
- * @return NSNumber (NSInteger)
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute;
-
-/*!
- * @brief Date & time shown left of the message in the chat view.
- *
- * @return NSDate
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute;
-
-/*!
- * @brief Array of ranges (NSRange) of text in the message body believed to be a URL.
- * 
- * @discussion Each entry in this array is another array containing two indexes. First 
- * index (0) is the range in THOPluginProtocolDidPostNewMessageMessageBodyAttribute that the
- * URL was at. The second index (1) is the URL that was found. The URL may differ from the 
- * value in the range as URL schemes may have been appended. For example, the text at the 
- * given range may be "www.example.com" whereas the entry at index 1 is "http://www.example.com"
- * 
- * @return NSArray
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute;
-
-/*!
- * @brief List of users from the channel that appear in the message;
- * 
- * @return NSSet
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute;
-
-/*!
- * @brief The contents of the message visible to the end user, minus any formatting.
- * 
- * @return NSString
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute;
-
-/*!
- * @brief Whether or not a highlight word was matched in the message body.
- *
- * @return NSNumber (BOOL)
- */
-TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute;
+- (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)logController;
 
 #pragma mark -
 
@@ -510,27 +326,178 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /* The behavior of this method call is undefined. It exists for internal
  purposes for the plugins packaged with Textual by default. It is not
  recommended to use it, or try to understand it. */
-@property (nonatomic, readonly, copy) NSDictionary *pluginOutputDisplayRules;
+@property (nonatomic, readonly, copy) NSArray *pluginOutputSuppressionRules;
 
 #pragma mark -
 #pragma mark Deprecated
 
-/* Even though these methods are deprecated, they will still function 
- as they always have. They will however be removed in a future release. */
-- (void)pluginLoadedIntoMemory:(IRCWorld *)world TEXTUAL_DEPRECATED("Use -pluginLoadedIntoMemory instead");
-- (void)pluginUnloadedFromMemory TEXTUAL_DEPRECATED("Use -pluginWillBeUnloadedFromMemory instead");
+- (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
-- (NSArray *)pluginSupportsUserInputCommands TEXTUAL_DEPRECATED("Use -subscribedUserInputCommands instead");
-- (NSArray *)pluginSupportsServerInputCommands TEXTUAL_DEPRECATED("Use -subscribedServerInputCommands instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderUsernameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderAddressAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageReceivedAtTimeAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageParamatersAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageCommandAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNumericReplyAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
-- (NSView *)preferencesView TEXTUAL_DEPRECATED("Use -pluginPreferencesPaneView instead");
-- (NSString *)preferencesMenuItemName TEXTUAL_DEPRECATED("Use -pluginPreferencesPaneMenuItemName instead");
+- (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 
-- (void)messageSentByUser:(IRCClient *)client
-				  message:(NSString *)messageString
-				  command:(NSString *)commandString TEXTUAL_DEPRECATED("Use -userInputCommandInvokedOnClient:commandString:messageString: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineTypeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMemberTypeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageListOfUsersAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageMessageBodyAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+@end
 
-- (void)messageReceivedByServer:(IRCClient *)client
-						 sender:(NSDictionary *)senderDict
-						message:(NSDictionary *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInputOnClient:senderInformation:messageInformation: instead");
+#pragma mark -
+
+@interface THOPluginDidPostNewMessageConcreteObject : NSObject
+/*!
+ * @brief Specifies whether the message was posted as a result of a bulk operation.
+ */
+@property (readonly) BOOL isProcessedInBulk;
+
+/*!
+ * @brief The contents of the message visible to the end user, minus any formatting.
+ */
+@property (readonly, copy) NSString *messageContents;
+
+/*!
+ * @brief The ID of the message that can be used to access it using getElementByID()
+ */
+@property (readonly, copy) NSString *lineNumber;
+
+/*!
+ * @brief The nickname of the person and/or server responsible for producing the 
+ *  message. This value may be empty. Not every event on IRC will have a sender value.
+ */
+@property (readonly, copy) NSString *senderNickname;
+
+/*!
+ * @brief The line type of the message that was posted.
+ */
+@property (readonly) TVCLogLineType lineType;
+
+/*!
+ * @brief The member type of the message that was posted. 
+ */
+@property (readonly) TVCLogLineMemberType memberType;
+
+/*!
+ * @brief The date & time displayed left of the message in the chat view.
+ */
+@property (readonly, copy) NSDate *receivedAt;
+
+/*!
+ * @brief Array of ranges (NSRange) of text in the message body believed to be a URL.
+ *
+ * @discussion Each entry in this array is another array containing two indexes. First
+ *  index (0) is the range in -messageContents that the URL was at. The second index (1)
+ *  is the URL that was found. The URL may differ from the value in the range as URL 
+ *  schemes may have been appended. For example, the text at the given range may be 
+ *  "www.example.com" whereas the entry at index 1 is "http://www.example.com"
+ */
+@property (readonly, copy) NSArray *listOfHyperlinks;
+
+/*!
+ * @brief List of users from the channel that appear in the message body.
+ */
+@property (readonly, copy) NSSet *listOfUsers;
+
+/*!
+ * @brief Whether or not a highlight word was matched in the message body.
+ */
+@property (readonly) BOOL keywordMatchFound;
+@end
+
+#pragma mark -
+
+@interface THOPluginDidReceiveServerInputConcreteObject : NSObject
+/*!
+ * @brief Whether the input was from a regular user or from a server.
+ */
+@property (readonly) BOOL senderIsServer;
+
+/*!
+ * @brief The nickname portion of the sender's hostmask.
+ *
+ * @discussion The value of this property is the server address if isServer == YES
+ */
+@property (readonly, copy) NSString *senderNickname;
+
+/*!
+ * @brief The username (ident) portion of the sender's hostmask.
+ */
+@property (readonly, copy) NSString *senderUsername;
+
+/*!
+ * @brief The address portion of the sender's hostmask.
+ */
+@property (readonly, copy) NSString *senderAddress;
+
+/*!
+ * @brief The combined hostmask of the sender.
+ */
+@property (readonly, copy) NSString *senderHostmask;
+
+/*!
+ * @brief The date & time during which the input was received.
+ *
+ * @discussion If the original message specifies a custom value using the server-time
+ *  capacity, then the value of this property will reflect the value defined by the
+ *  server-time capacity; not the exact date & time it was received on the socket.
+ */
+@property (readonly, copy) NSDate *receivedAt;
+
+/*!
+ * @brief The input itself
+ */
+@property (readonly, copy) NSString *messageSequence;
+
+/*!
+ * @brief The input, split up into sections
+ */
+@property (readonly, copy) NSArray *messageParamaters;
+
+/*!
+ * @brief The input's command
+ */
+@property (readonly, copy) NSString *messageCommand;
+
+/*!
+ * @brief The value of -messageCommand as an integer
+ */
+@property (readonly) NSInteger messageCommandNumeric;
+
+/*!
+ * @brief The server address of the IRC network
+ *
+ * @discussion The value of this attribute is the address of the server that 
+ *  Textual is currently connected to and may differ from -senderNickanme
+ */
+@property (readonly, copy) NSString *networkAddress;
+
+/*!
+ * @brief The name of the IRC network
+ */
+@property (readonly, copy) NSString *networkName;
+@end
+
+#pragma mark -
+
+@interface THOPluginOutputSuppressionRule : NSObject
+@property (nonatomic, assign) NSString *match;
+@property (nonatomic, assign) BOOL restrictConsole;
+@property (nonatomic, assign) BOOL restrictChannel;
+@property (nonatomic, assign) BOOL restrictPrivateMessage;
 @end

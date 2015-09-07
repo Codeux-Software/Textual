@@ -59,7 +59,9 @@
 
 @property (readonly, copy) NSArray *pluginsWithPreferencePanes;
 
-- (NSArray *)outputRulesForCommand:(NSString *)command;
+@property (readonly, copy) NSArray *pluginOutputSuppressionRules;
+
+@property (readonly) BOOL atleastOnePluginWantsPostNewMessageEvent;
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command
 						   scriptPath:(NSString **)scriptPath
@@ -82,13 +84,10 @@
 - (void)sendServerInputDataToBundles:(IRCClient *)client message:(IRCMessage *)message;
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command;
 
+- (void)postNewMessageEventForViewController:(TVCLogController *)viewController withObject:(THOPluginDidPostNewMessageConcreteObject *)messageObject;
+
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
 					   forViewController:(TVCLogController *)viewController
 								lineType:(TVCLogLineType)lineType
 							  memberType:(TVCLogLineMemberType)memberType;
-
-- (void)postNewMessageEventForViewController:(TVCLogController *)logController
-								 messageInfo:(NSDictionary *)messageInfo
-							   isThemeReload:(BOOL)isThemeReload
-							 isHistoryReload:(BOOL)isHistoryReload;
 @end

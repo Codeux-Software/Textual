@@ -42,13 +42,12 @@
 #pragma mark -
 #pragma mark Plugin API
 
-- (void)didReceiveServerInputOnClient:(IRCClient *)client
-					senderInformation:(NSDictionary *)senderDict
-				   messageInformation:(NSDictionary *)messageDict
+- (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
 {
 	if ([client isZNCBouncerConnection]) {
-		NSString *sender = senderDict[THOPluginProtocolDidReceiveServerInputSenderNicknameAttribute];
-		NSString *message = messageDict[THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute];
+		NSString *sender = [inputObject senderNickname];
+
+		NSString *message = [inputObject messageSequence];
 
 		if ([sender isEqualToString:@"*status"] && [message hasPrefix:@"Disconnected from IRC"]) {
 			/* We listen for ZNC disconnects so that we can terminate channels when we

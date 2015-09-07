@@ -41,35 +41,30 @@
  The code contained by this header file was designed to be used internally for
  Textual and may be dangerous to use otherwise. */
 
-// OldStyle = deprecated class names
-// NewStyle = current class names for THOPluginProtocol
-typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeaturesFlags) {
-	THOPluginItemSupportedFeaturePreferencePaneOldStyleFlag						= 1 << 0,
-	THOPluginItemSupportedFeatureSubscribedUserInputCommandsOldStyleFlag		= 1 << 1,
-	THOPluginItemSupportedFeatureSubscribedServerInputCommandsOldStyleFlag		= 1 << 2,
-	THOPluginItemSupportedFeatureInlineMediaManipulationFlag					= 1 << 3,
-	THOPluginItemSupportedFeatureNewMessagePostedEventFlag						= 1 << 4,
-	THOPluginItemSupportedFeatureWillRenderMessageEventFlag						= 1 << 5,
-	THOPluginItemSupportedFeaturePreferencePaneNewStyleFlag						= 1 << 6,
-	THOPluginItemSupportedFeatureUserInputDataInterceptionFlag					= 1 << 7,
-	THOPluginItemSupportedFeatureServerInputDataInterceptionFlag				= 1 << 8,
-	THOPluginItemSupportedFeatureSubscribedUserInputCommandsNewStyleFlag		= 1 << 9,
-	THOPluginItemSupportedFeatureSubscribedServerInputCommandsNewStyleFlag		= 1 << 10,
-	THOPluginItemSupportedFeatureOutputSuppressionRulesFlag						= 1 << 11
+typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
+	THOPluginItemSupportsInlineMediaManipulation			= 1 << 0,
+	THOPluginItemSupportsNewMessagePostedEvent				= 1 << 1,
+	THOPluginItemSupportsOutputSuppressionRules				= 1 << 2,
+	THOPluginItemSupportsPreferencePane						= 1 << 3,
+	THOPluginItemSupportsServerInputDataInterception		= 1 << 4,
+	THOPluginItemSupportsSubscribedServerInputCommands		= 1 << 5,
+	THOPluginItemSupportsSubscribedUserInputCommands		= 1 << 6,
+	THOPluginItemSupportsUserInputDataInterception			= 1 << 7,
+	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 8
 };
 
 @interface THOPluginItem : NSObject
-@property (nonatomic, strong) id primaryClass;
-@property (nonatomic, assign) THOPluginItemSupportedFeaturesFlags supportedFeatures;
-@property (nonatomic, copy) NSArray *supportedUserInputCommands;
-@property (nonatomic, copy) NSArray *supportedServerInputCommands;
-@property (nonatomic, copy) NSDictionary *outputSuppressionRules;
-@property (readonly, strong) NSView *pluginPreferenesPaneView;
+@property (readonly, strong) id primaryClass;
+@property (readonly, assign) THOPluginItemSupportedFeatures supportedFeatures;
+@property (readonly, copy) NSArray *supportedUserInputCommands;
+@property (readonly, copy) NSArray *supportedServerInputCommands;
+@property (readonly, copy) NSArray *outputSuppressionRules;
+@property (readonly, strong) NSView *pluginPreferencesPaneView;
 @property (readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
 
 - (BOOL)loadBundle:(NSBundle *)bundle;
 
-- (BOOL)supportsFeature:(THOPluginItemSupportedFeaturesFlags)feature;
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
 
 - (void)sendDealloc;
 @end

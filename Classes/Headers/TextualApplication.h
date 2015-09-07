@@ -313,9 +313,9 @@
 	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers. */
+	#import "THOPluginProtocol.h"
 	#import "THOPluginItem.h"
 	#import "THOPluginManager.h"
-	#import "THOPluginProtocol.h"
 	#import "THOUnicodeHelper.h"
 
 	/* Library. */
