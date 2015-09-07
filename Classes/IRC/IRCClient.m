@@ -4052,8 +4052,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		}
 	}
 
-		[self receiveNumericReply:m];
 	if ([m commandNumeric] > 0) {
+		[self receiveNumericReply:m];
 	} else {
 		NSInteger switchNumeric = [IRCCommandIndex indexOfIRCommand:[m command] publicSearch:NO];
 
