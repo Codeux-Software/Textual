@@ -1555,26 +1555,30 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-	self.windowScriptObjectLoaded = YES;
+	if (self.windowScriptObjectLoaded == NO) {
+		self.windowScriptObjectLoaded = YES;
 
-	[windowObject setValue:self.webViewScriptSink forKey:@"app"];
+		[windowObject setValue:self.webViewScriptSink forKey:@"app"];
 
-	/* If the view was already declared as loaded, then that means our 
-	 script object came behind our actual load. Therefore, we declare
-	 ourself loaded here since it wasn't done in other delegate method. */
-	if (self.windowFrameObjectLoaded) {
-		[self postViwLoadedJavaScript];
+		/* If the view was already declared as loaded, then that means our 
+		 script object came behind our actual load. Therefore, we declare
+		 ourself loaded here since it wasn't done in other delegate method. */
+		if (self.windowFrameObjectLoaded) {
+			[self postViwLoadedJavaScript];
+		}
 	}
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	self.windowFrameObjectLoaded = YES;
+	if (self.windowFrameObjectLoaded == NO) {
+		self.windowFrameObjectLoaded = YES;
 
-	/* Only post view loaded from here if we have a web script object.
-	 Otherwise, we wait until we have that before doing anything. */
-	if (self.windowScriptObjectLoaded) {
-		[self postViwLoadedJavaScript];
+		/* Only post view loaded from here if we have a web script object.
+		 Otherwise, we wait until we have that before doing anything. */
+		if (self.windowScriptObjectLoaded) {
+			[self postViwLoadedJavaScript];
+		}
 	}
 }
 
