@@ -285,8 +285,8 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		[input assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
 		[input assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];
 
-		[input assignIntegerTo:&_lineType forKey:@"lineType"];
-		[input assignIntegerTo:&_memberType forKey:@"memberType"];
+		[input assignUnsignedIntegerTo:&_lineType forKey:@"lineType"];
+		[input assignUnsignedIntegerTo:&_memberType forKey:@"memberType"];
 		
 		[input assignBoolTo:&_isHistoric forKey:@"isHistoric"];
 		[input assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];

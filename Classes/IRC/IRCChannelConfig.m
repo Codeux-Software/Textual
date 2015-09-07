@@ -187,7 +187,7 @@
 	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
 
 	/* Load the newest set of keys. */
-	[dic assignIntegerTo:&_type			forKey:@"channelType"];
+	[dic assignUnsignedIntegerTo:&_type			forKey:@"channelType"];
 
 	[dic assignStringTo:&_itemUUID		forKey:@"uniqueIdentifier"];
 	[dic assignStringTo:&_channelName	forKey:@"channelName"];

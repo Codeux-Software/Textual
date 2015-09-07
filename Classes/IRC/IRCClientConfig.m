@@ -444,7 +444,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[dic assignBoolTo:&_setInvisibleModeOnConnect	forKey:@"setInvisibleOnConnect"];
 
-	[dic assignIntegerTo:&_proxyType		forKey:@"proxyServerType"];
+	[dic assignUnsignedIntegerTo:&_proxyType		forKey:@"proxyServerType"];
 	[dic assignIntegerTo:&_proxyPort		forKey:@"proxyServerPort"];
 	[dic assignStringTo:&_proxyAddress		forKey:@"proxyServerAddress"];
 	[dic assignStringTo:&_proxyUsername		forKey:@"proxyServerUsername"];
@@ -530,7 +530,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"prefersSecuredConnection"];
 	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"connectionPrefersIPv6"];
 
-	[dic assignIntegerTo:&_proxyType				forKey:@"proxyType"];
+	[dic assignUnsignedIntegerTo:&_proxyType				forKey:@"proxyType"];
 	[dic assignStringTo:&_proxyAddress				forKey:@"proxyAddress"];
 	[dic assignIntegerTo:&_proxyPort				forKey:@"proxyPort"];
 	[dic assignStringTo:&_proxyUsername				forKey:@"proxyUsername"];
