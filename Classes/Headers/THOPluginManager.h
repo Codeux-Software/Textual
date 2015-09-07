@@ -54,7 +54,7 @@
 @property (readonly, copy) NSArray *supportedUserInputCommands;
 @property (readonly, copy) NSArray *supportedServerInputCommands;
 
-@property (readonly, strong) id supportedAppleScriptCommands;
+@property (readonly, copy) id supportedAppleScriptCommands;
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo;
 
 @property (readonly, copy) NSArray *pluginsWithPreferencePanes;
