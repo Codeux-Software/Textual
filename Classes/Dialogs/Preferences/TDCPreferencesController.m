@@ -372,7 +372,7 @@
 				THOPluginItem *plugin = [sharedPluginManager() pluginsWithPreferencePanes][pluginIndex];
 
 				if (plugin) {
-					NSView *prefsView = [plugin pluginPreferenesPaneView];
+					NSView *prefsView = [plugin pluginPreferencesPaneView];
 
 					if (prefsView) {
 						[self firstPane:prefsView selectedItem:_toolbarItemIndexAddons];

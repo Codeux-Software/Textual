@@ -198,9 +198,9 @@
 	self.command = [foundCommand uppercaseString];
 
 	if ([self.command isNumericOnly]) {
-		self.numericReply = [foundCommand integerValue];
+		self.commandNumeric = [foundCommand integerValue];
 	} else {
-		self.numericReply = 0;
+		self.commandNumeric = 0;
 	}
 
     /* After the sender information and command information is extracted,

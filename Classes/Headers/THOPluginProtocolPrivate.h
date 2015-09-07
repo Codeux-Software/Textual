@@ -5,7 +5,6 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -38,31 +37,32 @@
 
 #import "TextualApplication.h"
 
-@interface IRCMessage : NSObject
-@property (nonatomic, copy) IRCPrefix *sender;
-@property (nonatomic, copy) NSString *command;
-@property (nonatomic, assign) NSInteger commandNumeric;
-@property (nonatomic, copy) NSArray *params;
-@property (nonatomic, copy) NSDate *receivedAt;
-@property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
-@property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
+@interface THOPluginDidPostNewMessageConcreteObject ()
+@property (nonatomic, readwrite, assign) BOOL isProcessedInBulk;
+@property (nonatomic, readwrite, copy) NSString *messageContents;
+@property (nonatomic, readwrite, copy) NSString *lineNumber;
+@property (nonatomic, readwrite, copy) NSString *senderNickname;
+@property (nonatomic, readwrite, assign) TVCLogLineType lineType;
+@property (nonatomic, readwrite, assign) TVCLogLineMemberType memberType;
+@property (nonatomic, readwrite, copy) NSDate *receivedAt;
+@property (nonatomic, readwrite, copy) NSArray *listOfHyperlinks;
+@property (nonatomic, readwrite, copy) NSSet *listOfUsers;
+@property (nonatomic, readwrite, assign) BOOL keywordMatchFound;
+@end
 
-- (instancetype)initWithLine:(NSString *)line;
+#pragma mark -
 
-- (void)parseLine:(NSString *)line;
-- (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
-
-@property (readonly, copy) NSString *senderNickname;
-@property (readonly, copy) NSString *senderUsername;
-@property (readonly, copy) NSString *senderAddress;
-@property (readonly, copy) NSString *senderHostmask;
-
-@property (readonly) BOOL senderIsServer;
-
-@property (readonly) NSInteger paramsCount;
-
-- (NSString *)paramAt:(NSInteger)index;
-
-@property (readonly, copy) NSString *sequence;
-- (NSString *)sequence:(NSInteger)index;
+@interface THOPluginDidReceiveServerInputConcreteObject ()
+@property (nonatomic, readwrite, assign) BOOL senderIsServer;
+@property (nonatomic, readwrite, copy) NSString *senderNickname;
+@property (nonatomic, readwrite, copy) NSString *senderUsername;
+@property (nonatomic, readwrite, copy) NSString *senderAddress;
+@property (nonatomic, readwrite, copy) NSString *senderHostmask;
+@property (nonatomic, readwrite, copy) NSDate *receivedAt;
+@property (nonatomic, readwrite, copy) NSString *messageSequence;
+@property (nonatomic, readwrite, copy) NSArray *messageParamaters;
+@property (nonatomic, readwrite, copy) NSString *messageCommand;
+@property (nonatomic, readwrite, assign) NSInteger messageCommandNumeric;
+@property (nonatomic, readwrite, copy) NSString *networkAddress;
+@property (nonatomic, readwrite, copy) NSString *networkName;
 @end

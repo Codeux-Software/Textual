@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "THOPluginProtocolPrivate.h"
+
 #import <objc/objc-runtime.h>
 
 @interface TVCLogController ()
@@ -657,12 +659,15 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 			
 			/* Inform plugins. */
-			NSDictionary *resultInfo = lineInfo[1];
-			
-			[sharedPluginManager() postNewMessageEventForViewController:self
-															messageInfo:resultInfo[@"pluginDictionary"]
-														  isThemeReload:(markHistoric == NO)
-														isHistoryReload: markHistoric];
+			if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+				NSDictionary *resultInfo = lineInfo[1];
+
+				THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = resultInfo[@"pluginConcreteObject"];
+
+				[pluginConcreteObject setIsProcessedInBulk:YES];
+
+				[sharedPluginManager() postNewMessageEventForViewController:self withObject:pluginConcreteObject];
+			}
 		}
 	}];
 }
@@ -1064,10 +1069,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
-				[sharedPluginManager() postNewMessageEventForViewController:self
-																messageInfo:resultInfo[@"pluginDictionary"]
-															  isThemeReload:NO
-															isHistoryReload:NO];
+				if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+					[sharedPluginManager() postNewMessageEventForViewController:self withObject:resultInfo[@"pluginConcreteObject"]];
+				}
 
 				/* Limit lines. */
 				if (self.maximumLineCount > 0 && (self.activeLineCount - 10) > self.maximumLineCount) {
@@ -1321,24 +1325,28 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	attributes[@"lineRenderTime"] = lineRenderTime;
 	
 	resultData[@"lineNumber"] = newLinenNumber;
-	
-	NSMutableDictionary *pluginDictionary = [NSMutableDictionary dictionary];
-	
-	[pluginDictionary setBool:highlighted forKey:THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute];
-	
-	[pluginDictionary setInteger:[line lineType] forKey:THOPluginProtocolDidPostNewMessageLineTypeAttribute];
-	[pluginDictionary setInteger:[line memberType] forKey:THOPluginProtocolDidPostNewMessageMemberTypeAttribute];
-	
-	[pluginDictionary maybeSetObject:[line nickname] forKey:THOPluginProtocolDidPostNewMessageSenderNicknameAttribute];
-	[pluginDictionary maybeSetObject:[line receivedAt] forKey:THOPluginProtocolDidPostNewMessageReceivedAtTimeAttribute];
-	
-	[pluginDictionary maybeSetObject:newLinenNumber forKey:THOPluginProtocolDidPostNewMessageLineNumberAttribute];
-	
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfHyperlinksAttribute];
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsListOfUsersFoundAttribute] forKey:THOPluginProtocolDidPostNewMessageListOfUsersAttribute];
-	[pluginDictionary maybeSetObject:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute] forKey:THOPluginProtocolDidPostNewMessageMessageBodyAttribute];
-	
-	resultData[@"pluginDictionary"] = pluginDictionary;
+
+	if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+		THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = [THOPluginDidPostNewMessageConcreteObject new];
+
+		[pluginConcreteObject setKeywordMatchFound:highlighted];
+
+		[pluginConcreteObject setLineType:[line lineType]];
+		[pluginConcreteObject setMemberType:[line memberType]];
+
+		[pluginConcreteObject setSenderNickname:[line nickname]];
+
+		[pluginConcreteObject setReceivedAt:[line receivedAt]];
+
+		[pluginConcreteObject setLineNumber:newLinenNumber];
+
+		[pluginConcreteObject setMessageContents:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute]];
+
+		[pluginConcreteObject setListOfHyperlinks:rendererResults[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute]];
+		[pluginConcreteObject setListOfUsers:rendererResults[TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute]];
+
+		resultData[@"pluginConcreteObject"] = pluginConcreteObject;
+	}
 	
 	// ************************************************************************** /
 	// Return information.											              /
@@ -1362,6 +1370,11 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
 	[self.webViewScriptSink toggleInlineImage:uniqueID];
+}
+
+- (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID
+{
+	;
 }
 
 #pragma mark -
