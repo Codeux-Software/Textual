@@ -4918,8 +4918,6 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[mainWindow() reloadTreeItem:c];
 		
 		self.cachedLocalHostmask = [m senderHostmask];
-
-		self.cachedLocalNickname = [m senderNickname];
 		
 		self.inUserInvokedJoinRequest = NO;
 	} else {
