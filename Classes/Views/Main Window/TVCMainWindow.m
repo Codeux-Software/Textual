@@ -1274,8 +1274,10 @@
 		
 		if ([c isChannel]) {
 			/* We always want the channel name and user count. */
+			NSString *userCount = TXFormattedNumber([c numberOfMembers]);
+
 			[title appendString:[c name]];
-			[title appendString:BLS(1007, [c numberOfMembers])];
+			[title appendString:BLS(1007, userCount)];
 			
 			/* If we are aware of the channel modes, then we append that. */
 			NSString *modes = [[c modeInfo] titleString];
