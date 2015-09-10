@@ -1526,6 +1526,10 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return NO;
 	}
 
+	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityBatch] == NO) {
+		return (self.isZNCBouncerConnection == NO || [m isHistoric] == NO);
+	}
+
 	return ( self.isZNCBouncerConnection == NO ||
 			(self.isZNCBouncerConnection && self.zncBouncerIsPlayingBackHistory == NO));
 }
