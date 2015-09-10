@@ -92,6 +92,7 @@
 #define _reconnectTimerMaximumAttempts		100
 
 #define _maximumChannelCountPerWhoBatchRequest		5
+#define _maximumChannelSizePerWhoBatchRequest		5000
 
 enum {
 	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 9,
@@ -9013,7 +9014,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 							/* We set the flag even if user doesn't want them just to
 							 maintain internal state information. */
 							if (self.config.sendWhoCommandRequestsToChannels) {
-								[channelBatch addObject:c];
+								if ([c numberOfMembers] <= _maximumChannelSizePerWhoBatchRequest) {
+									[channelBatch addObject:c];
+								}
 							}
 						} else {
 							if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
