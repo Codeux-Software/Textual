@@ -90,6 +90,7 @@
 @interface IRCMessageBatchMessage : NSObject
 @property (nonatomic, assign) BOOL batchIsOpen;
 @property (nonatomic, copy) NSString *batchToken;
+@property (nonatomic, copy) NSString *batchType;
 @property (nonatomic, copy, readonly) NSArray *queuedEntries;
 @property (nonatomic, assign) IRCMessageBatchMessage *parentBatchMessage;
 

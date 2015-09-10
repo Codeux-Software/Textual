@@ -5535,10 +5535,17 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 			return; // Nothing left to do...
 		}
 
+		NSString *batchType = [thisBatchMessage batchType];
+
 		/* Process queued entries for this batch message. */
 		/* The method used for processing queued entries will 
 		 also remove it from queue once completed. */
 		[self recursivelyProcessBatchMessage:thisBatchMessage];
+
+		/* Set vendor specific flags based on BATCH command values */
+		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
+			self.zncBouncerIsPlayingBackHistory = NO;
+		}
 	}
 	else // isBatchOpening == NO
 	{
@@ -5557,15 +5564,16 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		[newBatchMessage setBatchIsOpen:YES];
 
 		[newBatchMessage setBatchToken:batchToken];
+		[newBatchMessage setBatchType:batchType];
 
 		[newBatchMessage setParentBatchMessage:parentBatchMessage];
 
 		[self.batchMessages queueEntry:newBatchMessage];
-	}
 
-	/* Set vendor specific flags based on BATCH command values */
-	if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
-		self.zncBouncerIsPlayingBackHistory = (self.isZNCBouncerConnection && isBatchOpening);
+		/* Set vendor specific flags based on BATCH command values */
+		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
+			self.zncBouncerIsPlayingBackHistory = self.isZNCBouncerConnection;
+		}
 	}
 }
 
