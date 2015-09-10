@@ -807,12 +807,19 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (NSInteger)indexOfMember:(NSString *)nick options:(NSStringCompareOptions)mask inList:(NSArray *)memberList
 {
 	NSObjectIsEmptyAssertReturn(nick, NSNotFound);
-	
-	if (mask & NSCaseInsensitiveSearch) {
-		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualIgnoringCase:)];
-	} else {
-		return [memberList indexOfObjectMatchingValue:nick withKeyPath:@"nickname" usingSelector:@selector(isEqualToString:)];
-	}
+
+	NSInteger memberIndex =
+	[memberList indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+		NSString *nick2 = [(IRCUser *)obj nickname];
+
+		if (mask & NSCaseInsensitiveSearch) {
+			return [nick isEqualToString:nick2];
+		} else {
+			return [nick isEqualIgnoringCase:nick2];
+		}
+	}];
+
+	return memberIndex;
 }
 
 #pragma mark -
