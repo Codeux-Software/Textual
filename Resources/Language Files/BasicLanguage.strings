@@ -101,7 +101,7 @@
 "TDCServerChannelListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
 
 /* Invite dialog */
-"TDChannelInviteSheet[1000]" = "%d users";
+"TDChannelInviteSheet[1000]" = "%ld users";
 "TDChannelInviteSheet[1001]" = "Invite %@ to:";
 "TDChannelInviteSheet[1002]" = "%1$@ and %2$@";
 
@@ -244,7 +244,7 @@
 /* Sections of channel information in main window title bar */
 "BasicLanguage[1005]" = " — ";
 "BasicLanguage[1006]" = " (%@)";
-"BasicLanguage[1007]" = " (%ld users)";
+"BasicLanguage[1007]" = " (%@ users)";
 "BasicLanguage[1008]" = "%1$@ on %2$@";
 
 /* Cancel button used by prompts */
