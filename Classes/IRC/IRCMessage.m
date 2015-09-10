@@ -38,6 +38,14 @@
 
 #import "TextualApplication.h"
 
+@interface IRCMessageBatchMessageContainer ()
+@property (nonatomic, strong) NSMutableDictionary *internalBatchEntries;
+@end
+
+@interface IRCMessageBatchMessage ()
+@property (nonatomic, strong) NSMutableArray *internalBatchEntries;
+@end
+
 @implementation IRCMessage
 
 - (instancetype)initWithLine:(NSString *)line
@@ -134,6 +142,17 @@
 				self.receivedAt = date;
 				
 				self.isHistoric = YES;
+			}
+		}
+
+		/* Process batch token if available. */
+		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityBatch]) {
+			NSString *batchToken = valueMatrix[@"batch"];
+
+			if (batchToken) {
+				if ([batchToken onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
+					self.batchToken = batchToken;
+				}
 			}
 		}
 	}
@@ -285,6 +304,132 @@
 - (BOOL)senderIsServer
 {
 	return self.sender.isServer;
+}
+
+@end
+
+#pragma mark -
+
+@implementation IRCMessageBatchMessageContainer
+
+- (NSDictionary *)queuedEntries
+{
+	@synchronized(self.internalBatchEntries) {
+		return [NSDictionary dictionaryWithDictionary:self.internalBatchEntries];
+	}
+}
+
+- (void)clearQueue
+{
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return;
+		}
+
+		[self.internalBatchEntries removeAllObjects];
+	}
+}
+
+- (void)dequeueEntry:(id)entry
+{
+	if (entry == nil) {
+		return;
+	}
+
+	if ([entry isKindOfClass:[IRCMessageBatchMessage class]]) {
+		[self dequeueEntryWithBatchToken:[entry batchToken]];
+	} else if ([entry isKindOfClass:[NSString class]]) {
+		[self dequeueEntryWithBatchToken:entry];
+	}
+}
+
+- (void)dequeueEntryWithBatchToken:(NSString *)batchToken
+{
+	if (NSObjectIsEmpty(batchToken)) {
+		return;
+	}
+
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return;
+		}
+
+		[self.internalBatchEntries removeObjectForKey:batchToken];
+	}
+}
+
+- (void)queueEntry:(id)entry
+{
+	if (entry == nil) {
+		return;
+	}
+
+	if ([entry isKindOfClass:[IRCMessageBatchMessage class]] == NO) {
+		return;
+	}
+
+	NSString *batchToken = [entry batchToken];
+
+	if (NSObjectIsEmpty(batchToken)) {
+		return;
+	}
+
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			self.internalBatchEntries = [NSMutableDictionary dictionary];
+		}
+
+		[self.internalBatchEntries setObject:entry forKey:batchToken];
+	}
+}
+
+- (id)queuedEntryWithBatchToken:(NSString *)batchToken
+{
+	if (NSObjectIsEmpty(batchToken)) {
+		return nil;
+	}
+
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			return nil;
+		}
+
+		return [self.internalBatchEntries objectForKey:batchToken];
+	}
+}
+
+@end
+
+#pragma mark -
+
+@implementation IRCMessageBatchMessage
+
+- (NSArray *)queuedEntries
+{
+	@synchronized(self.internalBatchEntries) {
+		return [NSArray arrayWithArray:self.internalBatchEntries];
+	}
+}
+
+- (void)queueEntry:(id)entry
+{
+	if (entry == nil) {
+		return;
+	}
+
+	if ([entry isKindOfClass:[IRCMessage class]] == NO &&
+		[entry isKindOfClass:[IRCMessageBatchMessage class]] == NO)
+	{
+		return;
+	}
+
+	@synchronized(self.internalBatchEntries) {
+		if (self.internalBatchEntries == nil) {
+			self.internalBatchEntries = [NSMutableArray array];
+		}
+
+		[self.internalBatchEntries addObject:entry];
+	}
 }
 
 @end

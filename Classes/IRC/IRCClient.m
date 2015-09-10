@@ -112,6 +112,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, assign) BOOL isTerminating; // Is being destroyed
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
+@property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
 @property (nonatomic, assign) NSInteger reconnectAttempts;
 @property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
@@ -131,6 +132,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 @property (nonatomic, strong) NSMutableArray *commandQueue;
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
 @property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
+@property (nonatomic, strong) IRCMessageBatchMessageContainer *batchMessages;
 @end
 
 @implementation IRCClient
@@ -142,6 +144,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 {
 	if ((self = [super init])) {
 		self.supportInfo = [IRCISupportInfo new];
+
+		self.batchMessages = [IRCMessageBatchMessageContainer new];
 
 		self.connectType = IRCClientConnectNormalMode;
 		self.disconnectType = IRCClientDisconnectNormalMode;
@@ -168,7 +172,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		self.isLoggedIn = NO;
 		self.isQuitting = NO;
 		self.isWaitingForNickServ = NO;
+
 		self.isZNCBouncerConnection = NO;
+		self.zncBouncerIsPlayingBackHistory = NO;
 
 		self.autojoinInProgress = NO;
 		self.rawModeEnabled = NO;
@@ -237,6 +243,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (void)dealloc
 {
+	[self.batchMessages clearQueue];
+
 	[self.commandQueueTimer stop];
 	[self.isonTimer	stop];
 	[self.pongTimer	stop];
@@ -1511,39 +1519,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 - (BOOL)isSafeToPostNotificationForMessage:(IRCMessage *)m inChannel:(IRCChannel *)channel
 {
-	// Validate input.
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
-	
-	// Post if user doesn't give a shit.
+
 	if (self.config.zncIgnorePlaybackNotifications == NO) {
-		return YES;
-	}
-
-	// Check other conditionals.
-	return ([self messageIsPartOfZNCPlaybackBuffer:m inChannel:channel] == NO); // Do playback check...
-}
-
-- (BOOL)messageIsPartOfZNCPlaybackBuffer:(IRCMessage *)m inChannel:(IRCChannel *)channel
-{
-	PointerIsEmptyAssertReturn(m, NO);
-	PointerIsEmptyAssertReturn(channel, NO);
-	
-	if (self.isZNCBouncerConnection == NO) {
-		return NO;
-	}
-	
-	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime] == NO) {
 		return NO;
 	}
 
-	/* When Textual is using the server-time CAP with ZNC it does not tell us when
-	 the playback buffer begins and when it ends. Therefore, we must make a best 
-	 guess. We do this by checking if the message being parsed has a @time= attached
-	 to it from server-time and also if it was sent during join.
-	 
-	 This is all best guess... */
-	return m.isHistoric;
+	return ( self.isZNCBouncerConnection == NO ||
+			(self.isZNCBouncerConnection && self.zncBouncerIsPlayingBackHistory == NO));
 }
 
 #pragma mark -
@@ -3791,7 +3775,9 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	self.isLoggedIn = NO;
 	self.isQuitting = NO;
 	self.isWaitingForNickServ = NO;
+
 	self.isZNCBouncerConnection = NO;
+	self.zncBouncerIsPlayingBackHistory = NO;
 	
 	self.autojoinInProgress = NO;
 	self.rawModeEnabled = NO;
@@ -4025,13 +4011,19 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	[m parseLine:s forClient:self];
 	
-	PointerIsEmptyAssert(m.params); // If line was malformed, params will be nil.
+	PointerIsEmptyAssert([m params]);
 
-    /* Intercept input. */
     m = [sharedPluginManager() processInterceptedServerInput:m for:self];
 
     PointerIsEmptyAssert(m);
 
+	if ([self filterBatchCommandIncomingData:m] == NO) {
+		[self processIncomingData:m];
+	}
+}
+
+- (void)processIncomingData:(IRCMessage *)m
+{
 	/* Keep track of the server time of the last seen message. */
 	if (self.isLoggedIn) {
 		if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
@@ -4175,7 +4167,15 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
             case 1050: // Command: AWAY (away-notify CAP)
             {
                 [self receiveAwayNotifyCapacity:m];
+
+				break;
             }
+			case 1054: // BATCH
+			{
+				[self receiveBatch:m];
+
+				break;
+			}
 		}
 	}
 
@@ -5479,6 +5479,150 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[self printError:message forCommand:[m command]];
 }
 
+- (void)receiveBatch:(IRCMessage *)m
+{
+	NSAssertReturn([m paramsCount] >= 1);
+
+	NSString *batchToken = [m paramAt:0];
+
+	if ([batchToken length] <= 1) {
+		LogToConsole(@"Cannot process BATCH command because [batchToken length] <= 1");
+
+		return; // Cancel operation...
+	}
+
+	NSString *batchType = [m paramAt:1];
+
+	BOOL isBatchOpening;
+
+	if ([batchToken hasPrefix:@"+"]) {
+		 batchToken = [batchToken substringFromIndex:1];
+
+		isBatchOpening = YES;
+	} else if ([batchToken hasPrefix:@"-"]) {
+		batchToken = [batchToken substringFromIndex:1];
+
+		isBatchOpening = NO;
+	} else {
+		LogToConsole(@"Cannot process BATCH command because there was no open or close token");
+
+		return; // Cancel operation...
+	}
+
+	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet] == NO) {
+		LogToConsole(@"Cannot process BATCH command because the batch token contains illegal characters");
+
+		return; // Cancel operation...
+	}
+
+	if (isBatchOpening == NO)
+	{
+		/* Find batch message matching known token. */
+		IRCMessageBatchMessage *thisBatchMessage = [self.batchMessages queuedEntryWithBatchToken:batchToken];
+
+		if (thisBatchMessage == nil) {
+			LogToConsole(@"Cannot process BATCH command because -queuedEntryWithBatchToken: returned nil");
+
+			return; // Cancel operation...
+		}
+
+		[thisBatchMessage setBatchIsOpen:NO];
+
+		/* If this batch message has a parent batch, then we 
+		 do not remove this batch or process it until the close
+		 statement for the parent is received. */
+		if ([thisBatchMessage parentBatchMessage]) {
+			return; // Nothing left to do...
+		}
+
+		/* Process queued entries for this batch message. */
+		/* The method used for processing queued entries will 
+		 also remove it from queue once completed. */
+		[self recursivelyProcessBatchMessage:thisBatchMessage];
+	}
+	else // isBatchOpening == NO
+	{
+		/* Check batch= value to look for possible parent batch. */
+		IRCMessageBatchMessage *parentBatchMessage = nil;
+
+		NSString *parentBatchMessageToken = [m batchToken];
+
+		if (parentBatchMessageToken) {
+			parentBatchMessage = [self.batchMessages queuedEntryWithBatchToken:parentBatchMessageToken];
+		}
+
+		/* Create new batch message and queue it. */
+		IRCMessageBatchMessage *newBatchMessage = [IRCMessageBatchMessage new];
+
+		[newBatchMessage setBatchIsOpen:YES];
+
+		[newBatchMessage setBatchToken:batchToken];
+
+		[newBatchMessage setParentBatchMessage:parentBatchMessage];
+
+		[self.batchMessages queueEntry:newBatchMessage];
+	}
+
+	/* Set vendor specific flags based on BATCH command values */
+	if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
+		self.zncBouncerIsPlayingBackHistory = (self.isZNCBouncerConnection && isBatchOpening);
+	}
+}
+
+#pragma mark -
+#pragma mark BATCH Command
+
+- (BOOL)filterBatchCommandIncomingData:(IRCMessage *)m
+{
+	if (m == nil) {
+		return NO;
+	}
+
+	NSString *batchToken = [m batchToken];
+
+	if (batchToken) {
+		IRCMessageBatchMessage *thisBatchMessage = [self.batchMessages queuedEntryWithBatchToken:batchToken];
+
+		if (thisBatchMessage && [thisBatchMessage batchIsOpen]) {
+			[thisBatchMessage queueEntry:m];
+
+			return YES;
+		}
+	}
+
+	return NO;
+}
+
+- (void)recursivelyProcessBatchMessage:(IRCMessageBatchMessage *)batchMessage
+{
+	[self recursivelyProcessBatchMessage:batchMessage depth:0];
+}
+
+- (void)recursivelyProcessBatchMessage:(IRCMessageBatchMessage *)batchMessage depth:(NSInteger)recursionDepth
+{
+	if (batchMessage == nil) {
+		return;
+	}
+
+	if ([batchMessage batchIsOpen]) {
+		return;
+	}
+
+	NSArray *queuedEntries = [batchMessage queuedEntries];
+
+	for (id queuedEntry in queuedEntries) {
+		if ([queuedEntry isKindOfClass:[IRCMessage class]]) {
+			[self processIncomingData:queuedEntry];
+		} else if ([queuedEntry isKindOfClass:[IRCMessageBatchMessage class]]) {
+			[self recursivelyProcessBatchMessage:queuedEntry depth:(recursionDepth + 1)];
+		}
+	}
+
+	if (recursionDepth == 0) {
+		[self.batchMessages dequeueEntry:batchMessage];
+	}
+}
+
 #pragma mark -
 #pragma mark Server CAP
 
@@ -5513,6 +5657,12 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		{
 			stringValue = @"away-notify";
 			
+			break;
+		}
+		case ClientIRCv3SupportedCapacityBatch:
+		{
+			stringValue = @"batch";
+
 			break;
 		}
 		case ClientIRCv3SupportedCapacityIdentifyCTCP:
@@ -5607,6 +5757,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	};
 
 	appendValue(ClientIRCv3SupportedCapacityAwayNotify);
+	appendValue(ClientIRCv3SupportedCapacityBatch);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyCTCP);
 	appendValue(ClientIRCv3SupportedCapacityIdentifyMsg);
 	appendValue(ClientIRCv3SupportedCapacityMultiPreifx);
@@ -5648,6 +5799,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	_rony(ClientIRCv3SupportedCapacitySASLGeneric)
 	_rony(ClientIRCv3SupportedCapacityAwayNotify)
+	_rony(ClientIRCv3SupportedCapacityBatch)
 	_rony(ClientIRCv3SupportedCapacityIdentifyCTCP)
 	_rony(ClientIRCv3SupportedCapacityIdentifyMsg)
 	_rony(ClientIRCv3SupportedCapacityMultiPreifx)
@@ -5684,6 +5836,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					   [cap isEqualIgnoringCase:@"identify-msg"]			||
 					   [cap isEqualIgnoringCase:@"identify-ctcp"]			||
 					   [cap isEqualIgnoringCase:@"away-notify"]				||
+					   [cap isEqualIgnoringCase:@"batch"]					||
 					   [cap isEqualIgnoringCase:@"multi-prefix"]			||
 					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
 					   [cap isEqualIgnoringCase:@"server-time"]				||
@@ -5707,6 +5860,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 		return ClientIRCv3SupportedCapacityIdentifyCTCP;
 	} else if ([stringValue isEqualIgnoringCase:@"away-notify"]) {
 		return ClientIRCv3SupportedCapacityAwayNotify;
+	} else if ([stringValue isEqualIgnoringCase:@"batch"]) {
+		return ClientIRCv3SupportedCapacityBatch;
 	} else if ([stringValue isEqualIgnoringCase:@"server-time"]) {
 		return ClientIRCv3SupportedCapacityServerTime;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/self-message"]) {
