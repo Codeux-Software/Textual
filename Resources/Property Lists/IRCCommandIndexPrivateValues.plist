@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<integer>1054</integer>
+		<real>1055</real>
 	</dict>
 	<key>action</key>
 	<dict>
@@ -39,6 +39,17 @@
 		<true/>
 		<key>outgoingColonIndex</key>
 		<integer>0</integer>
+	</dict>
+	<key>batch</key>
+	<dict>
+		<key>command</key>
+		<string>BATCH</string>
+		<key>indexValue</key>
+		<real>1054</real>
+		<key>isStandalone</key>
+		<true/>
+		<key>outgoingColonIndex</key>
+		<integer>-1</integer>
 	</dict>
 	<key>cap</key>
 	<dict>

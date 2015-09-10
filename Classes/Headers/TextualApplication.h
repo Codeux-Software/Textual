@@ -65,6 +65,8 @@
 	@class IRCExtras;
 	@class IRCISupportInfo;
 	@class IRCMessage;
+	@class IRCMessageBatchMessage;
+	@class IRCMessageBatchMessageContainer;
 	@class IRCModeInfo;
 	@class IRCPrefix;
 	@class IRCSendingMessage;

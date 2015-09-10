@@ -44,6 +44,7 @@
 @property (nonatomic, assign) NSInteger commandNumeric;
 @property (nonatomic, copy) NSArray *params;
 @property (nonatomic, copy) NSDate *receivedAt;
+@property (nonatomic, copy) NSString *batchToken;
 @property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
 @property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
 
@@ -65,4 +66,32 @@
 
 @property (readonly, copy) NSString *sequence;
 - (NSString *)sequence:(NSInteger)index;
+@end
+
+/* Each IRCClient is assigned a single instance of 
+ IRCMessageBatchMessageContainer which acts as a container for
+ all BATCH command events that the client may receive. */
+@interface IRCMessageBatchMessageContainer : NSObject
+@property (nonatomic, copy, readonly) NSDictionary *queuedEntries;
+
+- (void)queueEntry:(id)entry;
+
+- (void)dequeueEntry:(id)entry;
+- (void)dequeueEntryWithBatchToken:(NSString *)batchToken;
+
+- (id)queuedEntryWithBatchToken:(NSString *)batchToken;
+
+- (void)clearQueue;
+@end
+
+/* IRCMessageBatchMessage represents a single BATCH event based 
+ on its token value. Queued entries can either be an IRCMessage
+ instance or IRCMessageBatchMessage (for nested batch events). */
+@interface IRCMessageBatchMessage : NSObject
+@property (nonatomic, assign) BOOL batchIsOpen;
+@property (nonatomic, copy) NSString *batchToken;
+@property (nonatomic, copy, readonly) NSArray *queuedEntries;
+@property (nonatomic, assign) IRCMessageBatchMessage *parentBatchMessage;
+
+- (void)queueEntry:(id)entry;
 @end
