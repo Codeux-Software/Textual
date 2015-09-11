@@ -118,7 +118,7 @@
 
 - (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
 {
-	[client sendText:[NSAttributedString emptyStringWithBase:message]
+	[client sendText:[NSAttributedString attributedStringWithString:message]
 			 command:IRCPrivateCommandIndex("privmsg")
 			 channel:channel];
 }

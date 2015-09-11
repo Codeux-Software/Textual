@@ -224,7 +224,7 @@
 	[[self textStorage] beginEditing];
 
 	[[self textStorage] enumerateAttribute:NSForegroundColorAttributeName
-								   inRange:[self fullSelectionRange]
+								   inRange:[self range]
 								   options:0
 								usingBlock:^(id value, NSRange range, BOOL *stop)
 	 {
@@ -342,7 +342,7 @@
 		};
 		
 		self.placeholderString = nil;
-		self.placeholderString = [NSAttributedString stringWithBase:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
+		self.placeholderString = [NSAttributedString attributedStringWithString:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
 
 		/* Prepare draw. */
 		[self setNeedsDisplay:YES];

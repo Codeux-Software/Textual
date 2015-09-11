@@ -62,36 +62,45 @@
 	[self setDelegate:self];
 }
 
-- (NSString *)actualValue
+- (NSString *)predefinedSelectionValue
 {
 	if (self.lastOperationWasPredefinedSelection == NO) {
-		return [self stringValue];
-	} else {
-		NSInteger selectedItemIndex = [self indexOfSelectedItem];
-
-		if (selectedItemIndex > -1) {
-			return [self itemObjectValueAtIndex:selectedItemIndex];
-		} else {
-			return NSStringEmptyPlaceholder;
-		}
+		return nil;
 	}
+
+	NSInteger selectedItemIndex = [self indexOfSelectedItem];
+
+	if (selectedItemIndex > -1) {
+		return [self itemObjectValueAtIndex:selectedItemIndex];
+	} else {
+		return nil;
+	}
+}
+
+- (NSString *)validationValue
+{
+	NSString *predefinedSelectionValue = [self predefinedSelectionValue];
+
+	if (predefinedSelectionValue == nil) {
+		predefinedSelectionValue = [self stringValue];
+	}
+
+	return predefinedSelectionValue;
 }
 
 - (NSString *)value
 {
-	NSString *stringValue = [self actualValue];
-	
-	if (self.stringValueUsesOnlyFirstToken) {
-		stringValue = [stringValue trim];
-		
-		NSInteger spacePosition = [stringValue stringPosition:NSStringWhitespacePlaceholder];
-		
-		if (spacePosition >= 1) {
-			stringValue = [stringValue substringToIndex:spacePosition];
-		}
-	} else {
-		if (self.stringValueIsTrimmed) {
-			stringValue = [stringValue trim];
+	NSString *stringValue = [self predefinedSelectionValue];
+
+	if (stringValue == nil) {
+		if (self.stringValueUsesOnlyFirstToken) {
+			stringValue = [self trimmedFirstTokenStringValue];
+		} else {
+			stringValue = [self stringValue];
+
+			if (self.stringValueIsTrimmed) {
+				stringValue = [stringValue trim];
+			}
 		}
 	}
 
@@ -187,15 +196,17 @@
 
 - (void)performValidation
 {
-	if (NSObjectIsEmpty([self actualValue]) == NO) {
+	NSString *validationValue = [self validationValue];
+
+	if (NSObjectIsEmpty(validationValue) == NO) {
 		if (self.validationBlock) {
-			self.cachedValidValue = self.validationBlock([self actualValue]);
+			self.cachedValidValue = self.validationBlock(validationValue);
 		} else {
 			self.cachedValidValue = YES;
 		}
 	} else {
 		if (self.performValidationWhenEmpty) {
-			self.cachedValidValue = self.validationBlock([self actualValue]);
+			self.cachedValidValue = self.validationBlock(validationValue);
 		} else {
 			self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 		}

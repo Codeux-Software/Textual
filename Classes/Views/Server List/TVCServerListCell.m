@@ -611,7 +611,7 @@
 	
 	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
 	
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:messageCountString attributes:attributes];
+	NSAttributedString *mcstring = [NSAttributedString attributedStringWithString:messageCountString attributes:attributes];
 	
 	return mcstring;
 }

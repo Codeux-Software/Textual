@@ -152,7 +152,7 @@
 	
 	if ([self.kCheck state] == NSOnState) {
 		[[self.mode modeInfoFor:@"k"] setModeIsSet:YES];
-		[[self.mode modeInfoFor:@"k"] setModeParamater:[self.kText firstTokenStringValue]];
+		[[self.mode modeInfoFor:@"k"] setModeParamater:[self.kText trimmedFirstTokenStringValue]];
 	} else {
 		[[self.mode modeInfoFor:@"k"] setModeIsSet:NO];
 	}

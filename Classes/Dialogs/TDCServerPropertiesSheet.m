@@ -798,13 +798,13 @@
 {
 	/* General */
 	self.config.connectionName = [self.connectionNameTextField value];
-	
-	NSString *serverAddressComboBoxValue = [self.serverAddressComboBox lowercaseValue];
+
+	NSString *serverAddressComboBoxValue = [self.serverAddressComboBox value];
 
 	NSString *serverAddressMatchedHost = [self nameMatchesServerInList:serverAddressComboBoxValue];
 
 	if (serverAddressMatchedHost == nil) {
-		self.config.serverAddress = serverAddressComboBoxValue;
+		self.config.serverAddress = [serverAddressComboBoxValue lowercaseString];
 	} else {
 		self.config.serverAddress = self.serverList[serverAddressMatchedHost];
 	}
@@ -878,7 +878,7 @@
 	self.config.proxyType = [self.proxyTypeButton selectedTag];
 	self.config.proxyAddress = [self.proxyAddressTextField lowercaseValue];
 	self.config.proxyPort = [self.proxyPortTextField integerValue];
-	self.config.proxyUsername = [self.proxyUsernameTextField firstTokenStringValue];
+	self.config.proxyUsername = [self.proxyUsernameTextField trimmedFirstTokenStringValue];
 	self.config.proxyPassword = [self.proxyPasswordTextField trimmedStringValue];
 
 	/* Connect Commands */

@@ -62,7 +62,7 @@
 	NSString *stringValue = nil;
 	
 	if (self.stringValueUsesOnlyFirstToken) {
-		stringValue = [self firstTokenStringValue];
+		stringValue = [self trimmedFirstTokenStringValue];
 	} else {
 		stringValue = [self stringValue];
 		
