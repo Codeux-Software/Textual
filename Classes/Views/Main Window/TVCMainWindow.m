@@ -863,7 +863,7 @@
 {
 	NSAttributedString *as = [self.inputTextField attributedStringValue];
 	
-	[self.inputTextField setAttributedStringValue:[NSAttributedString emptyString]];
+	[self.inputTextField setAttributedStringValue:[NSAttributedString attributedString]];
 	
 	if ([as length] > 0) {
 		[[TXSharedApplication sharedInputHistoryManager] add:as];

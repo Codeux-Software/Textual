@@ -42,16 +42,14 @@
 @property (nonatomic, weak) IBOutlet NSButton *autoConnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
-@property (nonatomic, weak) IBOutlet NSTextField *nicknameTextField;
-@property (nonatomic, weak) IBOutlet NSComboBox *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldComboBoxWithValueValidation *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, copy) NSDictionary *serverList;
 
 - (IBAction)onAddChannel:(id)sender;
 - (IBAction)onDeleteChannel:(id)sender;
-
-- (IBAction)onServerAddressChanged:(id)sender;
 @end
 
 @implementation TDCWelcomeSheet
@@ -81,6 +79,28 @@
 		for (NSString *key in sortedServerListKeys) {
 			[self.serverAddressComboBox addItemWithObjectValue:key];
 		}
+
+		/* Nickname. */
+		[self.nicknameTextField setTextDidChangeCallback:self];
+
+		[self.nicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
+
+		[self.nicknameTextField setStringValueIsInvalidOnEmpty:YES];
+		[self.nicknameTextField setStringValueIsTrimmed:YES];
+		[self.nicknameTextField setStringValueUsesOnlyFirstToken:YES];
+
+		[self.nicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
+			return [currentValue isHostmaskNickname];
+		}];
+
+		/* Server address. */
+		[self.serverAddressComboBox setTextDidChangeCallback:self];
+
+		[self.serverAddressComboBox setOnlyShowStatusIfErrorOccurs:YES];
+
+		[self.serverAddressComboBox setStringValueIsInvalidOnEmpty:YES];
+		[self.serverAddressComboBox setStringValueIsTrimmed:YES];
+		[self.serverAddressComboBox setStringValueUsesOnlyFirstToken:YES];
 	}
 	
 	return self;
@@ -106,6 +126,7 @@
 - (void)show
 {
 	[self tableViewSelectionIsChanging:nil];
+
 	[self updateOKButton];
 
 	[self.channelTable setTextEditingDelegate:self];
@@ -131,12 +152,12 @@
 	IRCClientConfig *newConfig = [IRCClientConfig new];
 	
 	/* Get actaul server. */
-	NSString *userServAddress = [self.serverAddressComboBox firstTokenStringValue];
+	NSString *userServAddress = [self.serverAddressComboBox value];
 	
 	NSString *translatedServerAddress = [self nameMatchesServerInList:userServAddress];
 	
 	if (translatedServerAddress == nil) {
-		translatedServerAddress = userServAddress;
+		translatedServerAddress = [userServAddress lowercaseString];
 	} else {
 		translatedServerAddress = self.serverList[translatedServerAddress];
 	}
@@ -144,7 +165,7 @@
 	/* Complete basic information. */
 	BOOL autoConnect = [self.autoConnectCheck state];
 	
-	NSString *nickname = [self.nicknameTextField firstTokenStringValue];
+	NSString *nickname = [self.nicknameTextField value];
 
 	[newConfig setConnectionName:userServAddress];
 	[newConfig setServerAddress:translatedServerAddress];
@@ -222,14 +243,7 @@
 	}
 }
 
-- (void)controlTextDidChange:(NSNotification *)note
-{
-	[self askAboutTheSupportChannel];
-	
-	[self updateOKButton];
-}
-
-- (void)onServerAddressChanged:(id)sender
+- (void)validatedTextFieldTextDidChange:(id)sender
 {
 	[self askAboutTheSupportChannel];
 	
@@ -264,11 +278,8 @@
 
 - (void)updateOKButton
 {
-	NSString *nick = [self.nicknameTextField trimmedStringValue];
-	NSString *host = [self.serverAddressComboBox trimmedStringValue];
-	
-	BOOL enabled = (NSObjectIsNotEmpty(nick) && NSObjectIsNotEmpty(host));
-	
+	BOOL enabled = ([self.serverAddressComboBox valueIsValid] && [self.nicknameTextField valueIsValid]);
+
 	[self.okButton setEnabled:enabled];
 }
 

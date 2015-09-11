@@ -155,7 +155,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			[self appendPluralOrSingular:&resultString valueToken:1006 value:powerOverCount];
 		}
 
-		[client sendText:[NSAttributedString emptyStringWithBase:resultString]
+		[client sendText:[NSAttributedString attributedStringWithString:resultString]
 				 command:IRCPrivateCommandIndex("privmsg")
 				 channel:selectedChannel];
 	}

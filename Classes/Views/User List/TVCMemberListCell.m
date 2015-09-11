@@ -264,7 +264,7 @@
 	
 	NSDictionary *attributes = @{NSForegroundColorAttributeName : textColor, NSFontAttributeName : textFont};
 	
-	NSAttributedString *mcstring = [NSAttributedString stringWithBase:badgeString attributes:attributes];
+	NSAttributedString *mcstring = [NSAttributedString attributedStringWithString:badgeString attributes:attributes];
 	
 	return mcstring;
 }

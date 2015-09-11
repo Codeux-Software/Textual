@@ -1681,7 +1681,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	NSObjectIsEmptyAssert(command);
 
 	if ([str isKindOfClass:[NSString class]]) {
-		str = [NSAttributedString emptyStringWithBase:str];
+		str = [NSAttributedString attributedStringWithString:str];
 	}
 
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
@@ -1794,7 +1794,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)sendPrivmsg:(NSString *)message toChannel:(IRCChannel *)channel
 {
 	[self performBlockOnMainThread:^{
-		[self sendText:[NSAttributedString emptyStringWithBase:message]
+		[self sendText:[NSAttributedString attributedStringWithString:message]
 			   command:IRCPrivateCommandIndex("privmsg")
 			   channel:channel];
 	}];
@@ -1803,7 +1803,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)sendAction:(NSString *)message toChannel:(IRCChannel *)channel
 {
 	[self performBlockOnMainThread:^{
-		[self sendText:[NSAttributedString emptyStringWithBase:message]
+		[self sendText:[NSAttributedString attributedStringWithString:message]
 			   command:IRCPrivateCommandIndex("action")
 			   channel:channel];
 	}];
@@ -1812,7 +1812,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)sendNotice:(NSString *)message toChannel:(IRCChannel *)channel
 {
 	[self performBlockOnMainThread:^{
-		[self sendText:[NSAttributedString emptyStringWithBase:message]
+		[self sendText:[NSAttributedString attributedStringWithString:message]
 			   command:IRCPrivateCommandIndex("notice")
 			   channel:channel];
 	}];
@@ -1821,7 +1821,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 - (void)sendPrivmsgToSelectedChannel:(NSString *)message
 {
 	[self performBlockOnMainThread:^{
-		[self sendText:[NSAttributedString emptyStringWithBase:message]
+		[self sendText:[NSAttributedString attributedStringWithString:message]
 			   command:IRCPrivateCommandIndex("privmsg")
 			   channel:[mainWindow() selectedChannelOn:self]];
 	}];
@@ -2137,7 +2137,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					 when using the /me command so that the use of /me without any input
 					 still sends an action. */
 
-					s = [NSMutableAttributedString mutableStringWithBase:NSStringWhitespacePlaceholder attributes:nil];
+					s = [NSMutableAttributedString mutableAttributedStringWithString:NSStringWhitespacePlaceholder attributes:nil];
 				}
 			} else {
 				NSObjectIsEmptyAssert(s);
@@ -2464,8 +2464,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 					targetChannelName = [s getTokenAsString];
 				}
 			} else if ([uppercaseCommand isEqualToString:IRCPublicCommandIndex("umode")]) {
-				[s insertAttributedString:[NSAttributedString emptyStringWithBase:NSStringWhitespacePlaceholder]	atIndex:0];
-				[s insertAttributedString:[NSAttributedString emptyStringWithBase:[self localNickname]]				atIndex:0];
+				[s insertAttributedString:[NSAttributedString attributedStringWithString:NSStringWhitespacePlaceholder]	atIndex:0];
+				[s insertAttributedString:[NSAttributedString attributedStringWithString:[self localNickname]]			atIndex:0];
 			} else {
 				if (selChannel && [selChannel isChannel] && [[s string] isModeChannelName] == NO) {
 					targetChannelName = [selChannel name];
@@ -2500,7 +2500,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 				[ms appendString:NSStringWhitespacePlaceholder];
 				[ms appendString:[s string]];
 
-				[s setAttributedString:[NSAttributedString emptyStringWithBase:ms]];
+				[s setAttributedString:[NSAttributedString attributedStringWithString:ms]];
 			}
 
 			NSMutableString *line = [NSMutableString string];
@@ -7808,7 +7808,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 
 	/* -splitIntoLines is only available to NSAttributedString and I was too lazy to add it to NSString
 	 so fuck it... just convert our input over. */
-	NSAttributedString *resultBase = [NSAttributedString emptyStringWithBase:resultString];
+	NSAttributedString *resultBase = [NSAttributedString attributedStringWithString:resultString];
 
 	NSArray *lines = [resultBase splitIntoLines];
 

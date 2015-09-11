@@ -138,14 +138,14 @@
 
 	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
 
-    [self replaceCharactersInRange:[self fullSelectionRange] withRTF:stringData];
+    [self replaceCharactersInRange:[self range] withRTF:stringData];
 
 	[self didChangeText];
 }
 
 - (void)setStringValue:(NSString *)string
 {
-    [self replaceCharactersInRange:[self fullSelectionRange] withString:string];
+    [self replaceCharactersInRange:[self range] withString:string];
 
 	[self didChangeText];
 }
@@ -213,7 +213,7 @@
     [[self textStorage] beginEditing];
 
     [[self textStorage] enumerateAttribute:NSFontAttributeName
-								inRange:[self fullSelectionRange]
+								inRange:[self range]
 								options:0
 							usingBlock:^(id value, NSRange range, BOOL *stop)
 	{

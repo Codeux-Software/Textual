@@ -153,7 +153,7 @@
 	[self.config setDefaultModes:		[self.defaultModesTextField trimmedStringValue]];
 	[self.config setDefaultTopic:		[self.defaultTopicTextField trimmedStringValue]];
 	
-	[self.config setSecretKey:			[self.secretKeyTextField firstTokenStringValue]];
+	[self.config setSecretKey:			[self.secretKeyTextField trimmedFirstTokenStringValue]];
 
 	[self.config setAutoJoin:					[self.autoJoinCheck state]];
 	[self.config setPushNotifications:			[self.pushNotificationsCheck state]];
