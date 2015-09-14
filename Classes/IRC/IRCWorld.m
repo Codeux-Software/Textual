@@ -48,6 +48,8 @@ NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
 NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
 
+NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientListWasModifiedNotification";
+
 @interface IRCWorld ()
 @property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
 @end
@@ -180,6 +182,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 			[self.clients removeAllObjects];
 			
 			[self.clients addObjectsFromArray:clientList];
+
+			[self postClientListWasModifiedNotification];
 		}
 	});
 }
@@ -199,6 +203,11 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)postClientListWasModifiedNotification
+{
+	[RZNotificationCenter() postNotificationName:IRCWorldClientListWasModifiedNotification object:self];
+}
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
 {
@@ -658,7 +667,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 	(void)[mainWindow() reloadLoadingScreen];
 
 	[menuController() populateNavgiationChannelList];
-	
+
+	[self postClientListWasModifiedNotification];
+
 	return c;
 }
 
@@ -772,6 +783,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		
 		if ([target isClient]) {
 			[self.clients removeObjectIdenticalTo:target];
+
+			[self postClientListWasModifiedNotification];
 		} else {
 			IRCClient *u = [target associatedClient];
 			
@@ -826,6 +839,8 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 		@synchronized(self.clients) {
 			[self.clients removeObjectIdenticalTo:u];
 		}
+
+		[self postClientListWasModifiedNotification];
 		
 		[mainWindowServerList() removeItemFromList:u];
 

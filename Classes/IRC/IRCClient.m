@@ -103,6 +103,7 @@ enum {
 };
 
 NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfigurationWasUpdatedNotification";
+NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChannelListWasModifiedNotification";
 
 @interface IRCClient ()
 /* These are all considered private. */
@@ -438,9 +439,7 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	[mainWindow() updateTitleFor:self];
 	
 	/* Post notification. */
-	[RZNotificationCenter() postNotificationName:IRCClientConfigurationWasUpdatedNotification
-										  object:self
-										userInfo:@{@"clientID" : [self uniqueIdentifier]}];
+	[RZNotificationCenter() postNotificationName:IRCClientConfigurationWasUpdatedNotification object:self];
 }
 
 - (void)updateStoredChannelList
@@ -456,6 +455,8 @@ NSString * const IRCClientConfigurationWasUpdatedNotification = @"IRCClientConfi
 	}
 	
 	[self.config setChannelList:newChannelList];
+
+	[RZNotificationCenter() postNotificationName:IRCClientChannelListWasModifiedNotification object:self];
 }
 
 - (IRCClientConfig *)copyOfStoredConfig

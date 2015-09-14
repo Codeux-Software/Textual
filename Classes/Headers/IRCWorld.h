@@ -43,6 +43,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; 
 
 TEXTUAL_EXTERN NSString * const IRCWorldDateHasChangedNotification;
 
+TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
+
 @interface IRCWorld : NSObject
 @property (nonatomic, assign) NSInteger messagesSent;
 @property (nonatomic, assign) NSInteger messagesReceived;

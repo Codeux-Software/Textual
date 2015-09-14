@@ -69,6 +69,7 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
+TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 #import "IRCTreeItem.h" // superclass
 

@@ -120,9 +120,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		}
 
 		if (fireChangedNotification) {
-			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification
-												  object:self
-												userInfo:@{@"channelID" : [self uniqueIdentifier]}];
+			[RZNotificationCenter() postNotificationName:IRCChannelConfigurationWasUpdatedNotification object:self];
 		}
 	}
 }
