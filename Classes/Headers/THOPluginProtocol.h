@@ -278,6 +278,35 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 #pragma mark Input Manipulation
 
 /*!
+ * @brief Method invoked to inform the plugin that a plain text message was received 
+ *  (PRIVMSG, ACTION, or NOTICE)
+ *
+ * @discussion This method is invoked on the main thread which means that slow code
+ *  can lockup the user interface of Textual. If you have no intent to ignore content,
+ *  then do work in the background and immediately return YES when this method is invoked.
+ *
+ * @return YES to display the contents of the message to the user, NO otherwise.
+ *
+ * @param text The message contents
+ * @param textAuthor The author (sender) of the message
+ * @param textDestination The channel name that the message is destined for
+ * @param lineType The line type of the message. Possible values:
+ *          TVCLogLinePrivateMessageType, TVCLogLineActionType, TVCLogLineNoticeType
+ * @param client The client the message was received on
+ * @param receivedAt The date & time of the message. Depending on whether a custom 
+ *          value was specified using the server-time IRCv3 capacity, this NSDate
+ *          object may be very far in the past, or even possibly in the future.
+ * @param wasEncrypted Whether or not the message was encrypted.
+ */
+- (BOOL)receivedText:(NSString *)text
+          authoredBy:(IRCPrefix *)textAuthor
+         destinedFor:(NSString *)textDestination
+          asLineType:(TVCLogLineType)lineType
+            onClient:(IRCClient *)client
+          receivedAt:(NSDate *)receivedAt
+        wasEncrypted:(BOOL)wasEncrypted;
+
+/*!
  * @brief Method used to modify and/or completely ignore incoming data from
  *  the server before any action can be taken on it by Textual.
  *

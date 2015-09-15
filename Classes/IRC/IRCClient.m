@@ -4365,6 +4365,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
+																		  authoredBy:[referenceMessage sender]
+																		 destinedFor:target
+																		  asLineType:type
+																			onClient:self
+																		  receivedAt:[referenceMessage receivedAt]
+																		wasEncrypted:wasEncrypted];
+
+		if (pluginResult == NO) {
+			return;
+		}
+	}
+
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[referenceMessage senderHostmask]
 															 withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
 																			IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,

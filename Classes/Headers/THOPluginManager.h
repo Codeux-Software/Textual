@@ -61,7 +61,8 @@
 
 @property (readonly, copy) NSArray *pluginOutputSuppressionRules;
 
-@property (readonly) BOOL atleastOnePluginWantsPostNewMessageEvent;
+/* Returns YES if at least one loaded plugin supports the feature. */
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
 
 - (void)findHandlerForOutgoingCommand:(NSString *)command
 						   scriptPath:(NSString **)scriptPath
@@ -90,4 +91,12 @@
 					   forViewController:(TVCLogController *)viewController
 								lineType:(TVCLogLineType)lineType
 							  memberType:(TVCLogLineMemberType)memberType;
+
+- (BOOL)postReceivedPlainTextMessageEvent:(NSString *)text
+							   authoredBy:(IRCPrefix *)textAuthor
+							  destinedFor:(NSString *)textDestination
+							   asLineType:(TVCLogLineType)lineType
+								 onClient:(IRCClient *)client
+							   receivedAt:(NSDate *)receivedAt
+							 wasEncrypted:(BOOL)wasEncrypted;
 @end

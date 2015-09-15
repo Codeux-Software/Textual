@@ -50,7 +50,8 @@ typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
 	THOPluginItemSupportsSubscribedServerInputCommands		= 1 << 5,
 	THOPluginItemSupportsSubscribedUserInputCommands		= 1 << 6,
 	THOPluginItemSupportsUserInputDataInterception			= 1 << 7,
-	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 8
+	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 8,
+	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 9
 };
 
 @interface THOPluginItem : NSObject
