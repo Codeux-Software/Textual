@@ -659,7 +659,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 			
 			/* Inform plugins. */
-			if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 				NSDictionary *resultInfo = lineInfo[1];
 
 				THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = resultInfo[@"pluginConcreteObject"];
@@ -1069,7 +1069,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
-				if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 					[sharedPluginManager() postNewMessageEventForViewController:self withObject:resultInfo[@"pluginConcreteObject"]];
 				}
 
@@ -1326,7 +1326,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	
 	resultData[@"lineNumber"] = newLinenNumber;
 
-	if ([sharedPluginManager() atleastOnePluginWantsPostNewMessageEvent]) {
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
 		THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = [THOPluginDidPostNewMessageConcreteObject new];
 
 		[pluginConcreteObject setKeywordMatchFound:highlighted];

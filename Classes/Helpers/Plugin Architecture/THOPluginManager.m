@@ -43,6 +43,7 @@
 @interface THOPluginManager ()
 @property (nonatomic, copy) NSArray *allLoadedBundles;
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
+@property (nonatomic, assign) THOPluginItemSupportedFeatures supportedFeatures;
 @end
 
 NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"5.0.0";
@@ -74,12 +75,14 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 @implementation THOPluginManager
 
 #pragma mark -
-#pragma mark Init.
+#pragma mark Init
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
 		self.dispatchQueue = dispatch_queue_create("PluginManagerDispatchQueue", DISPATCH_QUEUE_SERIAL);
+
+		_supportedFeatures = 0;
 
 		return self;
 	}
@@ -95,7 +98,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 }
 
 #pragma mark -
-#pragma mark Retain & Release.
+#pragma mark Retain & Release
 
 - (void)loadPlugins
 {
@@ -140,9 +143,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 				BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
 
 				if (bundleLoaded) {
-					if ([currPlugin supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-						_atleastOnePluginWantsPostNewMessageEvent = YES;
-					}
+					[self updateSupportedFeaturesPropertyWithPlugin:currPlugin];
 
 					[loadedBundles addObject:currBundle];
 
@@ -173,7 +174,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 }
 
 #pragma mark -
-#pragma mark AppleScript Support.
+#pragma mark AppleScript Support
 
 - (id)supportedAppleScriptCommands
 {
@@ -361,7 +362,36 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 }
 
 #pragma mark -
-#pragma mark Extension Information.
+#pragma mark Extension Information
+
+- (void)updateSupportedFeaturesPropertyWithPlugin:(THOPluginItem *)plugin
+{
+	if (plugin == nil) {
+		return;
+	}
+
+#define _ef(_feature)		if ([plugin supportsFeature:(_feature)] && [self supportsFeature:(_feature)] == NO) {		\
+								_supportedFeatures |= (_feature);														\
+							}
+
+	_ef(THOPluginItemSupportsInlineMediaManipulation)
+	_ef(THOPluginItemSupportsNewMessagePostedEvent)
+	_ef(THOPluginItemSupportsOutputSuppressionRules)
+	_ef(THOPluginItemSupportsPreferencePane)
+	_ef(THOPluginItemSupportsServerInputDataInterception)
+	_ef(THOPluginItemSupportsSubscribedServerInputCommands)
+	_ef(THOPluginItemSupportsSubscribedUserInputCommands)
+	_ef(THOPluginItemSupportsUserInputDataInterception)
+	_ef(THOPluginItemSupportsWillRenderMessageEvent)
+	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
+
+#undef _ef
+}
+
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature
+{
+	return ((_supportedFeatures & feature) == feature);
+}
 
 - (NSArray *)pluginOutputSuppressionRules
 {
@@ -445,7 +475,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 }
 
 #pragma mark -
-#pragma mark Talk.
+#pragma mark Talk
 
 - (void)sendUserInputDataToBundles:(IRCClient *)client message:(NSString *)message command:(NSString *)command
 {
@@ -693,6 +723,30 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	} else {
 		return  newMessageCopy;
 	}
+}
+
+- (BOOL)postReceivedPlainTextMessageEvent:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(NSString *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
+{
+	if (text == nil || textAuthor == nil || textDestination == nil || client == nil || receivedAt == nil) {
+		return NO;
+	}
+
+	IRCPrefix *textAuthorCopy = [textAuthor copy];
+
+	NSDate *receivedAtCopy = [receivedAt copy];
+
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
+		if ([plugin supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+			BOOL pluginResult = [[plugin primaryClass] receivedText:text authoredBy:textAuthorCopy destinedFor:textDestination asLineType:lineType onClient:client receivedAt:receivedAtCopy wasEncrypted:wasEncrypted];
+
+			if (pluginResult == NO) {
+				return NO;
+			}
+		}
+	}
+
+	return YES;
 }
 
 @end

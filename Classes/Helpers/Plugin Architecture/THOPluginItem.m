@@ -221,6 +221,10 @@
 		supportedFeatures |= THOPluginItemSupportsUserInputDataInterception;
 	}
 
+	if ([self.primaryClass respondsToSelector:@selector(receivedText:authoredBy:destinedFor:asLineType:onClient:receivedAt:wasEncrypted:)]) {
+		supportedFeatures |= THOPluginItemSupportsDidReceivePlainTextMessageEvent;
+	}
+
 	/* Finish up */
 	self.supportedFeatures = supportedFeatures;
 	
