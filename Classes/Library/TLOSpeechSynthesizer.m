@@ -124,9 +124,9 @@
 					self.isWaitingForSystemToStopSpeaking = YES;
 
 					/* Start waiting for system to finish. */
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-					[[self invokeInBackgroundThread] speakNextItemWhenSystemFinishes];
-TEXTUAL_IGNORE_DEPRECATION_END
+					[self performBlockOnGlobalQueue:^{
+						[self speakNextItemWhenSystemFinishes];
+					}];
 				}
 
 				/* Do not continue. */
