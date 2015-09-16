@@ -599,21 +599,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 			NSObjectsAreEqual(_proxyPassword, [seed temporaryProxyPassword]));
 }
 
-- (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
-{
-	NSMutableDictionary *ndic = [NSMutableDictionary dictionary];
-
-	NSDictionary *defaults = [self defaults];
-
-	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (NSObjectsAreEqual(defaults[key], obj) == NO) {
-			[ndic setObject:obj forKey:key];
-		}
-	}];
-
-	return [ndic copy];
-}
-
 - (NSDictionary *)dictionaryValue
 {
 	return [self dictionaryValue:NO];
@@ -719,7 +704,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		[dic maybeSetObject:ignoreAry forKey:@"ignoreList"];
 	}
 
-	return [self dictionaryValueByStrippingDefaults:dic];
+	return [dic dictionaryByRemovingDefaults:[self defaults]];
 }
 
 - (id)copyWithZone:(NSZone *)zone
