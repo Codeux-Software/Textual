@@ -453,7 +453,7 @@ Gw
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="10" outlineTableColumn="DnG-4S-tlv" id="BTS-WW-BlV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="209"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="0.0"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <animations/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -655,9 +655,9 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="vdu-cW-fcy">
-                                            <rect key="frame" x="48" y="424" width="386" height="18"/>
+                                            <rect key="frame" x="48" y="424" width="156" height="18"/>
                                             <animations/>
-                                            <buttonCell key="cell" type="check" title="Ignore content that match filter instead of performing action" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EeO-VK-V0E">
+                                            <buttonCell key="cell" type="check" title="Hide original message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EeO-VK-V0E">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                                 <connections>
