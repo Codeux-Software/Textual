@@ -99,10 +99,6 @@
 				BOOL IHaveModeH = ((myRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
 				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
 
-				LogToConsole(@"1. q=%i;a=%i;o=%i;h=%i;v=%i",
-							 IHaveModeQ, IHaveModeA, IHaveModeO, IHaveModeH, IHaveModeV);
-
-
 				if ([c hasIRCopAccess] == NO) {
 					if ([myself isCop]) {
 						[c setHasIRCopAccess:YES];
