@@ -299,7 +299,6 @@
 /* Network not available messages */
 "BasicLanguage[1031]" = "Delaying auto connect after waking up for %ld seconds due to the unavailability of the local network. To force connect at any time, control-click the connection and click \002Connect\002.";
 "BasicLanguage[1032]" = "A reconnect attempt has been cancelled because the unavailability of the local network. Another attempt will be performed in %ld seconds. To force connect at any time, control-click the connection and click \002Connect\002. Alternatively, to cancel these reconnect attempts, control-click the connection and click \002Cancel Reconnect\002.";
-"BasicLanguage[1283]" = "Textual has cancelled automatic reconnect after trying %ld times.";
 
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
