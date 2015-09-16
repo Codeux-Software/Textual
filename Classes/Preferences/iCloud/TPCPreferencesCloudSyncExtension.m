@@ -256,7 +256,7 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	
 	/* Main window alpha level. */
 	if ((reloadAction & TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) == TPCPreferencesKeyReloadMainWindowTransparencyLevelAction) {
-		[mainWindow() setAlphaValue:[TPCPreferences themeTransparency]];
+		[mainWindow() updateAlphaValueToReflectPreferences];
 	}
 
 	/* Highlight keywords. */

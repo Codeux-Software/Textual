@@ -186,6 +186,24 @@
 	[self.contentView setNeedsDisplay:YES];
 }
 
+- (void)updateAlphaValueToReflectPreferences
+{
+	[self updateAlphaValueToReflectPreferencesAnimiated:NO];
+}
+
+- (void)updateAlphaValueToReflectPreferencesAnimiated:(BOOL)animate
+{
+	if ([self isInFullscreenMode] == NO) {
+		double alphaValue = [TPCPreferences themeTransparency];
+
+		if (animate) {
+			[[self animator] setAlphaValue:alphaValue];
+		} else {
+			[self setAlphaValue:alphaValue];
+		}
+	}
+}
+
 - (void)loadWindowState
 {
 	[self restoreWindowStateUsingKeyword:@"Main Window"];
@@ -325,6 +343,16 @@
 - (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
 {
 	return (NSApplicationPresentationFullScreen | NSApplicationPresentationHideDock | NSApplicationPresentationAutoHideMenuBar);
+}
+
+- (void)windowDidExitFullScreen:(NSNotification *)notification
+{
+	[self updateAlphaValueToReflectPreferencesAnimiated:YES];
+}
+
+- (void)windowWillEnterFullScreen:(NSNotification *)notification
+{
+	[[self animator] setAlphaValue:1.0];
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client

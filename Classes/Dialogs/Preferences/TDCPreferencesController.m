@@ -986,7 +986,7 @@
 
 - (void)onChangedTransparency:(id)sender
 {
-	[mainWindow() setAlphaValue:[TPCPreferences themeTransparency]];
+	[mainWindow() updateAlphaValueToReflectPreferences];
 }
 
 #pragma mark -
