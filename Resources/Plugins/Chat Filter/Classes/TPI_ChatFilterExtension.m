@@ -183,10 +183,6 @@
 
 					continue;
 				} else {
-					if ([filter filterIgnoreContent]) {
-						return NO; // Ignore original content
-					}
-
 					/* Perform actions defined by filter */
 					XRPerformBlockAsynchronouslyOnMainQueue(^{
 						[self performActionForFilter:filter
@@ -232,6 +228,10 @@
 									   [client setUnreadState:destinationChannel isHighlight:isHighlight];
 								   }
 							   }];
+					}
+
+					if ([filter filterIgnoreContent]) {
+						return NO; // Ignore original content
 					}
 
 					/* Return once the first filter matches */

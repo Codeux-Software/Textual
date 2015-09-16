@@ -434,6 +434,10 @@
 	[self.filterForwardToDestinationTextField setStringValueUsesOnlyFirstToken:NO];
 
 	[self.filterForwardToDestinationTextField setValidationBlock:^BOOL(NSString *currentValue) {
+		if ([currentValue length] > 125) {
+			return NO;
+		}
+
 		if ([XRRegularExpression string:currentValue isMatchedByRegex:@"^([a-zA-Z0-9\\-\\_\\s]+)$"]) {
 			return YES;
 		} else {
@@ -453,15 +457,7 @@
 
 - (void)updateEnableStateOfFilterActionTokenField
 {
-	if ([self.filterIgnoreContentCheck state] == NSOnState) {
-		[self.filterActionTokenField setEnabled:NO];
-
-		[self.filterForwardToDestinationTextField setEnabled:NO];
-	} else {
-		[self.filterActionTokenField setEnabled:YES];
-
-		[self.filterForwardToDestinationTextField setEnabled:YES];
-	}
+	;
 }
 
 - (void)viewFilterMatchHelpText:(id)sender
