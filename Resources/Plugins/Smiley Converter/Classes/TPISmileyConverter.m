@@ -103,12 +103,14 @@
 	
 	/* Save dictionary contents. */
 	self.conversionTable	=  converstionTable;
+
 	self.sortedSmileyList	= [converstionTable sortedDictionaryReversedKeys];
 }
 
 - (void)destroyConversionTable
 {
 	self.conversionTable = nil;
+
 	self.sortedSmileyList = nil;
 }
 

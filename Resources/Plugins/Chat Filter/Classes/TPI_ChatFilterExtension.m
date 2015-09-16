@@ -344,9 +344,11 @@
 
 - (void)pluginLoadedIntoMemory
 {
-	if ([TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterExtension" owner:self topLevelObjects:nil] == NO) {
-		NSAssert(NO, @"Failed to load interface");
-	}
+	[self performBlockOnMainThread:^{
+		if ([TPIBundleFromClass() loadNibNamed:@"TPI_ChatFilterExtension" owner:self topLevelObjects:nil] == NO) {
+			NSAssert(NO, @"Failed to load interface");
+		}
+	}];
 
 	self.activeChatFilterIndex = -1;
 

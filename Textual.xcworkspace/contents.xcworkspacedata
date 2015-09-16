@@ -8,6 +8,9 @@
       location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Resources/Plugins/ZNC Additions/../Chat Filter/Chat Filter Extension.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
    </FileRef>
    <FileRef
