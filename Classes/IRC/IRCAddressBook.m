@@ -249,21 +249,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	}
 }
 
-- (NSDictionary *)dictionaryValueByStrippingDefaults:(NSMutableDictionary *)dic
-{
-	NSMutableDictionary *ndic = [NSMutableDictionary dictionary];
-
-	NSDictionary *defaults = [self defaults];
-
-	[dic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (NSObjectsAreEqual(defaults[key], obj) == NO) {
-			ndic[key] = obj;
-		}
-	}];
-
-	return [ndic copy];
-}
-
 - (NSDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -285,7 +270,7 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
     
 	[dic setBool:self.trackUserActivity				forKey:@"trackUserActivity"];
 
-	return [self dictionaryValueByStrippingDefaults:dic];
+	return [dic dictionaryByRemovingDefaults:[self defaults]];
 }
 
 - (id)copyWithZone:(NSZone *)zone
