@@ -115,7 +115,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
 @property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
-@property (nonatomic, assign) NSInteger reconnectAttempts;
 @property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -184,7 +183,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		self.timeoutWarningShownToUser = NO;
 
 		self.reconnectEnabled = NO;
-		self.reconnectAttempts = 0;
 
 		self.cachedHighlights = nil;
 
@@ -6162,7 +6160,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self stopRetryTimer];
 
 	/* Manage local variables. */
-	self.reconnectAttempts = 0;
 	self.reconnectEnabledBecauseOfSleepMode = NO;
 
 	self.supportInfo.networkAddress = [m senderHostmask];
@@ -7730,20 +7727,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)onReconnectTimer:(id)sender
 {
-	if (self.reconnectAttempts >= _reconnectTimerMaximumAttempts) {
-		[self printDebugInformationToConsole:BLS(1283, self.reconnectAttempts)];
-
-		[self cancelReconnect];
-
-		return; // Nothing left here to do...
-	} else if ([self isHostReachable] == NO) {
+	if ([self isHostReachable] == NO) {
 		if (self.config.hideNetworkUnavailabilityNotices == NO) {
 			[self printDebugInformationToConsole:BLS(1032, _reconnectInterval)];
 		}
 	} else {
 		if (self.isConnected == NO) {
-			self.reconnectAttempts += 1;
-
 			[self connect:IRCClientConnectReconnectMode];
 		}
 	}
@@ -8224,8 +8213,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	self.reconnectEnabled = NO;
 	self.reconnectEnabledBecauseOfSleepMode = NO;
-
-	self.reconnectAttempts = 0;
 
 	[self stopReconnectTimer];
 }
