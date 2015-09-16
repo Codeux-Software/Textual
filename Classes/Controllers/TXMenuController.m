@@ -632,17 +632,21 @@
 
 #define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
 
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
 			NSArray *nicknames = [self selectedMembers:nil];
 
 			if ([nicknames count] == 1) {
 				IRCUser *m = nicknames[0];
 
-				_ui(_userControlsMenuGiveModeOMenuTag, [m o])
-				_ui(_userControlsMenuGiveModeVMenuTag, [m v])
-				_ui(_userControlsMenuTakeModeOMenuTag, ([m o] == NO))
-				_ui(_userControlsMenuTakeModeVMenuTag, ([m v] == NO))
+				IRCUserRank userRanks = [m ranks];
+
+				BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+				BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+				BOOL UserHasModeV = ((userRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
+
+				_ui(_userControlsMenuGiveModeOMenuTag, UserHasModeO)
+				_ui(_userControlsMenuGiveModeVMenuTag, UserHasModeV)
+				_ui(_userControlsMenuTakeModeOMenuTag, (UserHasModeO == NO))
+				_ui(_userControlsMenuTakeModeVMenuTag, (UserHasModeV == NO))
 
 				BOOL halfOpModeSupported = [[u supportInfo] modeIsSupportedUserPrefix:@"h"];
 
@@ -650,12 +654,12 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 					_ui(_userControlsMenuGiveModeHMenuTag, YES)
 					_ui(_userControlsMenuTakeModeHMenuTag, YES)
 				} else {
-					_ui(_userControlsMenuGiveModeHMenuTag,  [m h])
-					_ui(_userControlsMenuTakeModeHMenuTag, ([m h] == NO))
+					_ui(_userControlsMenuGiveModeHMenuTag,  UserHasModeH)
+					_ui(_userControlsMenuTakeModeHMenuTag, (UserHasModeH == NO))
 				}
 				
-				BOOL hideTakeSepItem = ([m o] == NO  || [m h] == NO  || [m v] == NO);
-				BOOL hideGiveSepItem = ([m o] == YES || [m h] == YES || [m v] == YES);
+				BOOL hideTakeSepItem = (UserHasModeO == NO  || UserHasModeH == NO  || UserHasModeV == NO);
+				BOOL hideGiveSepItem = (UserHasModeO == YES || UserHasModeH == YES || UserHasModeV == YES);
 
 				_ui(_userControlsMenuAllModesTakenMenuTag, hideGiveSepItem)
 				_ui(_userControlsMenuAllModesGivenMenuTag, hideTakeSepItem)
@@ -674,8 +678,6 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			}
 
 			return NO;
-
-TEXTUAL_IGNORE_DEPRECATION_END
 
 #undef _ui
 

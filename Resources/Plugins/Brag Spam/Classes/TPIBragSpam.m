@@ -56,8 +56,6 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-TEXTUAL_IGNORE_DEPRECATION_BEGIN
-
 	if ([commandString isEqualToString:@"BRAG"]) {
 		IRCChannel *selectedChannel = [mainWindow() selectedChannel];
 
@@ -92,7 +90,19 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 				channelCount += 1;
 				
 				IRCUser *myself = [ch findMember:[c localNickname]];
-				
+
+				IRCUserRank myRanks = [myself ranks];
+
+				BOOL IHaveModeQ = ((myRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
+				BOOL IHaveModeA = ((myRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
+				BOOL IHaveModeO = ((myRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+				BOOL IHaveModeH = ((myRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+				BOOL IHaveModeV = ((myRanks & IRCUserVoicedRank) == IRCUserVoicedRank);
+
+				LogToConsole(@"1. q=%i;a=%i;o=%i;h=%i;v=%i",
+							 IHaveModeQ, IHaveModeA, IHaveModeO, IHaveModeH, IHaveModeV);
+
+
 				if ([c hasIRCopAccess] == NO) {
 					if ([myself isCop]) {
 						[c setHasIRCopAccess:YES];
@@ -100,12 +110,12 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 						operCount++;
 					}
 				}
-				
-				if ([myself q] || [myself a] || [myself o]) {
+
+				if (IHaveModeQ || IHaveModeA || IHaveModeO) {
 					chanOpCount++;
-				} else if ([myself h]) {
+				} else if (IHaveModeH) {
 					chanHopCount++;
-				} else if ([myself v]) {
+				} else if (IHaveModeV) {
 					chanVopCount++;
 				}
 				
@@ -116,15 +126,22 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 				
 					BOOL addUser = NO;
 
+					IRCUserRank userRanks = [m ranks];
+
+					BOOL UserHasModeQ = ((userRanks & IRCUserChannelOwnerRank) == IRCUserChannelOwnerRank);
+					BOOL UserHasModeA = ((userRanks & IRCUserSuperOperatorRank) == IRCUserSuperOperatorRank);
+					BOOL UserHasModeO = ((userRanks & IRCUserNormalOperatorRank) == IRCUserNormalOperatorRank);
+					BOOL UserHasModeH = ((userRanks & IRCUserHalfOperatorRank) == IRCUserHalfOperatorRank);
+
 					if ([c hasIRCopAccess] && [m isCop] == NO) {
 						addUser = YES;
-					} else if ([myself q] && [m q] == NO) {
+					} else if (IHaveModeQ && UserHasModeQ == NO) {
 						addUser = YES;
-					} else if ([myself a] && [m q] == NO && [m a] == NO) {
+					} else if (IHaveModeA && UserHasModeQ == NO && UserHasModeA == NO) {
 						addUser = YES;
-					} else if ([myself o] && [m q] == NO && [m a] == NO && [m o] == NO) {
+					} else if (IHaveModeO && UserHasModeQ == NO && UserHasModeA == NO && UserHasModeO == NO) {
 						addUser = YES;
-					} else if ([myself h] && [m q] == NO && [m a] == NO && [m o] == NO && [m h] == NO) {
+					} else if (IHaveModeH && UserHasModeQ == NO && UserHasModeA == NO && UserHasModeO == NO && UserHasModeH == NO) {
 						addUser = YES;	
 					}
 					
@@ -159,8 +176,6 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 				 command:IRCPrivateCommandIndex("privmsg")
 				 channel:selectedChannel];
 	}
-
-TEXTUAL_IGNORE_DEPRECATION_END
 }
 
 - (NSArray *)subscribedUserInputCommands
