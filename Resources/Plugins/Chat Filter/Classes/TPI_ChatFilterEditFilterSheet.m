@@ -77,6 +77,8 @@
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
+@property (nonatomic, copy) NSArray *cachedClientList;
+@property (nonatomic, copy) NSDictionary *cachedChannelList;
 
 - (IBAction)viewFilterMatchHelpText:(id)sender;
 - (IBAction)viewFilterActionHelpText:(id)sender;
@@ -136,6 +138,8 @@
 	[self updateVisibilityOfLimitedToTableHostView];
 
 	[self setupTextFieldRules];
+
+	[self rebuildCachedChannelList];
 
 	[self toggleOkButton];
 
@@ -508,27 +512,56 @@
 
 - (void)channelListChanged:(id)sender
 {
+	[self rebuildCachedChannelList];
+
 	[self.filterLimitToSelectionOutlineView reloadData];
 }
 
 #pragma mark -
 #pragma mark Outline View Delegate
 
+- (void)rebuildCachedChannelList
+{
+	NSArray *cachedClientList = [worldController() clientList];
+
+	NSMutableDictionary *cachedChannelList = [NSMutableDictionary dictionary];
+
+	for (IRCClient *u in cachedClientList) {
+		NSMutableArray *uChannelList = [NSMutableArray array];
+
+		for (IRCChannel *c in [u channelList]) {
+			if ([c isChannel]) {
+				[uChannelList addObject:c];
+			}
+		}
+
+		[cachedChannelList setObject:[uChannelList copy] forKey:[u uniqueIdentifier]];
+	}
+
+	self.cachedClientList = cachedClientList;
+
+	self.cachedChannelList = cachedChannelList;
+}
+
 - (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
 	if (item) {
-		return [item numberOfChildren];
+		NSString *uniqueIdentifier = [item uniqueIdentifier];
+
+		return [self.cachedChannelList[uniqueIdentifier] count];
 	} else {
-		return [worldController() clientCount];
+		return [self.cachedClientList count];
 	}
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem *)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item) {
-		return [item childAtIndex:index];
+		NSString *uniqueIdentifier = [item uniqueIdentifier];
+
+		return self.cachedChannelList[uniqueIdentifier][index];
 	} else {
-		return [worldController() clientList][index];
+		return self.cachedClientList[index];
 	}
 }
 
@@ -558,7 +591,9 @@
 
 - (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
 {
-	return ([item numberOfChildren] > 0);
+	NSString *uniqueIdentifier = [item uniqueIdentifier];
+
+	return ([self.cachedChannelList[uniqueIdentifier] count] > 0);
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
