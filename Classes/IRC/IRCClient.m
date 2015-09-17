@@ -891,7 +891,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (id)childAtIndex:(NSInteger)index
 {
-	return self.channels[index];
+	@synchronized(self.channels) {
+		return self.channels[index];
+	}
 }
 
 - (NSString *)label
