@@ -174,7 +174,7 @@
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="145">
                         <rect key="frame" x="35" y="289" width="68" height="17"/>
                         <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Nickname:" id="179">
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="179">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -289,6 +289,7 @@ Gw
                     <constraint firstItem="145" firstAttribute="baseline" secondItem="146" secondAttribute="baseline" constant="1" id="9GA-ey-Vmk"/>
                     <constraint firstItem="216" firstAttribute="trailing" secondItem="146" secondAttribute="trailing" id="9k9-aN-VbD"/>
                     <constraint firstItem="157" firstAttribute="centerX" secondItem="I1L-Fi-uaP" secondAttribute="centerX" id="AeX-eL-VrR"/>
+                    <constraint firstItem="151" firstAttribute="baseline" secondItem="155" secondAttribute="baseline" id="BD9-bH-uKF"/>
                     <constraint firstItem="157" firstAttribute="top" secondItem="zqh-Vb-fjj" secondAttribute="top" id="Ew8-R2-Nrk"/>
                     <constraint firstItem="zqh-Vb-fjj" firstAttribute="leading" secondItem="144" secondAttribute="leading" constant="20" symbolic="YES" id="G9n-VJ-9Fk"/>
                     <constraint firstItem="155" firstAttribute="leading" secondItem="154" secondAttribute="trailing" constant="-1" id="GC0-Ih-L75"/>
@@ -316,7 +317,6 @@ Gw
                     <constraint firstItem="I1L-Fi-uaP" firstAttribute="leading" secondItem="zqh-Vb-fjj" secondAttribute="trailing" constant="20" id="fdZ-Sf-J1U"/>
                     <constraint firstItem="159" firstAttribute="top" secondItem="zqh-Vb-fjj" secondAttribute="bottom" constant="21" id="iGO-Y1-phc"/>
                     <constraint firstItem="146" firstAttribute="top" secondItem="216" secondAttribute="bottom" constant="8" symbolic="YES" id="nOZ-ao-VlC"/>
-                    <constraint firstItem="151" firstAttribute="top" secondItem="173" secondAttribute="bottom" constant="9" id="nXA-Tw-e9m"/>
                     <constraint firstItem="216" firstAttribute="top" secondItem="159" secondAttribute="bottom" constant="20" id="nvD-jf-HKA"/>
                     <constraint firstItem="149" firstAttribute="leading" secondItem="150" secondAttribute="trailing" constant="8" symbolic="YES" id="owA-Jz-rrE"/>
                     <constraint firstItem="149" firstAttribute="leading" secondItem="146" secondAttribute="leading" id="qYx-86-d0I"/>

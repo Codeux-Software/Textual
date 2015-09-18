@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A226f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikiStyleLinkParser">
@@ -21,57 +21,57 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="435"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="467"/>
             <userGuides>
                 <userLayoutGuide location="26" affinity="minX"/>
-                <userLayoutGuide location="430" affinity="minY"/>
+                <userLayoutGuide location="441" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="60">
-                    <rect key="frame" x="45" y="279" width="468" height="124"/>
+                    <rect key="frame" x="44" y="306" width="468" height="131"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="pdQ-DS-ILK">
-                        <rect key="frame" x="0.0" y="0.0" width="468" height="136"/>
+                        <rect key="frame" x="0.0" y="0.0" width="468" height="131"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView drawsBackground="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" smartInsertDelete="YES" id="61">
-                                <rect key="frame" x="0.0" y="0.0" width="468" height="124.21017456054688"/>
+                                <rect key="frame" x="0.0" y="0.0" width="468" height="131"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
-                                <color key="textColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="468" height="124"/>
+                                <size key="minSize" width="468" height="131"/>
                                 <size key="maxSize" width="488" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="The Wiki-style Link Parser automatically replaces Wiki-style link syntax blocks similar to ">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="system"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="[[&lt;title&gt;]] ">
+                                    <fragment content="[[&lt;title&gt;]]">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="systemBold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
-                                        <string key="content">with their equivalent.
+                                        <string key="content"> with a link to their content.
 
 </string>
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="system"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Any parsed link blocks only show for yourself. ">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="HelveticaNeue-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="systemBold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment>
@@ -79,14 +79,14 @@
 
 Click the + button below to add a new entry. Entries are channel specific. The link prefix can technically be anything, but in general it is what will be prepended to the completed title to make an absolute link.</string>
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="13" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="system"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="468" height="124"/>
+                                <size key="minSize" width="468" height="131"/>
                                 <size key="maxSize" width="488" height="10000000"/>
                             </textView>
                         </subviews>
@@ -94,19 +94,19 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="62">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="63">
                         <rect key="frame" x="452" y="0.0" width="16" height="136"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
                 </scrollView>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="64">
-                    <rect key="frame" x="66" y="250" width="105" height="18"/>
+                    <rect key="frame" x="63" y="276" width="105" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Enable parser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="65">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -117,7 +117,7 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="68">
-                    <rect key="frame" x="50" y="221" width="85" height="17"/>
+                    <rect key="frame" x="47" y="247" width="85" height="17"/>
                     <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Link Prefixes:" id="69">
                         <font key="font" metaFont="system"/>
@@ -126,13 +126,13 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="273">
-                    <rect key="frame" x="50" y="62" width="494" height="151"/>
+                    <rect key="frame" x="47" y="63" width="494" height="176"/>
                     <clipView key="contentView" id="K0X-dB-5Eh">
-                        <rect key="frame" x="1" y="0.0" width="492" height="150"/>
+                        <rect key="frame" x="1" y="0.0" width="492" height="175"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="276" id="274">
-                                <rect key="frame" x="0.0" y="0.0" width="492" height="127"/>
+                                <rect key="frame" x="0.0" y="0.0" width="492" height="152"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <animations/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -177,12 +177,12 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="275">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="275">
                         <rect key="frame" x="1" y="153" width="492" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="277">
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="277">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
@@ -194,10 +194,10 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="284">
-                    <rect key="frame" x="485" y="32" width="30" height="23"/>
+                    <rect key="frame" x="482" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="6Um-NM-fY7"/>
-                        <constraint firstAttribute="height" constant="21" id="Bhk-Kl-RYh"/>
+                        <constraint firstAttribute="height" constant="21" id="Pdv-Ht-hLs"/>
+                        <constraint firstAttribute="width" constant="30" id="y92-Sp-YvG"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="285">
@@ -210,9 +210,9 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="286">
-                    <rect key="frame" x="514" y="32" width="30" height="23"/>
+                    <rect key="frame" x="511" y="33" width="30" height="23"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="JD4-dx-9J2"/>
+                        <constraint firstAttribute="width" constant="30" id="uaI-f6-eZb"/>
                     </constraints>
                     <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="287">
@@ -226,26 +226,26 @@ Click the + button below to add a new entry. Entries are channel specific. The l
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="284" firstAttribute="top" secondItem="286" secondAttribute="top" id="97D-Yn-mqC"/>
-                <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="76" id="AFL-2S-V2M"/>
-                <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="13" id="Eh8-re-mfA"/>
-                <constraint firstAttribute="trailing" secondItem="284" secondAttribute="trailing" constant="74" id="GFh-El-sEg"/>
-                <constraint firstAttribute="trailing" secondItem="273" secondAttribute="trailing" constant="45" id="HpU-1d-BmJ"/>
-                <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" symbolic="YES" id="J2W-Jy-C5h"/>
-                <constraint firstItem="68" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="52" id="KNF-5W-XLo"/>
-                <constraint firstItem="284" firstAttribute="baseline" secondItem="286" secondAttribute="baseline" id="Lha-ue-xCv"/>
-                <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="68" id="Xjk-y0-31N"/>
-                <constraint firstItem="286" firstAttribute="trailing" secondItem="273" secondAttribute="trailing" id="m68-DK-NAW"/>
-                <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="32" id="oeh-oV-5dx"/>
-                <constraint firstItem="64" firstAttribute="top" secondItem="1" secondAttribute="top" constant="169" id="sbd-zC-gBY"/>
-                <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="14" id="tWs-NR-8dV"/>
-                <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="ubb-Y0-rJY"/>
-                <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="45" id="yxA-ox-qbj"/>
-                <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="50" id="zLt-zA-ewf"/>
-                <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="33" id="zN0-NR-ONh"/>
+                <constraint firstItem="284" firstAttribute="top" secondItem="286" secondAttribute="top" id="6MA-B8-TQy"/>
+                <constraint firstItem="64" firstAttribute="top" secondItem="1" secondAttribute="top" constant="175" id="OBV-j9-Mab"/>
+                <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="47" id="Ro5-6i-tIn"/>
+                <constraint firstItem="64" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="65" id="TWv-sT-Qwf"/>
+                <constraint firstAttribute="trailing" secondItem="60" secondAttribute="trailing" constant="77" id="Tto-qy-PPF"/>
+                <constraint firstItem="284" firstAttribute="baseline" secondItem="286" secondAttribute="baseline" id="UdA-ba-2z8"/>
+                <constraint firstItem="284" firstAttribute="trailing" secondItem="60" secondAttribute="trailing" id="VhZ-py-zA7"/>
+                <constraint firstItem="273" firstAttribute="trailing" secondItem="286" secondAttribute="trailing" id="Vvn-mb-1Xt"/>
+                <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="XzN-dc-grz"/>
+                <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="14" id="cFH-ut-oHU"/>
+                <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="34" id="hRW-ej-HeB"/>
+                <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="p8A-Sl-DSD"/>
+                <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" symbolic="YES" id="sCk-dl-48N"/>
+                <constraint firstItem="68" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="49" id="sUv-2J-Yaf"/>
+                <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="14" id="uXI-Aa-6WG"/>
+                <constraint firstItem="273" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="ui2-e5-gQs"/>
+                <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="44" id="yNw-gX-YfF"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="412.5" y="458.5"/>
+            <point key="canvasLocation" x="412.5" y="474.5"/>
         </customView>
         <window title="New Condition" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="224">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -341,11 +341,11 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="244" firstAttribute="top" secondItem="225" secondAttribute="top" constant="17" id="9xM-YK-c59"/>
                     <constraint firstItem="242" firstAttribute="top" secondItem="225" secondAttribute="top" constant="20" symbolic="YES" id="L2Z-Gx-BIf"/>
                     <constraint firstItem="260" firstAttribute="top" secondItem="262" secondAttribute="bottom" constant="20" symbolic="YES" id="LHs-b2-ejr"/>
                     <constraint firstItem="262" firstAttribute="centerY" secondItem="246" secondAttribute="centerY" id="LMj-38-I71"/>
                     <constraint firstItem="262" firstAttribute="top" secondItem="242" secondAttribute="bottom" constant="8" symbolic="YES" id="ULL-BS-SPL"/>
-                    <constraint firstItem="242" firstAttribute="baseline" secondItem="244" secondAttribute="baseline" id="UT4-Xc-vZn"/>
                     <constraint firstItem="262" firstAttribute="leading" secondItem="246" secondAttribute="trailing" constant="8" symbolic="YES" id="XF4-Fj-tK4"/>
                     <constraint firstItem="244" firstAttribute="trailing" secondItem="258" secondAttribute="trailing" id="Xb5-ol-YAr"/>
                     <constraint firstAttribute="trailing" secondItem="262" secondAttribute="trailing" constant="22" id="Z1p-RR-CLO"/>

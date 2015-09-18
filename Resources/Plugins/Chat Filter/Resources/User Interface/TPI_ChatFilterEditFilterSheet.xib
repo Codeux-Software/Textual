@@ -640,11 +640,13 @@ Gw
                                         </textField>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Poo-f2-StF" secondAttribute="trailing" constant="16" id="2UE-2S-z1X"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="15" id="4qv-Ka-KbO"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="top" secondItem="gXn-wi-BH2" secondAttribute="bottom" constant="8" symbolic="YES" id="ENh-DL-iku"/>
                                         <constraint firstItem="gXn-wi-BH2" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="17" id="QXj-pR-gXP"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="centerX" secondItem="gXn-wi-BH2" secondAttribute="centerX" id="c8g-hr-vBN"/>
                                         <constraint firstAttribute="bottom" secondItem="Poo-f2-StF" secondAttribute="bottom" constant="17" id="pEs-eY-dkH"/>
+                                        <constraint firstAttribute="trailing" secondItem="gXn-wi-BH2" secondAttribute="trailing" constant="17" id="pyF-kG-0Oh"/>
                                     </constraints>
                                     <animations/>
                                 </view>
