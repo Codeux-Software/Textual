@@ -989,7 +989,7 @@ Gw
                     <animations/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="NWt-hs-kp5">
                         <font key="font" metaFont="cellTitle"/>
-                        <string key="title">An optional regular expression that will be compared against the hostmask (address, nickname, and username) of the user to determine whether the filter was valid. </string>
+                        <string key="title">An optional regular expression that will be compared against the hostmask (address, nickname, and username) of the user to determine whether the filter is valid. </string>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
