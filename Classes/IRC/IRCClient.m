@@ -1674,9 +1674,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)inputText:(id)str command:(NSString *)command
 {
-	id sel = [mainWindow() selectedItem];
-	
-	PointerIsEmptyAssert(sel);
+	[self inputText:str command:command destination:[mainWindow() selectedItem]];
+}
+
+- (void)inputText:(id)str command:(NSString *)command destination:(IRCTreeItem *)destination
+{
+	PointerIsEmptyAssert(destination);
 
 	NSObjectIsEmptyAssert(str);
 	NSObjectIsEmptyAssert(command);
@@ -1687,10 +1690,25 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	NSArray *lines = [str performSelector:@selector(splitIntoLines)];
 
+	/* Warn if the split value is above 4 lines or if the total string 
+	 length exceeds TXMaximumIRCBodyLength times 4. */
+	if ([lines count] > 4 || ([str length] > (TXMaximumIRCBodyLength * 4))) {
+		BOOL continueInput = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1284][2]")
+																title:TXTLS(@"BasicLanguage[1284][1]")
+														defaultButton:TXTLS(@"BasicLanguage[1284][3]")
+													  alternateButton:TXTLS(@"BasicLanguage[1009]")
+													   suppressionKey:@"input_text_possible_flood_warning"
+													  suppressionText:nil];
+
+		if (continueInput == NO) {
+			return;
+		}
+	}
+
 	for (__strong NSAttributedString *s in lines) {
 		NSRange chopRange = NSMakeRange(1, ([s length] - 1));
 
-		if ([sel isClient]) {
+		if ([destination isClient]) {
 			if ([[s string] hasPrefix:@"/"]) {
 				if ([s length] > 1) {
 					s = [s attributedSubstringFromRange:chopRange];
@@ -1701,7 +1719,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self sendCommand:s];
 			}
 		} else {
-			IRCChannel *channel = (IRCChannel *)sel;
+			IRCChannel *channel = (IRCChannel *)destination;
 
 			if ([[s string] hasPrefix:@"/"] && [[s string] hasPrefix:@"//"] == NO && [s length] > 1) {
 				s = [s attributedSubstringFromRange:chopRange];
@@ -7804,39 +7822,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
 {
-	resultString = [resultString trim];
-	
-	NSObjectIsEmptyAssert(resultString);
+	IRCChannel *destinationChannel = [self findChannel:destination];
 
-	/* If our resultString does not begin with a / (meaning a command), then we will tell Textual it is a
-	 MSG command so that it posts as a normal message and goes to the correct destination. Each result 
-	 line is thrown through inputText:command: to have Textual treat it like any other user input. */
-
-	/* -splitIntoLines is only available to NSAttributedString and I was too lazy to add it to NSString
-	 so fuck it... just convert our input over. */
-	NSAttributedString *resultBase = [NSAttributedString attributedStringWithString:resultString];
-
-	NSArray *lines = [resultBase splitIntoLines];
+	PointerIsEmptyAssert(destinationChannel);
 
 	[self performBlockOnMainThread:^{
-		for (NSAttributedString *s in lines) {
-			if ([[s string] hasPrefix:@"/"]) {
-				/* We do not have to worry about whether this is an actual command or an escaped one
-				 by using double slashes (//) at this point because inputText:command: will do all that
-				 hard work for us. We only care if it starts with a slash. */
-
-				[self inputText:s command:IRCPrivateCommandIndex("privmsg")];
-			} else {
-				/* If there is no destination, then we are fucked. */
-				if (NSObjectIsEmpty(destination)) {
-					/* Do not send a normal message to the console. What? */
-				} else {
-					NSString *msgcmd = [NSString stringWithFormat:@"/msg %@ %@", destination, [s string]];
-
-					[self inputText:msgcmd command:IRCPrivateCommandIndex("privmsg")];
-				}
-			}
-		}
+		[self inputText:[resultString trim] command:IRCPrivateCommandIndex("privmsg") destination:destinationChannel];
 	}];
 }
 
