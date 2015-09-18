@@ -762,12 +762,16 @@
 
 "BasicLanguage[1282]" = "Chat View";
 
+/* Message length warning */
+"BasicLanguage[1284][1]" = "The message that you are sending is large which means that it will be split up into multiple messages. Sending too many messages at once is often considered disruptive and may result in a ban.";
+"BasicLanguage[1284][2]" = "Are you sure that you would like to send this message?";
+"BasicLanguage[1284][3]" = "Send";
 
 
 
 
 
 
-/* Next unusued key: 1284 */
+/* Next unusued key: 1285 */
 
 
