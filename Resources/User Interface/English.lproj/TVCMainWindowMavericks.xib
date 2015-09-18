@@ -1634,6 +1634,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <accessibility description="Purchase Textual"/>
+                                            <connections>
+                                                <action selector="openFastSpringStoreWebpage:" target="oRw-Te-R5j" id="SM7-Vd-8YP"/>
+                                            </connections>
                                         </button>
                                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="be0-qc-Z4Y">
                                             <rect key="frame" x="164" y="290" width="152" height="152"/>
@@ -1670,6 +1673,9 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="manageLicense:" target="oRw-Te-R5j" id="46Y-qs-jvi"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
