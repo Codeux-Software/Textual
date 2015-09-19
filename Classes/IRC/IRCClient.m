@@ -4446,20 +4446,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	PointerIsEmptyAssert(c);
 
-	/* Weights. */
-	IRCUser *owner = [c findMember:sender];
-
-	PointerIsEmptyAssert(owner);
-
-	NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
-
-	/* If we are mentioned in this piece of text, then update our weight for the user. */
-	if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
-		[owner outgoingConversation];
-	} else {
-		[owner conversation];
-	}
-
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
 		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
 																		  authoredBy:[referenceMessage sender]
@@ -4523,6 +4509,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				 [self setUnreadState:c isHighlight:isHighlight];
 			 }
 		 }];
+
+		/* Weights. */
+		IRCUser *owner = [c findMember:sender];
+
+		PointerIsEmptyAssert(owner);
+
+		NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
+
+		/* If we are mentioned in this piece of text, then update our weight for the user. */
+		if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
+			[owner outgoingConversation];
+		} else {
+			[owner conversation];
+		}
 	}
 }
 
