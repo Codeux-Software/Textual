@@ -96,7 +96,7 @@
 				 know that there is a filter that will need it. */
 				TPI_ChatFilterLimitToValue filterLimitedToValue = [filter filterLimitedToValue];
 
-				if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue) {
+				if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
 					if (targetChannel == nil) {
 						targetChannel = [client findChannel:textDestination];
 
@@ -156,7 +156,7 @@
 				}
 
 				/* Find author in the channel */
-				if ([filter filterIgnoresOperators]) {
+				if ([filter filterIgnoresOperators] && [targetChannel isChannel]) {
 					if ([textAuthor isServer] == NO) {
 						if (senderUser == nil) {
 							senderUser = [targetChannel findMember:[textAuthor nickname]];
