@@ -94,7 +94,7 @@
 
 - (BOOL)postReceivedPlainTextMessageEvent:(NSString *)text
 							   authoredBy:(IRCPrefix *)textAuthor
-							  destinedFor:(NSString *)textDestination
+							  destinedFor:(IRCChannel *)textDestination
 							   asLineType:(TVCLogLineType)lineType
 								 onClient:(IRCClient *)client
 							   receivedAt:(NSDate *)receivedAt
