@@ -4414,6 +4414,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self processPublicMessageComponents:type sender:sender command:command target:target text:text referenceMessage:referenceMessage wasEncrypted:wasEncrypted];
 	} else {
 		if ([referenceMessage senderIsServer]) {
+			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+				BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
+																				  authoredBy:[referenceMessage sender]
+																				 destinedFor:nil
+																				  asLineType:type
+																					onClient:self
+																				  receivedAt:[referenceMessage receivedAt]
+																				wasEncrypted:wasEncrypted];
+
+				if (pluginResult == NO) {
+					return;
+				}
+			}
+
 			[self print:nil type:type nickname:nil messageBody:text receivedAt:[referenceMessage receivedAt] command:[referenceMessage command]];
 		} else {
 			if ([ignoreChecks ignorePrivateMessages]) {
@@ -4431,6 +4445,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	IRCChannel *c = [self findChannel:target];
 
 	PointerIsEmptyAssert(c);
+
+	/* Weights. */
+	IRCUser *owner = [c findMember:sender];
+
+	PointerIsEmptyAssert(owner);
+
+	NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
+
+	/* If we are mentioned in this piece of text, then update our weight for the user. */
+	if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
+		[owner outgoingConversation];
+	} else {
+		[owner conversation];
+	}
 
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
 		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
@@ -4495,20 +4523,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				 [self setUnreadState:c isHighlight:isHighlight];
 			 }
 		 }];
-
-		/* Weights. */
-		IRCUser *owner = [c findMember:sender];
-
-		PointerIsEmptyAssert(owner);
-
-		NSString *trimmedMyNick = [[self localNickname] trimCharacters:@"_"]; // Remove any underscores from around nickname. (Guest___ becomes Guest)
-
-		/* If we are mentioned in this piece of text, then update our weight for the user. */
-		if ([text stringPositionIgnoringCase:trimmedMyNick] > -1) {
-			[owner outgoingConversation];
-		} else {
-			[owner conversation];
-		}
 	}
 }
 
