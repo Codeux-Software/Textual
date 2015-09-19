@@ -70,11 +70,9 @@
 #pragma mark -
 #pragma mark Plugin Logic
 
-- (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(NSString *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
+- (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
 {
 	/* Begin processing filters */
-	IRCChannel *targetChannel = nil; // This will be set later on...
-
 	IRCUser *senderUser = nil;
 
 	@synchronized([self.filterArrayController arrangedObjects]) {
@@ -97,26 +95,22 @@
 				TPI_ChatFilterLimitToValue filterLimitedToValue = [filter filterLimitedToValue];
 
 				if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
-					if (targetChannel == nil) {
-						targetChannel = [client findChannel:textDestination];
+					if (textDestination == nil) {
+						LogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
 
-						if (targetChannel == nil) {
-							LogToConsole(@"targetChannel == nil — Returning input instead of continuing with filter");
-
-							return YES;
-						}
+						return YES;
 					}
 				}
 
 				if (filterLimitedToValue == TPI_ChatFilterLimitToChannelsValue) {
-					if ([targetChannel isChannel] == NO) {
+					if ([textDestination isChannel] == NO) {
 						/* Filter is limited to a channel but the destination
 						 is not a channel. */
 
 						continue;
 					}
 				} else if (filterLimitedToValue == TPI_ChatFilterLimitToPrivateMessagesValue) {
-					if ([targetChannel isPrivateMessage] == NO) {
+					if ([textDestination isPrivateMessage] == NO) {
 						/* Filter is limited to a private message but the destination
 						 is not a private message. */
 
@@ -127,7 +121,7 @@
 					NSArray *filterLimitedToChannelsIDs = [filter filterLimitedToChannelsIDs];
 
 					if ([filterLimitedToClientsIDs containsObject:[client uniqueIdentifier]] == NO &&
-						[filterLimitedToChannelsIDs containsObject:[targetChannel uniqueIdentifier]] == NO)
+						[filterLimitedToChannelsIDs containsObject:[textDestination uniqueIdentifier]] == NO)
 					{
 						/* Target channel is not covered by current filter. */
 
@@ -156,10 +150,10 @@
 				}
 
 				/* Find author in the channel */
-				if ([filter filterIgnoresOperators] && [targetChannel isChannel]) {
+				if ([filter filterIgnoresOperators] && [textDestination isChannel]) {
 					if ([textAuthor isServer] == NO) {
 						if (senderUser == nil) {
-							senderUser = [targetChannel findMember:[textAuthor nickname]];
+							senderUser = [textDestination findMember:[textAuthor nickname]];
 
 							if (senderUser) {
 								if ([senderUser isHalfOp]) {
@@ -244,7 +238,7 @@
 	return YES;
 }
 
-- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(NSString *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client
+- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client
 {
 	NSString *filterActionData = [filter filterAction];
 
@@ -259,7 +253,7 @@
 													filterActionData = [filterActionData stringByReplacingOccurrencesOfString:(key) withString:(value)];						\
 												}
 
-	_maybeReplaceValue(@"%_channelName_%", textDestination)
+	_maybeReplaceValue(@"%_channelName_%", [textDestination name])
 	_maybeReplaceValue(@"%_localNickname_%", [client localNickname])
 	_maybeReplaceValue(@"%_networkName_%", [[client supportInfo] networkName])
 	_maybeReplaceValue(@"%_originalMessage_%", text)
@@ -287,7 +281,7 @@
 
 		NSString *formattedMessage = nil;
 
-		if (NSObjectIsEmpty(textDestination)) {
+		if (textDestination && [textDestination isChannel]) {
 			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0002]", [filter filterTitle], [textAuthor nickname]);
 		} else {
 			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", [filter filterTitle], [textAuthor nickname], textDestination);

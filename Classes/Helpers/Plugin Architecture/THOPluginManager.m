@@ -725,7 +725,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 }
 
-- (BOOL)postReceivedPlainTextMessageEvent:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(NSString *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
+- (BOOL)postReceivedPlainTextMessageEvent:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
 {
 	if (text == nil || textAuthor == nil || textDestination == nil || client == nil || receivedAt == nil) {
 		return NO;

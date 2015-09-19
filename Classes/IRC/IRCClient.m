@@ -4383,20 +4383,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
-	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
-		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
-																		  authoredBy:[referenceMessage sender]
-																		 destinedFor:target
-																		  asLineType:type
-																			onClient:self
-																		  receivedAt:[referenceMessage receivedAt]
-																		wasEncrypted:wasEncrypted];
-
-		if (pluginResult == NO) {
-			return;
-		}
-	}
-
 	IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[referenceMessage senderHostmask]
 															 withMatches:@[	IRCAddressBookDictionaryValueIgnorePublicMessageHighlightsKey,
 																			IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey,
@@ -4445,6 +4431,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	IRCChannel *c = [self findChannel:target];
 
 	PointerIsEmptyAssert(c);
+
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
+																		  authoredBy:[referenceMessage sender]
+																		 destinedFor:c
+																		  asLineType:type
+																			onClient:self
+																		  receivedAt:[referenceMessage receivedAt]
+																		wasEncrypted:wasEncrypted];
+
+		if (pluginResult == NO) {
+			return;
+		}
+	}
 
 	if (type == TVCLogLineNoticeType) {
 		[self print:c
@@ -4664,6 +4664,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 		}
 
+		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+			BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
+																			  authoredBy:[referenceMessage sender]
+																			 destinedFor:c
+																			  asLineType:type
+																				onClient:self
+																			  receivedAt:[referenceMessage receivedAt]
+																			wasEncrypted:wasEncrypted];
+
+			if (pluginResult == NO) {
+				return;
+			}
+		}
+
 		/* Post the notice. */
 		[self printToWebView:c
 						type:type
@@ -4699,6 +4713,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			newPrivateMessage = YES;
+		}
+
+		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
+			BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
+																			  authoredBy:[referenceMessage sender]
+																			 destinedFor:c
+																			  asLineType:type
+																				onClient:self
+																			  receivedAt:[referenceMessage receivedAt]
+																			wasEncrypted:wasEncrypted];
+
+			if (pluginResult == NO) {
+				return;
+			}
 		}
 
 		[self printToWebView:c

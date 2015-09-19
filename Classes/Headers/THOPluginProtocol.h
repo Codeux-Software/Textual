@@ -289,7 +289,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *
  * @param text The message contents
  * @param textAuthor The author (sender) of the message
- * @param textDestination The channel name that the message is destined for
+ * @param textDestination The channel that the message is destined for
  * @param lineType The line type of the message. Possible values:
  *          TVCLogLinePrivateMessageType, TVCLogLineActionType, TVCLogLineNoticeType
  * @param client The client the message was received on
@@ -300,7 +300,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  */
 - (BOOL)receivedText:(NSString *)text
           authoredBy:(IRCPrefix *)textAuthor
-         destinedFor:(NSString *)textDestination
+         destinedFor:(IRCChannel *)textDestination
           asLineType:(TVCLogLineType)lineType
             onClient:(IRCClient *)client
           receivedAt:(NSDate *)receivedAt
