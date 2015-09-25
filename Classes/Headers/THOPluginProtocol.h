@@ -525,7 +525,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 #pragma mark -
 
 @interface THOPluginOutputSuppressionRule : NSObject
-@property (nonatomic, assign) NSString *match;
+@property (nonatomic, copy) NSString *match;
 @property (nonatomic, assign) BOOL restrictConsole;
 @property (nonatomic, assign) BOOL restrictChannel;
 @property (nonatomic, assign) BOOL restrictPrivateMessage;
