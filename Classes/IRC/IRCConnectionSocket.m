@@ -712,6 +712,30 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 }
 
+- (NSString *)socks4ProxyResolvedAddress
+{
+	/* SOCKS4 proxies do not support anything other than IPv4 addresses 
+	 (unless you support SOCKS4a, which Textual does not) which means we
+	 perform manual DNS lookup for SOCKS4 and rely on end-point proxy to
+	 perform lookup when using other proxy types. */
+
+	NSData *resolvedAddress4 = nil;
+
+	NSArray *resolvedAddresses = [GCDAsyncSocket lookupHost:self.serverAddress port:self.serverPort error:NULL];
+
+	for (NSData *address in resolvedAddresses) {
+		if (resolvedAddress4 == nil && [GCDAsyncSocket isIPv4Address:address]) {
+			resolvedAddress4 = address;
+		}
+	}
+
+	if (resolvedAddress4) {
+		return [GCDAsyncSocket hostFromAddress:resolvedAddress4];
+	}
+
+	return nil;
+}
+
 - (void)socks4ProxyOpen
 {
 	[self socksProxyConnect];
@@ -745,7 +769,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	BOOL isVersion4Socks = (self.proxyType == IRCConnectionSocketSocks4ProxyType);
 
-	NSString *connectionAddress = self.serverAddress;
+	NSString *connectionAddress = nil;
+
+	if (isVersion4Socks) {
+		connectionAddress = [self socks4ProxyResolvedAddress];
+	} else {
+		connectionAddress = self.serverAddress;
+	}
 
 	NSData *connectionAddressBytes4 = [connectionAddress IPv4AddressBytes];
 	NSData *connectionAddressBytes6 = [connectionAddress IPv6AddressBytes];
