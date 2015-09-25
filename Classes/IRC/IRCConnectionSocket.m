@@ -627,12 +627,12 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	NSString *combinedDestinationAddress = nil;
 
 	if ([connectionAddress isIPv6Address]) {
-		combinedDestinationAddress = [NSString stringWithFormat:@"[%@]:%hu", connectionAddress, connectionPort];
+		combinedDestinationAddress = [NSString stringWithFormat:@"[%@]:%lu", connectionAddress, connectionPort];
 	} else {
-		combinedDestinationAddress = [NSString stringWithFormat:@"%@:%hu", connectionAddress, connectionPort];
+		combinedDestinationAddress = [NSString stringWithFormat:@"%@:%lu", connectionAddress, connectionPort];
 	}
 
-	NSString *connectCommand = [NSString stringWithFormat:@"CONNECT %@:%lu HTTP/1.1\x0d\x0a\x0d\x0a", combinedDestinationAddress];
+	NSString *connectCommand = [NSString stringWithFormat:@"CONNECT %@ HTTP/1.1\x0d\x0a\x0d\x0a", combinedDestinationAddress];
 
 	/* Pass the data along to the HTTP server */
 	NSData *connectCommandData = [connectCommand dataUsingEncoding:NSASCIIStringEncoding];
