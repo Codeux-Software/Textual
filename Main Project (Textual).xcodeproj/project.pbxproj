@@ -2561,7 +2561,7 @@
 		4C83B9061BA9BE4200BD7718 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C83B90B1BA9BE4200BD7718 /* Chat Filter Extension.bundle */,
+				4C83B90B1BA9BE4200BD7718 /* ChatFilterExtension.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3987,10 +3987,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		4C83B90B1BA9BE4200BD7718 /* Chat Filter Extension.bundle */ = {
+		4C83B90B1BA9BE4200BD7718 /* ChatFilterExtension.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "Chat Filter Extension.bundle";
+			path = ChatFilterExtension.bundle;
 			remoteRef = 4C83B90A1BA9BE4200BD7718 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
