@@ -77,17 +77,6 @@
 	}
 }
 
-- (NSString *)validationValue
-{
-	NSString *predefinedSelectionValue = [self predefinedSelectionValue];
-
-	if (predefinedSelectionValue == nil) {
-		predefinedSelectionValue = [self stringValue];
-	}
-
-	return predefinedSelectionValue;
-}
-
 - (NSString *)value
 {
 	NSString *stringValue = [self predefinedSelectionValue];
@@ -196,19 +185,28 @@
 
 - (void)performValidation
 {
-	NSString *validationValue = [self validationValue];
+	/* If a predefined selection is selected, then consider the value
+	 valid no matter what because it is a valid WE defined. */
+	NSString *predefinedSelectionValue = [self predefinedSelectionValue];
 
-	if (NSObjectIsEmpty(validationValue) == NO) {
-		if (self.validationBlock) {
-			self.cachedValidValue = self.validationBlock(validationValue);
-		} else {
-			self.cachedValidValue = YES;
-		}
+	if (predefinedSelectionValue) {
+		self.cachedValidValue = YES;
 	} else {
-		if (self.performValidationWhenEmpty) {
-			self.cachedValidValue = self.validationBlock(validationValue);
+		/* Perform validation on user entered string value */
+		NSString *validationValue = [self stringValue];
+
+		if (NSObjectIsEmpty(validationValue) == NO) {
+			if (self.validationBlock) {
+				self.cachedValidValue = self.validationBlock(validationValue);
+			} else {
+				self.cachedValidValue = YES;
+			}
 		} else {
-			self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
+			if (self.performValidationWhenEmpty) {
+				self.cachedValidValue = self.validationBlock(validationValue);
+			} else {
+				self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
+			}
 		}
 	}
 }
