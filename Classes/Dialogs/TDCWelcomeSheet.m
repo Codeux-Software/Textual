@@ -101,6 +101,10 @@
 		[self.serverAddressComboBox setStringValueIsInvalidOnEmpty:YES];
 		[self.serverAddressComboBox setStringValueIsTrimmed:YES];
 		[self.serverAddressComboBox setStringValueUsesOnlyFirstToken:YES];
+
+		[self.serverAddressComboBox setValidationBlock:^BOOL(NSString *currentValue) {
+			return [currentValue isValidInternetAddress];
+		}];
 	}
 	
 	return self;

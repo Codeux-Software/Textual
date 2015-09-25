@@ -56,6 +56,8 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 @property (readonly, copy) NSString *stripIRCEffects;
 
+@property (getter=isValidInternetAddress, readonly) BOOL validInternetAddress;
+
 @property (getter=isHostmask, readonly) BOOL hostmask;
 
 @property (getter=isIPv4Address, readonly) BOOL IPv4Address;

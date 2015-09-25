@@ -311,6 +311,10 @@
 		[self.serverAddressComboBox setStringValueIsTrimmed:YES];
 		[self.serverAddressComboBox setStringValueUsesOnlyFirstToken:YES];
 
+		[self.serverAddressComboBox setValidationBlock:^BOOL(NSString *currentValue) {
+			return [currentValue isValidInternetAddress];
+		}];
+
 		/* Server port. */
 		[self.serverPortTextField setTextDidChangeCallback:self];
 		
@@ -347,7 +351,7 @@
 				proxyType == IRCConnectionSocketHTTPProxyType ||
 				proxyType == IRCConnectionSocketHTTPSProxyType)
 			{
-				return ([currentValue length] > 0);
+				return [currentValue isValidInternetAddress];
 			} else {
 				return YES;
 			}

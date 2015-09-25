@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>-[NSString isValidInternetAddress] Performs Extended Validation</key>
+	<true/>
 	<key>AutojoinMaximumChannelJoinCount</key>
 	<integer>2</integer>
 	<key>AutomaticallyAddScrollbackMarker</key>
