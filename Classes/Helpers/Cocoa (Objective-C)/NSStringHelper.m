@@ -45,6 +45,43 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 @implementation NSString (TXStringHelper)
 
+- (BOOL)isValidInternetAddress
+{
+	if (NSObjectIsEmpty(self)) {
+		return NO;
+	}
+
+	if (NSObjectsAreEqual(self, @"localhost")) {
+		return YES;
+	}
+
+	if ([self isIPAddress]) {
+		return YES;
+	}
+
+	BOOL performExtendedValidation = [RZUserDefaults() boolForKey:@"-[NSString isValidInternetAddress] Performs Extended Validation"];
+
+	if (performExtendedValidation) {
+		static NSCharacterSet *_validationCharacterSet = nil;
+
+		if (_validationCharacterSet == nil) {
+			NSMutableCharacterSet *alphaNumericCharacterSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
+
+			[alphaNumericCharacterSet addCharactersInString:@".-"];
+
+			[alphaNumericCharacterSet invert];
+
+			_validationCharacterSet = [alphaNumericCharacterSet copy];
+		}
+
+		if ([self onlyContainsCharactersFromCharacterSet:_validationCharacterSet] == NO) {
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
 - (NSString *)stringByAppendingIRCFormattingStop
 {
 	return [self stringByAppendingFormat:@"%C", IRCTextFormatterTerminatingCharacter];
