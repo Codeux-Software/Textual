@@ -711,7 +711,6 @@
 	
 	if (s) {
 		[self.inputTextField setAttributedStringValue:s];
-		[self.inputTextField resetTextFieldCellSize:NO];
 		[self.inputTextField focus];
 	}
 }
@@ -740,7 +739,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([self.formattingMenu boldSet]) {
+	if ([self.formattingMenu textIsBold]) {
 		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertBoldCharIntoTextBox:nil];
@@ -751,7 +750,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([self.formattingMenu italicSet]) {
+	if ([self.formattingMenu textIsItalicized]) {
 		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertItalicCharIntoTextBox:nil];
@@ -762,7 +761,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([self.formattingMenu underlineSet]) {
+	if ([self.formattingMenu textIsUnderlined]) {
 		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertUnderlineCharIntoTextBox:nil];
@@ -773,7 +772,7 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([self.formattingMenu foregroundColorSet]) {
+	if ([self.formattingMenu textHasForegroundColor]) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 	} else {
 		NSRect fieldRect = [self.inputTextField frame];
@@ -789,17 +788,19 @@
 {
 	TVCMainWindowNegateActionWithAttachedSheet();
 	
-	if ([self.formattingMenu foregroundColorSet]) {
-		if ([self.formattingMenu backgroundColorSet]) {
-			[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
-		} else {
-			NSRect fieldRect = [self.inputTextField frame];
-			
-			fieldRect.origin.y -= 200;
-			fieldRect.origin.x += 100;
-			
-			[[self.formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
-		}
+	if ([self.formattingMenu textHasForegroundColor] == NO) {
+		return;
+	}
+
+	if ([self.formattingMenu textHasBackgroundColor]) {
+		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
+	} else {
+		NSRect fieldRect = [self.inputTextField frame];
+		
+		fieldRect.origin.y -= 200;
+		fieldRect.origin.x += 100;
+		
+		[[self.formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
 	}
 }
 

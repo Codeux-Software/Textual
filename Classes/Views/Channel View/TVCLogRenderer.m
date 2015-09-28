@@ -785,6 +785,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (attrArray & _rendererBoldFormatAttribute) {
 			boldItalic = [RZFontManager() convertFont:boldItalic toHaveTrait:NSBoldFontMask];
+
+			[body addAttribute:IRCTextFormatterBoldAttributeName value:@(YES) range:r];
 		}
 
 		if (attrArray & _rendererItalicFormatAttribute) {
@@ -792,7 +794,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
             if ([boldItalic fontTraitSet:NSItalicFontMask] == NO) {
                 boldItalic = [boldItalic convertToItalics];
-            }
+			}
+			
+			[body addAttribute:IRCTextFormatterItalicAttributeName value:@(YES) range:r];
         }
 
 		if (boldItalic) {
@@ -800,11 +804,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		}
 
 		if (attrArray & _rendererUnderlineFormatAttribute) {
+			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:@(YES) range:r];
+
 			[body addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:r];
 		}
 
 		if (attrArray & _rendererTextColorAttribute) {
 			NSInteger colorCode = (attrArray & _textColorMask);
+
+			[body addAttribute:IRCTextFormatterForegroundColorAttributeName value:@(colorCode) range:r];
 
 			[body addAttribute:NSForegroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:r];
 		} else {
@@ -815,6 +823,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (attrArray & _rendererBackgroundColorAttribute) {
 			NSInteger colorCode = ((attrArray & _backgroundColorMask) >> 4);
+
+			[body addAttribute:IRCTextFormatterBackgroundColorAttributeName value:@(colorCode) range:r];
 
 			[body addAttribute:NSBackgroundColorAttributeName value:[TVCLogRenderer mapColorCode:colorCode] range:r];
 		}
@@ -1204,43 +1214,6 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
     }
 
     return escaped;
-}
-
-+ (NSInteger)mapColorValue:(NSColor *)color
-{
-	NSArray *possibleColors = [NSColor possibleFormatterColors];
-
-	if ([color numberOfComponents] < 4) {
-        color = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    }
-    
-    CGFloat _redc   = [color redComponent];
-    CGFloat _bluec  = [color blueComponent];
-    CGFloat _greenc = [color greenComponent];
-    CGFloat _alphac = [color alphaComponent];
-
-    for (NSInteger i = 0; i <= 15; i++) {
-        NSColor *mapped = possibleColors[i];
-
-        if ([mapped numberOfComponents] == 4) {
-            CGFloat redc   = [mapped redComponent];
-            CGFloat bluec  = [mapped blueComponent];
-            CGFloat greenc = [mapped greenComponent];
-            CGFloat alphac = [mapped alphaComponent];
-
-            if (TXDirtyCGFloatMatch(_redc, redc)     && TXDirtyCGFloatMatch(_bluec, bluec) &&
-                TXDirtyCGFloatMatch(_greenc, greenc) && TXDirtyCGFloatMatch(_alphac, alphac)) {
-
-                return i;
-            }
-        } else {
-            if ([color isEqual:mapped]) {
-                return i;
-            }
-        }
-    }
-
-	return -1;
 }
 
 + (NSColor *)mapColorCode:(NSInteger)colorCode

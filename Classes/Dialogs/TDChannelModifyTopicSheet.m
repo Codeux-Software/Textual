@@ -63,7 +63,7 @@
 	[self.headerTitleTextField setStringValue:headerTitle];
 
 	[self.topicValueTextField setPreferredFont:[NSFont systemFontOfSize:13.0]];
-	[self.topicValueTextField setPreferredFontColor:[NSColor colorWithCalibratedWhite:0.01 alpha:1.0]];
+	[self.topicValueTextField setPreferredFontColor:[NSColor blackColor]];
 
 	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueTextField preferredFont]
 														preferredFontColor:[self.topicValueTextField preferredFontColor]
@@ -74,6 +74,11 @@
 	[[mainWindow() formattingMenu] enableSheetField:self.topicValueTextField];
 
 	[self startSheet];
+}
+
+- (void)textDidChange:(NSNotification *)aNotification
+{
+	[self.topicValueTextField textDidChange:aNotification];
 }
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector

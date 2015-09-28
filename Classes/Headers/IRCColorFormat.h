@@ -46,6 +46,12 @@ typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 	IRCTextFormatterBackgroundColorEffect,
 };
 
+TEXTUAL_EXTERN NSString * const IRCTextFormatterBoldAttributeName; // BOOL
+TEXTUAL_EXTERN NSString * const IRCTextFormatterItalicAttributeName; // BOOL
+TEXTUAL_EXTERN NSString * const IRCTextFormatterUnderlineAttributeName; // BOOL
+TEXTUAL_EXTERN NSString * const IRCTextFormatterForegroundColorAttributeName; // NSNumber, 0-15
+TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; // NSNumber, 0-15
+
 #define IRCTextFormatterColorEffectCharacter			0x03
 #define IRCTextFormatterBoldEffectCharacter				0x02
 #define IRCTextFormatterItalicEffectCharacter			0x1d
@@ -68,17 +74,16 @@ typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
 									 withClient:(IRCClient *)client
 										channel:(IRCChannel *)channel
 									   lineType:(TVCLogLineType)lineType;
-@end
 
-@interface TVCTextViewWithIRCFormatter (TVCTextFieldFormattingHelper)
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect
                                   range:(NSRange)limitRange;
+@end
 
+@interface NSMutableAttributedString (IRCTextFormatter)
 - (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
                            value:(id)value 
                            range:(NSRange)limitRange;
 
 - (void)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
-                              range:(NSRange)limitRange 
-                              color:(NSColor *)defaultColor;
+                              range:(NSRange)limitRange;
 @end
