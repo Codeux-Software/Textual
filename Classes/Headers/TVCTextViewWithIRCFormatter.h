@@ -67,9 +67,4 @@
 - (void)updateAllFontSizesToMatchTheDefaultFont;
 
 - (void)textDidChange:(NSNotification *)aNotification;
-
-- (void)removeAttribute:(id)attr inRange:(NSRange)local;
-- (void)setAttributes:(id)attrs inRange:(NSRange)local;
-
-- (void)addUndoActionForAttributes:(NSDictionary *)attributes inRange:(NSRange)local;
 @end

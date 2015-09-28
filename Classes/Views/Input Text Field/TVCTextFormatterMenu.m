@@ -38,37 +38,21 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCTextViewIRCFormattingMenu
-
 #define _formattingMenuForegroundColorEnabledTag		95005
 #define _formattingMenuBackgroundColorEnabledTag		95007
 #define _formattingMenuForegroundColorDisabledTag		95004
 #define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
 
-#define _returnMethodOnBadRange			if (selectedTextRange.location == NSNotFound || selectedTextRange.length == 0) {		\
-											return;																				\
-										}
+@interface TVCTextViewIRCFormattingMenu ()
+@property (nonatomic, assign) BOOL sheetOverrideEnabled;
+@property (nonatomic, unsafe_unretained) TVCTextViewWithIRCFormatter *textField;
+@end
 
+@implementation TVCTextViewIRCFormattingMenu
 
 #pragma mark -
 #pragma mark Menu Management
-
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		self.formattingQueue = dispatch_queue_create("formattingQueue", DISPATCH_QUEUE_SERIAL);
-		
-		return self;
-	}
-	
-	return nil;
-}
-
-- (void)dealloc
-{
-	self.formattingQueue = NULL;
-}
 
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field
 {
@@ -97,10 +81,10 @@
 		{
 			NSMenu *rootMenu = [item menu];
 			
-			BOOL boldText		 = [self boldSet];
+			BOOL boldText = [self textIsBold];
 			
-			BOOL foregroundColor = [self foregroundColorSet];
-			BOOL backgroundColor = [self backgroundColorSet];
+			BOOL foregroundColor = [self textHasForegroundColor];
+			BOOL backgroundColor = [self textHasBackgroundColor];
 			
 			[[rootMenu itemWithTag:_formattingMenuForegroundColorEnabledTag]  setHidden: foregroundColor];
 			[[rootMenu itemWithTag:_formattingMenuForegroundColorDisabledTag] setHidden:(foregroundColor == NO)];
@@ -122,7 +106,7 @@
 		}
 		case 95002:
 		{
-			BOOL italicText = [self italicSet];
+			BOOL italicText = [self textIsItalicized];
 			
 			if (italicText) {
 				[item setAction:@selector(removeItalicCharFromTextBox:)];
@@ -136,7 +120,7 @@
 		}
 		case 95003:
 		{
-			BOOL underlineText = [self underlineSet];
+			BOOL underlineText = [self textIsUnderlined];
 			
 			if (underlineText) {
 				[item setAction:@selector(removeUnderlineCharFromTextBox:)];
@@ -160,34 +144,94 @@
 #pragma mark -
 #pragma mark Formatting Properties
 
-- (BOOL)propertyIsSet:(IRCTextFormatterEffectType)effect
+- (BOOL)propertyIsSet:(IRCTextFormatterEffectType)formatterEffect
 {
-	return [self.textField IRCFormatterAttributeSetInRange:effect range:[self.textField selectedRange]];
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	return [[self.textField attributedString] IRCFormatterAttributeSetInRange:formatterEffect range:selectedTextRange];
 }
 
-- (BOOL)boldSet
+- (BOOL)textIsBold
 {
 	return [self propertyIsSet:IRCTextFormatterBoldEffect];
 }
 
-- (BOOL)italicSet
+- (BOOL)textIsItalicized
 {
 	return [self propertyIsSet:IRCTextFormatterItalicEffect];
 }
 
-- (BOOL)underlineSet
+- (BOOL)textIsUnderlined
 {
 	return [self propertyIsSet:IRCTextFormatterUnderlineEffect];
 }
 
-- (BOOL)foregroundColorSet
+- (BOOL)textHasForegroundColor
 {
 	return [self propertyIsSet:IRCTextFormatterForegroundColorEffect];
 }
 
-- (BOOL)backgroundColorSet
+- (BOOL)textHasBackgroundColor
 {
 	return [self propertyIsSet:IRCTextFormatterBackgroundColorEffect];
+}
+
+#pragma mark -
+#pragma mark Formatting Storage Helpers
+
+/* @public */
+- (void)applyEffectToTextBox:(IRCTextFormatterEffectType)formatterEffect withValue:(id)value inRange:(NSRange)limitRange
+{
+	NSMutableAttributedString *stringMutableCopy = [self mutableStringAtRange:limitRange];
+
+	if (stringMutableCopy) {
+		[self applyEffect:formatterEffect withValue:value toMutableString:stringMutableCopy];
+
+		[self applyAttributedStringToTextBox:stringMutableCopy inRange:limitRange];
+
+		if (formatterEffect == IRCTextFormatterForegroundColorEffect && value == nil) {
+			[self.textField resetTextColorInRange:limitRange];
+		}
+	}
+}
+
+/* @private */
+- (NSMutableAttributedString *)mutableStringAtRange:(NSRange)limitRange
+{
+	if (limitRange.location == NSNotFound || limitRange.length == 0) {
+		return nil;
+	} else {
+		NSAttributedString *stringSubstring = [[self.textField attributedString] attributedSubstringFromRange:limitRange];
+
+		return [stringSubstring mutableCopy];
+	}
+}
+
+- (void)applyEffect:(IRCTextFormatterEffectType)formatterEffect withValue:(id)value toMutableString:(NSMutableAttributedString *)mutableString
+{
+	[self applyEffect:formatterEffect withValue:value inRange:[mutableString range] toMutableString:mutableString];
+}
+
+- (void)applyEffect:(IRCTextFormatterEffectType)formatterEffect withValue:(id)value inRange:(NSRange)limitRange toMutableString:(NSMutableAttributedString *)mutableString
+{
+	if (value) {
+		[mutableString setIRCFormatterAttribute:formatterEffect value:value range:limitRange];
+	} else {
+		[mutableString removeIRCFormatterAttribute:formatterEffect range:limitRange];
+	}
+}
+
+- (void)applyAttributedStringToTextBox:(NSMutableAttributedString *)mutableString inRange:(NSRange)limitRange
+{
+	if ([self.textField shouldChangeTextInRange:limitRange replacementString:[mutableString string]]) {
+		[[self.textField textStorage] beginEditing];
+
+		[[self.textField textStorage] replaceCharactersInRange:limitRange withAttributedString:mutableString];
+
+		[[self.textField textStorage] endEditing];
+
+		[self.textField didChangeText];
+	}
 }
 
 #pragma mark -
@@ -195,176 +239,90 @@
 
 - (void)insertBoldCharIntoTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField setIRCFormatterAttribute:IRCTextFormatterBoldEffect
-									   value:@YES
-									   range:selectedTextRange];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterBoldEffect withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertItalicCharIntoTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField setIRCFormatterAttribute:IRCTextFormatterItalicEffect
-									   value:@YES
-									   range:selectedTextRange];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField setIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-									   value:@YES
-									   range:selectedTextRange];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterUnderlineEffect withValue:@(YES) inRange:selectedTextRange];
 }
 
 - (void)insertForegroundColorCharIntoTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	if ([sender tag] == _formattingMenuRainbowColorMenuItemTag) {
+		[self insertRainbowColorCharInfoTextBox:sender foregroundColor:YES];
+	} else {
 		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		if ([sender tag] == _formattingMenuRainbowColorMenuItemTag)
-		{
-			if (selectedTextRange.length > IRCTextFormatterMaximumRainbowTextFormattingLength) {
-				selectedTextRange.length = IRCTextFormatterMaximumRainbowTextFormattingLength;
-			}
-			
-			UniChar charValue;
-			
-			NSRange charRange;
-			
-			NSUInteger colorChar         = 0;
-			NSUInteger charCountIndex    = 0;
-			NSUInteger rainbowArrayIndex = 0;
-			
-			NSArray *colorCodes = @[@"4", @"7", @"8", @"3", @"12", @"2", @"6"];
-			
-			while (1 == 1) {
-				/* Break once we reach the selected range length. */
-				if (charCountIndex >= selectedTextRange.length) {
-					break;
-				}
-				
-				/* Range to apply to. */
-				charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-				
-				/* Character at that range. */
-				charValue = [[self.textField stringValue] characterAtIndex:charCountIndex];
-				
-				/* Reset rainbow index. */
-				if (rainbowArrayIndex > 6) {
-					rainbowArrayIndex = 0;
-				}
-				
-				/* Apply based on character. */
-				if (charValue == ' ') {
-					[self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												   value:@(0)
-												   range:charRange];
-				} else {
-					colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
-					
-					[self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-												   value:@(colorChar)
-												   range:charRange];
-				}
-				
-				/* Bump count. */
-				charCountIndex += 1;
-				
-				rainbowArrayIndex += 1;
-			}
-		}
-		else
-		{
-			[self.textField setIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-										   value:@([sender tag])
-										   range:selectedTextRange];
-		}
-		
-		[self.textField focus];
-	});
+
+		[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:@([sender tag]) inRange:selectedTextRange];
+	}
 }
 
 - (void)insertBackgroundColorCharIntoTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
+	if ([sender tag] == _formattingMenuRainbowColorMenuItemTag) {
+		[self insertRainbowColorCharInfoTextBox:sender foregroundColor:NO];
+	} else {
 		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		if ([sender tag] == _formattingMenuRainbowColorMenuItemTag)
-		{
-			if (selectedTextRange.length > IRCTextFormatterMaximumRainbowTextFormattingLength) {
-				selectedTextRange.length = IRCTextFormatterMaximumRainbowTextFormattingLength;
-			}
-			
-			NSRange charRange;
-			
-			NSUInteger colorChar         = 0;
-			NSUInteger charCountIndex    = 0;
-			NSUInteger rainbowArrayIndex = 0;
-			
-			NSArray *colorCodes = @[@"6", @"2", @"12", @"9", @"8", @"7", @"4"];
-			
-			while (1 == 1) {
-				/* Break when we reach the length of the selected range. */
-				if (charCountIndex >= selectedTextRange.length) {
-					break;
-				}
-				
-				/* Range of replacement. */
-				charRange = NSMakeRange((selectedTextRange.location + charCountIndex), 1);
-				
-				/* Update rainbow index. */
-				if (rainbowArrayIndex > 6) {
-					rainbowArrayIndex = 0;
-				}
-				
-				/* Apply color. */
-				colorChar = [colorCodes integerAtIndex:rainbowArrayIndex];
-				
-				[self.textField setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-											   value:@(colorChar)
-											   range:charRange];
-				
-				/* Bump numbers. */
-				charCountIndex += 1;
-				
-				rainbowArrayIndex += 1;
-			}
+
+		[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:@([sender tag]) inRange:selectedTextRange];
+	}
+}
+
+- (void)insertRainbowColorCharInfoTextBox:(id)sender foregroundColor:(BOOL)asForegroundColor
+{
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	NSMutableAttributedString *mutableStringCopy = [self mutableStringAtRange:selectedTextRange];
+
+	if (mutableStringCopy == nil) {
+		return;
+	}
+
+	[mutableStringCopy beginEditing];
+
+	NSUInteger rainbowArrayIndex = 0;
+
+	NSArray *colorCodes = @[@"4", @"7", @"8", @"3", @"12", @"2", @"6"];
+
+	for (NSInteger charCountIndex = 0; charCountIndex < [mutableStringCopy length]; charCountIndex++) {
+		UniChar currentCharacter = [[self.textField string] characterAtIndex:charCountIndex];
+
+		if (rainbowArrayIndex > 6) {
+			rainbowArrayIndex = 0;
 		}
-		else
-		{
-			[self.textField setIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-										   value:@([sender tag])
-										   range:selectedTextRange];
+
+		NSInteger currentColorCode = 0;
+
+		if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:currentCharacter] == NO) {
+			currentColorCode = [colorCodes integerAtIndex:rainbowArrayIndex];
 		}
-		
-		[self.textField focus];
-	});
+
+		NSRange currentCharacterRange = NSMakeRange(charCountIndex, 1);
+
+		if (asForegroundColor) {
+			[self applyEffect:IRCTextFormatterForegroundColorEffect withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
+		} else {
+			[self applyEffect:IRCTextFormatterBackgroundColorEffect withValue:@(currentColorCode) inRange:currentCharacterRange toMutableString:mutableStringCopy];
+		}
+
+		rainbowArrayIndex += 1;
+	}
+
+	[mutableStringCopy endEditing];
+
+	[self applyAttributedStringToTextBox:mutableStringCopy inRange:selectedTextRange];
 }
 
 #pragma mark -
@@ -372,77 +330,37 @@
 
 - (void)removeBoldCharFromTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField removeIRCFormatterAttribute:IRCTextFormatterBoldEffect
-										  range:selectedTextRange
-										  color:[self.textField preferredFontColor]];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterBoldEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeItalicCharFromTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField removeIRCFormatterAttribute:IRCTextFormatterItalicEffect
-										  range:selectedTextRange
-										  color:[self.textField preferredFontColor]];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField removeIRCFormatterAttribute:IRCTextFormatterUnderlineEffect
-										  range:selectedTextRange
-										  color:[self.textField preferredFontColor]];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterUnderlineEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeForegroundColorCharFromTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange
-		
-		[self.textField removeIRCFormatterAttribute:IRCTextFormatterForegroundColorEffect
-										  range:selectedTextRange
-										  color:[self.textField preferredFontColor]];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterForegroundColorEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeBackgroundColorCharFromTextBox:(id)sender
 {
-	XRPerformBlockSynchronouslyOnQueue(self.formattingQueue, ^{
-		NSRange selectedTextRange = [self.textField selectedRange];
-		
-		_returnMethodOnBadRange	
-		
-		[self.textField removeIRCFormatterAttribute:IRCTextFormatterBackgroundColorEffect
-										  range:selectedTextRange
-										  color:[self.textField preferredFontColor]];
-		
-		[self.textField focus];
-	});
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterBackgroundColorEffect withValue:nil inRange:selectedTextRange];
 }
 
 @end

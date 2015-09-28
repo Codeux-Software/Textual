@@ -62,9 +62,9 @@
 
 		/* These are the default values. Any class using this one is expected
 		 to define their own values at some point. */
-		[self setPreferredFont:[NSFont systemFontOfSize:12.0]];
+		[self setPreferredFont:[self font]];
 		
-		[self setPreferredFontColor:[NSColor blueColor]];
+		[self setPreferredFontColor:[self textColor]];
     }
 	
     return self;
@@ -136,59 +136,16 @@
 {
 	[[self undoManager] removeAllActions];
 
-	NSData *stringData = [string RTFFromRange:NSMakeRange(0, [string length]) documentAttributes:nil];
-
-    [self replaceCharactersInRange:[self range] withRTF:stringData];
+	[[self textStorage] replaceCharactersInRange:[self range] withAttributedString:string];
 
 	[self didChangeText];
 }
 
 - (void)setStringValue:(NSString *)string
 {
-    [self replaceCharactersInRange:[self range] withString:string];
+    [[self textStorage] replaceCharactersInRange:[self range] withString:string];
 
 	[self didChangeText];
-}
-
-#pragma mark -
-#pragma mark Attribute Management
-
-- (void)addUndoActionForAttributes:(NSDictionary *)attributes inRange:(NSRange)local
-{
-	if (NSObjectIsEmpty(attributes) || NSRangeIsValid(local) == NO) {
-		return;
-	}
-	
-	[[self undoManager] registerUndoWithTarget:self
-									  selector:@selector(setAttributesWithContext:)
-										object:@[attributes, NSStringFromRange(local)]];
-}
-
-- (void)setAttributesWithContext:(NSArray *)contextArray /* @private */
-{
-	NSRange local = NSRangeFromString(contextArray[1]);
-	
-	NSDictionary *attrs = [[self attributedString] attributesAtIndex:0
-											   longestEffectiveRange:NULL
-															 inRange:local];
-	
-	[[self undoManager] registerUndoWithTarget:self
-									  selector:@selector(setAttributesWithContext:)
-										object:@[attrs, NSStringFromRange(local)]];
-	
-	[self setAttributes:contextArray[0] inRange:local];
-}
-
-#pragma mark -
-
-- (void)removeAttribute:(id)attr inRange:(NSRange)local
-{
-    [[self textStorage] removeAttribute:attr range:local];
-}
-
-- (void)setAttributes:(id)attrs inRange:(NSRange)local
-{
-	[[self textStorage] addAttributes:attrs range:local];
 }
 
 #pragma mark -
@@ -283,7 +240,7 @@
 		NSForegroundColorAttributeName : self.preferredFontColor
 	};
 
-	[[self textStorage] setAttributes:newAttributes range:range];
+	[[self textStorage] addAttributes:newAttributes range:range];
 }
 
 #pragma mark -
