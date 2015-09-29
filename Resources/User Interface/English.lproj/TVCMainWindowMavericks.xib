@@ -22,11 +22,11 @@
             <modifierMask key="keyEquivalentModifierMask"/>
             <menu key="submenu" title="IRC Formatting" id="VU0-4x-Dhf">
                 <items>
-                    <menuItem title="Bold" tag="95001" keyEquivalent="b" id="uwr-gf-Jdj">
+                    <menuItem title="Bold" tag="95001" id="uwr-gf-Jdj">
                         <attributedString key="attributedTitle">
                             <fragment content="Bold">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                    <font key="NSFont" metaFont="systemBold" size="14"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -70,15 +70,17 @@
                                 </attributes>
                             </fragment>
                         </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertBoldCharIntoTextBox:" target="yyd-f5-aHb" id="qHu-yf-NIs"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Italics" tag="95002" keyEquivalent="i" id="bzw-ql-WJV">
+                    <menuItem title="Italics" tag="95002" id="bzw-ql-WJV">
                         <attributedString key="attributedTitle">
                             <fragment content="Italics">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica-Oblique"/>
+                                    <font key="NSFont" size="13" name=".AppleSystemUIFontItalic"/>
+                                    <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontItalic"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -122,16 +124,70 @@
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertItalicCharIntoTextBox:" target="yyd-f5-aHb" id="ou4-3z-i03"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Underline" tag="95003" keyEquivalent="u" id="fCM-hF-bf5">
+                    <menuItem title="Srikethrough" tag="95008" id="8dI-sd-HIl">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Srikethrough">
+                                <attributes>
+                                    <font key="NSFont" metaFont="system"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
+                                        <tabStops>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
+                                    <integer key="NSStrikethrough" value="1"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="insertStrikethroughCharIntoTextBox:" target="yyd-f5-aHb" id="jjW-2f-wOh"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Underline" tag="95003" id="fCM-hF-bf5">
                         <attributedString key="attributedTitle">
                             <fragment content="Underline">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica"/>
+                                    <font key="NSFont" metaFont="system"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -177,14 +233,14 @@
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertUnderlineCharIntoTextBox:" target="yyd-f5-aHb" id="ns2-1I-Iye"/>
                         </connections>
                     </menuItem>
                     <menuItem isSeparatorItem="YES" id="LQu-CW-gwP"/>
-                    <menuItem title="Text Color" state="on" tag="95004" hidden="YES" keyEquivalent="c" id="acl-5Q-G35">
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                    <menuItem title="Text Color" state="on" tag="95004" hidden="YES" id="acl-5Q-G35">
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="removeForegroundColorCharFromTextBox:" target="yyd-f5-aHb" id="YSM-dn-sT2"/>
                         </connections>
@@ -673,8 +729,8 @@
                             </items>
                         </menu>
                     </menuItem>
-                    <menuItem title="Background Color" state="on" tag="95006" hidden="YES" keyEquivalent="h" id="9gn-db-A9t">
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                    <menuItem title="Background Color" state="on" tag="95006" hidden="YES" id="9gn-db-A9t">
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="removeBackgroundColorCharFromTextBox:" target="yyd-f5-aHb" id="Dyw-Mg-hWZ"/>
                         </connections>
@@ -1870,7 +1926,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <outlet property="titlebarAccessoryView" destination="8Pz-wu-9PV" id="wtn-6H-hnV"/>
                 <outlet property="titlebarAccessoryViewLockButton" destination="N9S-CI-zgv" id="BLp-fo-3Ue"/>
             </connections>
-            <point key="canvasLocation" x="3948" y="542.5"/>
+            <point key="canvasLocation" x="4185" y="495.5"/>
         </window>
         <customObject id="yyd-f5-aHb" userLabel="FormatTextController" customClass="TVCTextViewIRCFormattingMenu">
             <connections>

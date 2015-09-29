@@ -80,13 +80,15 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 #define _rendererBackgroundColorAttribute		(1 << 24)
 #define _rendererConversationTrackerAttribute	(1 << 23)
 #define _rendererKeywordHighlightAttribute		(1 << 22)
+#define _rendererStrikethroughFormatAttribute	(1 << 21)
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
 #define _effectMask				(												\
 									_rendererBoldFormatAttribute |				\
 									_rendererUnderlineFormatAttribute |			\
-									_rendererItalicFormatAttribute |			\
+									_rendererItalicFormatAttribute |			\ 
+									_rendererStrikethroughFormatAttribute |		\
 									_rendererTextColorAttribute |				\
 									_rendererBackgroundColorAttribute			\
 								)
@@ -293,6 +295,16 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						currentAttr &= ~_rendererItalicFormatAttribute;
 					} else {
 						currentAttr |= _rendererItalicFormatAttribute;
+					}
+
+					continue;
+				}
+				case IRCTextFormatterStrikethroughEffectCharacter:
+				{
+					if (currentAttr & _rendererStrikethroughFormatAttribute) {
+						currentAttr &= ~_rendererStrikethroughFormatAttribute;
+					} else {
+						currentAttr |= _rendererStrikethroughFormatAttribute;
 					}
 
 					continue;
@@ -803,6 +815,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			[body addAttribute:NSFontAttributeName value:boldItalic range:r];
 		}
 
+		if (attrArray & _rendererStrikethroughFormatAttribute) {
+			[body addAttribute:IRCTextFormatterStrikethroughAttributeName value:@(YES) range:r];
+
+			[body addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:r];
+		}
+
 		if (attrArray & _rendererUnderlineFormatAttribute) {
 			[body addAttribute:IRCTextFormatterUnderlineAttributeName value:@(YES) range:r];
 
@@ -956,6 +974,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		if (attrArray & _rendererItalicFormatAttribute) {
 			templateTokens[@"fragmentIsItalicized"] = @(YES);
+		}
+
+		if (attrArray & _rendererStrikethroughFormatAttribute) {
+			templateTokens[@"fragmentIsStruckthrough"] = @(YES);
 		}
 
 		if (attrArray & _rendererUnderlineFormatAttribute) {

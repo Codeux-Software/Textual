@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A263e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -868,11 +868,11 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
             <modifierMask key="keyEquivalentModifierMask"/>
             <menu key="submenu" title="IRC Formatting" id="tby-cl-t36">
                 <items>
-                    <menuItem title="Bold" tag="95001" keyEquivalent="b" id="ajV-SV-z21">
+                    <menuItem title="Bold" tag="95001" id="ajV-SV-z21">
                         <attributedString key="attributedTitle">
                             <fragment content="Bold">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                    <font key="NSFont" metaFont="systemBold"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -916,15 +916,17 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                 </attributes>
                             </fragment>
                         </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertBoldCharIntoTextBox:" target="j7v-mc-UwU" id="FL2-d6-WTy"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Italics" tag="95002" keyEquivalent="i" id="MQM-6c-LVF">
+                    <menuItem title="Italics" tag="95002" id="MQM-6c-LVF">
                         <attributedString key="attributedTitle">
                             <fragment content="Italics">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica-Oblique"/>
+                                    <font key="NSFont" size="13" name=".AppleSystemUIFontItalic"/>
+                                    <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontItalic"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -968,16 +970,70 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertItalicCharIntoTextBox:" target="j7v-mc-UwU" id="ywY-c0-vnI"/>
                         </connections>
                     </menuItem>
-                    <menuItem title="Underline" tag="95003" keyEquivalent="u" id="WEO-6i-cGf">
+                    <menuItem title="Srikethrough" tag="95008" id="IRX-kV-qMN">
+                        <attributedString key="attributedTitle">
+                            <fragment content="Srikethrough">
+                                <attributes>
+                                    <font key="NSFont" metaFont="system"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
+                                        <tabStops>
+                                            <textTab alignment="left" location="36">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="72">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="108">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="144">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="180">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="216">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="252">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="288">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="324">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="360">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="396">
+                                                <options/>
+                                            </textTab>
+                                            <textTab alignment="left" location="432">
+                                                <options/>
+                                            </textTab>
+                                        </tabStops>
+                                    </paragraphStyle>
+                                    <integer key="NSStrikethrough" value="1"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <modifierMask key="keyEquivalentModifierMask"/>
+                        <connections>
+                            <action selector="insertStrikethroughCharIntoTextBox:" target="j7v-mc-UwU" id="Gvu-Mp-2ma"/>
+                        </connections>
+                    </menuItem>
+                    <menuItem title="Underline" tag="95003" id="WEO-6i-cGf">
                         <attributedString key="attributedTitle">
                             <fragment content="Underline">
                                 <attributes>
-                                    <font key="NSFont" size="14" name="Helvetica"/>
+                                    <font key="NSFont" metaFont="system"/>
                                     <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                         <tabStops>
                                             <textTab alignment="left" location="36">
@@ -1023,7 +1079,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                 </attributes>
                             </fragment>
                         </attributedString>
-                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                        <modifierMask key="keyEquivalentModifierMask"/>
                         <connections>
                             <action selector="insertUnderlineCharIntoTextBox:" target="j7v-mc-UwU" id="F1P-4u-Qi6"/>
                         </connections>

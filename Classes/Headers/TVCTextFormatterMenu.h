@@ -51,18 +51,21 @@
 
 @property (readonly) BOOL textIsBold;
 @property (readonly) BOOL textIsItalicized;
+@property (readonly) BOOL textIsStruckthrough;
 @property (readonly) BOOL textIsUnderlined;
 @property (readonly) BOOL textHasForegroundColor;
 @property (readonly) BOOL textHasBackgroundColor;
 
 - (IBAction)insertBoldCharIntoTextBox:(id)sender;
 - (IBAction)insertItalicCharIntoTextBox:(id)sender;
+- (IBAction)insertStrikethroughCharIntoTextBox:(id)sender;
 - (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
 - (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
 - (IBAction)insertBackgroundColorCharIntoTextBox:(id)sender;
 
 - (IBAction)removeBoldCharFromTextBox:(id)sender;
 - (IBAction)removeItalicCharFromTextBox:(id)sender;
+- (IBAction)removeStrikethroughCharFromTextBox:(id)sender;
 - (IBAction)removeUnderlineCharFromTextBox:(id)sender;
 - (IBAction)removeForegroundColorCharFromTextBox:(id)sender;
 - (IBAction)removeBackgroundColorCharFromTextBox:(id)sender;
