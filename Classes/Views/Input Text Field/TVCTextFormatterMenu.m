@@ -68,11 +68,18 @@
 	self.textField = field;
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem *)item
+- (BOOL)firstResponderSupportsFormatting
 {
 	if ([[NSApp keyWindow] firstResponder] == self.textField) {
-		;
+		return YES;
 	} else {
+		return NO;
+	}
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)item
+{
+	if ([self firstResponderSupportsFormatting] == NO) {
 		return NO;
 	}
 
