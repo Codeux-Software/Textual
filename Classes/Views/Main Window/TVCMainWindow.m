@@ -635,8 +635,6 @@
 
 - (void)tab:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 	
 	if (tabKeyAction == TXTabKeyNickCompleteAction) {
@@ -648,8 +646,6 @@
 
 - (void)shiftTab:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 	
 	if (tabKeyAction == TXTabKeyNickCompleteAction) {
@@ -670,8 +666,6 @@
 
 - (void)sendMsgAction:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
 		[self sendText:IRCPrivateCommandIndex("action")];
 	} else {
@@ -681,8 +675,6 @@
 
 - (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if (scroll) {
 		NSInteger nol = [self.inputTextField numberOfLines];
 		
@@ -737,8 +729,6 @@
 
 - (void)textFormattingBold:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([self.formattingMenu textIsBold]) {
 		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
@@ -748,8 +738,6 @@
 
 - (void)textFormattingItalic:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([self.formattingMenu textIsItalicized]) {
 		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
@@ -768,8 +756,6 @@
 
 - (void)textFormattingUnderline:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([self.formattingMenu textIsUnderlined]) {
 		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
@@ -779,8 +765,6 @@
 
 - (void)textFormattingForegroundColor:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([self.formattingMenu textHasForegroundColor]) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
 	} else {
@@ -795,8 +779,6 @@
 
 - (void)textFormattingBackgroundColor:(NSEvent *)e
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	if ([self.formattingMenu textHasForegroundColor] == NO) {
 		return;
 	}
@@ -829,9 +811,9 @@
 
 - (void)focusWebview
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-
-	[self makeFirstResponder:[[self selectedViewController] webView]];
+	if ([self attachedSheet] == nil) {
+		[self makeFirstResponder:[[self selectedViewController] webView]];
+	}
 }
 
 - (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods

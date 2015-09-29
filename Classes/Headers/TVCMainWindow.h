@@ -41,9 +41,6 @@
 #define TVCMainWindowDefaultFrameWidth		800
 #define TVCMainWindowDefaultFrameHeight		474
 
-#define TVCMainWindowNegateActionWithAttachedSheet()		if ([mainWindow() attachedSheet]) { return; }
-#define TVCMainWindowNegateActionWithAttachedSheetR(r)		if ([mainWindow() attachedSheet]) { return r; }
-
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationMovementType) {
 	TVCServerListNavigationMovementAllType,     // Move to next item.
 	TVCServerListNavigationMovementActiveType,  // Move to next active item.

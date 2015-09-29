@@ -94,8 +94,6 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	TVCMainWindowNegateActionWithAttachedSheetR(@[]);
-	
 	NSMutableArray *ary = [NSMutableArray array];
 
 	/* Invalidate passed information if we are in console. */

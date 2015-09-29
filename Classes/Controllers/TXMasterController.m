@@ -425,8 +425,6 @@
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event
 		withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	NSAppleEventDescriptor *desc = [event descriptorAtIndex:1];
 
 	[IRCExtras parseIRCProtocolURI:[desc stringValue] withDescriptor:event];
