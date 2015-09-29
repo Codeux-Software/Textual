@@ -38,15 +38,415 @@
 
 #import "TextualApplication.h"
 
+@interface TLONicknameCompletionStatus ()
+@property (nonatomic, copy) NSString *completedValue;
+@property (nonatomic, copy) NSString *completedValueCompletionSuffix;
+@property (nonatomic, copy) NSString *currentTextFieldStringValue;
+@property (nonatomic, copy) NSString *cachedSearchPattern;
+@property (nonatomic, copy) NSString *cachedSearchPatternPrefixCharacter;
+@property (nonatomic, copy) NSString *cachedCompletionSuffix;
+@property (nonatomic, assign) NSRange rangeOfTextSelection;
+@property (nonatomic, assign) NSRange rangeOfSearchPattern;
+@property (nonatomic, assign) NSRange rangeOfCompletionSuffix;
+@property (nonatomic, assign) NSInteger selectionIndexOfLastCompletion;
+@property (nonatomic, assign) BOOL completionIsMovingForward;
+@property (nonatomic, assign) BOOL isCompletingChannelName;
+@property (nonatomic, assign) BOOL isCompletingCommand;
+@property (nonatomic, assign) BOOL isCompletingNickname;
+@property (nonatomic, assign) BOOL searchPatternIsAtStart;
+@property (nonatomic, assign) BOOL searchPatternIsAtEnd;
+@property (nonatomic, assign) BOOL completionCacheIsConstructed;
+@end
+
 @implementation TLONicknameCompletionStatus
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[self clear:YES];
+		[self clear];
 	}
 
 	return self;
+}
+
+- (void)completeNickname:(BOOL)movingForward
+{
+	[self performCompletion:movingForward];
+}
+
+#pragma mark -
+#pragma mark Completion Management
+
+- (void)performCompletion:(BOOL)movingForward
+{
+	/* Global variables. */
+	NSTextView *textView = [mainWindow() inputTextField];
+
+	if (textView == nil) {
+		return; // Cancel operation...
+	}
+
+	BOOL canContinuePreviousScan = YES;
+
+	/* Focus text field so if the insertion point we not already 
+	 in it, its there now so we can get selected range. */
+	[textView focus];
+
+	/* Get the selected range. Length may be zero in which can 
+	 insertion point is just sitting idle. */
+	NSRange selectedRange = [textView selectedRange];
+
+	if (selectedRange.location == NSNotFound) {
+		return;
+	}
+
+	/* Perform various comparisons to determine whether the
+	 cache has to be rebuilt. */
+	if ( self.selectionIndexOfLastCompletion == NSNotFound ||
+		(self.rangeOfTextSelection.location == NSNotFound &&
+		 self.rangeOfSearchPattern.location == 0 && self.rangeOfSearchPattern.length == 0))
+	{
+		canContinuePreviousScan = NO;
+	}
+
+	NSString *currentTextFieldStringValue = [textView string];
+
+	if (NSObjectIsEmpty(self.currentTextFieldStringValue)) {
+		canContinuePreviousScan = NO;
+	} else if (NSObjectsAreEqual(self.currentTextFieldStringValue, currentTextFieldStringValue) == NO) {
+		canContinuePreviousScan = NO;
+	}
+
+	self.currentTextFieldStringValue = currentTextFieldStringValue;
+
+	self.completionIsMovingForward = movingForward;
+
+	/* Move onto stage two of the completion */
+	if (canContinuePreviousScan == NO) {
+		self.rangeOfTextSelection = selectedRange;
+
+		[self constructCache];
+	}
+
+	if (self.completionCacheIsConstructed) {
+		if ([self performCompletion_step1] == NO)
+			return;
+
+		[self performCompletion_step2];
+		[self performCompletion_step3];
+		[self performCompletion_step4];
+	}
+}
+
+- (BOOL)performCompletion_step1
+{
+	/* Only blindly complete nicknames */
+	BOOL searchPatternIsEmpty = NSObjectIsEmpty(self.cachedSearchPattern);
+
+	if (searchPatternIsEmpty && self.isCompletingNickname == NO) {
+		return NO;
+	}
+
+	/* Define our choices for the completion. The choicesUppercase array
+	 holds all the case-sensitive representations of the completions while
+	 the choicesLowercase array holds each completion as a lowercase string.
+	 The lowercase string is compared against the lowercase backward cut. If
+	 they match, then the actual case is requested from choicesUppercase. */
+	NSMutableArray *choicesUppercase = [NSMutableArray array];
+	NSMutableArray *choicesLowercase = [NSMutableArray array];
+
+	if (self.isCompletingCommand)
+	{
+		for (NSString *command in [IRCCommandIndex publicIRCCommandList]) {
+			[choicesUppercase addObject:[command lowercaseString]];
+		}
+
+		[choicesUppercase addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
+		[choicesUppercase addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
+	}
+	else if (self.isCompletingChannelName)
+	{
+		IRCClient *client = [mainWindow() selectedClient];
+		IRCChannel *channel = [mainWindow() selectedChannel];
+
+		if (channel) {
+			[choicesUppercase addObject:[channel name]];
+		}
+
+		for (IRCChannel *cc in [client channelList]) {
+			if (cc == channel) {
+				continue;
+			}
+
+			[choicesUppercase addObject:[cc name]];
+		}
+	}
+	else if (self.isCompletingNickname)
+	{
+		/* Complete the entire user list. */
+		IRCClient *client = [mainWindow() selectedClient];
+		IRCChannel *channel = [mainWindow() selectedChannel];
+
+		if (channel == nil) {
+			return NO; // Umm, where to get channels?...
+		}
+
+		/* When the search pattern is empty, then special consideration is taken for how
+		 the human brain may expect the result. When there is a search pattern, the list 
+		 is sorted using member weight, but that information is not really relevant when 
+		 you are targetting all. When the search pattern is empty, the member list is sorted 
+		 alphabeticaly and only the single most heighly weighted user is placed at the top 
+		 of the list and that only occurs if there is a user with a different weight. */
+		__block IRCUser *userWithGreatestWeight = nil;
+
+		__block BOOL noUserHadGreaterWeightThanOriginal = YES;
+
+		NSArray *memberList = nil;
+
+		if (searchPatternIsEmpty == NO) {
+			memberList = [[channel memberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
+
+			userWithGreatestWeight = [memberList firstObject];
+		} else {
+			memberList = [[channel memberList] sortedArrayUsingComparator:^NSComparisonResult(IRCUser *user1, IRCUser *user2) {
+				if (userWithGreatestWeight == nil) {
+					userWithGreatestWeight = user1;
+				}
+
+				if ([userWithGreatestWeight totalWeight] < [user2 totalWeight]) {
+					userWithGreatestWeight = user2;
+
+					noUserHadGreaterWeightThanOriginal = NO;
+				}
+
+				return [[user1 nickname] caseInsensitiveCompare:[user2 nickname]];
+			}];
+		}
+
+		/* Add nicknames to list */
+		NSCharacterSet *nonAlphaCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
+
+		void (^addNickname)(NSString *, BOOL) = ^(NSString *nickname, BOOL addTrimmedVariant)
+		{
+			/* Add unmodified version of nickname */
+			[choicesUppercase addObject:nickname];
+
+			[choicesLowercase addObject:[nickname lowercaseString]];
+
+			/* Add choice after it has been trimmed of special characters as well. */
+			if (addTrimmedVariant == NO)
+				return;
+
+			NSString *nicknameTrimmed = [self trimNickname:nickname usingCharacterSet:nonAlphaCharacters];
+
+			if ([nicknameTrimmed length] > 0 && [nickname isNotEqualTo:nicknameTrimmed]) {
+				NSString *nicknameTrimmedLowercase = [nicknameTrimmed lowercaseString];
+
+				if ([choicesLowercase containsObject:nicknameTrimmedLowercase] == NO) {
+					[choicesUppercase addObject:nicknameTrimmed];
+
+					[choicesLowercase addObject:nicknameTrimmedLowercase];
+				}
+			}
+		};
+
+		if (noUserHadGreaterWeightThanOriginal == NO) {
+			addNickname([userWithGreatestWeight nickname], YES);
+		}
+
+		for (IRCUser *m in memberList) {
+			if (noUserHadGreaterWeightThanOriginal == NO && m == userWithGreatestWeight) {
+				continue;
+			}
+
+			addNickname([m nickname], YES);
+		}
+
+		/* Complete static names, including application name. */
+		addNickname(@"NickServ", NO);
+		addNickname(@"RootServ", NO);
+		addNickname(@"OperServ", NO);
+		addNickname(@"HostServ", NO);
+		addNickname(@"ChanServ", NO);
+		addNickname(@"MemoServ", NO);
+
+		addNickname([TPCApplicationInfo applicationName], NO);
+
+		/* Complete network name. */
+		NSString *networkName = [[client supportInfo] networkName];
+
+		if (networkName) {
+			addNickname(networkName, NO);
+		}
+	}
+
+	/* Quick method for replacing the value of each array
+	 object based on a provided selector. */
+	if (self.isCompletingChannelName || self.isCompletingCommand) {
+		[choicesLowercase addObjectsFromArray:choicesUppercase];
+
+		[choicesLowercase performSelectorOnObjectValueAndReplace:@selector(lowercaseString)];
+	}
+
+	/* Now that we know the possible matches, we find all values 
+	 that has our search pattern as its prefix. */
+	NSMutableArray *choicesLowercaseMatched = nil;
+	NSMutableArray *choicesUppercaseMatched = nil;
+
+	if (searchPatternIsEmpty) {
+		choicesLowercaseMatched = choicesLowercase;
+		choicesUppercaseMatched = choicesUppercase;
+	}
+	else
+	{
+		choicesUppercaseMatched = [NSMutableArray array];
+		choicesLowercaseMatched = [NSMutableArray array];
+
+		NSString *searchPatternLowercase = [self.cachedSearchPattern lowercaseString];
+
+		[choicesLowercase enumerateObjectsUsingBlock:^(NSString *choice, NSUInteger choiceIndex, BOOL *stop) {
+			if ([choice hasPrefix:searchPatternLowercase]) {
+				[choicesLowercaseMatched addObject:choice];
+
+				[choicesUppercaseMatched addObject:choicesUppercase[choiceIndex]];
+			}
+		}];
+	}
+
+	NSUInteger choicesLowercaseMatchedCount = [choicesLowercaseMatched count];
+
+	if (choicesLowercaseMatchedCount == 0) {
+		return NO;
+	}
+
+	/* Now that we know the choices that are actually available to the
+	string being completed; we can filter through each going backwards
+	or forward depending on the call to this method. */
+	NSString *valueMatchedBySearchPattern = nil;
+
+	NSUInteger indexOfMatchedValue = self.selectionIndexOfLastCompletion;
+
+	if (choicesLowercaseMatchedCount <= indexOfMatchedValue || indexOfMatchedValue == NSNotFound) {
+		valueMatchedBySearchPattern = choicesUppercaseMatched[0];
+
+		self.selectionIndexOfLastCompletion = 0;
+	} else {
+		if (self.completionIsMovingForward) {
+			indexOfMatchedValue += 1;
+
+			if (choicesLowercaseMatchedCount <= indexOfMatchedValue) {
+				indexOfMatchedValue = 0;
+			}
+		} else {
+			if (indexOfMatchedValue == 0) {
+				indexOfMatchedValue = (choicesLowercaseMatchedCount - 1);
+			} else {
+				indexOfMatchedValue -= 1;
+			}
+		}
+
+		valueMatchedBySearchPattern = choicesUppercaseMatched[indexOfMatchedValue];
+
+		self.selectionIndexOfLastCompletion = indexOfMatchedValue;
+	}
+
+	if (NSObjectIsEmpty(self.cachedSearchPatternPrefixCharacter) == NO) {
+		valueMatchedBySearchPattern = [self.cachedSearchPatternPrefixCharacter stringByAppendingString:valueMatchedBySearchPattern];
+	}
+
+	self.completedValue = valueMatchedBySearchPattern;
+
+	return YES;
+}
+
+- (void)performCompletion_step2
+{
+	/* Add the completed string to the spell checker so that a nickname
+	 wont show up as spelled incorrectly. The spell checker is cleared
+	 of these ignores between channel changes. */
+	TVCMainWindowTextView *textView = [mainWindow() inputTextField];
+
+	[RZSpellChecker() ignoreWord:self.completedValue inSpellDocumentWithTag:[textView spellCheckerDocumentTag]];
+
+	[textView setHasModifiedSpellingDictionary:YES];
+}
+
+- (void)performCompletion_step3
+{
+	NSString *newCompletionSuffix = nil;
+
+	if (self.isCompletingCommand || self.isCompletingChannelName) {
+		newCompletionSuffix = NSStringWhitespacePlaceholder;
+	} else if (self.isCompletingNickname) {
+		newCompletionSuffix = [TPCPreferences tabCompletionSuffix];
+	}
+
+	if ([self.cachedCompletionSuffix hasSuffix:NSStringWhitespacePlaceholder]) {
+		newCompletionSuffix = nil;
+	}
+
+	self.completedValueCompletionSuffix = newCompletionSuffix;
+}
+
+- (void)performCompletion_step4
+{
+	/* Calculate range of the section that will be replaced. */
+	NSRange completeReplacementRange;
+
+	completeReplacementRange.location = self.rangeOfSearchPattern.location;
+	completeReplacementRange.length = (self.rangeOfSearchPattern.length + self.rangeOfCompletionSuffix.length);
+
+	/* Create the replacement value */
+	NSString *combinedCompletedValue = nil;
+
+	if (self.completedValueCompletionSuffix) {
+		combinedCompletedValue = [self.completedValue stringByAppendingString:self.completedValueCompletionSuffix];
+	} else {
+		combinedCompletedValue =  self.completedValue;
+	}
+
+	/* Perform replacement of selection with the new value */
+	TVCMainWindowTextView *textView = [mainWindow() inputTextField];
+
+	if ([textView shouldChangeTextInRange:completeReplacementRange replacementString:combinedCompletedValue]) {
+		[textView replaceCharactersInRange:completeReplacementRange withString:combinedCompletedValue];
+
+		[textView didChangeText];
+	}
+
+	/* Modify range to account for new length */
+	completeReplacementRange.length = [combinedCompletedValue length];
+
+	/* Scroll new selection into view and select it */
+	NSRange newSelectionRange = NSMakeRange((completeReplacementRange.location + completeReplacementRange.length), 0);
+
+	[textView scrollRangeToVisible:newSelectionRange];
+
+	[textView setSelectedRange:newSelectionRange];
+
+	/* Calculate range for new suffix */
+	NSRange completeCompletionSuffixRange;
+
+	completeCompletionSuffixRange.location = (self.rangeOfSearchPattern.location + self.rangeOfSearchPattern.length);
+	completeCompletionSuffixRange.length = (completeReplacementRange.length - self.rangeOfSearchPattern.length);
+
+	self.rangeOfCompletionSuffix = completeCompletionSuffixRange;
+
+	/* Finish operation by updating cache */
+	self.currentTextFieldStringValue = [textView string];
+
+	self.completedValue = nil;
+	self.completedValueCompletionSuffix = nil;
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (NSInteger)textViewMaximumRange
+{
+	TVCMainWindowTextView *textView = [mainWindow() inputTextField];
+
+	return [textView stringLength];
 }
 
 - (NSString *)trimNickname:(NSString *)nickname usingCharacterSet:(NSCharacterSet *)charset
@@ -64,517 +464,207 @@
 	return nil;
 }
 
-- (void)completeNickname:(BOOL)forward
+#pragma mark -
+#pragma mark Cache Construction
+
+- (void)constructCache
 {
-	/* Global variables. */
-	IRCClient *client = [mainWindow() selectedClient];
-	IRCChannel *channel = [mainWindow() selectedChannel];
-	
-	TVCMainWindowTextView *inputTextField = mainWindowTextField();
+	[self clearCache];
 
-	PointerIsEmptyAssert(client);
-
-	/* Focus the text field and get the selected range. */
-	[inputTextField focus];
-
-	NSRange selectedRange = [inputTextField selectedRange];
-
-	if (selectedRange.location == NSNotFound) {
+	if ([self constructCachedSearchPattern] == NO)
 		return;
-	}
 
-	/* Get the string. */
-	NSString *s = [inputTextField stringValue];
+	if ([self constructCachedSearchPatternPrefixCharacter] == NO)
+		return;
 
-	/* Time to start comparing values. */
-	BOOL canContinuePreviousScan = YES;
+	if ([self constructCachedCompletionSuffix] == NO)
+		return;
 
-	if (self.lastTextFieldSelectionRange.location == NSNotFound ||
-		self.lastCompletionFragmentRange.location == NSNotFound ||
-		self.lastCompletionCompletedRange.location == NSNotFound)
-	{
-		canContinuePreviousScan = NO;
-	}
-
-	if (NSObjectIsEmpty(self.cachedTextFieldStringValue)) {
-		canContinuePreviousScan = NO;
-	} else {
-		if ([self.cachedTextFieldStringValue isEqualToString:s] == NO) {
-			canContinuePreviousScan = NO;
-		}
-	}
-
-	if (NSEqualRanges(selectedRange, self.lastTextFieldSelectionRange) == NO) {
-		canContinuePreviousScan = NO;
-	}
-
-	/* 
-	 There are two important variables defined by this completion system.
-	 They are the backwardCut and selectedCut. The backwardCut is the fragment
-	 being compared against all other items. The selectedCut anything right 
-	 of the backwardCut left over from a previous scan. 
-	 
-	 "Hello Mikey"
-		  >|  |<		— "Mi" the backwardCut, also lastCompletionFragmentRange
-		     >|  |<		— "key" — the selectedCut, left over from last scan.
-		  >|     |<		- "Mikey" — th entire last completion, also lastCompletionCompletedRange.
-
-	 The above design only applies when canContinuePreviousScan is YES. Otherwise,
-	 we have to start over by scrapping everything and finding the new backwardCut.
-	 */
-
-	/* Get the backward cut. */
-	BOOL isAtStart = YES;
-	BOOL isAtEnd = YES;
-
-	NSString *backwardCut = NSStringEmptyPlaceholder;
-	NSString *selectedCut = NSStringEmptyPlaceholder;
-
-	if (canContinuePreviousScan == NO) {
-		/* If this is a new scan, then reset all our ranges to begin with. */
-		if ([self.cachedTextFieldStringValue isEqualToString:s]) {
-			[self clear:NO];
-		} else {
-			[self clear:YES];
-		}
-
-		/* Before we do anything, we must establish where we are starting. 
-		 If the length of selectedRange is above zero, then it means the
-		 user actually has something selected. If that is the case, we want
-		 the end of that seelection to be where backwardCut should end. */
-		if (selectedRange.length > 0) {
-			selectedRange.location += selectedRange.length;
-			selectedRange.length = 0;
-		}
-
-		/* We can back out the moment we aren't anywhere. */
-		if (selectedRange.location == 0) {
-			return;
-		}
-
-		/* Now that we know where our backwardCut check will begin, we must
-		 start checking the all around it. For the left side of backwardCut
-		 we want it to end on a space or the end of the text field. */
-		NSInteger si = (selectedRange.location - 1);
-		NSInteger ci = 0; // The cut index.
-
-		for (NSInteger i = si; i >= 0; i--) {
-			/* Scanning backwards from the origin unti we find a space
-			 or the end of the text field. */
-			UniChar cc = [s characterAtIndex:i];
-
-			if (cc == '\x020' || cc == '\x02c') {
-				ci = (i + 1); // Character right of the space.
-
-				isAtStart = NO;
-
-				break; // Exit scan loop;
-			}
-		}
-
-		/* We now have the left side maximum index of the backwardCut
-		 in the variable ci. The character at ci until the location
-		 of the selectedRange will make up the backwardCut. */
-		NSInteger bcl = (selectedRange.location - ci);
-
-		if (bcl <= 0) {
-			return; // Do not cut empty strings.
-		}
-
-		self.lastCompletionFragmentRange = NSMakeRange(ci, (selectedRange.location - ci));
-
-		backwardCut = [s substringWithRange:self.lastCompletionFragmentRange];
-
-		if ([backwardCut length] == 0) {
-			return;
-		}
-
-		/* Now we gather information about the right side of our backwardCut
-		 which will be turned into the selectedCut. The selectedCut will be
-		 at one point combined with backwardCut to search our search array 
-		 for any possible values to know whether we should move to the next
-		 result of a comparison. */
-		NSInteger nextIndex = (self.lastCompletionFragmentRange.length + self.lastCompletionFragmentRange.location);
-
-		if (([s length] - nextIndex) > 0) {
-			/* Only do work if we have work to do. */
-			ci = [s length]; // Default to end of text field.
-
-			/* We use the user configured suffix when scanning. */
-			NSString *ucs = [TPCPreferences tabCompletionSuffix];
-
-			/* State variable of the suffix. */
-			BOOL isucsempty = NSObjectIsEmpty(ucs);
-
-			UniChar ucsfc = 0;
-
-			/* Does user even have a suffix? */
-			if (isucsempty == NO) {
-				ucsfc = [ucs characterAtIndex:0]; // Get first character of suffix.
-			}
-			
-			/* Start scan. */
-			for (NSInteger i = nextIndex; i < [s length]; i++) {
-				UniChar cc = [s characterAtIndex:i];
-
-				if (isucsempty == NO && cc == ucsfc) {
-					/* If we have a suffix and the first character of it,
-					 then we are going to substring from that index and
-					 beyond to check if we have the rest of the suffix. */
-					if ([ucs length] == 1) {
-						isAtEnd = NO;
-						
-						ci = i; // Index before this char.
-
-						break;
-					} else {
-						NSString *css = [s substringFromIndex:i];
-
-						if ([css hasPrefix:ucs]) {
-							isAtEnd = NO;
-
-							ci = (i + [css length]); // Index before this char.
-
-							break;
-						}
-					}
-				} else {
-					/* Continue with a normal scan. */
-					if (cc == '\x020' || cc == '\x03a' || cc == '\x02c') {
-						ci = i; // Index before this char.
-
-						isAtEnd = NO;
-
-						break;
-					}
-				}
-			}
-
-			if (ci > 0) { // Do the actual truncate.
-				NSRange scr = NSMakeRange(nextIndex, (ci - nextIndex));
-
-				selectedCut = [s substringWithRange:scr];
-
-				/* Set the completed range so that we replace
-				 anything after the backwardCut when we replace. */
-				NSRange fcr = self.lastCompletionFragmentRange;
-
-				if (self.cachedLastCompleteStringValue) {
-					if (backwardCut && selectedCut) {
-						/* Only cut forward if the combined cut is equal to the previous complete. */
-						NSString *combinedCut = [backwardCut stringByAppendingString:selectedCut];
-						
-						if (NSObjectsAreEqual(self.cachedLastCompleteStringValue, combinedCut)) {
-							fcr.length += [selectedCut length];
-						}
-					}
-				}
-
-				/* Update state information. */
-				if ((fcr.location + fcr.length + 1) >= [s length]) {
-					isAtEnd = YES;
-				}
-
-				self.lastCompletionCompletedRange = fcr;
-			}
-		}
-	} else {
-		backwardCut = self.cachedBackwardCutStringValue;
-
-		if (self.lastCompletionFragmentRange.location > 0) {
-			isAtStart = NO;
-		}
-
-		if ((self.lastCompletionCompletedRange.location + self.lastCompletionCompletedRange.length + 1) < [s length]) {
-			isAtEnd = NO;
-		}
-
-		NSRange fr = self.lastCompletionCompletedRange;
-
-		fr.location += backwardCut.length;
-		fr.length -= backwardCut.length;
-
-		selectedCut = [s substringWithRange:fr];
-	}
-
-	NSObjectIsEmptyAssert(backwardCut);
-
-	/* What type of message are we completing? There are three
-	 prefixes that can be matched to determine this: "/" for a
-	 command, "@" (like Twitter) for a Nickname, and of course
-	 "#" for a channel. The fourth prefix would be nothing which
-	 also means a nickname. */
-	BOOL channelMode = NO;
-	BOOL commandMode = NO;
-
-	NSInteger backwardCutLengthAddition = 0;
-
-	NSString *backwardCutStringAddition = NSStringEmptyPlaceholder;
-
-	UniChar c = [backwardCut characterAtIndex:0];
-
-	if (isAtStart && c == '\x02f') {
-		commandMode = YES;
-
-		backwardCut = [backwardCut substringFromIndex:1];
-		backwardCutLengthAddition = 1;
-		backwardCutStringAddition = @"\x02f";
-	} else if (c == '\x040') {
-		PointerIsEmptyAssert(channel);
-
-		backwardCut = [backwardCut substringFromIndex:1];
-		backwardCutLengthAddition = 1;
-		backwardCutStringAddition = @"\x040";
-	} else if (c == '\x023') {
-		channelMode = YES;
-	}
-
-	NSObjectIsEmptyAssert(backwardCut);
-
-	/* Define our choices for the completion. The upperChoices array
-	 holds all the case-sensitive representations of the completions
-	 while the lowerChoices array holds each completion as a lowercase
-	 string. The lowercase string is compared against the lowercase
-	 backward cut. If they match, then the actual case is requested
-	 from the upperChoices array. */
-
-	NSString *lowerBackwardCut = backwardCut.lowercaseString;
-
-	NSMutableArray *upperChoices = [NSMutableArray array];
-	NSMutableArray *lowerChoices = [NSMutableArray array];
-
-	if (commandMode) {
-		for (NSString *command in [IRCCommandIndex publicIRCCommandList]) {
-			[upperChoices addObject:[command lowercaseString]];
-		}
-
-		[upperChoices addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
-		[upperChoices addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
-	} else if (channelMode) {
-		// Prioritize selected channel for channel completion
-		if (channel) {
-			[upperChoices addObject:[channel name]];
-		}
-		
-		for (IRCChannel *cc in [client channelList]) {
-			if ([cc isEqual:channel] == NO) {
-				[upperChoices addObjectWithoutDuplication:[cc name]];
-			}
-		}
-	} else {
-		/* Complete the entire user list. */
-		NSArray *memberList = [[channel memberList] sortedArrayUsingSelector:@selector(compareUsingWeights:)];
-
-		for (IRCUser *m in memberList) {
-			[upperChoices addObject:[m nickname]];
-		}
-
-		/* Complete static names, including application name. */
-		[upperChoices addObject:@"NickServ"];
-		[upperChoices addObject:@"RootServ"];
-		[upperChoices addObject:@"OperServ"];
-		[upperChoices addObject:@"HostServ"];
-		[upperChoices addObject:@"ChanServ"];
-		[upperChoices addObject:@"MemoServ"];
-		[upperChoices addObject:[TPCApplicationInfo applicationName]];
-
-		/* Complete network name. */
-		NSString *networkName = [[client supportInfo] networkName];
-		
-		if (networkName) {
-			[upperChoices addObject:networkName];
-		}
-	}
-
-	/* Quick method for replacing the value of each array
-	 object based on a provided selector. */
-	if (commandMode || channelMode) {
-		lowerChoices = [upperChoices mutableCopy];
-
-		[lowerChoices performSelectorOnObjectValueAndReplace:@selector(lowercaseString)];
-	} else {
-		/* For nickname completes we stripout certain characters. */
-		NSArray *tempChoices = [upperChoices copy];
-
-		[upperChoices removeAllObjects];
-
-		/* Add objects to the arrays plus their stripped versions. */
-		NSCharacterSet *nonAlphaChars = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
-
-		for (NSString *ss in tempChoices) {
-			[upperChoices addObject:ss];
-			[lowerChoices addObject:[ss lowercaseString]];
-
-			NSString *stripped = [self trimNickname:ss usingCharacterSet:nonAlphaChars];
-
-			if ([ss isNotEqualTo:stripped] && [stripped length] > 0) {
-				stripped = stripped.lowercaseString;
-
-				if ([lowerChoices containsObject:stripped] == NO) {
-					[upperChoices addObject:ss];
-					[lowerChoices addObject:[stripped lowercaseString]];
-				}
-			}
-		}
-	}
-
-	/* We will now get a list of matches to our backward cut. */
-	NSMutableArray *currentUpperChoices = [NSMutableArray array];
-	NSMutableArray *currentLowerChoices = [NSMutableArray array];
-
-	NSInteger i = 0;
-
-	for (NSString *ss in lowerChoices) {
-		if ([ss hasPrefix:lowerBackwardCut]) {
-			[currentLowerChoices addObject:ss];
-			[currentUpperChoices addObject:upperChoices[i]];
-		}
-
-		i += 1;
-	}
-
-	NSAssertReturn([currentUpperChoices count] > 0);
-
-	/* Now that we know the choices that are actually available to the
-	   string being completed; we can filter through each going backwards
-	   or forward depending on the call to this method. */
-	NSString *ut = nil;
-
-	NSUInteger index = self.lastCompletionSelectionIndex;
-
-	if (index == NSNotFound || index >= [currentLowerChoices count]) {
-		ut = currentUpperChoices[0];
-
-		self.lastCompletionSelectionIndex = 0;
-	} else {
-		if (forward) {
-			index += 1;
-
-			if ([currentUpperChoices count] <= index) {
-				index = 0;
-			}
-		} else {
-			if (index == 0) {
-				index = ([currentUpperChoices count] - 1);
-			} else {
-				index -= 1;
-			}
-		}
-
-		ut = currentUpperChoices[index];
-
-		self.lastCompletionSelectionIndex = index;
-	}
-
-	/* Add prefix back to the string? */
-	if (backwardCutLengthAddition > 0) {
-		backwardCut = [backwardCutStringAddition stringByAppendingString:backwardCut];
-
-		ut = [backwardCutStringAddition stringByAppendingString:ut];
-	}
-	
-	/* Cache value. */
-	self.cachedLastCompleteStringValue = ut;
-
-	/* Add the completed string to the spell checker so that a nickname
-	 wont show up as spelled incorrectly. The spell checker is cleared
-	 of these ignores between channel changes. */
-	[RZSpellChecker() ignoreWord:ut inSpellDocumentWithTag:inputTextField.spellCheckerDocumentTag];
-
-	[inputTextField setHasModifiedSpellingDictionary:YES];
-	
-	/* Create our final string. */
-	if (commandMode || channelMode || isAtStart == NO) {
-		BOOL addWhitespace = YES;
-
-		if (isAtEnd == NO) {
-			if ([selectedCut hasPrefix:NSStringWhitespacePlaceholder]) {
-				if (canContinuePreviousScan) {
-					addWhitespace = NO;
-				}
-			}
-		}
-
-		if (addWhitespace) {
-			ut = [ut stringByAppendingString:NSStringWhitespacePlaceholder];
-		}
-	} else {
-		NSString *completeSuffix = [TPCPreferences tabCompletionSuffix];
-
-		if (NSObjectIsNotEmpty(completeSuffix)) {
-			BOOL addWhitespace = YES;
-
-			if ([completeSuffix isEqualToString:NSStringWhitespacePlaceholder]) {
-				NSUInteger nextIndx = (self.lastCompletionCompletedRange.length + self.lastCompletionCompletedRange.location);
-				
-				if ([s length] > nextIndx) {
-					NSString *nextChar = [s stringCharacterAtIndex:nextIndx];
-					
-					if ([nextChar isEqualToString:NSStringWhitespacePlaceholder]) {
-						addWhitespace = NO;
-					}
-				}
-			}
-
-			if (addWhitespace) {
-				ut = [ut stringByAppendingString:completeSuffix];
-			}
-		}
-	}
-
-	/* Update the text field. */
-	NSRange fr = NSEmptyRange();
-
-	if (self.lastCompletionCompletedRange.location == NSNotFound) {
-		fr.length = [backwardCut length];
-	} else {
-		fr.length = self.lastCompletionCompletedRange.length;
-	}
-
-	fr.location = self.lastCompletionFragmentRange.location;
-
-	if ([inputTextField shouldChangeTextInRange:fr replacementString:ut])
-	{
-		[[inputTextField textStorage] beginEditing];
-		
-		[inputTextField replaceCharactersInRange:fr withString:ut];
-		
-		[[inputTextField textStorage] endEditing];
-	}
-
-	[inputTextField scrollRangeToVisible:inputTextField.selectedRange];
-
-	fr.length = [ut length];
-
-	self.lastCompletionCompletedRange = fr;
-
-	/* Update the selected range. */
-	fr.location = (fr.location + fr.length);
-	fr.length = 0;
-
-	[inputTextField setSelectedRange:fr];
-
-	self.lastTextFieldSelectionRange = fr;
-
-	/* Update cached string values. */
-	self.cachedTextFieldStringValue = [inputTextField string];
-	self.cachedBackwardCutStringValue = backwardCut;
+	self.completionCacheIsConstructed = YES;
 }
 
-- (void)clear:(BOOL)clearLastValue
+- (BOOL)constructCachedSearchPattern
 {
-	self.cachedTextFieldStringValue = nil;
-	self.cachedBackwardCutStringValue = nil;
-	
-	if (clearLastValue) {
-		self.cachedLastCompleteStringValue = nil;
+	/* Given string and a starting point, we move backwards
+	 from that starting point until we reach a comma (,) or
+	 a localized space character. */
+	NSRange selectedRange = self.rangeOfTextSelection;
+
+	NSInteger searchPatternStartingPoint = 0;
+
+	if (selectedRange.location > 0) {
+		for (NSInteger i = (selectedRange.location - 1); i >= 0; i--) {
+			UniChar cc = [self.currentTextFieldStringValue characterAtIndex:i];
+
+			if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:cc] || cc == '\x02c') {
+				searchPatternStartingPoint = (i + 1); // Starting point is plus one to
+													  // position the starting index as
+													  // character after separator
+
+				break;
+			}
+		}
 	}
 
-	self.lastCompletionSelectionIndex = NSNotFound;
+	/* Now that we know the starting point, we can extract the search string. */
+	NSInteger searchPatternLength = (selectedRange.location - searchPatternStartingPoint);
 
-	self.lastTextFieldSelectionRange = NSEmptyRange();
-	self.lastCompletionCompletedRange = NSEmptyRange();
-	self.lastCompletionFragmentRange = NSEmptyRange();
+	self.rangeOfSearchPattern = NSMakeRange(searchPatternStartingPoint, searchPatternLength);
+
+	if (searchPatternLength == 0) {
+		self.cachedSearchPattern = NSStringEmptyPlaceholder;
+	} else {
+		self.cachedSearchPattern = [self.currentTextFieldStringValue substringWithRange:self.rangeOfSearchPattern];
+	}
+
+	self.searchPatternIsAtStart = (searchPatternStartingPoint == 0);
+
+	return YES;
+}
+
+- (BOOL)constructCachedSearchPatternPrefixCharacter
+{
+	UniChar searchPatternFirstCharacter = 0; // null
+
+	if (NSObjectIsEmpty(self.cachedSearchPattern) == NO) {
+		searchPatternFirstCharacter = [self.cachedSearchPattern characterAtIndex:0];;
+	}
+
+	if (self.searchPatternIsAtStart && searchPatternFirstCharacter == '\x02f')
+	{
+		self.isCompletingCommand = YES;
+
+		self.cachedSearchPattern = [self.cachedSearchPattern substringFromIndex:1];
+		self.cachedSearchPatternPrefixCharacter = @"\x02f";
+	}
+	else if (searchPatternFirstCharacter == '\x040')
+	{
+		self.isCompletingNickname = YES;
+
+		self.cachedSearchPattern = [self.cachedSearchPattern substringFromIndex:1];
+		self.cachedSearchPatternPrefixCharacter = @"\x040";
+	}
+	else if (searchPatternFirstCharacter == '\x023')
+	{
+		self.isCompletingChannelName = YES;
+	}
+	else
+	{
+		self.isCompletingNickname = YES;
+	}
+
+	if (self.cachedSearchPattern == nil) {
+		return NO;
+	} else {
+		return YES;
+	}
+}
+
+- (BOOL)constructCachedCompletionSuffix
+{
+	/* Given string and a starting point, we move forward until the
+	 user's configured completion prefix is found. If its not found,
+	 then we look for a localized space, colon (:), or comma (,) */
+	NSRange selectedRange = self.rangeOfTextSelection;
+
+	NSInteger completionSuffixEndPoint = NSNotFound;
+
+	/* Create search pattern for the user configured completion suffix and
+	 search for it. If its found within range, we return that. */
+	if (self.isCompletingNickname) {
+		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
+
+		if (NSObjectIsEmpty(userCompletionSuffix) == NO) {
+			NSRange completionSearchRange = NSMakeRange(selectedRange.location,
+		   ([self.currentTextFieldStringValue length] - selectedRange.location));
+
+			NSRange completionRangePosition = [self.currentTextFieldStringValue rangeOfString:userCompletionSuffix options:0 range:completionSearchRange];
+
+			if (NSRangeIsValid(completionRangePosition)) {
+				completionSuffixEndPoint = NSMaxRange(completionRangePosition);
+			}
+		}
+	}
+
+	/* Search for interesting characters. */
+	if (completionSuffixEndPoint == NSNotFound) {
+		NSInteger maximumSearchIndex = ([self.currentTextFieldStringValue length] - 1);
+
+		for (NSInteger i = (selectedRange.location + 1); i <= maximumSearchIndex; i++) {
+			UniChar cc = [self.currentTextFieldStringValue characterAtIndex:i];
+
+			if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:cc]
+				|| cc == '\x03a'
+				|| cc == '\x02c')
+			{
+				completionSuffixEndPoint = (i - 1);
+
+				break;
+			}
+		}
+	}
+
+	/* Cache relevant information */
+	NSInteger totalTextLength = [self.currentTextFieldStringValue length];
+
+	if (completionSuffixEndPoint == NSNotFound) {
+		completionSuffixEndPoint = totalTextLength;
+	}
+
+	NSInteger completionSuffixStartingPoint = selectedRange.location;
+
+	NSInteger completionSuffixLength = (completionSuffixEndPoint - completionSuffixStartingPoint);
+
+	self.rangeOfCompletionSuffix = NSMakeRange(completionSuffixStartingPoint, completionSuffixLength);
+
+	if (completionSuffixLength == 0) {
+		self.cachedCompletionSuffix = NSStringEmptyPlaceholder;
+	} else {
+		self.cachedCompletionSuffix = [self.currentTextFieldStringValue substringWithRange:self.rangeOfCompletionSuffix];
+	}
+
+	self.searchPatternIsAtEnd = (completionSuffixEndPoint == totalTextLength);
+
+	return YES;
+}
+
+#pragma mark -
+#pragma mark Cache Management
+
+- (void)clearCache
+{
+	self.completedValue = nil;
+	self.completedValueCompletionSuffix = nil;
+
+	self.cachedSearchPattern = nil;
+	self.cachedSearchPatternPrefixCharacter = nil;
+
+	self.selectionIndexOfLastCompletion = NSNotFound;
+
+	self.cachedCompletionSuffix = nil;
+
+	self.rangeOfCompletionSuffix = NSMakeRange(0, 0);
+	self.rangeOfSearchPattern = NSMakeRange(0, 0);
+
+	self.completionCacheIsConstructed = NO;
+
+	self.isCompletingChannelName = NO;
+	self.isCompletingCommand = NO;
+	self.isCompletingNickname = NO;
+
+	self.searchPatternIsAtEnd = NO;
+	self.searchPatternIsAtStart = NO;
+}
+
+- (void)clear
+{
+	[self clearCache];
+
+	self.currentTextFieldStringValue = nil;
+
+	self.rangeOfTextSelection = NSEmptyRange();
+
+	self.completionIsMovingForward = NO;
 }
 
 @end
