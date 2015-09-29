@@ -243,15 +243,17 @@
 				NSString *nicknameTrimmedLowercase = [nicknameTrimmed lowercaseString];
 
 				if ([choicesLowercase containsObject:nicknameTrimmedLowercase] == NO) {
-					[choicesUppercase addObject:nicknameTrimmed];
+					[choicesUppercase addObject:nickname];
 
 					[choicesLowercase addObject:nicknameTrimmedLowercase];
 				}
 			}
 		};
 
+		BOOL includeTrimmedNicknames = (searchPatternIsEmpty == NO);
+
 		if (noUserHadGreaterWeightThanOriginal == NO) {
-			addNickname([userWithGreatestWeight nickname], YES);
+			addNickname([userWithGreatestWeight nickname], includeTrimmedNicknames);
 		}
 
 		for (IRCUser *m in memberList) {
@@ -259,7 +261,7 @@
 				continue;
 			}
 
-			addNickname([m nickname], YES);
+			addNickname([m nickname], includeTrimmedNicknames);
 		}
 
 		/* Complete static names, including application name. */
