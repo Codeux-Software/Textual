@@ -891,7 +891,7 @@
 		[self inputText:as command:command];
 	}
 	
-	[[TXSharedApplication sharedNicknameCompletionStatus] clear:YES];
+	[[TXSharedApplication sharedNicknameCompletionStatus] clear];
 }
 
 - (void)inputText:(id)str command:(NSString *)command
