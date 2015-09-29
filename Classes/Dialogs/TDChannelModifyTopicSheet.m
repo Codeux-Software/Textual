@@ -68,9 +68,11 @@
 	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueTextField preferredFont]
 														preferredFontColor:[self.topicValueTextField preferredFontColor]
 												 honorFormattingPreference:NO];
-	
-	[self.topicValueTextField setAttributedStringValue:topicas];
 
+	if (topicas) {
+		[self.topicValueTextField setAttributedStringValue:topicas];
+	}
+	
 	[[mainWindow() formattingMenu] enableSheetField:self.topicValueTextField];
 
 	[self startSheet];
