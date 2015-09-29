@@ -250,11 +250,7 @@
 - (void)applyAttributedStringToTextBox:(NSMutableAttributedString *)mutableString inRange:(NSRange)limitRange
 {
 	if ([self.textField shouldChangeTextInRange:limitRange replacementString:[mutableString string]]) {
-		[[self.textField textStorage] beginEditing];
-
 		[[self.textField textStorage] replaceCharactersInRange:limitRange withAttributedString:mutableString];
-
-		[[self.textField textStorage] endEditing];
 
 		[self.textField didChangeText];
 	}
