@@ -319,8 +319,6 @@
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-	
 	[super rightMouseDown:theEvent];
 }
 

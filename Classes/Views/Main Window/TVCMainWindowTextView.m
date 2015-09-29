@@ -117,15 +117,11 @@
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-
 	[super rightMouseDown:theEvent];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	TVCMainWindowNegateActionWithAttachedSheet();
-
 	if ([NSEvent modifierFlags] & NSControlKeyMask) {
 		[super rightMouseDown:theEvent];
 
