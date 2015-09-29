@@ -87,7 +87,7 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 #define _effectMask				(												\
 									_rendererBoldFormatAttribute |				\
 									_rendererUnderlineFormatAttribute |			\
-									_rendererItalicFormatAttribute |			\ 
+									_rendererItalicFormatAttribute |			\
 									_rendererStrikethroughFormatAttribute |		\
 									_rendererTextColorAttribute |				\
 									_rendererBackgroundColorAttribute			\
