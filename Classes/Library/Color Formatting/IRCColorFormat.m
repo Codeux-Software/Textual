@@ -39,6 +39,7 @@
 
 NSString * const IRCTextFormatterBoldAttributeName = @"IRCTextFormatterBoldAttributeName";
 NSString * const IRCTextFormatterItalicAttributeName = @"IRCTextFormatterItalicAttributeName";
+NSString * const IRCTextFormatterStrikethroughAttributeName = @"IRCTextFormatterStrikethroughAttributeName";
 NSString * const IRCTextFormatterUnderlineAttributeName = @"IRCTextFormatterUnderlineAttributeName";
 NSString * const IRCTextFormatterForegroundColorAttributeName = @"IRCTextFormatterForegroundColorAttributeName";
 NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatterBackgroundColorAttributeName";
@@ -77,11 +78,16 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		BOOL textIsBold = [attributes boolForKey:IRCTextFormatterBoldAttributeName];
 		BOOL textIsItalicized = [attributes boolForKey:IRCTextFormatterItalicAttributeName];
+		BOOL textIsStruckthrough = [attributes boolForKey:IRCTextFormatterStrikethroughAttributeName];
 		BOOL textIsUnderlined = [attributes boolForKey:IRCTextFormatterUnderlineAttributeName];
 
 		if (textIsUnderlined) {
 			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
 		}
+
+		 if (textIsStruckthrough) {
+			 [result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
+		 }
 
 		if (textIsItalicized) {
 			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
@@ -111,6 +117,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		if (textIsItalicized) {
 			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
+		}
+
+		if (textIsStruckthrough) {
+			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
 		}
 
 		if (textIsUnderlined) {
@@ -240,6 +250,7 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 		BOOL textIsBold = [dict boolForKey:IRCTextFormatterBoldAttributeName];
 		BOOL textIsItalicized = [dict boolForKey:IRCTextFormatterItalicAttributeName];
+		BOOL textIsStruckthrough = [dict boolForKey:IRCTextFormatterStrikethroughAttributeName];
 		BOOL textIsUnderlined = [dict boolForKey:IRCTextFormatterUnderlineAttributeName];
 		
         if (textIsBold) {
@@ -248,6 +259,11 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 		}
 
         if (textIsItalicized) {
+			startCharCount += 1; // control character
+			stopCharCount += 1; // control character
+		}
+
+		if (textIsStruckthrough) {
 			startCharCount += 1; // control character
 			stopCharCount += 1; // control character
 		}
@@ -312,6 +328,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 		 in the above defined -attributedStringToASCIIFormatting method. */
 		if (textIsUnderlined) {
 			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
+		}
+
+		if (textIsStruckthrough) {
+			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
 		}
 
 		if (textIsItalicized) {
@@ -412,6 +432,10 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			[result appendFormat:@"%c", IRCTextFormatterItalicEffectCharacter];
 		}
 
+		if (textIsStruckthrough) {
+			[result appendFormat:@"%c", IRCTextFormatterStrikethroughEffectCharacter];
+		}
+
 		if (textIsUnderlined) {
 			[result appendFormat:@"%c", IRCTextFormatterUnderlineEffectCharacter];
 		}
@@ -480,6 +504,16 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 			 case IRCTextFormatterUnderlineEffect:
 			 {
 				 if ([attributes boolForKey:IRCTextFormatterUnderlineAttributeName] == YES) {
+					 returnValue = YES;
+
+					 *stop = YES;
+				 }
+
+				 break;
+			 }
+			 case IRCTextFormatterStrikethroughEffect:
+			 {
+				 if ([attributes boolForKey:IRCTextFormatterStrikethroughAttributeName] == YES) {
 					 returnValue = YES;
 
 					 *stop = YES;
@@ -579,6 +613,14 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
                 
                 break;
             }
+			case IRCTextFormatterStrikethroughEffect:
+			{
+				[self addAttribute:IRCTextFormatterStrikethroughAttributeName value:@(YES) range:effectiveRange];
+
+				[self addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlineStyleSingle) range:effectiveRange];
+
+				break;
+			}
             case IRCTextFormatterForegroundColorEffect:
 			{
 				if (value == nil || [value isKindOfClass:[NSNumber class]] == NO) {
@@ -661,6 +703,14 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 					  [self removeAttribute:NSUnderlineStyleAttributeName range:effectiveRange];
 
 					  [self removeAttribute:IRCTextFormatterUnderlineAttributeName range:effectiveRange];
+
+					  break;
+				  }
+				  case IRCTextFormatterStrikethroughEffect:
+				  {
+					  [self removeAttribute:NSStrikethroughStyleAttributeName range:effectiveRange];
+
+					  [self removeAttribute:IRCTextFormatterStrikethroughAttributeName range:effectiveRange];
 
 					  break;
 				  }

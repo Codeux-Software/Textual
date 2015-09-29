@@ -355,6 +355,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 				case IRCTextFormatterBoldEffectCharacter:
 				case 0x16: // Old character used for italic text
 				case IRCTextFormatterItalicEffectCharacter:
+				case IRCTextFormatterStrikethroughEffectCharacter:
 				case IRCTextFormatterUnderlineEffectCharacter:
 				case IRCTextFormatterTerminatingCharacter:
 				{

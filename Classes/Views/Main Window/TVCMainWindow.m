@@ -757,6 +757,15 @@
 	}
 }
 
+- (void)textFormattingStrikethrough:(NSEvent *)e
+{
+	if ([self.formattingMenu textIsStruckthrough]) {
+		[self.formattingMenu removeStrikethroughCharFromTextBox:nil];
+	} else {
+		[self.formattingMenu insertStrikethroughCharIntoTextBox:nil];
+	}
+}
+
 - (void)textFormattingUnderline:(NSEvent *)e
 {
 	TVCMainWindowNegateActionWithAttachedSheet();

@@ -125,6 +125,20 @@
 			
 			return YES;
 		}
+		case 95008:
+		{
+			BOOL struckthroughText = [self textIsStruckthrough];
+
+			if (struckthroughText) {
+				[item setAction:@selector(removeStrikethroughCharFromTextBox:)];
+			} else {
+				[item setAction:@selector(insertStrikethroughCharIntoTextBox:)];
+			}
+
+			[item setState:struckthroughText];
+
+			return YES;
+		}
 		case 95003:
 		{
 			BOOL underlineText = [self textIsUnderlined];
@@ -166,6 +180,11 @@
 - (BOOL)textIsItalicized
 {
 	return [self propertyIsSet:IRCTextFormatterItalicEffect];
+}
+
+- (BOOL)textIsStruckthrough
+{
+	return [self propertyIsSet:IRCTextFormatterStrikethroughEffect];
 }
 
 - (BOOL)textIsUnderlined
@@ -258,6 +277,13 @@
 	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:@(YES) inRange:selectedTextRange];
 }
 
+- (void)insertStrikethroughCharIntoTextBox:(id)sender
+{
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterStrikethroughEffect withValue:@(YES) inRange:selectedTextRange];
+}
+
 - (void)insertUnderlineCharIntoTextBox:(id)sender
 {
 	NSRange selectedTextRange = [self.textField selectedRange];
@@ -347,6 +373,13 @@
 	NSRange selectedTextRange = [self.textField selectedRange];
 
 	[self applyEffectToTextBox:IRCTextFormatterItalicEffect withValue:nil inRange:selectedTextRange];
+}
+
+- (void)removeStrikethroughCharFromTextBox:(id)sender
+{
+	NSRange selectedTextRange = [self.textField selectedRange];
+
+	[self applyEffectToTextBox:IRCTextFormatterStrikethroughEffect withValue:nil inRange:selectedTextRange];
 }
 
 - (void)removeUnderlineCharFromTextBox:(id)sender
