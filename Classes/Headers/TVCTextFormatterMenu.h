@@ -47,6 +47,8 @@
 - (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
 - (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;
 
+@property (readonly) BOOL firstResponderSupportsFormatting;
+
 @property (readonly) BOOL textIsBold;
 @property (readonly) BOOL textIsItalicized;
 @property (readonly) BOOL textIsUnderlined;
