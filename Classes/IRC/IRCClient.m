@@ -1525,7 +1525,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	PointerIsEmptyAssertReturn(channel, NO);
 
 	if (self.config.zncIgnorePlaybackNotifications == NO) {
-		return NO;
+		return YES;
 	}
 
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityBatch] == NO) {
