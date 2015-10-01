@@ -123,16 +123,15 @@
 			/* The t= value is a legacy value in a epoch time. We always favor
 			 the new time= format over the old. */
 			NSString *timeObject = valueMatrix[@"time"];
-			
-			NSDate *date = nil;
-			
+
 			if (timeObject == nil) {
-				/* time= does not exist so now we try t= */
 				timeObject = valueMatrix[@"t"];
-				
-				if (timeObject) {
-					date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
-				}
+			}
+
+			NSDate *date = nil;
+
+			if ([timeObject isNumericOnly]) {
+				date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
 			} else {
 				date = [TXSharedISOStandardDateFormatter() dateFromString:timeObject];
 			}
