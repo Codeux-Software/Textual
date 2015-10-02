@@ -70,6 +70,8 @@
 
 @property (readonly, copy) NSColor *systemSpecificTextFieldTextFontColor;
 @property (readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;
+
+- (NSFont *)systemSpecificTextFieldFontWithSize:(CGFloat)fontSize;
 @end
 
 @interface TVCMainWindowTextViewContentView : NSView

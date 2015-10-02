@@ -41,9 +41,7 @@
 
 + (NSColor *)blackInputTextFieldPlaceholderTextColor
 {
-	/* Cannot be exactly white or it will interfere with text formatting engine for IRC. */
-	
-	return [NSColor colorWithCalibratedWhite:0.99 alpha:1.0];
+	return [NSColor whiteColor];
 }
 
 + (NSColor *)whiteInputTextFieldPlaceholderTextColor

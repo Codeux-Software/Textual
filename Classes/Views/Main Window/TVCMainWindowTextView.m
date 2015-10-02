@@ -321,13 +321,13 @@
 		self.cachedFontSize = newFontSize;
 
 		if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
-			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:12.0]];
+			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:12.0]];
 		} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:14.0]];
+			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:14.0]];
 		} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
-			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:16.0]];
+			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:16.0]];
 		} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
-			[self setPreferredFont:[NSFont fontWithName:@"Helvetica" size:24.0]];
+			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:24.0]];
 		}
 
 		/* Update the placeholder string. */
@@ -756,6 +756,15 @@
 
 #pragma mark -
 #pragma mark Drawing Factory
+
+- (NSFont *)systemSpecificTextFieldFontWithSize:(CGFloat)fontSize
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		return [NSFont systemFontOfSize:fontSize];
+	} else {
+		return [NSFont fontWithName:@"Helvetica" size:fontSize];
+	}
+}
 
 - (NSColor *)systemSpecificTextFieldTextFontColor
 {
