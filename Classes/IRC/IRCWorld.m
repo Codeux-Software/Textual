@@ -683,13 +683,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		NSAssert(NO, @"nil associated client.");
 	}
 
-	IRCChannel *c = [client findChannel:[seed channelName]];
-
-	if (c) {
-		return c;
-	}
-
-	c = [IRCChannel new];
+	IRCChannel *c = [IRCChannel new];
 
 	[c setAssociatedClient:client];
 

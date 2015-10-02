@@ -2380,12 +2380,12 @@
 
 - (void)connectToTextualHelpChannel:(id)sender 
 {
-	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual" autoConnect:YES focusChannel:YES];
+	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual" autoConnect:YES focusChannel:YES mergeConnectionIfPossible:YES];
 }
 
 - (void)connectToTextualTestingChannel:(id)sender
 {
-	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual-testing" autoConnect:YES focusChannel:YES];
+	[IRCExtras createConnectionAndJoinChannel:@"chat.freenode.net +6697" channel:@"#textual-testing" autoConnect:YES focusChannel:YES mergeConnectionIfPossible:YES];
 }
 
 - (void)onWantHostServVhostSet:(id)sender
