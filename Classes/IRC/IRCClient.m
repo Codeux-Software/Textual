@@ -417,8 +417,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* reloadItem will drop the views and reload them. We need to remember
 	 the selection because of this. */
 	if (reloadSelection) {
-		id selectedItem = [mainWindow() selectedItem];
-		
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
 		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
 
@@ -426,9 +424,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[mainWindowServerList() reloadItem:self reloadChildren:YES];
 		[mainWindowServerList() endUpdates];
 
-		[mainWindow() select:selectedItem];
 		[mainWindow() adjustSelection];
-		
+
 		[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
 		[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
 	}
