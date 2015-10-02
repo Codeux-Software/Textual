@@ -732,7 +732,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					{
 						/* Check if the nickname conversation tracking found is matched to an ignore
 						 that is set to hide them. */
-						IRCAddressBookEntry *ignoreCheck = [client checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[@"hideMessagesContainingMatch"]];
+						IRCAddressBookEntry *ignoreCheck = [client checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey]];
 
 						if (ignoreCheck && [ignoreCheck ignoreMessagesContainingMatchh]) {
 							_cancelRender = YES;
