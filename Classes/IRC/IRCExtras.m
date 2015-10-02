@@ -62,9 +62,9 @@
 	 seperate the channel name from the server name. If there
 	 is more than three, then our input is already invalid and
 	 we do not want to go any further with it. */
-	NSArray *slashMatches = [XRRegularExpression matchesInString:locationValue withRegex:@"([/])"];
+	NSUInteger totalSlashCount = [locationValue occurrencesOfCharacter:'/'];
 
-	if (NSNumberInRange([slashMatches count], 2, 3) == NO) {
+	if (totalSlashCount < 2 || totalSlashCount > 3) {
 		return;
 	}
 
@@ -78,7 +78,7 @@
 	NSString *serverInfo = locationValue;
 	NSString *channelInfo = nil;
 
-	if ([slashMatches count] == 3) { // Only cut if we do have an extra slash.
+	if (totalSlashCount == 3) { // Only cut if we do have an extra slash.
 		NSRange backwardRange = [locationValue rangeOfString:@"/" options:NSBackwardsSearch];
 
 		if (NSDissimilarObjects(backwardRange.location, NSNotFound)) {
@@ -226,10 +226,8 @@
 						objcopy = [@"#" stringByAppendingString:objcopy];
 					}
 					
-					if ([objcopy isChannelName]) {
-						[channelList appendString:objcopy];
-						[channelList appendString:@","];
-					}
+					[channelList appendString:objcopy];
+					[channelList appendString:@","];
 				}
 			}
 		}];
@@ -240,24 +238,28 @@
 
 	/* We have parsed every part of our URL. Build the final result and
 	 pass it along. We are done here. */
-	NSMutableString *finalResult = [NSMutableString string];
+	NSString *finalResult = nil;
 
 	if (connectionUsesSSL) {
-		[finalResult appendString:@"-SSL "];
+		finalResult = [NSString stringWithFormat:@"-SSL %@:%@", serverAddress, serverPort];
+	} else {
+		finalResult = [NSString stringWithFormat:@"%@:%@", serverAddress, serverPort];
 	}
 
-	[finalResult appendFormat:@"%@:%@", serverAddress, serverPort];
-
 	/* A URL is consider untrusted and will not auto connect. */
-	[IRCExtras createConnectionAndJoinChannel:finalResult channel:channelList autoConnect:NO];
+	[IRCExtras createConnectionAndJoinChannel:finalResult channel:channelList autoConnect:NO focusChannel:NO mergeConnectionIfPossible:YES];
 }
 
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect
 {
-	[self createConnectionAndJoinChannel:serverInfo channel:channelList autoConnect:autoConnect focusChannel:NO];
+	[self createConnectionAndJoinChannel:serverInfo channel:channelList autoConnect:autoConnect focusChannel:NO mergeConnectionIfPossible:NO];
 }
 
-+ (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect focusChannel:(BOOL)focusChannel
++ (void)createConnectionAndJoinChannel:(NSString *)serverInfo
+							   channel:(NSString *)channelList
+						   autoConnect:(BOOL)autoConnect
+						  focusChannel:(BOOL)focusChannel
+			 mergeConnectionIfPossible:(BOOL)mergeConnectionIfPossible
 {
 	NSObjectIsEmptyAssert(serverInfo);
 
@@ -272,16 +274,17 @@
 	/* Begin parsing. */
 	NSMutableString *base = [serverInfo mutableCopy];
 
-	/* Get our first token. A token is everything before
-	 the first occurrence of a space character. getToken
-	 will get everything before a space in a string, then
-	 erase the remaining content of that string so that
-	 each call to getToken gives us the next section
-	 of our string. */
+	/* Get our first token. A token is everything before the first 
+	 occurrence of a space character. getToken will get everything 
+	 before a space in a string, then erase the remaining content 
+	 of that string so that each call to getToken gives us the next 
+	 section of our string. */
 	NSString *tempStore = [base getToken];
 
     /* Secure Socket Layer? */
-    if ([tempStore isEqualIgnoringCase:@"-SSL"]) {
+    if ([tempStore isEqualIgnoringCase:@"-SSL"] ||
+		[tempStore isEqualIgnoringCase:@"-TLS"])
+	{
         connectionUsesSSL = YES;
 
 		/* If the SSL define was our first token, we
@@ -295,27 +298,35 @@
 
     if (hasOpeningBracket && hasClosingBracket) {
 		/* Get address from inside brackets. */
-		NSInteger startPos = ([tempStore stringPosition:@"["] + 1);
-		NSInteger srendPos =  [tempStore stringPosition:@"]"];
+		NSInteger startPosition = ([tempStore stringPosition:@"["] + 1);
+		NSInteger endPosition   =  [tempStore stringPosition:@"]"];
 
-		NSRange servRange = NSMakeRange(startPos, (srendPos - startPos));
+		NSRange serverAddressRange = NSMakeRange(startPosition, (endPosition - startPosition));
 
-		serverAddress = [tempStore substringWithRange:servRange];
+		NSString *tempServerAddress = [tempStore substringWithRange:serverAddressRange];
 
-		tempStore = [tempStore substringAfterIndex:srendPos];
+		if ([tempServerAddress isIPv6Address] == NO) {
+			LogToConsole(@"Server address was surrounded by square brackets but the enclosed value was not an IPv6 address");
+
+			return;
+		} else {
+			serverAddress = tempServerAddress;
+		}
+
+		tempStore = [tempStore substringAfterIndex:endPosition];
     } else {
 		if (hasOpeningBracket == NO && hasClosingBracket == NO) {
 			/* Our server address did not contain brackets. Does it
 			 contain a colon (:) which means a port is included? */
 
 			if ([tempStore contains:@":"]) {
-				NSInteger cutPos = [tempStore stringPosition:@":"];
+				NSInteger cutPosition = [tempStore stringPosition:@":"];
 
-				serverAddress = [tempStore substringToIndex:cutPos];
+				serverAddress = [tempStore substringToIndex:cutPosition];
 
 				/* We cut the server address out of our temporary store,
 				 but left the colon and everything after it, in it. */
-				tempStore = [tempStore substringFromIndex:cutPos];
+				tempStore = [tempStore substringFromIndex:cutPosition];
 			} else {
 				serverAddress = tempStore;
 			}
@@ -328,6 +339,14 @@
 			 for port use only. */
 
 			return;
+		}
+
+		if ([serverAddress isValidInternetAddress] == NO) {
+			LogToConsole(@"Invalid internet address");
+
+			return;
+		} else {
+			serverAddress = [serverAddress lowercaseString];
 		}
 	}
 
@@ -376,50 +395,130 @@
         tempStore = [base getToken];
         
         serverPassword = tempStore;
-    }
-    
-    /* Add Server. */
-	NSObjectIsEmptyAssert(serverAddress);
+	}
 	
-	IRCClientConfig *baseConfig = [IRCClientConfig new];
+	/* Convert channel list string into array of configurations */
+	NSMutableArray *channelListArray = nil;
 
-	[baseConfig setConnectionName:serverAddress];
-	
-	[baseConfig setServerAddress:serverAddress];
-	[baseConfig setServerPort:serverPort];
-
-	[baseConfig setPrefersSecuredConnection:connectionUsesSSL];
-	
 	if ([channelList length] > 0) {
-		NSMutableArray *channels = [NSMutableArray array];
-		
+		channelListArray = [NSMutableArray array];
+
 		NSArray *chunks = [channelList split:@","];
-			
-		for (NSString *cc in chunks) {
-			[channels addObject:[IRCChannelConfig seedWithName:[cc trim]]];
+
+		for (NSString *channel in chunks) {
+			NSString *channelName = [channel trim];
+
+			if ([channelName isChannelName] == NO) {
+				continue;
+			}
+
+			[channelListArray addObject:channelName];
+		}
+	}
+
+	NSInteger totalChannelCount = [channelListArray count];
+
+	/* If merging is enabled, try to find first possible client
+	 by comparing server address values. */
+	/* Merging is only performed if a channel is being joined. */
+	IRCClient *existingClient = nil;
+
+	BOOL attemptToMergeConnection = (mergeConnectionIfPossible && totalChannelCount > 0);
+
+	if (attemptToMergeConnection) {
+		for (IRCClient *u in [worldController() clientList]) {
+			if ([serverAddress isEqualIgnoringCase:[[u config] serverAddress]]) {
+				existingClient = u;
+
+				break;
+			}
 		}
 
-		[baseConfig setChannelList:channels];
-	}
-	
-	if (serverPassword) {
-		[baseConfig setServerPassword:serverPassword];
-		
-		[baseConfig writeServerPasswordKeychainItemToDisk];
+		if (existingClient) {
+			BOOL mergeConnection = NO;
+
+			if (totalChannelCount > 1) {
+				NSString *channelListString = [channelListArray componentsJoinedByString:@", "];
+
+				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1286][2]", [existingClient name])
+																	 title:TXTLS(@"BasicLanguage[1286][1]", serverAddress, channelListString)
+															 defaultButton:TXTLS(@"BasicLanguage[1286][3]")
+														   alternateButton:TXTLS(@"BasicLanguage[1286][4]")
+															suppressionKey:nil
+														   suppressionText:nil];
+			} else {
+				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1285][2]", [existingClient name])
+																	 title:TXTLS(@"BasicLanguage[1285][1]", serverAddress, channelListArray[0])
+															 defaultButton:TXTLS(@"BasicLanguage[1285][3]")
+														   alternateButton:TXTLS(@"BasicLanguage[1285][4]")
+															suppressionKey:nil
+														   suppressionText:nil];
+			}
+
+			// YES = default button (create new connection)
+			if (mergeConnection == NO) {
+				existingClient = nil;
+			}
+		}
 	}
 
-	/* Feed the world our seed and finish up. */
-	IRCClient *uf = [worldController() createClient:baseConfig reload:YES];
-	
-	[worldController() save];
+	/* Create new connection or merge into existing */
+	if (existingClient)
+	{
+		IRCChannel *firstAddedChannel = nil;
 
-	if (autoConnect) {
-		[uf connect];
+		for (NSString *channelName in channelListArray) {
+			IRCChannel *channel = [existingClient findChannelOrCreate:channelName isPrivateMessage:NO];
+
+			if (firstAddedChannel == nil) {
+				firstAddedChannel = channel;
+			}
+		}
+
+		[worldController() save];
+
+		if (focusChannel && firstAddedChannel) {
+			[mainWindow() select:firstAddedChannel];
+		}
 	}
+	else
+	{
+		IRCClientConfig *baseConfig = [IRCClientConfig new];
 
-	/* Focus the newly added connection? */
-	if (focusChannel) {
-		[uf selectFirstChannelInChannelList];
+		[baseConfig setConnectionName:serverAddress];
+
+		[baseConfig setServerAddress:serverAddress];
+		[baseConfig setServerPort:serverPort];
+
+		[baseConfig setPrefersSecuredConnection:connectionUsesSSL];
+
+		NSMutableArray *channelListConfigs = [NSMutableArray arrayWithCapacity:[channelListArray count]];
+
+		for (NSString *channelName in channelListArray) {
+			IRCChannelConfig *channelConfig = [IRCChannelConfig seedWithName:channelName];
+
+			[channelListConfigs addObject:channelConfig];
+		}
+
+		[baseConfig setChannelList:channelListConfigs];
+
+		if (serverPassword) {
+			[baseConfig setServerPassword:serverPassword];
+
+			[baseConfig writeServerPasswordKeychainItemToDisk];
+		}
+
+		IRCClient *client = [worldController() createClient:baseConfig reload:YES];
+
+		[worldController() save];
+
+		if (autoConnect) {
+			[client connect];
+		}
+
+		if (focusChannel) {
+			[client selectFirstChannelInChannelList];
+		}
 	}
 }
 

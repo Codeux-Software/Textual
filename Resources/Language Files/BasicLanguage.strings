@@ -767,11 +767,20 @@
 "BasicLanguage[1284][2]" = "Are you sure that you would like to send this message?";
 "BasicLanguage[1284][3]" = "Send";
 
+/* IRC URL scheme merging */
+"BasicLanguage[1285][1]" = "You have clicked a link that will connect you to “%1$@“ and join the channel %2$@";
+"BasicLanguage[1285][2]" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add this channel to that connection or would you rather create a new connection?";
+"BasicLanguage[1285][3]" = "Use Existing Connection";
+"BasicLanguage[1285][4]" = "Create New Connection";
+
+"BasicLanguage[1286][1]" = "You have clicked a link that will connect you to “%1$@“ and join the channels: %2$@";
+"BasicLanguage[1286][2]" = "The connection named “%1$@“ is already configured to connect to this server address.\n\nDo you want to add these channels to that connection or would you rather create a new connection?";
+"BasicLanguage[1286][3]" = "Use Existing Connection";
+"BasicLanguage[1286][4]" = "Create New Connection";
 
 
 
 
-
-/* Next unusued key: 1285 */
+/* Next unusued key: 1287 */
 
 

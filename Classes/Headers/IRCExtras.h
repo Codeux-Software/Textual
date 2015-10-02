@@ -43,5 +43,9 @@
 + (void)parseIRCProtocolURI:(NSString *)location withDescriptor:(NSAppleEventDescriptor *)event;
 
 + (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect;
-+ (void)createConnectionAndJoinChannel:(NSString *)serverInfo channel:(NSString *)channelList autoConnect:(BOOL)autoConnect focusChannel:(BOOL)focusChannel;
++ (void)createConnectionAndJoinChannel:(NSString *)serverInfo
+							   channel:(NSString *)channelList
+						   autoConnect:(BOOL)autoConnect
+						  focusChannel:(BOOL)focusChannel
+			 mergeConnectionIfPossible:(BOOL)mergeConnectionIfPossible;
 @end
