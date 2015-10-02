@@ -778,6 +778,10 @@
 "BasicLanguage[1286][3]" = "Use Existing Connection";
 "BasicLanguage[1286][4]" = "Create New Connection";
 
+/* Inline content warning for tor users */
+"BasicLanguage[1287][1]" = "Warning: Enabling inline media may lead to the exposure of your IP address by users linking to specially crafted image URLs";
+"BasicLanguage[1287][2]" = "You have at least one connection configured to connect through the Tor Anonymity Network or have the “Tor Browser“ application open.\n\nNote that content shown inline with chat does NOT pass through the proxy that can be configured through Server Properties.\n\nIf you want to display content inline, then it is recommended that you enable a system-wide proxy through the Network section of System Preferences.";
+
 
 
 

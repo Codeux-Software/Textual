@@ -4392,8 +4392,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
-                                        <rect key="frame" x="93" y="157" width="234" height="18"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="jNN-n9-eyu">
+                                        <rect key="frame" x="93" y="161" width="234" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Automatically add scrollback markers" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="imb-ex-Fq2">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4403,22 +4403,22 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyAddScrollbackMarker" id="kBt-PY-72G"/>
                                         </connections>
                                     </button>
-                                    <box verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="39" y="250" width="443" height="5"/>
+                                    <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
+                                        <rect key="frame" x="39" y="254" width="443" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <box verticalHuggingPriority="750" misplaced="YES" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="39" y="194" width="443" height="5"/>
+                                    <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
+                                        <rect key="frame" x="39" y="198" width="443" height="5"/>
                                         <animations/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
-                                        <rect key="frame" x="90" y="216" width="85" height="17"/>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19a-B6-iEv">
+                                        <rect key="frame" x="90" y="220" width="85" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="81" id="N8e-ht-JrX"/>
                                         </constraints>
@@ -4429,8 +4429,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
-                                        <rect key="frame" x="366" y="215" width="63" height="19"/>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCg-fG-WEB">
+                                        <rect key="frame" x="366" y="219" width="63" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="63" id="pvM-eT-of4"/>
                                         </constraints>
@@ -4446,8 +4446,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Channel Font Preference Enabled" id="BXQ-7H-Qn2"/>
                                         </connections>
                                     </button>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
-                                        <rect key="frame" x="93" y="101" width="198" height="18"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="7LB-4e-2Po">
+                                        <rect key="frame" x="93" y="105" width="198" height="18"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="194" id="4QV-C4-d1n"/>
                                         </constraints>
@@ -4460,8 +4460,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Join, Part, Quit" id="Jwb-Rk-nuD"/>
                                         </connections>
                                     </button>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-qs-5mz">
-                                        <rect key="frame" x="93" y="129" width="286" height="18"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-qs-5mz">
+                                        <rect key="frame" x="93" y="133" width="286" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Remember old messages when closing Textual" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="miK-Q1-Ozt">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4471,8 +4471,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ReloadScrollbackOnLaunch" id="ctk-aD-z6b"/>
                                         </connections>
                                     </button>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
-                                        <rect key="frame" x="111" y="81" width="239" height="14"/>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="I3x-2t-PYn">
+                                        <rect key="frame" x="111" y="85" width="239" height="14"/>
                                         <animations/>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="These include join, part, and quit messages. " id="Lfm-fL-lVE">
                                             <font key="font" metaFont="smallSystem"/>
@@ -4483,8 +4483,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <accessibilityConnection property="link" destination="7LB-4e-2Po" id="Bd1-he-n9U"/>
                                         </connections>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
-                                        <rect key="frame" x="178" y="215" width="179" height="19"/>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WiQ-md-lej">
+                                        <rect key="frame" x="178" y="219" width="179" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="19" id="rq9-Y9-W1h"/>
                                         </constraints>
@@ -4509,8 +4509,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Channel Font Preference Enabled" id="JfV-UB-ZCB"/>
                                         </connections>
                                     </textField>
-                                    <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EES-Ba-O9N">
-                                        <rect key="frame" x="93" y="54" width="274" height="18"/>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="EES-Ba-O9N">
+                                        <rect key="frame" x="93" y="58" width="274" height="18"/>
                                         <animations/>
                                         <buttonCell key="cell" type="check" title="Remove formatting from incoming messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="sG9-0L-YQ8">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -4520,19 +4520,19 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RemoveIRCTextFormatting" id="zmC-iH-hNx"/>
                                         </connections>
                                     </button>
-                                    <scrollView appearanceType="aqua" misplaced="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="29" width="357" height="15"/>
+                                    <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
+                                        <rect key="frame" x="109" y="33" width="357" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="15"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
-                                                    <rect key="frame" x="0.0" y="107" width="357" height="15"/>
+                                                    <rect key="frame" x="0.0" y="107" width="357" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <animations/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="357" height="15"/>
+                                                    <size key="minSize" width="357" height="19"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -4622,7 +4622,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="357" height="15"/>
+                                                    <size key="minSize" width="357" height="19"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -4644,8 +4644,8 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <accessibilityConnection property="link" destination="EES-Ba-O9N" id="sKL-mY-qir"/>
                                         </connections>
                                     </scrollView>
-                                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="326" y="275" width="140" height="19"/>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
+                                        <rect key="frame" x="326" y="279" width="140" height="19"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="Wsr-bT-Xxy"/>
                                         </constraints>
@@ -4676,7 +4676,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <constraint firstItem="WiQ-md-lej" firstAttribute="top" secondItem="wbm-Z3-lDn" secondAttribute="bottom" constant="18" id="JWD-qd-gtX"/>
                                     <constraint firstItem="EES-Ba-O9N" firstAttribute="leading" secondItem="7LB-4e-2Po" secondAttribute="leading" id="Nje-0O-SIC"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="leading" secondItem="bCO-56-p1h" secondAttribute="leading" constant="39" id="PN0-BS-7mJ"/>
-                                    <constraint firstAttribute="bottom" secondItem="zLU-Yb-c2r" secondAttribute="bottom" constant="29" id="PxO-yL-0wm"/>
+                                    <constraint firstAttribute="bottom" secondItem="zLU-Yb-c2r" secondAttribute="bottom" constant="33" id="PxO-yL-0wm"/>
                                     <constraint firstItem="RCg-fG-WEB" firstAttribute="leading" secondItem="WiQ-md-lej" secondAttribute="trailing" constant="9" id="TXc-Ct-Aro"/>
                                     <constraint firstItem="EES-Ba-O9N" firstAttribute="top" secondItem="I3x-2t-PYn" secondAttribute="bottom" constant="11" id="VbD-Nc-eA7"/>
                                     <constraint firstItem="WiQ-md-lej" firstAttribute="baseline" secondItem="RCg-fG-WEB" secondAttribute="baseline" id="Ymq-Gf-aPq"/>
@@ -4690,7 +4690,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="leading" secondItem="nPR-cs-1aS" secondAttribute="leading" id="lYi-4x-jUf"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="top" secondItem="wmq-Ee-waL" secondAttribute="bottom" constant="23" id="m6x-XQ-qgb"/>
                                     <constraint firstItem="7LB-4e-2Po" firstAttribute="top" secondItem="Gtt-qs-5mz" secondAttribute="bottom" constant="14" id="oM8-mv-BMN"/>
-                                    <constraint firstItem="zLU-Yb-c2r" firstAttribute="top" secondItem="EES-Ba-O9N" secondAttribute="bottom" constant="12" id="pMj-bC-WQN"/>
+                                    <constraint firstItem="zLU-Yb-c2r" firstAttribute="top" secondItem="EES-Ba-O9N" secondAttribute="bottom" constant="8" id="pMj-bC-WQN"/>
                                     <constraint firstItem="nPR-cs-1aS" firstAttribute="centerX" secondItem="bCO-56-p1h" secondAttribute="centerX" id="pPY-Aa-0LN"/>
                                     <constraint firstItem="wbm-Z3-lDn" firstAttribute="trailing" secondItem="nPR-cs-1aS" secondAttribute="trailing" id="q7q-Pg-VSm"/>
                                     <constraint firstItem="jNN-n9-eyu" firstAttribute="leading" secondItem="bCO-56-p1h" secondAttribute="leading" constant="95" id="ruU-wB-O4n"/>
@@ -4714,7 +4714,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedStyle:" target="-2" id="egd-h4-v9G"/>
+                                            <action selector="onChangedInlineMediaOption:" target="-2" id="By8-9n-sbM"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisplayEventInLogView -&gt; Inline Media" id="9Mc-kW-Pp0"/>
                                         </connections>
                                     </button>

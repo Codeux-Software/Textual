@@ -42,4 +42,6 @@
 @property (nonatomic, weak) id delegate;
 
 - (void)show;
+
++ (void)presentTorAnonymityNetworkInlineMediaWarning;
 @end

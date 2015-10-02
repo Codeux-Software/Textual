@@ -149,6 +149,7 @@
 
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
+- (IBAction)onChangedInlineMediaOption:(id)sender;
 - (IBAction)onChangedInputHistoryScheme:(id)sender;
 - (IBAction)onChangedMainWindowSegmentedController:(id)sender;
 - (IBAction)onChangedSidebarColorInversion:(id)sender;
@@ -1048,6 +1049,42 @@
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
 		[self editTableView:[self excludeKeywordsTable]];
 	});
+}
+
++ (void)presentTorAnonymityNetworkInlineMediaWarning
+{
+	for (IRCClient *u in [worldController() clientList]) {
+		if ([[u config] proxyType] == IRCConnectionSocketTorBrowserType) {
+			goto present_dialog;
+		}
+	}
+
+	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
+		if (NSObjectsAreEqual([application localizedName], @"TorBrowser") ||
+			NSObjectsAreEqual([application localizedName], @"Tor Browser"))
+		{
+			goto present_dialog;
+		}
+	}
+
+	return;
+
+present_dialog:
+	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
+											 title:TXTLS(@"BasicLanguage[1287][1]")
+									 defaultButton:TXTLS(@"BasicLanguage[1186]")
+								   alternateButton:nil
+									suppressionKey:nil
+								   suppressionText:nil];
+}
+
+- (void)onChangedInlineMediaOption:(id)sender
+{
+	if ([TPCPreferences showInlineImages]) {
+		[TDCPreferencesController presentTorAnonymityNetworkInlineMediaWarning];
+	}
+
+	[self onChangedStyle:sender];
 }
 
 - (void)onResetUserListModeColorsToDefaults:(id)sender
