@@ -60,6 +60,8 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 
 - (IBAction)onMenuBarItemChanged:(id)sender;
+
+- (IBAction)onChangedInlineMediaOption:(id)sender;
 @end
 
 @implementation TDChannelPropertiesSheet
@@ -239,6 +241,13 @@
 								   [self start];
 							   }
 						   }];
+}
+
+- (void)onChangedInlineMediaOption:(id)sender
+{
+	if ([self.enableInlineImagesCheck state] == NSOnState) {
+		[TDCPreferencesController presentTorAnonymityNetworkInlineMediaWarning];
+	}
 }
 
 #pragma mark -
