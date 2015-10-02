@@ -130,7 +130,7 @@
 
 			NSDate *date = nil;
 
-			if ([timeObject isNumericOnly]) {
+			if ([timeObject onlyContainsCharacters:@"0123456789."]) {
 				date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
 			} else {
 				date = [TXSharedISOStandardDateFormatter() dateFromString:timeObject];
