@@ -448,36 +448,39 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	}
 }
 
-- (void)_removeMemberWithNickname:(NSString *)nickname
+- (BOOL)_removeMemberWithNickname:(NSString *)nickname
 {
 	/* Find in normal member list. */
 	/* This also removes matched user from tree view. */
+	BOOL removedUser = NO;
+
 	@synchronized(self.memberListStandardSortedContainer) {
 		/* Remove from internal list. */
 		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListStandardSortedContainer];
 		
 		if (NSDissimilarObjects(crmi, NSNotFound)) {
 			/* Get matched user. */
-			IRCUser *matchedUser = self.memberListStandardSortedContainer[crmi];
-			
+			IRCUser *userToRemove = self.memberListStandardSortedContainer[crmi];
+
 			/* Maybe remove from tree view. */
 			XRPerformBlockSynchronouslyOnMainQueue(^{
-				[self _removeMemberFromTreeView:matchedUser];
+				[self _removeMemberFromTreeView:userToRemove];
 			});
 			
 			/* Remove from array archive. */
 			[self.memberListStandardSortedContainer removeObjectAtIndex:crmi];
+
+			/* Remove from alternate arrays */
+			@synchronized(self.memberListLengthSortedContainer) {
+				[self.memberListLengthSortedContainer removeObject:userToRemove];
+			}
+
+			/* Update state information */
+			removedUser = YES;
 		}
 	}
-	
-	/* Find in alternate list. */
-	@synchronized(self.memberListLengthSortedContainer) {
-		NSInteger crmi = [self indexOfMember:nickname options:NSCaseInsensitiveSearch inList:self.memberListLengthSortedContainer];
-		
-		if (NSDissimilarObjects(crmi, NSNotFound)) {
-			[self.memberListLengthSortedContainer removeObjectAtIndex:crmi];
-		}
-	}
+
+	return removedUser;
 }
 
 - (void)_removeMember:(IRCUser *)user
@@ -509,16 +512,20 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (void)removeMember:(NSString *)nickname
 {
 	NSObjectIsEmptyAssert(nickname);
-	
+
+	__block BOOL userRemoved = NO;
+
 	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		[self _removeMemberWithNickname:nickname];
+		userRemoved = [self _removeMemberWithNickname:nickname];
 	});
-	
-	XRPerformBlockSynchronouslyOnMainQueue(^{
-		if ([self isChannel]) {
-			[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
-		}
-	});
+
+	if (userRemoved) {
+		XRPerformBlockSynchronouslyOnMainQueue(^{
+			if ([self isChannel]) {
+				[self.associatedClient postEventToViewController:@"channelMemberRemoved" forChannel:self];
+			}
+		});
+	}
 }
 
 - (void)renameMember:(NSString *)fromNickname to:(NSString *)toNickname
