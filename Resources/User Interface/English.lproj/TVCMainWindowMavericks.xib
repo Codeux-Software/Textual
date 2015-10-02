@@ -352,56 +352,11 @@
                                 <menuItem isSeparatorItem="YES" tag="99" id="ADC-gW-8G3"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="oEw-6L-5ta">
                                     <attributedString key="attributedTitle">
-                                        <fragment content=" ">
+                                        <fragment content=" R">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="12" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
-                                                    <tabStops>
-                                                        <textTab alignment="left" location="36">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="72">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="108">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="144">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="180">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="216">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="252">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="288">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="324">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="360">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="396">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="432">
-                                                            <options/>
-                                                        </textTab>
-                                                    </tabStops>
-                                                </paragraphStyle>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="R">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -447,7 +402,8 @@
                                         <fragment content="a">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -493,7 +449,8 @@
                                         <fragment content="i">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -539,7 +496,8 @@
                                         <fragment content="n">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.67843137249999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -585,7 +543,8 @@
                                         <fragment content="b">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -631,7 +590,8 @@
                                         <fragment content="o">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -677,7 +637,8 @@
                                         <fragment content="w">
                                             <attributes>
                                                 <color key="NSColor" red="0.50196078430000002" green="0.0" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
+                                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -842,56 +803,10 @@
                                 <menuItem isSeparatorItem="YES" tag="99" id="JHg-4C-AVB"/>
                                 <menuItem title=" Rainbow" onStateImage="FormattingColor_Rainbow" offStateImage="FormattingColor_Rainbow" mixedStateImage="FormattingColor_Rainbow" tag="299" id="CVb-Xt-GnE">
                                     <attributedString key="attributedTitle">
-                                        <fragment content=" ">
+                                        <fragment content=" R">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="12" name="Helvetica-Bold"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
-                                                    <tabStops>
-                                                        <textTab alignment="left" location="36">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="72">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="108">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="144">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="180">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="216">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="252">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="288">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="324">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="360">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="396">
-                                                            <options/>
-                                                        </textTab>
-                                                        <textTab alignment="left" location="432">
-                                                            <options/>
-                                                        </textTab>
-                                                    </tabStops>
-                                                </paragraphStyle>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment content="R">
-                                            <attributes>
-                                                <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -937,7 +852,7 @@
                                         <fragment content="a">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="0.50196078430000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -983,7 +898,7 @@
                                         <fragment content="i">
                                             <attributes>
                                                 <color key="NSColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -1029,7 +944,7 @@
                                         <fragment content="n">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.67843137249999996" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -1075,7 +990,7 @@
                                         <fragment content="b">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -1121,7 +1036,7 @@
                                         <fragment content="o">
                                             <attributes>
                                                 <color key="NSColor" red="0.0" green="0.0" blue="0.36078431370000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
@@ -1167,7 +1082,7 @@
                                         <fragment content="w">
                                             <attributes>
                                                 <color key="NSColor" red="0.50196078430000002" green="0.0" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="14" name="Helvetica-Bold"/>
+                                                <font key="NSFont" metaFont="systemBold"/>
                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0">
                                                     <tabStops>
                                                         <textTab alignment="left" location="36">
