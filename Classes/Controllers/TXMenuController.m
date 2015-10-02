@@ -2534,14 +2534,6 @@
 
 - (void)sortChannelListNames:(id)sender
 {
-	TVCServerList *serverList = mainWindowServerList();
-
-	id oldSelection = [mainWindow() selectedItem];
-	
-	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
-
-	[serverList beginUpdates];
-
 	for (IRCClient *u in [worldController() clientList]) {
 		NSMutableArray *channels = [[u channelList] mutableCopy];
 		
@@ -2554,20 +2546,10 @@
 		
 		[u setChannelList:channels];
 		
-		[u updateConfig:[u copyOfStoredConfig] withSelectionUpdate:NO];
-
-		[serverList reloadItem:u reloadChildren:YES];
+		[u updateConfig:[u copyOfStoredConfig]];
 	}
-
-	[serverList endUpdates];
 	
 	[worldController() save];
-	
-	[mainWindow() select:oldSelection];
-	
-	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
-	
-	[self populateNavgiationChannelList];
 }
 
 - (void)resetWindowSize:(id)sender

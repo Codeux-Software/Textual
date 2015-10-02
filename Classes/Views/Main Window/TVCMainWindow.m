@@ -1441,7 +1441,7 @@
 	NSInteger selectedRow = [self.serverList selectedRow];
 	NSInteger selectionRow = [self.serverList rowForItem:self.selectedItem];
 	
-	if (0 <= selectedRow && NSDissimilarObjects(selectedRow, selectionRow)) {
+	if (NSDissimilarObjects(selectedRow, selectionRow)) {
 		[self.serverList selectItemAtIndex:selectionRow];
 	}
 }
