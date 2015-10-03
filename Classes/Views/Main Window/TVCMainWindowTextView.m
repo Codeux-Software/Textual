@@ -204,34 +204,18 @@
 
 - (void)updateAllFontColorsToMatchTheDefaultFont
 {
-	static NSArray *colorsToReset = nil;
-
-	if (colorsToReset == nil) {
-		colorsToReset = @[
-			[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPrimaryTextColor],
-			[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPrimaryTextColor],
-			[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldPlaceholderTextColor],
-			[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldPlaceholderTextColor]
-		];
-	}
-
-	NSColor *preferredColor = [self preferredFontColor];
-
 	[[self textStorage] beginEditing];
 
-	[[self textStorage] enumerateAttribute:NSForegroundColorAttributeName
-								   inRange:[self range]
-								   options:0
-								usingBlock:^(id value, NSRange range, BOOL *stop)
-	 {
-		 if ([value isEqual:preferredColor] == NO) {
-			 for (NSColor *color in colorsToReset) {
-				 if ([value isEqual:color]) {
-					 [self resetTextColorInRange:range];
-				 }
-			 }
-		 }
-	 }];
+	[[self textStorage] enumerateAttributesInRange:[self range]
+										   options:0
+										usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
+		{
+			if ([attributes containsKey:IRCTextFormatterForegroundColorAttributeName]) {
+				return;
+			}
+
+			[self resetTextColorInRange:effectiveRange];
+		}];
 
 	[[self textStorage] endEditing];
 }
