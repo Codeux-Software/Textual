@@ -149,7 +149,11 @@
 
 - (NSFont *)messageCountBadgeFont
 {
-	return [NSFont systemFontOfSize:10.5];
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		return [NSFont monospacedDigitSystemFontOfSize:10.5 weight:NSFontWeightRegular];
+	} else {
+		return [NSFont systemFontOfSize:10.5];
+	}
 }
 
 - (NSInteger)messageCountBadgeHeight
