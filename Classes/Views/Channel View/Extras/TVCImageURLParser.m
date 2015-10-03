@@ -173,6 +173,16 @@
         if ([p1 isEqualIgnoringCase:@"image"]) {
             return [NSString stringWithFormat:@"http://cl.ly/%@/content", p2];
         }
+	} else if ([host hasSuffix:@"instagram.com"]) {
+		NSObjectIsEmptyAssertReturn(path, nil);
+
+		if ([path hasPrefix:@"/p/"]) {
+			path = [path substringFromIndex:3];
+
+			if ([path isAlphabeticNumericOnly]) {
+				return [NSString stringWithFormat:@"https://www.instagram.com/p/%@/media/?size=l", path];
+			}
+		}
 	} else if ([host hasSuffix:@"tweetphoto.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
