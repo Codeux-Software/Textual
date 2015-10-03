@@ -56,10 +56,6 @@
 + (NSColor *)formatterNormalGrayColor;
 + (NSColor *)formatterLightGrayColor;
 
-+ (NSArray *)possibleFormatterColors;
-
-+ (NSColor *)sourceListBackgroundColor;
-
 + (NSColor *)outlineViewHeaderTextColor;
 + (NSColor *)outlineViewHeaderDisabledTextColor;
 @end

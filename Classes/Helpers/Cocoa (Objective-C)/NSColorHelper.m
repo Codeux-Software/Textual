@@ -125,39 +125,8 @@
 	return TXCalibratedRGBColor(0.80, 0.80, 0.80);
 }
 
-+ (NSArray *)possibleFormatterColors
-{
-	static id _colors = nil;
-
-	if (_colors == nil) {
-		_colors = @[[self formatterWhiteColor],
-					[self formatterBlackColor],
-					[self formatterNavyBlueColor],
-					[self formatterDarkGreenColor],
-					[self formatterRedColor],
-					[self formatterBrownColor],
-					[self formatterPurpleColor],
-					[self formatterOrangeColor],
-					[self formatterYellowColor],
-					[self formatterLimeGreenColor],
-					[self formatterTealColor],
-					[self formatterAquaCyanColor],
-					[self formatterLightBlueColor],
-					[self formatterFuchsiaPinkColor],
-					[self formatterNormalGrayColor],
-					[self formatterLightGrayColor]];
-	}
-
-	return _colors;
-}
-
 #pragma mark -
 #pragma mark Other Colors
-
-+ (NSColor *)sourceListBackgroundColor
-{
-	return [NSColor colorWithCatalogName:@"System" colorName:@"_sourceListBackgroundColor"];
-}
 
 + (NSColor *)outlineViewHeaderTextColor
 {
