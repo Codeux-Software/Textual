@@ -67,4 +67,7 @@
 - (void)updateAllFontSizesToMatchTheDefaultFont;
 
 - (void)textDidChange:(NSNotification *)aNotification;
+
+- (NSString *)stringValueWithIRCFormatting;
+- (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue;
 @end

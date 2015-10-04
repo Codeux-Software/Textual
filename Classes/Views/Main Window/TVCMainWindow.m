@@ -104,9 +104,7 @@
 		[self collapseMemberListForHiddenPreference];
 		
 		[self registerKeyHandlers];
-		
-		[self.formattingMenu enableWindowField:self.inputTextField];
-		
+
 		[worldController() setupConfiguration];
 		[worldController() setupOtherServices];
 		

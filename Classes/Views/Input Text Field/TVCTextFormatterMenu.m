@@ -44,33 +44,19 @@
 #define _formattingMenuBackgroundColorDisabledTag		95006
 #define _formattingMenuRainbowColorMenuItemTag			299
 
-@interface TVCTextViewIRCFormattingMenu ()
-@property (nonatomic, assign) BOOL sheetOverrideEnabled;
-@property (nonatomic, unsafe_unretained) TVCTextViewWithIRCFormatter *textField;
-@end
-
 @implementation TVCTextViewIRCFormattingMenu
 
 #pragma mark -
 #pragma mark Menu Management
 
-- (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field
+- (id)textField
 {
-	self.sheetOverrideEnabled = YES;
-
-	self.textField = field;
-}
-
-- (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field
-{
-	self.sheetOverrideEnabled = NO;
-
-	self.textField = field;
+	return [[NSApp keyWindow] firstResponder];
 }
 
 - (BOOL)firstResponderSupportsFormatting
 {
-	if ([[NSApp keyWindow] firstResponder] == self.textField) {
+	if ([[self textField] isKindOfClass:[TVCTextViewWithIRCFormatter class]]) {
 		return YES;
 	} else {
 		return NO;
@@ -253,6 +239,8 @@
 		[[self.textField textStorage] replaceCharactersInRange:limitRange withAttributedString:mutableString];
 
 		[self.textField didChangeText];
+
+		[self.textField setSelectedRange:limitRange];
 	}
 }
 

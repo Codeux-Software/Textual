@@ -44,9 +44,6 @@
 @property (nonatomic, weak) IBOutlet NSMenu *foregroundColorMenu;
 @property (nonatomic, weak) IBOutlet NSMenu *backgroundColorMenu;
 
-- (void)enableSheetField:(TVCTextViewWithIRCFormatter *)field;
-- (void)enableWindowField:(TVCTextViewWithIRCFormatter *)field;
-
 @property (readonly) BOOL firstResponderSupportsFormatting;
 
 @property (readonly) BOOL textIsBold;

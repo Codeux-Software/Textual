@@ -65,15 +65,7 @@
 	[self.topicValueTextField setPreferredFont:[NSFont systemFontOfSize:13.0]];
 	[self.topicValueTextField setPreferredFontColor:[NSColor blackColor]];
 
-	NSAttributedString *topicas = [topic attributedStringWithIRCFormatting:[self.topicValueTextField preferredFont]
-														preferredFontColor:[self.topicValueTextField preferredFontColor]
-												 honorFormattingPreference:NO];
-
-	if (topicas) {
-		[self.topicValueTextField setAttributedStringValue:topicas];
-	}
-	
-	[[mainWindow() formattingMenu] enableSheetField:self.topicValueTextField];
+	[self.topicValueTextField setAttributedStringValueWithStringContainingIRCFormatting:topic];
 
 	[self startSheet];
 }
@@ -101,7 +93,7 @@
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheet:onOK:)]) {
-		NSString *formattedTopic = [[self.topicValueTextField attributedStringValue] attributedStringToASCIIFormatting];
+		NSString *formattedTopic = [self.topicValueTextField stringValueWithIRCFormatting];
 
 		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
 																				   withString:NSStringWhitespacePlaceholder];
@@ -117,8 +109,6 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[[mainWindow() formattingMenu] enableWindowField:mainWindowTextField()];
-	
 	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheetWillClose:)]) {
 		[self.delegate channelModifyTopicSheetWillClose:self];
 	}

@@ -132,6 +132,22 @@
 	return [[self string] copy];
 }
 
+- (NSString *)stringValueWithIRCFormatting
+{
+	return [[self attributedString] attributedStringToASCIIFormatting];
+}
+
+- (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue
+{
+	NSAttributedString *asvalue = [stringValue attributedStringWithIRCFormatting:self.preferredFont
+															  preferredFontColor:self.preferredFontColor
+													   honorFormattingPreference:NO];
+
+	if (asvalue) {
+		[self setAttributedStringValue:asvalue];
+	}
+}
+
 - (void)setAttributedStringValue:(NSAttributedString *)string
 {
 	[[self undoManager] removeAllActions];
@@ -194,7 +210,7 @@
 
 - (void)setPreferredFont:(NSFont *)preferredFont
 {
-	if (_preferredFont == preferredFont) {
+	if (NSObjectsAreEqual(_preferredFont, preferredFont)) {
 		;
 	} else {
 		_preferredFont = [preferredFont copy];
@@ -205,7 +221,7 @@
 
 - (void)setPreferredFontColor:(NSColor *)preferredFontColor
 {
-	if (_preferredFontColor == preferredFontColor) {
+	if (NSObjectsAreEqual(_preferredFontColor, preferredFontColor)) {
 		;
 	} else {
 		_preferredFontColor = [preferredFontColor copy];
