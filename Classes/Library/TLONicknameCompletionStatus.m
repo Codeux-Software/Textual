@@ -377,7 +377,7 @@
 {
 	NSString *newCompletionSuffix = nil;
 
-	if (self.isCompletingCommand || self.isCompletingChannelName) {
+	if (self.isCompletingCommand || self.isCompletingChannelName || self.searchPatternIsAtStart == NO) {
 		newCompletionSuffix = NSStringWhitespacePlaceholder;
 	} else if (self.isCompletingNickname) {
 		newCompletionSuffix = [TPCPreferences tabCompletionSuffix];
