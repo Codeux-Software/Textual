@@ -1010,17 +1010,17 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				templateTokens[@"fragmentTextColor"] = @(-1);
 			}
 		}
+	}
 
-		/* Escape spaces that are prefix and suffix characters. */
-		if ([messageFragment hasPrefix:NSStringWhitespacePlaceholder]) {
-			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-																	   withString:@"&nbsp;"];
-		}
+	/* Escape spaces that are prefix and suffix characters. */
+	if ([messageFragment hasPrefix:NSStringWhitespacePlaceholder]) {
+		messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(0, 1)
+																   withString:@"&nbsp;"];
+	}
 
-		if ([messageFragment hasSuffix:NSStringWhitespacePlaceholder]) {
-			 messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(([messageFragment length] - 1), 1)
-																	 withString:@"&nbsp;"];
-		}
+	if ([messageFragment hasSuffix:NSStringWhitespacePlaceholder]) {
+		messageFragment = [messageFragment stringByReplacingCharactersInRange:NSMakeRange(([messageFragment length] - 1), 1)
+																   withString:@"&nbsp;"];
 	}
 
 	// --- //
