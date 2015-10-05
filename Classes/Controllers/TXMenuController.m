@@ -495,12 +495,12 @@
 		}
 		case 1500: // "Invite To…"
 		{
-			if (_connectionNotLoggedIn || [self checkSelectedMembers:item] == NO) {
+			if ([self checkSelectedMembers:item] == NO) {
 				return NO;
 			}
-			
+
 			NSInteger count = 0;
-			
+
 			for (IRCChannel *e in [u channelList]) {
 				if (NSDissimilarObjects(c, e) && [e isChannel]) {
 					++count;
@@ -613,12 +613,25 @@
 		}
 #endif
 
+		case 1503: // "Give Op (+o)"
+		case 1504: // "Give Halfop (+h)"
+		case 1505: // "Give Voice (+v)"
+		case 1507: // "Take Op (-o)"
+		case 1508: // "Take Halfop (-h)"
+		case 1509: // "Take Voice (-v)"
+		case 1511: // "Ban"
+		case 1512: // "Kick"
+		case 1513: // "Ban and Kick"
+		{
+			return (_isChannel && [self checkSelectedMembers:item]);
+		}
 		case 1506: // "All Modes Given"
 		{
 			return NO;
 		}
 		case 1510: // "All Modes Taken"
 		{
+
 #define _userControlsMenuAllModesGivenMenuTag		1506
 #define _userControlsMenuAllModesTakenMenuTag		1510
 			
@@ -632,9 +645,10 @@
 
 #define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
 
-			NSArray *nicknames = [self selectedMembers:nil];
+			NSArray *nicknames = [self selectedMembers:item];
 
-			if ([nicknames count] == 1) {
+			if ([nicknames count] == 1)
+			{
 				IRCUser *m = nicknames[0];
 
 				IRCUserRank userRanks = [m ranks];
@@ -819,55 +833,83 @@
 #pragma mark -
 #pragma mark Selected User(s)
 
-- (BOOL)checkSelectedMembers:(id)item
+- (BOOL)checkSelectedMembers:(id)sender
 {
-	return ([mainWindowMemberList() countSelectedRows] > 0);
+	return ([[self selectedMembers:sender] count] > 0);
 }
 
 - (NSArray *)selectedMembers:(id)sender
 {
+	return [self selectedMembers:sender returnStrings:NO];
+}
+
+- (NSArray *)selectedMembersNicknames:(id)sender
+{
+	return [self selectedMembers:sender returnStrings:YES];
+}
+
+- (id)selectedMembers:(id)sender returnStrings:(BOOL)returnStrings
+{
 	IRCClient *u = [mainWindow() selectedClient];
 	IRCChannel *c = [mainWindow() selectedChannel];
-	
-	if (_noClientOrChannel || _notActive || _connectionNotLoggedIn || _isClient) {
-		return @[];
-	} else {
-		NSIndexSet *indexes = [mainWindowMemberList() selectedRowIndexes];
 
-		NSString *pointedNickname = nil;
-		
-		if ([sender isKindOfClass:[NSMenuItem class]]) {
-			pointedNickname = [(NSMenuItem *)sender userInfo];
+	/* Return an empty array under certain conditions */
+	if (_noClientOrChannel || _notActive || _connectionNotLoggedIn || _isClient) {
+		return nil;
+	}
+
+	/* Return a specific nickname for WebView events */
+	NSString *pointedNickname = nil;
+	
+	if ([sender isKindOfClass:[NSMenuItem class]]) {
+		pointedNickname = [(NSMenuItem *)sender userInfo];
+	} else {
+		pointedNickname = [self pointedNickname];
+	}
+	
+	if (pointedNickname) {
+		if (returnStrings) {
+			return @[pointedNickname];
 		} else {
-			pointedNickname = [self pointedNickname];
-		}
-		
-		if (pointedNickname) {
 			IRCUser *m = [c findMember:pointedNickname];
-			
+
 			if (m) {
 				return @[m];
 			} else {
 				return nil;
 			}
-		} else {
-			NSMutableArray *ary = [NSMutableArray array];
-			
-			for (NSNumber *index in [indexes arrayFromIndexSet]) {
-				NSUInteger nindex = [index unsignedIntegerValue];
-				
-				IRCUser *m = [mainWindowMemberList() itemAtRow:nindex];
-				
-				if (m) {
-					[ary addObject:m];
-				}
-			}
-			
-			return [ary copy];
 		}
 	}
-	
-	return nil;
+
+	/* If we did not have a specific nickname, then query
+	 the user list for selected rows. */
+	NSMutableArray *userArray = nil;
+
+	NSIndexSet *indexes = [mainWindowMemberList() selectedRowIndexes];
+
+	for (NSNumber *index in [indexes arrayFromIndexSet]) {
+		NSUInteger nindex = [index unsignedIntegerValue];
+		
+		IRCUser *m = [mainWindowMemberList() itemAtRow:nindex];
+		
+		if (m) {
+			if (userArray == nil) {
+				userArray = [NSMutableArray arrayWithCapacity:[indexes count]];
+			}
+
+			if (returnStrings) {
+				[userArray addObject:[m nickname]];
+			} else {
+				[userArray addObject:m];
+			}
+		}
+	}
+
+	if (userArray) {
+		return [userArray copy];
+	} else {
+		return nil;
+	}
 }
 
 - (void)deselectMembers:(id)sender
@@ -1755,8 +1797,8 @@
 	/* Get list of users. */
 	NSMutableArray *users = [NSMutableArray array];
     
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[users addObject:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[users addObject:nickname];
 	}
     
 	/* The text field. */
@@ -1813,8 +1855,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendWhois:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendWhois:nickname];
 	}
 
 	[self deselectMembers:sender];
@@ -1829,8 +1871,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		IRCChannel *cc = [u findChannelOrCreate:[m nickname] isPrivateMessage:YES];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		IRCChannel *cc = [u findChannelOrCreate:nickname isPrivateMessage:YES];
 		
 		[mainWindow() select:cc];
 	}
@@ -1855,8 +1897,8 @@
 	NSMutableArray *channels = [NSMutableArray array];
 	NSMutableArray *nicknames = [NSMutableArray array];
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[nicknames addObject:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[nicknames addObject:nickname];
 	}
 	
 	for (IRCChannel *e in [u channelList]) {
@@ -1911,8 +1953,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPPing:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPPing:nickname];
 	}
 	
 	[self deselectMembers:sender];
@@ -1927,8 +1969,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:[m nickname] command:IRCPrivateCommandIndex("ctcp_finger") text:nil];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_finger") text:nil];
 	}
 
 	[self deselectMembers:sender];
@@ -1943,8 +1985,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:[m nickname] command:IRCPrivateCommandIndex("ctcp_time") text:nil];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_time") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1959,8 +2001,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:[m nickname] command:IRCPrivateCommandIndex("ctcp_version") text:nil];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_version") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1975,8 +2017,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:[m nickname] command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_userinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -1991,8 +2033,8 @@
 		return;
 	}
 
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCTCPQuery:[m nickname] command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCTCPQuery:nickname command:IRCPrivateCommandIndex("ctcp_clientinfo") text:nil];
 	}
 	
 	[self deselectMembers:sender];
@@ -2111,8 +2153,8 @@
 	
 	NSInteger currentIndex = 0;
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		opString = [opString stringByAppendingFormat:@"%@ ", [m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		opString = [opString stringByAppendingFormat:@"%@ ", nickname];
 		
 		currentIndex += 1;
 
@@ -2171,8 +2213,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u kick:c target:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u kick:c target:nickname];
 	}
 	
 	[self deselectMembers:sender];
@@ -2187,8 +2229,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), [m nickname]] completeTarget:YES target:[c name]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@", IRCPublicCommandIndex("ban"), nickname] completeTarget:YES target:[c name]];
 	}
 	
 	[self deselectMembers:sender];
@@ -2203,8 +2245,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kickban"), [m nickname], [TPCPreferences defaultKickMessage]] completeTarget:YES target:[c name]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kickban"), nickname, [TPCPreferences defaultKickMessage]] completeTarget:YES target:[c name]];
 	}
 	
 	[self deselectMembers:sender];
@@ -2219,8 +2261,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kill"), [m nickname], [TPCPreferences IRCopDefaultKillMessage]]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("kill"), nickname, [TPCPreferences IRCopDefaultKillMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -2235,11 +2277,11 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-        if ([[m nickname] isEqualIgnoringCase:[u localNickname]]) {
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+        if ([nickname isEqualIgnoringCase:[u localNickname]]) {
             [u printDebugInformation:BLS(1197, [u networkAddress]) channel:c];
         } else {
-            [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), [m nickname], [TPCPreferences IRCopDefaultGlineMessage]]];
+            [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), nickname, [TPCPreferences IRCopDefaultGlineMessage]]];
         }
     }
 	
@@ -2255,8 +2297,8 @@
 		return;
 	}
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("shun"), [m nickname], [TPCPreferences IRCopDefaultShunMessage]]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("shun"), nickname, [TPCPreferences IRCopDefaultShunMessage]]];
 	}
 	
 	[self deselectMembers:sender];
@@ -2283,9 +2325,9 @@
 		if (returnCode == NSModalResponseOK) {
 			[[self.fileTransferController fileTransferTable] beginUpdates];
 			
-			for (IRCUser *m in [self selectedMembers:sender]) {
+			for (NSString *nickname in [self selectedMembersNicknames:sender]) {
 				for (NSURL *pathURL in [d URLs]) {
-					(void)[self.fileTransferController addSenderForClient:u nickname:[m nickname] path:[pathURL path] autoOpen:YES];
+					(void)[self.fileTransferController addSenderForClient:u nickname:nickname path:[pathURL path] autoOpen:YES];
 				}
 			}
 			
@@ -2399,8 +2441,8 @@
 	
 	NSMutableArray *nicknames = [NSMutableArray array];
 	
-	for (IRCUser *m in [self selectedMembers:sender]) {
-		[nicknames addObject:[m nickname]];
+	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
+		[nicknames addObject:nickname];
 	}
 	
 	[self deselectMembers:sender];
