@@ -134,22 +134,32 @@ Textual.includeScriptResourceFile = function(file)
 We do not recommend anyone try to override these. */
 Textual.openChannelNameContextualMenu = function()
 {
-	app.setChannelName(event.target.innerHTML);
+	app.setChannelName(event.target.innerText);
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
-	app.setURLAddress(event.target.innerHTML);
+	app.setURLAddress(event.target.innerText);
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
-	app.setNickname(event.target.innerHTML);
+	var userNickname = event.target.innerText;
+
+	var userMode = event.target.getAttribute("mode");
+
+	if (userMode && userMode.length > 0 && userNickname.indexOf(userMode) === 0) {
+		app.setNickname(userNickname.substring(1));
+	} else {
+		app.setNickname(userNickname);
+	}
 }; // Conversation Tracking
 
 Textual.openStandardNicknameContextualMenu = function()
 {
-	app.setNickname(event.target.getAttribute("nickname"));
+	var userNickname = event.target.getAttribute("nickname");
+
+	app.setNickname(userNickname);
 };
 
 Textual.nicknameMaybeWasDoubleClicked = function(e)
