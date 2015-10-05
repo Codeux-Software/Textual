@@ -44,6 +44,9 @@
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
+                                    <connections>
+                                        <action selector="segmentedCellClicked:" target="Q9x-Ny-Yn4" id="OoN-TX-Sf0"/>
+                                    </connections>
                                 </segmentedCell>
                                 <accessibility description="Main Window Segmented Controller"/>
                             </segmentedControl>

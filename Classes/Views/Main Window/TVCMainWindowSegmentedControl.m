@@ -39,19 +39,27 @@
 #import "TextualApplication.h"
 
 @implementation TVCMainWindowSegmentedController
+
+- (void)segmentedCellClicked:(id)sender
+{
+	NSInteger selectedSegment = [self selectedSegment];
+
+	if (selectedSegment == 2) {
+		[menuController() showChannelIgnoreList:sender];
+	}
+}
+
 @end
 
 @implementation TVCMainWindowSegmentedControllerCell
 
 - (SEL)action
 {
-    if ([self menuForSegment:[self selectedSegment]] == nil) {
-		[menuController() showChannelIgnoreList:self];
-
+	if ([self menuForSegment:[self selectedSegment]] == nil) {
+		return [super action];
+	} else {
 		return nil;
-    } else {
-        return [super action];
-    }
+	}
 }
 
 @end
