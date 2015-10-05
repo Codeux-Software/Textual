@@ -134,17 +134,17 @@ Textual.includeScriptResourceFile = function(file)
 We do not recommend anyone try to override these. */
 Textual.openChannelNameContextualMenu = function()
 {
-	app.setChannelName(event.target.innerText);
+	app.setChannelName(event.target.textContent);
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
-	app.setURLAddress(event.target.innerText);
+	app.setURLAddress(event.target.textContent);
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
-	var userNickname = event.target.innerText;
+	var userNickname = event.target.textContent;
 
 	var userMode = event.target.getAttribute("mode");
 
