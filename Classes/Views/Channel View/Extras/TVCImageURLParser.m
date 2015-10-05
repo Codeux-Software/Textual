@@ -173,13 +173,14 @@
         if ([p1 isEqualIgnoringCase:@"image"]) {
             return [NSString stringWithFormat:@"http://cl.ly/%@/content", p2];
         }
-	} else if ([host hasSuffix:@"instagram.com"]) {
+	} else if ([host hasSuffix:@"instagram.com"] ||
+			   [host hasSuffix:@"instagr.am"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
 		if ([path hasPrefix:@"/p/"]) {
 			path = [path substringFromIndex:3];
 
-			if ([path isAlphabeticNumericOnly]) {
+			if ([path onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
 				return [NSString stringWithFormat:@"https://www.instagram.com/p/%@/media/?size=l", path];
 			}
 		}
