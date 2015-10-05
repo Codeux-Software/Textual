@@ -619,11 +619,34 @@
 		case 1507: // "Take Op (-o)"
 		case 1508: // "Take Halfop (-h)"
 		case 1509: // "Take Voice (-v)"
+		{
+			if (_isChannel) {
+				return [self checkSelectedMembers:item];
+			} else {
+				return NO;
+			}
+		}
 		case 1511: // "Ban"
 		case 1512: // "Kick"
 		case 1513: // "Ban and Kick"
 		{
-			return (_isChannel && [self checkSelectedMembers:item]);
+
+#define _userControlsBanKickSeparatorTag		1531
+
+			BOOL condition1 = (_isChannel);
+
+			[item setHidden:(condition1 == NO)];
+
+			[[[item menu] itemWithTag:_userControlsBanKickSeparatorTag] setHidden:(condition1 == NO)];
+
+			if (condition1) {
+				return [self checkSelectedMembers:item];
+			} else {
+				return NO;
+			}
+
+#undef _userControlsBanKickSeparatorTag
+
 		}
 		case 1506: // "All Modes Given"
 		{
@@ -638,12 +661,34 @@
 #define _userControlsMenuGiveModeOMenuTag			1503
 #define _userControlsMenuGiveModeHMenuTag			1504
 #define _userControlsMenuGiveModeVMenuTag			1505
+#define _userControlsMenuGiveModeSeparatorTag		1529
 			
 #define _userControlsMenuTakeModeOMenuTag			1507
 #define _userControlsMenuTakeModeHMenuTag			1508
 #define _userControlsMenuTakeModeVMenuTag			1509
+#define _userControlsMenuTakeModeSeparatorTag		1530
 
 #define _ui(tag, value)				[[[item menu] itemWithTag:(tag)] setHidden:(value)];
+
+			if (_isChannel == NO) {
+				_ui(_userControlsMenuAllModesTakenMenuTag, YES)
+				_ui(_userControlsMenuAllModesGivenMenuTag, YES)
+
+				_ui(_userControlsMenuGiveModeOMenuTag, YES)
+				_ui(_userControlsMenuGiveModeHMenuTag, YES)
+				_ui(_userControlsMenuGiveModeVMenuTag, YES)
+				_ui(_userControlsMenuTakeModeOMenuTag, YES)
+				_ui(_userControlsMenuTakeModeHMenuTag, YES)
+				_ui(_userControlsMenuTakeModeVMenuTag, YES)
+
+				_ui(_userControlsMenuGiveModeSeparatorTag, YES)
+				_ui(_userControlsMenuTakeModeSeparatorTag, YES)
+
+				return NO;
+			} else {
+				_ui(_userControlsMenuGiveModeSeparatorTag, NO)
+				_ui(_userControlsMenuTakeModeSeparatorTag, NO)
+			}
 
 			NSArray *nicknames = [self selectedMembers:item];
 
@@ -701,10 +746,13 @@
 #undef _userControlsMenuGiveModeOMenuTag
 #undef _userControlsMenuGiveModeHMenuTag
 #undef _userControlsMenuGiveModeVMenuTag
+#undef _userControlsMenuGiveModeSeparatorTag
 			
 #undef _userControlsMenuTakeModeOMenuTag
 #undef _userControlsMenuTakeModeHMenuTag
 #undef _userControlsMenuTakeModeVMenuTag
+#undef _userControlsMenuTakeModeSeparatorTag
+
 		}
 		case 715: // "Next Highlight"
 		{
