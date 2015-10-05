@@ -1225,6 +1225,9 @@
                                             <nil key="label"/>
                                         </segment>
                                     </segments>
+                                    <connections>
+                                        <action selector="segmentedCellClicked:" target="Ijw-SU-h2Z" id="0dv-Jt-lgS"/>
+                                    </connections>
                                 </segmentedCell>
                                 <accessibility description="Main Window Segmented Controller"/>
                             </segmentedControl>

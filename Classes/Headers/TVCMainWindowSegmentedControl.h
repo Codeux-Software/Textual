@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 @interface TVCMainWindowSegmentedController : NSSegmentedControl
+- (IBAction)segmentedCellClicked:(id)sender;
 @end
 
 @interface TVCMainWindowSegmentedControllerCell : NSSegmentedCell
