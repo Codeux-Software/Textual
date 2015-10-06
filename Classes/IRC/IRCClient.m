@@ -257,7 +257,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self.reconnectTimer setDelegate:nil];
 	[self.retryTimer setDelegate:nil];
 
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self cancelPerformRequests];
 }
 
 - (void)setup:(id)seed
@@ -2004,7 +2004,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				}
 			}
 
-			self.inUserInvokedJoinRequest = YES;
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
 
 			[self send:IRCPrivateCommandIndex("join"), targetChannelName, [s string], nil];
 
@@ -2310,7 +2310,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			self.inUserInvokedWhoRequest = YES;
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedWhoRequest];
 
 			[self send:IRCPrivateCommandIndex("who"), uncutInput, nil];
 
@@ -2318,7 +2318,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5100: // Command: ISON
 		{
-			self.inUserInvokedIsonRequest = YES;
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedIsonRequest];
 			
 			[self send:IRCPrivateCommandIndex("ison"), uncutInput, nil];
 			
@@ -2332,7 +2332,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5097: // Command: WATCH
 		{
-			self.inUserInvokedWatchRequest = YES;
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedWatchRequest];
 
 			[self send:IRCPrivateCommandIndex("watch"), nil];
 
@@ -2342,7 +2342,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			self.inUserInvokedNamesRequest = YES;
+			[self enableInUserInvokedCommandProperty:&_inUserInvokedNamesRequest];
 
 			[self send:IRCPrivateCommandIndex("names"), uncutInput, nil];
 
@@ -2540,7 +2540,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					 are handled properly. */
 					
 					if ([targetChannelName isChannelName:self]) {
-						self.inUserInvokedModeRequest = YES;
+						[self enableInUserInvokedCommandProperty:&_inUserInvokedModeRequest];
 					}
 				}
 			}
@@ -3841,7 +3841,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self stopRetryTimer];
 	[self stopISONTimer];
 
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self cancelPerformRequests];
 
 	[self.printingQueue cancelAllOperations];
 
@@ -4995,8 +4995,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[mainWindow() reloadTreeItem:c];
 		
 		self.cachedLocalHostmask = [m senderHostmask];
-		
-		self.inUserInvokedJoinRequest = NO;
+
+		[self disableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
 	} else {
 		c = [self findChannel:channel];
 		
@@ -5155,7 +5155,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if ([TPCPreferences rejoinOnKick] && [c errorOnLastJoinAttempt] == NO) {
 				[self printDebugInformation:BLS(1127) channel:c];
 
-				[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(joinKickedChannel:) object:c];
+				[self cancelPerformRequestsWithSelector:@selector(joinKickedChannel:) object:c];
 				
 				[self performSelector:@selector(joinKickedChannel:) withObject:c afterDelay:3.0];
 			}
@@ -6560,7 +6560,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSString *text = nil;
 
-			self.inUserInvokedWhowasRequest = (n == 314);
+			if (n == 314) {
+				[self enableInUserInvokedCommandProperty:&_inUserInvokedWhowasRequest];
+			}
 
 			if ([realname hasPrefix:@":"]) {
 				realname = [realname substringFromIndex:1];
@@ -6692,7 +6694,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				if (c.inUserInvokedModeRequest) {
 					c.inUserInvokedModeRequest = NO;
 				} else {
-					self.inUserInvokedModeRequest = NO;
+					[self disableInUserInvokedCommandProperty:&_inUserInvokedModeRequest];
 				}
 			}
 			
@@ -6781,8 +6783,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			/* Cut the users up. */
 			if (self.inUserInvokedIsonRequest) {
 				[self printErrorReply:m];
-				
-				self.inUserInvokedIsonRequest = NO;
+
+				[self disableInUserInvokedCommandProperty:&_inUserInvokedIsonRequest];
 			} else {
 				NSString *userInfo = [[m sequence] lowercaseString];
 				
@@ -6871,7 +6873,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if (self.inUserInvokedWhoRequest) {
 				[self printUnknownReply:m];
 
-				self.inUserInvokedWhoRequest = NO;
+				[self disableInUserInvokedCommandProperty:&_inUserInvokedWhoRequest];
 			}
 
 			break;
@@ -7108,9 +7110,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				}
 			}
 
-			if (self.inUserInvokedNamesRequest) {
-				self.inUserInvokedNamesRequest = NO;
-			}
+			[self disableInUserInvokedCommandProperty:&_inUserInvokedNamesRequest];
             
             [mainWindow() updateTitleFor:c];
 
@@ -7312,7 +7312,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 369: // RPL_ENDOFWHOWAS
 		{
-			self.inUserInvokedWhowasRequest = NO;
+			[self disableInUserInvokedCommandProperty:&_inUserInvokedWhowasRequest];
 
 			[self print:[mainWindow() selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -7333,7 +7333,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			if (n == 608 || n == 607) {
-				self.inUserInvokedWatchRequest = NO;
+				[self disableInUserInvokedCommandProperty:&_inUserInvokedWatchRequest];
 			}
 
 			break;
@@ -7690,7 +7690,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self quickJoin:ary];
 		
 		/* Update status later. */
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
+		[self cancelPerformRequestsWithSelector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
 
 		[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
 	}
@@ -7814,14 +7814,51 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)onRetryTimer:(id)sender
 {
 	[self performBlockOnMainThread:^{
-		[self disconnect];
-
 		__weak IRCClient *weakSelf = self;
 		
 		self.disconnectCallback = ^{
 			[weakSelf connect:IRCClientConnectRetryMode];
 		};
+
+		[self disconnect];
 	}];
+}
+
+#pragma mark -
+#pragma mark User Invoked Command Controls
+
+- (void)enableInUserInvokedCommandProperty:(BOOL *)property
+{
+#define _inUserInvokedCommandTimeoutInterval		10.0
+
+	if ( property && *property == NO) {
+		*property = YES;
+
+		[self performSelector:@selector(timeoutInUserInvokedCommandProperty:)
+				   withObject:[NSValue valueWithPointer:property]
+				   afterDelay:_inUserInvokedCommandTimeoutInterval];
+	}
+
+#undef _inUserInvokedCommandTimeoutInterval
+}
+
+- (void)disableInUserInvokedCommandProperty:(BOOL *)property
+{
+	if ( property && *property) {
+		*property = NO;
+
+		[self cancelPerformRequestsWithSelector:@selector(timeoutInUserInvokedCommandProperty:)
+										 object:[NSValue valueWithPointer:property]];
+	}
+}
+
+- (void)timeoutInUserInvokedCommandProperty:(NSValue *)propertyPointerValue
+{
+	void *pointerPointer = [propertyPointerValue pointerValue];
+
+	if (pointerPointer) {
+		pointerPointer = NO;
+	}
 }
 
 #pragma mark -
@@ -8183,7 +8220,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)disconnect
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(disconnect) object:nil];
+	[self cancelPerformRequestsWithSelector:@selector(disconnect) object:nil];
 
 	if ( self.socket) {
 		[self.socket close];
@@ -9248,7 +9285,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel
 {
-	self.inUserInvokedJoinRequest = YES;
+	[self enableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
 	
 	[self joinUnlistedChannel:channel];
 }
