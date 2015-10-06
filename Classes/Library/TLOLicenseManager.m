@@ -527,7 +527,17 @@ NSDictionary *TLOLicenseManagerLicenseDictionary(void)
 		NSDictionary *licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(licenseContents);
 
 		if (TLOLicenseManagerVerifyLicenseSignatureWithDictionary(licenseDictionary) == NO) {
-			LogToConsole(@"Cannot load license dictionary because it did not pass validation");
+			/* TLOLicenseManagerLicenseDictionary() is called during menu validation the exact moment
+			 Textual is launched. This occurs before the license manager has been setup which means
+			 this console message is spammed a few dozen times because its called for each menu item. 
+			 This is an easy fix that only displays this warning after Textual has been open for at 
+			 least a period of 5 seconds. 
+			 
+			 This console message can be potentially helpful in diagnosing problems for the end user
+			 which means this is the solution instead of removing it. */
+			if ([TPCApplicationInfo timeIntervalSinceApplicationLaunch] > 5) {
+				LogToConsole(@"Cannot load license dictionary because it did not pass validation");
+			}
 
 			return nil;
 		}
