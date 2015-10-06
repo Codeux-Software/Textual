@@ -583,11 +583,13 @@
 		[[userInfoPopover awayStatusField] setStringValue:BLS(1214)];
 	}
 
+	id currentFirstResponder = [mainWindow() firstResponder];
+
     [userInfoPopover showRelativeToRect:cellFrame
                                  ofView:mainWindowMemberList()
                           preferredEdge:NSMaxXEdge];
 
-	[mainWindowTextField() focus]; // Add focus back to text field.
+	[mainWindow() makeFirstResponder:currentFirstResponder];
 }
 
 - (NSInteger)rowIndex
