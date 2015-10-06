@@ -200,7 +200,7 @@
 
 - (void)destroyUserInfoPopover
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(popDelayedUserInfoExpansionFrame) object:nil];
+	[self cancelPerformRequestsWithSelector:@selector(popDelayedUserInfoExpansionFrame) object:nil];
 
 	self.lastRowShownUserInfoPopover = -1;
 

@@ -74,7 +74,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)dealloc
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self cancelPerformRequests];
 }
 
 #pragma mark -

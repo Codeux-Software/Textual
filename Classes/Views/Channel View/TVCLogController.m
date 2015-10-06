@@ -115,7 +115,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	[self.webView setPolicyDelegate:nil];
 	[self.webView setUIDelegate:nil];
 
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self cancelPerformRequests];
 }
 
 #pragma mark -
