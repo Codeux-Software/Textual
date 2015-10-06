@@ -155,9 +155,9 @@
 - (void)cancelAnyPreviouslyScheduledFileTruncationEvents
 {
 	if (self.truncationTimerScheduled) {
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-
 		self.truncationTimerScheduled = NO;
+
+		[self cancelPerformRequests];
 	}
 }
 
