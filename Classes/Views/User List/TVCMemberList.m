@@ -131,9 +131,17 @@
 {
 	if (self.keyDelegate) {
 		switch ([e keyCode]) {
-			case 123 ... 126:
-			case 116:
-			case 121:
+			case 125: // down arrow
+			case 126: // up arrow
+			{
+				[super keyDown:e];
+
+				break;
+			}
+			case 123: // left arrow
+			case 124: // right arrow
+			case 116: // page up
+			case 121: // page down
 			{
 				break;
 			}
