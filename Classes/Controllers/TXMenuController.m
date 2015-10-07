@@ -613,6 +613,7 @@
 		}
 #endif
 
+		case 1502: // "Private Message (Query)"
 		case 1503: // "Give Op (+o)"
 		case 1504: // "Give Halfop (+h)"
 		case 1505: // "Give Voice (+v)"
