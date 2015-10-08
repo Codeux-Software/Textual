@@ -22,6 +22,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#import <Foundation/Foundation.h>
+
 #import <HockeySDK/BITHockeyManager.h>
 #import <HockeySDK/BITHockeyManagerDelegate.h>
 
@@ -30,6 +32,8 @@
 #import <HockeySDK/BITCrashManager.h>
 #import <HockeySDK/BITCrashManagerDelegate.h>
 #import <HockeySDK/BITCrashDetails.h>
+#import <HockeySDK/BITCrashMetaData.h>
+#import <HockeySDK/BITCrashExceptionApplication.h>
 
 #import <HockeySDK/BITSystemProfile.h>
 

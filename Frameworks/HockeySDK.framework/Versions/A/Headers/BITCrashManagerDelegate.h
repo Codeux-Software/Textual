@@ -73,8 +73,6 @@
  
  @param crashManager The `BITCrashManager` instance invoking this delegate
  @see applicationLogForCrashManager:
- @see userNameForCrashManager:
- @see userEmailForCrashManager:
  */
 -(BITHockeyAttachment *)attachmentForCrashManager:(BITCrashManager *)crashManager;
 

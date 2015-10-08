@@ -185,7 +185,6 @@
  Returns the BITFeedbackManager instance initialized by BITHockeyManager
  
  @see configureWithIdentifier:delegate:
- @see configureWithBetaIdentifier:liveIdentifier:delegate:
  @see startManager
  @see disableFeedbackManager
  */
@@ -213,39 +212,81 @@
 
 /** Set the userid that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ Right now this is used by the `BITCrashManager` to attach to a crash report.
+ `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+ The value can be set at any time and will be stored in the keychain on the current
+ device only! To delete the value from the keychain set the value to `nil`.
+ 
+ This property is optional and can be used as an alternative to the delegate. If you
+ want to define specific data for each component, use the delegate instead which does
+ overwrite the values set by this property.
+ 
+ @warning When returning a non nil value, crash reports are not anonymous any more
+ and the crash alerts will not show the word "anonymous"!
+ 
+ @warning This property needs to be set before calling `startManager` to be considered
+ for being added to crash reports as meta data.
  
  @see [BITHockeyManagerDelegate userIDForHockeyManager:componentManager:]
  @see setUserName:
  @see setUserEmail:
+ 
+ @param userID NSString value for the userID
  */
 - (void)setUserID:(NSString *)userID;
 
 
 /** Set the user name that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ Right now this is used by the `BITCrashManager` to attach to a crash report.
+ `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+ The value can be set at any time and will be stored in the keychain on the current
+ device only! To delete the value from the keychain set the value to `nil`.
+ 
+ This property is optional and can be used as an alternative to the delegate. If you
+ want to define specific data for each component, use the delegate instead which does
+ overwrite the values set by this property.
+ 
+ @warning When returning a non nil value, crash reports are not anonymous any more
+ and the crash alerts will not show the word "anonymous"!
+ 
+ @warning This property needs to be set before calling `startManager` to be considered
+ for being added to crash reports as meta data.
 
  @see [BITHockeyManagerDelegate userNameForHockeyManager:componentManager:]
  @see setUserID:
  @see setUserEmail:
+ 
+ @param userName NSString value for the userName
  */
 - (void)setUserName:(NSString *)userName;
 
 
 /** Set the users email address that should used in the SDK components
  
- Right now this is used by the `BITCrashMananger` to attach to a crash report and `BITFeedbackManager`.
+ Right now this is used by the `BITCrashManager` to attach to a crash report.
+ `BITFeedbackManager` uses it too for assigning the user to a discussion thread.
  
- Note: the value is persisted in the keychain! To remove old values, call this setter with a `nil` value.
+ The value can be set at any time and will be stored in the keychain on the current
+ device only! To delete the value from the keychain set the value to `nil`.
+ 
+ This property is optional and can be used as an alternative to the delegate. If you
+ want to define specific data for each component, use the delegate instead which does
+ overwrite the values set by this property.
+ 
+ @warning When returning a non nil value, crash reports are not anonymous any more
+ and the crash alerts will not show the word "anonymous"!
+ 
+ @warning This property needs to be set before calling `startManager` to be considered
+ for being added to crash reports as meta data.
 
  @see [BITHockeyManagerDelegate userEmailForHockeyManager:componentManager:]
  @see setUserID:
  @see setUserName:
+ 
+ @param userEmail NSString value for the userEmail
  */
 - (void)setUserEmail:(NSString *)userEmail;
 
