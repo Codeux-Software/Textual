@@ -6,15 +6,15 @@
 	<dict>
 		<key>Resources/BITCrashReportUI.nib</key>
 		<data>
-		tipVKYJnMJ4b/1WhypCcgRWzp/Q=
+		1DHQoAb7W3LWFBQ9wevg4wL5xYc=
 		</data>
 		<key>Resources/BITFeedbackWindowController.nib</key>
 		<data>
-		yKnHD5Gw7ltvmpWKJeWjhujnjn0=
+		ms3k3r2nFRz4Blh8ki1WgJlv7jQ=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		r1k61RNfML0sFbQSpsxA4ePCJmc=
+		ojimiDcGdSHD00L333deOu5MMc8=
 		</data>
 		<key>Resources/de.lproj/HockeySDK.strings</key>
 		<dict>
@@ -91,18 +91,9 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/CrashReporter.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			2JuruTxbeC/Fr3q3o6p6wYkkiqk=
-			</data>
-			<key>requirement</key>
-			<string>identifier "coop.plausible.CrashReporter" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = KYJ84ZC369</string>
-		</dict>
 		<key>Headers/BITCrashDetails.h</key>
 		<data>
-		+ujUsnxyL/Il5gSe2bnAZpVkZfY=
+		cGYeMZeFecsfUgHx/3MAe6Xr9wY=
 		</data>
 		<key>Headers/BITCrashExceptionApplication.h</key>
 		<data>
@@ -110,11 +101,11 @@
 		</data>
 		<key>Headers/BITCrashManager.h</key>
 		<data>
-		u8Bfd0TtTvCTeTKMkTKYyygenqw=
+		0SUPkdixdAeZHB5vXbnszT3yfV0=
 		</data>
 		<key>Headers/BITCrashManagerDelegate.h</key>
 		<data>
-		om9SOYOsDbbNYQ5wla2StGLJQrA=
+		xN+7cConK98qLbalHrbl8UJkdIQ=
 		</data>
 		<key>Headers/BITCrashMetaData.h</key>
 		<data>
@@ -138,7 +129,7 @@
 		</data>
 		<key>Headers/BITHockeyManager.h</key>
 		<data>
-		cTLX18Q0v9RDXeDysVjNFsG/Iys=
+		VoVC1TCB4Ys0xP75sPA80uEkRdo=
 		</data>
 		<key>Headers/BITHockeyManagerDelegate.h</key>
 		<data>
@@ -150,19 +141,23 @@
 		</data>
 		<key>Headers/HockeySDK.h</key>
 		<data>
-		vsDVrDaLJDsCaXU9HftLlfKkj7s=
+		018+LGCFaPOaiwvVQ8/IqObfaOI=
+		</data>
+		<key>Modules/module.modulemap</key>
+		<data>
+		XqNxHBjpNA+vmtw20+/D9PQwPx8=
 		</data>
 		<key>Resources/BITCrashReportUI.nib</key>
 		<data>
-		tipVKYJnMJ4b/1WhypCcgRWzp/Q=
+		1DHQoAb7W3LWFBQ9wevg4wL5xYc=
 		</data>
 		<key>Resources/BITFeedbackWindowController.nib</key>
 		<data>
-		yKnHD5Gw7ltvmpWKJeWjhujnjn0=
+		ms3k3r2nFRz4Blh8ki1WgJlv7jQ=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		r1k61RNfML0sFbQSpsxA4ePCJmc=
+		ojimiDcGdSHD00L333deOu5MMc8=
 		</data>
 		<key>Resources/de.lproj/HockeySDK.strings</key>
 		<dict>

@@ -174,8 +174,6 @@ typedef NS_ENUM(NSUInteger, BITCrashManagerUserInput) {
  *  Mach-based handling should _NOT_ be used when a debugger is attached. The SDK will not
  *  enable catching exceptions if the app is started with the debugger running. If you attach
  *  the debugger during runtime, this may cause issues if it is not disabled!
- *
- * @deprecated Mach Exception Handler is now enabled by default!
  */
 @property (nonatomic, assign, getter=isMachExceptionHandlerDisabled) BOOL disableMachExceptionHandler;
 

@@ -81,30 +81,16 @@
 @property (nonatomic, readonly, strong) NSString *osBuild;
 
 /**
+ *  CFBundleShortVersionString value of the app that crashed
+ *
+ *  Can be `nil` if the crash was captured with an older version of the SDK
+ *  or if the app doesn't set the value.
+ */
+@property (nonatomic, readonly, strong) NSString *appVersion;
+
+/**
  *  CFBundleVersion value of the app that crashed
  */
 @property (nonatomic, readonly, strong) NSString *appBuild;
-
-/**
- Indicates if the app was killed while being in foreground from the iOS
- 
- If `[BITCrashManager enableAppNotTerminatingCleanlyDetection]` is enabled, use this on startup
- to check if the app starts the first time after it was killed by iOS in the previous session.
- 
- This can happen if it consumed too much memory or the watchdog killed the app because it
- took too long to startup or blocks the main thread for too long, or other reasons. See Apple
- documentation: https://developer.apple.com/library/ios/qa/qa1693/_index.html
- 
- See `[BITCrashManager enableAppNotTerminatingCleanlyDetection]` for more details about which kind of kills can be detected.
- 
- @warning This property only has a correct value, once `[BITHockeyManager startManager]` was
- invoked! In addition, it is automatically disabled while a debugger session is active!
- 
- @see `[BITCrashManager enableAppNotTerminatingCleanlyDetection]`
- @see `[BITCrashManager didReceiveMemoryWarningInLastSession]`
- 
- @return YES if the details represent an app kill instead of a crash
- */
-- (BOOL)isAppKill;
 
 @end
