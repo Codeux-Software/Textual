@@ -724,11 +724,11 @@
 "BasicLanguage[1254][07]" = "Off-the-Record Messaging: Received an encrypted message but cannot read it because a private conversation has not been started.";
 "BasicLanguage[1254][08]" = "Off-the-Record Messaging: Cannot read the message received.";
 "BasicLanguage[1254][09]" = "Off-the-Record Messaging: The message received contains malformed data.";
-"BasicLanguage[1254][10]" = "Off-the-Record Messaging: Received a heartbeat.";
-"BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat.";
+"BasicLanguage[1254][10]" = "Off-the-Record Messaging: Received a heartbeat";
+"BasicLanguage[1254][11]" = "Off-the-Record Messaging: Sent a heartbeat";
 "BasicLanguage[1254][12]" = "Off-the-Record Messaging: Received a general error from the Off-the-Record Messaging library.";
 "BasicLanguage[1254][13]" = "Off-the-Record Messaging: Received an unencrypted message.";
-"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized";
+"BasicLanguage[1254][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized.";
 "BasicLanguage[1254][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
 "BasicLanguage[1263]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not in session.";
