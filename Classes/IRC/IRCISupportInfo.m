@@ -85,7 +85,9 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	NSString *configDataString = configData;
 
 	if ([configDataString hasSuffix:IRCISupportRawSuffix]) {
-		 configDataString = [configDataString substringToIndex:([configDataString length] - [IRCISupportRawSuffix length])];
+		configDataString = [configDataString substringToIndex:([configDataString length] - [IRCISupportRawSuffix length])];
+
+		configDataString = [configDataString trim];
 	}
 
 	NSObjectIsEmptyAssert(configDataString);
@@ -169,7 +171,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 		if ([objectValue isKindOfClass:[NSString class]]) {
 			[cacheString appendFormat:@"\002%@\002=%@ ", configToken, objectValue];
 		} else {
-			[cacheString appendFormat:@"\002%@\002 ", configToken];
+			[cacheString appendFormat:@"\002%@ \002", configToken];
 		}
 	}
 
@@ -178,7 +180,7 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 	} else {
 		[cacheString appendString:IRCISupportRawSuffix];
 
-		return [cacheString copy];
+		return [cacheString trim];
 	}
 }
 
