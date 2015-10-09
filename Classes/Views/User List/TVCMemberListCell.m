@@ -768,19 +768,20 @@
 
 @implementation TVCMemberListCellYosemiteTextFieldInterior
 
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
-	
-	CGContextSaveGState(ctx);
-	
-	CGContextSetShouldAntialias(ctx, true);
-	CGContextSetShouldSmoothFonts(ctx, true);
-	CGContextSetShouldSubpixelPositionFonts(ctx, true);
-	
-	[[self attributedStringValue] drawInRect:cellFrame];
-	
-	CGContextRestoreGState(ctx);
+	NSAttributedString *stringValue = [self attributedStringValue];
+
+	NSImage *stringValueImage = [stringValue imageRepWithSize:cellFrame.size
+												  scaleFactor:[[mainWindow() screen] backingScaleFactor]
+											  backgroundColor:[NSColor whiteColor]];
+
+	[stringValueImage drawInRect:cellFrame
+						fromRect:NSZeroRect
+					   operation:NSCompositeSourceOver
+						fraction:1.0
+				  respectFlipped:YES
+						   hints:nil];
 }
 
 @end

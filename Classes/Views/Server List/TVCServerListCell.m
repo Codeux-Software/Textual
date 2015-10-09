@@ -200,10 +200,8 @@
 			}
 		}
 		
-		if (NSDissimilarObjects([icon isTemplate], iconIsTemplate)) {
-			[icon setTemplate:iconIsTemplate];
-		}
-		
+		[icon setTemplate:iconIsTemplate];
+
 		[imageView setImage:icon];
 	}
 
@@ -553,28 +551,18 @@
 	
 	/* Begin draw if we want to. */
 	if (channelTreeUnreadCount > 0 && drawMessageBadge) {
-		/* Get the string being draw. */
 		NSAttributedString *mcstring = [self messageCountBadgeText:channelTreeUnreadCount isSelected:isSelected isHighlight:isHighlight];
-		
-		/* Get the rect being drawn. */
+
 		NSRect badgeRect = [self messageCountBadgeRectWithText:mcstring];
-		
-		/* Draw the badge. */
+
 		[self drawMessageCountBadge:mcstring inCell:badgeRect isHighlighgt:isHighlight isSelected:isSelected];
-		
-		/* Set the right margin for badge image. */
+
 		[self.messageCountBadgeTrailingConstraint setConstant:[interfaceObject messageCountBadgeRightMargin]];
-		
-		/* Set the width of the badge image. */
 		[self.messageCountBadgeWidthConstraint setConstant:NSWidth(badgeRect)];
 	} else {
-		/* Reset auto layout constraint for right margin. */
 		[self.messageCountBadgeTrailingConstraint setConstant:0.0];
-
-		/* Reset auto layout constraint for width. */
 		[self.messageCountBadgeWidthConstraint setConstant:0.0];
-		
-		/* Reset any existing badge image. */
+
 		NSImageView *badgeView = [self messageCountBadgeImageView];
 		
 		[badgeView setImage:nil];
@@ -1056,19 +1044,20 @@
 
 @implementation TVCServerListCellYosemiteTextFieldInterior
 
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	CGContextRef ctx = [RZGraphicsCurrentContext() graphicsPort];
-	
-	CGContextSaveGState(ctx);
-	
-	CGContextSetShouldAntialias(ctx, true);
-	CGContextSetShouldSmoothFonts(ctx, true);
-	CGContextSetShouldSubpixelPositionFonts(ctx, true);
-	
-	[[self attributedStringValue] drawInRect:cellFrame];
-	
-	CGContextRestoreGState(ctx);
+	NSAttributedString *stringValue = [self attributedStringValue];
+
+	NSImage *stringValueImage = [stringValue imageRepWithSize:cellFrame.size
+												  scaleFactor:[[mainWindow() screen] backingScaleFactor]
+											  backgroundColor:[NSColor whiteColor]];
+
+	[stringValueImage drawInRect:cellFrame
+						fromRect:NSZeroRect
+					   operation:NSCompositeSourceOver
+						fraction:1.0
+				  respectFlipped:YES
+						   hints:nil];
 }
 
 @end
