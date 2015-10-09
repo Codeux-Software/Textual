@@ -768,13 +768,37 @@
 
 @implementation TVCMemberListCellYosemiteTextFieldInterior
 
+- (CGFloat)backingScaleFactor
+{
+	return [[mainWindow() screen] backingScaleFactor];
+}
+
+- (NSColor *)backgroundColorForFakingSubpixelAntialiasing
+{
+	NSAttributedString *stringValue = [self attributedStringValue];
+
+	NSColor *textColor = [stringValue attribute:NSForegroundColorAttributeName atIndex:0 effectiveRange:NULL];
+
+	if ([textColor isShadeOfGray] == NO) {
+		return textColor;
+	} else {
+		if ([TPCPreferences invertSidebarColors]) {
+			return [NSColor darkGrayColor];
+		} else {
+			return [NSColor whiteColor];
+		}
+	}
+}
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSAttributedString *stringValue = [self attributedStringValue];
 
+	NSColor *backgroundColor = [self backgroundColorForFakingSubpixelAntialiasing];
+
 	NSImage *stringValueImage = [stringValue imageRepWithSize:cellFrame.size
-												  scaleFactor:[[mainWindow() screen] backingScaleFactor]
-											  backgroundColor:[NSColor whiteColor]];
+												  scaleFactor:[self backingScaleFactor]
+											  backgroundColor:backgroundColor];
 
 	[stringValueImage drawInRect:cellFrame
 						fromRect:NSZeroRect
