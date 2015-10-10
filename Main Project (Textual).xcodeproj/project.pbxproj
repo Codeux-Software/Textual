@@ -1243,18 +1243,18 @@
 		4CF40E761AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDC1AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m */; };
 		4CF40E771AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDC1AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m */; };
 		4CF40E781AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDC1AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m */; };
-		4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
-		4CF40E7B1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
-		4CF40E7C1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
-		4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
-		4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
-		4CF40E801AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
-		4CF40E821AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
-		4CF40E831AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
-		4CF40E841AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
-		4CF40E861AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
-		4CF40E871AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
-		4CF40E881AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
+		4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
+		4CF40E7B1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
+		4CF40E7C1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */; };
+		4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
+		4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
+		4CF40E801AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */; };
+		4CF40E821AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
+		4CF40E831AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
+		4CF40E841AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */; };
+		4CF40E861AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
+		4CF40E871AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
+		4CF40E881AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */; };
 		4CF40E8A1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8B1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8C1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
@@ -2059,10 +2059,10 @@
 		4CF40DDA1AC1A4AC00A26BE0 /* TVCMemberList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberList.m; sourceTree = "<group>"; };
 		4CF40DDB1AC1A4AC00A26BE0 /* TVCMemberListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListCell.m; sourceTree = "<group>"; };
 		4CF40DDC1AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListDarkMavericksUserInterface.m; sourceTree = "<group>"; };
-		4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListDarkYosemiteUserInterface.m; sourceTree = "<group>"; };
-		4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightMavericksUserInterface.m; sourceTree = "<group>"; };
-		4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightYosemiteUserInterface.m; sourceTree = "<group>"; };
-		4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListSharedUserInterface.m; sourceTree = "<group>"; };
+		4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightMavericksUserInterface.m; sourceTree = "<group>"; };
+		4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListSharedUserInterface.m; sourceTree = "<group>"; };
+		4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListDarkYosemiteUserInterface.m; sourceTree = "<group>"; };
+		4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightYosemiteUserInterface.m; sourceTree = "<group>"; };
 		4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListUserInfoPopover.m; sourceTree = "<group>"; };
 		4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Entitlements/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
 		4CF40EAF1AC1A52D00A26BE0 /* core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Styles/JavaScript/API/core.js; sourceTree = SOURCE_ROOT; };
@@ -3328,10 +3328,10 @@
 				4CF40DDA1AC1A4AC00A26BE0 /* TVCMemberList.m */,
 				4CF40DDB1AC1A4AC00A26BE0 /* TVCMemberListCell.m */,
 				4CF40DDC1AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m */,
-				4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */,
-				4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */,
-				4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */,
-				4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */,
+				4CF40DDF1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m */,
+				4CF40DDD1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m */,
+				4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */,
+				4CF40DDE1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m */,
 				4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */,
 			);
 			path = "User List";
@@ -4575,7 +4575,7 @@
 				4CF40E2B1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */,
 				4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */,
-				4CF40E7B1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
+				4CF40E7B1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C04459316F1603B00EBB665 /* NSStringHelper.m in Sources */,
 				4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */,
 				4CF40DF31AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
@@ -4609,10 +4609,10 @@
 				4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4CF40E4F1AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
 				4C0445A716F1603C00EBB665 /* IRCModeInfo.m in Sources */,
-				4CF40E871AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
+				4CF40E871AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
 				4CF40E531AC1A4AC00A26BE0 /* TVCServerListYosemiteDarkUserInterface.m in Sources */,
 				4CBEACE01BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m in Sources */,
-				4CF40E831AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
+				4CF40E831AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
 				4CF40DE31AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */,
 				4C0445A816F1603C00EBB665 /* IRCPrefix.m in Sources */,
 				4CF40E0F1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */,
@@ -4643,7 +4643,7 @@
 				4CA110CF1955AA4A0062EC4E /* THOPluginManager.m in Sources */,
 				4CF40E5B1AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
 				4C0445B316F1603C00EBB665 /* TLOGrowlController.m in Sources */,
-				4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
+				4CF40E7F1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0445B416F1603C00EBB665 /* TLOInputHistory.m in Sources */,
 				4C0445B516F1603C00EBB665 /* TLOKeyEventHandler.m in Sources */,
 				4CF40DFB1AC1A4AC00A26BE0 /* TVCLogPolicy.m in Sources */,
@@ -4716,7 +4716,7 @@
 				4CF40E2A1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0BA6551990798800857343 /* NSColorHelper.m in Sources */,
 				4C0BA65F1990798800857343 /* NSStringHelper.m in Sources */,
-				4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
+				4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */,
 				4C0BA6631990798800857343 /* GTMEncodeURL.m in Sources */,
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
@@ -4748,9 +4748,9 @@
 				4CF40DEE1AC1A4AC00A26BE0 /* TVCLogControllerOperationQueue.m in Sources */,
 				4CF40E4E1AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
 				4C0BA67B1990798800857343 /* IRCSendingMessage.m in Sources */,
-				4CF40E861AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
+				4CF40E861AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
 				4CF40E521AC1A4AC00A26BE0 /* TVCServerListYosemiteDarkUserInterface.m in Sources */,
-				4CF40E821AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
+				4CF40E821AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
 				4CF40DE21AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */,
 				4C0BA67C1990798800857343 /* TPCPreferencesUserDefaults.m in Sources */,
 				4CF40E0E1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */,
@@ -4780,7 +4780,7 @@
 				4C0BA68E1990798800857343 /* THOPluginManager.m in Sources */,
 				4CF40E5A1AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
 				4C0BA6901990798800857343 /* TLOKeyEventHandler.m in Sources */,
-				4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
+				4CF40E7E1AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C0BA6911990798800857343 /* TLOLanguagePreferences.m in Sources */,
 				4C0BA6921990798800857343 /* TLOLinkParser.m in Sources */,
 				4CF40DFA1AC1A4AC00A26BE0 /* TVCLogPolicy.m in Sources */,
@@ -4854,7 +4854,7 @@
 				4CF40E2C1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */,
 				4C8AF699158E99520026668C /* NSStringHelper.m in Sources */,
-				4CF40E7C1AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
+				4CF40E7C1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C8AF69D158E99520026668C /* GTMEncodeHTML.m in Sources */,
 				4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */,
 				4CF40DF41AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
@@ -4888,10 +4888,10 @@
 				4C361B161B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */,
 				4CF40E501AC1A4AC00A26BE0 /* TVCServerListSharedUserInterface.m in Sources */,
 				4C8AF6AF158E99520026668C /* IRCSendingMessage.m in Sources */,
-				4CF40E881AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
+				4CF40E881AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
 				4CF40E541AC1A4AC00A26BE0 /* TVCServerListYosemiteDarkUserInterface.m in Sources */,
 				4CBEACE11BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m in Sources */,
-				4CF40E841AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m in Sources */,
+				4CF40E841AC1A4AC00A26BE0 /* TVCMemberListDarkYosemiteUserInterface.m in Sources */,
 				4CF40DE41AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */,
 				4CFC40DF1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m in Sources */,
 				4CF40E101AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */,
@@ -4922,7 +4922,7 @@
 				4CA110CE1955AA4A0062EC4E /* THOPluginManager.m in Sources */,
 				4CF40E5C1AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
 				4C8AF6C3158E99520026668C /* TLOKeyEventHandler.m in Sources */,
-				4CF40E801AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
+				4CF40E801AC1A4AC00A26BE0 /* TVCMemberListSharedUserInterface.m in Sources */,
 				4C8AF6C4158E99520026668C /* TLOLanguagePreferences.m in Sources */,
 				4C8AF6C5158E99520026668C /* TLOLinkParser.m in Sources */,
 				4CF40DFC1AC1A4AC00A26BE0 /* TVCLogPolicy.m in Sources */,

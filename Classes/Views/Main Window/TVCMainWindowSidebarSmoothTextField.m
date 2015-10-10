@@ -94,6 +94,36 @@
 	return [mainWindow() backingScaleFactor];
 }
 
+- (NSColor *)fontSmoothingBackgroundColorForParentTableRow
+{
+	NSTableRowView *tableRow = [self recursivelyFindTableRowViewRelativeTo:[self controlView]];
+
+	if (tableRow == nil) {
+		return NO;
+	}
+
+	if ([tableRow respondsToSelector:@selector(fontSmoothingBackgroundColor)]) {
+		return [tableRow performSelector:@selector(fontSmoothingBackgroundColor)];
+	} else {
+		return nil;
+	}
+}
+
+- (NSTableRowView *)recursivelyFindTableRowViewRelativeTo:(NSView *)controlView
+{
+	if ([controlView isKindOfClass:[NSTableRowView class]]) {
+		return (id)controlView;
+	}
+
+	NSView *controlViewSuperview = [controlView superview];
+
+	if (controlViewSuperview) {
+		return [self recursivelyFindTableRowViewRelativeTo:controlViewSuperview];
+	} else {
+		return nil;
+	}
+}
+
 - (NSColor *)backgroundColorForFakingSubpixelAntialiasing
 {
 	NSAttributedString *stringValue = [self attributedStringValue];
@@ -103,7 +133,15 @@
 	if ([textColor isShadeOfGray] == NO) {
 		return textColor;
 	} else {
-		return [NSColor whiteColor];
+		NSColor *superviewSmoothingColor = [self fontSmoothingBackgroundColorForParentTableRow];
+
+		if (superviewSmoothingColor) {
+			return superviewSmoothingColor;
+		} else {
+			LogToConsole(@"*** WARNING: -fontSmoothingBackgroundColorForParentTableRow returned nil value");
+
+			return [NSColor clearColor];
+		}
 	}
 }
 

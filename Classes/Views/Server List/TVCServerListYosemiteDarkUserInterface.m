@@ -109,7 +109,7 @@
 
 - (NSColor *)channelCellSelectedTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
 - (NSColor *)channelCellSelectedTextColorForInactiveWindow
@@ -139,7 +139,7 @@
 
 - (NSColor *)serverCellSelectedTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
 - (NSColor *)serverCellSelectedTextColorForInactiveWindow

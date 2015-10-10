@@ -37,36 +37,46 @@
 
 #import "TextualApplication.h"
 
-@implementation TVCMemberListMavericksLightUserInterface
+@implementation TVCMemberListDarkYosemiteUserInterface
 
 - (NSInteger)cellRowHeight
 {
 	return 20.0;
 }
 
-- (NSImage *)rowSelectionImageForActiveWindow
+- (NSColor *)userMarkBadgeBackgroundColor
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
 }
 
-- (NSImage *)rowSelectionImageForInactiveWindow
+- (NSColor *)normalCellTextColorForActiveWindow
 {
-	return nil; // Use system default.
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColorForGraphite
+- (NSColor *)awayUserCellTextColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.515 green:0.574 blue:0.636 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeBackgroundColorForAqua
+- (NSColor *)normalCellTextColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedRed:0.593 green:0.656 blue:0.789 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
 }
 
-- (NSColor *)userMarkBadgeSelectedBackgroundColor
+- (NSColor *)awayUserCellTextColorForInactiveWindow
 {
-	return [NSColor whiteColor];
+	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
+}
+
+- (NSColor *)selectedCellTextColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
+}
+
+- (NSColor *)selectedCellTextColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
 }
 
 - (NSColor *)userMarkBadgeNormalTextColor
@@ -74,69 +84,24 @@
 	return [NSColor whiteColor];
 }
 
-- (NSColor *)userMarkBadgeSelectedTextColor
-{
-	return [NSColor colorWithCalibratedRed:0.617 green:0.660 blue:0.769 alpha:1.0];
-}
-
-- (NSColor *)userMarkBadgeShadowColor
-{
-	return [NSColor colorWithCalibratedWhite:1.00 alpha:0.60];
-}
-
-- (NSFont *)normalCellFont
-{
-	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:0 size:12.0];
-}
-
-- (NSFont *)selectedCellFont
-{
-	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
-}
-
-- (NSColor *)normalCellTextColor
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.8];
-}
-
-- (NSColor *)awayUserCellTextColor
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.35];
-}
-
-- (NSColor *)selectedCellTextColor
+- (NSColor *)userMarkBadgeSelectedBackgroundColor
 {
 	return [NSColor whiteColor];
 }
 
-- (NSColor *)normalCellTextShadowColor
+- (NSColor *)userMarkBadgeSelectedTextColor
 {
-	return [NSColor colorWithSRGBRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
-- (NSColor *)normalSelectedCellTextShadowColorForActiveWindow
+- (NSColor *)rowSelectionColorForActiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.48];
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
-- (NSColor *)normalSelectedCellTextShadowColorForInactiveWindow
+- (NSColor *)rowSelectionColorForInactiveWindow
 {
-	return [NSColor colorWithCalibratedWhite:0.00 alpha:0.30];
-}
-
-- (NSColor *)graphiteSelectedCellTextShadowColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
-}
-
-- (NSColor *)memberListBackgroundColorForActiveWindow
-{
-	return nil; // Use system default.
-}
-
-- (NSColor *)memberListBackgroundColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedRed:0.901 green:0.901 blue:0.901 alpha:1.0];
+	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
 @end
