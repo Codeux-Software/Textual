@@ -49,12 +49,3 @@
 
 @interface TVCMemberListRowCell : NSTableRowView
 @end
-
-@interface TVCMemberListCellMavericksTextField : NSTextField
-@end
-
-@interface TVCMemberListCellMavericksTextFieldBackingLayer : CALayer
-@end
-
-@interface TVCMemberListCellYosemiteTextFieldInterior : NSTextFieldCell
-@end
