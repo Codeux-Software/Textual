@@ -39,8 +39,6 @@
 #import "TextualApplication.h"
 
 @interface NSColor (TXColorHelper)
-- (BOOL)isShadeOfGray;
-
 + (NSColor *)formatterWhiteColor;
 + (NSColor *)formatterBlackColor;
 + (NSColor *)formatterNavyBlueColor;
