@@ -494,8 +494,8 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	NSObjectIsEmptyAssertReturn(s, nil);
 
-	if ([s contains:@" "]) {
-		NSArray *ary = [s split:@" "];
+	if ([s contains:NSStringWhitespacePlaceholder]) {
+		NSArray *ary = [s split:NSStringWhitespacePlaceholder];
 
 		NSString *uid = ary[1];
 		NSString *cid = ary[0];

@@ -39,7 +39,7 @@
 
 #import <objc/message.h>
 
-#define _descriptionIncludesAdditionalInformation			1
+#define _descriptionIncludesAdditionalInformation			0
 
 @interface TVCQueuedCertificateTrustPanel ()
 @property (nonatomic, strong) NSMutableArray *queuedEntries;
@@ -138,7 +138,8 @@
 		[description appendString:TXTLS(@"BasicLanguage[1229][2]", certificateHost)];
 
 		if (ownershipInformation) {
-			[description appendString:@"\n\n"];
+			[description appendString:NSStringNewlinePlaceholder];
+			[description appendString:NSStringNewlinePlaceholder];
 			[description appendString:ownershipInformation];
 		}
 #else

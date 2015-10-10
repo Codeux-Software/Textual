@@ -292,16 +292,16 @@
         tempStore = [base getToken];
     }
 
-    /* Server Address. */
-	BOOL hasOpeningBracket = [tempStore hasPrefix:@"["];
-	BOOL hasClosingBracket = [tempStore contains:@"]"];
+	/* Server Address. */
+	NSInteger openingBracketPosition = ([tempStore stringPosition:@"["] + 1);
+	NSInteger closingBracketPosition =  [tempStore stringPosition:@"]"];
+
+	BOOL hasOpeningBracket = (openingBracketPosition > 0 && openingBracketPosition < closingBracketPosition);
+	BOOL hasClosingBracket = (closingBracketPosition > 0 && openingBracketPosition < closingBracketPosition);
 
     if (hasOpeningBracket && hasClosingBracket) {
 		/* Get address from inside brackets. */
-		NSInteger startPosition = ([tempStore stringPosition:@"["] + 1);
-		NSInteger endPosition   =  [tempStore stringPosition:@"]"];
-
-		NSRange serverAddressRange = NSMakeRange(startPosition, (endPosition - startPosition));
+		NSRange serverAddressRange = NSMakeRange(openingBracketPosition, (closingBracketPosition - openingBracketPosition));
 
 		NSString *tempServerAddress = [tempStore substringWithRange:serverAddressRange];
 
@@ -313,20 +313,20 @@
 			serverAddress = tempServerAddress;
 		}
 
-		tempStore = [tempStore substringAfterIndex:endPosition];
+		tempStore = [tempStore substringAfterIndex:closingBracketPosition];
     } else {
 		if (hasOpeningBracket == NO && hasClosingBracket == NO) {
 			/* Our server address did not contain brackets. Does it
 			 contain a colon (:) which means a port is included? */
 
-			if ([tempStore contains:@":"]) {
-				NSInteger cutPosition = [tempStore stringPosition:@":"];
+			NSInteger colonPosition = [tempStore stringPosition:@":"];
 
-				serverAddress = [tempStore substringToIndex:cutPosition];
+			if (colonPosition > -1) {
+				serverAddress = [tempStore substringToIndex:colonPosition];
 
 				/* We cut the server address out of our temporary store,
 				 but left the colon and everything after it, in it. */
-				tempStore = [tempStore substringFromIndex:cutPosition];
+				tempStore = [tempStore substringFromIndex:colonPosition];
 			} else {
 				serverAddress = tempStore;
 			}

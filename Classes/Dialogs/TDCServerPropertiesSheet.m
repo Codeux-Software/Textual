@@ -855,7 +855,7 @@
 	/* Alternate nicknames. */
 	NSString *alternateNicknames = [self.alternateNicknamesTextField stringValue];
 	
-	NSArray *alternateNicknameArray = [alternateNicknames split:NSStringWhitespacePlaceholder];
+	NSArray *alternateNicknameArray = [alternateNicknames componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 	
 	NSMutableArray *newAlternateNicknameList = [NSMutableArray array];
 	
@@ -890,7 +890,7 @@
 
 	NSString *connectCommands = [self.connectCommandsField string];
 	
-	NSArray *connectCommandsArray = [connectCommands split:NSStringNewlinePlaceholder];
+	NSArray *connectCommandsArray = [connectCommands componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 	
 	NSMutableArray *newConnectCommandsList = [NSMutableArray array];
 	

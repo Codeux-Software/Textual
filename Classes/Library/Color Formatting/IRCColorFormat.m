@@ -390,9 +390,9 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 
 				NSRange searchRange = NSMakeRange(minIndex, _textTruncationSpacePositionMaxDifferential);
 
-				NSRange spaceRange = [result rangeOfString:NSStringWhitespacePlaceholder
-												   options:NSBackwardsSearch
-													 range:searchRange];
+				NSRange spaceRange = [result rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]
+															 options:NSBackwardsSearch
+															   range:searchRange];
 
 				if (NSDissimilarObjects(spaceRange.location, NSNotFound)) {
 					/* Is the space within the range of this segment? */

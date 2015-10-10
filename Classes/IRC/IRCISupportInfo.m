@@ -241,12 +241,16 @@ NSString * const IRCISupportRawSuffix = @"are supported by this server";
 {
 	// Format: (qaohv)~&@%+
 
-	if ([value hasPrefix:@"("] && [value contains:@")"]) {
-		NSInteger endSignPos = [value stringPosition:@")"];
+	NSInteger openingParenthesesPosition = [value stringPosition:@"("];
+	NSInteger closingParenthesesPosition = [value stringPosition:@")"];
 
-		NSString *chars = [value substringAfterIndex:endSignPos];
+	if (openingParenthesesPosition == 0 &&
+		closingParenthesesPosition > -1 &&
+		openingParenthesesPosition < closingParenthesesPosition)
+	{
+		NSString *chars = [value substringAfterIndex:closingParenthesesPosition];
 
-		NSString *modes = [value substringWithRange:NSMakeRange(1, (endSignPos - 1))];
+		NSString *modes = [value substringWithRange:NSMakeRange(1, (closingParenthesesPosition - 1))];
 
 		NSInteger modeLength = [modes length];
 		NSInteger charLength = [chars length];

@@ -1164,7 +1164,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 	}
 
 	if ([body length] <= 0) {
-		return [[NSAttributedString alloc] initWithString:NSStringEmptyPlaceholder attributes:nil];
+		return [NSAttributedString attributedString];
 	}
 
 	TVCLogRenderer *renderer = [TVCLogRenderer new];

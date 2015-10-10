@@ -265,7 +265,7 @@
 
 #undef _maybeReplaceValue
 
-	NSArray *filterActions = [filterActionData split:NSStringNewlinePlaceholder];
+	NSArray *filterActions = [filterActionData componentsSeparatedByString:[NSCharacterSet newlineCharacterSet]];
 
 	for (NSString *filterAction in filterActions) {
 		if ([filterAction length] > 1 && [filterAction hasPrefix:@"/"] && [filterAction hasPrefix:@"//"] == NO) {
