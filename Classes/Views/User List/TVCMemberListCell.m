@@ -722,4 +722,13 @@
 	return YES;
 }
 
+- (NSColor *)fontSmoothingBackgroundColor
+{
+	if ([TPCPreferences invertSidebarColors]) {
+		return [NSColor grayColor];
+	} else {
+		return [NSColor whiteColor];
+	}
+}
+
 @end
