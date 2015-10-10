@@ -383,7 +383,7 @@
 		newCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 	}
 
-	if ([self.cachedCompletionSuffix hasSuffix:NSStringWhitespacePlaceholder]) {
+	if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
 		newCompletionSuffix = nil;
 	}
 

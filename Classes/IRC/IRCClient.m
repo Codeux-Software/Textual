@@ -1969,12 +1969,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			NSMutableArray *nicks = [NSMutableArray arrayWithArray:[uncutInput componentsSeparatedByString:NSStringWhitespacePlaceholder]];
+			NSArray *nicks = [uncutInput componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
 			if (NSObjectIsNotEmpty(nicks) && [[nicks lastObject] isChannelName:self]) {
 				targetChannelName = [nicks lastObject];
 
-				[nicks removeLastObject];
+				NSMutableArray *nicksMutable = [nicks mutableCopy];
+
+				[nicksMutable removeLastObject];
+
+				nicks = nicksMutable;
 			} else if (selChannel && [selChannel isChannel]) {
 				targetChannelName = [selChannel name];
 			} else {
@@ -2884,9 +2888,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5028: // Command: ICBADGE
 		{
-			NSAssertReturn([uncutInput contains:NSStringWhitespacePlaceholder]);
-			
-			NSArray *data = [[s string] componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+			NSArray *data = [uncutInput componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+			if ([data count] < 2) {
+				return;
+			}
 
 			[TVCDockIcon drawWithHilightCount:[data integerAtIndex:0]
 								 messageCount:[data integerAtIndex:1]];
@@ -3053,9 +3059,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 						reason = [TPCPreferences IRCopDefaultGlineMessage];
 
 						/* Remove the time from our default reason. */
-						if ([reason contains:NSStringWhitespacePlaceholder]) {
-							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+						NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
+						if (spacePos > 0) {
 							if (NSObjectIsEmpty(gltime)) {
 								gltime = [reason substringToIndex:spacePos];
 							}
@@ -3088,9 +3094,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							reason = [TPCPreferences IRCopDefaultShunMessage];
 
 							/* Remove the time from our default reason. */
-							if ([reason contains:NSStringWhitespacePlaceholder]) {
-								NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
+							if (spacePos > 0) {
 								reason = [reason substringAfterIndex:spacePos];
 							}
 						}
@@ -3104,9 +3110,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							reason = [TPCPreferences IRCopDefaultShunMessage];
 
 							/* Remove the time from our default reason. */
-							if ([reason contains:NSStringWhitespacePlaceholder]) {
-								NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
+							NSInteger spacePos = [reason stringPosition:NSStringWhitespacePlaceholder];
 
+							if (spacePos > 0) {
 								if (NSObjectIsEmpty(shtime)) {
 									shtime = [reason substringToIndex:spacePos];
 								}
@@ -3554,13 +3560,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		if (oValue) {
 			/* Check math and perform final append. */
 			if (width < 0 && ABS(width) > [oValue length]) {
-				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(width) - [oValue length]) withString:@" " startingAtIndex:0]];
+				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(width) - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0]];
 			}
 
 			[buffer appendString:oValue];
 
 			if (width > 0 && width > [oValue length]) {
-				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(width - [oValue length]) withString:@" " startingAtIndex:0]];
+				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(width - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0]];
 			}
 		}
 	}
@@ -7024,7 +7030,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			PointerIsEmptyAssertLoopBreak(c);
 
-			NSArray *items = [nameblob componentsSeparatedByString:NSStringWhitespacePlaceholder];
+			NSArray *items = [nameblob split:NSStringWhitespacePlaceholder];
 
 			for (NSString *nickname in items) {
 				NSObjectIsEmptyAssertLoopContinue(nickname); // Some networks append empty spaces...
@@ -8033,8 +8039,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		} else {
 			[arguments addObject:[NSNull null]];
 		}
-		
-		[arguments addObjectsFromArray:[scriptInput split:NSStringWhitespacePlaceholder]];
+
+		NSArray *splitInputArray = [scriptInput split:NSStringWhitespacePlaceholder];
+
+		[arguments addObjectsFromArray:splitInputArray];
 
 		/* Create task object. */
 		NSURL *userScriptURL = [NSURL fileURLWithPath:scriptPath];
@@ -8786,7 +8794,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	/* Build a safe filename. */
-	NSString *escapedFileName = [filename stringByReplacingOccurrencesOfString:NSStringWhitespacePlaceholder withString:@"_"];
+	NSString *escapedFileName = [filename safeFilename];
 	
 	/* Build the address information. */
 	NSString *address = [self DCCTransferAddress];

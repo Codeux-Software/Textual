@@ -260,7 +260,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	NSBundle *_bundle		= [NSBundle bundleForClass:[self class]];
 
 	_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"(\\s*@.*)|CPU|\\(R\\)|\\(TM\\)"	withString:NSStringWhitespacePlaceholder];
-	_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"							withString:NSStringWhitespacePlaceholder];
+	_cpu_model = [XRRegularExpression string:_cpu_model replacedByRegex:@"\\s+"								withString:NSStringWhitespacePlaceholder];
 
 	_cpu_model = [_cpu_model trim];
 
