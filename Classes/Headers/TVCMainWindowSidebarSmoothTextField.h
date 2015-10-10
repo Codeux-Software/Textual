@@ -37,27 +37,11 @@
 
 #import "TextualApplication.h"
 
-@interface TVCServerListCell : NSTableCellView
-@property (nonatomic, weak) IRCTreeItem *cellItem;
-@property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
-@property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
-
-@property (readonly, copy) NSDictionary *drawingContext;
-
-- (void)populateMessageCountBadge;
-
-- (void)updateGroupDisclosureTriangle;
+@interface TVCMainWindowSidebarMavericksSmoothTextField : NSTextField
 @end
 
-@interface TVCServerListCellChildItem : TVCServerListCell
+@interface TVCMainWindowSidebarYosemiteSmoothTextField : NSTextField
 @end
 
-@interface TVCServerListCellGroupItem : TVCServerListCell
-@end
-
-@interface TVCServerListRowCell : NSTableRowView
-@property (nonatomic, assign) BOOL isGroupItem;
+@interface TVCMainWindowSidebarYosemtieSmoothTextFieldCell : NSTextFieldCell
 @end
