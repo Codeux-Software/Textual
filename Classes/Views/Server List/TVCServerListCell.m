@@ -1070,6 +1070,10 @@
 {
 	NSAttributedString *stringValue = [self attributedStringValue];
 
+	if (stringValue == nil || [stringValue length] == 0) {
+		return;
+	}
+
 	NSColor *backgroundColor = [self backgroundColorForFakingSubpixelAntialiasing];
 
 	NSImage *stringValueImage = [stringValue imageRepWithSize:cellFrame.size
