@@ -203,7 +203,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 - (void)waitForData
 {
 	if (self.isConnected) {
-		[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:-1 tag:0];
+		[self.socketConnection readDataToData:[GCDAsyncSocket LFData] withTimeout:(-1) tag:0];
 	}
 }
 
@@ -388,6 +388,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	if ([data hasSuffixBytes:"\x0D\x0A" length:2]) {
 		readDataTrimLength = 2;
 	} else if ([data hasSuffixBytes:"\x0D" length:1]) {
+		readDataTrimLength = 1;
+	} else if ([data hasSuffixBytes:"\x0A" length:1]) {
 		readDataTrimLength = 1;
 	}
 
