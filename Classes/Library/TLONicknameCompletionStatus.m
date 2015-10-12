@@ -377,14 +377,28 @@
 {
 	NSString *newCompletionSuffix = nil;
 
-	if (self.isCompletingCommand || self.isCompletingChannelName || self.searchPatternIsAtStart == NO) {
-		newCompletionSuffix = NSStringWhitespacePlaceholder;
-	} else if (self.isCompletingNickname) {
+	if (self.isCompletingNickname && self.searchPatternIsAtStart) {
 		newCompletionSuffix = [TPCPreferences tabCompletionSuffix];
-	}
+	} else {
+		newCompletionSuffix = NSStringWhitespacePlaceholder;
 
-	if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
-		newCompletionSuffix = nil;
+		if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
+			newCompletionSuffix = nil;
+		}
+
+		if (newCompletionSuffix) {
+			NSInteger maximumCompletionSuffixEndPoint = ([self.currentTextFieldStringValue length] - 1);
+
+			NSInteger nextCharacterInRange = NSMaxRange(self.rangeOfCompletionSuffix);
+
+			if (nextCharacterInRange < maximumCompletionSuffixEndPoint) {
+				UniChar nextChar = [self.currentTextFieldStringValue characterAtIndex:nextCharacterInRange];
+
+				if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:nextChar]) {
+					newCompletionSuffix = nil;
+				}
+			}
+		}
 	}
 
 	self.completedValueCompletionSuffix = newCompletionSuffix;
@@ -569,7 +583,13 @@
 	 then we look for a localized space, colon (:), or comma (,) */
 	NSRange selectedRange = self.rangeOfTextSelection;
 
-	NSInteger completionSuffixEndPoint = NSNotFound;
+	NSInteger totalTextLength = [self.currentTextFieldStringValue length];
+
+	NSInteger completionSuffixStartingPoint = selectedRange.location;
+
+	NSInteger completionSuffixLength = 0;
+
+	BOOL matchedCompletionSuffix = NO;
 
 	/* Create search pattern for the user configured completion suffix and
 	 search for it. If its found within range, we return that. */
@@ -583,23 +603,27 @@
 			NSRange completionRangePosition = [self.currentTextFieldStringValue rangeOfString:userCompletionSuffix options:0 range:completionSearchRange];
 
 			if (NSRangeIsValid(completionRangePosition)) {
-				completionSuffixEndPoint = NSMaxRange(completionRangePosition);
+				completionSuffixLength = completionRangePosition.length;
+
+				matchedCompletionSuffix = YES;
 			}
 		}
 	}
 
 	/* Search for interesting characters. */
-	if (completionSuffixEndPoint == NSNotFound) {
-		NSInteger maximumSearchIndex = ([self.currentTextFieldStringValue length] - 1);
+	if (matchedCompletionSuffix == NO) {
+		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);
 
-		for (NSInteger i = (selectedRange.location + 1); i <= maximumSearchIndex; i++) {
+		for (NSInteger i = completionSuffixStartingPoint; i <= maximumCompletionSuffixEndPoint; i++) {
 			UniChar cc = [self.currentTextFieldStringValue characterAtIndex:i];
 
 			if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:cc]
 				|| cc == '\x03a'
 				|| cc == '\x02c')
 			{
-				completionSuffixEndPoint = (i - 1);
+				completionSuffixLength = (i - completionSuffixStartingPoint);
+
+				matchedCompletionSuffix = YES;
 
 				break;
 			}
@@ -607,15 +631,11 @@
 	}
 
 	/* Cache relevant information */
-	NSInteger totalTextLength = [self.currentTextFieldStringValue length];
-
-	if (completionSuffixEndPoint == NSNotFound) {
-		completionSuffixEndPoint = totalTextLength;
+	if (matchedCompletionSuffix == NO) {
+		completionSuffixLength = (totalTextLength - completionSuffixStartingPoint);
 	}
 
-	NSInteger completionSuffixStartingPoint = selectedRange.location;
-
-	NSInteger completionSuffixLength = (completionSuffixEndPoint - completionSuffixStartingPoint);
+	NSInteger completionSuffixEndPoint = (completionSuffixStartingPoint + completionSuffixLength);
 
 	self.rangeOfCompletionSuffix = NSMakeRange(completionSuffixStartingPoint, completionSuffixLength);
 
