@@ -45,6 +45,7 @@
 @property (nonatomic, copy) NSString *cachedSearchPattern;
 @property (nonatomic, copy) NSString *cachedSearchPatternPrefixCharacter;
 @property (nonatomic, copy) NSString *cachedCompletionSuffix;
+@property (nonatomic, assign) NSRange selectionRangeAfterLastCompletion;
 @property (nonatomic, assign) NSRange rangeOfTextSelection;
 @property (nonatomic, assign) NSRange rangeOfSearchPattern;
 @property (nonatomic, assign) NSRange rangeOfCompletionSuffix;
@@ -103,8 +104,11 @@
 	/* Perform various comparisons to determine whether the
 	 cache has to be rebuilt. */
 	if ( self.selectionIndexOfLastCompletion == NSNotFound ||
+		 self.selectionRangeAfterLastCompletion.location == NSNotFound ||
 		(self.rangeOfTextSelection.location == NSNotFound &&
-		 self.rangeOfSearchPattern.location == 0 && self.rangeOfSearchPattern.length == 0))
+		 self.rangeOfSearchPattern.location == 0 && self.rangeOfSearchPattern.length == 0) ||
+		selectedRange.location != self.selectionRangeAfterLastCompletion.location ||
+		selectedRange.length != self.selectionRangeAfterLastCompletion.length)
 	{
 		canContinuePreviousScan = NO;
 	}
@@ -401,10 +405,10 @@
 	{
 		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 
+		NSInteger userCompletionSuffixLength = [userCompletionSuffix length];
+
 		if (whitespaceAlreadyInPosition) {
 			if ([userCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
-				NSInteger userCompletionSuffixLength = [userCompletionSuffix length];
-
 				if (userCompletionSuffixLength > 1) {
 					newCompletionSuffix = [userCompletionSuffix substringToIndex:(userCompletionSuffixLength - 1)];
 				}
@@ -412,7 +416,11 @@
 				newCompletionSuffix = userCompletionSuffix;
 			}
 		} else {
-			newCompletionSuffix = userCompletionSuffix;
+			if (userCompletionSuffixLength == 0) {
+				newCompletionSuffix = NSStringWhitespacePlaceholder;
+			} else {
+				newCompletionSuffix = userCompletionSuffix;
+			}
 		}
 	}
 	else
@@ -460,6 +468,8 @@
 	[textView scrollRangeToVisible:newSelectionRange];
 
 	[textView setSelectedRange:newSelectionRange];
+
+	self.selectionRangeAfterLastCompletion = newSelectionRange;
 
 	/* Calculate range for new suffix */
 	NSRange completeCompletionSuffixRange;
@@ -612,9 +622,13 @@
 
 	BOOL matchedCompletionSuffix = NO;
 
+	if (selectedRange.length > 0) {
+		completionSuffixLength = selectedRange.length;
+	}
+
 	/* Create search pattern for the user configured completion suffix and
 	 search for it. If its found within range, we return that. */
-	if (self.isCompletingNickname) {
+	if (matchedCompletionSuffix == NO && self.isCompletingNickname) {
 		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 
 		if (NSObjectIsEmpty(userCompletionSuffix) == NO) {
@@ -632,8 +646,9 @@
 	}
 
 	/* Search for interesting characters. */
-#if 0
-	if (matchedCompletionSuffix == NO) {
+	BOOL cutNextWord = [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
+
+	if (matchedCompletionSuffix == NO && cutNextWord) {
 		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);
 
 		for (NSInteger i = completionSuffixStartingPoint; i <= maximumCompletionSuffixEndPoint; i++) {
@@ -650,12 +665,11 @@
 				break;
 			}
 		}
-	}
 
-	if (matchedCompletionSuffix == NO) {
-		completionSuffixLength = (totalTextLength - completionSuffixStartingPoint);
+		if (matchedCompletionSuffix == NO) {
+			completionSuffixLength = (totalTextLength - completionSuffixStartingPoint);
+		}
 	}
-#endif
 
 	/* Cache relevant information */
 	NSInteger completionSuffixEndPoint = (completionSuffixStartingPoint + completionSuffixLength);
@@ -708,6 +722,8 @@
 	self.currentTextFieldStringValue = nil;
 
 	self.rangeOfTextSelection = NSEmptyRange();
+
+	self.selectionRangeAfterLastCompletion = NSEmptyRange();
 
 	self.completionIsMovingForward = NO;
 }
