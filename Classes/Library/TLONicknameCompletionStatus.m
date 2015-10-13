@@ -632,6 +632,7 @@
 	}
 
 	/* Search for interesting characters. */
+#if 0
 	if (matchedCompletionSuffix == NO) {
 		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);
 
@@ -651,11 +652,12 @@
 		}
 	}
 
-	/* Cache relevant information */
 	if (matchedCompletionSuffix == NO) {
 		completionSuffixLength = (totalTextLength - completionSuffixStartingPoint);
 	}
+#endif
 
+	/* Cache relevant information */
 	NSInteger completionSuffixEndPoint = (completionSuffixStartingPoint + completionSuffixLength);
 
 	self.rangeOfCompletionSuffix = NSMakeRange(completionSuffixStartingPoint, completionSuffixLength);
