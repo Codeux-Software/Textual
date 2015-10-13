@@ -377,27 +377,48 @@
 {
 	NSString *newCompletionSuffix = nil;
 
-	if (self.isCompletingNickname && self.searchPatternIsAtStart) {
-		newCompletionSuffix = [TPCPreferences tabCompletionSuffix];
-	} else {
-		newCompletionSuffix = NSStringWhitespacePlaceholder;
+	BOOL whitespaceAlreadyInPosition = NO;
 
-		if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
-			newCompletionSuffix = nil;
-		}
+	if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
+		whitespaceAlreadyInPosition = YES;
+	}
 
-		if (newCompletionSuffix) {
-			NSInteger maximumCompletionSuffixEndPoint = ([self.currentTextFieldStringValue length] - 1);
+	if (whitespaceAlreadyInPosition == NO) {
+		NSInteger maximumCompletionSuffixEndPoint = ([self.currentTextFieldStringValue length] - 1);
 
-			NSInteger nextCharacterInRange = NSMaxRange(self.rangeOfCompletionSuffix);
+		NSInteger nextCharacterInRange = NSMaxRange(self.rangeOfCompletionSuffix);
 
-			if (nextCharacterInRange < maximumCompletionSuffixEndPoint) {
-				UniChar nextChar = [self.currentTextFieldStringValue characterAtIndex:nextCharacterInRange];
+		if (nextCharacterInRange < maximumCompletionSuffixEndPoint) {
+			UniChar nextChar = [self.currentTextFieldStringValue characterAtIndex:nextCharacterInRange];
 
-				if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:nextChar]) {
-					newCompletionSuffix = nil;
-				}
+			if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:nextChar]) {
+				whitespaceAlreadyInPosition = YES;
 			}
+		}
+	}
+
+	if (self.isCompletingNickname && self.searchPatternIsAtStart)
+	{
+		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
+
+		if (whitespaceAlreadyInPosition) {
+			if ([userCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
+				NSInteger userCompletionSuffixLength = [userCompletionSuffix length];
+
+				if (userCompletionSuffixLength > 1) {
+					newCompletionSuffix = [userCompletionSuffix substringToIndex:(userCompletionSuffixLength - 1)];
+				}
+			} else {
+				newCompletionSuffix = userCompletionSuffix;
+			}
+		} else {
+			newCompletionSuffix = userCompletionSuffix;
+		}
+	}
+	else
+	{
+		if (whitespaceAlreadyInPosition == NO) {
+			newCompletionSuffix = NSStringWhitespacePlaceholder;
 		}
 	}
 
