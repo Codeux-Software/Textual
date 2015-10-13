@@ -382,9 +382,11 @@
 	NSString *newCompletionSuffix = nil;
 
 	BOOL whitespaceAlreadyInPosition = NO;
+	BOOL whitespaceContainedByCachedSuffix = NO;
 
 	if ([self.cachedCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
 		whitespaceAlreadyInPosition = YES;
+		whitespaceContainedByCachedSuffix = YES;
 	}
 
 	if (whitespaceAlreadyInPosition == NO) {
@@ -411,6 +413,8 @@
 			if ([userCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
 				if (userCompletionSuffixLength > 1) {
 					newCompletionSuffix = [userCompletionSuffix substringToIndex:(userCompletionSuffixLength - 1)];
+				} else if (whitespaceContainedByCachedSuffix) {
+					newCompletionSuffix = userCompletionSuffix;
 				}
 			} else {
 				newCompletionSuffix = userCompletionSuffix;
@@ -612,23 +616,25 @@
 	/* Given string and a starting point, we move forward until the
 	 user's configured completion prefix is found. If its not found,
 	 then we look for a localized space, colon (:), or comma (,) */
-	NSRange selectedRange = self.rangeOfTextSelection;
-
 	NSInteger totalTextLength = [self.currentTextFieldStringValue length];
 
-	NSInteger completionSuffixStartingPoint = selectedRange.location;
+	NSRange selectedRange = self.rangeOfTextSelection;
 
-	NSInteger completionSuffixLength = 0;
+	NSInteger selectedRangeStartPoint = selectedRange.location;
 
-	BOOL matchedCompletionSuffix = NO;
+	NSRange completionSuffixRange;
 
 	if (selectedRange.length > 0) {
-		completionSuffixLength = selectedRange.length;
+		completionSuffixRange = selectedRange;
+
+		goto complete_operation;
+	} else {
+		completionSuffixRange = NSMakeRange(selectedRangeStartPoint, 0);
 	}
 
 	/* Create search pattern for the user configured completion suffix and
 	 search for it. If its found within range, we return that. */
-	if (matchedCompletionSuffix == NO && self.isCompletingNickname) {
+	if (self.isCompletingNickname) {
 		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 
 		if (NSObjectIsEmpty(userCompletionSuffix) == NO) {
@@ -638,9 +644,9 @@
 			NSRange completionRangePosition = [self.currentTextFieldStringValue rangeOfString:userCompletionSuffix options:0 range:completionSearchRange];
 
 			if (NSRangeIsValid(completionRangePosition)) {
-				completionSuffixLength = completionRangePosition.length;
+				completionSuffixRange.length = (NSMaxRange(completionRangePosition) - selectedRangeStartPoint);
 
-				matchedCompletionSuffix = YES;
+				goto complete_operation;
 			}
 		}
 	}
@@ -648,41 +654,38 @@
 	/* Search for interesting characters. */
 	BOOL cutNextWord = [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
 
-	if (matchedCompletionSuffix == NO && cutNextWord) {
+	if (cutNextWord) {
+
 		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);
 
-		for (NSInteger i = completionSuffixStartingPoint; i <= maximumCompletionSuffixEndPoint; i++) {
+		for (NSInteger i = selectedRangeStartPoint; i <= maximumCompletionSuffixEndPoint; i++) {
 			UniChar cc = [self.currentTextFieldStringValue characterAtIndex:i];
 
 			if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:cc]
 				|| cc == '\x03a'
 				|| cc == '\x02c')
 			{
-				completionSuffixLength = (i - completionSuffixStartingPoint);
+				completionSuffixRange.length = (i - selectedRangeStartPoint);
 
-				matchedCompletionSuffix = YES;
-
-				break;
+				goto complete_operation;
 			}
 		}
 
-		if (matchedCompletionSuffix == NO) {
-			completionSuffixLength = (totalTextLength - completionSuffixStartingPoint);
-		}
+		// Fallback when we never found a character
+		completionSuffixRange.length = (totalTextLength - selectedRangeStartPoint);
 	}
 
 	/* Cache relevant information */
-	NSInteger completionSuffixEndPoint = (completionSuffixStartingPoint + completionSuffixLength);
+complete_operation:
+	self.rangeOfCompletionSuffix = completionSuffixRange;
 
-	self.rangeOfCompletionSuffix = NSMakeRange(completionSuffixStartingPoint, completionSuffixLength);
-
-	if (completionSuffixLength == 0) {
+	if (self.rangeOfCompletionSuffix.length == 0) {
 		self.cachedCompletionSuffix = NSStringEmptyPlaceholder;
 	} else {
 		self.cachedCompletionSuffix = [self.currentTextFieldStringValue substringWithRange:self.rangeOfCompletionSuffix];
 	}
 
-	self.searchPatternIsAtEnd = (completionSuffixEndPoint == totalTextLength);
+	self.searchPatternIsAtEnd = (NSMaxRange(self.rangeOfCompletionSuffix) == totalTextLength);
 
 	return YES;
 }
