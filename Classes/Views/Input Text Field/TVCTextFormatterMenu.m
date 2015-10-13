@@ -314,17 +314,11 @@
 	NSArray *colorCodes = @[@"4", @"7", @"8", @"3", @"12", @"2", @"6"];
 
 	for (NSInteger charCountIndex = 0; charCountIndex < [mutableStringCopy length]; charCountIndex++) {
-		UniChar currentCharacter = [[self.textField string] characterAtIndex:charCountIndex];
-
 		if (rainbowArrayIndex > 6) {
 			rainbowArrayIndex = 0;
 		}
 
-		NSInteger currentColorCode = 0;
-
-		if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:currentCharacter] == NO) {
-			currentColorCode = [colorCodes integerAtIndex:rainbowArrayIndex];
-		}
+		NSInteger currentColorCode = [colorCodes integerAtIndex:rainbowArrayIndex];
 
 		NSRange currentCharacterRange = NSMakeRange(charCountIndex, 1);
 
