@@ -411,7 +411,7 @@
 
 		if (whitespaceAlreadyInPosition) {
 			if ([userCompletionSuffix hasSuffixWithCharacterSet:[NSCharacterSet whitespaceCharacterSet]]) {
-				if (userCompletionSuffixLength > 1) {
+				if (whitespaceContainedByCachedSuffix == NO && userCompletionSuffixLength > 1) {
 					newCompletionSuffix = [userCompletionSuffix substringToIndex:(userCompletionSuffixLength - 1)];
 				} else if (whitespaceContainedByCachedSuffix) {
 					newCompletionSuffix = userCompletionSuffix;
@@ -624,6 +624,8 @@
 
 	NSRange completionSuffixRange;
 
+	/* If the user has a selection in the text field, then we
+	 will be happy to use that as our completion suffix. */
 	if (selectedRange.length > 0) {
 		completionSuffixRange = selectedRange;
 
@@ -634,19 +636,30 @@
 
 	/* Create search pattern for the user configured completion suffix and
 	 search for it. If its found within range, we return that. */
+	/* If the range from start of our search to the beginning of the user's
+	 completion suffix contains a whitespace or exceeds 30 characters, then
+	 we do not use that range. */
 	if (self.isCompletingNickname) {
 		NSString *userCompletionSuffix = [TPCPreferences tabCompletionSuffix];
 
 		if (NSObjectIsEmpty(userCompletionSuffix) == NO) {
 			NSRange completionSearchRange = NSMakeRange(selectedRange.location,
-		   ([self.currentTextFieldStringValue length] - selectedRange.location));
+									 (totalTextLength - selectedRange.location));
 
 			NSRange completionRangePosition = [self.currentTextFieldStringValue rangeOfString:userCompletionSuffix options:0 range:completionSearchRange];
 
-			if (NSRangeIsValid(completionRangePosition)) {
-				completionSuffixRange.length = (NSMaxRange(completionRangePosition) - selectedRangeStartPoint);
+			if (NSRangeIsValid(completionRangePosition) && completionRangePosition.length < 30) {
+				NSRange whitespaceSearchRange = NSMakeRange(selectedRange.location,
+						 completionRangePosition.location - selectedRange.location);
 
-				goto complete_operation;
+				NSRange whitespaceSearchResult =
+				[self.currentTextFieldStringValue rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet] options:0 range:whitespaceSearchRange];
+
+				if (whitespaceSearchResult.location == NSNotFound) {
+					completionSuffixRange.length = (NSMaxRange(completionRangePosition) - selectedRangeStartPoint);
+
+					goto complete_operation;
+				}
 			}
 		}
 	}
@@ -655,7 +668,6 @@
 	BOOL cutNextWord = [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
 
 	if (cutNextWord) {
-
 		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);
 
 		for (NSInteger i = selectedRangeStartPoint; i <= maximumCompletionSuffixEndPoint; i++) {
