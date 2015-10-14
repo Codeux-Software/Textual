@@ -1547,10 +1547,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		
 		[mainWindow() reloadTreeItem:t];
 	}
-
-	if (t.isUnread || (isActiveWindow && [mainWindow() selectedItem] == t)) {
-		return;
-	}
 }
 
 - (void)setUnreadState:(IRCChannel *)t
