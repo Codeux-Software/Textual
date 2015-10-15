@@ -286,22 +286,35 @@
 - (NSInteger)colorNumber
 {
 	if (_colorNumber < 0) {
-		NSString *name = [self lowercaseNickname];
-		
-		NSInteger nameLength = [name length];
-		
-		NSUInteger hashedValue = 0;
-		
-		for (NSInteger i = 0; i < nameLength; i++) {
-			UniChar c = [name characterAtIndex:i];
-			
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		BOOL usesRandomHashing = [RZUserDefaults() boolForKey:@"IRCUser -> Performs Random Nickname Color Hashing"];
+
+		if (usesRandomHashing) {
+			_colorNumber = [self colorNumberForString:[NSString stringWithUUID] withNewHash:YES];
+		} else {
+			_colorNumber = [self colorNumberForString:[self lowercaseNickname] withNewHash:NO];
 		}
-		
-		_colorNumber = (hashedValue % _colorNumberMax);
 	}
 	
 	return _colorNumber;
+}
+
+- (NSInteger)colorNumberForString:(NSString *)inputString withNewHash:(BOOL)usesNewHash
+{
+	NSInteger inputStringLength = [inputString length];
+
+	NSUInteger hashedValue = 0;
+
+	for (NSInteger i = 0; i < inputStringLength; i++) {
+		UniChar c = [inputString characterAtIndex:i];
+
+		if (usesNewHash) {
+			hashedValue = ((hashedValue << 4) + hashedValue + c);
+		} else {
+			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		}
+	}
+
+	return (hashedValue % _colorNumberMax);
 }
 
 - (BOOL)isEqual:(id)other
