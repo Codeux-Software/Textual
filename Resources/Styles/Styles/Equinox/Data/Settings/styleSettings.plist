@@ -22,5 +22,7 @@
 		<key>default</key>
 		<integer>3</integer>
 	</dict>
+	<key>Nickname Color Style</key>
+	<string>HSL-dark</string>
 </dict>
 </plist>
