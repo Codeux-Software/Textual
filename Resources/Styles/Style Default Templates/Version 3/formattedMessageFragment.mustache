@@ -1,5 +1,10 @@
 {{#inlineNicknameMatchFound}}
-<span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}" colornumber="{{inlineNicknameColorNumber}}">
+<span class="inline_nickname" ondblclick="Textual.inlineNicknameDoubleClicked()" oncontextmenu="Textual.openInlineNicknameContextualMenu()" mode="{{inlineNicknameUserModeSymbol}}"
+	{{#nicknameColorHashingIsStyleBased}}
+		style="color: {{inlineNicknameColorStyle}};"
+	{{^nicknameColorHashingIsStyleBased}}
+		colornumber="{{inlineNicknameColorNumber}}"
+	{{/nicknameColorHashingIsStyleBased}}>
 {{/inlineNicknameMatchFound}}
 {{#fragmentTextColorIsSet}}
 <span class="effect"

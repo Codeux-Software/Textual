@@ -53,7 +53,7 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 @property (nonatomic, copy) NSString *username;
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *realname;
-@property (nonatomic, assign) NSInteger colorNumber;
+@property (nonatomic, copy) NSString *nicknameColorStyle;
 @property (nonatomic, copy) NSString *modes; // List of all user modes, ranked highest to lowest
 @property (nonatomic, assign) BOOL isCop; 
 @property (nonatomic, assign) BOOL isAway;

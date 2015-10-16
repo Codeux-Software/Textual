@@ -3166,7 +3166,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			if (selChannel && [selChannel isChannel]) {
 				for (IRCUser *user in [selChannel memberList]) {
-					user.colorNumber = -1;
+					[user setNicknameColorStyle:nil];
 				}
 			}
 
@@ -3610,7 +3610,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	TVCLogLineMemberType memberType = TVCLogLineMemberNormalType;
 
-	NSInteger colorNumber = 0;
+	NSString *nicknameColorStyle = nil;
 
 	NSArray *matchKeywords = nil;
 	NSArray *excludeKeywords = nil;
@@ -3666,10 +3666,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		IRCUser *user = [channel findMember:nickname];
 
 		if (user) {
-			colorNumber = [user colorNumber];
+			nicknameColorStyle = [user nicknameColorStyle];
 		}
-	} else {
-		colorNumber = -1;
 	}
 
 	/* Create new log entry. */
@@ -3691,7 +3689,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	/* Sender. */
 	c.nickname				= nickname;
-	c.nicknameColorNumber	= colorNumber;
+	c.nicknameColorStyle	= nicknameColorStyle;
 
 	/* Send date. */
 	c.receivedAt			= receivedAt;
