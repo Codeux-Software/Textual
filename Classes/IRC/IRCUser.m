@@ -517,43 +517,13 @@
 		if (onLightBackground) {
 			l = (25 + stringHashAbsolute % 20);
 		} else {
-			l = (stringHashAbsolute % 110);
+			l = (50 + stringHashAbsolute % 20);
 		}
 
-		if (onLightBackground)
-		{
-			;
-		}
-		else
-		{
-			/* Shift the reds into pinks and oranges */
-			if (h >= 330) {
-				h -= 30;
-			}
-
-			if (h < 25) {
-				h += 25;
-			}
-
-			if (h >= 30 && h <= 210) {
-				l = 60;
-			}
-
-			if (h >= 210 && s >= 80) {
-				s -= 30;
-			}
-
-			if ((h < 110 && s < 60) || (l <= 30)) {
-				l += 40;
-			}
-
-			if (l > 90) {
-				l -= 20;
-			}
-
-			/* If the saturation is really low, bump up the luminance a bit. */
-			if (s < 40) {
-				l += 10;
+		if (onLightBackground == NO) {
+			/* Hard code the lightness when dealing with some blues and purple. */
+			if (h >= 215 && h <= 280 && l < 70) {
+				l = (65 + stringHashAbsolute % 20);
 			}
 		}
 
