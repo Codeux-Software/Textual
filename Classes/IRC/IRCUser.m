@@ -285,15 +285,11 @@
 #undef _mm
 }
 
-- (NSString *)nicknameColorStyle
++ (NSString *)nicknameColorStyleForNickname:(NSString *)nickname
 {
-	if (_nicknameColorStyle == nil) {
-		NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:self.nickname];
+	NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:nickname];
 
-		_nicknameColorStyle = [nicknameColorStyle copy];
-	}
-
-	return _nicknameColorStyle;
+	return nicknameColorStyle;
 }
 
 - (BOOL)isEqual:(id)other
@@ -423,8 +419,6 @@
 	self.address = [from address];
 
 	self.realname = [from realname];
-
-	self.nicknameColorStyle = [from nicknameColorStyle];
 
 	self.modes = [from modes];
 
