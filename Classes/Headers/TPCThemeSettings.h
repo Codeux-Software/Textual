@@ -42,17 +42,23 @@
 
 #define TPCThemeSettingsLatestTemplateEngineVersion		3
 
+typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
+	TPCThemeSettingsNicknameColorLegacyStyle,
+	TPCThemeSettingsNicknameColorHashHueDarkStyle,
+	TPCThemeSettingsNicknameColorHashHueLightStyle
+};
+
 @interface TPCThemeSettings : NSObject
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
 @property (nonatomic, assign) BOOL postPreferencesDidChangesNotification;
 @property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
 @property (nonatomic, copy) NSFont *channelViewFont;
-@property (nonatomic, copy) NSString *nicknameColorStyle;
 @property (nonatomic, copy) NSString *nicknameFormat;
 @property (nonatomic, copy) NSString *timestampFormat;
 @property (nonatomic, copy) NSString *settingsKeyValueStoreName;
 @property (nonatomic, copy) NSColor *underlyingWindowColor;
 @property (nonatomic, assign) double indentationOffset;
+@property (nonatomic, assign) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 
 - (void)reloadWithPath:(NSString *)path;
 
