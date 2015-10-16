@@ -438,42 +438,26 @@
 {
 	NSObjectIsEmptyAssertReturn(inputString, nil);
 
-	BOOL isComputingRGBValue =
-	[TPCPreferences nicknameColorHashingComputesRGBValue];
-
-	BOOL onLightBackground = YES;
-
-	if (isComputingRGBValue) {
-		NSString *themeNicknameColorStyle = [themeSettings() nicknameColorStyle];
-
-		if (NSObjectsAreEqual(themeNicknameColorStyle, @"HSL-light")) {
-			onLightBackground = YES;
-		} else if (NSObjectsAreEqual(themeNicknameColorStyle, @"HSL-dark")) {
-			onLightBackground = NO;
-		} else {
-			if (themeNicknameColorStyle) {
-				NSAssert(NO, @"ERROR: Current style specifies a “Nickname Color Style” value but the value is not recognized.");
-			}
-		}
-	}
+	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
 
 	NSInteger stringHash =
-	[IRCUserNicknameColorStyleGenerator hashForString:inputString isComputingRGBValue:isComputingRGBValue];
+	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:TPCThemeSettingsNicknameColorLegacyStyle];
 
-	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash
-													 isComputingRGBValue:isComputingRGBValue
-													   onLightBackground:onLightBackground];
+	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
 }
 
-+ (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash isComputingRGBValue:(BOOL)isComputingRGBValue onLightBackground:(BOOL)onLightBackground
++ (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
-	if (isComputingRGBValue == NO)
+	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
 	{
 		return [NSString stringWithInteger:(stringHash % _colorNumberMax)];
 	}
-	else
+	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
 	{
 		/* Define base pair */
+		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
+
 		NSInteger stringHashAbsolute;
 
 		NSInteger deg;
@@ -516,12 +500,17 @@
 		}
 
 		return [NSString stringWithFormat:@"hsl(%ld,%ld%%,%ld%%)", h, s, l];
+	} else {
+		return nil;
+		
 	}
 }
 
-+ (NSString *)preprocessString:(NSString *)inputString isComputingRGBValue:(BOOL)isComputingRGBValue
++ (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
-	if (isComputingRGBValue) {
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	{
 		static NSCharacterSet *nonAlphaCharacters = nil;
 
 		if (nonAlphaCharacters == nil) {
@@ -534,10 +523,10 @@
 	}
 }
 
-+ (NSInteger)hashForString:(NSString *)inputString isComputingRGBValue:(BOOL)isComputingRGBValue
++ (NSInteger)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
 	NSString *stringToHash =
-	[IRCUserNicknameColorStyleGenerator preprocessString:inputString isComputingRGBValue:isComputingRGBValue];
+	[IRCUserNicknameColorStyleGenerator preprocessString:inputString colorStyle:colorStyle];
 
 	NSInteger stringToHashLength = [stringToHash length];
 
@@ -546,7 +535,9 @@
 	for (NSInteger i = 0; i < stringToHashLength; i++) {
 		UniChar c = [inputString characterAtIndex:i];
 
-		if (isComputingRGBValue) {
+		if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+			colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+		{
 			hashedValue = ((hashedValue << 6) + (hashedValue << 16) + c + stringToHashLength - hashedValue);
 		} else {
 			hashedValue = ((hashedValue << 6) + hashedValue + c);
