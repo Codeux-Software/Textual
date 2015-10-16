@@ -42,6 +42,10 @@
 
 #define _presentAwayMessageFor301Threshold			300.0f
 
+@interface IRCUserNicknameColorStyleGenerator : NSObject
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
+@end
+
 @interface IRCUser ()
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) CFAbsoluteTime presentAwayMessageFor301LastEvent;
@@ -52,8 +56,6 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.colorNumber = -1;
-		
 		self.lastWeightFade = CFAbsoluteTimeGetCurrent();
 	}
 	
@@ -283,38 +285,15 @@
 #undef _mm
 }
 
-- (NSInteger)colorNumber
+- (NSString *)nicknameColorStyle
 {
-	if (_colorNumber < 0) {
-		BOOL usesRandomHashing = [RZUserDefaults() boolForKey:@"IRCUser -> Performs Random Nickname Color Hashing"];
+	if (_nicknameColorStyle == nil) {
+		NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:self.nickname];
 
-		if (usesRandomHashing) {
-			_colorNumber = [self colorNumberForString:[NSString stringWithUUID] withNewHash:YES];
-		} else {
-			_colorNumber = [self colorNumberForString:[self lowercaseNickname] withNewHash:NO];
-		}
-	}
-	
-	return _colorNumber;
-}
-
-- (NSInteger)colorNumberForString:(NSString *)inputString withNewHash:(BOOL)usesNewHash
-{
-	NSInteger inputStringLength = [inputString length];
-
-	NSUInteger hashedValue = 0;
-
-	for (NSInteger i = 0; i < inputStringLength; i++) {
-		UniChar c = [inputString characterAtIndex:i];
-
-		if (usesNewHash) {
-			hashedValue = ((hashedValue << 4) + hashedValue + c);
-		} else {
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
-		}
+		_nicknameColorStyle = [nicknameColorStyle copy];
 	}
 
-	return (hashedValue % _colorNumberMax);
+	return _nicknameColorStyle;
 }
 
 - (BOOL)isEqual:(id)other
@@ -445,7 +424,7 @@
 
 	self.realname = [from realname];
 
-	self.colorNumber = [from colorNumber];
+	self.nicknameColorStyle = [from nicknameColorStyle];
 
 	self.modes = [from modes];
 
@@ -461,6 +440,143 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	return [[IRCUser allocWithZone:zone] initWithUser:self];
+}
+
+@end
+
+@implementation IRCUserNicknameColorStyleGenerator
+
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString
+{
+	NSObjectIsEmptyAssertReturn(inputString, nil);
+
+	BOOL isComputingRGBValue =
+	[TPCPreferences nicknameColorHashingComputesRGBValue];
+
+	NSString *stringToHash =
+	[IRCUserNicknameColorStyleGenerator preprocessString:inputString isComputingRGBValue:isComputingRGBValue];
+
+	NSInteger stringHash =
+	[IRCUserNicknameColorStyleGenerator hashForString:stringToHash isComputingRGBValue:isComputingRGBValue];
+
+	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash isComputingRGBValue:isComputingRGBValue];
+}
+
++ (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash isComputingRGBValue:(BOOL)isComputingRGBValue
+{
+	if (isComputingRGBValue == NO)
+	{
+		return [NSString stringWithInteger:(stringHash % _colorNumberMax)];
+	}
+	else
+	{
+		/* Define base pair */
+		NSInteger stringHashAbsolute;
+
+		NSInteger deg;
+
+		NSInteger h;
+		NSInteger l;
+		NSInteger s;
+
+		/* Populate base pair */
+		stringHashAbsolute = ABS(stringHash);
+
+		deg = (stringHash % 360);
+
+		if (deg < 0) {
+			h = (360 + deg);
+		} else {
+			h = deg;
+		}
+
+		l = (stringHashAbsolute % 110);
+
+		s = ((20 + stringHashAbsolute) % 70);
+
+		/* Don't use the blue and purple hues */
+		if (h >= 250 && h <= 290) {
+			h += 40;
+		}
+
+		if (h < 250 && h >= 210) {
+			h -= 40;
+		}
+
+		/* Shift the reds into pinks and oranges */
+		if (h >= 330) {
+			h -= 30;
+		}
+
+		if (h < 25) {
+			h += 25;
+		}
+
+		if (h >= 30 && h <= 210) {
+			l = 60;
+		}
+
+		if (h >= 210 && s >= 80) {
+			s -= 30;
+		}
+
+		if ((h < 110 && s < 60) || (l <= 30)) {
+			l += 40;
+		}
+
+		if (l > 90) {
+			l -= 20;
+		}
+
+		/* If the saturation is really low, bump up the luminance a bit. */
+		if (s < 40) {
+			l += 10;
+		}
+
+		/* Provide values to NSColor to allow it to perform conversion
+		 from RGB -> RGB values. */
+		NSColor *colorObject =
+		[NSColor colorWithCalibratedHue:h saturation:s brightness:l alpha:1.0];
+
+		return [NSString stringWithFormat:@"rgb(%.0f,%.0f,%.0f)",
+				([colorObject redComponent] * 255.99999f),
+				([colorObject greenComponent] * 255.99999f),
+				([colorObject blueComponent] * 255.99999f)];
+	}
+}
+
++ (NSString *)preprocessString:(NSString *)inputString isComputingRGBValue:(BOOL)isComputingRGBValue
+{
+	if (isComputingRGBValue) {
+		static NSCharacterSet *nonAlphaCharacters = nil;
+
+		if (nonAlphaCharacters == nil) {
+			nonAlphaCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_`{}\\"];
+		}
+
+		return [[inputString lowercaseString] stringByReplacingOccurrencesOfCharacterSet:nonAlphaCharacters withString:nil];
+	} else {
+		return  [inputString lowercaseString];
+	}
+}
+
++ (NSInteger)hashForString:(NSString *)inputString isComputingRGBValue:(BOOL)isComputingRGBValue
+{
+	NSInteger inputStringLength = [inputString length];
+
+	NSUInteger hashedValue = 0;
+
+	for (NSInteger i = 0; i < inputStringLength; i++) {
+		UniChar c = [inputString characterAtIndex:i];
+
+		if (isComputingRGBValue) {
+			hashedValue = ((hashedValue << 6) + (hashedValue << 16) + c - hashedValue);
+		} else {
+			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		}
+	}
+
+	return hashedValue;
 }
 
 @end

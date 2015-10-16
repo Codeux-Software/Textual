@@ -55,7 +55,6 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		self.receivedAt = [NSDate date];
 
 		self.nickname = NSStringEmptyPlaceholder;
-		self.nicknameColorNumber = (-1);
 
 		self.messageBody = NSStringEmptyPlaceholder;
 
@@ -219,8 +218,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 	[dict maybeSetObject:self.highlightKeywords			forKey:@"highlightKeywords"];
 
 	[dict maybeSetObject:self.nickname					forKey:@"nickname"];
-
-	[dict maybeSetObject:@(self.nicknameColorNumber)	forKey:@"nicknameColorNumber"];
+	[dict maybeSetObject:self.nicknameColorStyle		forKey:@"nicknameColorStyle"];
 
 	[dict maybeSetObject:self.rawCommand				forKey:@"rawCommand"];
 	[dict maybeSetObject:self.messageBody				forKey:@"messageBody"];
@@ -277,10 +275,11 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
 		
 		[input assignStringTo:&_nickname forKey:@"nickname"];
+		[input assignStringTo:&_nicknameColorStyle forKey:@"nicknameColorStyle"];
+
 		[input assignStringTo:&_messageBody forKey:@"messageBody"];
+
 		[input assignStringTo:&_rawCommand forKey:@"rawCommand"];
-		
-		[input assignIntegerTo:&_nicknameColorNumber forKey:@"nicknameColorNumber"];
 		
 		[input assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
 		[input assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];

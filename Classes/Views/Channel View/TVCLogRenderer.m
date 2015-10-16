@@ -952,7 +952,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					}
 
 					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
-					templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
+
+					templateTokens[@"inlineNicknameColorNumber"] = [user nicknameColorStyle];
+					templateTokens[@"inlineNicknameColorStyle"] = [user nicknameColorStyle];
+
+					templateTokens[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
+
 					templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 				}
 			}
