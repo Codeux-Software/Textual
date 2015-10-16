@@ -1253,7 +1253,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			attributes[@"nicknameColorStyle"] = [line nicknameColorStyle];
 
 			attributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
-			attributes[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
+
+			attributes[@"nicknameColorHashingIsStyleBased"] = @([themeSettings() nicknameColorStyle] != TPCThemeSettingsNicknameColorLegacyStyle);
 			
 			attributes[@"formattedNickname"] = [nickname trim];
 			
