@@ -268,6 +268,8 @@
 		/* Parse the dictionary values. */
 		self.channelViewFont = [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
+		self.nicknameColorStyle = [self stringForKey:@"Nickname Color Style" fromDictionary:styleSettings];
+
 		self.nicknameFormat	= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
 		self.timestampFormat = [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 

@@ -453,12 +453,28 @@
 	BOOL isComputingRGBValue =
 	[TPCPreferences nicknameColorHashingComputesRGBValue];
 
+	BOOL onLightBackground = YES;
+
+	if (isComputingRGBValue) {
+		NSString *themeNicknameColorStyle = [themeSettings() nicknameColorStyle];
+
+		if (NSObjectsAreEqual(themeNicknameColorStyle, @"HSL-light")) {
+			onLightBackground = YES;
+		} else if (NSObjectsAreEqual(themeNicknameColorStyle, @"HSL-dark")) {
+			onLightBackground = NO;
+		} else {
+			LogToConsole(@"WARNING: Current style specifies a “Nickname Color Style” value but the value is not known.");
+
+			isComputingRGBValue = NO;
+		}
+	}
+
 	NSInteger stringHash =
 	[IRCUserNicknameColorStyleGenerator hashForString:inputString isComputingRGBValue:isComputingRGBValue];
 
 	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash
 													 isComputingRGBValue:isComputingRGBValue
-													   onLightBackground:YES];
+													   onLightBackground:onLightBackground];
 }
 
 + (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash isComputingRGBValue:(BOOL)isComputingRGBValue onLightBackground:(BOOL)onLightBackground

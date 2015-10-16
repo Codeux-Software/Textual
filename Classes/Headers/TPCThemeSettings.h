@@ -47,6 +47,7 @@
 @property (nonatomic, assign) BOOL postPreferencesDidChangesNotification;
 @property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
 @property (nonatomic, copy) NSFont *channelViewFont;
+@property (nonatomic, copy) NSString *nicknameColorStyle;
 @property (nonatomic, copy) NSString *nicknameFormat;
 @property (nonatomic, copy) NSString *timestampFormat;
 @property (nonatomic, copy) NSString *settingsKeyValueStoreName;
