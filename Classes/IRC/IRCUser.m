@@ -484,15 +484,18 @@
 
 		deg = (stringHash % 360);
 
+		/* Hug */
 		if (deg < 0) {
 			h = (360 + deg);
 		} else {
 			h = deg;
 		}
 
-		l = (stringHashAbsolute % 110);
+		/* Saturation */
+		s = (20 + stringHashAbsolute % 70);
 
-		s = ((20 + stringHashAbsolute) % 70);
+		/* Lightness */
+		l = (stringHashAbsolute % 110);
 
 		/* Don't use the blue and purple hues */
 		if (h >= 250 && h <= 290) {
@@ -533,15 +536,7 @@
 			l += 10;
 		}
 
-		/* Provide values to NSColor to allow it to perform conversion
-		 from RGB -> RGB values. */
-		NSColor *colorObject =
-		[NSColor colorWithCalibratedHue:h saturation:s brightness:l alpha:1.0];
-
-		return [NSString stringWithFormat:@"rgb(%.0f,%.0f,%.0f)",
-				([colorObject redComponent] * 255.99999f),
-				([colorObject greenComponent] * 255.99999f),
-				([colorObject blueComponent] * 255.99999f)];
+		return [NSString stringWithFormat:@"hsl(%ld,%ld%%,%ld%%)", h, s, l];
 	}
 }
 
