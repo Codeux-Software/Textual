@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 #define _colorNumberMax				 30
 
 #define _presentAwayMessageFor301Threshold			300.0f
@@ -52,8 +54,6 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.colorNumber = -1;
-		
 		self.lastWeightFade = CFAbsoluteTimeGetCurrent();
 	}
 	
@@ -283,40 +283,6 @@
 #undef _mm
 }
 
-- (NSInteger)colorNumber
-{
-	if (_colorNumber < 0) {
-		BOOL usesRandomHashing = [RZUserDefaults() boolForKey:@"IRCUser -> Performs Random Nickname Color Hashing"];
-
-		if (usesRandomHashing) {
-			_colorNumber = [self colorNumberForString:[NSString stringWithUUID] withNewHash:YES];
-		} else {
-			_colorNumber = [self colorNumberForString:[self lowercaseNickname] withNewHash:NO];
-		}
-	}
-	
-	return _colorNumber;
-}
-
-- (NSInteger)colorNumberForString:(NSString *)inputString withNewHash:(BOOL)usesNewHash
-{
-	NSInteger inputStringLength = [inputString length];
-
-	NSUInteger hashedValue = 0;
-
-	for (NSInteger i = 0; i < inputStringLength; i++) {
-		UniChar c = [inputString characterAtIndex:i];
-
-		if (usesNewHash) {
-			hashedValue = ((hashedValue << 4) + hashedValue + c);
-		} else {
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
-		}
-	}
-
-	return (hashedValue % _colorNumberMax);
-}
-
 - (BOOL)isEqual:(id)other
 {
 	if ([other isKindOfClass:[IRCUser class]] == NO) {
@@ -445,8 +411,6 @@
 
 	self.realname = [from realname];
 
-	self.colorNumber = [from colorNumber];
-
 	self.modes = [from modes];
 
 	self.isCop = [from isCop];
@@ -461,6 +425,126 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	return [[IRCUser allocWithZone:zone] initWithUser:self];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Nickname Color Style Generator 
+
+@implementation IRCUserNicknameColorStyleGenerator
+
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString
+{
+	NSObjectIsEmptyAssertReturn(inputString, nil);
+
+	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
+
+	NSInteger stringHash =
+	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:TPCThemeSettingsNicknameColorLegacyStyle];
+
+	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
+}
+
++ (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
+{
+	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
+	{
+		return [NSString stringWithInteger:(stringHash % _colorNumberMax)];
+	}
+	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	{
+		/* Define base pair */
+		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
+
+		NSInteger stringHashAbsolute;
+
+		NSInteger deg;
+
+		NSInteger h;
+		NSInteger l;
+		NSInteger s;
+
+		/* Populate base pair */
+		stringHashAbsolute = ABS(stringHash);
+
+		deg = (stringHash % 360);
+
+		/* Hug */
+		if (deg < 0) {
+			h = (360 + deg);
+		} else {
+			h = deg;
+		}
+
+		/* Saturation */
+		if (onLightBackground) {
+			s = (80 + stringHashAbsolute % 20);
+		} else {
+			s = (20 + stringHashAbsolute % 70);
+		}
+
+		/* Lightness */
+		if (onLightBackground) {
+			l = (25 + stringHashAbsolute % 20);
+		} else {
+			l = (50 + stringHashAbsolute % 20);
+		}
+
+		if (onLightBackground == NO) {
+			/* Hard code the lightness when dealing with some blues and purple. */
+			if (h >= 215 && h <= 280 && l < 70) {
+				l = (65 + stringHashAbsolute % 20);
+			}
+		}
+
+		return [NSString stringWithFormat:@"hsl(%ld,%ld%%,%ld%%)", h, s, l];
+	} else {
+		return nil;
+		
+	}
+}
+
++ (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
+{
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	{
+		static NSCharacterSet *nonAlphaCharacters = nil;
+
+		if (nonAlphaCharacters == nil) {
+			nonAlphaCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_{}\\"];
+		}
+
+		return [[inputString lowercaseString] stringByReplacingOccurrencesOfCharacterSet:nonAlphaCharacters withString:nil];
+	} else {
+		return [inputString lowercaseString];
+	}
+}
+
++ (NSInteger)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
+{
+	NSString *stringToHash =
+	[IRCUserNicknameColorStyleGenerator preprocessString:inputString colorStyle:colorStyle];
+
+	NSInteger stringToHashLength = [stringToHash length];
+
+	NSUInteger hashedValue = 0;
+
+	for (NSInteger i = 0; i < stringToHashLength; i++) {
+		UniChar c = [inputString characterAtIndex:i];
+
+		if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+			colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+		{
+			hashedValue = ((hashedValue << 6) + (hashedValue << 16) + c + stringToHashLength - hashedValue);
+		} else {
+			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		}
+	}
+
+	return hashedValue;
 }
 
 @end

@@ -5,7 +5,6 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -36,37 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#define TPCThemeSettingsDisabledIndentationOffset     -99
-
-#define TPCThemeSettingsLatestTemplateEngineVersion		3
-
-typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorLegacyStyle,
-	TPCThemeSettingsNicknameColorHashHueDarkStyle,
-	TPCThemeSettingsNicknameColorHashHueLightStyle
-};
-
-@interface TPCThemeSettings : NSObject
-@property (nonatomic, assign) BOOL forceInvertSidebarColors;
-@property (nonatomic, assign) BOOL postPreferencesDidChangesNotification;
-@property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy) NSFont *channelViewFont;
-@property (nonatomic, copy) NSString *nicknameFormat;
-@property (nonatomic, copy) NSString *timestampFormat;
-@property (nonatomic, copy) NSString *settingsKeyValueStoreName;
-@property (nonatomic, copy) NSColor *underlyingWindowColor;
-@property (nonatomic, assign) double indentationOffset;
-@property (nonatomic, assign) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-
-- (void)reloadWithPath:(NSString *)path;
-
-- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
-
-- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError;
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError;
-
-- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (GRMustacheTemplate *)templateWithName:(NSString *)name;
+@interface IRCUserNicknameColorStyleGenerator : NSObject
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
 @end

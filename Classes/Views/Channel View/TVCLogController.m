@@ -1249,13 +1249,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		} else {
 			attributes[@"isNicknameAvailable"] = @(YES);
 			
-			attributes[@"nicknameColorNumber"]			= @([line nicknameColorNumber]);
-			attributes[@"nicknameColorHashingEnabled"]	= @([TPCPreferences disableNicknameColorHashing] == NO);
+			attributes[@"nicknameColorNumber"] = [line nicknameColorStyle];
+			attributes[@"nicknameColorStyle"] = [line nicknameColorStyle];
+
+			attributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
+			attributes[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
 			
-			attributes[@"formattedNickname"]	= [nickname trim];
+			attributes[@"formattedNickname"] = [nickname trim];
 			
-			attributes[@"nickname"]				=  [line nickname];
-			attributes[@"nicknameType"]			=  [line memberTypeString];
+			attributes[@"nickname"]	= [line nickname];
+			attributes[@"nicknameType"]	= [line memberTypeString];
 		}
 	} else {
 		attributes[@"isNicknameAvailable"] = @(NO);

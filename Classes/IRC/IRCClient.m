@@ -3162,16 +3162,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			break;
 		}
-		case 5049: // Command: NNCOLORESET
-		{
-			if (selChannel && [selChannel isChannel]) {
-				for (IRCUser *user in [selChannel memberList]) {
-					user.colorNumber = -1;
-				}
-			}
-
-			break;
-		}
 		case 5066: // Command: SSLCONTEXT
 		{
 			[self presentCertificateTrustInformation];
@@ -3610,8 +3600,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	TVCLogLineMemberType memberType = TVCLogLineMemberNormalType;
 
-	NSInteger colorNumber = 0;
-
 	NSArray *matchKeywords = nil;
 	NSArray *excludeKeywords = nil;
 
@@ -3660,18 +3648,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
-	if (nickname && destination && (type == TVCLogLinePrivateMessageType ||
-									type == TVCLogLineActionType))
-	{
-		IRCUser *user = [channel findMember:nickname];
-
-		if (user) {
-			colorNumber = [user colorNumber];
-		}
-	} else {
-		colorNumber = -1;
-	}
-
 	/* Create new log entry. */
 	TVCLogLine *c = [TVCLogLine new];
 
@@ -3691,7 +3667,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	/* Sender. */
 	c.nickname				= nickname;
-	c.nicknameColorNumber	= colorNumber;
 
 	/* Send date. */
 	c.receivedAt			= receivedAt;

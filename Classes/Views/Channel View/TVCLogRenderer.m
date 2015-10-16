@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 typedef uint32_t attr_t;
 
 @interface TVCLogRenderer ()
@@ -951,8 +953,15 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						}
 					}
 
+					NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:[user nickname]];
+
 					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
-					templateTokens[@"inlineNicknameColorNumber"] = @([user colorNumber]);
+
+					templateTokens[@"inlineNicknameColorNumber"] = nicknameColorStyle;
+					templateTokens[@"inlineNicknameColorStyle"] = nicknameColorStyle;
+
+					templateTokens[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
+
 					templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 				}
 			}

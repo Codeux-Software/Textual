@@ -82,12 +82,12 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (nonatomic, assign) BOOL isEncrypted;
 @property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
 @property (nonatomic, copy) NSDate *receivedAt;
+@property (nonatomic, copy) NSString *nicknameColorStyle;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *messageBody;
 @property (nonatomic, copy) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogLineMemberType memberType;
-@property (nonatomic, assign) NSInteger nicknameColorNumber;
 @property (nonatomic, copy) NSArray *highlightKeywords;
 @property (nonatomic, copy) NSArray *excludeKeywords;
 
@@ -104,6 +104,8 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 
 @property (readonly, copy) NSString *lineTypeString;
 @property (readonly, copy) NSString *memberTypeString;
+
+- (void)computeNicknameColorStyle;
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel;
 

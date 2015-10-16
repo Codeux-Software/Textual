@@ -538,15 +538,6 @@
 		<key>indexValue</key>
 		<integer>5048</integer>
 	</dict>
-	<key>nncoloreset</key>
-	<dict>
-		<key>command</key>
-		<string>NNCOLORESET</string>
-		<key>developerModeOnly</key>
-		<true/>
-		<key>indexValue</key>
-		<integer>5049</integer>
-	</dict>
 	<key>notice</key>
 	<dict>
 		<key>command</key>

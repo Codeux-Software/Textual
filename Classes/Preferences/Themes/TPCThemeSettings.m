@@ -294,7 +294,20 @@
 			}
 		}
 
-		/* Get style template version. */
+		/* Nickname color style */
+		id nicknameColorStyle = [styleSettings objectForKey:@"Nickname Color Style"];
+
+		BOOL computeRGBValue = [TPCPreferences nicknameColorHashingComputesRGBValue];
+
+		if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-light")) {
+			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueLightStyle;
+		} else if (computeRGBValue && NSObjectsAreEqual(nicknameColorStyle, @"HSL-dark")) {
+			self.nicknameColorStyle = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+		} else {
+			self.nicknameColorStyle = TPCThemeSettingsNicknameColorLegacyStyle;
+		}
+
+		/* Get style template version */
 		NSDictionary *templateVersions = [styleSettings dictionaryForKey:@"Template Engine Versions"];
 
 		if (templateVersions) {

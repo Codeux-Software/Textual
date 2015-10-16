@@ -30,7 +30,11 @@
 					mtype="{{nicknameType}}"
 					nickname="{{nickname}}"
 					{{#nicknameColorHashingEnabled}}
-						colornumber="{{nicknameColorNumber}}"
+						{{#nicknameColorHashingIsStyleBased}}
+							style="color: {{nicknameColorStyle}};"
+						{{^nicknameColorHashingIsStyleBased}}
+							colornumber="{{nicknameColorNumber}}"
+						{{/nicknameColorHashingIsStyleBased}}
 					{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
 			</span>
 

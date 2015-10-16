@@ -210,6 +210,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];
 }
 
++ (BOOL)nicknameColorHashingComputesRGBValue
+{
+	return [RZUserDefaults() boolForKey:@"NicknameColorHashingComputesRGBValue"];
+}
+
 + (BOOL)conversationTrackingIncludesUserModeSymbol
 {
 	return [RZUserDefaults() boolForKey:@"ConversationTrackingIncludesUserModeSymbol"];
