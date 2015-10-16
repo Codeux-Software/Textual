@@ -951,10 +951,12 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 						}
 					}
 
+					NSString *nicknameColorStyle = [IRCUser nicknameColorStyleForNickname:[user nickname]];
+
 					templateTokens[@"inlineNicknameMatchFound"] = @(YES);
 
-					templateTokens[@"inlineNicknameColorNumber"] = [user nicknameColorStyle];
-					templateTokens[@"inlineNicknameColorStyle"] = [user nicknameColorStyle];
+					templateTokens[@"inlineNicknameColorNumber"] = nicknameColorStyle;
+					templateTokens[@"inlineNicknameColorStyle"] = nicknameColorStyle;
 
 					templateTokens[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
 
