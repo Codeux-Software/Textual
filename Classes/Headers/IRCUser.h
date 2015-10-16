@@ -99,8 +99,6 @@ typedef NS_OPTIONS(NSUInteger, IRCUserRank) {
 - (void)incomingConversation;
 - (void)conversation;
 
-+ (NSString *)nicknameColorStyleForNickname:(NSString *)nickname;
-
 - (void)migrate:(IRCUser *)from;
 
 - (NSComparisonResult)compare:(IRCUser *)other;

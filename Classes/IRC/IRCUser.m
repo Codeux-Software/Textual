@@ -38,13 +38,11 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 #define _colorNumberMax				 30
 
 #define _presentAwayMessageFor301Threshold			300.0f
-
-@interface IRCUserNicknameColorStyleGenerator : NSObject
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
-@end
 
 @interface IRCUser ()
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
@@ -285,13 +283,6 @@
 #undef _mm
 }
 
-+ (NSString *)nicknameColorStyleForNickname:(NSString *)nickname
-{
-	NSString *nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:nickname];
-
-	return nicknameColorStyle;
-}
-
 - (BOOL)isEqual:(id)other
 {
 	if ([other isKindOfClass:[IRCUser class]] == NO) {
@@ -437,6 +428,9 @@
 }
 
 @end
+
+#pragma mark -
+#pragma mark Nickname Color Style Generator 
 
 @implementation IRCUserNicknameColorStyleGenerator
 
