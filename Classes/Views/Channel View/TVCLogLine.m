@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 NSString * const TVCLogLineUndefinedNicknameFormat			= @"<%@%n>";
 NSString * const TVCLogLineActionNicknameFormat				= @"%@ ";
 NSString * const TVCLogLineNoticeNicknameFormat				= @"-%@-";
@@ -221,7 +223,7 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		self.lineType == TVCLogLineActionType ||
 		self.lineType == TVCLogLineActionNoHighlightType)
 	{
-		self.nicknameColorStyle = [IRCUser nicknameColorStyleForNickname:self.nickname];
+		self.nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:self.nickname];
 	} else {
 		self.nicknameColorStyle = nil;
 	}
