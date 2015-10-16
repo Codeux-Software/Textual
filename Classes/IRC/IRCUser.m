@@ -441,7 +441,7 @@
 	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
 
 	NSInteger stringHash =
-	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:TPCThemeSettingsNicknameColorLegacyStyle];
+	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyle];
 
 	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
 }
