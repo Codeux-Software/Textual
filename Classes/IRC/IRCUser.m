@@ -463,9 +463,9 @@
 		} else if (NSObjectsAreEqual(themeNicknameColorStyle, @"HSL-dark")) {
 			onLightBackground = NO;
 		} else {
-			LogToConsole(@"WARNING: Current style specifies a “Nickname Color Style” value but the value is not known.");
-
-			isComputingRGBValue = NO;
+			if (themeNicknameColorStyle) {
+				NSAssert(NO, @"ERROR: Current style specifies a “Nickname Color Style” value but the value is not recognized.");
+			}
 		}
 	}
 
