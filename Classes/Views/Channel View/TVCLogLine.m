@@ -312,6 +312,8 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		[input assignBoolTo:&_isHistoric forKey:@"isHistoric"];
 		[input assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];
 
+		[self computeNicknameColorStyle];
+
 		return self;
 	}
 		

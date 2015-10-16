@@ -1930,68 +1930,21 @@ DQ
             <point key="canvasLocation" x="397.5" y="-2598.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="e8Q-5b-yYH" userLabel="Experimental Settings">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="305"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="333"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cwh-JV-tWi">
-                    <rect key="frame" x="60" y="103" width="117" height="13"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="113" id="RtZ-G4-cD2"/>
-                        <constraint firstAttribute="height" constant="13" id="iHA-Ar-RoS"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="Jfe-QS-I1T">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Qoz-jq-Y9W">
-                    <rect key="frame" x="77" y="34" width="449" height="61"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="61" id="ATD-gL-ax3"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mLE-94-QqL">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <accessibilityConnection property="title" destination="cwh-JV-tWi" id="mwW-YL-K72"/>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
-                    </connections>
-                </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="OhO-2g-Ujx">
-                    <rect key="frame" x="74" y="220" width="442" height="5"/>
+                    <rect key="frame" x="74" y="248" width="442" height="5"/>
                     <animations/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DT8-XE-Nc5">
-                    <rect key="frame" x="74" y="129" width="442" height="5"/>
-                    <animations/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="VGL-Zb-9Bk">
-                    <rect key="frame" x="79" y="191" width="326" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Automatically reload custom styles when they change" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="P9J-JZ-K2M">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="cellTitle"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyReloadCustomThemesWhenTheyChange" id="FmB-cV-bEi"/>
-                    </connections>
-                </button>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-Lv-4dl">
-                    <rect key="frame" x="72" y="230" width="446" height="44"/>
+                    <rect key="frame" x="72" y="258" width="446" height="44"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Zsm-ol-0H3">
                         <rect key="frame" x="1" y="1" width="223" height="133"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2047,6 +2000,65 @@ DQ
                         <animations/>
                     </scroller>
                 </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="vi2-2J-058">
+                    <rect key="frame" x="79" y="219" width="403" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Nickname colors are based on hue, saturation, and lightness values" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="WOL-E0-XRu">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedStyle:" target="-2" id="cU2-r8-zN0"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.NicknameColorHashingComputesRGBValue" id="fnP-ep-WBT"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cwh-JV-tWi">
+                    <rect key="frame" x="60" y="103" width="117" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="113" id="RtZ-G4-cD2"/>
+                        <constraint firstAttribute="height" constant="13" id="iHA-Ar-RoS"/>
+                    </constraints>
+                    <animations/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Fake CTCP Version:" id="Jfe-QS-I1T">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Qoz-jq-Y9W">
+                    <rect key="frame" x="77" y="34" width="449" height="61"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="61" id="ATD-gL-ax3"/>
+                    </constraints>
+                    <animations/>
+                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="mLE-94-QqL">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <accessibilityConnection property="title" destination="cwh-JV-tWi" id="mwW-YL-K72"/>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.ApplicationCTCPVersionMasquerade" id="vH0-9e-ycZ"/>
+                    </connections>
+                </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DT8-XE-Nc5">
+                    <rect key="frame" x="74" y="129" width="442" height="5"/>
+                    <animations/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="VGL-Zb-9Bk">
+                    <rect key="frame" x="79" y="191" width="326" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Automatically reload custom styles when they change" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="P9J-JZ-K2M">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.AutomaticallyReloadCustomThemesWhenTheyChange" id="FmB-cV-bEi"/>
+                    </connections>
+                </button>
                 <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="VZH-gw-9yK">
                     <rect key="frame" x="94" y="141" width="371" height="44"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Dog-4X-w01">
@@ -2140,17 +2152,19 @@ DQ
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="74" id="1Vk-F4-L0h"/>
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="centerX" secondItem="JVk-Lv-4dl" secondAttribute="centerX" id="6E9-9Q-qaG"/>
                 <constraint firstAttribute="trailing" secondItem="VZH-gw-9yK" secondAttribute="trailing" constant="124" id="A0G-qw-LWf"/>
+                <constraint firstItem="VGL-Zb-9Bk" firstAttribute="leading" secondItem="vi2-2J-058" secondAttribute="leading" id="BdB-IU-dwy"/>
                 <constraint firstItem="cwh-JV-tWi" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="62" id="DRt-h6-TA8"/>
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="top" secondItem="e8Q-5b-yYH" secondAttribute="top" constant="82" id="EQV-kz-g9t"/>
                 <constraint firstItem="JVk-Lv-4dl" firstAttribute="top" secondItem="e8Q-5b-yYH" secondAttribute="top" constant="31" id="HE8-R5-RRk"/>
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="leading" secondItem="DT8-XE-Nc5" secondAttribute="leading" id="Lpu-7w-eh2"/>
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="trailing" secondItem="DT8-XE-Nc5" secondAttribute="trailing" id="O2U-eB-nyT"/>
-                <constraint firstItem="VGL-Zb-9Bk" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="81" id="Okb-xp-hdm"/>
-                <constraint firstItem="VGL-Zb-9Bk" firstAttribute="top" secondItem="OhO-2g-Ujx" secondAttribute="bottom" constant="15" id="X5I-pq-O3I"/>
+                <constraint firstItem="VGL-Zb-9Bk" firstAttribute="top" secondItem="vi2-2J-058" secondAttribute="bottom" constant="14" id="Opb-4i-Iic"/>
+                <constraint firstItem="vi2-2J-058" firstAttribute="top" secondItem="OhO-2g-Ujx" secondAttribute="bottom" constant="15" id="Vv2-XE-zw3"/>
                 <constraint firstAttribute="trailing" secondItem="Qoz-jq-Y9W" secondAttribute="trailing" constant="63" id="Yjj-Hc-AH2"/>
                 <constraint firstAttribute="trailing" secondItem="JVk-Lv-4dl" secondAttribute="trailing" constant="71" id="dtY-Uh-Qlg"/>
                 <constraint firstItem="OhO-2g-Ujx" firstAttribute="top" secondItem="JVk-Lv-4dl" secondAttribute="bottom" constant="7" id="ghp-5S-YwU"/>
                 <constraint firstAttribute="bottom" secondItem="Qoz-jq-Y9W" secondAttribute="bottom" constant="34" id="kIW-4a-v7O"/>
+                <constraint firstItem="vi2-2J-058" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="81" id="llF-cA-yNY"/>
                 <constraint firstItem="Qoz-jq-Y9W" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="77" id="p8w-hd-PP0"/>
                 <constraint firstItem="VZH-gw-9yK" firstAttribute="leading" secondItem="e8Q-5b-yYH" secondAttribute="leading" constant="94" id="qJa-RI-xli"/>
                 <constraint firstItem="DT8-XE-Nc5" firstAttribute="top" secondItem="VZH-gw-9yK" secondAttribute="bottom" constant="9" id="tsw-Ig-6s3"/>
@@ -2160,7 +2174,7 @@ DQ
                 <constraint firstItem="Qoz-jq-Y9W" firstAttribute="top" secondItem="cwh-JV-tWi" secondAttribute="bottom" constant="8" symbolic="YES" id="zuV-s2-B6K"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="476.5" y="-239.5"/>
+            <point key="canvasLocation" x="476.5" y="-225.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fnm-DD-Hbc" userLabel="Controls">
             <rect key="frame" x="0.0" y="0.0" width="625" height="475"/>

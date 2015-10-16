@@ -960,7 +960,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 					templateTokens[@"inlineNicknameColorNumber"] = nicknameColorStyle;
 					templateTokens[@"inlineNicknameColorStyle"] = nicknameColorStyle;
 
-					templateTokens[@"nicknameColorHashingIsStyleBased"] = @([TPCPreferences nicknameColorHashingComputesRGBValue]);
+					templateTokens[@"nicknameColorHashingIsStyleBased"] = @([themeSettings() nicknameColorStyle] != TPCThemeSettingsNicknameColorLegacyStyle);
 
 					templateTokens[@"inlineNicknameUserModeSymbol"] = modeSymbol;
 				}
