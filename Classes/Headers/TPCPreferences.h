@@ -155,6 +155,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (TXNoticeSendLocationType)locationToSendNotices;
 
 + (BOOL)disableNicknameColorHashing;
++ (BOOL)nicknameColorHashingComputesRGBValue;
 
 + (BOOL)displayDockBadge;
 + (BOOL)displayPublicMessageCountOnDockBadge;
