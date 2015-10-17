@@ -13,7 +13,8 @@
 		command="{{rawCommand}}"
 		highlight="{{highlightAttributeRepresentation}}" 
 		class="line {{lineClassAttributeRepresentation}}" 
-		id="line-{{lineNumber}}">
+		id="line-{{lineNumber}}"
+		timestamp="{{timestamp}}">
 
 	<p>
 		<span class="time">{{formattedTimestamp}} </span>
@@ -35,8 +36,7 @@
 						{{^nicknameColorHashingIsStyleBased}}
 							colornumber="{{nicknameColorNumber}}"
 						{{/nicknameColorHashingIsStyleBased}}
-					{{/nicknameColorHashingEnabled}}
-					timestamp="{{timestamp}}">{{formattedNickname}}</span>
+					{{/nicknameColorHashingEnabled}}>{{formattedNickname}}</span>
 			</span>
 
 			<span class="innerMessage">
