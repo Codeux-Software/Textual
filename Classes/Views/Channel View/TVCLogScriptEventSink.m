@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 #define _doubleClickRadius		3
 
 @implementation TVCLogScriptEventSink
@@ -63,6 +65,8 @@
 	
 	if ([s hasPrefix:@"styleSettingsSetValue"]) {
 		return nil;
+	} else if ([s hasPrefix:@"nicknameColorStyleHash"]) {
+		return nil;
 	}
 	
 	if ([s hasSuffix:@":"]) {
@@ -76,6 +80,8 @@
 {
 	if ([name isEqualToString:@"styleSettingsSetValue"]) {
 		return @([self styleSettingsSetValue:args]);
+	} else if ([name isEqualToString:@"nicknameColorStyleHash"]) {
+		return @([self nicknameColorStyleHash:args]);
 	}
 
 	return nil;
@@ -260,6 +266,31 @@
 - (BOOL)sidebarInversionIsEnabled
 {
 	return [TPCPreferences invertSidebarColors];
+}
+
+- (NSInteger)nicknameColorStyleHash:(NSArray *)arguments
+{
+	if ([arguments count] == 2) {
+		id inputString = arguments[0];
+
+		id colorStyle = arguments[1];
+
+		if ([inputString isKindOfClass:[NSString class]] &&
+			[colorStyle isKindOfClass:[NSString class]])
+		{
+			TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
+
+			if ([colorStyle isEqualToString:@"HSL-dark"]) {
+				colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+			} else if ([colorStyle isEqualToString:@"HSL-light"]) {
+				colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+			}
+
+			return [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum];
+		}
+	}
+
+	return 0;
 }
 
 - (BOOL)styleSettingsSetValue:(NSArray *)arguments
