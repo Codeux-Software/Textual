@@ -469,13 +469,14 @@
 		if (onLightBackground) {
 			s = (60 + stringHashAbsolute % 25);
 		} else {
-			s = (20 + stringHashAbsolute % 70);
+			s = (50 + stringHashAbsolute % 25);
 		}
 
 		/* Lightness */
 		NSInteger l;
 
-		if (onLightBackground) {
+		if (onLightBackground)
+		{
 			if (s >= 60 && s < 66) {
 				l = (45 + stringHashAbsolute % 10);
 			} else if (s >= 66 && s < 72) {
@@ -485,8 +486,10 @@
 			} else if (s >= 78 && s <= 85) {
 				l = (30 + stringHashAbsolute % 10);
 			}
-		} else {
-			l = (50 + stringHashAbsolute % 20);
+		}
+		else
+		{
+			l = (40 + stringHashAbsolute % 20);
 		}
 
 		/* Hard code the lightness when dealing with some blues and purple. */
