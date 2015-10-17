@@ -534,9 +534,9 @@
 		NSInteger shuffleStartingPoint = 0;
 
 		if ((unshuffledStringLength % 2) == 0) {
-			shuffleStartingPoint = ((stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * (-743930)) % unshuffledStringLength);
+			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * (-743930)) % unshuffledStringLength);
 		} else {
-			shuffleStartingPoint = ((stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
+			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
 		}
 
 		NSMutableString *shuffledString = [NSMutableString stringWithCapacity:unshuffledStringLength];
