@@ -534,7 +534,9 @@
 		NSInteger shuffleStartingPoint = 0;
 
 		if ((unshuffledStringLength % 2) == 0) {
-			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * (-743930)) % unshuffledStringLength);
+			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 743930) % unshuffledStringLength);
+		} else if ((unshuffledStringLength % 5) == 0) {
+			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 1263) % unshuffledStringLength);
 		} else {
 			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
 		}
