@@ -480,21 +480,31 @@
 
 		/* Saturation */
 		if (onLightBackground) {
-			s = (80 + stringHashAbsolute % 20);
+			s = (60 + stringHashAbsolute % 25);
 		} else {
 			s = (20 + stringHashAbsolute % 70);
 		}
 
 		/* Lightness */
 		if (onLightBackground) {
-			l = (25 + stringHashAbsolute % 20);
+			if (s >= 60 && s < 66) {
+				l = (45 + stringHashAbsolute % 10);
+			} else if (s >= 66 && s < 72) {
+				l = (40 + stringHashAbsolute % 10);
+			} else if (s >= 72 && s < 78) {
+				l = (35 + stringHashAbsolute % 10);
+			} else if (s >= 78 && s <= 85) {
+				l = (30 + stringHashAbsolute % 10);
+			}
 		} else {
 			l = (50 + stringHashAbsolute % 20);
 		}
 
-		if (onLightBackground == NO) {
-			/* Hard code the lightness when dealing with some blues and purple. */
-			if (h >= 215 && h <= 280 && l < 70) {
+		/* Hard code the lightness when dealing with some blues and purple. */
+		if (h >= 215 && h <= 280 && l < 70) {
+			if (onLightBackground) {
+				l = (55 + stringHashAbsolute % 10);
+			} else {
 				l = (65 + stringHashAbsolute % 20);
 			}
 		}
