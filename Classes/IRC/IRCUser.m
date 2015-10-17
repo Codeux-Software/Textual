@@ -40,6 +40,8 @@
 
 #import "IRCUserPrivate.h"
 
+#import <CommonCrypto/CommonDigest.h>
+
 #define _colorNumberMax				 30
 
 #define _presentAwayMessageFor301Threshold			300.0f
@@ -458,18 +460,16 @@
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
 
-		NSInteger stringHashAbsolute = ABS(stringHash);
-
 		/* Hug */
-		NSInteger h = (stringHashAbsolute % 360);
+		NSInteger h = (stringHash % 360);
 
 		/* Saturation */
 		NSInteger s;
 
 		if (onLightBackground) {
-			s = (60 + stringHashAbsolute % 25);
+			s = (60 + stringHash % 25);
 		} else {
-			s = (50 + stringHashAbsolute % 25);
+			s = (50 + stringHash % 25);
 		}
 
 		/* Lightness */
@@ -478,33 +478,32 @@
 		if (onLightBackground)
 		{
 			if (s >= 60 && s < 66) {
-				l = (45 + stringHashAbsolute % 10);
+				l = (45 + stringHash % 10);
 			} else if (s >= 66 && s < 72) {
-				l = (40 + stringHashAbsolute % 10);
+				l = (40 + stringHash % 10);
 			} else if (s >= 72 && s < 78) {
-				l = (35 + stringHashAbsolute % 10);
+				l = (35 + stringHash % 10);
 			} else if (s >= 78 && s <= 85) {
-				l = (30 + stringHashAbsolute % 10);
+				l = (30 + stringHash % 10);
 			}
 		}
 		else
 		{
-			l = (40 + stringHashAbsolute % 20);
+			l = (40 + stringHash % 20);
 		}
 
 		/* Hard code the lightness when dealing with some blues and purple. */
 		if (h >= 215 && h <= 280 && l < 70) {
 			if (onLightBackground) {
-				l = (55 + stringHashAbsolute % 10);
+				l = (55 + stringHash % 10);
 			} else {
-				l = (65 + stringHashAbsolute % 20);
+				l = (65 + stringHash % 20);
 			}
 		}
 
 		return [NSString stringWithFormat:@"hsl(%ld,%ld%%,%ld%%)", h, s, l];
 	} else {
 		return nil;
-		
 	}
 }
 
@@ -513,12 +512,6 @@
 	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
 		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
 	{
-		static NSCharacterSet *nonAlphaCharacters = nil;
-
-		if (nonAlphaCharacters == nil) {
-			nonAlphaCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_{}\\"];
-		}
-
 		NSString *unshuffledString = [inputString lowercaseString];
 
 		NSInteger unshuffledStringLength = [unshuffledString length];
@@ -536,9 +529,7 @@
 		NSInteger shuffleStartingPoint = 0;
 
 		if ((unshuffledStringLength % 2) == 0) {
-			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 743930) % unshuffledStringLength);
-		} else if ((unshuffledStringLength % 5) == 0) {
-			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 1263) % unshuffledStringLength);
+			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 1023) % unshuffledStringLength);
 		} else {
 			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
 		}
@@ -546,19 +537,15 @@
 		NSMutableString *shuffledString = [NSMutableString stringWithCapacity:unshuffledStringLength];
 
 		for (NSInteger i = shuffleStartingPoint; i >= 0; i--) {
-			UniChar c = [unshuffledString characterAtIndex:i];
+			NSString *c = [unshuffledString stringCharacterAtIndex:i];
 
-			if ([nonAlphaCharacters characterIsMember:c] == NO) {
-				[shuffledString appendString:[NSString stringWithUniChar:c]];
-			}
+			[shuffledString appendString:c];
 		}
 
 		for (NSInteger i = (shuffleStartingPoint + 1); i < unshuffledStringLength; i++) {
-			UniChar c = [unshuffledString characterAtIndex:i];
+			NSString *c = [unshuffledString stringCharacterAtIndex:i];
 
-			if ([nonAlphaCharacters characterIsMember:c] == NO) {
-				[shuffledString appendString:[NSString stringWithUniChar:c]];
-			}
+			[shuffledString appendString:c];
 		}
 
 		return shuffledString;
@@ -574,15 +561,32 @@
 
 	NSInteger stringToHashLength = [stringToHash length];
 
-	NSUInteger hashedValue = 0;
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	{
+		NSData *stringToHashData = [stringToHash dataUsingEncoding:NSUTF8StringEncoding];
 
-	for (NSInteger i = 0; i < stringToHashLength; i++) {
-		UniChar c = [inputString characterAtIndex:i];
+		NSMutableData *hashedData = [NSMutableData dataWithLength:CC_MD5_DIGEST_LENGTH];
 
-		hashedValue = ((hashedValue << 6) + hashedValue + c);
+		CC_MD5([stringToHashData bytes], (CC_LONG)[stringToHashData length], [hashedData mutableBytes]);
+
+		NSInteger hashedValue;
+		[hashedData getBytes:&hashedValue length:6];
+
+		return ABS(hashedValue);
 	}
+	else
+	{
+		NSInteger hashedValue = 0;
 
-	return hashedValue;
+		for (NSInteger i = 0; i < stringToHashLength; i++) {
+			UniChar c = [stringToHash characterAtIndex:i];
+
+			hashedValue = ((hashedValue << 6) + hashedValue + c);
+		}
+
+		return hashedValue;
+	}
 }
 
 @end
