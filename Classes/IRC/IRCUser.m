@@ -517,7 +517,47 @@
 			nonAlphaCharacters = [NSCharacterSet characterSetWithCharactersInString:@"^[]-_{}\\"];
 		}
 
-		return [[inputString lowercaseString] stringByReplacingOccurrencesOfCharacterSet:nonAlphaCharacters withString:nil];
+		NSString *unshuffledString = [inputString lowercaseString];
+
+		NSInteger unshuffledStringLength = [unshuffledString length];
+
+		if (unshuffledStringLength <= 3) {
+			return unshuffledString;
+		}
+
+		NSInteger stringMiddlePoint = (NSInteger)(ceil(unshuffledStringLength / 2));
+
+		UniChar stringFirstCharacter = [unshuffledString characterAtIndex:0];
+		UniChar stringMiddleCharacter = [unshuffledString characterAtIndex:stringMiddlePoint];
+		UniChar stringLastCharacter = [unshuffledString characterAtIndex:(unshuffledStringLength - 1)];
+
+		NSInteger shuffleStartingPoint = 0;
+
+		if ((unshuffledStringLength % 2) == 0) {
+			shuffleStartingPoint = ((stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * (-743930)) % unshuffledStringLength);
+		} else {
+			shuffleStartingPoint = ((stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
+		}
+
+		NSMutableString *shuffledString = [NSMutableString stringWithCapacity:unshuffledStringLength];
+
+		for (NSInteger i = shuffleStartingPoint; i >= 0; i--) {
+			UniChar c = [unshuffledString characterAtIndex:i];
+
+			if ([nonAlphaCharacters characterIsMember:c] == NO) {
+				[shuffledString appendString:[NSString stringWithUniChar:c]];
+			}
+		}
+
+		for (NSInteger i = (shuffleStartingPoint + 1); i < unshuffledStringLength; i++) {
+			UniChar c = [unshuffledString characterAtIndex:i];
+
+			if ([nonAlphaCharacters characterIsMember:c] == NO) {
+				[shuffledString appendString:[NSString stringWithUniChar:c]];
+			}
+		}
+
+		return shuffledString;
 	} else {
 		return [inputString lowercaseString];
 	}
@@ -535,13 +575,7 @@
 	for (NSInteger i = 0; i < stringToHashLength; i++) {
 		UniChar c = [inputString characterAtIndex:i];
 
-		if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-			colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-		{
-			hashedValue = ((hashedValue << 6) + (hashedValue << 16) + c + stringToHashLength - hashedValue);
-		} else {
-			hashedValue = ((hashedValue << 6) + hashedValue + c);
-		}
+		hashedValue = ((hashedValue << 6) + hashedValue + c);
 	}
 
 	return hashedValue;
