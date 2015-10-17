@@ -458,27 +458,14 @@
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
 
-		NSInteger stringHashAbsolute;
-
-		NSInteger deg;
-
-		NSInteger h;
-		NSInteger l;
-		NSInteger s;
-
-		/* Populate base pair */
-		stringHashAbsolute = ABS(stringHash);
-
-		deg = (stringHash % 360);
+		NSInteger stringHashAbsolute = ABS(stringHash);
 
 		/* Hug */
-		if (deg < 0) {
-			h = (360 + deg);
-		} else {
-			h = deg;
-		}
+		NSInteger h = (stringHashAbsolute % 360);
 
 		/* Saturation */
+		NSInteger s;
+
 		if (onLightBackground) {
 			s = (60 + stringHashAbsolute % 25);
 		} else {
@@ -486,6 +473,8 @@
 		}
 
 		/* Lightness */
+		NSInteger l;
+
 		if (onLightBackground) {
 			if (s >= 60 && s < 66) {
 				l = (45 + stringHashAbsolute % 10);
