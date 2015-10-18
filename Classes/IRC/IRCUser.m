@@ -460,44 +460,64 @@
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
 
-		/* Hug */
+		NSInteger shash = (stringHash >> 1);
+		NSInteger lhash = (stringHash >> 2);
+
 		NSInteger h = (stringHash % 360);
 
-		/* Saturation */
 		NSInteger s;
-
-		if (onLightBackground) {
-			s = (60 + stringHash % 25);
-		} else {
-			s = (50 + stringHash % 25);
-		}
-
-		/* Lightness */
 		NSInteger l;
 
 		if (onLightBackground)
 		{
-			if (s >= 60 && s < 66) {
-				l = (45 + stringHash % 10);
-			} else if (s >= 66 && s < 72) {
-				l = (40 + stringHash % 10);
-			} else if (s >= 72 && s < 78) {
-				l = (35 + stringHash % 10);
-			} else if (s >= 78 && s <= 85) {
-				l = (30 + stringHash % 10);
+			s = (shash % 50 + 35);   // 35 - 85
+			l = (lhash % 38 + 20);   // 20 - 58
+
+			// Lower lightness for Yello, Green, Cyan
+			if (h > 45 && h <= 195) {
+				l = (lhash % 21 + 20);   // 20 - 41
+
+				if (l > 31) {
+					s = (shash % 40 + 55);   // 55 - 95
+				} else {
+					s = (shash % 35 + 65);   // 65 - 95
+				}
+			}
+
+			// Give the reds a bit more saturation
+			if (h <= 25 || h >= 335) {
+				s = (shash % 33 + 45); // 45 - 78
 			}
 		}
 		else
 		{
-			l = (40 + stringHash % 20);
-		}
+			s = (shash % 50 + 45);   // 50 - 95
+			l = (lhash % 36 + 45);   // 45 - 81
 
-		/* Hard code the lightness when dealing with some blues and purple. */
-		if (h >= 215 && h <= 280 && l < 70) {
-			if (onLightBackground) {
-				l = (55 + stringHash % 10);
-			} else {
-				l = (65 + stringHash % 20);
+			// give the pinks a wee bit more lightness
+			if (h >= 280 && h < 335) {
+				l = (lhash % 36 + 50); // 50 - 86
+			}
+
+			// Give the blues a smaller (but lighter) range
+			if (h >= 210 && h < 240) {
+				l = (lhash % 30 + 60); // 60 - 90
+			}
+
+			// Tone down very specific range of blue/purple
+			if (h >= 240 && h < 280) {
+				s = (shash % 55 + 40); // 40 - 95
+				l = (lhash % 20 + 65); // 65 - 85
+			}
+
+			// Give the reds a bit less saturation
+			if (h <= 25 || h >= 335) {
+				s = (shash % 33 + 45); // 45 - 78
+			}
+
+			// Give the yellows and greens a bit less saturation as well
+			if (h >= 50 && h <= 150) {
+				s = (shash % 50 + 40); // 40 - 90
 			}
 		}
 
@@ -526,12 +546,10 @@
 		UniChar stringMiddleCharacter = [unshuffledString characterAtIndex:stringMiddlePoint];
 		UniChar stringLastCharacter = [unshuffledString characterAtIndex:(unshuffledStringLength - 1)];
 
-		NSInteger shuffleStartingPoint = 0;
+		NSInteger shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
 
-		if ((unshuffledStringLength % 2) == 0) {
-			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter * 1023) % unshuffledStringLength);
-		} else {
-			shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
+		if (shuffleStartingPoint == 0) {
+			shuffleStartingPoint = stringMiddlePoint;
 		}
 
 		NSMutableString *shuffledString = [NSMutableString stringWithCapacity:unshuffledStringLength];
