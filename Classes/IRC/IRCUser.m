@@ -550,7 +550,7 @@
 		UniChar stringMiddleCharacter = [unshuffledString characterAtIndex:stringMiddlePoint];
 		UniChar stringLastCharacter = [unshuffledString characterAtIndex:(unshuffledStringLength - 1)];
 
-		NSInteger shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter) % unshuffledStringLength);
+		NSInteger shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter + 5) % unshuffledStringLength);
 
 		if (shuffleStartingPoint == 0) {
 			shuffleStartingPoint = stringMiddlePoint;
