@@ -533,46 +533,14 @@
 
 + (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
-		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
-	{
-		NSString *unshuffledString = [inputString lowercaseString];
+	NSString *unshuffledString = [inputString lowercaseString];
 
-		NSInteger unshuffledStringLength = [unshuffledString length];
-
-		if (unshuffledStringLength <= 3) {
-			return unshuffledString;
-		}
-
-		NSInteger stringMiddlePoint = (NSInteger)(ceil(unshuffledStringLength / 2));
-
-		UniChar stringFirstCharacter = [unshuffledString characterAtIndex:0];
-		UniChar stringMiddleCharacter = [unshuffledString characterAtIndex:stringMiddlePoint];
-		UniChar stringLastCharacter = [unshuffledString characterAtIndex:(unshuffledStringLength - 1)];
-
-		NSInteger shuffleStartingPoint = (ABS(stringFirstCharacter + stringMiddleCharacter + stringLastCharacter + 5) % unshuffledStringLength);
-
-		if (shuffleStartingPoint == 0) {
-			shuffleStartingPoint = stringMiddlePoint;
-		}
-
-		NSMutableString *shuffledString = [NSMutableString stringWithCapacity:unshuffledStringLength];
-
-		for (NSInteger i = shuffleStartingPoint; i >= 0; i--) {
-			NSString *c = [unshuffledString stringCharacterAtIndex:i];
-
-			[shuffledString appendString:c];
-		}
-
-		for (NSInteger i = (shuffleStartingPoint + 1); i < unshuffledStringLength; i++) {
-			NSString *c = [unshuffledString stringCharacterAtIndex:i];
-
-			[shuffledString appendString:c];
-		}
-
-		return shuffledString;
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle) {
+		return [NSString stringWithFormat:@"a-%@", unshuffledString];
+	} else if (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle) {
+		return [NSString stringWithFormat:@"d-%@", unshuffledString];
 	} else {
-		return [inputString lowercaseString];
+		return unshuffledString;
 	}
 }
 
