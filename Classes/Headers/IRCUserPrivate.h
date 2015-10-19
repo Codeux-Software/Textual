@@ -38,5 +38,5 @@
 @interface IRCUserNicknameColorStyleGenerator : NSObject
 + (NSString *)nicknameColorStyleForString:(NSString *)inputString;
 
-+ (NSInteger)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle;
++ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle;
 @end
