@@ -442,17 +442,19 @@
 
 	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
 
-	NSInteger stringHash =
+	NSNumber *stringHash =
 	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyle];
 
 	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
 }
 
-+ (NSString *)nicknameColorStyleForHash:(NSInteger)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
++ (NSString *)nicknameColorStyleForHash:(NSNumber *)stringHash colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
 	if (colorStyle == TPCThemeSettingsNicknameColorLegacyStyle)
 	{
-		return [NSString stringWithInteger:(stringHash % _colorNumberMax)];
+		NSInteger stringHash64 = [stringHash integerValue];
+
+		return [NSString stringWithInteger:(stringHash64 % _colorNumberMax)];
 	}
 	else if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
 			 colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
@@ -460,13 +462,15 @@
 		/* Define base pair */
 		BOOL onLightBackground = (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle);
 
-		NSInteger shash = (stringHash >> 1);
-		NSInteger lhash = (stringHash >> 2);
+		unsigned int stringHash32 = [stringHash intValue];
 
-		NSInteger h = (stringHash % 360);
+		int shash = (stringHash32 >> 1);
+		int lhash = (stringHash32 >> 2);
 
-		NSInteger s;
-		NSInteger l;
+		int h = (stringHash32 % 360);
+
+		int s;
+		int l;
 
 		if (onLightBackground)
 		{
@@ -572,7 +576,7 @@
 	}
 }
 
-+ (NSInteger)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
++ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
 	NSString *stringToHash =
 	[IRCUserNicknameColorStyleGenerator preprocessString:inputString colorStyle:colorStyle];
@@ -588,10 +592,10 @@
 
 		CC_MD5([stringToHashData bytes], (CC_LONG)[stringToHashData length], [hashedData mutableBytes]);
 
-		NSInteger hashedValue;
-		[hashedData getBytes:&hashedValue length:6];
+		unsigned int hashedValue;
+		[hashedData getBytes:&hashedValue length:sizeof(unsigned int)];
 
-		return ABS(hashedValue);
+		return @(hashedValue);
 	}
 	else
 	{
@@ -603,7 +607,7 @@
 			hashedValue = ((hashedValue << 6) + hashedValue + c);
 		}
 
-		return hashedValue;
+		return @(hashedValue);
 	}
 }
 

@@ -81,7 +81,7 @@
 	if ([name isEqualToString:@"styleSettingsSetValue"]) {
 		return @([self styleSettingsSetValue:args]);
 	} else if ([name isEqualToString:@"nicknameColorStyleHash"]) {
-		return @([self nicknameColorStyleHash:args]);
+		return [self nicknameColorStyleHash:args];
 	}
 
 	return nil;
@@ -268,7 +268,7 @@
 	return [TPCPreferences invertSidebarColors];
 }
 
-- (NSInteger)nicknameColorStyleHash:(NSArray *)arguments
+- (NSNumber *)nicknameColorStyleHash:(NSArray *)arguments
 {
 	if ([arguments count] == 2) {
 		id inputString = arguments[0];
