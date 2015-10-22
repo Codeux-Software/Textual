@@ -60,7 +60,9 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 @property (assign) BOOL reloadingHistory;
 
 - (void)setUp;
+
 - (void)notifyDidBecomeVisible;
+- (void)notifyDidBecomeHidden;
 
 - (void)preferencesChanged;
 

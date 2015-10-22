@@ -613,7 +613,6 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[c resetState];
 
 	[c.viewController clear];
-	[c.viewController notifyDidBecomeVisible];
 	
 	[c.viewController setTopic:c.topic];
 
@@ -625,7 +624,6 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[u resetState];
 
 	[u.viewController clear];
-	[u.viewController notifyDidBecomeVisible];
 
 	[mainWindow() reloadTreeItem:u];
 }

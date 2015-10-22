@@ -8,6 +8,7 @@
 @property (nonatomic, weak) WebFrameView *webFrame;
 
 @property (readonly) BOOL canScroll;
+@property (readonly) BOOL viewingBottom;
 
 - (void)forceFrameRedraw;
 @end

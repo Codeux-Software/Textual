@@ -46,6 +46,7 @@
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL windowScriptObjectLoaded;
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
+@property (nonatomic, assign) BOOL wasViewingBottomBeforeBecomingHidden;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
 @property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
@@ -82,6 +83,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;
+
+		self.wasViewingBottomBeforeBecomingHidden = NO;
 	}
 
 	return self;
@@ -780,9 +783,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	[self executeQuickScriptCommand:@"notifyDidBecomeVisible" withArguments:@[]];
+	NSValue *wasViewingBottom = @(self.wasViewingBottomBeforeBecomingHidden);
+
+	[self executeQuickScriptCommand:@"notifyDidBecomeVisible" withArguments:@[wasViewingBottom]];
 
 	[self maybeRedrawFrame];
+}
+
+- (void)notifyDidBecomeHidden
+{
+	self.wasViewingBottomBeforeBecomingHidden = [[self webViewAutoScroller] viewingBottom];
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -979,6 +989,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	 // self.reloadingBacklog = NO;
 	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
+
+		self.wasViewingBottomBeforeBecomingHidden = NO;
 
 		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 	}];

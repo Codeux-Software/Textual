@@ -47,6 +47,15 @@
 	return (contentRect.size.height > frameRect.size.height);
 }
 
+- (BOOL)viewingBottom
+{
+	if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 - (void)maybeForceFrameRedraw
 {
 	/* WebKit uses layered compositing for position: fixed elements as of Yosemite.
@@ -72,7 +81,7 @@
 		return;
 	}
 	
-	self.lastVisibleRect = [clipView.documentView visibleRect];
+	self.lastVisibleRect = [[clipView documentView] visibleRect];
 
 	[self maybeForceFrameRedraw];
 }
@@ -88,7 +97,7 @@
 	}
 	
 	if (view == [self.webFrame documentView]) {
-		if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
+		if ([self viewingBottom]) {
 			[self scrollViewToBottom:view];
 			
 			self.lastVisibleRect = [view visibleRect];
@@ -98,7 +107,7 @@
 	}
 	
 	if (view == self.webFrame) {
-		if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
+		if ([self viewingBottom]) {
 			[self scrollViewToBottom:[self.webFrame documentView]];
 		}
 	}

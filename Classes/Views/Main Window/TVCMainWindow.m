@@ -1744,6 +1744,9 @@
 	/* Set content view to WebView. */
 	[self.channelViewBox setContentView:[log webView]];
 
+	/* Notify old view that it is no longer visible. */
+	[[self.previouslySelectedItem viewController] notifyDidBecomeHidden];
+
 	/* Prepare the member list for the selection. */
 	BOOL isClient = ([self.selectedItem isClient]);
 	BOOL isQuery = ([self.selectedItem isPrivateMessage]);
