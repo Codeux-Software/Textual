@@ -100,7 +100,6 @@ Textual.notifyDidBecomeVisible = function(wasViewingBottom)
 		Textual.scrollToBottomOfView();
 	}
 };
-};
 
 /* Resource management. */
 Textual.includeStyleResourceFile = function(file)
