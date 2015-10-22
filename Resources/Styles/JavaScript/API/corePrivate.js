@@ -92,11 +92,14 @@ Textual.scrollToBottomOfView = function(fireNotification)
 	}
 };
 
-Textual.notifyDidBecomeVisible = function()
+Textual.notifyDidBecomeVisible = function(wasViewingBottom)
 {
 	window.getSelection().empty();
 
-	Textual.scrollToBottomOfView();
+	if (wasViewingBottom) {
+		Textual.scrollToBottomOfView();
+	}
+};
 };
 
 /* Resource management. */
