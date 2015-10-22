@@ -144,23 +144,23 @@
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
 	
-	[senderInfo setHostmask:hostmask];
-	
-	[senderInfo setIsServer:NO];
-	
 	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
+		if (NSObjectsAreEqual(nicknameInt, [client localNickname])) {
+			return nil; // Do not post these events for self.
+		}
+
 		[senderInfo setNickname:nicknameInt];
 		[senderInfo setUsername:usernameInt];
 		[senderInfo setAddress:addressInt];
-		
-		if (NSObjectsAreEqual([senderInfo nickname], [client localNickname])) {
-			return input; // Do not post these events for self.
-		}
 	} else {
 		[senderInfo setNickname:hostmask];
 		
 		[senderInfo setIsServer:YES];
 	}
+
+	[senderInfo setHostmask:hostmask];
+
+	[senderInfo setIsServer:NO];
 	
 	/* Let Textual know to treat this message as a special event. */
 	[input setIsPrintOnlyMessage:YES];
