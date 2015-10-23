@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCLicenseManagerRecoverLostLicenseSheet">
@@ -102,6 +102,7 @@ Gw
                     <constraint firstAttribute="bottom" secondItem="GuT-8v-aNV" secondAttribute="bottom" constant="20" symbolic="YES" id="REI-nJ-XQE"/>
                     <constraint firstAttribute="trailing" secondItem="RLC-SX-HOX" secondAttribute="trailing" constant="27" id="WLR-Lc-YFZ"/>
                     <constraint firstItem="BdN-s0-jEO" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="20" symbolic="YES" id="ad4-im-3Ms"/>
+                    <constraint firstAttribute="trailing" secondItem="BdN-s0-jEO" secondAttribute="trailing" constant="20" id="eXU-6q-6vF"/>
                     <constraint firstItem="l4F-Hq-LJS" firstAttribute="leading" secondItem="Lpx-CQ-7HY" secondAttribute="leading" constant="26" id="jEZ-Fz-CFl"/>
                     <constraint firstItem="RLC-SX-HOX" firstAttribute="leading" secondItem="l4F-Hq-LJS" secondAttribute="trailing" constant="8" symbolic="YES" id="oYP-Lh-Ux1"/>
                     <constraint firstAttribute="trailing" secondItem="3wc-zV-dNO" secondAttribute="trailing" constant="20" id="pmf-YU-mb7"/>
