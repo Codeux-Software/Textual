@@ -162,6 +162,13 @@ static NSCache *_internalCache = nil;
 
 - (BOOL)continueWithImageProcessing
 {
+	/* Fix for very unfortunate logic oversight. Loading an image that ends up redirecting
+	 to a data image will result in self.requestResponse existing as an of NSURLResponse
+	 which does not have a header field resulting in crashes. Thanks to Prince32780 */
+	if ([self.requestResponse isKindOfClass:[NSHTTPURLResponse class]] == NO) {
+		return NO;
+	}
+
 	/* Get data from headers. */
 	NSDictionary *headers = [self.requestResponse allHeaderFields];
 
