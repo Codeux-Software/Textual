@@ -75,7 +75,7 @@ body[dir=rtl] .senderContainer {
 
 /* Time */
 body[dir=ltr] .time {
-  font-size: 10px !important;
+  font-size: .91em !important;
   white-space: nowrap;
   float: right;
   color: #999;
@@ -421,6 +421,7 @@ body div.line[command="722"] .message {
 body span.message {
   position: relative;
   padding-left: 150px;
+  /* padding-right: 25px; */
   display: table-cell;
   min-height: 22px;
   line-height: 22px;
@@ -576,4 +577,29 @@ body div.line[ltype=action][highlight=true] {
   position: relative;
   font-weight: normal;
   background-color: #30473a;
+}
+
+/* Date changes */
+body div.date {
+    display: flex;
+    display: -webkit-flex;
+    padding: .5em 0;
+}
+
+body div.date > hr {
+    background: #444;
+    border: 0;
+    flex: 1;
+    height: 1px;
+    margin-top: .6em;
+    -webkit-flex: 1;
+}
+
+body div.date > span {
+    font-style: oblique;
+    margin: 0 1em;
+}
+
+body div.date + div#mark, body div.date + div#historic_messages + div#mark {
+  display: none;
 }
