@@ -421,7 +421,11 @@
 			}
 		} else {
 			if (userCompletionSuffixLength == 0) {
-				newCompletionSuffix = NSStringWhitespacePlaceholder;
+				BOOL doNotAppendWhitespace = [RZUserDefaults() boolForKey:@"Tab Completion -> Do Not Use Whitespace for Missing Completion Suffix"];
+
+				if (doNotAppendWhitespace == NO) {
+					newCompletionSuffix = NSStringWhitespacePlaceholder;
+				}
 			} else {
 				newCompletionSuffix = userCompletionSuffix;
 			}
