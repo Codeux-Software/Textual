@@ -535,10 +535,10 @@
 {
 	NSString *unshuffledString = [inputString lowercaseString];
 
-	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle) {
+	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
+		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
+	{
 		return [NSString stringWithFormat:@"a-%@", unshuffledString];
-	} else if (colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle) {
-		return [NSString stringWithFormat:@"d-%@", unshuffledString];
 	} else {
 		return unshuffledString;
 	}
