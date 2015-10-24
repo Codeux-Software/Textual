@@ -5274,9 +5274,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
-			if ([c findMember:target]) {
-				[c removeMember:target];
-			}
+			[c removeMember:target];
 		}
 	}
 }
