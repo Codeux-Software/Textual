@@ -818,9 +818,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		NSString *nick2 = [(IRCUser *)obj nickname];
 
 		if (mask & NSCaseInsensitiveSearch) {
-			return [nick isEqualToString:nick2];
-		} else {
 			return [nick isEqualIgnoringCase:nick2];
+		} else {
+			return [nick isEqualToString:nick2];
 		}
 	}];
 
