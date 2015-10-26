@@ -205,6 +205,13 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() boolForKey:@"AutomaticallyDetectHighlightSpam"];
 }
 
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
++ (BOOL)receiveBetaUpdates
+{
+	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
+}
+#endif
+
 + (BOOL)disableNicknameColorHashing
 {
 	return [RZUserDefaults() boolForKey:@"DisableRemoteNicknameColorHashing"];

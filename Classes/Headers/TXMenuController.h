@@ -191,6 +191,7 @@
 	923: "Simulate a Crash"
 	924: "Export Preferences"
 	925: "Import Preferences"
+	926: "Download Beta Updates"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
@@ -454,6 +455,7 @@
 - (IBAction)simulateCrash:(id)sender;
 #endif
 
+- (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
 
 - (IBAction)emptyAction:(id)sender TEXTUAL_DEPRECATED("Do not target this method");

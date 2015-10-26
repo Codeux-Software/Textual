@@ -202,19 +202,27 @@
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
 
-	NSString *feedURL = [sparkleData objectForKey:@"SUFeedURL"];
+	NSString *feedURL = nil;
+
+	if ([TPCPreferences receiveBetaUpdates] == NO) {
+		feedURL = [sparkleData objectForKey:@"SUFeedURL"];
+	} else {
+		feedURL = [sparkleData objectForKey:@"SUFeedURL-beta"];
+	}
 
 	if (feedURL) {
-		[[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:feedURL]];
+		SUUpdater *updater = [SUUpdater sharedUpdater];
 
-		[[SUUpdater sharedUpdater] setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
-		[[SUUpdater sharedUpdater] setAutomaticallyDownloadsUpdates:[sparkleData boolForKey:@"SUAllowsAutomaticUpdates"]];
+		[updater setFeedURL:[NSURL URLWithString:feedURL]];
 
-		[[SUUpdater sharedUpdater] setSendsSystemProfile:[sparkleData boolForKey:@"SUEnableSystemProfiling"]];
+		[updater setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
+		[updater setAutomaticallyDownloadsUpdates:[sparkleData boolForKey:@"SUAllowsAutomaticUpdates"]];
 
-		[[SUUpdater sharedUpdater] setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+		[updater setSendsSystemProfile:[sparkleData boolForKey:@"SUEnableSystemProfiling"]];
 
-		[[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+
+		[updater checkForUpdatesInBackground];
 	}
 #endif
 }

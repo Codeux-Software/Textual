@@ -4,6 +4,8 @@
 <dict>
 	<key>SUFeedURL</key>
 	<string>https://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one.xml</string>
+	<key>SUFeedURL-beta</key>
+	<string>https://www.codeux.com/textual/private/appcast/sparkle/feeds/v5/feed-one-beta.xml</string>
 	<key>SUAllowsAutomaticUpdates</key>
 	<false/>
 	<key>SUBundleName</key>

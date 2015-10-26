@@ -585,7 +585,20 @@
             }
             
             return YES;
-        }
+		}
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+		case 926: // Download Beta Updates
+		{
+			if ([TPCPreferences receiveBetaUpdates] == YES) {
+				[item setState:NSOnState];
+			} else {
+				[item setState:NSOffState];
+			}
+
+			return YES;
+		}
+#endif
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
@@ -2965,6 +2978,27 @@
 
 #pragma mark -
 #pragma mark Sparkle Framework
+
+- (void)toggleBetaUpdates:(id)sender
+{
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	if ([sender state] == NSOnState) {
+		[RZUserDefaults() setBool:NO forKey:@"ReceiveBetaUpdates"];
+
+		[sender setState:NSOffState];
+	} else {
+		[RZUserDefaults() setBool:YES forKey:@"ReceiveBetaUpdates"];
+
+		[sender setState:NSOnState];
+	}
+
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction];
+
+	if ([TPCPreferences receiveBetaUpdates]) {
+		[self checkForUpdates:sender];
+	}
+#endif
+}
 
 - (void)checkForUpdates:(id)sender
 {

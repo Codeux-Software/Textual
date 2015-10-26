@@ -109,6 +109,10 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 @interface TPCPreferences : NSObject
 + (NSString *)masqueradeCTCPVersion;
 
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
++ (BOOL)receiveBetaUpdates;
+#endif
+
 + (BOOL)channelNavigationIsServerSpecific;
 
 + (BOOL)automaticallyDetectHighlightSpam;
