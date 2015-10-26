@@ -430,15 +430,6 @@
 		<key>indexValue</key>
 		<integer>5037</integer>
 	</dict>
-	<key>loaded_plugins</key>
-	<dict>
-		<key>command</key>
-		<string>LOADED_PLUGINS</string>
-		<key>developerModeOnly</key>
-		<true/>
-		<key>indexValue</key>
-		<integer>5091</integer>
-	</dict>
 	<key>locops</key>
 	<dict>
 		<key>command</key>

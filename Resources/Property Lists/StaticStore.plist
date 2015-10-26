@@ -197,5 +197,12 @@
 		<string>uuid</string>
 		<string>vlc</string>
 	</array>
+	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
+	<dict>
+		<key>BlowfishEncryption</key>
+		<string>1.0.2</string>
+		<key>WikiStyleLinkParser</key>
+		<string>1.0.2</string>
+	</dict>
 </dict>
 </plist>

@@ -3000,27 +3000,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			
 			break;
 		}
-		case 5091: // Command: LOADED_PLUGINS
-		{
-			NSArray *loadedBundles = [sharedPluginManager() allLoadedExtensions];
-			NSArray *loadedScripts = [sharedPluginManager() supportedAppleScriptCommands];
-
-			NSString *bundleResult = [loadedBundles componentsJoinedByString:@", "];
-			NSString *scriptResult = [loadedScripts componentsJoinedByString:@", "];
-
-			if (NSObjectIsEmpty(bundleResult)) {
-				bundleResult = BLS(1105);
-			}
-
-			if (NSObjectIsEmpty(scriptResult)) {
-				scriptResult = BLS(1105);
-			}
-
-			[self printDebugInformation:BLS(1103, bundleResult)];
-			[self printDebugInformation:BLS(1104, scriptResult)];
-
-			break;
-		}
 		case 5084: // Command: LAGCHECK
 		case 5045: // Command: MYLAG
 		{
@@ -3176,7 +3155,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5098: // Command: GETSCRIPTS
 		{
-			[sharedPluginManager() openExtrasInstallerDownloadURL];
+			[sharedPluginManager() extrasInstallerLaunchInstaller];
 			
 			break;
 		}
@@ -3339,7 +3318,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand scriptPath:&scriptPath isReserved:&commandIsReserved isScript:&scriptFound isExtension:&pluginFound];
 
 			if (commandIsReserved) {
-				[sharedPluginManager() maybeOpenExtrasInstallerDownloadURLForCommand:lowercaseCommand];
+				[sharedPluginManager() extrasInstallerAskUserIfTheyWantToInstallCommand:lowercaseCommand];
 			}
 
 			/* Perform script or plugin. */
