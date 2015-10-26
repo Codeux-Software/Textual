@@ -60,7 +60,7 @@
 	}
 }
 
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local lostBytes:(NSInteger *)lostBytes
 {
 	if (mode == EKBlowfishEncryptionNoneModeOfOperation) {
 		return input;
@@ -102,7 +102,7 @@
 		phrase = [phrase substringToIndex:56];
 	}
 
-	NSString *result = [EKBlowfishEncryptionBase decrypt:input key:phrase mode:mode encoding:local badBytes:badByteCount];
+	NSString *result = [EKBlowfishEncryptionBase decrypt:input key:phrase mode:mode encoding:local lostBytes:lostBytes];
 
 	if ([result length] <= 0) {
 		return nil;

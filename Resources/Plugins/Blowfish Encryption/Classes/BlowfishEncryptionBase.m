@@ -33,69 +33,25 @@
 /* A portion of this source file contains copyrighted work derived from one or more
  3rd party, open source projects. The use of this work is hereby acknowledged. */
 
-/*
-	Copyright (c) 2010 Samuel Lidén Borell <samuel@slbdata.se>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in
-	all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-	THE SOFTWARE.
- */
-
-/* This source file contains modified work of the original mirc_fish_10
- project hosted at: https://github.com/flakes/mirc_fish_10/tree/master/fish_10
- The author of this project has opted to not license their software and 
- instead release it into the Public Domain. */
+// Copyright (c) 2005-2013 Mathias Karlsson
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// Please see LICENSE-GPLv2.txt for further information.
 
 #import "BlowfishEncryptionBase.h"
 
 #import "NSDataHelper.h"
 
-#include <openssl/blowfish.h>
-#include <openssl/evp.h>
-#include <openssl/rand.h>
-#include <openssl/bio.h>
-
 #import <CocoaExtensions/XRBase64Encoding.h>
 
-/* =============================================== */
+#import <CommonCrypto/CommonCrypto.h>
+#import <CommonCrypto/CommonRandom.h>
 
-#define IB 64
-
-static const char fish_base64[64] = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-static const signed char fish_unbase64[256] = {
-    IB,IB,IB,IB,IB,IB,IB,IB,  IB,IB,IB,IB,IB,IB,IB,IB,
-    IB,IB,IB,IB,IB,IB,IB,IB,  IB,IB,IB,IB,IB,IB,IB,IB,
-    IB,IB,IB,IB,IB,IB,IB,IB,  IB,IB,IB,IB,IB,IB, 0, 1,
-	2, 3, 4, 5, 6, 7, 8, 9,   10,11,IB,IB,IB,IB,IB,IB,
-    IB,38,39,40,41,42,43,44,  45,46,47,48,49,50,51,52,
-    53,54,55,56,57,58,59,60,  61,62,63,IB,IB,IB,IB,IB,
-    IB,12,13,14,15,16,17,18,  19,20,21,22,23,24,25,26,
-    27,28,29,30,31,32,33,34,  35,36,37,IB,IB,IB,IB,IB,
-};
-
-#define GET_BYTES(dest, source) do { \
-	*((dest)++) = ((source) >> 24) & 0xFF; \
-	*((dest)++) = ((source) >> 16) & 0xFF; \
-	*((dest)++) = ((source) >> 8) & 0xFF; \
-	*((dest)++) = (source) & 0xFF; \
-} while (0);
-
-/* =============================================== */
+static const char blowfish_ecb_base64_chars[64] = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 #pragma mark -
 #pragma mark Implementation.
@@ -111,513 +67,403 @@ static const signed char fish_unbase64[256] = {
 	}
 }
 
-+ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
++ (NSString *)decrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding lostBytes:(NSInteger *)lostBytes
 {
 	if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {
-		return [self ecb_decrypt:rawInput key:secretKey encoding:dataEncoding badBytes:badByteCount];
+		return [self ecb_decrypt:rawInput key:secretKey encoding:dataEncoding lostBytes:lostBytes];
 	} else {
-		return [self cbc_decrypt:rawInput key:secretKey encoding:dataEncoding badBytes:badByteCount];
+		return [self cbc_decrypt:rawInput key:secretKey encoding:dataEncoding];
 	}
+}
+
+NSData *_commonCryptoIninitializationVector()
+{
+	uint8_t ininitializationVector[kCCBlockSizeBlowfish] = {0};
+
+	CCRNGStatus cryptorRandomBytesStatus =
+	CCRandomGenerateBytes(&ininitializationVector, 8);
+
+	if (cryptorRandomBytesStatus == kCCSuccess) {
+		return [NSData dataWithBytes:ininitializationVector length:kCCBlockSizeBlowfish];
+	} else {
+		return nil;
+	}
+}
+
+NSData *_performCommonCryptoOperation(CCOperation ccInOperation,
+									  CCAlgorithm ccInOperationAlgorithm,
+									  CCMode ccInOperationMode,
+									  BOOL ccInOperationUsesPadding,
+									  NSData *ccIninitializationVector,
+									  NSData *ccInSecretKey,
+									  NSData *ccInRelatedData)
+{
+	/* Perform basic validation on input data. */
+	if (ccInSecretKey == nil || ccInRelatedData == nil) {
+		return nil;
+	}
+
+	/* Validate key length is within an expected range. */
+	switch (ccInOperationAlgorithm) {
+		case kCCAlgorithmAES128:
+		{
+			if ([ccInSecretKey length] != kCCKeySizeAES128 &&
+				[ccInSecretKey length] != kCCKeySizeAES192 &&
+				[ccInSecretKey length] != kCCKeySizeAES256)
+			{
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithmDES:
+		{
+			if ([ccInSecretKey length] != kCCKeySizeDES) {
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithm3DES:
+		{
+			if ([ccInSecretKey length] != kCCKeySize3DES) {
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithmCAST:
+		{
+			if ([ccInSecretKey length] < kCCKeySizeMinCAST ||
+				[ccInSecretKey length] > kCCKeySizeMaxCAST)
+			{
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithmRC4:
+		{
+			if ([ccInSecretKey length] < kCCKeySizeMinRC4 ||
+				[ccInSecretKey length] > kCCKeySizeMaxRC4)
+			{
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithmRC2:
+		{
+			if ([ccInSecretKey length] < kCCKeySizeMinRC2 ||
+				[ccInSecretKey length] > kCCKeySizeMaxRC2)
+			{
+				return nil;
+			}
+
+			break;
+		}
+		case kCCAlgorithmBlowfish:
+		{
+			if (/* [ccInSecretKey length] < kCCKeySizeMinBlowfish || */
+				[ccInSecretKey length] > kCCKeySizeMaxBlowfish)
+			{
+				return nil;
+			}
+
+			break;
+		}
+	}
+
+	/* Attempt to create a cryptor reference using input. */
+	CCPadding ccInPadding;
+
+	if (ccInOperationUsesPadding) {
+		ccInPadding = ccPKCS7Padding;
+	} else {
+		ccInPadding = ccNoPadding;
+	}
+
+	CCCryptorRef cryptorRef;
+
+	CCCryptorStatus cryptorCreateStatus =
+	CCCryptorCreateWithMode(ccInOperation,
+							ccInOperationMode,
+							ccInOperationAlgorithm,
+							ccInPadding,
+							[ccIninitializationVector bytes],
+							[ccInSecretKey bytes],
+							[ccInSecretKey length],
+							NULL,
+							0,
+							0,
+							0,
+							&cryptorRef);
+
+	if (cryptorCreateStatus != kCCSuccess) {
+		return nil;
+	}
+
+	/* Create output buffer using expected output length. */
+	size_t outputBufferSize = CCCryptorGetOutputLength(cryptorRef, [ccInRelatedData length], true);
+
+	NSMutableData *outputBuffer = [NSMutableData dataWithLength:outputBufferSize];;
+
+	/* Perform update operation on the cryptor. */
+	size_t cryptorUpdateDataOutMoved = 0;
+
+	CCCryptorStatus cryptorUpdateStatus =
+	CCCryptorUpdate(cryptorRef,
+					[ccInRelatedData bytes],
+					[ccInRelatedData length],
+					[outputBuffer mutableBytes],
+					[outputBuffer length],
+					&cryptorUpdateDataOutMoved);
+
+	if (cryptorUpdateStatus != kCCSuccess) {
+		goto cleanup_function;
+	}
+
+	/* Perform final operation on the cryptor. */
+	size_t totalBytesWritten = cryptorUpdateDataOutMoved;
+
+	if (ccInPadding == ccPKCS7Padding || ccInOperationAlgorithm == kCCAlgorithmRC4) {
+		void *cryptorFinalDataOut = ([outputBuffer mutableBytes] + cryptorUpdateDataOutMoved);
+
+		size_t cryptorFinalDataOutSize = ([outputBuffer length] - cryptorUpdateDataOutMoved);
+
+		CCCryptorStatus cryptorFinalStatus =
+		CCCryptorFinal(cryptorRef,
+					   cryptorFinalDataOut,
+					   cryptorFinalDataOutSize,
+					   &cryptorUpdateDataOutMoved);
+
+		if (cryptorFinalStatus != kCCSuccess) {
+			goto cleanup_function;
+		}
+
+		totalBytesWritten += cryptorUpdateDataOutMoved;
+
+		[outputBuffer setLength:totalBytesWritten];
+	}
+
+cleanup_function:
+	if (cryptorRef) {
+		CCCryptorRelease(cryptorRef);
+	}
+	
+	return outputBuffer;
 }
 
 #pragma mark -
 #pragma mark CBC Encryption
 
-+ (BOOL)walkBlowfishCipherForCBC:(EVP_CIPHER_CTX *)context inputStream:(unsigned char *)inputStream inputSize:(size_t)inputSize outputHandler:(NSMutableData * __autoreleasing *)outputHandler
-{
-	/* Define basic context. */
-	size_t _bytesLeft = inputSize;
-	
-	const unsigned char *_inputPointer = inputStream;
-	
-	unsigned char _temporaryBuffer[256];
-	
-	int _outLength;
-	
-	/* Begin looping blocks. */
-	while (_bytesLeft > 0) {
-		int _inSize = (int)_bytesLeft;
-		
-		if (_inSize > 256) {
-			_inSize = 256;
-		}
-		
-		if (EVP_CipherUpdate(context, _temporaryBuffer, &_outLength, _inputPointer, _inSize) == 0) {
-			NSLog(@"[EKBlowfishEncryptionBase] Walking the cipher failed on EVP_CipherUpdate");
-			
-			return NO;
-		}
-		
-		[*outputHandler appendBytes:_temporaryBuffer length:_outLength];
-		
-		_bytesLeft -= _inSize;
-		
-		_inputPointer += _inSize;
-	}
-	
-	/* Finish looping. */
-	BOOL success = (EVP_CipherFinal_ex(context, _temporaryBuffer, &_outLength) == 1);
-	
-	if (success) {
-		[*outputHandler appendBytes:_temporaryBuffer length:_outLength];
-	} else {
-		NSLog(@"[EKBlowfishEncryptionBase] Walking the cipher failed on EVP_CipherFinal_ex");
-	}
-	
-	return success;
-}
-
 + (NSString *)cbc_encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
-	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		NSLog(@"[EKBlowfishEncryptionBase] Received bad input with a empty value or empty key.");
-		
+	NSData *secretKeyData = [secretKey dataUsingEncoding:dataEncoding];
+
+	NSData *rawInputData = [rawInput dataUsingEncoding:dataEncoding paddedByBytes:kCCBlockSizeBlowfish];
+
+	NSData *ininitializationVectorData = _commonCryptoIninitializationVector();
+
+	if (ininitializationVectorData == nil) {
 		return nil;
 	}
-	
-	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
-	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-	
-	if (message == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of message could not be created.");
-		
-		return nil;
-	}
-	
-	if (secrkey == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of the secret key could not be created.");
-		
-		return nil;
-	}
-	
-	size_t keylen = strlen(secrkey);
-	size_t msglen = strlen(message);
 
-	/* =============================================== */
-	
-	EVP_CIPHER_CTX context;
-	
-	const unsigned char iv[8] = {0};
+	/* mIRC fish 10 places the ininitialization vector directly on the data
+	 stream rather than allowing the crypto library to handle that itself. 
+	 If we do not append the IV here and instead feed it to Common Crypto,
+	 mIRC will not handle the operation properly. */
+	NSMutableData *objectToEncrypt = [NSMutableData data];
 
-	/* =============================================== */
-	
-	/* Create structure for encryption. */
-	EVP_CIPHER_CTX_init(&context);
-	
-	EVP_CipherInit_ex(&context, EVP_bf_cbc(), NULL, NULL, NULL, 1);
-	
-	/* Set options for encryption. */
-	EVP_CIPHER_CTX_set_key_length(&context, (int)keylen);
-	
-	EVP_CIPHER_CTX_set_padding(&context, 0);
-	
-	/* Build session context. */
-	EVP_CipherInit_ex(&context, NULL, NULL, (const unsigned char *)secrkey, iv, 1);
-	
-	/* Prepare buffer. */
-	size_t bufferSize = msglen;
-	
-	if (bufferSize % 8) {
-		bufferSize += (8 - (bufferSize % 8));
-	}
-	
-	bufferSize += 8;
-	
-	/* =============================================== */
-	
-	/* Create buffer. */
-	unsigned char *inputStream = malloc(bufferSize);
-	
-	memset(inputStream, 0, bufferSize);
-	
-	/* General IV. */
-	unsigned char realIv[8];
-	
-	if (RAND_bytes(realIv, 8) == 0) {
-		RAND_pseudo_bytes(realIv, 8);
-	}
-	
-	/* Copy seed information. */
-	memcpy( inputStream, realIv, 8);
-	memcpy((inputStream + 8), message, msglen);
-	
-	/* =============================================== */
-	
-	/* Out output stream. */
-	NSMutableData *outputHandler = [NSMutableData data];
-	
-	/* Perform encryption. */
-	BOOL result = [EKBlowfishEncryptionBase walkBlowfishCipherForCBC:&context inputStream:inputStream inputSize:bufferSize outputHandler:&outputHandler];
-	
-	EVP_CIPHER_CTX_cleanup(&context);
+	[objectToEncrypt appendData:ininitializationVectorData];
+	[objectToEncrypt appendData:rawInputData];
 
-	free(inputStream);
+	NSData *encryptedData =
+	_performCommonCryptoOperation(kCCEncrypt, kCCAlgorithmBlowfish, kCCModeCBC, NO, nil, secretKeyData, objectToEncrypt);
 
-	if (result) {
-		return [XRBase64Encoding encodeData:outputHandler];
-	} else {
-		NSLog(@"[EKBlowfishEncryptionBase] Walking the cipher returned NO.");
-		
-		return nil;
-	}
+	return [XRBase64Encoding encodeData:encryptedData];
 }
 
 #pragma mark -
 #pragma mark CBC Decryption
 
-+ (NSString *)cbc_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
++ (NSString *)cbc_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
-	*badByteCount = 0;
-		
-	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		NSLog(@"[EKBlowfishEncryptionBase] Received bad input with a empty value or empty key.");
-		
-		return nil;
-	}
-	
-	/* Decode encoded data. */
-	NSData *decodedMessage = [EKBlowfishEncryptionBase base64DecodedCDCData:rawInput];
-	
-	NSInteger trueLength = [decodedMessage length];
+	NSData *secretKeyData = [secretKey dataUsingEncoding:dataEncoding];
 
-	/* Check if message is fragment. */
-	if (trueLength <= 8) {
-		NSLog(@"[EKBlowfishEncryptionBase] Received corrupt input with a length less than 8.");
-		
-		return nil; // Cancel operation.
-	}
-	
-	/* Begin decoding message. */
-	BOOL beenCut = (trueLength % 8);
-	
-	if (beenCut) {
-		NSLog(@"[EKBlowfishEncryptionBase] WARNING: Received input not divisible by 8. Moving to last block which is. This may lose data.");
-		
-		trueLength = (trueLength - (trueLength % 8));
-	}
-	
-	unsigned char *message = malloc(trueLength);
-	
-	[decodedMessage getBytes:message length:trueLength];
-	
-	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-	
-	size_t keylen = strlen(secrkey);
-	
-	size_t msglen = trueLength;
+	NSData *rawInputData = [XRBase64Encoding decodeData:rawInput];
 
-	/* =============================================== */
-	
-	EVP_CIPHER_CTX context;
-	
-	const unsigned char iv[8] = {0};
-	
-	/* Create structure for encryption. */
-	EVP_CIPHER_CTX_init(&context);
-	
-	EVP_CipherInit_ex(&context, EVP_bf_cbc(), NULL, NULL, NULL, 0);
-	
-	/* Set options for encryption. */
-	EVP_CIPHER_CTX_set_key_length(&context, (int)keylen);
-	
-	EVP_CIPHER_CTX_set_padding(&context, 0);
-	
-	/* Build session context. */
-	EVP_CipherInit_ex(&context, NULL, NULL, (const unsigned char *)secrkey, iv, 0);
-	
-	/* =============================================== */
-	
-	/* Out output stream. */
-	NSMutableData *outputHandler = [NSMutableData data];
-	
-	/* Perform encryption. */
-	BOOL result = [EKBlowfishEncryptionBase walkBlowfishCipherForCBC:&context inputStream:message inputSize:msglen outputHandler:&outputHandler];
-	
-	EVP_CIPHER_CTX_cleanup(&context);
-	
-	free(message);
-	
-	/* Return result. */
-	if (result) {
-		if ([outputHandler length] > 8) {
-			[outputHandler replaceBytesInRange:NSMakeRange(0, 8) withBytes:NULL length:0];
-			
-			[outputHandler removeBadCharacters];
-			
-			NSData *finalData = nil;
-			
-			if (dataEncoding == NSUTF8StringEncoding) {
-				finalData = [outputHandler repairedCharacterBufferForUTF8Encoding:badByteCount];
-			} else {
-				finalData =  outputHandler;
-			}
-			
-			NSString *cipher = [[NSString alloc] initWithData:finalData encoding:dataEncoding];
+	NSData *decryptedData =
+	_performCommonCryptoOperation(kCCDecrypt, kCCAlgorithmBlowfish, kCCModeCBC, NO, nil, secretKeyData, rawInputData);
 
-			return cipher;
-		} else {
-			NSLog(@"[EKBlowfishEncryptionBase] outputHandler returned a result with a length less or equal to 8.");
-			
-			return nil;
-		}
+	/* If we contain at least two blocks, then remove the first block. 
+	 mIRC fish 10 has the IV in the first block then we want at least
+	 one block of user data. */
+	if ([decryptedData length] >= (kCCBlockSizeBlowfish * 2)) {
+		 decryptedData = [decryptedData subdataWithRange:NSMakeRange(kCCBlockSizeBlowfish,
+										   ([decryptedData length] - kCCBlockSizeBlowfish))];
 	} else {
-		NSLog(@"[EKBlowfishEncryptionBase] Walking the cipher returned NO.");
-		
 		return nil;
 	}
+
+	NSMutableData *decryptedDataCleaned = [decryptedData mutableCopy];
+	[decryptedDataCleaned removeBadCharacters];
+
+	return [[NSString alloc] initWithData:decryptedDataCleaned encoding:dataEncoding];
 }
 
 #pragma mark -
-#pragma mark CDC Utilities
-
-+ (NSData *)base64DecodedCDCData:(NSString *)rawInput
-{
-	NSData *data = [rawInput dataUsingEncoding:NSASCIIStringEncoding];
-	
-	BIO *command = BIO_new(BIO_f_base64());
-	
-	BIO_set_flags(command, BIO_FLAGS_BASE64_NO_NL);
-	
-	BIO *context = BIO_new_mem_buf((void *)[data bytes], (int)[data length]);
-	
-	context = BIO_push(command, context);
- 
-	NSMutableData *decodedMessage = [NSMutableData data];
-	
-#define BUFFSIZE 256
-	int len;
-	
-	char inbuf[BUFFSIZE];
-	
-	while ((len = BIO_read(context, inbuf, BUFFSIZE)) > 0) {
-		[decodedMessage appendBytes:inbuf length:len];
-	}
- 
-	BIO_free_all(context);
-#undef BUFFSIZE
-	
-	return decodedMessage;
-}
-
-#pragma mark -
-#pragma mark ECB Decryption
+#pragma mark ECB Mode Encryption
 
 + (NSString *)ecb_encrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding
 {
-	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		NSLog(@"[EKBlowfishEncryptionBase] Received bad input with a empty value or empty key.");
-		
-		return nil;
-	}
-	
-	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
-	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-	
-	if (message == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of message could not be created.");
-		
-		return nil;
-	}
-	
-	if (secrkey == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of the secret key could not be created.");
-		
-		return nil;
-	}
-	
-	size_t keylen = strlen(secrkey);
-	size_t msglen = strlen(message);
+	NSData *secretKeyData = [secretKey dataUsingEncoding:dataEncoding];
 
-	/* =============================================== */
+	NSData *rawInputData = [rawInput dataUsingEncoding:dataEncoding paddedByBytes:kCCBlockSizeBlowfish];
 
-	BF_KEY bfkey;
-	
-    BF_set_key(&bfkey, (int)keylen, (const unsigned char *)secrkey);
+	NSData *encryptedData =
+	_performCommonCryptoOperation(kCCEncrypt, kCCAlgorithmBlowfish, kCCModeECB, NO, nil, secretKeyData, rawInputData);
 
-	NSInteger mallocSize = msglen;
+	NSString *encryptedString = [EKBlowfishEncryptionBase ecb_encrypt_base64Encode:encryptedData];
 
-	mallocSize -= 1;
-	mallocSize /= 8;
-	mallocSize *= 12;
-	mallocSize += 12;
-	mallocSize += 1;
-	
-    char *encrypted = malloc(mallocSize);
+	return encryptedString;
+}
 
-    char *end = encrypted;
++ (NSString *)ecb_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding lostBytes:(NSInteger *)lostBytes
+{
+	NSData *secretKeyData = [secretKey dataUsingEncoding:dataEncoding];
 
-    if (encrypted == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] Malloc block for encrypted segment returned NULL result.");
+	NSData *encodedRawData = [rawInput dataUsingEncoding:dataEncoding fitToPadding:12 trimmedCharacters:lostBytes];
 
-		return nil;
-	}
+	NSData *rawInputData = [EKBlowfishEncryptionBase ecb_decrypt_base64Decode:encodedRawData];
 
-    while (*message) {
-        BF_LONG binary[2] = {0, 0};
-		
-        unsigned char c;
+	NSData *decryptedData =
+	_performCommonCryptoOperation(kCCDecrypt, kCCAlgorithmBlowfish, kCCModeECB, NO, nil, secretKeyData, rawInputData);
 
-        for (size_t i = 0; i < 8; i++) {
-            c = message[i];
-			
-            binary[i >> 2] |= (c << (8 * (3 - (i & 3))));
-			
-            if (c == '\0') {
-				break;
-			}
-        }
+	NSMutableData *decryptedDataCleaned = [decryptedData mutableCopy];
+	[decryptedDataCleaned removeBadCharacters];
 
-        message += 8;
-
-        BF_encrypt(binary, &bfkey);
-
-        unsigned char bit = 0;
-        unsigned char word = 1;
-
-        for (int i = 0; i < 12; i++) {
-            unsigned char d = fish_base64[((binary[word] >> bit) & 63)];
-
-			*(end++) = d;
-			
-            bit += 6;
-
-			if (i == 5) {
-                bit = 0;
-                word = 0;
-            }
-        }
-
-        if (c == '\0') {
-			break;
-		}
-    }
-
-    *end = '\0';
-
-	/* =============================================== */
-
-	NSString *cipher = [NSString stringWithCString:encrypted encoding:dataEncoding];
-
-	free(encrypted);
-
-	/* =============================================== */
-
-	if ([cipher length] <= 0) {
-		return nil;
-	}
-	
-    return cipher;
+	return [[NSString alloc] initWithData:decryptedDataCleaned encoding:dataEncoding];
 }
 
 #pragma mark -
-#pragma mark ECB Decryption
+#pragma mark ECB Mode Encoding
 
-+ (NSString *)ecb_decrypt:(NSString *)rawInput key:(NSString *)secretKey encoding:(NSStringEncoding)dataEncoding badBytes:(NSInteger *)badByteCount
++ (NSString *)ecb_encrypt_base64Encode:(NSData *)encryptedData
 {
-	*badByteCount = 0;
-		
-	if ([secretKey length] <= 0 || [rawInput length] <= 0) {
-		NSLog(@"[EKBlowfishEncryptionBase] Received bad input with a empty value or empty key.");
-		
+	if (encryptedData == nil) {
 		return nil;
 	}
 
-	const char *message	= [rawInput	 cStringUsingEncoding:dataEncoding];
-	const char *secrkey	= [secretKey cStringUsingEncoding:dataEncoding];
-	
-	if (message == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of message could not be created.");
-		
-		return nil;
-	}
-	
-	if (secrkey == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] C string value of the secret key could not be created.");
-		
-		return nil;
-	}
-	
-	size_t keylen = strlen(secrkey);
-	size_t msglen = strlen(message);
-
-	/* =============================================== */
-
-	BF_KEY bfkey;
-	
-    BF_set_key(&bfkey, (int)keylen, (const unsigned char *)secrkey);
-
-    char *decrypted = malloc((msglen + 1));
-	
-    char *end = decrypted;
-
-	if (decrypted == NULL) {
-		NSLog(@"[EKBlowfishEncryptionBase] Malloc block for encrypted segment returned NULL result.");
-
+	if (([encryptedData length] % kCCBlockSizeBlowfish) != 0) {
 		return nil;
 	}
 
-	BOOL breakloop = NO;
+	NSMutableData *outputBuffer = [NSMutableData data];
 
-    while (*message) {
-        BF_LONG binary[2] = {0, 0};
-		
-        unsigned char bit = 0;
-        unsigned char word = 1;
+	unsigned char *s = (unsigned char *)[encryptedData bytes];
 
-        for (size_t i = 0; i < 12; i++) {
-            unsigned char d = fish_unbase64[(const unsigned char)*(message++)];
+	for (NSInteger i = 0; i < [encryptedData length]; i += 8) {
+		unsigned int left;
+		unsigned int right;
 
-            if (d == IB) {
-				breakloop = YES;
+		left  = (*s++ << 24);
+		left += (*s++ << 16);
+		left += (*s++ << 8);
+		left +=  *s++;
 
-				break;
-			}
-			
-            binary[word] |= (d << bit);
-			
-            bit += 6;
+		right  = (*s++ << 24);
+		right += (*s++ << 16);
+		right += (*s++ << 8);
+		right +=  *s++;
 
-            if (i == 5) {
-                bit = 0;
-                word = 0;
-            }
-        }
+		for (NSInteger k = 0; k < 6; k++) {
+			unsigned char partChar = blowfish_ecb_base64_chars[(right & 0x3f)];
 
-		if (breakloop) { // Old implementation used "goto" for this. eww…
-			break;
+			[outputBuffer appendBytes:&partChar length:sizeof(partChar)];
+
+			right = (right >> 6);
 		}
 
-        BF_decrypt(binary, &bfkey);
+		for (NSInteger k = 0; k < 6; k++) {
+			unsigned char partChar = blowfish_ecb_base64_chars[(left & 0x3f)];
 
-        GET_BYTES(end, binary[0]);
-        GET_BYTES(end, binary[1]);
-    }
+			[outputBuffer appendBytes:&partChar length:sizeof(partChar)];
 
-    *end = '\0';
-	
-	// ========================================== //
-
-	NSData *rawData = [NSData dataWithBytes:decrypted length:strlen(decrypted)];
-	
-	rawData = [rawData dataByRemovingBadCharacters];
-	
-	if (dataEncoding == NSUTF8StringEncoding) {
-		rawData = [rawData repairedCharacterBufferForUTF8Encoding:badByteCount];
-	} else {
-		*badByteCount = 0;
+			left = (left >> 6);
+		}
 	}
-	
-	NSString *cipher = [[NSString alloc] initWithData:rawData encoding:dataEncoding];
 
-	free(decrypted);
+	return [[NSString alloc] initWithData:outputBuffer encoding:NSASCIIStringEncoding];
+}
 
-	// ========================================== //
++ (int)ecb_decrypt_base64DecodeCharacterIndex:(char)c
+{
+	int i = (-1);
 
-	if ([cipher length] <= 0) {
+	for (i = 0; i < 64; i++) {
+		if (blowfish_ecb_base64_chars[i] == c) {
+			return i;
+		}
+	}
+
+	return i;
+}
+
++ (NSData *)ecb_decrypt_base64Decode:(NSData *)dataToDecrypt
+{
+	if (dataToDecrypt == nil) {
 		return nil;
 	}
-	
-    return cipher;
+
+	if (([dataToDecrypt length] % 12) != 0) {
+		return nil;
+	}
+
+	NSMutableData *outputBuffer = [NSMutableData data];
+
+	unsigned char *s = (unsigned char *)[dataToDecrypt bytes];
+
+	for (NSInteger i = 0; i < [dataToDecrypt length]; i += 12) {
+		unsigned int left = 0;
+		unsigned int right = 0;
+
+		for (NSInteger k = 0; k < 6; k++) {
+			int partChar = [EKBlowfishEncryptionBase ecb_decrypt_base64DecodeCharacterIndex:(*s++)];
+
+			if (partChar == (-1)) {
+				return nil; // Bad character in block
+			}
+
+			right |= (partChar << k * 6);
+		}
+
+		for (NSInteger k = 0; k < 6; k++) {
+			int partChar = [EKBlowfishEncryptionBase ecb_decrypt_base64DecodeCharacterIndex:(*s++)];
+
+			if (partChar == (-1)) {
+				return nil; // Bad character in block
+			}
+
+			left |= (partChar << k * 6);
+		}
+
+		uint8_t bufferByte[8];
+
+		bufferByte[0] = ((left >> 24) & 0xFF);
+		bufferByte[1] = ((left >> 16) & 0xFF);
+		bufferByte[2] = ((left >> 8) & 0xFF);
+		bufferByte[3] =  (left & 0xFF);
+
+		bufferByte[4] = ((right >> 24) & 0xFF);
+		bufferByte[5] = ((right >> 16) & 0xFF);
+		bufferByte[6] = ((right >> 8) & 0xFF);
+		bufferByte[7] =  (right & 0xFF);
+
+		[outputBuffer appendBytes:&bufferByte length:sizeof(bufferByte)];
+	}
+
+	return [outputBuffer copy];
 }
 
 @end

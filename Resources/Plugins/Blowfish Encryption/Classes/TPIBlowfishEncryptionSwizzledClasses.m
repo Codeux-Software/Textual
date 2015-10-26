@@ -106,15 +106,19 @@
 				NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
 
 				if (encryptionKey) {
-					NSInteger badCharCount = 0;
+					NSInteger lostBytes = 0;
 
 					EKBlowfishEncryptionModeOfOperation decodeMode = [TPIBlowfishEncryption encryptionModeOfOperationForChannel:targetChannel];
 
-					NSString *newstr = [EKBlowfishEncryption decodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding badBytes:&badCharCount];
+					NSString *newstr = [EKBlowfishEncryption decodeData:messageBody key:encryptionKey mode:decodeMode encoding:NSUTF8StringEncoding lostBytes:&lostBytes];
 
-					if (badCharCount > 0) {
-						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]", badCharCount) channel:targetChannel];
+					if (newstr == nil) {
+						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]") channel:targetChannel];
 					} else {
+						if (lostBytes > 0) {
+							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1030]", lostBytes) channel:targetChannel];
+						}
+
 						if (NSObjectIsNotEmpty(newstr)) {
 							if (decodingCallback) {
 								decodingCallback(newstr, YES);

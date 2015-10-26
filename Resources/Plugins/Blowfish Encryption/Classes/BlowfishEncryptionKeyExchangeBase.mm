@@ -85,7 +85,8 @@ static NSString *fishPrimeB64 = @"++ECLiPSE+is+proud+to+present+latest+FiSH+rele
 - (id)init
 {
     if ((self = [super init])) {
-		self.DHStatus	  = 0;
+		self.DHStatus = 0;
+
 		self.publicBigNum = 0;
 
 		[self initalizeKeyExchange];

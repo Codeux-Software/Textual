@@ -41,5 +41,5 @@ typedef enum EKBlowfishEncryptionModeOfOperation : NSInteger {
 
 @interface EKBlowfishEncryption : NSObject
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local;
-+ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local badBytes:(NSInteger *)badByteCount;
++ (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local lostBytes:(NSInteger *)lostBytes;
 @end

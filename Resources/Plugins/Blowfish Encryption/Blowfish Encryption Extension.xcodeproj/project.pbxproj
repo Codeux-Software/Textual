@@ -13,6 +13,7 @@
 		4C69EB0A1AC1AA8A003EC07D /* LICENSE-GPLv2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EB071AC1AA8A003EC07D /* LICENSE-GPLv2.txt */; };
 		4C69EB0B1AC1AA8A003EC07D /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EB081AC1AA8A003EC07D /* LICENSE.txt */; };
 		4C69EB0D1AC1AB35003EC07D /* TPIBlowfishEncryption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EB0C1AC1AB35003EC07D /* TPIBlowfishEncryption.xib */; };
+		4C8C62C71BDD06C600B2506B /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8C62C61BDD06C600B2506B /* libcrypto.a */; };
 		4CBE7B4C1A91471A008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */; };
 		4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEE0DD012E09A1900C5096E /* Cocoa.framework */; };
 		4CF35F251AC19A4E00B1B0EB /* BlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF35F1B1AC19A4E00B1B0EB /* BlowfishEncryption.m */; };
@@ -21,7 +22,6 @@
 		4CF35F281AC19A4E00B1B0EB /* BlowfishEncryptionKeyExchangeBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4CF35F211AC19A4E00B1B0EB /* BlowfishEncryptionKeyExchangeBase.mm */; };
 		4CF35F291AC19A4E00B1B0EB /* TPIBlowfishEncryption.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF35F231AC19A4E00B1B0EB /* TPIBlowfishEncryption.m */; };
 		4CF35F301AC19BE000B1B0EB /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF35F2F1AC19BE000B1B0EB /* NSDataHelper.m */; };
-		4CF35F321AC19DED00B1B0EB /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF35F311AC19DED00B1B0EB /* libcrypto.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +35,7 @@
 		4C69EB071AC1AA8A003EC07D /* LICENSE-GPLv2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPLv2.txt"; sourceTree = "<group>"; };
 		4C69EB081AC1AA8A003EC07D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4C69EB0C1AC1AB35003EC07D /* TPIBlowfishEncryption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TPIBlowfishEncryption.xib; path = "Resources/User Interface/TPIBlowfishEncryption.xib"; sourceTree = "<group>"; };
+		4C8C62C61BDD06C600B2506B /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/lib/libcrypto.a"; sourceTree = "<absolute>"; };
 		4CBE7B4A1A91471A008FB230 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "../../../.tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CEE0DD012E09A1900C5096E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CF35F1A1AC19A4E00B1B0EB /* BlowfishEncryption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlowfishEncryption.h; path = Classes/BlowfishEncryption.h; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		4CF35F2D1AC19A6D00B1B0EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CF35F2E1AC19BE000B1B0EB /* NSDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSDataHelper.h; path = Classes/NSDataHelper.h; sourceTree = "<group>"; };
 		4CF35F2F1AC19BE000B1B0EB /* NSDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSDataHelper.m; path = Classes/NSDataHelper.m; sourceTree = "<group>"; };
-		4CF35F311AC19DED00B1B0EB /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* BlowfishEncryption.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlowfishEncryption.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -59,9 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CF35F321AC19DED00B1B0EB /* libcrypto.dylib in Frameworks */,
 				4CEE0DD112E09A1900C5096E /* Cocoa.framework in Frameworks */,
 				4CBE7B4C1A91471A008FB230 /* CocoaExtensions.framework in Frameworks */,
+				4C8C62C71BDD06C600B2506B /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CF35F311AC19DED00B1B0EB /* libcrypto.dylib */,
+				4C8C62C61BDD06C600B2506B /* libcrypto.a */,
 				4C8F2F6C1AAE661B007821CC /* Custom Frameworks */,
 				4CD8861D16C09BA00000CF8D /* System Frameworks */,
 			);
@@ -284,6 +284,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**\"",
+					"\"/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/include\"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Debug;
@@ -292,6 +296,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"${TEXTUAL_PROJECT_ROOT}/Classes/Headers/**\"",
+					"\"/private/tmp/com.codeux.frameworks.encryptionKit/Library-Build-Results/include\"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-BlowfishEncryption";
 			};
 			name = Release;
@@ -303,7 +311,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
-				SDKROOT = macosx10.10;
 			};
 			name = Debug;
 		};
@@ -314,7 +321,6 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = BlowfishEncryption;
-				SDKROOT = macosx10.10;
 			};
 			name = Release;
 		};
