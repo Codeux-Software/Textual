@@ -204,7 +204,9 @@ NSData *_performCommonCryptoOperation(CCOperation ccInOperation,
 	}
 
 	/* Create output buffer using expected output length. */
-	size_t outputBufferSize = CCCryptorGetOutputLength(cryptorRef, [ccInRelatedData length], true);
+	BOOL willCallCryptorFinal = (ccInPadding == ccPKCS7Padding || ccInOperationAlgorithm == kCCAlgorithmRC4);
+
+	size_t outputBufferSize = CCCryptorGetOutputLength(cryptorRef, [ccInRelatedData length], willCallCryptorFinal);
 
 	NSMutableData *outputBuffer = [NSMutableData dataWithLength:outputBufferSize];;
 
@@ -226,7 +228,7 @@ NSData *_performCommonCryptoOperation(CCOperation ccInOperation,
 	/* Perform final operation on the cryptor. */
 	size_t totalBytesWritten = cryptorUpdateDataOutMoved;
 
-	if (ccInPadding == ccPKCS7Padding || ccInOperationAlgorithm == kCCAlgorithmRC4) {
+	if (willCallCryptorFinal) {
 		void *cryptorFinalDataOut = ([outputBuffer mutableBytes] + cryptorUpdateDataOutMoved);
 
 		size_t cryptorFinalDataOutSize = ([outputBuffer length] - cryptorUpdateDataOutMoved);

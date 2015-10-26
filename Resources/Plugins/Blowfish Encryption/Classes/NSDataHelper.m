@@ -106,9 +106,11 @@
 	NSUInteger dataObjectLengthRemainder = (dataObjectLength % bytePadding);
 
 	if (dataObjectLengthRemainder > 0) {
-		dataObjectLength += (bytePadding - dataObjectLengthRemainder);
+		NSMutableData *dataObjectMutable = [dataObject mutableCopy];
 
-		return [NSData dataWithBytes:[dataObject bytes] length:dataObjectLength];
+		[dataObjectMutable increaseLengthBy:(bytePadding - dataObjectLengthRemainder)];
+
+		return [dataObjectMutable copy];
 	} else {
 		return dataObject;
 	}
