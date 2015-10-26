@@ -157,6 +157,8 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 		self.allLoadedBundles = loadedBundles;
 
 		self.allLoadedPlugins = loadedPlugins;
+
+		[self extrasInstallerCheckForUpdates];
 	});
 }
 
@@ -260,10 +262,53 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 #pragma mark -
 #pragma mark Extras Installer
 
-- (NSArray *)reservedCommandNamesForExtrasInstaller
+- (void)extrasInstallerCheckForUpdates
+{
+	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+	NSDictionary *_latestVersions = [staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
+
+	for (NSBundle *pluginBundle in self.allLoadedBundles) {
+		/* Find latest verison information if the bundle name is known. */
+		NSDictionary *infoDictionary = [pluginBundle infoDictionary];
+
+		NSString *bundleName = infoDictionary[@"CFBundleName"];
+
+		NSString *latestVersion = _latestVersions[bundleName];
+
+		if (latestVersion == nil) {
+			continue;
+		}
+
+		/* Perform comparison of the current version number. */
+		NSString *bundleVersion = infoDictionary[@"CFBundleVersion"];
+
+		NSComparisonResult comparisonResult = [bundleVersion compare:latestVersion options:NSNumericSearch];
+
+		if (comparisonResult == NSOrderedAscending) {
+			[self extrasInstallerInformUserAboutUpdateForBundleNamed:bundleName];
+		}
+	}
+}
+
+- (void)extrasInstallerInformUserAboutUpdateForBundleNamed:(NSString *)bundleName
+{
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
+													   title:TXTLS(@"BasicLanguage[1287][1]", bundleName)
+											   defaultButton:TXTLS(@"BasicLanguage[1287][3]")
+											 alternateButton:BLS(1009)
+											  suppressionKey:@"plugin_manager_extension_update_dialog"
+											 suppressionText:nil];
+
+	if (download) {
+		[self extrasInstallerLaunchInstaller];
+	}
+}
+
+- (NSArray *)extrasInstallerReservedCommands
 {
 	/* List of scripts that are available as downloadable
-	 content from the codeux.com website. */
+	 content from the www.codeux.com website. */
 
 	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
 							 @"THOPluginManager -> THOPluginManager List of Reserved Commands"];
@@ -324,7 +369,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 		}
 		
 		/* Prompt user if command exists as a reserved command. */
-		NSArray *reservedNames = [self reservedCommandNamesForExtrasInstaller];
+		NSArray *reservedNames = [self extrasInstallerReservedCommands];
 		
 		if ([reservedNames containsObject:command]) {
 			*isReserved = YES;
@@ -334,7 +379,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	}
 }
 
-- (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command
+- (void)extrasInstallerAskUserIfTheyWantToInstallCommand:(NSString *)command
 {
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]")
 													   title:TXTLS(@"BasicLanguage[1236][1]", command)
@@ -344,11 +389,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 											 suppressionText:nil];
 
 	if (download) {
-		[self openExtrasInstallerDownloadURL];
+		[self extrasInstallerLaunchInstaller];
 	}
 }
 
-- (void)openExtrasInstallerDownloadURL
+- (void)extrasInstallerLaunchInstaller
 {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras-MAS" ofType:@"pkg"];
@@ -455,23 +500,6 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	}
 
 	return allExtensions;
-}
-
-- (NSArray *)allLoadedExtensions
-{
-	NSMutableArray *allPlugins = [NSMutableArray array];
-	
-	for (NSBundle *bundle in self.allLoadedBundles) {
-		NSString *path = [bundle bundlePath];
-
-		NSString *bundleName = [path lastPathComponent];
-
-		NSString *bundleNameWithoutExtension = [bundleName stringByDeletingPathExtension];
-		
-		[allPlugins addObjectWithoutDuplication:bundleNameWithoutExtension];
-	}
-
-	return allPlugins;
 }
 
 #pragma mark -

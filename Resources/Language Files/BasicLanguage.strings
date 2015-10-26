@@ -408,11 +408,6 @@
 "BasicLanguage[1102][1]" = "iCloud is Not Available";
 "BasicLanguage[1102][2]" = "It appears iCloud may not be available right now. Please try again later.";
 
-/* /loaded_plugins/ command */
-"BasicLanguage[1103]" = "Loaded Bundles: %@";
-"BasicLanguage[1104]" = "Loaded Scripts: %@";
-"BasicLanguage[1105]" = "Nothing loaded";
-
 /* /lagcheck/ command */
 "BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
 "BasicLanguage[1107]" = "Waiting for response from lag check…";
@@ -782,9 +777,14 @@
 "BasicLanguage[1287][1]" = "Warning: Enabling inline media may lead to the exposure of your IP address by users linking to specially crafted image URLs";
 "BasicLanguage[1287][2]" = "You have at least one connection configured to connect through the Tor Anonymity Network or have the “Tor Browser“ application open.\n\nNote that content shown inline with chat does NOT pass through the proxy that can be configured through Server Properties.\n\nIf you want to display content inline, then it is recommended that you enable a system-wide proxy through the Network section of System Preferences.";
 
+/* Extras installer updates */
+"BasicLanguage[1287][1]" = "A new version of the “%@” addon is available!";
+"BasicLanguage[1287][2]" = "Would you like to launch the “Textual Extras” installer to perform update?";
+"BasicLanguage[1287][3]" = "Launch Installer";
 
 
 
-/* Next unusued key: 1287 */
+
+/* Next unusued key: 1288 */
 
 

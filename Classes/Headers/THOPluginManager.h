@@ -49,8 +49,6 @@
 - (void)unloadPlugins;
 
 /* Information about loaded plugins. */
-@property (readonly, copy) NSArray *allLoadedExtensions;
-
 @property (readonly, copy) NSArray *supportedUserInputCommands;
 @property (readonly, copy) NSArray *supportedServerInputCommands;
 
@@ -71,8 +69,8 @@
 						  isExtension:(BOOL *)isExtension;
 
 /* Installer */
-- (void)maybeOpenExtrasInstallerDownloadURLForCommand:(NSString *)command;
-- (void)openExtrasInstallerDownloadURL;
+- (void)extrasInstallerAskUserIfTheyWantToInstallCommand:(NSString *)command;
+- (void)extrasInstallerLaunchInstaller;
 
 /* Talk to plugins. */
 /* Unless you are Textual, do not call these. We mean it. */
