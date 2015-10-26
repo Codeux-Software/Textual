@@ -54,7 +54,11 @@ typedef NS_ENUM(NSUInteger, TPCPreferencesKeyReloadActionMask) {
 	TPCPreferencesKeyReloadStyleWithTableViewsAction					= 1 << 13, // Reloads the style as well as the window appearance.
 	TPCPreferencesKeyReloadTextDirectionAction							= 1 << 14,
 	TPCPreferencesKeyReloadTextFieldFontSizeAction						= 1 << 15,
-	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction		= 1 << 16
+	TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction		= 1 << 16,
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction				= 1 << 17
+#endif
 };
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

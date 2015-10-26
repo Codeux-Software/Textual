@@ -149,7 +149,14 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	if ([prefKeys containsObject:@"Server List Unread Message Count Badge Colors -> Highlight"]) {
 		reloadActions |= TPCPreferencesKeyReloadServerListUnreadBadgesAction;
 	}
-	
+
+	/* Sparkle framework update feed URL. */
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	if ([prefKeys containsObject:@"ReceiveBetaUpdates"]) {
+		reloadActions |= TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction;
+	}
+#endif
+
 	/* After this is all complete; we call preferencesChanged just to take care
 	 of everything else that does not need specific reloads. */
 	reloadActions |= TPCPreferencesKeyReloadPreferencesChangedAction;
@@ -291,7 +298,14 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	if ((reloadAction & TPCPreferencesKeyReloadInputHistoryScopeAction) == TPCPreferencesKeyReloadInputHistoryScopeAction) {
 		[[TXSharedApplication sharedInputHistoryManager] inputHistoryObjectScopeDidChange];
 	}
-	
+
+	/* Sparkle framework update feed URL. */
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	if ((reloadAction & TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction) == TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction) {
+		[masterController() prepareThirdPartyServiceSparkleFramework];
+	}
+#endif
+
 	/* World controller preferences changed call. */
 	if ((reloadAction & TPCPreferencesKeyReloadPreferencesChangedAction) == TPCPreferencesKeyReloadPreferencesChangedAction) {
 		[worldController() preferencesChanged];

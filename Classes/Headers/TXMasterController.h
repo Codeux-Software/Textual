@@ -59,4 +59,6 @@
 /* Both wake cycle methods are invoked by TVCMainWindow -awakeFromNib */
 - (void)performAwakeningBeforeMainWindowDidLoad;
 - (void)performAwakeningAfterMainWindowDidLoad;
+
+- (void)prepareThirdPartyServiceSparkleFramework;
 @end
