@@ -30,22 +30,18 @@
 
  *********************************************************************** */
 
-/* A portion of this source file contains copyrighted work derived from one or more
- 3rd party, open source projects. The use of this work is hereby acknowledged. */
-
-// Author: Oleg Andreev <oleganza@gmail.com>
-// May 28, 2011
-// Do What The Fuck You Want Public License <http://www.wtfpl.net>
-// https://gist.github.com/oleganza/997155
-
 #import <Foundation/Foundation.h>
-
-@interface NSData (BlowfishEncryptionDatHelper)
-- (NSData *)dataByRemovingBadCharacters;
-
-- (NSData *)repairedCharacterBufferForUTF8Encoding:(NSInteger *)badByteCount;
-@end
 
 @interface NSMutableData (BlowfishEncryptionDatHelper)
 - (void)removeBadCharacters;
+@end
+
+@interface NSString (BlowfishEncryptionStringHelper)
+/* If the data object does not fit in the block size, then NULL 
+ characters are set to fill in the half-sized block */
+- (NSData *)dataUsingEncoding:(NSStringEncoding)encoding paddedByBytes:(NSInteger)bytePadding;
+
+/* If the data object does not fit in the block size, then the
+ tail is truncated and the number of bytes lost is returned. */
+- (NSData *)dataUsingEncoding:(NSStringEncoding)encoding fitToPadding:(NSInteger)bytePadding trimmedCharacters:(NSInteger *)bytesRemoved;
 @end

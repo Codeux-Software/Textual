@@ -58,11 +58,12 @@
 "BasicLanguage[1020]" = "The Cipher-block Chaining (CBC) mode of operation will be used for encryption.";
 "BasicLanguage[1021]" = "The Electronic Codebok (ECB) mode of operation will be used for encryption.";
 
-"BasicLanguage[1022]" = "Decryption failed. When attempting to decrypt, %i bad sections were found and were unable to be repaired.";
+"BasicLanguage[1022]" = "Decryption failed";
 "BasicLanguage[1023]" = "Encryption of message failed; not sending to server.";
 "BasicLanguage[1024]" = "Encryption key changed; adjusting accordingly.";
 "BasicLanguage[1025]" = "Encryption started";
 "BasicLanguage[1026]" = "Encryption stopped";
+"BasicLanguage[1030]" = "\0034\002Decryption lost data!\002\003 When decrypting message, %ld bytes were found at the end of the message which do not form a complete 8 byte encryption block. These bytes were removed and could not be decrypted.";
 
 "BasicLanguage[1028]" = "Blowfish Encryption";
 
