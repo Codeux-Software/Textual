@@ -3934,8 +3934,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	[self send:IRCPrivateCommandIndex("nick"), self.tryingNicknameSentNickname, nil];
 	[self send:IRCPrivateCommandIndex("user"), username, modeParam, @"*", realname, nil];
-
-	[mainWindow() reloadTreeGroup:self];
 }
 
 #pragma mark -
