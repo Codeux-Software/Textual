@@ -40,6 +40,8 @@ typedef enum EKBlowfishEncryptionModeOfOperation : NSInteger {
 } EKBlowfishEncryptionModeOfOperation;
 
 @interface EKBlowfishEncryption : NSObject
++ (NSUInteger)estiminatedLengthOfEncodedDataOfLength:(NSUInteger)dataLength;
+
 + (NSString *)encodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local;
 + (NSString *)decodeData:(NSString *)input key:(NSString *)phrase mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)local lostBytes:(NSInteger *)lostBytes;
 @end
