@@ -161,11 +161,24 @@
 
 	NSColor *backgroundColor = [self backgroundColorForFakingSubpixelAntialiasing];
 
-	NSImage *stringValueImage = [stringValue imageRepWithSize:cellFrame.size
-												  scaleFactor:[self backingScaleFactor]
-											  backgroundColor:backgroundColor];
+	NSRect drawFrame = cellFrame;
 
-	[stringValueImage drawInRect:cellFrame
+	NSInteger coreTextFrameOffset = 0;
+
+	NSImage *stringValueImage = [stringValue imageRepWithSize:drawFrame.size
+												  scaleFactor:[self backingScaleFactor]
+											  backgroundColor:backgroundColor
+										  coreTextFrameOffset:&coreTextFrameOffset];
+
+	/* This is an incredibly lazy fix. Emoji characters add an extra 4 pixels
+	 to the height when drawing with a height of 16 which is the height we are
+	 drawing into right now. I will eventually fix this to scale to any size, 
+	 but as long as this works for now... */
+	if (coreTextFrameOffset == 4) {
+		drawFrame.origin.y += 1;
+	}
+
+	[stringValueImage drawInRect:drawFrame
 						fromRect:NSZeroRect
 					   operation:NSCompositeSourceOver
 						fraction:1.0
