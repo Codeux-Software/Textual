@@ -34,11 +34,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="vlQ-Kl-hYs">
-                                <rect key="frame" x="0.0" y="0.0" width="223" height="156"/>
+                                <rect key="frame" x="0.0" y="0.0" width="377" height="106"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="377" height="106"/>
+                                <size key="minSize" width="223" height="106"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="WARNING: ">
@@ -75,7 +75,7 @@ Cgo
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content="With FiSH encryption enabled, use of Off-the-Record Messaging (OTR) is disabled.">
+                                    <fragment content="It is not possible to use Off-the-Record Messaging (OTR) when FiSH encryption is enabled.">
                                         <attributes>
                                             <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -83,7 +83,7 @@ Cgo
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="377" height="106"/>
+                                <size key="minSize" width="223" height="106"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                             </textView>
                         </subviews>
@@ -116,7 +116,20 @@ Cgo
                                 <size key="minSize" width="377" height="31"/>
                                 <size key="maxSize" width="472" height="10000000"/>
                                 <attributedString key="textStorage">
-                                    <fragment content="“FiSH” refers to a type of text based encryption that many applications support for peer-to-peer communications.">
+                                    <fragment content="“FiSH” is the name of an implementation of the ">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="cellTitle"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Blowfish block cipher">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="cellTitle"/>
+                                            <url key="NSLink" string="https://en.wikipedia.org/wiki/Blowfish_(cipher)"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" supported by many older IRC clients support.">
                                         <attributes>
                                             <font key="NSFont" metaFont="cellTitle"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
