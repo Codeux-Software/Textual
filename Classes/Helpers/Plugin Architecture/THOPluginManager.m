@@ -40,6 +40,8 @@
 
 #import "THOPluginProtocolPrivate.h"
 
+#define _extrasInstallerExtensionUpdateCheckInterval			345600
+
 @interface THOPluginManager ()
 @property (nonatomic, copy) NSArray *allLoadedBundles;
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
@@ -264,6 +266,17 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)extrasInstallerCheckForUpdates
 {
+	/* Do not check for updates too often */
+	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+
+	NSTimeInterval lastUpdateCheck =
+	[RZUserDefaults() doubleForKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
+
+	if ((currentTime - lastUpdateCheck) < _extrasInstallerExtensionUpdateCheckInterval) {
+		return;
+	}
+
+	/* Perform update check */
 	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
 
 	NSDictionary *_latestVersions = [staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
@@ -289,6 +302,9 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			[self extrasInstallerInformUserAboutUpdateForBundleNamed:bundleName];
 		}
 	}
+
+	/* Record the last time updates were checked for */
+	[RZUserDefaults() setDouble:currentTime forKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
 }
 
 - (void)extrasInstallerInformUserAboutUpdateForBundleNamed:(NSString *)bundleName
