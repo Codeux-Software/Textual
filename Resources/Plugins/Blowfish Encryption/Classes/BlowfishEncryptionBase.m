@@ -58,6 +58,21 @@ static const char blowfish_ecb_base64_chars[64] = "./0123456789abcdefghijklmnopq
 
 @implementation EKBlowfishEncryptionBase
 
++ (NSUInteger)estiminatedLengthOfEncodedDataOfLength:(NSUInteger)dataLength
+{
+	/* The returned estimation is the result of base64 encoded,
+	 properly padded encryption block up to input length. */
+	NSUInteger blockLength = dataLength;
+
+	NSUInteger blockLengthRemainder = (blockLength % kCCBlockSizeBlowfish);
+
+	if (blockLengthRemainder != 0) {
+		blockLength += (kCCBlockSizeBlowfish - blockLengthRemainder);
+	}
+
+	return (ceil(blockLength / 3) * 4);
+}
+
 + (NSString *)encrypt:(NSString *)rawInput key:(NSString *)secretKey mode:(EKBlowfishEncryptionModeOfOperation)mode encoding:(NSStringEncoding)dataEncoding
 {
 	if (mode == EKBlowfishEncryptionDefaultModeOfOperation || mode == EKBlowfishEncryptionECBModeOfOperation) {

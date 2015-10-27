@@ -40,6 +40,7 @@
 	XRExchangeImplementation(@"IRCClient", @"encryptionAllowedForNickname:", @"__tpi_encryptionAllowedForNickname:");
 	XRExchangeImplementation(@"IRCClient", @"decryptMessage:referenceMessage:decodingCallback:", @"__tpi_decryptMessage:referenceMessage:decodingCallback:");
 	XRExchangeImplementation(@"IRCClient", @"encryptMessage:directedAt:encodingCallback:injectionCallback:", @"__tpi_encryptMessage:directedAt:encodingCallback:injectionCallback:");
+	XRExchangeImplementation(@"IRCClient", @"lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:", @"__tpi_lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:");
 }
 
 - (BOOL)__tpi_encryptionAllowedForNickname:(NSString *)nickname
@@ -49,6 +50,35 @@
 	} else {
 		return [self __tpi_encryptionAllowedForNickname:nickname];
 	}
+}
+
+- (NSInteger)__tpi_lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSInteger)maximumLength
+{
+	if ([TPIBlowfishEncryption isPluginEnabled]) {
+		IRCChannel *targetChannel = [self findChannel:messageTo];
+
+		if (targetChannel) {
+			NSString *encryptionKey = [TPIBlowfishEncryption encryptionKeyForChannel:targetChannel];
+
+			if (encryptionKey) {
+				NSInteger lastEstimatedSize = 0;
+
+				for (NSInteger i = maximumLength; i >= 0; i--) {
+					NSInteger sizeForLength = [EKBlowfishEncryption estiminatedLengthOfEncodedDataOfLength:i];
+
+					if (sizeForLength < maximumLength) {
+						break;
+					} else {
+						lastEstimatedSize = i;
+					}
+				}
+
+				return lastEstimatedSize;
+			}
+		}
+	}
+
+	return [self __tpi_lengthOfEncryptedMessageDirectedAt:messageTo thatFitsWithinBounds:maximumLength];
 }
 
 - (void)__tpi_encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
