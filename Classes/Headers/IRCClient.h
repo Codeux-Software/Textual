@@ -202,6 +202,8 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+- (NSInteger)lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSInteger)maximumLength;
+
 - (BOOL)encryptionAllowedForNickname:(NSString *)nickname;
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;

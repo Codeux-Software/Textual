@@ -1068,6 +1068,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 }
 #endif
 
+- (NSInteger)lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSInteger)maximumLength
+{
+	return (-1);
+}
+
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1

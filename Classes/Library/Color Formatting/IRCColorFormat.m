@@ -205,7 +205,13 @@ NSString * const IRCTextFormatterBackgroundColorAttributeName = @"IRCTextFormatt
 	NSInteger stringDeletionLength  = 0;
 	
 	NSInteger maximumLength = TXMaximumIRCBodyLength;
-	
+
+	NSInteger encryptionEstimate = [client lengthOfEncryptedMessageDirectedAt:[channel name] thatFitsWithinBounds:(maximumLength - baseMath)];
+
+	if (encryptionEstimate > (-1)) {
+		maximumLength = encryptionEstimate;
+	}
+
 	/* Begin actual work. */
 	NSInteger startCharCount = 0;
 	NSInteger stopCharCount = 0;
