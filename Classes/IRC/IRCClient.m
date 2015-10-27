@@ -6233,6 +6233,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
+	[mainWindow() reloadTreeItem:self];
 	[mainWindow() updateTitleFor:self];
 
 	[mainWindowTextField() updateSegmentedController];
