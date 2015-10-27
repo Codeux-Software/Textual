@@ -121,7 +121,7 @@ function isMessageInViewport(elem) {
     return true;
   }
 
-  return (elem.getBoundingClientRect().bottom <= document.documentElement.clientHeight);
+  return (Math.floor(elem.getBoundingClientRect().bottom) <= Math.floor(document.documentElement.clientHeight));
 }
 
 function toggleSelectionStatusForNicknameInsideElement(e) {
