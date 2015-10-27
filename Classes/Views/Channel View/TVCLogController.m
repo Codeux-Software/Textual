@@ -84,7 +84,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 		self.maximumLineCount = 300;
 
-		self.wasViewingBottomBeforeBecomingHidden = NO;
+		self.wasViewingBottomBeforeBecomingHidden = YES;
 	}
 
 	return self;
@@ -990,7 +990,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
 
-		self.wasViewingBottomBeforeBecomingHidden = NO;
+		self.wasViewingBottomBeforeBecomingHidden = YES;
 
 		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 	}];
