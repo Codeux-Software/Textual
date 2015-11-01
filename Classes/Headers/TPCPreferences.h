@@ -245,12 +245,14 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event;
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event;
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event;
++ (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event;
 
 + (void)setSound:(NSString *)value forEvent:(TXNotificationType)event;
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event;
++ (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event;
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event;
 
 + (TXTabKeyAction)tabKeyAction;

@@ -731,6 +731,28 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	[RZUserDefaults() setBool:value forKey:key];
 }
 
++ (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event
+{
+	NSString *okey = [TPCPreferences keyForEvent:event];
+
+	NSObjectIsEmptyAssertReturn(okey, NO);
+
+	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
+
+	return [RZUserDefaults() boolForKey:key];
+}
+
++ (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event
+{
+	NSString *okey = [TPCPreferences keyForEvent:event];
+
+	NSObjectIsEmptyAssert(okey);
+
+	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
+
+	[RZUserDefaults() setBool:value forKey:key];
+}
+
 + (BOOL)speakEvent:(TXNotificationType)event
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];

@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="addExcludeKeywordButton" destination="KgU-fm-1CL" id="Yh1-uA-Lzy"/>
                 <outlet property="alertBounceDockIconButton" destination="lHl-sy-SBb" id="dNa-Ig-gbA"/>
+                <outlet property="alertBounceDockIconRepeatedlyButton" destination="Izn-3U-WFY" id="t0Y-y0-uqa"/>
                 <outlet property="alertDisableWhileAwayButton" destination="pyR-Yq-9tk" id="YHI-cT-iku"/>
                 <outlet property="alertNotificationDestinationTextField" destination="O82-On-A00" id="K1U-BT-rCB"/>
                 <outlet property="alertPushNotificationButton" destination="fyC-tf-kOI" id="Yru-lz-bqp"/>
@@ -1083,17 +1084,6 @@ DQ
                         <action selector="onChangedAlertSpoken:" target="-2" id="iph-MR-aty"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="lHl-sy-SBb">
-                    <rect key="frame" x="117" y="197" width="123" height="18"/>
-                    <animations/>
-                    <buttonCell key="cell" type="check" title="Bounce dock icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QLU-i1-tIY">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="onChangedAlertBounceDockIcon:" target="-2" id="ftP-RY-zHs"/>
-                    </connections>
-                </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nkc-Mt-osY">
                     <rect key="frame" x="434" y="342" width="106" height="5"/>
                     <animations/>
@@ -1226,6 +1216,28 @@ DQ
                     </buttonCell>
                     <connections>
                         <action selector="onChangedAlertNotification:" target="-2" id="c1S-wp-lbA"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Izn-3U-WFY">
+                    <rect key="frame" x="247" y="199" width="90" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Repeatedly" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bko-ZV-lwT">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertBounceDockIconRepeatedly:" target="-2" id="Q4k-4M-Bgz"/>
+                    </connections>
+                </button>
+                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lHl-sy-SBb">
+                    <rect key="frame" x="117" y="198" width="123" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Bounce dock icon" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QLU-i1-tIY">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="onChangedAlertBounceDockIcon:" target="-2" id="ftP-RY-zHs"/>
                     </connections>
                 </button>
             </subviews>

@@ -1278,9 +1278,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return YES;
 	}
     
-    if ([TPCPreferences bounceDockIconForEvent:type]) {
-        [NSApp requestUserAttention:NSInformationalRequest];
-    }
+	if ([TPCPreferences bounceDockIconForEvent:type]) {
+		if ([TPCPreferences bounceDockIconRepeatedlyForEvent:type]) {
+			[NSApp requestUserAttention:NSCriticalRequest];
+		} else {
+			[NSApp requestUserAttention:NSInformationalRequest];
+		}
+	}
 
 	if ([sharedGrowlController() areNotificationsDisabled]) {
 		return YES;
@@ -1361,9 +1365,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	//NSObjectIsEmptyAssertReturn(text, NO);
 	//NSObjectIsEmptyAssertReturn(nick, NO);
     
-    if ([TPCPreferences bounceDockIconForEvent:type]) {
-        [NSApp requestUserAttention:NSInformationalRequest];
-    }
+	if ([TPCPreferences bounceDockIconForEvent:type]) {
+		if ([TPCPreferences bounceDockIconRepeatedlyForEvent:type]) {
+			[NSApp requestUserAttention:NSCriticalRequest];
+		} else {
+			[NSApp requestUserAttention:NSInformationalRequest];
+		}
+	}
 	
 	if ([sharedGrowlController() areNotificationsDisabled]) {
 		return YES;
