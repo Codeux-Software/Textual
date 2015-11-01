@@ -80,6 +80,7 @@
 @property (nonatomic, strong) IBOutlet NSArrayController *matchKeywordsArrayController;
 @property (nonatomic, strong) IBOutlet NSButton *addExcludeKeywordButton;
 @property (nonatomic, strong) IBOutlet NSButton *alertBounceDockIconButton;
+@property (nonatomic, strong) IBOutlet NSButton *alertBounceDockIconRepeatedlyButton;
 @property (nonatomic, strong) IBOutlet NSButton *alertDisableWhileAwayButton;
 @property (nonatomic, strong) IBOutlet NSButton *alertPushNotificationButton;
 @property (nonatomic, strong) IBOutlet NSButton *alertSpeakEventButton;
@@ -135,6 +136,7 @@
 - (IBAction)onChangedAlertSound:(id)sender;
 - (IBAction)onChangedAlertDisableWhileAway:(id)sender;
 - (IBAction)onChangedAlertBounceDockIcon:(id)sender;
+- (IBAction)onChangedAlertBounceDockIconRepeatedly:(id)sender;
 - (IBAction)onChangedAlertNotification:(id)sender;
 - (IBAction)onChangedAlertType:(id)sender;
 
@@ -608,6 +610,8 @@
     [[self alertPushNotificationButton] setState:[alert pushNotification]];
     [[self alertDisableWhileAwayButton] setState:[alert disabledWhileAway]];
     [[self alertBounceDockIconButton] setState:[alert bounceDockIcon]];
+    [[self alertBounceDockIconRepeatedlyButton] setState:[alert bounceDockIconRepeatedly]];
+    [[self alertBounceDockIconRepeatedlyButton] setEnabled: ([[self alertBounceDockIconButton] state] == NSOnState)];
 
 	NSInteger soundObject = [[self availableSounds] indexOfObject:[alert alertSound]];
 	
@@ -658,6 +662,19 @@
     TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
     
 	[alert setBounceDockIcon:[[self alertBounceDockIconButton] state]];
+	
+	alert = nil;
+    
+	[[self alertBounceDockIconRepeatedlyButton] setEnabled: ([[self alertBounceDockIconButton] state] == NSOnState)];
+}
+
+- (void)onChangedAlertBounceDockIconRepeatedly:(id)sender
+{
+	TXNotificationType alertType = (TXNotificationType)[[self alertTypeChoiceButton] selectedTag];
+    
+	TDCPreferencesSoundWrapper *alert = [TDCPreferencesSoundWrapper soundWrapperWithEventType:alertType];
+    
+	[alert setBounceDockIconRepeatedly:[[self alertBounceDockIconRepeatedlyButton] state]];
 	
 	alert = nil;
 }
