@@ -132,4 +132,14 @@ NSString * const TXEmptySoundAlertPreferenceValue = @"None";
     [TPCPreferences setBounceDockIcon:value forEvent:self.eventType];
 }
 
+- (BOOL)bounceDockIconRepeatedly
+{
+    return [TPCPreferences bounceDockIconRepeatedlyForEvent:self.eventType];
+}
+
+- (void)setBounceDockIconRepeatedly:(BOOL)value
+{
+    [TPCPreferences setBounceDockIconRepeatedly:value forEvent:self.eventType];
+}
+
 @end
