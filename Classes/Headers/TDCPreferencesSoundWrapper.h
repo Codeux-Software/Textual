@@ -48,6 +48,7 @@ TEXTUAL_EXTERN NSString * const TXEmptySoundAlertPreferenceValue;
 @property (nonatomic, assign) BOOL pushNotification;
 @property (nonatomic, assign) BOOL disabledWhileAway;
 @property (nonatomic, assign) BOOL bounceDockIcon;
+@property (nonatomic, assign) BOOL bounceDockIconRepeatedly;
 
 + (NSString *)localizedEmptySoundSelectionLabel;
 
