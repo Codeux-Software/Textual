@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8187.4" systemVersion="15A263e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8187.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelBanListSheet">
@@ -209,7 +209,7 @@
                             <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="36">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="598" height="23"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
                         </tableHeaderView>
@@ -272,10 +272,31 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mxf-43-RTj">
+                        <rect key="frame" x="322" y="282" width="260" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="BjX-hz-9vr"/>
+                            <constraint firstAttribute="width" constant="256" id="gv7-wv-mdo"/>
+                        </constraints>
+                        <animations/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="1234" id="VEA-PK-9MZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="displayPatternValue1" keyPath="self.entryCount" id="KPz-a9-t0f">
+                                <dictionary key="options">
+                                    <string key="NSDisplayPattern">%{value1}@ entries</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="2Bd-76-9yw"/>
                     <constraint firstItem="3" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="6zy-UX-gxj"/>
+                    <constraint firstAttribute="trailing" secondItem="mxf-43-RTj" secondAttribute="trailing" constant="20" id="AZG-85-OZC"/>
                     <constraint firstAttribute="bottom" secondItem="14" secondAttribute="bottom" constant="10" id="Ccs-FX-sQp"/>
                     <constraint firstItem="33" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="DZF-cq-xo9"/>
                     <constraint firstItem="14" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="10" id="Gw5-fe-B9P"/>
@@ -284,6 +305,7 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="18" secondAttribute="trailing" constant="20" symbolic="YES" id="iLu-la-jhn"/>
                     <constraint firstItem="33" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="k9D-3a-TlO"/>
                     <constraint firstItem="16" firstAttribute="baseline" secondItem="14" secondAttribute="baseline" id="nCU-Yl-GOk"/>
+                    <constraint firstItem="mxf-43-RTj" firstAttribute="top" secondItem="2" secondAttribute="top" constant="13" id="tLU-s9-vhb"/>
                     <constraint firstItem="18" firstAttribute="baseline" secondItem="16" secondAttribute="baseline" id="ulH-EH-VR5"/>
                     <constraint firstItem="14" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="vTV-hY-IGn"/>
                 </constraints>

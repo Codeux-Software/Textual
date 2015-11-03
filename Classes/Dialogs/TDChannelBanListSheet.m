@@ -100,7 +100,11 @@
 	[newEntry setEntryAuthor:entryAuthor];
 	[newEntry setEntryCreationDate:entryCreationDate];
 
+	[self willChangeValueForKey:@"entryCount"];
+
 	[self.entryTableController addObject:newEntry];
+
+	[self didChangeValueForKey:@"entryCount"];
 }
 
 - (NSString *)mode
@@ -114,6 +118,11 @@
 	}
 
 	return nil;
+}
+
+- (NSNumber *)entryCount
+{
+	return @([[self.entryTableController arrangedObjects] count]);
 }
 
 #pragma mark -
