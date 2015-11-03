@@ -2180,38 +2180,48 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSArray *targets = [targetChannelName componentsSeparatedByString:@","];
 
-			while ([s length] > 0)
-			{
-				for (NSString *target in targets) {
-					NSString *destinationChannelName = target;
+			IRCChannel *channelToSelect = nil;
 
-					for (NSArray *prefixData in userModePrefixes) {
-						NSString *symbol = prefixData[1];
+			for (NSString *target in targets) {
+				NSString *destinationChannelName = target;
 
-						if ([destinationChannelName hasPrefix:symbol]) {
-							NSString *nch = [destinationChannelName stringCharacterAtIndex:1];
+				for (NSArray *prefixData in userModePrefixes) {
+					NSString *symbol = prefixData[1];
 
-							if ([validTargetPrefixes contains:nch]) {
-								destinationPrefix = symbol;
+					if ([destinationChannelName hasPrefix:symbol]) {
+						NSString *nch = [destinationChannelName stringCharacterAtIndex:1];
 
-								destinationChannelName = [destinationChannelName substringFromIndex:1];
-							}
+						if ([validTargetPrefixes contains:nch]) {
+							destinationPrefix = symbol;
 
-							break;
+							destinationChannelName = [destinationChannelName substringFromIndex:1];
+						}
+
+						break;
+					}
+				}
+
+				IRCChannel *channel = [self findChannel:destinationChannelName];
+
+				if (secretMessage == NO) {
+					if (channel == nil) {
+						if ([destinationChannelName isChannelName:self] == NO) {
+							channel = [worldController() createPrivateMessage:destinationChannelName client:self];
 						}
 					}
 
-					IRCChannel *channel = [self findChannel:destinationChannelName];
-
-					if (secretMessage == NO) {
-						if (channel == nil) {
-							if ([destinationChannelName isChannelName:self] == NO) {
-								channel = [worldController() createPrivateMessage:destinationChannelName client:self];
-							}
+					if ([TPCPreferences giveFocusOnMessageCommand]) {
+						if (channelToSelect == nil) {
+							channelToSelect = channel;
 						}
 					}
+				}
 
-					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&s withClient:self channel:channel lineType:type];
+				NSMutableAttributedString *strCopy = [s mutableCopy];
+
+				while ([strCopy length] > 0)
+				{
+					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strCopy withClient:self channel:channel lineType:type];
 
 					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 						if (channel) {
@@ -2252,15 +2262,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					} else {
 						[self encryptMessage:unencryptedMessage directedAt:[channel name] encodingCallback:encryptionBlock injectionCallback:injectionBlock];
 					}
-
-					if (channel) {
-						if (secretMessage == NO) {
-							if ([TPCPreferences giveFocusOnMessageCommand]) {
-								[mainWindow() select:channel];
-							}
-						}
-					}
 				}
+			}
+
+			if (channelToSelect) {
+				[mainWindow() select:channelToSelect];
 			}
 
 			break;
