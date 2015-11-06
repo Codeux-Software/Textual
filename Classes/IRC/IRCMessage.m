@@ -154,8 +154,15 @@
 				}
 			}
 		}
+
+        self.messageTags = valueMatrix;
 	}
-			
+
+    /* Initialize messageTags if it isn't already set. */
+    if (self.messageTags == nil) {
+        self.messageTags = [NSDictionary dictionary];
+    }
+
 	/* Set a date if there is none already set. */
 	if (self.receivedAt == nil) {
 		self.receivedAt = [NSDate date];
