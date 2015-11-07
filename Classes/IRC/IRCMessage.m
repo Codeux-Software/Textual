@@ -78,7 +78,7 @@
 
 	// ---- //
 
-    /* Get extensions from in front of input string. See IRCv3.atheme.org for
+    /* Get extensions from in front of input string. See ircv3.net for
      more information regarding extensions in the IRC protocol. */
 	if ([s hasPrefix:@"@"]) {
 		/* Get leading string up to first space. */
@@ -93,10 +93,10 @@
 		extensionInfo = [extensionInfo substringFromIndex:1];
 		
 		/* Chop the tags up using ; as a divider as defined by the syntax
-		 located at: <http://ircv3.org/specification/message-tags-3.2> */
+		 located at: <http://ircv3.net/specs/core/message-tags-3.2.html> */
 		/* An example grouping would look like the following:
 				@aaa=bbb;ccc;example.com/ddd=eee */
-		/* The specification does not speicfy what is to happen if the value
+		/* The specification does not specify what is to happen if the value
 		 of an extension will contain a semicolon so at this point we will
 		 assume that they will not exist and only be there as a divider. */
 		NSArray *values = [extensionInfo componentsSeparatedByString:@";"];
@@ -154,8 +154,15 @@
 				}
 			}
 		}
+
+        self.messageTags = valueMatrix;
 	}
-			
+
+    /* Initialize messageTags if it isn't already set. */
+    if (self.messageTags == nil) {
+        self.messageTags = [NSDictionary dictionary];
+    }
+
 	/* Set a date if there is none already set. */
 	if (self.receivedAt == nil) {
 		self.receivedAt = [NSDate date];

@@ -43,6 +43,7 @@
 @property (nonatomic, copy) NSString *command;
 @property (nonatomic, assign) NSInteger commandNumeric;
 @property (nonatomic, copy) NSArray *params;
+@property (nonatomic, copy) NSDictionary *messageTags; /* IRCv3 message tags. See ircv3.net for more information regarding extensions in the IRC protocol. */
 @property (nonatomic, copy) NSDate *receivedAt;
 @property (nonatomic, copy) NSString *batchToken;
 @property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
