@@ -105,8 +105,6 @@
 	 option is enabled, then this method observes clients 
 	 and toggles sleep mode once completed. */
 	@synchronized(self.observedClients) {
-		self.isPopulatingObservedClients = YES;
-
 		BOOL observeClients = [self disableSleepModeWhenConnected];
 
 		NSArray *clientList = [worldController() clientList];
