@@ -30,7 +30,7 @@
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="NvJ-e8-90E">
                     <rect key="frame" x="106" y="30" width="377" height="106"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zt2-Hf-A6W">
-                        <rect key="frame" x="1" y="1" width="223" height="133"/>
+                        <rect key="frame" x="0.0" y="0.0" width="377" height="106"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="vlQ-Kl-hYs">
@@ -38,8 +38,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="223" height="106"/>
-                                <size key="maxSize" width="472" height="10000000"/>
+                                <size key="minSize" width="377" height="106"/>
+                                <size key="maxSize" width="542" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="WARNING: ">
                                         <attributes>
@@ -83,8 +83,8 @@ Cgo
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="223" height="106"/>
-                                <size key="maxSize" width="472" height="10000000"/>
+                                <size key="minSize" width="377" height="106"/>
+                                <size key="maxSize" width="542" height="10000000"/>
                             </textView>
                         </subviews>
                         <animations/>
