@@ -52,7 +52,7 @@
 		if ([commandString isEqualToString:@"CLONES"]) {
 			[self findAllClonesIn:channel on:client];
 		} else if ([commandString isEqualToString:@"NAMEL"]) {
-			[self buildListOfUsersOn:channel on:client];
+			[self buildListOfUsersOn:channel on:client withParameters:messageString];
 		} else if ([commandString isEqualToString:@"FINDUSER"]) {
 			[self findAllUsersMatchingHost:[messageString trim] in:channel on:client];
 		}
@@ -64,7 +64,7 @@
 	return @[@"clones", @"namel", @"finduser"];
 }
 
-- (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client
+- (void)buildListOfUsersOn:(IRCChannel *)channel on:(IRCClient *)client withParameters:(NSString *)parameters
 {
 	if ([channel numberOfMembers] <= 0) {
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]", [channel name]) channel:channel];
@@ -72,18 +72,51 @@
 		return; // We cannot do anything with no users now can we?
 	}
 
-	/* Build list of users and print it. */
-	NSMutableArray *users = [NSMutableArray array];
+	/* Process parameters */
+	BOOL sortByRank = NO;
+	BOOL displayRank = NO;
 
-	for (IRCUser *u in [channel memberList]) {
-		[users addObject:[u nickname]];
+	if ([parameters length] > 1 && [parameters hasPrefix:@"-"]) {
+		for (NSInteger i = 1; i < [parameters length]; i++) {
+			UniChar parameter = [parameters characterAtIndex:i];
+
+			if (parameter == 'r') {
+				sortByRank = YES;
+			} else if (parameter == 'd') {
+				displayRank = YES;
+			}
+		}
 	}
 
-	[users sortUsingSelector:@selector(compare:)];
+	/* Build list of users and print it. */
+	NSArray *userObjects = [channel memberList];
 
-	NSString *printedList = [users componentsJoinedByString:NSStringWhitespacePlaceholder];
+	/* -memberList returns a list sorted by rank by default.
+	 If we are not sorting by rank, then we have to first get
+	 the member list then sort it another way. */
+	if (sortByRank == NO) {
+		/* Sort user objects alphabetically by comparing nicknames */
+		userObjects = [userObjects sortedArrayUsingComparator:^NSComparisonResult(IRCUser *obj1, IRCUser *obj2) {
+			return [[obj1 nickname] compare:[obj2 nickname]];
+		}];
+	}
 
-	[client printDebugInformation:printedList channel:channel];
+	/* Join user objects into string */
+	NSMutableString *userString = [NSMutableString string];
+
+	for (IRCUser *user in userObjects) {
+		NSString *rank = [user mark];
+
+		if (rank && displayRank) {
+			[userString appendString:rank];
+		}
+
+		[userString appendString:[user nickname]];
+
+		[userString appendString:NSStringWhitespacePlaceholder];
+	}
+
+	[client printDebugInformation:userString channel:channel];
 }
 
 - (void)findAllUsersMatchingHost:(NSString *)matchString in:(IRCChannel *)channel on:(IRCClient *)client
