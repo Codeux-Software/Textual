@@ -58,9 +58,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="9" id="t28-K4-r2N"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <accessibilityConnection property="title" destination="10" id="0D2-UX-54T"/>

@@ -160,9 +160,6 @@ DQ
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="123" id="w2f-eL-yzY"/>
-                        </connections>
                     </textFieldCell>
                     <accessibility description="Channel Name"/>
                 </textField>

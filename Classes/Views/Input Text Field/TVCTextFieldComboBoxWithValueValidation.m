@@ -62,6 +62,11 @@
 	[self setDelegate:self];
 }
 
+- (BOOL)drawsBackground
+{
+	return NO;
+}
+
 - (NSString *)predefinedSelectionValue
 {
 	if (self.lastOperationWasPredefinedSelection == NO) {
@@ -391,6 +396,11 @@
 	[clipView setFrame:clipViewRect];
 	
 	[[self parentField] resetCursorRects];
+}
+
+- (TVCTextFieldComboBoxWithValueValidation *)parentField
+{
+	return (TVCTextFieldComboBoxWithValueValidation *)[self controlView];
 }
 
 - (NSRect)parentViewFrame

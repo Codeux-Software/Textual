@@ -45,9 +45,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="rVI-TX-GRu" id="NhQ-qD-J03"/>
-                            </connections>
                         </textFieldCell>
                         <accessibility description="E-mail address to assosciate with license key"/>
                     </textField>
@@ -100,9 +97,6 @@ Gw
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="JL9-wh-1Zp" id="apZ-8a-clr"/>
-                            </connections>
                         </textFieldCell>
                         <accessibility description="Name to assosicate with license key"/>
                     </textField>

@@ -197,9 +197,6 @@ DQ
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="540" id="XMM-dO-upa"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <accessibilityConnection property="title" destination="541" id="TiN-Rr-XgG"/>
@@ -263,9 +260,6 @@ DQ
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="298" id="R3N-FX-jSA"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <accessibilityConnection property="title" destination="296" id="orM-OL-W3d"/>

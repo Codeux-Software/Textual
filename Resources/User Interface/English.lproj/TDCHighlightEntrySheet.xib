@@ -91,9 +91,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="parentField" destination="310" id="h4H-Fm-k8S"/>
-                            </connections>
                         </textFieldCell>
                         <accessibility description="Highlight Match Keyword"/>
                         <connections>

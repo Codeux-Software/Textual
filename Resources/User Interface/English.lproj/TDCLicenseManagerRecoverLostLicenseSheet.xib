@@ -44,9 +44,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="parentField" destination="RLC-SX-HOX" id="GSt-jS-JRB"/>
-                            </connections>
                         </textFieldCell>
                         <accessibility description="E-mail address associated with order"/>
                         <connections>

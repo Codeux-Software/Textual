@@ -40,9 +40,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="parentField" destination="146" id="921-Vd-HVI"/>
-                            </connections>
                         </textFieldCell>
                         <connections>
                             <accessibilityConnection property="title" destination="145" id="5Xq-Kg-kdi"/>
@@ -163,9 +160,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <connections>
-                                <outlet property="parentField" destination="216" id="PlT-uQ-hHL"/>
-                            </connections>
                         </comboBoxCell>
                         <connections>
                             <accessibilityConnection property="title" destination="148" id="SFX-7P-Cs7"/>

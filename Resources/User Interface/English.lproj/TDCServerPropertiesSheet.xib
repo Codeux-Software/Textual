@@ -365,9 +365,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1548" id="zsu-EP-rrz"/>
-                        </connections>
                     </comboBoxCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1540" id="Vek-86-p4Z"/>
@@ -400,9 +397,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1539" id="I7s-Or-pOr"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1538" id="TQ6-9b-XVp"/>
@@ -446,9 +440,6 @@ Gw
                         <allowedInputSourceLocales>
                             <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                         </allowedInputSourceLocales>
-                        <connections>
-                            <outlet property="parentField" destination="1541" id="AFE-Ox-Eey"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1542" id="15n-da-FwL"/>
@@ -530,9 +521,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1595" id="qM3-Zl-sum"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1596" id="DbG-3n-Xx2"/>
@@ -559,9 +547,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1597" id="7QU-DC-W27"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1598" id="YBC-KR-Lno"/>
@@ -586,9 +571,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="1599" id="QU9-Iv-nrH"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1600" id="Y9Q-hW-UWv"/>
@@ -649,9 +631,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="2335" id="ElP-6n-a1u"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="2336" id="eN3-Ll-UUN"/>
@@ -821,9 +800,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="2290" id="HyZ-bh-uDV"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1656" id="9XF-4w-7xl"/>
@@ -840,9 +816,6 @@ Gw
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <connections>
-                            <outlet property="parentField" destination="2294" id="GzN-d2-ypd"/>
-                        </connections>
                     </textFieldCell>
                     <connections>
                         <accessibilityConnection property="title" destination="1671" id="y7q-o0-o8y"/>
@@ -1777,9 +1750,6 @@ Gw
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <connections>
-                                    <outlet property="parentField" destination="1901" id="6jj-TG-Ml9"/>
-                                </connections>
                             </textFieldCell>
                             <connections>
                                 <accessibilityConnection property="title" destination="1897" id="rwX-Bu-Yk3"/>
@@ -1796,9 +1766,6 @@ Gw
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <connections>
-                                    <outlet property="parentField" destination="1903" id="IFt-Ky-dJW"/>
-                                </connections>
                             </textFieldCell>
                             <connections>
                                 <accessibilityConnection property="title" destination="1898" id="DSz-Am-kbS"/>
