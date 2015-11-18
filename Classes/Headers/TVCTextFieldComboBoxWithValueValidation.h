@@ -62,5 +62,4 @@
 @end
 
 @interface TVCTextFieldComboBoxWithValueValidationCell : NSComboBoxCell
-@property (nonatomic, weak) IBOutlet TVCTextFieldComboBoxWithValueValidation *parentField;
 @end

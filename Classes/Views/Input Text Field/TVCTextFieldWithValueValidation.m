@@ -57,6 +57,11 @@
 	[self setCachedValidValue:NO];
 }
 
+- (BOOL)drawsBackground
+{
+	return NO;
+}
+
 - (NSString *)value
 {
 	NSString *stringValue = nil;
@@ -329,6 +334,11 @@
 	[clipView setFrame:clipViewRect];
 	
 	[[self parentField] resetCursorRects];
+}
+
+- (TVCTextFieldWithValueValidation *)parentField
+{
+	return (TVCTextFieldWithValueValidation *)[self controlView];
 }
 
 - (NSRect)parentViewFrame

@@ -62,5 +62,4 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @end
 
 @interface TVCTextFieldWithValueValidationCell : NSTextFieldCell
-@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *parentField;
 @end
