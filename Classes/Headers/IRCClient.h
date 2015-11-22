@@ -119,7 +119,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 @property (nonatomic, assign) NSTimeInterval lastMessageServerTime;			// The time of the last message received that contained a server-time CAP.
 @property (nonatomic, copy) NSString *serverRedirectAddressTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
 @property (nonatomic, assign) NSInteger serverRedirectPortTemporaryStore; // Temporary store for RPL_BOUNCE (010) redirects.
-@property (readonly, copy) NSString *zncBouncerCertificateChainData;
+@property (readonly, copy) NSData *zncBouncerCertificateChainData;
 
 @property (readonly) BOOL connectionIsSecured;
 
