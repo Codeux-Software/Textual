@@ -11,6 +11,7 @@
 		4C69EAFB1AC1A941003EC07D /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C69EAFA1AC1A941003EC07D /* BasicLanguage.strings */; };
 		4CBE7B591A91485C008FB230 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */; };
 		4CF40D6B1AC1A06300A26BE0 /* TPI_ZNCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */; };
+		4CF7B6C81C02836A00C986AA /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF7B6C71C02836A00C986AA /* SecurityInterface.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		4CF40D651AC1A03F00A26BE0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CF40D691AC1A06300A26BE0 /* TPI_ZNCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_ZNCAdditions.h; path = Classes/TPI_ZNCAdditions.h; sourceTree = "<group>"; };
 		4CF40D6A1AC1A06300A26BE0 /* TPI_ZNCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPI_ZNCAdditions.m; path = Classes/TPI_ZNCAdditions.m; sourceTree = "<group>"; };
+		4CF7B6C71C02836A00C986AA /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = System/Library/Frameworks/SecurityInterface.framework; sourceTree = SDKROOT; };
 		8D576316048677EA00EA77CD /* ZNCAdditions.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZNCAdditions.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -31,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CF7B6C81C02836A00C986AA /* SecurityInterface.framework in Frameworks */,
 				4C393B2E121AE5D5004C66F4 /* Cocoa.framework in Frameworks */,
 				4CBE7B591A91485C008FB230 /* CocoaExtensions.framework in Frameworks */,
 			);
@@ -53,6 +56,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CF7B6C71C02836A00C986AA /* SecurityInterface.framework */,
 				4CBE7B341A913F34008FB230 /* CocoaExtensions.framework */,
 				4C393B2D121AE5D5004C66F4 /* Cocoa.framework */,
 			);

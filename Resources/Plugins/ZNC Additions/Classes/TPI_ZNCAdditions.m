@@ -68,15 +68,82 @@
 						  commandString:(NSString *)commandString
 						  messageString:(NSString *)messageString
 {
-	BOOL isDetach = [commandString isEqualIgnoringCase:@"DETACH"];
-	BOOL isAttach = [commandString isEqualIgnoringCase:@"ATTACH"];
-	
-	if (isAttach || isDetach) {
-		if ([client isZNCBouncerConnection] == NO) {
-			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
+	/* Throw error if user tries to invoke a command that requires the
+	 user to be connected to a ZNC bouncer */
+	if ([client isZNCBouncerConnection] == NO) {
+		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1000]")];
+
+		return;
+	}
+
+	/* Process commands */
+	if ([commandString isEqualIgnoringCase:@"ZNCCERT"])
+	{
+		/* Textual is designed not to import partial content. It will either
+		 return the complete certificate chain at this point, or nil. */
+		NSData *certificateData = [client zncBouncerCertificateChainData];
+
+		if (certificateData == nil) {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1003]")];
 
 			return;
 		}
+
+		/* Given the raw, base64 encoded data, convert it into certificate objects. */
+		SecItemImportExportKeyParameters importParameters;
+
+		importParameters.version = SEC_KEY_IMPORT_EXPORT_PARAMS_VERSION;
+		importParameters.flags = kSecKeyNoAccessControl;
+
+		importParameters.passphrase = NULL;
+		importParameters.alertTitle = NULL;
+		importParameters.alertPrompt = NULL;
+		importParameters.accessRef = NULL;
+
+		importParameters.keyUsage = NULL;
+		importParameters.keyAttributes = NULL;
+
+		SecExternalItemType itemType = kSecItemTypeCertificate;
+
+		SecExternalFormat externalFormat = kSecFormatPEMSequence;
+
+		int flags = 0;
+
+		CFArrayRef certificateArray = NULL;
+
+		OSStatus operationStatus =
+		SecItemImport((__bridge CFDataRef)(certificateData), NULL, &externalFormat, &itemType, flags, &importParameters, NULL, &certificateArray);
+
+		/* Display an error or hand the certificate chain off to Apple's own
+		 APIs to display them in a dialog. */
+		if (operationStatus == noErr) {
+			[self performBlockOnMainThread:^{
+				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
+
+				[panel setDefaultButtonTitle:BLS(1011)];
+				[panel setAlternateButtonTitle:nil];
+
+				[panel beginSheetForWindow:[NSApp mainWindow]
+							 modalDelegate:nil
+							didEndSelector:NULL
+							   contextInfo:NULL
+							  certificates:(__bridge NSArray *)certificateArray
+								 showGroup:YES];
+			}];
+
+			CFRelease(certificateArray);
+		} else {
+			[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]")];
+		}
+	}
+
+	/* ------ */
+
+	else if ([commandString isEqualIgnoringCase:@"DETACH"] ||
+			 [commandString isEqualIgnoringCase:@"ATTACH"])
+	{
+		BOOL isDetach = [commandString isEqualIgnoringCase:@"DETACH"];
+		BOOL isAttach = [commandString isEqualIgnoringCase:@"ATTACH"];
 
 		messageString = [messageString trim];
 		
@@ -104,7 +171,7 @@
 
 - (NSArray *)subscribedUserInputCommands
 {
-	return @[@"detach", @"attach"];
+	return @[@"detach", @"attach", @"znccert"];
 }
 
 - (NSArray *)subscribedServerInputCommands
