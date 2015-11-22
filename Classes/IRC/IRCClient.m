@@ -115,6 +115,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, assign) BOOL CAPNegotiationIsPaused;
 @property (nonatomic, assign) BOOL reconnectEnabledBecauseOfSleepMode;
 @property (nonatomic, assign) BOOL zncBouncerIsPlayingBackHistory;
+@property (nonatomic, assign) BOOL zncBoucnerIsSendingCertificateInfo;
 @property (nonatomic, assign) NSInteger successfulConnects;
 @property (nonatomic, assign) NSInteger tryingNicknameNumber;
 @property (nonatomic, assign) NSUInteger lastWhoRequestChannelListIndex;
@@ -122,6 +123,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, copy) NSString *cachedLocalHostmask;
 @property (nonatomic, copy) NSString *cachedLocalNickname;
 @property (nonatomic, copy) NSString *tryingNicknameSentNickname;
+@property (nonatomic, strong) NSMutableString *zncBouncerCertificateChainDataMutable;
 @property (nonatomic, strong) TLOFileLogger *logFile;
 @property (nonatomic, strong) TLOTimer *isonTimer;
 @property (nonatomic, strong) TLOTimer *pongTimer;
@@ -176,6 +178,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		self.isZNCBouncerConnection = NO;
 		self.zncBouncerIsPlayingBackHistory = NO;
+		self.zncBoucnerIsSendingCertificateInfo = NO;
+		self.zncBouncerCertificateChainDataMutable = nil;
 
 		self.autojoinInProgress = NO;
 		self.rawModeEnabled = NO;
@@ -649,6 +653,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	} else {
 		return NO;
 	}
+}
+
+- (NSString *)zncBouncerCertificateChainData
+{
+	/* If the data is stll being processed, then return
+	 nil so that partial data is not returned. */
+	if (self.isZNCBouncerConnection == NO ||
+		self.zncBoucnerIsSendingCertificateInfo ||
+		self.zncBouncerCertificateChainDataMutable == nil)
+	{
+		return nil;
+	}
+
+	return [self.zncBouncerCertificateChainDataMutable copy];
 }
 
 #pragma mark -
@@ -3774,6 +3792,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	self.isZNCBouncerConnection = NO;
 	self.zncBouncerIsPlayingBackHistory = NO;
+	self.zncBoucnerIsSendingCertificateInfo = NO;
+	self.zncBouncerCertificateChainDataMutable = nil;
 	
 	self.autojoinInProgress = NO;
 	self.rawModeEnabled = NO;
@@ -4167,6 +4187,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			case 1054: // BATCH
 			{
 				[self receiveBatch:m];
+
+				break;
+			}
+			case 1055: // CERTINFO
+			{
+				[self receiveCertInfo:m];
 
 				break;
 			}
@@ -5527,6 +5553,36 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self printError:message forCommand:[m command]];
 }
 
+- (void)receiveCertInfo:(IRCMessage *)m
+{
+	NSAssertReturn([m paramsCount] == 2);
+
+	/* CERTINFO is not a standard command for Textual to
+	 receive which means we should be strict about what
+	 conditions we will accept it under. */
+	if (self.zncBoucnerIsSendingCertificateInfo == NO ||
+		[m senderIsServer] == NO ||
+		NSObjectsAreEqual([m senderNickname], @"znc.in") == NO)
+	{
+		return;
+	}
+
+	/* The data we expect to receive should be chunk split 
+	 which means it is safe to assume a maximum length. */
+	NSString *line = [m sequence];
+
+	if ([line length] < 2 || [line length] > 65) {
+		return;
+	}
+
+	/* Write line to the mutable buffer */
+	if (self.zncBouncerCertificateChainDataMutable == nil) {
+		self.zncBouncerCertificateChainDataMutable = [NSMutableString string];
+	}
+
+	[self.zncBouncerCertificateChainDataMutable appendFormat:@"%@\n", line];
+}
+
 - (void)receiveBatch:(IRCMessage *)m
 {
 	NSAssertReturn([m paramsCount] >= 1);
@@ -5593,6 +5649,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		/* Set vendor specific flags based on BATCH command values */
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = NO;
+		} else if (NSObjectsAreEqual(batchType, @"znc.in/certinfo_v1")) {
+			self.zncBoucnerIsSendingCertificateInfo = NO;
 		}
 	}
 	else // isBatchOpening == NO
@@ -5621,6 +5679,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		/* Set vendor specific flags based on BATCH command values */
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = self.isZNCBouncerConnection;
+		} else if (NSObjectsAreEqual(batchType, @"znc.in/certinfo_v1")) {
+			self.zncBoucnerIsSendingCertificateInfo = self.isZNCBouncerConnection;
 		}
 	}
 }

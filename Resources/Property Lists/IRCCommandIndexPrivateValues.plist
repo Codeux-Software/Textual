@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>1055</real>
+		<real>1056</real>
 	</dict>
 	<key>action</key>
 	<dict>
@@ -68,6 +68,17 @@
 		<string>AUTHENTICATE</string>
 		<key>indexValue</key>
 		<integer>1005</integer>
+		<key>isStandalone</key>
+		<true/>
+		<key>outgoingColonIndex</key>
+		<integer>-1</integer>
+	</dict>
+	<key>certinfo</key>
+	<dict>
+		<key>command</key>
+		<string>CERTINFO</string>
+		<key>indexValue</key>
+		<real>1055</real>
 		<key>isStandalone</key>
 		<true/>
 		<key>outgoingColonIndex</key>
