@@ -655,7 +655,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 }
 
-- (NSString *)zncBouncerCertificateChainData
+- (NSData *)zncBouncerCertificateChainData
 {
 	/* If the data is stll being processed, then return
 	 nil so that partial data is not returned. */
@@ -666,7 +666,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return nil;
 	}
 
-	return [self.zncBouncerCertificateChainDataMutable copy];
+	return [self.zncBouncerCertificateChainDataMutable dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 #pragma mark -
