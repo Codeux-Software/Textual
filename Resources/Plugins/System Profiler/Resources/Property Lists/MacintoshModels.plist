@@ -162,6 +162,12 @@
 	<string>iMac (21.5-inch, Late 2014)</string>
 	<key>iMac15,1</key>
 	<string>iMac (27-inch, Retina, Late 2014)</string>
+	<key>iMac16,1</key>
+	<string>iMac (21.5-Inch, Late 2015)</string>
+	<key>iMac16,2</key>
+	<string>iMac (21.5-Inch, Late 2015)</string>
+	<key>iMac17,1</key>
+	<string>iMac (27-inch, Retina, Late 2015)</string>
 	<key>iMac4,1</key>
 	<string>iMac (Early 2006)</string>
 	<key>iMac4,2</key>
