@@ -62,8 +62,9 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 	ClientIRCv3SupportedCapacityIsInSASLNegotiation		= 1 << 7, // YES if in SASL CAP authentication request, else NO.
 	ClientIRCv3SupportedCapacityIsIdentifiedWithSASL	= 1 << 8, // YES if SASL authentication was successful, else NO.
 	ClientIRCv3SupportedCapacityZNCSelfMessage			= 1 << 14, // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 15,  // YES if the ZNC vendor specific CAP supported.
-	ClientIRCv3SupportedCapacityBatch					= 1 << 16  // YES if batch CAP supported.
+	ClientIRCv3SupportedCapacityZNCPlaybackModule		= 1 << 15, // YES if the ZNC vendor specific CAP supported.
+	ClientIRCv3SupportedCapacityBatch					= 1 << 16, // YES if batch CAP supported.
+	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17  // YES if the ZNC vendor specific CAP supported.
 };
 
 typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
