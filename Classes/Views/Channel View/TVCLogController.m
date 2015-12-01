@@ -901,6 +901,11 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Manage Scrollback Size
 
+- (NSInteger)numberOfLines
+{
+	return self.activeLineCount;
+}
+
 - (void)limitNumberOfLines
 {
 	self.needsLimitNumberOfLines = NO;
