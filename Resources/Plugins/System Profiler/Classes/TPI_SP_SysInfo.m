@@ -115,7 +115,18 @@
 	NSString *shared  = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"shared"]];
 	NSString *private = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"private"]];
 
-	return TPILocalizedString(@"BasicLanguage[1020]", private, shared);
+	NSInteger totalScrollbackSize = 0;
+
+	for (IRCClient *u in [worldController() clientList]) {
+		totalScrollbackSize += [[u viewController] numberOfLines];
+
+		for (IRCChannel *c in [u channelList]) {
+			totalScrollbackSize += [[c viewController] numberOfLines];
+		}
+	}
+
+	return TPILocalizedString(@"BasicLanguage[1020]",
+							  private, shared, TXFormattedNumber(totalScrollbackSize));
 }
 
 + (NSString *)applicationRuntimeStatistics
