@@ -45,8 +45,8 @@ typedef NS_ENUM(NSUInteger, TDChannelBanListSheetEntryType) {
 
 @interface TDChannelBanListSheet : TDCSheetBase
 @property (nonatomic, assign) TDChannelBanListSheetEntryType entryType;
-@property (nonatomic, copy, readonly) NSArray *changeModeList;
-@property (nonatomic, copy, readonly) NSString *mode;
+@property (readonly, copy) NSArray *changeModeList;
+@property (readonly, copy) NSString *mode;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) NSString *channelID;

@@ -73,7 +73,7 @@
  IRCMessageBatchMessageContainer which acts as a container for
  all BATCH command events that the client may receive. */
 @interface IRCMessageBatchMessageContainer : NSObject
-@property (nonatomic, copy, readonly) NSDictionary *queuedEntries;
+@property (readonly, copy) NSDictionary *queuedEntries;
 
 - (void)queueEntry:(id)entry;
 
@@ -92,7 +92,7 @@
 @property (nonatomic, assign) BOOL batchIsOpen;
 @property (nonatomic, copy) NSString *batchToken;
 @property (nonatomic, copy) NSString *batchType;
-@property (nonatomic, copy, readonly) NSArray *queuedEntries;
+@property (readonly, copy) NSArray *queuedEntries;
 @property (nonatomic, assign) IRCMessageBatchMessage *parentBatchMessage;
 
 - (void)queueEntry:(id)entry;

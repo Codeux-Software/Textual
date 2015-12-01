@@ -40,7 +40,7 @@
 @interface TDChannelBanListSheetEntry : NSObject
 @property (nonatomic, copy) NSString *entryMask;
 @property (nonatomic, copy) NSString *entryAuthor;
-@property (nonatomic, copy, readonly) NSString *entryCreationDateString;
+@property (readonly, copy) NSString *entryCreationDateString;
 @property (nonatomic, copy) NSDate *entryCreationDate;
 @end
 
