@@ -1204,7 +1204,7 @@
 
 	NSObjectIsEmptyAssert(s);
 
-	NSString *urlStr = [NSString stringWithFormat:@"http://www.google.com/search?ie=UTF-8&q=%@", [s gtm_stringByEscapingForURLArgument]];
+	NSString *urlStr = [NSString stringWithFormat:@"https://www.google.com/search?ie=UTF-8&q=%@", [s gtm_stringByEscapingForURLArgument]];
 		
 	[TLOpenLink openWithString:urlStr];
 }
@@ -2604,12 +2604,12 @@
 
 - (void)openMacAppStoreDownloadPage:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.textualapp.com/mac-app-store"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/mac-app-store"];
 }
 
 - (void)openFastSpringStoreWebpage:(id)sender
 {
-	[TLOpenLink openWithString:@"http://www.textualapp.com/fastspring-store"];
+	[TLOpenLink openWithString:@"https://www.textualapp.com/fastspring-store"];
 }
 
 - (void)processNavigationItem:(id)sender
