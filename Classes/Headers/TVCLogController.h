@@ -59,6 +59,8 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 @property (assign) BOOL reloadingBacklog;
 @property (assign) BOOL reloadingHistory;
 
+@property (readonly) NSInteger numberOfLines;
+
 - (void)setUp;
 
 - (void)notifyDidBecomeVisible;
