@@ -6297,7 +6297,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	/* Request certificate information */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCCertInfoModule]) {
-		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"tlsinfo"], @"send", nil];
+		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"tlsinfo"], @"send-data", nil];
 	}
 
 	/* Request playback since the last seen message when previously connected. */
