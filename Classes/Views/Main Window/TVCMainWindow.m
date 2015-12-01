@@ -99,10 +99,6 @@
 		
 		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
 		
-		[self.contentSplitView restorePositions];
-
-		[self collapseMemberListForHiddenPreference];
-		
 		[self registerKeyHandlers];
 
 		[worldController() setupConfiguration];
@@ -205,6 +201,8 @@
 - (void)loadWindowState
 {
 	[self restoreWindowStateUsingKeyword:@"Main Window"];
+
+	[self restoreSavedContentSplitViewState];
 }
 
 - (void)saveWindowState
@@ -216,6 +214,8 @@
 	[self saveWindowStateUsingKeyword:@"Main Window"];
 	
 	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
+
+	[self saveContentSplitViewState];
 }
 
 - (void)prepareForApplicationTermination
@@ -1074,11 +1074,30 @@
 #pragma mark -
 #pragma mark Split View
 
-- (void)collapseMemberListForHiddenPreference
+- (void)saveContentSplitViewState
 {
-	BOOL collapseMemberList = [RZUserDefaults() boolForKey:@"UserListHideOnLaunch"];
+	[RZUserDefaults() setBool:[self isServerListVisible]
+					   forKey:@"Window -> Main Window -> Server List is Visible"];
 
-	if (collapseMemberList) {
+	[RZUserDefaults() setBool:([self.memberList isHiddenByUser] == NO)
+					   forKey:@"Window -> Main Window -> Member List is Visible"];
+}
+
+- (void)restoreSavedContentSplitViewState
+{
+	/* Make server list and member list visible + restore saved position. */
+	[self.contentSplitView restorePositions];
+
+	/* Collapse one or more items if they were collapsed when closing Textual. */
+	id makeServerListVisible = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Server List is Visible"];
+
+	id makeMemberListVisible = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Member List is Visible"];
+
+	if (makeServerListVisible && [makeServerListVisible boolValue] == NO) {
+		[self.contentSplitView collapseServerList];
+	}
+
+	if (makeMemberListVisible && [makeMemberListVisible boolValue] == NO) {
 		[self.memberList setIsHiddenByUser:YES];
 
 		[self.contentSplitView collapseMemberList];
