@@ -41,11 +41,11 @@
 @interface IRCConnection : NSObject
 @property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, strong) TLOTimer *floodTimer;
-@property (readonly, assign) BOOL isConnected;
-@property (readonly, assign) BOOL isConnecting;
-@property (readonly, assign) BOOL isSending;
-@property (readonly, assign) BOOL isSecured;
-@property (readonly, assign) BOOL isConnectedWithClientSideCertificate;
+@property (readonly) BOOL isConnected;
+@property (readonly) BOOL isConnecting;
+@property (readonly) BOOL isSending;
+@property (readonly) BOOL isSecured;
+@property (readonly) BOOL isConnectedWithClientSideCertificate;
 @property (nonatomic, assign) BOOL connectionPrefersIPv6;
 @property (nonatomic, assign) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign) BOOL connectionUsesOutgoingFloodControl;

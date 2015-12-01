@@ -56,7 +56,7 @@ typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
 
 @interface THOPluginItem : NSObject
 @property (readonly, strong) id primaryClass;
-@property (readonly, assign) THOPluginItemSupportedFeatures supportedFeatures;
+@property (readonly) THOPluginItemSupportedFeatures supportedFeatures;
 @property (readonly, copy) NSArray *supportedUserInputCommands;
 @property (readonly, copy) NSArray *supportedServerInputCommands;
 @property (readonly, copy) NSArray *outputSuppressionRules;
