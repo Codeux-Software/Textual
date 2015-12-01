@@ -5647,7 +5647,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		/* Set vendor specific flags based on BATCH command values */
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = NO;
-		} else if (NSObjectsAreEqual(batchType, @"znc.in/certinfo")) {
+		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
 			self.zncBoucnerIsSendingCertificateInfo = NO;
 		}
 	}
@@ -5677,7 +5677,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		/* Set vendor specific flags based on BATCH command values */
 		if (NSObjectsAreEqual(batchType, @"znc.in/playback")) {
 			self.zncBouncerIsPlayingBackHistory = self.isZNCBouncerConnection;
-		} else if (NSObjectsAreEqual(batchType, @"znc.in/certinfo")) {
+		} else if (NSObjectsAreEqual(batchType, @"znc.in/tlsinfo")) {
 			/* If this is parent batch (there is no @batch=), then we
 			 reset the mutable object to read new data. */
 			if (parentBatchMessageToken == nil) {
@@ -5833,7 +5833,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case ClientIRCv3SupportedCapacityZNCCertInfoModule:
 		{
-			stringValue = @"znc.in/certinfo";
+			stringValue = @"znc.in/tlsinfo";
 
 			break;
 		}
@@ -5969,7 +5969,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					   [cap isEqualIgnoringCase:@"userhost-in-names"]		||
 					   [cap isEqualIgnoringCase:@"server-time"]				||
 					   [cap isEqualIgnoringCase:@"znc.in/self-message"]		||
-					   [cap isEqualIgnoringCase:@"znc.in/certinfo"]			||
+					   [cap isEqualIgnoringCase:@"znc.in/tlsinfo"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/playback"]			||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time"]		||
 					   [cap isEqualIgnoringCase:@"znc.in/server-time-iso"]);
@@ -5999,7 +5999,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return ClientIRCv3SupportedCapacityZNCServerTime;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/server-time-iso"]) {
 		return ClientIRCv3SupportedCapacityZNCServerTimeISO;
-	} else if ([stringValue isEqualIgnoringCase:@"znc.in/certinfo"]) {
+	} else if ([stringValue isEqualIgnoringCase:@"znc.in/tlsinfo"]) {
 		return ClientIRCv3SupportedCapacityZNCCertInfoModule;
 	} else if ([stringValue isEqualIgnoringCase:@"znc.in/playback"]) {
 		return ClientIRCv3SupportedCapacityZNCPlaybackModule;
@@ -6297,7 +6297,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	/* Request certificate information */
 	if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityZNCCertInfoModule]) {
-		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"certinfo"], @"send", nil];
+		[self send:IRCPrivateCommandIndex("privmsg"), [self nicknameWithZNCUserPrefix:@"tlsinfo"], @"send", nil];
 	}
 
 	/* Request playback since the last seen message when previously connected. */
