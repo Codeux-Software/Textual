@@ -323,7 +323,7 @@ static const char *kMacNames[] = {
 	switch (protocol) {
 		case kSSLProtocol2:
 		{
-			protocolString = @"Secure Sockets Layer (SSL) version 2.0";
+			protocolString = @"Secure Sockets Layer (SSL), version 2.0";
 
 			break;
 		}
