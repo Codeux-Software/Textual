@@ -206,8 +206,8 @@
 		NSString *param = [h modeParamater];
 
 		if ([h modeIsSet]) {
-			if ([param length] > 0 && maskK == NO) {
-				if ([symbol isEqualToString:@"k"]) {
+			if ([param length] > 0) {
+				if ([symbol isEqualToString:@"k"] && maskK) {
 					[trail appendFormat:@" ******"];
 				} else {
 					[trail appendFormat:@" %@", param];
