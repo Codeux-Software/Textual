@@ -6411,12 +6411,12 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 		NSArray *cipherSuites = (NSArray *)value;
 		NSUInteger numberCiphers = [cipherSuites count];
 		SSLCipherSuite ciphers[numberCiphers];
-		
+
 		NSUInteger cipherIndex;
 		for (cipherIndex = 0; cipherIndex < numberCiphers; cipherIndex++)
 		{
 			NSNumber *cipherObject = [cipherSuites objectAtIndex:cipherIndex];
-			ciphers[cipherIndex] = [cipherObject shortValue];
+			ciphers[cipherIndex] = [cipherObject intValue];
 		}
 		
 		status = SSLSetEnabledCiphers(sslContext, ciphers, numberCiphers);

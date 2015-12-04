@@ -71,6 +71,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *pongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *performDisconnectOnPongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv6heck;
+@property (nonatomic, weak) IBOutlet NSButton *connectionPrefersModernCiphersCheck;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateChangeCertificateButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateResetCertificateButton;
@@ -718,6 +719,8 @@
 
 	[self.validateServerCertificateChainCheck setState:self.config.validateServerCertificateChain];
 
+	[self.connectionPrefersModernCiphersCheck setState:self.config.connectionPrefersModernCiphers];
+
 	/* Identity */
 	if (NSObjectIsEmpty(self.config.nickname)) {
 		[self.nicknameTextField setStringValue:[TPCPreferences defaultNickname]];
@@ -840,6 +843,8 @@
 	self.config.performDisconnectOnReachabilityChange = [self.disconnectOnReachabilityChangeCheck state];
 
 	self.config.validateServerCertificateChain = [self.validateServerCertificateChainCheck state];
+
+	self.config.connectionPrefersModernCiphers = [self.connectionPrefersModernCiphersCheck state];
 
 	/* Identity */
 	self.config.nickname = [self.nicknameTextField value];

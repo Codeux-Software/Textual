@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerPropertiesSheet">
@@ -30,6 +30,7 @@
                 <outlet property="connectCommandsField" destination="2310" id="2Ht-9D-ef5"/>
                 <outlet property="connectionNameTextField" destination="1539" id="f2G-5T-09V"/>
                 <outlet property="connectionPrefersIPv6heck" destination="2530" id="Ri4-7R-JRA"/>
+                <outlet property="connectionPrefersModernCiphersCheck" destination="VLy-2l-FGP" id="D8g-jX-Usc"/>
                 <outlet property="contentViewAddressBook" destination="1817" id="d5R-wV-sv5"/>
                 <outlet property="contentViewAutojoin" destination="1738" id="GdW-S9-Mmc"/>
                 <outlet property="contentViewClientCertificate" destination="Ti4-Q4-cYX" id="dRg-gZ-hNm"/>
@@ -1151,7 +1152,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1320,7 +1321,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -1412,7 +1413,7 @@ Gw
                         <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                     </tableHeaderView>
@@ -2126,7 +2127,7 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2530">
-                    <rect key="frame" x="34" y="223" width="140" height="18"/>
+                    <rect key="frame" x="34" y="250" width="140" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Connect using IPv6" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2134,7 +2135,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
-                    <rect key="frame" x="34" y="134" width="339" height="18"/>
+                    <rect key="frame" x="34" y="161" width="339" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2142,7 +2143,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2536">
-                    <rect key="frame" x="34" y="114" width="355" height="18"/>
+                    <rect key="frame" x="34" y="141" width="355" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when no PING response is received" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2537">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2150,7 +2151,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="7Re-Oa-iNx">
-                    <rect key="frame" x="34" y="66" width="303" height="18"/>
+                    <rect key="frame" x="34" y="93" width="303" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Validate the certificate chain when connecting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2158,7 +2159,7 @@ Gw
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="w5K-aH-URS">
-                    <rect key="frame" x="34" y="94" width="303" height="18"/>
+                    <rect key="frame" x="34" y="121" width="303" height="18"/>
                     <animations/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when reachability changes" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mLI-Vm-l2s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -2166,19 +2167,19 @@ Gw
                     </buttonCell>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="BvM-lk-kI4">
-                    <rect key="frame" x="49" y="163" width="446" height="54"/>
+                    <rect key="frame" x="49" y="190" width="446" height="54"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="bZM-Rf-rgn">
-                        <rect key="frame" x="1" y="1" width="223" height="133"/>
+                        <rect key="frame" x="0.0" y="0.0" width="446" height="54"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" baseWritingDirection="leftToRight" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="8lV-2X-EIW">
-                                <rect key="frame" x="0.0" y="0.0" width="1115" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="446" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <animations/>
                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="1338" height="10000000"/>
+                                <size key="maxSize" width="446" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment>
                                         <string key="content">• If a DNS lookup returns an IPv4 address, then Textual uses IPv4.
@@ -2196,12 +2197,15 @@ Gw
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <size key="minSize" width="446" height="54"/>
-                                <size key="maxSize" width="1338" height="10000000"/>
+                                <size key="maxSize" width="446" height="10000000"/>
                             </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="54" id="wkk-1c-sa5"/>
+                    </constraints>
                     <animations/>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WkZ-2H-1d6">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
@@ -2217,25 +2221,108 @@ Gw
                         <accessibilityConnection property="link" destination="2530" id="G14-mH-hsZ"/>
                     </connections>
                 </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="VLy-2l-FGP">
+                    <rect key="frame" x="34" y="65" width="280" height="18"/>
+                    <animations/>
+                    <buttonCell key="cell" type="check" title="Use modern, strong ciphers for encryption" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PVf-DV-Q7i">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="vbe-IS-JFh">
+                    <rect key="frame" x="49" y="31" width="446" height="28"/>
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="yCp-j6-Sgs">
+                        <rect key="frame" x="0.0" y="0.0" width="446" height="28"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" baseWritingDirection="leftToRight" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="QWv-lm-r9r">
+                                <rect key="frame" x="0.0" y="0.0" width="446" height="28"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <animations/>
+                                <color key="textColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="minSize" width="446" height="28"/>
+                                <size key="maxSize" width="446" height="10000000"/>
+                                <attributedString key="textStorage">
+                                    <fragment content="Improve strength of secured connections by using ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Mozilla's &quot;Modern&quot; cipher list">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <url key="NSLink" string="https://wiki.mozilla.org/Security/Server_Side_TLS#Modern_compatibility"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=".">
+                                        <attributes>
+                                            <color key="NSColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="smallSystem"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" defaultTabInterval="36" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                <tabStops/>
+                                            </paragraphStyle>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <size key="minSize" width="446" height="28"/>
+                                <size key="maxSize" width="446" height="10000000"/>
+                            </textView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="2cu-7v-Ebd"/>
+                    </constraints>
+                    <animations/>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="p0C-fM-Wz3">
+                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ixe-Ib-GXo">
+                        <rect key="frame" x="224" y="1" width="15" height="133"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </scroller>
+                    <connections>
+                        <accessibilityConnection property="link" destination="2530" id="Fn1-2M-nac"/>
+                    </connections>
+                </scrollView>
             </subviews>
             <constraints>
+                <constraint firstItem="vbe-IS-JFh" firstAttribute="top" secondItem="VLy-2l-FGP" secondAttribute="bottom" constant="8" id="4Cy-Zy-IKX"/>
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2536" secondAttribute="leading" id="5NB-by-0Ao"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="5tp-Q9-vNa"/>
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2530" secondAttribute="leading" id="B4I-2A-73x"/>
                 <constraint firstItem="2531" firstAttribute="top" secondItem="BvM-lk-kI4" secondAttribute="bottom" constant="13" id="CjT-fc-1Pz"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="top" secondItem="2536" secondAttribute="bottom" constant="6" symbolic="YES" id="Cu1-dV-CwP"/>
-                <constraint firstAttribute="bottom" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="68" id="De4-bQ-4YE"/>
                 <constraint firstAttribute="trailing" secondItem="BvM-lk-kI4" secondAttribute="trailing" constant="35" id="Eej-UV-514"/>
-                <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="68" id="POg-pW-mor"/>
+                <constraint firstAttribute="trailing" secondItem="vbe-IS-JFh" secondAttribute="trailing" constant="35" id="PKu-9v-gYq"/>
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="top" secondItem="w5K-aH-URS" secondAttribute="bottom" constant="14" id="TGV-7h-adM"/>
+                <constraint firstItem="vbe-IS-JFh" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="49" id="TxM-0s-3p6"/>
                 <constraint firstItem="2536" firstAttribute="top" secondItem="2531" secondAttribute="bottom" constant="6" symbolic="YES" id="aKm-bC-D2S"/>
+                <constraint firstAttribute="bottom" secondItem="vbe-IS-JFh" secondAttribute="bottom" constant="31" id="c9d-Ul-9BY"/>
+                <constraint firstItem="VLy-2l-FGP" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="14" id="dKp-IE-NKN"/>
                 <constraint firstItem="2536" firstAttribute="leading" secondItem="w5K-aH-URS" secondAttribute="leading" id="dZU-hR-1fY"/>
+                <constraint firstItem="VLy-2l-FGP" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="j57-f1-5D9"/>
                 <constraint firstItem="BvM-lk-kI4" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="8" symbolic="YES" id="n3m-IX-TWV"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="36" id="qfI-sb-gzB"/>
+                <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="41" id="qhb-Mm-6C8"/>
                 <constraint firstItem="BvM-lk-kI4" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="49" id="xnd-Zz-3WZ"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="521" y="73"/>
+            <point key="canvasLocation" x="521" y="113.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ti4-Q4-cYX" userLabel="CertFP View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
