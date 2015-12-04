@@ -136,6 +136,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 @property (nonatomic, strong) NSMutableDictionary *trackedUsers;
 @property (nonatomic, weak) IRCChannel *lagCheckDestinationChannel;
 @property (nonatomic, strong) IRCMessageBatchMessageContainer *batchMessages;
+@property (readonly) BOOL isBrokenIRCd_aka_Twitch;
 @end
 
 @implementation IRCClient
@@ -667,6 +668,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	return [self.zncBouncerCertificateChainDataMutable dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (BOOL)isBrokenIRCd_aka_Twitch
+{
+	return [self.networkAddress hasSuffix:@".twitch.tv"];
 }
 
 #pragma mark -
@@ -5062,7 +5068,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[mainWindow() updateTitleFor:c];
 
 		if (myself) {
-			if (self.config.sendWhoCommandRequestsToChannels) {
+			if (self.config.sendWhoCommandRequestsToChannels &&
+				self.isBrokenIRCd_aka_Twitch == NO)
+			{
 				[c setInUserInvokedModeRequest:YES];
 
 				[self send:IRCPrivateCommandIndex("mode"), [c name], nil];
@@ -7144,20 +7152,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			PointerIsEmptyAssertLoopBreak(c);
 			
-			if (self.inUserInvokedNamesRequest == NO) {
+			if (self.inUserInvokedNamesRequest == NO && self.isBrokenIRCd_aka_Twitch == NO) {
 				if ([c numberOfMembers] <= 1) {
 					NSString *mode = c.config.defaultModes;
 
 					if (NSObjectIsNotEmpty(m)) {
 						[self send:IRCPrivateCommandIndex("mode"), [c name], mode, nil];
 					}
-				}
 
-				if ([c numberOfMembers] <= 1 && [channel isModeChannelName]) {
-					NSString *topic = c.config.defaultTopic;
+					if ([channel isModeChannelName]) {
+						NSString *topic = c.config.defaultTopic;
 
-					if (NSObjectIsNotEmpty(topic)) {
-						[self send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
+						if (NSObjectIsNotEmpty(topic)) {
+							[self send:IRCPrivateCommandIndex("topic"), [c name], topic, nil];
+						}
 					}
 				}
 			}
@@ -9113,6 +9121,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)onISONTimer:(id)sender
 {
     NSAssertReturn(self.isLoggedIn);
+
+	NSAssertReturn(self.isBrokenIRCd_aka_Twitch == NO);
 
     NSMutableString *userstr = [NSMutableString string];
 
