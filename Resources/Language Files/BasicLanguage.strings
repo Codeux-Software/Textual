@@ -696,7 +696,9 @@
 
 /* Connection protocol and cipher suite */
 "BasicLanguage[1248]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
-"BasicLanguage[1250]" = "%1$@ with the cipher suite: %2$@";
+"BasicLanguage[1250]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";
+"BasicLanguage[1288]" = "%1$@ with the cipher suite: %2$@";
+"BasicLanguage[1289]" = "%1$@ with the cipher suite: %2$@ (deprecated)";
 
 /* Off-the-Record Messaging status messages */
 "BasicLanguage[1253][01]" = "Off-the-Record Messaging: Private conversation started with an UNRECOGNIZED user.";
@@ -785,6 +787,6 @@
 
 
 
-/* Next unusued key: 1288 */
+/* Next unusued key: 1290 */
 
 
