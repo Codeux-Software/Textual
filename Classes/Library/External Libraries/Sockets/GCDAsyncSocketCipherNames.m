@@ -398,4 +398,75 @@ static const char *kMacNames[] = {
 	return @"Unknown";
 }
 
+- (BOOL)sslConnectedWithDeprecatedCipher
+{
+	SSLCipherSuite cipher = [self sslNegotiatedCipherSuite];
+
+	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipher)];
+}
+
++ (NSArray *)cipherList
+{
+	id allowDeprecatedCiphers = [RZUserDefaults() objectForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
+
+	if (allowDeprecatedCiphers && [allowDeprecatedCiphers boolValue] == NO) {
+		return [GCDAsyncSocket cipherListModern];
+	} else {
+		NSMutableArray *_cipherList = [NSMutableArray array];
+
+		[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListModern]];
+		[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListDeprecated]];
+
+		return [_cipherList copy];
+	}
+}
+
++ (NSArray *)cipherListModern
+{
+	/* The following list of ciphers, which is ordered from most important
+	 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
+
+	return @[
+		 @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256),			// ECDHE-RSA-AES128-GCM-SHA256
+		 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-GCM-SHA256
+		 @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384),			// ECDHE-RSA-AES256-GCM-SHA384
+		 @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384),		// ECDHE-ECDSA-AES256-GCM-SHA384
+		 @(TLS_DHE_RSA_WITH_AES_128_GCM_SHA256),			// DHE-RSA-AES128-GCM-SHA256
+		 @(TLS_DHE_DSS_WITH_AES_128_GCM_SHA256),			// DHE-DSS-AES128-GCM-SHA256
+		 @(TLS_DHE_DSS_WITH_AES_256_GCM_SHA384),			// DHE-DSS-AES256-GCM-SHA384
+		 @(TLS_DHE_RSA_WITH_AES_256_GCM_SHA384),			// DHE-RSA-AES256-GCM-SHA384
+		 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256),			// ECDHE-RSA-AES128-SHA256
+		 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-SHA256
+		 @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA),			// ECDHE-RSA-AES128-SHA
+		 @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),			// ECDHE-ECDSA-AES128-SHA
+		 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384),			// ECDHE-RSA-AES256-SHA384
+		 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384),		// ECDHE-ECDSA-AES256-SHA384
+		 @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA),			// ECDHE-RSA-AES256-SHA
+		 @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA),			// ECDHE-ECDSA-AES256-SHA
+		 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA256),			// DHE-RSA-AES128-SHA256
+		 @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA),				// DHE-RSA-AES128-SHA
+		 @(TLS_DHE_DSS_WITH_AES_128_CBC_SHA256),			// DHE-DSS-AES128-SHA256
+		 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA256),			// DHE-RSA-AES256-SHA256
+		 @(TLS_DHE_DSS_WITH_AES_256_CBC_SHA),				// DHE-DSS-AES256-SHA
+		 @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA),				// DHE-RSA-AES256-SHA
+	];
+}
+
++ (NSArray *)cipherListDeprecated
+{
+	// These were originally going to be excluded but certain large
+	// IRC networks including OFTC (~10,000 users) still use older
+	// configurations. We should phase these out soon...
+
+	return @[
+		 @(TLS_RSA_WITH_AES_128_GCM_SHA256),				// AES128-GCM-SHA256
+		 @(TLS_RSA_WITH_AES_256_GCM_SHA384),				// AES256-GCM-SHA384
+		 @(TLS_RSA_WITH_AES_128_CBC_SHA256),				// AES128-SHA256
+		 @(TLS_RSA_WITH_AES_256_CBC_SHA256),				// AES256-SHA256
+		 @(TLS_RSA_WITH_AES_128_CBC_SHA),					// AES128-SHA
+		 @(TLS_RSA_WITH_AES_256_CBC_SHA)					// AES256-SHA
+	];
+}
+
+
 @end
