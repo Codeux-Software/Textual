@@ -51,6 +51,7 @@
 @property (nonatomic, assign) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign) BOOL connectionUsesOutgoingFloodControl;
 @property (nonatomic, assign) BOOL connectionShouldValidateCertificateChain;
+@property (nonatomic, copy) NSData *identityClientSideCertificate;
 @property (nonatomic, assign) NSInteger floodControlDelayInterval;
 @property (nonatomic, assign) NSInteger floodControlMaximumMessageCount;
 @property (nonatomic, copy) NSString *serverAddress;

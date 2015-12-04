@@ -221,7 +221,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 - (NSArray *)clientSideCertificateForAuthentication
 {
-	NSData *localCertData = [[[self associatedClient] config] identityClientSideCertificate];
+	NSData *localCertData = self.identityClientSideCertificate;
 
 	id returnValue = nil;
 

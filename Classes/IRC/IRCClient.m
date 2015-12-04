@@ -8217,6 +8217,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	self.socket.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;
 	self.socket.connectionShouldValidateCertificateChain = self.config.validateServerCertificateChain;
 
+	self.socket.identityClientSideCertificate = self.config.identityClientSideCertificate;
+
 	self.socket.proxyType = self.config.proxyType;
 
 	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType ||
