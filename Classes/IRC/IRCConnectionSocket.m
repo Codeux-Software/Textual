@@ -283,6 +283,37 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	}
 }
 
+- (NSArray *)strictCipherList
+{
+	/* The following list of ciphers, which is ordered from most important
+	 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
+
+	return @[
+		  @(TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256),			// ECDHE-RSA-AES128-GCM-SHA256
+		  @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-GCM-SHA256
+		  @(TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384),			// ECDHE-RSA-AES256-GCM-SHA384
+		  @(TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384),		// ECDHE-ECDSA-AES256-GCM-SHA384
+		  @(TLS_DHE_RSA_WITH_AES_128_GCM_SHA256),			// DHE-RSA-AES128-GCM-SHA256
+		  @(TLS_DHE_DSS_WITH_AES_128_GCM_SHA256),			// DHE-DSS-AES128-GCM-SHA256
+		  @(TLS_DHE_DSS_WITH_AES_256_GCM_SHA384),			// DHE-DSS-AES256-GCM-SHA384
+		  @(TLS_DHE_RSA_WITH_AES_256_GCM_SHA384),			// DHE-RSA-AES256-GCM-SHA384
+		  @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256),			// ECDHE-RSA-AES128-SHA256
+		  @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256),		// ECDHE-ECDSA-AES128-SHA256
+		  @(TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA),			// ECDHE-RSA-AES128-SHA
+		  @(TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),			// ECDHE-ECDSA-AES128-SHA
+		  @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384),			// ECDHE-RSA-AES256-SHA384
+		  @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384),		// ECDHE-ECDSA-AES256-SHA384
+		  @(TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA),			// ECDHE-RSA-AES256-SHA
+		  @(TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA),			// ECDHE-ECDSA-AES256-SHA
+		  @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA256),			// DHE-RSA-AES128-SHA256
+		  @(TLS_DHE_RSA_WITH_AES_128_CBC_SHA),				// DHE-RSA-AES128-SHA
+		  @(TLS_DHE_DSS_WITH_AES_128_CBC_SHA256),			// DHE-DSS-AES128-SHA256
+		  @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA256),			// DHE-RSA-AES256-SHA256
+		  @(TLS_DHE_DSS_WITH_AES_256_CBC_SHA),				// DHE-DSS-AES256-SHA
+		  @(TLS_DHE_RSA_WITH_AES_256_CBC_SHA)				// DHE-RSA-AES256-SHA
+	];
+}
+
 - (void)maybeBeginTLSNegotation
 {
 	if (self.connectionPrefersSecuredConnection) {
@@ -302,12 +333,8 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 			settings[(id)kCFStreamSSLCertificates] = (id)localCertData;
 		}
 
-		BOOL enforceCipherSuites = [RZUserDefaults() boolForKey:@"Socket -> Secured Connection -> Enforce Allowed Cipher Suites"];
-
-		if (enforceCipherSuites) {
-			NSArray *permittedCipherSuites = [RZUserDefaults() arrayForKey:@"Socket -> Secured Connection -> Allowed Cipher Suites"];
-
-			settings[GCDAsyncSocketSSLCipherSuites] = permittedCipherSuites;
+		if (self.connectionPrefersModernCiphers) {
+			settings[GCDAsyncSocketSSLCipherSuites] = [self strictCipherList];
 		}
 
 		[self.socketConnection startTLS:settings];

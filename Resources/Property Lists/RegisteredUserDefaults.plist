@@ -140,19 +140,6 @@
 	<integer>300</integer>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
 	<false/>
-	<key>Socket -&gt; Secured Connection -&gt; Allowed Cipher Suites</key>
-	<array>
-		<integer>49195</integer>
-		<integer>49199</integer>
-		<integer>49162</integer>
-		<integer>49161</integer>
-		<integer>49172</integer>
-		<integer>49171</integer>
-		<integer>57</integer>
-		<integer>51</integer>
-		<integer>53</integer>
-		<integer>47</integer>
-	</array>
 	<key>SwipeMinimumLength</key>
 	<integer>30</integer>
 	<key>SyncPreferencesToTheCloud</key>

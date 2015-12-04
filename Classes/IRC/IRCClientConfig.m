@@ -76,6 +76,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 TEXTUAL_IGNORE_DEPRECATION_END
 
 			 @"connectionPrefersIPv6" : @(NO),
+			 @"connectionPrefersModernCiphers" : @(YES),
 			 @"prefersSecuredConnection" : @(NO),
 
 			 @"excludedFromCloudSyncing" : @(NO),
@@ -163,8 +164,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.autojoinWaitsForNickServ	= [defaults boolForKey:@"autojoinWaitsForNickServ"];
 #pragma clang diagnostic pop
 
-	self.connectionPrefersIPv6		= [defaults boolForKey:@"connectionPrefersIPv6"];
-	self.prefersSecuredConnection	= [defaults boolForKey:@"prefersSecuredConnection"];
+	self.connectionPrefersIPv6				= [defaults boolForKey:@"connectionPrefersIPv6"];
+	self.connectionPrefersModernCiphers		= [defaults boolForKey:@"connectionPrefersModernCiphers"];
+	self.prefersSecuredConnection			= [defaults boolForKey:@"prefersSecuredConnection"];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	self.excludedFromCloudSyncing	= [defaults boolForKey:@"excludedFromCloudSyncing"];
@@ -524,11 +526,12 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignStringTo:&_realName					forKey:@"realName"];
 	[dic assignStringTo:&_username					forKey:@"username"];
 
-	[dic assignStringTo:&_connectionName			forKey:@"connectionName"];
-	[dic assignStringTo:&_serverAddress				forKey:@"serverAddress"];
-	[dic assignIntegerTo:&_serverPort				forKey:@"serverPort"];
-	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"prefersSecuredConnection"];
-	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"connectionPrefersIPv6"];
+	[dic assignStringTo:&_connectionName				forKey:@"connectionName"];
+	[dic assignStringTo:&_serverAddress					forKey:@"serverAddress"];
+	[dic assignIntegerTo:&_serverPort					forKey:@"serverPort"];
+	[dic assignBoolTo:&_prefersSecuredConnection		forKey:@"prefersSecuredConnection"];
+	[dic assignBoolTo:&_connectionPrefersModernCiphers	forKey:@"connectionPrefersModernCiphers"];
+	[dic assignBoolTo:&_connectionPrefersIPv6			forKey:@"connectionPrefersIPv6"];
 
 	[dic assignUnsignedIntegerTo:&_proxyType				forKey:@"proxyType"];
 	[dic assignStringTo:&_proxyAddress				forKey:@"proxyAddress"];
@@ -663,6 +666,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic maybeSetObject:self.serverAddress				forKey:@"serverAddress"];
 	[dic setInteger:self.serverPort						forKey:@"serverPort"];
 	[dic setBool:self.prefersSecuredConnection			forKey:@"prefersSecuredConnection"];
+	[dic setBool:self.connectionPrefersModernCiphers	forKey:@"connectionPrefersModernCiphers"];
 	[dic setBool:self.connectionPrefersIPv6				forKey:@"connectionPrefersIPv6"];
 
 	[dic setInteger:self.proxyType						forKey:@"proxyType"];
