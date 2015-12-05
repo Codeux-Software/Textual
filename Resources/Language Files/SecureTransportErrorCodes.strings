@@ -38,7 +38,7 @@
 "heading" = "Transport Layer Security (TLS) Error: %1$@ (%2$ld)";
 
 "9800" = "Generic Protocol Error"; // errSSLProtocol
-"9801" = "Cipher Suite Negotation Failure"; // errSSLNegotiation
+"9801" = "Cipher Suite Negotiation Failure"; // errSSLNegotiation
 "9802" = "Fatal Alert"; // errSSLFatalAlert
 "9803" = "I/O would block (not fatal)"; // errSSLWouldBlock
 "9804" = "Attempt to restore an unknown session"; // errSSLSessionNotFound
