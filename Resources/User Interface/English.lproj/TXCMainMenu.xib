@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -853,9 +853,9 @@ CQ
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1795"/>
-                            <menuItem title="Developer Resources" tag="919" id="2718">
+                            <menuItem title="Advanced" tag="919" id="2718">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Developer Resources" id="2719">
+                                <menu key="submenu" title="Advanced" id="2719">
                                     <items>
                                         <menuItem title="Enable Developer Mode" tag="920" id="2280">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -914,73 +914,36 @@ CQ
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="3085">
-                                            <connections>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="dEy-NC-udk">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                            </connections>
-                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="3085"/>
                                         <menuItem title="Export Preferences" tag="924" id="3088">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="exportPreferences:" target="267" id="3091"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="z0J-za-n4L">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Import Preferences" tag="925" id="3086">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="importPreferences:" target="267" id="3090"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="kIK-sJ-qmz">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kKj-sA-u0F">
                                             <connections>
-                                                <binding destination="TlT-Ik-3QP" name="hidden2" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" previousBinding="fIf-8h-LJw" id="Tos-rr-zHD">
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="Z2B-tl-Our">
                                                     <dictionary key="options">
                                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="fIf-8h-LJw">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Download Beta Updates" tag="926" id="wQm-wp-azO">
+                                        <menuItem title="Enable Beta Updates" tag="926" id="OUj-ks-huG">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="toggleBetaUpdates:" target="267" id="ynx-Nw-CeL"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden2" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" previousBinding="yrz-Fq-yEd" id="YPo-nW-8qH">
-                                                    <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                        <integer key="NSNullPlaceholder" value="-1"/>
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.TextualDeveloperEnvironment" id="yrz-Fq-yEd">
-                                                    <dictionary key="options">
-                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                    </dictionary>
-                                                </binding>
+                                                <action selector="toggleBetaUpdates:" target="267" id="fwr-f1-tOW"/>
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="Gr3-A7-Jvh"/>
                                             </connections>
                                         </menuItem>
                                     </items>
