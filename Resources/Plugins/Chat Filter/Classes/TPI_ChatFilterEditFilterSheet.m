@@ -563,13 +563,11 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		id addedItem = [outlineView itemAtRow:row];
-
-		if ([outlineView isGroupItem:addedItem]) {
-			[outlineView expandItem:addedItem];
-		}
-	});
+	if ((row + 1) == [outlineView numberOfRows]) {
+		XRPerformBlockAsynchronouslyOnMainQueue(^{
+			[outlineView expandItem:nil expandChildren:YES];
+		});
+	}
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
