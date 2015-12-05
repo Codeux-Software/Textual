@@ -202,9 +202,11 @@
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
 
+	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
+
 	NSString *feedURL = nil;
 
-	if ([TPCPreferences receiveBetaUpdates] == NO) {
+	if (receiveBetaUpdates == NO) {
 		feedURL = [sparkleData objectForKey:@"SUFeedURL"];
 	} else {
 		feedURL = [sparkleData objectForKey:@"SUFeedURL-beta"];
@@ -220,7 +222,11 @@
 
 		[updater setSendsSystemProfile:[sparkleData boolForKey:@"SUEnableSystemProfiling"]];
 
-		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+		if (receiveBetaUpdates == NO) {
+			[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+		} else {
+			[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval-beta"]];
+		}
 
 		[updater checkForUpdatesInBackground];
 	}

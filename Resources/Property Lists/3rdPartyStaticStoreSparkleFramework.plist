@@ -16,5 +16,7 @@
 	<false/>
 	<key>SUScheduledCheckInterval</key>
 	<string>345600</string>
+	<key>SUScheduledCheckInterval-beta</key>
+	<string>86400</string>
 </dict>
 </plist>
