@@ -551,9 +551,9 @@ Gw
                                             </buttonCell>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Sf0-lF-BvV">
-                                            <rect key="frame" x="199" y="318" width="287" height="18"/>
+                                            <rect key="frame" x="199" y="318" width="126" height="18"/>
                                             <animations/>
-                                            <buttonCell key="cell" type="check" title="Plain text, action messages (/me command)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WHr-iU-eh3">
+                                            <buttonCell key="cell" type="check" title="Action messages" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WHr-iU-eh3">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -568,9 +568,9 @@ Gw
                                             </textFieldCell>
                                         </textField>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="sIk-0H-vJL">
-                                            <rect key="frame" x="199" y="298" width="244" height="18"/>
+                                            <rect key="frame" x="199" y="298" width="127" height="18"/>
                                             <animations/>
-                                            <buttonCell key="cell" type="check" title="Notice messages (/notice command)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WGL-fp-bU3">
+                                            <buttonCell key="cell" type="check" title="Notice messages" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WGL-fp-bU3">
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
