@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterEditFilterSheet">
             <connections>
                 <outlet property="cancelButton" destination="dLf-X5-R1o" id="fzG-QP-wnn"/>
-                <outlet property="filterActionHelpButton" destination="b1E-IB-AAD" id="DVB-vP-ZFT"/>
-                <outlet property="filterActionHelpTextView" destination="qeK-9B-HCC" id="acD-1E-WDG"/>
                 <outlet property="filterActionTokenChannelName" destination="xNC-RA-OVo" id="Ond-3l-FcE"/>
                 <outlet property="filterActionTokenField" destination="wGy-N2-oQL" id="iLb-xy-pZz"/>
                 <outlet property="filterActionTokenLocalNickname" destination="Dbl-MS-g0g" id="bfG-TE-h5U"/>
@@ -24,23 +22,15 @@
                 <outlet property="filterCommandNOTICECheck" destination="sIk-0H-vJL" id="m07-wl-UMb"/>
                 <outlet property="filterCommandPRIVMSGCheck" destination="GjK-NM-ryy" id="umy-LE-JtE"/>
                 <outlet property="filterCommandPRIVMSG_ACTIONCheck" destination="Sf0-lF-BvV" id="v1v-kX-smG"/>
-                <outlet property="filterForwardToDestinationHelpButton" destination="CCU-H7-ovf" id="wem-dI-Uen"/>
-                <outlet property="filterForwardToDestinationHelpTextView" destination="bTa-nL-S2a" id="QWT-e3-ZQc"/>
                 <outlet property="filterForwardToDestinationTextField" destination="muN-88-pns" id="bY7-q6-27g"/>
-                <outlet property="filterHelpTextPopover" destination="YDf-Wf-AAu" id="Dye-0q-KLo"/>
-                <outlet property="filterHelpTextViewController" destination="rt2-RN-wky" id="isb-WW-U36"/>
                 <outlet property="filterIgnoreContentCheck" destination="vdu-cW-fcy" id="1fS-BW-6xG"/>
                 <outlet property="filterIgnoresOperatorsCheck" destination="VMT-we-bNC" id="Uwf-3u-b0F"/>
                 <outlet property="filterLimitToMatrix" destination="bT2-rB-pWP" id="jR3-Br-WDr"/>
                 <outlet property="filterLimitToSelectionOutlineView" destination="BTS-WW-BlV" id="IAH-Xf-9Ni"/>
                 <outlet property="filterLimitedToTableHostView" destination="gTG-wG-y2s" id="cxs-Xs-kZb"/>
                 <outlet property="filterLogMatchCheck" destination="A8t-L5-qUs" id="ER5-sB-xJw"/>
-                <outlet property="filterMatchHelpButton" destination="ahe-EZ-5US" id="phF-Zs-Pol"/>
-                <outlet property="filterMatchHelpTextView" destination="bgb-VT-GH3" id="TWM-kq-bYR"/>
                 <outlet property="filterMatchTextField" destination="TYu-Qh-WKq" id="ODf-sf-0P0"/>
                 <outlet property="filterNotesTextField" destination="Poo-f2-StF" id="gsx-YB-cca"/>
-                <outlet property="filterSenderMatchHelpButton" destination="xst-nI-tZS" id="HFm-bI-IAh"/>
-                <outlet property="filterSenderMatchHelpTextView" destination="cNF-LT-T7E" id="TLl-dG-0lq"/>
                 <outlet property="filterSenderMatchTextField" destination="h0y-YZ-G4g" id="gUX-Ns-43S"/>
                 <outlet property="filterTitleTextField" destination="sfN-Ws-FW8" id="W3i-Cc-LIn"/>
                 <outlet property="okButton" destination="wmA-Wb-Jwj" id="Xn6-UY-DCw"/>
@@ -771,9 +761,6 @@ Gw
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                <connections>
-                                                    <outlet property="parentField" destination="muN-88-pns" id="RVI-dw-S0i"/>
-                                                </connections>
                                             </textFieldCell>
                                         </textField>
                                         <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CCU-H7-ovf">
@@ -841,299 +828,5 @@ Gw
             </connections>
             <point key="canvasLocation" x="-286.5" y="388.5"/>
         </window>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="qeK-9B-HCC">
-            <rect key="frame" x="0.0" y="0.0" width="405" height="100"/>
-            <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAY-3D-yB8">
-                    <rect key="frame" x="8" y="10" width="389" height="80"/>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="179-YD-IZ1">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">The “Filter Action” is a line separated list of commands, each prefixed with a forward slash, that will be performed from top to bottom when the “Filter Match” is successfully matched. One ore more of the “Filter Action Tokens” can be dragged to this text field to add context to the command(s) performed.</string>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <constraints>
-                <constraint firstItem="nAY-3D-yB8" firstAttribute="leading" secondItem="qeK-9B-HCC" secondAttribute="leading" constant="10" id="DPa-9X-EH0"/>
-                <constraint firstAttribute="width" constant="405" id="UG2-JH-4D5"/>
-                <constraint firstAttribute="height" constant="100" id="dSm-LT-TaB"/>
-                <constraint firstItem="nAY-3D-yB8" firstAttribute="centerX" secondItem="qeK-9B-HCC" secondAttribute="centerX" id="xia-98-l2U"/>
-                <constraint firstItem="nAY-3D-yB8" firstAttribute="centerY" secondItem="qeK-9B-HCC" secondAttribute="centerY" id="ymR-As-dwk"/>
-            </constraints>
-            <animations/>
-            <point key="canvasLocation" x="-204.5" y="565"/>
-        </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="bgb-VT-GH3">
-            <rect key="frame" x="0.0" y="0.0" width="471" height="223"/>
-            <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5PG-VY-PJx">
-                    <rect key="frame" x="8" y="165" width="455" height="48"/>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="vNc-nF-Fp5">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">When a plain text message is received, the “Filter Match” regular expression (which is case-insensitive) is compared against the contents of the message to determine whether the “Filter Action” will fire.</string>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nXP-7g-bji">
-                    <rect key="frame" x="8" y="136" width="67" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="0qZ-db-zWN">
-                        <font key="font" metaFont="systemBold" size="12"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Czv-uG-jAG">
-                    <rect key="frame" x="8" y="59" width="455" height="64"/>
-                    <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="zPO-2p-ucd">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">• “^Apple$” will match the exact message “Apple”
-• “^!help” will match any message starting with “!help”
-• “^([0-9]+)$” will match any message that only contains numbers
-• “google\.com” will match any message that contains “google.com”</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Ljl-VH-0wx">
-                    <rect key="frame" x="15" y="11" width="441" height="35"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LQL-Jd-NgO">
-                        <rect key="frame" x="0.0" y="0.0" width="441" height="35"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="fPt-YR-WnF">
-                                <rect key="frame" x="0.0" y="0.0" width="441" height="35"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <animations/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="441" height="35"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="See ">
-                                        <attributes>
-                                            <color key="NSColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="cellTitle"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.05" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="http://userguide.icu-project.org/strings/regexp">
-                                        <attributes>
-                                            <color key="NSColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="cellTitle"/>
-                                            <url key="NSLink" string="http://userguide.icu-project.org/strings/regexp"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.05" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" for more information and examples.">
-                                        <attributes>
-                                            <color key="NSColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" metaFont="cellTitle"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.05" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="441" height="35"/>
-                                <size key="maxSize" width="463" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <animations/>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="87Q-2X-GPh">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="hhc-9o-3Mc">
-                        <rect key="frame" x="-100" y="-100" width="16" height="42"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </scroller>
-                </scrollView>
-            </subviews>
-            <constraints>
-                <constraint firstItem="5PG-VY-PJx" firstAttribute="top" secondItem="bgb-VT-GH3" secondAttribute="top" constant="10" id="16J-7z-WeW"/>
-                <constraint firstItem="Czv-uG-jAG" firstAttribute="leading" secondItem="nXP-7g-bji" secondAttribute="leading" id="3mi-eQ-IgG"/>
-                <constraint firstAttribute="height" constant="223" id="9qR-Bb-WGa"/>
-                <constraint firstItem="Ljl-VH-0wx" firstAttribute="leading" secondItem="bgb-VT-GH3" secondAttribute="leading" constant="15" id="Dds-qk-p9D"/>
-                <constraint firstItem="Czv-uG-jAG" firstAttribute="centerX" secondItem="bgb-VT-GH3" secondAttribute="centerX" id="IR9-S7-2Kb"/>
-                <constraint firstAttribute="bottom" secondItem="Ljl-VH-0wx" secondAttribute="bottom" constant="11" id="NQ6-zb-nwc"/>
-                <constraint firstAttribute="trailing" secondItem="5PG-VY-PJx" secondAttribute="trailing" constant="10" id="Qrb-Ay-ni7"/>
-                <constraint firstItem="5PG-VY-PJx" firstAttribute="leading" secondItem="bgb-VT-GH3" secondAttribute="leading" constant="10" id="RSR-PM-svt"/>
-                <constraint firstAttribute="width" constant="471" id="Vma-HK-oJl"/>
-                <constraint firstItem="Ljl-VH-0wx" firstAttribute="top" secondItem="Czv-uG-jAG" secondAttribute="bottom" constant="13" id="Zuw-QP-D9g"/>
-                <constraint firstItem="Czv-uG-jAG" firstAttribute="top" secondItem="nXP-7g-bji" secondAttribute="bottom" constant="13" id="sRC-Bd-j7n"/>
-                <constraint firstItem="nXP-7g-bji" firstAttribute="leading" secondItem="5PG-VY-PJx" secondAttribute="leading" id="tlL-pH-f6r"/>
-                <constraint firstItem="Ljl-VH-0wx" firstAttribute="centerX" secondItem="Czv-uG-jAG" secondAttribute="centerX" id="u0o-Qk-5pi"/>
-                <constraint firstItem="nXP-7g-bji" firstAttribute="top" secondItem="5PG-VY-PJx" secondAttribute="bottom" constant="13" id="zu8-Au-ate"/>
-            </constraints>
-            <animations/>
-            <point key="canvasLocation" x="-368.5" y="324.5"/>
-        </customView>
-        <viewController id="rt2-RN-wky" userLabel="Popover View Controller"/>
-        <popover behavior="t" id="YDf-Wf-AAu">
-            <connections>
-                <outlet property="contentViewController" destination="rt2-RN-wky" id="Mly-du-pAw"/>
-            </connections>
-        </popover>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="cNF-LT-T7E">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="145"/>
-            <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V9p-Oi-Khz">
-                    <rect key="frame" x="8" y="87" width="354" height="48"/>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="NWt-hs-kp5">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">An optional regular expression that will be compared against the hostmask (address, nickname, and username) of the user to determine whether the filter is valid. </string>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pff-6I-i5u">
-                    <rect key="frame" x="8" y="57" width="64" height="17"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="17" id="5ZT-eI-OA2"/>
-                        <constraint firstAttribute="width" constant="60" id="k0w-L4-2gN"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="0z8-wX-NkI">
-                        <font key="font" metaFont="systemBold" size="12"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Ia-KN-66H">
-                    <rect key="frame" x="8" y="10" width="354" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="34" id="fMv-Ig-4oM"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="z0g-08-Tmp">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">• “^Josh!” match only messages by the user “Josh”
-• “^([^!@]+)$” match only messages from a server</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <constraints>
-                <constraint firstItem="pff-6I-i5u" firstAttribute="leading" secondItem="V9p-Oi-Khz" secondAttribute="leading" id="CsV-Tf-t6a"/>
-                <constraint firstItem="V9p-Oi-Khz" firstAttribute="leading" secondItem="cNF-LT-T7E" secondAttribute="leading" constant="10" id="HQy-TA-lu9"/>
-                <constraint firstItem="V9p-Oi-Khz" firstAttribute="top" secondItem="cNF-LT-T7E" secondAttribute="top" constant="10" id="UeJ-Zc-URG"/>
-                <constraint firstItem="pff-6I-i5u" firstAttribute="leading" secondItem="5Ia-KN-66H" secondAttribute="leading" id="e7V-Zy-2uN"/>
-                <constraint firstItem="5Ia-KN-66H" firstAttribute="trailing" secondItem="V9p-Oi-Khz" secondAttribute="trailing" id="ele-RW-VWh"/>
-                <constraint firstAttribute="height" constant="145" id="fJL-wf-tmy"/>
-                <constraint firstItem="pff-6I-i5u" firstAttribute="top" secondItem="V9p-Oi-Khz" secondAttribute="bottom" constant="13" id="fLs-aw-nlN"/>
-                <constraint firstAttribute="width" constant="375" id="gdO-NY-TUR"/>
-                <constraint firstItem="5Ia-KN-66H" firstAttribute="top" secondItem="pff-6I-i5u" secondAttribute="bottom" constant="13" id="pH6-RR-dQv"/>
-                <constraint firstAttribute="trailing" secondItem="V9p-Oi-Khz" secondAttribute="trailing" constant="15" id="ttI-39-ZZL"/>
-            </constraints>
-            <animations/>
-            <point key="canvasLocation" x="-390.5" y="800.5"/>
-        </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="bTa-nL-S2a">
-            <rect key="frame" x="0.0" y="0.0" width="395" height="195"/>
-            <subviews>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYz-ra-XZ8">
-                    <rect key="frame" x="8" y="152" width="379" height="33"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="33" id="Hr6-xK-vMA"/>
-                    </constraints>
-                    <animations/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="qwU-3Q-O2b">
-                        <font key="font" metaFont="cellTitle"/>
-                        <string key="title">The “Foward to” value specifies the name of a query that Textual will forward a copy of the filtered message to.
-
-</string>
-                        <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iTm-0T-RTi">
-                    <rect key="frame" x="8" y="69" width="67" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Examples:" id="rxe-A1-xN1">
-                        <font key="font" metaFont="systemBold" size="12"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="a5q-t7-0xT">
-                    <rect key="frame" x="20" y="44" width="137" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="• “Operator Messages”" id="BMl-cY-cS9">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oTy-D1-f4t">
-                    <rect key="frame" x="20" y="27" width="109" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="• “Server Notices”" id="6iB-Fn-jvC">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VQG-h3-FUk">
-                    <rect key="frame" x="20" y="10" width="117" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="• “Filtered Content”" id="Hks-sX-KJg">
-                        <font key="font" metaFont="cellTitle"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EK5-6B-3aL">
-                    <rect key="frame" x="8" y="123" width="108" height="16"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Valid Characters:" id="bCc-R9-afH">
-                        <font key="font" metaFont="systemBold" size="12"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TbE-MQ-R2g">
-                    <rect key="frame" x="20" y="98" width="285" height="17"/>
-                    <animations/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="A-Z, a-z, 0-9, underscore, dash (-), and space" id="g3Z-oc-7l5">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <constraints>
-                <constraint firstItem="a5q-t7-0xT" firstAttribute="top" secondItem="iTm-0T-RTi" secondAttribute="bottom" constant="9" id="0qi-Jw-8G5"/>
-                <constraint firstItem="FYz-ra-XZ8" firstAttribute="leading" secondItem="bTa-nL-S2a" secondAttribute="leading" constant="10" id="3CI-9q-Qvh"/>
-                <constraint firstItem="TbE-MQ-R2g" firstAttribute="leading" secondItem="a5q-t7-0xT" secondAttribute="leading" id="4nq-A6-ubV"/>
-                <constraint firstAttribute="width" constant="395" id="5bJ-B7-50T"/>
-                <constraint firstItem="FYz-ra-XZ8" firstAttribute="leading" secondItem="EK5-6B-3aL" secondAttribute="leading" id="7yx-vk-QbC"/>
-                <constraint firstItem="VQG-h3-FUk" firstAttribute="top" secondItem="oTy-D1-f4t" secondAttribute="bottom" constant="1" id="8cW-Cm-OoO"/>
-                <constraint firstItem="iTm-0T-RTi" firstAttribute="top" secondItem="TbE-MQ-R2g" secondAttribute="bottom" constant="13" id="CnC-5l-rkh"/>
-                <constraint firstItem="TbE-MQ-R2g" firstAttribute="top" secondItem="EK5-6B-3aL" secondAttribute="bottom" constant="8" symbolic="YES" id="DIX-rb-Lsd"/>
-                <constraint firstItem="VQG-h3-FUk" firstAttribute="leading" secondItem="oTy-D1-f4t" secondAttribute="leading" id="FSn-YO-ntE"/>
-                <constraint firstItem="oTy-D1-f4t" firstAttribute="top" secondItem="a5q-t7-0xT" secondAttribute="bottom" constant="1" id="NNN-UB-bby"/>
-                <constraint firstItem="iTm-0T-RTi" firstAttribute="leading" secondItem="EK5-6B-3aL" secondAttribute="leading" id="V5e-MK-Trz"/>
-                <constraint firstItem="TbE-MQ-R2g" firstAttribute="leading" secondItem="bTa-nL-S2a" secondAttribute="leading" constant="22" id="VKQ-Rh-uFe"/>
-                <constraint firstAttribute="height" constant="195" id="Waq-2y-f4D"/>
-                <constraint firstItem="EK5-6B-3aL" firstAttribute="top" secondItem="FYz-ra-XZ8" secondAttribute="bottom" constant="13" id="cnJ-bx-7VV"/>
-                <constraint firstItem="a5q-t7-0xT" firstAttribute="leading" secondItem="oTy-D1-f4t" secondAttribute="leading" id="id0-CF-lJ2"/>
-                <constraint firstItem="FYz-ra-XZ8" firstAttribute="centerX" secondItem="bTa-nL-S2a" secondAttribute="centerX" id="kba-LZ-z4e"/>
-                <constraint firstItem="FYz-ra-XZ8" firstAttribute="top" secondItem="bTa-nL-S2a" secondAttribute="top" constant="10" id="s8H-NG-BZw"/>
-            </constraints>
-            <animations/>
-            <point key="canvasLocation" x="-366.5" y="394.5"/>
-        </customView>
     </objects>
 </document>
