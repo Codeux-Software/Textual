@@ -708,7 +708,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		[dic maybeSetObject:ignoreAry forKey:@"ignoreList"];
 	}
 
-	return [dic dictionaryByRemovingDefaults:[self defaults]];
+	return [dic dictionaryByRemovingDefaults:[self defaults] allowEmptyValues:YES];
 }
 
 - (id)copyWithZone:(NSZone *)zone
