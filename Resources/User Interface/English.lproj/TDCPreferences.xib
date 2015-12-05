@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -148,7 +148,7 @@
                             <rect key="frame" x="2" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Advanced" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Abd-Fd-gqU" id="o4H-Er-8Yy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="W9G-v3-1hY">
@@ -268,7 +268,7 @@
                             <rect key="frame" x="0.0" y="14" width="55" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <animations/>
-                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="TPWTB_Addons" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="b9Y-Fr-JSg" id="sbw-Pi-BcH">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" id="mgV-ad-4kQ">
@@ -1162,7 +1162,7 @@ DQ
                                 <animations/>
                                 <color key="textColor" white="0.0" alpha="0.85999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="223" height="14"/>
+                                <size key="minSize" width="294" height="14"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="Disable alert when the ">
@@ -1188,7 +1188,7 @@ DQ
                                     </fragment>
                                 </attributedString>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="223" height="14"/>
+                                <size key="minSize" width="294" height="14"/>
                                 <size key="maxSize" width="463" height="10000000"/>
                             </textView>
                         </subviews>
@@ -3768,7 +3768,7 @@ DQ
                             </items>
                         </menu>
                     </popUpButtonCell>
-                    <accessibility description="Action to Perform when File Transfer Request is Recieved"/>
+                    <accessibility description="Action to Perform when File Transfer Request is Received"/>
                     <connections>
                         <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.File Transfers -&gt; File Transfer Request Reply Action" id="O4f-48-hv4"/>
                     </connections>
@@ -3931,7 +3931,7 @@ DQ
                     <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="u41-M4-xrj">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsiblity of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
+                        <string key="title">A passive file transfer provides the ability to send files without the need to perform port forwarding or configuration of the firewall as it is made the responsibility of the receiver. It is recommended to leave this option off by default for greatest compatibility with legacy IRC clients.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4231,7 +4231,7 @@ DQ
                     <animations/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="34J-sn-YZe">
                         <font key="font" metaFont="smallSystem"/>
-                        <string key="title">For a message to qualify as “highlight spam”, a minimum of ten (10) nicknames must be present in the message with at least 75% of the message consisting soley of nicknames.</string>
+                        <string key="title">For a message to qualify as “highlight spam”, a minimum of ten (10) nicknames must be present in the message with at least 75% of the message consisting solely of nicknames.</string>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4349,7 +4349,7 @@ DQ
 
 It is recommended that you upgrade to OS X Mavericks as soon as possible in order to continue using Textual and all the fantastic features that it provides.
 
-Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks which means that there is no reason not to upgrade!</string>
+Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks which means that there is no reason not to upgrade!</string>
                         <color key="textColor" white="0.0" alpha="0.86000001429999995" colorSpace="calibratedWhite"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -4389,7 +4389,7 @@ Any Mac that runs OS X Mountain Lion is fully compatiable with OS X Mavericks wh
                 <constraint firstItem="xlp-dS-uye" firstAttribute="centerX" secondItem="bpz-tg-K62" secondAttribute="centerX" id="q5E-MT-S8r"/>
             </constraints>
             <animations/>
-            <point key="canvasLocation" x="633.5" y="262.5"/>
+            <point key="canvasLocation" x="413.5" y="170.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="oeR-nv-slx" userLabel="Style">
             <rect key="frame" x="0.0" y="0.0" width="589" height="383"/>

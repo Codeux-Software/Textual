@@ -49,14 +49,14 @@
 "BasicLanguage[1012]" = "Key exchange request for \002%@\002 has expired.";
 "BasicLanguage[1013]" = "Key exchange response has been sent to \002%@\002.";
 "BasicLanguage[1014]" = "Received key exchange response from \002%@\002. Processing…";
-"BasicLanguage[1017]" = "The Electronic Codebok (ECB) mode of operation is currently in use for encryption.";
+"BasicLanguage[1017]" = "The Electronic Codebook (ECB) mode of operation is currently in use for encryption.";
 "BasicLanguage[1018]" = "The Cipher-block Chaining (CBC) mode of operation is currently in use for encryption.";
 
 "BasicLanguage[1015]" = "Cannot process key exchange request from \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";
 "BasicLanguage[1016]" = "Cannot process key exchange request for \002%@\002 until the active encryption keys are reset. This task can be accomplished by using the \002delkey\002 command.";
 
 "BasicLanguage[1020]" = "The Cipher-block Chaining (CBC) mode of operation will be used for encryption.";
-"BasicLanguage[1021]" = "The Electronic Codebok (ECB) mode of operation will be used for encryption.";
+"BasicLanguage[1021]" = "The Electronic Codebook (ECB) mode of operation will be used for encryption.";
 
 "BasicLanguage[1022]" = "Decryption failed";
 "BasicLanguage[1023]" = "Encryption of message failed; not sending to server.";

@@ -380,7 +380,7 @@
 "BasicLanguage[1084]" = "User with nickname “%1$@” is no longer available";
 "BasicLanguage[1085]" = "User with nickname “%1$@” is now available";
 
-/* Notification bubble replyb button placeholders */
+/* Notification bubble reply button placeholders */
 "BasicLanguage[1239]" = "Enter message to reply to this private message";
 
 /* File transfer notification accept button */
@@ -545,7 +545,7 @@
 "BasicLanguage[1189][1]" = "Extension Installed";
 "BasicLanguage[1189][2]" = "The extension named “%@” has been successfully installed. The services defined by this extension will be available the next time Textual launches.";
 
-"BasicLanguage[1190][1]" = "Incompatiable System Version";
+"BasicLanguage[1190][1]" = "Incompatible System Version";
 "BasicLanguage[1190][2]" = "A file that you are trying to install cannot be used on this version of OS X.";
 
 "BasicLanguage[1192][1]" = "Are you sure that you would like to open this file with Textual?";
@@ -618,7 +618,7 @@
 "BasicLanguage[1222]" = "Sound is not muted";
 "BasicLanguage[1223]" = "Sound has been muted";
 
-/* Selet button for dialogs */
+/* Select button for dialogs */
 "BasicLanguage[1225]" = "Select";
 
 /* /tage/ command */
@@ -689,7 +689,7 @@
 "BasicLanguage[1243][1]" = "Thank you for beta testing Textual";
 "BasicLanguage[1243][2]" = "Your copy of Textual has expired. Please download the latest release.";
 
-/* Certificate conext command dialog */
+/* Certificate context command dialog */
 "BasicLanguage[1247][1]" = "Textual is using an encrypted connection to “%@“";
 "BasicLanguage[1247][2]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“";
 "BasicLanguage[1247][3]" = "Encryption with a digital certificate keeps information private as it’s sent to or from the server “%1$@“\n\nInformation encrypted using: %2$@";
@@ -713,7 +713,7 @@
 "BasicLanguage[1269]" = "Off-the-Record Messaging: Starting a private conversation…";
 
 "BasicLanguage[1254][01]" = "Off-the-Record Messaging: Our policy requires encryption but we are trying to send an unencrypted message out. The message visible on your screen will be sent once a private conversation has started.";
-"BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occured while encrypting a message. The message was not sent.";
+"BasicLanguage[1254][02]" = "Off-the-Record Messaging: An error occurred while encrypting a message. The message was not sent.";
 "BasicLanguage[1254][03]" = "Off-the-Record Messaging: Message has not been sent because the other user has closed the conversation.";
 "BasicLanguage[1254][04]" = "Off-the-Record Messaging: A private conversation could not be started.";
 "BasicLanguage[1254][05]" = "Off-the-Record Messaging: Our original message has been sent back to us.";
@@ -744,7 +744,7 @@
 "BasicLanguage[1265][2]" = "Encrypted & Unverified";
 "BasicLanguage[1265][3]" = "Encrypted & Verified";
 
-/* Accessiblity descriptions */
+/* Accessibility descriptions */
 "BasicLanguage[1277]" = "User %@ in User List";
 
 "BasicLanguage[1278][1]" = "Connection %@, Connected";
