@@ -64,16 +64,6 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterCommandPRIVMSGCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterCommandPRIVMSG_ACTIONCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterCommandNOTICECheck;
-@property (nonatomic, strong) IBOutlet NSViewController *filterHelpTextViewController;
-@property (nonatomic, strong) IBOutlet NSView *filterMatchHelpTextView;
-@property (nonatomic, strong) IBOutlet NSView *filterActionHelpTextView;
-@property (nonatomic, strong) IBOutlet NSView *filterSenderMatchHelpTextView;
-@property (nonatomic, strong) IBOutlet NSView *filterForwardToDestinationHelpTextView;
-@property (nonatomic, weak) IBOutlet NSButton *filterMatchHelpButton;
-@property (nonatomic, weak) IBOutlet NSButton *filterActionHelpButton;
-@property (nonatomic, weak) IBOutlet NSButton *filterSenderMatchHelpButton;
-@property (nonatomic, weak) IBOutlet NSButton *filterForwardToDestinationHelpButton;
-@property (nonatomic, strong) IBOutlet NSPopover *filterHelpTextPopover;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
@@ -466,29 +456,22 @@
 
 - (void)viewFilterMatchHelpText:(id)sender
 {
-	[self presentHelpTextView:self.filterMatchHelpTextView relativeToButton:self.filterMatchHelpButton];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-1"];
 }
 
 - (void)viewFilterActionHelpText:(id)sender
 {
-	[self presentHelpTextView:self.filterActionHelpTextView relativeToButton:self.filterActionHelpButton];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-2"];
 }
 
 - (void)viewFilterSenderMatchHelpText:(id)sender
 {
-	[self presentHelpTextView:self.filterSenderMatchHelpTextView relativeToButton:self.filterSenderMatchHelpButton];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-3"];
 }
 
 - (void)viewFilterForwardToDestinationHelpText:(id)sender
 {
-	[self presentHelpTextView:self.filterForwardToDestinationHelpTextView relativeToButton:self.filterForwardToDestinationHelpButton];
-}
-
-- (void)presentHelpTextView:(NSView *)helpTextView relativeToButton:(NSButton *)helpButton
-{
-	[self.filterHelpTextViewController setView:helpTextView];
-
-	[self.filterHelpTextPopover showRelativeToRect:NSZeroRect ofView:helpButton preferredEdge:NSMaxYEdge];
+	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-4"];
 }
 
 - (void)filteredLimitedToMatrixChanged:(id)sender
