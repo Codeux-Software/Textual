@@ -92,6 +92,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *checkbox;
 
 - (void)populateDefaults;
+- (void)reloadCheckboxForChildren;
 
 - (IBAction)checkboxToggled:(id)sender;
 @end
@@ -563,6 +564,12 @@
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
 {
+	XRPerformBlockAsynchronouslyOnMainQueue(^{
+		NSView *cellView = [rowView viewAtColumn:0];
+
+		[(id)cellView reloadCheckboxForChildren];
+	});
+
 	if ((row + 1) == [outlineView numberOfRows]) {
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[outlineView expandItem:nil expandChildren:YES];
@@ -603,44 +610,27 @@
 
 	id currentItem = [self associatedItem];
 
-	/* Update releated content */
+	BOOL isGroupItem = [outlineView isGroupItem:currentItem];
+
+	/* Update related content */
 	[[self textField] setStringValue:[currentItem label]];
 
-	[[self checkbox] setAllowsMixedState:[outlineView isGroupItem:currentItem]];
-
-	[self reloadCheckboxForChildren];
+	[[self checkbox] setAllowsMixedState:isGroupItem];
 }
 
 - (void)reloadCheckboxForChildren
 {
 	/* Define context for current operation. */
-	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+	NSOutlineView *outlineView = [self parentOutlineView];
 
-	NSOutlineView *outlineView = [parentDialog filterLimitToSelectionOutlineView];
+	TPI_ChatFilterLimitToTableCellView *parentItemView = [self parentCellViewOrSelf];
 
-	id currentItem = [self associatedItem];
-
-	/* Load parent information into variable or use self. */
-	id parentItem = nil;
-
-	TPI_ChatFilterLimitToTableCellView *parentItemView = nil;
-
-	if ([outlineView isGroupItem:currentItem]) {
-		parentItem = currentItem;
-
-		parentItemView = self;
-	} else {
-		parentItem = [outlineView parentForItem:currentItem];
-
-		NSInteger parentItemViewRow = [outlineView rowForItem:parentItem];
-
-		parentItemView = [outlineView viewAtColumn:0 row:parentItemViewRow makeIfNecessary:NO];
-	}
+	id parentItem = [parentItemView associatedItem];
 
 	/* Process child items */
 	BOOL atleastOneChildChecked = NO;
 
-	BOOL parentItemInFilter = [[parentDialog filterLimitedToClientsIDs] containsObject:[parentItem uniqueIdentifier]];
+	BOOL parentItemInFilter = [[self filterLimitedToClientsIDs] containsObject:[parentItem uniqueIdentifier]];
 
 	NSArray *childrenItems = [outlineView rowsInGroup:parentItem];
 
@@ -649,7 +639,7 @@
 
 		TPI_ChatFilterLimitToTableCellView *childItemView = [outlineView viewAtColumn:0 row:childItemRow makeIfNecessary:NO];
 
-		BOOL childItemInFilter = [[parentDialog filterLimitedToChannelsIDs] containsObject:[childItem uniqueIdentifier]];
+		BOOL childItemInFilter = [[self filterLimitedToChannelsIDs] containsObject:[childItem uniqueIdentifier]];
 
 		if (parentItemInFilter) {
 			[[childItemView checkbox] setState:NSOnState];
@@ -708,36 +698,54 @@
 	}
 
 	/* Further process filters depending on state of other items */
-	if (isGroupItem || isEnablingItem) {
+	if (isGroupItem && isEnablingItem) {
 		NSArray *childrenItems = [outlineView rowsFromParentGroup:currentItem];
 
-		BOOL atleastCheckboxIsUnchecked = NO;
-
 		for (id childItem in childrenItems) {
-			BOOL childItemInFilter = [[parentDialog filterLimitedToChannelsIDs] containsObject:[childItem uniqueIdentifier]];
-
-			if (childItemInFilter == NO) {
-				atleastCheckboxIsUnchecked = YES;
-
-				break;
-			}
-		}
-
-		if (isGroupItem || atleastCheckboxIsUnchecked == NO) {
-			for (id childItem in childrenItems) {
-				[[parentDialog filterLimitedToChannelsIDs] removeObject:[childItem uniqueIdentifier]];
-			}
-
-			if (isGroupItem == NO && atleastCheckboxIsUnchecked == NO) {
-				id parentItem = [outlineView parentForItem:currentItem];
-
-				[[parentDialog filterLimitedToClientsIDs] addObject:[parentItem uniqueIdentifier]];
-			}
+			[[parentDialog filterLimitedToChannelsIDs] removeObject:[childItem uniqueIdentifier]];
 		}
 	}
 
 	/* Reload checkbox state for all */
 	[self reloadCheckboxForChildren];
+}
+
+- (NSMutableArray *)filterLimitedToClientsIDs
+{
+	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+
+	return [parentDialog filterLimitedToClientsIDs];
+}
+
+- (NSMutableArray *)filterLimitedToChannelsIDs
+{
+	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+
+	return [parentDialog filterLimitedToChannelsIDs];
+}
+
+- (NSOutlineView *)parentOutlineView
+{
+	TPI_ChatFilterEditFilterSheet *parentDialog = [self parentDialog];
+
+	return [parentDialog filterLimitToSelectionOutlineView];
+}
+
+- (TPI_ChatFilterLimitToTableCellView *)parentCellViewOrSelf
+{
+	NSOutlineView *outlineView = [self parentOutlineView];
+
+	id currentItem = [self associatedItem];
+
+	if ([outlineView isGroupItem:currentItem]) {
+		return self;
+	} else {
+		id parentItem = [outlineView parentForItem:currentItem];
+
+		NSInteger parentItemViewRow = [outlineView rowForItem:parentItem];
+
+		return [outlineView viewAtColumn:0 row:parentItemViewRow makeIfNecessary:NO];
+	}
 }
 
 @end
