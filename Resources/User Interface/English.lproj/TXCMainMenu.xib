@@ -929,12 +929,9 @@ CQ
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kKj-sA-u0F">
                                             <connections>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="Z2B-tl-Our">
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="r9L-AR-Ee9">
                                                     <dictionary key="options">
-                                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                     </dictionary>
                                                 </binding>
                                             </connections>
@@ -943,7 +940,11 @@ CQ
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="toggleBetaUpdates:" target="267" id="fwr-f1-tOW"/>
-                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="Gr3-A7-Jvh"/>
+                                                <binding destination="TlT-Ik-3QP" name="hidden" keyPath="values.System -&gt; 3rd-party Services -&gt; Built with Sparkle Framework" id="L10-Te-cBX">
+                                                    <dictionary key="options">
+                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                    </dictionary>
+                                                </binding>
                                             </connections>
                                         </menuItem>
                                     </items>
