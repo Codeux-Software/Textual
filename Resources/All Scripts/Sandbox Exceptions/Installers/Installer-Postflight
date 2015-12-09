@@ -36,7 +36,9 @@
 
 		if (file_exists($newDirectory) === FALSE) {
 			if (mkdir($newDirectory, 0700, TRUE) === FALSE) {
-				return FALSE;
+				log_to_stderr("Error: Failed to create folder at location: '{$newDirectory}'\n");
+				
+				exit(-1);
 			}
 			
 			if (chown($newDirectory, $currentUsername) === FALSE) {
@@ -67,11 +69,24 @@
 						
 						if (copy($oldDirectoryFilePath, $newDirectoryFilePath)) {
 							chown($newDirectoryFilePath, $currentUsername);
+						} else {
+							log_to_stderr("Error: Failed to copy '{$oldDirectoryFilePath}' to '{$newDirectoryFilePat}'\n");
+							
+							exit(-1);
 						}
 					}
 				} 
 			}
 		}
+	}
+	
+	function log_to_stderr($message) 
+	{
+        $stderr = fopen('php://stderr', 'w'); 
+        
+        fwrite($stderr, $message); 
+        
+        fclose($stderr); 
 	}
 
 	exit(0);
