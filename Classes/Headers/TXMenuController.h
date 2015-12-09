@@ -192,6 +192,7 @@
 	924: "Export Preferences"
 	925: "Import Preferences"
 	926: "Download Beta Updates"
+	927: "End User License Agreement"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"

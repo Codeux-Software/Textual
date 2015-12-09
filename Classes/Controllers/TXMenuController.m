@@ -217,7 +217,7 @@
 			if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
 				/* Disable everything by default except tag 900 through 916. These are various
 				 help menu links. See TXMenuController.h for complete list of tags. */
-				if (tag < 900 || tag > 916) {
+				if (tag < 900 || (tag > 916 && tag < 927)) {
 					returnValue = NO;
 				}
 
@@ -2594,7 +2594,8 @@
 	   @(913) : @"https://www.codeux.com/textual/help/Styles.kb",
 	   @(914) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
 	   @(915) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
-	   @(916) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb"
+	   @(916) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb",
+	   @(927) : @"https://www.codeux.com/textual/help/End-User-License-Agreement.kb"
 	};
 	
 	NSString *linkloc = _helpMenuLinks[@([sender tag])];
