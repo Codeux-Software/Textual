@@ -736,6 +736,12 @@ CQ
                                     <action selector="showAcknowledgments:" target="267" id="2556"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="License Agreement" tag="927" id="BrC-PS-U3X">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openHelpMenuLinkItem:" target="267" id="hc9-Ks-ru3"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Privacy Policy" tag="901" id="1710">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
