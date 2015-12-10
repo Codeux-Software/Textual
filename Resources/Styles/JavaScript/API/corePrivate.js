@@ -141,7 +141,7 @@ Textual.openChannelNameContextualMenu = function()
 
 Textual.openURLManagementContextualMenu = function()
 {
-	app.setURLAddress(event.target.textContent);
+	app.setURLAddress(event.target.getAttribute("href"));
 };
 
 Textual.openInlineNicknameContextualMenu = function()
