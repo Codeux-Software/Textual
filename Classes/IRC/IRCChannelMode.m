@@ -69,7 +69,7 @@
 
 - (NSArray *)badModes
 {
-	return @[@"b", @"e", @"I"];
+	return @[@"b", @"e", @"I", @"q"];
 }
 
 - (NSArray *)update:(NSString *)str
