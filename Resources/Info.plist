@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
-	<string>5.2.7-git</string>
+	<string>5.2.7</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.2.7-git</string>
+	<string>5.2.7</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2010 - 2015 Codeux Software, LLC. All rights reserved.</string>
 	<key>CFBundleDocumentTypes</key>
