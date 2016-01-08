@@ -397,6 +397,8 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		NSArray *urlAryRanges = [TLOLinkParser locatedLinksForString:_body];
 
+		NSMutableArray *urlAryRangesNew = [NSMutableArray arrayWithCapacity:[urlAryRanges count]];
+
 		for (NSArray *rn in urlAryRanges) {
 			NSRange r = NSRangeFromString(rn[0]);
 
@@ -407,7 +409,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				setFlag(_effectAttributes, _rendererURLAttribute, r.location, r.length);
 
 				/* Build unique list of URLs by using them as keys. */
-				NSString *matchedURL = rn[1];
+				NSString *matchedURL = [rn[1] encodeURIFragment];
+
+				[urlAryRangesNew addObject:@[rn[0], matchedURL]];
 
 				if ([matchedEntries containsObject:matchedURL] == NO) {
 					[matchedEntries addObject:matchedURL];
@@ -423,7 +427,7 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 
 		matchedEntries = nil;
 
-		_outputDictionary[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] = urlAryRanges;
+		_outputDictionary[TVCLogRendererResultsRangesOfAllLinksInBodyAttribute] = [urlAryRangesNew copy];
 		_outputDictionary[TVCLogRendererResultsUniqueListOfAllLinksInBodyAttribute] = urlAry;
 	}
 }
