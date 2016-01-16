@@ -50,4 +50,5 @@
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSDate *timeLogged;
 @property (readonly, copy) NSString *timeLoggedFormatted;
+@property (nonatomic, assign) CGFloat rowHeight;
 @end
