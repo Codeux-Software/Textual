@@ -92,6 +92,39 @@
 	}
 }
 
+- (void)lazilyDefineHeightForRow:(NSInteger)row
+{
+	NSTableView *aTableView = [self highlightListTable];
+
+	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"renderedMessage"];
+
+	NSTableCellView *cellView = (id)[self tableView:aTableView viewForTableColumn:tableColumn row:row];
+
+	NSRect textFieldFrame = [[cellView textField] frame];
+
+	[self performBlockOnGlobalQueue:^{
+		TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+
+		CGFloat calculatedTextHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
+
+		CGFloat finalRowHeight = (ceilf(calculatedTextHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
+
+		[entryItem setRowHeight:finalRowHeight];
+
+		[self performBlockOnMainThread:^{
+			NSIndexSet *rowIndexSet = [NSIndexSet indexSetWithIndex:row];
+
+			[NSAnimationContext beginGrouping];
+
+			[RZAnimationCurrentContext() setDuration:0.0];
+
+			[aTableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
+
+			[NSAnimationContext endGrouping];
+		}];
+	}];
+}
+
 - (void)onClearList:(id)sender
 {
 	[self.highlightListController setContent:nil];
@@ -106,17 +139,13 @@
 
 - (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
 {
-	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"renderedMessage"];
-
-	NSTableCellView *cellView = (id)[self tableView:aTableView viewForTableColumn:tableColumn row:row];
-
-	NSRect textFieldFrame = [[cellView textField] frame];
-
 	TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
-	CGFloat calculatedHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
-
-	return (ceilf(calculatedHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
+	if ([entryItem rowHeight] > 0) {
+		return [entryItem rowHeight];
+	} else {
+		return [aTableView rowHeight];
+	}
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
@@ -124,6 +153,11 @@
 	NSTableCellView *result = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
 
 	return result;
+}
+
+- (void)tableView:(NSTableView *)tableView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
+{
+	[self lazilyDefineHeightForRow:row];
 }
 
 #pragma mark -
