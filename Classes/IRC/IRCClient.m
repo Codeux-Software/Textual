@@ -1558,6 +1558,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	PointerIsEmptyAssertReturn(m, NO);
 	PointerIsEmptyAssertReturn(channel, NO);
 
+	if (self.config.zncIgnoreUserNotifications) {
+		if ([self nicknameIsPrivateZNCUser:[channel name]]) {
+			return NO;
+		}
+	}
+
 	if (self.config.zncIgnorePlaybackNotifications == NO) {
 		return YES;
 	}
@@ -3244,6 +3250,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			BOOL applyToAll = NSObjectsAreEqual(section2, @"-a");
 
 			NSDictionary *providedKeys = @{
+				@"Ignore Notifications by Private ZNC Users"			: @"setZncIgnoreUserNotifications:",
 				@"Send Authentication Requests to UserServ"				: @"setSendAuthenticationRequestsToUserServ:",
 				@"Hide Network Unavailability Notices on Reconnect"		: @"setHideNetworkUnavailabilityNotices:",
 				@"SASL Authentication Uses External Mechanism"			: @"setSaslAuthenticationUsesExternalMechanism:",

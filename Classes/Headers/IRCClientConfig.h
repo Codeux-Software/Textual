@@ -77,6 +77,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, assign) BOOL validateServerCertificateChain;
 @property (nonatomic, assign) BOOL zncIgnoreConfiguredAutojoin;
 @property (nonatomic, assign) BOOL zncIgnorePlaybackNotifications;
+@property (nonatomic, assign) BOOL zncIgnoreUserNotifications;
 @property (nonatomic, assign) IRCConnectionSocketProxyType proxyType;
 @property (nonatomic, assign) NSInteger fallbackEncoding;
 @property (nonatomic, assign) NSInteger floodControlDelayTimerInterval;
