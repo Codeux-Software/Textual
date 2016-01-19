@@ -100,6 +100,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 			 @"zncIgnoreConfiguredAutojoin" : @(NO),
 			 @"zncIgnorePlaybackNotifications" : @(YES),
+			 @"zncIgnoreUserNotifications" : @(NO),
 
 			 @"proxyType" : @(IRCConnectionSocketSystemSocksProxyType),
 			 @"proxyPort" : @(IRCConnectionDefaultProxyPort),
@@ -194,6 +195,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	self.zncIgnoreConfiguredAutojoin		= [defaults boolForKey:@"zncIgnoreConfiguredAutojoin"];
 	self.zncIgnorePlaybackNotifications		= [defaults boolForKey:@"zncIgnorePlaybackNotifications"];
+	self.zncIgnoreUserNotifications			= [defaults boolForKey:@"zncIgnoreUserNotifications"];
 
 	self.proxyType = [defaults integerForKey:@"proxyType"];
 	self.proxyPort = [defaults integerForKey:@"proxyPort"];
@@ -506,6 +508,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[dic assignBoolTo:&_zncIgnoreConfiguredAutojoin				forKey:@"zncIgnoreConfiguredAutojoin"];
 	[dic assignBoolTo:&_zncIgnorePlaybackNotifications			forKey:@"zncIgnorePlaybackNotifications"];
+	[dic assignBoolTo:&_zncIgnoreUserNotifications				forKey:@"zncIgnoreUserNotifications"];
 
 	[dic assignIntegerTo:&_fallbackEncoding					forKey:@"fallbackEncoding"];
 	[dic assignIntegerTo:&_primaryEncoding					forKey:@"primaryEncoding"];
@@ -640,6 +643,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[dic setBool:self.zncIgnoreConfiguredAutojoin			forKey:@"zncIgnoreConfiguredAutojoin"];
 	[dic setBool:self.zncIgnorePlaybackNotifications		forKey:@"zncIgnorePlaybackNotifications"];
+	[dic setBool:self.zncIgnoreUserNotifications			forKey:@"zncIgnoreUserNotifications"];
 
 	[dic setInteger:self.fallbackEncoding					forKey:@"fallbackEncoding"];
 	[dic setInteger:self.primaryEncoding					forKey:@"primaryEncoding"];
