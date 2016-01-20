@@ -247,6 +247,13 @@
 	
 	/* Use the underlying visual effect view for real situations. */
 	[visaulEffectView setAppearance:appearance];
+
+	/* Update state of visual effect view */
+	if ([TPCPreferences disableSidebarTranslucency]) {
+		[visaulEffectView setState:NSVisualEffectStateInactive];
+	} else {
+		[visaulEffectView setState:NSVisualEffectStateFollowsWindowActiveState];
+	}
 }
 
 - (void)updateBackgroundColor
