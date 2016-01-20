@@ -112,7 +112,6 @@
 {
 	NSDictionary *mem = [TPI_SP_SysInfo applicationMemoryInformation];
 
-	NSString *shared  = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"shared"]];
 	NSString *private = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"private"]];
 
 	NSInteger totalScrollbackSize = 0;
@@ -126,7 +125,7 @@
 	}
 
 	return TPILocalizedString(@"BasicLanguage[1020]",
-							  private, shared, TXFormattedNumber(totalScrollbackSize));
+							  private, TXFormattedNumber(totalScrollbackSize));
 }
 
 + (NSString *)applicationRuntimeStatistics
