@@ -57,7 +57,7 @@
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
 
 /* /memory/ command. */
-"BasicLanguage[1020]" = "Private memory use (memory actively being used): %1$@ • Memory shared with other processes: %2$@ • Visible lines: %3$@ ";
+"BasicLanguage[1020]" = "Private memory use (memory actively being used): %1$@ • Visible lines: %2$@ ";
 
 /* /diskspace/ command. */
 "BasicLanguage[1021]" = "\002Mounted Drives:\002 %@";
