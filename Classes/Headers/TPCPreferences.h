@@ -176,6 +176,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSInteger)trackUserAwayStatusMaximumChannelSize;
 
 + (BOOL)invertSidebarColors;
++ (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
 
 + (BOOL)reloadScrollbackOnLaunch;

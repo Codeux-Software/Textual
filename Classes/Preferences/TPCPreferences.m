@@ -138,6 +138,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 
++ (BOOL)disableSidebarTranslucency
+{
+	return [RZUserDefaults() boolForKey:@"DisableSidebarTranslucency"];
+}
+
 + (BOOL)hideMainWindowSegmentedController
 {
 	return [RZUserDefaults() boolForKey:@"DisableMainWindowSegmentedController"];
