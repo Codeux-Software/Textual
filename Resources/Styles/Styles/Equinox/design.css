@@ -4,8 +4,7 @@
   margin: 0;
   padding: 0;
   font-size: 100%;
-  -webkit-word-break: break-word;
-  word-wrap: break-word;
+  word-break: break-word;
 }
 
 body {
@@ -304,7 +303,6 @@ body .senderContainer .swrapper {
 }
 
 body div[ltype="privmsg"] .message {
-  word-break: break-word;
   color: #f2f2f2;
 }
 
@@ -347,7 +345,6 @@ body div[ltype=action] .senderContainer {
 }
 
 body div.line[ltype=action] .message {
-  word-break: break-word;
   padding-top: 1px;
 }
 
@@ -545,6 +542,7 @@ body .f {  /* fade out */
 .senderContainer {
   cursor: pointer;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 body div.line[ltype=privmsg]:not(.selectedUser),
