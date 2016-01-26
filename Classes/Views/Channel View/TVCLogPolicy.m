@@ -201,7 +201,26 @@
 	if (action == WebNavigationTypeLinkClicked) {
 		[listener ignore];
 
-		[TLOpenLink open:actionInformation[WebActionOriginalURLKey]];
+		NSURL *actionURL = actionInformation[WebActionOriginalURLKey];
+
+		if (NSObjectsAreEqual([actionURL scheme], @"http") == NO &&
+			NSObjectsAreEqual([actionURL scheme], @"https") == NO &&
+			NSObjectsAreEqual([actionURL scheme], @"textual") == NO)
+		{
+			BOOL openLink =
+			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
+											   title:TXTLS(@"BasicLanguage[1290][1]", [actionURL absoluteString])
+									   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
+									 alternateButton:TXTLS(@"BasicLanguage[1009]")
+									  suppressionKey:@"open_non_http_url_warning"
+									 suppressionText:nil];
+
+			if (openLink == NO) {
+				return;
+			}
+		}
+
+		[TLOpenLink open:actionURL];
 	} else {
 		[listener use];
 	}
