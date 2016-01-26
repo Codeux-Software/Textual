@@ -784,9 +784,14 @@
 "BasicLanguage[1287][2]" = "Would you like to launch the “Textual Extras” installer to perform update?";
 "BasicLanguage[1287][3]" = "Launch Installer";
 
+/* Non-HTTP link warning */
+"BasicLanguage[1290][1]" = "Please verify that you would like to open the following URL: %@";
+"BasicLanguage[1290][2]" = "The linked you clicked will launch an application other than your web browser which could possibly lead to the leak of your personal information.";
+"BasicLanguage[1290][3]" = "I Understand, Continue";
 
 
 
-/* Next unusued key: 1290 */
+
+/* Next unusued key: 1291 */
 
 
