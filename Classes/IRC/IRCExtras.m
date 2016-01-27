@@ -210,6 +210,8 @@
 		NSArray *dataSections = [channelInfo split:@","];
 
 		[dataSections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			NSObjectIsEmptyAssert(obj);
+
 			if (idx > 4) {
 				*stop = YES;
 				
