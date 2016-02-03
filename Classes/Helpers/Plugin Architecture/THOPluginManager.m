@@ -312,11 +312,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
 													   title:TXTLS(@"BasicLanguage[1287][1]", bundleName)
 											   defaultButton:TXTLS(@"BasicLanguage[1287][3]")
-											 alternateButton:BLS(1009)
+											 alternateButton:TXTLS(@"BasicLanguage[1287][4]")
 											  suppressionKey:@"plugin_manager_extension_update_dialog"
 											 suppressionText:nil];
 
-	if (download) {
+	if (download == NO) {
 		[self extrasInstallerLaunchInstaller];
 	}
 }
