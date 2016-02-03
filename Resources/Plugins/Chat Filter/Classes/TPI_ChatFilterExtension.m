@@ -80,6 +80,8 @@
 
 		for (TPI_ChatFilter *filter in arrangedObjects) {
 			@autoreleasepool {
+				BOOL filterMatchedBySender = NO;
+
 				if ((lineType == TVCLogLinePrivateMessageType && [filter filterCommandPRIVMSG] == NO) ||
 					(lineType == TVCLogLineActionType && [filter filterCommandPRIVMSG_ACTION] == NO) ||
 					(lineType == TVCLogLineNoticeType && [filter filterCommandNOTICE] == NO))
@@ -146,6 +148,8 @@
 						 this particular filter fails, then skip this filter. */
 
 						continue;
+					} else {
+						filterMatchedBySender = YES;
 					}
 				}
 
@@ -171,66 +175,77 @@
 				}
 
 				/* Filter text */
-				if ([XRRegularExpression string:text isMatchedByRegex:[filter filterMatch] withoutCase:YES] == NO) {
-					/* The input text is not matched by the filter match.
-					 Continue to the next filter to try again. */
+				NSString *filterMatch = [filter filterMatch];
 
-					continue;
+				if (NSObjectIsEmpty(filterMatch)) {
+					if (filterMatchedBySender == NO) {
+						/* An empty match (= wildcard) + no matching sender = bogus filter */
+
+						continue;
+					}
+
 				} else {
-					/* Perform actions defined by filter */
-					XRPerformBlockAsynchronouslyOnMainQueue(^{
-						[self performActionForFilter:filter
-								 withOriginalMessage:text
-										  authoredBy:textAuthor
-										 destinedFor:textDestination
-										  asLineType:lineType
-											onClient:client];
-					});
+					if ([XRRegularExpression string:text isMatchedByRegex:filterMatch withoutCase:YES] == NO) {
+						/* The input text is not matched by the filter match.
+						 Continue to the next filter to try again. */
 
-					/* Forward a copy of the message to a query? */
-					NSString *filterForwardToDestination = [filter filterForwardToDestination];
-
-					if (NSObjectIsNotEmpty(filterForwardToDestination)) {
-						IRCChannel *destinationChannel = [client findChannelOrCreate:filterForwardToDestination isPrivateMessage:YES];
-
-						NSString *fakeMessageCommand = nil;
-
-						if (lineType == TVCLogLinePrivateMessageType ||
-							lineType == TVCLogLineActionType)
-						{
-							fakeMessageCommand = @"PRIVMSG";
-						} else if (lineType == TVCLogLineNoticeType) {
-							fakeMessageCommand = @"NOTICE";
-						}
-
-						[client printToWebView:destinationChannel
-										  type:lineType
-									   command:fakeMessageCommand
-									  nickname:[textAuthor nickname]
-								   messageBody:text
-								   isEncrypted:wasEncrypted
-									receivedAt:receivedAt
-							  referenceMessage:nil
-							   completionBlock:^(BOOL isHighlight) {
-								   if (lineType == TVCLogLineNoticeType) {
-									   [client setUnreadState:destinationChannel];
-								   } else {
-									   if (isHighlight) {
-										   [client setKeywordState:destinationChannel];
-									   }
-
-									   [client setUnreadState:destinationChannel isHighlight:isHighlight];
-								   }
-							   }];
+						continue;
 					}
-
-					if ([filter filterIgnoreContent]) {
-						return NO; // Ignore original content
-					}
-
-					/* Return once the first filter matches */
-					return YES;
 				}
+
+				/* Perform actions defined by filter */
+				XRPerformBlockAsynchronouslyOnMainQueue(^{
+					[self performActionForFilter:filter
+							 withOriginalMessage:text
+									  authoredBy:textAuthor
+									 destinedFor:textDestination
+									  asLineType:lineType
+										onClient:client];
+				});
+
+				/* Forward a copy of the message to a query? */
+				NSString *filterForwardToDestination = [filter filterForwardToDestination];
+
+				if (NSObjectIsNotEmpty(filterForwardToDestination)) {
+					IRCChannel *destinationChannel = [client findChannelOrCreate:filterForwardToDestination isPrivateMessage:YES];
+
+					NSString *fakeMessageCommand = nil;
+
+					if (lineType == TVCLogLinePrivateMessageType ||
+						lineType == TVCLogLineActionType)
+					{
+						fakeMessageCommand = @"PRIVMSG";
+					} else if (lineType == TVCLogLineNoticeType) {
+						fakeMessageCommand = @"NOTICE";
+					}
+
+					[client printToWebView:destinationChannel
+									  type:lineType
+								   command:fakeMessageCommand
+								  nickname:[textAuthor nickname]
+							   messageBody:text
+							   isEncrypted:wasEncrypted
+								receivedAt:receivedAt
+						  referenceMessage:nil
+						   completionBlock:^(BOOL isHighlight) {
+							   if (lineType == TVCLogLineNoticeType) {
+								   [client setUnreadState:destinationChannel];
+							   } else {
+								   if (isHighlight) {
+									   [client setKeywordState:destinationChannel];
+								   }
+
+								   [client setUnreadState:destinationChannel isHighlight:isHighlight];
+							   }
+						   }];
+				}
+
+				if ([filter filterIgnoreContent]) {
+					return NO; // Ignore original content
+				}
+
+				/* Return once the first filter matches */
+				return YES;
 			} // @autorelease
 		} // for
 	} // @synchronized
