@@ -409,7 +409,8 @@
 - (void)toggleOkButton
 {
 	BOOL disabled = ([[self.filterTitleTextField stringValue] length] == 0 ||
-					 [[self.filterMatchTextField stringValue] length] == 0 ||
+					 ([[self.filterMatchTextField stringValue] length] == 0 &&
+					  [[self.filterSenderMatchTextField stringValue] length] == 0) ||
 					([[self.filterActionTokenField stringValue] length] == 0 &&
 						([self.filterIgnoreContentCheck state] == NSOffState &&
 						 [[self.filterForwardToDestinationTextField stringValue] length] == 0)) ||

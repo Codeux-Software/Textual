@@ -35,9 +35,7 @@
 
  *********************************************************************** */
 
-"TPI_ChatFilter[0001]" = "Empty Filter";
-"TPI_ChatFilter[0002]" = "Filter “%@“";
-"TPI_ChatFilter[0003]" = "Filter “%1$@“ matched by “%2$@“";
+"TPI_ChatFilter[0001]" = "Filter “%@“";
 
 "TPI_ChatFilterExtension[0001]" = "Chat Filter";
 "TPI_ChatFilterExtension[0002]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“";

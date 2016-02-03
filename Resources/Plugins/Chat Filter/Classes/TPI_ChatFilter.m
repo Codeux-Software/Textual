@@ -156,19 +156,7 @@
 
 - (NSString *)filterDescription
 {
-	NSString *filterMatch = [self filterMatch];
-
-	NSString *filterTitle = [self filterTitle];
-
-	if (NSObjectIsEmpty(filterMatch)) {
-		return TPILocalizedString(@"TPI_ChatFilter[0001]");
-	}
-
-	if (NSObjectIsEmpty(filterTitle)) {
-		return TPILocalizedString(@"TPI_ChatFilter[0002]", filterMatch);
-	} else {
-		return TPILocalizedString(@"TPI_ChatFilter[0003]", filterTitle, filterMatch);
-	}
+	return TPILocalizedString(@"TPI_ChatFilter[0001]", [self filterTitle]);
 }
 
 @end
