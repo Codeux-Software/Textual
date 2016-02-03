@@ -41,9 +41,9 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 
 /* URLs for performing certain actions with license keys. */
-NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/activateLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/sendLostLicense.cs";
-NSString * const TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL				= @"https://www.codeux.com/textual/private/fastspring/textual5-license-API/convertReceiptToLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIActivationURL						= @"https://textual5-license-key-backend.codeux.com/activateLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPISendLostLicenseURL				= @"https://textual5-license-key-backend.codeux.com/sendLostLicense.cs";
+NSString * const TLOLicenseManagerDownloaderLicenseAPIMigrateAppStoreURL				= @"https://textual5-license-key-backend.codeux.com/convertReceiptToLicense.cs";
 
 /* The license API throttles requests to prevent abuse. The following HTTP status 
  code will inform Textual if it the license API has been overwhelmed. */
