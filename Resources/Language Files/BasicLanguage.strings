@@ -782,7 +782,8 @@
 /* Extras installer updates */
 "BasicLanguage[1287][1]" = "A new version of the “%@” addon is available!";
 "BasicLanguage[1287][2]" = "Would you like to launch the “Textual Extras” installer to perform update?";
-"BasicLanguage[1287][3]" = "Launch Installer";
+"BasicLanguage[1287][3]" = "Remind Me Later";
+"BasicLanguage[1287][4]" = "Launch Installer";
 
 /* Non-HTTP link warning */
 "BasicLanguage[1290][1]" = "Please verify that you would like to open the following URL: %@";
