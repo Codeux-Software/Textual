@@ -121,6 +121,7 @@
 		 unsupervised-script-folder			— Open the unsupervised scripts folder.
 		 unsupervised-scripts-folder		— Same as unsupervised-script-folder except plural.
 		 knowledge-base						— Open the homepage of our knowledge base.
+		 application-support-folder			— Open the Application Support folder
 	 */
 
 	if ([addressScheme isEqualToString:@"textual"]) {
@@ -174,6 +175,10 @@
 		{
 			[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/"];
 		}
+		else if ([serverAddress isEqualToString:@"application-support-folder"])
+		{
+			[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
+		}
 
 		return;
 	}
@@ -210,6 +215,8 @@
 		NSArray *dataSections = [channelInfo split:@","];
 
 		[dataSections enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			NSObjectIsEmptyAssert(obj);
+
 			if (idx > 4) {
 				*stop = YES;
 				
