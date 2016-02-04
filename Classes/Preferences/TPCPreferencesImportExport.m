@@ -294,7 +294,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	[d setCanCreateDirectories:YES];
 
-	[d setNameFieldStringValue:@"TextualPrefrences.plist"];
+	[d setNameFieldStringValue:@"TextualPreferences.plist"];
 
 	[d setMessage:BLS(1180)];
 
