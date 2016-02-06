@@ -714,6 +714,19 @@
 #pragma mark -
 #pragma mark Network Information
 
+- (NSString *)cachedIPAddress
+{
+	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod) {
+		NSString *manualIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
+
+		NSObjectIsEmptyAssertReturn(manualIPAddress, nil);
+
+		return manualIPAddress;
+	}
+
+	return _cachedIPAddress;
+}
+
 - (void)clearCachedIPAddress
 {
 	self.cachedIPAddress = nil;

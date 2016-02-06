@@ -365,11 +365,6 @@
 
 	BOOL usesManualDetection = ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod);
 
-	/* What did user specify? */
-	if (cachedIPAddress == nil && usesManualDetection) {
-		cachedIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
-	}
-
 	/* Important check. */
 	if (cachedIPAddress == nil && usesManualDetection == NO) {
 		if (self.portMapping) {
