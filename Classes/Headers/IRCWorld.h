@@ -58,6 +58,7 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 - (void)setupOtherServices;
 
 - (void)save;
+- (void)savePeriodically;
 
 - (NSMutableDictionary *)dictionaryValue;
 

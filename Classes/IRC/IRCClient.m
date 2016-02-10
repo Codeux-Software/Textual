@@ -639,12 +639,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)setLastMessageServerTime:(NSTimeInterval)lastMessageServerTime
 {
-	self.config.cachedLastServerTimeCapacityReceivedAtTimestamp = lastMessageServerTime;
+	self.config.lastMessageServerTime = lastMessageServerTime;
+
+	/* Save configuration periodically so that our timestamp is not lost
+	 in the event of a crash (like those never happen). The configuration
+	 schemes needs a overhaul so we don't to save the entire world just 
+	 for one value. It's like we're putting a cast on a scratch. */
+	[worldController() savePeriodically];
 }
 
 - (NSTimeInterval)lastMessageServerTime
 {
-	return self.config.cachedLastServerTimeCapacityReceivedAtTimestamp;
+	return self.config.lastMessageServerTime;
 }
 
 - (BOOL)connectionIsSecured

@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, assign) NSInteger primaryEncoding;
 @property (nonatomic, assign) NSInteger proxyPort;
 @property (nonatomic, assign) NSInteger serverPort;
-@property (nonatomic, assign) NSTimeInterval cachedLastServerTimeCapacityReceivedAtTimestamp;
+@property (nonatomic, assign) NSTimeInterval lastMessageServerTime;
 @property (nonatomic, copy) NSArray *alternateNicknames;
 @property (nonatomic, copy) NSArray *channelList;
 @property (nonatomic, copy) NSArray *highlightList;
