@@ -43,6 +43,8 @@
 #define _autoConnectDelay				1
 #define _reconnectAfterWakeupDelay		8
 
+#define _savePeriodicallyThreshold		300
+
 NSString * const IRCWorldControllerDefaultsStorageKey = @"World Controller";
 NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
 
@@ -52,6 +54,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 @interface IRCWorld ()
 @property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
+@property (nonatomic, assign) CFAbsoluteTime savePeriodicallyLastSave;
 @end
 
 @implementation IRCWorld
@@ -67,6 +70,8 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		self.textSizeMultiplier = 1.0f;
 
 		self.preferencesDidChangeTimerIsActive = NO;
+
+		self.savePeriodicallyLastSave = CFAbsoluteTimeGetCurrent();
 	}
 	
 	return self;
@@ -126,6 +131,17 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 - (void)save
 {
 	[TPCPreferences saveWorld:[self dictionaryValue]];
+}
+
+- (void)savePeriodically
+{
+	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+
+	if ((self.savePeriodicallyLastSave + _savePeriodicallyThreshold) < now) {
+		 self.savePeriodicallyLastSave = now;
+
+		[self save];
+	}
 }
 
 - (void)prepareForApplicationTermination

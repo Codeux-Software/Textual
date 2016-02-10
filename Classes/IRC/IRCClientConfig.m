@@ -207,7 +207,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	self.serverPort			= [defaults integerForKey:@"serverPort"];
 
-	self.cachedLastServerTimeCapacityReceivedAtTimestamp = [defaults integerForKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+	self.lastMessageServerTime = [defaults integerForKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
 	self.normalLeavingComment = [defaults stringForKey:@"normalLeavingComment"];
 
@@ -517,7 +517,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignIntegerTo:&_floodControlDelayTimerInterval	forKey:@"floodControlDelayTimerInterval"];
 	[dic assignIntegerTo:&_floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
 
-	[dic assignDoubleTo:&_cachedLastServerTimeCapacityReceivedAtTimestamp forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+	[dic assignDoubleTo:&_lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
 	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"identityClientSideCertificate" performCopy:YES];
 
@@ -653,7 +653,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setInteger:self.floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
 
 	if (isCloudDictionary == NO) {
-		[dic setDouble:self.cachedLastServerTimeCapacityReceivedAtTimestamp	forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+		[dic setDouble:self.lastMessageServerTime	forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
 		[dic maybeSetObject:self.identityClientSideCertificate forKey:@"identityClientSideCertificate"];
 	}
