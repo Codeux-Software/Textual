@@ -49,6 +49,10 @@
 
 - (BOOL)viewingBottom
 {
+	if ([self canScroll] == NO) {
+		return YES;
+	}
+
 	if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
 		return YES;
 	} else {
