@@ -792,7 +792,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)notifyDidBecomeHidden
 {
-	self.wasViewingBottomBeforeBecomingHidden = [[self webViewAutoScroller] viewingBottom];
+	self.wasViewingBottomBeforeBecomingHidden = ([self.webViewAutoScroller canScroll] == NO ||
+												 [self.webViewAutoScroller viewingBottom]);
 }
 
 - (void)changeTextSize:(BOOL)bigger

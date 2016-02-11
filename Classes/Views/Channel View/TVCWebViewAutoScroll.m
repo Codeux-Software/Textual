@@ -49,11 +49,12 @@
 
 - (BOOL)viewingBottom
 {
-	if ([self canScroll] == NO) {
-		return YES;
-	}
-
-	if (NSMaxY(self.lastVisibleRect) >= NSMaxY(self.lastFrame)) {
+	/* 7 is a fairly magical number subtracted from lastFrame to account
+	 for very slight scrolling that may occur with a TrackPad or other
+	 sensitive scrolling device. A line in the Tomorrow Night style is 
+	 15 pixels so we are basically saying as long as we are within half
+	 a message of the bottom, we are actually at the bottom. */
+	if (NSMaxY(self.lastVisibleRect) >= (NSMaxY(self.lastFrame) - 7.0)) {
 		return YES;
 	} else {
 		return NO;
