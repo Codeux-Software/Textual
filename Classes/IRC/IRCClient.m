@@ -6578,6 +6578,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 310: // RPL_WHOISHELPOP
 		case 313: // RPL_WHOISOPERATOR
 		case 335: // RPL_WHOISBOT
+		case 336: // RPL_WHOIS? — (is on private/secret channels..., InspIRCd)
 		case 378: // RPL_WHOISHOST
 		case 379: // RPL_WHOISMODES
 		case 616: // RPL_WHOISHOST
