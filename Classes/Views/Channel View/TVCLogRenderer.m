@@ -729,26 +729,27 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 				BOOL cleanMatch = [self sectionOfBodyIsSurroundedByNonAlphabeticals:r];
 
 				if (cleanMatch) {
-					if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length) &&
-						isClear(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length))
+					if (isClear(_effectAttributes, _rendererURLAttribute, r.location, r.length))
 					{
-						/* Check if the nickname conversation tracking found is matched to an ignore
-						 that is set to hide them. */
-						IRCAddressBookEntry *ignoreCheck = [client checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey]];
+						if (isClear(_effectAttributes, _rendererKeywordHighlightAttribute, r.location, r.length)) {
+							/* Check if the nickname conversation tracking found is matched to an ignore
+							 that is set to hide them. */
+							IRCAddressBookEntry *ignoreCheck = [client checkIgnoreAgainstHostmask:[user hostmask] withMatches:@[IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey]];
 
-						if (ignoreCheck && [ignoreCheck ignoreMessagesContainingMatchh]) {
-							_cancelRender = YES;
+							if (ignoreCheck && [ignoreCheck ignoreMessagesContainingMatchh]) {
+								_cancelRender = YES;
 
-							return; // Break from this method.
+								return; // Break from this method.
+							}
+
+							/* Continue normally */
+							totalNicknameCount += 1;
+							totalNicknameLength += [[user nickname] length];
+
+							[mentionedUsers addObject:user];
 						}
 
-						/* Continue normally. */
 						setFlag(_effectAttributes, _rendererConversationTrackerAttribute, r.location, r.length);
-
-						totalNicknameCount += 1;
-						totalNicknameLength += [[user nickname] length];
-
-						[mentionedUsers addObject:user];
 					}
 				}
 
