@@ -71,6 +71,8 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
 
+- (void)invalidateScrollingPosition;
+
 - (void)nextHighlight;
 - (void)previousHighlight;
 

@@ -157,6 +157,8 @@
 		TVCLogController *viewController = [channel viewController];
 
 		if ([viewController jumpToLine:[entryItem lineNumber]]) {
+			[viewController invalidateScrollingPosition];
+
 			[mainWindow() select:channel];
 
 			[self cancel:nil];
