@@ -754,12 +754,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Utilities
 
-- (void)jumpToLine:(NSString *)line
+- (BOOL)jumpToLine:(NSString *)line
 {
 	NSString *lid = [NSString stringWithFormat:@"line-%@", line];
 
 	if ([self jumpToElementID:lid]) {
 		[self executeQuickScriptCommand:@"viewPositionMovedToLine" withArguments:@[line]];
+
+		return YES;
+	} else {
+		return NO;
 	}
 }
 
@@ -866,7 +870,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 		}
 
-		[self jumpToLine:self.lastVisitedHighlight];
+		(void)[self jumpToLine:self.lastVisitedHighlight];
 	}
 }
 
@@ -895,7 +899,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 		}
 
-		[self jumpToLine:self.lastVisitedHighlight];
+		(void)[self jumpToLine:self.lastVisitedHighlight];
 	}
 }
 
@@ -1077,7 +1081,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 						[self.highlightedLineNumbers addObject:lineNumber];
 					}
 
-					[self.associatedClient cacheHighlightInChannel:self.associatedChannel withLogLine:logLine];
+					[self.associatedClient cacheHighlightInChannel:self.associatedChannel withLogLine:logLine lineNumber:lineNumber];
 				}
 
 				/* Do the actual append to WebKit. */

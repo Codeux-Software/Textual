@@ -691,10 +691,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 }
 
-- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine lineNumber:(NSString *)lineNumber
 {
 	PointerIsEmptyAssert(channel);
 	PointerIsEmptyAssert(logLine);
+
+	NSObjectIsEmptyAssert(lineNumber);
 	
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
@@ -717,7 +719,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		TDCServerHighlightListSheetEntry *newEntry = [TDCServerHighlightListSheetEntry new];
 
-		[newEntry setChannelName:[channel name]];
+		[newEntry setChannelID:[channel uniqueIdentifier]];
+
+		[newEntry setLineNumber:lineNumber];
 
 		[newEntry setRenderedMessage:renderedMessage];
 

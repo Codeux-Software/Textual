@@ -47,12 +47,21 @@
 - (IBAction)onClearList:(id)sender;
 @end
 
+@interface TDCServerHighlightListSheetEntry ()
+@property (readonly, weak) IRCChannel *channel;
+@property (readonly, copy) NSString *channelName;
+@property (readonly, copy) NSString *timeLoggedFormatted;
+@property (nonatomic, assign) CGFloat rowHeight;
+@end
+
 @implementation TDCServerHighlightListSheet
 
 - (instancetype)init
 {
     if ((self = [super init])) {
 		[RZMainBundle() loadNibNamed:@"TDCServerHighlightListSheet" owner:self topLevelObjects:nil];
+
+		[self.highlightListTable setDoubleAction:@selector(highlightDoubleClicked:)];
 
 		[self.highlightListTable setSortDescriptors:@[
 			[NSSortDescriptor sortDescriptorWithKey:@"timeLogged" ascending:NO selector:@selector(compare:)],
@@ -134,6 +143,27 @@
 	[currentNetwork clearCachedHighlights];
 }
 
+- (void)highlightDoubleClicked:(id)sender
+{
+	NSInteger row = [self.highlightListTable clickedRow];
+
+	if (row >= 0) {
+		TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+
+		IRCChannel *channel = [entryItem channel];
+
+		PointerIsEmptyAssert(channel);
+
+		TVCLogController *viewController = [channel viewController];
+
+		if ([viewController jumpToLine:[entryItem lineNumber]]) {
+			[mainWindow() select:channel];
+
+			[self cancel:nil];
+		}
+	}
+}
+
 #pragma mark -
 #pragma mark NSTableView Delegate
 
@@ -181,15 +211,29 @@
 
 - (NSString *)timeLoggedFormatted
 {
-	if (self.timeLogged == nil) {
-		return nil; // What to do with nil?...
-	}
-
 	NSTimeInterval timeInterval = [self.timeLogged timeIntervalSinceNow];
 
 	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
 
 	return BLS(1216, formattedTimeInterval);
+}
+
+- (IRCChannel *)channel
+{
+	IRCClient *client = [mainWindow() selectedClient];
+
+	IRCChannel *channel = [worldController() findChannelByClientId:[client uniqueIdentifier] channelId:self.channelID];
+
+	return channel;
+}
+
+- (NSString *)channelName
+{
+	IRCChannel *channel = [self channel];
+
+	PointerIsEmptyAssertReturn(channel, nil);
+
+	return [channel name];
 }
 
 @end

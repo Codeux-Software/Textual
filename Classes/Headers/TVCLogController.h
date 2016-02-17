@@ -83,6 +83,8 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 - (void)moveToTop;
 - (void)moveToBottom;
 
+- (BOOL)jumpToLine:(NSString *)line;
+
 @property (readonly) BOOL viewingBottom;
 
 @property (readonly, copy) NSString *topicValue;
