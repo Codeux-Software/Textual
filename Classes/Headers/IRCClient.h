@@ -182,7 +182,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)selectFirstChannelInChannelList;
 
-- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine lineNumber:(NSString *)lineNumber;
 - (void)clearCachedHighlights;
 
 - (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname;

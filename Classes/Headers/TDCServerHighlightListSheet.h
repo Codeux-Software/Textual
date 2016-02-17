@@ -47,8 +47,7 @@
 
 @interface TDCServerHighlightListSheetEntry : NSObject
 @property (nonatomic, copy) NSAttributedString *renderedMessage;
-@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSString *channelID;
+@property (nonatomic, copy) NSString *lineNumber;
 @property (nonatomic, copy) NSDate *timeLogged;
-@property (readonly, copy) NSString *timeLoggedFormatted;
-@property (nonatomic, assign) CGFloat rowHeight;
 @end
