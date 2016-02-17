@@ -785,6 +785,11 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	return YES;
 }
 
+- (void)invalidateScrollingPosition
+{
+	self.wasViewingBottomBeforeBecomingHidden = NO;
+}
+
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
 	NSValue *wasViewingBottom = @(self.wasViewingBottomBeforeBecomingHidden);
