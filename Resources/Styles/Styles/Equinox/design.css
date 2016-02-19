@@ -516,13 +516,6 @@ body[dir=rtl] div[ltype=quit] .message:before {
 }
 
 /* Nickname Colors */
-
-/*
-body .inline_nickname {
-  font-weight: 700;
-}
-*/
-
 body .sender[mtype=myself] {
   color: #9A60FF;
 }
@@ -600,4 +593,69 @@ body div.date > span {
 
 body div.date + div#mark, body div.date + div#historic_messages + div#mark {
   display: none;
+}
+
+/* Shamelessly steal the background colors from Tomorrow Night */
+.effect[color-number='0'] {
+  color: #EAEAEA !important;
+}
+
+.effect[color-number='1'] {
+  color: #515151 !important;
+}
+
+.effect[color-number='2'] {
+  color: #6699CC !important;
+}
+
+.effect[color-number='3'] {
+  color: #99CC99 !important;
+}
+
+.effect[color-number='4'] {
+  color: #F2777A !important;
+}
+
+.effect[color-number='5'] {
+  color: #FF9DA4 !important;
+}
+
+.effect[color-number='6'] {
+  color: #CC99CC !important;
+}
+
+.effect[color-number='7'] {
+  color: #F99157 !important;
+}
+
+.effect[color-number='8'] {
+  color: #FFCC66 !important;
+}
+
+.effect[color-number='9'] {
+  color: #B9CA4A !important;
+}
+
+.effect[color-number='10'] {
+  color: #66CCCC !important;
+}
+
+.effect[color-number='11'] {
+  color: #99FFFF !important;
+}
+
+.effect[color-number='12'] {
+  color: #7AA6DA !important;
+}
+
+.effect[color-number='13'] {
+  color: #C397D8 !important;
+}
+
+.effect[color-number='14'] {
+  color: #999999 !important;
+}
+
+.effect[color-number='15'] {
+  color: #CCCCCC !important;
 }
