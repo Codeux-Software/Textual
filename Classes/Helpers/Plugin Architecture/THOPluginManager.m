@@ -412,13 +412,17 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 - (void)extrasInstallerLaunchInstaller
 {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras-MAS" ofType:@"pkg"];
+	NSURL *installerURL = [RZMainBundle() URLForResource:@"Textual-Extras-MAS" withExtension:@"pkg"];
 #else
-	NSString *installerURL = [RZMainBundle() pathForResource:@"Textual-Extras" ofType:@"pkg"];
+	NSURL *installerURL = [RZMainBundle() URLForResource:@"Textual-Extras" withExtension:@"pkg"];
 #endif
 
 	if (installerURL) {
-		[RZWorkspace() openFile:installerURL withApplication:@"Installer"];
+		[RZWorkspace() openURLs:@[installerURL]
+		withAppBundleIdentifier:@"com.apple.installer"
+						options:NSWorkspaceLaunchDefault
+ additionalEventParamDescriptor:nil
+			  launchIdentifiers:NULL];
 	}
 }
 
