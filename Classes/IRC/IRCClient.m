@@ -1219,7 +1219,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case TXNotificationChannelMessageType:
 		case TXNotificationChannelNoticeType:
 		{
-			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
+			NSObjectIsEmptyAssert(text); // Do not speak empty messages.
 
 			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 			
@@ -1231,7 +1231,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case TXNotificationPrivateMessageType:
 		case TXNotificationPrivateNoticeType:
 		{
-			NSObjectIsEmptyAssertLoopBreak(text); // Do not speak empty messages.
+			NSObjectIsEmptyAssert(text); // Do not speak empty messages.
 
 			NSInteger nformatString = [self localizedSpokenMessageForEvent:type];
 
@@ -2413,7 +2413,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname2 = [s getTokenAsString];
 
 			if (NSObjectIsEmpty(nickname1)) {
-				if (selChannel.isPrivateMessage) {
+				if ([selChannel isPrivateMessage]) {
 					nickname1 = [selChannel name];
 				} else {
 					return;
@@ -3220,7 +3220,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5099: // Command: GOTO
 		{
-			NSObjectIsEmptyAssertLoopBreak(uncutInput);
+			NSObjectIsEmptyAssert(uncutInput);
 
 			IRCTreeItem *bestMatch = [mainWindow() selectedItem];
 
@@ -6414,7 +6414,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 10: // RPL_REDIR
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *address = [m paramAt:0];
 			NSString *portraw = [m paramAt:1];
@@ -6472,7 +6472,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 376: // RPL_ENDOFMOTD
 		case 422: // ERR_NOMOTD
 		{
-			NSAssertReturnLoopBreak([TPCPreferences displayServerMOTD]);
+			NSAssertReturn([TPCPreferences displayServerMOTD]);
 
 			if (n == 422) {
 				[self printErrorReply:m];
@@ -6484,7 +6484,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 221: // RPL_UMODES
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] > 1);
 			
 			NSString *modestr = [m paramAt:1];
 
@@ -6503,7 +6503,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 290: // RPL_CAPAB (freenode)
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] > 1);
 
 			NSString *kind = [m paramAt:1];
 
@@ -6519,7 +6519,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 301: // RPL_AWAY
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] > 1);
 
 			NSString *awaynick = [m paramAt:1];
 			NSString *comment = [m paramAt:2];
@@ -6560,7 +6560,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
             
             /* Update our own status. This has to only be done with away-notify CAP enabled.
              Old, WHO based information requests will still show our own status. */
-            NSAssertReturnLoopBreak([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]);
+            NSAssertReturn([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]);
 
 			@synchronized(self.channels) {
 				for (IRCChannel *channel in self.channels) {
@@ -6590,7 +6590,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 672: // RPL_WHOIS? — (is a CGI:IRC client from..., hybrid)
 		case 727: // RPL_WHOIS? — (is captured, hybrid)
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
 
@@ -6605,7 +6605,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 338: // RPL_WHOISACTUALLY (ircu, Bahamut)
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *text = nil;
 			
@@ -6629,7 +6629,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 311: // RPL_WHOISUSER
 		case 314: // RPL_WHOWASUSER
 		{
-			NSAssertReturnLoopBreak([m paramsCount] >= 6);
+			NSAssertReturn([m paramsCount] >= 6);
 
 			NSString *nickname = [m paramAt:1];
 			NSString *username = [m paramAt:2];
@@ -6671,7 +6671,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 312: // RPL_WHOISSERVER
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			NSString *nickname = [m paramAt:1];
 			NSString *serverHost = [m paramAt:2];
@@ -6698,7 +6698,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 317: // RPL_WHOISIDLE
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			NSString *nickname = [m paramAt:1];
 			NSString *idleTime = [m paramAt:2];
@@ -6723,7 +6723,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 319: // RPL_WHOISCHANNELS
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
@@ -6741,7 +6741,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 324: // RPL_CHANNELMODES
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *channel = [m paramAt:1];
 			NSString *modestr = [m sequence:2];
@@ -6752,7 +6752,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 
 			if ([c isActive]) {
 				[[c modeInfo] clear];
@@ -6780,14 +6780,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 332: // RPL_TOPIC
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *channel = [m paramAt:1];
 			NSString *topicva = [m paramAt:2];
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 
 			if ([c isActive]) {
 				[c setTopic:topicva];
@@ -6805,7 +6805,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 333: // RPL_TOPICWHOTIME
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			NSString *channel = [m paramAt:1];
 			NSString *topicow = [m paramAt:2];
@@ -6819,7 +6819,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 
 			if ([c isActive]) {
 				NSString *text = BLS(1125, topicow, settime);
@@ -6836,14 +6836,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 341: // RPL_INVITING
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 			
 			NSString *nickname = [m paramAt:1];
 			NSString *channel = [m paramAt:2];
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 
 			if ([c isActive]) {
 				[self print:c
@@ -6958,7 +6958,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 352: // RPL_WHOREPLY
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 6);
+			NSAssertReturn([m paramsCount] > 6);
 
 			NSString *channel = [m paramAt:1];
 
@@ -6968,7 +6968,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 					
 			/* Example incoming data:
 				<channel> <user> <host> <server> <nick> <H|G>[*][@|+] <hopcount> <real name>
@@ -7089,7 +7089,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 353: // RPL_NAMEREPLY
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			NSString *channel = [m paramAt:2];
 			NSString *nameblob = [m paramAt:3];
@@ -7100,7 +7100,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 
 			NSArray *items = [nameblob split:NSStringWhitespacePlaceholder];
 
@@ -7162,13 +7162,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 366: // RPL_ENDOFNAMES
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 1);
+			NSAssertReturn([m paramsCount] > 1);
 			
 			NSString *channel = [m paramAt:1];
 
 			IRCChannel *c = [self findChannel:channel];
 
-			PointerIsEmptyAssertLoopBreak(c);
+			PointerIsEmptyAssert(c);
 			
 			if (self.inUserInvokedNamesRequest == NO && self.isBrokenIRCd_aka_Twitch == NO) {
 				if ([c numberOfMembers] <= 1) {
@@ -7196,7 +7196,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 320: // RPL_WHOISSPECIAL
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 			
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
 
@@ -7223,7 +7223,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 322: // RPL_LIST
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 			
 			NSString *channel = [m paramAt:1];
 			NSString *uscount = [m paramAt:2];
@@ -7254,7 +7254,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 330: // RPL_WHOISACCOUNT (ircu)
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 			
@@ -7271,7 +7271,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 346: // RPL_INVITELIST
 		case 348: // RPL_EXCEPTLIST
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 
 			NSString *channelName = [m paramAt:1];
 
@@ -7368,7 +7368,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 328: // RPL_CHANNEL_URL
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 2);
+			NSAssertReturn([m paramsCount] > 2);
 			
 			NSString *channel = [m paramAt:1];
 			NSString *website = [m paramAt:2];
@@ -7421,7 +7421,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 604: // RPL_NOWON
 		case 605: // RPL_NOWOFF
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 4);
+			NSAssertReturn([m paramsCount] > 4);
 
 			if (self.inUserInvokedWatchRequest) {
 				[self printUnknownReply:m];
@@ -7449,7 +7449,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			/* We only continue if there is an actual address book match for the nickname. */
-			PointerIsEmptyAssertLoopBreak(ignoreChecks);
+			PointerIsEmptyAssert(ignoreChecks);
 
 			if (n == 600) // logged online
 			{
@@ -7477,7 +7477,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 717: // RPL_TARGNOTIFY
 		{
-			NSAssertReturnLoopBreak([m paramsCount] == 3);
+			NSAssertReturn([m paramsCount] == 3);
 
 			NSString *sendern = [m paramAt:1];
 			
@@ -7487,7 +7487,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 718:
 		{
-			NSAssertReturnLoopBreak([m paramsCount] == 4);
+			NSAssertReturn([m paramsCount] == 4);
 			
 			NSString *sendern = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
@@ -7504,7 +7504,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 900: // RPL_LOGGEDIN
 		{
-			NSAssertReturnLoopBreak([m paramsCount] > 3);
+			NSAssertReturn([m paramsCount] > 3);
 
 			[self enableCapacity:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL];
 
