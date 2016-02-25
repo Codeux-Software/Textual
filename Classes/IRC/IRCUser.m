@@ -436,14 +436,38 @@
 
 @implementation IRCUserNicknameColorStyleGenerator
 
+#define _overridesDefaultsKey		@"Nickname Color Style Overrides"
+
 + (NSString *)nicknameColorStyleForString:(NSString *)inputString
 {
+	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:inputString isOverride:NULL];
+}
+
++ (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL *)isOverride
+{
 	NSObjectIsEmptyAssertReturn(inputString, nil);
+
+	NSString *unshuffledString = [inputString lowercaseString];
+
+	NSColor *styleOverride =
+	[IRCUserNicknameColorStyleGenerator nicknameColorStyleOverrideForKey:unshuffledString];
+
+	if (styleOverride) {
+		if ( isOverride) {
+			*isOverride = YES;
+		}
+
+		return [NSString stringWithFormat:@"#%@", [styleOverride hexadecimalValue]];
+	} else {
+		if ( isOverride) {
+			*isOverride = NO;
+		}
+	}
 
 	TPCThemeSettingsNicknameColorStyle colorStyle = [themeSettings() nicknameColorStyle];
 
 	NSNumber *stringHash =
-	[IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyle];
+	[IRCUserNicknameColorStyleGenerator hashForString:unshuffledString colorStyle:colorStyle];
 
 	return [IRCUserNicknameColorStyleGenerator nicknameColorStyleForHash:stringHash colorStyle:colorStyle];
 }
@@ -533,14 +557,12 @@
 
 + (NSString *)preprocessString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle
 {
-	NSString *unshuffledString = [inputString lowercaseString];
-
 	if (colorStyle == TPCThemeSettingsNicknameColorHashHueDarkStyle ||
 		colorStyle == TPCThemeSettingsNicknameColorHashHueLightStyle)
 	{
-		return [NSString stringWithFormat:@"a-%@", unshuffledString];
+		return [NSString stringWithFormat:@"a-%@", inputString];
 	} else {
-		return unshuffledString;
+		return inputString;
 	}
 }
 
@@ -577,6 +599,71 @@
 
 		return @(hashedValue);
 	}
+}
+
+/* 
+ *   Color override storage talks in NSColor instead of hexadecimal strings for a few reasons:
+ *    1. Easier to work with when modifying. No need to perform messy string conversion.
+ *    2. Easier to change output format in another update (if that decision is made)
+ */
++ (NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey
+{
+	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
+
+	if (colorStyleOverrides) {
+		id objectValue = [colorStyleOverrides objectForKey:styleKey];
+
+		if (objectValue == nil || [objectValue isKindOfClass:[NSData class]] == NO) {
+			return nil;
+		}
+
+		id objectValueObj = [NSUnarchiver unarchiveObjectWithData:objectValue];
+
+		if (objectValueObj == nil || [objectValueObj isKindOfClass:[NSColor class]] == NO) {
+			return nil;
+		}
+
+		return objectValueObj;
+	}
+
+	return nil;
+}
+
++ (void)setNicknameColorStyleOverride:(NSColor *)styleValue forKey:(NSString *)styleKey
+{
+	NSObjectIsEmptyAssert(styleKey);
+
+	NSDictionary *colorStyleOverrides = [RZUserDefaults() dictionaryForKey:_overridesDefaultsKey];
+
+	if (styleValue == nil) {
+		if (colorStyleOverrides == nil) {
+			return;
+		} else if ([colorStyleOverrides count] == 1) {
+			[RZUserDefaults() removeObjectForKey:_overridesDefaultsKey];
+
+			return;
+		}
+	}
+
+	NSData *styleValueRolled = nil;
+
+	if (styleValue) {
+		styleValueRolled = [NSArchiver archivedDataWithRootObject:styleValue];
+
+		if (colorStyleOverrides == nil) {
+			colorStyleOverrides = [NSDictionary new];
+		}
+	}
+
+	NSMutableDictionary *colorStyleOverridesMut = [colorStyleOverrides mutableCopy];
+
+	if (styleValue == nil) {
+		[colorStyleOverridesMut removeObjectForKey:styleKey];
+	} else {
+		[colorStyleOverridesMut setObject:styleValueRolled forKey:styleKey];
+	}
+
+	[RZUserDefaults() setObject:[colorStyleOverridesMut copy] forKey:_overridesDefaultsKey];
 }
 
 @end

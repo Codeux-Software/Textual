@@ -267,9 +267,9 @@
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 #import "TDCLicenseManagerDialog.h"
 
-@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCNicknameColorSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
 #else
-@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCNicknameColorSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCPreferencesControllerDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
 #endif
 
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
@@ -387,6 +387,8 @@
 - (IBAction)memberKillFromServer:(id)sender;
 - (IBAction)memberGlineFromServer:(id)sender;
 - (IBAction)memberShunFromServer:(id)sender;
+
+- (void)memberChangeColor:(NSString *)nickname;
 
 - (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row;
 - (void)memberSendDroppedFilesToSelectedChannel:(NSArray *)files; // Only works if selectedChannel is a private message

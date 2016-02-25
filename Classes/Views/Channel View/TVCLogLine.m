@@ -48,6 +48,11 @@ NSString * const TVCLogLineSpecialNoticeMessageFormat		= @"[%@]: %@";
 
 NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
+@interface TVCLogLine ()
+@property (readwrite, copy) NSString *nicknameColorStyle;
+@property (readwrite, assign) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
+@end
+
 @implementation TVCLogLine
 
 - (instancetype)init
@@ -223,7 +228,12 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		self.lineType == TVCLogLineActionType ||
 		self.lineType == TVCLogLineActionNoHighlightType)
 	{
-		self.nicknameColorStyle = [IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:self.nickname];
+		BOOL isOverride = NO;
+
+		self.nicknameColorStyle =
+		[IRCUserNicknameColorStyleGenerator nicknameColorStyleForString:self.nickname isOverride:&isOverride];
+
+		self.nicknameColorStyleOverride = isOverride;
 	} else {
 		self.nicknameColorStyle = nil;
 	}

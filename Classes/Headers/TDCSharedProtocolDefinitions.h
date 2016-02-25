@@ -57,7 +57,6 @@
 @protocol TDChannelBanListSheetDelegate <NSObject>
 @required
 
-
 - (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender;
 - (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender;
 @end
@@ -162,4 +161,13 @@
 
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
+@end
+
+#pragma mark -
+
+@protocol TDCNicknameColorSheetDelegate <NSObject>
+@required
+
+- (void)nicknameColorSheetOnOK:(TDCNicknameColorSheet *)sneder;
+- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender;
 @end

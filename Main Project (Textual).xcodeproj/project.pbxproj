@@ -1355,6 +1355,15 @@
 		4CF40F671AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F101AC1A59500A26BE0 /* TXCMainMenu.xib */; };
 		4CF40F681AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40F101AC1A59500A26BE0 /* TXCMainMenu.xib */; };
 		4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */; };
+		4CF621CB1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
+		4CF621CC1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
+		4CF621CD1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
+		4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
+		4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
+		4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
+		4CF621D41C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
+		4CF621D51C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
+		4CF621D61C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
 		4CF76A451A91153A0088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
 		4CF76A5A1A9115670088BF9A /* AutoHyperlinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */; };
 		4CF76A611A9115710088BF9A /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */; };
@@ -2101,6 +2110,9 @@
 		4CF40F0F1AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TVCMainWindowYosemite.xib"; sourceTree = SOURCE_ROOT; };
 		4CF40F111AC1A59500A26BE0 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TXCMainMenu.xib"; sourceTree = SOURCE_ROOT; };
 		4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCNicknameColorSheet.m; path = Dialogs/TDCNicknameColorSheet.m; sourceTree = "<group>"; };
+		4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCNicknameColorSheet.h; sourceTree = "<group>"; };
+		4CF621D31C7F675A000969CB /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCNicknameColorSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4CF76A371A91153A0088BF9A /* AutoHyperlinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AutoHyperlinks.framework; path = ".tmp/SharedBuildResults-Frameworks/AutoHyperlinks.framework"; sourceTree = "<group>"; };
 		4CF76A391A91153A0088BF9A /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = ".tmp/SharedBuildResults-Frameworks/CocoaExtensions.framework"; sourceTree = "<group>"; };
 		4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaults.m; path = Preferences/TPCPreferencesUserDefaults.m; sourceTree = "<group>"; };
@@ -2306,6 +2318,7 @@
 				4CAE23551B7A3BE800A1ABAD /* Server Specific Views */,
 				4CF40EE81AC1A59500A26BE0 /* TDCAddressBookSheet.xib */,
 				4CF40EF41AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib */,
+				4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */,
 				4CF40F021AC1A59500A26BE0 /* TDCProgressInformationSheet.xib */,
 				4CF40F081AC1A59500A26BE0 /* TDCWelcomeSheet.xib */,
 				4CF40F101AC1A59500A26BE0 /* TXCMainMenu.xib */,
@@ -2660,6 +2673,7 @@
 				4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */,
 				4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */,
 				4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */,
+				4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */,
 				4C8AF563158E99520026668C /* TDCPreferencesController.h */,
 				4C8AF565158E99520026668C /* TDCPreferencesSoundWrapper.h */,
 				4CABE8591840615A002FE4B8 /* TDCProgressInformationSheet.h */,
@@ -2952,6 +2966,7 @@
 				4C8AF518158E99520026668C /* TDCAboutDialog.m */,
 				4C8AF519158E99520026668C /* TDCAddressBookSheet.m */,
 				4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */,
+				4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */,
 				4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */,
 				4C8AF524158E99520026668C /* TDCSheetBase.m */,
 				4C8AF526158E99520026668C /* TDCWelcomeSheet.m */,
@@ -3383,6 +3398,7 @@
 				4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */,
 				4C0BA58E1990798800857343 /* IRCChannel.h in Headers */,
 				4C0BA58F1990798800857343 /* IRCChannelConfig.h in Headers */,
+				4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C0BA5901990798800857343 /* IRCChannelMode.h in Headers */,
 				4C0BA5911990798800857343 /* IRCClient.h in Headers */,
 				4C0BA5921990798800857343 /* IRCClientConfig.h in Headers */,
@@ -3548,6 +3564,7 @@
 				4C5BA40216F1302F00A96CA2 /* IRCConnection.h in Headers */,
 				4C5BA40316F1302F00A96CA2 /* IRCExtras.h in Headers */,
 				4C5BA40416F1302F00A96CA2 /* IRCISupportInfo.h in Headers */,
+				4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C5BA40516F1302F00A96CA2 /* IRCMessage.h in Headers */,
 				4C5BA40616F1302F00A96CA2 /* IRCModeInfo.h in Headers */,
 				4C80832D1B43914100746327 /* TLOLicenseManagerDownloader.h in Headers */,
@@ -3710,6 +3727,7 @@
 				4C8AF630158E99520026668C /* IRCConnection.h in Headers */,
 				4C8AF631158E99520026668C /* IRCExtras.h in Headers */,
 				4C8AF632158E99520026668C /* IRCISupportInfo.h in Headers */,
+				4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C8AF633158E99520026668C /* IRCMessage.h in Headers */,
 				4C8AF634158E99520026668C /* IRCModeInfo.h in Headers */,
 				4C80832E1B43914100746327 /* TLOLicenseManagerDownloader.h in Headers */,
@@ -4074,6 +4092,7 @@
 				4CF40F561AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4C0BA50A1990798800857343 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
 				4C0BA50C1990798800857343 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
+				4CF621D41C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4CCFA67E1ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
 				4CF40F521AC1A59500A26BE0 /* TDChannelModifyTopicSheet.xib in Resources */,
 				4C0BA50D1990798800857343 /* DIRedBadgeRightMavericks.png in Resources */,
@@ -4195,6 +4214,7 @@
 			files = (
 				4CC475FE1B57F72500AFD3E5 /* 3rdPartyStaticStoreSparkleFramework.plist in Resources */,
 				4C7766381978CECA00759774 /* MavericksDarkChannelCellSelection@2x.tif in Resources */,
+				4CF621D61C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4C46F4731943A654004CA8BA /* FormattingColor_8.png in Resources */,
 				4C46F45B1943A654004CA8BA /* FormattingColor_10.png in Resources */,
 				4CCFA6841ABCF36A0083620F /* TPWTB_Interface@2x.png in Resources */,
@@ -4400,6 +4420,7 @@
 				4CC164C11943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C46F46A1943A654004CA8BA /* FormattingColor_3.png in Resources */,
 				4CF40EDB1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
+				4CF621D51C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4C7A21981979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229291978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4C5BAEB01AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */,
@@ -4567,6 +4588,7 @@
 				4C0444FC16F1603B00EBB665 /* TDCAboutDialog.m in Sources */,
 				4C0444FD16F1603B00EBB665 /* TDCAddressBookSheet.m in Sources */,
 				4C0444FF16F1603B00EBB665 /* TDChannelBanListSheet.m in Sources */,
+				4CF621CC1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C04450116F1603B00EBB665 /* TDChannelPropertiesSheet.m in Sources */,
 				4C04450216F1603B00EBB665 /* TDCServerHighlightListSheet.m in Sources */,
 				4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
@@ -4767,6 +4789,7 @@
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
 				4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */,
 				4CF40E161AC1A4AC00A26BE0 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
+				4CF621CB1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C0BA67E1990798800857343 /* TPCPreferencesCloudSyncExtension.m in Sources */,
 				4CF40DFE1AC1A4AC00A26BE0 /* TVCLogRenderer.m in Sources */,
 				4CF40DE61AC1A4AC00A26BE0 /* TVCImageURLParser.m in Sources */,
@@ -4846,6 +4869,7 @@
 				4C8AF612158E99520026668C /* TDChannelBanListSheet.m in Sources */,
 				4C8AF614158E99520026668C /* TDChannelPropertiesSheet.m in Sources */,
 				4C8AF615158E99520026668C /* TDCServerHighlightListSheet.m in Sources */,
+				4CF621CD1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C8AF616158E99520026668C /* TDChannelInviteSheet.m in Sources */,
 				4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
 				4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
@@ -5188,6 +5212,14 @@
 				4CF40F111AC1A59500A26BE0 /* English */,
 			);
 			name = TXCMainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CF621D31C7F675A000969CB /* English */,
+			);
+			name = TDCNicknameColorSheet.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
