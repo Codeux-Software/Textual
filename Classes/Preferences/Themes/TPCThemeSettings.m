@@ -74,7 +74,7 @@
 
 	/* Supported format: #FFF or #FFFFFF */
 	if ([hexValue length] == 7 || [hexValue length] == 4) {
-		return [NSColor fromCSS:hexValue];
+		return [NSColor colorWithHexadecimalValue:hexValue];
 	}
 
 	return nil;
