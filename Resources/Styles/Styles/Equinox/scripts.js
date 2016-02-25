@@ -64,48 +64,39 @@ var NickColorGenerator = (function () {
     }
   }
 
-  NickColorGenerator.prototype.generateHashFromNickname = function (nick) {
-    var hash = 5381, i;
-
-    /* First, sanitize the nickname */
+  NickColorGenerator.prototype.generateColorFromNickname = function (nick) {
+    // First, sanitize the nicknames
     nick = nick.toLowerCase();          // make them lowercase (so that April and april produce the same color)
     nick = nick.replace(/[`_-]+$/, ''); // typically `, _, and - are used on the end of a nick
     nick = nick.replace(/|.*$/, '');    // remove |<anything> from the end
 
-    // Courtesy of https://github.com/darkskyapp/string-hash/
-    i = nick.length;
-    while (i) {
-      hash = (hash * 33) ^ nick.charCodeAt(--i);
-    }
+    // Generate the hashes
+    var hhash = app.nicknameColorStyleHash(nick, 'HSL-dark');
+    var shash = hhash >>> 1;
+    var lhash = hhash >>> 2;
 
-    return hash >>> 0;
-  };
-
-  NickColorGenerator.prototype.generateColorFromNickname = function (nick) {
-    var nickhash = this.generateHashFromNickname(nick);
-
-    var h           = nickhash % 360;
-    var s           = nickhash * 17 % 50 + 45;   // 50 - 95
-    var l           = nickhash * 23 % 36 + 45;   // 45 - 81
+    var h           = hhash % 360;
+    var s           = shash % 50 + 45;   // 50 - 95
+    var l           = lhash % 36 + 45;   // 45 - 81
 
     // give the pinks a wee bit more lightness
     if (h >= 280 && h < 335) {
-      l = nickhash * 23 % 36 + 50; // 50 - 86
+      l = lhash % 36 + 50; // 50 - 86
     }
 
     // Give the blues a smaller (but lighter) range
     if (h >= 210 && h < 280) {
-      l = nickhash * 23 % 30 + 60; // 60 - 90
+      l = lhash % 25 + 65; // 65 - 90
     }
 
     // Give the reds a bit less saturation
     if (h <= 25 || h >= 335) {
-      s = nickhash * 17 % 33 + 45; // 45 - 78
+      s = shash % 33 + 45; // 45 - 78
     }
 
     // Give the yellows and greens a bit less saturation as well
     if (h >= 50 && h <= 150) {
-      s = nickhash * 17 % 50 + 40; // 40 - 90
+      s = shash % 50 + 40; // 40 - 90
     }
 
     return 'hsl(' + String(h) + ',' + String(s) + '%,' + String(l) + '%)';
@@ -265,7 +256,9 @@ Textual.newMessagePostedToView = function (line) {
   // if it's a private message, colorize the nick and then track the state and fade away the nicks if needed
   if (message.getAttribute('ltype') === 'privmsg' || message.getAttribute('ltype') === 'action') {
     sender = message.getElementsByClassName('sender')[0];
-    new NickColorGenerator(message); // colorized the nick
+    if (sender.getAttribute('coloroverride') !== 'true') {
+	    new NickColorGenerator(message); // colorized the nick
+	}
 
     // Delete (ie, make foreground and background color identical) the previous line's nick, if it was set to be deleted
     if (rs.nick.delete === true) {
