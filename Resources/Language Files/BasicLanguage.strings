@@ -790,9 +790,12 @@
 "BasicLanguage[1290][2]" = "The linked you clicked will launch an application other than your web browser which could possibly lead to the leak of your personal information.";
 "BasicLanguage[1290][3]" = "I Understand, Continue";
 
+/* /setcolor/ responses */
+"BasicLanguage[1291]" = "Error: This command cannot be used unless the new nickname color system has been enabled through the “Experimental Settings” section of Preferences.";
+"BasicLanguage[1292]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
 
 
 
-/* Next unusued key: 1291 */
+/* Next unusued key: 1293 */
 
 

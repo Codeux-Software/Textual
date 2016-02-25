@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,12 +35,10 @@
 
  *********************************************************************** */
 
-@interface IRCUserNicknameColorStyleGenerator : NSObject
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL *)isOverride;
+#import "TextualApplication.h"
 
-+ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle;
+@interface TDCNicknameColorSheet : TDCSheetBase
+@property (nonatomic, copy) NSString *nickname;
 
-+ (NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey;
-+ (void)setNicknameColorStyleOverride:(NSColor *)styleValue forKey:(NSString *)styleKey;
+- (void)start;
 @end

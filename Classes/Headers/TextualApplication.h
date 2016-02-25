@@ -81,6 +81,7 @@
 	@class TDCFileTransferDialogTransferController;
 	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
+	@class TDCNicknameColorSheet;
 	@class TDCPreferencesController;
 	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
@@ -304,6 +305,7 @@
 	#import "TDCFileTransferDialogTransferController.h"
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCHighlightEntrySheet.h"
+	#import "TDCNicknameColorSheet.h"
 	#import "TDCPreferencesController.h"
 	#import "TDCPreferencesSoundWrapper.h"
 	#import "TDCServerChangeNicknameSheet.h"

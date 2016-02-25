@@ -32,6 +32,10 @@
 					nickname="{{nickname}}"
 					{{#nicknameColorHashingEnabled}}
 						{{#nicknameColorHashingIsStyleBased}}
+							{{#nicknameColorStyleOverride}}
+								coloroverride="true"
+							{{/nicknameColorStyleOverride}}
+
 							style="color: {{nicknameColorStyle}};"
 						{{^nicknameColorHashingIsStyleBased}}
 							colornumber="{{nicknameColorNumber}}"

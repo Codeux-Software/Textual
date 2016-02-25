@@ -1279,6 +1279,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			attributes[@"nicknameColorNumber"] = [line nicknameColorStyle];
 			attributes[@"nicknameColorStyle"] = [line nicknameColorStyle];
 
+			attributes[@"nicknameColorStyleOverride"] = @([line nicknameColorStyleOverride]);
+
 			attributes[@"nicknameColorHashingEnabled"] = @([TPCPreferences disableNicknameColorHashing] == NO);
 
 			attributes[@"nicknameColorHashingIsStyleBased"] = @([themeSettings() nicknameColorStyle] != TPCThemeSettingsNicknameColorLegacyStyle);

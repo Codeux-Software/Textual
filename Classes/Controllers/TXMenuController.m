@@ -1592,6 +1592,41 @@
 }
 
 #pragma mark -
+#pragma mark Nickname Color Sheet
+
+- (void)memberChangeColor:(NSString *)nickname
+{
+	[windowController() popMainWindowSheetIfExists];
+
+	IRCClient *u = [mainWindow() selectedClient];
+
+	if (_noClient) {
+		return;
+	}
+
+	TDCNicknameColorSheet *t = [TDCNicknameColorSheet new];
+
+	[t setDelegate:self];
+	[t setWindow:mainWindow()];
+
+	[t setNickname:nickname];
+
+	[t start];
+
+	[windowController() addWindowToWindowList:t];
+}
+
+- (void)nicknameColorSheetOnOK:(TDCNicknameColorSheet *)sneder
+{
+	[worldController() reloadTheme:NO];
+}
+
+- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender
+{
+	[windowController() removeWindowFromWindowList:sender];
+}
+
+#pragma mark -
 #pragma mark Channel Topic Sheet
 
 - (void)showChannelTopicDialog:(id)sender

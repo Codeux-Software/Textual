@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,12 +35,75 @@
 
  *********************************************************************** */
 
-@interface IRCUserNicknameColorStyleGenerator : NSObject
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString;
-+ (NSString *)nicknameColorStyleForString:(NSString *)inputString isOverride:(BOOL *)isOverride;
+#import "TextualApplication.h"
 
-+ (NSNumber *)hashForString:(NSString *)inputString colorStyle:(TPCThemeSettingsNicknameColorStyle)colorStyle;
+#import "IRCUserPrivate.h"
 
-+ (NSColor *)nicknameColorStyleOverrideForKey:(NSString *)styleKey;
-+ (void)setNicknameColorStyleOverride:(NSColor *)styleValue forKey:(NSString *)styleKey;
+@interface TDCNicknameColorSheet ()
+@property (nonatomic, weak) IBOutlet NSColorWell *nicknameColorWell;
+
+- (IBAction)resetNicknameColor:(id)sender;
+@end
+
+@implementation TDCNicknameColorSheet
+
+- (instancetype)init
+{
+	if ((self = [super init])) {
+		[RZMainBundle() loadNibNamed:@"TDCNicknameColorSheet" owner:self topLevelObjects:nil];
+	}
+
+	return self;
+}
+
+- (void)start
+{
+	NSColor *nicknameColor =
+	[IRCUserNicknameColorStyleGenerator nicknameColorStyleOverrideForKey:self.nickname];
+
+	if (nicknameColor == nil) {
+		nicknameColor = [NSColor whiteColor];
+	}
+
+	[self.nicknameColorWell setColor:nicknameColor];
+
+	[self startSheet];
+}
+
+- (void)ok:(id)sender
+{
+	NSColor *nicknameColor = [self.nicknameColorWell color];
+
+	if ([nicknameColor isEqual:[NSColor whiteColor]]) {
+		 nicknameColor = nil;
+	}
+
+	[IRCUserNicknameColorStyleGenerator setNicknameColorStyleOverride:nicknameColor forKey:self.nickname];
+
+	if ([self.delegate respondsToSelector:@selector(nicknameColorSheetOnOK:)]) {
+		[self.delegate nicknameColorSheetOnOK:self];
+	}
+
+	[super ok:nil];
+}
+
+- (void)resetNicknameColor:(id)sender
+{
+	if ([NSColorPanel sharedColorPanelExists]) {
+		[[NSColorPanel sharedColorPanel] close];
+	}
+
+	[self.nicknameColorWell setColor:[NSColor whiteColor]];
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(nicknameColorSheetWillClose:)]) {
+		[self.delegate nicknameColorSheetWillClose:self];
+	}
+}
+
 @end

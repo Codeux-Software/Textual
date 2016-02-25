@@ -82,7 +82,8 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (nonatomic, assign) BOOL isEncrypted;
 @property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
 @property (nonatomic, copy) NSDate *receivedAt;
-@property (nonatomic, copy) NSString *nicknameColorStyle;
+@property (readonly, copy) NSString *nicknameColorStyle;
+@property (readonly, assign) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *messageBody;
 @property (nonatomic, copy) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)

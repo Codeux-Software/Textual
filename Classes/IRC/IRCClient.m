@@ -80,6 +80,8 @@
 
 #import "TextualApplication.h"
 
+#import "IRCUserPrivate.h"
+
 #import <objc/message.h>
 
 #define _isonCheckInterval			30
@@ -3362,6 +3364,28 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					}
 				}
 			}
+
+			break;
+		}
+		case 5103: // Command: SETCOLOR
+		{
+			NSObjectIsEmptyAssert(uncutInput);
+
+			if ([TPCPreferences nicknameColorHashingComputesRGBValue] == NO) {
+				[self printDebugInformation:BLS(1291)];
+
+				return;
+			}
+
+			NSString *nickname = [[s getTokenAsString] lowercaseString];
+
+			if ([nickname isChannelName:self] || [nickname isHostmaskNickname] == NO) {
+				[self printDebugInformation:BLS(1292, nickname)];
+
+				return;
+			}
+
+			[menuController() memberChangeColor:nickname];
 
 			break;
 		}
