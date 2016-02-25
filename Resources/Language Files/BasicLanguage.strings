@@ -791,11 +791,12 @@
 "BasicLanguage[1290][3]" = "I Understand, Continue";
 
 /* /setcolor/ responses */
-"BasicLanguage[1291]" = "Error: This command cannot be used unless the new nickname color system has been enabled through the “Experimental Settings” section of Preferences.";
-"BasicLanguage[1292]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
+"BasicLanguage[1291]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the “Style” section of Preferences.";
+"BasicLanguage[1292]" = "Error: This command cannot be used unless the checkbox labeled “Enable new nickname color system” is checked in the “Experimental Settings” section of Preferences.";
+"BasicLanguage[1293]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
 
 
 
-/* Next unusued key: 1293 */
+/* Next unusued key: 1294 */
 
 
