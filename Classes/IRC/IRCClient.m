@@ -3371,8 +3371,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			if ([TPCPreferences nicknameColorHashingComputesRGBValue] == NO) {
+			if ([TPCPreferences disableNicknameColorHashing]) {
 				[self printDebugInformation:BLS(1291)];
+
+				return;
+			}
+
+			if ([TPCPreferences nicknameColorHashingComputesRGBValue] == NO) {
+				[self printDebugInformation:BLS(1292)];
 
 				return;
 			}
@@ -3380,7 +3386,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname = [[s getTokenAsString] lowercaseString];
 
 			if ([nickname isChannelName:self] || [nickname isHostmaskNickname] == NO) {
-				[self printDebugInformation:BLS(1292, nickname)];
+				[self printDebugInformation:BLS(1293, nickname)];
 
 				return;
 			}

@@ -4265,17 +4265,17 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="zLU-Yb-c2r">
-                                        <rect key="frame" x="109" y="33" width="357" height="15"/>
+                                        <rect key="frame" x="109" y="33" width="357" height="19"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="BoA-1W-bxJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="357" height="15"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="357" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="DC3-lp-VgN">
-                                                    <rect key="frame" x="0.0" y="107" width="357" height="15"/>
+                                                    <rect key="frame" x="0.0" y="107" width="357" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="357" height="15"/>
+                                                    <size key="minSize" width="357" height="19"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="Strips away formatting such as ">
@@ -4365,7 +4365,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="357" height="15"/>
+                                                    <size key="minSize" width="357" height="19"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -4600,7 +4600,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <size key="minSize" width="394" height="27"/>
+                                                    <size key="minSize" width="223" height="133"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                     <attributedString key="textStorage">
                                                         <fragment content="If inline images are disabled here, then Textual provides the option to enable them on a per-channel basis using ">
@@ -4626,7 +4626,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                                         </fragment>
                                                     </attributedString>
                                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="394" height="27"/>
+                                                    <size key="minSize" width="223" height="133"/>
                                                     <size key="maxSize" width="463" height="10000000"/>
                                                 </textView>
                                             </subviews>
@@ -4776,7 +4776,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="mRh-IR-wdO">
                                         <rect key="frame" x="115" y="159" width="291" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Right to left text (for languages such as Arabic)" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="E3B-Fo-5wX">
+                                        <buttonCell key="cell" type="check" title="Right to left text" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="E3B-Fo-5wX">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
@@ -4786,8 +4786,8 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="jio-H9-YRl">
-                                        <rect key="frame" x="115" y="131" width="278" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Disable colors attached to remote nicknames" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SBi-wa-YwN">
+                                        <rect key="frame" x="115" y="131" width="160" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Disable nickname colors" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="SBi-wa-YwN">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
