@@ -3383,6 +3383,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				return;
 			}
 
+			if ([themeSettings() nicknameColorStyle] == TPCThemeSettingsNicknameColorLegacyStyle) {
+				[self printDebugInformation:BLS(1294)];
+
+				return;
+			}
+
 			NSString *nickname = [[s getTokenAsString] lowercaseString];
 
 			if ([nickname isChannelName:self] || [nickname isHostmaskNickname] == NO) {
