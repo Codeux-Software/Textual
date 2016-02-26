@@ -34,7 +34,9 @@ Failing to follow these steps will result in several "file not found" errors res
 
 ## Note Regarding Trial Mode
 
-When you build Textual, it will launch in trial mode because this repository contains the license manage which is used by the trial version of the app. If you do not have a license nor plan on obtaining one, then disable the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag in the Standard Release configuration file to disable the inclusion of this code at build time.
+To avoid patch files and/or a separate repository; the code which is responsible for licensing paid copies of Textual is in the source code that you download from here.
+
+If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag to 0 in the Standard Release configuration file to disable the inclusion of this code at build time. 
 
 ## Building Textual
 
