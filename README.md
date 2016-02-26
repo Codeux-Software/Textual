@@ -32,6 +32,10 @@ Failing to follow these steps will result in several "file not found" errors res
 
 **TEXTUAL DOES NOT REQUIRE A CERTIFICATE ISSUED BY APPLE TO BUILD** which means there is absolutely no reason to turn code signing off.
 
+## Note Regarding Trial Mode
+
+When you build Textual, it will launch in trial mode because this repository contains the license manage which is used by the trial version of the app. If you do not have a license nor plan on obtaining one, then disable the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag in the Standard Release configuration file to disable the inclusion of this code at build time.
+
 ## Building Textual
 
 The latest version of Textual requires two things to be built. One is a valid (does not need to be issued by Apple) code signing certificate. The second is an installation of Xcode 6.1 or newer on OS X Yosemite. **Building on OS X Mavericks and earlier is not possible.**
