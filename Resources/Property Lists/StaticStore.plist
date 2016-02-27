@@ -37,6 +37,8 @@
 	<dict>
 		<key>NS</key>
 		<string>PREFIX</string>
+		<key>SU</key>
+		<string>PREFIX</string>
 		<key>SGT</key>
 		<string>PREFIX</string>
 		<key>Apple</key>

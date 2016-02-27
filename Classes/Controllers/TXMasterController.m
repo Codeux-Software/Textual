@@ -206,32 +206,25 @@
 
 	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
 
-	NSString *feedURL = nil;
+	if (receiveBetaUpdates == NO) {
+		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL"] forKey:@"SUFeedURL"];
+	} else {
+		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta"] forKey:@"SUFeedURL"];
+	}
 
 	if (receiveBetaUpdates == NO) {
-		feedURL = [sparkleData objectForKey:@"SUFeedURL"];
+		[RZUserDefaults() setObject:sparkleData[@"SUScheduledCheckInterval"] forKey:@"SUScheduledCheckInterval"];
 	} else {
-		feedURL = [sparkleData objectForKey:@"SUFeedURL-beta"];
+		[RZUserDefaults() setObject:sparkleData[@"SUScheduledCheckInterval-beta"] forKey:@"SUScheduledCheckInterval"];
 	}
 
-	if (feedURL) {
-		SUUpdater *updater = [SUUpdater sharedUpdater];
+	[RZUserDefaults() setObject:sparkleData[@"SUEnableAutomaticChecks"] forKey:@"SUEnableAutomaticChecks"];
 
-		[updater setFeedURL:[NSURL URLWithString:feedURL]];
+	[RZUserDefaults() setObject:sparkleData[@"SUAllowsAutomaticUpdates"] forKey:@"SUAllowsAutomaticUpdates"];
 
-		[updater setAutomaticallyChecksForUpdates:[sparkleData boolForKey:@"SUEnableAutomaticChecks"]];
-		[updater setAutomaticallyDownloadsUpdates:[sparkleData boolForKey:@"SUAllowsAutomaticUpdates"]];
+	[RZUserDefaults() setObject:sparkleData[@"SUEnableSystemProfiling"] forKey:@"SUEnableSystemProfiling"];
 
-		[updater setSendsSystemProfile:[sparkleData boolForKey:@"SUEnableSystemProfiling"]];
-
-		if (receiveBetaUpdates == NO) {
-			[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
-		} else {
-			[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval-beta"]];
-		}
-
-		[updater checkForUpdatesInBackground];
-	}
+	[[SUUpdater sharedUpdater] checkForUpdatesInBackground];
 #endif
 }
 
