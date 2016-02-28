@@ -173,7 +173,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"knowledge-base"])
 		{
-			[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/"];
+			[TLOpenLink openWithString:@"https://help.codeux.com/textual/"];
 		}
 		else if ([serverAddress isEqualToString:@"application-support-folder"])
 		{
