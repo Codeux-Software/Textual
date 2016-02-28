@@ -458,22 +458,22 @@
 
 - (void)viewFilterMatchHelpText:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-1"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-1"];
 }
 
 - (void)viewFilterActionHelpText:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-2"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-2"];
 }
 
 - (void)viewFilterSenderMatchHelpText:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-3"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-3"];
 }
 
 - (void)viewFilterForwardToDestinationHelpText:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-4"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Introduction-to-the-Chat-Filter-Addon.kb#faq-entry-4"];
 }
 
 - (void)filteredLimitedToMatrixChanged:(id)sender

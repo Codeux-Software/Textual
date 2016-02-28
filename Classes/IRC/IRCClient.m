@@ -3290,7 +3290,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
-				[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Command-Reference.kb#cr=defaults"];
+				[TLOpenLink openWithString:@"https://help.codeux.com/textual/Command-Reference.kb#cr=defaults"];
 			}
 			else if (NSObjectsAreEqual(section1, @"enable"))
 			{

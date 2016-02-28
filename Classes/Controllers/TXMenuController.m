@@ -1191,7 +1191,7 @@
 
 - (void)showScriptingDocumentation:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Writing-Scripts.kb"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb"];
 }
 
 - (void)searchGoogle:(id)sender
@@ -2616,21 +2616,21 @@
 - (void)openHelpMenuLinkItem:(id)sender
 {
 	NSDictionary *_helpMenuLinks = @{
-	   @(901) : @"https://www.codeux.com/textual/help/Privacy-Policy.kb",
-	   @(902) : @"https://www.codeux.com/textual/help/Frequently-Asked-Questions.kb",
-	   @(905) : @"https://www.codeux.com/textual/help/home.kb",
-	   @(906) : @"https://www.codeux.com/textual/help/iCloud-Syncing.kb",
-	   @(907) : @"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb",
-	   @(908) : @"https://www.codeux.com/textual/help/Command-Reference.kb",
-	   @(909) : @"https://www.codeux.com/textual/help/Support.kb",
-	   @(910) : @"https://www.codeux.com/textual/help/Keyboard-Shortcuts.kb",
-	   @(911) : @"https://www.codeux.com/textual/help/Memory-Management.kb",
-	   @(912) : @"https://www.codeux.com/textual/help/Text-Formatting.kb",
-	   @(913) : @"https://www.codeux.com/textual/help/Styles.kb",
-	   @(914) : @"https://www.codeux.com/textual/help/Using-CertFP.kb",
-	   @(915) : @"https://www.codeux.com/textual/help/Connecting-to-ZNC-Bouncer.kb",
-	   @(916) : @"https://www.codeux.com/textual/help/DCC-File-Transfer-Information.kb",
-	   @(927) : @"https://www.codeux.com/textual/help/End-User-License-Agreement.kb"
+	   @(901) : @"https://help.codeux.com/textual/Privacy-Policy.kb",
+	   @(902) : @"https://help.codeux.com/textual/Frequently-Asked-Questions.kb",
+	   @(905) : @"https://help.codeux.com/textual/home.kb",
+	   @(906) : @"https://help.codeux.com/textual/iCloud-Syncing.kb",
+	   @(907) : @"https://help.codeux.com/textual/Off-the-Record-Messaging.kb",
+	   @(908) : @"https://help.codeux.com/textual/Command-Reference.kb",
+	   @(909) : @"https://help.codeux.com/textual/Support.kb",
+	   @(910) : @"https://help.codeux.com/textual/Keyboard-Shortcuts.kb",
+	   @(911) : @"https://help.codeux.com/textual/Memory-Management.kb",
+	   @(912) : @"https://help.codeux.com/textual/Text-Formatting.kb",
+	   @(913) : @"https://help.codeux.com/textual/Styles.kb",
+	   @(914) : @"https://help.codeux.com/textual/Using-CertFP.kb",
+	   @(915) : @"https://help.codeux.com/textual/Connecting-to-ZNC-Bouncer.kb",
+	   @(916) : @"https://help.codeux.com/textual/DCC-File-Transfer-Information.kb",
+	   @(927) : @"https://help.codeux.com/textual/End-User-License-Agreement.kb"
 	};
 	
 	NSString *linkloc = _helpMenuLinks[@([sender tag])];
@@ -2881,7 +2881,7 @@
 
 - (void)encryptionWhatIsThisInformation:(id)sender
 {
-	[TLOpenLink openWithString:@"https://www.codeux.com/textual/help/Off-the-Record-Messaging.kb"];
+	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Off-the-Record-Messaging.kb"];
 }
 
 #undef _encryptionNotEnabled

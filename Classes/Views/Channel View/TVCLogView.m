@@ -40,7 +40,7 @@
 
 @implementation TVCLogView
 
-NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://www.codeux.com/textual/help/Inline-Media-Scanner-User-Agent.kb)";
+NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.codeux.com/textual/Inline-Media-Scanner-User-Agent.kb)";
 
 - (void)keyDown:(NSEvent *)e
 {

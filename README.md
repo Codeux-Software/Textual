@@ -1,6 +1,6 @@
 ## Introduction to Textual
 
-Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](https://www.codeux.com/textual/help/Writing-Plugins.kb) written in Objective-C and [scripts](https://www.codeux.com/textual/help/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
+Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](https://help.codeux.com/textual/Writing-Plugins.kb) written in Objective-C and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
 
 Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, Textual has since evolved into one of the most popular applications for interacting with IRC on OS X. 
 
