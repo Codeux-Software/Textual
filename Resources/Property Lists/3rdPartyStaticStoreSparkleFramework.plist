@@ -6,14 +6,6 @@
 	<string>https://textual5-updates-backend.codeux.com/sparkle/feeds/v5/feed-one.xml</string>
 	<key>SUFeedURL-beta</key>
 	<string>https://textual5-updates-backend.codeux.com/sparkle/feeds/v5/feed-one-beta.xml</string>
-	<key>SUAllowsAutomaticUpdates</key>
-	<false/>
-	<key>SUBundleName</key>
-	<string>Textual</string>
-	<key>SUEnableAutomaticChecks</key>
-	<true/>
-	<key>SUEnableSystemProfiling</key>
-	<false/>
 	<key>SUScheduledCheckInterval</key>
 	<string>345600</string>
 	<key>SUScheduledCheckInterval-beta</key>
