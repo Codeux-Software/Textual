@@ -212,19 +212,15 @@
 		[RZUserDefaults() setObject:sparkleData[@"SUFeedURL-beta"] forKey:@"SUFeedURL"];
 	}
 
+	SUUpdater *updater = [SUUpdater sharedUpdater];
+
 	if (receiveBetaUpdates == NO) {
-		[RZUserDefaults() setObject:sparkleData[@"SUScheduledCheckInterval"] forKey:@"SUScheduledCheckInterval"];
+		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
 	} else {
-		[RZUserDefaults() setObject:sparkleData[@"SUScheduledCheckInterval-beta"] forKey:@"SUScheduledCheckInterval"];
+		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval-beta"]];
 	}
 
-	[RZUserDefaults() setObject:sparkleData[@"SUEnableAutomaticChecks"] forKey:@"SUEnableAutomaticChecks"];
-
-	[RZUserDefaults() setObject:sparkleData[@"SUAllowsAutomaticUpdates"] forKey:@"SUAllowsAutomaticUpdates"];
-
-	[RZUserDefaults() setObject:sparkleData[@"SUEnableSystemProfiling"] forKey:@"SUEnableSystemProfiling"];
-
-	[[SUUpdater sharedUpdater] checkForUpdatesInBackground];
+	[updater checkForUpdatesInBackground];
 #endif
 }
 
