@@ -223,7 +223,7 @@
 "TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
 
 "TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
-"TLOLicenseManager[1016]" = "Your trial of Textual is expired.";
+"TLOLicenseManager[1016]" = "Your trial of Textual has expired.";
 
 "TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
 "TLOLicenseManager[1017][3]" = "More Info";
