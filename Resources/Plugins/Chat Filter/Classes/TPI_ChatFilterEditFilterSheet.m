@@ -85,6 +85,7 @@
 
 - (IBAction)filteredLimitedToMatrixChanged:(id)sender;
 - (IBAction)filterIgnoreContentCheckChanged:(id)sender;
+- (IBAction)filterEventTypeChanged:(id)sender;
 @end
 
 #define TPI_ChatFilterFilterActionTokenFieldBottomPadding		6
@@ -137,6 +138,7 @@
 
 	[self updateEnabledStateOfFilterEvents];
 	[self updateEnableStateOfFilterActionTokenField];
+	[self updateEnabledStateOfComponentsConstrainedByFilterEvents];
 	[self updateVisibilityOfLimitedToTableHostView];
 
 	[self rebuildCachedChannelList];
@@ -607,6 +609,20 @@
 	[self.filterEventChannelTopicReceivedCheck setEnabled:enabled];
 	[self.filterEventChannelTopicChangedCheck setEnabled:enabled];
 	[self.filterEventChannelModeChangedCheck setEnabled:enabled];
+}
+
+- (void)updateEnabledStateOfComponentsConstrainedByFilterEvents
+{
+	BOOL enabled = ([self.filterEventPlainTextMessageCheck state] == NSOnState ||
+					[self.filterEventActionMessageCheck state] == NSOnState ||
+					[self.filterEventNoticeMessageCheck state] == NSOnState);
+
+	[self.filterForwardToDestinationTextField setEnabled:enabled];
+}
+
+- (void)filterEventTypeChanged:(id)sender
+{
+	[self updateEnabledStateOfComponentsConstrainedByFilterEvents];
 }
 
 - (void)viewFilterMatchHelpText:(id)sender

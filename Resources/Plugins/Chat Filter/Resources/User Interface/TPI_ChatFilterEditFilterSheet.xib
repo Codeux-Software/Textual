@@ -391,7 +391,7 @@ Gw
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="10" outlineTableColumn="DnG-4S-tlv" id="BTS-WW-BlV">
-                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="285"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="452" height="0.0"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <size key="intercellSpacing" width="3" height="2"/>
                                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -543,6 +543,7 @@ Gw
                                             </buttonCell>
                                             <connections>
                                                 <accessibilityConnection property="title" destination="i3Y-vE-Mwp" id="2yf-FD-yOi"/>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="rdO-AY-qdf"/>
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="M7O-JK-d0f">
@@ -551,6 +552,9 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="S7g-1l-7D2"/>
+                                            </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="u10-y4-aAf">
                                             <rect key="frame" x="84" y="359" width="120" height="18"/>
@@ -558,6 +562,9 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="uPX-A8-jum"/>
+                                            </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="mc1-xL-Gv7">
                                             <rect key="frame" x="84" y="325" width="142" height="18"/>
