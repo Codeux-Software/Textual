@@ -42,6 +42,11 @@
 
 #define _extrasInstallerExtensionUpdateCheckInterval			345600
 
+/* THOPluginProtocolExtension exists to extend THOPluginProtocol with private methods */
+@interface NSObject (THOPluginProtocolExtension);
+- (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
+@end
+
 @interface THOPluginManager ()
 @property (nonatomic, copy) NSArray *allLoadedBundles;
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
@@ -787,6 +792,30 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
 			BOOL pluginResult = [[plugin primaryClass] receivedText:text authoredBy:textAuthorCopy destinedFor:textDestination asLineType:lineType onClient:client receivedAt:receivedAtCopy wasEncrypted:wasEncrypted];
+
+			if (pluginResult == NO) {
+				return NO;
+			}
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)postReceivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
+{
+	if (text == nil || textAuthor == nil || client == nil || receivedAt == nil) {
+		return NO;
+	}
+
+	IRCPrefix *textAuthorCopy = [textAuthor copy];
+
+	NSDate *receivedAtCopy = [receivedAt copy];
+
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
+		if ([plugin supportsFeature:THOPluginItemSupportsDidReceiveCommandEvent]) {
+			BOOL pluginResult = [[plugin primaryClass] receivedCommand:command withText:text authoredBy:textAuthorCopy destinedFor:textDestination onClient:client receivedAt:receivedAtCopy];
 
 			if (pluginResult == NO) {
 				return NO;
