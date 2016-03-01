@@ -804,7 +804,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (BOOL)postReceivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
-	if (text == nil || textAuthor == nil || client == nil || receivedAt == nil) {
+	if (textAuthor == nil || client == nil || receivedAt == nil) {
 		return NO;
 	}
 
