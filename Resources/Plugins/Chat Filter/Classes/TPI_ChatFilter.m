@@ -64,6 +64,7 @@
 	if (_defaults == nil) {
 		NSDictionary *defaults = @{
 			@"filterEvents"						: @(TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType),
+
 			@"filterIgnoreContent"				: @(NO),
 			@"filterIgnoresOperators"			: @(YES),
 			@"filterLogMatch"					: @(NO),
@@ -99,6 +100,8 @@
 	/* Set regular key names */
 	[dic assignArrayTo:&_filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
 	[dic assignArrayTo:&_filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
+
+	[dic assignArrayTo:&_filterEventsNumerics forKey:@"filterEventsNumerics"];
 
 	[dic assignBoolTo:&_filterIgnoreContent forKey:@"filterIgnoreContent"];
 	[dic assignBoolTo:&_filterIgnoresOperators forKey:@"filterIgnoresOperators"];
@@ -147,6 +150,8 @@
 	/* Set regular key names */
 	[dic maybeSetObject:self.filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
 	[dic maybeSetObject:self.filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
+
+	[dic maybeSetObject:self.filterEventsNumerics forKey:@"filterEventsNumerics"];
 
 	[dic maybeSetObject:self.filterAction forKey:@"filterAction"];
 	[dic maybeSetObject:self.filterForwardToDestination forKey:@"filterForwardToDestination"];
