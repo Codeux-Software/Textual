@@ -66,6 +66,7 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (nonatomic, assign) TPI_ChatFilterLimitToValue filterLimitedToValue;
 @property (nonatomic, copy) NSArray *filterLimitedToChannelsIDs;
 @property (nonatomic, copy) NSArray *filterLimitedToClientsIDs;
+@property (nonatomic, copy) NSArray *filterEventsNumerics;
 @property (nonatomic, copy) NSString *filterAction;
 @property (nonatomic, copy) NSString *filterForwardToDestination;
 @property (nonatomic, copy) NSString *filterItemID;
