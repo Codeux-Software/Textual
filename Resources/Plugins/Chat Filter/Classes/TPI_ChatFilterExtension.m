@@ -82,9 +82,9 @@
 			@autoreleasepool {
 				BOOL filterMatchedBySender = NO;
 
-				if ((lineType == TVCLogLinePrivateMessageType && [filter filterCommandPRIVMSG] == NO) ||
-					(lineType == TVCLogLineActionType && [filter filterCommandPRIVMSG_ACTION] == NO) ||
-					(lineType == TVCLogLineNoticeType && [filter filterCommandNOTICE] == NO))
+				if ((lineType == TVCLogLinePrivateMessageType && [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
+					(lineType == TVCLogLineActionType && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
+					(lineType == TVCLogLineNoticeType && [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
 				{
 					/* Continue to next filter. This filter is not interested
 					  in the line type of the input. */
