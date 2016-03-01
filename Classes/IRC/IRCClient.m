@@ -5107,12 +5107,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 														  onClient:self
 														receivedAt:[m receivedAt]];
 
-	if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
-		printMessage = NO;
-	} else if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
-		printMessage = NO;
-	} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
-		printMessage = NO;
+	if (printMessage) {
+		if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+			printMessage = NO;
+		} else if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
+			printMessage = NO;
+		} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
+			printMessage = NO;
+		}
 	}
 
 	if (printMessage) {
@@ -5177,16 +5179,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 														  onClient:self
 														receivedAt:[m receivedAt]];
 
-	if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
-		printMessage = NO;
-	} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
-		printMessage = NO;
-	} else {
-		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-																 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
-
-		if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+	if (printMessage) {
+		if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
 			printMessage = NO;
+		} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
+			printMessage = NO;
+		} else {
+			IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
+																	 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
+
+			if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+				printMessage = NO;
+			}
 		}
 	}
 
@@ -5255,16 +5259,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 														  onClient:self
 														receivedAt:[m receivedAt]];
 
-	if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
-		printMessage = NO;
-	} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
-		printMessage = NO;
-	} else {
-		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
-																 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
-
-		if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+	if (printMessage) {
+		if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
 			printMessage = NO;
+		} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
+			printMessage = NO;
+		} else {
+			IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
+																	 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
+
+			if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+				printMessage = NO;
+			}
 		}
 	}
 
