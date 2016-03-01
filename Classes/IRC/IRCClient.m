@@ -5100,11 +5100,22 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 	}
 
-	if (([ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages) && myself == NO) {
-		return;
+	BOOL printMessage = [sharedPluginManager() postReceivedCommand:[m command]
+														  withText:nil
+														authoredBy:[m sender]
+													   destinedFor:c
+														  onClient:self
+														receivedAt:[m receivedAt]];
+
+	if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+		printMessage = NO;
+	} else if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
+		printMessage = NO;
+	} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
+		printMessage = NO;
 	}
 
-	if ([TPCPreferences showJoinLeave] || myself) {
+	if (printMessage) {
 		NSString *senderAddress = [m senderAddress];
 
 		NSString *text = BLS(1161, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
