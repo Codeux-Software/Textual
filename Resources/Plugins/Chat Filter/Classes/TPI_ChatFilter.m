@@ -123,16 +123,19 @@
 	if (filterEvents && [filterEvents isKindOfClass:[NSNumber class]]) {
 		self.filterEvents = [filterEvents unsignedIntegerValue];
 	} else {
-		TPI_ChatFilterEventType filterEventsOld = 0;
+		TPI_ChatFilterEventType filterEventsOld = (TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType);
+
+		id filterCommandPRIVMSG = dic[@"filterCommandPRIVMSG"];
+		id filterCommandPRIVMSG_ACTION = dic[@"filterCommandPRIVMSG_ACTION"];
 
 		if ([dic boolForKey:@"filterCommandNOTICE"])
 			filterEventsOld |= TPI_ChatFilterNoticeMessageEventType;
 
-		if ([dic boolForKey:@"filterCommandPRIVMSG"])
-			filterEventsOld |= TPI_ChatFilterPlainTextMessageEventType;
+		if (filterCommandPRIVMSG && [filterCommandPRIVMSG boolValue] == NO)
+			filterEventsOld &= ~TPI_ChatFilterPlainTextMessageEventType;
 
-		if ([dic boolForKey:@"filterCommandPRIVMSG_ACTION"])
-			filterEventsOld |= TPI_ChatFilterActionMessageEventType;
+		if (filterCommandPRIVMSG_ACTION && [filterCommandPRIVMSG_ACTION boolValue] == NO)
+			filterEventsOld &= ~TPI_ChatFilterActionMessageEventType;
 
 		self.filterEvents = filterEventsOld;
 	}
