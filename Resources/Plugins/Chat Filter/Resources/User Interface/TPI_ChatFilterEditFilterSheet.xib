@@ -636,7 +636,7 @@ Gw
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="57" id="Z9e-eD-Mcr"/>
                                             </constraints>
-                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="001, 002, 003" id="xLg-Zy-ggt" customClass="TVCTextFieldWithValueValidationCell">
+                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCTextFieldWithValueValidationCell">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
