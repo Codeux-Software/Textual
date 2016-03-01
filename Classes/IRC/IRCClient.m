@@ -5170,14 +5170,27 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[c removeMember:sendern];
 	}
 
-	if ([TPCPreferences showJoinLeave] || myself) {
+	BOOL printMessage = [sharedPluginManager() postReceivedCommand:[m command]
+														  withText:comment
+														authoredBy:[m sender]
+													   destinedFor:c
+														  onClient:self
+														receivedAt:[m receivedAt]];
+
+	if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
+		printMessage = NO;
+	} else if (c.config.ignoreGeneralEventMessages && myself == NO) {
+		printMessage = NO;
+	} else {
 		IRCAddressBookEntry *ignoreChecks = [self checkIgnoreAgainstHostmask:[m senderHostmask]
 																 withMatches:@[IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey]];
 
-		if (([ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages) && myself == NO) {
-			return;
+		if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
+			printMessage = NO;
 		}
+	}
 
+	if (printMessage) {
 		NSString *senderAddress = [m senderAddress];
 
 		NSString *message = BLS(1163, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
