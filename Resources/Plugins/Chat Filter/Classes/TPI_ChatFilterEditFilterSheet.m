@@ -69,6 +69,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterEventUserLeftChannelCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventUserKickedFromChannelCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventUserDisconnectedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventUserChangedNicknameCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicReceivedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
@@ -176,6 +177,7 @@
 	[self.filterEventUserLeftChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserLeftChannelEventType]];
 	[self.filterEventUserKickedFromChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserKickedFromChannelEventType]];
 	[self.filterEventUserDisconnectedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserDisconnectedEventType]];
+	[self.filterEventUserChangedNicknameCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserChangedNicknameEventType]];
 	[self.filterEventChannelTopicReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicReceivedEventType]];
 	[self.filterEventChannelTopicChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicChangedEventType]];
 	[self.filterEventChannelModeChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeChangedEventType]];
@@ -299,6 +301,9 @@
 
 	if ([self.filterEventUserDisconnectedCheck state] == NSOnState)
 		filterEvents |= TPI_ChatFilterUserDisconnectedEventType;
+
+	if ([self.filterEventUserChangedNicknameCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterUserChangedNicknameEventType;
 
 	if ([self.filterEventChannelTopicReceivedCheck state] == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelTopicReceivedEventType;
@@ -606,6 +611,7 @@
 	[self.filterEventUserLeftChannelCheck setEnabled:enabled];
 	[self.filterEventUserKickedFromChannelCheck setEnabled:enabled];
 	[self.filterEventUserDisconnectedCheck setEnabled:enabled];
+	[self.filterEventUserChangedNicknameCheck setEnabled:enabled];
 	[self.filterEventChannelTopicReceivedCheck setEnabled:enabled];
 	[self.filterEventChannelTopicChangedCheck setEnabled:enabled];
 	[self.filterEventChannelModeChangedCheck setEnabled:enabled];
