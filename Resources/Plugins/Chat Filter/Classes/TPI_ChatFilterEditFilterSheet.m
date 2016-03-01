@@ -519,7 +519,10 @@
 
 	if (disabled == NO) {
 		if ([[self.filterMatchTextField stringValue] length] == 0 &&
-			[[self.filterSenderMatchTextField stringValue] length] == 0)
+			[[self.filterSenderMatchTextField stringValue] length] == 0 &&
+			([self.filterEventPlainTextMessageCheck state] == NSOnState ||
+			 [self.filterEventActionMessageCheck state] == NSOnState ||
+			 [self.filterEventNoticeMessageCheck state] == NSOnState))
 		{
 			disabled = YES;
 		}
