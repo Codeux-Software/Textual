@@ -225,6 +225,10 @@
 		supportedFeatures |= THOPluginItemSupportsDidReceivePlainTextMessageEvent;
 	}
 
+	if ([self.primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:)] ) {
+		supportedFeatures |= THOPluginItemSupportsDidReceiveCommandEvent;
+	}
+
 	/* Finish up */
 	self.supportedFeatures = supportedFeatures;
 	
