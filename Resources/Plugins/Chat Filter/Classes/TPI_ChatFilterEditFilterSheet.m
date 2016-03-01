@@ -45,6 +45,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *filterSenderMatchTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterTitleTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *filterNotesTextField;
+@property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterEventNumericTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterForwardToDestinationTextField;
 @property (nonatomic, weak) IBOutlet TPI_ChatFilterFilterActionTokenField *filterActionTokenField;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenChannelName;
@@ -61,9 +62,16 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoreContentCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterIgnoresOperatorsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLogMatchCheck;
-@property (nonatomic, weak) IBOutlet NSButton *filterCommandPRIVMSGCheck;
-@property (nonatomic, weak) IBOutlet NSButton *filterCommandPRIVMSG_ACTIONCheck;
-@property (nonatomic, weak) IBOutlet NSButton *filterCommandNOTICECheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventPlainTextMessageCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventActionMessageCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventNoticeMessageCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventUserJoinedChannelCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventUserLeftChannelCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventUserKickedFromChannelCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventUserDisconnectedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicReceivedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicChangedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
@@ -123,12 +131,13 @@
 
 	[self populateTokenFieldStringValues];
 
+	[self setupTextFieldRules];
+
 	[self loadFilter];
 
+	[self updateEnabledStateOfFilterEvents];
 	[self updateEnableStateOfFilterActionTokenField];
 	[self updateVisibilityOfLimitedToTableHostView];
-
-	[self setupTextFieldRules];
 
 	[self rebuildCachedChannelList];
 
@@ -158,10 +167,26 @@
 
 	[self.filterLogMatchCheck setState:[self.filter filterLogMatch]];
 
-	[self.filterCommandPRIVMSGCheck setState:[self.filter filterCommandPRIVMSG]];
-	[self.filterCommandPRIVMSG_ACTIONCheck setState:[self.filter filterCommandPRIVMSG_ACTION]];
+	[self.filterEventPlainTextMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType]];
+	[self.filterEventActionMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]];
+	[self.filterEventNoticeMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]];
+	[self.filterEventUserJoinedChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserJoinedChannelEventType]];
+	[self.filterEventUserLeftChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserLeftChannelEventType]];
+	[self.filterEventUserKickedFromChannelCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserKickedFromChannelEventType]];
+	[self.filterEventUserDisconnectedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserDisconnectedEventType]];
+	[self.filterEventChannelTopicReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicReceivedEventType]];
+	[self.filterEventChannelTopicChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicChangedEventType]];
+	[self.filterEventChannelModeChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeChangedEventType]];
 
-	[self.filterCommandNOTICECheck setState:[self.filter filterCommandNOTICE]];
+	NSArray *filterEventsNumerics = [self.filter filterEventsNumerics];
+
+	if (filterEventsNumerics) {
+		NSString *filterEventsNumericsJoined = [filterEventsNumerics componentsJoinedByString:@", "];
+
+		[self.filterEventNumericTextField setStringValue:filterEventsNumericsJoined];
+	} else {
+		[self.filterEventNumericTextField performValidation];
+	}
 
 	NSCell *filterLimitedToMatrixCell = [self.filterLimitToMatrix cellWithTag:[self.filter filterLimitedToValue]];
 
@@ -206,13 +231,83 @@
 
 	[self.filter setFilterLogMatch:([self.filterLogMatchCheck state] == NSOnState)];
 
-	[self.filter setFilterCommandPRIVMSG:([self.filterCommandPRIVMSGCheck state] == NSOnState)];
-	[self.filter setFilterCommandPRIVMSG_ACTION:([self.filterCommandPRIVMSG_ACTIONCheck state] == NSOnState)];
+	[self.filter setFilterEvents:[self compileFilterEvents]];
 
-	[self.filter setFilterCommandNOTICE:([self.filterCommandNOTICECheck state] == NSOnState)];
+	[self.filter setFilterEventsNumerics:[self compileFilterEventsNumerics]];
 
 	[self.filter setFilterLimitedToClientsIDs:self.filterLimitedToClientsIDs];
 	[self.filter setFilterLimitedToChannelsIDs:self.filterLimitedToChannelsIDs];
+}
+
+- (NSArray *)compileFilterEventsNumerics
+{
+	NSString *numericsString = [self.filterEventNumericTextField value];
+
+	NSArray *numericsArray = [numericsString componentsSeparatedByString:@","];
+
+	NSMutableArray *filterEventsNumerics = nil; // Create later so we don't waste memory if error.
+
+	for (NSString *numeric in numericsArray) {
+		NSString *numericTrimmed = [numeric trim];
+
+		if ([numericTrimmed length] == 0) {
+			continue; // Empty segment. We can ignore.
+		} else if ([numericTrimmed length] > 3) {
+			return nil; // Bad value, fail completely
+		} else if ([numericTrimmed isNumericOnly] == NO) {
+			return nil; // Bad value, fail completely
+		} else {
+			if (filterEventsNumerics == nil) {
+				filterEventsNumerics = [NSMutableArray array];
+			}
+
+			// Convert to integer and back to remove leading zeros
+			numericTrimmed = [NSString stringWithFormat:@"%ld", [numericTrimmed integerValue]];
+
+			if ([filterEventsNumerics containsObject:numericTrimmed] == NO) {
+				[filterEventsNumerics addObject:numericTrimmed];
+			}
+		}
+	}
+
+	return [filterEventsNumerics copy];
+}
+
+- (TPI_ChatFilterEventType)compileFilterEvents
+{
+	TPI_ChatFilterEventType filterEvents = 0;
+
+	if ([self.filterEventPlainTextMessageCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterPlainTextMessageEventType;
+
+	if ([self.filterEventActionMessageCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterActionMessageEventType;
+
+	if ([self.filterEventNoticeMessageCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterNoticeMessageEventType;
+
+	if ([self.filterEventUserJoinedChannelCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterUserJoinedChannelEventType;
+
+	if ([self.filterEventUserLeftChannelCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterUserLeftChannelEventType;
+
+	if ([self.filterEventUserKickedFromChannelCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterUserKickedFromChannelEventType;
+
+	if ([self.filterEventUserDisconnectedCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterUserDisconnectedEventType;
+
+	if ([self.filterEventChannelTopicReceivedCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterChannelTopicReceivedEventType;
+
+	if ([self.filterEventChannelTopicChangedCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterChannelTopicChangedEventType;
+
+	if ([self.filterEventChannelModeChangedCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterChannelModeChangedEventType;
+
+	return filterEvents;
 }
 
 - (void)ok:(id)sender
@@ -408,20 +503,47 @@
 
 - (void)toggleOkButton
 {
-	BOOL disabled = ([[self.filterTitleTextField stringValue] length] == 0 ||
-					 ([[self.filterMatchTextField stringValue] length] == 0 &&
-					  [[self.filterSenderMatchTextField stringValue] length] == 0) ||
-					([[self.filterActionTokenField stringValue] length] == 0 &&
-						([self.filterIgnoreContentCheck state] == NSOffState &&
-						 [[self.filterForwardToDestinationTextField stringValue] length] == 0)) ||
-					 [self.filterForwardToDestinationTextField valueIsValid] == NO);
+	BOOL disabled = NO;
+
+	if ([[self.filterTitleTextField stringValue] length] == 0) {
+		disabled = YES;
+	}
+
+	if (disabled == NO) {
+		if ([self.filterEventNumericTextField valueIsValid] == NO) {
+			disabled = YES;
+		} else if ([self.filterForwardToDestinationTextField valueIsValid] == NO) {
+			disabled = YES;
+		}
+	}
+
+	if (disabled == NO) {
+		if ([[self.filterMatchTextField stringValue] length] == 0 &&
+			[[self.filterSenderMatchTextField stringValue] length] == 0)
+		{
+			disabled = YES;
+		}
+	}
+
+	if (disabled == NO) {
+		if ([self.filterIgnoreContentCheck state] == NSOffState &&
+			[[self.filterForwardToDestinationTextField stringValue] length] == 0)
+		{
+			if ([[self.filterActionTokenField stringValue] length] == 0) {
+				disabled = YES;
+			}
+		}
+	}
 
 	[[self okButton] setEnabled:(disabled == NO)];
 }
 
 - (void)setupTextFieldRules
 {
+	/* "Forward To" text field */
 	[self.filterForwardToDestinationTextField setTextDidChangeCallback:self];
+
+	[self.filterForwardToDestinationTextField setPerformValidationWhenEmpty:NO];
 
 	[self.filterForwardToDestinationTextField setOnlyShowStatusIfErrorOccurs:YES];
 
@@ -440,6 +562,21 @@
 			return NO;
 		}
 	}];
+
+	/* "Numerics" text field */
+	[self.filterEventNumericTextField setTextDidChangeCallback:self];
+
+	[self.filterEventNumericTextField setPerformValidationWhenEmpty:NO];
+
+	[self.filterEventNumericTextField setOnlyShowStatusIfErrorOccurs:YES];
+
+	[self.filterEventNumericTextField setStringValueIsInvalidOnEmpty:NO];
+	[self.filterEventNumericTextField setStringValueIsTrimmed:NO];
+	[self.filterEventNumericTextField setStringValueUsesOnlyFirstToken:NO];
+
+	[self.filterEventNumericTextField setValidationBlock:^BOOL(NSString *currentValue) {
+		return ([self compileFilterEventsNumerics] != nil);
+	}];
 }
 
 - (void)updateVisibilityOfLimitedToTableHostView
@@ -454,6 +591,19 @@
 - (void)updateEnableStateOfFilterActionTokenField
 {
 	;
+}
+
+- (void)updateEnabledStateOfFilterEvents
+{
+	BOOL enabled = ([self.filterLimitToMatrix selectedTag] != TPI_ChatFilterLimitToPrivateMessagesValue);
+
+	[self.filterEventUserJoinedChannelCheck setEnabled:enabled];
+	[self.filterEventUserLeftChannelCheck setEnabled:enabled];
+	[self.filterEventUserKickedFromChannelCheck setEnabled:enabled];
+	[self.filterEventUserDisconnectedCheck setEnabled:enabled];
+	[self.filterEventChannelTopicReceivedCheck setEnabled:enabled];
+	[self.filterEventChannelTopicChangedCheck setEnabled:enabled];
+	[self.filterEventChannelModeChangedCheck setEnabled:enabled];
 }
 
 - (void)viewFilterMatchHelpText:(id)sender
@@ -479,6 +629,8 @@
 - (void)filteredLimitedToMatrixChanged:(id)sender
 {
 	[self updateVisibilityOfLimitedToTableHostView];
+
+	[self updateEnabledStateOfFilterEvents];
 }
 
 - (void)filterIgnoreContentCheckChanged:(id)sender
