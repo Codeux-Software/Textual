@@ -70,6 +70,16 @@
 #pragma mark -
 #pragma mark Plugin Logic
 
+- (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
+{
+	DebugLogToConsole(@"Received command:");
+	DebugLogToConsole(@"   Command: %@", command);
+	DebugLogToConsole(@"   Text: %@", text);
+	DebugLogToConsole(@"   Sender: %@", [textAuthor hostmask]);
+
+	return YES;
+}
+
 - (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
 {
 	/* Begin processing filters */
