@@ -80,8 +80,6 @@
 
 		for (TPI_ChatFilter *filter in arrangedObjects) {
 			@autoreleasepool {
-				BOOL filterMatchedBySender = NO;
-
 				if ((lineType == TVCLogLinePrivateMessageType && [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
 					(lineType == TVCLogLineActionType && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
 					(lineType == TVCLogLineNoticeType && [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
@@ -148,8 +146,6 @@
 						 this particular filter fails, then skip this filter. */
 
 						continue;
-					} else {
-						filterMatchedBySender = YES;
 					}
 				}
 
@@ -177,14 +173,7 @@
 				/* Filter text */
 				NSString *filterMatch = [filter filterMatch];
 
-				if (NSObjectIsEmpty(filterMatch)) {
-					if (filterMatchedBySender == NO) {
-						/* An empty match (= wildcard) + no matching sender = bogus filter */
-
-						continue;
-					}
-
-				} else {
+				if (NSObjectIsEmpty(filterMatch) == NO) {
 					if ([XRRegularExpression string:text isMatchedByRegex:filterMatch withoutCase:YES] == NO) {
 						/* The input text is not matched by the filter match.
 						 Continue to the next filter to try again. */

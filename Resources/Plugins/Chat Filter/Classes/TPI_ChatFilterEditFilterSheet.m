@@ -517,7 +517,7 @@
 		}
 	}
 
-	if (disabled == NO) {
+/*	if (disabled == NO) {
 		if ([[self.filterMatchTextField stringValue] length] == 0 &&
 			[[self.filterSenderMatchTextField stringValue] length] == 0 &&
 			([self.filterEventPlainTextMessageCheck state] == NSOnState ||
@@ -526,7 +526,7 @@
 		{
 			disabled = YES;
 		}
-	}
+	} */
 
 	if (disabled == NO) {
 		if ([self.filterIgnoreContentCheck state] == NSOffState &&
