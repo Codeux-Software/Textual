@@ -78,7 +78,7 @@
 
 	if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
 		if (textDestination == nil && [textAuthor isServer] == NO) {
-			LogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
+			DebugLogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
 
 			return NO;
 		}
