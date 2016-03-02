@@ -21,6 +21,7 @@
                 <outlet property="filterActionTokenServerAddress" destination="Jah-Fc-rje" id="oPJ-5V-cvy"/>
                 <outlet property="filterEventActionMessageCheck" destination="M7O-JK-d0f" id="R19-fl-AA3"/>
                 <outlet property="filterEventChannelModeChangedCheck" destination="JQR-Gl-iQP" id="m6Z-Qd-anf"/>
+                <outlet property="filterEventChannelModeReceivedCheck" destination="lix-vw-M6p" id="K7o-WE-Pj7"/>
                 <outlet property="filterEventChannelTopicChangedCheck" destination="cyY-it-BgK" id="Zo7-3I-8gE"/>
                 <outlet property="filterEventChannelTopicReceivedCheck" destination="yrW-UY-o8N" id="lIC-uv-SUp"/>
                 <outlet property="filterEventNoticeMessageCheck" destination="u10-y4-aAf" id="R2D-G7-si4"/>
@@ -670,6 +671,13 @@ Gw
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="lix-vw-M6p">
+                                            <rect key="frame" x="290" y="241" width="165" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Channel mode received" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="iyx-ft-qqL">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="7zc-fd-KcG" firstAttribute="leading" secondItem="yrW-UY-o8N" secondAttribute="leading" id="0ei-Qg-Zbe"/>
@@ -677,6 +685,7 @@ Gw
                                         <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="Vry-Tf-Odq" secondAttribute="leading" id="3OE-Zc-QEd"/>
                                         <constraint firstItem="mc1-xL-Gv7" firstAttribute="top" secondItem="u10-y4-aAf" secondAttribute="bottom" constant="15" id="3bw-cM-8X1"/>
                                         <constraint firstItem="fJz-XV-6oT" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="41" id="5wi-AG-xxV"/>
+                                        <constraint firstItem="lix-vw-M6p" firstAttribute="leading" secondItem="yrW-UY-o8N" secondAttribute="leading" id="6Pt-te-Sto"/>
                                         <constraint firstItem="gUd-LZ-E8a" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="77" id="BWp-qH-0Jn"/>
                                         <constraint firstItem="u10-y4-aAf" firstAttribute="leading" secondItem="mc1-xL-Gv7" secondAttribute="leading" id="Bme-Z9-Q0l"/>
                                         <constraint firstItem="i3Y-vE-Mwp" firstAttribute="top" secondItem="g73-Zu-4Qw" secondAttribute="top" constant="11" id="Bxc-4m-9k2"/>
@@ -704,6 +713,7 @@ Gw
                                         <constraint firstAttribute="trailing" secondItem="i3Y-vE-Mwp" secondAttribute="trailing" constant="17" id="pFZ-Nr-VqY"/>
                                         <constraint firstItem="i3Y-vE-Mwp" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="17" id="s1D-AN-f36"/>
                                         <constraint firstItem="gUd-LZ-E8a" firstAttribute="top" secondItem="haw-Qs-dgE" secondAttribute="bottom" constant="6" symbolic="YES" id="uec-5S-z1D"/>
+                                        <constraint firstItem="lix-vw-M6p" firstAttribute="baseline" secondItem="JQR-Gl-iQP" secondAttribute="baseline" id="voi-ba-K0v"/>
                                         <constraint firstItem="cyY-it-BgK" firstAttribute="baseline" secondItem="yrW-UY-o8N" secondAttribute="baseline" id="w1M-w2-0AR"/>
                                         <constraint firstItem="gUd-LZ-E8a" firstAttribute="trailing" secondItem="vF7-kr-nqH" secondAttribute="trailing" id="wpY-rF-hGk"/>
                                         <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="SWQ-7s-2jI" secondAttribute="leading" id="xIm-jX-I9S"/>

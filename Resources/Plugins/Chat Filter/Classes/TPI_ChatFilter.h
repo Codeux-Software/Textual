@@ -56,7 +56,8 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 	TPI_ChatFilterUserChangedNicknameEventType		= 1 << 8,
 	TPI_ChatFilterChannelTopicReceivedEventType		= 1 << 9,
 	TPI_ChatFilterChannelTopicChangedEventType		= 1 << 10,
-	TPI_ChatFilterChannelModeChangedEventType		= 1 << 11
+	TPI_ChatFilterChannelModeReceivedEventType		= 1 << 11,
+	TPI_ChatFilterChannelModeChangedEventType		= 1 << 12
 };
 
 @interface TPI_ChatFilter : NSObject <NSCopying>
