@@ -4901,6 +4901,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 			target = [mainWindow() selectedChannelOn:self];
+		} else if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
+			target = [self findChannelOrCreate:sendern isPrivateMessage:YES];
 		}
 
 		NSString *textm = BLS(1148, command, sendern);
@@ -5002,6 +5004,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 		c = [mainWindow() selectedChannelOn:self];
+	} else if ([TPCPreferences locationToSendNotices] == TXNoticeSendToQueryDestinationType) {
+		c = [self findChannelOrCreate:sendern isPrivateMessage:YES];
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
