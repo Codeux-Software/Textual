@@ -72,6 +72,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterEventUserChangedNicknameCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicReceivedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicChangedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeReceivedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
@@ -180,6 +181,7 @@
 	[self.filterEventUserChangedNicknameCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterUserChangedNicknameEventType]];
 	[self.filterEventChannelTopicReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicReceivedEventType]];
 	[self.filterEventChannelTopicChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelTopicChangedEventType]];
+	[self.filterEventChannelModeReceivedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeReceivedEventType]];
 	[self.filterEventChannelModeChangedCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterChannelModeChangedEventType]];
 
 	NSArray *filterEventsNumerics = [self.filter filterEventsNumerics];
@@ -310,6 +312,9 @@
 
 	if ([self.filterEventChannelTopicChangedCheck state] == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelTopicChangedEventType;
+
+	if ([self.filterEventChannelModeReceivedCheck state] == NSOnState)
+		filterEvents |= TPI_ChatFilterChannelModeReceivedEventType;
 
 	if ([self.filterEventChannelModeChangedCheck state] == NSOnState)
 		filterEvents |= TPI_ChatFilterChannelModeChangedEventType;
@@ -614,6 +619,7 @@
 	[self.filterEventUserChangedNicknameCheck setEnabled:enabled];
 	[self.filterEventChannelTopicReceivedCheck setEnabled:enabled];
 	[self.filterEventChannelTopicChangedCheck setEnabled:enabled];
+	[self.filterEventChannelModeReceivedCheck setEnabled:enabled];
 	[self.filterEventChannelModeChangedCheck setEnabled:enabled];
 }
 
