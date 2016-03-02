@@ -162,14 +162,14 @@
 - (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
 	/* Begin processing filters */
-	// LogToConsole(@"Received command: %@; with text “%@“", command, text);
+	LogToConsole(@"Received command: %@; text “%@“; sender “%@“", command, text, [textAuthor hostmask]);
 
 	@synchronized([self.filterArrayController arrangedObjects]) {
 		NSArray *arrangedObjects = [self.filterArrayController arrangedObjects];
 
 		for (TPI_ChatFilter *filter in arrangedObjects) {
 			@autoreleasepool {
-#define _commandMatchesEvent(_command_, _event_)		([command isEqualIgnoringCase:(_command_)] && [filter isEventTypeEnabled:(_event_)] == NO)
+#define _commandMatchesEvent(_command_, _event_)		([command isEqualToString:(_command_)] && [filter isEventTypeEnabled:(_event_)] == NO)
 
 				if ((_commandMatchesEvent(@"JOIN", TPI_ChatFilterUserJoinedChannelEventType) ||
 					 _commandMatchesEvent(@"PART", TPI_ChatFilterUserLeftChannelEventType) ||
