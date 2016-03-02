@@ -639,7 +639,7 @@
 					 [self.filterEventActionMessageCheck state] == NSOnState ||
 					 [self.filterEventNoticeMessageCheck state] == NSOnState);
 
-	BOOL enabled2 = ([self.filterEventUserJoinedChannelCheck state] == NSOnState ||
+/*	BOOL enabled2 = ([self.filterEventUserJoinedChannelCheck state] == NSOnState ||
 					 [self.filterEventUserLeftChannelCheck state] == NSOnState ||
 					 [self.filterEventUserKickedFromChannelCheck state] == NSOnState ||
 					 [self.filterEventUserDisconnectedCheck state] == NSOnState ||
@@ -647,11 +647,11 @@
 					 [self.filterEventChannelTopicReceivedCheck state] == NSOnState ||
 					 [self.filterEventChannelTopicChangedCheck state] == NSOnState ||
 					 [self.filterEventChannelModeReceivedCheck state] == NSOnState ||
-					 [self.filterEventChannelModeChangedCheck state] == NSOnState);
+					 [self.filterEventChannelModeChangedCheck state] == NSOnState); */
 
 	[self.filterForwardToDestinationTextField setEnabled:enabled1];
 
-	[self.filterIgnoresOperatorsCheck setEnabled:(enabled1 || enabled2)];
+//	[self.filterIgnoresOperatorsCheck setEnabled:(enabled1 || enabled2)];
 }
 
 - (void)filterEventTypeChanged:(id)sender
