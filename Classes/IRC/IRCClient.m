@@ -5100,12 +5100,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self checkAddressBookForTrackedUser:ignoreChecks inMessage:m];
 	}
 
-	BOOL printMessage = [sharedPluginManager() postReceivedCommand:[m command]
-														  withText:nil
-														authoredBy:[m sender]
-													   destinedFor:c
-														  onClient:self
-														receivedAt:[m receivedAt]];
+	BOOL printMessage = [self postReceivedMessage:m withText:nil destinedFor:c];
 
 	if (printMessage) {
 		if ([ignoreChecks ignoreGeneralEventMessages] && myself == NO) {
@@ -5172,12 +5167,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[c removeMember:sendern];
 	}
 
-	BOOL printMessage = [sharedPluginManager() postReceivedCommand:[m command]
-														  withText:comment
-														authoredBy:[m sender]
-													   destinedFor:c
-														  onClient:self
-														receivedAt:[m receivedAt]];
+	BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
 
 	if (printMessage) {
 		if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
@@ -5252,12 +5242,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[c removeMember:targetu];
 	}
 
-	BOOL printMessage = [sharedPluginManager() postReceivedCommand:[m command]
-														  withText:comment
-														authoredBy:[m sender]
-													   destinedFor:c
-														  onClient:self
-														receivedAt:[m receivedAt]];
+	BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
 
 	if (printMessage) {
 		if ([TPCPreferences showJoinLeave] == NO && myself == NO) {
@@ -5464,14 +5449,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		IRCChannel *c = [self findChannel:target];
 
 		if (c) {
+			BOOL printMessage = [self postReceivedMessage:m withText:newNick destinedFor:c];
+
 			NSString *text = nil;
 			
-			if (myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO) {
+			if (printMessage && myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO) {
 				text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
-
-			}
-            
-			if (myself == YES) {
+			} else if (printMessage && myself == YES) {
 				text = TXTLS(@"BasicLanguage[1152][1]", newNick);
 			}
 			
@@ -5494,13 +5478,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
 			if ([c memberExists:oldNick]) {
+				BOOL printMessage = [self postReceivedMessage:m withText:newNick destinedFor:c];
+
 				NSString *text = nil;
 				
-				if ((myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)) {
+				if ((printMessage && myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)) {
 					text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
-				}
-				
-				if (myself == YES) {
+				} else if (printMessage && myself == YES) {
 					text = TXTLS(@"BasicLanguage[1152][1]", newNick);
 				}
 				
@@ -5568,7 +5552,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 		}
 
-		if ([TPCPreferences showJoinLeave] && c.config.ignoreGeneralEventMessages == NO) {
+		BOOL printMessage = [self postReceivedMessage:m withText:modestr destinedFor:c];
+
+		if (printMessage) {
+			if ([TPCPreferences showJoinLeave] == NO || c.config.ignoreGeneralEventMessages) {
+				printMessage = NO;
+			}
+		}
+
+		if (printMessage) {
 			[self print:c
 				   type:TVCLogLineModeType
 			   nickname:nil
@@ -5581,12 +5573,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[mainWindow() updateTitleFor:c];
 		}
 	} else {
-		[self print:nil
-			   type:TVCLogLineModeType
-		   nickname:nil
-		messageBody:BLS(1145, sendern, modestr)
-		 receivedAt:[m receivedAt]
-			command:[m command]];
+		BOOL printMessage = [self postReceivedCommand:@"UMODE" withText:modestr destinedFor:nil referenceMessage:m];
+
+		if (printMessage) {
+			[self print:nil
+				   type:TVCLogLineModeType
+			   nickname:nil
+			messageBody:BLS(1145, sendern, modestr)
+			 receivedAt:[m receivedAt]
+				command:[m command]];
+		}
 	}
 }
 
@@ -5605,13 +5601,17 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[c setTopic:topicav];
 	}
 
-	[self print:c
-		   type:TVCLogLineTopicType
-	   nickname:nil
-	messageBody:BLS(1128, sendern, topicav)
-	isEncrypted:NO
-	 receivedAt:[m receivedAt]
-		command:[m command]];
+	BOOL printMessage = [self postReceivedMessage:m withText:topicav destinedFor:c];
+
+	if (printMessage) {
+		[self print:c
+			   type:TVCLogLineTopicType
+		   nickname:nil
+		messageBody:BLS(1128, sendern, topicav)
+		isEncrypted:NO
+		 receivedAt:[m receivedAt]
+			command:[m command]];
+	}
 }
 
 - (void)receiveInvite:(IRCMessage *)m
@@ -5626,12 +5626,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	/* Invite notifications are sent to frontmost channel on server of if it is
 	 not on server, then it will be redirected to console. */
-	[self print:[mainWindow() selectedChannelOn:self]
-		   type:TVCLogLineInviteType
-	   nickname:nil
-	messageBody:text
-	 receivedAt:[m receivedAt]
-		command:[m command]];
+	BOOL printMessage = [self postReceivedMessage:m withText:channel destinedFor:nil];
+
+	if (printMessage) {
+		[self print:[mainWindow() selectedChannelOn:self]
+			   type:TVCLogLineInviteType
+		   nickname:nil
+		messageBody:text
+		 receivedAt:[m receivedAt]
+			command:[m command]];
+	}
 	
 	[self notifyEvent:TXNotificationInviteType lineType:TVCLogLineInviteType target:nil nickname:sendern text:channel];
 	
@@ -8239,6 +8243,21 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)processBundlesServerMessage:(IRCMessage *)message
 {
 	[sharedPluginManager() sendServerInputDataToBundles:self message:message];
+}
+
+- (BOOL)postReceivedMessage:(IRCMessage *)referenceMessage withText:(NSString *)text destinedFor:(IRCChannel *)textDestination
+{
+	return [self postReceivedCommand:[referenceMessage command] withText:text destinedFor:textDestination referenceMessage:referenceMessage];
+}
+
+- (BOOL)postReceivedCommand:(NSString *)command withText:(NSString *)text destinedFor:(IRCChannel *)textDestination referenceMessage:(IRCMessage *)referenceMessage
+{
+	return [sharedPluginManager() postReceivedCommand:command
+											 withText:text
+										   authoredBy:[referenceMessage sender]
+										  destinedFor:textDestination
+											 onClient:self
+										   receivedAt:[referenceMessage receivedAt]];
 }
 
 #pragma mark -
