@@ -630,6 +630,8 @@
 					[self.filterEventNoticeMessageCheck state] == NSOnState);
 
 	[self.filterForwardToDestinationTextField setEnabled:enabled];
+
+	[self.filterIgnoresOperatorsCheck setEnabled:enabled];
 }
 
 - (void)filterEventTypeChanged:(id)sender
