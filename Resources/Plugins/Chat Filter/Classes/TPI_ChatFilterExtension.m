@@ -137,7 +137,7 @@
 - (BOOL)testFilterMatch:(TPI_ChatFilter *)filter againstText:(NSString *)text allowingEmptyText:(BOOL)allowingEmptyText
 {
 	/* Filter text */
-	if (NSObjectIsEmpty(text)) {
+	if (text == nil) {
 		if (allowingEmptyText) {
 			return YES;
 		} else {
@@ -162,7 +162,7 @@
 - (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
 	/* Begin processing filters */
-	LogToConsole(@"Received command: %@; text “%@“; sender “%@“", command, text, [textAuthor hostmask]);
+	DebugLogToConsole(@"Received command: %@; text “%@“; sender “%@“", command, text, [textAuthor hostmask]);
 
 	@synchronized([self.filterArrayController arrangedObjects]) {
 		NSArray *arrangedObjects = [self.filterArrayController arrangedObjects];
