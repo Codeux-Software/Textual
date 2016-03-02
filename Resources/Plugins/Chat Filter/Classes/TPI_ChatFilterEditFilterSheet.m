@@ -635,13 +635,23 @@
 
 - (void)updateEnabledStateOfComponentsConstrainedByFilterEvents
 {
-	BOOL enabled = ([self.filterEventPlainTextMessageCheck state] == NSOnState ||
-					[self.filterEventActionMessageCheck state] == NSOnState ||
-					[self.filterEventNoticeMessageCheck state] == NSOnState);
+	BOOL enabled1 = ([self.filterEventPlainTextMessageCheck state] == NSOnState ||
+					 [self.filterEventActionMessageCheck state] == NSOnState ||
+					 [self.filterEventNoticeMessageCheck state] == NSOnState);
 
-	[self.filterForwardToDestinationTextField setEnabled:enabled];
+	BOOL enabled2 = ([self.filterEventUserJoinedChannelCheck state] == NSOnState ||
+					 [self.filterEventUserLeftChannelCheck state] == NSOnState ||
+					 [self.filterEventUserKickedFromChannelCheck state] == NSOnState ||
+					 [self.filterEventUserDisconnectedCheck state] == NSOnState ||
+					 [self.filterEventUserChangedNicknameCheck state] == NSOnState ||
+					 [self.filterEventChannelTopicReceivedCheck state] == NSOnState ||
+					 [self.filterEventChannelTopicChangedCheck state] == NSOnState ||
+					 [self.filterEventChannelModeReceivedCheck state] == NSOnState ||
+					 [self.filterEventChannelModeChangedCheck state] == NSOnState);
 
-	[self.filterIgnoresOperatorsCheck setEnabled:enabled];
+	[self.filterForwardToDestinationTextField setEnabled:enabled1];
+
+	[self.filterIgnoresOperatorsCheck setEnabled:(enabled1 || enabled2)];
 }
 
 - (void)filterEventTypeChanged:(id)sender
