@@ -546,9 +546,103 @@ Gw
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="vF7-kr-nqH">
+                                            <rect key="frame" x="62" y="379" width="136" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Plain text message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tJF-kp-5sx">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <accessibilityConnection property="title" destination="i3Y-vE-Mwp" id="2yf-FD-yOi"/>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="rdO-AY-qdf"/>
+                                            </connections>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="M7O-JK-d0f">
+                                            <rect key="frame" x="303" y="379" width="119" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Action message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HOI-IF-yz1">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="S7g-1l-7D2"/>
+                                            </connections>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="u10-y4-aAf">
+                                            <rect key="frame" x="62" y="359" width="120" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Notice message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="B2Y-Dd-QCe">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="filterEventTypeChanged:" target="-2" id="uPX-A8-jum"/>
+                                            </connections>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="mc1-xL-Gv7">
+                                            <rect key="frame" x="62" y="330" width="142" height="18"/>
+                                            <buttonCell key="cell" type="check" title="User joined channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="359-NZ-Rau">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="haw-Qs-dgE">
+                                            <rect key="frame" x="62" y="310" width="126" height="18"/>
+                                            <buttonCell key="cell" type="check" title="User left channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Rpi-S7-ix9">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="gUd-LZ-E8a">
+                                            <rect key="frame" x="61" y="290" width="137" height="18"/>
+                                            <buttonCell key="cell" type="check" title="User disconnected" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HWV-SJ-fmt">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="7zc-fd-KcG">
+                                            <rect key="frame" x="303" y="310" width="177" height="18"/>
+                                            <buttonCell key="cell" type="check" title="User kicked from channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4JE-Zy-V9U">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="JQR-Gl-iQP">
+                                            <rect key="frame" x="303" y="241" width="166" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Channel mode changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Stg-r9-CUZ">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="yrW-UY-o8N">
+                                            <rect key="frame" x="62" y="261" width="161" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Channel topic received" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DZQ-Tj-aiE">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="cyY-it-BgK">
+                                            <rect key="frame" x="303" y="261" width="162" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Channel topic changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WN4-08-x1u">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="cEI-rg-wh9">
+                                            <rect key="frame" x="303" y="330" width="169" height="18"/>
+                                            <buttonCell key="cell" type="check" title="User changed nickname" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dO2-Tp-BSU">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="lix-vw-M6p">
+                                            <rect key="frame" x="62" y="241" width="165" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Channel mode received" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="iyx-ft-qqL">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
-                                            <rect key="frame" x="49" y="187" width="66" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Numerics:" id="hII-je-7Zh">
+                                            <rect key="frame" x="49" y="191" width="49" height="17"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Others:" id="hII-je-7Zh">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -561,11 +655,11 @@ Gw
                                             <font key="titleFont" metaFont="system"/>
                                         </box>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qe2-po-Vne" customClass="TVCTextFieldWithValueValidation">
-                                            <rect key="frame" x="51" y="122" width="441" height="57"/>
+                                            <rect key="frame" x="51" y="127" width="444" height="56"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="57" id="Mq2-Ul-2MS"/>
+                                                <constraint firstAttribute="height" constant="56" id="iMP-AJ-ctu"/>
                                             </constraints>
-                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCTextFieldWithValueValidationCell">
+                                            <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="INVITE, 001, 002, 003, …" id="xLg-Zy-ggt" customClass="TVCTextFieldWithValueValidationCell">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -577,147 +671,53 @@ Gw
                                             </connections>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vry-Tf-Odq">
-                                            <rect key="frame" x="49" y="100" width="445" height="14"/>
-                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma separated list of numerics (1 through 999) that are treated as an event. " id="gqg-Wn-ped">
+                                            <rect key="frame" x="49" y="91" width="445" height="28"/>
+                                            <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Comma seperated list of named commands and/or numerics (1 through 999) which are not defined as a checkbox up above." id="gqg-Wn-ped">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="vF7-kr-nqH">
-                                            <rect key="frame" x="76" y="379" width="136" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Plain text message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tJF-kp-5sx">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <accessibilityConnection property="title" destination="i3Y-vE-Mwp" id="2yf-FD-yOi"/>
-                                                <action selector="filterEventTypeChanged:" target="-2" id="rdO-AY-qdf"/>
-                                            </connections>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="M7O-JK-d0f">
-                                            <rect key="frame" x="290" y="379" width="119" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Action message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HOI-IF-yz1">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="filterEventTypeChanged:" target="-2" id="S7g-1l-7D2"/>
-                                            </connections>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="u10-y4-aAf">
-                                            <rect key="frame" x="76" y="359" width="120" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Notice message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="B2Y-Dd-QCe">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="filterEventTypeChanged:" target="-2" id="uPX-A8-jum"/>
-                                            </connections>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="mc1-xL-Gv7">
-                                            <rect key="frame" x="76" y="330" width="142" height="18"/>
-                                            <buttonCell key="cell" type="check" title="User joined channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="359-NZ-Rau">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="haw-Qs-dgE">
-                                            <rect key="frame" x="76" y="310" width="126" height="18"/>
-                                            <buttonCell key="cell" type="check" title="User left channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Rpi-S7-ix9">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="gUd-LZ-E8a">
-                                            <rect key="frame" x="75" y="290" width="137" height="18"/>
-                                            <buttonCell key="cell" type="check" title="User disconnected" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HWV-SJ-fmt">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="7zc-fd-KcG">
-                                            <rect key="frame" x="290" y="310" width="177" height="18"/>
-                                            <buttonCell key="cell" type="check" title="User kicked from channel" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4JE-Zy-V9U">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="JQR-Gl-iQP">
-                                            <rect key="frame" x="76" y="241" width="166" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Channel mode changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Stg-r9-CUZ">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="yrW-UY-o8N">
-                                            <rect key="frame" x="290" y="261" width="161" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Channel topic received" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DZQ-Tj-aiE">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="cyY-it-BgK">
-                                            <rect key="frame" x="76" y="261" width="162" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Channel topic changed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WN4-08-x1u">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="cEI-rg-wh9">
-                                            <rect key="frame" x="290" y="330" width="169" height="18"/>
-                                            <buttonCell key="cell" type="check" title="User changed nickname" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dO2-Tp-BSU">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="lix-vw-M6p">
-                                            <rect key="frame" x="290" y="241" width="165" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Channel mode received" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="iyx-ft-qqL">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="7zc-fd-KcG" firstAttribute="leading" secondItem="yrW-UY-o8N" secondAttribute="leading" id="0ei-Qg-Zbe"/>
-                                        <constraint firstItem="cEI-rg-wh9" firstAttribute="baseline" secondItem="mc1-xL-Gv7" secondAttribute="baseline" id="2pD-rw-bjb"/>
-                                        <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="Vry-Tf-Odq" secondAttribute="leading" id="3OE-Zc-QEd"/>
-                                        <constraint firstItem="mc1-xL-Gv7" firstAttribute="top" secondItem="u10-y4-aAf" secondAttribute="bottom" constant="15" id="3bw-cM-8X1"/>
-                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="41" id="5wi-AG-xxV"/>
-                                        <constraint firstItem="lix-vw-M6p" firstAttribute="leading" secondItem="yrW-UY-o8N" secondAttribute="leading" id="6Pt-te-Sto"/>
-                                        <constraint firstItem="gUd-LZ-E8a" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="77" id="BWp-qH-0Jn"/>
-                                        <constraint firstItem="u10-y4-aAf" firstAttribute="leading" secondItem="mc1-xL-Gv7" secondAttribute="leading" id="Bme-Z9-Q0l"/>
-                                        <constraint firstItem="i3Y-vE-Mwp" firstAttribute="top" secondItem="g73-Zu-4Qw" secondAttribute="top" constant="11" id="Bxc-4m-9k2"/>
-                                        <constraint firstItem="cyY-it-BgK" firstAttribute="leading" secondItem="haw-Qs-dgE" secondAttribute="leading" id="FGd-Zx-ub4"/>
-                                        <constraint firstItem="JQR-Gl-iQP" firstAttribute="top" secondItem="cyY-it-BgK" secondAttribute="bottom" constant="6" symbolic="YES" id="Gca-kM-JBF"/>
-                                        <constraint firstItem="u10-y4-aAf" firstAttribute="top" secondItem="vF7-kr-nqH" secondAttribute="bottom" constant="6" symbolic="YES" id="LtY-jK-asW"/>
-                                        <constraint firstItem="M7O-JK-d0f" firstAttribute="baseline" secondItem="vF7-kr-nqH" secondAttribute="baseline" id="QaA-Ge-laO"/>
-                                        <constraint firstItem="cEI-rg-wh9" firstAttribute="leading" secondItem="M7O-JK-d0f" secondAttribute="leading" id="SfK-zJ-RT2"/>
-                                        <constraint firstItem="7zc-fd-KcG" firstAttribute="baseline" secondItem="haw-Qs-dgE" secondAttribute="baseline" id="TFc-Rn-PtZ"/>
-                                        <constraint firstItem="7zc-fd-KcG" firstAttribute="leading" secondItem="cEI-rg-wh9" secondAttribute="leading" id="TZm-Yt-3RJ"/>
-                                        <constraint firstItem="qe2-po-Vne" firstAttribute="trailing" secondItem="Vry-Tf-Odq" secondAttribute="trailing" id="WRx-96-fhb"/>
-                                        <constraint firstItem="vF7-kr-nqH" firstAttribute="leading" secondItem="u10-y4-aAf" secondAttribute="leading" id="Ylq-wN-iGf"/>
-                                        <constraint firstItem="vF7-kr-nqH" firstAttribute="top" secondItem="i3Y-vE-Mwp" secondAttribute="bottom" constant="20" id="Z39-vo-1g6"/>
-                                        <constraint firstItem="SWQ-7s-2jI" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="51" id="Zf5-Lr-J9R"/>
-                                        <constraint firstItem="cyY-it-BgK" firstAttribute="top" secondItem="gUd-LZ-E8a" secondAttribute="bottom" constant="15" id="epn-1y-dkl"/>
-                                        <constraint firstItem="yrW-UY-o8N" firstAttribute="leading" secondItem="cyY-it-BgK" secondAttribute="trailing" constant="56" id="kMk-gK-19g"/>
-                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="centerX" secondItem="qe2-po-Vne" secondAttribute="centerX" id="kxI-dl-mxH"/>
-                                        <constraint firstItem="haw-Qs-dgE" firstAttribute="top" secondItem="mc1-xL-Gv7" secondAttribute="bottom" constant="6" symbolic="YES" id="lBf-el-Fgu"/>
-                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="top" secondItem="JQR-Gl-iQP" secondAttribute="bottom" constant="20" id="lTF-dr-q8O"/>
-                                        <constraint firstItem="cyY-it-BgK" firstAttribute="leading" secondItem="JQR-Gl-iQP" secondAttribute="leading" id="nHR-Ko-PaH"/>
-                                        <constraint firstItem="i3Y-vE-Mwp" firstAttribute="centerX" secondItem="fJz-XV-6oT" secondAttribute="centerX" id="nqe-5X-nQN"/>
-                                        <constraint firstItem="mc1-xL-Gv7" firstAttribute="leading" secondItem="haw-Qs-dgE" secondAttribute="leading" id="nvr-lm-shv"/>
-                                        <constraint firstItem="Vry-Tf-Odq" firstAttribute="top" secondItem="qe2-po-Vne" secondAttribute="bottom" constant="8" symbolic="YES" id="oge-YI-fWX"/>
-                                        <constraint firstItem="qe2-po-Vne" firstAttribute="top" secondItem="SWQ-7s-2jI" secondAttribute="bottom" constant="8" symbolic="YES" id="oz4-yv-PyS"/>
-                                        <constraint firstAttribute="trailing" secondItem="i3Y-vE-Mwp" secondAttribute="trailing" constant="17" id="pFZ-Nr-VqY"/>
-                                        <constraint firstItem="i3Y-vE-Mwp" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="17" id="s1D-AN-f36"/>
-                                        <constraint firstItem="gUd-LZ-E8a" firstAttribute="top" secondItem="haw-Qs-dgE" secondAttribute="bottom" constant="6" symbolic="YES" id="uec-5S-z1D"/>
-                                        <constraint firstItem="lix-vw-M6p" firstAttribute="baseline" secondItem="JQR-Gl-iQP" secondAttribute="baseline" id="voi-ba-K0v"/>
-                                        <constraint firstItem="cyY-it-BgK" firstAttribute="baseline" secondItem="yrW-UY-o8N" secondAttribute="baseline" id="w1M-w2-0AR"/>
-                                        <constraint firstItem="gUd-LZ-E8a" firstAttribute="trailing" secondItem="vF7-kr-nqH" secondAttribute="trailing" id="wpY-rF-hGk"/>
-                                        <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="SWQ-7s-2jI" secondAttribute="leading" id="xIm-jX-I9S"/>
-                                        <constraint firstItem="SWQ-7s-2jI" firstAttribute="top" secondItem="fJz-XV-6oT" secondAttribute="bottom" constant="18" id="zdx-cv-psa"/>
+                                        <constraint firstItem="M7O-JK-d0f" firstAttribute="baseline" secondItem="vF7-kr-nqH" secondAttribute="baseline" id="0pM-FF-n3H"/>
+                                        <constraint firstItem="vF7-kr-nqH" firstAttribute="leading" secondItem="u10-y4-aAf" secondAttribute="leading" id="1TI-ds-DVm"/>
+                                        <constraint firstItem="7zc-fd-KcG" firstAttribute="leading" secondItem="cyY-it-BgK" secondAttribute="leading" id="2qg-u4-5c2"/>
+                                        <constraint firstItem="Vry-Tf-Odq" firstAttribute="top" secondItem="qe2-po-Vne" secondAttribute="bottom" constant="8" symbolic="YES" id="2rY-JV-SAd"/>
+                                        <constraint firstItem="lix-vw-M6p" firstAttribute="leading" secondItem="yrW-UY-o8N" secondAttribute="leading" id="38T-bh-9Um"/>
+                                        <constraint firstItem="JQR-Gl-iQP" firstAttribute="leading" secondItem="lix-vw-M6p" secondAttribute="trailing" constant="80" id="39j-u6-FHa"/>
+                                        <constraint firstItem="SWQ-7s-2jI" firstAttribute="top" secondItem="fJz-XV-6oT" secondAttribute="bottom" constant="14" id="56b-3T-g07"/>
+                                        <constraint firstItem="gUd-LZ-E8a" firstAttribute="top" secondItem="haw-Qs-dgE" secondAttribute="bottom" constant="6" symbolic="YES" id="5qN-Id-cQZ"/>
+                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="top" secondItem="lix-vw-M6p" secondAttribute="bottom" constant="20" id="8YO-6F-rNe"/>
+                                        <constraint firstItem="gUd-LZ-E8a" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="63" id="E1H-dg-hEA"/>
+                                        <constraint firstItem="haw-Qs-dgE" firstAttribute="leading" secondItem="mc1-xL-Gv7" secondAttribute="leading" id="Ems-ZJ-AhQ"/>
+                                        <constraint firstItem="cyY-it-BgK" firstAttribute="baseline" secondItem="yrW-UY-o8N" secondAttribute="baseline" id="FMT-QD-gRR"/>
+                                        <constraint firstItem="M7O-JK-d0f" firstAttribute="leading" secondItem="cEI-rg-wh9" secondAttribute="leading" id="GYn-wG-e9z"/>
+                                        <constraint firstItem="mc1-xL-Gv7" firstAttribute="top" secondItem="u10-y4-aAf" secondAttribute="bottom" constant="15" id="Hm8-3z-l7n"/>
+                                        <constraint firstItem="JQR-Gl-iQP" firstAttribute="leading" secondItem="cyY-it-BgK" secondAttribute="leading" id="Ixf-GW-mVB"/>
+                                        <constraint firstItem="cEI-rg-wh9" firstAttribute="leading" secondItem="7zc-fd-KcG" secondAttribute="leading" id="KrC-kk-bP7"/>
+                                        <constraint firstAttribute="trailing" secondItem="i3Y-vE-Mwp" secondAttribute="trailing" constant="17" id="ONx-RB-pjA"/>
+                                        <constraint firstItem="i3Y-vE-Mwp" firstAttribute="top" secondItem="g73-Zu-4Qw" secondAttribute="top" constant="11" id="PpD-yw-efO"/>
+                                        <constraint firstItem="i3Y-vE-Mwp" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="17" id="RUN-tY-Zo0"/>
+                                        <constraint firstItem="vF7-kr-nqH" firstAttribute="trailing" secondItem="gUd-LZ-E8a" secondAttribute="trailing" id="Uri-rl-vbb"/>
+                                        <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="Vry-Tf-Odq" secondAttribute="leading" id="VK9-zX-Ugx"/>
+                                        <constraint firstItem="vF7-kr-nqH" firstAttribute="top" secondItem="i3Y-vE-Mwp" secondAttribute="bottom" constant="20" id="YoE-Bu-hIm"/>
+                                        <constraint firstItem="yrW-UY-o8N" firstAttribute="top" secondItem="gUd-LZ-E8a" secondAttribute="bottom" constant="15" id="bij-1p-7It"/>
+                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="41" id="eql-rA-s5v"/>
+                                        <constraint firstItem="lix-vw-M6p" firstAttribute="top" secondItem="yrW-UY-o8N" secondAttribute="bottom" constant="6" symbolic="YES" id="eso-G0-rw3"/>
+                                        <constraint firstItem="lix-vw-M6p" firstAttribute="baseline" secondItem="JQR-Gl-iQP" secondAttribute="baseline" id="ewF-gt-W0I"/>
+                                        <constraint firstItem="SWQ-7s-2jI" firstAttribute="leading" secondItem="g73-Zu-4Qw" secondAttribute="leading" constant="51" id="hXH-Xx-BXj"/>
+                                        <constraint firstItem="mc1-xL-Gv7" firstAttribute="leading" secondItem="u10-y4-aAf" secondAttribute="leading" id="jMh-Wz-yiR"/>
+                                        <constraint firstItem="qe2-po-Vne" firstAttribute="leading" secondItem="SWQ-7s-2jI" secondAttribute="leading" id="jtS-kl-fbb"/>
+                                        <constraint firstItem="qe2-po-Vne" firstAttribute="top" secondItem="SWQ-7s-2jI" secondAttribute="bottom" constant="8" symbolic="YES" id="l6G-iw-JEG"/>
+                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="centerX" secondItem="i3Y-vE-Mwp" secondAttribute="centerX" id="lZn-ys-f8u"/>
+                                        <constraint firstItem="fJz-XV-6oT" firstAttribute="centerX" secondItem="Vry-Tf-Odq" secondAttribute="centerX" id="ly1-b4-cRa"/>
+                                        <constraint firstItem="yrW-UY-o8N" firstAttribute="leading" secondItem="haw-Qs-dgE" secondAttribute="leading" id="mVX-wg-EqX"/>
+                                        <constraint firstAttribute="trailing" secondItem="qe2-po-Vne" secondAttribute="trailing" constant="48" id="mnG-Dy-K6C"/>
+                                        <constraint firstItem="mc1-xL-Gv7" firstAttribute="baseline" secondItem="cEI-rg-wh9" secondAttribute="baseline" id="ncF-Az-hot"/>
+                                        <constraint firstItem="u10-y4-aAf" firstAttribute="top" secondItem="vF7-kr-nqH" secondAttribute="bottom" constant="6" symbolic="YES" id="oUE-1B-Ndr"/>
+                                        <constraint firstItem="haw-Qs-dgE" firstAttribute="baseline" secondItem="7zc-fd-KcG" secondAttribute="baseline" id="oy0-N1-ybF"/>
+                                        <constraint firstItem="haw-Qs-dgE" firstAttribute="top" secondItem="mc1-xL-Gv7" secondAttribute="bottom" constant="6" symbolic="YES" id="rLX-94-w24"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -922,14 +922,14 @@ Gw
                     </tabView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="leading" secondItem="dLf-X5-R1o" secondAttribute="trailing" constant="12" symbolic="YES" id="8rn-H0-THK"/>
-                    <constraint firstItem="dLf-X5-R1o" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="Pns-Jc-42d"/>
-                    <constraint firstAttribute="bottom" secondItem="dLf-X5-R1o" secondAttribute="bottom" constant="20" symbolic="YES" id="YqJ-wt-8as"/>
-                    <constraint firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" constant="20" symbolic="YES" id="Ys0-Li-lcZ"/>
-                    <constraint firstItem="T01-Nx-QhV" firstAttribute="top" secondItem="alB-sv-LJa" secondAttribute="top" constant="12" symbolic="YES" id="ngc-7q-OOf"/>
-                    <constraint firstItem="T01-Nx-QhV" firstAttribute="trailing" secondItem="wmA-Wb-Jwj" secondAttribute="trailing" id="uKq-4W-406"/>
-                    <constraint firstItem="dLf-X5-R1o" firstAttribute="baseline" secondItem="wmA-Wb-Jwj" secondAttribute="baseline" id="vuy-oB-ZRQ"/>
-                    <constraint firstItem="T01-Nx-QhV" firstAttribute="leading" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" symbolic="YES" id="zKq-ev-r2K"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" id="4BO-IN-1OI"/>
+                    <constraint firstItem="dLf-X5-R1o" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="BMe-t4-wDU"/>
+                    <constraint firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" constant="20" symbolic="YES" id="D3I-Ld-uGW"/>
+                    <constraint firstAttribute="bottom" secondItem="dLf-X5-R1o" secondAttribute="bottom" constant="20" symbolic="YES" id="O6I-Fp-GdB"/>
+                    <constraint firstItem="T01-Nx-QhV" firstAttribute="top" secondItem="alB-sv-LJa" secondAttribute="top" constant="12" symbolic="YES" id="Wuf-CS-yMi"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="baseline" secondItem="dLf-X5-R1o" secondAttribute="baseline" id="dfo-Ld-dYh"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="leading" secondItem="dLf-X5-R1o" secondAttribute="trailing" constant="12" symbolic="YES" id="f48-C4-qwj"/>
+                    <constraint firstItem="T01-Nx-QhV" firstAttribute="leading" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" symbolic="YES" id="qU4-Wa-4Bt"/>
                 </constraints>
             </view>
             <connections>

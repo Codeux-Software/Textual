@@ -258,21 +258,31 @@
 
 		if ([numericTrimmed length] == 0) {
 			continue; // Empty segment. We can ignore.
-		} else if ([numericTrimmed length] > 3) {
-			return nil; // Bad value, fail completely
-		} else if ([numericTrimmed isNumericOnly] == NO) {
-			return nil; // Bad value, fail completely
-		} else {
-			if (filterEventsNumerics == nil) {
-				filterEventsNumerics = [NSMutableArray array];
+		}
+
+		if ([numericTrimmed isNumericOnly]) {
+			if ([numericTrimmed length] > 3) {
+				return nil; // Bad value, fail completely
 			}
 
 			// Convert to integer and back to remove leading zeros
 			numericTrimmed = [NSString stringWithFormat:@"%ld", [numericTrimmed integerValue]];
-
-			if ([filterEventsNumerics containsObject:numericTrimmed] == NO) {
-				[filterEventsNumerics addObject:numericTrimmed];
+		} else if ([numericTrimmed isAlphabeticNumericOnly]) {
+			if ([numericTrimmed length] > 20) {
+				return nil; // Bad value, fail completely
 			}
+
+			numericTrimmed = [numericTrimmed uppercaseString];
+		} else {
+			return nil; // Bad value, fail completely
+		}
+
+		if (filterEventsNumerics == nil) {
+			filterEventsNumerics = [NSMutableArray array];
+		}
+
+		if ([filterEventsNumerics containsObject:numericTrimmed] == NO) {
+			[filterEventsNumerics addObject:numericTrimmed];
 		}
 	}
 
