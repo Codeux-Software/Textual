@@ -738,7 +738,7 @@ Gw
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Poo-f2-StF">
                                             <rect key="frame" x="15" y="17" width="512" height="390"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="390" id="AgF-hl-bxA"/>
+                                                <constraint firstAttribute="height" constant="390" id="Urh-Tg-dZo"/>
                                             </constraints>
                                             <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="AxR-JW-tjB">
                                                 <font key="font" metaFont="system"/>
@@ -751,13 +751,11 @@ Gw
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Poo-f2-StF" secondAttribute="trailing" constant="16" id="2UE-2S-z1X"/>
-                                        <constraint firstItem="Poo-f2-StF" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="15" id="4qv-Ka-KbO"/>
-                                        <constraint firstItem="Poo-f2-StF" firstAttribute="top" secondItem="gXn-wi-BH2" secondAttribute="bottom" constant="8" symbolic="YES" id="ENh-DL-iku"/>
-                                        <constraint firstItem="gXn-wi-BH2" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="17" id="QXj-pR-gXP"/>
-                                        <constraint firstItem="Poo-f2-StF" firstAttribute="centerX" secondItem="gXn-wi-BH2" secondAttribute="centerX" id="c8g-hr-vBN"/>
-                                        <constraint firstAttribute="bottom" secondItem="Poo-f2-StF" secondAttribute="bottom" constant="17" id="pEs-eY-dkH"/>
-                                        <constraint firstAttribute="trailing" secondItem="gXn-wi-BH2" secondAttribute="trailing" constant="17" id="pyF-kG-0Oh"/>
+                                        <constraint firstItem="gXn-wi-BH2" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="17" id="0x3-VA-FNZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="Poo-f2-StF" secondAttribute="bottom" constant="17" id="Jbh-h4-OdV"/>
+                                        <constraint firstItem="gXn-wi-BH2" firstAttribute="centerX" secondItem="Poo-f2-StF" secondAttribute="centerX" id="iYg-uH-xBI"/>
+                                        <constraint firstItem="Poo-f2-StF" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="15" id="vrf-o9-n91"/>
+                                        <constraint firstItem="Poo-f2-StF" firstAttribute="top" secondItem="gXn-wi-BH2" secondAttribute="bottom" constant="8" symbolic="YES" id="zwB-fj-66k"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -922,14 +920,14 @@ Gw
                     </tabView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" id="4BO-IN-1OI"/>
-                    <constraint firstItem="dLf-X5-R1o" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="BMe-t4-wDU"/>
-                    <constraint firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" constant="20" symbolic="YES" id="D3I-Ld-uGW"/>
-                    <constraint firstAttribute="bottom" secondItem="dLf-X5-R1o" secondAttribute="bottom" constant="20" symbolic="YES" id="O6I-Fp-GdB"/>
-                    <constraint firstItem="T01-Nx-QhV" firstAttribute="top" secondItem="alB-sv-LJa" secondAttribute="top" constant="12" symbolic="YES" id="Wuf-CS-yMi"/>
-                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="baseline" secondItem="dLf-X5-R1o" secondAttribute="baseline" id="dfo-Ld-dYh"/>
-                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="leading" secondItem="dLf-X5-R1o" secondAttribute="trailing" constant="12" symbolic="YES" id="f48-C4-qwj"/>
-                    <constraint firstItem="T01-Nx-QhV" firstAttribute="leading" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" symbolic="YES" id="qU4-Wa-4Bt"/>
+                    <constraint firstAttribute="bottom" secondItem="dLf-X5-R1o" secondAttribute="bottom" constant="20" symbolic="YES" id="3vE-zE-ijA"/>
+                    <constraint firstItem="T01-Nx-QhV" firstAttribute="top" secondItem="alB-sv-LJa" secondAttribute="top" constant="12" symbolic="YES" id="B2w-XB-jQO"/>
+                    <constraint firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" constant="20" symbolic="YES" id="GoU-Ou-hb7"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="leading" secondItem="dLf-X5-R1o" secondAttribute="trailing" constant="12" symbolic="YES" id="Xoj-py-4fB"/>
+                    <constraint firstItem="T01-Nx-QhV" firstAttribute="leading" secondItem="alB-sv-LJa" secondAttribute="leading" constant="20" symbolic="YES" id="drd-wu-a5L"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="baseline" secondItem="dLf-X5-R1o" secondAttribute="baseline" id="fVL-eR-odF"/>
+                    <constraint firstItem="wmA-Wb-Jwj" firstAttribute="trailing" secondItem="T01-Nx-QhV" secondAttribute="trailing" id="lU4-BU-7I5"/>
+                    <constraint firstItem="dLf-X5-R1o" firstAttribute="top" secondItem="T01-Nx-QhV" secondAttribute="bottom" constant="20" id="tfa-mw-lYm"/>
                 </constraints>
             </view>
             <connections>
