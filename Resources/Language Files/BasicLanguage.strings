@@ -472,7 +472,6 @@
 "BasicLanguage[1146]" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "BasicLanguage[1147]" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "BasicLanguage[1148]" = "\002-CTCP-\002 %1$@ from %2$@";
-"BasicLanguage[1149]" = "Netsplit: %@";
 "BasicLanguage[1150]" = "%1$@ (%2$@)";
 "BasicLanguage[1151]" = "%@ IRC Network";
 "BasicLanguage[1152][0]" = "%1$@ is now known as \002%2$@\002";

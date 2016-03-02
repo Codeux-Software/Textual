@@ -5306,24 +5306,25 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *text = BLS(1153, sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 	if (NSObjectIsNotEmpty(comment)) {
-		/* Crude regular expression for matching netsplits. */
-		static NSString *nsrgx = @"^((([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)) (([a-zA-Z0-9-_\\.\\*]+)\\.([a-zA-Z0-9-_]+)))$";
-		
-		if ([XRRegularExpression string:comment isMatchedByRegex:nsrgx]) {
-			comment = BLS(1149, comment);
-		}
-
 		text = BLS(1150, text, [comment stringByAppendingIRCFormattingStop]);
 	}
-	
-#define	_showQuitInChannel		([TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)
+
+#define	_hideQuitInChannel		([TPCPreferences showJoinLeave] == NO || [ignoreChecks ignoreGeneralEventMessages] && c.config.ignoreGeneralEventMessages)
 
 	/* Is this a targetted print message? */
 	if ([m isPrintOnlyMessage]) {
 		IRCChannel *c = [self findChannel:target];
 
 		if ([c isChannel]) {
-			if (_showQuitInChannel) {
+			BOOL printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
+
+			if (printMessage) {
+				if (myself == NO && _hideQuitInChannel) {
+					printMessage = NO;
+				}
+			}
+
+			if (printMessage) {
 				[self print:c
 					   type:TVCLogLineQuitType
 				   nickname:nil
@@ -5342,11 +5343,21 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	@synchronized(self.channels) {
 		for (IRCChannel *c in self.channels) {
 			if ([c memberExists:sendern]) {
-				if (_showQuitInChannel || myself || [c isPrivateMessage]) {
-					if ([c isPrivateMessage]) {
-						text = BLS(1154, sendern);
-					}
+				BOOL printMessage = YES;
 
+				if ([c isChannel]) {
+					printMessage = [self postReceivedMessage:m withText:comment destinedFor:c];
+
+					if (printMessage) {
+						if (myself == NO && _hideQuitInChannel) {
+							printMessage = NO;
+						}
+					}
+				} else {
+					text = BLS(1154, sendern);
+				}
+
+				if (printMessage) {
 					[self print:c
 						   type:TVCLogLineQuitType
 					   nickname:nil
@@ -5359,10 +5370,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				if (myself || [c isPrivateMessage]) {
 					[c deactivate];
+				}
 
-					if (myself == NO) {
-						[mainWindow() reloadTreeItem:c];
-					}
+				if (myself == NO) {
+					[mainWindow() reloadTreeItem:c];
 				}
 			}
 		}
@@ -6334,6 +6345,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self sendSASLIdentificationInformation];
 		}
 	}
+
+	(void)[self postReceivedMessage:m];
 }
 
 - (void)receivePing:(IRCMessage *)m
@@ -6341,6 +6354,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSAssertReturn([m paramsCount] > 0);
 
 	[self send:IRCPrivateCommandIndex("pong"), [m sequence:0], nil];
+
+	(void)[self postReceivedMessage:m];
 }
 
 - (void)receiveAwayNotifyCapacity:(IRCMessage *)m
@@ -6468,12 +6483,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return [self receiveErrorNumericReply:m];
 	}
 
+	BOOL printMessage = YES;
+
+	if (n != 324 && n != 332) {
+		printMessage = [self postReceivedMessage:m];
+	}
+
 	switch (n) {
 		case 1: // RPL_WELCOME
 		{
 			[self receiveInit:m];
-			
-			[self printReply:m];
+
+			if (printMessage) {
+				[self printReply:m];
+			}
 
 			break;
 		}
@@ -6481,17 +6504,21 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 3: // RPL_CREATED
 		case 4: // RPL_MYINFO
 		{
-			[self printReply:m];
+			if (printMessage) {
+				[self printReply:m];
+			}
 
 			break;
 		}
 		case 5: // RPL_ISUPPORT
 		{
             [self.supportInfo update:[m sequence:1] client:self];
-            
-			NSString *configRep = [self.supportInfo buildConfigurationRepresentationForLastEntry];
 
-			[self printDebugInformationToConsole:configRep forCommand:[m command]];
+			if (printMessage) {
+				NSString *configRep = [self.supportInfo buildConfigurationRepresentationForLastEntry];
+
+				[self printDebugInformationToConsole:configRep forCommand:[m command]];
+			}
 
 			break;
 		}
@@ -6522,7 +6549,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 42: // RPL_(?????) — Legacy code. What goes here?
 		case 250 ... 255: // RPL_STATSCONN, RPL_LUSERCLIENT, RPL_LUSERHOP, RPL_LUSERUNKNOWN, RPL_LUSERCHANNELS, RPL_LUSERME
 		{
-			[self printReply:m];
+			if (printMessage) {
+				[self printReply:m];
+			}
 
 			break;
 		}
@@ -6532,6 +6561,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 265 ... 266: // RPL_LOCALUSERS, RPL_GLOBALUSERS
         {
+			NSAssertReturn(printMessage);
+
             NSString *message = [m sequence];
 
             if ([m paramsCount] == 4) {
@@ -6557,6 +6588,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([TPCPreferences displayServerMOTD]);
 
+			NSAssertReturn(printMessage);
+
 			if (n == 422) {
 				[self printErrorReply:m];
 			} else {
@@ -6568,6 +6601,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 221: // RPL_UMODES
 		{
 			NSAssertReturn([m paramsCount] > 1);
+
+			NSAssertReturn(printMessage);
 			
 			NSString *modestr = [m paramAt:1];
 
@@ -6596,7 +6631,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self enableCapacity:ClientIRCv3SupportedCapacityIdentifyCTCP];
 			}
 
-			[self printReply:m];
+			if (printMessage) {
+				[self printReply:m];
+			}
 
 			break;
 		}
@@ -6620,17 +6657,19 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[user setIsAway:YES];
 
 					if ([user presentAwayMessageFor301] == NO) {
-						break;
+						return;
 					}
 				}
 			}
-			
-			[self print:ac
-				   type:TVCLogLineDebugType
-			   nickname:nil
-			messageBody:text
-			 receivedAt:[m receivedAt]
-				command:[m command]];
+
+			if (printMessage) {
+				[self print:ac
+					   type:TVCLogLineDebugType
+				   nickname:nil
+				messageBody:text
+				 receivedAt:[m receivedAt]
+					command:[m command]];
+			}
 
 			break;
 		}
@@ -6639,8 +6678,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			self.isAway = (n == 306);
 
-			[self printUnknownReply:m];
-            
+			if (printMessage) {
+				[self printUnknownReply:m];
+			}
+
             /* Update our own status. This has to only be done with away-notify CAP enabled.
              Old, WHO based information requests will still show our own status. */
             NSAssertReturn([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]);
@@ -6675,6 +6716,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
+			NSAssertReturn(printMessage);
+
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m paramAt:2]];
 
 			[self print:[mainWindow() selectedChannelOn:self]
@@ -6689,6 +6732,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 338: // RPL_WHOISACTUALLY (ircu, Bahamut)
 		{
 			NSAssertReturn([m paramsCount] > 2);
+
+			NSAssertReturn(printMessage);
 
 			NSString *text = nil;
 			
@@ -6725,12 +6770,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self enableInUserInvokedCommandProperty:&_inUserInvokedWhowasRequest];
 			}
 
-			if ([realname hasPrefix:@":"]) {
-				realname = [realname substringFromIndex:1];
+			if (printMessage) {
+				if ([realname hasPrefix:@":"]) {
+					 realname = [realname substringFromIndex:1];
+				}
 			}
 
 			if (self.inUserInvokedWhowasRequest) {
-				text = BLS(1170, nickname, username, hostmask, realname);
+				if (printMessage) {
+					text = BLS(1170, nickname, username, hostmask, realname);
+				}
 			} else {
 				/* Update local cache of our hostmask. */
 				if ([nickname isEqualIgnoringCase:[self localNickname]]) {
@@ -6740,21 +6789,27 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				}
 
 				/* Continue normal WHOIS event. */
-				text = BLS(1167, nickname, username, hostmask, realname);
+				if (printMessage) {
+					text = BLS(1167, nickname, username, hostmask, realname);
+				}
 			}
-			
-			[self print:[mainWindow() selectedChannelOn:self]
-				   type:TVCLogLineDebugType
-			   nickname:nil
-			messageBody:text
-			 receivedAt:[m receivedAt]
-				command:[m command]];
+
+			if (text) {
+				[self print:[mainWindow() selectedChannelOn:self]
+					   type:TVCLogLineDebugType
+				   nickname:nil
+				messageBody:text
+				 receivedAt:[m receivedAt]
+					command:[m command]];
+			}
 
 			break;
 		}
 		case 312: // RPL_WHOISSERVER
 		{
 			NSAssertReturn([m paramsCount] > 3);
+
+			NSAssertReturn(printMessage);
 
 			NSString *nickname = [m paramAt:1];
 			NSString *serverHost = [m paramAt:2];
@@ -6783,6 +6838,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([m paramsCount] > 3);
 
+			NSAssertReturn(printMessage);
+
 			NSString *nickname = [m paramAt:1];
 			NSString *idleTime = [m paramAt:2];
 			NSString *connTime = [m paramAt:3];
@@ -6808,6 +6865,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([m paramsCount] > 2);
 
+			NSAssertReturn(printMessage);
+
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
@@ -6830,7 +6889,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *modestr = [m sequence:2];
 
 			if ([modestr isEqualToString:@"+"]) {
-				break;
+				return;
 			}
 
 			IRCChannel *c = [self findChannel:channel];
@@ -6842,15 +6901,19 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[[c modeInfo] update:modestr];
 			}
 
-			if (self.inUserInvokedModeRequest || c.inUserInvokedModeRequest) {
-				NSString *fmodestr = [[c modeInfo] format:NO];
+			printMessage = [self postReceivedMessage:m withText:modestr destinedFor:c];
 
-				[self print:c
-					   type:TVCLogLineModeType
-				   nickname:nil
-				messageBody:BLS(1123, fmodestr)
-				 receivedAt:[m receivedAt]
-					command:[m command]];
+			if (self.inUserInvokedModeRequest || c.inUserInvokedModeRequest) {
+				if (printMessage) {
+					NSString *fmodestr = [[c modeInfo] format:NO];
+
+					[self print:c
+						   type:TVCLogLineModeType
+					   nickname:nil
+					messageBody:BLS(1123, fmodestr)
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+				}
 
 				if (c.inUserInvokedModeRequest) {
 					c.inUserInvokedModeRequest = NO;
@@ -6872,16 +6935,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			PointerIsEmptyAssert(c);
 
+			printMessage = [self postReceivedMessage:m withText:topicva destinedFor:c];
+
 			if ([c isActive]) {
 				[c setTopic:topicva];
-				
-				[self print:c
-					   type:TVCLogLineTopicType
-				   nickname:nil
-				messageBody:BLS(1124, topicva)
-				isEncrypted:NO
-				 receivedAt:[m receivedAt]
-					command:[m command]];
+
+				if (printMessage) {
+					[self print:c
+						   type:TVCLogLineTopicType
+					   nickname:nil
+					messageBody:BLS(1124, topicva)
+					isEncrypted:NO
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+				}
 			}
 
 			break;
@@ -6889,6 +6956,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 333: // RPL_TOPICWHOTIME
 		{
 			NSAssertReturn([m paramsCount] > 3);
+
+			NSAssertReturn(printMessage);
 
 			NSString *channel = [m paramAt:1];
 			NSString *topicow = [m paramAt:2];
@@ -6920,6 +6989,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 341: // RPL_INVITING
 		{
 			NSAssertReturn([m paramsCount] > 2);
+
+			NSAssertReturn(printMessage);
 			
 			NSString *nickname = [m paramAt:1];
 			NSString *channel = [m paramAt:2];
@@ -6943,7 +7014,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			/* Cut the users up. */
 			if (self.inUserInvokedIsonRequest) {
-				[self printErrorReply:m];
+				if (printMessage) {
+					[self printErrorReply:m];
+				}
 
 				[self disableInUserInvokedCommandProperty:&_inUserInvokedIsonRequest];
 			} else {
@@ -7032,7 +7105,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 315: // RPL_ENDOFWHO
 		{
 			if (self.inUserInvokedWhoRequest) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 
 				[self disableInUserInvokedCommandProperty:&_inUserInvokedWhoRequest];
 			}
@@ -7046,7 +7121,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *channel = [m paramAt:1];
 
 			if (self.inUserInvokedWhoRequest) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 			}
 
 			IRCChannel *c = [self findChannel:channel];
@@ -7178,7 +7255,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nameblob = [m paramAt:3];
 			
 			if (self.inUserInvokedNamesRequest) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 			}
 
 			IRCChannel *c = [self findChannel:channel];
@@ -7280,6 +7359,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 320: // RPL_WHOISSPECIAL
 		{
 			NSAssertReturn([m paramsCount] > 2);
+
+			NSAssertReturn(printMessage);
 			
 			NSString *text = [NSString stringWithFormat:@"%@ %@", [m paramAt:1], [m sequence:2]];
 
@@ -7339,6 +7420,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([m paramsCount] > 3);
 
+			NSAssertReturn(printMessage);
+
 			NSString *text = [NSString stringWithFormat:@"%@ %@ %@", [m paramAt:1], [m sequence:3], [m paramAt:2]];
 			
 			[self print:[mainWindow() selectedChannelOn:self]
@@ -7382,6 +7465,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				[listSheet addEntry:entryMask setBy:entryAuthor creationDate:entryCreationDate];
 			} else {
+				if (printMessage == NO) {
+					return;
+				}
+
 				NSString *languageKey = nil;
 
 				if (n == 367) { // RPL_BANLIST
@@ -7425,7 +7512,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if ( listSheet) {
 				[listSheet setContentAlreadyReceived:YES];
 			} else {
-				[self printReply:m];
+				if (printMessage) {
+					[self printReply:m];
+				}
 			}
 
 			break;
@@ -7436,13 +7525,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				/* If we are already an IRCOp, then we do not need to see this line again.
 				 We will assume that if we are seeing it again, then it is the result of a
 				 user opening two connections to a single bouncer session. */
-				
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:BLS(1160, [m senderNickname])
-				 receivedAt:[m receivedAt]
-					command:[m command]];
+
+				if (printMessage) {
+					[self print:nil
+						   type:TVCLogLineDebugType
+					   nickname:nil
+					messageBody:BLS(1160, [m senderNickname])
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+				}
 
 				self.hasIRCopAccess = YES;
 			}
@@ -7452,6 +7543,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 328: // RPL_CHANNEL_URL
 		{
 			NSAssertReturn([m paramsCount] > 2);
+
+			NSAssertReturn(printMessage);
 			
 			NSString *channel = [m paramAt:1];
 			NSString *website = [m paramAt:2];
@@ -7475,12 +7568,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			[self disableInUserInvokedCommandProperty:&_inUserInvokedWhowasRequest];
 
-			[self print:[mainWindow() selectedChannelOn:self]
-				   type:TVCLogLineDebugType
-			   nickname:nil
-			messageBody:[m sequence]
-			 receivedAt:[m receivedAt]
-				command:[m command]];
+			if (printMessage) {
+				[self print:[mainWindow() selectedChannelOn:self]
+					   type:TVCLogLineDebugType
+				   nickname:nil
+				messageBody:[m sequence]
+				 receivedAt:[m receivedAt]
+					command:[m command]];
+			}
 
 			break;
 		}
@@ -7490,7 +7585,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 608: // RPL_CLEARWATCH
 		{
 			if (self.inUserInvokedWatchRequest) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 			}
 
 			if (n == 608 || n == 607) {
@@ -7507,7 +7604,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSAssertReturn([m paramsCount] > 4);
 
 			if (self.inUserInvokedWatchRequest) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 
 				return;
 			}
@@ -7562,6 +7661,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn([m paramsCount] == 3);
 
+			NSAssertReturn(printMessage);
+
 			NSString *sendern = [m paramAt:1];
 			
 			[self printDebugInformation:BLS(1171, sendern)];
@@ -7571,6 +7672,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 718:
 		{
 			NSAssertReturn([m paramsCount] == 4);
+
+			NSAssertReturn(printMessage);
 			
 			NSString *sendern = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
@@ -7591,12 +7694,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			[self enableCapacity:ClientIRCv3SupportedCapacityIsIdentifiedWithSASL];
 
-			[self print:nil
-				   type:TVCLogLineDebugType
-			   nickname:nil
-			messageBody:[m sequence:3]
-			 receivedAt:[m receivedAt]
-				command:[m command]];
+			if (printMessage) {
+				[self print:nil
+					   type:TVCLogLineDebugType
+				   nickname:nil
+				messageBody:[m sequence:3]
+				 receivedAt:[m receivedAt]
+					command:[m command]];
+			}
 
 			break;
 		}
@@ -7606,15 +7711,17 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 906: // ERR_SASLABORTED
 		case 907: // ERR_SASLALREADY
 		{
-			if (n == 903) { // success
-				[self print:nil
-					   type:TVCLogLineDebugType
-				   nickname:nil
-				messageBody:[m sequence:1]
-				 receivedAt:[m receivedAt]
-					command:[m command]];
-			} else {
-				[self printReply:m];
+			if (printMessage) {
+				if (n == 903) { // success
+					[self print:nil
+						   type:TVCLogLineDebugType
+					   nickname:nil
+					messageBody:[m sequence:1]
+					 receivedAt:[m receivedAt]
+						command:[m command]];
+				} else {
+					[self printReply:m];
+				}
 			}
 
 			if (_capacitiesPending &   ClientIRCv3SupportedCapacityIsInSASLNegotiation) {
@@ -7633,7 +7740,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				break;
 			}
 
-			[self printUnknownReply:m];
+			if (printMessage) {
+				[self printUnknownReply:m];
+			}
 
 			break;
 		}
@@ -7644,9 +7753,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	NSInteger n = [m commandNumeric];
 
+	BOOL printMessage = [self postReceivedMessage:m];
+
 	switch (n) {
 		case 401: // ERR_NOSUCHNICK
 		{
+			NSAssertReturn(printMessage);
+
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 
 			if ([c isActive]) {
@@ -7659,6 +7772,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 402: // ERR_NOSUCHSERVER
 		{
+			NSAssertReturn(printMessage);
+
 			NSString *text = BLS(1139, n, [m sequence:1]);
 			
 			[self print:nil
@@ -7674,7 +7789,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 437: // ERR_NICKCHANGETOOFAST
 		{
 			if (self.isLoggedIn) {
-				[self printUnknownReply:m];
+				if (printMessage) {
+					[self printUnknownReply:m];
+				}
 
 				break;
 			}
@@ -7685,6 +7802,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 404: // ERR_CANNOTSENDTOCHAN
 		{
+			NSAssertReturn(printMessage);
+
 			NSString *text = BLS(1139, n, [m sequence:2]);
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
@@ -7712,14 +7831,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if (c) {
 				[c setErrorOnLastJoinAttempt:YES];
 			}
-			
-			[self printErrorReply:m];
+
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
 
 			break;
 		}
 		default:
 		{
-			[self printErrorReply:m];
+			if (printMessage) {
+				[self printErrorReply:m];
+			}
 
 			break;
 		}
@@ -8243,6 +8366,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)processBundlesServerMessage:(IRCMessage *)message
 {
 	[sharedPluginManager() sendServerInputDataToBundles:self message:message];
+}
+
+- (BOOL)postReceivedMessage:(IRCMessage *)referenceMessage
+{
+	return [self postReceivedMessage:referenceMessage withText:[referenceMessage sequence] destinedFor:nil];
 }
 
 - (BOOL)postReceivedMessage:(IRCMessage *)referenceMessage withText:(NSString *)text destinedFor:(IRCChannel *)textDestination
