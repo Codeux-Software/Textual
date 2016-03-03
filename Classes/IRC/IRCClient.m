@@ -5313,7 +5313,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		text = BLS(1150, text, [comment stringByAppendingIRCFormattingStop]);
 	}
 
-#define	_hideQuitInChannel		([TPCPreferences showJoinLeave] == NO || [ignoreChecks ignoreGeneralEventMessages] && c.config.ignoreGeneralEventMessages)
+#define	_hideQuitInChannel		([TPCPreferences showJoinLeave] == NO || [ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages)
 
 	/* Is this a targetted print message? */
 	if ([m isPrintOnlyMessage]) {
