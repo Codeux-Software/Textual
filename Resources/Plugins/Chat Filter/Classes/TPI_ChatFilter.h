@@ -64,6 +64,7 @@ typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
 @property (nonatomic, assign) BOOL filterIgnoreContent;
 @property (nonatomic, assign) BOOL filterIgnoresOperators;
 @property (nonatomic, assign) BOOL filterLogMatch;
+@property (nonatomic, assign) BOOL filterLimitedToMyself;
 @property (nonatomic, assign) TPI_ChatFilterEventType filterEvents;
 @property (nonatomic, assign) TPI_ChatFilterLimitToValue filterLimitedToValue;
 @property (nonatomic, copy) NSArray *filterLimitedToChannelsIDs;

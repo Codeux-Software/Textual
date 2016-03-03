@@ -74,6 +74,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelTopicChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeReceivedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
+@property (nonatomic, weak) IBOutlet NSButton *filterLimitedToMyselfCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
@@ -88,6 +89,7 @@
 - (IBAction)filteredLimitedToMatrixChanged:(id)sender;
 - (IBAction)filterIgnoreContentCheckChanged:(id)sender;
 - (IBAction)filterEventTypeChanged:(id)sender;
+- (IBAction)filterLimitedToMyselfChanged:(id)sender;
 @end
 
 #define TPI_ChatFilterFilterActionTokenFieldBottomPadding		6
@@ -138,6 +140,7 @@
 
 	[self loadFilter];
 
+	[self updateEnabledStateOfSenderMatch];
 	[self updateEnabledStateOfFilterEvents];
 	[self updateEnableStateOfFilterActionTokenField];
 	[self updateEnabledStateOfComponentsConstrainedByFilterEvents];
@@ -170,6 +173,8 @@
 	[self.filterIgnoreContentCheck setState:[self.filter filterIgnoreContent]];
 
 	[self.filterLogMatchCheck setState:[self.filter filterLogMatch]];
+
+	[self.filterLimitedToMyselfCheck setState:[self.filter filterLimitedToMyself]];
 
 	[self.filterEventPlainTextMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType]];
 	[self.filterEventActionMessageCheck setState:[self.filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]];
@@ -236,6 +241,8 @@
 	[self.filter setFilterLimitedToValue:[self.filterLimitToMatrix selectedTag]];
 
 	[self.filter setFilterLogMatch:([self.filterLogMatchCheck state] == NSOnState)];
+
+	[self.filter setFilterLimitedToMyself:([self.filterLimitedToMyselfCheck state] == NSOnState)];
 
 	[self.filter setFilterEvents:[self compileFilterEvents]];
 
@@ -639,19 +646,21 @@
 					 [self.filterEventActionMessageCheck state] == NSOnState ||
 					 [self.filterEventNoticeMessageCheck state] == NSOnState);
 
-/*	BOOL enabled2 = ([self.filterEventUserJoinedChannelCheck state] == NSOnState ||
-					 [self.filterEventUserLeftChannelCheck state] == NSOnState ||
-					 [self.filterEventUserKickedFromChannelCheck state] == NSOnState ||
-					 [self.filterEventUserDisconnectedCheck state] == NSOnState ||
-					 [self.filterEventUserChangedNicknameCheck state] == NSOnState ||
-					 [self.filterEventChannelTopicReceivedCheck state] == NSOnState ||
-					 [self.filterEventChannelTopicChangedCheck state] == NSOnState ||
-					 [self.filterEventChannelModeReceivedCheck state] == NSOnState ||
-					 [self.filterEventChannelModeChangedCheck state] == NSOnState); */
-
 	[self.filterForwardToDestinationTextField setEnabled:enabled1];
 
-//	[self.filterIgnoresOperatorsCheck setEnabled:(enabled1 || enabled2)];
+	[self.filterIgnoresOperatorsCheck setEnabled:enabled1];
+}
+
+- (void)updateEnabledStateOfSenderMatch
+{
+	BOOL enabled1 = ([self.filterLimitedToMyselfCheck state] == NSOffState);
+
+	[self.filterSenderMatchTextField setEnabled:enabled1];
+}
+
+- (void)filterLimitedToMyselfChanged:(id)sender
+{
+	[self updateEnabledStateOfSenderMatch];
 }
 
 - (void)filterEventTypeChanged:(id)sender

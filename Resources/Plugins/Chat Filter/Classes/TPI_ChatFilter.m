@@ -68,6 +68,7 @@
 			@"filterIgnoreContent"				: @(NO),
 			@"filterIgnoresOperators"			: @(YES),
 			@"filterLogMatch"					: @(NO),
+			@"filterLimitedToMyself"			: @(NO),
 
 			@"filterLimitedToValue"				: @(TPI_ChatFilterLimitToNoLimitValue),
 		};
@@ -85,6 +86,8 @@
 	self.filterItemID = [NSString stringWithUUID];
 
 	self.filterLimitedToValue = [defaults integerForKey:@"filterLimitedToValue"];
+
+	self.filterLimitedToMyself = [defaults boolForKey:@"filterLimitedToMyself"];
 
 	self.filterIgnoresOperators = [defaults boolForKey:@"filterIgnoresOperators"];
 
@@ -105,6 +108,7 @@
 
 	[dic assignBoolTo:&_filterIgnoreContent forKey:@"filterIgnoreContent"];
 	[dic assignBoolTo:&_filterIgnoresOperators forKey:@"filterIgnoresOperators"];
+	[dic assignBoolTo:&_filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic assignBoolTo:&_filterLogMatch forKey:@"filterLogMatch"];
 
 	[dic assignStringTo:&_filterAction forKey:@"filterAction"];
@@ -166,6 +170,7 @@
 
 	[dic setBool:self.filterIgnoreContent forKey:@"filterIgnoreContent"];
 	[dic setBool:self.filterIgnoresOperators forKey:@"filterIgnoresOperators"];
+	[dic setBool:self.filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic setBool:self.filterLogMatch forKey:@"filterLogMatch"];
 
 	[dic setUnsignedInteger:self.filterEvents forKey:@"filterEvents"];
