@@ -111,6 +111,24 @@
 		}
 	}
 
+	return YES;
+}
+
+- (BOOL)testFilterSender:(TPI_ChatFilter *)filter authoredBy:(IRCPrefix *)textAuthor onClient:(IRCClient *)client
+{
+	/* Check whether the sender is the local user */
+	if ([filter filterLimitedToMyself]) {
+		NSString *comparisonValue1 = [client localNickname];
+
+		NSString *comparisonValue2 = [textAuthor nickname];
+
+		if ([comparisonValue1 isEqualIgnoringCase:comparisonValue2] == NO) {
+			return NO;
+		} else {
+			return YES;
+		}
+	}
+
 	/* Maybe perform filter action on sender hostmask */
 	NSString *filterSenderMatch = [filter filterSenderMatch];
 
@@ -195,6 +213,10 @@
 					continue;
 				}
 
+				if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
+					continue;
+				}
+
 				if ([self testFilterMatch:filter againstText:text allowingEmptyText:YES] == NO) {
 					continue;
 				}
@@ -245,6 +267,10 @@
 
 				/* Perform common filter checks */
 				if ([self testFilterDestination:filter againstText:text authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {
+					continue;
+				}
+
+				if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
 					continue;
 				}
 
