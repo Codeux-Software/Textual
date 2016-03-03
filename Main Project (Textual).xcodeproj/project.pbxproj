@@ -1714,6 +1714,8 @@
 		4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialog.h; sourceTree = "<group>"; };
 		4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTableCell.h; sourceTree = "<group>"; };
 		4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTransferController.h; sourceTree = "<group>"; };
+		4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements; sourceTree = SOURCE_ROOT; };
+		4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
 		4C52379315C18F6700414852 /* Styles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Styles; path = Resources/Styles/Styles; sourceTree = SOURCE_ROOT; };
 		4C529E2017AF0050009BA0B3 /* TPCResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCResourceManager.m; path = Preferences/TPCResourceManager.m; sourceTree = "<group>"; };
@@ -2596,6 +2598,8 @@
 			children = (
 				4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */,
 				4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */,
+				4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */,
+				4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */,
 			);
 			name = Entitlements;
 			sourceTree = "<group>";
@@ -5296,13 +5300,10 @@
 			baseConfigurationReference = 4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = .tmp/Info.plist;
+				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = debug;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5312,13 +5313,10 @@
 			baseConfigurationReference = 4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = .tmp/Info.plist;
+				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = devid;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -5366,13 +5364,10 @@
 			baseConfigurationReference = 4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = .tmp/Info.plist;
+				INFOPLIST_FILE = "${PROJECT_DIR}/.tmp/Info.plist";
 				PRODUCT_NAME = Textual;
 				STRIPFLAGS = "-S";
 				STRIP_STYLE = "non-global";
-				TEXTUAL_BUILD_SCHEME_TOKEN = appstore;
-				TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
-				TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual;
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Release (App Store)";
