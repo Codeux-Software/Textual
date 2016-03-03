@@ -1,3 +1,21 @@
 #include "Base Configuration.xcconfig"
 
+//
+// If you change TEXTUAL_BUILT_INSIDE_SANDBOX to 1:
+//
+// When sandbox is enabled, perform the following change:
+//
+// TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
+// TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual
+//
+// Changes to:
+//
+// TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.irc.textual5;
+// TEXTUAL_GROUP_CONTAINER_IDENTIFIER = 8482Q6EPL6.com.codeux.irc.textual
+//
+
 GCC_PREPROCESSOR_DEFINITIONS = TEXTUAL_BUILT_INSIDE_SANDBOX=0 TEXTUAL_BUILT_WITH_LICENSE_MANAGER=1 TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED=1 TEXTUAL_BUILT_WITH_SPARKLE_ENABLED=1
+
+TEXTUAL_BUNDLE_IDENTIFIER = com.codeux.apps.textual;
+TEXTUAL_GROUP_CONTAINER_IDENTIFIER = com.codeux.apps.textual
+TEXTUAL_BUILD_SCHEME_TOKEN = devid

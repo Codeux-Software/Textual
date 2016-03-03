@@ -208,6 +208,18 @@
 	#import "StaticDefinitions.h"
 
 	/* Import frameworks based on defines. */
+	#ifndef TEXTUAL_BUILT_INSIDE_SANDBOX
+		#define TEXTUAL_BUILT_INSIDE_SANDBOX 0
+	#endif
+
+	#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+		#ifdef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
+			#undef TEXTUAL_BUILT_WITH_SPARKLE_ENABLED
+		#endif
+
+		#define TEXTUAL_BUILT_WITH_SPARKLE_ENABLED 0
+	#endif
+
 	#ifndef TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED
 		#define	TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED 0
 	#endif

@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		4C51BE9412D0471600E79CEB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C51BE9312D0471600E79CEB /* Cocoa.framework */; };
 		4C9AD1CE1B8A1634000B63EF /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9AD1CD1B8A1634000B63EF /* CocoaExtensions.framework */; };
-		4CAA731C1BA9B19F00A38456 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAA731B1BA9B19F00A38456 /* BasicLanguage.strings */; settings = {ASSET_TAGS = (); }; };
-		4CF4880E1BA7B43800A87EED /* TPI_ChatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF488091BA7B43800A87EED /* TPI_ChatFilter.m */; settings = {ASSET_TAGS = (); }; };
-		4CF4880F1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4880B1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m */; settings = {ASSET_TAGS = (); }; };
-		4CF488101BA7B43800A87EED /* TPI_ChatFilterExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4880D1BA7B43800A87EED /* TPI_ChatFilterExtension.m */; settings = {ASSET_TAGS = (); }; };
-		4CF488151BA7B44C00A87EED /* TPI_ChatFilterEditFilterSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF488131BA7B44C00A87EED /* TPI_ChatFilterEditFilterSheet.xib */; settings = {ASSET_TAGS = (); }; };
-		4CF488161BA7B44C00A87EED /* TPI_ChatFilterExtension.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF488141BA7B44C00A87EED /* TPI_ChatFilterExtension.xib */; settings = {ASSET_TAGS = (); }; };
+		4CAA731C1BA9B19F00A38456 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CAA731B1BA9B19F00A38456 /* BasicLanguage.strings */; };
+		4CF4880E1BA7B43800A87EED /* TPI_ChatFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF488091BA7B43800A87EED /* TPI_ChatFilter.m */; };
+		4CF4880F1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4880B1BA7B43800A87EED /* TPI_ChatFilterEditFilterSheet.m */; };
+		4CF488101BA7B43800A87EED /* TPI_ChatFilterExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF4880D1BA7B43800A87EED /* TPI_ChatFilterExtension.m */; };
+		4CF488151BA7B44C00A87EED /* TPI_ChatFilterEditFilterSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF488131BA7B44C00A87EED /* TPI_ChatFilterEditFilterSheet.xib */; };
+		4CF488161BA7B44C00A87EED /* TPI_ChatFilterExtension.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF488141BA7B44C00A87EED /* TPI_ChatFilterExtension.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */

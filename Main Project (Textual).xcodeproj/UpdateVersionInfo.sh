@@ -1,14 +1,34 @@
 #!/bin/sh
 
-# Make a copy of the Info.plist file in the .tmp folder
-# This will be the Info.plist file manipulated with the version
-# information that is generated below.
-
 cd "${PROJECT_DIR}/Resources/"
 
 mkdir -p "${PROJECT_DIR}/.tmp/"
 
+# Make a copy of the Info.plist file in the .tmp folder
+# This will be the Info.plist file manipulated with the version
+# information that is generated below.
 cp "${PROJECT_DIR}/Resources/Info.plist" "${PROJECT_DIR}/.tmp/Info.plist"
+
+# Make a copy of the appropriate entitlements file.
+if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
+	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
+else
+	if [[ "${GCC_PREPROCESSOR_DEFINITIONS}" == *"TEXTUAL_BUILT_INSIDE_SANDBOX=1"* ]]; then
+		# While we are here, check to make sure that the user
+		# performed the necessary configuration changes
+		if [ "${TEXTUAL_BUNDLE_IDENTIFIER}" != "com.codeux.irc.textual5" ] || [ "${TEXTUAL_GROUP_CONTAINER_IDENTIFIER}" != "8482Q6EPL6.com.codeux.irc.textual" ]; then
+			echo "Before changing TEXTUAL_BULIT_INSIDE_SANDBOX to 1, make the changes noted in the comments of the configuration file.";
+
+			exit 1;
+		fi
+
+		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
+	else
+		echo "Butt ${GCC_PREPROCESSOR_DEFINITIONS}"
+
+		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
+	fi
+fi
 
 cd "${PROJECT_DIR}/.tmp/"
 
