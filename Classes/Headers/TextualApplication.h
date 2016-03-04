@@ -195,7 +195,6 @@
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
-	@class TVCWebViewAutoScroll;
 	@class TXMasterController;
 	@class TXMasterController;
 	@class TXMenuController;
@@ -406,7 +405,6 @@
 	#import "TVCTextFieldComboBoxWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
-	#import "TVCWebViewAutoScroll.h"
 
 	/* Master Controllers — Root. */
 	#import "TXGlobalModels.h"

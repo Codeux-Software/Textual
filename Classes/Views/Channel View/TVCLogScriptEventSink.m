@@ -40,8 +40,6 @@
 
 #import "IRCUserPrivate.h"
 
-#define _doubleClickRadius		3
-
 @implementation TVCLogScriptEventSink
 
 - (instancetype)init
@@ -56,6 +54,15 @@
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
+	if (sel == @selector(init) ||
+		sel == @selector(webView) ||
+		sel == @selector(webViewPolicy) ||
+ 		sel == @selector(associatedClient) ||
+		sel == @selector(associatedChannel))
+	{
+		return YES;
+	}
+
 	return NO;
 }
 
@@ -97,31 +104,24 @@
 	return nil;
 }
 
-- (BOOL)shouldStopDoubleClick:(id)e
+- (TVCLogView *)webView
 {
-	NSInteger dr = _doubleClickRadius;
-	
-	NSInteger cx = [[e valueForKey:@"clientX"] integerValue];
-	NSInteger cy = [[e valueForKey:@"clientY"] integerValue];
-	
-	BOOL res = NO;
-	
-	NSTimeInterval now = [NSDate unixTime];
-	
-	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
-		(self.y - dr) <= cy && cy <= (self.y + dr))
-	{
-		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
-			res = YES;
-		}
-	}
-	
-	self.lastClickTime = now;
-	
-	self.x = cx;
-	self.y = cy;
-	
-	return res;
+	return [self.logController webView];
+}
+
+- (TVCLogPolicy *)webViewPolicy
+{
+	return [self.logController webViewPolicy];
+}
+
+- (IRCClient *)associatedClient
+{
+	return [self.logController associatedClient];
+}
+
+- (IRCChannel *)associatedChannel
+{
+	return [self.logController associatedChannel];
 }
 
 - (void)logToConsole:(NSString *)message
@@ -129,138 +129,108 @@
     LogToConsole(@"JavaScript: %@", message);
 }
 
-- (void)throwJavaScriptException:(NSString *)message
-{
-	[WebScriptObject throwException:message];
-}
-
 - (void)logToJavaScriptConsole:(NSString *)message
 {
-	TVCLogView *webView = [self.logController webView];
-	
-	WebScriptObject *console = [webView javaScriptConsoleAPI];
-	
-	[console callWebScriptMethod:@"log" withArguments:@[message]];
+	TVCLogView *webView = [self webView];
+
+	[webView executeCommand:@"console.log" withArguments:@[message]];
 }
 
-- (void)toggleInlineImage:(NSString *)object
+- (void)throwJavaScriptException:(NSString *)message
 {
-	/* Do we have a properly formatted ID? */
-	if ([object hasPrefix:@"inlineImage-"] == NO) {
-		object = [@"inlineImage-" stringByAppendingString:object];
-	}
+	TVCLogView *webView = [self webView];
 
-	/* Find the element. */
-	DOMElement *imageNode = [[self.logController mainFrameDocument] getElementById:object];
-
-	PointerIsEmptyAssert(imageNode);
-
-	/* Update the display information. */
-	NSString *display = [[imageNode style] display];
-
-	if ([display isEqualIgnoringCase:@"none"]) {
-		display = NSStringEmptyPlaceholder;
-	} else {
-		display = @"none";
-	}
-	
-	[[imageNode style] setDisplay:display];
-	
-	if ([display isEqualToString:@"none"]) {
-		[self.logController executeScriptCommand:@"didToggleInlineImageToHidden" withArguments:@[imageNode] onQueue:NO];
-	} else {
-		[self.logController executeScriptCommand:@"didToggleInlineImageToVisible" withArguments:@[imageNode] onQueue:NO];
-	}
+	[webView executeCommand:@"console.error" withArguments:@[message]];
 }
 
 - (void)setURLAddress:(NSString *)s
 {
-    [[self.logController webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
+    [[self webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setNickname:(NSString *)s
 {
-    [[self.logController webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
+    [[self webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)setChannelName:(NSString *)s
 {
-    [[self.logController webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
+    [[self webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
 }
 
 - (void)channelNameDoubleClicked
 {
-    [[self.logController webViewPolicy] channelDoubleClicked];
+    [[self webViewPolicy] channelDoubleClicked];
 }
 
 - (void)nicknameDoubleClicked
 {
-    [[self.logController webViewPolicy] nicknameDoubleClicked];
+    [[self webViewPolicy] nicknameDoubleClicked];
 }
 
-- (void)topicDoubleClicked
+- (void)topicBarDoubleClicked
 {
-    [[self.logController webViewPolicy] topicDoubleClicked];
+	[[self webViewPolicy] topicBarDoubleClicked];
 }
 
 - (NSInteger)channelMemberCount
 {
-    return [[self.logController associatedChannel] numberOfMembers];
+    return [[self associatedChannel] numberOfMembers];
 }
 
 - (NSInteger)serverChannelCount
 {
-	return [[self.logController associatedClient] channelCount];
+	return [[self associatedClient] channelCount];
 }
 
 - (BOOL)serverIsConnected
 {
-	return [[self.logController associatedClient] isLoggedIn];
+	return [[self associatedClient] isLoggedIn];
 }
 
 - (BOOL)channelIsJoined
 {
-	return [[self.logController associatedChannel] isActive];
+	return [[self associatedChannel] isActive];
 }
 
 - (NSString *)channelName
 {
-	return [[self.logController associatedChannel] name];
+	return [[self associatedChannel] name];
 }
 
 - (NSString *)serverAddress
 {
-	return [[self.logController associatedClient] networkAddress];
+	return [[self associatedClient] networkAddress];
 }
 
 - (NSString *)networkName
 {
-	return [[self.logController associatedClient] networkName];
+	return [[self associatedClient] networkName];
 }
 
 - (NSString *)localUserNickname
 {
-	return [[self.logController associatedClient] localNickname];
+	return [[self associatedClient] localNickname];
 }
 
 - (NSString *)localUserHostmask
 {
-	return [[self.logController associatedClient] localHostmask];
+	return [[self associatedClient] localHostmask];
 }
 
 - (BOOL)inlineImagesEnabledForView
 {
-	return [self.logController inlineImagesEnabledForView];
+	return [self inlineImagesEnabledForView];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[[self.logController associatedClient] printDebugInformationToConsole:m];
+	[[self associatedClient] printDebugInformationToConsole:m];
 }
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[[self.logController associatedClient] printDebugInformation:m channel:[self.logController associatedChannel]];
+	[[self associatedClient] printDebugInformation:m channel:[self.logController associatedChannel]];
 }
 
 - (BOOL)sidebarInversionIsEnabled

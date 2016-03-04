@@ -1109,6 +1109,12 @@
 		4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD378931C89EB18009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
+		4CD378941C89EB1D009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
+		4CD378951C89EB21009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
+		4CD378971C89F53B009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
+		4CD378981C89F541009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
+		4CD378991C89F548009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
 		4CD4165B184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD4165C184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
@@ -1124,9 +1130,6 @@
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CEA09C61875A734005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1162,9 +1165,6 @@
 		4CF40E061AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
 		4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
 		4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */; };
-		4CF40E0A1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBD1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m */; };
-		4CF40E0B1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBD1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m */; };
-		4CF40E0C1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBD1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m */; };
 		4CF40E0E1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBF1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4CF40E0F1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBF1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
 		4CF40E101AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DBF1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m */; };
@@ -1498,6 +1498,8 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
+				4CD378991C89F548009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
+				4CD378931C89EB18009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
 				4CF40EB21AC1A53A00A26BE0 /* core.js in Copy JavaScript Files */,
 				4CF40EB31AC1A53C00A26BE0 /* corePrivate.js in Copy JavaScript Files */,
 				4CF40EB41AC1A53D00A26BE0 /* liveresize.js in Copy JavaScript Files */,
@@ -1554,6 +1556,8 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
+				4CD378981C89F541009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
+				4CD378941C89EB1D009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
 				4CF40EB51AC1A54000A26BE0 /* core.js in Copy JavaScript Files */,
 				4CF40EB61AC1A54200A26BE0 /* corePrivate.js in Copy JavaScript Files */,
 				4CF40EB71AC1A54400A26BE0 /* liveresize.js in Copy JavaScript Files */,
@@ -1589,6 +1593,8 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
+				4CD378971C89F53B009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
+				4CD378951C89EB21009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
 				4CF40EB81AC1A54800A26BE0 /* core.js in Copy JavaScript Files */,
 				4CF40EB91AC1A54900A26BE0 /* corePrivate.js in Copy JavaScript Files */,
 				4CF40EBA1AC1A54B00A26BE0 /* liveresize.js in Copy JavaScript Files */,
@@ -2024,6 +2030,8 @@
 		4CCFA6541ABCF36A0083620F /* TPWTB_Style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Style.png; sourceTree = "<group>"; };
 		4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TPWTB_Style@2x.png"; sourceTree = "<group>"; };
 		4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
+		4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = scriptSinkPrivate.js; path = Resources/Styles/JavaScript/API/scriptSinkPrivate.js; sourceTree = SOURCE_ROOT; };
+		4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = autoScrollPrivate.js; path = Resources/Styles/JavaScript/API/autoScrollPrivate.js; sourceTree = SOURCE_ROOT; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
@@ -2033,7 +2041,6 @@
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
-		4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCWebViewAutoScroll.h; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLoader.m; sourceTree = "<group>"; };
@@ -2046,7 +2053,6 @@
 		4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogRenderer.m; sourceTree = "<group>"; };
 		4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogScriptEventSink.m; sourceTree = "<group>"; };
 		4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogView.m; sourceTree = "<group>"; };
-		4CF40DBD1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCWebViewAutoScroll.m; sourceTree = "<group>"; };
 		4CF40DBF1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowTextViewMavericksUserInterace.m; sourceTree = "<group>"; };
 		4CF40DC01AC1A4AC00A26BE0 /* TVCMainWindowTextViewYosemiteUserInterace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowTextViewYosemiteUserInterace.m; sourceTree = "<group>"; };
 		4CF40DC11AC1A4AC00A26BE0 /* TVCTextFieldComboBoxWithValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCTextFieldComboBoxWithValueValidation.m; sourceTree = "<group>"; };
@@ -2363,9 +2369,11 @@
 		4C46CCA5158043B100846B64 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */,
 				4CF40EAF1AC1A52D00A26BE0 /* core.js */,
 				4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */,
 				4CF40EB11AC1A52D00A26BE0 /* liveresize.js */,
+				4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2758,7 +2766,6 @@
 				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
-				4CEC551919BE6A000028DEF2 /* TVCWebViewAutoScroll.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C8AF596158E99520026668C /* TXMasterController.h */,
 				4C8AF597158E99520026668C /* TXMenuController.h */,
@@ -3289,7 +3296,6 @@
 				4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */,
 				4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */,
 				4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */,
-				4CF40DBD1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m */,
 			);
 			path = "Channel View";
 			sourceTree = "<group>";
@@ -3530,7 +3536,6 @@
 				4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
-				4CEC551A19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C790FC91B82706400EB318C /* TXWindowController.h in Headers */,
 				4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */,
@@ -3692,7 +3697,6 @@
 				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
-				4CEC551B19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4CC2DC661A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
 				4C77FF251991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4C992DD41AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
@@ -3849,7 +3853,6 @@
 				4CBFB2E81979AFBD005BB6B5 /* TVCMemberListSharedUserInterface.h in Headers */,
 				4CBFB2E51979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h in Headers */,
 				4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
-				4CEC551C19BE6A000028DEF2 /* TVCWebViewAutoScroll.h in Headers */,
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
@@ -4614,7 +4617,6 @@
 				4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */,
 				4CF40DF31AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E231AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
-				4CF40E0B1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */,
 				4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */,
 				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CF40E3B1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
@@ -4756,7 +4758,6 @@
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */,
-				4CF40E0A1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */,
 				4C0BA6671990798800857343 /* IRCChannel.m in Sources */,
 				4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */,
 				4CF40E3A1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
@@ -4895,7 +4896,6 @@
 				4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */,
 				4CF40DF41AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E241AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
-				4CF40E0C1AC1A4AC00A26BE0 /* TVCWebViewAutoScroll.m in Sources */,
 				4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */,
 				4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */,
 				4CF40E3C1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,

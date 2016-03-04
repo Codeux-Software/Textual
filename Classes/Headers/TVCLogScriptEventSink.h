@@ -43,6 +43,4 @@
 @property (nonatomic, assign) NSInteger x;
 @property (nonatomic, assign) NSInteger y;
 @property (nonatomic, assign) NSTimeInterval lastClickTime;
-
-- (void)toggleInlineImage:(NSString *)object;
 @end

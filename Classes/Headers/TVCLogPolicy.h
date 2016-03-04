@@ -52,5 +52,5 @@
 
 - (void)channelDoubleClicked;
 - (void)nicknameDoubleClicked;
-- (void)topicDoubleClicked;
+- (void)topicBarDoubleClicked;
 @end
