@@ -46,12 +46,29 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @property (readonly, copy) NSString *contentString;
 
-@property (readonly, strong) WebScriptObject *javaScriptAPI;
-@property (readonly, strong) WebScriptObject *javaScriptConsoleAPI;
-
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
 @property (readonly, copy) NSString *selection;
+@end
+
+@interface TVCLogView (TVCLogViewJavaScriptHandler)
+- (BOOL)scriptingIsAvailable;
+
+- (id)executeJavaScript:(NSString *)code;
+
+- (id)executeCommand:(NSString *)command;
+- (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command;
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSString *)returnStringByExecutingCommand:(NSString *)command;
+- (NSString *)returnStringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command;
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSString *)escapeJavaScriptString:(NSString *)string;
 @end
 
 @protocol TVCLogViewDelegate <NSObject>

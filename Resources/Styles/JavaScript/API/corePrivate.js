@@ -43,62 +43,244 @@
 /*																		   */
 /* *********************************************************************** */
 
-/* Internal state. */
+/* Internal state */
 Textual.nicknameDoubleClickTimer = null;
 
-/* Loading screen. */
-Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
+/* Loading screen */
+Textual.loadingScreenElement = function()
 {
-	/* fadeInLoadingScreen is the old API name and makes no sense since we are
-	not bringing the loading screen into view, we are removing it. So it is
-	being faded "out" not "in" */
-
-	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
+	return document.getElementById("loading_screen");
 };
 
 Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 {
-	/* Reserved element IDs. */
-	var bhe = document.getElementById("body_home");
-	var tbe = document.getElementById("topic_bar");
-	var lbe = document.getElementById("loading_screen");
+	var documentBody = Textual.documentBodyElement();
 
-	lbe.style.opacity = 0.00;
-	bhe.style.opacity = bodyOp;
+	var topicBar = Textual.topicBarElement();
 
-	if (tbe !== null) {
-		tbe.style.opacity = topicOp;
+	var loadingScreen = Textual.loadingScreenElement();
+
+	/* Modify the opacity values of the various elements */
+	loadingScreen.style.opacity = 0.00;
+
+	documentBody.style.opacity = bodyOp;
+
+	if (topicBar !== null) {
+		topicBar.style.opacity = topicOp;
 	}
 
 	/* The fade time for the loading screen depends on the CSS of the actual
 	style, but there is no reason it should take more than five (5) seconds.
 	We will wait that amount of time before setting the overlay to hidden.
 	Setting it to hidden makes it not copiable after it is not visible. */
-
 	setTimeout(function() {
-		var lbef = document.getElementById("loading_screen");
+		var loadingScreen = Textual.loadingScreenElement();
 
-		lbef.style.display = "none";
+		loadingScreen.style.display = "none";
 	}, 5000);
 };
 
-/* Scrolling. */
+/* Topic bar */
+Textual.topicBarElement = function()
+{
+	return document.getElementById("topic_bar");
+};
+
+Textual.topicBarValue = function(asText)
+{
+	var topicBar = Textual.topicBarElement();
+
+	if (topicBar) {
+		if (typeof asText === 'undefined' || asText === true) {
+			return topicBar.textContent;
+		} else {
+			return topicBar.innerHTML;
+		}
+	} else {
+		return null;
+	}
+};
+
+Textual.setTopicBarValue = function(topicValue, topicValueHTML)
+{
+	var topicBar = Textual.topicBarElement();
+
+	if (topicBar) {
+		topicBar.innerHTML = topicValueHTML;
+
+		Textual.topicBarValueChanged(topicValue);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.topicBarDoubleClicked = function()
+{
+	app.topicBarDoubleClicked();
+};
+
+/* Scrolling */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
 	document.body.scrollTop = document.body.scrollHeight;
 
-	if (fireNotification === undefined || fireNotification === true) {
+	if (typeof fireNotification === 'undefined' || fireNotification === true) {
 		Textual.viewPositionMovedToBottom();
 	}
 };
 
-Textual.notifyDidBecomeVisible = function(wasViewingBottom)
+Textual.scrollToTopOfView = function(fireNotification)
+{
+	document.body.scrollTop = 0;
+
+	if (typeof fireNotification === 'undefined' || fireNotification === true) {
+		Textual.viewPositionMovedToTop();
+	}
+};
+
+Textual.scrollToLine = function(lineNumber)
+{
+	if (Textual.scrollToElement("line-" + lineNumber)) {
+		Textual.viewPositionMovedToLine(lineNumber);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.scrollToElement = function(elementName)
+{
+	var element = document.getElementById(elementName);
+
+	if (element) {
+		element.scrollIntoViewIfNeeded(true);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+/* History indicator */
+Textual.scrollToHistoryIndicator = function()
+{
+	if (Textual.scrollToElement("mark")) {
+		Textual.viewPositionModToHistoryIndicator();
+	}
+};
+
+Textual.historyIndicatorAdd = function(templateHTML)
+{
+	Textual.historyIndicatorRemove();
+
+	Textual.documentBodyAppend(templateHTML);
+
+	Textual.historyIndicatorAddedToView();
+};
+
+Textual.historyIndicatorRemove = function()
+{
+	var e = document.getElementById("mark");
+
+	if (e) {
+		e.parentNode.removeChild(e);
+
+		Textual.historyIndicatorRemovedFromView();
+	}
+};
+
+/* Document body */
+Textual.documentBodyElement = function()
+{
+	return document.getElementById("body_home");
+};
+
+Textual.documentBodyAppend = function(templateHTML)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	documentBody.insertAdjacentHTML("beforeend", templateHTML);
+
+	TextualScroller.performAutoScroll();
+};
+
+Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	var elementToAppendTo = null;
+
+	if (isReload == false) {
+		var historicMessagesDiv = document.getElementById("historic_messages");
+
+		if (historicMessagesDiv) {
+			elementToAppendTo = historicMessagesDiv;
+		}
+	}
+
+	if (elementToAppendTo === null) {
+		elementToAppendTo = documentBody;
+	}
+
+	elementToAppendTo.insertAdjacentHTML("afterbegin", templateHTML);
+
+	TextualScroller.performAutoScroll();
+};
+
+Textual.documentHTML = function()
+{
+	return document.documentElement.innerHTML;
+};
+
+Textual.reduceNumberOfLines = function(countOfLinesToRemove)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	var childNodes = documentBody.childNodes;
+
+	if (countOfLinesToRemove > childNodes.length) {
+		countOfLinesToRemove = childNodes.length;
+	}
+
+	var removedChildren = [];
+
+	for (var i = (countOfLinesToRemove - 1); i >= 0; i--) {
+		var childNode = childNodes[i];
+
+		var childNodeID = childNode.id;
+
+		if (childNodeID && childNodeID.indexOf("line-") === 0) {
+			removedChildren.push(childNodeID);
+
+			documentBody.removeChild(childNode);
+		}
+
+		if (removedChildren.length == countOfLinesToRemove) {
+			break;
+		}
+	}
+
+	return removedChildren;
+};
+
+/* State management */
+Textual.notifyDidBecomeVisible = function()
+{
+	Textual.clearSelection();
+};
+
+/* Selection */
+Textual.clearSelection = function()
 {
 	window.getSelection().empty();
+};
 
-	if (wasViewingBottom) {
-		Textual.scrollToBottomOfView();
-	}
+Textual.currentSelection = function()
+{
+	return window.getSelection().toString();
 };
 
 /* Resource management. */
@@ -207,11 +389,7 @@ Textual.inlineNicknameDoubleClicked = function()
 	app.nicknameDoubleClicked();
 };
 
-Textual.topicDoubleClicked = function()
-{
-	app.topicDoubleClicked();
-};
-
+/* Inline images */
 Textual.hasLiveResize = function()
 {
 	if (typeof InlineImageLiveResize !== 'undefined') {
@@ -234,16 +412,36 @@ Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 	link anchor of an inline image. If the last mouse down event was related to a resize,
 	then we return false to stop link from opening. Else, we pass the event information
 	to the internals of Textual itself to determine whether to cancel the request. */
-
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
-			app.toggleInlineImage(object);
+			Textual.toggleInlineImageReally(object);
 		}
 	} else {
-		app.toggleInlineImage(object);
+		Textual.toggleInlineImageReally(object);
 	}
 
 	return false;
+};
+
+Textual.toggleInlineImageReally = function(object)
+{
+	if (object.indexOf("inlineImage-") !== 0) {
+		object = ("inlineImage-" + object);
+	}
+
+	var imageNode = document.getElementById(object);
+
+	if (imageNode.style.display === "none") {
+		imageNode.style.display = "";
+	} else {
+		imageNode.style.display = "none";
+	}
+
+	if (imageNode.style.display === "none") {
+		Textual.didToggleInlineImageToHidden(imageNode);
+	} else {
+		Textual.didToggleInlineImageToVisible(imageNode);
+	}
 };
 
 Textual.didToggleInlineImageToHidden = function(imageElement)
