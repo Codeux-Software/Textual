@@ -437,7 +437,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if (fireNotification) {
 		[RZNotificationCenter() postNotificationName:IRCWorldDateHasChangedNotification object:nil userInfo:nil];
 
-		[self executeScriptCommandOnAllViews:@"dateChanged"
+		[self executeScriptCommandOnAllViews:@"Textual.dateChanged"
 								   arguments:@[@([currentDayComponents year]),
 											   @([currentDayComponents month]),
 											   @([currentDayComponents day])]

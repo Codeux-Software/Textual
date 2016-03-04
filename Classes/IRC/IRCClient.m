@@ -7989,7 +7989,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)postEventToViewController:(NSString *)eventToken
 {
-    [[self viewController] executeScriptCommand:@"handleEvent" withArguments:@[eventToken] onQueue:NO];
+    [[self viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
 
 	@synchronized(self.channels) {
 		for (IRCChannel *channel in self.channels) {
@@ -8000,7 +8000,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel
 {
-	[[channel viewController] executeScriptCommand:@"handleEvent" withArguments:@[eventToken] onQueue:NO];
+	[[channel viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
 }
 
 #pragma mark -

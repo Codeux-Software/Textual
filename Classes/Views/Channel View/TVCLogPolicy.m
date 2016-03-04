@@ -87,7 +87,7 @@
 	[menuController() memberInChannelViewDoubleClicked:nil];
 }
 
-- (void)topicDoubleClicked
+- (void)topicBarDoubleClicked
 {
     [menuController() showChannelTopicDialog:nil];
 }

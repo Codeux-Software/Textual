@@ -71,8 +71,6 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
 
-- (void)invalidateScrollingPosition;
-
 - (void)nextHighlight;
 - (void)previousHighlight;
 
@@ -80,14 +78,10 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
 @property (readonly, copy) NSString *uniqueIdentifier;
 
-@property (readonly, copy) DOMDocument *mainFrameDocument;
-
 - (void)moveToTop;
 - (void)moveToBottom;
 
-- (BOOL)jumpToLine:(NSString *)line;
-
-@property (readonly) BOOL viewingBottom;
+- (BOOL)jumpToLine:(NSString *)lineNumber;
 
 @property (readonly, copy) NSString *topicValue;
 - (void)setTopic:(NSString *)topic;
