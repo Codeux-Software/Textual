@@ -456,5 +456,12 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 		var realImageElement = imageElement.querySelector("a .image");
 
 		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
+
+		realImageElement.addEventListener("load", Textual.inlineImageLoaded, false);
 	}
 };
+
+Textual.inlineImageLoaded = function()
+{
+	TextualScroller.performAutoScroll();
+}
