@@ -46,10 +46,8 @@
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, assign) BOOL windowScriptObjectLoaded;
 @property (nonatomic, assign) BOOL windowFrameObjectLoaded;
-@property (nonatomic, assign) BOOL wasViewingBottomBeforeBecomingHidden;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
-@property (nonatomic, strong) TVCWebViewAutoScroll *webViewAutoScroller;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
@@ -83,8 +81,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		self.needsLimitNumberOfLines = NO;
 
 		self.maximumLineCount = 300;
-
-		self.wasViewingBottomBeforeBecomingHidden = YES;
 	}
 
 	return self;
@@ -143,8 +139,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	/* Create view. */
 	 self.webViewScriptSink = [TVCLogScriptEventSink new];
 	[self.webViewScriptSink setLogController:self];
-
-	self.webViewAutoScroller = [TVCWebViewAutoScroll new];
 
 	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
 	
@@ -309,54 +303,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			([TPCPreferences showInlineImages] == NO	&& self.associatedChannel.config.ignoreInlineImages));
 }
 
-- (NSInteger)scrollbackCorrectionInit
-{
-	return ([self.webView frame].size.height / 2);
-}
-
-- (DOMDocument *)mainFrameDocument
-{
-	return [[self.webView mainFrame] DOMDocument];
-}
-
-- (DOMElement *)documentBody
-{
-	DOMDocument *doc = [self mainFrameDocument];
-
-	PointerIsEmptyAssertReturn(doc, nil);
-
-	return [doc getElementById:@"body_home"];
-}
-
-- (DOMElement *)documentChannelTopicBar
-{
-	DOMDocument *doc = [self mainFrameDocument];
-
-	PointerIsEmptyAssertReturn(doc, nil);
-
-	return [doc getElementById:@"topic_bar"];
-}
-
-- (WebFrameView *)webFrameView
-{
-	return [[[self webView] mainFrame] frameView];
-}
-
 #pragma mark -
 #pragma mark Document Append & JavaScript Controller
-
-- (void)appendToDocumentBody:(NSString *)html
-{
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [self documentBody];
-	PointerIsEmptyAssert(body);
-
-	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
-
-	[body appendChild:frag];
-}
 
 - (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
@@ -370,34 +318,39 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			NSAssertReturn([operation isCancelled] == NO);
 			
 			[self performBlockOnMainThread:^{
-				[self executeQuickScriptCommand:command withArguments:args];
+				(void)[self executeQuickScriptCommand:command withArguments:args];
 			}];
 		};
 		
 		[[self printingQueue] enqueueMessageBlock:scriptBlock for:self];
 	} else {
-		[self executeQuickScriptCommand:command withArguments:args];
+		(void)[self executeQuickScriptCommand:command withArguments:args];
 	}
 }
 
-- (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
+- (id)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	WebScriptObject *js_api = [self.webView javaScriptAPI];
-
-	if ( js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		[js_api callWebScriptMethod:command	withArguments:args];
-	}
+	return [self.webView executeCommand:command withArguments:args];
 }
 
-- (BOOL)viewHasValidJavaScriptAPIPointer
+- (BOOL)executeQuickBooleanScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	WebScriptObject *js_api = [self.webView javaScriptAPI];
+	return [self.webView returnBooleanByExecutingCommand:command withArguments:args];
+}
 
-	if (js_api && [js_api isKindOfClass:[WebUndefined class]] == NO) {
-		return YES;
-	}
+- (NSString *)executeQuickStringScriptCommand:(NSString *)command withArguments:(NSArray *)args
+{
+	return [self.webView returnStringByExecutingCommand:command withArguments:args];
+}
 
-	return NO;
+- (NSArray *)executeQuickArrayScriptCommand:(NSString *)command withArguments:(NSArray *)args
+{
+	return [self.webView returnArrayByExecutingCommand:command withArguments:args];
+}
+
+- (void)appendToDocumentBody:(NSString *)html
+{
+	(void)[self executeQuickScriptCommand:@"Textual.documentBodyAppend" withArguments:@[html]];
 }
 
 #pragma mark -
@@ -405,45 +358,41 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (NSString *)topicValue
 {
-	DOMElement *topicBar = [self documentChannelTopicBar];
+	NSString *topicValueHTML = [self executeQuickStringScriptCommand:@"Textual.topicBarValue" withArguments:@[@(NO)]];
 
-	if (topicBar == nil) {
+	if (topicValueHTML == nil) {
 		return NSStringEmptyPlaceholder;
 	}
 
-	return [(id)topicBar innerHTML];
+	return topicValueHTML;
 }
 
 - (void)setTopic:(NSString *)topic
 {
-	if (NSObjectIsEmpty(topic)) {
-		topic = BLS(1122);
-	}
-
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		NSAssertReturn([operation isCancelled] == NO);
 
-		NSString *body = [TVCLogRenderer renderBody:topic
-									  forController:self
-									 withAttributes:@{
-											TVCLogRendererConfigurationShouldRenderLinksAttribute : @YES,
-											TVCLogRendererConfigurationLineTypeAttribute : @(TVCLogLineTopicType)
-													}
-										 resultInfo:NULL];
+		NSString *topicString = nil;
+
+		if (NSObjectIsEmpty(topic)) {
+			topicString = BLS(1122);
+		} else {
+			topicString = topic;
+		}
+
+		NSString *topicTemplate = [TVCLogRenderer renderBody:topicString
+											   forController:self
+											  withAttributes:@{
+													TVCLogRendererConfigurationShouldRenderLinksAttribute : @YES,
+													TVCLogRendererConfigurationLineTypeAttribute : @(TVCLogLineTopicType)
+															}
+												  resultInfo:NULL];
 
 		[self performBlockOnMainThread:^{
-			DOMElement *topicBar = [self documentChannelTopicBar];
+			BOOL topicSet = [self executeQuickBooleanScriptCommand:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
 
-			if (topicBar) {
-				NSString *oldTopic = [(id)topicBar innerHTML];
-
-				if (NSObjectsAreEqual(topic, oldTopic) == NO) {
-					[(id)topicBar setInnerHTML:body];
-
-					[self executeScriptCommand:@"topicBarValueChanged" withArguments:@[topic]];
-
-					[self redrawFrame];
-				}
+			if (topicSet) {
+				[self redrawFrame];
 			}
 		}];
 	} for:self];
@@ -454,51 +403,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)moveToTop
 {
-	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssert(body);
-
-	[(DOMElement *)[body firstChild] scrollIntoView:YES];
-
-	[self executeQuickScriptCommand:@"viewPositionMovedToTop" withArguments:@[]];
+	(void)[self executeQuickScriptCommand:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
 }
 
 - (void)moveToBottom
 {
-	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssert(body);
-
-	[(DOMElement *)[body lastElementChild] scrollIntoViewIfNeeded:YES];
-
-	[self executeQuickScriptCommand:@"viewPositionMovedToBottom" withArguments:@[]];
-}
-
-- (BOOL)viewingBottom
-{
-	NSAssertReturnR(self.isLoaded, NO);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssertReturn(doc, NO);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssertReturn(body, NO);
-
-	NSInteger offsetHeight = [body offsetHeight];
-	NSInteger scrollHeight = [body scrollHeight];
-	NSInteger scrollTop = [body scrollTop];
-
-	BOOL isNotAtBottom = (scrollTop < (scrollHeight - offsetHeight));
-
-	return (isNotAtBottom == NO);
+	(void)[self executeQuickScriptCommand:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
 }
 
 #pragma mark -
@@ -506,87 +416,27 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)mark
 {
-	NSAssertReturn(self.isLoaded);
+	NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *e = [doc getElementById:@"mark"];
-
-	while (e) {
-		[[e parentNode] removeChild:e];
-
-		e = [doc getElementById:@"mark"];
-	}
-
-	NSString *html = [TVCLogRenderer renderTemplate:@"historyIndicator"];
-
-	[self appendToDocumentBody:html];
-	
-	[self executeQuickScriptCommand:@"historyIndicatorAddedToView" withArguments:@[]];
+	(void)[self executeQuickScriptCommand:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 }
 
 - (void)unmark
 {
-	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *e = [doc getElementById:@"mark"];
-
-	while (e) {
-		[[e parentNode] removeChild:e];
-
-		e = [doc getElementById:@"mark"];
-	}
-
-	[self executeQuickScriptCommand:@"historyIndicatorRemovedFromView" withArguments:@[]];
+	(void)[self executeQuickScriptCommand:@"Textual.historyIndicatorRemove" withArguments:nil];
 }
 
 - (void)goToMark
 {
-	if ([self jumpToElementID:@"mark"]) {
-		[self executeQuickScriptCommand:@"viewPositionModToHistoryIndicator" withArguments:@[]];
-	}
+	(void)[self executeQuickScriptCommand:@"Textual.scrollToHistoryIndicator" withArguments:nil];
 }
 
 #pragma mark -
 #pragma mark Reload Scrollback
 
-- (void)appendHistoricMessageFragment:(NSString *)html toHistoricMessagesDiv:(BOOL)toHistoricMessagesDiv
+- (void)appendHistoricMessageFragment:(NSString *)html isReload:(BOOL)isReload
 {
-	/* This method looks for #historic_messages and appends to that if it
-	 exists. If it does not exist, then it looks for #body_home. This div 
-	 should exist, but if it does not, then the method is cancelled.
-	 
-	 The appended fragment is placed above the first child node of the
-	 container, or is simply appended to the container if no child exists. */
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = nil;
-
-	if (toHistoricMessagesDiv) {
-		body = [doc getElementById:@"historic_messages"];
-	}
-
-	if (body == nil) {
-		body = [self documentBody];
-	}
-
-	PointerIsEmptyAssert(body);
-
-	DOMNodeList *childNodes = [body childNodes];
-
-	DOMDocumentFragment *frag = [(id)doc createDocumentFragmentWithMarkupString:html baseURL:[self baseURL]];
-
-	if ([childNodes length] < 1) {
-		[body appendChild:frag];
-	} else {
-		[body insertBefore:frag refChild:[childNodes item:0]];
-	}
+	(void)[self executeQuickScriptCommand:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -647,7 +497,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	/* Update WebKit. */
 	[self performBlockOnMainThread:^{
-		[self appendHistoricMessageFragment:patchedAppend toHistoricMessagesDiv:markHistoric];
+		[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
 
 		[self mark];
 
@@ -659,7 +509,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			NSString *lineNumber = lineInfo[0];
 
 			/* Inform the style of the addition. */
-			[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+			(void)[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
 			
 			/* Inform plugins. */
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
@@ -754,55 +604,26 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Utilities
 
-- (BOOL)jumpToLine:(NSString *)line
+- (BOOL)jumpToLine:(NSString *)lineNumber
 {
-	NSString *lid = [NSString stringWithFormat:@"line-%@", line];
-
-	if ([self jumpToElementID:lid]) {
-		[self executeQuickScriptCommand:@"viewPositionMovedToLine" withArguments:@[line]];
-
-		return YES;
-	} else {
-		return NO;
-	}
+	return [self executeQuickBooleanScriptCommand:@"Textual.scrollToLine" withArguments:@[lineNumber]];
 }
 
-- (BOOL)jumpToElementID:(NSString *)elementID
+- (BOOL)jumpToElementID:(NSString *)elementName
 {
-	NSAssertReturnR(self.isLoaded, NO);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssertReturn(doc, NO);
-
-	DOMElement *body = [doc getElementById:@"body_home"];
-	PointerIsEmptyAssertReturn(body, NO);
-	
-	DOMElement *e = [doc getElementById:elementID];
-	PointerIsEmptyAssertReturn(e, NO);
-
-	[e scrollIntoViewIfNeeded:YES];
-
-	return YES;
-}
-
-- (void)invalidateScrollingPosition
-{
-	self.wasViewingBottomBeforeBecomingHidden = NO;
+	return [self executeQuickBooleanScriptCommand:@"Textual.scrollToElement" withArguments:@[elementName]];
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	NSValue *wasViewingBottom = @(self.wasViewingBottomBeforeBecomingHidden);
-
-	[self executeQuickScriptCommand:@"notifyDidBecomeVisible" withArguments:@[wasViewingBottom]];
+	(void)[self executeQuickScriptCommand:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 
 	[self maybeRedrawFrame];
 }
 
 - (void)notifyDidBecomeHidden
 {
-	self.wasViewingBottomBeforeBecomingHidden = ([self.webViewAutoScroller canScroll] == NO ||
-												 [self.webViewAutoScroller viewingBottom]);
+	;
 }
 
 - (void)changeTextSize:(BOOL)bigger
@@ -813,7 +634,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		[self.webView makeTextSmaller:nil];
 	}
 
-	[self executeQuickScriptCommand:@"viewFontSizeChanged" withArguments:@[@(bigger)]];
+	[self executeQuickScriptCommand:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
 #pragma mark -
@@ -853,9 +674,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)nextHighlight
 {
 	NSAssertReturn(self.isLoaded);
-
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
 	
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
@@ -883,9 +701,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 {
 	NSAssertReturn(self.isLoaded);
 
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-	
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
 
@@ -926,47 +741,18 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		return;
 	}
 
-	DOMDocument *doc = [self mainFrameDocument];
-	PointerIsEmptyAssert(doc);
-
-	DOMElement *body = [self documentBody];
-	PointerIsEmptyAssert(body);
-
-	DOMNodeList *nodeList = [body childNodes];
-	PointerIsEmptyAssert(nodeList);
-
-	n = (nodeList.length - self.maximumLineCount);
-
-	/* Remove old lines. */
-	for (NSInteger i = (n - 1); i >= 0; --i) {
-		[body removeChild:[nodeList item:(unsigned)i]];
-	}
-
 	self.activeLineCount -= n;
 
 	if (self.activeLineCount < 0) {
 		self.activeLineCount = 0;
 	}
 
-	/* Update highlight index. */
-	@synchronized(self.highlightedLineNumbers) {
-		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
+	NSArray *removedLines = [self executeQuickArrayScriptCommand:@"Textual.reduceNumberOfLines" withArguments:@[@(n)]];
 
-		NSMutableArray *newList = [NSMutableArray array];
-
-		for (NSString *lineNumber in self.highlightedLineNumbers) {
-			NSString *lid = [NSString stringWithFormat:@"line-%@", lineNumber];
-
-			DOMElement *e = [doc getElementById:lid];
-
-			/* If the element does not exist, then it means
-			 that we removed it up above. */
-			if (e) {
-				[newList addObject:lineNumber];
-			}
+	if (removedLines) {
+		@synchronized(self.highlightedLineNumbers) {
+			[self.highlightedLineNumbers removeObjectsInArray:removedLines];
 		}
-
-		self.highlightedLineNumbers = [newList mutableCopy];
 	}
 }
 
@@ -1005,8 +791,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
 
-		self.wasViewingBottomBeforeBecomingHidden = YES;
-
 		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
 	}];
 }
@@ -1021,25 +805,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)redrawFrame
 {
-	if ([mainWindow() selectedViewController] == self) {
-		[self.webViewAutoScroller forceFrameRedraw];
-	}
+#warning TODO: Check whether we still require redrawing on OS X Yosemite
 }
 
 - (void)maybeRedrawFrame
 {
-	/* The WebView is layer backed which means it is not redrawn unless it is told to do so. 
-	 TVCWebViewAutoScroll automatically tells it to do so if it scrolled programmatically or
-	 by the end user. When there is not enough content to scroll, the WebView is not redrawn
-	 because there is never a scroll event triggered. Therefore, this call exists to tell 
-	 TVCWebViewAutoScroll that we are interested in a redraw and it will then take appropriate
-	 actions depending on whether one is necessary or not. */
-
-	if ([mainWindow() selectedViewController] == self) {
-		if ([self.webViewAutoScroller canScroll] == NO) {
-			[self.webViewAutoScroller forceFrameRedraw];
-		}
-	}
+	;
 }
 
 - (NSString *)uniquePrintIdentifier
@@ -1093,7 +864,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self appendToDocumentBody:html];
 
 				/* Inform the style of the new append. */
-				[self executeQuickScriptCommand:@"newMessagePostedToView" withArguments:@[lineNumber]];
+				[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
 				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
@@ -1402,7 +1173,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
-	[self.webViewScriptSink toggleInlineImage:uniqueID];
+	(void)[self executeQuickScriptCommand:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
 }
 
 - (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID
@@ -1518,25 +1289,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
     [[challenge sender] cancelAuthenticationChallenge:challenge];
 }
 
-/* These failure calls have never been tested against. They are only here because the delegate provides them. */
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
-{
-	DebugLogToConsole(@"Log [%@] for channel [%@] on [%@] failed to load with error: %@",
-				 [self description], [self.associatedChannel description], [self.associatedClient description], [error localizedDescription]);
-}
-
-- (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
-{
-	DebugLogToConsole(@"Resource [%@] in log [%@] failed loading for channel [%@] on [%@] with error: %@",
-				 identifier, [self description], [self.associatedChannel description], [self.associatedClient description], [error localizedDescription]);
-}
-
-- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
-{
-	DebugLogToConsole(@"Log [%@] for channel [%@] on [%@] failed provisional load with error: %@",
-				 [self description], [self.associatedChannel description], [self.associatedClient description], [error localizedDescription]);
-}
-
 - (void)postViewLoadedJavaScriptPostflight
 {
 	/* Post events. */
@@ -1548,7 +1300,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	self.isLoaded = YES;
 
-	[self executeQuickScriptCommand:@"viewInitiated" withArguments:@[
+	[self executeQuickScriptCommand:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
 		 NSDictionaryNilValue([self.associatedClient uniqueIdentifier]),
 		 NSDictionaryNilValue([self.associatedChannel uniqueIdentifier]),
@@ -1556,14 +1308,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	]];
 
 	if (self.reloadingBacklog == NO) {
-		[self executeQuickScriptCommand:@"viewFinishedLoading" withArguments:@[]];
+		[self executeQuickScriptCommand:@"Textual.viewFinishedLoading" withArguments:@[]];
 	} else {
-		[self executeQuickScriptCommand:@"viewFinishedReload" withArguments:@[]];
+		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
 	}
 
 	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
-
-	[self setUpScroller];
 
 	[[self printingQueue] updateReadinessState:self];
 
@@ -1575,7 +1325,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)postViwLoadedJavaScript
 {
-	if ([self viewHasValidJavaScriptAPIPointer]) {
+	if ([self.webView scriptingIsAvailable]) {
 		[self postViewLoadedJavaScriptPostflight];
 	} else {
 		/* Even though our window script object and view frame may be loaded,
@@ -1591,7 +1341,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	if (self.windowScriptObjectLoaded == NO) {
 		self.windowScriptObjectLoaded = YES;
 
-		[windowObject setValue:self.webViewScriptSink forKey:@"app"];
+		[windowObject setValue:self.webViewScriptSink forKey:@"TextualScriptSink"];
 
 		/* If the view was already declared as loaded, then that means our 
 		 script object came behind our actual load. Therefore, we declare
@@ -1615,32 +1365,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	}
 }
 
-- (void)setUpScroller
-{
-	WebFrameView *frame = [[self.webView mainFrame] frameView];
-
-	PointerIsEmptyAssert(frame);
-
-	[self.webViewAutoScroller setWebFrame:frame];
-
-	// ---- //
-
-	NSScrollView *scrollView = nil;
-
-	for (NSView *v in [frame subviews]) {
-		if ([v isKindOfClass:[NSScrollView class]]) {
-			scrollView = (NSScrollView *)v;
-
-			break;
-		}
-	}
-
-	PointerIsEmptyAssert(scrollView);
-
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setHasVerticalScroller:NO];
-}
-
 #pragma mark -
 #pragma mark LogView Delegate
 
@@ -1651,8 +1375,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)logViewRecievedDropWithFile:(NSString *)filename
 {
-	/* TVCLogPolicy guarantees that this delegate method is only called for private messages. */
-	
 	[menuController() memberSendDroppedFilesToSelectedChannel:@[filename]];
 }
 

@@ -85,47 +85,196 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)contentString
 {
-	DOMDocument *doc = [[self mainFrame] DOMDocument];
-	PointerIsEmptyAssertReturn(doc, nil);
-	
-	DOMElement *body = [doc body];
-	PointerIsEmptyAssertReturn(body, nil);
-	
-	DOMHTMLElement *root = (DOMHTMLElement *)[body parentNode];
-	PointerIsEmptyAssertReturn(root, nil);
-	
-	return [root outerHTML];
-}
+	NSString *contentString = [self executeCommand:@"Textual.documentHTML"];
 
-- (WebScriptObject *)javaScriptAPI
-{
-	return [[self windowScriptObject] evaluateWebScript:@"Textual"];
-}
-
-- (WebScriptObject *)javaScriptConsoleAPI
-{
-	return [[self windowScriptObject] evaluateWebScript:@"console"];
-}
-
-- (void)clearSelection
-{
-	[self setSelectedDOMRange:nil affinity:NSSelectionAffinityDownstream];
+	return contentString;
 }
 
 - (BOOL)hasSelection
 {
-	return (NSObjectIsEmpty([self selection]) == NO);
+	NSString *selection = [self selection];
+
+	return (NSObjectIsEmpty(selection) == NO);
 }
 
 - (NSString *)selection
 {
-	DOMRange *range = [self selectedDOMRange];
+	NSString *selection = [self executeCommand:@"Textual.currentSelection"];
 
-	if (range == nil)  {
-		return nil;
+	return selection;
+}
+
+- (void)clearSelection
+{
+	(void)[self executeCommand:@"Textual.clearSelection"];
+}
+
+@end
+
+@implementation TVCLogView (TVCLogViewJavaScriptHandler)
+
+- (BOOL)scriptingIsAvailable
+{
+	WebScriptObject *scriptObject = [self windowScriptObject];
+
+	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
+		return NO;
 	} else {
-		return [range toString];
+		return YES;
 	}
+}
+
+- (id)executeJavaScript:(NSString *)code
+{
+	WebScriptObject *scriptObject = [self windowScriptObject];
+
+	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
+		return nil;
+	}
+
+	id scriptResult = [scriptObject evaluateWebScript:code];
+
+	if (scriptResult == nil || [scriptResult isKindOfClass:[WebUndefined class]]) {
+		return nil;
+	}
+
+	return scriptResult;
+}
+
+- (NSString *)escapeJavaScriptString:(NSString *)string
+{
+	return [string stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+}
+
+- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	NSInteger argumentCount = 0;
+
+	if ( arguments) {
+		argumentCount = [arguments count];
+
+		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
+		 {
+			 if ([object isKindOfClass:[NSString class]])
+			 {
+				 NSString *objectEscaped = [self escapeJavaScriptString:object];
+
+				 [compiledScript appendFormat:@"var _argument_%ld_ = \"%@\";\n", objectIndex, objectEscaped];
+			 }
+			 else if ([object isKindOfClass:[NSNumber class]])
+			 {
+				 if (strcmp([object objCType], @encode(BOOL)) == 0) {
+					 if ([object boolValue] == YES) {
+						 [compiledScript appendFormat:@"var _argument_%ld_ = true;\n", objectIndex];
+					 } else {
+						 [compiledScript appendFormat:@"var _argument_%ld_ = false;\n", objectIndex];
+					 }
+				 } else {
+					 [compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, object];
+				 }
+			 }
+			 else if ([object isKindOfClass:[NSNull class]])
+			 {
+				 [compiledScript appendFormat:@"var _argument_%ld_ = null;\n", objectIndex];
+			 }
+			 else
+			 {
+				 [compiledScript appendFormat:@"var _argument_%ld_ = undefined;\n", objectIndex];
+			 }
+		 }];
+	}
+
+	[compiledScript appendFormat:@"%@(", command];
+
+	for (NSInteger i = 0; i < argumentCount; i++) {
+		if (i == (argumentCount - 1)) {
+			[compiledScript appendFormat:@"_argument_%ld_", i];
+		} else {
+			[compiledScript appendFormat:@"_argument_%ld_, ", i];
+		}
+	}
+
+	[compiledScript appendString:@");\n"];
+
+	return [compiledScript copy];
+}
+
+- (id)executeCommand:(NSString *)command
+{
+	return [self executeCommand:command withArguments:nil];
+}
+
+- (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
+
+	return [self executeJavaScript:compiledScript];
+}
+
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command
+{
+	return [self returnBooleanByExecutingCommand:command withArguments:nil];
+}
+
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	id scriptResult = [self executeCommand:command withArguments:arguments];
+
+	if (scriptResult && [scriptResult isKindOfClass:[NSNumber class]] == NO) {
+		return NO;
+	}
+
+	return [scriptResult boolValue];
+}
+
+- (NSString *)returnStringByExecutingCommand:(NSString *)command
+{
+	return [self returnStringByExecutingCommand:command withArguments:nil];
+}
+
+- (NSString *)returnStringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	id scriptResult = [self executeCommand:command withArguments:arguments];
+
+	if (scriptResult && [scriptResult isKindOfClass:[NSString class]] == NO) {
+		return nil;
+	}
+
+	return scriptResult;
+}
+
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command
+{
+	return [self returnArrayByExecutingCommand:command withArguments:nil];
+}
+
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	id scriptResult = [self executeCommand:command withArguments:arguments];
+
+	if (scriptResult && [scriptResult isKindOfClass:[WebScriptObject class]] == NO) {
+		return nil;
+	}
+
+	id arrayLengthObject = [scriptResult valueForKey:@"length"];
+
+	if (arrayLengthObject == nil || [arrayLengthObject isKindOfClass:[NSNumber class]] == NO) {
+		return nil;
+	}
+
+	NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
+
+	NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
+
+	for (NSUInteger i = 0; i < arrayLength; i++) {
+		id item = [scriptResult webScriptValueAtIndex:(unsigned)i];
+
+		[scriptArray addObject:item];
+	}
+
+	return [scriptArray copy];
 }
 
 @end
