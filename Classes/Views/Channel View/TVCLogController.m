@@ -198,15 +198,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	NSColor *windowColor = [themeSettings() underlyingWindowColor];
+	[self.webView setDrawsBackground:NO];
 
-	if (windowColor == nil) {
-		windowColor = [NSColor blackColor];
-	}
-
-	[(id)self.webView setBackgroundColor:windowColor];
-	
 	[[self.webView mainFrame] stopLoading];
+	
 	[[self.webView mainFrame] loadHTMLString:newHTML baseURL:[self baseURL]];
 }
 
