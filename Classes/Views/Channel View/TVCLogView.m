@@ -143,7 +143,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)escapeJavaScriptString:(NSString *)string
 {
-	return [string stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+	NSString *escapedString = string;
+
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
+	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+
+	return escapedString;
 }
 
 - (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
