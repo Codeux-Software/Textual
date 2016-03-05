@@ -45,6 +45,21 @@
 
 var app = {};
 
+app.setURLAddress = function(object)
+{
+	TextualScriptSink.setURLAddress(object);
+};
+
+app.setChannelName = function(object)
+{
+	TextualScriptSink.setChannelName(object);
+};
+
+app.setNickname = function(object)
+{
+	TextualScriptSink.setNickname(object);
+};
+
 app.channelNameDoubleClicked = function()
 {
 	TextualScriptSink.channelNameDoubleClicked();
