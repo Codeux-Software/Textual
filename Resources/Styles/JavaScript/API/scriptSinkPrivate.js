@@ -147,7 +147,7 @@ app.sidebarInversionIsEnabled = function()
 
 app.nicknameColorStyleHash = function(nickname, nicknameColorStyle)
 {
-	TextualScriptSink.nicknameColorStyleHash(nickname, nicknameColorStyle);
+	return TextualScriptSink.nicknameColorStyleHash(nickname, nicknameColorStyle);
 };
 
 app.styleSettingsRetrieveValue = function(key)
