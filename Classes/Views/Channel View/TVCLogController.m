@@ -198,15 +198,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	NSColor *windowColor = [themeSettings() underlyingWindowColor];
-
-	if (windowColor == nil) {
-		windowColor = [NSColor blackColor];
-	}
-
-	[(id)self.webView setBackgroundColor:windowColor];
-	
 	[[self.webView mainFrame] stopLoading];
+
 	[[self.webView mainFrame] loadHTMLString:newHTML baseURL:[self baseURL]];
 }
 
@@ -1321,6 +1314,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	float math = [worldController() textSizeMultiplier];
 
 	[self.webView setTextSizeMultiplier:math];
+
+	/* Change background color of view */
+	NSColor *windowColor = [themeSettings() underlyingWindowColor];
+
+	if (windowColor == nil) {
+		windowColor = [NSColor blackColor];
+	}
+
+	[(id)self.webView setDrawsBackground:YES];
+	[(id)self.webView setBackgroundColor:windowColor];
 }
 
 - (void)postViwLoadedJavaScript
