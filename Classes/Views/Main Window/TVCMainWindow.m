@@ -160,6 +160,14 @@
 
 - (void)updateBackgroundColor
 {
+	NSColor *channelViewBoxColor = [themeSettings() underlyingWindowColor];
+
+	if (channelViewBoxColor == nil) {
+		channelViewBoxColor = [NSColor blackColor];
+	}
+
+	[self.channelViewBox setFillColor:channelViewBoxColor];
+
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
