@@ -618,6 +618,8 @@
 	}
 
 	[self saveFilters];
+
+	return YES;
 }
 
 @end
