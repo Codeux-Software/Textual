@@ -142,7 +142,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "Spammer Paradise Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -190,6 +190,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SpammerParadise";
 			};
 			name = Debug;
 		};
@@ -197,6 +198,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SpammerParadise";
 			};
 			name = Release;
 		};
@@ -204,6 +206,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC901A93CD8A0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SpammerParadise;
 			};
@@ -213,6 +216,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC901A93CD8A0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SpammerParadise;
 			};
