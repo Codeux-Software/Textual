@@ -408,9 +408,6 @@
 		4C0BA6C11990798800857343 /* TLOSpeechSynthesizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */; };
 		4C0BA6C41990798800857343 /* OELReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D4846C2171F0AC00015F2B0 /* OELReachability.m */; };
 		4C0BA6C61990798800857343 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
-		4C0BA6CD1990798800857343 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C0BA6CE1990798800857343 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C0BA6CF1990798800857343 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D01990798800857343 /* SmileyConverter.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C956893194A8862003D97FD /* SmileyConverter.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D11990798800857343 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C0BA6D31990798800857343 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
@@ -895,9 +892,6 @@
 		4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C992DD41AB513A90072AB0B /* TLOEncryptionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C992DD51AB513A90072AB0B /* TLOEncryptionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
@@ -1468,27 +1462,6 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = ZNCAdditions;
 		};
-		4CCC6B75158E8CDA003A102B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = BragSpam;
-		};
-		4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SystemProfiler;
-		};
-		4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = SpammerParadise;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1513,10 +1486,7 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4C0BA6CD1990798800857343 /* BragSpam.bundle in Copy Extensions */,
 				4C83B9111BA9BECC00BD7718 /* ChatFilterExtension.bundle in Copy Extensions */,
-				4C0BA6CE1990798800857343 /* SpammerParadise.bundle in Copy Extensions */,
-				4C0BA6CF1990798800857343 /* SystemProfiler.bundle in Copy Extensions */,
 				4C0BA6D01990798800857343 /* SmileyConverter.bundle in Copy Extensions */,
 				4C0BA6D11990798800857343 /* ZNCAdditions.bundle in Copy Extensions */,
 			);
@@ -1540,10 +1510,7 @@
 			dstPath = Extensions;
 			dstSubfolderSpec = 7;
 			files = (
-				4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */,
 				4C83B9121BA9BED500BD7718 /* ChatFilterExtension.bundle in Copy Extensions */,
-				4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */,
-				4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */,
 				4C95689F194A894D003D97FD /* SmileyConverter.bundle in Copy Extensions */,
 				4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */,
 			);
@@ -1682,7 +1649,6 @@
 		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
-		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
 		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
 		4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerMigrateAppStoreSheet.h; sourceTree = "<group>"; };
@@ -1933,9 +1899,6 @@
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
 		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOEncryptionManager.h; sourceTree = "<group>"; };
-		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = ".tmp/SharedBuildProducts-Extensions/BragSpam.bundle"; sourceTree = SOURCE_ROOT; };
-		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
-		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = ".tmp/SharedBuildProducts-Extensions/SystemProfiler.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = ".tmp/SharedBuildProducts-Extensions/ZNCAdditions.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9E85B41B561AAC00B2670D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.xib"; sourceTree = SOURCE_ROOT; };
 		4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCQueuedCertificateTrustPanel.h; sourceTree = "<group>"; };
@@ -1977,7 +1940,7 @@
 		4CB229211978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = YosemiteDarkServerListViewDisclosureUp.tif; sourceTree = "<group>"; };
 		4CB26C6F19529003005F927C /* IRCCommandIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCCommandIndex.m; path = Classes/IRC/IRCCommandIndex.m; sourceTree = SOURCE_ROOT; };
 		4CB26C7219529016005F927C /* IRCCommandIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCCommandIndex.h; sourceTree = "<group>"; };
-		4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras-MAS.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras-MAS.pkg"; sourceTree = SOURCE_ROOT; };
+		4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.installer-pkg"; name = "Textual-Extras-MAS.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras-MAS.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB2954C1B9CC8C2002B7972 /* THOPluginProtocolPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginProtocolPrivate.h; sourceTree = "<group>"; };
 		4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCAnimatedContentNavigationOutlineView.h; sourceTree = "<group>"; };
 		4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOUnicodeHelper.m; path = Helpers/THOUnicodeHelper.m; sourceTree = "<group>"; };
@@ -2009,8 +1972,6 @@
 		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
-		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Addons.png; sourceTree = "<group>"; };
@@ -2041,7 +2002,7 @@
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
-		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
+		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.installer-pkg"; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLoader.m; sourceTree = "<group>"; };
 		4CF40DB41AC1A4AC00A26BE0 /* TVCImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLParser.m; sourceTree = "<group>"; };
@@ -2390,11 +2351,8 @@
 		4C46CCA7158043C000846B64 /* Binaries */ = {
 			isa = PBXGroup;
 			children = (
-				4C9A1D911836E6A100C14835 /* BragSpam.bundle */,
 				4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */,
 				4C956893194A8862003D97FD /* SmileyConverter.bundle */,
-				4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */,
-				4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */,
 				4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */,
 			);
 			name = Binaries;
@@ -2403,11 +2361,8 @@
 		4C46CCA8158043D500846B64 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */,
 				4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */,
 				4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */,
-				4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */,
-				4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */,
 				4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */,
 			);
 			name = Projects;
@@ -3224,22 +3179,6 @@
 			name = "Build Settings";
 			sourceTree = "<group>";
 		};
-		4CCC6B6F158E8CDA003A102B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CCC6B76158E8CDA003A102B /* BragSpam.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4CCC6B78158E8CF6003A102B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		4CD1FB0E16D7D4500085BC82 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -3365,14 +3304,6 @@
 				4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */,
 			);
 			path = "User List";
-			sourceTree = "<group>";
-		};
-		4CF4D48316BC54C2000C5AC8 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5D9B8EB1170A0EA700919CB0 /* Build Scripts */ = {
@@ -3996,24 +3927,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 4CCC6B6F158E8CDA003A102B /* Products */;
-					ProjectRef = 4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */;
-				},
-				{
 					ProductGroup = 4C83B9061BA9BE4200BD7718 /* Products */;
 					ProjectRef = 4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */;
 				},
 				{
 					ProductGroup = 4C95689A194A887D003D97FD /* Products */;
 					ProjectRef = 4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CF4D48316BC54C2000C5AC8 /* Products */;
-					ProjectRef = 4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */;
-				},
-				{
-					ProductGroup = 4CCC6B78158E8CF6003A102B /* Products */;
-					ProjectRef = 4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */;
 				},
 				{
 					ProductGroup = 4CC9D8A21745BE1700461F05 /* Products */;
@@ -4052,27 +3971,6 @@
 			fileType = wrapper.cfbundle;
 			path = ZNCAdditions.bundle;
 			remoteRef = 4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CCC6B76158E8CDA003A102B /* BragSpam.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BragSpam.bundle;
-			remoteRef = 4CCC6B75158E8CDA003A102B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CCC6B7F158E8CF6003A102B /* SystemProfiler.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SystemProfiler.bundle;
-			remoteRef = 4CCC6B7E158E8CF6003A102B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CF4D48916BC54C2000C5AC8 /* SpammerParadise.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SpammerParadise.bundle;
-			remoteRef = 4CF4D48816BC54C2000C5AC8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
