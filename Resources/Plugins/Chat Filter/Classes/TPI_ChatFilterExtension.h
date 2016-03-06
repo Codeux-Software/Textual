@@ -37,5 +37,5 @@
 
 #import "TextualApplication.h"
 
-@interface TPI_ChatFilterExtension : NSObject <THOPluginProtocol>
+@interface TPI_ChatFilterExtension : NSObject <THOPluginProtocol, NSTableViewDataSource, NSTableViewDelegate>
 @end

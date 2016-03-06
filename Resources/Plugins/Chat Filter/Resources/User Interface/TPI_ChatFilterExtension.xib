@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterExtension">
@@ -33,7 +33,6 @@
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="KyR-f3-84p" viewBased="YES" id="xhh-gD-9rb">
                                 <rect key="frame" x="0.0" y="0.0" width="547" height="195"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <animations/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +56,6 @@
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="QaU-xP-qMH">
                                                         <rect key="frame" x="0.0" y="0.0" width="544" height="17"/>
-                                                        <animations/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="D7G-go-Bq0">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -73,7 +71,6 @@
                                                     <constraint firstItem="QaU-xP-qMH" firstAttribute="top" secondItem="ej9-iB-qgp" secondAttribute="top" id="WJ6-OS-9MO"/>
                                                     <constraint firstItem="QaU-xP-qMH" firstAttribute="leading" secondItem="ej9-iB-qgp" secondAttribute="leading" constant="2" id="wYk-Ik-nmG"/>
                                                 </constraints>
-                                                <animations/>
                                                 <connections>
                                                     <outlet property="textField" destination="QaU-xP-qMH" id="Pdv-Vb-F2f"/>
                                                 </connections>
@@ -86,32 +83,28 @@
                                     <binding destination="gVm-uR-B4M" name="content" keyPath="arrangedObjects" id="LfG-uc-cX4"/>
                                     <binding destination="gVm-uR-B4M" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="LfG-uc-cX4" id="hDO-mw-Iyw"/>
                                     <binding destination="gVm-uR-B4M" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="hDO-mw-Iyw" id="SuY-E9-KPr"/>
+                                    <outlet property="dataSource" destination="-2" id="o37-CJ-sxy"/>
+                                    <outlet property="delegate" destination="-2" id="xtu-9K-hYu"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <animations/>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iJb-x6-x6a">
                         <rect key="frame" x="1" y="119" width="223" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cdX-i1-2vb">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </scroller>
                     <tableHeaderView key="headerView" id="KyR-f3-84p">
                         <rect key="frame" x="0.0" y="0.0" width="547" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </tableHeaderView>
                 </scrollView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xp-tp-X2E">
                     <rect key="frame" x="41" y="298" width="467" height="85"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="IGh-Af-VcM">
                         <font key="font" metaFont="system"/>
                         <string key="title">The “Chat Filter” addon is a very powerful tool which can be used to ignore specific content or automatically perform one or more commands (including external scripts) based on the contents of a message.
@@ -127,7 +120,6 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <constraint firstAttribute="height" constant="21" id="Y5V-gE-yHZ"/>
                         <constraint firstAttribute="width" constant="25" id="xjy-7r-SyM"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="cTJ-QJ-tKS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -141,7 +133,6 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="oAO-CT-D3X"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UvM-Ae-sCx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -156,7 +147,6 @@ Click the + button in the bottom left corner to add your first filter.</string>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="SC5-YV-7Wl"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yxL-c7-9D2">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -183,7 +173,6 @@ Click the + button in the bottom left corner to add your first filter.</string>
                 <constraint firstItem="un4-9j-DSX" firstAttribute="top" secondItem="gPh-Vf-Ty1" secondAttribute="bottom" constant="8" symbolic="YES" id="n7J-E9-CXw"/>
                 <constraint firstAttribute="bottom" secondItem="un4-9j-DSX" secondAttribute="bottom" constant="33" id="yQw-kQ-bUd"/>
             </constraints>
-            <animations/>
             <point key="canvasLocation" x="433.5" y="375"/>
         </customView>
         <arrayController objectClassName="TPI_ChatFilter" preservesSelection="NO" avoidsEmptySelection="NO" id="gVm-uR-B4M">

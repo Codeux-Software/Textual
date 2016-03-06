@@ -38,6 +38,8 @@
 #import "TPI_ChatFilterExtension.h"
 #import "TPI_ChatFilterEditFilterSheet.h"
 
+#define _filterTableDragToken			@"filterTableDragToken"
+
 #define _filterListUserDefaultsKey		@"Textual Chat Filter Extension -> Filters"
 
 @interface TPI_ChatFilterExtension ()
@@ -486,6 +488,11 @@
 	return TPILocalizedString(@"TPI_ChatFilterExtension[0001]");
 }
 
+- (void)awakeFromNib
+{
+	[self.filterTable registerForDraggedTypes:@[_filterTableDragToken]];
+}
+
 - (void)filterTableDoubleClicked:(id)sender
 {
 	[self filterEdit:sender];
@@ -558,6 +565,48 @@
 
 		[self saveFilters];
 	});
+}
+
+#pragma mark -
+#pragma mark Table View Delegate
+
+- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pasteboard
+{
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+
+	[pasteboard declareTypes:@[_filterTableDragToken] owner:self.filterArrayController];
+
+	[pasteboard setData:data forType:_filterTableDragToken];
+
+	return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation
+{
+	return NSDragOperationGeneric;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)dropRow dropOperation:(NSTableViewDropOperation)dropOperation
+{
+	NSPasteboard *pasteboard = [info draggingPasteboard];
+
+	NSData *rowData = [pasteboard dataForType:_filterTableDragToken];
+
+	NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+
+	NSInteger filterIndex = [rowIndexes firstIndex];
+
+	TPI_ChatFilter *draggedFilter = [self.filterArrayController arrangedObjects][filterIndex];
+
+	[self.filterArrayController insertObject:draggedFilter atArrangedObjectIndex:dropRow];
+
+	if (filterIndex > dropRow) {
+		[self.filterArrayController removeObjectAtArrangedObjectIndex:(filterIndex + 1)];
+	} else {
+		[self.filterArrayController removeObjectAtArrangedObjectIndex:filterIndex];
+	}
+
+	[self saveFilters];
 }
 
 @end
