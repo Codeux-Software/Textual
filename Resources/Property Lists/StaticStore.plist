@@ -177,27 +177,37 @@
 	<array>
 		<string>apps</string>
 		<string>banhammer</string>
+		<string>brag</string>
 		<string>delkey</string>
+		<string>diskspace</string>
 		<string>ffuu</string>
+		<string>finduser</string>
 		<string>flip</string>
 		<string>hermes</string>
-		<string>instacast</string>
 		<string>key</string>
 		<string>keyx</string>
+		<string>memory</string>
+		<string>msgcount</string>
 		<string>music</string>
+		<string>namel</string>
+		<string>netstats</string>
 		<string>np</string>
 		<string>o_p</string>
 		<string>page</string>
 		<string>qt</string>
 		<string>radium</string>
-		<string>rdio</string>
 		<string>reverse</string>
+		<string>runcount</string>
+		<string>screens</string>
 		<string>setkey</string>
 		<string>setkeymode</string>
 		<string>shell</string>
 		<string>slap</string>
 		<string>spotify</string>
-		<string>uuid</string>
+		<string>style</string>
+		<string>sysinfo</string>
+		<string>sysmem</string>
+		<string>uptime</string>
 		<string>vlc</string>
 	</array>
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
