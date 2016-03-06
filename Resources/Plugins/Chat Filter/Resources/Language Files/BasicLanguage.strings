@@ -50,3 +50,8 @@
 "TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
 "TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
 "TPI_ChatFilterEditFilterSheet[0009]" = "Sender Address";
+
+"TPI_ChatFilterEditFilterSheet[0010][1]" = "Are you sure that you want to delete this filter?";
+"TPI_ChatFilterEditFilterSheet[0010][2]" = "There is no undo and all data related to this filter will be erased.";
+"TPI_ChatFilterEditFilterSheet[0010][3]" = "Yes";
+"TPI_ChatFilterEditFilterSheet[0010][4]" = "No";

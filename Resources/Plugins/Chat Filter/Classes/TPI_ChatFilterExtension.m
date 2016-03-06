@@ -505,6 +505,17 @@
 
 - (void)filterRemove:(id)sender
 {
+	BOOL performRemove = [TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][2]")
+															title:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][1]")
+													defaultButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][3]")
+												  alternateButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][4]")
+												   suppressionKey:nil
+												  suppressionText:nil];
+
+	if (performRemove == NO) {
+		return;
+	}
+
 	NSInteger selectedIndex = [self.filterArrayController selectionIndex];
 
 	[self.filterArrayController removeObjectAtArrangedObjectIndex:selectedIndex];
