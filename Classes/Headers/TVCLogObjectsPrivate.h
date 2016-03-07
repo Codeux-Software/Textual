@@ -37,11 +37,16 @@
 
 #import "TextualApplication.h"
 
+@interface TVCLogController ()
+- (void)clearBackingView;
+@end
+
 @interface TVCLogView ()
 @property (nonatomic, weak) TVCLogController *logController;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
+- (void)informDelegateWebViewClosedUnexpectedly;
 - (void)informDelegateWebViewFinishedLoading;
 
 - (void)keyDown:(NSEvent *)e inView:(NSView *)view;
