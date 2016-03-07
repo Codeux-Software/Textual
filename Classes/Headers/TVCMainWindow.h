@@ -137,6 +137,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
+- (void)redirectKeyDown:(NSEvent *)e;
+
 @property (getter=isMemberListVisible, readonly) BOOL memberListVisible;
 @property (getter=isServerListVisible, readonly) BOOL serverListVisible;
 

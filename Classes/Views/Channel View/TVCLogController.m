@@ -42,12 +42,16 @@
 
 #import <objc/objc-runtime.h>
 
+#warning TODO: Find does not work 
+#warning TODO: Copy on mouse up does not work
+#warning TODO: Menus do not work
+#warning TODO: JavaScript API does not work
+#warning TODO: Missing backwards compatibility (WebView)
+#warning TODO: THOPluginProtocolCompatibilityMinimumVersion needs to be bumped
+
 @interface TVCLogController ()
 @property (nonatomic, assign) BOOL historyLoaded;
-@property (nonatomic, assign) BOOL windowScriptObjectLoaded;
-@property (nonatomic, assign) BOOL windowFrameObjectLoaded;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
-@property (nonatomic, strong) TVCLogScriptEventSink *webViewScriptSink;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
 @property (nonatomic, assign) BOOL needsLimitNumberOfLines;
 @property (nonatomic, assign) NSInteger activeLineCount;
@@ -74,9 +78,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 		self.reloadingBacklog = NO;
 		self.reloadingHistory = NO;
-
-		self.windowFrameObjectLoaded = NO;
-		self.windowScriptObjectLoaded = NO;
 		
 		self.needsLimitNumberOfLines = NO;
 
@@ -107,13 +108,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)dealloc
 {
-	[self.webView setKeyDelegate:nil];
-	[self.webView setDraggingDelegate:nil];
-	[self.webView setFrameLoadDelegate:nil];
-	[self.webView setResourceLoadDelegate:nil];
-	[self.webView setPolicyDelegate:nil];
-	[self.webView setUIDelegate:nil];
-
 	[self cancelPerformRequests];
 }
 
@@ -122,46 +116,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)setUp
 {
-	/* Update a few preferences. */
-	static WebPreferences *_preferencesInitd = nil;
-	
-	if (_preferencesInitd == nil) {
-		_preferencesInitd = [[WebPreferences alloc] initWithIdentifier:@"TVCLogControllerSharedWebPreferencesObject"];
-		
-		[_preferencesInitd setCacheModel:WebCacheModelDocumentViewer];
-		[_preferencesInitd setUsesPageCache:NO];
+	self.backingView = [[TVCLogView alloc] initWithLogController:self];
 
-		if ([_preferencesInitd respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
-			(void)objc_msgSend(_preferencesInitd, @selector(setShouldRespectImageOrientation:), YES);
-		}
-	}
-	
-	/* Create view. */
-	 self.webViewScriptSink = [TVCLogScriptEventSink new];
-	[self.webViewScriptSink setLogController:self];
-
-	 self.webView = [[TVCLogView alloc] initWithFrame:NSZeroRect];
-	
-	 self.webViewPolicy = [TVCLogPolicy new];
-	[self.webViewPolicy setLogController:self];
-	
-	[self.webView setPreferences:_preferencesInitd];
-	
-	[self.webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	
-	[self.webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
-	
-	[self.webView setKeyDelegate:self];
-	[self.webView setDraggingDelegate:self];
-	[self.webView setFrameLoadDelegate:self];
-	[self.webView setResourceLoadDelegate:self];
-	[self.webView setPolicyDelegate:self.webViewPolicy];
-	[self.webView setUIDelegate:self.webViewPolicy];
-	
-	[self.webView setShouldUpdateWhileOffscreen:NO];
-	
-	[self.webView setHostWindow:mainWindow()];
-	
 	/* Load initial document. */
 	[self loadAlternateHTML:[self initialDocument:nil]];
 
@@ -198,9 +154,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)loadAlternateHTML:(NSString *)newHTML
 {
-	[[self.webView mainFrame] stopLoading];
+	[self.backingView stopLoading];
 
-	[[self.webView mainFrame] loadHTMLString:newHTML baseURL:[self baseURL]];
+	[self.backingView loadHTMLString:newHTML baseURL:[self baseURL]];
 }
 
 #pragma mark -
@@ -311,39 +267,39 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			NSAssertReturn([operation isCancelled] == NO);
 			
 			[self performBlockOnMainThread:^{
-				(void)[self executeQuickScriptCommand:command withArguments:args];
+				[self executeQuickScriptCommand:command withArguments:args];
 			}];
 		};
 		
 		[[self printingQueue] enqueueMessageBlock:scriptBlock for:self];
 	} else {
-		(void)[self executeQuickScriptCommand:command withArguments:args];
+		[self executeQuickScriptCommand:command withArguments:args];
 	}
 }
 
-- (id)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
+- (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	return [self.webView executeCommand:command withArguments:args];
+	return [self.backingView executeStandaloneCommand:command withArguments:args];
 }
 
 - (BOOL)executeQuickBooleanScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	return [self.webView returnBooleanByExecutingCommand:command withArguments:args];
+	return [self.backingView returnBooleanByExecutingCommand:command withArguments:args];
 }
 
 - (NSString *)executeQuickStringScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	return [self.webView returnStringByExecutingCommand:command withArguments:args];
+	return [self.backingView returnStringByExecutingCommand:command withArguments:args];
 }
 
 - (NSArray *)executeQuickArrayScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	return [self.webView returnArrayByExecutingCommand:command withArguments:args];
+	return [self.backingView returnArrayByExecutingCommand:command withArguments:args];
 }
 
 - (void)appendToDocumentBody:(NSString *)html
 {
-	(void)[self executeQuickScriptCommand:@"Textual.documentBodyAppend" withArguments:@[html]];
+	[self executeQuickScriptCommand:@"Textual.documentBodyAppend" withArguments:@[html]];
 }
 
 #pragma mark -
@@ -382,11 +338,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 												  resultInfo:NULL];
 
 		[self performBlockOnMainThread:^{
-			BOOL topicSet = [self executeQuickBooleanScriptCommand:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
-
-			if (topicSet) {
-				[self redrawFrame];
-			}
+			[self executeQuickScriptCommand:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
 		}];
 	} for:self];
 }
@@ -396,12 +348,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)moveToTop
 {
-	(void)[self executeQuickScriptCommand:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
+	[self executeQuickScriptCommand:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
 }
 
 - (void)moveToBottom
 {
-	(void)[self executeQuickScriptCommand:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
+	[self executeQuickScriptCommand:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
 }
 
 #pragma mark -
@@ -411,17 +363,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 {
 	NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	(void)[self executeQuickScriptCommand:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+	[self executeQuickScriptCommand:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 }
 
 - (void)unmark
 {
-	(void)[self executeQuickScriptCommand:@"Textual.historyIndicatorRemove" withArguments:nil];
+	[self executeQuickScriptCommand:@"Textual.historyIndicatorRemove" withArguments:nil];
 }
 
 - (void)goToMark
 {
-	(void)[self executeQuickScriptCommand:@"Textual.scrollToHistoryIndicator" withArguments:nil];
+	[self executeQuickScriptCommand:@"Textual.scrollToHistoryIndicator" withArguments:nil];
 }
 
 #pragma mark -
@@ -429,7 +381,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)appendHistoricMessageFragment:(NSString *)html isReload:(BOOL)isReload
 {
-	(void)[self executeQuickScriptCommand:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
+	[self executeQuickScriptCommand:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -502,7 +454,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			NSString *lineNumber = lineInfo[0];
 
 			/* Inform the style of the addition. */
-			(void)[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
+			[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
 			
 			/* Inform plugins. */
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
@@ -546,8 +498,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[self performBlockOnMainThread:^{
 		[self moveToBottom];
-
-		[self maybeRedrawFrame];
 	}];
 
 	self.reloadingHistory = NO;
@@ -587,8 +537,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[self performBlockOnMainThread:^{
 		[self moveToBottom];
-
-		[self maybeRedrawFrame];
 	}];
 
 	self.reloadingBacklog = NO;
@@ -609,9 +557,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	(void)[self executeQuickScriptCommand:@"Textual.notifyDidBecomeVisible" withArguments:nil];
-
-	[self maybeRedrawFrame];
+	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 }
 
 - (void)notifyDidBecomeHidden
@@ -619,13 +565,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	;
 }
 
+- (void)changeTextSizeMultiplier
+{
+	float sizeMultiplier = [worldController() textSizeMultiplier];
+
+	[self executeQuickScriptCommand:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
+}
+
 - (void)changeTextSize:(BOOL)bigger
 {
-	if (bigger) {
-		[self.webView makeTextLarger:nil];
-	} else {
-		[self.webView makeTextSmaller:nil];
-	}
+	[self changeTextSizeMultiplier];
 
 	[self executeQuickScriptCommand:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
@@ -776,9 +725,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		self.activeLineCount = 0;
 		self.lastVisitedHighlight = nil;
 
-		self.windowFrameObjectLoaded = NO;
-		self.windowScriptObjectLoaded = NO;
-
 		self.isLoaded = NO;
 	 // self.reloadingBacklog = NO;
 	 // self.reloadingHistory = NO;
@@ -795,16 +741,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 #pragma mark -
 #pragma mark Print
-
-- (void)redrawFrame
-{
-#warning TODO: Check whether we still require redrawing on OS X Yosemite
-}
-
-- (void)maybeRedrawFrame
-{
-	;
-}
 
 - (NSString *)uniquePrintIdentifier
 {
@@ -903,9 +839,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				} else {
 					[mentionedUsers makeObjectsPerformSelector:@selector(conversation)];
 				}
-
-				/* Maybe redraw our frame. */
-				[self maybeRedrawFrame];
 
 				/* Finish up. */
 				PointerIsEmptyAssert(completionBlock);
@@ -1166,7 +1099,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
-	(void)[self executeQuickScriptCommand:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
+	[self executeQuickScriptCommand:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
 }
 
 - (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID
@@ -1274,15 +1207,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 }
 
 #pragma mark -
-#pragma mark WebView Delegate
+#pragma mark LogView Delegate
 
-/* Thanks to ePirat for this patch. It disables authentication dialogs for inline images. */
-- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
-{
-    [[challenge sender] cancelAuthenticationChallenge:challenge];
-}
-
-- (void)postViewLoadedJavaScriptPostflight
+- (void)logViewWebViewFinishedLoading
 {
 	/* Post events. */
 	NSString *viewType = @"server";
@@ -1310,73 +1237,15 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[[self printingQueue] updateReadinessState:self];
 
-	/* Change the font size to the one of others for new views. */
-	float math = [worldController() textSizeMultiplier];
-
-	[self.webView setTextSizeMultiplier:math];
-
-	/* Change background color of view */
-	NSColor *windowColor = [themeSettings() underlyingWindowColor];
-
-	if (windowColor == nil) {
-		windowColor = [NSColor blackColor];
-	}
-
-	[(id)self.webView setDrawsBackground:YES];
-	[(id)self.webView setBackgroundColor:windowColor];
+	[self changeTextSizeMultiplier];
 }
 
-- (void)postViwLoadedJavaScript
+- (void)logViewWebViewKeyDown:(NSEvent *)e
 {
-	if ([self.webView scriptingIsAvailable]) {
-		[self postViewLoadedJavaScriptPostflight];
-	} else {
-		/* Even though our window script object and view frame may be loaded,
-		 there are times when our core.js API is not available right away.
-		 In those cases, we cycle a timer until it is available. */
-
-		[self performSelector:@selector(postViwLoadedJavaScript) withObject:nil afterDelay:1.0];
-	}
+	[mainWindow() redirectKeyDown:e];
 }
 
-- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
-{
-	if (self.windowScriptObjectLoaded == NO) {
-		self.windowScriptObjectLoaded = YES;
-
-		[windowObject setValue:self.webViewScriptSink forKey:@"TextualScriptSink"];
-
-		/* If the view was already declared as loaded, then that means our 
-		 script object came behind our actual load. Therefore, we declare
-		 ourself loaded here since it wasn't done in other delegate method. */
-		if (self.windowFrameObjectLoaded) {
-			[self postViwLoadedJavaScript];
-		}
-	}
-}
-
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
-{
-	if (self.windowFrameObjectLoaded == NO) {
-		self.windowFrameObjectLoaded = YES;
-
-		/* Only post view loaded from here if we have a web script object.
-		 Otherwise, we wait until we have that before doing anything. */
-		if (self.windowScriptObjectLoaded) {
-			[self postViwLoadedJavaScript];
-		}
-	}
-}
-
-#pragma mark -
-#pragma mark LogView Delegate
-
-- (void)logViewKeyDown:(NSEvent *)e
-{
-	[worldController() logKeyDown:e];
-}
-
-- (void)logViewRecievedDropWithFile:(NSString *)filename
+- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename
 {
 	[menuController() memberSendDroppedFilesToSelectedChannel:@[filename]];
 }

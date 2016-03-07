@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogObjectsPrivate.h"
+
 /* The actual tag value for the Inspect Element item is in a private
  enum in WebKit so we have to define it based on whatever version of
  WebKit is on the OS. */
@@ -48,56 +50,17 @@
 
 @implementation TVCLogPolicy
 
-- (void)webView:(TVCLogView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
-{
-	NSAssertReturn([TPCPreferences copyOnSelect]);
-	
-	NSEvent *currentEvent = [NSApp currentEvent];
-
-	NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
-
-	if (flags == NSAlternateKeyMask ||
-		flags == NSCommandKeyMask)
-	{
-		return;
-	}
-	
-	if ([currentEvent type] == NSLeftMouseUp) {
-		if ([sender hasSelection]) {
-			[NSApp sendAction:@selector(copy:) to:sender from:self];
-		
-			[sender clearSelection];
-		}
-	}
-}
-
-- (void)channelDoubleClicked
-{
-	[menuController() joinClickedChannel:self.channelName];
-
-	self.channelName = nil;
-}
-
-- (void)nicknameDoubleClicked
-{
-	[menuController() setPointedNickname:self.nickname];
-
-	self.nickname = nil;
-	
-	[menuController() memberInChannelViewDoubleClicked:nil];
-}
-
-- (void)topicBarDoubleClicked
-{
-    [menuController() showChannelTopicDialog:nil];
-}
+#pragma mark -
+#pragma mark WebKit Delegate
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
+	TVCLogController *logController = [[self parentView] logController];
+
 	NSMutableArray *ary = [NSMutableArray array];
 
 	/* Invalidate passed information if we are in console. */
-	if ([self.logController associatedChannel] == nil) {
+	if ([logController associatedChannel] == nil) {
 		self.nickname = nil;
 	}
 	
@@ -194,6 +157,16 @@
 	}
 }
 
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+{
+	[[challenge sender] cancelAuthenticationChallenge:challenge];
+}
+
+- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
+{
+	return WebDragDestinationActionNone;
+}
+
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
 	NSInteger action = [actionInformation integerForKey:WebActionNavigationTypeKey];
@@ -203,42 +176,79 @@
 
 		NSURL *actionURL = actionInformation[WebActionOriginalURLKey];
 
-		if (NSObjectsAreEqual([actionURL scheme], @"http") == NO &&
-			NSObjectsAreEqual([actionURL scheme], @"https") == NO &&
-			NSObjectsAreEqual([actionURL scheme], @"textual") == NO)
-		{
-			BOOL openLink =
-			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
-											   title:TXTLS(@"BasicLanguage[1290][1]", [actionURL absoluteString])
-									   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
-									 alternateButton:TXTLS(@"BasicLanguage[1009]")
-									  suppressionKey:@"open_non_http_url_warning"
-									 suppressionText:nil];
-
-			if (openLink == NO) {
-				return;
-			}
-		}
-
-		[TLOpenLink open:actionURL];
+		[self openWebpage:actionURL];
 	} else {
 		[listener use];
 	}
 }
 
-- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
-{
-	IRCChannel *channel = [self.logController associatedChannel];
-	
-	if (channel && [channel isPrivateMessage]) {
-		NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+#pragma mark -
+#pragma mark WebKit2 Delegate
 
-		if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-			return WebDragDestinationActionAny;
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+{
+	completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+	WKNavigationType action = [navigationAction navigationType];
+
+	if (action == WKNavigationTypeLinkActivated) {
+		decisionHandler(WKNavigationActionPolicyCancel);
+
+		NSURL *actionURL = [[navigationAction request] URL];
+
+		[self openWebpage:actionURL];
+	} else {
+		decisionHandler(WKNavigationActionPolicyAllow);
+	}
+}
+
+#pragma mark -
+#pragma mark Shared
+
+- (void)channelDoubleClicked
+{
+	[menuController() joinClickedChannel:self.channelName];
+
+	self.channelName = nil;
+}
+
+- (void)nicknameDoubleClicked
+{
+	[menuController() setPointedNickname:self.nickname];
+
+	self.nickname = nil;
+
+	[menuController() memberInChannelViewDoubleClicked:nil];
+}
+
+- (void)topicBarDoubleClicked
+{
+	[menuController() showChannelTopicDialog:nil];
+}
+
+- (void)openWebpage:(NSURL *)webpageURL
+{
+	if (NSObjectsAreEqual([webpageURL scheme], @"http") == NO &&
+		NSObjectsAreEqual([webpageURL scheme], @"https") == NO &&
+		NSObjectsAreEqual([webpageURL scheme], @"textual") == NO)
+	{
+		BOOL openLink =
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
+										   title:TXTLS(@"BasicLanguage[1290][1]", [webpageURL absoluteString])
+								   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
+								 alternateButton:TXTLS(@"BasicLanguage[1009]")
+								  suppressionKey:@"open_non_http_url_warning"
+								 suppressionText:nil];
+
+		if (openLink == NO) {
+			return;
 		}
 	}
-	
-	return WebDragDestinationActionNone;
+
+	[TLOpenLink open:webpageURL];
 }
 
 @end

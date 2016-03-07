@@ -38,49 +38,57 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogObjectsPrivate.h"
+
+#import "TVCLogViewInternalWK2.h"
+
+@interface TVCLogView ()
+@property (nonatomic, strong) id webViewBacking;
+@end
+
 @implementation TVCLogView
 
 NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.codeux.com/textual/Inline-Media-Scanner-User-Agent.kb)";
 
-- (void)keyDown:(NSEvent *)e
+- (instancetype)initWithLogController:(TVCLogController *)logController
 {
-	if (self.keyDelegate) {
-		NSUInteger m = [e modifierFlags];
-		
-		BOOL cmd = (m & NSCommandKeyMask);
-		BOOL alt = (m & NSAlternateKeyMask);
-		BOOL ctrl = (m & NSControlKeyMask);
-		
-		if (ctrl == NO && alt == NO && cmd == NO) {
-			if ([self.keyDelegate respondsToSelector:@selector(logViewKeyDown:)]) {
-				[self.keyDelegate logViewKeyDown:e];
-			}
-			
-			return;
-		}
+	if ((self = [super init])) {
+		[self setLogController:logController];
+
+		[self constructWebView];
+
+		return self;
 	}
-	
-	[super keyDown:e];
+
+	return nil;
 }
 
-- (BOOL)maintainsInactiveSelection
++ (BOOL)isUsingWebKit2
 {
-	return YES;
-}
+	static BOOL _usesWebKit2 = NO;
 
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
-{
-	NSURL *fileURL = [NSURL URLFromPasteboard:[sender draggingPasteboard]];
+	static BOOL _valueCached = NO;
 
-	if (fileURL) {
-		NSString *filename = [fileURL relativePath];
-		
-		if ([self.draggingDelegate respondsToSelector:@selector(logViewRecievedDropWithFile:)]) {
-			[self.draggingDelegate logViewRecievedDropWithFile:filename];
+	if (_valueCached == NO) {
+		_valueCached = YES;
+
+		BOOL usesWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
+
+		if ( usesWebKit2) {
+			_usesWebKit2 = [XRSystemInformation isUsingOSXYosemiteOrLater];
 		}
 	}
-	
-	return NO;
+
+	return _usesWebKit2;
+}
+
+- (void)constructWebView
+{
+	if ([TVCLogView isUsingWebKit2]) {
+		self.webViewBacking = [TVCLogViewInternalWK2 createNewInstanceWithHostView:self];
+	} else {
+		NSAssert(NO, @"Unsupported platform");
+	}
 }
 
 - (NSString *)contentString
@@ -106,39 +114,103 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)clearSelection
 {
-	(void)[self executeCommand:@"Textual.clearSelection"];
+	[self executeCommand:@"Textual.clearSelection"];
+}
+
+- (void)print
+{
+	// Printing is probably broken: <http://www.openradar.me/20217859>
+
+	[[self webView] print:nil];
+}
+
+- (void)keyDown:(NSEvent *)e inView:(NSView *)view
+{
+	NSUInteger m = [e modifierFlags];
+
+	BOOL cmd = (m & NSCommandKeyMask);
+	BOOL alt = (m & NSAlternateKeyMask);
+	BOOL ctrl = (m & NSControlKeyMask);
+
+	if (ctrl == NO && alt == NO && cmd == NO) {
+		[[self logController] logViewWebViewKeyDown:e];
+
+		return;
+	}
+
+	[view keyDown:e];
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+	NSURL *fileURL = [NSURL URLFromPasteboard:[sender draggingPasteboard]];
+
+	if (fileURL) {
+		NSString *filename = [fileURL relativePath];
+
+		[[self logController] logViewWebViewRecievedDropWithFile:filename];
+	}
+
+	return NO;
+}
+
+- (void)informDelegateWebViewFinishedLoading
+{
+	[[self logController] logViewWebViewFinishedLoading];
+}
+
+@end
+
+@implementation TVCLogView (TVCLogViewBackingProxy)
+
+- (NSView *)webView
+{
+	return [self webViewBacking];
+}
+
+- (TVCLogPolicy *)webViewPolicy
+{
+	return [[self webViewBacking] webViewPolicy];
+}
+
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
+{
+	if ([TVCLogView isUsingWebKit2]) {
+		WKWebView *webView = [self webViewBacking];
+
+		[webView loadHTMLString:string baseURL:baseURL];
+	} else {
+		WebFrame *webViewFrame = [[self webViewBacking] webFrame];
+
+		[webViewFrame loadHTMLString:string baseURL:baseURL];
+	}
+}
+
+- (void)stopLoading
+{
+	if ([TVCLogView isUsingWebKit2]) {
+		WKWebView *webView = [self webViewBacking];
+
+		[webView stopLoading];
+	} else {
+		WebFrame *webViewFrame = [[self webViewBacking] webFrame];
+
+		[webViewFrame stopLoading];
+	}
 }
 
 @end
 
 @implementation TVCLogView (TVCLogViewJavaScriptHandler)
 
-- (BOOL)scriptingIsAvailable
+- (void)executeJavaScript:(NSString *)code
 {
-	WebScriptObject *scriptObject = [self windowScriptObject];
-
-	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
-		return NO;
-	} else {
-		return YES;
-	}
+	[[self webViewBacking] executeJavaScript:code];
 }
 
-- (id)executeJavaScript:(NSString *)code
+- (id)executeJavaScriptWithResult:(NSString *)code
 {
-	WebScriptObject *scriptObject = [self windowScriptObject];
-
-	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
-		return nil;
-	}
-
-	id scriptResult = [scriptObject evaluateWebScript:code];
-
-	if (scriptResult == nil || [scriptResult isKindOfClass:[WebUndefined class]]) {
-		return nil;
-	}
-
-	return scriptResult;
+	return [[self webViewBacking] executeJavaScriptWithResult:code];
 }
 
 - (NSString *)escapeJavaScriptString:(NSString *)string
@@ -206,6 +278,18 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return [compiledScript copy];
 }
 
+- (void)executeStandaloneCommand:(NSString *)command
+{
+	[self executeStandaloneCommand:command withArguments:nil];
+}
+
+- (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
+
+	[self executeJavaScript:compiledScript];
+}
+
 - (id)executeCommand:(NSString *)command
 {
 	return [self executeCommand:command withArguments:nil];
@@ -215,7 +299,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 {
 	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
 
-	return [self executeJavaScript:compiledScript];
+	return [self executeJavaScriptWithResult:compiledScript];
 }
 
 - (BOOL)returnBooleanByExecutingCommand:(NSString *)command

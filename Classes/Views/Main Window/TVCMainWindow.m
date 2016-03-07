@@ -408,6 +408,19 @@
 	[super sendEvent:e];
 }
 
+- (void)redirectKeyDown:(NSEvent *)e
+{
+	[mainWindowTextField() focus];
+
+	if ([e keyCode] == TXKeyReturnCode ||
+		[e keyCode] == TXKeyEnterCode)
+	{
+		return;
+	}
+
+	[mainWindowTextField() keyDown:e];
+}
+
 #pragma mark -
 #pragma mark Nick Completion
 
@@ -810,7 +823,11 @@
 - (void)focusWebview
 {
 	if ([self attachedSheet] == nil) {
-		[self makeFirstResponder:[[self selectedViewController] webView]];
+		TVCLogController *logController = self.selectedViewController;
+
+		NSView *webView = [[logController backingView] webView];
+
+		[self makeFirstResponder:webView];
 	}
 }
 
@@ -1758,10 +1775,24 @@
 	}
 	
 	/* Setup WebKit. */
-	TVCLogController *log = self.selectedViewController;
+	TVCLogController *logController = self.selectedViewController;
+
+	NSView *webView = [[logController backingView] webView];
 	
 	/* Set content view to WebView. */
-	[self.channelViewBox setContentView:[log webView]];
+	[self.channelViewBox setContentView:webView];
+
+	[self.channelViewBox addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
+											 options:0
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
+
+	[self.channelViewBox addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|"
+											 options:0
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
 
 	/* Notify old view that it is no longer visible. */
 	[[self.previouslySelectedItem viewController] notifyDidBecomeHidden];
@@ -1822,7 +1853,7 @@
 	[self storeLastSelectedChannel];
 
 	/* Allow selected WebView time to update. */
-	[log notifyDidBecomeVisible];
+	[logController notifyDidBecomeVisible];
 	
 	/* Dimiss notification center. */
 	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
@@ -2027,12 +2058,12 @@
 
 - (void)memberListViewKeyDown:(NSEvent *)e
 {
-	[worldController() logKeyDown:e];
+	[self redirectKeyDown:e];
 }
 
 - (void)serverListKeyDown:(NSEvent *)e
 {
-	[worldController() logKeyDown:e];
+	[self redirectKeyDown:e];
 }
 
 @end
