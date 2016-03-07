@@ -42,6 +42,8 @@
 
 #import "IRCUserPrivate.h"
 
+#include <objc/message.h>
+
 @interface TVCLogScriptEventSink ()
 @property (nonatomic, strong) WKUserContentController *userContentController;
 @end
@@ -115,9 +117,7 @@
 		return;
 	}
 
-	[self performSelector:handlerSelector
-			   withObject:[message body]
-			   withObject:[message webView]];
+	(void)objc_msgSend(self, handlerSelector, [message body], [message webView]);
 }
 
 - (void)processInputData:(id)inputData inWebView:(id)webView forSelector:(SEL)selector
@@ -220,9 +220,9 @@
 	[context setArguments:values];
 
 	if (promiseIndex == (-1)) {
-		(void)[self performSelector:selector withObject:context];
+		(void)objc_msgSend(self, selector, context);
 	} else {
-		id returnValue = [self performSelector:selector withObject:context];
+		id returnValue = objc_msgSend(self, selector, context);
 
 		if (returnValue == nil) {
 			returnValue = [NSNull null];
