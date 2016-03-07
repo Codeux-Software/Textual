@@ -115,11 +115,15 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 	[webView setUIDelegate:webView];
 
+	[webView addObserver:webView forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
+
 	return webView;
 }
 
 - (void)dealloc
 {
+	[self removeObserver:self forKeyPath:@"loading"];
+
 	[self setNavigationDelegate:nil];
 
 	[self setUIDelegate:nil];
@@ -141,6 +145,16 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
 	return [[self t_parentView] performDragOperation:sender];
+}
+
+#pragma mark -
+#pragma mark Utilities
+
+- (void)maybeInformDelegateWebViewFinishedLoading
+{
+	if (self.t_viewIsLoading == NO && self.t_viewIsNavigating == NO) {
+		[[self t_parentView] informDelegateWebViewFinishedLoading];
+	}
 }
 
 #pragma mark -
@@ -185,6 +199,15 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 #pragma mark -
 #pragma mark Web View Delegate
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+	if ([keyPath isEqualToString:@"loading"]) {
+		self.t_viewIsLoading = [self isLoading];
+
+		[self maybeInformDelegateWebViewFinishedLoading];
+	}
+}
+
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
 	[_sharedWebPolicy webView:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
@@ -195,9 +218,16 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[_sharedWebPolicy webView:webView didReceiveAuthenticationChallenge:challenge completionHandler:completionHandler];
 }
 
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
+{
+	self.t_viewIsNavigating = YES;
+}
+
 - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
 {
-	[[self t_parentView] informDelegateWebViewFinishedLoading];
+	self.t_viewIsNavigating = NO;
+
+	[self maybeInformDelegateWebViewFinishedLoading];
 }
 
 @end
