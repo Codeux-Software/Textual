@@ -39,6 +39,8 @@
 
 @interface TVCLogViewInternalWK2 : WKWebView <WKUIDelegate, WKNavigationDelegate>
 @property (nonatomic, weak) TVCLogView *t_parentView;
+@property (nonatomic, assign) BOOL t_viewIsLoading;
+@property (nonatomic, assign) BOOL t_viewIsNavigating;
 
 + (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView;
 
