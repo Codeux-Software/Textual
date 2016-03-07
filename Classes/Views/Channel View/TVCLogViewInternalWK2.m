@@ -199,6 +199,11 @@ create_normal_pool:
 	}
 }
 
+- (void)webViewClosedUnexpectedly
+{
+	[[self t_parentView] informDelegateWebViewClosedUnexpectedly];
+}
+
 #pragma mark -
 #pragma mark View Configuration
 
@@ -240,6 +245,11 @@ create_normal_pool:
 
 #pragma mark -
 #pragma mark Web View Delegate
+
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
+{
+	[self webViewClosedUnexpectedly];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
