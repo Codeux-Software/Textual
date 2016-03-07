@@ -45,7 +45,6 @@
 #warning TODO: Find does not work 
 #warning TODO: Copy on mouse up does not work
 #warning TODO: Menus do not work
-#warning TODO: JavaScript API does not work
 #warning TODO: Missing backwards compatibility (WebView)
 #warning TODO: THOPluginProtocolCompatibilityMinimumVersion needs to be bumped
 
