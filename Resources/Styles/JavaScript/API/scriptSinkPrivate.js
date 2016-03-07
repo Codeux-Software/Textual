@@ -44,11 +44,53 @@
 /* *********************************************************************** */
 
 var app = {};
+var appInternal = {};
+
+appInternal.promiseIndex = 1;
+appInternal.promisedCallbacks = {}
+
+appInternal.promiseKept = function(promiseIndex, returnValue)
+{
+	/* Check to see if an array entry exists for given index. */
+	var callbackFunction = appInternal.promisedCallbacks[promiseIndex];
+
+	/* If an array entry did exist, then perform it as a function. */
+	if (typeof callbackFunction !== "undefined") {
+		callbackFunction(returnValue);
+
+		delete appInternal.promisedCallbacks[promiseIndex];
+	}
+};
+
+appInternal.makePromise = function(callbackFunction)
+{
+	/* Best to be safe about the data we take in. */
+	if (appInternal.isValidCallbackFunction(callbackFunction) === false) {
+		throw "Invalid callback function";
+	}
+
+	/* Insert the promise then return its index (count minus one) */
+	var promiseIndex = appInternal.promiseIndex;
+
+	appInternal.promiseIndex += 1;
+	appInternal.promisedCallbacks[promiseIndex] = callbackFunction;
+
+	return promiseIndex;
+};
+
+appInternal.isValidCallbackFunction = function(callbackFunction)
+{
+	if (callbackFunction && typeof callbackFunction === "function") {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 app.supportsMessageHandlers = function()
 {
 	return (typeof window.webkit.messageHandlers !== "undefined");
-}
+};
 
 app.setURLAddress = function(object)
 {
@@ -82,7 +124,7 @@ app.channelNameDoubleClicked = function()
 	if (app.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelNameDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.channelNameDoubleClicked();
+		TextualScriptSink.channelNameDoubleClicked(null);
 	}
 };
 
@@ -91,7 +133,7 @@ app.nicknameDoubleClicked = function()
 	if (app.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.nicknameDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.nicknameDoubleClicked();
+		TextualScriptSink.nicknameDoubleClicked(null);
 	}
 };
 
@@ -100,97 +142,124 @@ app.topicBarDoubleClicked = function()
 	if (app.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.topicBarDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.topicBarDoubleClicked();
+		TextualScriptSink.topicBarDoubleClicked(null);
 	}
 };
 
-app.channelMemberCount = function()
+app.channelMemberCount = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.channelMemberCount.postMessage(null);
+		window.webkit.messageHandlers.channelMemberCount.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.channelMemberCount();
+		TextualScriptSink.channelMemberCount(dataValue);
 	}
 };
 
-app.serverChannelCount = function()
+app.serverChannelCount = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.serverChannelCount.postMessage(null);
+		window.webkit.messageHandlers.serverChannelCount.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.serverChannelCount();
+		TextualScriptSink.serverChannelCount(dataValue);
 	}
 };
 
-app.serverIsConnected = function()
+app.serverIsConnected = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.serverIsConnected.postMessage(null);
+		window.webkit.messageHandlers.serverIsConnected.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.serverIsConnected();
+		TextualScriptSink.serverIsConnected(dataValue);
 	}
 };
 
-app.channelIsJoined = function()
+app.channelIsJoined = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.channelIsJoined.postMessage(null);
+		window.webkit.messageHandlers.channelIsJoined.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.channelIsJoined();
+		TextualScriptSink.channelIsJoined(dataValue);
 	}
 };
 
-app.channelName = function()
+app.channelName = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.channelName.postMessage(null);
+		window.webkit.messageHandlers.channelName.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.channelName();
+		TextualScriptSink.channelName(dataValue);
 	}
 };
 
-app.serverAddress = function()
+app.serverAddress = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.serverAddress.postMessage(null);
+		window.webkit.messageHandlers.serverAddress.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.serverAddress();
+		TextualScriptSink.serverAddress(dataValue);
 	}
 };
 
-app.networkName = function()
+app.networkName = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.networkName.postMessage(null);
+		window.webkit.messageHandlers.networkName.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.networkName();
+		TextualScriptSink.networkName(dataValue);
 	}
 };
 
-app.localUserNickname = function()
+app.localUserNickname = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.localUserNickname.postMessage(null);
+		window.webkit.messageHandlers.localUserNickname.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.localUserNickname();
+		TextualScriptSink.localUserNickname(dataValue);
 	}
 };
 
-app.localUserHostmask = function()
+app.localUserHostmask = function(callbackFunction)
 {
-	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.localUserHostmask.postMessage(null);
-	} else {
-		return TextualScriptSink.localUserHostmask();
-	}
-};
+	var promiseIndex = appInternal.makePromise(callbackFunction);
 
-app.inlineImagesEnabledForView = function()
-{
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.inlineImagesEnabledForView.postMessage(null);
+		window.webkit.messageHandlers.localUserHostmask.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.inlineImagesEnabledForView();
+		TextualScriptSink.localUserHostmask(dataValue);
 	}
 };
 
@@ -223,45 +292,78 @@ app.printDebugInformation = function(message)
 
 app.sidebarInversionIsEnabled = function()
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(null);
+		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(dataValue);
 	} else {
-		TextualScriptSink.sidebarInversionIsEnabled();
+		TextualScriptSink.sidebarInversionIsEnabled(dataValue);
 	}
 };
 
-app.nicknameColorStyleHash = function(nickname, nicknameColorStyle)
+app.inlineImagesEnabledForView = function(callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex};
+
 	if (app.supportsMessageHandlers()) {
-		return window.webkit.messageHandlers.nicknameColorStyleHash.postMessage([nickname, nicknameColorStyle]);
+		window.webkit.messageHandlers.inlineImagesEnabledForView.postMessage(dataValue);
 	} else {
-		return TextualScriptSink.nicknameColorStyleHash(nickname, nicknameColorStyle);
+		TextualScriptSink.inlineImagesEnabledForView(dataValue);
 	}
 };
 
-app.styleSettingsRetrieveValue = function(key)
+app.nicknameColorStyleHash = function(nickname, nicknameColorStyle, callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [nickname, nicknameColorStyle]};
+
 	if (app.supportsMessageHandlers()) {
-		window.webkit.messageHandlers.styleSettingsRetrieveValue.postMessage(key);
+		window.webkit.messageHandlers.nicknameColorStyleHash.postMessage(dataValue);
 	} else {
-		TextualScriptSink.styleSettingsRetrieveValue(key);
+		TextualScriptSink.nicknameColorStyleHash(dataValue);
 	}
 };
 
-app.styleSettingsSetValue = function(key, value)
+app.styleSettingsRetrieveValue = function(key, callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key]};
+
 	if (app.supportsMessageHandlers()) {
-		window.webkit.messageHandlers.styleSettingsSetValue.postMessage([key, value]);
+		window.webkit.messageHandlers.styleSettingsRetrieveValue.postMessage(dataValue);
 	} else {
-		TextualScriptSink.styleSettingsSetValue(key, value);
+		TextualScriptSink.styleSettingsRetrieveValue(dataValue);
 	}
 };
 
-app.retrievePreferencesWithMethodName = function(name)
+app.styleSettingsSetValue = function(key, value, callbackFunction)
 {
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key, value]};
+
 	if (app.supportsMessageHandlers()) {
-		window.webkit.messageHandlers.retrievePreferencesWithMethodName.postMessage(name);
+		window.webkit.messageHandlers.styleSettingsSetValue.postMessage(dataValue);
 	} else {
-		TextualScriptSink.retrievePreferencesWithMethodName(name);
+		TextualScriptSink.styleSettingsSetValue(dataValue);
+	}
+};
+
+app.retrievePreferencesWithMethodName = function(name, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [name]};
+
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.retrievePreferencesWithMethodName.postMessage(dataValue);
+	} else {
+		TextualScriptSink.retrievePreferencesWithMethodName(dataValue);
 	}
 };

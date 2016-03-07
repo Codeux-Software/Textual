@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogViewInternalWK2.h"
+
 @interface TVCLogController ()
 - (void)clearBackingView;
 @end

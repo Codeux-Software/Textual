@@ -37,8 +37,6 @@
 
 #import "TVCLogObjectsPrivate.h"
 
-#import "TVCLogViewInternalWK2.h"
-
 #define _maximumProcessCount			15
 
 @interface _WKProcessPoolConfiguration : NSObject <NSCopying>
@@ -102,7 +100,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"topicBarDoubleClickedlogToConsole"];
+	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
 
 	[_sharedWebViewConfiguration setUserContentController:_sharedUserContentController];
 
