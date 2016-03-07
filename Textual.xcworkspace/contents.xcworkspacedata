@@ -5,10 +5,19 @@
       location = "container:Main Project (Textual).xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Resources/Plugins/ZNC Additions/../Chat Filter/Chat Filter Extension.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj">
