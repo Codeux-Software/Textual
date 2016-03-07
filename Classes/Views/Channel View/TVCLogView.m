@@ -159,6 +159,11 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[[self logController] logViewWebViewFinishedLoading];
 }
 
+- (TVCLogPolicy *)webViewPolicy
+{
+	return [[self webViewBacking] webViewPolicy];
+}
+
 @end
 
 @implementation TVCLogView (TVCLogViewBackingProxy)
@@ -166,11 +171,6 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 - (NSView *)webView
 {
 	return [self webViewBacking];
-}
-
-- (TVCLogPolicy *)webViewPolicy
-{
-	return [[self webViewBacking] webViewPolicy];
 }
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
