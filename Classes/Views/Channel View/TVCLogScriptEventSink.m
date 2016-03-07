@@ -285,6 +285,17 @@
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
 }
 
+- (void)copySelection:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_copySelection:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
 - (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineImagesEnabledForView:)];
@@ -464,6 +475,11 @@
 - (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[[context webViewPolicy] channelNameDoubleClicked];
+}
+
+- (void)_copySelection:(TVCLogScriptEventSinkContext *)context
+{
+	[RZPasteboard() setStringContent:[context arguments][0]];
 }
 
 - (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context

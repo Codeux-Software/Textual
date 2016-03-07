@@ -371,3 +371,12 @@ app.retrievePreferencesWithMethodName = function(name, callbackFunction)
 		TextualScriptSink.retrievePreferencesWithMethodName(dataValue);
 	}
 };
+
+app.copySelection = function(object)
+{
+	if (appInternal.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.copySelection.postMessage(object);
+	} else {
+		TextualScriptSink.retrievePreferencesWithMethodName(object);
+	}
+};
