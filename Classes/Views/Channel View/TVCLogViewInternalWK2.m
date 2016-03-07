@@ -234,8 +234,12 @@ create_normal_pool:
 		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 	}
 
-	if (scriptResult && [scriptResult isKindOfClass:[WebUndefined class]]) {
-		return nil;
+	if (scriptResult) {
+		if ([scriptResult isKindOfClass:[NSNull class]] == NO &&
+			[scriptResult isKindOfClass:[WebUndefined class]] == NO)
+		{
+			return nil;
+		}
 	}
 
 	return scriptResult;
@@ -246,11 +250,15 @@ create_normal_pool:
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
 {
+	NSAssertReturn(self == webView);
+
 	[self webViewClosedUnexpectedly];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
+	NSAssertReturn(self == object);
+
 	if ([keyPath isEqualToString:@"loading"]) {
 		self.t_viewIsLoading = [self isLoading];
 
@@ -270,11 +278,15 @@ create_normal_pool:
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
+	NSAssertReturn(self == webView);
+
 	self.t_viewIsNavigating = YES;
 }
 
 - (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
 {
+	NSAssertReturn(self == webView);
+
 	self.t_viewIsNavigating = NO;
 
 	[self maybeInformDelegateWebViewFinishedLoading];
