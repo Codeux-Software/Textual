@@ -377,6 +377,19 @@ app.copySelection = function(object)
 	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.copySelection.postMessage(object);
 	} else {
-		TextualScriptSink.retrievePreferencesWithMethodName(object);
+		TextualScriptSink.copySelection(object);
+	}
+};
+
+app.copySelectionWhenPermitted = function(object, callbackFunction)
+{
+	var promiseIndex = appInternal.makePromise(callbackFunction);
+
+	var dataValue = {"promiseIndex" : promiseIndex, "values" : [object]};
+
+	if (appInternal.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.copySelectionWhenPermitted.postMessage(dataValue);
+	} else {
+		TextualScriptSink.copySelectionWhenPermitted(dataValue);
 	}
 };

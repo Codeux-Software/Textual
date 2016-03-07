@@ -296,6 +296,17 @@
 			}];
 }
 
+- (void)copyWhenPermitted:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_copySelectionWhenPermitted:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
 - (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineImagesEnabledForView:)];
@@ -480,6 +491,17 @@
 - (void)_copySelection:(TVCLogScriptEventSinkContext *)context
 {
 	[RZPasteboard() setStringContent:[context arguments][0]];
+}
+
+- (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
+{
+	if ([TPCPreferences copyOnSelect]) {
+		[RZPasteboard() setStringContent:[context arguments][0]];
+
+		return @(YES);
+	} else {
+		return @(NO);
+	}
 }
 
 - (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
