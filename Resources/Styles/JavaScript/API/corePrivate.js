@@ -292,6 +292,25 @@ Textual.currentSelection = function()
 	return window.getSelection().toString();
 };
 
+Textual.copyOnSelectMouseUpEvent = function()
+{
+	if (window.event.metaKey || window.event.altKey) {
+		return;
+	}
+
+	var selectedText = Textual.currentSelection();
+
+	if (selectedText && selectedText.length > 0) {
+		app.copySelectionWhenPermitted(selectedText,
+		   function(returnValue) {
+				if (returnValue) {
+					Textual.clearSelection();
+				}
+		   }
+		);
+	}
+};
+
 /* Resource management. */
 Textual.includeStyleResourceFile = function(file)
 {
@@ -474,3 +493,5 @@ Textual.inlineImageLoaded = function()
 {
 	TextualScroller.performAutoScroll();
 }
+
+document.addEventListener("mouseup", Textual.copyOnSelectMouseUpEvent, false);

@@ -296,7 +296,7 @@
 			}];
 }
 
-- (void)copyWhenPermitted:(id)inputData inWebView:(id)webView
+- (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
 				 inWebView:webView
