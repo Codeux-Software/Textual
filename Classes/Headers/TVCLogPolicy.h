@@ -39,7 +39,7 @@
 #import "TextualApplication.h"
 
 #ifdef TXSystemIsOSXElCapitanOrLater
-@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebPolicyDelegate, WebUIDelegate>
+@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
 #else
 @interface TVCLogPolicy : NSObject
 #endif

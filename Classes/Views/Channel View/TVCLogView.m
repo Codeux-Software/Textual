@@ -85,7 +85,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	if ([TVCLogView isUsingWebKit2]) {
 		self.webViewBacking = [TVCLogViewInternalWK2 createNewInstanceWithHostView:self];
 	} else {
-		NSAssert(NO, @"Unsupported platform");
+		self.webViewBacking = [TVCLogViewInternalWK1 createNewInstanceWithHostView:self];
 	}
 }
 
@@ -183,7 +183,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 		[webView loadHTMLString:string baseURL:baseURL];
 	} else {
-		WebFrame *webViewFrame = [[self webViewBacking] webFrame];
+		WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
 
 		[webViewFrame loadHTMLString:string baseURL:baseURL];
 	}
@@ -196,7 +196,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 		[webView stopLoading];
 	} else {
-		WebFrame *webViewFrame = [[self webViewBacking] webFrame];
+		WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
 
 		[webViewFrame stopLoading];
 	}

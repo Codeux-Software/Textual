@@ -87,14 +87,18 @@ appInternal.isValidCallbackFunction = function(callbackFunction)
 	}
 };
 
-app.supportsMessageHandlers = function()
+appInternal.supportsMessageHandlers = function()
 {
-	return (typeof window.webkit.messageHandlers !== "undefined");
+	if (window.webkit && typeof window.webkit.messageHandlers !== "undefined") {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 app.setURLAddress = function(object)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.setURLAddress.postMessage(object);
 	} else {
 		TextualScriptSink.setURLAddress(object);
@@ -103,7 +107,7 @@ app.setURLAddress = function(object)
 
 app.setChannelName = function(object)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.setChannelName.postMessage(object);
 	} else {
 		TextualScriptSink.setChannelName(object);
@@ -112,7 +116,7 @@ app.setChannelName = function(object)
 
 app.setNickname = function(object)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.setNickname.postMessage(object);
 	} else {
 		TextualScriptSink.setNickname(object);
@@ -121,7 +125,7 @@ app.setNickname = function(object)
 
 app.channelNameDoubleClicked = function()
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelNameDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.channelNameDoubleClicked(null);
@@ -130,7 +134,7 @@ app.channelNameDoubleClicked = function()
 
 app.nicknameDoubleClicked = function()
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.nicknameDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.nicknameDoubleClicked(null);
@@ -139,7 +143,7 @@ app.nicknameDoubleClicked = function()
 
 app.topicBarDoubleClicked = function()
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.topicBarDoubleClicked.postMessage(null);
 	} else {
 		TextualScriptSink.topicBarDoubleClicked(null);
@@ -152,7 +156,7 @@ app.channelMemberCount = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelMemberCount.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelMemberCount(dataValue);
@@ -165,7 +169,7 @@ app.serverChannelCount = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.serverChannelCount.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverChannelCount(dataValue);
@@ -178,7 +182,7 @@ app.serverIsConnected = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.serverIsConnected.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverIsConnected(dataValue);
@@ -191,7 +195,7 @@ app.channelIsJoined = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelIsJoined.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelIsJoined(dataValue);
@@ -204,7 +208,7 @@ app.channelName = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.channelName(dataValue);
@@ -217,7 +221,7 @@ app.serverAddress = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.serverAddress.postMessage(dataValue);
 	} else {
 		TextualScriptSink.serverAddress(dataValue);
@@ -230,7 +234,7 @@ app.networkName = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.networkName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.networkName(dataValue);
@@ -243,7 +247,7 @@ app.localUserNickname = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.localUserNickname.postMessage(dataValue);
 	} else {
 		TextualScriptSink.localUserNickname(dataValue);
@@ -256,7 +260,7 @@ app.localUserHostmask = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.localUserHostmask.postMessage(dataValue);
 	} else {
 		TextualScriptSink.localUserHostmask(dataValue);
@@ -265,7 +269,7 @@ app.localUserHostmask = function(callbackFunction)
 
 app.logToConsole = function(message)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.logToConsole.postMessage(message);
 	} else {
 		TextualScriptSink.logToConsole(message);
@@ -274,7 +278,7 @@ app.logToConsole = function(message)
 
 app.printDebugInformationToConsole = function(message)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.printDebugInformationToConsole.postMessage(message);
 	} else {
 		TextualScriptSink.printDebugInformationToConsole(message);
@@ -283,7 +287,7 @@ app.printDebugInformationToConsole = function(message)
 
 app.printDebugInformation = function(message)
 {
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.printDebugInformation.postMessage(message);
 	} else {
 		TextualScriptSink.printDebugInformation(message);
@@ -296,7 +300,7 @@ app.sidebarInversionIsEnabled = function()
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(dataValue);
 	} else {
 		TextualScriptSink.sidebarInversionIsEnabled(dataValue);
@@ -309,7 +313,7 @@ app.inlineImagesEnabledForView = function(callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.inlineImagesEnabledForView.postMessage(dataValue);
 	} else {
 		TextualScriptSink.inlineImagesEnabledForView(dataValue);
@@ -322,7 +326,7 @@ app.nicknameColorStyleHash = function(nickname, nicknameColorStyle, callbackFunc
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [nickname, nicknameColorStyle]};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.nicknameColorStyleHash.postMessage(dataValue);
 	} else {
 		TextualScriptSink.nicknameColorStyleHash(dataValue);
@@ -335,7 +339,7 @@ app.styleSettingsRetrieveValue = function(key, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key]};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.styleSettingsRetrieveValue.postMessage(dataValue);
 	} else {
 		TextualScriptSink.styleSettingsRetrieveValue(dataValue);
@@ -348,7 +352,7 @@ app.styleSettingsSetValue = function(key, value, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [key, value]};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.styleSettingsSetValue.postMessage(dataValue);
 	} else {
 		TextualScriptSink.styleSettingsSetValue(dataValue);
@@ -361,7 +365,7 @@ app.retrievePreferencesWithMethodName = function(name, callbackFunction)
 
 	var dataValue = {"promiseIndex" : promiseIndex, "values" : [name]};
 
-	if (app.supportsMessageHandlers()) {
+	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.retrievePreferencesWithMethodName.postMessage(dataValue);
 	} else {
 		TextualScriptSink.retrievePreferencesWithMethodName(dataValue);

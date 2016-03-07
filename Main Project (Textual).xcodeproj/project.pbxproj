@@ -423,6 +423,12 @@
 		4C1383271AA9F9CF0099F887 /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */; };
 		4C1383281AA9F9CF0099F887 /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */; };
 		4C1383291AA9F9CF0099F887 /* birthdayIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */; };
+		4C14E1251C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */; };
+		4C14E1261C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */; };
+		4C14E1271C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */; };
+		4C14E12E1C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14E12D1C8E3051002A1934 /* TVCLogViewInternalWK1.h */; };
+		4C14E12F1C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14E12D1C8E3051002A1934 /* TVCLogViewInternalWK1.h */; };
+		4C14E1301C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C14E12D1C8E3051002A1934 /* TVCLogViewInternalWK1.h */; };
 		4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1893F217980F460091D173 /* TVCImageURLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1669,6 +1675,8 @@
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1383211AA9F9C90099F887 /* applicationIconYosemite.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = applicationIconYosemite.icns; path = Application/Yosemite/applicationIconYosemite.icns; sourceTree = "<group>"; };
 		4C1383261AA9F9CF0099F887 /* birthdayIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = birthdayIcon.icns; path = Application/birthdayIcon.icns; sourceTree = "<group>"; };
+		4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogViewInternalWK1.m; sourceTree = "<group>"; };
+		4C14E12D1C8E3051002A1934 /* TVCLogViewInternalWK1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogViewInternalWK1.h; sourceTree = "<group>"; };
 		4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSync.h; path = Classes/Headers/TPCPreferencesCloudSync.h; sourceTree = SOURCE_ROOT; };
 		4C1818B01B656C310068FAD9 /* TextualAppStore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualAppStore.entitlements; path = Resources/Sandbox/Entitlements/TextualAppStore.entitlements; sourceTree = SOURCE_ROOT; };
 		4C1893F217980F460091D173 /* TVCImageURLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCImageURLoader.h; sourceTree = "<group>"; };
@@ -2752,6 +2760,7 @@
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
 				4C8AF58A158E99520026668C /* TVCLogScriptEventSink.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
+				4C14E12D1C8E3051002A1934 /* TVCLogViewInternalWK1.h */,
 				4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */,
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
@@ -3308,6 +3317,7 @@
 				4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */,
 				4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */,
 				4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */,
+				4C14E1241C8E3043002A1934 /* TVCLogViewInternalWK1.m */,
 				4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */,
 			);
 			path = "Channel View";
@@ -3518,6 +3528,7 @@
 				4C0BA60C1990798800857343 /* TDCFileTransferDialog.h in Headers */,
 				4C0BA60D1990798800857343 /* TDCFileTransferDialogTransferController.h in Headers */,
 				4C0BA60E1990798800857343 /* TDCProgressInformationSheet.h in Headers */,
+				4C14E12E1C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */,
 				4C0BA6111990798800857343 /* TVCTextFieldWithValueValidation.h in Headers */,
 				4C0BA6121990798800857343 /* TPCPreferencesUserDefaults.h in Headers */,
 				4C0BA6131990798800857343 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
@@ -3612,6 +3623,7 @@
 				4C5BA42416F1302F00A96CA2 /* TDCServerChangeNicknameSheet.h in Headers */,
 				4C699C661B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C5BA42516F1302F00A96CA2 /* TDCPreferencesController.h in Headers */,
+				4C14E12F1C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */,
 				4C5BA42716F1302F00A96CA2 /* TDCPreferencesSoundWrapper.h in Headers */,
 				4C5BA42816F1302F00A96CA2 /* TDCServerPropertiesSheet.h in Headers */,
 				4C5BA42916F1302F00A96CA2 /* TDCSheetBase.h in Headers */,
@@ -3775,6 +3787,7 @@
 				4C8AF657158E99520026668C /* TDCServerChangeNicknameSheet.h in Headers */,
 				4C699C671B1FAF42001CD1C3 /* TLOLicenseManager.h in Headers */,
 				4C8AF658158E99520026668C /* TDCPreferencesController.h in Headers */,
+				4C14E1301C8E3051002A1934 /* TVCLogViewInternalWK1.h in Headers */,
 				4C8AF65A158E99520026668C /* TDCPreferencesSoundWrapper.h in Headers */,
 				4C8AF65B158E99520026668C /* TDCServerPropertiesSheet.h in Headers */,
 				4C8AF65C158E99520026668C /* TDCSheetBase.h in Headers */,
@@ -4617,6 +4630,7 @@
 				4C04450216F1603B00EBB665 /* TDCServerHighlightListSheet.m in Sources */,
 				4CF40E071AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C04450316F1603B00EBB665 /* TDChannelInviteSheet.m in Sources */,
+				4C14E1261C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */,
 				4C04450416F1603B00EBB665 /* TDCServerChannelListDialog.m in Sources */,
 				4C04450516F1603B00EBB665 /* TDChannelModifyModesSheet.m in Sources */,
 				4CF40DF71AC1A4AC00A26BE0 /* TVCLogLine.m in Sources */,
@@ -4760,6 +4774,7 @@
 				4C0BA6491990798800857343 /* TDCServerChannelListDialog.m in Sources */,
 				4C0BA64A1990798800857343 /* TDChannelModifyModesSheet.m in Sources */,
 				4C0BA64C1990798800857343 /* TDCServerChangeNicknameSheet.m in Sources */,
+				4C14E1251C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */,
 				4CF40DF61AC1A4AC00A26BE0 /* TVCLogLine.m in Sources */,
 				4C0BA64D1990798800857343 /* TDCServerPropertiesSheet.m in Sources */,
 				4C741C421C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
@@ -4898,6 +4913,7 @@
 				4CA110E21955AA890062EC4E /* TPCPreferencesImportExport.m in Sources */,
 				4CF40E081AC1A4AC00A26BE0 /* TVCLogView.m in Sources */,
 				4C8AF617158E99520026668C /* TDCServerChannelListDialog.m in Sources */,
+				4C14E1271C8E3043002A1934 /* TVCLogViewInternalWK1.m in Sources */,
 				4C8AF618158E99520026668C /* TDChannelModifyModesSheet.m in Sources */,
 				4C8AF619158E99520026668C /* TDCServerChangeNicknameSheet.m in Sources */,
 				4CF40DF81AC1A4AC00A26BE0 /* TVCLogLine.m in Sources */,
