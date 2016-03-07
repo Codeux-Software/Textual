@@ -79,18 +79,28 @@
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-	NSString *s = NSStringFromSelector(sel);
-
-	if ([s hasSuffix:@":"]) {
-		return [s substringToIndex:([s length] - 1)];
-	}
-	
 	return nil;
 }
 
 - (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
 {
-	return nil;
+	SEL handlerSelector = NSSelectorFromString([name stringByAppendingString:@":inWebView:"]);
+
+	if ([self respondsToSelector:handlerSelector] == NO) {
+		return @(NO);
+	}
+
+	if (args == nil || [args count] == 0) {
+		return @(NO);
+	}
+
+	if ([args[0] isKindOfClass:[WebScriptObject class]] == NO) {
+		return @(NO);
+	}
+
+	(void)objc_msgSend(self, handlerSelector, args[0], [self parentView]);
+
+	return @(YES);
 }
 
 + (BOOL)isKeyExcludedFromWebScript:(const char *)name
@@ -135,7 +145,9 @@
 
 	if ([webView isKindOfClass:[TVCLogView class]]) {
 		intWebView = webView;
-	} else if ([webView isKindOfClass:[TVCLogViewInternalWK2 class]]) {
+	} else if ([webView isKindOfClass:[TVCLogViewInternalWK1 class]] ||
+			   [webView isKindOfClass:[TVCLogViewInternalWK2 class]])
+	{
 		intWebView = [webView t_parentView];
 	} else {
 		return;
@@ -146,23 +158,30 @@
 	NSArray *values = nil;
 
 	/* Extract relevant information from inputData */
-	if ([inputData isKindOfClass:[NSDictionary class]])
+	if ([inputData isKindOfClass:[NSDictionary class]] ||
+		[inputData isKindOfClass:[WebScriptObject class]])
 	{
 		/* Check that the object exists in the dictionary before 
 		 setting the value. If the object does not exist and we
 		 do not do this, then -integerValue will return 0 which
 		 is considered a valid promiseIndex value. */
-		id promiseIndexObj = inputData[@"promiseIndex"];
+		id promiseIndexObj = [inputData valueForKey:@"promiseIndex"];
 
 		if (promiseIndexObj) {
+			if ([promiseIndexObj isKindOfClass:[NSNumber class]] == NO) {
+				[self _throwJavaScriptException:@"'promiseIndex' must be a number" inWebView:intWebView];
+
+				return;
+			}
+
 			promiseIndex = [promiseIndexObj integerValue];
 		}
 
 		/* Values should always be in an array */
 		if (minimumArgumentCount > 0) {
-			id valuesObj = inputData[@"values"];
+			id valuesObj = [inputData valueForKey:@"values"];
 
-			if ([valuesObj isKindOfClass:[NSArray class]] == NO) {
+			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
 				[self _throwJavaScriptException:@"'values' must be an array" inWebView:intWebView];
 
 				return;

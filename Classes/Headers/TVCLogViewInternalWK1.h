@@ -37,30 +37,15 @@
 
 #import "TextualApplication.h"
 
-#import "TVCLogViewInternalWK1.h"
-#import "TVCLogViewInternalWK2.h"
+@interface TVCLogViewInternalWK1 : WebView <WebFrameLoadDelegate, WebPolicyDelegate, WebResourceLoadDelegate, WebUIDelegate>
+@property (nonatomic, weak) TVCLogView *t_parentView;
+@property (nonatomic, assign) BOOL t_viewHasLoaded;
+@property (nonatomic, assign) BOOL t_viewHasScriptObject;
 
-@interface TVCLogController ()
-- (void)clearBackingView;
-@end
++ (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView;
 
-@interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *logController;
+- (void)executeJavaScript:(NSString *)code;
+- (id)executeJavaScriptWithResult:(NSString *)code;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
-
-- (void)informDelegateWebViewClosedUnexpectedly;
-- (void)informDelegateWebViewFinishedLoading;
-
-- (void)keyDown:(NSEvent *)e inView:(NSView *)view;
-
-- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
-@end
-
-@interface TVCLogPolicy ()
-@property (nonatomic, weak) TVCLogView *parentView;
-@end
-
-@interface TVCLogScriptEventSink ()
-@property (nonatomic, weak) TVCLogView *parentView;
 @end

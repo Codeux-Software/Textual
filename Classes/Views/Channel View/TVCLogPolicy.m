@@ -164,6 +164,12 @@
 
 - (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
 {
+	NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+
+	if ([[pboard types] containsObject:NSFilenamesPboardType]) {
+		return WebDragDestinationActionAny;
+	}
+
 	return WebDragDestinationActionNone;
 }
 
@@ -184,11 +190,6 @@
 
 #pragma mark -
 #pragma mark WebKit2 Delegate
-
-- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
-{
-
-}
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
