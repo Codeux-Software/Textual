@@ -159,6 +159,11 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[[self logController] logViewWebViewFinishedLoading];
 }
 
+- (void)informDelegateWebViewClosedUnexpectedly
+{
+	[[self logController] logViewWebViewClosedUnexpectedly];
+}
+
 - (TVCLogPolicy *)webViewPolicy
 {
 	return [[self webViewBacking] webViewPolicy];

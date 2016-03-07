@@ -1089,6 +1089,30 @@
 }
 
 #pragma mark -
+#pragma mark Channel View Box
+
+- (void)updateChannelViewBoxContentViewSelection
+{
+	TVCLogController *logController = self.selectedViewController;
+
+	NSView *webView = [[logController backingView] webView];
+
+	[self.channelViewBox setContentView:webView];
+
+	[self.channelViewBox addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
+											 options:0
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
+
+	[self.channelViewBox addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|"
+											 options:0
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
+}
+
+#pragma mark -
 #pragma mark Split View
 
 - (void)saveContentSplitViewState
@@ -1777,22 +1801,7 @@
 	/* Setup WebKit. */
 	TVCLogController *logController = self.selectedViewController;
 
-	NSView *webView = [[logController backingView] webView];
-	
-	/* Set content view to WebView. */
-	[self.channelViewBox setContentView:webView];
-
-	[self.channelViewBox addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
-											 options:0
-											 metrics:nil
-											   views:NSDictionaryOfVariableBindings(webView)]];
-
-	[self.channelViewBox addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|"
-											 options:0
-											 metrics:nil
-											   views:NSDictionaryOfVariableBindings(webView)]];
+	[self updateChannelViewBoxContentViewSelection];
 
 	/* Notify old view that it is no longer visible. */
 	[[self.previouslySelectedItem viewController] notifyDidBecomeHidden];
