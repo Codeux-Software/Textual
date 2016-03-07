@@ -616,6 +616,13 @@
 		4C6ED7F315901579001AD200 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7079091B536659001002F3 /* TDCLicenseManagerDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */; };
 		4C70790A1B536659001002F3 /* TDCLicenseManagerDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */; };
+		4C741C3D1C8CABE90090970C /* TVCLogObjectsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C741C3C1C8CABE90090970C /* TVCLogObjectsPrivate.h */; };
+		4C741C421C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */; };
+		4C741C431C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */; };
+		4C741C441C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */; };
+		4C741C461C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */; };
+		4C741C471C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */; };
+		4C741C481C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */; };
 		4C74FBBF1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */; };
 		4C74FBC01B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */; };
 		4C74FBC21B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */; };
@@ -1702,6 +1709,9 @@
 		4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RemoteLicenseSystemPublicKey.pub; path = "Resources/License Manager/RemoteLicenseSystemPublicKey.pub"; sourceTree = SOURCE_ROOT; };
 		4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSegmentedControl.h; sourceTree = "<group>"; };
 		4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerDialog.h; sourceTree = "<group>"; };
+		4C741C3C1C8CABE90090970C /* TVCLogObjectsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogObjectsPrivate.h; sourceTree = "<group>"; };
+		4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogViewInternalWK2.m; sourceTree = "<group>"; };
+		4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogViewInternalWK2.h; sourceTree = "<group>"; };
 		4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerRecoverLostLicenseSheet.m; path = Dialogs/TDCLicenseManagerRecoverLostLicenseSheet.m; sourceTree = "<group>"; };
 		4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerRecoverLostLicenseSheet.h; sourceTree = "<group>"; };
 		4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerDialog.m; path = Dialogs/TDCLicenseManagerDialog.m; sourceTree = "<group>"; };
@@ -2692,10 +2702,12 @@
 				4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */,
 				4CC6F51B1778AB2E00930E6E /* TVCLogControllerOperationQueue.h */,
 				4C8AF587158E99520026668C /* TVCLogLine.h */,
+				4C741C3C1C8CABE90090970C /* TVCLogObjectsPrivate.h */,
 				4C8AF588158E99520026668C /* TVCLogPolicy.h */,
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
 				4C8AF58A158E99520026668C /* TVCLogScriptEventSink.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
+				4C741C451C8CAD550090970C /* TVCLogViewInternalWK2.h */,
 				4C8AF58C158E99520026668C /* TVCMainWindow.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
@@ -3235,6 +3247,7 @@
 				4CF40DBA1AC1A4AC00A26BE0 /* TVCLogRenderer.m */,
 				4CF40DBB1AC1A4AC00A26BE0 /* TVCLogScriptEventSink.m */,
 				4CF40DBC1AC1A4AC00A26BE0 /* TVCLogView.m */,
+				4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */,
 			);
 			path = "Channel View";
 			sourceTree = "<group>";
@@ -3429,6 +3442,7 @@
 				4C0BA6051990798800857343 /* TXSharedApplication.h in Headers */,
 				4C0BA6061990798800857343 /* TPCApplicationInfo.h in Headers */,
 				4C0BA6071990798800857343 /* TXUserInterface.h in Headers */,
+				4C741C461C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */,
 				4C0BA6081990798800857343 /* IRCCommandIndex.h in Headers */,
 				4C0BA6091990798800857343 /* TPCPathInfo.h in Headers */,
 				4C0BA60B1990798800857343 /* TDCFileTransferDialogTableCell.h in Headers */,
@@ -3470,6 +3484,7 @@
 				4C790FC91B82706400EB318C /* TXWindowController.h in Headers */,
 				4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */,
+				4C741C3D1C8CABE90090970C /* TVCLogObjectsPrivate.h in Headers */,
 				4CE8683E1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h in Headers */,
 				4C0BA61E1990798800857343 /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C0BA61F1990798800857343 /* TVCQueuedCertificateTrustPanel.h in Headers */,
@@ -3614,6 +3629,7 @@
 				4C7E0FD219AC25900084173D /* GRMustacheVersion.h in Headers */,
 				4C7E0FA219AC25900084173D /* GRMustacheConfiguration.h in Headers */,
 				4C7E0FBE19AC25900084173D /* GRMustacheSafeKeyAccess.h in Headers */,
+				4C741C471C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */,
 				4C7E0FAA19AC25900084173D /* GRMustacheContext.h in Headers */,
 				4C7E0F9E19AC25900084173D /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7E0FB219AC25900084173D /* GRMustacheFilter.h in Headers */,
@@ -3776,6 +3792,7 @@
 				4C7E0FA319AC25900084173D /* GRMustacheConfiguration.h in Headers */,
 				4C7E0FBF19AC25900084173D /* GRMustacheSafeKeyAccess.h in Headers */,
 				4C7E0FAB19AC25900084173D /* GRMustacheContext.h in Headers */,
+				4C741C481C8CAD550090970C /* TVCLogViewInternalWK2.h in Headers */,
 				4C7E0F9F19AC25900084173D /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7E0FB319AC25900084173D /* GRMustacheFilter.h in Headers */,
 				4C7E0FA719AC25900084173D /* GRMustacheContentType.h in Headers */,
@@ -4607,6 +4624,7 @@
 				4CB26C7119529003005F927C /* IRCCommandIndex.m in Sources */,
 				5D4846C4171F0AC00015F2B0 /* OELReachability.m in Sources */,
 				4CBE64C81743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
+				4C741C431C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */,
 				4C0EC1251AB49ACA00D0015C /* TPCResourceManager.m in Sources */,
 			);
@@ -4642,6 +4660,7 @@
 				4C0BA64C1990798800857343 /* TDCServerChangeNicknameSheet.m in Sources */,
 				4CF40DF61AC1A4AC00A26BE0 /* TVCLogLine.m in Sources */,
 				4C0BA64D1990798800857343 /* TDCServerPropertiesSheet.m in Sources */,
+				4C741C421C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C0BA64E1990798800857343 /* TDCSheetBase.m in Sources */,
 				4C0BA6501990798800857343 /* TDChannelModifyTopicSheet.m in Sources */,
 				4C0BA6511990798800857343 /* TDCWelcomeSheet.m in Sources */,
@@ -4886,6 +4905,7 @@
 				4C937BD5170618940050CEF3 /* TLOSpeechSynthesizer.m in Sources */,
 				5D4846C3171F0AC00015F2B0 /* OELReachability.m in Sources */,
 				4CBE64C71743720600831D69 /* TDCHighlightEntrySheet.m in Sources */,
+				4C741C441C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C0EC1261AB49DD000D0015C /* TPCResourceManager.m in Sources */,
 				4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */,
 			);

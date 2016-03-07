@@ -45,122 +45,223 @@
 
 var app = {};
 
+app.supportsMessageHandlers = function()
+{
+	return (typeof window.webkit.messageHandlers !== "undefined");
+}
+
 app.setURLAddress = function(object)
 {
-	TextualScriptSink.setURLAddress(object);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.setURLAddress.postMessage(object);
+	} else {
+		TextualScriptSink.setURLAddress(object);
+	}
 };
 
 app.setChannelName = function(object)
 {
-	TextualScriptSink.setChannelName(object);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.setChannelName.postMessage(object);
+	} else {
+		TextualScriptSink.setChannelName(object);
+	}
 };
 
 app.setNickname = function(object)
 {
-	TextualScriptSink.setNickname(object);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.setNickname.postMessage(object);
+	} else {
+		TextualScriptSink.setNickname(object);
+	}
 };
 
 app.channelNameDoubleClicked = function()
 {
-	TextualScriptSink.channelNameDoubleClicked();
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.channelNameDoubleClicked.postMessage(null);
+	} else {
+		TextualScriptSink.channelNameDoubleClicked();
+	}
 };
 
 app.nicknameDoubleClicked = function()
 {
-	TextualScriptSink.nicknameDoubleClicked();
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.nicknameDoubleClicked.postMessage(null);
+	} else {
+		TextualScriptSink.nicknameDoubleClicked();
+	}
 };
 
 app.topicBarDoubleClicked = function()
 {
-	TextualScriptSink.topicBarDoubleClicked();
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.topicBarDoubleClicked.postMessage(null);
+	} else {
+		TextualScriptSink.topicBarDoubleClicked();
+	}
 };
 
 app.channelMemberCount = function()
 {
-	return TextualScriptSink.channelMemberCount();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.channelMemberCount.postMessage(null);
+	} else {
+		return TextualScriptSink.channelMemberCount();
+	}
 };
 
 app.serverChannelCount = function()
 {
-	return TextualScriptSink.serverChannelCount();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.serverChannelCount.postMessage(null);
+	} else {
+		return TextualScriptSink.serverChannelCount();
+	}
 };
 
 app.serverIsConnected = function()
 {
-	return TextualScriptSink.serverIsConnected();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.serverIsConnected.postMessage(null);
+	} else {
+		return TextualScriptSink.serverIsConnected();
+	}
 };
 
 app.channelIsJoined = function()
 {
-	return TextualScriptSink.channelIsJoined();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.channelIsJoined.postMessage(null);
+	} else {
+		return TextualScriptSink.channelIsJoined();
+	}
 };
 
 app.channelName = function()
 {
-	return TextualScriptSink.channelName();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.channelName.postMessage(null);
+	} else {
+		return TextualScriptSink.channelName();
+	}
 };
 
 app.serverAddress = function()
 {
-	return TextualScriptSink.serverAddress();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.serverAddress.postMessage(null);
+	} else {
+		return TextualScriptSink.serverAddress();
+	}
 };
 
 app.networkName = function()
 {
-	return TextualScriptSink.networkName();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.networkName.postMessage(null);
+	} else {
+		return TextualScriptSink.networkName();
+	}
 };
 
 app.localUserNickname = function()
 {
-	return TextualScriptSink.localUserNickname();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.localUserNickname.postMessage(null);
+	} else {
+		return TextualScriptSink.localUserNickname();
+	}
 };
 
 app.localUserHostmask = function()
 {
-	return TextualScriptSink.localUserHostmask();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.localUserHostmask.postMessage(null);
+	} else {
+		return TextualScriptSink.localUserHostmask();
+	}
 };
 
 app.inlineImagesEnabledForView = function()
 {
-	return TextualScriptSink.inlineImagesEnabledForView();
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.inlineImagesEnabledForView.postMessage(null);
+	} else {
+		return TextualScriptSink.inlineImagesEnabledForView();
+	}
 };
 
 app.logToConsole = function(message)
 {
-	TextualScriptSink.logToConsole(message);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.logToConsole.postMessage(message);
+	} else {
+		TextualScriptSink.logToConsole(message);
+	}
 };
 
 app.printDebugInformationToConsole = function(message)
 {
-	TextualScriptSink.printDebugInformationToConsole(message);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.printDebugInformationToConsole.postMessage(message);
+	} else {
+		TextualScriptSink.printDebugInformationToConsole(message);
+	}
 };
 
 app.printDebugInformation = function(message)
 {
-	TextualScriptSink.printDebugInformation(message);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.printDebugInformation.postMessage(message);
+	} else {
+		TextualScriptSink.printDebugInformation(message);
+	}
 };
 
 app.sidebarInversionIsEnabled = function()
 {
-	TextualScriptSink.sidebarInversionIsEnabled();
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.sidebarInversionIsEnabled.postMessage(null);
+	} else {
+		TextualScriptSink.sidebarInversionIsEnabled();
+	}
 };
 
 app.nicknameColorStyleHash = function(nickname, nicknameColorStyle)
 {
-	return TextualScriptSink.nicknameColorStyleHash(nickname, nicknameColorStyle);
+	if (app.supportsMessageHandlers()) {
+		return window.webkit.messageHandlers.nicknameColorStyleHash.postMessage([nickname, nicknameColorStyle]);
+	} else {
+		return TextualScriptSink.nicknameColorStyleHash(nickname, nicknameColorStyle);
+	}
 };
 
 app.styleSettingsRetrieveValue = function(key)
 {
-	TextualScriptSink.styleSettingsRetrieveValue(key);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.styleSettingsRetrieveValue.postMessage(key);
+	} else {
+		TextualScriptSink.styleSettingsRetrieveValue(key);
+	}
 };
 
 app.styleSettingsSetValue = function(key, value)
 {
-	TextualScriptSink.styleSettingsSetValue(key, value);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.styleSettingsSetValue.postMessage([key, value]);
+	} else {
+		TextualScriptSink.styleSettingsSetValue(key, value);
+	}
 };
 
 app.retrievePreferencesWithMethodName = function(name)
 {
-	TextualScriptSink.retrievePreferencesWithMethodName(name);
+	if (app.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.retrievePreferencesWithMethodName.postMessage(name);
+	} else {
+		TextualScriptSink.retrievePreferencesWithMethodName(name);
+	}
 };

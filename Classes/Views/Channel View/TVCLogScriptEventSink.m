@@ -38,19 +38,15 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogObjectsPrivate.h"
+
 #import "IRCUserPrivate.h"
 
-@implementation TVCLogScriptEventSink
+@interface TVCLogScriptEventSink ()
+@property (nonatomic, strong) WKUserContentController *userContentController;
+@end
 
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		self.x = -10000;
-		self.y = -10000;
-	}
-	
-	return self;
-}
+@implementation TVCLogScriptEventSink
 
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
@@ -104,24 +100,34 @@
 	return nil;
 }
 
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+	;
+}
+
 - (TVCLogView *)webView
 {
-	return [self.logController webView];
+	return [self parentView];
 }
 
 - (TVCLogPolicy *)webViewPolicy
 {
-	return [self.logController webViewPolicy];
+	return [[self parentView] webViewPolicy];
+}
+
+- (TVCLogController *)logController
+{
+	return [[self parentView] logController];
 }
 
 - (IRCClient *)associatedClient
 {
-	return [self.logController associatedClient];
+	return [[self logController] associatedClient];
 }
 
 - (IRCChannel *)associatedChannel
 {
-	return [self.logController associatedChannel];
+	return [[self logController] associatedChannel];
 }
 
 - (void)logToConsole:(NSString *)message
@@ -230,7 +236,7 @@
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[[self associatedClient] printDebugInformation:m channel:[self.logController associatedChannel]];
+	[[self associatedClient] printDebugInformation:m channel:[self associatedChannel]];
 }
 
 - (BOOL)sidebarInversionIsEnabled

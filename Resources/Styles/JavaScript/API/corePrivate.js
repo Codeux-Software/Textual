@@ -272,6 +272,15 @@ Textual.notifyDidBecomeVisible = function()
 	Textual.clearSelection();
 };
 
+Textual.changeTextSizeMultiplier = function(sizeMultiplier)
+{
+	if (sizeMultiplier === 1.0) {
+		document.body.style.fontSize = "";
+	} else {
+		document.body.style.fontSize = ((sizeMultiplier * 100.0) + "%");
+	}
+}
+
 /* Selection */
 Textual.clearSelection = function()
 {

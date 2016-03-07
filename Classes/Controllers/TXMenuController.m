@@ -296,7 +296,7 @@
 		case 315: // "Search in Google"
 		case 1601: // "Search on Google"
 		{
-			TVCLogView *web = [self currentWebView];
+			TVCLogView *web = [self currentLogControllerBackingView];
 
 			PointerIsEmptyAssertReturn(web, NO);
 
@@ -812,11 +812,11 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (TVCLogView *)currentWebView
+- (TVCLogView *)currentLogControllerBackingView
 {
 	TVCLogController *currentView = [mainWindow() selectedViewController];
 
-	return [currentView webView];
+	return [currentView backingView];
 }
 
 #pragma mark -
@@ -994,53 +994,12 @@
 
 - (void)internalOpenFindPanel:(id)sender
 {
-	_popWindowViewIfExists(@"TXMenuControllerFindPanel");
-
-	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
-
-	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1026][3]")
-					defaultButton:TXTLS(@"BasicLanguage[1026][1]")
-				  alternateButton:BLS(1009)
-				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
-				 defaultUserInput:self.currentSearchPhrase
-				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
-					  if (defaultButtonClicked) {
-						  if (NSObjectIsEmpty(resultString)) {
-							  self.currentSearchPhrase = NSStringEmptyPlaceholder;
-						  } else {
-							  if ([resultString isNotEqualTo:self.currentSearchPhrase]) {
-								  self.currentSearchPhrase = resultString;
-							  }
-							  
-							  [self performBlockOnMainThread:^{
-								  [[self currentWebView] searchFor:resultString direction:YES caseSensitive:NO wrap:YES];
-							  }];
-						  }
-					  }
-
-					  [windowController() removeWindowFromWindowList:@"TXMenuControllerFindPanel"];
-				  }];
-
-	[windowController() addWindowToWindowList:dialog withDescription:@"TXMenuControllerFindPanel"];
+	;
 }
 
 - (void)showFindPanel:(id)sender
 {
-#define _findPanelOpenPanelMenuTag		308
-#define _findPanelMoveForwardMenuTag	309
-
-	if ([sender tag] == _findPanelOpenPanelMenuTag || NSObjectIsEmpty(self.currentSearchPhrase)) {
-		[self internalOpenFindPanel:sender];
-	} else {
-		if ([sender tag] == _findPanelMoveForwardMenuTag) {
-			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
-		} else {
-			[[self currentWebView] searchFor:self.currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
-		}
-	}
-	
-#undef _findPanelOpenPanelMenuTag
-#undef _findPanelMoveForwardMenuTag
+	;
 }
 
 #pragma mark -
@@ -1158,7 +1117,9 @@
 	if ([mainWindow() isKeyWindow] == NO) {
 		[[NSApp keyWindow] print:sender];
 	} else {
-		[[self currentWebView] print:sender];
+		TVCLogView *web = [self currentLogControllerBackingView];
+
+		[web print];
 	}
 }
 
@@ -1196,7 +1157,7 @@
 
 - (void)searchGoogle:(id)sender
 {
-	TVCLogView *web = [self currentWebView];
+	TVCLogView *web = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(web);
 	
@@ -1211,7 +1172,7 @@
 
 - (void)copyLogAsHtml:(id)sender
 {
-	TVCLogView *sel = [self currentWebView];
+	TVCLogView *sel = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(sel);
 	

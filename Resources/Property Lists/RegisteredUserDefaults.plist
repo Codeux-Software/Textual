@@ -202,6 +202,8 @@
 	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg8HKIT+DH4WrPoOLbGc+AYY=</data>
 	<key>UserListDoubleClickAction</key>
 	<integer>200</integer>
+	<key>UsesWebKit2WhenAvailable</key>
+	<true/>
 	<key>WebKitDeveloperExtras</key>
 	<true/>
 </dict>

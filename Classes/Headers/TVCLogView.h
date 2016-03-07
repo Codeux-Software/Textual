@@ -40,21 +40,31 @@
 
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
-@interface TVCLogView : WebView
-@property (nonatomic, weak) id keyDelegate;
-@property (nonatomic, weak) id draggingDelegate;
-
+@interface TVCLogView : NSObject
 @property (readonly, copy) NSString *contentString;
 
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
 @property (readonly, copy) NSString *selection;
+
+- (instancetype)initWithLogController:(TVCLogController *)logController;
+
+- (void)print;
+
++ (BOOL)isUsingWebKit2;
+@end
+
+@interface TVCLogView (TVCLogViewBackingProxy)
+@property (readonly) NSView *webView;
+
+- (void)stopLoading;
+
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
-- (BOOL)scriptingIsAvailable;
-
-- (id)executeJavaScript:(NSString *)code;
+- (void)executeStandaloneCommand:(NSString *)command;
+- (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments;
 
 - (id)executeCommand:(NSString *)command;
 - (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
@@ -74,6 +84,7 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @protocol TVCLogViewDelegate <NSObject>
 @required
 
-- (void)logViewKeyDown:(NSEvent *)e;
-- (void)logViewRecievedDropWithFile:(NSString *)filename;
+- (void)logViewWebViewFinishedLoading;
+- (void)logViewWebViewKeyDown:(NSEvent *)e;
+- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
 @end

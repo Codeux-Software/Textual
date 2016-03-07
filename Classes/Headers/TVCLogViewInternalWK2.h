@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,63 +37,13 @@
 
 #import "TextualApplication.h"
 
-#import "TVCLogView.h" // @protocol
+@interface TVCLogViewInternalWK2 : WKWebView <WKUIDelegate, WKNavigationDelegate>
+@property (nonatomic, weak) TVCLogView *t_parentView;
 
-TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
++ (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView;
 
-@interface TVCLogController : NSObject <TVCLogViewDelegate, TVCImageURLoaderDelegate>
-@property (nonatomic, weak) IRCClient *associatedClient;
-@property (nonatomic, weak) IRCChannel *associatedChannel;
-@property (nonatomic, strong) TVCLogView *backingView;
-@property (nonatomic, assign) BOOL isLoaded;
-@property (nonatomic, assign) BOOL viewIsEncrypted;
-@property (nonatomic, assign) NSInteger maximumLineCount;
+- (void)executeJavaScript:(NSString *)code;
+- (id)executeJavaScriptWithResult:(NSString *)code;
 
-@property (assign) BOOL reloadingBacklog;
-@property (assign) BOOL reloadingHistory;
-
-@property (readonly) NSInteger numberOfLines;
-
-- (void)setUp;
-
-- (void)notifyDidBecomeVisible;
-- (void)notifyDidBecomeHidden;
-
-- (void)preferencesChanged;
-
-- (void)prepareForApplicationTermination;
-- (void)prepareForPermanentDestruction;
-
-- (void)nextHighlight;
-- (void)previousHighlight;
-
-- (BOOL)highlightAvailable:(BOOL)previous;
-
-@property (readonly, copy) NSString *uniqueIdentifier;
-
-- (void)moveToTop;
-- (void)moveToBottom;
-
-- (BOOL)jumpToLine:(NSString *)lineNumber;
-
-@property (readonly, copy) NSString *topicValue;
-- (void)setTopic:(NSString *)topic;
-
-@property (readonly) BOOL inlineImagesEnabledForView;
-
-- (void)mark;
-- (void)unmark;
-- (void)goToMark;
-
-- (void)clear;
-
-- (void)reloadTheme;
-
-- (void)changeTextSize:(BOOL)bigger;
-
-- (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
-
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;
+@property (readonly) TVCLogPolicy *webViewPolicy;
 @end
