@@ -39,6 +39,18 @@
 
 #import "TVCLogViewInternalWK2.h"
 
+#define _maximumProcessCount			15
+
+@interface _WKProcessPoolConfiguration : NSObject <NSCopying>
+@property (nonatomic) NSUInteger maximumProcessCount;
+@end
+
+@interface WKProcessPool ()
+- (instancetype)_initWithConfiguration:(_WKProcessPoolConfiguration *)configuration;
+
+- (_WKProcessPoolConfiguration *)_configuration;
+@end
+
 @interface NSView (WKViewSwizzle)
 @end
 
@@ -55,7 +67,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 + (void)initialize
 {
-	_sharedProcessPool = [WKProcessPool new];
+	[self constructProcessPool];
 
 	_sharedWebViewConfiguration = [WKWebViewConfiguration new];
 
@@ -95,6 +107,36 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[_sharedWebViewConfiguration setUserContentController:_sharedUserContentController];
 
 	_sharedWebPolicy = [TVCLogPolicy new];
+}
+
++ (void)constructProcessPool
+{
+	/* What we are doing here is very dirty which means it is probably a good idea
+	 that we go above and beyond for error checking incase this stuff is changed. */
+	WKProcessPool *sharedProcessPool = [WKProcessPool alloc];
+
+	if ([sharedProcessPool respondsToSelector:@selector(_initWithConfiguration:)] == NO) {
+		goto create_normal_pool;
+	}
+
+	if ([_WKProcessPoolConfiguration class]) {
+		_WKProcessPoolConfiguration *processPoolConfiguration = [_WKProcessPoolConfiguration new];
+
+		if (processPoolConfiguration == nil) {
+			goto create_normal_pool;
+		} else if ([processPoolConfiguration respondsToSelector:@selector(setMaximumProcessCount:)] == NO) {
+			goto create_normal_pool;
+		}
+
+		[processPoolConfiguration setMaximumProcessCount:_maximumProcessCount];
+
+		_sharedProcessPool = [sharedProcessPool _initWithConfiguration:processPoolConfiguration];
+
+		return;
+	}
+
+create_normal_pool:
+	_sharedProcessPool = [sharedProcessPool init];
 }
 
 + (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView
