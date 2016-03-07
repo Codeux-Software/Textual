@@ -40,8 +40,6 @@
 
 #import "TVCLogObjectsPrivate.h"
 
-#import "TVCLogViewInternalWK2.h"
-
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
 @end

@@ -219,7 +219,7 @@
 #pragma mark -
 #pragma mark Shared
 
-- (void)channelDoubleClicked
+- (void)channelNameDoubleClicked
 {
 	[menuController() joinClickedChannel:self.channelName];
 

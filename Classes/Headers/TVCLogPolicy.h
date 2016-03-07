@@ -48,7 +48,7 @@
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;
 
-- (void)channelDoubleClicked;
+- (void)channelNameDoubleClicked;
 - (void)nicknameDoubleClicked;
 - (void)topicBarDoubleClicked;
 @end
