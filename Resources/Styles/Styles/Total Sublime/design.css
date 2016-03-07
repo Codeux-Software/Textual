@@ -234,7 +234,6 @@ body div.line.selectedUser[highlight=false] {
 /* Historic Line */
 
 #historic_messages {
-	display: inline-block;
 	margin: 0;
 	padding: 0;
 	opacity: 0.6;
