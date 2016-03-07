@@ -185,9 +185,20 @@
 #pragma mark -
 #pragma mark WebKit2 Delegate
 
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
+{
+
+}
+
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
-	completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+	NSString *authenticationMethod = [[challenge protectionSpace] authenticationMethod];
+
+	if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+		completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+	} else {
+		completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+	}
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
