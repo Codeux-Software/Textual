@@ -84,6 +84,7 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @protocol TVCLogViewDelegate <NSObject>
 @required
 
+- (void)logViewWebViewClosedUnexpectedly;
 - (void)logViewWebViewFinishedLoading;
 - (void)logViewWebViewKeyDown:(NSEvent *)e;
 - (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;

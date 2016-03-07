@@ -116,10 +116,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)setUp
 {
-	self.backingView = [[TVCLogView alloc] initWithLogController:self];
-
 	/* Load initial document. */
-	[self loadAlternateHTML:[self initialDocument:nil]];
+	[self constructBackingView];
+
+	[self loadInitialDocument];
 
 	/* Cache last known state of encryption. */
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -150,6 +150,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			[self reloadHistory];
 		}
 	}
+}
+
+- (void)constructBackingView
+{
+	self.backingView = [[TVCLogView alloc] initWithLogController:self];
+}
+
+- (void)loadInitialDocument
+{
+	[self loadAlternateHTML:[self initialDocument]];
 }
 
 - (void)loadAlternateHTML:(NSString *)newHTML
@@ -305,15 +315,15 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Channel Topic Bar
 
-- (NSString *)topicValue
+- (void)setInitialTopic
 {
-	NSString *topicValueHTML = [self executeQuickStringScriptCommand:@"Textual.topicBarValue" withArguments:@[@(NO)]];
+	PointerIsEmptyAssert(self.associatedChannel);
 
-	if (topicValueHTML == nil) {
-		return NSStringEmptyPlaceholder;
+	NSString *topic = [self.associatedChannel topic];
+
+	if (NSObjectIsEmpty(topic) == NO) {
+		[self setTopic:topic];
 	}
-
-	return topicValueHTML;
 }
 
 - (void)setTopic:(NSString *)topic
@@ -730,13 +740,26 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
 
-		[self loadAlternateHTML:[self initialDocument:[self topicValue]]];
+		[self loadInitialDocument];
 	}];
 }
 
 - (void)clear
 {
 	[self clearWithReset:YES];
+}
+
+- (void)clearBackingView
+{
+	self.backingView = nil;
+
+	[self constructBackingView];
+
+	[self clearWithReset:YES];
+
+	if ([mainWindow() selectedViewController] == self) {
+		[mainWindow() updateChannelViewBoxContentViewSelection];
+	}
 }
 
 #pragma mark -
@@ -1110,7 +1133,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Initial Document
 
-- (NSString *)initialDocument:(NSString *)topic
+- (NSString *)initialDocument
 {
 	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
 
@@ -1135,12 +1158,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		templateTokens[@"channelName"]	  = [TVCLogRenderer escapeString:[self.associatedChannel name]];
 		
 		templateTokens[@"viewTypeToken"]  = [self.associatedChannel channelTypeString];
-
-		if (topic == nil || [topic length] == 0) {
-			templateTokens[@"formattedTopicValue"] = BLS(1122);
-		} else {
-			templateTokens[@"formattedTopicValue"] = topic;
-		}
 	} else {
 		templateTokens[@"viewTypeToken"] = @"server";
 	}
@@ -1233,11 +1250,18 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
 	}
 
+	[self setInitialTopic];
+
 	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
 
 	[[self printingQueue] updateReadinessState:self];
 
 	[self changeTextSizeMultiplier];
+}
+
+- (void)logViewWebViewClosedUnexpectedly
+{
+	[self clearBackingView];
 }
 
 - (void)logViewWebViewKeyDown:(NSEvent *)e
