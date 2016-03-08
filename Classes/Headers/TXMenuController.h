@@ -310,6 +310,7 @@
 
 - (IBAction)showPreferencesDialog:(id)sender;
 
+- (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
 - (IBAction)print:(id)sender;
 

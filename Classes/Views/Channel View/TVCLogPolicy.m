@@ -104,7 +104,23 @@
 	}
 	else
 	{
+		NSMenu *menu = [menuController() channelViewMenu];
 
+		for (NSMenuItem *item in [menu itemArray]) {
+			NSMenuItem *newItem = [item copy];
+
+			[newMenu addItem:newItem];
+		}
+
+		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+			[newMenu addItem:[NSMenuItem separatorItem]];
+
+			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:BLS(1018) target:menuController() action:@selector(copyLogAsHtml:)];
+			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:BLS(1019) target:menuController() action:@selector(forceReloadTheme:)];
+
+			[newMenu addItem:newItem1];
+			[newMenu addItem:newItem2];
+		}
 	}
 
 	/* Present the menu relative to the mouse location converted to the window. */
