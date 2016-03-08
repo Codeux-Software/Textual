@@ -342,19 +342,62 @@ Textual.includeScriptResourceFile = function(file)
 	}
 };
 
-/* Contextual menu management and other resources.
-We do not recommend anyone try to override these. */
+/* Contextual menu management */
+Textual.openGenericContextualMenu = function(event)
+{
+	/* Do not block if target element already has a callback. */
+	if (event.target.oncontextmenu !== null) {
+		return;
+	}
+
+	// event.preventDefault();
+};
+
 Textual.openChannelNameContextualMenu = function()
 {
-	app.setChannelName(event.target.textContent);
+	Textual.setPolicyChannelName();
+
+	Textual.contextMenuConstructor(event);
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
-	app.setURLAddress(event.target.getAttribute("href"));
+	Textual.setPolicyURLAddress();
+
+	Textual.contextMenuConstructor(event);
+};
+
+Textual.openStandardNicknameContextualMenu = function()
+{
+	Textual.setPolicyStandardNickname();
+
+	Textual.contextMenuConstructor(event);
 };
 
 Textual.openInlineNicknameContextualMenu = function()
+{
+	Textual.setPolicyInlineNickname();
+
+	Textual.contextMenuConstructor(event);
+};
+
+Textual.contextMenuConstructor = function(event)
+{
+	Textual.clearSelection();
+
+	app.constructContextMenu();
+
+	event.preventDefault();
+};
+
+Textual.setPolicyStandardNickname = function()
+{
+	var userNickname = event.target.getAttribute("nickname");
+
+	app.setNickname(userNickname);
+};
+
+Textual.setPolicyInlineNickname = function()
 {
 	var userNickname = event.target.textContent;
 
@@ -365,15 +408,19 @@ Textual.openInlineNicknameContextualMenu = function()
 	} else {
 		app.setNickname(userNickname);
 	}
-}; // Conversation Tracking
-
-Textual.openStandardNicknameContextualMenu = function()
-{
-	var userNickname = event.target.getAttribute("nickname");
-
-	app.setNickname(userNickname);
 };
 
+Textual.setPolicyURLAddress = function()
+{
+	app.setURLAddress(event.target.getAttribute("href"));
+};
+
+Textual.setPolicyChannelName = function()
+{
+	app.setChannelName(event.target.textContent);
+};
+
+/* Double click actions */
 Textual.nicknameMaybeWasDoubleClicked = function(e)
 {
 	if (Textual.nicknameDoubleClickTimer) {
@@ -396,23 +443,23 @@ Textual.nicknameSingleClicked = function(e)
 	// API does not handle this action by default...
 };
 
-Textual.nicknameDoubleClicked = function(e)
-{
-	Textual.openStandardNicknameContextualMenu();
-
-	app.nicknameDoubleClicked();
-};
-
 Textual.channelNameDoubleClicked = function()
 {
-	Textual.openChannelNameContextualMenu();
+	Textual.setPolicyChannelName();
 
 	app.channelNameDoubleClicked();
 };
 
+Textual.nicknameDoubleClicked = function(e)
+{
+	Textual.setPolicyStandardNickname();
+
+	app.nicknameDoubleClicked();
+};
+
 Textual.inlineNicknameDoubleClicked = function()
 {
-	Textual.openInlineNicknameContextualMenu();
+	Textual.setPolicyInlineNickname();
 
 	app.nicknameDoubleClicked();
 };
@@ -492,6 +539,8 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 Textual.inlineImageLoaded = function()
 {
 	TextualScroller.performAutoScroll();
-}
+};
+
+document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
 
 document.addEventListener("mouseup", Textual.copyOnSelectMouseUpEvent, false);

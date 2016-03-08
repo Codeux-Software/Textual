@@ -350,23 +350,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 		return nil;
 	}
 
-	id arrayLengthObject = [scriptResult valueForKey:@"length"];
-
-	if (arrayLengthObject == nil || [arrayLengthObject isKindOfClass:[NSNumber class]] == NO) {
-		return nil;
-	}
-
-	NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
-
-	NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
-
-	for (NSUInteger i = 0; i < arrayLength; i++) {
-		id item = [scriptResult webScriptValueAtIndex:(unsigned)i];
-
-		[scriptArray addObject:item];
-	}
-
-	return [scriptArray copy];
+	return [TVCLogScriptEventSink webScriptObjectToArray:scriptResult];
 }
 
 @end

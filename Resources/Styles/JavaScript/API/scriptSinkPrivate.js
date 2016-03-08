@@ -128,7 +128,7 @@ app.channelNameDoubleClicked = function()
 	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.channelNameDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.channelNameDoubleClicked(null);
+		TextualScriptSink.channelNameDoubleClicked();
 	}
 };
 
@@ -137,7 +137,7 @@ app.nicknameDoubleClicked = function()
 	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.nicknameDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.nicknameDoubleClicked(null);
+		TextualScriptSink.nicknameDoubleClicked();
 	}
 };
 
@@ -146,7 +146,7 @@ app.topicBarDoubleClicked = function()
 	if (appInternal.supportsMessageHandlers()) {
 		window.webkit.messageHandlers.topicBarDoubleClicked.postMessage(null);
 	} else {
-		TextualScriptSink.topicBarDoubleClicked(null);
+		TextualScriptSink.topicBarDoubleClicked();
 	}
 };
 
@@ -391,5 +391,14 @@ app.copySelectionWhenPermitted = function(object, callbackFunction)
 		window.webkit.messageHandlers.copySelectionWhenPermitted.postMessage(dataValue);
 	} else {
 		TextualScriptSink.copySelectionWhenPermitted(dataValue);
+	}
+};
+
+app.constructContextMenu = function(selection)
+{
+	if (appInternal.supportsMessageHandlers()) {
+		window.webkit.messageHandlers.constructContextMenu.postMessage(selection);
+	} else {
+		TextualScriptSink.constructContextMenu(selection);
 	}
 };

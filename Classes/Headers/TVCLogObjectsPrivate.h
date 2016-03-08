@@ -58,9 +58,10 @@
 @end
 
 @interface TVCLogPolicy ()
-@property (nonatomic, weak) TVCLogView *parentView;
 @end
 
 @interface TVCLogScriptEventSink ()
 @property (nonatomic, weak) TVCLogView *parentView;
+
++ (NSArray *)webScriptObjectToArray:(WebScriptObject *)object;
 @end
