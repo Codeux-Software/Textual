@@ -50,16 +50,12 @@
 
 @implementation TVCLogPolicy
 
-#pragma mark -
-#pragma mark WebKit Delegate
-
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (void)constructContextMenu:(NSString *)selection inWebView:(TVCLogView *)webView
 {
-	TVCLogController *logController = [[self parentView] logController];
+	TVCLogController *logController = [webView logController];
 
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMenu *newMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
 
-	/* Invalidate passed information if we are in console. */
 	if ([logController associatedChannel] == nil) {
 		self.nickname = nil;
 	}
@@ -69,92 +65,77 @@
 		NSMenu *urlMenu = [menuController() tcopyURLMenu];
 		
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
+			NSMenuItem *newItem = [item copy];
 			
-			[newitem setUserInfo:self.anchorURL recursively:YES];
-			
-			[ary addObject:newitem];
+			[newItem setUserInfo:self.anchorURL recursively:YES];
+
+			[newMenu addItem:newItem];
 		}
 		
 		self.anchorURL = nil;
-		
-		return ary;
 	}
 	else if (self.nickname)
 	{
 		NSMenu *memberMenu = [menuController() userControlMenu];
 		
 		for (NSMenuItem *item in [memberMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
+			NSMenuItem *newItem = [item copy];
 			
-			[newitem setUserInfo:self.nickname recursively:YES];
-			
-			[ary addObject:newitem];
+			[newItem setUserInfo:self.nickname recursively:YES];
+
+			[newMenu addItem:newItem];
 		}
 		
 		self.nickname = nil;
-		
-		return ary;
 	}
 	else if (self.channelName)
 	{
 		NSMenu *chanMenu = [menuController() joinChannelMenu];
 		
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
+			NSMenuItem *newItem = [item copy];
 			
-			[newitem setUserInfo:self.channelName recursively:YES];
-			
-			[ary addObject:newitem];
+			[newItem setUserInfo:self.channelName recursively:YES];
+
+			[newMenu addItem:newItem];
 		}
 		
 		self.channelName = nil;
-		
-		return ary;
 	}
 	else
 	{
-		NSMenu *menu = [menuController() channelViewMenu];
-		
-		NSMenuItem *inspectElementItem		= nil;
-		NSMenuItem *lookupInDictionaryItem	= nil;
-		
-		for (NSMenuItem *item in defaultMenuItems) {
-			if ([item tag] == WebMenuItemTagLookUpInDictionary) {
-				lookupInDictionaryItem = item;
-			} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
-					   [item tag] == _WebMenuItemTagInspectElementMountainLion)
-			{
-				inspectElementItem = item;
-			}
-		}
-		
-		for (NSMenuItem *item in [menu itemArray]) {
-			[ary addObject:[item copy]];
 
-			if ([item tag] == _WebMenuItemTagSearchInGoogle) {
-				if (lookupInDictionaryItem) {
-					[ary addObject:lookupInDictionaryItem];
-				}
-			}
-		}
-		
-		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
-			[ary addObject:[NSMenuItem separatorItem]];
-			
-			if (inspectElementItem) {
-				[ary addObject:[inspectElementItem copy]];
-			}
-
-			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:BLS(1018) target:menuController() action:@selector(copyLogAsHtml:)];
-			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:BLS(1019) target:menuController() action:@selector(forceReloadTheme:)];
-
-			[ary addObject:newItem1];
-			[ary addObject:newItem2];
-		}
-		
-		return ary;
 	}
+
+	/* Present the menu relative to the mouse location converted to the window. */
+	NSView *webViewBacking = [webView webView];
+
+	NSWindow *webViewWindow = [webViewBacking window];
+
+	NSPoint mouseLocationGlobal = [NSEvent mouseLocation];
+
+	NSRect mouseLocationLocal =
+	[webViewWindow convertRectFromScreen:NSMakeRect(mouseLocationGlobal.x, mouseLocationGlobal.y, 0, 0)];
+
+	NSEvent *event = [NSEvent mouseEventWithType:NSRightMouseUp
+										location:mouseLocationLocal.origin
+								   modifierFlags:0
+									   timestamp:0
+									windowNumber:[webViewWindow windowNumber]
+										 context:nil
+									 eventNumber:0
+									  clickCount:0
+										pressure:0];
+
+	[NSMenu popUpContextMenu:newMenu withEvent:event forView:webViewBacking];
+}
+
+#pragma mark -
+#pragma mark WebKit Delegate
+
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+{
+	return nil;
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource

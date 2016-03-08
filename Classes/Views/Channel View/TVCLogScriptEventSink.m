@@ -90,15 +90,11 @@
 		return @(NO);
 	}
 
-	if (args == nil || [args count] == 0) {
-		return @(NO);
+	if (args && [args count] > 0) {
+		(void)objc_msgSend(self, handlerSelector, args[0], [self parentView]);
+	} else {
+		(void)objc_msgSend(self, handlerSelector, nil, [self parentView]);
 	}
-
-	if ([args[0] isKindOfClass:[WebScriptObject class]] == NO) {
-		return @(NO);
-	}
-
-	(void)objc_msgSend(self, handlerSelector, args[0], [self parentView]);
 
 	return @(YES);
 }
@@ -111,6 +107,27 @@
 + (NSString *)webScriptNameForKey:(const char *)name
 {
 	return nil;
+}
+
++ (NSArray *)webScriptObjectToArray:(WebScriptObject *)object
+{
+	id arrayLengthObject = [object valueForKey:@"length"];
+
+	if (arrayLengthObject == nil || [arrayLengthObject isKindOfClass:[NSNumber class]] == NO) {
+		return nil;
+	}
+
+	NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
+
+	NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
+
+	for (NSUInteger i = 0; i < arrayLength; i++) {
+		id item = [object webScriptValueAtIndex:(unsigned)i];
+
+		[scriptArray addObject:item];
+	}
+
+	return [scriptArray copy];
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
@@ -180,6 +197,12 @@
 		/* Values should always be in an array */
 		if (minimumArgumentCount > 0) {
 			id valuesObj = [inputData valueForKey:@"values"];
+
+			if (valuesObj) {
+				if ([valuesObj isKindOfClass:[WebScriptObject class]]) {
+					 valuesObj = [TVCLogScriptEventSink webScriptObjectToArray:valuesObj];
+				}
+			}
 
 			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
 				[self _throwJavaScriptException:@"'values' must be an array" inWebView:intWebView];
@@ -283,6 +306,11 @@
 - (void)channelNameDoubleClicked:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
+}
+
+- (void)constructContextMenu:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_constructContextMenu:)];
 }
 
 - (void)copySelection:(id)inputData inWebView:(id)webView
@@ -486,6 +514,11 @@
 - (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
 	[[context webViewPolicy] channelNameDoubleClicked];
+}
+
+- (void)_constructContextMenu:(TVCLogScriptEventSinkContext *)context
+{
+	[[context webViewPolicy] constructContextMenu:nil inWebView:[context webView]];
 }
 
 - (void)_copySelection:(TVCLogScriptEventSinkContext *)context

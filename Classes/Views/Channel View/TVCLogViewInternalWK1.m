@@ -69,7 +69,6 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	[webViewScriptSink setParentView:hostView];
 
 	TVCLogPolicy *webViewPolicy = [TVCLogPolicy new];
-	[webViewPolicy setParentView:hostView];
 
 	TVCLogViewInternalWK1 *webView = [[TVCLogViewInternalWK1 alloc] initWithFrame:NSZeroRect];
 
@@ -90,6 +89,8 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	[webView setUIDelegate:webView];
 
 	[webView setShouldUpdateWhileOffscreen:NO];
+
+	[webView updateBackgroundColor];
 
 	return webView;
 }
@@ -117,6 +118,17 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)updateBackgroundColor
+{
+	NSColor *windowColor = [themeSettings() underlyingWindowColor];
+
+	if (windowColor == nil) {
+		windowColor = [NSColor blackColor];
+	}
+
+	[(id)self setBackgroundColor:windowColor];
+}
 
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
@@ -209,6 +221,8 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	self.t_viewHasLoaded = YES;
 
 	[self maybeInformDelegateWebViewFinishedLoading];
+
+	[self updateBackgroundColor];
 }
 
 @end

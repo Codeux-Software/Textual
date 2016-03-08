@@ -81,6 +81,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelMemberCount"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelName"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
+	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"constructContextMenu"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelection"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];

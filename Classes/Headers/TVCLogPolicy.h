@@ -48,6 +48,8 @@
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;
 
+- (void)constructContextMenu:(NSString *)selection inWebView:(TVCLogView *)webView;
+
 - (void)channelNameDoubleClicked;
 - (void)nicknameDoubleClicked;
 - (void)topicBarDoubleClicked;
