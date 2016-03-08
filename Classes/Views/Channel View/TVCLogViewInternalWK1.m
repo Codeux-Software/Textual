@@ -158,7 +158,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	id scriptResult = [scriptObject evaluateWebScript:code];
 
 	if (scriptResult) {
-		if ([scriptResult isKindOfClass:[NSNull class]] == NO &&
+		if ([scriptResult isKindOfClass:[NSNull class]] == NO ||
 			[scriptResult isKindOfClass:[WebUndefined class]] == NO)
 		{
 			return nil;
