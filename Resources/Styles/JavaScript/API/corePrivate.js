@@ -357,7 +357,9 @@ Textual.openGenericContextualMenu = function(event)
 		return;
 	}
 
-	// event.preventDefault();
+	event.preventDefault();
+
+	app.constructContextMenu();
 };
 
 Textual.openChannelNameContextualMenu = function()
