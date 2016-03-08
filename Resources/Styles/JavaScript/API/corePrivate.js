@@ -287,6 +287,13 @@ Textual.clearSelection = function()
 	window.getSelection().empty();
 };
 
+Textual.clearSelectionAndPreventDefault = function()
+{
+	Textual.clearSelection();
+
+	event.preventDefault();
+};
+
 Textual.currentSelection = function()
 {
 	return window.getSelection().toString();
@@ -355,39 +362,38 @@ Textual.openGenericContextualMenu = function(event)
 
 Textual.openChannelNameContextualMenu = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyChannelName();
 
-	Textual.contextMenuConstructor(event);
+	app.constructContextMenu();
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyURLAddress();
 
-	Textual.contextMenuConstructor(event);
+	app.constructContextMenu();
 };
 
 Textual.openStandardNicknameContextualMenu = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyStandardNickname();
 
-	Textual.contextMenuConstructor(event);
+	app.constructContextMenu();
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyInlineNickname();
 
-	Textual.contextMenuConstructor(event);
-};
-
-Textual.contextMenuConstructor = function(event)
-{
-	Textual.clearSelection();
-
 	app.constructContextMenu();
-
-	event.preventDefault();
 };
 
 Textual.setPolicyStandardNickname = function()
@@ -445,13 +451,17 @@ Textual.nicknameSingleClicked = function(e)
 
 Textual.channelNameDoubleClicked = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyChannelName();
 
 	app.channelNameDoubleClicked();
 };
 
-Textual.nicknameDoubleClicked = function(e)
+Textual.nicknameDoubleClicked = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyStandardNickname();
 
 	app.nicknameDoubleClicked();
@@ -459,6 +469,8 @@ Textual.nicknameDoubleClicked = function(e)
 
 Textual.inlineNicknameDoubleClicked = function()
 {
+	Textual.clearSelectionAndPreventDefault();
+
 	Textual.setPolicyInlineNickname();
 
 	app.nicknameDoubleClicked();
