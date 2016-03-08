@@ -238,8 +238,8 @@ create_normal_pool:
 	}
 
 	if (scriptResult) {
-		if ([scriptResult isKindOfClass:[NSNull class]] == NO ||
-			[scriptResult isKindOfClass:[WebUndefined class]] == NO)
+		if ([scriptResult isKindOfClass:[NSNull class]] ||
+			[scriptResult isKindOfClass:[WebUndefined class]])
 		{
 			return nil;
 		}
