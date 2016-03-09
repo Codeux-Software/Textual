@@ -40,11 +40,6 @@
 
 #import "THOPluginProtocolPrivate.h"
 
-#import <objc/objc-runtime.h>
-
-#warning TODO: Find does not work 
-#warning TODO: THOPluginProtocolCompatibilityMinimumVersion needs to be bumped
-
 @interface TVCLogController ()
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
