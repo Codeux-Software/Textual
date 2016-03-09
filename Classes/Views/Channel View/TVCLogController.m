@@ -43,7 +43,6 @@
 #import <objc/objc-runtime.h>
 
 #warning TODO: Find does not work 
-#warning TODO: Menus do not work
 #warning TODO: THOPluginProtocolCompatibilityMinimumVersion needs to be bumped
 
 @interface TVCLogController ()

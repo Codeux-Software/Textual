@@ -42,6 +42,8 @@
 #import "TLOLicenseManager.h"
 #endif
 
+#import "TVCLogObjectsPrivate.h"
+
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
 #define _connected					(u && [u isConnected])
@@ -301,6 +303,30 @@
 			PointerIsEmptyAssertReturn(web, NO);
 
 			return [web hasSelection];
+		}
+		case 1608: // "Look Up in Dictionary"
+		{
+			TVCLogView *web = [self currentLogControllerBackingView];
+
+			PointerIsEmptyAssertReturn(web, NO);
+
+			NSString *selection = [web selection];
+
+			if (selection == nil || [selection length] > 40) {
+				[item setTitle:BLS(1296)];
+
+				return NO;
+			} else {
+				if ([selection length] > 25) {
+					selection = [selection substringToIndex:24];
+
+					selection = [NSString stringWithFormat:@"%@…", [selection trim]];
+				}
+
+				[item setTitle:BLS(1297, selection)];
+
+				return YES;
+			}
 		}
 		case 802: // "Toggle Visiblity of Member List"
 		{
@@ -1194,6 +1220,21 @@
 	[TLOpenLink openWithString:urlStr];
 }
 
+- (void)lookUpInDictionary:(id)sender
+{
+	TVCLogView *web = [self currentLogControllerBackingView];
+
+	PointerIsEmptyAssert(web);
+
+	NSString *s = [web selection];
+
+	NSObjectIsEmptyAssert(s);
+
+	NSString *urlStr = [NSString stringWithFormat:@"dict://%@", [s gtm_stringByEscapingForURLArgument]];
+
+	[TLOpenLink openWithString:urlStr];
+}
+
 - (void)copyLogAsHtml:(id)sender
 {
 	TVCLogView *sel = [self currentLogControllerBackingView];
@@ -1201,6 +1242,19 @@
 	PointerIsEmptyAssert(sel);
 	
 	[RZPasteboard() setStringContent:[sel contentString]];
+}
+
+- (void)openWebInspector:(id)sender
+{
+	if ([TVCLogView isUsingWebKit2] == NO) {
+		NSAssert(NO, @"Missing implementation");
+	}
+
+	TVCLogView *sel = [self currentLogControllerBackingView];
+
+	PointerIsEmptyAssert(sel);
+
+	[(TVCLogViewInternalWK2 *)[sel webView] openWebInspector];
 }
 
 - (void)markScrollback:(id)sender

@@ -48,4 +48,6 @@
 - (id)executeJavaScriptWithResult:(NSString *)code;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
+
+- (void)openWebInspector;
 @end

@@ -58,6 +58,7 @@
 @end
 
 @interface TVCLogPolicy ()
+@property (nonatomic, weak) TVCLogView *parentView;
 @end
 
 @interface TVCLogScriptEventSink ()

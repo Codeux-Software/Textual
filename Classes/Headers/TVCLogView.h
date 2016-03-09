@@ -46,6 +46,7 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
 @property (readonly, copy) NSString *selection;
+@property (readonly) NSRect selectionCoordinates;
 
 - (instancetype)initWithLogController:(TVCLogController *)logController;
 
