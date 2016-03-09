@@ -299,6 +299,26 @@ Textual.currentSelection = function()
 	return window.getSelection().toString();
 };
 
+Textual.currentSelectionCoordinates = function()
+{
+	var currentSelection = window.getSelection();
+
+	if (currentSelection.toString() === "") {
+		return null;
+	}
+
+	var clientHeight = document.body.clientHeight;
+
+	var elementRect = currentSelection.getRangeAt(0).getBoundingClientRect();
+
+	return {
+		"x" : elementRect.left,
+		"y" : (clientHeight - elementRect.bottom),
+		"w" : elementRect.width,
+		"h" : elementRect.height
+	};
+};
+
 Textual.copyOnSelectMouseUpEvent = function()
 {
 	if (window.event.metaKey || window.event.altKey) {
@@ -350,52 +370,62 @@ Textual.includeScriptResourceFile = function(file)
 };
 
 /* Contextual menu management */
-Textual.openGenericContextualMenu = function(event)
+Textual.openGenericContextualMenu = function()
 {
 	/* Do not block if target element already has a callback. */
 	if (event.target.oncontextmenu !== null) {
 		return;
 	}
 
-	event.preventDefault();
+	if (appInternal.isWebKit2()) {
+		event.preventDefault();
 
-	app.constructContextMenu();
+		app.displayContextMenu();
+	}
 };
 
 Textual.openChannelNameContextualMenu = function()
 {
-	Textual.clearSelectionAndPreventDefault();
-
 	Textual.setPolicyChannelName();
 
-	app.constructContextMenu();
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
-	Textual.clearSelectionAndPreventDefault();
-
 	Textual.setPolicyURLAddress();
 
-	app.constructContextMenu();
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openStandardNicknameContextualMenu = function()
 {
-	Textual.clearSelectionAndPreventDefault();
-
 	Textual.setPolicyStandardNickname();
 
-	app.constructContextMenu();
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openInlineNicknameContextualMenu = function()
 {
-	Textual.clearSelectionAndPreventDefault();
-
 	Textual.setPolicyInlineNickname();
 
-	app.constructContextMenu();
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.setPolicyStandardNickname = function()

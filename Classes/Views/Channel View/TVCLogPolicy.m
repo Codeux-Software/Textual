@@ -47,83 +47,148 @@
 #define _WebMenuItemTagInspectElementMountainLion	2025
 
 #define _WebMenuItemTagSearchInGoogle		1601 // Tag for Textual's menu, not WebKit
+#define _WebMenuItemTagLookUpDictionary		1608 // Tag for Textual's meny, not WebKit
 
 @implementation TVCLogPolicy
 
-- (void)constructContextMenu:(NSString *)selection inWebView:(TVCLogView *)webView
+- (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	TVCLogController *logController = [webView logController];
 
-	NSMenu *newMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+	BOOL isWebKit2 = [TVCLogView isUsingWebKit2];
+
+	id newMenu = nil;
+
+	if (isWebKit2) {
+		newMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+	} else {
+		newMenu = [NSMutableArray array];
+	}
+
+#define _addItem(_itemValue_)		if (isWebKit2) {						\
+										[newMenu addItem:(_itemValue_)];	\
+									} else {								\
+										[newMenu addObject:(_itemValue_)];	\
+									}
 
 	if ([logController associatedChannel] == nil) {
 		self.nickname = nil;
 	}
-	
+
 	if (self.anchorURL)
 	{
 		NSMenu *urlMenu = [menuController() tcopyURLMenu];
-		
+
 		for (NSMenuItem *item in [urlMenu itemArray]) {
 			NSMenuItem *newItem = [item copy];
-			
+
 			[newItem setUserInfo:self.anchorURL recursively:YES];
 
-			[newMenu addItem:newItem];
+			_addItem(newItem)
 		}
-		
+
 		self.anchorURL = nil;
 	}
 	else if (self.nickname)
 	{
 		NSMenu *memberMenu = [menuController() userControlMenu];
-		
+
 		for (NSMenuItem *item in [memberMenu itemArray]) {
 			NSMenuItem *newItem = [item copy];
-			
+
 			[newItem setUserInfo:self.nickname recursively:YES];
 
-			[newMenu addItem:newItem];
+			_addItem(newItem)
 		}
-		
+
 		self.nickname = nil;
 	}
 	else if (self.channelName)
 	{
 		NSMenu *chanMenu = [menuController() joinChannelMenu];
-		
+
 		for (NSMenuItem *item in [chanMenu itemArray]) {
 			NSMenuItem *newItem = [item copy];
-			
+
 			[newItem setUserInfo:self.channelName recursively:YES];
 
-			[newMenu addItem:newItem];
+			_addItem(newItem)
 		}
-		
+
 		self.channelName = nil;
 	}
 	else
 	{
 		NSMenu *menu = [menuController() channelViewMenu];
 
+		NSMenuItem *inspectElementItem		= nil;
+		NSMenuItem *lookupInDictionaryItem	= nil;
+
+		if (isWebKit2 == NO) {
+			for (NSMenuItem *item in defaultMenuItems) {
+				if ([item tag] == WebMenuItemTagLookUpInDictionary) {
+					lookupInDictionaryItem = item;
+				} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
+						   [item tag] == _WebMenuItemTagInspectElementMountainLion)
+				{
+					inspectElementItem = item;
+				}
+			}
+		}
+
 		for (NSMenuItem *item in [menu itemArray]) {
 			NSMenuItem *newItem = [item copy];
 
-			[newMenu addItem:newItem];
+			if (isWebKit2 == NO) {
+				if ([newItem tag] == _WebMenuItemTagLookUpDictionary) {
+					continue;
+				}
+			}
+
+			_addItem(newItem);
+
+			if ([newItem tag] == _WebMenuItemTagSearchInGoogle) {
+				if (lookupInDictionaryItem) {
+					_addItem(lookupInDictionaryItem)
+				}
+			}
 		}
 
 		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
-			[newMenu addItem:[NSMenuItem separatorItem]];
+			_addItem([NSMenuItem separatorItem])
 
-			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:BLS(1018) target:menuController() action:@selector(copyLogAsHtml:)];
-			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:BLS(1019) target:menuController() action:@selector(forceReloadTheme:)];
+			_addItem(
+			 [NSMenuItem menuItemWithTitle:BLS(1018)
+									target:menuController()
+									action:@selector(copyLogAsHtml:)])
 
-			[newMenu addItem:newItem1];
-			[newMenu addItem:newItem2];
+			_addItem(
+			 [NSMenuItem menuItemWithTitle:BLS(1019)
+									target:menuController()
+									action:@selector(forceReloadTheme:)])
+
+			if (isWebKit2) {
+				_addItem(
+				 [NSMenuItem menuItemWithTitle:BLS(1295)
+										target:menuController()
+										action:@selector(openWebInspector:)])
+			} else {
+				if (inspectElementItem) {
+					_addItem(inspectElementItem)
+				}
+			}
 		}
 	}
 
-	/* Present the menu relative to the mouse location converted to the window. */
+	return newMenu;
+}
+
+- (void)displayContextMenuInWebView:(TVCLogView *)webView
+{
+	NSAssertReturn([TVCLogView isUsingWebKit2] == YES);
+
+	NSMenu *newMenu = [self constructContextMenuInWebView:webView defaultMenuItems:nil];
+
 	NSView *webViewBacking = [webView webView];
 
 	NSWindow *webViewWindow = [webViewBacking window];
@@ -151,7 +216,7 @@
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	return nil;
+	return [self constructContextMenuInWebView:[self parentView] defaultMenuItems:defaultMenuItems];
 }
 
 - (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource

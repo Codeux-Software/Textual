@@ -37,20 +37,9 @@
 
 #import "TVCLogObjectsPrivate.h"
 
+#import "WKWebViewPrivate.h"
+
 #define _maximumProcessCount			15
-
-@interface _WKProcessPoolConfiguration : NSObject <NSCopying>
-@property (nonatomic) NSUInteger maximumProcessCount;
-@end
-
-@interface WKProcessPool ()
-- (instancetype)_initWithConfiguration:(_WKProcessPoolConfiguration *)configuration;
-
-- (_WKProcessPoolConfiguration *)_configuration;
-@end
-
-@interface NSView (WKViewSwizzle)
-@end
 
 @implementation TVCLogViewInternalWK2
 
@@ -81,7 +70,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelMemberCount"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelName"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"constructContextMenu"];
+	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"displayContextMenu"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelection"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
 	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];
@@ -192,6 +181,17 @@ create_normal_pool:
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)openWebInspector
+{
+	WKView *webViewParent = (id)[self subviews][0];
+
+	WKPageRef pageRef = [webViewParent pageRef];
+
+	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
+
+	WKInspectorShow(inspectorRef);
+}
 
 - (void)maybeInformDelegateWebViewFinishedLoading
 {

@@ -91,7 +91,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)contentString
 {
-	NSString *contentString = [self executeCommand:@"Textual.documentHTML"];
+	NSString *contentString = [self returnStringByExecutingCommand:@"Textual.documentHTML"];
 
 	return contentString;
 }
@@ -105,9 +105,52 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)selection
 {
-	NSString *selection = [self executeCommand:@"Textual.currentSelection"];
+	NSString *selection = [self returnStringByExecutingCommand:@"Textual.currentSelection"];
 
 	return selection;
+}
+
+- (NSRect)selectionCoordinates
+{
+	id scriptResult = [self executeCommand:@"Textual.currentSelectionCoordinates"];
+
+	id elementX = nil;
+	id elementY = nil;
+	id elementWidth = nil;
+	id elementHeight = nil;
+
+	if (scriptResult && [scriptResult isKindOfClass:[NSDictionary class]])
+	{
+		elementX = [scriptResult objectForKey:@"x"];
+		elementY = [scriptResult objectForKey:@"y"];
+		elementWidth = [scriptResult objectForKey:@"w"];
+		elementHeight = [scriptResult objectForKey:@"h"];
+	}
+	else if (scriptResult && [scriptResult isKindOfClass:[WebScriptObject class]])
+	{
+		elementX = [scriptResult valueForKey:@"x"];
+		elementY = [scriptResult valueForKey:@"y"];
+		elementWidth = [scriptResult valueForKey:@"w"];
+		elementHeight = [scriptResult valueForKey:@"h"];
+	}
+	else
+	{
+		return NSZeroRect;
+	}
+
+	if ([elementX isKindOfClass:[NSNumber class]] == NO ||
+		[elementY isKindOfClass:[NSNumber class]] == NO ||
+		[elementWidth isKindOfClass:[NSNumber class]] == NO ||
+		[elementHeight isKindOfClass:[NSNumber class]] == NO)
+	{
+		return NSZeroRect;
+	}
+
+	return NSMakeRect(
+		[elementX integerValue],
+		[elementY integerValue],
+		[elementWidth integerValue],
+		[elementHeight integerValue]);
 }
 
 - (void)clearSelection

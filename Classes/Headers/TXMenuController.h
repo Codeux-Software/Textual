@@ -258,6 +258,7 @@
 	1605: "-"
 	1606: "Query Logs"
 	1607: "Channel"
+	1608: "Look Up in Dictionary"
 
 	The following tags apply to the "Dock" menu:
 	1700: "Disable All Notifications"
@@ -458,6 +459,9 @@
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 - (IBAction)simulateCrash:(id)sender;
 #endif
+
+- (IBAction)openWebInspector:(id)sender;
+- (IBAction)lookUpInDictionary:(id)sender;
 
 - (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;

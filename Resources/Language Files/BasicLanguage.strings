@@ -270,6 +270,9 @@
 /* Channel view right click menu, menu items */
 "BasicLanguage[1018]" = "Copy Log as HTML";
 "BasicLanguage[1019]" = "Force Reload Style";
+"BasicLanguage[1295]" = "Open Web Inspector";
+"BasicLanguage[1296]" = "Look Up in Dictionary";
+"BasicLanguage[1297]" = "Look Up “%@”";
 
 /* DCC request console error */
 "BasicLanguage[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
@@ -797,6 +800,6 @@
 
 
 
-/* Next unusued key: 1295 */
+/* Next unusued key: 1298 */
 
 

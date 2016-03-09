@@ -308,9 +308,9 @@
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
 }
 
-- (void)constructContextMenu:(id)inputData inWebView:(id)webView
+- (void)displayContextMenu:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_constructContextMenu:)];
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_displayContextMenu:)];
 }
 
 - (void)copySelection:(id)inputData inWebView:(id)webView
@@ -516,9 +516,9 @@
 	[[context webViewPolicy] channelNameDoubleClicked];
 }
 
-- (void)_constructContextMenu:(TVCLogScriptEventSinkContext *)context
+- (void)_displayContextMenu:(TVCLogScriptEventSinkContext *)context
 {
-	[[context webViewPolicy] constructContextMenu:nil inWebView:[context webView]];
+	[[context webViewPolicy] displayContextMenuInWebView:[context webView]];
 }
 
 - (void)_copySelection:(TVCLogScriptEventSinkContext *)context
