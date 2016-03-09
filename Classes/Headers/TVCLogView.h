@@ -66,6 +66,9 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
+- (void)executeJavaScript:(NSString *)code;
+- (id)executeJavaScriptWithResult:(NSString *)code;
+
 - (void)executeStandaloneCommand:(NSString *)command;
 - (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments;
 
