@@ -143,15 +143,12 @@ create_normal_pool:
 	[webView setT_parentView:hostView];
 
 	[webView setAllowsBackForwardNavigationGestures:NO];
+	[webView setAllowsLinkPreview:NO];
 	[webView setAllowsMagnification:YES];
 
 	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
-
-		[webView setAllowsLinkPreview:NO];
-	}
+	[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
 
 	[webView setNavigationDelegate:webView];
 
@@ -328,7 +325,7 @@ create_normal_pool:
 
 + (void)load
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+	NSAssertReturn([TVCLogView isUsingWebKit2]);
 
 	static dispatch_once_t onceToken;
 
