@@ -48,4 +48,6 @@
 - (id)executeJavaScriptWithResult:(NSString *)code;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
+
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 @end

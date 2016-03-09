@@ -245,6 +245,11 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 }
 
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
+{
+	[[self webViewBacking] findString:searchString movingForward:movingForward];
+}
+
 @end
 
 @implementation TVCLogView (TVCLogViewJavaScriptHandler)
