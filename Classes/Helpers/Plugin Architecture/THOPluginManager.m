@@ -196,10 +196,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
 	/* Begin building list. Topmost take priority. */
-	NSArray *scriptPaths = [TPCPathInfo buildPathArray:
-							[TPCPathInfo systemUnsupervisedScriptFolderPath],
-							[TPCPathInfo bundledScriptFolderPath],
-							nil];
+	NSArray *scriptPaths =
+	[TPCPathInfo buildPathArray:
+		[TPCPathInfo systemUnsupervisedScriptFolderPath],
+		[TPCPathInfo bundledScriptFolderPath],
+		nil];
 	
 	/* Begin scanning folders. */
 	id returnData = nil;
@@ -314,11 +315,16 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)extrasInstallerInformUserAboutUpdateForBundleNamed:(NSString *)bundleName
 {
+	/* Append the current version to the suppression key so that updates 
+	 aren't refused forever. Only until the next verison of Textual is out. */
+	NSString *suppressionKey =
+	[@"plugin_manager_extension_update_dialog_" stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
+
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
 													   title:TXTLS(@"BasicLanguage[1287][1]", bundleName)
 											   defaultButton:TXTLS(@"BasicLanguage[1287][3]")
 											 alternateButton:TXTLS(@"BasicLanguage[1287][4]")
-											  suppressionKey:@"plugin_manager_extension_update_dialog"
+											  suppressionKey:suppressionKey
 											 suppressionText:nil];
 
 	if (download == NO) {
@@ -454,6 +460,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	_ef(THOPluginItemSupportsUserInputDataInterception)
 	_ef(THOPluginItemSupportsWillRenderMessageEvent)
 	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
+	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
 
 #undef _ef
 }
