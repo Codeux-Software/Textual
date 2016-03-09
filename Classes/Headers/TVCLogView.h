@@ -61,6 +61,8 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 - (void)stopLoading;
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
+
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)

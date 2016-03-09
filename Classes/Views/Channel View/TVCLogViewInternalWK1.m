@@ -137,6 +137,11 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	}
 }
 
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
+{
+	[self searchFor:searchString direction:movingForward caseSensitive:NO wrap:YES];
+}
+
 #pragma mark -
 #pragma mark View Configuration
 

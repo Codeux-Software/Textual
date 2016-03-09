@@ -39,6 +39,7 @@
 
 #import "WKWebViewPrivate.h"
 
+#include <objc/message.h>
 #include <objc/runtime.h>
 
 #define _maximumProcessCount			15
@@ -197,6 +198,19 @@ create_normal_pool:
 	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
 
 	WKInspectorShow(inspectorRef);
+}
+
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
+{
+	_WKFindOptions findOptions = (_WKFindOptionsCaseInsensitive	| _WKFindOptionsShowOverlay	| _WKFindOptionsShowFindIndicator | _WKFindOptionsWrapAround);
+
+	if (movingForward == NO) {
+		findOptions |= _WKFindOptionsBackwards;
+	}
+
+	if ([self respondsToSelector:@selector(_findString:options:maxCount:)]) {
+		(void)objc_msgSend(self, @selector(_findString:options:maxCount:), searchString, findOptions, 1);
+	}
 }
 
 - (void)maybeInformDelegateWebViewFinishedLoading

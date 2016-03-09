@@ -50,4 +50,6 @@
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
 - (void)openWebInspector;
+
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 @end
