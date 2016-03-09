@@ -143,12 +143,15 @@ create_normal_pool:
 	[webView setT_parentView:hostView];
 
 	[webView setAllowsBackForwardNavigationGestures:NO];
-	[webView setAllowsLinkPreview:NO];
 	[webView setAllowsMagnification:YES];
 
 	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-	[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+
+		[webView setAllowsLinkPreview:NO];
+	}
 
 	[webView setNavigationDelegate:webView];
 
