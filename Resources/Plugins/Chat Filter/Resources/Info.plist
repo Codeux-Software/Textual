@@ -15,9 +15,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0.0</string>
 	<key>MinimumTextualVersion</key>
-	<string>5.0.0</string>
-	<key>MinimumTextualApplicationVersion</key>
-	<string>5.2.3</string>
+	<string>6.0.0</string>
 	<key>NSPrincipalClass</key>
 	<string>TPI_ChatFilterExtension</string>
 </dict>
