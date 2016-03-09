@@ -196,6 +196,14 @@
 		<string>spotify</string>
 		<string>vlc</string>
 	</array>
+	<key>THOPluginManager Version 6.0.0 Extension Whitelist</key>
+	<array>
+		<string>com.codeux.app-extensions.textual-BlowfishEncryption</string>
+		<string>com.codeux.app-extensions.textual-Caffeine</string>
+		<string>com.codeux.app-extensions.textual-WikiStyleLinkParser</string>
+		<string>com.codeux.irc.textual.extension.WikiStyleLinkParser</string>
+		<string>com.codeux.irc.textual5.extension.BlowfishCommandLine</string>
+	</array>
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
 	<dict>
 		<key>BlowfishEncryption</key>
