@@ -53,7 +53,7 @@
 @property (nonatomic, assign) THOPluginItemSupportedFeatures supportedFeatures;
 @end
 
-NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"5.0.0";
+NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute = @"lineNumber";
 NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute = @"senderNickname";
