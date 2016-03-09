@@ -51,6 +51,11 @@ TextualScroller.isScrollingProgrammatically = false;
 TextualScroller.isScrolledToBottomOfView = true;
 
 /* Core functions */
+TextualScroller.documentResizedCallback = function()
+{
+	TextualScroller.performAutoScroll();
+};
+
 TextualScroller.documentScrolledCallback = function()
 {
 	if (TextualScroller.isScrollingProgrammatically) {
@@ -105,3 +110,5 @@ TextualScroller.viewingBottom = function()
 };
 
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
+
+window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
