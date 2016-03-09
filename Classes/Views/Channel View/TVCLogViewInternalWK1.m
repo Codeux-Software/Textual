@@ -133,7 +133,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewHasLoaded && self.t_viewHasScriptObject) {
-		[[self t_parentView] informDelegateWebViewFinishedLoading];
+		[[self t_parentView] performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
 
