@@ -309,7 +309,7 @@ create_normal_pool:
 	self.t_viewIsNavigating = YES;
 }
 
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
 	NSAssertReturn(self == webView);
 
