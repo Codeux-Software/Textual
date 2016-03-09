@@ -233,7 +233,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (NSURL *)baseURL
 {
-	return [themeController() baseURL];
+	NSString *temporaryPath = [themeController() temporaryPath];
+
+	return [NSURL fileURLWithPath:temporaryPath];
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue
@@ -919,7 +921,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	NSMutableDictionary *specialAttributes = [NSMutableDictionary new];
 
-	specialAttributes[@"activeStyleAbsolutePath"] = [[self baseURL] absoluteString];
+	specialAttributes[@"activeStyleAbsolutePath"] = [[self baseURL] path];
 	
 	specialAttributes[@"applicationResourcePath"] = [TPCPathInfo applicationResourcesFolderPath];
 
@@ -1130,11 +1132,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	// ---- //
 
-	templateTokens[@"activeStyleAbsolutePath"]	= [[self baseURL] absoluteString];
+	templateTokens[@"activeStyleAbsolutePath"]	= [[self baseURL] path];
 	
 	templateTokens[@"applicationResourcePath"]	= [TPCPathInfo applicationResourcesFolderPath];
-
-	templateTokens[@"cacheToken"]				= [themeController() sharedCacheID];
 
     templateTokens[@"configuredServerName"]     = [self.associatedClient altNetworkName];
 

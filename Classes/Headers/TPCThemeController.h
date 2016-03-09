@@ -59,7 +59,6 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 @interface TPCThemeController : NSObject
 @property (nonatomic, copy) NSURL *baseURL;
 @property (nonatomic, copy) NSString *associatedThemeName;
-@property (nonatomic, copy) NSString *sharedCacheID;
 @property (nonatomic, strong) TPCThemeSettings *customSettings;
 @property (nonatomic, assign) TPCThemeControllerStorageLocation storageLocation;
 
@@ -67,10 +66,13 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 - (void)load; // Calling this more than once will throw an exception
 - (void)reload;
 
+- (void)prepareForApplicationTermination;
+
 @property (readonly, copy) NSDictionary *dictionaryOfAllThemes;
 
 @property (readonly, copy) NSString *path;
 @property (readonly, copy) NSString *actualPath; // Ignores iCloud cache and queries iCloud directly.
+@property (readonly, copy) NSString *temporaryPath;
 
 @property (readonly, copy) NSString *name;
 

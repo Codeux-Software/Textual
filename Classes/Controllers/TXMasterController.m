@@ -402,6 +402,8 @@
 
 	[windowController() prepareForApplicationTermination];
 
+	[themeController() prepareForApplicationTermination];
+
 	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
