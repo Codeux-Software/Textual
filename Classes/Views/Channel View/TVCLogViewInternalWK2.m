@@ -39,6 +39,8 @@
 
 #import "WKWebViewPrivate.h"
 
+#include <objc/runtime.h>
+
 #define _maximumProcessCount			15
 
 @implementation TVCLogViewInternalWK2
@@ -54,6 +56,8 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 + (void)initialize
 {
+	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+
 	[self constructProcessPool];
 
 	_sharedWebViewConfiguration = [WKWebViewConfiguration new];
@@ -109,8 +113,10 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		goto create_normal_pool;
 	}
 
-	if ([_WKProcessPoolConfiguration class]) {
-		_WKProcessPoolConfiguration *processPoolConfiguration = [_WKProcessPoolConfiguration new];
+	Class processPoolConfigurationClass = objc_getClass("_WKProcessPoolConfiguration");
+
+	if (processPoolConfigurationClass) {
+		id processPoolConfiguration = [processPoolConfigurationClass new];
 
 		if (processPoolConfiguration == nil) {
 			goto create_normal_pool;
@@ -305,6 +311,8 @@ create_normal_pool:
 
 + (void)load
 {
+	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
