@@ -85,7 +85,7 @@
  * the key named: "MinimumTextualVersion" - Set the value of this entry, as a 
  * String, to the return value of THOPluginProtocolCompatibilityMinimumVersion.
  *
- * @return "5.0.0" as of March 09, 2015
+ * @return "6.0.0" as of March 08, 2016
  */
 TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 
