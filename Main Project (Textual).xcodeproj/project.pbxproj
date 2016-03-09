@@ -516,9 +516,6 @@
 		4C49495118735BC400B7F00A /* TDCFileTransferDialogTransferController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C52379415C18F6700414852 /* Style Default Templates in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379215C18F6700414852 /* Style Default Templates */; };
 		4C52379515C18F6700414852 /* Styles in Resources */ = {isa = PBXBuildFile; fileRef = 4C52379315C18F6700414852 /* Styles */; };
-		4C530C751C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C530C741C8F7CDB00E70E1A /* WKWebViewPrivate.h */; };
-		4C530C761C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C530C741C8F7CDB00E70E1A /* WKWebViewPrivate.h */; };
-		4C530C771C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C530C741C8F7CDB00E70E1A /* WKWebViewPrivate.h */; };
 		4C58B572186011B900834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C58B573186011BE00834882 /* Acknowledgments.pdf in Copy Acknowledgements */ = {isa = PBXBuildFile; fileRef = 4C58B570186011AC00834882 /* Acknowledgments.pdf */; };
 		4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -3508,7 +3505,6 @@
 				4C0BA5E31990798800857343 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C0BA5E41990798800857343 /* TVCTextFormatterMenu.h in Headers */,
 				4C0BA5E51990798800857343 /* TVCMainWindowSplitView.h in Headers */,
-				4C530C751C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */,
 				4C0BA5E81990798800857343 /* TXGlobalModels.h in Headers */,
 				4C0BA5E91990798800857343 /* TXMasterController.h in Headers */,
 				4C0BA5EA1990798800857343 /* TXMenuController.h in Headers */,
@@ -3705,7 +3701,6 @@
 				4CBFB2E31979AF9C005BB6B5 /* TVCMemberListMavericksUserInterface.h in Headers */,
 				4CBFB2E91979AFBD005BB6B5 /* TVCMemberListSharedUserInterface.h in Headers */,
 				4CBFB2E61979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h in Headers */,
-				4C530C761C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */,
 				4C7E0FAE19AC25900084173D /* GRMustacheError.h in Headers */,
 				4C7E0FCA19AC25900084173D /* GRMustacheTemplate.h in Headers */,
 				4C7E0F9A19AC25900084173D /* GRMustache.h in Headers */,
@@ -3870,7 +3865,6 @@
 				4CEA09BE1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h in Headers */,
 				4C77661F19789F9A00759774 /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C7E0FAF19AC25900084173D /* GRMustacheError.h in Headers */,
-				4C530C771C8F7CDB00E70E1A /* WKWebViewPrivate.h in Headers */,
 				4C7E0FCB19AC25900084173D /* GRMustacheTemplate.h in Headers */,
 				4C7E0F9B19AC25900084173D /* GRMustache.h in Headers */,
 				4C7E0FCF19AC25900084173D /* GRMustacheTemplateRepository.h in Headers */,
