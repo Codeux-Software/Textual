@@ -114,10 +114,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			NSAssert(NO, @"-loadPlugins called more than one time.");
 		}
 
-		NSArray *paths = [TPCPathInfo buildPathArray:
-						  [TPCPathInfo customExtensionFolderPath],
-						  [TPCPathInfo bundledExtensionFolderPath],
-						  nil];
+		NSArray *paths =
+		[TPCPathInfo buildPathArray:
+			[TPCPathInfo customExtensionFolderPath],
+			[TPCPathInfo bundledExtensionFolderPath],
+			nil];
 
 		NSMutableArray *loadedBundles = [NSMutableArray array];
 
@@ -139,25 +140,80 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			}
 		}
 
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		NSArray *whitelistedBundles = [staticValues arrayForKey:@"THOPluginManager Version 6.0.0 Extension Whitelist"];
+
 		for (NSString *bundleName in bundlesToLoad) {
 			NSString *bundlePath = bundlesToLoad[bundleName];
 
 			NSBundle *currBundle = [NSBundle bundleWithPath:bundlePath];
 
-			if (currBundle) {
-				THOPluginItem *currPlugin = [THOPluginItem new];
+			if (currBundle == nil) {
+				continue;
+			}
 
-				BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
+			/* Begin version comparison */
+			NSDictionary *bundleInfo = [currBundle infoDictionary];
 
-				if (bundleLoaded) {
-					[self updateSupportedFeaturesPropertyWithPlugin:currPlugin];
+			NSString *comparisonVersion = bundleInfo[@"MinimumTextualVersion"];
 
-					[loadedBundles addObject:currBundle];
+			if (comparisonVersion == nil) {
+				NSLog(@" ---------------------------- ERROR ---------------------------- ");
+				NSLog(@"                                                                 ");
+				NSLog(@"  Textual has failed to load the bundle at the following path    ");
+				NSLog(@"  which did not specify a minimum version:                       ");
+				NSLog(@"                                                                 ");
+				NSLog(@"     Bundle Path: %@", [currBundle bundlePath]);
+				NSLog(@"                                                                 ");
+				NSLog(@"  Please add a key-value pair in the bundle's Info.plist file    ");
+				NSLog(@"  with the key name as \"MinimumTextualVersion\"                 ");
+				NSLog(@"                                                                 ");
+				NSLog(@"  For example, to support this version and later:                ");
+				NSLog(@"                                                                 ");
+				NSLog(@"     <key>MinimumTextualVersion</key>                            ");
+				NSLog(@"     <string>%@</string>", THOPluginProtocolCompatibilityMinimumVersion);
+				NSLog(@"                                                                 ");
+				NSLog(@" --------------------------------------------------------------- ");
 
-					[loadedPlugins addObject:currPlugin];
-				} else {
-					currPlugin = nil;
+				continue;
+			} else {
+				NSComparisonResult comparisonResult = NSOrderedSame;
+
+				if ([whitelistedBundles containsObject:[currBundle bundleIdentifier]] == NO) {
+					comparisonResult = [comparisonVersion compare:THOPluginProtocolCompatibilityMinimumVersion options:NSNumericSearch];
 				}
+
+				if (comparisonResult == NSOrderedAscending) {
+					NSLog(@" ---------------------------- ERROR ---------------------------- ");
+					NSLog(@"                                                                 ");
+					NSLog(@"  Textual has failed to load the bundle at the followig path     ");
+					NSLog(@"  because the specified minimum version is out of range:         ");
+					NSLog(@"                                                                 ");
+					NSLog(@"     Bundle Path: %@", [currBundle bundlePath]);
+					NSLog(@"                                                                 ");
+					NSLog(@"     Minimum version specified by bundle: %@", comparisonVersion);
+					NSLog(@"     Version used by Textual for comparison: %@", THOPluginProtocolCompatibilityMinimumVersion);
+					NSLog(@"                                                                 ");
+					NSLog(@" --------------------------------------------------------------- ");
+
+					continue;
+				}
+			}
+
+			/* Load bundle as a plugin */
+			THOPluginItem *currPlugin = [THOPluginItem new];
+
+			BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
+
+			if (bundleLoaded) {
+				[self updateSupportedFeaturesPropertyWithPlugin:currPlugin];
+
+				[loadedBundles addObject:currBundle];
+
+				[loadedPlugins addObject:currPlugin];
+			} else {
+				currPlugin = nil;
 			}
 		}
 
