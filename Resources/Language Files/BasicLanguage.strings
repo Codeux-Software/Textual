@@ -202,9 +202,9 @@
 "TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
 "TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
 
-"TLOLicenseManager[1008]" = "Select a copy of Textual 5 installed through the Mac App Store to receive a free license key.";
+"TLOLicenseManager[1008]" = "Select a copy of Textual installed through the Mac App Store to receive a free license key.";
 
-"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or was not downloaded through the Mac App Store.";
+"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or newer version, or was not downloaded through the Mac App Store.";
 "TLOLicenseManager[1009][2]" = "Select another application and try again.";
 
 "TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase to new license system";
