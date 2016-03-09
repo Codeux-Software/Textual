@@ -312,7 +312,7 @@
 
 			NSString *selection = [web selection];
 
-			if (selection == nil || [selection length] > 40) {
+			if (NSObjectIsEmpty(selection) || [selection length] > 40) {
 				[item setTitle:BLS(1296)];
 
 				return NO;
