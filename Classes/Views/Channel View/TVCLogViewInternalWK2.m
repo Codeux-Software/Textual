@@ -57,7 +57,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 + (void)initialize
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+	NSAssertReturn([XRSystemInformation isUsingOSXElCapitanOrLater]);
 
 	[self constructProcessPool];
 
@@ -325,7 +325,7 @@ create_normal_pool:
 
 + (void)load
 {
-	NSAssertReturn([TVCLogView isUsingWebKit2]);
+	NSAssertReturn([XRSystemInformation isUsingOSXElCapitanOrLater]);
 
 	static dispatch_once_t onceToken;
 
