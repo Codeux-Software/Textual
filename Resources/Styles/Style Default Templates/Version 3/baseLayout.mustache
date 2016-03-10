@@ -102,6 +102,10 @@
 
 		onload="Textual.viewBodyDidLoad()"
 
+		{{#usesCustomScrollers}}
+			customscroller="true"
+		{{/usesCustomScrollers}}
+
 		{{#isChannelView}}
 			channelname="{{channelName}}"
 		{{/isChannelView}}
