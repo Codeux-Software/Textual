@@ -14,7 +14,7 @@ body {
  	z-index: 100;
 	font-size: 11px;
 	overflow: hidden;
-	overflow-y: visible;
+	overflow-y: auto;
 	background-color: #272822;
 	font-family: "Lucida Grande";
 }
