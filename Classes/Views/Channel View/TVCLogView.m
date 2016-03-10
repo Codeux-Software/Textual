@@ -284,6 +284,104 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return escapedString;
 }
 
+- (NSString *)compileJavaScriptDictionaryArgument:(NSDictionary *)objects
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	[compiledScript appendString:@"{"];
+
+	NSInteger lastIndex = ([[objects allKeys] count] - 1);
+
+	__block NSInteger currentIndex = 0;
+
+	[objects enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		/* Perform check to make sure the key we are using is actually a string. */
+		if ([key isKindOfClass:[NSString class]] == NO) {
+			LogToConsole(@"Silently ignoring non-string key: %@", NSStringFromClass([key class]));
+
+			return;
+		}
+
+		/* Add key and value to new object. */
+		NSString *keyString = [self escapeJavaScriptString:key];
+
+		NSString *objectString = [self compileJavaScriptGenericArgument:object];
+
+		if (currentIndex == lastIndex) {
+			[compiledScript appendFormat:@"\"%@\" : %@", keyString, objectString];
+		} else {
+			[compiledScript appendFormat:@"\"%@\" : %@, ", keyString, objectString];
+		}
+
+		currentIndex += 1;
+	}];
+
+	[compiledScript appendString:@"}"];
+
+	return [compiledScript copy];
+}
+
+- (NSString *)compileJavaScriptArrayArgument:(NSArray *)objects
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	[compiledScript appendString:@"["];
+
+	NSInteger lastIndex = ([objects count] - 1);
+
+	[objects enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		NSString *objectString = [self compileJavaScriptGenericArgument:object];
+
+		if (index == lastIndex) {
+			[compiledScript appendString:objectString];
+		} else {
+			[compiledScript appendFormat:@"%@, ", objectString];
+		}
+	}];
+
+	[compiledScript appendString:@"]"];
+
+	return [compiledScript copy];
+}
+
+- (NSString *)compileJavaScriptGenericArgument:(id)object
+{
+	if ([object isKindOfClass:[NSString class]])
+	{
+		NSString *objectEscaped = [self escapeJavaScriptString:object];
+
+		return [NSString stringWithFormat:@"\"%@\"", objectEscaped];
+	}
+	else if ([object isKindOfClass:[NSNumber class]])
+	{
+		if (strcmp([object objCType], @encode(BOOL)) == 0) {
+			if ([object boolValue] == YES) {
+				return @"true";
+			} else {
+				return @"false";
+			}
+		} else {
+			return [object stringValue];
+		}
+	}
+	else if ([object isKindOfClass:[NSArray class]])
+	{
+		return [self compileJavaScriptArrayArgument:object];
+	}
+	else if ([object isKindOfClass:[NSDictionary class]])
+	{
+		return [self compileJavaScriptDictionaryArgument:object];
+	}
+	else if ([object isKindOfClass:[NSNull class]])
+	{
+		return @"null";
+	}
+	else
+	{
+		return @"undefined";
+	}
+}
+
 - (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
 {
 	NSMutableString *compiledScript = [NSMutableString string];
@@ -295,32 +393,9 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
 		 {
-			 if ([object isKindOfClass:[NSString class]])
-			 {
-				 NSString *objectEscaped = [self escapeJavaScriptString:object];
+			 NSString *objectString = [self compileJavaScriptGenericArgument:object];
 
-				 [compiledScript appendFormat:@"var _argument_%ld_ = \"%@\";\n", objectIndex, objectEscaped];
-			 }
-			 else if ([object isKindOfClass:[NSNumber class]])
-			 {
-				 if (strcmp([object objCType], @encode(BOOL)) == 0) {
-					 if ([object boolValue] == YES) {
-						 [compiledScript appendFormat:@"var _argument_%ld_ = true;\n", objectIndex];
-					 } else {
-						 [compiledScript appendFormat:@"var _argument_%ld_ = false;\n", objectIndex];
-					 }
-				 } else {
-					 [compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, object];
-				 }
-			 }
-			 else if ([object isKindOfClass:[NSNull class]])
-			 {
-				 [compiledScript appendFormat:@"var _argument_%ld_ = null;\n", objectIndex];
-			 }
-			 else
-			 {
-				 [compiledScript appendFormat:@"var _argument_%ld_ = undefined;\n", objectIndex];
-			 }
+			[compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, objectString];
 		 }];
 	}
 
