@@ -8732,15 +8732,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* Gather basic information. */
 	NSString *subcommand = [rawMessage uppercaseGetToken];
 	
-	/* For now, we recognize ACCEPT and RESUME, but we do not act on it. Just adding
-	 code for future expansion in another update. Basically, I had time to write the
-	 basic handler so I will thank myself in time when it comes to write the rest. */
 	BOOL isSendRequest = ([subcommand isEqualToString:@"SEND"]);
-//	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
-//	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
+	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
+	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
 	
 	// Process file transfer requests.
-	if (isSendRequest /* || isResumeRequest || isAcceptRequest */) {
+	if (isSendRequest || isResumeRequest || isAcceptRequest) {
 		/* Check ignore status. */
 		if ([ignoreChecks ignoreFileTransferRequests] == YES) {
 			return;
@@ -8762,17 +8759,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if ([section5 hasPrefix:@"T"]) {
 				section5 = [section5 substringFromIndex:1];
 			}
-		} /* else if (isAcceptRequest || isResumeRequest) {
+		}  else if (isAcceptRequest || isResumeRequest) {
 		   if ([section4 hasPrefix:@"T"]) {
 				section4 = [section4 substringFromIndex:1];
 		   }
-		} */
+		}
 		
 		/* Valid values? */
 		NSObjectIsEmptyAssert(section1);
 		NSObjectIsEmptyAssert(section2);
-	  //NSObjectIsEmptyAssert(section3);
-		NSObjectIsEmptyAssert(section4);
+		if (isSendRequest) {
+			NSObjectIsEmptyAssert(section4);
+		}
 
 		/* Start data association. */
 		NSString *hostAddress = nil;
@@ -8806,9 +8804,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				hostAddress = section2;
 			}
 		}
-		/* else if (isResumeRequest || isAcceptRequest)
+		 else if (isResumeRequest || isAcceptRequest)
 		 {
-			 filename = section1;
+			 filename = [section1 safeFilename];
 			 filesize = section3;
 			 
 			 hostPort = section2;
@@ -8816,7 +8814,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			 transferToken = section4;
 			 
 			 hostAddress = nil; // ACCEPT and RESUME do not carry the host address.
-		 } */
+
+			 //NOTE: the newer versions of mIRC actually ignore the filename as it is
+			 //redundant since the port uniquely identifies the connection. However, to remain
+			 //compatible mIRC still sends a filename as "file.ext" in both RESUME and ACCEPT.
+			 TDCFileTransferDialogTransferController *controller = [[self fileTransferController] fileTransferMatchingPort:[hostPort integerValue]];
+			 if (controller && controller.isResume) {
+				 [controller open];
+				 return;
+			 }
+		 }
 		
 		/* Process invidiual commands. */
 		if (isSendRequest) {
