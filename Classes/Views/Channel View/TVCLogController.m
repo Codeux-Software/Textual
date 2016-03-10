@@ -1132,9 +1132,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	BOOL usesCustomScrollers = ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
 
-	BOOL usingAtleastYosemite = [XRSystemInformation isUsingOSXYosemiteOrLater];
+	BOOL usingWebKit2 = [TVCLogView isUsingWebKit2];
 
-	return (onlyShowDuringScrolling == NO && usesCustomScrollers && usingAtleastYosemite);
+	return (onlyShowDuringScrolling == NO && usesCustomScrollers && usingWebKit2);
 }
 
 - (NSString *)initialDocument
