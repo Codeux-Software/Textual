@@ -270,19 +270,19 @@
 			returnValue = [NSNull null];
 		}
 
-		[intWebView executeCommand:@"appInternal.promiseKept"
-					 withArguments:@[@(promiseIndex), returnValue]];
+		[intWebView executeStandaloneCommand:@"appInternal.promiseKept"
+							   withArguments:@[@(promiseIndex), returnValue]];
 	}
 }
 
 - (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeCommand:@"console.log" withArguments:@[message]];
+	[webView executeStandaloneCommand:@"console.log" withArguments:@[message]];
 }
 
 - (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeCommand:@"console.error" withArguments:@[message]];
+	[webView executeStandaloneCommand:@"console.error" withArguments:@[message]];
 }
 
 #pragma mark -
