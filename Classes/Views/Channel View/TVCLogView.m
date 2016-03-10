@@ -155,7 +155,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)clearSelection
 {
-	[self executeCommand:@"Textual.clearSelection"];
+	[self executeStandaloneCommand:@"Textual.clearSelection"];
 }
 
 - (void)print
