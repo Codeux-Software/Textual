@@ -14,7 +14,7 @@ body {
   background-color: #1d1d1d;
   font-family: "Helvetica Neue";
   font-weight: 200;
-  overflow-y: visible;
+  overflow-y: auto;
 }
 
 p {

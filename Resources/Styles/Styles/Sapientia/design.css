@@ -13,7 +13,7 @@ body {
  	z-index: 100;
 	font-size: 15pt;
 	overflow: hidden;
-	overflow-y: visible;
+	overflow-y: auto;
 	background-color: #242323;
 	font-family: "HelveticaNeue";
 }

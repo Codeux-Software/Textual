@@ -13,7 +13,7 @@ body {
  	z-index: 100;
 	font-size: 9px;
 	overflow: hidden;
-	overflow-y: visible;
+	overflow-y: auto;
 	background-color: #000;
 	font-family: "Lucida Grande";
 }
