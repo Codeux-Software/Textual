@@ -281,6 +281,12 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 	}
 }
 
+/* Events */
+Textual.mouseUpEventCallback = function()
+{
+	Textual.copyOnSelectMouseUpEvent();
+};
+
 /* Selection */
 Textual.clearSelection = function()
 {
@@ -587,4 +593,4 @@ Textual.inlineImageLoaded = function()
 
 document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
 
-document.addEventListener("mouseup", Textual.copyOnSelectMouseUpEvent, false);
+document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
