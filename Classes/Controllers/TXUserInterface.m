@@ -55,4 +55,15 @@
 	}
 }
 
++ (BOOL)onlyShowScrollbarWhileScrolling
+{
+	NSString *objectValue = [RZUserDefaults() stringForKey:@"AppleShowScrollBars"];
+
+	if ([objectValue isEqualIgnoringCase:@"WhenScrolling"]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 @end
