@@ -1126,6 +1126,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Initial Document
 
+- (BOOL)usesCustomScrollers
+{
+	BOOL onlyShowDuringScrolling = [TXUserInterface onlyShowScrollbarWhileScrolling];
+
+	BOOL usesCustomScrollers = ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
+
+	BOOL usingAtleastYosemite = [XRSystemInformation isUsingOSXYosemiteOrLater];
+
+	return (onlyShowDuringScrolling == NO && usesCustomScrollers && usingAtleastYosemite);
+}
+
 - (NSString *)initialDocument
 {
 	NSMutableDictionary *templateTokens = [self generateOverrideStyle];
@@ -1139,6 +1150,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
     templateTokens[@"configuredServerName"]     = [self.associatedClient altNetworkName];
 
 	templateTokens[@"userConfiguredTextEncoding"] = [NSString charsetRepFromStringEncoding:self.associatedClient.config.primaryEncoding];
+
+	templateTokens[@"usesCustomScrollers"] = @([self usesCustomScrollers]);
 
     // ---- //
 
