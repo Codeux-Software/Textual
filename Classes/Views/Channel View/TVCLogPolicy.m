@@ -55,7 +55,7 @@
 {
 	TVCLogController *logController = [webView logController];
 
-	BOOL isWebKit2 = [TVCLogView isUsingWebKit2];
+	BOOL isWebKit2 = [webView isUsingWebKit2];
 
 	id newMenu = nil;
 
@@ -185,7 +185,7 @@
 
 - (void)displayContextMenuInWebView:(TVCLogView *)webView
 {
-	NSAssertReturn([TVCLogView isUsingWebKit2] == YES);
+	NSAssertReturn([webView isUsingWebKit2] == YES);
 
 	NSMenu *newMenu = [self constructContextMenuInWebView:webView defaultMenuItems:nil];
 

@@ -219,6 +219,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSInteger)inlineImagesMaxHeight;
 + (void)setInlineImagesMaxHeight:(NSInteger)value;
 
++ (BOOL)webKit2Enabled;
+
 + (NSString *)themeName;
 + (NSString *)themeNicknameFormat;
 + (NSString *)themeTimestampFormat;

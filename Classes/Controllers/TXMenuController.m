@@ -1291,13 +1291,13 @@
 
 - (void)openWebInspector:(id)sender
 {
-	if ([TVCLogView isUsingWebKit2] == NO) {
-		NSAssert(NO, @"Missing implementation");
-	}
-
 	TVCLogView *sel = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(sel);
+
+	if ([sel isUsingWebKit2] == NO) {
+		NSAssert(NO, @"Missing implementation");
+	}
 
 	[(TVCLogViewInternalWK2 *)[sel webView] openWebInspector];
 }
