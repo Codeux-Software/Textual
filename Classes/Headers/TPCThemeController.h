@@ -74,6 +74,8 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 @property (readonly, copy) NSString *actualPath; // Ignores iCloud cache and queries iCloud directly.
 @property (readonly, copy) NSString *temporaryPath;
 
+@property (readonly) BOOL usesTemporaryPath;
+
 @property (readonly, copy) NSString *name;
 
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;

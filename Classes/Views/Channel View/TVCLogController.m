@@ -108,7 +108,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)setUp
 {
 	/* Load initial document. */
-	[self constructBackingView];
+	[self buildBackingView];
 
 	[self loadInitialDocument];
 
@@ -143,9 +143,20 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	}
 }
 
-- (void)constructBackingView
+- (void)buildBackingView
 {
 	self.backingView = [[TVCLogView alloc] initWithLogController:self];
+}
+
+- (void)rebuildBackingView
+{
+	self.backingView = nil;
+
+	[self buildBackingView];
+
+	if ([mainWindow() selectedViewController] == self) {
+		[mainWindow() updateChannelViewBoxContentViewSelection];
+	}
 }
 
 - (void)loadInitialDocument
@@ -233,9 +244,13 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (NSURL *)baseURL
 {
-	NSString *temporaryPath = [themeController() temporaryPath];
+	if ([themeController() usesTemporaryPath] == NO) {
+		return [themeController() baseURL];
+	} else {
+		NSString *temporaryPath = [themeController() temporaryPath];
 
-	return [NSURL fileURLWithPath:temporaryPath];
+		return [NSURL fileURLWithPath:temporaryPath];
+	}
 }
 
 - (TVCLogControllerOperationQueue *)printingQueue
@@ -733,6 +748,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	 // self.reloadingHistory = NO;
 		self.needsLimitNumberOfLines = NO;
 
+		if ([self.backingView isUsingWebKit2] != [TPCPreferences webKit2Enabled]) {
+			[self rebuildBackingView];
+		}
+
 		[self loadInitialDocument];
 	}];
 }
@@ -744,15 +763,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)clearBackingView
 {
-	self.backingView = nil;
-
-	[self constructBackingView];
+	[self rebuildBackingView];
 
 	[self clearWithReset:YES];
-
-	if ([mainWindow() selectedViewController] == self) {
-		[mainWindow() updateChannelViewBoxContentViewSelection];
-	}
 }
 
 #pragma mark -
@@ -1132,7 +1145,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	BOOL usesCustomScrollers = ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
 
-	BOOL usingWebKit2 = [TVCLogView isUsingWebKit2];
+	BOOL usingWebKit2 = [self.backingView isUsingWebKit2];
 
 	return (onlyShowDuringScrolling == NO && usesCustomScrollers && usingWebKit2);
 }

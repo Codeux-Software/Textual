@@ -42,6 +42,7 @@
 
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
+@property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
 @end
 
 @implementation TVCLogView
@@ -61,28 +62,13 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return nil;
 }
 
-+ (BOOL)isUsingWebKit2
-{
-	static BOOL _usesWebKit2 = NO;
-
-	static BOOL _valueCached = NO;
-
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		BOOL usesWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
-
-		if ( usesWebKit2) {
-			_usesWebKit2 = [XRSystemInformation isUsingOSXElCapitanOrLater];
-		}
-	}
-
-	return _usesWebKit2;
-}
-
 - (void)constructWebView
 {
-	if ([TVCLogView isUsingWebKit2]) {
+	BOOL isUsingWebKit2 = [TPCPreferences webKit2Enabled];
+
+	[self setIsUsingWebKit2:isUsingWebKit2];
+
+	if (isUsingWebKit2) {
 		self.webViewBacking = [TVCLogViewInternalWK2 createNewInstanceWithHostView:self];
 	} else {
 		self.webViewBacking = [TVCLogViewInternalWK1 createNewInstanceWithHostView:self];
@@ -221,21 +207,28 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
-	if ([TVCLogView isUsingWebKit2]) {
-		NSString *filename = [NSString stringWithFormat:@"%@.html", [NSString stringWithUUID]];
-
-		NSURL *filePath = [baseURL URLByAppendingPathComponent:filename];
-
-		NSError *fileWriteError = nil;
-
-		if ([string writeToURL:filePath atomically:NO encoding:NSUTF8StringEncoding error:&fileWriteError] == NO) {
-			LogToConsole(@"Failed to write temporary file: %@", [fileWriteError localizedDescription]);
-		}
-
+	if ([self isUsingWebKit2])
+	{
 		WKWebView *webView = [self webViewBacking];
 
-		[webView loadFileURL:filePath allowingReadAccessToURL:baseURL];
-	} else {
+		if ([themeController() usesTemporaryPath]) {
+			NSString *filename = [NSString stringWithFormat:@"%@.html", [NSString stringWithUUID]];
+
+			NSURL *filePath = [baseURL URLByAppendingPathComponent:filename];
+
+			NSError *fileWriteError = nil;
+
+			if ([string writeToURL:filePath atomically:NO encoding:NSUTF8StringEncoding error:&fileWriteError] == NO) {
+				LogToConsole(@"Failed to write temporary file: %@", [fileWriteError localizedDescription]);
+			}
+
+			[webView loadFileURL:filePath allowingReadAccessToURL:baseURL];
+		} else {
+			[webView loadHTMLString:string baseURL:baseURL];
+		}
+	}
+	else
+	{
 		WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
 
 		[webViewFrame loadHTMLString:string baseURL:baseURL];
@@ -244,7 +237,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)stopLoading
 {
-	if ([TVCLogView isUsingWebKit2]) {
+	if ([self isUsingWebKit2]) {
 		WKWebView *webView = [self webViewBacking];
 
 		[webView stopLoading];

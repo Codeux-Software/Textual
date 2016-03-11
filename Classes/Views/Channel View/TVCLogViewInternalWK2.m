@@ -57,51 +57,55 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 + (void)initialize
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXElCapitanOrLater]);
+	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
 
-	[self constructProcessPool];
+	static dispatch_once_t onceToken;
 
-	_sharedWebViewConfiguration = [WKWebViewConfiguration new];
+	dispatch_once(&onceToken, ^{
+		[TVCLogViewInternalWK2 constructProcessPool];
 
-	[_sharedWebViewConfiguration setProcessPool:_sharedProcessPool];
+		_sharedWebViewConfiguration = [WKWebViewConfiguration new];
 
-	[[_sharedWebViewConfiguration preferences] setValue:@(YES) forKey:@"developerExtrasEnabled"];
+		[_sharedWebViewConfiguration setProcessPool:_sharedProcessPool];
 
-	_sharedWebViewScriptSink = [TVCLogScriptEventSink new];
+		[[_sharedWebViewConfiguration preferences] setValue:@(YES) forKey:@"developerExtrasEnabled"];
 
-	_sharedUserContentController = [WKUserContentController new];
+		_sharedWebViewScriptSink = [TVCLogScriptEventSink new];
 
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelIsJoined"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelMemberCount"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelName"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"displayContextMenu"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelection"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserHostmask"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserNickname"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsole"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"networkName"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameColorStyleHash"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformation"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"retrievePreferencesWithMethodName"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverAddress"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverChannelCount"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverIsConnected"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setChannelName"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setNickname"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setURLAddress"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
-	[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
+		_sharedUserContentController = [WKUserContentController new];
 
-	[_sharedWebViewConfiguration setUserContentController:_sharedUserContentController];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelIsJoined"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelMemberCount"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelName"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"displayContextMenu"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelection"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserHostmask"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserNickname"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsole"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"networkName"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameColorStyleHash"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformation"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"retrievePreferencesWithMethodName"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverAddress"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverChannelCount"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverIsConnected"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setChannelName"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setNickname"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setURLAddress"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
 
-	_sharedWebPolicy = [TVCLogPolicy new];
+		[_sharedWebViewConfiguration setUserContentController:_sharedUserContentController];
+
+		_sharedWebPolicy = [TVCLogPolicy new];
+	});
 }
 
 + (void)constructProcessPool
@@ -143,12 +147,15 @@ create_normal_pool:
 	[webView setT_parentView:hostView];
 
 	[webView setAllowsBackForwardNavigationGestures:NO];
-	[webView setAllowsLinkPreview:NO];
 	[webView setAllowsMagnification:YES];
 
 	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-	[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		[webView setAllowsLinkPreview:NO];
+
+		[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	}
 
 	[webView setNavigationDelegate:webView];
 
@@ -325,7 +332,7 @@ create_normal_pool:
 
 + (void)load
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXElCapitanOrLater]);
+	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
 
 	static dispatch_once_t onceToken;
 

@@ -48,11 +48,11 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @property (readonly, copy) NSString *selection;
 @property (readonly) NSRect selectionCoordinates;
 
+@property (readonly) BOOL isUsingWebKit2;
+
 - (instancetype)initWithLogController:(TVCLogController *)logController;
 
 - (void)print;
-
-+ (BOOL)isUsingWebKit2;
 @end
 
 @interface TVCLogView (TVCLogViewBackingProxy)

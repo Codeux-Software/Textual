@@ -118,6 +118,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return [[self temporaryPathLeading] stringByAppendingPathComponent:pathExtension];
 }
 
+- (BOOL)usesTemporaryPath
+{
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		return [TPCPreferences webKit2Enabled];
+	} else {
+		return NO;
+	}
+}
+
 - (NSString *)actualPath
 {
 	return [TPCThemeController pathOfThemeWithName:[self associatedThemeName] skipCloudCache:YES storageLocation:NULL];
@@ -293,6 +302,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (BOOL)createTemporaryCopyOfTheme
 {
+	/* Do not create temporary path if we do no need it. */
+	NSAssertReturnR([self usesTemporaryPath], NO);
+
 	/* Create leading directory if it does not exist yet. */
 	NSString *temporaryPathLeading = [self temporaryPathLeading];
 
