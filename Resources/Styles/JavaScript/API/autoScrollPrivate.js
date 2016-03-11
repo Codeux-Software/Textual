@@ -46,8 +46,6 @@
 var TextualScroller = {};
 
 /* State tracking */
-TextualScroller.isScrollingProgrammatically = false;
-
 TextualScroller.isScrolledToBottomOfView = true;
 
 /* Core functions */
@@ -58,40 +56,25 @@ TextualScroller.documentResizedCallback = function()
 
 TextualScroller.documentScrolledCallback = function()
 {
-	if (TextualScroller.isScrollingProgrammatically) {
-		TextualScroller.isScrollingProgrammatically = false;
-	}
-
-	if (TextualScroller.canScroll() == false) {
-		return;
-	}
-
 	TextualScroller.isScrolledToBottomOfView = TextualScroller.viewingBottom();
 };
 
 TextualScroller.performAutoScroll = function()
 {
-	if (TextualScroller.canScroll() == false) {
+	if (TextualScroller.isScrolledToBottomOfView === false) {
 		return;
 	}
-
-	if (TextualScroller.isScrolledToBottomOfView == false) {
-		return;
-	}
-
-	TextualScroller.isScrollingProgrammatically = true;
 
 	Textual.scrollToBottomOfView(false);
 };
 
-TextualScroller.canScroll = function()
-{
-	return (Math.floor(document.body.scrollHeight) > Math.floor(document.body.clientHeight));
-};
-
 TextualScroller.viewingTop = function()
 {
-	return (Math.floor(document.body.scrollTop) === 0);
+	if (Math.floor(document.body.scrollTop) === 0) {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 TextualScroller.viewingBottom = function()
@@ -106,7 +89,11 @@ TextualScroller.viewingBottom = function()
 	 sensitive scrolling device. A line in the Tomorrow Night style is
 	 15 pixels so we are basically saying as long as we are within half
 	 a message of the bottom, we are actually at the bottom. */
-	return ((scrollTop + 7) >= (scrollHeight - offsetHeight));
+	if ((scrollTop + 7) >= (scrollHeight - offsetHeight)) {
+		return true;
+	} else {
+		return false;
+	}
 };
 
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);

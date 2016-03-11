@@ -313,7 +313,7 @@ Textual.currentSelectionCoordinates = function()
 		return null;
 	}
 
-	var clientHeight = document.body.clientHeight;
+	var clientHeight = document.body.offsetHeight;
 
 	var elementRect = currentSelection.getRangeAt(0).getBoundingClientRect();
 
