@@ -206,5 +206,7 @@
 	<true/>
 	<key>WebKitDeveloperExtras</key>
 	<true/>
+	<key>__WebInspectorPageGroupLevel1__.WebKit2InspectorStartsAttached</key>
+	<false/>
 </dict>
 </plist>

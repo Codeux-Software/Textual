@@ -45,6 +45,8 @@
 		<string>PREFIX</string>
 		<key>WebKit</key>
 		<string>PREFIX</string>
+		<key>__Web</key>
+		<string>PREFIX</string>
 		<key>com.apple.</key>
 		<string>PREFIX</string>
 		<key>DataDetectorsSettings</key>
