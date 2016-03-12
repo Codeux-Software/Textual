@@ -96,7 +96,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	[self stopMonitoringActiveThemePath];
 
-	(void)[self removeTemporaryCopyOfTheme];
+	[self removeTemporaryCopyOfTheme];
 }
 
 - (NSString *)path
@@ -252,6 +252,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (void)reload
 {
+	/* Destroy temporary directory if it already exists. */
+	[self removeTemporaryCopyOfTheme];
+
 	/* Try to find a theme by the stored name. */
 	[self setAssociatedThemeName:[TPCPreferences themeName]];
 	
@@ -269,7 +272,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	
 	/* We have a path. */
 	[self setBaseURL:[NSURL fileURLWithPath:path]];
-	
+
 	/* Define a shared cache ID for files. */
 	[self setSharedCacheID:[NSString stringWithInteger:TXRandomNumber(5000)]];
 	
@@ -280,11 +283,13 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	[self maybePresentCompatibilityWarningDialog];
 
 	/* Create temporary copy of theme. */
-	(void)[self createTemporaryCopyOfTheme];
+	[self createTemporaryCopyOfTheme];
 }
 
-- (BOOL)removeTemporaryCopyOfTheme
+- (void)removeTemporaryCopyOfTheme
 {
+	NSObjectIsEmptyAssert([self sharedCacheID]);
+
 	NSString *temporaryPath = [self temporaryPath];
 
 	if ([RZFileManager() directoryExistsAtPath:temporaryPath]) {
@@ -292,18 +297,14 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 		if ([RZFileManager() removeItemAtPath:temporaryPath error:&removeFileError] == NO) {
 			LogToConsole(@"Failed to remove temporary directory: %@", [removeFileError localizedDescription]);
-
-			return NO;
 		}
 	}
-
-	return YES;
 }
 
-- (BOOL)createTemporaryCopyOfTheme
+- (void)createTemporaryCopyOfTheme
 {
 	/* Do not create temporary path if we do no need it. */
-	NSAssertReturnR([self usesTemporaryPath], NO);
+	NSAssertReturn([self usesTemporaryPath]);
 
 	/* Create leading directory if it does not exist yet. */
 	NSString *temporaryPathLeading = [self temporaryPathLeading];
@@ -314,13 +315,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		if ([RZFileManager() createDirectoryAtPath:temporaryPathLeading withIntermediateDirectories:YES attributes:nil error:&directoryCreateError] == NO) {
 			LogToConsole(@"Failed to create leading temporary directory: %@", [directoryCreateError localizedDescription]);
 
-			return NO;
+			return;
 		}
-	}
-
-	/* Destroy temporary directory if it already exists. */
-	if ([self removeTemporaryCopyOfTheme] == NO) {
-		return NO;
 	}
 
 	/* Perform copy operation */
@@ -330,11 +326,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 	if ([RZFileManager() copyItemAtPath:[self path] toPath:temporaryPath error:&copyFileError] == NO) {
 		LogToConsole(@"Failed to copy temporary directory: %@", [copyFileError localizedDescription]);
-
-		return NO;
 	}
-
-	return YES;
 }
 
 - (void)maybePresentCompatibilityWarningDialog
