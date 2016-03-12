@@ -131,21 +131,24 @@ TextualScroller.viewingTop = function()
 
 TextualScroller.viewingBottom = function()
 {
-	var offsetHeight = Math.floor(document.body.offsetHeight);
+	var documentBody = Textual.documentBodyElement();
 
-	var scrollHeight = Math.floor(document.body.scrollHeight);
-	var scrollTop = Math.floor(document.body.scrollTop);
+	var lastChild = documentBody.lastChild;
 
-	/* 7 is a fairly magical number subtracted from lastFrame to account
-	 for very slight scrolling that may occur with a TrackPad or other
-	 sensitive scrolling device. A line in the Tomorrow Night style is
-	 15 pixels so we are basically saying as long as we are within half
-	 a message of the bottom, we are actually at the bottom. */
-	if ((scrollTop + 7) >= (scrollHeight - offsetHeight)) {
-		return true;
-	} else {
-		return false;
+	if (lastChild) {
+		var elementBottom = Math.floor(lastChild.getBoundingClientRect().bottom);
+
+		var documentBottom = Math.floor(documentBody.offsetHeight);
+
+		/*	15 is a fairly magical number subtracted from elementBottom to 
+			account for very slight scrolling that may occur with a TrackPad 
+			or other sensitive scrolling device. */
+		if ((elementBottom - 15) > documentBottom) {
+			return false;
+		}
 	}
+
+	return true;
 };
 
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);

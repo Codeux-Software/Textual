@@ -124,19 +124,39 @@ Textual.topicBarDoubleClicked = function()
 /* Scrolling */
 Textual.scrollToBottomOfView = function(fireNotification)
 {
-	document.body.scrollTop = document.body.scrollHeight;
+	var documentBody = Textual.documentBodyElement();
 
-	if (typeof fireNotification === 'undefined' || fireNotification === true) {
-		Textual.viewPositionMovedToBottom();
+	if (documentBody === null) {
+		return;
+	}
+
+	var lastChild = documentBody.lastChild;
+
+	if (lastChild) {
+		lastChild.scrollIntoView(false);
+
+		if (typeof fireNotification === 'undefined' || fireNotification === true) {
+			Textual.viewPositionMovedToBottom();
+		}
 	}
 };
 
 Textual.scrollToTopOfView = function(fireNotification)
 {
-	document.body.scrollTop = 0;
+	var documentBody = Textual.documentBodyElement();
 
-	if (typeof fireNotification === 'undefined' || fireNotification === true) {
-		Textual.viewPositionMovedToTop();
+	if (documentBody === null) {
+		return;
+	}
+
+	var firstChild = documentBody.firstChild;
+
+	if (firstChild) {
+		firstChild.scrollIntoView(true);
+
+		if (typeof fireNotification === 'undefined' || fireNotification === true) {
+			Textual.viewPositionMovedToTop();
+		}
 	}
 };
 
@@ -555,6 +575,8 @@ Textual.toggleInlineImageReally = function(object)
 	}
 
 	var imageNode = document.getElementById(object);
+
+	console.log(object + " " + imageNode.style.display);
 
 	if (imageNode.style.display === "none") {
 		imageNode.style.display = "";
