@@ -53,24 +53,24 @@ body[dir=rtl] .senderContainer {
 /* Scrolling */
 
 body[customscroller="true"]::-webkit-scrollbar {
-	width: 17px;
+  width: 17px;
 }
 
 body[customscroller="true"]::-webkit-scrollbar-track {
-	background: #393939;
-	box-shadow: inset 1px 0px 0px 0px #4b4b4b;
+  background: #393939;
+  box-shadow: inset 1px 0px 0px 0px #4b4b4b;
 }
 
 body[customscroller="true"]::-webkit-scrollbar-thumb {
-	background-color: #7c7c7c;
-	border: 4px solid transparent;
-	border-left: 5px solid transparent;
-	border-radius: 20px;
-	background-clip: content-box;
+  background-color: #7c7c7c;
+  border: 4px solid transparent;
+  border-left: 5px solid transparent;
+  border-radius: 20px;
+  background-clip: content-box;
 }
 
 body[customscroller="true"]::-webkit-scrollbar-thumb:hover {
-	background-color: #b0b0b0;
+  background-color: #b0b0b0;
 }
 
 /* Loading Screen */
@@ -550,6 +550,7 @@ body .sender {
 
 body .f {  /* fade out */
   -webkit-transition: color .75s;
+  color: rgb(22, 22, 22) !important;
 }
 
 
@@ -595,23 +596,23 @@ body div.line[ltype=action][highlight=true] {
 
 /* Date changes */
 body div.date {
-    display: flex;
-    display: -webkit-flex;
-    padding: .5em 0;
+  display: flex;
+  display: -webkit-flex;
+  padding: .5em 0;
 }
 
 body div.date > hr {
-    background: #444;
-    border: 0;
-    flex: 1;
-    height: 1px;
-    margin-top: .6em;
-    -webkit-flex: 1;
+  background: #444;
+  border: 0;
+  flex: 1;
+  height: 1px;
+  margin-top: .6em;
+  -webkit-flex: 1;
 }
 
 body div.date > span {
-    font-style: oblique;
-    margin: 0 1em;
+  font-style: oblique;
+  margin: 0 1em;
 }
 
 body div.date + div#mark, body div.date + div#historic_messages + div#mark {
