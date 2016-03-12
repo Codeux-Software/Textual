@@ -138,7 +138,7 @@ TextualScroller.viewingBottom = function()
 	if (lastChild) {
 		var elementBottom = Math.floor(lastChild.getBoundingClientRect().bottom);
 
-		var documentBottom = Math.floor(documentBody.offsetHeight);
+		var documentBottom = Math.floor(document.documentElement.offsetHeight);
 
 		/*	15 is a fairly magical number subtracted from elementBottom to 
 			account for very slight scrolling that may occur with a TrackPad 
