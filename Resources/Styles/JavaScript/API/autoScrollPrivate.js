@@ -46,9 +46,23 @@
 var TextualScroller = {};
 
 /* State tracking */
-TextualScroller.isScrolledToBottomOfView = true;
+TextualScroller.isScrolledByCode = false;
+TextualScroller.isScrolledByUser = false;
+
+TextualScroller.scrolledToBottomTimer = null;
 
 /* Core functions */
+TextualScroller.debugDataLog = function(message)
+{
+	var channelName = document.body.getAttribute("channelname");
+
+	if (channelName === null) {
+		channelName = "(server console)";
+	}
+
+	app.logToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
+};
+
 TextualScroller.documentResizedCallback = function()
 {
 	TextualScroller.performAutoScroll();
@@ -56,14 +70,52 @@ TextualScroller.documentResizedCallback = function()
 
 TextualScroller.documentScrolledCallback = function()
 {
-	TextualScroller.isScrolledToBottomOfView = TextualScroller.viewingBottom();
+	/*	If JavaScript has determined that we are not at the bottom even though
+		we are supposed to be (isScrollingByCode == true), then set a timer to
+		to perform manual scroll one more time to try and fix this problem. */
+	var viewingBottom = TextualScroller.viewingBottom();
+	
+	var createTimer = false;
+	
+	if (TextualScroller.isScrolledByCode) {
+		TextualScroller.isScrolledByCode = false;
+
+		if (viewingBottom) {
+			createTimer = false;
+		} else {
+			createTimer = true;
+		}
+	} else {
+		if (viewingBottom) {
+			TextualScroller.isScrolledByUser = false;
+		} else {
+			TextualScroller.isScrolledByUser = true;
+		}
+	}
+	
+	if (createTimer) {
+		if (TextualScroller.scrolledToBottomTimer) {
+			return;
+		}
+		
+		TextualScroller.debugDataLog("viewingBottom === false, creating timer to try to fix")
+
+		TextualScroller.scrolledToBottomTimer = 
+			setTimeout(function() {
+				TextualScroller.scrolledToBottomTimer = null;
+
+				TextualScroller.performAutoScroll();
+			}, 500);
+	}
 };
 
 TextualScroller.performAutoScroll = function()
 {
-	if (TextualScroller.isScrolledToBottomOfView === false) {
+	if (TextualScroller.isScrolledByUser) {
 		return;
 	}
+
+	TextualScroller.isScrolledByCode = true;
 
 	Textual.scrollToBottomOfView(false);
 };
