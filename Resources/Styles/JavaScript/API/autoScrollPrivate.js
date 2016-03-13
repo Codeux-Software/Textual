@@ -142,10 +142,10 @@ TextualScroller.viewingBottom = function()
 
 		var documentBottom = Math.floor(document.documentElement.offsetHeight);
 
-		/*	15 is a fairly magical number subtracted from elementBottom to 
+		/*	18 is a fairly magical number subtracted from elementBottom to 
 			account for very slight scrolling that may occur with a TrackPad 
 			or other sensitive scrolling device. */
-		if ((elementBottom - 15) > documentBottom) {
+		if ((elementBottom - 18) > documentBottom) {
 			return false;
 		}
 	}
