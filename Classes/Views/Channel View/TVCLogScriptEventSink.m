@@ -38,53 +38,65 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogObjectsPrivate.h"
+
 #import "IRCUserPrivate.h"
 
-#define _doubleClickRadius		3
+#include <objc/message.h>
+
+@interface TVCLogScriptEventSink ()
+@property (nonatomic, strong) WKUserContentController *userContentController;
+@end
+
+@interface TVCLogScriptEventSinkContext : NSObject
+@property (nonatomic, weak) TVCLogView *webView;
+@property (readonly) TVCLogPolicy *webViewPolicy;
+@property (readonly) TVCLogController *logController;
+@property (readonly) IRCClient *associatedClient;
+@property (readonly) IRCChannel *associatedChannel;
+@property (nonatomic, copy) NSArray *arguments;
+@end
 
 @implementation TVCLogScriptEventSink
 
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		self.x = -10000;
-		self.y = -10000;
-	}
-	
-	return self;
-}
-
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
+	if (sel == @selector(init) ||
+		sel == @selector(webView) ||
+		sel == @selector(webViewPolicy) ||
+ 		sel == @selector(associatedClient) ||
+		sel == @selector(associatedChannel))
+	{
+		return YES;
+	}
+
+	if ([NSStringFromSelector(sel) hasPrefix:@"_"]) {
+		return NO;
+	}
+
 	return NO;
 }
 
 + (NSString *)webScriptNameForSelector:(SEL)sel
 {
-	NSString *s = NSStringFromSelector(sel);
-	
-	if ([s hasPrefix:@"styleSettingsSetValue"]) {
-		return nil;
-	} else if ([s hasPrefix:@"nicknameColorStyleHash"]) {
-		return nil;
-	}
-	
-	if ([s hasSuffix:@":"]) {
-		return [s substringToIndex:([s length] - 1)];
-	}
-	
 	return nil;
 }
 
 - (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
 {
-	if ([name isEqualToString:@"styleSettingsSetValue"]) {
-		return @([self styleSettingsSetValue:args]);
-	} else if ([name isEqualToString:@"nicknameColorStyleHash"]) {
-		return [self nicknameColorStyleHash:args];
+	SEL handlerSelector = NSSelectorFromString([name stringByAppendingString:@":inWebView:"]);
+
+	if ([self respondsToSelector:handlerSelector] == NO) {
+		return @(NO);
 	}
 
-	return nil;
+	if (args && [args count] > 0) {
+		(void)objc_msgSend(self, handlerSelector, args[0], [self parentView]);
+	} else {
+		(void)objc_msgSend(self, handlerSelector, nil, [self parentView]);
+	}
+
+	return @(YES);
 }
 
 + (BOOL)isKeyExcludedFromWebScript:(const char *)name
@@ -97,284 +109,638 @@
 	return nil;
 }
 
-- (BOOL)shouldStopDoubleClick:(id)e
++ (NSArray *)webScriptObjectToArray:(WebScriptObject *)object
 {
-	NSInteger dr = _doubleClickRadius;
-	
-	NSInteger cx = [[e valueForKey:@"clientX"] integerValue];
-	NSInteger cy = [[e valueForKey:@"clientY"] integerValue];
-	
-	BOOL res = NO;
-	
-	NSTimeInterval now = [NSDate unixTime];
-	
-	if ((self.x - dr) <= cx && cx <= (self.x + dr) &&
-		(self.y - dr) <= cy && cy <= (self.y + dr))
+	id arrayLengthObject = [object valueForKey:@"length"];
+
+	if (arrayLengthObject == nil || [arrayLengthObject isKindOfClass:[NSNumber class]] == NO) {
+		return nil;
+	}
+
+	NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
+
+	NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
+
+	for (NSUInteger i = 0; i < arrayLength; i++) {
+		id item = [object webScriptValueAtIndex:(unsigned)i];
+
+		[scriptArray addObject:item];
+	}
+
+	return [scriptArray copy];
+}
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+	NSString *handlerName = [message name];
+
+	SEL handlerSelector = NSSelectorFromString([handlerName stringByAppendingString:@":inWebView:"]);
+
+	if ([self respondsToSelector:handlerSelector] == NO) {
+		return;
+	}
+
+	if ([TVCLogScriptEventSink isSelectorExcludedFromWebScript:handlerSelector]) {
+		return;
+	}
+
+	(void)objc_msgSend(self, handlerSelector, [message body], [message webView]);
+}
+
+- (void)processInputData:(id)inputData inWebView:(id)webView forSelector:(SEL)selector
+{
+	[self processInputData:inputData inWebView:webView forSelector:selector minimumArgumentCount:0 withValidation:nil];
+}
+
+- (void)processInputData:(id)inputData
+			   inWebView:(id)webView
+			 forSelector:(SEL)selector
+   minimumArgumentCount:(NSInteger)minimumArgumentCount
+		  withValidation:(Class (^)(NSInteger argumentIndex))validateArgumentBlock
+{
+	TVCLogView *intWebView = nil;
+
+	if ([webView isKindOfClass:[TVCLogView class]]) {
+		intWebView = webView;
+	} else if ([webView isKindOfClass:[TVCLogViewInternalWK1 class]] ||
+			   [webView isKindOfClass:[TVCLogViewInternalWK2 class]])
 	{
-		if (now < (self.lastClickTime + [NSEvent doubleClickInterval])) {
-			res = YES;
-		}
-	}
-	
-	self.lastClickTime = now;
-	
-	self.x = cx;
-	self.y = cy;
-	
-	return res;
-}
-
-- (void)logToConsole:(NSString *)message
-{
-    LogToConsole(@"JavaScript: %@", message);
-}
-
-- (void)throwJavaScriptException:(NSString *)message
-{
-	[WebScriptObject throwException:message];
-}
-
-- (void)logToJavaScriptConsole:(NSString *)message
-{
-	TVCLogView *webView = [self.logController webView];
-	
-	WebScriptObject *console = [webView javaScriptConsoleAPI];
-	
-	[console callWebScriptMethod:@"log" withArguments:@[message]];
-}
-
-- (void)toggleInlineImage:(NSString *)object
-{
-	/* Do we have a properly formatted ID? */
-	if ([object hasPrefix:@"inlineImage-"] == NO) {
-		object = [@"inlineImage-" stringByAppendingString:object];
-	}
-
-	/* Find the element. */
-	DOMElement *imageNode = [[self.logController mainFrameDocument] getElementById:object];
-
-	PointerIsEmptyAssert(imageNode);
-
-	/* Update the display information. */
-	NSString *display = [[imageNode style] display];
-
-	if ([display isEqualIgnoringCase:@"none"]) {
-		display = NSStringEmptyPlaceholder;
+		intWebView = [webView t_parentView];
 	} else {
-		display = @"none";
+		return;
 	}
-	
-	[[imageNode style] setDisplay:display];
-	
-	if ([display isEqualToString:@"none"]) {
-		[self.logController executeScriptCommand:@"didToggleInlineImageToHidden" withArguments:@[imageNode] onQueue:NO];
-	} else {
-		[self.logController executeScriptCommand:@"didToggleInlineImageToVisible" withArguments:@[imageNode] onQueue:NO];
-	}
-}
 
-- (void)setURLAddress:(NSString *)s
-{
-    [[self.logController webViewPolicy] setAnchorURL:[s gtm_stringByUnescapingFromHTML]];
-}
+	NSInteger promiseIndex = (-1);
 
-- (void)setNickname:(NSString *)s
-{
-    [[self.logController webViewPolicy] setNickname:[s gtm_stringByUnescapingFromHTML]];
-}
+	NSArray *values = nil;
 
-- (void)setChannelName:(NSString *)s
-{
-    [[self.logController webViewPolicy] setChannelName:[s gtm_stringByUnescapingFromHTML]];
-}
+	/* Extract relevant information from inputData */
+	if ([inputData isKindOfClass:[NSDictionary class]] ||
+		[inputData isKindOfClass:[WebScriptObject class]])
+	{
+		/* Check that the object exists in the dictionary before 
+		 setting the value. If the object does not exist and we
+		 do not do this, then -integerValue will return 0 which
+		 is considered a valid promiseIndex value. */
+		id promiseIndexObj = [inputData valueForKey:@"promiseIndex"];
 
-- (void)channelNameDoubleClicked
-{
-    [[self.logController webViewPolicy] channelDoubleClicked];
-}
+		if (promiseIndexObj) {
+			if ([promiseIndexObj isKindOfClass:[NSNumber class]] == NO) {
+				[self _throwJavaScriptException:@"'promiseIndex' must be a number" inWebView:intWebView];
 
-- (void)nicknameDoubleClicked
-{
-    [[self.logController webViewPolicy] nicknameDoubleClicked];
-}
-
-- (void)topicDoubleClicked
-{
-    [[self.logController webViewPolicy] topicDoubleClicked];
-}
-
-- (NSInteger)channelMemberCount
-{
-    return [[self.logController associatedChannel] numberOfMembers];
-}
-
-- (NSInteger)serverChannelCount
-{
-	return [[self.logController associatedClient] channelCount];
-}
-
-- (BOOL)serverIsConnected
-{
-	return [[self.logController associatedClient] isLoggedIn];
-}
-
-- (BOOL)channelIsJoined
-{
-	return [[self.logController associatedChannel] isActive];
-}
-
-- (NSString *)channelName
-{
-	return [[self.logController associatedChannel] name];
-}
-
-- (NSString *)serverAddress
-{
-	return [[self.logController associatedClient] networkAddress];
-}
-
-- (NSString *)networkName
-{
-	return [[self.logController associatedClient] networkName];
-}
-
-- (NSString *)localUserNickname
-{
-	return [[self.logController associatedClient] localNickname];
-}
-
-- (NSString *)localUserHostmask
-{
-	return [[self.logController associatedClient] localHostmask];
-}
-
-- (BOOL)inlineImagesEnabledForView
-{
-	return [self.logController inlineImagesEnabledForView];
-}
-
-- (void)printDebugInformationToConsole:(NSString *)m
-{
-	[[self.logController associatedClient] printDebugInformationToConsole:m];
-}
-
-- (void)printDebugInformation:(NSString *)m
-{
-	[[self.logController associatedClient] printDebugInformation:m channel:[self.logController associatedChannel]];
-}
-
-- (BOOL)sidebarInversionIsEnabled
-{
-	return [TPCPreferences invertSidebarColors];
-}
-
-- (NSNumber *)nicknameColorStyleHash:(NSArray *)arguments
-{
-	if ([arguments count] == 2) {
-		id inputString = arguments[0];
-
-		id colorStyle = arguments[1];
-
-		if ([inputString isKindOfClass:[NSString class]] &&
-			[colorStyle isKindOfClass:[NSString class]])
-		{
-			TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
-
-			if ([colorStyle isEqualToString:@"HSL-dark"]) {
-				colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
-			} else if ([colorStyle isEqualToString:@"HSL-light"]) {
-				colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+				return;
 			}
 
-			return [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum];
+			promiseIndex = [promiseIndexObj integerValue];
+		}
+
+		/* Values should always be in an array */
+		if (minimumArgumentCount > 0) {
+			id valuesObj = [inputData valueForKey:@"values"];
+
+			if (valuesObj) {
+				if ([valuesObj isKindOfClass:[WebScriptObject class]]) {
+					 valuesObj = [TVCLogScriptEventSink webScriptObjectToArray:valuesObj];
+				}
+			}
+
+			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
+				[self _throwJavaScriptException:@"'values' must be an array" inWebView:intWebView];
+
+				return;
+			} else {
+				values = valuesObj;
+			}
+		}
+	}
+	else if ([inputData isKindOfClass:[NSString class]] ||
+			 [inputData isKindOfClass:[NSNumber class]])
+	{
+		if (minimumArgumentCount > 0) {
+			values = @[inputData];
+		}
+	}
+	else if ([inputData isKindOfClass:[NSArray class]])
+	{
+		if (minimumArgumentCount > 0) {
+			values = inputData;
 		}
 	}
 
-	return 0;
-}
+	/* Perform validation if needed */
+	if (minimumArgumentCount > 0 && [values count] < minimumArgumentCount) {
+		[self _throwJavaScriptException:@"Minimum number of arguments condition not met" inWebView:intWebView];
 
-- (BOOL)styleSettingsSetValue:(NSArray *)arguments
-{
-	id objectKey = nil;
-	id objectValue = nil;
-	
-	if (NSNumberInRange([arguments count], 1, 2)) {
-		objectKey = arguments[0];
-		
-		if ([arguments count] == 1) {
-			objectValue = [WebUndefined undefined];
-		} else {
-			objectValue = arguments[1];
+		return;
+	}
+
+	if (validateArgumentBlock) {
+		__block BOOL validationPassed = YES;
+
+		[values enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			Class expectedClass = validateArgumentBlock(index);
+
+			if ([object isKindOfClass:expectedClass] == NO) {
+				validationPassed = NO;
+
+				*stop = YES;
+			}
+		}];
+
+		if (validationPassed == NO) {
+			[self _throwJavaScriptException:@"Invalid argument type(s)" inWebView:intWebView];
+
+			return;
 		}
-		
-		NSString *errorValue = nil;
-		
-		BOOL result = [themeSettings() styleSettingsSetValue:objectValue forKey:objectKey error:&errorValue];
-		
-		if (errorValue) {
-			[self throwJavaScriptException:errorValue];
-		}
-		
-		if (result) {
-			[worldController() executeScriptCommandOnAllViews:@"styleSettingDidChange" arguments:@[objectKey]];
-		}
-		
-		return result;
+	}
+
+	/* Pass validated data to selector */
+	TVCLogScriptEventSinkContext *context = [TVCLogScriptEventSinkContext new];
+
+	[context setWebView:intWebView];
+
+	[context setArguments:values];
+
+	if (promiseIndex == (-1)) {
+		(void)objc_msgSend(self, selector, context);
 	} else {
-		[self throwJavaScriptException:@"Improperly formatted arguments"];
-		
-		return NO;
+		id returnValue = objc_msgSend(self, selector, context);
+
+		if (returnValue == nil) {
+			returnValue = [NSNull null];
+		}
+
+		[intWebView executeStandaloneCommand:@"appInternal.promiseKept"
+							   withArguments:@[@(promiseIndex), returnValue]];
 	}
 }
 
-- (id)styleSettingsRetrieveValue:(NSString *)key
+- (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	NSString *errorValue = nil;
-	
-	id result = [themeSettings() styleSettingsRetrieveValueForKey:key error:&errorValue];
-	
-	if (errorValue) {
-		[self throwJavaScriptException:errorValue];
+	[webView executeStandaloneCommand:@"console.log" withArguments:@[message]];
+}
+
+- (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView
+{
+	[webView executeStandaloneCommand:@"console.error" withArguments:@[message]];
+}
+
+#pragma mark -
+#pragma mark Private Implementation
+
+- (void)channelIsJoined:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelIsJoined:)];
+}
+
+- (void)channelMemberCount:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelMemberCount:)];
+}
+
+- (void)channelName:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelName:)];
+}
+
+- (void)channelNameDoubleClicked:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_channelNameDoubleClicked:)];
+}
+
+- (void)displayContextMenu:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_displayContextMenu:)];
+}
+
+- (void)copySelection:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_copySelection:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_copySelectionWhenPermitted:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineImagesEnabledForView:)];
+}
+
+- (void)localUserHostmask:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_localUserHostmask:)];
+}
+
+- (void)localUserNickname:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_localUserNickname:)];
+}
+
+- (void)logToConsole:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_logToConsole:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)networkName:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_networkName:)];
+}
+
+- (void)nicknameColorStyleHash:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_nicknameColorStyleHash:)
+	  minimumArgumentCount:2
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)nicknameDoubleClicked:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_nicknameDoubleClicked:)];
+}
+
+- (void)printDebugInformation:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_printDebugInformation:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)printDebugInformationToConsole:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_printDebugInformationToConsole:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)retrievePreferencesWithMethodName:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_retrievePreferencesWithMethodName:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)serverAddress:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverAddress:)];
+}
+
+- (void)serverChannelCount:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverChannelCount:)];
+}
+
+- (void)serverIsConnected:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_serverIsConnected:)];
+}
+
+- (void)setChannelName:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_setChannelName:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)setNickname:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_setNickname:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)setURLAddress:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_setURLAddress:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)sidebarInversionIsEnabled:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_sidebarInversionIsEnabled:)];
+}
+
+- (void)styleSettingsRetrieveValue:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_styleSettingsRetrieveValue:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
+- (void)styleSettingsSetValue:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_styleSettingsSetValue:)
+	  minimumArgumentCount:1
+			withValidation:nil];
+}
+
+- (void)topicBarDoubleClicked:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_topicBarDoubleClicked:)];
+}
+
+#pragma mark -
+#pragma mark Private Implementation
+
+- (id)_channelIsJoined:(TVCLogScriptEventSinkContext *)context
+{
+	return @([[context associatedChannel] isActive]);
+}
+
+- (id)_channelMemberCount:(TVCLogScriptEventSinkContext *)context
+{
+	return @([[context associatedChannel] numberOfMembers]);
+}
+
+- (id)_channelName:(TVCLogScriptEventSinkContext *)context
+{
+	return [[context associatedChannel] name];
+}
+
+- (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
+{
+	[[context webViewPolicy] channelNameDoubleClicked];
+}
+
+- (void)_displayContextMenu:(TVCLogScriptEventSinkContext *)context
+{
+	[[context webViewPolicy] displayContextMenuInWebView:[context webView]];
+}
+
+- (void)_copySelection:(TVCLogScriptEventSinkContext *)context
+{
+	[RZPasteboard() setStringContent:[context arguments][0]];
+}
+
+- (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
+{
+	if ([TPCPreferences copyOnSelect]) {
+		[RZPasteboard() setStringContent:[context arguments][0]];
+
+		return @(YES);
+	} else {
+		return @(NO);
 	}
-	
+}
+
+- (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
+{
+	return @([[context logController] inlineImagesEnabledForView]);
+}
+
+- (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
+{
+	return [[context associatedClient] localHostmask];
+}
+
+- (id)_localUserNickname:(TVCLogScriptEventSinkContext *)context
+{
+	return [[context associatedClient] localNickname];
+}
+
+- (void)_logToConsole:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *message = [context arguments][0];
+
+	LogToConsole(@"JavaScript: %@", message);
+}
+
+- (id)_networkName:(TVCLogScriptEventSinkContext *)context
+{
+	return [[context associatedClient] networkName];
+}
+
+- (id)_nicknameColorStyleHash:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *inputString = [context arguments][0];
+
+	NSString *colorStyle = [context arguments][1];
+
+	TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
+
+	if ([colorStyle isEqualToString:@"HSL-dark"]) {
+		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueDarkStyle;
+	} else if ([colorStyle isEqualToString:@"HSL-light"]) {
+		colorStyleEnum = TPCThemeSettingsNicknameColorHashHueLightStyle;
+	}
+
+	return [IRCUserNicknameColorStyleGenerator hashForString:inputString colorStyle:colorStyleEnum];
+}
+
+- (void)_nicknameDoubleClicked:(TVCLogScriptEventSinkContext *)context
+{
+	[[context webViewPolicy] nicknameDoubleClicked];
+}
+
+- (void)_printDebugInformation:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *message = [context arguments][0];
+
+	[[context associatedClient] printDebugInformation:message channel:[context associatedChannel]];
+}
+
+- (void)_printDebugInformationToConsole:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *message = [context arguments][0];
+
+	[[context associatedClient] printDebugInformationToConsole:message];
+}
+
+- (id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *methodName = [context arguments][0];
+
+	SEL methodSelector = NSSelectorFromString(methodName);
+
+	NSArray *resultErrors = nil;
+
+	id returnValue = [TPCPreferences performSelector:methodSelector
+									   withArguments:nil
+								   returnsPrimitives:YES
+									usesTypeChecking:NO
+											   error:&resultErrors];
+
+	if (resultErrors) {
+		for (NSDictionary *error in resultErrors) {
+			if ([error boolForKey:@"isWarning"]) {
+				[self _logToJavaScriptConsole:error[@"errorMessage"] inWebView:[context webView]];
+			} else {
+				[self _throwJavaScriptException:error[@"errorMessage"] inWebView:[context webView]];
+			}
+		}
+	}
+
+	return returnValue;
+}
+
+- (id)_serverAddress:(TVCLogScriptEventSinkContext *)context
+{
+	return [[context associatedClient] networkAddress];
+}
+
+- (id)_serverChannelCount:(TVCLogScriptEventSinkContext *)context
+{
+	return @([[context associatedClient] channelCount]);
+}
+
+- (id)_serverIsConnected:(TVCLogScriptEventSinkContext *)context
+{
+	return @([[context associatedClient] isLoggedIn]);
+}
+
+- (void)_setChannelName:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *value = [context arguments][0];
+
+	[[context webViewPolicy] setChannelName:[value gtm_stringByUnescapingFromHTML]];
+}
+
+- (void)_setNickname:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *value = [context arguments][0];
+
+	[[context webViewPolicy] setNickname:[value gtm_stringByUnescapingFromHTML]];
+}
+
+- (void)_setURLAddress:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *value = [context arguments][0];
+
+	[[context webViewPolicy] setAnchorURL:[value gtm_stringByUnescapingFromHTML]];
+}
+
+- (id)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
+{
+	return @([TPCPreferences invertSidebarColors]);
+}
+
+- (id)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context
+{
+	NSString *keyName = [context arguments][0];
+
+	NSString *errorValue = nil;
+
+	id result = [themeSettings() styleSettingsRetrieveValueForKey:keyName error:&errorValue];
+
+	if (errorValue) {
+		[self _throwJavaScriptException:errorValue inWebView:[context webView]];
+	}
+
 	return result;
 }
 
-- (id)retrievePreferencesWithMethodName:(id)name
+- (id)_styleSettingsSetValue:(TVCLogScriptEventSinkContext *)context
 {
-	if ([name isKindOfClass:[NSString class]] == NO) {
-		[self throwJavaScriptException:@"The value provided to retrievePreferencesWithMethodName must be a string"];
-	} else if ([name length] <= 1) {
-		[self throwJavaScriptException:@"Length of value supplied to retrievePreferencesWithMethodName is less than or equal to zero (0)"];
-	} else {
-		SEL realSelector = NSSelectorFromString(name);
-		
-		NSArray *resultErrors = nil;
-		
-		id returnValue = [TPCPreferences performSelector:realSelector
-										   withArguments:nil
-									   returnsPrimitives:YES
-										usesTypeChecking:NO
-												   error:&resultErrors];
-		
-		if (resultErrors) {
-			for (NSDictionary *error in resultErrors) {
-				if ([error boolForKey:@"isWarning"]) {
-					[self logToJavaScriptConsole:error[@"errorMessage"]];
-				} else {
-					[self throwJavaScriptException:error[@"errorMessage"]];
-				}
-			}
+	NSArray *arguments = [context arguments];
+
+	NSString *keyName = arguments[0];
+
+	id keyValue = nil;
+
+	if ([arguments count] > 1) {
+		if ([arguments[1] isKindOfClass:[NSNull class]] == NO &&
+			[arguments[1] isKindOfClass:[WebUndefined class]] == NO)
+		{
+			keyValue = arguments[1];
 		}
-		
-		return returnValue;
 	}
-	
-	return nil;
+
+	NSString *errorValue = nil;
+
+	BOOL result = [themeSettings() styleSettingsSetValue:keyValue forKey:keyName error:&errorValue];
+
+	if (errorValue) {
+		[self _throwJavaScriptException:errorValue inWebView:[context webView]];
+	}
+
+	if (result) {
+		[worldController() executeScriptCommandOnAllViews:@"Textual.styleSettingDidChange" arguments:@[keyName]];
+	}
+
+	return @(result);
 }
 
-- (void)print:(NSString *)s
+- (void)_topicBarDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
+	[[context webViewPolicy] topicBarDoubleClicked];
+}
+
+@end
+
+@implementation TVCLogScriptEventSinkContext
+
+- (TVCLogController *)logController
+{
+	return [[self webView] logController];
+}
+
+- (TVCLogPolicy *)webViewPolicy
+{
+	return [[self webView] webViewPolicy];
+}
+
+- (IRCClient *)associatedClient
+{
+	return [[self logController] associatedClient];
+}
+
+- (IRCChannel *)associatedChannel
+{
+	return [[self logController] associatedChannel];
 }
 
 @end

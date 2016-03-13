@@ -44,16 +44,32 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterLimitToValue) {
 	TPI_ChatFilterLimitToSpecificItemsValue			= 3
 };
 
+typedef NS_OPTIONS(NSUInteger, TPI_ChatFilterEventType) {
+	TPI_ChatFilterNumericEventType					= 1 << 0,
+	TPI_ChatFilterPlainTextMessageEventType			= 1 << 1,
+	TPI_ChatFilterActionMessageEventType			= 1 << 2,
+	TPI_ChatFilterNoticeMessageEventType			= 1 << 3,
+	TPI_ChatFilterUserJoinedChannelEventType		= 1 << 4,
+	TPI_ChatFilterUserLeftChannelEventType			= 1 << 5,
+	TPI_ChatFilterUserKickedFromChannelEventType	= 1 << 6,
+	TPI_ChatFilterUserDisconnectedEventType			= 1 << 7,
+	TPI_ChatFilterUserChangedNicknameEventType		= 1 << 8,
+	TPI_ChatFilterChannelTopicReceivedEventType		= 1 << 9,
+	TPI_ChatFilterChannelTopicChangedEventType		= 1 << 10,
+	TPI_ChatFilterChannelModeReceivedEventType		= 1 << 11,
+	TPI_ChatFilterChannelModeChangedEventType		= 1 << 12
+};
+
 @interface TPI_ChatFilter : NSObject <NSCopying>
-@property (nonatomic, assign) BOOL filterCommandNOTICE;
-@property (nonatomic, assign) BOOL filterCommandPRIVMSG;
-@property (nonatomic, assign) BOOL filterCommandPRIVMSG_ACTION;
 @property (nonatomic, assign) BOOL filterIgnoreContent;
 @property (nonatomic, assign) BOOL filterIgnoresOperators;
 @property (nonatomic, assign) BOOL filterLogMatch;
+@property (nonatomic, assign) BOOL filterLimitedToMyself;
+@property (nonatomic, assign) TPI_ChatFilterEventType filterEvents;
 @property (nonatomic, assign) TPI_ChatFilterLimitToValue filterLimitedToValue;
 @property (nonatomic, copy) NSArray *filterLimitedToChannelsIDs;
 @property (nonatomic, copy) NSArray *filterLimitedToClientsIDs;
+@property (nonatomic, copy) NSArray *filterEventsNumerics;
 @property (nonatomic, copy) NSString *filterAction;
 @property (nonatomic, copy) NSString *filterForwardToDestination;
 @property (nonatomic, copy) NSString *filterItemID;
@@ -65,4 +81,6 @@ typedef NS_ENUM(NSUInteger, TPI_ChatFilterLimitToValue) {
 
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 - (NSDictionary *)dictionaryValue;
+
+- (BOOL)isEventTypeEnabled:(TPI_ChatFilterEventType)eventType;
 @end

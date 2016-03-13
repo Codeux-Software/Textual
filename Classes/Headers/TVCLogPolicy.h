@@ -39,18 +39,18 @@
 #import "TextualApplication.h"
 
 #ifdef TXSystemIsOSXElCapitanOrLater
-@interface TVCLogPolicy : NSObject <WebPolicyDelegate, WebUIDelegate>
+@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
 #else
 @interface TVCLogPolicy : NSObject
 #endif
-
-@property (nonatomic, weak) TVCLogController *logController;
 
 @property (nonatomic, copy) NSString *anchorURL;
 @property (nonatomic, copy) NSString *channelName;
 @property (nonatomic, copy) NSString *nickname;
 
-- (void)channelDoubleClicked;
+- (void)displayContextMenuInWebView:(TVCLogView *)webView;
+
+- (void)channelNameDoubleClicked;
 - (void)nicknameDoubleClicked;
-- (void)topicDoubleClicked;
+- (void)topicBarDoubleClicked;
 @end

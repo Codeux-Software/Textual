@@ -110,6 +110,10 @@
 		NSArray *clientList = [worldController() clientList];
 
 		for (IRCClient *client in self.observedClients) {
+			if ([self.observedClients containsObject:client] == NO) {
+				continue;
+			}
+
 			if ([clientList containsObject:client] == NO || observeClients == NO) {
 				[client removeObserver:self forKeyPath:@"isLoggedIn"];
 			}

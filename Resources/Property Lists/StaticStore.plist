@@ -45,6 +45,8 @@
 		<string>PREFIX</string>
 		<key>WebKit</key>
 		<string>PREFIX</string>
+		<key>__Web</key>
+		<string>PREFIX</string>
 		<key>com.apple.</key>
 		<string>PREFIX</string>
 		<key>DataDetectorsSettings</key>
@@ -181,7 +183,6 @@
 		<string>ffuu</string>
 		<string>flip</string>
 		<string>hermes</string>
-		<string>instacast</string>
 		<string>key</string>
 		<string>keyx</string>
 		<string>music</string>
@@ -190,22 +191,29 @@
 		<string>page</string>
 		<string>qt</string>
 		<string>radium</string>
-		<string>rdio</string>
-		<string>reverse</string>
 		<string>setkey</string>
 		<string>setkeymode</string>
 		<string>shell</string>
 		<string>slap</string>
 		<string>spotify</string>
-		<string>uuid</string>
 		<string>vlc</string>
+	</array>
+	<key>THOPluginManager Version 6.0.0 Extension Whitelist</key>
+	<array>
+		<string>com.codeux.app-extensions.textual-BlowfishEncryption</string>
+		<string>com.codeux.app-extensions.textual-Caffeine</string>
+		<string>com.codeux.app-extensions.textual-WikiStyleLinkParser</string>
+		<string>com.codeux.irc.textual.extension.WikiStyleLinkParser</string>
+		<string>com.codeux.irc.textual5.extension.BlowfishCommandLine</string>
+		<string>de.incnet.TXTunes</string>
+		<string>de.incnet.txurldumper</string>
 	</array>
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
 	<dict>
 		<key>BlowfishEncryption</key>
 		<string>1.0.3</string>
 		<key>Caffeine</key>
-		<string>1.0.1</string>
+		<string>1.0.2</string>
 		<key>WikiStyleLinkParser</key>
 		<string>1.0.2</string>
 	</dict>

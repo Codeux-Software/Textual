@@ -38,6 +38,8 @@
 #import "TPI_ChatFilterExtension.h"
 #import "TPI_ChatFilterEditFilterSheet.h"
 
+#define _filterTableDragToken			@"filterTableDragToken"
+
 #define _filterListUserDefaultsKey		@"Textual Chat Filter Extension -> Filters"
 
 @interface TPI_ChatFilterExtension ()
@@ -70,9 +72,184 @@
 #pragma mark -
 #pragma mark Plugin Logic
 
+- (BOOL)testFilterDestination:(TPI_ChatFilter *)filter againstText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client
+{
+	/* Try to resolve destination channel now that we
+	 know that there is a filter that will need it. */
+	TPI_ChatFilterLimitToValue filterLimitedToValue = [filter filterLimitedToValue];
+
+	if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
+		if (textDestination == nil && [textAuthor isServer] == NO) {
+			DebugLogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
+
+			return NO;
+		}
+	}
+
+	if (filterLimitedToValue == TPI_ChatFilterLimitToChannelsValue) {
+		if ([textDestination isChannel] == NO) {
+			/* Filter is limited to a channel but the destination
+			 is not a channel. */
+
+			return NO;
+		}
+	} else if (filterLimitedToValue == TPI_ChatFilterLimitToPrivateMessagesValue) {
+		if ([textDestination isPrivateMessage] == NO) {
+			/* Filter is limited to a private message but the destination
+			 is not a private message. */
+
+			return NO;
+		}
+	} else if (filterLimitedToValue == TPI_ChatFilterLimitToSpecificItemsValue) {
+		NSArray *filterLimitedToClientsIDs = [filter filterLimitedToClientsIDs];
+		NSArray *filterLimitedToChannelsIDs = [filter filterLimitedToChannelsIDs];
+
+		if ([filterLimitedToClientsIDs containsObject:[client uniqueIdentifier]] == NO &&
+			[filterLimitedToChannelsIDs containsObject:[textDestination uniqueIdentifier]] == NO)
+		{
+			/* Target channel is not covered by current filter. */
+
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)testFilterSender:(TPI_ChatFilter *)filter authoredBy:(IRCPrefix *)textAuthor onClient:(IRCClient *)client
+{
+	/* Check whether the sender is the local user */
+	if ([filter filterLimitedToMyself]) {
+		NSString *comparisonValue1 = [client localNickname];
+
+		NSString *comparisonValue2 = [textAuthor nickname];
+
+		if ([comparisonValue1 isEqualIgnoringCase:comparisonValue2] == NO) {
+			return NO;
+		} else {
+			return YES;
+		}
+	}
+
+	/* Maybe perform filter action on sender hostmask */
+	NSString *filterSenderMatch = [filter filterSenderMatch];
+
+	if (NSObjectIsEmpty(filterSenderMatch) == NO) {
+		NSString *comparisonHostmask = nil;
+
+		if ([textAuthor isServer]) {
+			comparisonHostmask = [textAuthor nickname]; // Server address
+		} else {
+			comparisonHostmask = [textAuthor hostmask];
+		}
+
+		if ([XRRegularExpression string:comparisonHostmask isMatchedByRegex:filterSenderMatch withoutCase:YES] == NO) {
+			/* If a filter specifies a sender match and the match for
+			 this particular filter fails, then skip this filter. */
+
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)testFilterMatch:(TPI_ChatFilter *)filter againstText:(NSString *)text allowingEmptyText:(BOOL)allowingEmptyText
+{
+	/* Filter text */
+	if (text == nil) {
+		if (allowingEmptyText) {
+			return YES;
+		} else {
+			return NO;
+		}
+	}
+
+	NSString *filterMatch = [filter filterMatch];
+
+	if (NSObjectIsEmpty(filterMatch) == NO) {
+		if ([XRRegularExpression string:text isMatchedByRegex:filterMatch withoutCase:YES] == NO) {
+			/* The input text is not matched by the filter match.
+			 Continue to the next filter to try again. */
+
+			return NO;
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
+{
+	/* Begin processing filters */
+	DebugLogToConsole(@"Received command: %@; text “%@“; sender “%@“", command, text, [textAuthor hostmask]);
+
+	@synchronized([self.filterArrayController arrangedObjects]) {
+		NSArray *arrangedObjects = [self.filterArrayController arrangedObjects];
+
+		for (TPI_ChatFilter *filter in arrangedObjects) {
+			@autoreleasepool {
+#define _commandMatchesEvent(_command_, _event_)		([command isEqualToString:(_command_)] && [filter isEventTypeEnabled:(_event_)] == NO)
+
+				if ((_commandMatchesEvent(@"JOIN", TPI_ChatFilterUserJoinedChannelEventType) ||
+					 _commandMatchesEvent(@"PART", TPI_ChatFilterUserLeftChannelEventType) ||
+					 _commandMatchesEvent(@"KICK", TPI_ChatFilterUserKickedFromChannelEventType) ||
+					 _commandMatchesEvent(@"QUIT", TPI_ChatFilterUserDisconnectedEventType) ||
+					 _commandMatchesEvent(@"NICK", TPI_ChatFilterUserChangedNicknameEventType) ||
+					 _commandMatchesEvent(@"TOPIC", TPI_ChatFilterChannelTopicChangedEventType) ||
+					 _commandMatchesEvent(@"MODE", TPI_ChatFilterChannelModeChangedEventType) ||
+					 _commandMatchesEvent(@"332", TPI_ChatFilterChannelTopicReceivedEventType) ||
+					 _commandMatchesEvent(@"324", TPI_ChatFilterChannelModeReceivedEventType)) &&
+					[[filter filterEventsNumerics] containsObject:command] == NO)
+				{
+					/* Continue to next filter. This filter is not interested
+					 in the line type of the input. */
+
+					continue;
+				}
+
+#undef _commandMatchesEvent
+
+				/* Perform common filter checks */
+				if ([self testFilterDestination:filter againstText:text authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {
+					continue;
+				}
+
+				if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
+					continue;
+				}
+
+				if ([self testFilterMatch:filter againstText:text allowingEmptyText:YES] == NO) {
+					continue;
+				}
+
+				/* Perform actions defined by filter */
+				XRPerformBlockAsynchronouslyOnMainQueue(^{
+					[self performActionForFilter:filter
+							 withOriginalMessage:text
+									  authoredBy:textAuthor
+									 destinedFor:textDestination
+										onClient:client];
+				});
+
+				if ([filter filterIgnoreContent]) {
+					return NO; // Ignore original content
+				}
+
+				/* Return once the first filter matches */
+				return YES;
+			} // @autorelease
+		} // for
+	} // @synchronized
+
+	return YES;
+}
+
 - (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted
 {
 	/* Begin processing filters */
+	/* Finding the IRCUser instance for the sender has a lot of overhead involved
+	 which means it is easier to store it in a variable here and find only once. */
 	IRCUser *senderUser = nil;
 
 	@synchronized([self.filterArrayController arrangedObjects]) {
@@ -80,11 +257,9 @@
 
 		for (TPI_ChatFilter *filter in arrangedObjects) {
 			@autoreleasepool {
-				BOOL filterMatchedBySender = NO;
-
-				if ((lineType == TVCLogLinePrivateMessageType && [filter filterCommandPRIVMSG] == NO) ||
-					(lineType == TVCLogLineActionType && [filter filterCommandPRIVMSG_ACTION] == NO) ||
-					(lineType == TVCLogLineNoticeType && [filter filterCommandNOTICE] == NO))
+				if ((lineType == TVCLogLinePrivateMessageType && [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
+					(lineType == TVCLogLineActionType && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
+					(lineType == TVCLogLineNoticeType && [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
 				{
 					/* Continue to next filter. This filter is not interested
 					  in the line type of the input. */
@@ -92,68 +267,15 @@
 					continue;
 				}
 
-				/* Try to resolve destination channel now that we 
-				 know that there is a filter that will need it. */
-				TPI_ChatFilterLimitToValue filterLimitedToValue = [filter filterLimitedToValue];
-
-				if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
-					if (textDestination == nil && [textAuthor isServer] == NO) {
-						LogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
-
-						return YES;
-					}
+				/* Perform common filter checks */
+				if ([self testFilterDestination:filter againstText:text authoredBy:textAuthor destinedFor:textDestination onClient:client] == NO) {
+					continue;
 				}
 
-				if (filterLimitedToValue == TPI_ChatFilterLimitToChannelsValue) {
-					if ([textDestination isChannel] == NO) {
-						/* Filter is limited to a channel but the destination
-						 is not a channel. */
-
-						continue;
-					}
-				} else if (filterLimitedToValue == TPI_ChatFilterLimitToPrivateMessagesValue) {
-					if ([textDestination isPrivateMessage] == NO) {
-						/* Filter is limited to a private message but the destination
-						 is not a private message. */
-
-						continue;
-					}
-				} else if (filterLimitedToValue == TPI_ChatFilterLimitToSpecificItemsValue) {
-					NSArray *filterLimitedToClientsIDs = [filter filterLimitedToClientsIDs];
-					NSArray *filterLimitedToChannelsIDs = [filter filterLimitedToChannelsIDs];
-
-					if ([filterLimitedToClientsIDs containsObject:[client uniqueIdentifier]] == NO &&
-						[filterLimitedToChannelsIDs containsObject:[textDestination uniqueIdentifier]] == NO)
-					{
-						/* Target channel is not covered by current filter. */
-
-						continue;
-					}
+				if ([self testFilterSender:filter authoredBy:textAuthor onClient:client] == NO) {
+					continue;
 				}
 
-				/* Maybe perform filter action on sender hostmask */
-				NSString *filterSenderMatch = [filter filterSenderMatch];
-
-				if (NSObjectIsEmpty(filterSenderMatch) == NO) {
-					NSString *comparisonHostmask = nil;
-
-					if ([textAuthor isServer]) {
-						comparisonHostmask = [textAuthor nickname]; // Server address
-					} else {
-						comparisonHostmask = [textAuthor hostmask];
-					}
-
-					if ([XRRegularExpression string:comparisonHostmask isMatchedByRegex:filterSenderMatch withoutCase:YES] == NO) {
-						/* If a filter specifies a sender match and the match for
-						 this particular filter fails, then skip this filter. */
-
-						continue;
-					} else {
-						filterMatchedBySender = YES;
-					}
-				}
-
-				/* Find author in the channel */
 				if ([filter filterIgnoresOperators] && [textDestination isChannel]) {
 					if ([textAuthor isServer] == NO) {
 						if (senderUser == nil) {
@@ -167,30 +289,15 @@
 								}
 							} else {
 								LogToConsole(@"senderUser == nil — Skipping to next filter");
-
+								
 								continue;
 							}
 						}
 					}
 				}
 
-				/* Filter text */
-				NSString *filterMatch = [filter filterMatch];
-
-				if (NSObjectIsEmpty(filterMatch)) {
-					if (filterMatchedBySender == NO) {
-						/* An empty match (= wildcard) + no matching sender = bogus filter */
-
-						continue;
-					}
-
-				} else {
-					if ([XRRegularExpression string:text isMatchedByRegex:filterMatch withoutCase:YES] == NO) {
-						/* The input text is not matched by the filter match.
-						 Continue to the next filter to try again. */
-
-						continue;
-					}
+				if ([self testFilterMatch:filter againstText:text allowingEmptyText:NO] == NO) {
+					continue;
 				}
 
 				/* Perform actions defined by filter */
@@ -199,7 +306,6 @@
 							 withOriginalMessage:text
 									  authoredBy:textAuthor
 									 destinedFor:textDestination
-									  asLineType:lineType
 										onClient:client];
 				});
 
@@ -253,7 +359,7 @@
 	return YES;
 }
 
-- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client
+- (void)performActionForFilter:(TPI_ChatFilter *)filter withOriginalMessage:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client
 {
 	NSString *filterActionData = [filter filterAction];
 
@@ -262,6 +368,12 @@
 	}
 
 	/* Perform action */
+	NSString *eventText = text;
+
+	if (eventText == nil) {
+		eventText = NSStringEmptyPlaceholder;
+	}
+
 #define _maybeReplaceValue(key, value)			if (value == nil) {																												\
 													filterActionData = [filterActionData stringByReplacingOccurrencesOfString:(key) withString:NSStringEmptyPlaceholder];		\
 												} else {																														\
@@ -296,10 +408,10 @@
 
 		NSString *formattedMessage = nil;
 
-		if (textDestination && [textDestination isChannel]) {
+		if (textDestination == nil) {
 			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0002]", [filter filterTitle], [textAuthor nickname]);
 		} else {
-			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", [filter filterTitle], [textAuthor nickname], textDestination);
+			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", [filter filterTitle], [textAuthor nickname], [textDestination name]);
 		}
 
 		[client print:filterActionReportQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultRawCommandValue];
@@ -376,6 +488,11 @@
 	return TPILocalizedString(@"TPI_ChatFilterExtension[0001]");
 }
 
+- (void)awakeFromNib
+{
+	[self.filterTable registerForDraggedTypes:@[_filterTableDragToken]];
+}
+
 - (void)filterTableDoubleClicked:(id)sender
 {
 	[self filterEdit:sender];
@@ -388,6 +505,17 @@
 
 - (void)filterRemove:(id)sender
 {
+	BOOL performRemove = [TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][2]")
+															title:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][1]")
+													defaultButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][3]")
+												  alternateButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][4]")
+												   suppressionKey:nil
+												  suppressionText:nil];
+
+	if (performRemove == NO) {
+		return;
+	}
+
 	NSInteger selectedIndex = [self.filterArrayController selectionIndex];
 
 	[self.filterArrayController removeObjectAtArrangedObjectIndex:selectedIndex];
@@ -448,6 +576,50 @@
 
 		[self saveFilters];
 	});
+}
+
+#pragma mark -
+#pragma mark Table View Delegate
+
+- (BOOL)tableView:(NSTableView *)tableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard *)pasteboard
+{
+	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+
+	[pasteboard declareTypes:@[_filterTableDragToken] owner:self.filterArrayController];
+
+	[pasteboard setData:data forType:_filterTableDragToken];
+
+	return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation
+{
+	return NSDragOperationGeneric;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)dropRow dropOperation:(NSTableViewDropOperation)dropOperation
+{
+	NSPasteboard *pasteboard = [info draggingPasteboard];
+
+	NSData *rowData = [pasteboard dataForType:_filterTableDragToken];
+
+	NSIndexSet *rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+
+	NSInteger filterIndex = [rowIndexes firstIndex];
+
+	TPI_ChatFilter *draggedFilter = [self.filterArrayController arrangedObjects][filterIndex];
+
+	[self.filterArrayController insertObject:draggedFilter atArrangedObjectIndex:dropRow];
+
+	if (filterIndex > dropRow) {
+		[self.filterArrayController removeObjectAtArrangedObjectIndex:(filterIndex + 1)];
+	} else {
+		[self.filterArrayController removeObjectAtArrangedObjectIndex:filterIndex];
+	}
+
+	[self saveFilters];
+
+	return YES;
 }
 
 @end

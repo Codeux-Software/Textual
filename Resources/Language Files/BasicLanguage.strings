@@ -202,9 +202,9 @@
 "TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
 "TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
 
-"TLOLicenseManager[1008]" = "Select a copy of Textual 5 installed through the Mac App Store to receive a free license key.";
+"TLOLicenseManager[1008]" = "Select a copy of Textual installed through the Mac App Store to receive a free license key.";
 
-"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or was not downloaded through the Mac App Store.";
+"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or newer version, or was not downloaded through the Mac App Store.";
 "TLOLicenseManager[1009][2]" = "Select another application and try again.";
 
 "TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase to new license system";
@@ -223,7 +223,7 @@
 "TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
 
 "TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
-"TLOLicenseManager[1016]" = "Your trial of Textual is expired.";
+"TLOLicenseManager[1016]" = "Your trial of Textual has expired.";
 
 "TLOLicenseManager[1017][2]" = "Please purchase Textual to prevent disruption to your chat experience.";
 "TLOLicenseManager[1017][3]" = "More Info";
@@ -270,6 +270,9 @@
 /* Channel view right click menu, menu items */
 "BasicLanguage[1018]" = "Copy Log as HTML";
 "BasicLanguage[1019]" = "Force Reload Style";
+"BasicLanguage[1295]" = "Open Web Inspector";
+"BasicLanguage[1296]" = "Look Up in Dictionary";
+"BasicLanguage[1297]" = "Look Up “%@”";
 
 /* DCC request console error */
 "BasicLanguage[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
@@ -472,7 +475,6 @@
 "BasicLanguage[1146]" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
 "BasicLanguage[1147]" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
 "BasicLanguage[1148]" = "\002-CTCP-\002 %1$@ from %2$@";
-"BasicLanguage[1149]" = "Netsplit: %@";
 "BasicLanguage[1150]" = "%1$@ (%2$@)";
 "BasicLanguage[1151]" = "%@ IRC Network";
 "BasicLanguage[1152][0]" = "%1$@ is now known as \002%2$@\002";
@@ -798,6 +800,6 @@
 
 
 
-/* Next unusued key: 1295 */
+/* Next unusued key: 1298 */
 
 

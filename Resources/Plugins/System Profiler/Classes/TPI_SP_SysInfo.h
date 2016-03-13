@@ -64,7 +64,7 @@
 + (TXUnsignedLongLong)freeMemorySize;
 + (TXUnsignedLongLong)totalMemorySize;
 
-+ (NSDictionary *)applicationMemoryInformation;
++ (NSInteger)applicationMemoryInformation;
 
 + (NSString *)formattedGraphicsCardInformation;
 + (NSString *)formattedLocalVolumeDiskUsage;

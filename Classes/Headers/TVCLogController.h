@@ -42,16 +42,10 @@
 
 TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
-#ifdef TXSystemIsOSXElCapitanOrLater
-@interface TVCLogController : NSObject <TVCLogViewDelegate, TVCImageURLoaderDelegate, WebFrameLoadDelegate, WebResourceLoadDelegate>
-#else
 @interface TVCLogController : NSObject <TVCLogViewDelegate, TVCImageURLoaderDelegate>
-#endif
-
 @property (nonatomic, weak) IRCClient *associatedClient;
 @property (nonatomic, weak) IRCChannel *associatedChannel;
-@property (nonatomic, strong) TVCLogView *webView;
-@property (nonatomic, strong) TVCLogPolicy *webViewPolicy;
+@property (nonatomic, strong) TVCLogView *backingView;
 @property (nonatomic, assign) BOOL isLoaded;
 @property (nonatomic, assign) BOOL viewIsEncrypted;
 @property (nonatomic, assign) NSInteger maximumLineCount;
@@ -71,8 +65,6 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
 
-- (void)invalidateScrollingPosition;
-
 - (void)nextHighlight;
 - (void)previousHighlight;
 
@@ -80,14 +72,10 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
 @property (readonly, copy) NSString *uniqueIdentifier;
 
-@property (readonly, copy) DOMDocument *mainFrameDocument;
-
 - (void)moveToTop;
 - (void)moveToBottom;
 
-- (BOOL)jumpToLine:(NSString *)line;
-
-@property (readonly) BOOL viewingBottom;
+- (BOOL)jumpToLine:(NSString *)lineNumber;
 
 @property (readonly, copy) NSString *topicValue;
 - (void)setTopic:(NSString *)topic;

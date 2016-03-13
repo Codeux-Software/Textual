@@ -170,7 +170,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0720;
 			};
 			buildConfigurationList = 1DEB911E08733D790010E9CD /* Build configuration list for PBXProject "System Profiler Extension" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -234,6 +234,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SystemProfiler";
 			};
 			name = Debug;
 		};
@@ -241,6 +242,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.codeux.app-extensions.textual-SystemProfiler";
 			};
 			name = Release;
 		};
@@ -248,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8E1A93CD6E0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SystemProfiler;
@@ -258,6 +261,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4C24DC8E1A93CD6E0098D1BE /* Shared Configuration for Extensions.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = SystemProfiler;
 			};

@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "TVCLogObjectsPrivate.h"
+
 /* The actual tag value for the Inspect Element item is in a private
  enum in WebKit so we have to define it based on whatever version of
  WebKit is on the OS. */
@@ -45,153 +47,192 @@
 #define _WebMenuItemTagInspectElementMountainLion	2025
 
 #define _WebMenuItemTagSearchInGoogle		1601 // Tag for Textual's menu, not WebKit
+#define _WebMenuItemTagLookUpDictionary		1608 // Tag for Textual's meny, not WebKit
 
 @implementation TVCLogPolicy
 
-- (void)webView:(TVCLogView *)sender mouseDidMoveOverElement:(NSDictionary *)elementInformation modifierFlags:(NSUInteger)modifierFlags
+- (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	NSAssertReturn([TPCPreferences copyOnSelect]);
-	
-	NSEvent *currentEvent = [NSApp currentEvent];
+	TVCLogController *logController = [webView logController];
 
-	NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	BOOL isWebKit2 = [webView isUsingWebKit2];
 
-	if (flags == NSAlternateKeyMask ||
-		flags == NSCommandKeyMask)
-	{
-		return;
+	id newMenu = nil;
+
+	if (isWebKit2) {
+		newMenu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
+	} else {
+		newMenu = [NSMutableArray array];
 	}
-	
-	if ([currentEvent type] == NSLeftMouseUp) {
-		if ([sender hasSelection]) {
-			[NSApp sendAction:@selector(copy:) to:sender from:self];
-		
-			[sender clearSelection];
-		}
-	}
-}
 
-- (void)channelDoubleClicked
-{
-	[menuController() joinClickedChannel:self.channelName];
+#define _addItem(_itemValue_)		if (isWebKit2) {						\
+										[newMenu addItem:(_itemValue_)];	\
+									} else {								\
+										[newMenu addObject:(_itemValue_)];	\
+									}
 
-	self.channelName = nil;
-}
-
-- (void)nicknameDoubleClicked
-{
-	[menuController() setPointedNickname:self.nickname];
-
-	self.nickname = nil;
-	
-	[menuController() memberInChannelViewDoubleClicked:nil];
-}
-
-- (void)topicDoubleClicked
-{
-    [menuController() showChannelTopicDialog:nil];
-}
-
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
-{
-	NSMutableArray *ary = [NSMutableArray array];
-
-	/* Invalidate passed information if we are in console. */
-	if ([self.logController associatedChannel] == nil) {
+	if ([logController associatedChannel] == nil) {
 		self.nickname = nil;
 	}
-	
+
 	if (self.anchorURL)
 	{
 		NSMenu *urlMenu = [menuController() tcopyURLMenu];
-		
+
 		for (NSMenuItem *item in [urlMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
-			
-			[newitem setUserInfo:self.anchorURL recursively:YES];
-			
-			[ary addObject:newitem];
+			NSMenuItem *newItem = [item copy];
+
+			[newItem setUserInfo:self.anchorURL recursively:YES];
+
+			_addItem(newItem)
 		}
-		
+
 		self.anchorURL = nil;
-		
-		return ary;
 	}
 	else if (self.nickname)
 	{
 		NSMenu *memberMenu = [menuController() userControlMenu];
-		
+
 		for (NSMenuItem *item in [memberMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
-			
-			[newitem setUserInfo:self.nickname recursively:YES];
-			
-			[ary addObject:newitem];
+			NSMenuItem *newItem = [item copy];
+
+			[newItem setUserInfo:self.nickname recursively:YES];
+
+			_addItem(newItem)
 		}
-		
+
 		self.nickname = nil;
-		
-		return ary;
 	}
 	else if (self.channelName)
 	{
 		NSMenu *chanMenu = [menuController() joinChannelMenu];
-		
+
 		for (NSMenuItem *item in [chanMenu itemArray]) {
-			NSMenuItem *newitem = [item copy];
-			
-			[newitem setUserInfo:self.channelName recursively:YES];
-			
-			[ary addObject:newitem];
+			NSMenuItem *newItem = [item copy];
+
+			[newItem setUserInfo:self.channelName recursively:YES];
+
+			_addItem(newItem)
 		}
-		
+
 		self.channelName = nil;
-		
-		return ary;
 	}
 	else
 	{
 		NSMenu *menu = [menuController() channelViewMenu];
-		
+
 		NSMenuItem *inspectElementItem		= nil;
 		NSMenuItem *lookupInDictionaryItem	= nil;
-		
-		for (NSMenuItem *item in defaultMenuItems) {
-			if ([item tag] == WebMenuItemTagLookUpInDictionary) {
-				lookupInDictionaryItem = item;
-			} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
-					   [item tag] == _WebMenuItemTagInspectElementMountainLion)
-			{
-				inspectElementItem = item;
-			}
-		}
-		
-		for (NSMenuItem *item in [menu itemArray]) {
-			[ary addObject:[item copy]];
 
-			if ([item tag] == _WebMenuItemTagSearchInGoogle) {
-				if (lookupInDictionaryItem) {
-					[ary addObject:lookupInDictionaryItem];
+		if (isWebKit2 == NO) {
+			for (NSMenuItem *item in defaultMenuItems) {
+				if ([item tag] == WebMenuItemTagLookUpInDictionary) {
+					lookupInDictionaryItem = item;
+				} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
+						   [item tag] == _WebMenuItemTagInspectElementMountainLion)
+				{
+					inspectElementItem = item;
 				}
 			}
 		}
-		
-		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
-			[ary addObject:[NSMenuItem separatorItem]];
-			
-			if (inspectElementItem) {
-				[ary addObject:[inspectElementItem copy]];
+
+		for (NSMenuItem *item in [menu itemArray]) {
+			NSMenuItem *newItem = [item copy];
+
+			if (isWebKit2 == NO) {
+				if ([newItem tag] == _WebMenuItemTagLookUpDictionary) {
+					continue;
+				}
 			}
 
-			NSMenuItem *newItem1 = [NSMenuItem menuItemWithTitle:BLS(1018) target:menuController() action:@selector(copyLogAsHtml:)];
-			NSMenuItem *newItem2 = [NSMenuItem menuItemWithTitle:BLS(1019) target:menuController() action:@selector(forceReloadTheme:)];
+			_addItem(newItem);
 
-			[ary addObject:newItem1];
-			[ary addObject:newItem2];
+			if ([newItem tag] == _WebMenuItemTagSearchInGoogle) {
+				if (lookupInDictionaryItem) {
+					_addItem(lookupInDictionaryItem)
+				}
+			}
 		}
-		
-		return ary;
+
+		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+			_addItem([NSMenuItem separatorItem])
+
+			_addItem(
+			 [NSMenuItem menuItemWithTitle:BLS(1018)
+									target:menuController()
+									action:@selector(copyLogAsHtml:)])
+
+			_addItem(
+			 [NSMenuItem menuItemWithTitle:BLS(1019)
+									target:menuController()
+									action:@selector(forceReloadTheme:)])
+
+			if (isWebKit2) {
+				_addItem(
+				 [NSMenuItem menuItemWithTitle:BLS(1295)
+										target:menuController()
+										action:@selector(openWebInspector:)])
+			} else {
+				if (inspectElementItem) {
+					_addItem(inspectElementItem)
+				}
+			}
+		}
 	}
+
+	return newMenu;
+}
+
+- (void)displayContextMenuInWebView:(TVCLogView *)webView
+{
+	NSAssertReturn([webView isUsingWebKit2] == YES);
+
+	NSMenu *newMenu = [self constructContextMenuInWebView:webView defaultMenuItems:nil];
+
+	NSView *webViewBacking = [webView webView];
+
+	NSWindow *webViewWindow = [webViewBacking window];
+
+	NSPoint mouseLocationGlobal = [NSEvent mouseLocation];
+
+	NSRect mouseLocationLocal =
+	[webViewWindow convertRectFromScreen:NSMakeRect(mouseLocationGlobal.x, mouseLocationGlobal.y, 0, 0)];
+
+	NSEvent *event = [NSEvent mouseEventWithType:NSRightMouseUp
+										location:mouseLocationLocal.origin
+								   modifierFlags:0
+									   timestamp:0
+									windowNumber:[webViewWindow windowNumber]
+										 context:nil
+									 eventNumber:0
+									  clickCount:0
+										pressure:0];
+
+	[NSMenu popUpContextMenu:newMenu withEvent:event forView:webViewBacking];
+}
+
+#pragma mark -
+#pragma mark WebKit Delegate
+
+- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+{
+	return [self constructContextMenuInWebView:[self parentView] defaultMenuItems:defaultMenuItems];
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+{
+	[[challenge sender] cancelAuthenticationChallenge:challenge];
+}
+
+- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
+{
+	NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+
+	if ([[pboard types] containsObject:NSFilenamesPboardType]) {
+		return WebDragDestinationActionAny;
+	}
+
+	return WebDragDestinationActionNone;
 }
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
@@ -203,42 +244,85 @@
 
 		NSURL *actionURL = actionInformation[WebActionOriginalURLKey];
 
-		if (NSObjectsAreEqual([actionURL scheme], @"http") == NO &&
-			NSObjectsAreEqual([actionURL scheme], @"https") == NO &&
-			NSObjectsAreEqual([actionURL scheme], @"textual") == NO)
-		{
-			BOOL openLink =
-			[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
-											   title:TXTLS(@"BasicLanguage[1290][1]", [actionURL absoluteString])
-									   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
-									 alternateButton:TXTLS(@"BasicLanguage[1009]")
-									  suppressionKey:@"open_non_http_url_warning"
-									 suppressionText:nil];
-
-			if (openLink == NO) {
-				return;
-			}
-		}
-
-		[TLOpenLink open:actionURL];
+		[self openWebpage:actionURL];
 	} else {
 		[listener use];
 	}
 }
 
-- (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
-{
-	IRCChannel *channel = [self.logController associatedChannel];
-	
-	if (channel && [channel isPrivateMessage]) {
-		NSPasteboard *pboard = [draggingInfo draggingPasteboard];
+#pragma mark -
+#pragma mark WebKit2 Delegate
 
-		if ([[pboard types] containsObject:NSFilenamesPboardType]) {
-			return WebDragDestinationActionAny;
+- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+{
+	NSString *authenticationMethod = [[challenge protectionSpace] authenticationMethod];
+
+	if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+		completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
+	} else {
+		completionHandler(NSURLSessionAuthChallengeCancelAuthenticationChallenge, nil);
+	}
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+	WKNavigationType action = [navigationAction navigationType];
+
+	if (action == WKNavigationTypeLinkActivated) {
+		decisionHandler(WKNavigationActionPolicyCancel);
+
+		NSURL *actionURL = [[navigationAction request] URL];
+
+		[self openWebpage:actionURL];
+	} else {
+		decisionHandler(WKNavigationActionPolicyAllow);
+	}
+}
+
+#pragma mark -
+#pragma mark Shared
+
+- (void)channelNameDoubleClicked
+{
+	[menuController() joinClickedChannel:self.channelName];
+
+	self.channelName = nil;
+}
+
+- (void)nicknameDoubleClicked
+{
+	[menuController() setPointedNickname:self.nickname];
+
+	self.nickname = nil;
+
+	[menuController() memberInChannelViewDoubleClicked:nil];
+}
+
+- (void)topicBarDoubleClicked
+{
+	[menuController() showChannelTopicDialog:nil];
+}
+
+- (void)openWebpage:(NSURL *)webpageURL
+{
+	if (NSObjectsAreEqual([webpageURL scheme], @"http") == NO &&
+		NSObjectsAreEqual([webpageURL scheme], @"https") == NO &&
+		NSObjectsAreEqual([webpageURL scheme], @"textual") == NO)
+	{
+		BOOL openLink =
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
+										   title:TXTLS(@"BasicLanguage[1290][1]", [webpageURL absoluteString])
+								   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
+								 alternateButton:TXTLS(@"BasicLanguage[1009]")
+								  suppressionKey:@"open_non_http_url_warning"
+								 suppressionText:nil];
+
+		if (openLink == NO) {
+			return;
 		}
 	}
-	
-	return WebDragDestinationActionNone;
+
+	[TLOpenLink open:webpageURL];
 }
 
 @end

@@ -63,12 +63,12 @@
 
 	if (_defaults == nil) {
 		NSDictionary *defaults = @{
-			@"filterCommandNOTICE"				: @(NO),
-			@"filterCommandPRIVMSG"				: @(YES),
-			@"filterCommandPRIVMSG_ACTION"		: @(YES),
+			@"filterEvents"						: @(TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType),
+
 			@"filterIgnoreContent"				: @(NO),
 			@"filterIgnoresOperators"			: @(YES),
 			@"filterLogMatch"					: @(NO),
+			@"filterLimitedToMyself"			: @(NO),
 
 			@"filterLimitedToValue"				: @(TPI_ChatFilterLimitToNoLimitValue),
 		};
@@ -87,28 +87,28 @@
 
 	self.filterLimitedToValue = [defaults integerForKey:@"filterLimitedToValue"];
 
+	self.filterLimitedToMyself = [defaults boolForKey:@"filterLimitedToMyself"];
+
 	self.filterIgnoresOperators = [defaults boolForKey:@"filterIgnoresOperators"];
 
 	self.filterIgnoreContent = [defaults boolForKey:@"filterIgnoreContent"];
 
 	self.filterLogMatch = [defaults boolForKey:@"filterLogMatch"];
 
-	self.filterCommandPRIVMSG = [defaults boolForKey:@"filterCommandPRIVMSG"];
-	self.filterCommandPRIVMSG_ACTION = [defaults boolForKey:@"filterCommandPRIVMSG_ACTION"];
-
-	self.filterCommandNOTICE = [defaults boolForKey:@"filterCommandNOTICE"];
+	self.filterEvents = [defaults integerForKey:@"filterEvents"];
 }
 
 - (void)populateDictionaryValues:(NSDictionary *)dic
 {
+	/* Set regular key names */
 	[dic assignArrayTo:&_filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
 	[dic assignArrayTo:&_filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
 
-	[dic assignBoolTo:&_filterCommandNOTICE forKey:@"filterCommandNOTICE"];
-	[dic assignBoolTo:&_filterCommandPRIVMSG forKey:@"filterCommandPRIVMSG"];
-	[dic assignBoolTo:&_filterCommandPRIVMSG_ACTION forKey:@"filterCommandPRIVMSG_ACTION"];
+	[dic assignArrayTo:&_filterEventsNumerics forKey:@"filterEventsNumerics"];
+
 	[dic assignBoolTo:&_filterIgnoreContent forKey:@"filterIgnoreContent"];
 	[dic assignBoolTo:&_filterIgnoresOperators forKey:@"filterIgnoresOperators"];
+	[dic assignBoolTo:&_filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic assignBoolTo:&_filterLogMatch forKey:@"filterLogMatch"];
 
 	[dic assignStringTo:&_filterAction forKey:@"filterAction"];
@@ -120,14 +120,45 @@
 	[dic assignStringTo:&_filterTitle forKey:@"filterTitle"];
 
 	[dic assignUnsignedIntegerTo:&_filterLimitedToValue forKey:@"filterLimitedToValue"];
+
+	/* Maintain backwards compatibility by setting old key names */
+	id filterEvents = dic[@"filterEvents"];
+
+	if (filterEvents && [filterEvents isKindOfClass:[NSNumber class]]) {
+		self.filterEvents = [filterEvents unsignedIntegerValue];
+	} else {
+		TPI_ChatFilterEventType filterEventsOld = (TPI_ChatFilterPlainTextMessageEventType | TPI_ChatFilterActionMessageEventType);
+
+		id filterCommandPRIVMSG = dic[@"filterCommandPRIVMSG"];
+		id filterCommandPRIVMSG_ACTION = dic[@"filterCommandPRIVMSG_ACTION"];
+
+		if ([dic boolForKey:@"filterCommandNOTICE"])
+			filterEventsOld |= TPI_ChatFilterNoticeMessageEventType;
+
+		if (filterCommandPRIVMSG && [filterCommandPRIVMSG boolValue] == NO)
+			filterEventsOld &= ~TPI_ChatFilterPlainTextMessageEventType;
+
+		if (filterCommandPRIVMSG_ACTION && [filterCommandPRIVMSG_ACTION boolValue] == NO)
+			filterEventsOld &= ~TPI_ChatFilterActionMessageEventType;
+
+		self.filterEvents = filterEventsOld;
+	}
 }
 
 - (NSDictionary *)dictionaryValue
 {
 	NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:6];
 
+	/* Maintain backwards compatibility by setting old key names */
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType]		forKey:@"filterCommandNOTICE"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType]	forKey:@"filterCommandPRIVMSG"];
+	[dic setBool:[self isEventTypeEnabled:TPI_ChatFilterActionMessageEventType]		forKey:@"filterCommandPRIVMSG_ACTION"];
+
+	/* Set regular key names */
 	[dic maybeSetObject:self.filterLimitedToChannelsIDs forKey:@"filterLimitedToChannelsIDs"];
 	[dic maybeSetObject:self.filterLimitedToClientsIDs forKey:@"filterLimitedToClientsIDs"];
+
+	[dic maybeSetObject:self.filterEventsNumerics forKey:@"filterEventsNumerics"];
 
 	[dic maybeSetObject:self.filterAction forKey:@"filterAction"];
 	[dic maybeSetObject:self.filterForwardToDestination forKey:@"filterForwardToDestination"];
@@ -137,16 +168,21 @@
 	[dic maybeSetObject:self.filterSenderMatch forKey:@"filterSenderMatch"];
 	[dic maybeSetObject:self.filterTitle forKey:@"filterTitle"];
 
-	[dic setBool:self.filterCommandNOTICE forKey:@"filterCommandNOTICE"];
-	[dic setBool:self.filterCommandPRIVMSG forKey:@"filterCommandPRIVMSG"];
-	[dic setBool:self.filterCommandPRIVMSG_ACTION forKey:@"filterCommandPRIVMSG_ACTION"];
 	[dic setBool:self.filterIgnoreContent forKey:@"filterIgnoreContent"];
 	[dic setBool:self.filterIgnoresOperators forKey:@"filterIgnoresOperators"];
+	[dic setBool:self.filterLimitedToMyself forKey:@"filterLimitedToMyself"];
 	[dic setBool:self.filterLogMatch forKey:@"filterLogMatch"];
+
+	[dic setUnsignedInteger:self.filterEvents forKey:@"filterEvents"];
 
 	[dic setUnsignedInteger:self.filterLimitedToValue forKey:@"filterLimitedToValue"];
 
 	return [dic dictionaryByRemovingDefaults:[self defaults]];
+}
+
+- (BOOL)isEventTypeEnabled:(TPI_ChatFilterEventType)eventType
+{
+	return ((_filterEvents & eventType) == eventType);
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone

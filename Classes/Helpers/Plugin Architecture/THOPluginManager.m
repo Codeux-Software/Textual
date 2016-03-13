@@ -42,13 +42,18 @@
 
 #define _extrasInstallerExtensionUpdateCheckInterval			345600
 
+/* THOPluginProtocolExtension exists to extend THOPluginProtocol with private methods */
+@interface NSObject (THOPluginProtocolExtension);
+- (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
+@end
+
 @interface THOPluginManager ()
 @property (nonatomic, copy) NSArray *allLoadedBundles;
 @property (nonatomic, copy) NSArray *allLoadedPlugins;
 @property (nonatomic, assign) THOPluginItemSupportedFeatures supportedFeatures;
 @end
 
-NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"5.0.0";
+NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute = @"lineNumber";
 NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute = @"senderNickname";
@@ -109,10 +114,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			NSAssert(NO, @"-loadPlugins called more than one time.");
 		}
 
-		NSArray *paths = [TPCPathInfo buildPathArray:
-						  [TPCPathInfo customExtensionFolderPath],
-						  [TPCPathInfo bundledExtensionFolderPath],
-						  nil];
+		NSArray *paths =
+		[TPCPathInfo buildPathArray:
+			[TPCPathInfo customExtensionFolderPath],
+			[TPCPathInfo bundledExtensionFolderPath],
+			nil];
 
 		NSMutableArray *loadedBundles = [NSMutableArray array];
 
@@ -134,25 +140,80 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			}
 		}
 
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+
+		NSArray *whitelistedBundles = [staticValues arrayForKey:@"THOPluginManager Version 6.0.0 Extension Whitelist"];
+
 		for (NSString *bundleName in bundlesToLoad) {
 			NSString *bundlePath = bundlesToLoad[bundleName];
 
 			NSBundle *currBundle = [NSBundle bundleWithPath:bundlePath];
 
-			if (currBundle) {
-				THOPluginItem *currPlugin = [THOPluginItem new];
+			if (currBundle == nil) {
+				continue;
+			}
 
-				BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
+			/* Begin version comparison */
+			NSDictionary *bundleInfo = [currBundle infoDictionary];
 
-				if (bundleLoaded) {
-					[self updateSupportedFeaturesPropertyWithPlugin:currPlugin];
+			NSString *comparisonVersion = bundleInfo[@"MinimumTextualVersion"];
 
-					[loadedBundles addObject:currBundle];
+			if (comparisonVersion == nil) {
+				NSLog(@" ---------------------------- ERROR ---------------------------- ");
+				NSLog(@"                                                                 ");
+				NSLog(@"  Textual has failed to load the bundle at the following path    ");
+				NSLog(@"  which did not specify a minimum version:                       ");
+				NSLog(@"                                                                 ");
+				NSLog(@"     Bundle Path: %@", [currBundle bundlePath]);
+				NSLog(@"                                                                 ");
+				NSLog(@"  Please add a key-value pair in the bundle's Info.plist file    ");
+				NSLog(@"  with the key name as \"MinimumTextualVersion\"                 ");
+				NSLog(@"                                                                 ");
+				NSLog(@"  For example, to support this version and later:                ");
+				NSLog(@"                                                                 ");
+				NSLog(@"     <key>MinimumTextualVersion</key>                            ");
+				NSLog(@"     <string>%@</string>", THOPluginProtocolCompatibilityMinimumVersion);
+				NSLog(@"                                                                 ");
+				NSLog(@" --------------------------------------------------------------- ");
 
-					[loadedPlugins addObject:currPlugin];
-				} else {
-					currPlugin = nil;
+				continue;
+			} else {
+				NSComparisonResult comparisonResult = NSOrderedSame;
+
+				if ([whitelistedBundles containsObject:[currBundle bundleIdentifier]] == NO) {
+					comparisonResult = [comparisonVersion compare:THOPluginProtocolCompatibilityMinimumVersion options:NSNumericSearch];
 				}
+
+				if (comparisonResult == NSOrderedAscending) {
+					NSLog(@" ---------------------------- ERROR ---------------------------- ");
+					NSLog(@"                                                                 ");
+					NSLog(@"  Textual has failed to load the bundle at the followig path     ");
+					NSLog(@"  because the specified minimum version is out of range:         ");
+					NSLog(@"                                                                 ");
+					NSLog(@"     Bundle Path: %@", [currBundle bundlePath]);
+					NSLog(@"                                                                 ");
+					NSLog(@"     Minimum version specified by bundle: %@", comparisonVersion);
+					NSLog(@"     Version used by Textual for comparison: %@", THOPluginProtocolCompatibilityMinimumVersion);
+					NSLog(@"                                                                 ");
+					NSLog(@" --------------------------------------------------------------- ");
+
+					continue;
+				}
+			}
+
+			/* Load bundle as a plugin */
+			THOPluginItem *currPlugin = [THOPluginItem new];
+
+			BOOL bundleLoaded = [currPlugin loadBundle:currBundle];
+
+			if (bundleLoaded) {
+				[self updateSupportedFeaturesPropertyWithPlugin:currPlugin];
+
+				[loadedBundles addObject:currBundle];
+
+				[loadedPlugins addObject:currPlugin];
+			} else {
+				currPlugin = nil;
 			}
 		}
 
@@ -191,10 +252,11 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	NSArray *scriptExtensions = @[@"scpt", @"py", @"pyc", @"rb", @"pl", @"sh", @"php", @"bash"];
 
 	/* Begin building list. Topmost take priority. */
-	NSArray *scriptPaths = [TPCPathInfo buildPathArray:
-							[TPCPathInfo systemUnsupervisedScriptFolderPath],
-							[TPCPathInfo bundledScriptFolderPath],
-							nil];
+	NSArray *scriptPaths =
+	[TPCPathInfo buildPathArray:
+		[TPCPathInfo systemUnsupervisedScriptFolderPath],
+		[TPCPathInfo bundledScriptFolderPath],
+		nil];
 	
 	/* Begin scanning folders. */
 	id returnData = nil;
@@ -309,11 +371,16 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)extrasInstallerInformUserAboutUpdateForBundleNamed:(NSString *)bundleName
 {
+	/* Append the current version to the suppression key so that updates 
+	 aren't refused forever. Only until the next verison of Textual is out. */
+	NSString *suppressionKey =
+	[@"plugin_manager_extension_update_dialog_" stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
+
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
 													   title:TXTLS(@"BasicLanguage[1287][1]", bundleName)
 											   defaultButton:TXTLS(@"BasicLanguage[1287][3]")
 											 alternateButton:TXTLS(@"BasicLanguage[1287][4]")
-											  suppressionKey:@"plugin_manager_extension_update_dialog"
+											  suppressionKey:suppressionKey
 											 suppressionText:nil];
 
 	if (download == NO) {
@@ -449,6 +516,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	_ef(THOPluginItemSupportsUserInputDataInterception)
 	_ef(THOPluginItemSupportsWillRenderMessageEvent)
 	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
+	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
 
 #undef _ef
 }
@@ -787,6 +855,30 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	{
 		if ([plugin supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
 			BOOL pluginResult = [[plugin primaryClass] receivedText:text authoredBy:textAuthorCopy destinedFor:textDestination asLineType:lineType onClient:client receivedAt:receivedAtCopy wasEncrypted:wasEncrypted];
+
+			if (pluginResult == NO) {
+				return NO;
+			}
+		}
+	}
+
+	return YES;
+}
+
+- (BOOL)postReceivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
+{
+	if (textAuthor == nil || client == nil || receivedAt == nil) {
+		return NO;
+	}
+
+	IRCPrefix *textAuthorCopy = [textAuthor copy];
+
+	NSDate *receivedAtCopy = [receivedAt copy];
+
+	for (THOPluginItem *plugin in self.allLoadedPlugins)
+	{
+		if ([plugin supportsFeature:THOPluginItemSupportsDidReceiveCommandEvent]) {
+			BOOL pluginResult = [[plugin primaryClass] receivedCommand:command withText:text authoredBy:textAuthorCopy destinedFor:textDestination onClient:client receivedAt:receivedAtCopy];
 
 			if (pluginResult == NO) {
 				return NO;

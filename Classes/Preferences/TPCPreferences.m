@@ -504,6 +504,30 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() boolForKey:@"AutomaticallyReloadCustomThemesWhenTheyChange"];
 }
 
++ (BOOL)webKit2Enabled
+{
+	BOOL canUseWebKit2 = [RZUserDefaults() boolForKey:@"UsesWebKit2WhenAvailable"];
+
+	if (canUseWebKit2 == NO) {
+		return NO;
+	}
+
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		return YES;
+	} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		/* WKWebView uses sandboxing... The OS X El Capitan version of the
+		 WebKit framework includes a method to allow access to local files
+		 outside of this sandbox, but the OS X Yosemite version does not.
+		 This means we restrict WebKit2 to bundled styles on this verison. */
+
+		if ([themeController() storageLocation] == TPCThemeControllerStorageBundleLocation) {
+			return YES;
+		}
+	}
+
+	return NO;
+}
+
 #pragma mark -
 #pragma mark Completion Suffix
 
