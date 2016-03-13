@@ -57,10 +57,10 @@ TextualScroller.debugDataLog = function(message)
 	var channelName = document.body.getAttribute("channelname");
 
 	if (channelName === null) {
-		channelName = "(server console)";
+		app.logToConsole("TextualScroller.debugDataLog(): (server console) - " + message);
+	} else {
+		app.printDebugInformationToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
 	}
-
-	app.printDebugInformationToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
 };
 
 TextualScroller.documentResizedCallback = function()
