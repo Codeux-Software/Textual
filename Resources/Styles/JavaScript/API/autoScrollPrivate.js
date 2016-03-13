@@ -65,6 +65,7 @@ TextualScroller.isScrolledByUser = false;
 TextualScroller.currentScrollTopValue = 0;
 
 TextualScroller.scrollTopUserConstant = 9;
+TextualScroller.scrollTopUserConstantSet = false;
 
 /* Core functions */
 TextualScroller.documentResizedCallback = function()
@@ -87,6 +88,8 @@ TextualScroller.documentScrolledCallback = function()
 
 TextualScroller.performAutoScroll = function()
 {
+	TextualScroller.setScrollTopUserConstant();
+
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	TextualScroller.currentScrollTopValue = scrollHeight;
@@ -96,6 +99,31 @@ TextualScroller.performAutoScroll = function()
 	}
 
 	document.body.scrollTop = scrollHeight;
+};
+
+TextualScroller.setScrollTopUserConstant = function()
+{
+	/*	Set TextualScroller.setScrollTopUserConstant to the height
+		of a single plain text line. */
+	if (TextualScroller.scrollTopUserConstantSet) {
+		return;
+	}
+
+	var documentBody = Textual.documentBodyElement();
+
+	var lastChild = documentBody.lastChild;
+
+	if (typeof lastChild.getAttribute !== "function") {
+		return;
+	}
+
+	if (lastChild.getAttribute("ltype") === "privmsg") {
+		var lastChildBottom = lastChild.getBoundingClientRect().height;
+
+		TextualScroller.scrollTopUserConstant = lastChildBottom;
+
+		TextualScroller.scrollTopUserConstantSet = true;
+	}
 };
 
 TextualScroller.scrollHeight = function()
