@@ -52,6 +52,11 @@ Textual.loadingScreenElement = function()
 	return document.getElementById("loading_screen");
 };
 
+Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
+{
+	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
+};
+
 Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 {
 	var documentBody = Textual.documentBodyElement();
