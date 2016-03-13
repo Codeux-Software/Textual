@@ -1371,9 +1371,9 @@
 		4CF621CB1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
 		4CF621CC1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
 		4CF621CD1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF621CA1C7F65DC000969CB /* TDCNicknameColorSheet.m */; };
-		4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
-		4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
-		4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; };
+		4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF621CE1C7F65EB000969CB /* TDCNicknameColorSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF621D41C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
 		4CF621D51C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
 		4CF621D61C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CF621D21C7F675A000969CB /* TDCNicknameColorSheet.xib */; };
@@ -3433,7 +3433,6 @@
 				4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */,
 				4C0BA58E1990798800857343 /* IRCChannel.h in Headers */,
 				4C0BA58F1990798800857343 /* IRCChannelConfig.h in Headers */,
-				4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C0BA5901990798800857343 /* IRCChannelMode.h in Headers */,
 				4C0BA5911990798800857343 /* IRCClient.h in Headers */,
 				4C0BA5921990798800857343 /* IRCClientConfig.h in Headers */,
@@ -3563,6 +3562,7 @@
 				4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
 				4CC2DC651A96BA35006DE696 /* NSTableVIewHelper.h in Headers */,
+				4CF621CF1C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C790FC91B82706400EB318C /* TXWindowController.h in Headers */,
 				4C992DD31AB513A90072AB0B /* TLOEncryptionManager.h in Headers */,
 				4C195A931ABBC7590009BCB6 /* NSViewHelper.h in Headers */,
@@ -3601,7 +3601,6 @@
 				4C5BA40216F1302F00A96CA2 /* IRCConnection.h in Headers */,
 				4C5BA40316F1302F00A96CA2 /* IRCExtras.h in Headers */,
 				4C5BA40416F1302F00A96CA2 /* IRCISupportInfo.h in Headers */,
-				4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C5BA40516F1302F00A96CA2 /* IRCMessage.h in Headers */,
 				4C5BA40616F1302F00A96CA2 /* IRCModeInfo.h in Headers */,
 				4C80832D1B43914100746327 /* TLOLicenseManagerDownloader.h in Headers */,
@@ -3723,6 +3722,7 @@
 				4C77661D19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
 				4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */,
+				4CF621D01C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C7766261978A74D00759774 /* TVCServerListSharedUserInterface.h in Headers */,
 				4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C5FB0FE197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
@@ -3765,7 +3765,6 @@
 				4C8AF630158E99520026668C /* IRCConnection.h in Headers */,
 				4C8AF631158E99520026668C /* IRCExtras.h in Headers */,
 				4C8AF632158E99520026668C /* IRCISupportInfo.h in Headers */,
-				4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C8AF633158E99520026668C /* IRCMessage.h in Headers */,
 				4C8AF634158E99520026668C /* IRCModeInfo.h in Headers */,
 				4C80832E1B43914100746327 /* TLOLicenseManagerDownloader.h in Headers */,
@@ -3887,6 +3886,7 @@
 				4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
 				4C001C0A197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C77661C19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
+				4CF621D11C7F65EB000969CB /* TDCNicknameColorSheet.h in Headers */,
 				4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C5FB0FD197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
