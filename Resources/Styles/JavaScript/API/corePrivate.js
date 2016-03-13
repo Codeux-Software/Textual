@@ -132,7 +132,7 @@ Textual.scrollToBottomOfView = function(fireNotification)
 
 	var lastChild = documentBody.lastChild;
 
-	if (lastChild) {
+	if (typeof lastChild.scrollIntoView === "function") {
 		lastChild.scrollIntoView(false);
 
 		if (typeof fireNotification === 'undefined' || fireNotification === true) {
@@ -151,7 +151,7 @@ Textual.scrollToTopOfView = function(fireNotification)
 
 	var firstChild = documentBody.firstChild;
 
-	if (firstChild) {
+	if (typeof firstChild.scrollIntoView === "function") {
 		firstChild.scrollIntoView(true);
 
 		if (typeof fireNotification === 'undefined' || fireNotification === true) {
