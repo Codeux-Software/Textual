@@ -87,13 +87,13 @@ TextualScroller.documentScrolledCallback = function()
 
 TextualScroller.performAutoScroll = function()
 {
-	if (TextualScroller.isScrolledByUser) {
-		return;
-	}
-
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	TextualScroller.currentScrollTopValue = scrollHeight;
+
+	if (TextualScroller.isScrolledByUser) {
+		return;
+	}
 
 	document.body.scrollTop = scrollHeight;
 };
