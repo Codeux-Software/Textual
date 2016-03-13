@@ -43,61 +43,329 @@
 /*																		   */
 /* *********************************************************************** */
 
-/* Internal state. */
+/* Internal state */
 Textual.nicknameDoubleClickTimer = null;
 
-/* Loading screen. */
+/* Loading screen */
+Textual.loadingScreenElement = function()
+{
+	return document.getElementById("loading_screen");
+};
+
 Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
 {
-	/* fadeInLoadingScreen is the old API name and makes no sense since we are
-	not bringing the loading screen into view, we are removing it. So it is
-	being faded "out" not "in" */
-
 	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
 };
 
 Textual.fadeOutLoadingScreen = function(bodyOp, topicOp)
 {
-	/* Reserved element IDs. */
-	var bhe = document.getElementById("body_home");
-	var tbe = document.getElementById("topic_bar");
-	var lbe = document.getElementById("loading_screen");
+	var documentBody = Textual.documentBodyElement();
 
-	lbe.style.opacity = 0.00;
-	bhe.style.opacity = bodyOp;
+	var topicBar = Textual.topicBarElement();
 
-	if (tbe !== null) {
-		tbe.style.opacity = topicOp;
+	var loadingScreen = Textual.loadingScreenElement();
+
+	/* Modify the opacity values of the various elements */
+	loadingScreen.style.opacity = 0.00;
+
+	documentBody.style.opacity = bodyOp;
+
+	if (topicBar !== null) {
+		topicBar.style.opacity = topicOp;
 	}
 
 	/* The fade time for the loading screen depends on the CSS of the actual
 	style, but there is no reason it should take more than five (5) seconds.
 	We will wait that amount of time before setting the overlay to hidden.
 	Setting it to hidden makes it not copiable after it is not visible. */
-
 	setTimeout(function() {
-		var lbef = document.getElementById("loading_screen");
+		var loadingScreen = Textual.loadingScreenElement();
 
-		lbef.style.display = "none";
+		loadingScreen.style.display = "none";
 	}, 5000);
 };
 
-/* Scrolling. */
-Textual.scrollToBottomOfView = function(fireNotification)
+/* Topic bar */
+Textual.topicBarElement = function()
 {
-	document.body.scrollTop = document.body.scrollHeight;
+	return document.getElementById("topic_bar");
+};
 
-	if (fireNotification === undefined || fireNotification === true) {
-		Textual.viewPositionMovedToBottom();
+Textual.topicBarValue = function(asText)
+{
+	var topicBar = Textual.topicBarElement();
+
+	if (topicBar) {
+		if (typeof asText === 'undefined' || asText === true) {
+			return topicBar.textContent;
+		} else {
+			return topicBar.innerHTML;
+		}
+	} else {
+		return null;
 	}
 };
 
-Textual.notifyDidBecomeVisible = function(wasViewingBottom)
+Textual.setTopicBarValue = function(topicValue, topicValueHTML)
+{
+	var topicBar = Textual.topicBarElement();
+
+	if (topicBar) {
+		topicBar.innerHTML = topicValueHTML;
+
+		Textual.topicBarValueChanged(topicValue);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.topicBarDoubleClicked = function()
+{
+	app.topicBarDoubleClicked();
+};
+
+/* Scrolling */
+Textual.scrollToBottomOfView = function(fireNotification)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	if (documentBody === null) {
+		return;
+	}
+
+	var lastChild = documentBody.lastChild;
+
+	if (typeof lastChild.scrollIntoView === "function") {
+		lastChild.scrollIntoView(false);
+
+		if (typeof fireNotification === 'undefined' || fireNotification === true) {
+			Textual.viewPositionMovedToBottom();
+		}
+	}
+};
+
+Textual.scrollToTopOfView = function(fireNotification)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	if (documentBody === null) {
+		return;
+	}
+
+	var firstChild = documentBody.firstChild;
+
+	if (typeof firstChild.scrollIntoView === "function") {
+		firstChild.scrollIntoView(true);
+
+		if (typeof fireNotification === 'undefined' || fireNotification === true) {
+			Textual.viewPositionMovedToTop();
+		}
+	}
+};
+
+Textual.scrollToLine = function(lineNumber)
+{
+	if (Textual.scrollToElement("line-" + lineNumber)) {
+		Textual.viewPositionMovedToLine(lineNumber);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.scrollToElement = function(elementName)
+{
+	var element = document.getElementById(elementName);
+
+	if (element) {
+		element.scrollIntoViewIfNeeded(true);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+/* History indicator */
+Textual.scrollToHistoryIndicator = function()
+{
+	if (Textual.scrollToElement("mark")) {
+		Textual.viewPositionModToHistoryIndicator();
+	}
+};
+
+Textual.historyIndicatorAdd = function(templateHTML)
+{
+	Textual.historyIndicatorRemove();
+
+	Textual.documentBodyAppend(templateHTML);
+
+	Textual.historyIndicatorAddedToView();
+};
+
+Textual.historyIndicatorRemove = function()
+{
+	var e = document.getElementById("mark");
+
+	if (e) {
+		e.parentNode.removeChild(e);
+
+		Textual.historyIndicatorRemovedFromView();
+	}
+};
+
+/* Document body */
+Textual.documentBodyElement = function()
+{
+	return document.getElementById("body_home");
+};
+
+Textual.documentBodyAppend = function(templateHTML)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	documentBody.insertAdjacentHTML("beforeend", templateHTML);
+
+	TextualScroller.performAutoScroll();
+};
+
+Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	var elementToAppendTo = null;
+
+	if (isReload == false) {
+		var historicMessagesDiv = document.getElementById("historic_messages");
+
+		if (historicMessagesDiv) {
+			elementToAppendTo = historicMessagesDiv;
+		}
+	}
+
+	if (elementToAppendTo === null) {
+		elementToAppendTo = documentBody;
+	}
+
+	elementToAppendTo.insertAdjacentHTML("afterbegin", templateHTML);
+
+	TextualScroller.performAutoScroll();
+};
+
+Textual.documentHTML = function()
+{
+	return document.documentElement.innerHTML;
+};
+
+Textual.reduceNumberOfLines = function(countOfLinesToRemove)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	var childNodes = documentBody.childNodes;
+
+	if (countOfLinesToRemove > childNodes.length) {
+		countOfLinesToRemove = childNodes.length;
+	}
+
+	var removedChildren = [];
+
+	for (var i = (countOfLinesToRemove - 1); i >= 0; i--) {
+		var childNode = childNodes[i];
+
+		var childNodeID = childNode.id;
+
+		if (childNodeID && childNodeID.indexOf("line-") === 0) {
+			removedChildren.push(childNodeID);
+
+			documentBody.removeChild(childNode);
+		}
+
+		if (removedChildren.length == countOfLinesToRemove) {
+			break;
+		}
+	}
+
+	return removedChildren;
+};
+
+/* State management */
+Textual.notifyDidBecomeVisible = function()
+{
+	Textual.clearSelection();
+};
+
+Textual.changeTextSizeMultiplier = function(sizeMultiplier)
+{
+	if (sizeMultiplier === 1.0) {
+		document.body.style.fontSize = "";
+	} else {
+		document.body.style.fontSize = ((sizeMultiplier * 100.0) + "%");
+	}
+}
+
+/* Events */
+Textual.mouseUpEventCallback = function()
+{
+	Textual.copyOnSelectMouseUpEvent();
+};
+
+/* Selection */
+Textual.clearSelection = function()
 {
 	window.getSelection().empty();
+};
 
-	if (wasViewingBottom) {
-		Textual.scrollToBottomOfView();
+Textual.clearSelectionAndPreventDefault = function()
+{
+	Textual.clearSelection();
+
+	event.preventDefault();
+};
+
+Textual.currentSelection = function()
+{
+	return window.getSelection().toString();
+};
+
+Textual.currentSelectionCoordinates = function()
+{
+	var currentSelection = window.getSelection();
+
+	if (currentSelection.toString() === "") {
+		return null;
+	}
+
+	var clientHeight = document.body.offsetHeight;
+
+	var elementRect = currentSelection.getRangeAt(0).getBoundingClientRect();
+
+	return {
+		"x" : elementRect.left,
+		"y" : (clientHeight - elementRect.bottom),
+		"w" : elementRect.width,
+		"h" : elementRect.height
+	};
+};
+
+Textual.copyOnSelectMouseUpEvent = function()
+{
+	if (window.event.metaKey || window.event.altKey) {
+		return;
+	}
+
+	var selectedText = Textual.currentSelection();
+
+	if (selectedText && selectedText.length > 0) {
+		app.copySelectionWhenPermitted(selectedText,
+		   function(returnValue) {
+				if (returnValue) {
+					Textual.clearSelection();
+				}
+		   }
+		);
 	}
 };
 
@@ -132,19 +400,73 @@ Textual.includeScriptResourceFile = function(file)
 	}
 };
 
-/* Contextual menu management and other resources.
-We do not recommend anyone try to override these. */
+/* Contextual menu management */
+Textual.openGenericContextualMenu = function()
+{
+	/* Do not block if target element already has a callback. */
+	if (event.target.oncontextmenu !== null) {
+		return;
+	}
+
+	if (appInternal.isWebKit2()) {
+		event.preventDefault();
+
+		app.displayContextMenu();
+	}
+};
+
 Textual.openChannelNameContextualMenu = function()
 {
-	app.setChannelName(event.target.textContent);
+	Textual.setPolicyChannelName();
+
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openURLManagementContextualMenu = function()
 {
-	app.setURLAddress(event.target.getAttribute("href"));
+	Textual.setPolicyURLAddress();
+
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
+};
+
+Textual.openStandardNicknameContextualMenu = function()
+{
+	Textual.setPolicyStandardNickname();
+
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
 };
 
 Textual.openInlineNicknameContextualMenu = function()
+{
+	Textual.setPolicyInlineNickname();
+
+	if (appInternal.isWebKit2()) {
+		Textual.clearSelectionAndPreventDefault();
+
+		app.displayContextMenu();
+	}
+};
+
+Textual.setPolicyStandardNickname = function()
+{
+	var userNickname = event.target.getAttribute("nickname");
+
+	app.setNickname(userNickname);
+};
+
+Textual.setPolicyInlineNickname = function()
 {
 	var userNickname = event.target.textContent;
 
@@ -155,15 +477,19 @@ Textual.openInlineNicknameContextualMenu = function()
 	} else {
 		app.setNickname(userNickname);
 	}
-}; // Conversation Tracking
-
-Textual.openStandardNicknameContextualMenu = function()
-{
-	var userNickname = event.target.getAttribute("nickname");
-
-	app.setNickname(userNickname);
 };
 
+Textual.setPolicyURLAddress = function()
+{
+	app.setURLAddress(event.target.getAttribute("href"));
+};
+
+Textual.setPolicyChannelName = function()
+{
+	app.setChannelName(event.target.textContent);
+};
+
+/* Double click actions */
 Textual.nicknameMaybeWasDoubleClicked = function(e)
 {
 	if (Textual.nicknameDoubleClickTimer) {
@@ -186,32 +512,34 @@ Textual.nicknameSingleClicked = function(e)
 	// API does not handle this action by default...
 };
 
-Textual.nicknameDoubleClicked = function(e)
-{
-	Textual.openStandardNicknameContextualMenu();
-
-	app.nicknameDoubleClicked();
-};
-
 Textual.channelNameDoubleClicked = function()
 {
-	Textual.openChannelNameContextualMenu();
+	Textual.clearSelectionAndPreventDefault();
+
+	Textual.setPolicyChannelName();
 
 	app.channelNameDoubleClicked();
 };
 
-Textual.inlineNicknameDoubleClicked = function()
+Textual.nicknameDoubleClicked = function()
 {
-	Textual.openInlineNicknameContextualMenu();
+	Textual.clearSelectionAndPreventDefault();
+
+	Textual.setPolicyStandardNickname();
 
 	app.nicknameDoubleClicked();
 };
 
-Textual.topicDoubleClicked = function()
+Textual.inlineNicknameDoubleClicked = function()
 {
-	app.topicDoubleClicked();
+	Textual.clearSelectionAndPreventDefault();
+
+	Textual.setPolicyInlineNickname();
+
+	app.nicknameDoubleClicked();
 };
 
+/* Inline images */
 Textual.hasLiveResize = function()
 {
 	if (typeof InlineImageLiveResize !== 'undefined') {
@@ -234,16 +562,36 @@ Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 	link anchor of an inline image. If the last mouse down event was related to a resize,
 	then we return false to stop link from opening. Else, we pass the event information
 	to the internals of Textual itself to determine whether to cancel the request. */
-
 	if (Textual.hasLiveResize()) {
 		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
-			app.toggleInlineImage(object);
+			Textual.toggleInlineImageReally(object);
 		}
 	} else {
-		app.toggleInlineImage(object);
+		Textual.toggleInlineImageReally(object);
 	}
 
 	return false;
+};
+
+Textual.toggleInlineImageReally = function(object)
+{
+	if (object.indexOf("inlineImage-") !== 0) {
+		object = ("inlineImage-" + object);
+	}
+
+	var imageNode = document.getElementById(object);
+
+	if (imageNode.style.display === "none") {
+		imageNode.style.display = "";
+	} else {
+		imageNode.style.display = "none";
+	}
+
+	if (imageNode.style.display === "none") {
+		Textual.didToggleInlineImageToHidden(imageNode);
+	} else {
+		Textual.didToggleInlineImageToVisible(imageNode);
+	}
 };
 
 Textual.didToggleInlineImageToHidden = function(imageElement)
@@ -258,5 +606,16 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 		var realImageElement = imageElement.querySelector("a .image");
 
 		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
+
+		realImageElement.addEventListener("load", Textual.inlineImageLoaded, false);
 	}
 };
+
+Textual.inlineImageLoaded = function()
+{
+	TextualScroller.performAutoScroll();
+};
+
+document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
+
+document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);

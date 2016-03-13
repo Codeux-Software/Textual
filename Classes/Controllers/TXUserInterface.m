@@ -46,9 +46,20 @@
 
 + (BOOL)systemWideDarkModeEnabledInYosemite
 {
-	id objectValue = [RZUserDefaults() objectForKey:@"AppleInterfaceStyle"];
+	NSString *objectValue = [RZUserDefaults() stringForKey:@"AppleInterfaceStyle"];
 
 	if ([objectValue isEqualIgnoringCase:@"dark"]) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
++ (BOOL)onlyShowScrollbarWhileScrolling
+{
+	NSString *objectValue = [RZUserDefaults() stringForKey:@"AppleShowScrollBars"];
+
+	if ([objectValue isEqualIgnoringCase:@"WhenScrolling"]) {
 		return YES;
 	} else {
 		return NO;

@@ -437,7 +437,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if (fireNotification) {
 		[RZNotificationCenter() postNotificationName:IRCWorldDateHasChangedNotification object:nil userInfo:nil];
 
-		[self executeScriptCommandOnAllViews:@"dateChanged"
+		[self executeScriptCommandOnAllViews:@"Textual.dateChanged"
 								   arguments:@[@([currentDayComponents year]),
 											   @([currentDayComponents month]),
 											   @([currentDayComponents day])]
@@ -911,25 +911,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	
 	[c setUp];
 	
-	[[c webView] setHostWindow:mainWindow()];
-	
 	return c;
-}
-
-#pragma mark -
-#pragma mark Log Delegate
-
-- (void)logKeyDown:(NSEvent *)e
-{
-	[mainWindowTextField() focus];
-
-	if ([e keyCode] == TXKeyReturnCode ||
-		[e keyCode] == TXKeyEnterCode)
-	{
-		return;
-	}
-
-	[mainWindowTextField() keyDown:e];
 }
 
 @end

@@ -110,9 +110,9 @@
 
 + (NSString *)applicationMemoryUsage
 {
-	NSDictionary *mem = [TPI_SP_SysInfo applicationMemoryInformation];
+	TXUnsignedLongLong privateMemory = [TPI_SP_SysInfo applicationMemoryInformation];
 
-	NSString *private = [TPI_SP_SysInfo formattedDiskSize:[mem integerForKey:@"private"]];
+	NSString *privateMemoryString = [TPI_SP_SysInfo formattedDiskSize:privateMemory];
 
 	NSInteger totalScrollbackSize = 0;
 
@@ -125,7 +125,7 @@
 	}
 
 	return TPILocalizedString(@"BasicLanguage[1020]",
-							  private, TXFormattedNumber(totalScrollbackSize));
+							  privateMemoryString, TXFormattedNumber(totalScrollbackSize));
 }
 
 + (NSString *)applicationRuntimeStatistics
@@ -693,10 +693,11 @@ TEXTUAL_IGNORE_DEPRECATION_END
 {
 	mach_msg_type_number_t infoCount = (sizeof(vm_statistics_data_t) / sizeof(natural_t));
 	
-	vm_size_t              pagesize;
-	vm_statistics_data_t   vm_stat;
+	vm_size_t  pagesize;
 	
 	host_page_size(mach_host_self(), &pagesize);
+
+	vm_statistics_data_t vm_stat;
 	
 	if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vm_stat, &infoCount) == KERN_SUCCESS) {
 		return ((vm_stat.inactive_count + vm_stat.free_count) * pagesize);
@@ -718,49 +719,42 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	return -1;
 }
 
-+ (NSDictionary *)applicationMemoryInformation
++ (NSInteger)applicationMemoryInformation
 {
-	kern_return_t kernr;
-	
-	mach_vm_address_t addr = 0;
-	
-	NSInteger shrdmem = -1;
-	NSInteger privmem = 0;
-	
-	NSInteger pagesize = getpagesize();
-	
-	while (1 == 1) {
-		mach_vm_address_t size;
+	pid_t processIdentifier = (pid_t)[[NSProcessInfo processInfo] processIdentifier];
 
-		vm_region_top_info_data_t info;
+	return [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
+}
 
-		mach_msg_type_number_t count = VM_REGION_TOP_INFO_COUNT;
-		mach_port_t object_name;
-
-		kernr = mach_vm_region(mach_task_self(), &addr, &size, VM_REGION_TOP_INFO,
-							   (vm_region_info_t)&info, &count, &object_name);
-
-		if (NSDissimilarObjects(kernr, KERN_SUCCESS)) {
-			break;
-		}
-		
-		if (info.share_mode == SM_PRIVATE) {
-			privmem += (info.private_pages_resident * pagesize);
-			shrdmem += (info.shared_pages_resident * pagesize);
-		} else if (info.share_mode == SM_COW) {
-			privmem += (info.private_pages_resident * pagesize);
-			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
-		} else if (info.share_mode == SM_SHARED) {
-			shrdmem += (info.shared_pages_resident * (pagesize / info.ref_count));
-		}
-		
-		addr += size;
++ (NSInteger)memoryUseForProcess:(pid_t)processIdentifier
+{
+	if (processIdentifier == 0) {
+		return 0;
 	}
-	
-	return @{
-		@"shared" : @(shrdmem),
-		@"private" : @(privmem)
-	};
+
+	int processLookupResult = 0;
+
+	struct proc_regioninfo processRegionInfo;
+
+	uint64_t processAddress = 0;
+
+	TXUnsignedLongLong memoryUse = 0;
+
+	int memoryPageSize = getpagesize();
+
+	do {
+		processLookupResult =
+		proc_pidinfo(processIdentifier, PROC_PIDREGIONINFO, processAddress, &processRegionInfo, PROC_PIDREGIONINFO_SIZE);
+
+		processAddress = (processRegionInfo.pri_address + processRegionInfo.pri_size);
+
+		if (processRegionInfo.pri_share_mode == SM_PRIVATE) {
+			memoryUse += (processRegionInfo.pri_private_pages_resident * memoryPageSize);
+		}
+	}
+	while (processLookupResult > 0);
+
+	return memoryUse;
 }
 
 @end

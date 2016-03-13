@@ -41,4 +41,6 @@
 + (BOOL)runningInHighResolutionMode;
 
 + (BOOL)systemWideDarkModeEnabledInYosemite;
+
++ (BOOL)onlyShowScrollbarWhileScrolling;
 @end

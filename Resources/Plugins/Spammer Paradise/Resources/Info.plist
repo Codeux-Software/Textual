@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.codeux.app-extensions.textual-SpammerParadise</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleVersion</key>
 	<string>1.0.1</string>
 	<key>MinimumTextualVersion</key>
-	<string>5.0.0</string>
+	<string>6.0.0</string>
 	<key>NSPrincipalClass</key>
 	<string>TPISpammerParadise</string>
 </dict>

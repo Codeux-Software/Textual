@@ -107,6 +107,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 - (void)updateAlphaValueToReflectPreferences;
 
+- (void)updateChannelViewBoxContentViewSelection;
+
 @property (getter=isOccluded, readonly) BOOL occluded;
 @property (getter=isInactive, readonly) BOOL inactive;
 @property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
@@ -136,6 +138,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 - (void)selectPreviousActiveServer:(NSEvent *)e;
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
+
+- (void)redirectKeyDown:(NSEvent *)e;
 
 @property (getter=isMemberListVisible, readonly) BOOL memberListVisible;
 @property (getter=isServerListVisible, readonly) BOOL serverListVisible;

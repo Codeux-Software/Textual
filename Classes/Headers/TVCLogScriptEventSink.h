@@ -38,11 +38,5 @@
 
 #import "TextualApplication.h"
 
-@interface TVCLogScriptEventSink : NSObject
-@property (nonatomic, weak) TVCLogController *logController;
-@property (nonatomic, assign) NSInteger x;
-@property (nonatomic, assign) NSInteger y;
-@property (nonatomic, assign) NSTimeInterval lastClickTime;
-
-- (void)toggleInlineImage:(NSString *)object;
+@interface TVCLogScriptEventSink : NSObject <WKScriptMessageHandler>
 @end

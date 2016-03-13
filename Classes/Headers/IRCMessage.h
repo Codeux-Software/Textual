@@ -47,6 +47,7 @@
 @property (nonatomic, copy) NSDate *receivedAt;
 @property (nonatomic, copy) NSString *batchToken;
 @property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
+@property (nonatomic, assign) BOOL isEventOnlyMessage; /* The message should be parsed and special actions performed such as adding/removing user but the result is never passsed to print: */
 @property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
 
 - (instancetype)initWithLine:(NSString *)line;

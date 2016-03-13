@@ -97,4 +97,11 @@
 								 onClient:(IRCClient *)client
 							   receivedAt:(NSDate *)receivedAt
 							 wasEncrypted:(BOOL)wasEncrypted;
+
+- (BOOL)postReceivedCommand:(NSString *)command
+				   withText:(NSString *)text
+				 authoredBy:(IRCPrefix *)textAuthor
+				destinedFor:(IRCChannel *)textDestination
+				   onClient:(IRCClient *)client
+				 receivedAt:(NSDate *)receivedAt;
 @end

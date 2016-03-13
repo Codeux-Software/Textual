@@ -42,6 +42,8 @@
 #import "TLOLicenseManager.h"
 #endif
 
+#import "TVCLogObjectsPrivate.h"
+
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
 #define _connected					(u && [u isConnected])
@@ -296,11 +298,35 @@
 		case 315: // "Search in Google"
 		case 1601: // "Search on Google"
 		{
-			TVCLogView *web = [self currentWebView];
+			TVCLogView *web = [self currentLogControllerBackingView];
 
 			PointerIsEmptyAssertReturn(web, NO);
 
 			return [web hasSelection];
+		}
+		case 1608: // "Look Up in Dictionary"
+		{
+			TVCLogView *web = [self currentLogControllerBackingView];
+
+			PointerIsEmptyAssertReturn(web, NO);
+
+			NSString *selection = [web selection];
+
+			if (NSObjectIsEmpty(selection) || [selection length] > 40) {
+				[item setTitle:BLS(1296)];
+
+				return NO;
+			} else {
+				if ([selection length] > 25) {
+					selection = [selection substringToIndex:24];
+
+					selection = [NSString stringWithFormat:@"%@…", [selection trim]];
+				}
+
+				[item setTitle:BLS(1297, selection)];
+
+				return YES;
+			}
 		}
 		case 802: // "Toggle Visiblity of Member List"
 		{
@@ -780,8 +806,25 @@
 
 			return ([currentView highlightAvailable:YES]);
 		}
-		case 304: // "Paste"
+		case 1603: // "Copy" (WebView)
 		{
+			TVCLogView *web = [self currentLogControllerBackingView];
+
+			PointerIsEmptyAssertReturn(web, NO);
+
+			return [web hasSelection];
+
+			break;
+		}
+		case 304: // "Paste"
+		case 1604: // "Paste" (WebView)
+		{
+			NSString *currentPasteboard = [RZPasteboard() stringContent];
+
+			if (NSObjectIsEmpty(currentPasteboard)) {
+				return NO;
+			}
+
 			if ([mainWindow() isKeyWindow]) {
 				return ([mainWindowTextField() isEditable]);
 			} else {
@@ -812,11 +855,11 @@
 #pragma mark -
 #pragma mark Utilities
 
-- (TVCLogView *)currentWebView
+- (TVCLogView *)currentLogControllerBackingView
 {
 	TVCLogController *currentView = [mainWindow() selectedViewController];
 
-	return [currentView webView];
+	return [currentView backingView];
 }
 
 #pragma mark -
@@ -1011,9 +1054,11 @@
 							  if ([resultString isNotEqualTo:self.currentSearchPhrase]) {
 								  self.currentSearchPhrase = resultString;
 							  }
-							  
+
 							  [self performBlockOnMainThread:^{
-								  [[self currentWebView] searchFor:resultString direction:YES caseSensitive:NO wrap:YES];
+								  TVCLogView *web = [self currentLogControllerBackingView];
+
+								  [web findString:resultString movingForward:YES];
 							  }];
 						  }
 					  }
@@ -1032,13 +1077,15 @@
 	if ([sender tag] == _findPanelOpenPanelMenuTag || NSObjectIsEmpty(self.currentSearchPhrase)) {
 		[self internalOpenFindPanel:sender];
 	} else {
+		TVCLogView *web = [self currentLogControllerBackingView];
+
 		if ([sender tag] == _findPanelMoveForwardMenuTag) {
-			[[self currentWebView] searchFor:self.currentSearchPhrase direction:YES caseSensitive:NO wrap:YES];
+			[web findString:self.currentSearchPhrase movingForward:YES];
 		} else {
-			[[self currentWebView] searchFor:self.currentSearchPhrase direction:NO caseSensitive:NO wrap:YES];
+			[web findString:self.currentSearchPhrase movingForward:NO];
 		}
 	}
-	
+
 #undef _findPanelOpenPanelMenuTag
 #undef _findPanelMoveForwardMenuTag
 }
@@ -1140,6 +1187,13 @@
 	;
 }
 
+- (void)copy:(id)sender
+{
+	if ([[[NSApp keyWindow] firstResponder] respondsToSelector:@selector(copy:)]) {
+		[[[NSApp keyWindow] firstResponder] performSelector:@selector(copy:) withObject:nil];
+	}
+}
+
 - (void)paste:(id)sender
 {
 	if ([mainWindow() isKeyWindow]) {
@@ -1158,7 +1212,9 @@
 	if ([mainWindow() isKeyWindow] == NO) {
 		[[NSApp keyWindow] print:sender];
 	} else {
-		[[self currentWebView] print:sender];
+		TVCLogView *web = [self currentLogControllerBackingView];
+
+		[web print];
 	}
 }
 
@@ -1196,7 +1252,7 @@
 
 - (void)searchGoogle:(id)sender
 {
-	TVCLogView *web = [self currentWebView];
+	TVCLogView *web = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(web);
 	
@@ -1209,13 +1265,41 @@
 	[TLOpenLink openWithString:urlStr];
 }
 
+- (void)lookUpInDictionary:(id)sender
+{
+	TVCLogView *web = [self currentLogControllerBackingView];
+
+	PointerIsEmptyAssert(web);
+
+	NSString *s = [web selection];
+
+	NSObjectIsEmptyAssert(s);
+
+	NSString *urlStr = [NSString stringWithFormat:@"dict://%@", [s gtm_stringByEscapingForURLArgument]];
+
+	[TLOpenLink openWithString:urlStr];
+}
+
 - (void)copyLogAsHtml:(id)sender
 {
-	TVCLogView *sel = [self currentWebView];
+	TVCLogView *sel = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(sel);
 	
 	[RZPasteboard() setStringContent:[sel contentString]];
+}
+
+- (void)openWebInspector:(id)sender
+{
+	TVCLogView *sel = [self currentLogControllerBackingView];
+
+	PointerIsEmptyAssert(sel);
+
+	if ([sel isUsingWebKit2] == NO) {
+		NSAssert(NO, @"Missing implementation");
+	}
+
+	[(TVCLogViewInternalWK2 *)[sel webView] openWebInspector];
 }
 
 - (void)markScrollback:(id)sender

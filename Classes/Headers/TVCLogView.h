@@ -40,23 +40,58 @@
 
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
-@interface TVCLogView : WebView
-@property (nonatomic, weak) id keyDelegate;
-@property (nonatomic, weak) id draggingDelegate;
-
+@interface TVCLogView : NSObject
 @property (readonly, copy) NSString *contentString;
-
-@property (readonly, strong) WebScriptObject *javaScriptAPI;
-@property (readonly, strong) WebScriptObject *javaScriptConsoleAPI;
 
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
 @property (readonly, copy) NSString *selection;
+@property (readonly) NSRect selectionCoordinates;
+
+@property (readonly) BOOL isUsingWebKit2;
+
+- (instancetype)initWithLogController:(TVCLogController *)logController;
+
+- (void)print;
+@end
+
+@interface TVCLogView (TVCLogViewBackingProxy)
+@property (readonly) NSView *webView;
+
+- (void)stopLoading;
+
+- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
+
+- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
+@end
+
+@interface TVCLogView (TVCLogViewJavaScriptHandler)
+- (void)executeJavaScript:(NSString *)code;
+- (id)executeJavaScriptWithResult:(NSString *)code;
+
+- (void)executeStandaloneCommand:(NSString *)command;
+- (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (id)executeCommand:(NSString *)command;
+- (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command;
+- (BOOL)returnBooleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSString *)returnStringByExecutingCommand:(NSString *)command;
+- (NSString *)returnStringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command;
+- (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (NSString *)escapeJavaScriptString:(NSString *)string;
 @end
 
 @protocol TVCLogViewDelegate <NSObject>
 @required
 
-- (void)logViewKeyDown:(NSEvent *)e;
-- (void)logViewRecievedDropWithFile:(NSString *)filename;
+- (void)logViewWebViewClosedUnexpectedly;
+- (void)logViewWebViewFinishedLoading;
+- (void)logViewWebViewKeyDown:(NSEvent *)e;
+- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
 @end
