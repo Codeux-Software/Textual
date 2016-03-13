@@ -60,7 +60,7 @@ TextualScroller.debugDataLog = function(message)
 		channelName = "(server console)";
 	}
 
-	app.logToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
+	app.printDebugInformationToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
 };
 
 TextualScroller.documentResizedCallback = function()
@@ -112,6 +112,8 @@ TextualScroller.documentScrolledCallback = function()
 TextualScroller.performAutoScroll = function()
 {
 	if (TextualScroller.isScrolledByUser) {
+		TextualScroller.debugDataLog("Scrolling prevented because TextualScroller.isScrolledByUser is true");
+
 		return;
 	}
 
