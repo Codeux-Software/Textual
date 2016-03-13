@@ -8,6 +8,8 @@
 #include <mach/host_info.h>
 #include <mach/mach_vm.h>
 
+#import <libproc.h>
+
 #include <sys/mount.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
