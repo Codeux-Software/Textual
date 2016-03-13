@@ -205,6 +205,8 @@
 		<string>com.codeux.app-extensions.textual-WikiStyleLinkParser</string>
 		<string>com.codeux.irc.textual.extension.WikiStyleLinkParser</string>
 		<string>com.codeux.irc.textual5.extension.BlowfishCommandLine</string>
+		<string>de.incnet.TXTunes</string>
+		<string>de.incnet.txurldumper</string>
 	</array>
 	<key>THOPluginManager Extras Installer Latest Extension Versions</key>
 	<dict>
