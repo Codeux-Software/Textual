@@ -576,8 +576,6 @@ Textual.toggleInlineImageReally = function(object)
 
 	var imageNode = document.getElementById(object);
 
-	console.log(object + " " + imageNode.style.display);
-
 	if (imageNode.style.display === "none") {
 		imageNode.style.display = "";
 	} else {
