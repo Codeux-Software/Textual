@@ -45,24 +45,28 @@
 
 var TextualScroller = {};
 
+/*	Scrolling is very dependent on TextualScroller.scrollTopUserConstant
+	JavaScript has no way to distinguish user scroll events and programatic
+	scroll events which means everything is best guess. Each time an auto
+	scroll is performed, the Y coordinate we are scrolling to is recorded.
+
+	Take this coordinate and add TextualScroller.scrollTopUserConstant to it.
+	If a scroll event is received that scrolls ABOVE this calculated height,
+	the the event is believed to be the user.
+
+	If a scroll event occurs at the exact bottom, or within the value of
+	TextualScroller.scrollTopUserConstant from the exact bottom, then the
+	user is believed to have scrolled back to the bottom.
+*/
+
 /* State tracking */
-TextualScroller.isScrolledByCode = false;
 TextualScroller.isScrolledByUser = false;
 
-TextualScroller.scrolledToBottomTimer = null;
+TextualScroller.currentScrollTopValue = 0;
+
+TextualScroller.scrollTopUserConstant = 9;
 
 /* Core functions */
-TextualScroller.debugDataLog = function(message)
-{
-	var channelName = document.body.getAttribute("channelname");
-
-	if (channelName === null) {
-		app.logToConsole("TextualScroller.debugDataLog(): (server console) - " + message);
-	} else {
-		app.printDebugInformationToConsole("TextualScroller.debugDataLog(): " + channelName + " - " + message);
-	}
-};
-
 TextualScroller.documentResizedCallback = function()
 {
 	TextualScroller.performAutoScroll();
@@ -70,87 +74,75 @@ TextualScroller.documentResizedCallback = function()
 
 TextualScroller.documentScrolledCallback = function()
 {
-	/*	If JavaScript has determined that we are not at the bottom even though
-		we are supposed to be (isScrollingByCode == true), then set a timer to
-		to perform manual scroll one more time to try and fix this problem. */
-	var viewingBottom = TextualScroller.viewingBottom();
-	
-	var createTimer = false;
-	
-	if (TextualScroller.isScrolledByCode) {
-		TextualScroller.isScrolledByCode = false;
-
-		if (viewingBottom) {
-			createTimer = false;
-		} else {
-			createTimer = true;
+	if (TextualScroller.isScrolledByUser) {
+		if (TextualScroller.isScrolledToBottom()) {
+			TextualScroller.isScrolledByUser = false;
 		}
 	} else {
-		if (viewingBottom) {
-			TextualScroller.isScrolledByUser = false;
-		} else {
+		if (TextualScroller.isScrolledAboveUserThreshold()) {
 			TextualScroller.isScrolledByUser = true;
 		}
-	}
-	
-	if (createTimer) {
-		if (TextualScroller.scrolledToBottomTimer) {
-			return;
-		}
-		
-		TextualScroller.debugDataLog("viewingBottom === false, creating timer to try to fix")
-
-		TextualScroller.scrolledToBottomTimer = 
-			setTimeout(function() {
-				TextualScroller.scrolledToBottomTimer = null;
-
-				TextualScroller.performAutoScroll();
-			}, 500);
 	}
 };
 
 TextualScroller.performAutoScroll = function()
 {
 	if (TextualScroller.isScrolledByUser) {
-		TextualScroller.debugDataLog("Scrolling prevented because TextualScroller.isScrolledByUser is true");
-
 		return;
 	}
 
-	TextualScroller.isScrolledByCode = true;
+	var scrollHeight = TextualScroller.scrollHeight();
 
-	Textual.scrollToBottomOfView(false);
+	TextualScroller.currentScrollTopValue = scrollHeight;
+
+	document.body.scrollTop = scrollHeight;
 };
 
-TextualScroller.viewingTop = function()
+TextualScroller.scrollHeight = function()
 {
-	if (Math.floor(document.body.scrollTop) === 0) {
+	var offsetHeight = document.body.offsetHeight;
+
+	var scrollHeight = document.body.scrollHeight;
+
+	return (scrollHeight - offsetHeight);
+};
+
+TextualScroller.scrollTop = function()
+{
+	var scrollTop = document.body.scrollTop;
+
+	return scrollTop;
+};
+
+TextualScroller.scrollTopCorrected = function()
+{
+	var scrollTop = document.body.scrollTop;
+
+	return (scrollTop + TextualScroller.scrollTopUserConstant);
+};
+
+TextualScroller.isScrolledAboveUserThreshold = function()
+{
+	var scrollTop = document.body.scrollTop;
+
+	if ((TextualScroller.currentScrollTopValue - scrollTop) > TextualScroller.scrollTopUserConstant) {
 		return true;
 	} else {
 		return false;
 	}
 };
 
-TextualScroller.viewingBottom = function()
+TextualScroller.isScrolledToBottom = function()
 {
-	var documentBody = Textual.documentBodyElement();
+	var scrollTop = TextualScroller.scrollTopCorrected();
 
-	var lastChild = documentBody.lastChild;
+	var scrollHeight = TextualScroller.scrollHeight();
 
-	if (lastChild) {
-		var elementBottom = Math.floor(lastChild.getBoundingClientRect().bottom);
-
-		var documentBottom = Math.floor(document.documentElement.offsetHeight);
-
-		/*	18 is a fairly magical number subtracted from elementBottom to 
-			account for very slight scrolling that may occur with a TrackPad 
-			or other sensitive scrolling device. */
-		if ((elementBottom - 18) > documentBottom) {
-			return false;
-		}
+	if (scrollTop >= scrollHeight) {
+		return true;
+	} else {
+		return false;
 	}
-
-	return true;
 };
 
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
