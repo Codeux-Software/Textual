@@ -120,6 +120,10 @@ TextualScroller.setScrollTopUserConstant = function()
 	if (lastChild.getAttribute("ltype") === "privmsg") {
 		var lastChildBottom = lastChild.getBoundingClientRect().height;
 
+		if (lastChildBottom > 30) {
+			lastChildBottom = 30;
+		}
+
 		TextualScroller.scrollTopUserConstant = lastChildBottom;
 
 		TextualScroller.scrollTopUserConstantSet = true;
