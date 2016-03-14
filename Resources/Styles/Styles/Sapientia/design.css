@@ -49,6 +49,10 @@ body[customscroller="true"]::-webkit-scrollbar {
 	width: 17px;
 }
 
+body[customscroller="true"]::-webkit-scrollbar:horizontal {
+	height: 0;
+}
+
 body[customscroller="true"]::-webkit-scrollbar-track {
 	background: #393939;
 	box-shadow: inset 1px 0px 0px 0px #4b4b4b;
