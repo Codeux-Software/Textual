@@ -10,7 +10,8 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "exec &quot;${PROJECT_FILE_PATH}/FindProvisioningProfile.sh&quot;">
+               scriptText = "&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/CleanUpResources.sh&quot;&#10;&quot;${PROJECT_DIR}/Main Project (Textual).xcodeproj/UpdateVersionInfo.sh&quot;&#10;"
+               shellToInvoke = "/bin/sh">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"

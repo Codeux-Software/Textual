@@ -1,8 +1,6 @@
 
-// This is the code signing identity used by the Developer ID Release
-// and Debug builds of Textual. This is all you should have to edit,
-// but if you really want to edit everything then look at the "App
-// Store Release" configuration file. That supersedes this value when
-// that configuration is being targetted.
+// This is the code signing identity used by the Standard Release
+// and Debug builds of Textual. This is all you should have to edit.
+// This value is automatically inherited by all frameworks and plugins.
 
 CODE_SIGN_IDENTITY = Mac Developer

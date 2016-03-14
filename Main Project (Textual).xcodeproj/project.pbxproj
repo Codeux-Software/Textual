@@ -1411,33 +1411,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4C0BA4FA1990798800857343 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01B9FC1580C591007E2DAF;
-			remoteInfo = "Clean Up Resources";
-		};
-		4C0BA4FC1990798800857343 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
-			remoteInfo = "Update Version Info";
-		};
 		4C0BA4FE1990798800857343 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
-		};
-		4C5BA37616F1302F00A96CA2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
-			remoteInfo = "Update Version Info";
 		};
 		4C83B90A1BA9BE4200BD7718 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1459,20 +1438,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4CCF301015804DCE006FFE21;
 			remoteInfo = "Build Frameworks";
-		};
-		4CBB842E16F0DA1F004E3ED6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01B9FC1580C591007E2DAF;
-			remoteInfo = "Clean Up Resources";
-		};
-		4CBB843016F0DA21004E3ED6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C1DC5491580420500A47BC9 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4C01BA0415810DD8007E2DAF;
-			remoteInfo = "Update Version Info";
 		};
 		4CC9D8A51745BE1700461F05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1690,7 +1655,6 @@
 		4C24DC751A93C9CE0098D1BE /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Base Configuration.xcconfig"; path = "Resources/Build Configurations/Base Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Code Signing Identity.xcconfig"; path = "Resources/Build Configurations/Code Signing Identity.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C24DC831A93CC340098D1BE /* Provisioning Profile.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Provisioning Profile.xcconfig"; path = "Resources/Build Configurations/Provisioning Profile.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared App Store Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared App Store Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Configuration for Extensions.xcconfig"; path = "Resources/Build Configurations/Shared Configuration for Extensions.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -1735,6 +1699,8 @@
 		4C49494818735BC400B7F00A /* TDCFileTransferDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialog.h; sourceTree = "<group>"; };
 		4C49494918735BC400B7F00A /* TDCFileTransferDialogTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTableCell.h; sourceTree = "<group>"; };
 		4C49494A18735BC400B7F00A /* TDCFileTransferDialogTransferController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogTransferController.h; sourceTree = "<group>"; };
+		4C4A0D6C1C973E9000064A23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Resources/Property Lists/Application Properties/Info.plist"; sourceTree = SOURCE_ROOT; };
+		4C4A0D6D1C973E9000064A23 /* InfoAppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoAppStore.plist; path = "Resources/Property Lists/Application Properties/InfoAppStore.plist"; sourceTree = SOURCE_ROOT; };
 		4C4C96C31C88BDC000E8F8F3 /* TextualWithoutSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithoutSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C4C96C41C88BDC000E8F8F3 /* TextualWithSandbox.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TextualWithSandbox.entitlements; path = Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements; sourceTree = SOURCE_ROOT; };
 		4C52379215C18F6700414852 /* Style Default Templates */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Style Default Templates"; path = "Resources/Styles/Style Default Templates"; sourceTree = SOURCE_ROOT; };
@@ -2026,7 +1992,6 @@
 		4CC6F51B1778AB2E00930E6E /* TVCLogControllerOperationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerOperationQueue.h; sourceTree = "<group>"; };
 		4CC70202171E1CB400BDFAE0 /* BuildConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuildConfig.h; path = .tmp/BuildConfig.h; sourceTree = SOURCE_ROOT; };
 		4CC9D8A11745BE1700461F05 /* ZNC Additions Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ZNC Additions Extension.xcodeproj"; path = "Resources/Plugins/ZNC Additions/ZNC Additions Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
-		4CCC6B47158E8C27003A102B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -2059,7 +2024,6 @@
 		4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTitlebarAccessoryView.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
-		4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = FindProvisioningProfile.sh; path = "Main Project (Textual).xcodeproj/FindProvisioningProfile.sh"; sourceTree = SOURCE_ROOT; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
 		4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLoader.m; sourceTree = "<group>"; };
@@ -2511,6 +2475,15 @@
 				4C46F3F21943A654004CA8BA /* FormattingColor_Rainbow@2x.tif */,
 			);
 			path = "IRC Formatting Colors";
+			sourceTree = "<group>";
+		};
+		4C4A0D6B1C973E8100064A23 /* Application Properties */ = {
+			isa = PBXGroup;
+			children = (
+				4C4A0D6C1C973E9000064A23 /* Info.plist */,
+				4C4A0D6D1C973E9000064A23 /* InfoAppStore.plist */,
+			);
+			name = "Application Properties";
 			sourceTree = "<group>";
 		};
 		4C51B8B7196ACDBB00003A87 /* Language Files */ = {
@@ -3238,11 +3211,11 @@
 		4CCC6B46158E8C1B003A102B /* Build Settings */ = {
 			isa = PBXGroup;
 			children = (
+				4C4A0D6B1C973E8100064A23 /* Application Properties */,
 				5D9B8EB1170A0EA700919CB0 /* Build Scripts */,
 				4CD6202E16E31EE600D780D6 /* Configurations */,
 				4C86B4A8181FB40A0043C544 /* Entitlements */,
 				4CC70202171E1CB400BDFAE0 /* BuildConfig.h */,
-				4CCC6B47158E8C27003A102B /* Info.plist */,
 			);
 			name = "Build Settings";
 			sourceTree = "<group>";
@@ -3283,7 +3256,6 @@
 			children = (
 				4C24DC811A93CC340098D1BE /* Base Configuration.xcconfig */,
 				4C24DC821A93CC340098D1BE /* Code Signing Identity.xcconfig */,
-				4C24DC831A93CC340098D1BE /* Provisioning Profile.xcconfig */,
 				4C24DC841A93CC340098D1BE /* Shared App Store Release Configuration.xcconfig */,
 				4C24DC851A93CC340098D1BE /* Shared Configuration for Extensions.xcconfig */,
 				4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */,
@@ -3406,7 +3378,6 @@
 				5D9B8EB9170A10F200919CB0 /* BuildExtensions.sh */,
 				5D9B8EB6170A0EB400919CB0 /* BuildFrameworks.sh */,
 				5D9B8EB7170A0EB400919CB0 /* CleanUpResources.sh */,
-				4CEB348919BB98D9000349A1 /* FindProvisioningProfile.sh */,
 				5D9B8EB8170A0EB400919CB0 /* UpdateVersionInfo.sh */,
 			);
 			name = "Build Scripts";
@@ -3923,8 +3894,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C0BA4F91990798800857343 /* PBXTargetDependency */,
-				4C0BA4FB1990798800857343 /* PBXTargetDependency */,
 				4C0BA4FD1990798800857343 /* PBXTargetDependency */,
 			);
 			name = "Textual (App Store)";
@@ -3949,8 +3918,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4CBB842F16F0DA1F004E3ED6 /* PBXTargetDependency */,
-				4CBB843116F0DA21004E3ED6 /* PBXTargetDependency */,
 				4CBB842D16F0DA1D004E3ED6 /* PBXTargetDependency */,
 			);
 			name = "Textual (Standard Release)";
@@ -3973,7 +3940,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C5BA37516F1302F00A96CA2 /* PBXTargetDependency */,
 			);
 			name = "Textual (Debug)";
 			productName = Textual;
@@ -5034,40 +5000,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C0BA4F91990798800857343 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01B9FC1580C591007E2DAF /* Clean Up Resources */;
-			targetProxy = 4C0BA4FA1990798800857343 /* PBXContainerItemProxy */;
-		};
-		4C0BA4FB1990798800857343 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01BA0415810DD8007E2DAF /* Update Version Info */;
-			targetProxy = 4C0BA4FC1990798800857343 /* PBXContainerItemProxy */;
-		};
 		4C0BA4FD1990798800857343 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CCF301015804DCE006FFE21 /* Build Frameworks */;
 			targetProxy = 4C0BA4FE1990798800857343 /* PBXContainerItemProxy */;
 		};
-		4C5BA37516F1302F00A96CA2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01BA0415810DD8007E2DAF /* Update Version Info */;
-			targetProxy = 4C5BA37616F1302F00A96CA2 /* PBXContainerItemProxy */;
-		};
 		4CBB842D16F0DA1D004E3ED6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4CCF301015804DCE006FFE21 /* Build Frameworks */;
 			targetProxy = 4CBB842C16F0DA1D004E3ED6 /* PBXContainerItemProxy */;
-		};
-		4CBB842F16F0DA1F004E3ED6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01B9FC1580C591007E2DAF /* Clean Up Resources */;
-			targetProxy = 4CBB842E16F0DA1F004E3ED6 /* PBXContainerItemProxy */;
-		};
-		4CBB843116F0DA21004E3ED6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4C01BA0415810DD8007E2DAF /* Update Version Info */;
-			targetProxy = 4CBB843016F0DA21004E3ED6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

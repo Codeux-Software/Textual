@@ -1,17 +1,32 @@
 #!/bin/sh
 
-cd "${PROJECT_DIR}/Resources/"
+set -e
+
+echo 1 > /Users/Michael/Desktop/toaster.txt
 
 mkdir -p "${PROJECT_DIR}/.tmp/"
 
 # Make a copy of the Info.plist file in the .tmp folder
 # This will be the Info.plist file manipulated with the version
 # information that is generated below.
-cp "${PROJECT_DIR}/Resources/Info.plist" "${PROJECT_DIR}/.tmp/Info.plist"
+
+if [ -f "${PROJECT_DIR}/.tmp/Info.plist" ]; then
+	rm -f "${PROJECT_DIR}/.tmp/Info.plist"
+fi
+
+if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
+	cp "${PROJECT_DIR}/Resources/Property Lists/Application Properties/InfoAppStore.plist" "${PROJECT_DIR}/.tmp/Info.plist"
+else
+	cp "${PROJECT_DIR}/Resources/Property Lists/Application Properties/Info.plist" "${PROJECT_DIR}/.tmp/Info.plist"
+fi
 
 # Make a copy of the appropriate entitlements file.
+if [ -f "${CODE_SIGN_ENTITLEMENTS}" ]; then
+	rm -f "${CODE_SIGN_ENTITLEMENTS}"
+fi
+
 if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
-	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
+	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" ""
 else
 	if [[ "${GCC_PREPROCESSOR_DEFINITIONS}" == *"TEXTUAL_BUILT_INSIDE_SANDBOX=1"* ]]; then
 		# While we are here, check to make sure that the user
@@ -24,8 +39,6 @@ else
 
 		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
 	else
-		echo "Butt ${GCC_PREPROCESSOR_DEFINITIONS}"
-
 		cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualWithoutSandbox.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
 	fi
 fi

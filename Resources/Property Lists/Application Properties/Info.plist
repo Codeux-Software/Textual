@@ -70,18 +70,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSUbiquitousContainers</key>
-	<dict>
-		<key>iCloud.com.codeux.irc.textual5</key>
-		<dict>
-			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-			<true/>
-			<key>NSUbiquitousContainerName</key>
-			<string>Textual IRC Client</string>
-			<key>NSUbiquitousContainerSupportedFolderLevels</key>
-			<string>Any</string>
-		</dict>
-	</dict>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSAppleScriptEnabled</key>
