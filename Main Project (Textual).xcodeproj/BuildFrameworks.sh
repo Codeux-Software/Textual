@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 BUILD_DESTINATION_FOLDER="${PROJECT_DIR}/.tmp/SharedBuildResults-Frameworks"
 
 rm -rf "${BUILD_DESTINATION_FOLDER}"

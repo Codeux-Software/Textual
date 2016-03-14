@@ -7,4 +7,3 @@ if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "debug" ]; then exit; fi;
 
 rm -rf "${PROJECT_DIR}/Build Results/"
 rm -rf "${PROJECT_DIR}/.tmp/"
-

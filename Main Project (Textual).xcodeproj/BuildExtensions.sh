@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 cd "${PROJECT_DIR}/Resources/Plugins/Brag Spam"
 xcodebuild -target "BragSpam" -configuration "Release" BUNDLE_LOADER="${CODESIGNING_FOLDER_PATH}/Contents/MacOS/${EXECUTABLE_NAME}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}"
 
