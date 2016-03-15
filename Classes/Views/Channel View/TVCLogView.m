@@ -283,7 +283,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 	[compiledScript appendString:@"{"];
 
-	NSInteger lastIndex = ([[objects allKeys] count] - 1);
+	NSInteger lastIndex = ([objects count] - 1);
 
 	__block NSInteger currentIndex = 0;
 
