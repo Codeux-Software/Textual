@@ -47,6 +47,11 @@
 @property (nonatomic, readonly) pid_t _webProcessIdentifier;
 @end
 
+@interface TPI_SP_WebViewProcessInfo : NSObject
+@property (nonatomic, assign) TXUnsignedLongLong processMemoryUse;
+@property (nonatomic, strong) NSArray *processViewNames;
+@end
+
 @implementation TPI_SP_CompiledOutput
 
 + (NSString *)applicationActiveStyle
@@ -126,35 +131,35 @@
 
 	TXUnsignedLongLong textualMemoryUse = [TPI_SP_SysInfo applicationMemoryInformation];
 
-	TXUnsignedLongLong webViewMemoryUse = 0;
-	NSInteger webViewProcessCount = 0;
+	NSMutableString *resultString = [NSMutableString string];
 
-	NSString *resultString = nil;
+	[resultString appendString:
+	 TPILocalizedString(@"BasicLanguage[1020]",
+		[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
+		 TXFormattedNumber(totalScrollbackSize))];
 
 	if ([TPCPreferences webKit2Enabled]) {
 		NSArray *webViewProcesses = [TPI_SP_SysInfo webViewProcessIdentifiers];
 
-		for (NSNumber *processIdentifier in webViewProcesses) {
-			pid_t processIdentifierInt = [processIdentifier intValue];
-
-			webViewMemoryUse += [TPI_SP_SysInfo memoryUseForProcess:processIdentifierInt];
+		if ([webViewProcesses count] == 0) {
+			return resultString;
 		}
 
-		webViewProcessCount = [webViewProcesses count];
-	}
+		NSArray *viewNameArray = [webViewProcesses[0] processViewNames];
 
-	if (webViewProcessCount == 0 || webViewMemoryUse == 0) {
-		resultString =
-		TPILocalizedString(@"BasicLanguage[1020]",
-			[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
-			TXFormattedNumber(totalScrollbackSize));
-	} else {
-		resultString =
-		TPILocalizedString(@"BasicLanguage[1052]",
-			[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
-			[TPI_SP_SysInfo formattedDiskSize:webViewMemoryUse],
-			TXFormattedNumber(webViewProcessCount),
-			TXFormattedNumber(totalScrollbackSize));
+		if ([viewNameArray count] == 0) {
+			return resultString;
+		}
+
+		NSString *viewName = [viewNameArray componentsJoinedByString:@", "];
+
+		if ([viewNameArray count] == 1) {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1052]", viewName)];
+		} else {
+			[resultString appendString:
+			 TPILocalizedString(@"BasicLanguage[1053]", viewName)];
+		}
 	}
 
 	return resultString;
@@ -791,25 +796,81 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 + (NSArray *)webViewProcessIdentifiers
 {
-	NSMutableArray *webViewProcesses = [NSMutableArray array];
+	/* Create a dictionary with key as identifier and value as an array of 
+	 views managed by the process. */
+	NSMutableDictionary *webViewProcesses = [NSMutableDictionary dictionary];
 
-	for (IRCClient *u in [worldController() clientList]) {
-		pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:u];
+	void (^_addEntry)(IRCTreeItem *) = ^void (IRCTreeItem *treeItem)
+	{
+		pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:treeItem];
 
-		if (processIdentifier > 0) {
-			[webViewProcesses addObjectWithoutDuplication:@(processIdentifier)];
+		if (processIdentifier == 0)
+			return;
+
+		NSNumber *processIdentifierObj = [NSNumber numberWithInt:processIdentifier];
+
+		NSMutableArray *viewArray = webViewProcesses[processIdentifierObj];
+
+		if (viewArray == nil) {
+			viewArray = [NSMutableArray array];
+
+			[webViewProcesses setObject:viewArray forKey:processIdentifierObj];
 		}
 
-		for (IRCChannel *c in [u channelList]) {
-			pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:c];
+		if ([treeItem isClient])
+			return;
 
-			if (processIdentifier > 0) {
-				[webViewProcesses addObjectWithoutDuplication:@(processIdentifier)];
-			}
+		[viewArray addObject:[treeItem name]];
+	};
+
+
+	for (IRCClient *u in [worldController() clientList]) {
+		_addEntry(u);
+
+		for (IRCChannel *c in [u channelList]) {
+			_addEntry(c);
 		}
 	}
 
-	return [webViewProcesses copy];
+	/* Create array of TPI_SP_WebViewProcessInfo objects */
+	NSMutableArray *webViewProcessObjects =
+	[NSMutableArray arrayWithCapacity:[webViewProcesses count]];
+
+	[webViewProcesses enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		/* Object values */
+		pid_t processIdentifier = [key intValue];
+
+		TXUnsignedLongLong processMemoryUse = [TPI_SP_SysInfo memoryUseForProcess:processIdentifier];
+
+		NSArray *processViewNames = [object sortedArrayUsingSelector:@selector(compare:)];
+
+		TPI_SP_WebViewProcessInfo *processInfoObject = [TPI_SP_WebViewProcessInfo new];
+
+		/* Set values */
+		[processInfoObject setProcessMemoryUse:processMemoryUse];
+
+		[processInfoObject setProcessViewNames:processViewNames];
+
+		/* Add object */
+		[webViewProcessObjects addObject:processInfoObject];
+	}];
+
+	/* Sort objects based on memory use (highest to lowest) */
+	[webViewProcessObjects sortUsingComparator:^NSComparisonResult(id object1, id object2) {
+		TXUnsignedLongLong processMemoryUse1 = [object1 processMemoryUse];
+		TXUnsignedLongLong processMemoryUse2 = [object2 processMemoryUse];
+
+		if (processMemoryUse1 > processMemoryUse2) {
+			return NSOrderedAscending;
+		} else if (processMemoryUse1 < processMemoryUse2) {
+			return NSOrderedDescending;
+		}
+
+		return NSOrderedSame;
+	}];
+
+	/* Return a copy of mutable array */
+	return [webViewProcessObjects copy];
 }
 
 + (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem
@@ -825,4 +886,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	return 0;
 }
 
+@end
+
+@implementation TPI_SP_WebViewProcessInfo
 @end
