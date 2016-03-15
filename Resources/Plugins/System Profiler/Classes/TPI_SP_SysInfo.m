@@ -43,6 +43,10 @@
 
 #define _systemMemoryDivisor			1.073741824
 
+@interface WKWebView ()
+@property (nonatomic, readonly) pid_t _webProcessIdentifier;
+@end
+
 @implementation TPI_SP_CompiledOutput
 
 + (NSString *)applicationActiveStyle
@@ -110,10 +114,6 @@
 
 + (NSString *)applicationMemoryUsage
 {
-	TXUnsignedLongLong privateMemory = [TPI_SP_SysInfo applicationMemoryInformation];
-
-	NSString *privateMemoryString = [TPI_SP_SysInfo formattedDiskSize:privateMemory];
-
 	NSInteger totalScrollbackSize = 0;
 
 	for (IRCClient *u in [worldController() clientList]) {
@@ -124,8 +124,40 @@
 		}
 	}
 
-	return TPILocalizedString(@"BasicLanguage[1020]",
-							  privateMemoryString, TXFormattedNumber(totalScrollbackSize));
+	TXUnsignedLongLong textualMemoryUse = [TPI_SP_SysInfo applicationMemoryInformation];
+
+	TXUnsignedLongLong webViewMemoryUse = 0;
+	NSInteger webViewProcessCount = 0;
+
+	NSString *resultString = nil;
+
+	if ([TPCPreferences webKit2Enabled]) {
+		NSArray *webViewProcesses = [TPI_SP_SysInfo webViewProcessIdentifiers];
+
+		for (NSNumber *processIdentifier in webViewProcesses) {
+			pid_t processIdentifierInt = [processIdentifier intValue];
+
+			webViewMemoryUse += [TPI_SP_SysInfo memoryUseForProcess:processIdentifierInt];
+		}
+
+		webViewProcessCount = [webViewProcesses count];
+	}
+
+	if (webViewProcessCount == 0 || webViewMemoryUse == 0) {
+		resultString =
+		TPILocalizedString(@"BasicLanguage[1020]",
+			[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
+			TXFormattedNumber(totalScrollbackSize));
+	} else {
+		resultString =
+		TPILocalizedString(@"BasicLanguage[1052]",
+			[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
+			[TPI_SP_SysInfo formattedDiskSize:webViewMemoryUse],
+			TXFormattedNumber(webViewProcessCount),
+			TXFormattedNumber(totalScrollbackSize));
+	}
+
+	return resultString;
 }
 
 + (NSString *)applicationRuntimeStatistics
@@ -755,6 +787,42 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	while (processLookupResult > 0);
 
 	return memoryUse;
+}
+
++ (NSArray *)webViewProcessIdentifiers
+{
+	NSMutableArray *webViewProcesses = [NSMutableArray array];
+
+	for (IRCClient *u in [worldController() clientList]) {
+		pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:u];
+
+		if (processIdentifier > 0) {
+			[webViewProcesses addObjectWithoutDuplication:@(processIdentifier)];
+		}
+
+		for (IRCChannel *c in [u channelList]) {
+			pid_t processIdentifier = [TPI_SP_SysInfo webViewProcessIdentifierForTreeItem:c];
+
+			if (processIdentifier > 0) {
+				[webViewProcesses addObjectWithoutDuplication:@(processIdentifier)];
+			}
+		}
+	}
+
+	return [webViewProcesses copy];
+}
+
++ (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem
+{
+	TVCLogView *backingView = [[treeItem viewController] backingView];
+
+	id webView = [backingView webView];
+
+	if ([webView respondsToSelector:@selector(_webProcessIdentifier)]) {
+		return [webView _webProcessIdentifier];
+	}
+
+	return 0;
 }
 
 @end

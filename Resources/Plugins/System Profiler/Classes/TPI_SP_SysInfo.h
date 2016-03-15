@@ -71,4 +71,9 @@
 + (NSString *)formattedTotalMemorySize;
 + (NSString *)formattedDiskSize:(TXUnsignedLongLong)size;
 + (NSString *)formattedCPUFrequency:(double)rate;
+
++ (NSInteger)memoryUseForProcess:(pid_t)processIdentifier;
+
++ (NSArray *)webViewProcessIdentifiers;
++ (pid_t)webViewProcessIdentifierForTreeItem:(IRCTreeItem *)treeItem;
 @end
