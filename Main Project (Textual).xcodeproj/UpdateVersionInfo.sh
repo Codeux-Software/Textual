@@ -2,8 +2,6 @@
 
 set -e
 
-echo 1 > /Users/Michael/Desktop/toaster.txt
-
 mkdir -p "${PROJECT_DIR}/.tmp/"
 
 # Make a copy of the Info.plist file in the .tmp folder
