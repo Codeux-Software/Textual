@@ -57,8 +57,9 @@
 "BasicLanguage[1019]" = "%.2f MHz"; // really?
 
 /* /memory/ command. */
-"BasicLanguage[1020]" = "\002Textual:\002 Private memory: %1$@ • Visible lines: %2$@";
-"BasicLanguage[1052]" = "\002Textual:\002 Private memory: %1$@; \002WebKit:\002 Private memory: %2$@ • Process count: %3$@ • Visible lines: %4$@";
+"BasicLanguage[1020]" = "Memory use of Textual: %1$@ • Visible lines: %2$@";
+"BasicLanguage[1052]" = " • View using most memory: %1$@";
+"BasicLanguage[1053]" = " • Views using most memory: %1$@";
 
 /* /diskspace/ command. */
 "BasicLanguage[1021]" = "\002Mounted Drives:\002 %@";
