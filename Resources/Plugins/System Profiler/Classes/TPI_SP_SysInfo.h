@@ -48,6 +48,7 @@
 + (NSString *)systemInformation;
 + (NSString *)systemMemoryInformation;
 + (NSString *)systemNetworkInformation;
++ (NSString *)webKitFrameworkMemoryUsage;
 @end
 
 @interface TPI_SP_SysInfo : NSObject
