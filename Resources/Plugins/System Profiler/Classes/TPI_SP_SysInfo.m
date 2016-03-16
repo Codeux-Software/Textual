@@ -48,6 +48,7 @@
 @end
 
 @interface TPI_SP_WebViewProcessInfo : NSObject
+@property (nonatomic, assign) pid_t processIdentifier;
 @property (nonatomic, assign) TXUnsignedLongLong processMemoryUse;
 @property (nonatomic, strong) NSArray *processViewNames;
 @end
@@ -131,38 +132,63 @@
 
 	TXUnsignedLongLong textualMemoryUse = [TPI_SP_SysInfo applicationMemoryInformation];
 
-	NSMutableString *resultString = [NSMutableString string];
-
-	[resultString appendString:
-	 TPILocalizedString(@"BasicLanguage[1020]",
+	return TPILocalizedString(@"BasicLanguage[1020]",
 		[TPI_SP_SysInfo formattedDiskSize:textualMemoryUse],
-		 TXFormattedNumber(totalScrollbackSize))];
+		 TXFormattedNumber(totalScrollbackSize));
+}
 
++ (NSString *)webKitFrameworkMemoryUsage
+{
 	if ([TPCPreferences webKit2Enabled]) {
 		NSArray *webViewProcesses = [TPI_SP_SysInfo webViewProcessIdentifiers];
 
 		if ([webViewProcesses count] == 0) {
-			return resultString;
+			return nil;
 		}
 
-		NSArray *viewNameArray = [webViewProcesses[0] processViewNames];
+		TPI_SP_WebViewProcessInfo *topProcess = webViewProcesses[0];
+
+		NSArray *viewNameArray = [topProcess processViewNames];
 
 		if ([viewNameArray count] == 0) {
-			return resultString;
+			return nil;
 		}
 
 		NSString *viewName = [viewNameArray componentsJoinedByString:@", "];
 
+		NSMutableString *resultString = [NSMutableString string];
+
 		if ([viewNameArray count] == 1) {
 			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1052]", viewName)];
+			 TPILocalizedString(@"BasicLanguage[1052]",
+				[topProcess processIdentifier],
+				 viewName,
+				[TPI_SP_SysInfo formattedDiskSize:[topProcess processMemoryUse]])];
 		} else {
 			[resultString appendString:
-			 TPILocalizedString(@"BasicLanguage[1053]", viewName)];
+			 TPILocalizedString(@"BasicLanguage[1053]",
+				[topProcess processIdentifier],
+				 viewName,
+				[TPI_SP_SysInfo formattedDiskSize:[topProcess processMemoryUse]])];
 		}
+
+		[resultString appendString:@"\n"];
+
+		TXUnsignedLongLong totalMemoryUse = 0;
+
+		for (TPI_SP_WebViewProcessInfo *processInfo in webViewProcesses) {
+			totalMemoryUse += [processInfo processMemoryUse];
+		}
+
+		[resultString appendString:
+		 TPILocalizedString(@"BasicLanguage[1054]",
+			[webViewProcesses count],
+			[TPI_SP_SysInfo formattedDiskSize:totalMemoryUse])];
+
+		return [resultString copy];
 	}
 
-	return resultString;
+	return nil;
 }
 
 + (NSString *)applicationRuntimeStatistics
@@ -847,6 +873,8 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		TPI_SP_WebViewProcessInfo *processInfoObject = [TPI_SP_WebViewProcessInfo new];
 
 		/* Set values */
+		[processInfoObject setProcessIdentifier:processIdentifier];
+
 		[processInfoObject setProcessMemoryUse:processMemoryUse];
 
 		[processInfoObject setProcessViewNames:processViewNames];

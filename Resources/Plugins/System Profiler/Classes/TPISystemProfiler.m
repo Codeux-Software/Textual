@@ -116,11 +116,24 @@
 	@"runcount", @"sysmem"];
 }
 
+- (void)printDebugInformation:(NSString *)message onClient:(IRCClient *)client inChannel:(IRCChannel *)channel
+{
+	NSArray *messages = [message split:@"\n"];
+
+	for (NSString *messageSplit in messages) {
+		[client printDebugInformation:messageSplit channel:channel];
+	}
+}
+
 - (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
 {
-	[client sendText:[NSAttributedString attributedStringWithString:message]
-			 command:IRCPrivateCommandIndex("privmsg")
-			 channel:channel];
+	NSArray *messages = [message split:@"\n"];
+
+	for (NSString *messageSplit in messages) {
+		[client sendText:[NSAttributedString attributedStringWithString:messageSplit]
+				 command:IRCPrivateCommandIndex("privmsg")
+				 channel:channel];
+	}
 }
 
 - (void)userInputCommandInvokedOnClient:(IRCClient *)client
@@ -134,6 +147,8 @@
 			[self sendMessage:[TPI_SP_CompiledOutput systemInformation] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"MEMORY"]) {
 			[self sendMessage:[TPI_SP_CompiledOutput applicationMemoryUsage] onClient:client toChannel:channel];
+
+			[self printDebugInformation:[TPI_SP_CompiledOutput webKitFrameworkMemoryUsage] onClient:client inChannel:channel];
 		} else if ([commandString isEqualToString:@"UPTIME"]) {
 			[self sendMessage:[TPI_SP_CompiledOutput applicationAndSystemUptime] onClient:client toChannel:channel];
 		} else if ([commandString isEqualToString:@"NETSTATS"]) {
