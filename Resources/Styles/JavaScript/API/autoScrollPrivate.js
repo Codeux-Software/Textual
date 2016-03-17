@@ -67,7 +67,7 @@ TextualScroller.currentScrollTopValue = 0;
 TextualScroller.scrollTopUserConstant = 9;
 TextualScroller.scrollTopUserConstantSet = false;
 
-TextualScroller.nextScrollTopValue = null;
+TextualScroller.nextScrollTopValue = 0;
 
 /* Core functions */
 TextualScroller.documentResizedCallback = function()
@@ -84,10 +84,10 @@ TextualScroller.documentScrolledCallback = function()
 	} else {
 		if (TextualScroller.isScrolledAboveUserThreshold()) {
 			TextualScroller.isScrolledByUser = true;
-		} else if (TextualScroller.nextScrollTopValue) {
+		} else if (TextualScroller.nextScrollTopValue !== 0) {
 			TextualScroller.currentScrollTopValue = TextualScroller.nextScrollTopValue;
 
-			TextualScroller.nextScrollTopValue = null;
+			TextualScroller.nextScrollTopValue = 0;
 		}
 	}
 };
@@ -98,7 +98,13 @@ TextualScroller.performAutoScroll = function()
 
 	var scrollHeight = TextualScroller.scrollHeight();
 
-	TextualScroller.nextScrollTopValue = scrollHeight;
+	if (scrollHeight === 0) {
+		TextualScroller.currentScrollTopValue = 0;
+
+		TextualScroller.nextScrollTopValue = 0;
+	} else {
+		TextualScroller.nextScrollTopValue = scrollHeight;
+	}
 
 	if (TextualScroller.isScrolledByUser) {
 		return;
