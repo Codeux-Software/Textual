@@ -109,6 +109,8 @@ TextualScroller.performAutoScroll = function()
 		TextualScroller.scrollingEnabled = true;
 	}
 
+	TextualScroller.nextScrollTopValue = scrollHeight;
+
 	if (TextualScroller.isScrolledByUser) {
 		return;
 	}
