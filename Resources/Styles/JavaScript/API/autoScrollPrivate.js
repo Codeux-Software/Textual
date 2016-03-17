@@ -99,9 +99,7 @@ TextualScroller.performAutoScroll = function()
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	if (scrollHeight === 0) {
-		TextualScroller.currentScrollTopValue = 0;
-
-		TextualScroller.nextScrollTopValue = 0;
+		TextualScroller.resetStatus();
 	} else {
 		TextualScroller.nextScrollTopValue = scrollHeight;
 	}
@@ -111,6 +109,15 @@ TextualScroller.performAutoScroll = function()
 	}
 
 	document.body.scrollTop = scrollHeight;
+};
+
+TextualScroller.resetStatus = function()
+{
+	TextualScroller.isScrolledByUser = false;
+
+	TextualScroller.currentScrollTopValue = 0;
+
+	TextualScroller.nextScrollTopValue = 0;
 };
 
 TextualScroller.setScrollTopUserConstant = function()
