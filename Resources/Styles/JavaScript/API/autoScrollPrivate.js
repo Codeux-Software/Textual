@@ -62,12 +62,13 @@ var TextualScroller = {};
 /* State tracking */
 TextualScroller.isScrolledByUser = false;
 
+TextualScroller.nextScrollTopValue = 0;
 TextualScroller.currentScrollTopValue = 0;
 
 TextualScroller.scrollTopUserConstant = 9;
 TextualScroller.scrollTopUserConstantSet = false;
 
-TextualScroller.nextScrollTopValue = 0;
+TextualScroller.scrollingEnabled = false;
 
 /* Core functions */
 TextualScroller.documentResizedCallback = function()
@@ -77,6 +78,10 @@ TextualScroller.documentResizedCallback = function()
 
 TextualScroller.documentScrolledCallback = function()
 {
+	if (TextualScroller.scrollingEnabled === false) {
+		return;
+	}
+
 	if (TextualScroller.isScrolledByUser) {
 		if (TextualScroller.isScrolledToBottom()) {
 			TextualScroller.isScrolledByUser = false;
@@ -99,9 +104,9 @@ TextualScroller.performAutoScroll = function()
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	if (scrollHeight === 0) {
-		TextualScroller.resetStatus();
-	} else {
-		TextualScroller.nextScrollTopValue = scrollHeight;
+		return;
+	} else if (TextualScroller.scrollingEnabled === false) {
+		TextualScroller.scrollingEnabled = true;
 	}
 
 	if (TextualScroller.isScrolledByUser) {
@@ -109,15 +114,6 @@ TextualScroller.performAutoScroll = function()
 	}
 
 	document.body.scrollTop = scrollHeight;
-};
-
-TextualScroller.resetStatus = function()
-{
-	TextualScroller.isScrolledByUser = false;
-
-	TextualScroller.currentScrollTopValue = 0;
-
-	TextualScroller.nextScrollTopValue = 0;
 };
 
 TextualScroller.setScrollTopUserConstant = function()
@@ -152,6 +148,13 @@ TextualScroller.setScrollTopUserConstant = function()
 TextualScroller.scrollHeight = function()
 {
 	var offsetHeight = document.body.offsetHeight;
+
+	/*	offsetHeight /should/ never be zero but it can be at times
+		when this function is called and the tree has not been fully
+		rendered. In that case, we return zero instead of bad math. */
+	if (offsetHeight === 0) {
+		return 0;
+	}
 
 	var scrollHeight = document.body.scrollHeight;
 
