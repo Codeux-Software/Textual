@@ -272,6 +272,39 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return [[self webViewBacking] executeJavaScriptWithResult:code error:error];
 }
 
+- (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
+{
+	if ([scriptResult isKindOfClass:[NSString class]])
+	{
+		return scriptResult;
+	}
+	else if ([scriptResult isKindOfClass:[NSArray class]] ||
+			 [scriptResult isKindOfClass:[NSDictionary class]])
+	{
+		return [scriptResult description];
+	}
+	else if ([scriptResult isKindOfClass:[NSNumber class]])
+	{
+		if (strcmp([scriptResult objCType], @encode(BOOL)) == 0) {
+			if ([scriptResult boolValue] == YES) {
+				return @"true";
+			} else {
+				return @"false";
+			}
+		} else {
+			return [scriptResult stringValue];
+		}
+	}
+	else if ([scriptResult isKindOfClass:[NSNull class]])
+	{
+		return @"null";
+	}
+	else
+	{
+		return @"undefined";
+	}
+}
+
 - (NSString *)escapeJavaScriptString:(NSString *)string
 {
 	NSString *escapedString = string;
