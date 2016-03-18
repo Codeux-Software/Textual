@@ -172,7 +172,7 @@
 				[TPI_SP_SysInfo formattedDiskSize:[topProcess processMemoryUse]])];
 		}
 
-		[resultString appendString:@"\n"];
+		[resultString appendString:NSStringNewlinePlaceholder];
 
 		TXUnsignedLongLong totalMemoryUse = 0;
 

@@ -118,7 +118,7 @@
 
 - (void)printDebugInformation:(NSString *)message onClient:(IRCClient *)client inChannel:(IRCChannel *)channel
 {
-	NSArray *messages = [message split:@"\n"];
+	NSArray *messages = [message split:NSStringNewlinePlaceholder];
 
 	for (NSString *messageSplit in messages) {
 		[client printDebugInformation:messageSplit channel:channel];
@@ -127,7 +127,7 @@
 
 - (void)sendMessage:(NSString *)message onClient:(IRCClient *)client toChannel:(IRCChannel *)channel
 {
-	NSArray *messages = [message split:@"\n"];
+	NSArray *messages = [message split:NSStringNewlinePlaceholder];
 
 	for (NSString *messageSplit in messages) {
 		[client sendText:[NSAttributedString attributedStringWithString:messageSplit]
