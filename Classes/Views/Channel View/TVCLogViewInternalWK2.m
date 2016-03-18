@@ -270,10 +270,14 @@ create_normal_pool:
 		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 	}
 
-	if ( error) {
-		*error = [scriptResultError copy];
-	} else {
-		LogToConsole(@"Error: %@", [scriptResultError localizedDescription]);
+	if (scriptResultError) {
+		if ( error) {
+			*error = [scriptResultError copy];
+		} else {
+			LogToConsole(@"Error: %@", [scriptResultError localizedDescription]);
+		}
+
+		scriptResultError = nil;
 	}
 
 	if (scriptResult) {
