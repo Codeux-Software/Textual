@@ -164,8 +164,10 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	(void)[scriptObject evaluateWebScript:code];
 }
 
-- (id)executeJavaScriptWithResult:(NSString *)code
+- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
 {
+#pragma unused(error)
+
 	WebScriptObject *scriptObject = [self windowScriptObject];
 
 	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {

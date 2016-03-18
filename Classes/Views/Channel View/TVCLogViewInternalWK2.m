@@ -248,13 +248,19 @@ create_normal_pool:
 	[self evaluateJavaScript:code completionHandler:nil];
 }
 
-- (id)executeJavaScriptWithResult:(NSString *)code
+- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
 {
 	__block id scriptResult = nil;
+
+	__block NSError *scriptResultError = nil;
 
 	__block BOOL finishedExecuting = NO;
 
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
+		if (error) {
+			scriptResultError = error;
+		}
+
 		scriptResult = result;
 
 		finishedExecuting = YES;
@@ -262,6 +268,12 @@ create_normal_pool:
 
 	while (finishedExecuting == NO) {
 		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+	}
+
+	if ( error) {
+		*error = [scriptResultError copy];
+	} else {
+		LogToConsole(@"Error: %@", [scriptResultError localizedDescription]);
 	}
 
 	if (scriptResult) {

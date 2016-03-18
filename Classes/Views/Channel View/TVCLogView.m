@@ -264,7 +264,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (id)executeJavaScriptWithResult:(NSString *)code
 {
-	return [[self webViewBacking] executeJavaScriptWithResult:code];
+	return [[self webViewBacking] executeJavaScriptWithResult:code error:NULL];
+}
+
+- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
+{
+	return [[self webViewBacking] executeJavaScriptWithResult:code error:error];
 }
 
 - (NSString *)escapeJavaScriptString:(NSString *)string
