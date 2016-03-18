@@ -3401,6 +3401,45 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			break;
 		}
+		case 5104: // Command: JSEVAL
+		{
+#warning TODO: Remove before Textual 6 is finalized. \
+		This command should not be trusted by large user base.
+
+			NSObjectIsEmptyAssert(uncutInput);
+
+			PointerIsEmptyAssert(selChannel);
+
+			TVCLogView *backingView = [[selChannel viewController] backingView];
+
+			NSError *scriptResultError = nil;
+
+			id scriptResult = [backingView executeJavaScriptWithResult:uncutInput error:&scriptResultError];
+
+			if (scriptResult) {
+				NSString *resultDescription = [backingView descriptionOfJavaScriptResult:scriptResult];
+
+				NSArray *descriptionLines = [resultDescription split:NSStringNewlinePlaceholder];
+
+				for (NSString *descriptionLine in descriptionLines) {
+					[self printDebugInformation:descriptionLine channel:selChannel];
+				}
+			}
+			else // scriptResult
+			{
+				NSString *errorMessage = nil;
+
+				if (scriptResultError) {
+					errorMessage = BLS(1298, [scriptResultError localizedDescription]);
+				} else {
+					errorMessage = BLS(1299);
+				}
+
+				[self printDebugInformation:errorMessage channel:selChannel];
+			}
+
+			break;
+		}
 		default:
 		{
 			/* Find an addon responsible for this command. */
