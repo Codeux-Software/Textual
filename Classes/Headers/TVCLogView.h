@@ -86,6 +86,8 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 - (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
 
 - (NSString *)escapeJavaScriptString:(NSString *)string;
+
+- (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
 @end
 
 @protocol TVCLogViewDelegate <NSObject>
