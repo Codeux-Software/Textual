@@ -5,7 +5,7 @@
 	<key>Reserved Information</key>
 	<dict>
 		<key>Next Index Value</key>
-		<real>5104</real>
+		<real>5105</real>
 	</dict>
 	<key>adchat</key>
 	<dict>
@@ -366,6 +366,15 @@
 		<false/>
 		<key>indexValue</key>
 		<integer>5032</integer>
+	</dict>
+	<key>jseval</key>
+	<dict>
+		<key>command</key>
+		<string>JSEVAL</string>
+		<key>developerModeOnly</key>
+		<string>YES</string>
+		<key>indexValue</key>
+		<integer>5104</integer>
 	</dict>
 	<key>kb</key>
 	<dict>
