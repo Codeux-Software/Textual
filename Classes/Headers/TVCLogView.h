@@ -68,6 +68,7 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
 - (void)executeJavaScript:(NSString *)code;
 - (id)executeJavaScriptWithResult:(NSString *)code;
+- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error; // "error" is only used with WK2
 
 - (void)executeStandaloneCommand:(NSString *)command;
 - (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments;
