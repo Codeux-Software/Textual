@@ -129,6 +129,19 @@
 	return NO;
 }
 
+- (TDCFileTransferDialogTransferController *)fileTransferMatchingPort:(NSInteger)port
+{
+	@synchronized (self.fileTransfers) {
+		for (id e in self.fileTransfers) {
+			if ([e transferPort] == port) {
+				return e;
+			}
+		}
+	}
+
+	return nil;
+}
+
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken
 {
 	@synchronized(self.fileTransfers) {
@@ -233,16 +246,26 @@
 		[groupItem setPath:[self.downloadDestination path]];
 	}
 	
-	[self show:YES restorePosition:NO];
-	
-	[self addReceiver:groupItem];
-	
-	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
+
 		/* If the user is set to automatically download, then just save to the downloads folder. */
 		if ([groupItem path] == nil) {
 			[groupItem setPath:[TPCPathInfo userDownloadFolderPath]];
 		}
-		
+
+	[self show:YES restorePosition:NO];
+
+	[self addReceiver:groupItem];
+
+	if ([RZFileManager() fileExistsAtPath:groupItem.completePath]) {
+		NSDictionary *fileInfo = [RZFileManager() attributesOfItemAtPath:groupItem.completePath error:nil];
+		unsigned long long int currentFileSize = fileInfo.fileSize;
+		if (currentFileSize < totalFilesize) {
+			NSString *text = [NSString stringWithFormat:@"%@ %ld %lld", filename, hostPort, currentFileSize];
+			[groupItem setIsResume:YES];
+			[groupItem setProcessedFilesize:currentFileSize];
+			[client sendCTCPQuery:nickname command:@"DCC RESUME" text:text];
+		}
+	} else if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		/* Begin the transfer. */
 		[groupItem open];
 	}

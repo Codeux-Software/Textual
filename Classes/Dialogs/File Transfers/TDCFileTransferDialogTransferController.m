@@ -592,7 +592,7 @@
 - (BOOL)openFileHandle
 {
 	/* Make sure we are doing something on a file that doesn't exist. */
-	if ([self isSender] == NO) {
+	if (![self isSender] && !self.isResume) {
 		/* Update filename. */
 		[self updateTransferInformationWithNonexistentFilename];
 
@@ -602,12 +602,14 @@
 	
 	/* Try to create file handle. */
 	self.fileHandle = [NSFileHandle fileHandleForUpdatingAtPath:[self completePath]];
-	
+
 	if (self.fileHandle == nil) {
 		/* There was a problem opening the file handle. */
 		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 
 		return NO;
+	} else if (self.isResume) {
+		[self.fileHandle seekToEndOfFile];
 	}
 
 	return YES;
@@ -874,7 +876,9 @@
 
 - (void)resetProperties
 {
-	self.processedFilesize = 0;
+	if (!self.isResume) {
+		self.processedFilesize = 0;
+	}
 	self.currentRecord = 0;
 	
 	self.errorMessageToken = nil;

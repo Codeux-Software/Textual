@@ -43,6 +43,7 @@
 @property (nonatomic, assign) BOOL isHidden; // Is visible on the dialog.
 @property (nonatomic, assign) BOOL isReversed; // Is reverse DCC transfer.
 @property (nonatomic, assign) BOOL isSender; // Type of transfer.
+@property (nonatomic, assign) BOOL isResume; // Whether we are resuming a previous transfer.
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, copy) NSString *filename;
 @property (nonatomic, copy) NSString *peerNickname;
@@ -88,4 +89,7 @@
 
 - (void)close;
 - (void)close:(BOOL)postNotifications;
+
+- (NSString *)completePath;
+
 @end
