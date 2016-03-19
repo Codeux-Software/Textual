@@ -344,6 +344,8 @@
 
 		LogToConsole(@"Successful port mapping on port %i", self.transferPort);
 	} else {
+		LogToConsole(@"Port mapping failed with error code: %i", [self.portMapping error]);
+
 		if ([self isReversed]) {
 			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
 		} else {
@@ -354,8 +356,6 @@
 
 			[self requestLocalIPAddress];
 		}
-
-		LogToConsole(@"Port mapping failed with error code: %i", [self.portMapping error]);
 	}
 }
 
