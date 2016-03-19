@@ -6944,7 +6944,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			if (self.inUserInvokedModeRequest || c.inUserInvokedModeRequest) {
 				if (printMessage) {
-					NSString *fmodestr = [[c modeInfo] format:NO];
+					NSString *fmodestr = [[c modeInfo] format:YES];
 
 					[self print:c
 						   type:TVCLogLineModeType
