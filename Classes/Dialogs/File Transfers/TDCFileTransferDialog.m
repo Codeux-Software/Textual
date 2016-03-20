@@ -103,60 +103,55 @@
 	[[self window] close];
 }
 
-- (TDCFileTransferDialogTransferController *)fileTransferFromUniqueIdentifier:(NSString *)identifier
+- (TDCFileTransferDialogTransferController *)fileTransferMatchingCondition:(BOOL (^)(TDCFileTransferDialogTransferController *controller))matchBlock
 {
 	@synchronized(self.fileTransfers) {
 		for (id e in self.fileTransfers) {
-			if (NSObjectsAreEqual(identifier, [e uniqueIdentifier])) {
+			if (matchBlock(e)) {
 				return e;
 			}
 		}
 	}
-	
+
 	return nil;
+}
+
+- (TDCFileTransferDialogTransferController *)fileTransferMatchingPort:(NSInteger)port
+{
+	return [self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
+		return ([controller transferPort] == port);
+	}];
+}
+
+- (TDCFileTransferDialogTransferController *)fileTransferFromUniqueIdentifier:(NSString *)identifier
+{
+	return [self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
+		return NSObjectsAreEqual(identifier, [controller uniqueIdentifier]);
+	}];
 }
 
 - (BOOL)fileTransferExistsWithToken:(NSString *)transferToken
 {
-	@synchronized(self.fileTransfers) {
-		for (id e in self.fileTransfers) {
-			if (NSObjectsAreEqual(transferToken, [e transferToken])) {
-				return YES;
-			}
-		}
-	}
-	
-	return NO;
+	TDCFileTransferDialogTransferController *e =
+	[self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
+		return NSObjectsAreEqual(transferToken, [controller transferToken]);
+	}];
+
+	return (e != nil);
 }
 
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken
 {
-	@synchronized(self.fileTransfers) {
-		for (id e in self.fileTransfers) {
-			NSAssertReturnLoopContinue([e isSender]);
-			
-			if (NSObjectsAreEqual(transferToken, [e transferToken])) {
-				return e;
-			}
-		}
-	}
-	
-	return nil;
+	return [self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
+		return (NSObjectsAreEqual(transferToken, [controller transferToken]) && [controller isSender]);
+	}];
 }
 
 - (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken
 {
-	@synchronized(self.fileTransfers) {
-		for (id e in self.fileTransfers) {
-			NSAssertReturnLoopContinue([e isSender] == NO);
-			
-			if (NSObjectsAreEqual(transferToken, [e transferToken])) {
-				return e;
-			}
-		}
-	}
-	
-	return nil;
+	return [self fileTransferMatchingCondition:^BOOL(TDCFileTransferDialogTransferController *controller) {
+		return (NSObjectsAreEqual(transferToken, [controller transferToken]) && [controller isSender] == NO);
+	}];
 }
 
 - (void)prepareForApplicationTermination
@@ -210,7 +205,7 @@
 		
 		return nil;
 	}
-	
+
 	TDCFileTransferDialogTransferController *groupItem = [TDCFileTransferDialogTransferController new];
 	
 	[groupItem setIsSender:NO];
@@ -232,17 +227,17 @@
 	if (self.downloadDestination) {
 		[groupItem setPath:[self.downloadDestination path]];
 	}
-	
+
 	[self show:YES restorePosition:NO];
-	
+
 	[self addReceiver:groupItem];
-	
+
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		/* If the user is set to automatically download, then just save to the downloads folder. */
 		if ([groupItem path] == nil) {
 			[groupItem setPath:[TPCPathInfo userDownloadFolderPath]];
 		}
-		
+
 		/* Begin the transfer. */
 		[groupItem open];
 	}
@@ -266,16 +261,21 @@
 #endif
 
 	/* Gather file information. */
-	NSDictionary *fileAttrs = [RZFileManager() attributesOfItemAtPath:completePath error:NULL];
+	NSDictionary *fileAttributes = [RZFileManager() attributesOfItemAtPath:completePath error:NULL];
 	
-	NSObjectIsEmptyAssertReturn(fileAttrs, nil);
+	NSObjectIsEmptyAssertReturn(fileAttributes, nil);
 	
-	TXUnsignedLongLong filesize = [fileAttrs longLongForKey:NSFileSize];
+	TXUnsignedLongLong filesize = [fileAttributes fileSize];
+
+	if (filesize == 0) {
+		LogToConsole(@"Fatal error: Cannot create sender because filesize == 0");
+
+		return nil;
+	}
 	
-	NSAssertReturnR((filesize > 0), nil);
-	
-	NSString *actualFilename = [completePath lastPathComponent];
-	NSString *actualFilePath = [completePath stringByDeletingLastPathComponent];
+	NSString *fileFilename = [completePath lastPathComponent];
+
+	NSString *filePath = [completePath stringByDeletingLastPathComponent];
 	
 	/* Build view. */
 	TDCFileTransferDialogTransferController *groupItem = [TDCFileTransferDialogTransferController new];
@@ -284,8 +284,8 @@
 	[groupItem setTransferDialog:self];
 	[groupItem setAssociatedClient:client];
 	[groupItem setPeerNickname:nickname];
-	[groupItem setFilename:actualFilename];
-	[groupItem setPath:actualFilePath];
+	[groupItem setFilename:fileFilename];
+	[groupItem setPath:filePath];
 	[groupItem setTotalFilesize:filesize];
 	[groupItem setUniqueIdentifier:[NSString stringWithUUID]];
 	
@@ -312,9 +312,10 @@
 	
 	@synchronized(self.fileTransfers) {
 		for (id e in self.fileTransfers) {
-			if ([e transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
-				[e transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
-				[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
+			if ([e transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
+				[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
+				[e transferStatus] == TDCFileTransferDialogTransferFatalErrorStatus ||
+				[e transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus)
 			{
 				enabled = YES;
 				
@@ -384,8 +385,8 @@
 		case 3001:	// Start Download
 		{
 			for (id e in sel) {
-				if ([e transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
-					[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
+				if ([e transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus)
 				{
 					return YES;
 				}
@@ -403,7 +404,8 @@
 					[e transferStatus] == TDCFileTransferDialogTransferSendingStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferMappingListeningPortStatus ||
 					[e transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
-					[e transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus)
+					[e transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
+					[e transferStatus] == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus)
 				{
 					return YES;
 				}
@@ -450,9 +452,10 @@
 		for (NSInteger i = ([self.fileTransfers count] - 1); i >= 0; i--) {
 			id obj = self.fileTransfers[i];
 			
-			if ([obj transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
-				[obj transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
-				[obj transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
+			if ([obj transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
+				[obj transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
+				[obj transferStatus] == TDCFileTransferDialogTransferFatalErrorStatus ||
+				[obj transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus)
 			{
 				[obj prepareForDestruction];
 				
@@ -478,8 +481,8 @@
 			
 			id e = self.fileTransfers[actualIndx];
 			
-			if ([e transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
-				[e transferStatus] == TDCFileTransferDialogTransferStoppedStatus)
+			if ([e transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
+				[e transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus)
 			{
 				if ([e isSender]) {
 					[(TDCFileTransferDialogTransferController *)e open];
@@ -580,6 +583,7 @@
 - (void)revealReceivedFileInFinder:(id)sender
 {
 	NSIndexSet *indexes = [self.fileTransferTable selectedRowIndexes];
+
 	@synchronized(self.fileTransfers) {
 		for (NSNumber *index in [indexes arrayFromIndexSet]) {
 			NSInteger actualIndx = [index integerValue];
@@ -719,7 +723,9 @@
 	if ([TPCPreferences fileTransferIPAddressDetectionMethod] == TXFileTransferIPAddressManualDetectionMethod) {
 		NSString *manualIPAddress = [TPCPreferences fileTransferManuallyEnteredIPAddress];
 
-		NSObjectIsEmptyAssertReturn(manualIPAddress, nil);
+		if (manualIPAddress && [manualIPAddress length] == 0) {
+			return nil;
+		}
 
 		return manualIPAddress;
 	}

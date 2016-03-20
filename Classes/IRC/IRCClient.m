@@ -8961,152 +8961,220 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* Gather basic information. */
 	NSString *subcommand = [rawMessage uppercaseGetToken];
 	
-	/* For now, we recognize ACCEPT and RESUME, but we do not act on it. Just adding
-	 code for future expansion in another update. Basically, I had time to write the
-	 basic handler so I will thank myself in time when it comes to write the rest. */
 	BOOL isSendRequest = ([subcommand isEqualToString:@"SEND"]);
-//	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
-//	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
+	BOOL isResumeRequest = ([subcommand isEqualToString:@"RESUME"]);
+	BOOL isAcceptRequest = ([subcommand isEqualToString:@"ACCEPT"]);
 	
 	// Process file transfer requests.
-	if (isSendRequest /* || isResumeRequest || isAcceptRequest */) {
-		/* Check ignore status. */
-		if ([ignoreChecks ignoreFileTransferRequests] == YES) {
-			return;
-		}
-		
-		/* Gather information about the actual transfer. */
-		NSString *section1 = [rawMessage getTokenIncludingQuotes];
-		NSString *section2 = [rawMessage getToken];
-		NSString *section3 = [rawMessage getToken];
-		NSString *section4 = [rawMessage getToken];
-		NSString *section5 = [rawMessage getToken];
+	if (isSendRequest == NO &&
+		isResumeRequest == NO &&
+		isAcceptRequest == NO)
+	{
+		return;
+	}
 
-		/* Trim whitespaces if someone tries to send blank spaces 
-		 in a quoted string for filename. */
-		section1 = [section1 trim];
-		
-		/* Remove T from in front of token if it is there. */
-		if (isSendRequest) {
-			if ([section5 hasPrefix:@"T"]) {
-				section5 = [section5 substringFromIndex:1];
-			}
-		} /* else if (isAcceptRequest || isResumeRequest) {
-		   if ([section4 hasPrefix:@"T"]) {
-				section4 = [section4 substringFromIndex:1];
-		   }
-		} */
-		
-		/* Valid values? */
-		NSObjectIsEmptyAssert(section1);
-		NSObjectIsEmptyAssert(section2);
-	  //NSObjectIsEmptyAssert(section3);
-		NSObjectIsEmptyAssert(section4);
-
-		/* Start data association. */
-		NSString *hostAddress = nil;
-		NSString *hostPort = nil;
-		NSString *filename = nil;
-		NSString *filesize = nil;
-		NSString *transferToken = nil;
-		
-		/* Match data variables. */
-		if (isSendRequest)
-		{
-			/* Get normal information. */
-			filename = [section1 safeFilename];
-			filesize =  section4;
-			
-			hostPort = section3;
-			
-			transferToken = section5;
-			
-			/* Translate host address. */
-			if ([section2 isNumericOnly]) {
-				long long a = [section2 longLongValue];
-				
-				NSInteger w = (a & 0xff); a >>= 8;
-				NSInteger x = (a & 0xff); a >>= 8;
-				NSInteger y = (a & 0xff); a >>= 8;
-				NSInteger z = (a & 0xff);
-				
-				hostAddress = [NSString stringWithFormat:@"%ld.%ld.%ld.%ld",(long) z, (long)y, (long)x, (long)w];
-			} else {
-				hostAddress = section2;
-			}
-		}
-		/* else if (isResumeRequest || isAcceptRequest)
-		 {
-			 filename = section1;
-			 filesize = section3;
-			 
-			 hostPort = section2;
-			 
-			 transferToken = section4;
-			 
-			 hostAddress = nil; // ACCEPT and RESUME do not carry the host address.
-		 } */
-		
-		/* Process invidiual commands. */
-		if (isSendRequest) {
-			/* DCC SEND <filename> <peer-ip> <port> <filesize> [token] */
-
-			/* Important check. */
-			NSAssertReturn([filesize longLongValue] > 0);
-
-			/* Add the actual file. */
-			if ([transferToken length] > 0) {
-				/* Validate the transfer token is a number. */
-				if ([transferToken isNumericOnly]) {
-					/* Is part of reverse DCC request. Let's check if the token
-					 already exists somewhere. If it does, we ignore this request. */
-					BOOL transferExists = [[self fileTransferController] fileTransferExistsWithToken:transferToken];
-
-					/* 0 port indicates a new request in reverse DCC */
-					if ([hostPort integerValue] == 0) {
-						if (transferExists == NO) {
-							[self receivedDCCSend:nickname
-										 filename:filename
-										  address:hostAddress
-											 port:[hostPort integerValue]
-										 filesize:[filesize longLongValue]
-											token:transferToken];
-
-							return;
-						} else {
-							LogToConsole(@"Received reverse DCC request with token '%@' but the token already exists.", transferToken);
-						}
-					} else {
-						if (transferExists) {
-							TDCFileTransferDialogTransferController *e = [[self fileTransferController] fileTransferSenderMatchingToken:transferToken];
-
-							if (e) {
-								/* Define transfer information. */
-								[e setHostAddress:hostAddress];
-								[e setTransferPort:[hostPort integerValue]];
-
-								[e didReceiveSendRequestFromClient];
-
-								return;
-							}
-						}
-					}
-				}
-			} else {
-				/* Treat as normal DCC request. */
-				[self receivedDCCSend:nickname
-							 filename:filename
-							  address:hostAddress
-								 port:[hostPort integerValue]
-							 filesize:[filesize longLongValue]
-								token:nil];
-
-				return;
-			}
-		}
+	/* Check ignore status. */
+	if ([ignoreChecks ignoreFileTransferRequests] == YES) {
+		return;
 	}
 	
-	// Report an error.
+	/* Gather information about the actual transfer. */
+	NSString *section1 = [rawMessage getTokenIncludingQuotes];
+	NSString *section2 = [rawMessage getToken];
+	NSString *section3 = [rawMessage getToken];
+	NSString *section4 = [rawMessage getToken];
+	NSString *section5 = [rawMessage getToken];
+
+	/* Trim whitespaces if someone tries to send blank spaces 
+	 in a quoted string for filename. */
+	section1 = [section1 trim];
+	
+	/* Remove T from in front of token if it is there. */
+	if (isSendRequest) {
+		if ([section5 hasPrefix:@"T"]) {
+			section5 = [section5 substringFromIndex:1];
+		}
+	}  else if (isAcceptRequest || isResumeRequest) {
+	   if ([section4 hasPrefix:@"T"]) {
+			section4 = [section4 substringFromIndex:1];
+	   }
+	}
+	
+	/* Valid values? */
+	NSObjectIsEmptyAssert(section1);
+	NSObjectIsEmptyAssert(section2);
+
+	if (isSendRequest) {
+		NSObjectIsEmptyAssert(section4);
+	}
+
+	/* Start data association. */
+	NSString *hostAddress = nil;
+	NSString *hostPort = nil;
+	NSString *filename = nil;
+	NSString *filesize = nil;
+	NSString *transferToken = nil;
+	
+	/* Match data variables. */
+	if (isSendRequest)
+	{
+		/* Get normal information. */
+		filename = [section1 safeFilename];
+		filesize =  section4;
+		
+		hostPort = section3;
+		
+		transferToken = section5;
+		
+		/* Translate host address. */
+		if ([section2 isNumericOnly]) {
+			long long a = [section2 longLongValue];
+			
+			NSInteger w = (a & 0xff); a >>= 8;
+			NSInteger x = (a & 0xff); a >>= 8;
+			NSInteger y = (a & 0xff); a >>= 8;
+			NSInteger z = (a & 0xff);
+			
+			hostAddress = [NSString stringWithFormat:@"%ld.%ld.%ld.%ld",(long) z, (long)y, (long)x, (long)w];
+		} else {
+			hostAddress = section2;
+		}
+	}
+	else if (isResumeRequest || isAcceptRequest)
+	{
+		filename = [section1 safeFilename];
+		filesize =  section3;
+
+		hostPort = section2;
+
+		transferToken = section4;
+
+		hostAddress = nil;
+	}
+
+	if (transferToken && [transferToken length] == 0) {
+		transferToken = nil;
+	}
+
+	/* Important check. */
+	NSAssertReturn([filesize longLongValue] > 0);
+
+	if ([transferToken length] > 0 && [transferToken isNumericOnly] == NO) {
+		LogToConsole(@"Fatal error: Received transfer token that is not a number");
+
+		goto present_error;
+	}
+
+	NSInteger hostPortInt = [hostPort integerValue];
+
+	if (hostPortInt == 0 && transferToken == nil) {
+		LogToConsole(@"Fatal error: Port cannot be zero without a transfer token");
+
+		goto present_error;
+	} else if (hostPortInt < 0 || hostPortInt > 65535) {
+		LogToConsole(@"Fatal error: Port cannot be less than zero or greater than 65535");
+
+		goto present_error;
+	}
+
+	NSInteger filesizeInt = [filesize integerValue];
+
+	if (filesizeInt <= 0 || filesizeInt > 1000000000000000) { // 1 PB
+		LogToConsole(@"Fatal error: Filesize is silly");
+
+		goto present_error;
+	}
+
+	/* Process invidiual commands. */
+	if (isSendRequest) {
+		/* DCC SEND <filename> <peer-ip> <port> <filesize> [token] */
+
+		if (transferToken) {
+			TDCFileTransferDialogTransferController *e = [[self fileTransferController] fileTransferSenderMatchingToken:transferToken];
+
+			/* 0 port indicates a new request in reverse DCC */
+			if (hostPortInt == 0)
+			{
+				if (e == nil) {
+					[self receivedDCCSend:nickname
+								 filename:filename
+								  address:hostAddress
+									 port:hostPortInt
+								 filesize:filesizeInt
+									token:transferToken];
+
+					return;
+				} else {
+					LogToConsole(@"Fatal error: Received reverse DCC request with token '%@' but the token already exists.", transferToken);
+
+					goto present_error;
+				}
+			}
+			else if (e)
+			{
+				if ([e transferStatus] != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) {
+					LogToConsole(@"Fatal error: Unexpected request to begin transfer");
+
+					goto present_error;
+				} else {
+					[e setHostAddress:hostAddress];
+
+					[e setTransferPort:hostPortInt];
+
+					[e didReceiveSendRequestFromClient];
+
+					return;
+				}
+			}
+		}
+		else // transferToken
+		{
+			/* Treat as normal DCC request. */
+			[self receivedDCCSend:nickname
+						 filename:filename
+						  address:hostAddress
+							 port:[hostPort integerValue]
+						 filesize:[filesize longLongValue]
+							token:nil];
+
+			return;
+		}
+	}
+	else if (isResumeRequest || isAcceptRequest)
+	{
+		TDCFileTransferDialogTransferController *e = nil;
+
+		if (transferToken && hostPortInt == 0) {
+			e = [[self fileTransferController] fileTransferSenderMatchingToken:transferToken];
+		} else if (transferToken == nil && hostPortInt > 0) {
+			e = [[self fileTransferController] fileTransferMatchingPort:hostPortInt];
+		}
+
+		if (e == nil) {
+			LogToConsole(@"Fatal error: Could not locate file transfer that matches resume request");
+
+			goto present_error;
+		}
+
+		if ((isResumeRequest && [e transferStatus] != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) ||
+			(isAcceptRequest && [e transferStatus] != TDCFileTransferDialogTransferWaitingForResumeAcceptStatus))
+		{
+			LogToConsole(@"Fatal error: Bad transfer status");
+
+			goto present_error;
+		}
+
+		if (isResumeRequest) {
+			[e didReceiveResumeRequestFromClient:filesizeInt];
+		} else {
+			[e didReceiveResumeAcceptFromClient:filesizeInt];
+		}
+
+		return;
+	}
+
+	// Report an error
+present_error:
 	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:BLS(1020, nickname) command:TVCLogLineDefaultRawCommandValue];
 }
 
@@ -9131,23 +9199,50 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 }
 
-- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
+- (void)sendFileResume:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-	/* Build a safe filename. */
 	NSString *escapedFileName = [filename safeFilename];
-	
-	/* Build the address information. */
-	NSString *address = [self DCCTransferAddress];
-	
-	NSObjectIsEmptyAssert(address);
-	
-	/* Send file information. */
+
 	NSString *trail = nil;
 
 	if ([transferToken length] > 0) {
-		trail = [NSString stringWithFormat:@"%@ %@ %li %lli %@", escapedFileName, address, (long)port, totalFilesize, transferToken];
+		trail = [NSString stringWithFormat:@"%@ %lu %lli %@", escapedFileName, port, totalFilesize, transferToken];
 	} else {
-		trail = [NSString stringWithFormat:@"%@ %@ %li %lli", escapedFileName, address, (long)port, totalFilesize];
+		trail = [NSString stringWithFormat:@"%@ %lu %lli", escapedFileName, port, totalFilesize];
+	}
+
+	[self sendCTCPQuery:nickname command:@"DCC RESUME" text:trail];
+}
+
+- (void)sendFileResumeAccept:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
+{
+	NSString *escapedFileName = [filename safeFilename];
+
+	NSString *trail = nil;
+
+	if ([transferToken length] > 0) {
+		trail = [NSString stringWithFormat:@"%@ %lu %lli %@", escapedFileName, port, totalFilesize, transferToken];
+	} else {
+		trail = [NSString stringWithFormat:@"%@ %lu %lli", escapedFileName, port, totalFilesize];
+	}
+
+	[self sendCTCPQuery:nickname command:@"DCC ACCEPT" text:trail];
+}
+
+- (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
+{
+	NSString *escapedFileName = [filename safeFilename];
+
+	NSString *address = [self DCCTransferAddress];
+	
+	NSObjectIsEmptyAssert(address);
+
+	NSString *trail = nil;
+
+	if ([transferToken length] > 0) {
+		trail = [NSString stringWithFormat:@"%@ %@ %lu %lli %@", escapedFileName, address, port, totalFilesize, transferToken];
+	} else {
+		trail = [NSString stringWithFormat:@"%@ %@ %lu %lli", escapedFileName, address, port, totalFilesize];
 	}
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
@@ -9160,6 +9255,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (NSString *)DCCTransferAddress
 {
 	NSString *address = nil;
+
 	NSString *baseaddr = [[self fileTransferController] cachedIPAddress];
 	
 	if ([baseaddr isIPv6Address]) {
