@@ -41,9 +41,11 @@
 typedef NS_ENUM(NSUInteger, TDCFileTransferDialogTransferStatus) {
 	TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus,
 	TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus,
+	TDCFileTransferDialogTransferWaitingForResumeAcceptStatus,
 	TDCFileTransferDialogTransferMappingListeningPortStatus,
 	TDCFileTransferDialogTransferInitializingStatus,
-	TDCFileTransferDialogTransferErrorStatus,
+	TDCFileTransferDialogTransferRecoverableErrorStatus,
+	TDCFileTransferDialogTransferFatalErrorStatus,
 	TDCFileTransferDialogTransferStoppedStatus,
 	TDCFileTransferDialogTransferConnectingStatus,
 	TDCFileTransferDialogTransferIsListeningAsSenderStatus,
@@ -100,6 +102,7 @@ typedef NS_ENUM(NSUInteger, TDCFileTransferDialogNavigationControllerSelectedTab
 
 - (BOOL)fileTransferExistsWithToken:(NSString *)transferToken;
 
+- (TDCFileTransferDialogTransferController *)fileTransferMatchingPort:(NSInteger)port;
 - (TDCFileTransferDialogTransferController *)fileTransferSenderMatchingToken:(NSString *)transferToken;
 - (TDCFileTransferDialogTransferController *)fileTransferReceiverMatchingToken:(NSString *)transferToken;
 

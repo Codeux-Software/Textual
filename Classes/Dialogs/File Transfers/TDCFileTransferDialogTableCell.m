@@ -86,14 +86,16 @@
 		
 		/* Set info into some relevant vars. */
 		BOOL transferIsStopped = ([self transferStatus] == TDCFileTransferDialogTransferCompleteStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferErrorStatus ||
+								  [self transferStatus] == TDCFileTransferDialogTransferFatalErrorStatus ||
+								  [self transferStatus] == TDCFileTransferDialogTransferRecoverableErrorStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferStoppedStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferIsListeningAsSenderStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferIsListeningAsReceiverStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferInitializingStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferMappingListeningPortStatus ||
 								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForLocalIPAddressStatus ||
-								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus);
+								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus ||
+								  [self transferStatus] == TDCFileTransferDialogTransferWaitingForResumeAcceptStatus);
 		
 		/* Update position of text fields. */
 		if (transferIsStopped) {
@@ -137,7 +139,7 @@
 				if ([self isReceiving]) {
 					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1009]", [self peerNickname])];
 				} else {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[10001]", [self peerNickname])];
+					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1001]", [self peerNickname])];
 				}
 				
 				break;
@@ -184,7 +186,8 @@
 				
 				break;
 			}
-			case TDCFileTransferDialogTransferErrorStatus:
+			case TDCFileTransferDialogTransferFatalErrorStatus:
+			case TDCFileTransferDialogTransferRecoverableErrorStatus:
 			{
 				[self.transferProgressTextField setStringValue:TXTLS([self errorMessageToken], [self peerNickname])];
 				
@@ -251,6 +254,12 @@
 			case TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus:
 			{
 				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1007]", [self peerNickname])];
+
+				break;
+			}
+			case TDCFileTransferDialogTransferWaitingForResumeAcceptStatus:
+			{
+				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1023]", [self peerNickname])];
 
 				break;
 			}
