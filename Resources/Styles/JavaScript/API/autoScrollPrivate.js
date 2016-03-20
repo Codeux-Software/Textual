@@ -62,11 +62,12 @@ var TextualScroller = {};
 /* State tracking */
 TextualScroller.isScrolledByUser = false;
 
-TextualScroller.nextScrollTopValue = 0;
 TextualScroller.currentScrollTopValue = 0;
 
-TextualScroller.scrollTopUserConstant = 9;
-TextualScroller.scrollTopUserConstantSet = false;
+TextualScroller.scrollTopLastPosition1 = 0;
+TextualScroller.scrollTopLastPosition2 = 0;
+
+TextualScroller.scrollTopUserConstant = 20;
 
 TextualScroller.scrollingEnabled = false;
 
@@ -82,25 +83,31 @@ TextualScroller.documentScrolledCallback = function()
 		return;
 	}
 
+	TextualScroller.scrollTopLastPosition2 = TextualScroller.scrollTopLastPosition1;
+
+	TextualScroller.scrollTopLastPosition1 = document.body.scrollTop;
+
 	if (TextualScroller.isScrolledByUser) {
 		if (TextualScroller.isScrolledToBottom()) {
 			TextualScroller.isScrolledByUser = false;
+
+			TextualScroller.currentScrollTopValue = TextualScroller.scrollTopLastPosition1;
 		}
 	} else {
-		if (TextualScroller.isScrolledAboveUserThreshold()) {
-			TextualScroller.isScrolledByUser = true;
-		} else if (TextualScroller.nextScrollTopValue !== 0) {
-			TextualScroller.currentScrollTopValue = TextualScroller.nextScrollTopValue;
+		if (TextualScroller.scrollTopLastPosition1 < TextualScroller.scrollTopLastPosition2) {
+			if (TextualScroller.isScrolledAboveUserThreshold()) {
+				TextualScroller.isScrolledByUser = true;
+			}
+		}
 
-			TextualScroller.nextScrollTopValue = 0;
+		if (TextualScroller.scrollTopLastPosition1 > TextualScroller.currentScrollTopValue) {
+			TextualScroller.currentScrollTopValue = TextualScroller.scrollTopLastPosition1;
 		}
 	}
 };
 
 TextualScroller.performAutoScroll = function()
 {
-	TextualScroller.setScrollTopUserConstant();
-
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	if (scrollHeight === 0) {
@@ -109,42 +116,11 @@ TextualScroller.performAutoScroll = function()
 		TextualScroller.scrollingEnabled = true;
 	}
 
-	TextualScroller.nextScrollTopValue = scrollHeight;
-
 	if (TextualScroller.isScrolledByUser) {
 		return;
 	}
 
 	document.body.scrollTop = scrollHeight;
-};
-
-TextualScroller.setScrollTopUserConstant = function()
-{
-	/*	Set TextualScroller.setScrollTopUserConstant to the height
-		of a single plain text line. */
-	if (TextualScroller.scrollTopUserConstantSet) {
-		return;
-	}
-
-	var documentBody = Textual.documentBodyElement();
-
-	var lastChild = documentBody.lastChild;
-
-	if (typeof lastChild.getAttribute !== "function") {
-		return;
-	}
-
-	if (lastChild.getAttribute("ltype") === "privmsg") {
-		var lastChildBottom = lastChild.getBoundingClientRect().height;
-
-		if (lastChildBottom > 30) {
-			lastChildBottom = 30;
-		}
-
-		TextualScroller.scrollTopUserConstant = lastChildBottom;
-
-		TextualScroller.scrollTopUserConstantSet = true;
-	}
 };
 
 TextualScroller.scrollHeight = function()
@@ -163,25 +139,11 @@ TextualScroller.scrollHeight = function()
 	return (scrollHeight - offsetHeight);
 };
 
-TextualScroller.scrollTop = function()
-{
-	var scrollTop = document.body.scrollTop;
-
-	return scrollTop;
-};
-
-TextualScroller.scrollTopCorrected = function()
-{
-	var scrollTop = document.body.scrollTop;
-
-	return (scrollTop + TextualScroller.scrollTopUserConstant);
-};
-
 TextualScroller.isScrolledAboveUserThreshold = function()
 {
-	var scrollTop = document.body.scrollTop;
+	var scrollTop = (TextualScroller.currentScrollTopValue - document.body.scrollTop);
 
-	if ((TextualScroller.currentScrollTopValue - scrollTop) > TextualScroller.scrollTopUserConstant) {
+	if (scrollTop > TextualScroller.scrollTopUserConstant) {
 		return true;
 	} else {
 		return false;
@@ -190,7 +152,7 @@ TextualScroller.isScrolledAboveUserThreshold = function()
 
 TextualScroller.isScrolledToBottom = function()
 {
-	var scrollTop = TextualScroller.scrollTopCorrected();
+	var scrollTop = (TextualScroller.scrollTopUserConstant + document.body.scrollTop);
 
 	var scrollHeight = TextualScroller.scrollHeight();
 
