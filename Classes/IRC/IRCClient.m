@@ -9201,7 +9201,7 @@ present_error:
 
 - (void)sendFileResume:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-	NSString *escapedFileName = [filename safeFilename];
+	NSString *escapedFileName = [self DCCSendEscapeFilename:filename];
 
 	NSString *trail = nil;
 
@@ -9216,7 +9216,7 @@ present_error:
 
 - (void)sendFileResumeAccept:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-	NSString *escapedFileName = [filename safeFilename];
+	NSString *escapedFileName = [self DCCSendEscapeFilename:filename];
 
 	NSString *trail = nil;
 
@@ -9231,7 +9231,7 @@ present_error:
 
 - (void)sendFile:(NSString *)nickname port:(NSInteger)port filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
-	NSString *escapedFileName = [filename safeFilename];
+	NSString *escapedFileName = [self DCCSendEscapeFilename:filename];
 
 	NSString *address = [self DCCTransferAddress];
 	
@@ -9250,6 +9250,17 @@ present_error:
 	NSString *message = BLS(1039, nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultRawCommandValue];
+}
+
+- (NSString *)DCCSendEscapeFilename:(NSString *)filename
+{
+	NSString *filenameEscaped = [filename safeFilename];
+
+	if ([filenameEscaped contains:NSStringWhitespacePlaceholder]) {
+		return [NSString stringWithFormat:@"\"%@\"", filenameEscaped];
+	}
+
+	return filenameEscaped;
 }
 
 - (NSString *)DCCTransferAddress
