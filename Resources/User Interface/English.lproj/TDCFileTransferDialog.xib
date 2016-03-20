@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A263e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCFileTransferDialog">
@@ -17,28 +17,29 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="File Transfers" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Window">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-            <rect key="contentRect" x="560" y="234" width="517" height="297"/>
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <rect key="contentRect" x="560" y="234" width="550" height="297"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <value key="minSize" type="size" width="515" height="297"/>
+            <value key="maxSize" type="size" width="800" height="800"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="517" height="297"/>
+                <rect key="frame" x="0.0" y="0.0" width="550" height="297"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="66" horizontalPageScroll="10" verticalLineScroll="66" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jdf-Fe-O7N">
-                        <rect key="frame" x="0.0" y="33" width="517" height="264"/>
+                        <rect key="frame" x="0.0" y="33" width="550" height="264"/>
                         <clipView key="contentView" id="LgH-Ka-LaD">
-                            <rect key="frame" x="0.0" y="0.0" width="519" height="264"/>
+                            <rect key="frame" x="0.0" y="0.0" width="550" height="264"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="64" viewBased="YES" id="xso-Ti-Pvf" customClass="TVCBasicTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="517" height="0.0"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="550" height="264"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn editable="NO" width="514" minWidth="40" maxWidth="1000" id="rMl-gp-lCO">
+                                        <tableColumn editable="NO" width="547" minWidth="40" maxWidth="1000" id="rMl-gp-lCO">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,19 +53,14 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <customView identifier="GroupView" id="rFe-Pm-QDv" customClass="TDCFileTransferDialogTableCell">
-                                                    <rect key="frame" x="1" y="1" width="514" height="64"/>
+                                                    <rect key="frame" x="1" y="1" width="547" height="64"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <subviews>
-                                                        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fkg-tB-oW2">
-                                                            <rect key="frame" x="69" y="25" width="423" height="12"/>
-                                                            <animations/>
+                                                        <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="fkg-tB-oW2">
+                                                            <rect key="frame" x="69" y="25" width="456" height="12"/>
                                                         </progressIndicator>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="tvE-ly-KOo">
                                                             <rect key="frame" x="67" y="43" width="94" height="17"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="362" id="l8D-mH-X77"/>
-                                                            </constraints>
-                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="dummyfile.png" id="5dv-pa-ldM">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -72,11 +68,7 @@
                                                             </textFieldCell>
                                                         </textField>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22V-bc-ITj">
-                                                            <rect key="frame" x="67" y="6" width="429" height="14"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="425" id="REl-oT-rZn"/>
-                                                            </constraints>
-                                                            <animations/>
+                                                            <rect key="frame" x="67" y="6" width="462" height="14"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" title="10 MB of 100 MB (100 KB/sec) — 2 seconds reamining" id="VVN-xJ-iKJ">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -89,12 +81,13 @@
                                                                 <constraint firstAttribute="width" constant="61" id="E0l-CX-YUP"/>
                                                                 <constraint firstAttribute="height" constant="64" id="WBp-LA-De2"/>
                                                             </constraints>
-                                                            <animations/>
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="yRx-w7-oXd"/>
                                                         </imageView>
-                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
-                                                            <rect key="frame" x="457" y="43" width="37" height="14"/>
-                                                            <animations/>
+                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-pI-cPd">
+                                                            <rect key="frame" x="167" y="43" width="360" height="14"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="oah-Xd-IAI"/>
+                                                            </constraints>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" allowsUndo="NO" sendsActionOnEndEditing="YES" alignment="right" title="10 MB" id="PAR-0R-j9A">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -105,6 +98,7 @@
                                                     <constraints>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="baseline" secondItem="qsO-pI-cPd" secondAttribute="baseline" id="2ex-Th-hxI"/>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="leading" secondItem="NYx-LB-DAM" secondAttribute="trailing" constant="8" id="7o2-gu-oax"/>
+                                                        <constraint firstAttribute="trailing" secondItem="22V-bc-ITj" secondAttribute="trailing" constant="20" id="AES-tc-3mu"/>
                                                         <constraint firstItem="NYx-LB-DAM" firstAttribute="leading" secondItem="rFe-Pm-QDv" secondAttribute="leading" id="Aks-Nu-Q9F"/>
                                                         <constraint firstAttribute="trailing" secondItem="qsO-pI-cPd" secondAttribute="trailing" constant="22" id="Cwc-na-g2p"/>
                                                         <constraint firstAttribute="trailing" secondItem="fkg-tB-oW2" secondAttribute="trailing" constant="22" id="F6I-RK-DFp"/>
@@ -112,11 +106,11 @@
                                                         <constraint firstAttribute="bottom" secondItem="NYx-LB-DAM" secondAttribute="bottom" id="MRx-7c-RFt"/>
                                                         <constraint firstAttribute="bottom" secondItem="22V-bc-ITj" secondAttribute="bottom" constant="6" id="NgU-gF-1BD"/>
                                                         <constraint firstItem="fkg-tB-oW2" firstAttribute="top" secondItem="rFe-Pm-QDv" secondAttribute="top" constant="27" id="Skz-Lf-LFX"/>
+                                                        <constraint firstItem="qsO-pI-cPd" firstAttribute="leading" secondItem="tvE-ly-KOo" secondAttribute="trailing" constant="10" id="Ugx-DI-HCB"/>
                                                         <constraint firstItem="fkg-tB-oW2" firstAttribute="leading" secondItem="NYx-LB-DAM" secondAttribute="trailing" constant="8" id="ZJv-3c-0Gc"/>
                                                         <constraint firstItem="tvE-ly-KOo" firstAttribute="top" secondItem="rFe-Pm-QDv" secondAttribute="top" constant="4" id="fE3-Pt-GL0"/>
                                                         <constraint firstItem="NYx-LB-DAM" firstAttribute="top" secondItem="rFe-Pm-QDv" secondAttribute="top" id="ztW-h6-oiN"/>
                                                     </constraints>
-                                                    <animations/>
                                                     <connections>
                                                         <outlet property="fileIconView" destination="NYx-LB-DAM" id="LdH-bC-6lX"/>
                                                         <outlet property="filenameTextField" destination="tvE-ly-KOo" id="Pab-WA-74U"/>
@@ -137,24 +131,19 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="jCb-ZR-rm0">
                             <rect key="frame" x="-100" y="-100" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="e1W-F5-jSi">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="117">
                         <rect key="frame" x="10" y="3" width="180" height="25"/>
-                        <animations/>
                         <buttonCell key="cell" type="roundTextured" title="Clear All Stopped Transfers" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="118">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -165,7 +154,6 @@
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S61-G4-yuP">
                         <rect key="frame" x="-2" y="-3" width="24" height="27"/>
-                        <animations/>
                         <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" transparent="YES" imageScaling="proportionallyDown" inset="2" id="SeN-Yp-yzc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -186,7 +174,6 @@ Gw
                     <constraint firstAttribute="bottom" secondItem="117" secondAttribute="bottom" constant="5" id="uVj-fq-PFp"/>
                     <constraint firstAttribute="trailing" secondItem="Jdf-Fe-O7N" secondAttribute="trailing" id="yBR-gX-R1n"/>
                 </constraints>
-                <animations/>
             </view>
             <toolbar key="toolbar" implicitIdentifier="F9BA2FE0-3285-45B9-A261-616E8F0B841D" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconOnly" sizeMode="regular" id="U41-vi-dWL">
                 <allowedToolbarItems>
@@ -198,7 +185,6 @@ Gw
                         <segmentedControl key="view" verticalHuggingPriority="750" id="fj7-Wr-P1f">
                             <rect key="frame" x="0.0" y="14" width="192" height="25"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <animations/>
                             <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="nY8-F3-7sa">
                                 <font key="font" metaFont="system"/>
                                 <segments>
@@ -220,7 +206,7 @@ Gw
                 </defaultToolbarItems>
             </toolbar>
             <contentBorderThickness minY="33"/>
-            <point key="canvasLocation" x="605.5" y="361.5"/>
+            <point key="canvasLocation" x="605" y="361.5"/>
         </window>
         <menu title="Menu" id="34" userLabel="TableMenu">
             <items>
