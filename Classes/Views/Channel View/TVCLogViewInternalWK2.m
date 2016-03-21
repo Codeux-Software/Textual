@@ -204,16 +204,20 @@ create_normal_pool:
 
 - (void)emptyCaches:(void (^)(void))completionHandler
 {
-	WKWebsiteDataStore *wk2WebsiteDataStore = [_sharedWebViewConfiguration websiteDataStore];
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		WKWebsiteDataStore *wk2WebsiteDataStore = [_sharedWebViewConfiguration websiteDataStore];
 
-	if ( wk2WebsiteDataStore) {
-		[wk2WebsiteDataStore removeDataOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
-								 modifiedSince:[NSDate distantPast]
-							 completionHandler:completionHandler];
-	} else {
-		if (completionHandler) {
-			completionHandler();
+		if ( wk2WebsiteDataStore) {
+			[wk2WebsiteDataStore removeDataOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+									 modifiedSince:[NSDate distantPast]
+								 completionHandler:completionHandler];
+
+			return;
 		}
+	}
+
+	if (completionHandler) {
+		completionHandler();
 	}
 }
 
