@@ -113,9 +113,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (NSString *)temporaryPath
 {
-	NSString *pathExtension = [NSString stringWithFormat:@"/Cached-Style-Resources-%@/", [self sharedCacheID]];
-
-	return [[self temporaryPathLeading] stringByAppendingPathComponent:pathExtension];
+	return [[self temporaryPathLeading] stringByAppendingPathComponent:@"/Cached-Style-Resources/"];
 }
 
 - (BOOL)usesTemporaryPath
