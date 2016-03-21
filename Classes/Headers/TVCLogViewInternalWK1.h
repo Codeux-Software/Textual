@@ -50,4 +50,6 @@
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
+
+- (void)emptyCaches:(void (^)(void))completionHandler;
 @end
