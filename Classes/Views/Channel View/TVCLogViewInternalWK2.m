@@ -152,7 +152,7 @@ create_normal_pool:
 	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[webView setAllowsLinkPreview:NO];
+		[webView setAllowsLinkPreview:YES];
 
 		[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
 	}
