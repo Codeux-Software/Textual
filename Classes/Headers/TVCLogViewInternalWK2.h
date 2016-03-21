@@ -52,4 +52,6 @@
 - (void)openWebInspector;
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
+
+- (void)emptyCaches:(void (^)(void))completionHandler;
 @end

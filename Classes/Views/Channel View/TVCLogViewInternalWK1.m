@@ -101,6 +101,8 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	[self setPolicyDelegate:nil];
 	[self setResourceLoadDelegate:nil];
 	[self setUIDelegate:nil];
+
+	[self emptyCaches:nil];
 }
 
 #pragma mark -
@@ -118,6 +120,13 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)emptyCaches:(void (^)(void))completionHandler
+{
+	if (completionHandler) {
+		completionHandler();
+	}
+}
 
 - (void)updateBackgroundColor
 {

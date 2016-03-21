@@ -207,6 +207,13 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
+	[[self webViewBacking] emptyCaches:^{
+		[self _loadHTMLString:string baseURL:baseURL];
+	}];
+}
+
+- (void)_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
+{
 	if ([self isUsingWebKit2])
 	{
 		WKWebView *webView = [self webViewBacking];

@@ -173,6 +173,12 @@ create_normal_pool:
 	[self setNavigationDelegate:nil];
 
 	[self setUIDelegate:nil];
+
+	[self emptyCaches:nil];
+
+	_sharedWebViewConfiguration = nil;
+	_sharedUserContentController = nil;
+	_sharedProcessPool = nil;
 }
 
 - (TVCLogPolicy *)webViewPolicy
@@ -195,6 +201,21 @@ create_normal_pool:
 
 #pragma mark -
 #pragma mark Utilities
+
+- (void)emptyCaches:(void (^)(void))completionHandler
+{
+	WKWebsiteDataStore *wk2WebsiteDataStore = [_sharedWebViewConfiguration websiteDataStore];
+
+	if ( wk2WebsiteDataStore) {
+		[wk2WebsiteDataStore removeDataOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+								 modifiedSince:[NSDate distantPast]
+							 completionHandler:completionHandler];
+	} else {
+		if (completionHandler) {
+			completionHandler();
+		}
+	}
+}
 
 - (void)openWebInspector
 {
