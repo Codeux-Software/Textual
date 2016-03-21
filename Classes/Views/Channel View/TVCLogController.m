@@ -580,7 +580,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)notifyDidBecomeHidden
 {
-	;
+	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeHidden" withArguments:nil];
 }
 
 - (void)changeTextSizeMultiplier
@@ -1265,6 +1265,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		[self executeQuickScriptCommand:@"Textual.viewFinishedLoading" withArguments:@[]];
 	} else {
 		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
+	}
+
+	if ([mainWindow() selectedViewController] == self) {
+		[self notifyDidBecomeVisible];
 	}
 
 	[self setInitialTopic];
