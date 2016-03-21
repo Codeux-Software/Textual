@@ -84,9 +84,9 @@ TextualScroller.documentVisbilityChangedCallback = function()
 	}
 
 	if (documentHidden) {
-		TextualScroller.disableScrollingTimer();
+		TextualScroller._disableScrollingTimer();
 	} else {
-		TextualScroller.enableScrollingTimer();
+		TextualScroller._enableScrollingTimer();
 	}
 };
 
