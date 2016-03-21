@@ -69,6 +69,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	[webViewScriptSink setParentView:hostView];
 
 	TVCLogPolicy *webViewPolicy = [TVCLogPolicy new];
+	[webViewPolicy setParentView:hostView];
 
 	TVCLogViewInternalWK1 *webView = [[TVCLogViewInternalWK1 alloc] initWithFrame:NSZeroRect];
 
