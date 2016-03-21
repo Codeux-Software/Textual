@@ -130,6 +130,10 @@ TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 		scrolling event if its value has changed. */
 	var scrollHeight = TextualScroller.scrollHeight();
 
+	if (scrollHeight === 0) {
+		return;
+	}
+
 	if (skipScrollHeightCheck === false) {
 		if (scrollHeight === TextualScroller.scrollHeightLastValue) {
 			return;
@@ -146,7 +150,7 @@ TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 TextualScroller.scrollHeight = function()
 {
 	/* This function is called very early so add catch */
-	if (typeof document.body === "undefined") {
+	if (document.body === null) {
 		return 0;
 	}
 		
