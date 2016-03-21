@@ -173,10 +173,6 @@ create_normal_pool:
 	[self setNavigationDelegate:nil];
 
 	[self setUIDelegate:nil];
-
-	_sharedWebViewConfiguration = nil;
-	_sharedUserContentController = nil;
-	_sharedProcessPool = nil;
 }
 
 - (TVCLogPolicy *)webViewPolicy
