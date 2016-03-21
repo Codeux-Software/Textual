@@ -228,8 +228,6 @@ Textual.documentBodyAppend = function(templateHTML)
 	var documentBody = Textual.documentBodyElement();
 
 	documentBody.insertAdjacentHTML("beforeend", templateHTML);
-
-	TextualScroller.performAutoScroll();
 };
 
 Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
@@ -251,8 +249,6 @@ Textual.documentBodyAppendHistoric = function(templateHTML, isReload)
 	}
 
 	elementToAppendTo.insertAdjacentHTML("afterbegin", templateHTML);
-
-	TextualScroller.performAutoScroll();
 };
 
 Textual.documentHTML = function()
@@ -294,6 +290,15 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 /* State management */
 Textual.notifyDidBecomeVisible = function()
 {
+	TextualScroller.enableScrollingTimer();
+
+	Textual.clearSelection();
+};
+
+Textual.notifyDidBecomeHidden = function()
+{
+	TextualScroller.disableScrollingTimer();
+
 	Textual.clearSelection();
 };
 
@@ -607,16 +612,6 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 
 		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
-
-	/* Perform auto scroll now + when the image has actually completed loading */
-	realImageElement.addEventListener("load", Textual.inlineImageLoaded, false);
-
-	TextualScroller.performAutoScroll();
-};
-
-Textual.inlineImageLoaded = function()
-{
-	TextualScroller.performAutoScroll();
 };
 
 document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
