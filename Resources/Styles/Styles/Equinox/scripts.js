@@ -434,12 +434,6 @@ Textual.nicknameSingleClicked = function (e) {
   }
 };
 
-/* Don't jump back to the bottom of the window when the view becomes visible */
-Textual.notifyDidBecomeVisible = function () {
-  'use strict';
-  window.getSelection().empty();
-};
-
 Textual.viewBodyDidLoad = function () {
   'use strict';
   Textual.fadeOutLoadingScreen(1.00, 0.95);
