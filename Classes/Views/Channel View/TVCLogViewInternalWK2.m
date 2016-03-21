@@ -174,8 +174,6 @@ create_normal_pool:
 
 	[self setUIDelegate:nil];
 
-	[self emptyCaches:nil];
-
 	_sharedWebViewConfiguration = nil;
 	_sharedUserContentController = nil;
 	_sharedProcessPool = nil;
