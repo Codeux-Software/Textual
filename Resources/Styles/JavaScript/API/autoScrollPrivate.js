@@ -73,6 +73,23 @@ TextualScroller.scrollTopLastPosition2 = 0;
 TextualScroller.scrollHeightChangedTimer = null;
 
 /* Core functions */
+TextualScroller.documentVisbilityChangedCallback = function()
+{
+	var documentHidden = false;
+	
+	if (typeof document.hidden !== "undefined") {
+		documentHidden = document.hidden;
+	} else if (typeof document.webkitHidden !== "undefined") {
+		documentHidden = document.webkitHidden;
+	}
+
+	if (documentHidden) {
+		TextualScroller.disableScrollingTimer();
+	} else {
+		TextualScroller.enableScrollingTimer();
+	}
+};
+
 TextualScroller.documentResizedCallback = function()
 {
 	TextualScroller.performAutoScroll(false);
@@ -157,24 +174,47 @@ TextualScroller.scrollHeight = function()
 };
 
 /* 	Functions that can be used to toggle automatic scrolling */
-TextualScroller.enableScrollingTimer = function()
+TextualScroller._enableScrollingTimer = function()
 {
+	/* Catch possible edge cases */
 	if (TextualScroller.scrollHeightChangedTimer) {
 		throw "Tried to create timer when one already exists";
 	}
-	
+
+	/* Perform automatic scroll the moment this function is called. */
+	TextualScroller.performAutoScroll();
+
+	/* Setup timer to continuously perform automatic scroll. */
 	TextualScroller.scrollHeightChangedTimer = setInterval(function() {
 		TextualScroller.performAutoScroll();
 	}, 100);
 };
 
-TextualScroller.disableScrollingTimer = function()
+TextualScroller._disableScrollingTimer = function()
 {
 	if (TextualScroller.scrollHeightChangedTimer) {
 		clearInterval(TextualScroller.scrollHeightChangedTimer);
-		
+
 		TextualScroller.scrollHeightChangedTimer = null;
 	}
+};
+
+TextualScroller.enableScrollingTimer = function()
+{
+	if (TextualScroller.usesStupidScroller() === false) {
+		return;
+	}
+	
+	TextualScroller._enableScrollingTimer();
+};
+
+TextualScroller.disableScrollingTimer = function()
+{
+	if (TextualScroller.usesStupidScroller() === false) {
+		return;
+	}
+	
+	TextualScroller._disableScrollingTimer();
 };
 
 /* 	Function returns true if the document is scrolled the offset defined 
@@ -207,7 +247,25 @@ TextualScroller.isScrolledToBottom = function()
 	}
 };
 
+/* 	corePrivate.js will call enableScrollingTimer() and disableScrollingTimer() when a
+	view is switched to. These functions ignore that call if document.hidden is available
+	because if it is, using that is much more optimized for managing the timer. */
+TextualScroller.usesStupidScroller = function() 
+{
+	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 /* Bind to events */
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
 
 window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
+
+if (typeof document.hidden !== "undefined") {
+	document.addEventListener("visibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
+} else if (typeof document.webkitHidden !== "undefined") {
+	document.addEventListener("webkitvisibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
+}
