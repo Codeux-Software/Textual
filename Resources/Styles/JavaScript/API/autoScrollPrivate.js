@@ -45,20 +45,6 @@
 
 var TextualScroller = {};
 
-/*	Scrolling is very dependent on TextualScroller.scrollTopUserConstant
-	JavaScript has no way to distinguish user scroll events and programatic
-	scroll events which means everything is best guess. Each time an auto
-	scroll is performed, the Y coordinate we are scrolling to is recorded.
-
-	Take this coordinate and add TextualScroller.scrollTopUserConstant to it.
-	If a scroll event is received that scrolls ABOVE this calculated height,
-	the the event is believed to be the user.
-
-	If a scroll event occurs at the exact bottom, or within the value of
-	TextualScroller.scrollTopUserConstant from the exact bottom, then the
-	user is believed to have scrolled back to the bottom.
-*/
-
 /* State tracking */
 TextualScroller.isScrolledByUser = false;
 
@@ -76,7 +62,7 @@ TextualScroller.scrollHeightChangedTimer = null;
 TextualScroller.documentVisbilityChangedCallback = function()
 {
 	var documentHidden = false;
-	
+
 	if (typeof document.hidden !== "undefined") {
 		documentHidden = document.hidden;
 	} else if (typeof document.webkitHidden !== "undefined") {
@@ -84,15 +70,15 @@ TextualScroller.documentVisbilityChangedCallback = function()
 	}
 
 	if (documentHidden) {
-		TextualScroller._disableScrollingTimer();
+		TextualScroller.disableScrollingTimerInt();
 	} else {
-		TextualScroller._enableScrollingTimer();
+		TextualScroller.enableScrollingTimerInt();
 	}
 };
 
 TextualScroller.documentResizedCallback = function()
 {
-	TextualScroller.performAutoScroll(false);
+	TextualScroller.performAutoScroll(true);
 };
 
 TextualScroller.documentScrolledCallback = function()
@@ -159,6 +145,11 @@ TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 /* 	Function returns the scroll height accounting for offset height */
 TextualScroller.scrollHeight = function()
 {
+	/* This function is called very early so add catch */
+	if (typeof document.body === "undefined") {
+		return 0;
+	}
+		
 	var offsetHeight = document.body.offsetHeight;
 
 	/*	offsetHeight /should/ never be zero but it can be at times
@@ -174,7 +165,7 @@ TextualScroller.scrollHeight = function()
 };
 
 /* 	Functions that can be used to toggle automatic scrolling */
-TextualScroller._enableScrollingTimer = function()
+TextualScroller.enableScrollingTimerInt = function()
 {
 	/* Catch possible edge cases */
 	if (TextualScroller.scrollHeightChangedTimer) {
@@ -190,7 +181,7 @@ TextualScroller._enableScrollingTimer = function()
 	}, 100);
 };
 
-TextualScroller._disableScrollingTimer = function()
+TextualScroller.disableScrollingTimerInt = function()
 {
 	if (TextualScroller.scrollHeightChangedTimer) {
 		clearInterval(TextualScroller.scrollHeightChangedTimer);
@@ -199,22 +190,24 @@ TextualScroller._disableScrollingTimer = function()
 	}
 };
 
+/* 	TextualScroller.enableScrollingTimer and TextualScroller.disableScrollingTimer 
+	are called by corePrivate.js when a view is switched to and switched away. 
+	The timer is only managed here when document.hidden is not available. When 
+	document.hidden is available, it is better to rely on state changes to it, 
+	as it allows us to disable timer not only when the view is switched away,
+	but when its host window is occluded. */
 TextualScroller.enableScrollingTimer = function()
 {
-	if (TextualScroller.usesStupidScroller() === false) {
-		return;
+	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
+		TextualScroller.enableScrollingTimerInt();
 	}
-	
-	TextualScroller._enableScrollingTimer();
 };
 
 TextualScroller.disableScrollingTimer = function()
 {
-	if (TextualScroller.usesStupidScroller() === false) {
-		return;
+	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
+		TextualScroller.disableScrollingTimerInt();
 	}
-	
-	TextualScroller._disableScrollingTimer();
 };
 
 /* 	Function returns true if the document is scrolled the offset defined 
@@ -247,18 +240,6 @@ TextualScroller.isScrolledToBottom = function()
 	}
 };
 
-/* 	corePrivate.js will call enableScrollingTimer() and disableScrollingTimer() when a
-	view is switched to. These functions ignore that call if document.hidden is available
-	because if it is, using that is much more optimized for managing the timer. */
-TextualScroller.usesStupidScroller = function() 
-{
-	if (typeof document.hidden === "undefined" && typeof document.webkitHidden === "undefined") {
-		return true;
-	} else {
-		return false;
-	}
-}
-
 /* Bind to events */
 document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
 
@@ -269,3 +250,6 @@ if (typeof document.hidden !== "undefined") {
 } else if (typeof document.webkitHidden !== "undefined") {
 	document.addEventListener("webkitvisibilitychange", TextualScroller.documentVisbilityChangedCallback, false);
 }
+
+/* Populate initial visiblity state and maybe create timer */
+TextualScroller.documentVisbilityChangedCallback();
