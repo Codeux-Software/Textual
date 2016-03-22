@@ -204,6 +204,8 @@
 	<integer>200</integer>
 	<key>UsesWebKit2WhenAvailable</key>
 	<true/>
+	<key>WKProcessPoolSizeIsLimited</key>
+	<true/>
 	<key>WebKitDeveloperExtras</key>
 	<true/>
 	<key>__WebInspectorPageGroupLevel1__.WebKit2InspectorStartsAttached</key>
