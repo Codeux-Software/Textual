@@ -46,11 +46,17 @@
 var TextualScroller = {};
 
 /* State tracking */
-TextualScroller.currentScrollHeightValue = 0;
-
 TextualScroller.scrollTopUserConstant = 25;
 
+TextualScroller.scrollHeightLastValue = 0;
 TextualScroller.scrollHeightChangedTimer = null;
+
+TextualScroller.scrollLastPosition1 = 0;
+TextualScroller.scrollLastPosition2 = 0;
+
+TextualScroller.currentScrollTopValue = 0;
+
+TextualScroller.isScrolledByUser = false;
 
 /* Core functions */
 TextualScroller.documentVisbilityChangedCallback = function()
@@ -75,6 +81,59 @@ TextualScroller.documentResizedCallback = function()
 	TextualScroller.performAutoScroll(true);
 };
 
+TextualScroller.documentScrolledCallback = function()
+{
+	/* 	Record the last two known scrollY values. These properties are compared
+		to determine if the user is scrolling upwards or downwards. */
+	TextualScroller.scrollLastPosition2 = TextualScroller.scrollLastPosition1;
+
+	TextualScroller.scrollLastPosition1 = window.scrollY;
+
+	/* 	If the current scroll top value exceeds the view height, then it means
+		that some lines were probably removed to enforce size limit. */
+	/* 	Reset the value to be the absolute bottom when this occurs. */
+	var scrollHeight = TextualScroller.scrollHeight();
+
+	if (TextualScroller.currentScrollTopValue > scrollHeight) {
+		TextualScroller.currentScrollTopValue = scrollHeight;
+
+		if (TextualScroller.currentScrollTopValue < 0) {
+			TextualScroller.currentScrollTopValue = 0;
+		}
+	}
+	
+	if (TextualScroller.isScrolledByUser) {
+		/* Check whether the user has scrolled back to the bottom */
+		var scrollTop = (scrollHeight - TextualScroller.scrollLastPosition1);
+
+		if (scrollTop < TextualScroller.scrollTopUserConstant) {
+			TextualScroller.isScrolledByUser = false;
+
+			TextualScroller.currentScrollTopValue = TextualScroller.scrollLastPosition1;
+		}
+	}
+	else 
+	{
+		/* 	Check if the user is scrolling upwards. If they are, then check if they have went
+			above the threshold that defines whether its a user initated event or not. */
+		if (TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) {
+			var scrollTop = (TextualScroller.currentScrollTopValue - TextualScroller.scrollLastPosition1);
+
+			if (scrollTop > TextualScroller.scrollTopUserConstant) {
+				console.log("Scrolled above user threshold with difference: " + scrollTop);
+
+				TextualScroller.isScrolledByUser = true;
+			}
+		}
+
+		/* 	If the user is scrolling downward and passes last threshold location, then
+			move the location further downward. */
+		if (TextualScroller.scrollLastPosition1 > TextualScroller.currentScrollTopValue) {
+			TextualScroller.currentScrollTopValue = TextualScroller.scrollLastPosition1;
+		}
+	}
+};
+
 /* 	Perform automatic scrolling */
 TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 {
@@ -89,31 +148,29 @@ TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 	if (scrollHeight === 0) {
 		return;
 	}
-	
+
 	/* Make a copy of the previous scroll height and save the new */
-	var scrollHeightPrevious = TextualScroller.currentScrollHeightValue;
+	var scrollHeightPrevious = TextualScroller.scrollHeightLastValue;
 	
-	TextualScroller.currentScrollHeightValue = scrollHeight;
+	TextualScroller.scrollHeightLastValue = scrollHeight;
 	
+	/* Do not perform scrolling if the user is believed to have scrolled */
+	if (TextualScroller.isScrolledByUser) {
+		return;
+	}
+
 	/* Perform comparison test for scroll height */
 	if (skipScrollHeightCheck === false) {
 		if (scrollHeight === scrollHeightPrevious) {
 			return;
 		}
 	}
-	
-	/* Check if we are at or near the bottom */
-	var scrollTop = (document.body.scrollTop + TextualScroller.scrollTopUserConstant);
-
-	if (scrollTop < scrollHeightPrevious) {
-		return;
-	}
 
 	/* Scroll to new value */
-	document.body.scrollTop = scrollHeight;
+	window.scrollTo(0, scrollHeight);
 };
 
-/* 	Function returns the scroll height accounting for offset height */
+/* Function returns the scroll height accounting for offset height */
 TextualScroller.scrollHeight = function()
 {
 	/* This function is called very early so add catch */
@@ -135,21 +192,18 @@ TextualScroller.scrollHeight = function()
 	return (scrollHeight - offsetHeight);
 };
 
-/* 	Functions that can be used to toggle automatic scrolling */
+/* Functions that can be used to toggle automatic scrolling */
 TextualScroller.enableScrollingTimerInt = function()
 {
-	/* Catch possible edge cases */
 	if (TextualScroller.scrollHeightChangedTimer) {
 		throw "Tried to create timer when one already exists";
 	}
 
-	/* Perform automatic scroll the moment this function is called. */
 	TextualScroller.performAutoScroll();
 
-	/* Setup timer to continuously perform automatic scroll. */
 	TextualScroller.scrollHeightChangedTimer = setInterval(function() {
 		TextualScroller.performAutoScroll();
-	}, 100);
+	}, 50);
 };
 
 TextualScroller.disableScrollingTimerInt = function()
@@ -181,8 +235,9 @@ TextualScroller.disableScrollingTimer = function()
 	}
 };
 
-
 /* Bind to events */
+document.addEventListener("scroll", TextualScroller.documentScrolledCallback, false);
+
 window.addEventListener("resize", TextualScroller.documentResizedCallback, false);
 
 if (typeof document.hidden !== "undefined") {
