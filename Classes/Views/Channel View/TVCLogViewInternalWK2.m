@@ -207,7 +207,12 @@ create_normal_pool:
 		WKWebsiteDataStore *wk2WebsiteDataStore = [_sharedWebViewConfiguration websiteDataStore];
 
 		if ( wk2WebsiteDataStore) {
-			[wk2WebsiteDataStore removeDataOfTypes:[WKWebsiteDataStore allWebsiteDataTypes]
+			NSSet *itemsToRemove = [NSSet setWithArray:@[
+				WKWebsiteDataTypeDiskCache,
+				WKWebsiteDataTypeMemoryCache
+			]];
+
+			[wk2WebsiteDataStore removeDataOfTypes:itemsToRemove
 									 modifiedSince:[NSDate distantPast]
 								 completionHandler:completionHandler];
 
