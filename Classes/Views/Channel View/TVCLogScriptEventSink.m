@@ -361,6 +361,17 @@
 			}];
 }
 
+- (void)logToConsoleFile:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_logToConsoleFile:)
+	  minimumArgumentCount:1
+			withValidation:^Class(NSInteger argumentIndex) {
+				return [NSString class];
+			}];
+}
+
 - (void)networkName:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_networkName:)];
@@ -557,6 +568,84 @@
 	NSString *message = [context arguments][0];
 
 	LogToConsole(@"JavaScript: %@", message);
+}
+
+- (void)_logToConsoleFile:(TVCLogScriptEventSinkContext *)context
+{
+	/* Define the file path in which the data is written to. */
+	IRCClient *u = [context associatedClient];
+
+	IRCChannel *c = [context associatedChannel];
+
+	NSString *basePath = [[TPCPathInfo applicationLogsFolderPath] stringByAppendingPathComponent:@"/JavaScript-Console/"];
+
+	NSString *filename = nil;
+
+	if (c) {
+		NSString *subPath = [NSString stringWithFormat:@"/%@/", [u  uniqueIdentifier]];
+
+		basePath = [basePath stringByAppendingPathComponent:subPath];
+
+		filename = [NSString stringWithFormat:@"%@.txt", [[c name] safeFilename]];
+	}
+	else // c != nil
+	{
+		filename = [NSString stringWithFormat:@"%@.txt", [u uniqueIdentifier]];
+	}
+
+	/* Create folder in which the log files will be kept or throw error. */
+	if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+		NSError *createDirectoryError = nil;
+
+		if ([RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
+			NSString *errorMessage = [NSString stringWithFormat:@"Failed to create directory to write files in: %@", [createDirectoryError localizedDescription]];
+
+			[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+
+			return;
+		}
+	}
+
+	/* Try to create blank file if it does not exist yet or throw error. */
+	NSString *writePath = [basePath stringByAppendingPathComponent:filename];
+
+	if ([RZFileManager() fileExistsAtPath:writePath] == NO) {
+		NSError *writeToFileError = nil;
+
+		if ([NSStringEmptyPlaceholder writeToFile:writePath atomically:NO encoding:NSUTF8StringEncoding error:&writeToFileError] == NO) {
+			NSString *errorMessage = [NSString stringWithFormat:@"Failed to write blank file: %@", [writeToFileError localizedDescription]];
+
+			[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+
+			return;
+		}
+	}
+
+	/* Get file handle for writing or throw error */
+	NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:writePath];
+
+	if (fileHandle == nil) {
+		NSString *errorMessage = [NSString stringWithFormat:@"Failed to open file handle for file: %@", writePath];
+
+		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+
+		return;
+	}
+
+	[fileHandle seekToEndOfFile];
+
+	/* Write to file */
+	NSString *message = [NSString stringWithFormat:@"(%f) %@\x0d\x0a",
+						 CFAbsoluteTimeGetCurrent(), [context arguments][0]];
+
+	NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
+
+	[fileHandle writeData:messageData];
+
+	/* Close access to file */
+	[fileHandle closeFile];
+
+	 fileHandle = nil;
 }
 
 - (id)_networkName:(TVCLogScriptEventSinkContext *)context

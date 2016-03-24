@@ -85,6 +85,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserHostmask"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserNickname"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsole"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsoleFile"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"networkName"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameColorStyleHash"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
