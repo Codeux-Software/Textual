@@ -367,15 +367,6 @@
 		<key>indexValue</key>
 		<integer>5032</integer>
 	</dict>
-	<key>jseval</key>
-	<dict>
-		<key>command</key>
-		<string>JSEVAL</string>
-		<key>developerModeOnly</key>
-		<string>YES</string>
-		<key>indexValue</key>
-		<integer>5104</integer>
-	</dict>
 	<key>kb</key>
 	<dict>
 		<key>command</key>
