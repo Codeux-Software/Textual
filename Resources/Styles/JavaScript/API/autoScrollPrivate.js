@@ -145,11 +145,11 @@ TextualScroller.performAutoScroll = function()
 		}
 	});
 	
-	if (typeof window.requestAnimationFrame === "undefined") {
+	// if (typeof window.requestAnimationFrame === "undefined") {
 		setTimeout(performAutoScrollFunction, 50);
-	} else {
-		requestAnimationFrame(performAutoScrollFunction);
-	}
+	// } else {
+	//	requestAnimationFrame(performAutoScrollFunction);
+	// }
 };
 
 TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
