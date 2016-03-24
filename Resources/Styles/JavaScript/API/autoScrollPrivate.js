@@ -49,7 +49,7 @@ var TextualScroller = {};
 TextualScroller.scrollTopUserConstant = 25;
 
 TextualScroller.scrollHeightLastValue = 0;
-TextualScroller.scrollHeightChangedTimer = null;
+TextualScroller.scrollHeightTimerActive = false;
 
 TextualScroller.scrollLastPosition1 = 0;
 TextualScroller.scrollLastPosition2 = 0;
@@ -78,7 +78,7 @@ TextualScroller.documentVisbilityChangedCallback = function()
 
 TextualScroller.documentResizedCallback = function()
 {
-	TextualScroller.performAutoScroll(true);
+	TextualScroller.performAutoScrollInt(true);
 };
 
 TextualScroller.documentScrolledCallback = function()
@@ -135,13 +135,21 @@ TextualScroller.documentScrolledCallback = function()
 };
 
 /* 	Perform automatic scrolling */
-TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
+TextualScroller.performAutoScroll = function()
 {
-	window.requestAnimationFrame(
-		function() {
-			TextualScroller.performAutoScrollInt(skipScrollHeightCheck);
+	var performAutoScrollFunction = (function() {
+		TextualScroller.performAutoScrollInt(false);
+
+		if (TextualScroller.scrollHeightTimerActive) {
+			TextualScroller.performAutoScroll();
 		}
-	);
+	});
+	
+	if (typeof window.requestAnimationFrame === "undefined") {
+		setTimeout(performAutoScrollFunction, 50);
+	} else {
+		requestAnimationFrame(performAutoScrollFunction);
+	}
 };
 
 TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
@@ -149,15 +157,6 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	/* Set default value of argument */
 	if (typeof skipScrollHeightCheck === "undefined") {
 		skipScrollHeightCheck = false;
-	}
-	
-	/* Do not perform scrolling if we are performing live resize */
-	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
-		scrolling will notice the new height of the view and use that. */
-	if (Textual.hasLiveResize()) {
-		if (InlineImageLiveResize.dragElement) {
-			return;
-		}
 	}
 
 	/* 	Retrieve the current scroll height and return if it is zero */
@@ -215,24 +214,14 @@ TextualScroller.scrollHeight = function()
 /* Functions that can be used to toggle automatic scrolling */
 TextualScroller.enableScrollingTimerInt = function()
 {
-	if (TextualScroller.scrollHeightChangedTimer) {
-		throw "Tried to create timer when one already exists";
-	}
-
+	TextualScroller.scrollHeightTimerActive = true;
+	
 	TextualScroller.performAutoScroll();
-
-	TextualScroller.scrollHeightChangedTimer = setInterval(function() {
-		TextualScroller.performAutoScroll();
-	}, 50);
 };
 
 TextualScroller.disableScrollingTimerInt = function()
 {
-	if (TextualScroller.scrollHeightChangedTimer) {
-		clearInterval(TextualScroller.scrollHeightChangedTimer);
-
-		TextualScroller.scrollHeightChangedTimer = null;
-	}
+	TextualScroller.scrollHeightTimerActive = false;
 };
 
 /* 	TextualScroller.enableScrollingTimer and TextualScroller.disableScrollingTimer 
