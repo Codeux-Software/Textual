@@ -73,7 +73,6 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 /* Private header for theme controller that a plugin does not need access to. */
 @interface TPCThemeController ()
-@property (nonatomic, copy) NSString *sharedCacheID;
 @property (nonatomic, assign) FSEventStreamRef eventStreamRef;
 @property (nonatomic, strong) TPCThemeControllerCopyOperation *currentCopyOperation;
 @end
@@ -271,9 +270,6 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	/* We have a path. */
 	[self setBaseURL:[NSURL fileURLWithPath:path]];
 
-	/* Define a shared cache ID for files. */
-	[self setSharedCacheID:[NSString stringWithInteger:TXRandomNumber(5000)]];
-	
 	/* Reload theme settings. */
 	[[self customSettings] reloadWithPath:path];
 
@@ -286,8 +282,6 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (void)removeTemporaryCopyOfTheme
 {
-	NSObjectIsEmptyAssert([self sharedCacheID]);
-
 	NSString *temporaryPath = [self temporaryPath];
 
 	if ([RZFileManager() directoryExistsAtPath:temporaryPath]) {
