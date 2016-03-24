@@ -437,9 +437,10 @@
 "BasicLanguage[1111]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
 
 /* /myversion/ command */
-"BasicLanguage[1112]" = "%1$@ %2$@ (Git Reference: %3$@) ";
-"BasicLanguage[1113]" = "%1$@ %2$@ (Git Reference: %3$@) (Build Date: %5$@)";
-"BasicLanguage[1114]" = "\002Current Version:\002 %@";
+"BasicLanguage[1112]" = "%1$@ %2$@ (Build %3$@) (%4$@)";
+"BasicLanguage[3000]" = "Mac App Store";
+"BasicLanguage[3001]" = "Standalone Version";
+"BasicLanguage[1114]" = "I am using %@";
 
 /* Miscellaneous messages related to IRC events */
 "BasicLanguage[1115]" = "Be back later";
@@ -805,6 +806,6 @@
 "BasicLanguage[1299]" = "Error: Something bad happened and we don't know why. Check the Web Inspector.";
 
 
-/* Next unusued key: 3000 */
+/* Next unusued key: 3002 */
 
 

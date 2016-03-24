@@ -2986,30 +2986,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5046: // Command: MYVERSION
 		{
-			NSString *gref = [TPCApplicationInfo gitBuildReference];
 			NSString *name = [TPCApplicationInfo applicationName];
-			NSString *vers = [TPCApplicationInfo applicationVersionShort];
+			NSString *versionLong = [TPCApplicationInfo applicationVersion];
+			NSString *versionShort = [TPCApplicationInfo applicationVersionShort];
+			NSString *buildScheme = [TPCApplicationInfo applicationBuildScheme];
 
-			if (NSObjectIsEmpty(gref)) {
-				gref = BLS(1218);
-			}
+			NSString *downloadSource = nil;
 
-			NSString *text = nil;
-			
-			if ([uncutInput isEqualIgnoringCase:@"-d"]) {
-				NSDateFormatter *dateFormatter = [NSDateFormatter new];
-				
-				[dateFormatter setDateStyle:NSDateFormatterFullStyle];
-				[dateFormatter setTimeStyle:NSDateFormatterLongStyle];
-				
-				[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-				
-				NSDate *apbd = [TPCApplicationInfo applicationBuildDate];
-				
-				text = BLS(1113, name, vers, gref, [dateFormatter stringFromDate:apbd]);
+			if ([buildScheme isEqualToString:@"appstore"]) {
+				downloadSource = BLS(3000);
 			} else {
-				text = BLS(1112, name, vers, gref);
+				downloadSource = BLS(3001);
 			}
+
+			NSString *text = BLS(1112, name, versionShort, versionLong, downloadSource);
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];

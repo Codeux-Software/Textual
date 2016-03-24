@@ -58,11 +58,8 @@
 + (NSString *)applicationBundleIdentifier;
 
 + (NSString *)applicationBuildScheme;
-+ (NSDate *)applicationBuildDate;
 
 + (NSInteger)applicationProcessID;
-
-+ (NSString *)gitBuildReference;
 
 + (NSDictionary *)applicationInfoPlist;
 @end

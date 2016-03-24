@@ -43,7 +43,7 @@
 
 + (NSString *)applicationName
 {
-	NSString *name = [RZMainBundle() infoDictionary][@"CFBundleName"];
+	NSString *name = TXBundleBuildProductName;
 
 	NSInteger spacePosition = [name stringPosition:NSStringWhitespacePlaceholder];
 	
@@ -52,13 +52,6 @@
 	} else {
 		return  name;
 	}
-}
-
-+ (NSDate *)applicationBuildDate
-{
-	NSTimeInterval buildInterval = [TXBundleBuildDate integerValue];
-	
-	return [NSDate dateWithTimeIntervalSince1970:buildInterval];
 }
 
 + (NSString *)applicationVersion
@@ -78,7 +71,12 @@
 
 + (NSString *)applicationBundleIdentifier
 {
-	return [RZMainBundle() bundleIdentifier];
+	return TXBundleBuildProductIdentifier;
+}
+
++ (NSString *)applicationBuildScheme
+{
+	return TXBundleBuildScheme;
 }
 
 + (BOOL)runningInHighResolutionMode
@@ -89,16 +87,6 @@
 + (NSDictionary *)applicationInfoPlist
 {
 	return [RZMainBundle() infoDictionary];
-}
-
-+ (NSString *)gitBuildReference
-{
-	return TXBundleBuildReference;
-}
-
-+ (NSString *)applicationBuildScheme
-{
-	return TXBundleBuildScheme;
 }
 
 + (BOOL)sandboxEnabled
