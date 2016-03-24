@@ -9,7 +9,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Textual IRC Client</string>
 	<key>CFBundleIdentifier</key>
-	<string>${TEXTUAL_BUNDLE_IDENTIFIER}</string>
+	<string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
