@@ -46,6 +46,7 @@
 + (NSString *)applicationBundlePath;
 + (NSString *)applicationTemporaryFolderPath;
 + (NSString *)applicationCachesFolderPath;
++ (NSString *)applicationLogsFolderPath;
 + (NSString *)applicationResourcesFolderPath;
 + (NSString *)applicationGroupContainerPath;
 

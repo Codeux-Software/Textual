@@ -72,6 +72,25 @@
 	return nil;
 }
 
++ (NSString *)applicationLogsFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if ([searchArray count]) {
+		NSString *endPath = [NSString stringWithFormat:@"/Logs/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
+
+		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:endPath];
+
+		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
+			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
+		}
+
+		return basePath;
+	}
+
+	return nil;
+}
+
 + (NSString *)applicationGroupContainerPath
 {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
