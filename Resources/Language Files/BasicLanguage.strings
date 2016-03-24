@@ -801,9 +801,6 @@
 "BasicLanguage[1293]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
 "BasicLanguage[1294]" = "Error: The style that is in use is not compatible with this command";
 
-/* /jseval/ responses */
-"BasicLanguage[1298]" = "Error: %@";
-"BasicLanguage[1299]" = "Error: Something bad happened and we don't know why. Check the Web Inspector.";
 
 
 /* Next unusued key: 3002 */
