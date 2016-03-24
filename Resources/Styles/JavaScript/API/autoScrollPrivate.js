@@ -137,9 +137,27 @@ TextualScroller.documentScrolledCallback = function()
 /* 	Perform automatic scrolling */
 TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 {
+	window.requestAnimationFrame(
+		function() {
+			TextualScroller.performAutoScrollInt(skipScrollHeightCheck);
+		}
+	);
+};
+
+TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
+{
 	/* Set default value of argument */
 	if (typeof skipScrollHeightCheck === "undefined") {
 		skipScrollHeightCheck = false;
+	}
+	
+	/* Do not perform scrolling if we are performing live resize */
+	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
+		scrolling will notice the new height of the view and use that. */
+	if (Textual.hasLiveResize()) {
+		if (InlineImageLiveResize.dragElement) {
+			return;
+		}
 	}
 
 	/* 	Retrieve the current scroll height and return if it is zero */
@@ -158,6 +176,8 @@ TextualScroller.performAutoScroll = function(skipScrollHeightCheck)
 	if (TextualScroller.isScrolledByUser) {
 		return;
 	}
+	
+	InlineImageLiveResize.onMouseDown
 
 	/* Perform comparison test for scroll height */
 	if (skipScrollHeightCheck === false) {
