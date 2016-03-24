@@ -276,6 +276,15 @@ app.logToConsole = function(message)
 	}
 };
 
+app.logToConsoleFile = function(message)
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.logToConsoleFile.postMessage(message);
+	} else {
+		TextualScriptSink.logToConsoleFile(message);
+	}
+};
+
 app.printDebugInformationToConsole = function(message)
 {
 	if (appInternal.isWebKit2()) {
