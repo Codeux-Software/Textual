@@ -50,6 +50,7 @@ TextualScroller.scrollTopUserConstant = 25;
 
 TextualScroller.scrollHeightCurrentValue = 0;
 TextualScroller.scrollHeightPreviousValue = 0;
+
 TextualScroller.scrollHeightTimerActive = false;
 
 TextualScroller.scrollLastPosition1 = 0;
@@ -105,7 +106,7 @@ TextualScroller.documentScrolledCallback = function()
 {
 //	TextualScroller.logToConsoleFile("TextualScroller.documentScrolledCallback() entered");
 	
-	/* 	Record the last two known scrollY values. These properties are compared
+	/* 	Record the last three known scrollY values. These properties are compared
 		to determine if the user is scrolling upwards or downwards. */
 	TextualScroller.scrollLastPosition3 = TextualScroller.scrollLastPosition2;
 
@@ -186,22 +187,31 @@ TextualScroller.performAutoScroll = function()
 		}
 	});
 	
-	if (typeof window.requestAnimationFrame === "undefined") {
+//	if (typeof window.requestAnimationFrame === "undefined") {
 		setTimeout(performAutoScrollFunction, 50);
-	} else {
-		requestAnimationFrame(performAutoScrollFunction);
-	}
+//	} else {
+//		requestAnimationFrame(performAutoScrollFunction);
+//	}
 };
 
 TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 {
+//	TextualScroller.logToConsoleFile("TextualScroller.performAutoScrollInt() entered");
+
 	/* Set default value of argument */
 	if (typeof skipScrollHeightCheck === "undefined") {
 		skipScrollHeightCheck = false;
+	}	
+	
+	/* Do not perform scrolling if we are performing live resize */
+	/* 	Stop auto scroll before height is recorded so that once live resize is completed,
+		scrolling will notice the new height of the view and use that. */
+	if (Textual.hasLiveResize()) {
+		if (InlineImageLiveResize.dragElement) {
+			return;
+		}
 	}
 	
-//	TextualScroller.logToConsoleFile("TextualScroller.performAutoScrollInt() entered");
-
 	/* 	Retrieve the current scroll height and return if it is zero */
 	var scrollHeight = TextualScroller.scrollHeight();
 
@@ -210,11 +220,8 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 
 		return;
 	}
-
-	/* Make a copy of the previous scroll height and save the new */
-	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
 	
-	TextualScroller.scrollHeightCurrentValue = scrollHeight;
+	var scrollHeightPrevious = TextualScroller.scrollHeightCurrentValue;
 	
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
@@ -225,14 +232,19 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 
 	/* Perform comparison test for scroll height */
 	if (skipScrollHeightCheck === false) {
-		if (TextualScroller.scrollHeightCurrentValue === TextualScroller.scrollHeightPreviousValue) {
+		if (scrollHeight === scrollHeightPrevious) {
 			return;
 		}
 	}
 	
-//	TextualScroller.logToConsoleFile("Scrolling to " + scrollHeight + " with previous height " + TextualScroller.scrollHeightPreviousValue);
+	/* Make a copy of the previous scroll height and save the new */
+	TextualScroller.scrollHeightPreviousValue = scrollHeightPrevious;
+	
+	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
 	/* Scroll to new value */
+//	TextualScroller.logToConsoleFile("Scrolling to " + scrollHeight + " with previous height " + scrollHeightPrevious);
+
 	window.scrollTo(0, scrollHeight);
 };
 
