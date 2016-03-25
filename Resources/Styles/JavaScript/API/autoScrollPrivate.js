@@ -48,7 +48,8 @@ var TextualScroller = {};
 /* State tracking */
 TextualScroller.scrollTopUserConstant = 25;
 
-TextualScroller.scrollHeightLastValue = 0;
+TextualScroller.scrollHeightCurrentValue = 0;
+TextualScroller.scrollHeightPreviousValue = 0;
 TextualScroller.scrollHeightTimerActive = false;
 
 TextualScroller.scrollLastPosition1 = 0;
@@ -111,44 +112,19 @@ TextualScroller.documentScrolledCallback = function()
 	TextualScroller.scrollLastPosition2 = TextualScroller.scrollLastPosition1;
 
 	TextualScroller.scrollLastPosition1 = window.scrollY;
-
-	var scrollHeight = TextualScroller.scrollHeight();
 	
-	/* 	
-		WebKit has a very odd bug on OS X El Capitan which results in it sometimes
-		sending bogus scroll events. The following logic recognizes the behavior 
-		of these bogus events and offers a workaround for now. 
-
-		The bogus event looks similiar to the following history:
-		
-		TextualScroller.performAutoScrollInt() entered
-		Scrolling to 196 with previous height 46
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 46, New Position: 196, Height: 196
-		TextualScroller.documentScrolledCallback() entered
-		Old position: 196, New Position: 46, Height: 196
-		Scrolled above user threshold with difference: 150
-		TextualScroller.performAutoScrollInt() entered
-	
-		The view is scrolled to 196 from previous position of 46. Without the automatic
-		scroller doing so and without the user doing so; WebKit reverses the last scroll
-		event jumping back to 46 from 196. 
-	*/
-
-	if (TextualScroller.scrollLastPosition2 === TextualScroller.currentScrollTopValue &&
-		TextualScroller.scrollLastPosition1 === TextualScroller.scrollLastPosition3 &&
-		TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) 
+	/* Perform bug corrections */
+	if (TextualScroller.correctScrollBug1() === true ||
+		TextualScroller.correctScrollBug2() === true)
 	{
-//		TextualScroller.logToConsoleFile("Possible bogus event detected");
-
-		TextualScroller.performAutoScrollInt(true);
-		
 		return;
 	}
 
 	/* 	If the current scroll top value exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
+	var scrollHeight = TextualScroller.scrollHeight();
+	
 //	TextualScroller.logToConsoleFile("Old position: " + TextualScroller.scrollLastPosition2 + ", New Position: " + TextualScroller.scrollLastPosition1 + ", Height: " + scrollHeight);
 
 	if (TextualScroller.currentScrollTopValue > scrollHeight) {
@@ -236,9 +212,9 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	}
 
 	/* Make a copy of the previous scroll height and save the new */
-	var scrollHeightPrevious = TextualScroller.scrollHeightLastValue;
+	TextualScroller.scrollHeightPreviousValue = TextualScroller.scrollHeightCurrentValue;
 	
-	TextualScroller.scrollHeightLastValue = scrollHeight;
+	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 	
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
@@ -249,12 +225,12 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 
 	/* Perform comparison test for scroll height */
 	if (skipScrollHeightCheck === false) {
-		if (scrollHeight === scrollHeightPrevious) {
+		if (TextualScroller.scrollHeightCurrentValue === TextualScroller.scrollHeightPreviousValue) {
 			return;
 		}
 	}
 	
-//	TextualScroller.logToConsoleFile("Scrolling to " + scrollHeight + " with previous height " + scrollHeightPrevious);
+//	TextualScroller.logToConsoleFile("Scrolling to " + scrollHeight + " with previous height " + TextualScroller.scrollHeightPreviousValue);
 
 	/* Scroll to new value */
 	window.scrollTo(0, scrollHeight);
@@ -293,6 +269,73 @@ TextualScroller.enableScrollingTimerInt = function()
 TextualScroller.disableScrollingTimerInt = function()
 {
 	TextualScroller.scrollHeightTimerActive = false;
+};
+
+/* Bug fixes */
+TextualScroller.correctScrollBug1 = function()
+{
+	/* 	
+		Fix events that look similiar to the following:
+		
+		TextualScroller.performAutoScrollInt() entered
+		Scrolling to 196 with previous height 46
+		TextualScroller.documentScrolledCallback() entered
+		Old position: 46, New Position: 196, Height: 196
+		TextualScroller.documentScrolledCallback() entered
+		Old position: 196, New Position: 46, Height: 196
+		Scrolled above user threshold with difference: 150
+		TextualScroller.performAutoScrollInt() entered
+	
+		The view is scrolled to 196 from previous position of 46. Without the automatic
+		scroller doing so and without the user doing so; WebKit reverses the last scroll
+		event jumping back to 46 from 196. 
+	*/
+
+	if (TextualScroller.scrollLastPosition2 === TextualScroller.currentScrollTopValue &&
+		TextualScroller.scrollLastPosition1 === TextualScroller.scrollLastPosition3 &&
+		TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) 
+	{
+		console.log("Possible bogus event detected (1)");
+
+		TextualScroller.performAutoScrollInt(true);
+		
+		return true;
+	}
+	
+	return false;
+};
+
+TextualScroller.correctScrollBug2 = function()
+{
+	/* 	
+		Fix events that look similiar to the following:
+		
+		TextualScroller.performAutoScrollInt() entered
+		Scrolling to 2051 with previous height 1511
+		TextualScroller.documentScrolledCallback() entered
+		Old position: 1731, New Position: 2051, Height: 2051
+		TextualScroller.performAutoScrollInt() entered
+		TextualScroller.documentScrolledCallback() entered
+		Old position: 2051, New Position: 1511, Height: 2051
+	
+		The view is scrolled to 2051 from previous position of 1511. Without the automatic
+		scroller doing so and without the user doing so; WebKit reverses the last scroll
+		event jumping back to 1511 from 2051.
+	*/
+	
+	if (TextualScroller.scrollHeightCurrentValue !== TextualScroller.scrollHeightPreviousValue &&
+		TextualScroller.scrollHeightCurrentValue === TextualScroller.scrollLastPosition2 &&
+		TextualScroller.scrollHeightPreviousValue === TextualScroller.scrollLastPosition1 &&
+		TextualScroller.scrollLastPosition1 < TextualScroller.scrollLastPosition2) 
+	{
+		console.log("Possible bogus event detected (2)");
+
+		TextualScroller.performAutoScrollInt(true);
+		
+		return true;
+	}
+	
+	return false;
 };
 
 /* 	TextualScroller.enableScrollingTimer and TextualScroller.disableScrollingTimer 
