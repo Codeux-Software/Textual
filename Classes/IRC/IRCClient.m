@@ -93,9 +93,6 @@
 
 #define _reconnectTimerMaximumAttempts		100
 
-#define _maximumChannelCountPerWhoBatchRequest		5
-#define _maximumChannelSizePerWhoBatchRequest		5000
-
 enum {
 	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 9,
 	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 10, // YES if SASL=plain CAP is supported.
@@ -9471,52 +9468,8 @@ present_error:
 	 If a channel is an actual channel and it meets certain conditions, then we send
 	 a WHO request here to gather away status information. */
 	@synchronized(self.channels) {
-		NSInteger channelCount = [self.channels count];
-		
-		NSInteger startingPosition = self.lastWhoRequestChannelListIndex;
-		
-		NSMutableArray *channelBatch = [NSMutableArray arrayWithCapacity:_maximumChannelCountPerWhoBatchRequest];
-		
-		for (NSInteger i = startingPosition; i < channelCount; i++) {
-			if ([channelBatch count] == _maximumChannelCountPerWhoBatchRequest) {
-				self.lastWhoRequestChannelListIndex = i;
-				
-				break;
-			} else {
-				IRCChannel *c = self.channels[i];
-				
-				if ([c isChannel]) {
-					if ([c isActive]) {
-						if ([c sentInitialWhoRequest] == NO) {
-							[c setSentInitialWhoRequest:YES];
-							
-							/* We set the flag even if user doesn't want them just to
-							 maintain internal state information. */
-							if (self.config.sendWhoCommandRequestsToChannels) {
-								if ([c numberOfMembers] <= _maximumChannelSizePerWhoBatchRequest) {
-									[channelBatch addObject:c];
-								}
-							}
-						} else {
-							if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify] == NO) {
-								if ([c numberOfMembers] <= [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
-									[channelBatch addObject:c];
-								}
-							}
-						}
-					}
-				}
-				
-				if ((i + 1) == channelCount) {
-					self.lastWhoRequestChannelListIndex = 0;
-				}
-			}
-		}
-		
-		for (IRCChannel *c in channelBatch) {
-			[self send:IRCPrivateCommandIndex("who"), [c name], nil];
-		}
-		
+		[self sendTimedWhoRequests];
+
 		for (IRCChannel *channel in self.channels) {
 			if ([channel isPrivateMessage]) {
 				[userstr appendFormat:@" %@", [channel name]];
@@ -9537,6 +9490,110 @@ present_error:
 	NSObjectIsEmptyAssert(userstr);
 
     [self send:IRCPrivateCommandIndex("ison"), userstr, nil];
+}
+
+- (void)sendTimedWhoRequests
+{
+#define _maximumChannelCountPerWhoBatchRequest			5
+#define _maximumSingleChannelSizePerWhoBatchRequest		5000
+#define _maximumTotalChannelSizePerWhoBatchRequest		2000
+
+	NSInteger channelCount = [self.channels count];
+
+	NSInteger startingPosition = self.lastWhoRequestChannelListIndex;
+
+	if (startingPosition >= channelCount) {
+		startingPosition = 0;
+	}
+
+	NSInteger currentPosition = startingPosition;
+
+	NSInteger memberCount = 0;
+
+	NSMutableArray *channelsToQuery = nil;
+
+	while (1 == 1) {
+		/* Break loop once if we will exceed hard limit by adding another channel. */
+		if ([channelsToQuery count] == _maximumChannelCountPerWhoBatchRequest) {
+			break;
+		}
+
+		/* Take current value and add it */
+		NSInteger i = currentPosition;
+
+		currentPosition += 1;
+
+		if (currentPosition == channelCount) {
+			currentPosition = 0;
+		}
+
+		if (currentPosition == startingPosition) {
+			break;
+		}
+
+		/* Get channel and disregard it if it is not joined */
+		IRCChannel *c = self.channels[i];
+
+		if ([c isChannel] == NO || [c isActive] == NO) {
+			continue;
+		}
+
+		/* Update internal state of flag */
+		BOOL sentInitialWhoRequest = [c sentInitialWhoRequest];
+
+		if (sentInitialWhoRequest == NO) {
+			[c setSentInitialWhoRequest:YES];
+		}
+
+		/* continue to next channel and do not break so that the
+		 -sentInitialWhoRequest flag of all channels can be updated. */
+		if (self.config.sendWhoCommandRequestsToChannels == NO) {
+			continue;
+		}
+
+		/* Perform comparisons to know whether channel is acceptable */
+		NSInteger memberCountC = [c numberOfMembers];
+
+		if (sentInitialWhoRequest == NO) {
+			if (memberCountC > _maximumSingleChannelSizePerWhoBatchRequest) {
+				continue;
+			}
+		} else {
+			if ([self isCapacityEnabled:ClientIRCv3SupportedCapacityAwayNotify]) {
+				continue;
+			}
+
+			if (memberCountC > [TPCPreferences trackUserAwayStatusMaximumChannelSize]) {
+				continue;
+			}
+		}
+
+		/* Add channel to list */
+		if (channelsToQuery == nil) {
+			channelsToQuery = [NSMutableArray new];
+		}
+
+		[channelsToQuery addObject:c];
+
+		/* Update total number of members and maybe break loop */
+		memberCount += memberCountC;
+
+		if (memberCount > _maximumTotalChannelSizePerWhoBatchRequest) {
+			break;
+		}
+	}
+
+	self.lastWhoRequestChannelListIndex = currentPosition;
+
+	/* Send WHO requests */
+	LogToConsole(@"%@", channelsToQuery);
+	for (IRCChannel *c in channelsToQuery) {
+		[self send:IRCPrivateCommandIndex("who"), [c name], nil];
+	}
+
+#undef _maximumChannelCountPerWhoBatchRequest
+#undef _maximumSingleChannelSizePerWhoBatchRequest
+#undef _maximumTotalChannelSizePerWhoBatchRequest
 }
 
 - (void)checkAddressBookForTrackedUser:(IRCAddressBookEntry *)abEntry inMessage:(IRCMessage *)message
