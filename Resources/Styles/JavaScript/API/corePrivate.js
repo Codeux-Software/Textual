@@ -403,6 +403,8 @@ Textual.openGenericContextualMenu = function()
 
 	if (appInternal.isWebKit2()) {
 		event.preventDefault();
+		
+		Textual.setSelection();
 
 		app.displayContextMenu();
 	}
