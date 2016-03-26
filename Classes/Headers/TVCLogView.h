@@ -67,23 +67,20 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
 - (void)executeJavaScript:(NSString *)code;
-- (id)executeJavaScriptWithResult:(NSString *)code;
-- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error; // "error" is only used with WK2
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id result))completionHandler;
 
-- (void)executeStandaloneCommand:(NSString *)command;
-- (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)executeCommand:(NSString *)command;
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments  completionHandler:(void (^)(id result))completionHandler;
 
-- (id)executeCommand:(NSString *)command;
-- (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL result))completionHandler;
+- (void)booleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL result))completionHandler;
 
-- (BOOL)returnBooleanByExecutingCommand:(NSString *)command;
-- (BOOL)returnBooleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)stringByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSString *result))completionHandler;
+- (void)stringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *result))completionHandler;
 
-- (NSString *)returnStringByExecutingCommand:(NSString *)command;
-- (NSString *)returnStringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
-
-- (NSArray *)returnArrayByExecutingCommand:(NSString *)command;
-- (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *result))completionHandler;
+- (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
 
 - (NSString *)escapeJavaScriptString:(NSString *)string;
 

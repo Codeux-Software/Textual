@@ -266,17 +266,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)executeJavaScript:(NSString *)code
 {
-	[[self webViewBacking] executeJavaScript:code];
+	[[self webViewBacking] executeJavaScript:code completionHandler:nil];
 }
 
-- (id)executeJavaScriptWithResult:(NSString *)code
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
-	return [[self webViewBacking] executeJavaScriptWithResult:code error:NULL];
-}
-
-- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
-{
-	return [[self webViewBacking] executeJavaScriptWithResult:code error:error];
+	[[self webViewBacking] executeJavaScript:code completionHandler:completionHandler];
 }
 
 - (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
@@ -452,76 +447,83 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return [compiledScript copy];
 }
 
-- (void)executeStandaloneCommand:(NSString *)command
+- (void)executeCommand:(NSString *)command
 {
-	[self executeStandaloneCommand:command withArguments:nil];
+	[self executeCommand:command withArguments:nil completionHandler:nil];
 }
 
-- (void)executeStandaloneCommand:(NSString *)command withArguments:(NSArray *)arguments
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments
+{
+	[self executeCommand:command withArguments:arguments completionHandler:nil];
+}
+
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(id))completionHandler
 {
 	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
 
 	[self executeJavaScript:compiledScript];
 }
 
-- (id)executeCommand:(NSString *)command
+- (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL))completionHandler
 {
-	return [self executeCommand:command withArguments:nil];
+	[self booleanByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
 }
 
-- (id)executeCommand:(NSString *)command withArguments:(NSArray *)arguments
+- (void)booleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL))completionHandler
 {
-	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
+	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+		BOOL resultBool = NO;
 
-	return [self executeJavaScriptWithResult:compiledScript];
+		if (result && [result isKindOfClass:[NSNumber class]]) {
+			resultBool = [result boolValue];
+		}
+
+		if (completionHandler) {
+			completionHandler(resultBool);
+		}
+	}];
 }
 
-- (BOOL)returnBooleanByExecutingCommand:(NSString *)command
+- (void)stringByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSString *))completionHandler
 {
-	return [self returnBooleanByExecutingCommand:command withArguments:nil];
+	[self stringByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
 }
 
-- (BOOL)returnBooleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
+- (void)stringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *))completionHandler
 {
-	id scriptResult = [self executeCommand:command withArguments:arguments];
+	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+		NSString *resultString = nil;
 
-	if (scriptResult && [scriptResult isKindOfClass:[NSNumber class]] == NO) {
-		return NO;
-	}
+		if (result && [result isKindOfClass:[NSString class]]) {
+			resultString = result;
+		}
 
-	return [scriptResult boolValue];
+		if (completionHandler) {
+			completionHandler(resultString);
+		}
+	}];
 }
 
-- (NSString *)returnStringByExecutingCommand:(NSString *)command
+- (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *))completionHandler
 {
-	return [self returnStringByExecutingCommand:command withArguments:nil];
+	[self arrayByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
 }
 
-- (NSString *)returnStringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
+- (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *))completionHandler
 {
-	id scriptResult = [self executeCommand:command withArguments:arguments];
+	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+		NSArray *resultArray = nil;
 
-	if (scriptResult && [scriptResult isKindOfClass:[NSString class]] == NO) {
-		return nil;
-	}
+		if (result && [result isKindOfClass:[NSArray class]]) {
+			resultArray = result;
+		} else if (result && [result isKindOfClass:[WebScriptObject class]]) {
+			resultArray = [TVCLogScriptEventSink webScriptObjectToArray:result];
+		}
 
-	return scriptResult;
-}
-
-- (NSArray *)returnArrayByExecutingCommand:(NSString *)command
-{
-	return [self returnArrayByExecutingCommand:command withArguments:nil];
-}
-
-- (NSArray *)returnArrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments
-{
-	id scriptResult = [self executeCommand:command withArguments:arguments];
-
-	if (scriptResult && [scriptResult isKindOfClass:[WebScriptObject class]] == NO) {
-		return nil;
-	}
-
-	return [TVCLogScriptEventSink webScriptObjectToArray:scriptResult];
+		if (completionHandler) {
+			completionHandler(resultArray);
+		}
+	}];
 }
 
 @end

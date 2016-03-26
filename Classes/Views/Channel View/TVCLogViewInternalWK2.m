@@ -272,52 +272,27 @@ create_normal_pool:
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)executeJavaScript:(NSString *)code
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
-	[self evaluateJavaScript:code completionHandler:nil];
-}
-
-- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
-{
-	__block id scriptResult = nil;
-
-	__block NSError *scriptResultError = nil;
-
-	__block BOOL finishedExecuting = NO;
-
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
 		if (error) {
-			scriptResultError = error;
+			LogToConsole(@"Error: %@", [error localizedDescription]);
 		}
 
-		scriptResult = result;
+		if (result) {
+			if ([result isKindOfClass:[NSNull class]] ||
+				[result isKindOfClass:[WebUndefined class]])
+			{
+				if (completionHandler) {
+					completionHandler(nil);
+				}
+			}
+		}
 
-		finishedExecuting = YES;
+		if (completionHandler) {
+			completionHandler(result);
+		}
 	}];
-
-	while (finishedExecuting == NO) {
-		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-	}
-
-	if (scriptResultError) {
-		if ( error) {
-			*error = [scriptResultError copy];
-		} else {
-			LogToConsole(@"Error: %@", [scriptResultError localizedDescription]);
-		}
-
-		scriptResultError = nil;
-	}
-
-	if (scriptResult) {
-		if ([scriptResult isKindOfClass:[NSNull class]] ||
-			[scriptResult isKindOfClass:[WebUndefined class]])
-		{
-			return nil;
-		}
-	}
-
-	return scriptResult;
 }
 
 #pragma mark -

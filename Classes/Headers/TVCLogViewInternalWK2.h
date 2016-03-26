@@ -44,8 +44,7 @@
 
 + (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView;
 
-- (void)executeJavaScript:(NSString *)code;
-- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error;
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
