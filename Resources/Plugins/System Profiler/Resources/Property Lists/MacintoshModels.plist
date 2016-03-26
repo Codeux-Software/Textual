@@ -184,9 +184,11 @@
 	<string>iMac (Early 2008)</string>
 	<key>iMac9,1</key>
 	<string>iMac (Early 2009)</string>
-	<key>VMware</key>
-	<string>VMware Fusion Virtual Machine</string>
 	<key>MacPro6,1</key>
 	<string>Mac Pro (Late 2013)</string>
+	<key>Parallels</key>
+	<string>Parallels Desktop Virtual Machine</string>
+	<key>VMware</key>
+	<string>VMware Fusion Virtual Machine</string>
 </dict>
 </plist>

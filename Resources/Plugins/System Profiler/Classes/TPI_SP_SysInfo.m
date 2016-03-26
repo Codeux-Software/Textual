@@ -364,6 +364,8 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 			if ([_model hasPrefix:@"VMware"]) {
 				_exact_model = _all_models[@"VMware"];
+			} else if ([_model hasPrefix:@"Parallels"]) {
+				_exact_model = _all_models[@"Parallels"];
 			} else {
 				_exact_model = [XRSystemInformation systemModelName];
 
