@@ -1285,8 +1285,8 @@
 	TVCLogView *sel = [self currentLogControllerBackingView];
 
 	PointerIsEmptyAssert(sel);
-	
-	[RZPasteboard() setStringContent:[sel contentString]];
+
+	[sel copyContentString];
 }
 
 - (void)openWebInspector:(id)sender

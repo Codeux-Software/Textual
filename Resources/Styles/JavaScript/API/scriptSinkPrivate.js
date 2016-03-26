@@ -105,6 +105,15 @@ app.setURLAddress = function(object)
 	}
 };
 
+app.setSelection = function(object)
+{
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.setSelection.postMessage(object);
+	} else {
+		TextualScriptSink.setSelection(object);
+	}
+};
+
 app.setChannelName = function(object)
 {
 	if (appInternal.isWebKit2()) {
@@ -381,11 +390,11 @@ app.retrievePreferencesWithMethodName = function(name, callbackFunction)
 	}
 };
 
-app.copySelectionWhenPermitted = function(object, callbackFunction)
+app.copySelectionWhenPermitted = function(callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
-	var dataValue = {"promiseIndex" : promiseIndex, "values" : [object]};
+	var dataValue = {"promiseIndex" : promiseIndex};
 
 	if (appInternal.isWebKit2()) {
 		window.webkit.messageHandlers.copySelectionWhenPermitted.postMessage(dataValue);

@@ -156,11 +156,13 @@
 
 		TVCLogController *viewController = [channel viewController];
 
-		if ([viewController jumpToLine:[entryItem lineNumber]]) {
-			[mainWindow() select:channel];
+		[viewController jumpToLine:[entryItem lineNumber] completionHandler:^(BOOL result) {
+			if (result) {
+				[mainWindow() select:channel];
 
-			[self cancel:nil];
-		}
+				[self cancel:nil];
+			}
+		}];
 	}
 }
 
