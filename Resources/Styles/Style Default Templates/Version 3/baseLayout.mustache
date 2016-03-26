@@ -19,9 +19,11 @@
 
 		<script src="{{applicationResourcePath}}/JavaScript/API/core.js" type="text/javascript" charset="UTF-8"></script>
 		<script src="{{applicationResourcePath}}/JavaScript/API/corePrivate.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="{{applicationResourcePath}}/JavaScript/API/autoScrollPrivate.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="{{applicationResourcePath}}/JavaScript/API/scriptSinkPrivate.js" type="text/javascript" charset="UTF-8"></script>
-		<script src="{{applicationResourcePath}}/JavaScript/API/liveresize.js" type="text/javascript" charset="UTF-8"></script>
+
+		<script type="text/javascript">
+			Textual.initializeCore("{{applicationResourcePath}}");
+		</script>
+
 		<script src="{{activeStyleAbsolutePath}}/scripts.js" type="text/javascript" charset="UTF-8"></script>
 
 		<style type="text/css">

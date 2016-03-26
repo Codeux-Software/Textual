@@ -41,50 +41,72 @@
 /*                                                    */
 /* ************************************************** */
 
-/* Resource management */
-Textual.initializeCore = function(resourcesPath)
+/* Inline media */
+Textual.hasLiveResize = function()
 {
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/clickMenuSelection.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/documentBody.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
-	
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/liveresize.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scriptSink.js");
-};
-
-Textual.includeStyleResourceFile = function(file)
-{
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("link");
-
-		newFile.charset = "UTF-8";
-		newFile.href = file;
-		newFile.media = "screen";
-		newFile.rel = "stylesheet";
-		newFile.type = "text/css";
-
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
+	if (typeof InlineImageLiveResize !== 'undefined') {
+		return true;
 	} else {
-		document.write('<link href="' + file + '" media="screen" rel="stylesheet" type="text/css" />');
+		return false;
 	}
 };
 
-Textual.includeScriptResourceFile = function(file)
+Textual.toggleInlineImage = function(object, onlyPerformForShiftKey)
 {
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("script");
+	/* We only want certain actions to happen for shift key. */
+	if (onlyPerformForShiftKey) {
+		if (window.event.shiftKey === false) {
+			return true;
+		}
+	}
 
-		newFile.setAttribute("charset", "UTF-8");
-
-		newFile.charset = "UTF-8";
-		newFile.src = file;
-		newFile.type = "text/javascript";
-
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
+	/* toggleInlineImage() is called when an onclick event is thrown on the associated
+	link anchor of an inline image. If the last mouse down event was related to a resize,
+	then we return false to stop link from opening. Else, we pass the event information
+	to the internals of Textual itself to determine whether to cancel the request. */
+	if (Textual.hasLiveResize()) {
+		if (InlineImageLiveResize.previousMouseActionWasForResizing === false) {
+			Textual.toggleInlineImageReally(object);
+		}
 	} else {
-		document.write('<script type="text/javascript" src="' + file + '"></scr' + 'ipt>');
+		Textual.toggleInlineImageReally(object);
+	}
+
+	return false;
+};
+
+Textual.toggleInlineImageReally = function(object)
+{
+	if (object.indexOf("inlineImage-") !== 0) {
+		object = ("inlineImage-" + object);
+	}
+
+	var imageNode = document.getElementById(object);
+
+	if (imageNode.style.display === "none") {
+		imageNode.style.display = "";
+	} else {
+		imageNode.style.display = "none";
+	}
+
+	if (imageNode.style.display === "none") {
+		Textual.didToggleInlineImageToHidden(imageNode);
+	} else {
+		Textual.didToggleInlineImageToVisible(imageNode);
+	}
+};
+
+Textual.didToggleInlineImageToHidden = function(imageElement)
+{
+	/* Do something here? */
+};
+
+Textual.didToggleInlineImageToVisible = function(imageElement)
+{
+	/* Start monitoring events for this image. */
+	if (Textual.hasLiveResize()) {
+		var realImageElement = imageElement.querySelector("a .image");
+
+		realImageElement.addEventListener("mousedown", InlineImageLiveResize.onMouseDown, false);
 	}
 };

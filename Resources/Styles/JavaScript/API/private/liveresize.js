@@ -6,7 +6,7 @@
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
  
  Copyright (c) 2014 Alex Sørlie.
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,13 +36,11 @@
 
  *********************************************************************** */
 
-/* *********************************************************************** */
-/*																		   */
-/* DO NOT EDIT ANYTHING BELOW THIS LINE FROM WITHIN A STYLE. 			   */
-/* THE FUNCTIONS DELCARED WITHIN THIS FILE ARE USED FOR INTERNAL		   */
-/* PURPOSES AND THE RESULT OF OVERRIDING A FUNCTION IS UNDEFINED.		   */
-/*																		   */
-/* *********************************************************************** */
+/* ************************************************** */
+/*                                                    */
+/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
+/*                                                    */
+/* ************************************************** */
 
 var InlineImageLiveResize = (function () {
     function InlineImageLiveResize() {
@@ -146,6 +144,9 @@ var InlineImageLiveResize = (function () {
     return InlineImageLiveResize;
 })();
 
+/* Bind to events */
 document.addEventListener("mousedown", InlineImageLiveResize.onMouseDownGeneric, false);
+
 document.addEventListener("mousemove", InlineImageLiveResize.onMouseMove, false);
+
 document.addEventListener("mouseup", InlineImageLiveResize.onMouseUp, false);
