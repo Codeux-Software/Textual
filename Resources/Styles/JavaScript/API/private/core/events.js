@@ -41,50 +41,26 @@
 /*                                                    */
 /* ************************************************** */
 
-/* Resource management */
-Textual.initializeCore = function(resourcesPath)
+/* State management */
+Textual.notifyDidBecomeVisible = function()
 {
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/clickMenuSelection.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/documentBody.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
-	
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/liveresize.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scriptSink.js");
+	TextualScroller.enableScrollingTimer();
+
+	Textual.clearSelection();
 };
 
-Textual.includeStyleResourceFile = function(file)
+Textual.notifyDidBecomeHidden = function()
 {
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("link");
+	TextualScroller.disableScrollingTimer();
 
-		newFile.charset = "UTF-8";
-		newFile.href = file;
-		newFile.media = "screen";
-		newFile.rel = "stylesheet";
-		newFile.type = "text/css";
-
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
-	} else {
-		document.write('<link href="' + file + '" media="screen" rel="stylesheet" type="text/css" />');
-	}
+	Textual.clearSelection();
 };
 
-Textual.includeScriptResourceFile = function(file)
+/* Events */
+Textual.mouseUpEventCallback = function()
 {
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("script");
-
-		newFile.setAttribute("charset", "UTF-8");
-
-		newFile.charset = "UTF-8";
-		newFile.src = file;
-		newFile.type = "text/javascript";
-
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
-	} else {
-		document.write('<script type="text/javascript" src="' + file + '"></scr' + 'ipt>');
-	}
+	Textual.copySelectionOnMouseUpEvent();
 };
+
+/* Bind to events */
+document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);

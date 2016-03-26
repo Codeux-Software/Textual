@@ -41,50 +41,76 @@
 /*                                                    */
 /* ************************************************** */
 
-/* Resource management */
-Textual.initializeCore = function(resourcesPath)
+/* Scrolling */
+Textual.scrollToBottomOfView = function(fireNotification)
 {
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/clickMenuSelection.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/documentBody.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/events.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/inlineMedia.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
-	
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/liveresize.js");
-	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scriptSink.js");
-};
+	var documentBody = Textual.documentBodyElement();
 
-Textual.includeStyleResourceFile = function(file)
-{
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("link");
+	if (documentBody === null) {
+		return;
+	}
 
-		newFile.charset = "UTF-8";
-		newFile.href = file;
-		newFile.media = "screen";
-		newFile.rel = "stylesheet";
-		newFile.type = "text/css";
+	var lastChild = documentBody.lastChild;
 
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
-	} else {
-		document.write('<link href="' + file + '" media="screen" rel="stylesheet" type="text/css" />');
+	if (typeof lastChild.scrollIntoView === "function") {
+		lastChild.scrollIntoView(false);
+
+		if (fireNotification === false) {
+			return;
+		}
+		
+		Textual.viewPositionMovedToBottom();
 	}
 };
 
-Textual.includeScriptResourceFile = function(file)
+Textual.scrollToTopOfView = function(fireNotification)
 {
-	if (/loaded|complete/.test(document.readyState)) {
-		var newFile = document.createElement("script");
+	var documentBody = Textual.documentBodyElement();
 
-		newFile.setAttribute("charset", "UTF-8");
+	if (documentBody === null) {
+		return;
+	}
 
-		newFile.charset = "UTF-8";
-		newFile.src = file;
-		newFile.type = "text/javascript";
+	var firstChild = documentBody.firstChild;
 
-		document.getElementsByTagName("HEAD")[0].appendChild(newFile);
+	if (typeof firstChild.scrollIntoView === "function") {
+		firstChild.scrollIntoView(true);
+
+		if (fireNotification === false) {
+			return;
+		}
+		
+		Textual.viewPositionMovedToTop();
+	}
+};
+
+Textual.scrollToLine = function(lineNumber)
+{
+	if (Textual.scrollToElement("line-" + lineNumber)) {
+		Textual.viewPositionMovedToLine(lineNumber);
+
+		return true;
 	} else {
-		document.write('<script type="text/javascript" src="' + file + '"></scr' + 'ipt>');
+		return false;
+	}
+};
+
+Textual.scrollToElement = function(elementName)
+{
+	var element = document.getElementById(elementName);
+
+	if (element) {
+		element.scrollIntoViewIfNeeded(true);
+
+		return true;
+	} else {
+		return false;
+	}
+};
+
+Textual.scrollToHistoryIndicator = function()
+{
+	if (Textual.scrollToElement("mark")) {
+		Textual.viewPositionModToHistoryIndicator();
 	}
 };

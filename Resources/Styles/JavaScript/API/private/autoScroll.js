@@ -35,13 +35,11 @@
 
  *********************************************************************** */
 
-/* *********************************************************************** */
-/*																		   */
-/* DO NOT EDIT ANYTHING BELOW THIS LINE FROM WITHIN A STYLE. 			   */
-/* THE FUNCTIONS DELCARED WITHIN THIS FILE ARE USED FOR INTERNAL		   */
-/* PURPOSES AND THE RESULT OF OVERRIDING A FUNCTION IS UNDEFINED.		   */
-/*																		   */
-/* *********************************************************************** */
+/* ************************************************** */
+/*                                                    */
+/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
+/*                                                    */
+/* ************************************************** */
 
 var TextualScroller = {};
 
@@ -62,22 +60,8 @@ TextualScroller.currentScrollTopValue = 0;
 TextualScroller.isScrolledByUser = false;
 
 /* Core functions */
-/*
-TextualScroller.logToConsoleFile = function(message)
-{
-	if (typeof app === "undefined" || typeof app === null) {
-		return;
-	}
-
-	app.logToConsoleFile(message);
-};
-*/
-
 TextualScroller.documentVisbilityChangedCallback = function()
 {
-//	TextualScroller.logToConsoleFile("-------------------------------");
-//	TextualScroller.logToConsoleFile("TextualScroller.documentVisbilityChangedCallback() entered");
-
 	var documentHidden = false;
 
 	if (typeof document.hidden !== "undefined") {
@@ -85,8 +69,6 @@ TextualScroller.documentVisbilityChangedCallback = function()
 	} else if (typeof document.webkitHidden !== "undefined") {
 		documentHidden = document.webkitHidden;
 	}
-	
-//	TextualScroller.logToConsoleFile("documentHidden === " + documentHidden);
 
 	if (documentHidden) {
 		TextualScroller.disableScrollingTimerInt();
@@ -97,15 +79,11 @@ TextualScroller.documentVisbilityChangedCallback = function()
 
 TextualScroller.documentResizedCallback = function()
 {
-//	TextualScroller.logToConsoleFile("TextualScroller.documentResizedCallback() entered");
-
 	TextualScroller.performAutoScrollInt(true);
 };
 
 TextualScroller.documentScrolledCallback = function()
 {
-//	TextualScroller.logToConsoleFile("TextualScroller.documentScrolledCallback() entered");
-	
 	/* Ignore events that are related to elastic scrolling. */
 	var scrollHeight = TextualScroller.scrollHeight();
 	
@@ -133,28 +111,20 @@ TextualScroller.documentScrolledCallback = function()
 	/* 	If the current scroll top value exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-//	TextualScroller.logToConsoleFile("Old position: " + TextualScroller.scrollLastPosition2 + ", New Position: " + TextualScroller.scrollLastPosition1 + ", Height: " + scrollHeight);
-
 	if (TextualScroller.currentScrollTopValue > scrollHeight) {
 		TextualScroller.currentScrollTopValue = scrollHeight;
 
 		if (TextualScroller.currentScrollTopValue < 0) {
 			TextualScroller.currentScrollTopValue = 0;
 		}
-		
-//		TextualScroller.logToConsoleFile("Scroll height was smaller than previous value");
 	}
 	
 	if (TextualScroller.isScrolledByUser) {
-//		TextualScroller.logToConsoleFile("TextualScroller.isScrolledByUser === true");
-
 		/* Check whether the user has scrolled back to the bottom */
 		var scrollTop = (scrollHeight - TextualScroller.scrollLastPosition1);
 
 		if (scrollTop < TextualScroller.scrollTopUserConstant) {
 			TextualScroller.isScrolledByUser = false;
-			
-//			TextualScroller.logToConsoleFile("User scrolled back to the bottom");
 
 			TextualScroller.currentScrollTopValue = TextualScroller.scrollLastPosition1;
 		}
@@ -167,8 +137,6 @@ TextualScroller.documentScrolledCallback = function()
 			var scrollTop = (TextualScroller.currentScrollTopValue - TextualScroller.scrollLastPosition1);
 
 			if (scrollTop > TextualScroller.scrollTopUserConstant) {
-//				TextualScroller.logToConsoleFile("Scrolled above user threshold with difference: " + scrollTop);
-
 				TextualScroller.isScrolledByUser = true;
 			}
 		}
@@ -177,8 +145,6 @@ TextualScroller.documentScrolledCallback = function()
 			move the location further downward. */
 		if (TextualScroller.scrollLastPosition1 > TextualScroller.currentScrollTopValue) {
 			TextualScroller.currentScrollTopValue = TextualScroller.scrollLastPosition1;
-			
-//			TextualScroller.logToConsoleFile("Advancing threshold to " + TextualScroller.currentScrollTopValue);
 		}
 	}
 };
@@ -203,8 +169,6 @@ TextualScroller.performAutoScroll = function()
 
 TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 {
-//	TextualScroller.logToConsoleFile("TextualScroller.performAutoScrollInt() entered");
-
 	/* Set default value of argument */
 	if (typeof skipScrollHeightCheck === "undefined") {
 		skipScrollHeightCheck = false;
@@ -223,8 +187,6 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	var scrollHeight = TextualScroller.scrollHeight();
 
 	if (scrollHeight === 0) {
-//		TextualScroller.logToConsoleFile("Cancelled because scrollHeight === 0");
-
 		return;
 	}
 	
@@ -232,8 +194,6 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	
 	/* Do not perform scrolling if the user is believed to have scrolled */
 	if (TextualScroller.isScrolledByUser) {
-//		TextualScroller.logToConsoleFile("Cancelled because user scrolled");
-
 		return;
 	}
 
@@ -250,8 +210,6 @@ TextualScroller.performAutoScrollInt = function(skipScrollHeightCheck)
 	TextualScroller.scrollHeightCurrentValue = scrollHeight;
 
 	/* Scroll to new value */
-//	TextualScroller.logToConsoleFile("Scrolling to " + scrollHeight + " with previous height " + scrollHeightPrevious);
-
 	window.scrollTo(0, scrollHeight);
 };
 

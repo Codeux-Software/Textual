@@ -1071,6 +1071,9 @@
 		4CC70203171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4CC70204171E1CB400BDFAE0 /* BuildConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CC70202171E1CB400BDFAE0 /* BuildConfig.h */; };
 		4CCC6B61158E8C48003A102B /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = 4CCC6B60158E8C48003A102B /* Scripts */; };
+		4CCD93FD1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
+		4CCD93FE1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
+		4CCD93FF1CA7291300335381 /* JavaScript in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD93FC1CA7291300335381 /* JavaScript */; };
 		4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
 		4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */; };
@@ -1122,12 +1125,6 @@
 		4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4CD378931C89EB18009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
-		4CD378941C89EB1D009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
-		4CD378951C89EB21009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */; };
-		4CD378971C89F53B009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
-		4CD378981C89F541009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
-		4CD378991C89F548009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */; };
 		4CD4165B184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD4165C184065E3005B134D /* TDCProgressInformationSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */; };
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
@@ -1274,15 +1271,6 @@
 		4CF40E8A1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8B1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8C1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
-		4CF40EB21AC1A53A00A26BE0 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EAF1AC1A52D00A26BE0 /* core.js */; };
-		4CF40EB31AC1A53C00A26BE0 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */; };
-		4CF40EB41AC1A53D00A26BE0 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB11AC1A52D00A26BE0 /* liveresize.js */; };
-		4CF40EB51AC1A54000A26BE0 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EAF1AC1A52D00A26BE0 /* core.js */; };
-		4CF40EB61AC1A54200A26BE0 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */; };
-		4CF40EB71AC1A54400A26BE0 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB11AC1A52D00A26BE0 /* liveresize.js */; };
-		4CF40EB81AC1A54800A26BE0 /* core.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EAF1AC1A52D00A26BE0 /* core.js */; };
-		4CF40EB91AC1A54900A26BE0 /* corePrivate.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */; };
-		4CF40EBA1AC1A54B00A26BE0 /* liveresize.js in Copy JavaScript Files */ = {isa = PBXBuildFile; fileRef = 4CF40EB11AC1A52D00A26BE0 /* liveresize.js */; };
 		4CF40EBF1AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
 		4CF40EC01AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
 		4CF40EC11AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
@@ -1476,11 +1464,6 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
-				4CD378991C89F548009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
-				4CD378931C89EB18009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
-				4CF40EB21AC1A53A00A26BE0 /* core.js in Copy JavaScript Files */,
-				4CF40EB31AC1A53C00A26BE0 /* corePrivate.js in Copy JavaScript Files */,
-				4CF40EB41AC1A53D00A26BE0 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1534,11 +1517,6 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
-				4CD378981C89F541009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
-				4CD378941C89EB1D009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
-				4CF40EB51AC1A54000A26BE0 /* core.js in Copy JavaScript Files */,
-				4CF40EB61AC1A54200A26BE0 /* corePrivate.js in Copy JavaScript Files */,
-				4CF40EB71AC1A54400A26BE0 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1571,11 +1549,6 @@
 			dstPath = JavaScript/API;
 			dstSubfolderSpec = 7;
 			files = (
-				4CD378971C89F53B009C0D38 /* autoScrollPrivate.js in Copy JavaScript Files */,
-				4CD378951C89EB21009C0D38 /* scriptSinkPrivate.js in Copy JavaScript Files */,
-				4CF40EB81AC1A54800A26BE0 /* core.js in Copy JavaScript Files */,
-				4CF40EB91AC1A54900A26BE0 /* corePrivate.js in Copy JavaScript Files */,
-				4CF40EBA1AC1A54B00A26BE0 /* liveresize.js in Copy JavaScript Files */,
 			);
 			name = "Copy JavaScript Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1995,6 +1968,7 @@
 		4CCC6B60158E8C48003A102B /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scripts; path = "Resources/All Scripts/Bundled Scripts/Scripts"; sourceTree = SOURCE_ROOT; };
 		4CCC6B6E158E8CDA003A102B /* Brag Spam Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Brag Spam Extension.xcodeproj"; path = "Resources/Plugins/Brag Spam/Brag Spam Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CCC6B77158E8CF6003A102B /* System Profiler Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "System Profiler Extension.xcodeproj"; path = "Resources/Plugins/System Profiler/System Profiler Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4CCD93FC1CA7291300335381 /* JavaScript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JavaScript; path = Resources/Styles/JavaScript; sourceTree = SOURCE_ROOT; };
 		4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4CCF2EE1158046F9006FFE21 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		4CCFA6461ABCF36A0083620F /* TPWTB_Addons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Addons.png; sourceTree = "<group>"; };
@@ -2014,8 +1988,6 @@
 		4CCFA6541ABCF36A0083620F /* TPWTB_Style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Style.png; sourceTree = "<group>"; };
 		4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TPWTB_Style@2x.png"; sourceTree = "<group>"; };
 		4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
-		4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = scriptSinkPrivate.js; path = Resources/Styles/JavaScript/API/scriptSinkPrivate.js; sourceTree = SOURCE_ROOT; };
-		4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = autoScrollPrivate.js; path = Resources/Styles/JavaScript/API/autoScrollPrivate.js; sourceTree = SOURCE_ROOT; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
@@ -2069,9 +2041,6 @@
 		4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightYosemiteUserInterface.m; sourceTree = "<group>"; };
 		4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListUserInfoPopover.m; sourceTree = "<group>"; };
 		4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Entitlements/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4CF40EAF1AC1A52D00A26BE0 /* core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = core.js; path = Resources/Styles/JavaScript/API/core.js; sourceTree = SOURCE_ROOT; };
-		4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = corePrivate.js; path = Resources/Styles/JavaScript/API/corePrivate.js; sourceTree = SOURCE_ROOT; };
-		4CF40EB11AC1A52D00A26BE0 /* liveresize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = liveresize.js; path = Resources/Styles/JavaScript/API/liveresize.js; sourceTree = SOURCE_ROOT; };
 		4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = SOURCE_ROOT; };
 		4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppleCloudMappedKeys.plist; path = "Resources/Property Lists/AppleCloudMappedKeys.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPrivateValues.plist; path = "Resources/Property Lists/IRCCommandIndexPrivateValues.plist"; sourceTree = SOURCE_ROOT; };
@@ -2271,7 +2240,7 @@
 				4C46CCA6158043BB00846B64 /* Extensions */,
 				4C46F3C11943A654004CA8BA /* Images */,
 				4C69E3571B65C266002782D4 /* Installers */,
-				4C46CCA4158043A300846B64 /* JavaScript */,
+				4CCD93FC1CA7291300335381 /* JavaScript */,
 				4C51B8B7196ACDBB00003A87 /* Language Files */,
 				4C699C681B1FB04D001CD1C3 /* License Manager */,
 				4C46CCA31580437B00846B64 /* Property Lists */,
@@ -2339,26 +2308,6 @@
 				4CF40EC91AC1A57800A26BE0 /* StaticStore.plist */,
 			);
 			name = "Property Lists";
-			sourceTree = "<group>";
-		};
-		4C46CCA4158043A300846B64 /* JavaScript */ = {
-			isa = PBXGroup;
-			children = (
-				4C46CCA5158043B100846B64 /* API */,
-			);
-			name = JavaScript;
-			sourceTree = "<group>";
-		};
-		4C46CCA5158043B100846B64 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				4CD378961C89F52E009C0D38 /* autoScrollPrivate.js */,
-				4CF40EAF1AC1A52D00A26BE0 /* core.js */,
-				4CF40EB01AC1A52D00A26BE0 /* corePrivate.js */,
-				4CF40EB11AC1A52D00A26BE0 /* liveresize.js */,
-				4CD3788A1C89E5D9009C0D38 /* scriptSinkPrivate.js */,
-			);
-			name = API;
 			sourceTree = "<group>";
 		};
 		4C46CCA6158043BB00846B64 /* Extensions */ = {
@@ -4166,6 +4115,7 @@
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
+				4CCD93FD1CA7291300335381 /* JavaScript in Resources */,
 				4CF40EBF1AC1A56500A26BE0 /* BasicLanguage.strings in Resources */,
 				4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */,
 				4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */,
@@ -4290,6 +4240,7 @@
 				4CF40EDC1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
+				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
 				4C5BAEB11AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */,
 				4CB229661978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293E1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
@@ -4374,6 +4325,7 @@
 				4CC164B71943B17100B0D4B6 /* DIGreenBadgeLeftYosemite.png in Resources */,
 				4CB229391978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4CF40F571AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
+				4CCD93FE1CA7291300335381 /* JavaScript in Resources */,
 				4CB229311978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
 				4C77663D1978CECA00759774 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
 				4CCFA67F1ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
