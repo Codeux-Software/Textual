@@ -314,7 +314,7 @@ Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 /* Events */
 Textual.mouseUpEventCallback = function()
 {
-	Textual.copyOnSelectMouseUpEvent();
+	Textual.copySelectionOnMouseUpEvent();
 };
 
 /* Selection */
@@ -335,43 +335,31 @@ Textual.currentSelection = function()
 	return window.getSelection().toString();
 };
 
-Textual.currentSelectionCoordinates = function()
+Textual.setSelection = function()
 {
-	var currentSelection = window.getSelection();
+	var selectedText = Textual.currentSelection();
 
-	if (currentSelection.toString() === "") {
-		return null;
-	}
-
-	var clientHeight = document.body.offsetHeight;
-
-	var elementRect = currentSelection.getRangeAt(0).getBoundingClientRect();
-
-	return {
-		"x" : elementRect.left,
-		"y" : (clientHeight - elementRect.bottom),
-		"w" : elementRect.width,
-		"h" : elementRect.height
-	};
+	app.setSelection(selectedText);
 };
 
-Textual.copyOnSelectMouseUpEvent = function()
+Textual.selectionChangedCallback = function()
+{
+	Textual.setSelection();
+};
+
+Textual.copySelectionOnMouseUpEvent = function()
 {
 	if (window.event.metaKey || window.event.altKey) {
 		return;
 	}
 
-	var selectedText = Textual.currentSelection();
-
-	if (selectedText && selectedText.length > 0) {
-		app.copySelectionWhenPermitted(selectedText,
-		   function(returnValue) {
-				if (returnValue) {
-					Textual.clearSelection();
-				}
-		   }
-		);
-	}
+	app.copySelectionWhenPermitted(
+	   function(returnValue) {
+			if (returnValue) {
+				Textual.clearSelection();
+			}
+	   }
+	);
 };
 
 /* Resource management. */
@@ -615,5 +603,7 @@ Textual.didToggleInlineImageToVisible = function(imageElement)
 };
 
 document.addEventListener("contextmenu", Textual.openGenericContextualMenu, false);
+
+document.addEventListener("selectionchange", Textual.selectionChangedCallback, false);
 
 document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);

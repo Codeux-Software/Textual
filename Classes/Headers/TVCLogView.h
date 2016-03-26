@@ -41,16 +41,15 @@
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView : NSObject
-@property (readonly, copy) NSString *contentString;
-
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
 @property (readonly, copy) NSString *selection;
-@property (readonly) NSRect selectionCoordinates;
 
 @property (readonly) BOOL isUsingWebKit2;
 
 - (instancetype)initWithLogController:(TVCLogController *)logController;
+
+- (void)copyContentString;
 
 - (void)print;
 @end

@@ -297,22 +297,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
-	return [self.backingView executeStandaloneCommand:command withArguments:args];
-}
-
-- (BOOL)executeQuickBooleanScriptCommand:(NSString *)command withArguments:(NSArray *)args
-{
-	return [self.backingView returnBooleanByExecutingCommand:command withArguments:args];
-}
-
-- (NSString *)executeQuickStringScriptCommand:(NSString *)command withArguments:(NSArray *)args
-{
-	return [self.backingView returnStringByExecutingCommand:command withArguments:args];
-}
-
-- (NSArray *)executeQuickArrayScriptCommand:(NSString *)command withArguments:(NSArray *)args
-{
-	return [self.backingView returnArrayByExecutingCommand:command withArguments:args];
+	[self.backingView executeCommand:command withArguments:args];
 }
 
 - (void)appendToDocumentBody:(NSString *)html
@@ -563,14 +548,16 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Utilities
 
-- (BOOL)jumpToLine:(NSString *)lineNumber
+- (void)jumpToLine:(NSString *)lineNumber
 {
-	return [self executeQuickBooleanScriptCommand:@"Textual.scrollToLine" withArguments:@[lineNumber]];
+	[self jumpToLine:lineNumber completionHandler:nil];
 }
 
-- (BOOL)jumpToElementID:(NSString *)elementName
+- (void)jumpToLine:(NSString *)lineNumber completionHandler:(void (^)(BOOL))completionHandler
 {
-	return [self executeQuickBooleanScriptCommand:@"Textual.scrollToElement" withArguments:@[elementName]];
+	[self.backingView booleanByExecutingCommand:@"Textual.scrollToLine"
+								  withArguments:@[lineNumber]
+							  completionHandler:completionHandler];
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
@@ -653,7 +640,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 		}
 
-		(void)[self jumpToLine:self.lastVisitedHighlight];
+		[self jumpToLine:self.lastVisitedHighlight];
 	}
 }
 
@@ -679,7 +666,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			self.lastVisitedHighlight = self.highlightedLineNumbers[0];
 		}
 
-		(void)[self jumpToLine:self.lastVisitedHighlight];
+		[self jumpToLine:self.lastVisitedHighlight];
 	}
 }
 
@@ -707,13 +694,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		self.activeLineCount = 0;
 	}
 
-	NSArray *removedLines = [self executeQuickArrayScriptCommand:@"Textual.reduceNumberOfLines" withArguments:@[@(n)]];
+	[self.backingView arrayByExecutingCommand:@"Textual.reduceNumberOfLines"
+								withArguments:@[@(n)]
+							completionHandler:^(NSArray *result) {
+								if (result == nil) {
+									return;
+								}
 
-	if (removedLines) {
-		@synchronized(self.highlightedLineNumbers) {
-			[self.highlightedLineNumbers removeObjectsInArray:removedLines];
-		}
-	}
+								@synchronized(self.highlightedLineNumbers) {
+									[self.highlightedLineNumbers removeObjectsInArray:result];
+								}
+							}];
 }
 
 - (void)setNeedsLimitNumberOfLines

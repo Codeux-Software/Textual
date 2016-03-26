@@ -270,19 +270,19 @@
 			returnValue = [NSNull null];
 		}
 
-		[intWebView executeStandaloneCommand:@"appInternal.promiseKept"
-							   withArguments:@[@(promiseIndex), returnValue]];
+		[intWebView executeCommand:@"appInternal.promiseKept"
+					 withArguments:@[@(promiseIndex), returnValue]];
 	}
 }
 
 - (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeStandaloneCommand:@"console.log" withArguments:@[message]];
+	[webView executeCommand:@"console.log" withArguments:@[message]];
 }
 
 - (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeStandaloneCommand:@"console.error" withArguments:@[message]];
+	[webView executeCommand:@"console.error" withArguments:@[message]];
 }
 
 #pragma mark -
@@ -315,13 +315,7 @@
 
 - (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData
-				 inWebView:webView
-			   forSelector:@selector(_copySelectionWhenPermitted:)
-	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
-			}];
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
 - (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
@@ -452,6 +446,15 @@
 			}];
 }
 
+- (void)setSelection:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_setSelection:)
+	  minimumArgumentCount:1
+			withValidation:nil];
+}
+
 - (void)setURLAddress:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -524,12 +527,16 @@
 - (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
 {
 	if ([TPCPreferences copyOnSelect]) {
-		[RZPasteboard() setStringContent:[context arguments][0]];
+		NSString *selection = [[context webView] selection];
 
-		return @(YES);
-	} else {
-		return @(NO);
+		if (selection) {
+			[RZPasteboard() setStringContent:selection];
+
+			return @(YES);
+		}
 	}
+
+	return @(NO);
 }
 
 - (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
@@ -727,6 +734,31 @@
 	NSString *value = [context arguments][0];
 
 	[[context webViewPolicy] setNickname:[value gtm_stringByUnescapingFromHTML]];
+}
+
+- (void)_setSelection:(TVCLogScriptEventSinkContext *)context
+{
+	id selection = nil;
+
+	NSArray *arguments = [context arguments];
+
+	if (arguments && [arguments count] == 1) {
+		selection = arguments[0];
+	}
+
+	if (selection && [selection isKindOfClass:[NSString class]] == NO) {
+		[self _throwJavaScriptException:@"Invalid type" inWebView:[context webView]];
+
+		return;
+	}
+
+	if ([selection length] == 0) {
+		selection = nil;
+	} else {
+		selection = [selection gtm_stringByUnescapingFromHTML];
+	}
+
+	[[context webView] setSelection:selection];
 }
 
 - (void)_setURLAddress:(TVCLogScriptEventSinkContext *)context

@@ -96,6 +96,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverIsConnected"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setChannelName"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setNickname"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setSelection"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setURLAddress"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];

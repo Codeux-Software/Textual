@@ -75,11 +75,11 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 }
 
-- (NSString *)contentString
+- (void)copyContentString
 {
-	NSString *contentString = [self returnStringByExecutingCommand:@"Textual.documentHTML"];
-
-	return contentString;
+	[self stringByExecutingCommand:@"Textual.documentHTML" completionHandler:^(NSString *result) {
+		[RZPasteboard() setStringContent:result];
+	}];
 }
 
 - (BOOL)hasSelection
@@ -89,59 +89,9 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return (NSObjectIsEmpty(selection) == NO);
 }
 
-- (NSString *)selection
-{
-	NSString *selection = [self returnStringByExecutingCommand:@"Textual.currentSelection"];
-
-	return selection;
-}
-
-- (NSRect)selectionCoordinates
-{
-	id scriptResult = [self executeCommand:@"Textual.currentSelectionCoordinates"];
-
-	id elementX = nil;
-	id elementY = nil;
-	id elementWidth = nil;
-	id elementHeight = nil;
-
-	if (scriptResult && [scriptResult isKindOfClass:[NSDictionary class]])
-	{
-		elementX = [scriptResult objectForKey:@"x"];
-		elementY = [scriptResult objectForKey:@"y"];
-		elementWidth = [scriptResult objectForKey:@"w"];
-		elementHeight = [scriptResult objectForKey:@"h"];
-	}
-	else if (scriptResult && [scriptResult isKindOfClass:[WebScriptObject class]])
-	{
-		elementX = [scriptResult valueForKey:@"x"];
-		elementY = [scriptResult valueForKey:@"y"];
-		elementWidth = [scriptResult valueForKey:@"w"];
-		elementHeight = [scriptResult valueForKey:@"h"];
-	}
-	else
-	{
-		return NSZeroRect;
-	}
-
-	if ([elementX isKindOfClass:[NSNumber class]] == NO ||
-		[elementY isKindOfClass:[NSNumber class]] == NO ||
-		[elementWidth isKindOfClass:[NSNumber class]] == NO ||
-		[elementHeight isKindOfClass:[NSNumber class]] == NO)
-	{
-		return NSZeroRect;
-	}
-
-	return NSMakeRect(
-		[elementX integerValue],
-		[elementY integerValue],
-		[elementWidth integerValue],
-		[elementHeight integerValue]);
-}
-
 - (void)clearSelection
 {
-	[self executeStandaloneCommand:@"Textual.clearSelection"];
+	[self executeCommand:@"Textual.clearSelection"];
 }
 
 - (void)print
@@ -461,7 +411,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 {
 	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
 
-	[self executeJavaScript:compiledScript];
+	[self executeJavaScript:compiledScript completionHandler:completionHandler];
 }
 
 - (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL))completionHandler

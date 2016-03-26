@@ -49,6 +49,8 @@
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
+@property (nonatomic, readwrite, copy) NSString *selection;
+
 - (void)informDelegateWebViewClosedUnexpectedly;
 - (void)informDelegateWebViewFinishedLoading;
 
