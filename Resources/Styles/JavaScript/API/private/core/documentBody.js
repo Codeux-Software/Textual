@@ -49,7 +49,7 @@ Textual.loadingScreenElement = function()
 
 Textual.fadeInLoadingScreen = function(bodyOp, topicOp)
 {
-	console.error("Deprecated function. Use Textual.fadeOutLoadingScreen() instead.");
+	console.warn("Deprecated function. Use Textual.fadeOutLoadingScreen() instead.");
 
 	Textual.fadeOutLoadingScreen(bodyOp, topicOp);
 };
