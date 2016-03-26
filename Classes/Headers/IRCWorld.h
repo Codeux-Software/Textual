@@ -79,8 +79,6 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 - (void)markAllAsRead;
 - (void)markAllAsRead:(IRCClient *)limitedClient;
 
-- (void)markAllScrollbacks TEXTUAL_DEPRECATED("Method is no longer used by Textual");
-
 - (void)reloadTheme;
 - (void)reloadTheme:(BOOL)reloadUserInterface;
 
@@ -91,9 +89,6 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 
 - (IRCTreeItem *)findItemFromPasteboardString:(NSString *)s;
 - (NSString *)pasteboardStringForItem:(IRCTreeItem *)item;
-
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s TEXTUAL_DEPRECATED("Use -findItemFromPasteboardString instead");
-- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item TEXTUAL_DEPRECATED("Use -pasteboardStringForItem: instead");
 
 - (IRCClient *)createClient:(id)seed reload:(BOOL)reload;
 - (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust;

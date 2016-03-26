@@ -44,11 +44,6 @@
 	return @[@"image/gif", @"image/jpeg", @"image/png", @"image/svg+xml", @"image/tiff", @"image/x-ms-bmp"];
 }
 
-+ (NSURL *)URLFromWebViewPasteboard:(NSString *)baseURL
-{
-	return [baseURL URLUsingWebKitPasteboard];
-}
-
 + (NSString *)imageURLFromBase:(NSString *)url
 {
 	/* Convert URL. */
