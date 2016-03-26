@@ -381,15 +381,6 @@ app.retrievePreferencesWithMethodName = function(name, callbackFunction)
 	}
 };
 
-app.copySelection = function(object)
-{
-	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.copySelection.postMessage(object);
-	} else {
-		TextualScriptSink.copySelection(object);
-	}
-};
-
 app.copySelectionWhenPermitted = function(object, callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);

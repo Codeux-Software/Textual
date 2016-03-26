@@ -313,17 +313,6 @@
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_displayContextMenu:)];
 }
 
-- (void)copySelection:(id)inputData inWebView:(id)webView
-{
-	[self processInputData:inputData
-				 inWebView:webView
-			   forSelector:@selector(_copySelection:)
-	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
-			}];
-}
-
 - (void)copySelectionWhenPermitted:(id)inputData inWebView:(id)webView
 {
 	[self processInputData:inputData
@@ -530,11 +519,6 @@
 - (void)_displayContextMenu:(TVCLogScriptEventSinkContext *)context
 {
 	[[context webViewPolicy] displayContextMenuInWebView:[context webView]];
-}
-
-- (void)_copySelection:(TVCLogScriptEventSinkContext *)context
-{
-	[RZPasteboard() setStringContent:[context arguments][0]];
 }
 
 - (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
