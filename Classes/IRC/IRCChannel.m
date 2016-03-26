@@ -740,16 +740,6 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	return mutlist;
 }
 
-- (NSArray *)sortedByNicknameLengthMemberList
-{
-	return [self memberListSortedByNicknameLength];
-}
-
-- (NSArray *)sortedByChannelRankMemberList
-{
-	return [self memberList];
-}
-
 #pragma mark -
 #pragma mark User Search
 

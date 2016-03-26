@@ -358,19 +358,6 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[TVCDockIcon updateDockIcon];
 }
 
-- (void)markAllScrollbacks
-{
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u.viewController mark];
-			
-			for (IRCChannel *c in u.channelList) {
-				[c.viewController mark];
-			}
-		}
-	}
-}
-
 - (void)preferencesChanged
 {
 	[menuController() preferencesChanged];
@@ -501,11 +488,6 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	return s;
 }
 
-- (NSString *)findItemFromInfoGeneratedValue:(IRCTreeItem *)item
-{
-	return [self pasteboardStringForItem:item];
-}
-
 - (IRCTreeItem *)findItemFromPasteboardString:(NSString *)s
 {
 	NSObjectIsEmptyAssertReturn(s, nil);
@@ -520,11 +502,6 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	} else {
 		return [self findClientById:s];
 	}
-}
-
-- (IRCTreeItem *)findItemFromInfo:(NSString *)s
-{
-	return [self findItemFromPasteboardString:s];
 }
 
 #pragma mark -

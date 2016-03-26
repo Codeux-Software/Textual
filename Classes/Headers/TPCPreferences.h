@@ -189,7 +189,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)rejoinOnKick;
 + (BOOL)copyOnSelect;
 + (BOOL)replyToCTCPRequests;
-+ (BOOL)autojoinWaitsForNickServ TEXTUAL_DEPRECATED("This option is now server specific. It is maintained here to read any previous, user-configured value to use a defaut");
++ (BOOL)autojoinWaitsForNickServ TEXTUAL_DEPRECATED("This option is now server specific. It is maintained here to read any previous, user-configured value to use a default");
 
 + (BOOL)inputHistoryIsChannelSpecific;
 
