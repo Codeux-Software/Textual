@@ -163,25 +163,14 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)executeJavaScript:(NSString *)code
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
 	WebScriptObject *scriptObject = [self windowScriptObject];
 
 	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
-		return;
-	}
-
-	(void)[scriptObject evaluateWebScript:code];
-}
-
-- (id)executeJavaScriptWithResult:(NSString *)code error:(NSError **)error
-{
-#pragma unused(error)
-
-	WebScriptObject *scriptObject = [self windowScriptObject];
-
-	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
-		return nil;
+		if (completionHandler) {
+			completionHandler(nil);
+		}
 	}
 
 	id scriptResult = [scriptObject evaluateWebScript:code];
@@ -190,11 +179,15 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 		if ([scriptResult isKindOfClass:[NSNull class]] ||
 			[scriptResult isKindOfClass:[WebUndefined class]])
 		{
-			return nil;
+			if (completionHandler) {
+				completionHandler(nil);
+			}
 		}
 	}
 
-	return scriptResult;
+	if (completionHandler) {
+		completionHandler(scriptResult);
+	}
 }
 
 #pragma mark -
