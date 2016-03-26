@@ -106,13 +106,22 @@ TextualScroller.documentScrolledCallback = function()
 {
 //	TextualScroller.logToConsoleFile("TextualScroller.documentScrolledCallback() entered");
 	
+	/* Ignore events that are related to elastic scrolling. */
+	var scrollHeight = TextualScroller.scrollHeight();
+	
+	var scrollPosition = window.scrollY;
+	
+	if (scrollPosition > scrollHeight) {
+		return;
+	}
+	
 	/* 	Record the last three known scrollY values. These properties are compared
 		to determine if the user is scrolling upwards or downwards. */
 	TextualScroller.scrollLastPosition3 = TextualScroller.scrollLastPosition2;
 
 	TextualScroller.scrollLastPosition2 = TextualScroller.scrollLastPosition1;
 
-	TextualScroller.scrollLastPosition1 = window.scrollY;
+	TextualScroller.scrollLastPosition1 = scrollPosition;
 	
 	/* Perform bug corrections */
 	if (TextualScroller.correctScrollBug1() === true ||
@@ -124,8 +133,6 @@ TextualScroller.documentScrolledCallback = function()
 	/* 	If the current scroll top value exceeds the view height, then it means
 		that some lines were probably removed to enforce size limit. */
 	/* 	Reset the value to be the absolute bottom when this occurs. */
-	var scrollHeight = TextualScroller.scrollHeight();
-	
 //	TextualScroller.logToConsoleFile("Old position: " + TextualScroller.scrollLastPosition2 + ", New Position: " + TextualScroller.scrollLastPosition1 + ", Height: " + scrollHeight);
 
 	if (TextualScroller.currentScrollTopValue > scrollHeight) {
