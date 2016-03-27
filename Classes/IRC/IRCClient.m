@@ -9586,7 +9586,6 @@ present_error:
 	self.lastWhoRequestChannelListIndex = currentPosition;
 
 	/* Send WHO requests */
-	LogToConsole(@"%@", channelsToQuery);
 	for (IRCChannel *c in channelsToQuery) {
 		[self send:IRCPrivateCommandIndex("who"), [c name], nil];
 	}
