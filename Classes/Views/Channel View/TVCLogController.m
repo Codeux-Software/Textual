@@ -154,7 +154,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[self buildBackingView];
 
-	if ([self isInSelectionStack]) {
+	if ([self isVisible]) {
 		[mainWindow() updateChannelViewBoxContentViewSelection];
 	}
 }
@@ -275,7 +275,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	return ([mainWindow() selectedViewController] == self);
 }
 
-- (BOOL)isInSelectionStack
+- (BOOL)isVisible
 {
 	if (self.associatedChannel) {
 		return [[mainWindow() selectedItems] containsObject:self.associatedChannel];
@@ -1279,7 +1279,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
 	}
 
-	if ([self isInSelectionStack]) {
+	if ([self isVisible]) {
 		[self notifyDidBecomeVisible];
 	}
 
