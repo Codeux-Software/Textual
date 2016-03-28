@@ -57,9 +57,7 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 #import "TVCServerList.h" // @protocol
 
 @interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
-@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
-@property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
-@property (nonatomic, weak) IBOutlet NSBox *channelViewBox;
+@property (nonatomic, weak) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewLockButton *titlebarAccessoryViewLockButton;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
@@ -70,16 +68,17 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 @property (nonatomic, weak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, weak) IBOutlet TVCServerList *serverList;
-@property (nonatomic, strong) IRCTreeItem *selectedItem; // Please don't directy modify this without calling -adjustSelection
-@property (nonatomic, copy) NSString *previousSelectedClientId; // There are no reasons to modify this.
-@property (nonatomic, copy) NSString *previousSelectedChannelId; // There are no reasons to modify this.
 @property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
 @property (nonatomic, assign) BOOL temporarilyIgnoreOutlineViewSelectionChanges;
 
+@property (readonly) BOOL multipleItemsSelected;
+
+@property (readonly) IRCTreeItem *previouslySelectedItem;
+@property (readonly) IRCTreeItem *selectedItem;
+@property (readonly, copy) NSArray *selectedItems;
 @property (readonly) IRCClient *selectedClient;
 @property (readonly) IRCChannel *selectedChannel;
 @property (readonly) TVCLogController *selectedViewController;
-@property (readonly) IRCTreeItem *previouslySelectedItem;
 
 - (void)prepareForApplicationTermination;
 

@@ -118,6 +118,19 @@ Textual.setTopicBarValue = function(topicValue, topicValueHTML)
 	}
 };
 
+Textual.setTopicBarVisible = function(isVisible)
+{
+	var topicBar = Textual.topicBarElement();
+
+	if (topicBar) {
+		if (isVisible) {
+			topicBar.style.display = "";
+		} else {
+			topicBar.style.display = "none";
+		}
+	}
+};
+
 Textual.topicBarDoubleClicked = function()
 {
 	app.topicBarDoubleClicked();

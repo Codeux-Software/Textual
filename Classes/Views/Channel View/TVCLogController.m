@@ -154,7 +154,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[self buildBackingView];
 
-	if ([mainWindow() selectedViewController] == self) {
+	if ([self isInSelectionStack]) {
 		[mainWindow() updateChannelViewBoxContentViewSelection];
 	}
 }
@@ -268,6 +268,20 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	return (([TPCPreferences showInlineImages]			&& self.associatedChannel.config.ignoreInlineImages == NO) ||
 			([TPCPreferences showInlineImages] == NO	&& self.associatedChannel.config.ignoreInlineImages));
+}
+
+- (BOOL)isSelected
+{
+	return ([mainWindow() selectedViewController] == self);
+}
+
+- (BOOL)isInSelectionStack
+{
+	if (self.associatedChannel) {
+		return [[mainWindow() selectedItems] containsObject:self.associatedChannel];
+	} else {
+		return [[mainWindow() selectedItems] containsObject:self.associatedClient];
+	}
 }
 
 #pragma mark -
@@ -563,6 +577,13 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
 	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeVisible" withArguments:nil];
+}
+
+- (void)notifySelectionChanged
+{
+	BOOL isSelected = [self isSelected];
+
+	[self executeQuickScriptCommand:@"Textual.notifySelectionChanged" withArguments:@[@(isSelected)]];
 }
 
 - (void)notifyDidBecomeHidden
@@ -1258,7 +1279,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
 	}
 
-	if ([mainWindow() selectedViewController] == self) {
+	if ([self isInSelectionStack]) {
 		[self notifyDidBecomeVisible];
 	}
 

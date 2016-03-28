@@ -35,41 +35,15 @@
 
  *********************************************************************** */
 
-/* ************************************************** */
-/*                                                    */
-/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
-/*                                                    */
-/* ************************************************** */
+#import "TextualApplication.h"
 
-/* State management */
-Textual.notifyDidBecomeVisible = function()
-{
-	TextualScroller.enableScrollingTimer();
+@interface TVCMainWindowChannelView : NSSplitView <NSSplitViewDelegate>
+- (void)populateSubviews;
+@end
 
-	Textual.clearSelection();
-};
+@interface TVCMainWindowChannelViewSubview : NSView
+@property (readonly) BOOL overlayVisible;
+@end
 
-Textual.notifyDidBecomeHidden = function()
-{
-	TextualScroller.disableScrollingTimer();
-
-	Textual.clearSelection();
-};
-
-Textual.notifySelectionChanged = function(isSelected)
-{
-	if (isSelected) {
-		Textual.setTopicBarVisible(true);
-	} else {
-		Textual.setTopicBarVisible(false);
-	}
-};
-
-/* Events */
-Textual.mouseUpEventCallback = function()
-{
-	Textual.copySelectionOnMouseUpEvent();
-};
-
-/* Bind to events */
-document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
+@interface TVCMainWindowChannelViewSubviewOverlayView : NSView
+@end

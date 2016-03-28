@@ -42,13 +42,10 @@
 #import "TLOLicenseManager.h"
 #endif
 
+#import "TVCMainWindowPrivate.h"
+
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
-
-@interface TVCMainWindow ()
-@property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
-@property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
-@end
 
 @implementation TVCMainWindow
 
@@ -164,9 +161,9 @@
 		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
 		
 		if ([TPCPreferences invertSidebarColors]) {
-			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
+			[self.channelView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
 		} else {
-			[self.channelViewBox setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
+			[self.channelView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
 		}
 
 		[self.contentSplitView setNeedsDisplay:YES];
@@ -404,7 +401,7 @@
 			return;
 		}
 	}
-	
+
 	[super sendEvent:e];
 }
 
@@ -1091,25 +1088,140 @@
 #pragma mark -
 #pragma mark Channel View Box
 
+- (BOOL)multipleItemsSelected
+{
+	return ([self.selectedItems count] > 1);
+}
+
+- (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
+{
+	[self storePreviousSelection];
+
+	self.selectedItem = selectedItem;
+
+	[self selectionDidChangePostflight];
+}
+
 - (void)updateChannelViewBoxContentViewSelection
 {
-	TVCLogController *logController = self.selectedViewController;
+	[self.channelView populateSubviews];
+}
 
-	NSView *webView = [[logController backingView] webView];
+- (void)selectionDidChangePostflight
+{
+	/* If the selection hasn't changed, then do nothing. */
+	IRCTreeItem *itemChangedTo = self.selectedItem;
 
-	[self.channelViewBox setContentView:webView];
+	IRCTreeItem *itemChangedFrom = self.previouslySelectedItem;
 
-	[self.channelViewBox addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
-											 options:0
-											 metrics:nil
-											   views:NSDictionaryOfVariableBindings(webView)]];
+	if (itemChangedTo == itemChangedFrom) {
+		return;
+	}
 
-	[self.channelViewBox addConstraints:
-	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView]-0-|"
-											 options:0
-											 metrics:nil
-											   views:NSDictionaryOfVariableBindings(webView)]];
+	/* Reset state of selections */
+	if ( itemChangedFrom) {
+		[itemChangedFrom resetState];
+	}
+
+	if ( itemChangedTo) {
+		[itemChangedTo resetState];
+	}
+
+	/* Notify WebKit its selection status has changed. */
+	if (  itemChangedFrom) {
+		[[itemChangedFrom viewController] notifySelectionChanged];
+	}
+
+	/* Destroy any floating popup */
+	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
+
+	/* Destroy member list if we have no selection */
+	if (itemChangedTo == nil) {
+		self.memberList.delegate = nil;
+		self.memberList.dataSource = nil;
+
+		[self.memberList reloadData];
+
+		self.serverList.menu = [menuController() addServerMenu];
+
+		[self updateTitle];
+
+		return; // Nothing more to do for empty selections.
+	}
+
+	/* Prepare the member list for the selection */
+	BOOL isClient = ([itemChangedTo isClient]);
+
+	BOOL isPrivateMessage = ([itemChangedTo isPrivateMessage]);
+
+	/* The right click menu follows selection so let's update
+	 the menu we will show depending on the selection. */
+	if (isClient) {
+		self.serverList.menu = [[menuController() serverMenuItem] submenu];
+	} else {
+		self.serverList.menu = [[menuController() channelMenuItem] submenu];
+	}
+
+	/* Update table view data sources */
+	if (isClient || isPrivateMessage) {
+		/* Private messages and the client console
+		 do not have a member list. */
+		self.memberList.delegate = nil;
+		self.memberList.dataSource = nil;
+
+		[self.memberList reloadData];
+	} else {
+		self.memberList.delegate = (id)itemChangedTo;
+		self.memberList.dataSource = (id)itemChangedTo;
+
+		[self.memberList deselectAll:nil];
+		[self.memberList scrollRowToVisible:0];
+
+		[(id)self.selectedItem reloadDataForTableView];
+	}
+
+	/* Begin work on text field */
+	BOOL autoFocusInputTextField = [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+
+	if (autoFocusInputTextField && [XRAccessibility isVoiceOverEnabled] == NO) {
+		[self.inputTextField focus];
+	}
+
+	[self.inputTextField updateSegmentedController];
+
+	/* Setup text field value with history item when we have
+	 history setup to be channel specific. */
+	[[TXSharedApplication sharedInputHistoryManager] moveFocusTo:itemChangedTo];
+
+	/* Reset spelling for text field */
+	if ([self.inputTextField hasModifiedSpellingDictionary]) {
+		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:[self.inputTextField spellCheckerDocumentTag]];
+	}
+
+	/* Update splitter view depending on selection */
+	if (isClient || isPrivateMessage) {
+		[self.contentSplitView collapseMemberList];
+	} else {
+		if (self.memberList.isHiddenByUser == NO) {
+			[self.contentSplitView expandMemberList];
+		}
+	}
+
+	/* Notify WebKit its selection status has changed. */
+	[[itemChangedTo viewController] notifySelectionChanged];
+
+	/* Update client specific data */
+	[self storeLastSelectedChannel];
+
+	/* Dimiss notification center */
+	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
+
+	/* Finish up */
+	[menuController() mainWindowSelectionDidChange];
+
+	[TVCDockIcon updateDockIcon];
+	
+	[self updateTitle];
 }
 
 #pragma mark -
@@ -1550,37 +1662,38 @@
 
 - (void)select:(id)item
 {
-	/* There is nothing to do if we are already selected. */
+	/* There is nothing to do if we are already selected */
 	if (self.selectedItem == item) {
 		return;
 	}
 	
-	/* We do support selecting nothing. */
+	/* We do support selecting nothing */
 	if (item == nil) {
 		[self storePreviousSelection]; // -outlineViewSelectionDidChange: would normally do this
 
-		 self.selectedItem = nil;
-		
-		[self.channelViewBox setContentView:nil];
-		
-		[self.memberList setDataSource:nil];
+		self.selectedItem = nil;
+		self.selectedItems = nil;
+
+		[self.channelView populateSubviews];
+
+		self.memberList.delegate = nil;
+		self.memberList.dataSource = nil;
+
 		[self.memberList reloadData];
 		
 		return;
 	}
 	
-	/* Begin selection process. */
-	BOOL isClient = [item isClient];
-	
+	/* Begin selection process */
 	IRCClient *u = [item associatedClient];
 	
 	/* If we are selecting a channel, then we expand the 
 	 client list if it was not already expanded. */
-	if (isClient == NO) {
+	if ([item isClient] == NO) {
 		[[self.serverList animator] expandItem:u];
 	}
 
-	/* We now move the actual selection. */
+	/* We now move the actual selection */
 	NSInteger i = [self.serverList rowForItem:item];
 
 	if (i >= 0) {
@@ -1754,138 +1867,131 @@
 	}
 }
 
+- (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
+{
+#define _maximumSelectedRows	6
+
+	if ([proposedSelectionIndexes count] > _maximumSelectedRows) {
+		NSMutableIndexSet *limitedSelectionIndexes = [NSMutableIndexSet indexSet];
+
+		NSInteger indexCount = 0;
+
+		NSUInteger currentIndex = [proposedSelectionIndexes firstIndex];
+
+		while (indexCount < _maximumSelectedRows) {
+			[limitedSelectionIndexes addIndex:currentIndex];
+
+			currentIndex = [proposedSelectionIndexes indexGreaterThanIndex:currentIndex];
+
+			indexCount += 1;
+		}
+
+		return limitedSelectionIndexes;
+	}
+
+	return proposedSelectionIndexes;
+
+#undef _maximumSelectedRows
+}
+
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
 	/* Do nothing under special circumstances. */
 	if (self.temporarilyIgnoreOutlineViewSelectionChanges) {
 		return;
 	}
-	
-	/* Store previous selection. */
+
+	/* Store previous selection */
 	[self storePreviousSelection];
-	
-	/* Reset spelling for text field. */
-	if ([self.inputTextField hasModifiedSpellingDictionary]) {
-		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:[self.inputTextField spellCheckerDocumentTag]];
-	}
-	
-	/* Prepare next item. */
-	NSUInteger selectedRow = [self.serverList selectedRow];
 
-	id nextItem = [self.serverList itemAtRow:selectedRow];
-	
-	[self.selectedItem resetState]; // Reset state of old item.
-	 self.selectedItem = nextItem;
-	
-	[self.selectedItem resetState]; // Reset state of new item.
-	
-	/* Destroy any floating popup. */
-	[self.memberList destroyUserInfoPopoverOnWindowKeyChange];
-	
-	/* Destroy member list if we have no selection. */
-	if (self.selectedItem == nil) {
-		[self.channelViewBox setContentView:nil];
-		
-		 self.memberList.delegate = nil;
-		 self.memberList.dataSource = nil;
-		
-		[self.memberList reloadData];
-		
-		self.serverList.menu = [menuController() addServerMenu];
-		
-		[self updateTitle];
-		
-		return; // Nothing more to do for empty selections.
-	}
-	
-	/* Setup WebKit. */
-	TVCLogController *logController = self.selectedViewController;
+	/* Prepare next item */
+	NSIndexSet *selectedRows = [mainWindowServerList() selectedRowIndexes];
 
-	[self updateChannelViewBoxContentViewSelection];
+	NSInteger selectedRowsCount = [selectedRows count];
 
-	/* Notify old view that it is no longer visible. */
-	[[self.previouslySelectedItem viewController] notifyDidBecomeHidden];
+	/* Create list of selected items and notify those newly selected items
+	 that they are now visible + part of a stacked view */
+	NSMutableArray *selectedItems = nil;
 
-	/* Prepare the member list for the selection. */
-	BOOL isClient = ([self.selectedItem isClient]);
-	BOOL isQuery = ([self.selectedItem isPrivateMessage]);
-	
-	/* The right click menu follows selection so let's update
-	 the menu we will show depending on the selection. */
-	if (isClient) {
-		self.serverList.menu = [[menuController() serverMenuItem] submenu];
-	} else {
-		self.serverList.menu = [[menuController() channelMenuItem] submenu];
-	}
-	
-	/* Update table view data sources. */
-	if (isClient || isQuery) {
-		/* Private messages and the client console
-		 do not have a member list. */
-		 self.memberList.delegate = nil;
-		 self.memberList.dataSource = nil;
-		
-		[self.memberList reloadData];
-	} else {
-		 self.memberList.delegate = (id)self.selectedItem;
-		 self.memberList.dataSource = (id)self.selectedItem;
-		
-		[self.memberList deselectAll:nil];
-		[self.memberList scrollRowToVisible:0];
-		
-		[(id)self.selectedItem reloadDataForTableView];
-	}
-	
-	/* Begin work on text field. */
-	BOOL autoFocusInputTextField = [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+	if (selectedRowsCount > 0) {
+		selectedItems = [NSMutableArray arrayWithCapacity:selectedRowsCount];
 
-	if (autoFocusInputTextField && [XRAccessibility isVoiceOverEnabled] == NO) {
-		[self.inputTextField focus];
-	}
+		for (NSNumber *row in [selectedRows arrayFromIndexSet]) {
+			NSInteger rowInt = [row integerValue];
 
-	[self.inputTextField updateSegmentedController];
-	
-	/* Setup text field value with history item when we have
-	 history setup to be channel specific. */
-	[[TXSharedApplication sharedInputHistoryManager] moveFocusTo:self.selectedItem];
-	
-	/* Update splitter view depending on selection. */
-	if (isClient || isQuery) {
-		[self.contentSplitView collapseMemberList];
-	} else {
-		if (self.memberList.isHiddenByUser == NO) {
-			[self.contentSplitView expandMemberList];
+			IRCTreeItem *rowObject = [mainWindowServerList() itemAtRow:rowInt];
+
+			[selectedItems addObject:rowObject];
 		}
 	}
 
-	/* Update client specific data. */
-	[self storeLastSelectedChannel];
+	/* Update properties */
+	NSArray *selectedItemsPrevious = nil;
 
-	/* Allow selected WebView time to update. */
-	[logController notifyDidBecomeVisible];
-	
-	/* Dimiss notification center. */
-	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
-	
-	/* Finish up. */
-	[menuController() mainWindowSelectionDidChange];
-	
-	[TVCDockIcon updateDockIcon];
-	
-	[self updateTitle];
+	if (self.selectedItems) {
+		selectedItemsPrevious = [self.selectedItems copy];
+	}
+
+	if (selectedItems) {
+		self.selectedItems = selectedItems;
+
+		if ([self.selectedItems containsObject:self.selectedItem] == NO) {
+			 self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
+		}
+	} else {
+		self.selectedItem = nil;
+		self.selectedItems = nil;
+	}
+
+	/* Update split view */
+	[self updateChannelViewBoxContentViewSelection];
+
+	/* Inform views that are currently selected that no longer will be that they
+	 are now hidden. We wait until after -updateChannelViewBoxContentViewSelection
+	 is called to do this so that the views that are hidden are actually hidden 
+	 before informing the views of this fact. */
+	if (selectedItemsPrevious) {
+		for (IRCTreeItem *item in selectedItemsPrevious) {
+			if (selectedItems == nil || [selectedItems containsObject:item] == NO) {
+				[[item viewController] notifyDidBecomeHidden];
+			}
+		}
+	}
+
+	/* Inform new views that they are visible now that they are visible. */
+	if (selectedItems) {
+		for (IRCTreeItem *item in selectedItems) {
+			if (selectedItemsPrevious == nil || [selectedItemsPrevious containsObject:item] == NO) {
+				[[item viewController] notifyDidBecomeVisible];
+
+				if (item != self.selectedItem) {
+					[[item viewController] notifySelectionChanged];
+				}
+			}
+		}
+	}
+
+	selectedItems = nil;
+	selectedItemsPrevious = nil;
+
+	/* Perform postflight routines */
+	[self selectionDidChangePostflight];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
 	NSObjectIsEmptyAssertReturn(items, NO);
-	
-	IRCTreeItem *i = items[0];
-	
-	NSString *s = [worldController() pasteboardStringForItem:i];
-	
-	[pboard declareTypes:_treeDragItemTypes owner:self];
-	
-	[pboard setPropertyList:s forType:_treeDragItemType];
+
+	/* TODO (March 27, 2016): Support dragging multiple items */
+	if ([items count] == 1) {
+		IRCTreeItem *i = items[0];
+		
+		NSString *s = [worldController() pasteboardStringForItem:i];
+		
+		[pboard declareTypes:_treeDragItemTypes owner:self];
+		
+		[pboard setPropertyList:s forType:_treeDragItemType];
+	}
 	
 	return YES;
 }

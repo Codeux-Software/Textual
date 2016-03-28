@@ -378,9 +378,6 @@ create_normal_pool:
 
 - (void)__t_priv_updateLayer
 {
-	/* Be a good friend to WKView by at least allowing it to do work. */
-	[self __t_priv_updateLayer];
-
 	/* Set the style defined background color for the layer. */
 	NSColor *windowColor = [themeSettings() underlyingWindowColor];
 
