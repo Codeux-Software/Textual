@@ -595,7 +595,18 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)changeTextSizeMultiplier
 {
+	[self changeTextSizeMultiplierIgnoringBaseline:YES];
+}
+
+- (void)changeTextSizeMultiplierIgnoringBaseline:(BOOL)ignoreBaseline
+{
 	float sizeMultiplier = [worldController() textSizeMultiplier];
+
+	if (ignoreBaseline == NO) {
+		if ([NSNumber compareCGFloat:sizeMultiplier toFloat:1.0f]) {
+			return;
+		}
+	}
 
 	[self executeQuickScriptCommand:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
 }
@@ -1286,7 +1297,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	[[self printingQueue] updateReadinessState:self];
 
-	[self changeTextSizeMultiplier];
+	[self changeTextSizeMultiplierIgnoringBaseline:NO];
 }
 
 - (void)logViewWebViewClosedUnexpectedly
