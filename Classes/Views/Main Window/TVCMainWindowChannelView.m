@@ -222,41 +222,25 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 
 - (TVCMainWindowChannelViewSubview *)subviewForItem:(IRCTreeItem *)item
 {
+	NSRect splitViewFrame = [self frame];
+
+	splitViewFrame.origin.x = 0.0;
+	splitViewFrame.origin.y = 0.0;
+
 	  TVCMainWindowChannelViewSubview *overlayView =
-	[[TVCMainWindowChannelViewSubview alloc] initWithFrame:NSZeroRect];
+	[[TVCMainWindowChannelViewSubview alloc] initWithFrame:splitViewFrame];
 
 	return overlayView;
 }
 
 - (void)positionDividersProportionally
 {
-	NSInteger subviewCount = [[self subviews] count];
-
-	NSAssertReturn(subviewCount > 1);
-
-	NSRect splitViewFrame = [self frame];
-
-	CGFloat dividerThickness = [self dividerThickness];
-
-	NSInteger subviewHeight = ((splitViewFrame.size.height / subviewCount) -
-							   (dividerThickness * (subviewCount - 1)));
-
-	self.isMovingDividers = YES;
-
-	for (NSInteger i = 0; i < subviewCount; i++) {
-		NSInteger currentPosition = (subviewHeight * (i + 1));
-
-		[self setPosition:currentPosition ofDividerAtIndex:i];
-	}
-
-	self.isMovingDividers = NO;
+	[self adjustSubviews];
 }
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-	/* This magic number is also in -setWebView: further down this source file.
-	 If you modify the number here, then make sure you modify it there too. */
-#define _minimumHeight		55.0
+#define _minimumHeight		22.0
 
 	if (self.isMovingDividers) {
 		return proposedPosition;
@@ -354,7 +338,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 												   views:NSDictionaryOfVariableBindings(webView)]];
 
 		[self addConstraints:
-		 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=55)]-0-|"
+		 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=22)]-0-|"
 												 options:NSLayoutFormatDirectionLeadingToTrailing
 												 metrics:nil
 												   views:NSDictionaryOfVariableBindings(webView)]];
@@ -364,7 +348,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 - (void)addOverlayView
 {
 	  TVCMainWindowChannelViewSubviewOverlayView *overlayView =
-	[[TVCMainWindowChannelViewSubviewOverlayView alloc] initWithFrame:NSZeroRect];
+	[[TVCMainWindowChannelViewSubviewOverlayView alloc] initWithFrame:[self frame]];
 
 	[overlayView setTranslatesAutoresizingMaskIntoConstraints:NO];
 
