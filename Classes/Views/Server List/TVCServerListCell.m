@@ -525,12 +525,16 @@
 - (void)populateMessageCountBadge:(id)interfaceObject inContext:(NSDictionary *)drawingContext
 {
 	BOOL isWindowActive = [drawingContext boolForKey:@"isActiveWindow"];
+
 	BOOL isSelected = [drawingContext boolForKey:@"isSelected"];
+	BOOL isSelectedFrontmost = [drawingContext boolForKey:@"isSelectedFrontmost"];
 
 	/* Gather information about this badge draw. */
 	IRCChannel *channelPointer = (id)[self cellItem];
-	
-	BOOL drawMessageBadge = (isSelected == NO || (isWindowActive == NO && isSelected));
+
+	BOOL drawMessageBadge = (isSelected == NO ||
+							(isSelectedFrontmost == NO && isSelected) ||
+							(isWindowActive == NO && isSelected));
 	
 	NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
 	NSInteger nicknameHighlightCount = [channelPointer nicknameHighlightCount];
@@ -822,6 +826,7 @@
 		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
 		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
+		@"isSelectedFrontmost"	: @([mainWindow() selectedItem] == cellItem),
 		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
 		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])
