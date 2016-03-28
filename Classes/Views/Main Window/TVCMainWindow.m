@@ -1872,6 +1872,14 @@
 #define _maximumSelectedRows	6
 
 	if ([proposedSelectionIndexes count] > _maximumSelectedRows) {
+		/* If the user has already selected the maximum, then return the current index set.
+		 This prevents the user clicking one item up and having the entire selection shift
+		 because the following logic works from highest to lowest. */
+		if ([outlineView numberOfSelectedRows] == _maximumSelectedRows) {
+			return [outlineView selectedRowIndexes];
+		}
+
+		/* Pick first six rows to use as selection */
 		NSMutableIndexSet *limitedSelectionIndexes = [NSMutableIndexSet indexSet];
 
 		NSInteger indexCount = 0;
