@@ -1275,15 +1275,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		 NSDictionaryNilValue([self.associatedChannel name])
 	]];
 
-	if (self.reloadingBacklog == NO) {
-		[self executeQuickScriptCommand:@"Textual.viewFinishedLoading" withArguments:@[]];
-	} else {
-		[self executeQuickScriptCommand:@"Textual.viewFinishedReload" withArguments:@[]];
-	}
-
-	if ([self isVisible]) {
-		[self notifyDidBecomeVisible];
-	}
+	[self executeQuickScriptCommand:@"Textual.viewFinishedLoadingInt"
+					  withArguments:@[@([self isVisible]),
+									  @([self isSelected]),
+									  @(self.reloadingBacklog)]];
 
 	[self setInitialTopic];
 
