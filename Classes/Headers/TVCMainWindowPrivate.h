@@ -40,8 +40,8 @@
 @interface TVCMainWindow ()
 @property (nonatomic, readwrite, copy) NSArray *selectedItems;
 @property (nonatomic, readwrite, strong) IRCTreeItem *selectedItem;
-@property (nonatomic, copy) NSString *previousSelectedClientId;
-@property (nonatomic, copy) NSString *previousSelectedChannelId;
+@property (nonatomic, copy) NSArray *previousSelectedItemsId;
+@property (nonatomic, copy) NSString *previousSelectedItemId;
 @property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
 @property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;

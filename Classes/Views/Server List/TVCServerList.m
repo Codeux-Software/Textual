@@ -262,8 +262,7 @@
 	 rows, change the appearance, and reselect them. If we don't do this, the
 	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
 	 forever leaving blue on selected rows no matter how hard we try to draw. */
-	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:YES];
-	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:YES];
+	[mainWindow() setIgnoreOutlineViewSelectionChanges:YES];
 	
 	[self setAllowsEmptySelection:YES];
 	
@@ -291,8 +290,7 @@
 	
 	[self setAllowsEmptySelection:NO];
 	
-	[mainWindow() setTemporarilyDisablePreviousSelectionUpdates:NO];
-	[mainWindow() setTemporarilyIgnoreOutlineViewSelectionChanges:NO];
+	[mainWindow() setIgnoreOutlineViewSelectionChanges:NO];
 	
 	[self reloadAllDrawings:YES];
 }

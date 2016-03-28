@@ -1093,7 +1093,7 @@
 	return ([self.selectedItems count] > 1);
 }
 
-- (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
+- (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
 {
 	[self storePreviousSelection];
 
@@ -1105,6 +1105,92 @@
 - (void)updateChannelViewBoxContentViewSelection
 {
 	[self.channelView populateSubviews];
+}
+
+- (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows
+{
+	[self selectionDidChangeToRows:selectedRows selectedItem:nil];
+}
+
+- (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows selectedItem:(IRCTreeItem *)selectedItem
+{
+	/* Store previous selection */
+	[self storePreviousSelection];
+
+	/* Prepare next item */
+	NSInteger selectedRowsCount = [selectedRows count];
+
+	/* Create list of selected items and notify those newly selected items
+	 that they are now visible + part of a stacked view */
+	NSMutableArray *selectedItems = nil;
+
+	if (selectedRowsCount > 0) {
+		selectedItems = [NSMutableArray arrayWithCapacity:selectedRowsCount];
+
+		for (NSNumber *row in [selectedRows arrayFromIndexSet]) {
+			NSInteger rowInt = [row integerValue];
+
+			IRCTreeItem *rowObject = [mainWindowServerList() itemAtRow:rowInt];
+
+			[selectedItems addObject:rowObject];
+		}
+	}
+
+	/* Update properties */
+	NSArray *selectedItemsPrevious = nil;
+
+	if (self.selectedItems) {
+		selectedItemsPrevious = [self.selectedItems copy];
+	}
+
+	if (selectedItems) {
+		self.selectedItems = selectedItems;
+
+		if (selectedItem) {
+			self.selectedItem = selectedItem;
+		}
+
+		if ([self.selectedItems containsObject:self.selectedItem] == NO) {
+			self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
+		}
+	} else {
+		self.selectedItem = nil;
+		self.selectedItems = nil;
+	}
+
+	/* Update split view */
+	[self updateChannelViewBoxContentViewSelection];
+
+	/* Inform views that are currently selected that no longer will be that they
+	 are now hidden. We wait until after -updateChannelViewBoxContentViewSelection
+	 is called to do this so that the views that are hidden are actually hidden
+	 before informing the views of this fact. */
+	if (selectedItemsPrevious) {
+		for (IRCTreeItem *item in selectedItemsPrevious) {
+			if (selectedItems == nil || [selectedItems containsObject:item] == NO) {
+				[[item viewController] notifyDidBecomeHidden];
+			}
+		}
+	}
+
+	/* Inform new views that they are visible now that they are visible. */
+	if (selectedItems) {
+		for (IRCTreeItem *item in selectedItems) {
+			if (selectedItemsPrevious == nil || [selectedItemsPrevious containsObject:item] == NO) {
+				[[item viewController] notifyDidBecomeVisible];
+
+				if (item != self.selectedItem) {
+					[[item viewController] notifySelectionChanged];
+				}
+			}
+		}
+	}
+
+	selectedItems = nil;
+	selectedItemsPrevious = nil;
+
+	/* Perform postflight routines */
+	[self selectionDidChangePostflight];
 }
 
 - (void)selectionDidChangePostflight
@@ -1608,56 +1694,122 @@
 
 - (void)adjustSelection
 {
-	NSInteger selectedRow = [self.serverList selectedRow];
-	NSInteger selectionRow = [self.serverList rowForItem:self.selectedItem];
-	
-	if (NSDissimilarObjects(selectedRow, selectionRow)) {
-		[self.serverList selectItemAtIndex:selectionRow];
+	NSIndexSet *selectedRows = [self serverListRowsForItems:self.selectedItems];
+
+	[self adjustSelectionWithRows:selectedRows selectedItem:self.selectedItem];
+}
+
+- (void)adjustSelectionWithRows:(NSIndexSet *)selectedRows selectedItem:(IRCTreeItem *)selectedItem
+{
+	/* If the selected rows have not changed, then only select the one item */
+	NSIndexSet *selectedRowsActual = [self.serverList selectedRowIndexes];
+
+	if ([selectedRowsActual isEqual:selectedRows]) {
+		if (self.selectedItem != selectedItem) {
+			[self select:selectedItem];
+		}
+
+		return;
 	}
+
+	/* Selection updates are disabled and selection changes are faked so that
+	 the correct next item is selected when moving to previous group. */
+	self.ignoreNextOutlineViewSelectionChange = YES;
+
+	[self.serverList selectRowIndexes:selectedRows byExtendingSelection:NO];
+
+	[self selectionDidChangeToRows:selectedRows selectedItem:selectedItem];
+}
+
+- (NSIndexSet *)serverListRowsForItems:(NSArray *)items
+{
+	NSMutableIndexSet *itemRows = [NSMutableIndexSet indexSet];
+
+	for (id item in items) {
+		IRCTreeItem *itemPointer  = nil;
+
+		if ([item isKindOfClass:[NSString class]]) {
+			itemPointer = [worldController() findItemByTreeId:item];
+		} else if ([item isKindOfClass:[IRCTreeItem class]]) {
+			itemPointer = item;
+		} else {
+			continue;
+		}
+
+		if (itemPointer == nil) {
+			continue;
+		}
+
+		NSInteger itemRow = [self.serverList rowForItem:itemPointer];
+
+		if ( itemRow >= 0) {
+			[itemRows addIndex:itemRow];
+		}
+	}
+
+	return [itemRows copy];
 }
 
 - (void)storePreviousSelection
 {
-	if (self.temporarilyDisablePreviousSelectionUpdates == NO) {
-		self.previousSelectedClientId = self.selectedClient.treeUUID;
-		self.previousSelectedChannelId = self.selectedChannel.treeUUID;
+	self.previousSelectedItemId = [self.selectedItem treeUUID];
+
+	[self storePreviousSelections];
+}
+
+- (void)storePreviousSelections
+{
+	NSMutableArray *previousSelectedItems = nil;
+
+	for (IRCTreeItem *item in self.selectedItems) {
+		if (previousSelectedItems == nil) {
+			previousSelectedItems = [NSMutableArray array];
+		}
+
+		[previousSelectedItems addObject:[item treeUUID]];
 	}
+
+	self.previousSelectedItemsId = previousSelectedItems;
 }
 
 - (void)storeLastSelectedChannel
 {
-	if (self.temporarilyDisablePreviousSelectionUpdates == NO) {
-		if (self.selectedClient) {
-			self.selectedClient.lastSelectedChannel = self.selectedChannel;
-		}
+	if ( self.selectedClient) {
+		[self.selectedClient setLastSelectedChannel:self.selectedChannel];
 	}
 }
 
 - (IRCTreeItem *)previouslySelectedItem
 {
-	NSObjectIsEmptyAssertReturn(self.previousSelectedClientId, nil);
-	
-	NSString *uid = self.previousSelectedClientId;
-	NSString *cid = self.previousSelectedChannelId;
-	
-	IRCTreeItem *item = nil;
-	
-	if (NSObjectIsEmpty(cid)) {
-		item = [worldController() findClientById:uid];
-	} else {
-		item = [worldController() findChannelByClientId:uid channelId:cid];
+	NSString *itemIdentifier = self.previousSelectedItemId;
+
+	if (itemIdentifier) {
+		return [worldController() findItemByTreeId:itemIdentifier];
 	}
-	
-	return item;
+
+	return nil;
 }
 
 - (void)selectPreviousItem
 {
-	IRCTreeItem *item = [self previouslySelectedItem];
-	
-	if (item) {
-		[self select:item];
+	/* Do not try to browse backwards without these items */
+	if (self.previousSelectedItemId == nil ||
+		self.previousSelectedItemsId == nil)
+	{
+		return;
 	}
+
+	/* Get previously selected item and canel if its missing */
+	IRCTreeItem *previousItem = self.previouslySelectedItem;
+
+	if (previousItem == nil) {
+		return;
+	}
+
+	/* Build list of rows in the table view that contain previous group */
+	NSIndexSet *previosuItemRows = [self serverListRowsForItems:self.previousSelectedItemsId];
+
+	[self adjustSelectionWithRows:previosuItemRows selectedItem:previousItem];
 }
 
 - (void)select:(id)item
@@ -1669,21 +1821,35 @@
 	
 	/* We do support selecting nothing */
 	if (item == nil) {
-		[self storePreviousSelection]; // -outlineViewSelectionDidChange: would normally do this
+		[self storePreviousSelection];
 
 		self.selectedItem = nil;
 		self.selectedItems = nil;
 
-		[self.channelView populateSubviews];
-
-		self.memberList.delegate = nil;
-		self.memberList.dataSource = nil;
-
-		[self.memberList reloadData];
+		[self selectionDidChangePostflight];
 		
 		return;
 	}
-	
+
+	/* Perform some formal validation */
+	if ([item isKindOfClass:[IRCTreeItem class]] == NO) {
+		return;
+	}
+
+	/* If the item is within the current group, then we do not need to reset
+	 the group by selecting the item in the outline view. */
+	if (self.selectedItems && [self.selectedItems containsObject:item]) {
+		[self storePreviousSelection];
+
+		self.selectedItem = item;
+
+		[self updateChannelViewBoxContentViewSelection];
+
+		[self selectionDidChangePostflight];
+
+		return;
+	}
+
 	/* Begin selection process */
 	IRCClient *u = [item associatedClient];
 	
@@ -1904,86 +2070,19 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-	/* Do nothing under special circumstances. */
-	if (self.temporarilyIgnoreOutlineViewSelectionChanges) {
+	if (self.ignoreOutlineViewSelectionChanges) {
 		return;
 	}
 
-	/* Store previous selection */
-	[self storePreviousSelection];
+	if (self.ignoreNextOutlineViewSelectionChange) {
+		self.ignoreNextOutlineViewSelectionChange = NO;
 
-	/* Prepare next item */
+		return;
+	}
+
 	NSIndexSet *selectedRows = [mainWindowServerList() selectedRowIndexes];
 
-	NSInteger selectedRowsCount = [selectedRows count];
-
-	/* Create list of selected items and notify those newly selected items
-	 that they are now visible + part of a stacked view */
-	NSMutableArray *selectedItems = nil;
-
-	if (selectedRowsCount > 0) {
-		selectedItems = [NSMutableArray arrayWithCapacity:selectedRowsCount];
-
-		for (NSNumber *row in [selectedRows arrayFromIndexSet]) {
-			NSInteger rowInt = [row integerValue];
-
-			IRCTreeItem *rowObject = [mainWindowServerList() itemAtRow:rowInt];
-
-			[selectedItems addObject:rowObject];
-		}
-	}
-
-	/* Update properties */
-	NSArray *selectedItemsPrevious = nil;
-
-	if (self.selectedItems) {
-		selectedItemsPrevious = [self.selectedItems copy];
-	}
-
-	if (selectedItems) {
-		self.selectedItems = selectedItems;
-
-		if ([self.selectedItems containsObject:self.selectedItem] == NO) {
-			 self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
-		}
-	} else {
-		self.selectedItem = nil;
-		self.selectedItems = nil;
-	}
-
-	/* Update split view */
-	[self updateChannelViewBoxContentViewSelection];
-
-	/* Inform views that are currently selected that no longer will be that they
-	 are now hidden. We wait until after -updateChannelViewBoxContentViewSelection
-	 is called to do this so that the views that are hidden are actually hidden 
-	 before informing the views of this fact. */
-	if (selectedItemsPrevious) {
-		for (IRCTreeItem *item in selectedItemsPrevious) {
-			if (selectedItems == nil || [selectedItems containsObject:item] == NO) {
-				[[item viewController] notifyDidBecomeHidden];
-			}
-		}
-	}
-
-	/* Inform new views that they are visible now that they are visible. */
-	if (selectedItems) {
-		for (IRCTreeItem *item in selectedItems) {
-			if (selectedItemsPrevious == nil || [selectedItemsPrevious containsObject:item] == NO) {
-				[[item viewController] notifyDidBecomeVisible];
-
-				if (item != self.selectedItem) {
-					[[item viewController] notifySelectionChanged];
-				}
-			}
-		}
-	}
-
-	selectedItems = nil;
-	selectedItemsPrevious = nil;
-
-	/* Perform postflight routines */
-	[self selectionDidChangePostflight];
+	[self selectionDidChangeToRows:selectedRows];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard

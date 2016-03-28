@@ -68,8 +68,8 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 @property (nonatomic, weak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, weak) IBOutlet TVCServerList *serverList;
-@property (nonatomic, assign) BOOL temporarilyDisablePreviousSelectionUpdates;
-@property (nonatomic, assign) BOOL temporarilyIgnoreOutlineViewSelectionChanges;
+@property (nonatomic, assign) BOOL ignoreOutlineViewSelectionChanges;
+@property (nonatomic, assign) BOOL ignoreNextOutlineViewSelectionChange;
 
 @property (readonly) BOOL multipleItemsSelected;
 
