@@ -2082,7 +2082,23 @@
 
 	NSIndexSet *selectedRows = [mainWindowServerList() selectedRowIndexes];
 
-	[self selectionDidChangeToRows:selectedRows];
+	IRCTreeItem *selectedItem = nil;
+
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+	if (keyboardKeys == NSCommandKeyMask) {
+		NSInteger clickedRow = [self.serverList rowUnderMouse];
+
+		if (clickedRow >= 0 && [selectedRows containsIndex:clickedRow]) {
+			selectedItem = [self.serverList itemAtRow:clickedRow];
+		}
+	}
+
+	if (selectedItem) {
+		[self selectionDidChangeToRows:selectedRows selectedItem:selectedItem];
+	} else {
+		[self selectionDidChangeToRows:selectedRows];
+	}
 }
 
 - (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
