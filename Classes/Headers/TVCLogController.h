@@ -59,6 +59,7 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 
 - (void)notifyDidBecomeVisible;
 - (void)notifyDidBecomeHidden;
+- (void)notifySelectionChanged;
 
 - (void)preferencesChanged;
 

@@ -1,4 +1,4 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,41 +35,17 @@
 
  *********************************************************************** */
 
-/* ************************************************** */
-/*                                                    */
-/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
-/*                                                    */
-/* ************************************************** */
+#import "TextualApplication.h"
 
-/* State management */
-Textual.notifyDidBecomeVisible = function()
-{
-	TextualScroller.enableScrollingTimer();
+@interface TVCMainWindow ()
+@property (nonatomic, readwrite, copy) NSArray *selectedItems;
+@property (nonatomic, readwrite, strong) IRCTreeItem *selectedItem;
+@property (nonatomic, copy) NSString *previousSelectedClientId;
+@property (nonatomic, copy) NSString *previousSelectedChannelId;
+@property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
+@property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+@property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 
-	Textual.clearSelection();
-};
-
-Textual.notifyDidBecomeHidden = function()
-{
-	TextualScroller.disableScrollingTimer();
-
-	Textual.clearSelection();
-};
-
-Textual.notifySelectionChanged = function(isSelected)
-{
-	if (isSelected) {
-		Textual.setTopicBarVisible(true);
-	} else {
-		Textual.setTopicBarVisible(false);
-	}
-};
-
-/* Events */
-Textual.mouseUpEventCallback = function()
-{
-	Textual.copySelectionOnMouseUpEvent();
-};
-
-/* Bind to events */
-document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
+- (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
+@end
