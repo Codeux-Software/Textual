@@ -284,7 +284,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	return 2.0;
 }
 
-- (void)drawDividerInRect:(NSRect)rect
+- (NSColor *)dividerColor
 {
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
@@ -292,9 +292,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 		dividerColor = [dividerColor invertedColor];
 	}
 
-	[dividerColor set];
-
-	NSRectFill(rect);
+	return dividerColor;
 }
 
 @end

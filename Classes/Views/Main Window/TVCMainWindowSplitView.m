@@ -52,7 +52,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 @implementation TVCMainWindowSplitView
 
-- (void)drawDividerInRect:(NSRect)rect
+- (NSColor *)dividerColor
 {
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
@@ -60,9 +60,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 		dividerColor = [dividerColor invertedColor];
 	}
 
-	[dividerColor set];
-
-	NSRectFill(rect);
+	return dividerColor;
 }
 
 - (void)awakeFromNib
