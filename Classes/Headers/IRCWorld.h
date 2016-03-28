@@ -84,6 +84,7 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 
 @property (readonly) NSInteger clientCount;
 
+- (IRCTreeItem *)findItemByTreeId:(NSString *)uid;
 - (IRCClient *)findClientById:(NSString *)uid;
 - (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid;
 
