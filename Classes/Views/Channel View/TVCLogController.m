@@ -311,6 +311,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
 {
+	NSAssertReturn(self.isLoaded);
+
 	[self.backingView executeCommand:command withArguments:args];
 }
 
