@@ -443,6 +443,25 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 #pragma mark -
 #pragma mark Tree Items
 
+- (IRCTreeItem *)findItemByTreeId:(NSString *)uid
+{
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			if ([uid isEqualToString:[u treeUUID]]) {
+				return u;
+			}
+
+			for (IRCChannel *c in u.channelList) {
+				if ([uid isEqualToString:[c treeUUID]]) {
+					return c;
+				}
+			}
+		}
+	}
+
+	return nil;
+}
+
 - (IRCClient *)findClientById:(NSString *)uid
 {
 	@synchronized(self.clients) {
