@@ -65,6 +65,25 @@ Textual.notifySelectionChanged = function(isSelected)
 	}
 };
 
+Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBacklog)
+{
+	if (isVisible) {
+		Textual.notifyDidBecomeVisible();
+	
+		if (isSelected) {
+			Textual.notifySelectionChanged(true);
+		} else {
+			Textual.notifySelectionChanged(false);
+		}
+	}
+	
+	if (isReloadingBacklog) {
+		Textual.viewFinishedReload();
+	} else {
+		Textual.viewFinishedLoading();
+	}
+};
+
 /* Events */
 Textual.mouseUpEventCallback = function()
 {
