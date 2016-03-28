@@ -1114,9 +1114,6 @@
 
 - (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows selectedItem:(IRCTreeItem *)selectedItem
 {
-	/* Store previous selection */
-	[self storePreviousSelection];
-
 	/* Prepare next item */
 	NSInteger selectedRowsCount = [selectedRows count];
 
@@ -1136,6 +1133,18 @@
 		}
 	}
 
+	/* Check whether arrays match */
+	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {
+		/* Update selected item even if group hasn't changed */
+		[self selectItemInSelectedItems:selectedItem];
+
+		/* Do nothing else if they match */
+		return;
+	}
+
+	/* Store previous selection */
+	[self storePreviousSelection];
+
 	/* Update properties */
 	NSArray *selectedItemsPrevious = nil;
 
@@ -1146,11 +1155,13 @@
 	if (selectedItems) {
 		self.selectedItems = selectedItems;
 
-		if (selectedItem) {
-			self.selectedItem = selectedItem;
+		if (selectedItem == nil) {
+			selectedItem = self.selectedItem;
 		}
 
-		if ([self.selectedItems containsObject:self.selectedItem] == NO) {
+		if ([self.selectedItems containsObject:selectedItem]) {
+			self.selectedItem = selectedItem;
+		} else {
 			self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
 		}
 	} else {
@@ -1694,60 +1705,47 @@
 
 - (void)adjustSelection
 {
-	NSIndexSet *selectedRows = [self serverListRowsForItems:self.selectedItems];
-
-	[self adjustSelectionWithRows:selectedRows selectedItem:self.selectedItem];
+	[self adjustSelectionWithItems:self.selectedItems selectedItem:self.selectedItem];
 }
 
-- (void)adjustSelectionWithRows:(NSIndexSet *)selectedRows selectedItem:(IRCTreeItem *)selectedItem
-{
-	/* If the selected rows have not changed, then only select the one item */
-	NSIndexSet *selectedRowsActual = [self.serverList selectedRowIndexes];
-
-	if ([selectedRowsActual isEqual:selectedRows]) {
-		if (self.selectedItem != selectedItem) {
-			[self select:selectedItem];
-		}
-
-		return;
-	}
-
-	/* Selection updates are disabled and selection changes are faked so that
-	 the correct next item is selected when moving to previous group. */
-	self.ignoreNextOutlineViewSelectionChange = YES;
-
-	[self.serverList selectRowIndexes:selectedRows byExtendingSelection:NO];
-
-	[self selectionDidChangeToRows:selectedRows selectedItem:selectedItem];
-}
-
-- (NSIndexSet *)serverListRowsForItems:(NSArray *)items
+- (void)adjustSelectionWithItems:(NSArray<IRCTreeItem *> *)selectedItems selectedItem:(IRCTreeItem *)selectedItem
 {
 	NSMutableIndexSet *itemRows = [NSMutableIndexSet indexSet];
 
-	for (id item in items) {
-		IRCTreeItem *itemPointer  = nil;
+	for (IRCTreeItem *item in selectedItems) {
+		/* Expand the parent of the item if its not already expanded. */
+		if ([item isClient] == NO) {
+			IRCClient *itemClient = [item associatedClient];
 
-		if ([item isKindOfClass:[NSString class]]) {
-			itemPointer = [worldController() findItemByTreeId:item];
-		} else if ([item isKindOfClass:[IRCTreeItem class]]) {
-			itemPointer = item;
-		} else {
-			continue;
+			[self.serverList expandItem:itemClient];
 		}
 
-		if (itemPointer == nil) {
-			continue;
-		}
-
-		NSInteger itemRow = [self.serverList rowForItem:itemPointer];
+		/* Find the row of the item */
+		NSInteger itemRow = [self.serverList rowForItem:item];
 
 		if ( itemRow >= 0) {
 			[itemRows addIndex:itemRow];
 		}
 	}
 
-	return [itemRows copy];
+	/* If the selected rows have not changed, then only select the one item */
+	NSIndexSet *selectedRows = [self.serverList selectedRowIndexes];
+
+	if ([selectedRows isEqual:itemRows] == NO) {
+		/* Selection updates are disabled and selection changes are faked so that
+		 the correct next item is selected when moving to previous group. */
+		self.ignoreNextOutlineViewSelectionChange = YES;
+
+		[self.serverList selectRowIndexes:itemRows byExtendingSelection:NO];
+
+		[self selectionDidChangeToRows:itemRows selectedItem:selectedItem];
+
+		/* End logic here */
+		return;
+	}
+
+	/* Select item if its in the current group */
+	[self selectItemInSelectedItems:selectedItem];
 }
 
 - (void)storePreviousSelection
@@ -1800,19 +1798,46 @@
 	}
 
 	/* Get previously selected item and canel if its missing */
-	IRCTreeItem *previousItem = self.previouslySelectedItem;
+	IRCTreeItem *itemPrevious = self.previouslySelectedItem;
 
-	if (previousItem == nil) {
+	if (itemPrevious == nil) {
 		return;
 	}
 
 	/* Build list of rows in the table view that contain previous group */
-	NSIndexSet *previosuItemRows = [self serverListRowsForItems:self.previousSelectedItemsId];
+	NSMutableArray *itemsPrevious = [NSMutableArray array];
 
-	[self adjustSelectionWithRows:previosuItemRows selectedItem:previousItem];
+	for (NSString *itemIdentifier in self.previousSelectedItemsId) {
+		IRCTreeItem *item = [worldController() findItemByTreeId:itemIdentifier];
+
+		if ( item) {
+			[itemsPrevious addObject:item];
+		}
+	}
+
+	[self adjustSelectionWithItems:itemsPrevious selectedItem:itemPrevious];
 }
 
-- (void)select:(id)item
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
+{
+	/* Do nothing if items are the same */
+	if (self.selectedItem == selectedItem) {
+		return;
+	}
+
+	/* Select item if its in the current group */
+	if (self.selectedItems && [self.selectedItems containsObject:selectedItem]) {
+		[self storePreviousSelection];
+
+		self.selectedItem = selectedItem;
+
+		[self updateChannelViewBoxContentViewSelection];
+
+		[self selectionDidChangePostflight];
+	}
+}
+
+- (void)select:(IRCTreeItem *)item
 {
 	/* There is nothing to do if we are already selected */
 	if (self.selectedItem == item) {
@@ -1833,20 +1858,6 @@
 
 	/* Perform some formal validation */
 	if ([item isKindOfClass:[IRCTreeItem class]] == NO) {
-		return;
-	}
-
-	/* If the item is within the current group, then we do not need to reset
-	 the group by selecting the item in the outline view. */
-	if (self.selectedItems && [self.selectedItems containsObject:item]) {
-		[self storePreviousSelection];
-
-		self.selectedItem = item;
-
-		[self updateChannelViewBoxContentViewSelection];
-
-		[self selectionDidChangePostflight];
-
 		return;
 	}
 
@@ -2022,15 +2033,7 @@
 
 - (void)outlineViewItemWillCollapse:(NSNotification *)notification
 {
-	/* If the item being collapsed is the one our selected channel is on,
-	 then move selection to the console of the collapsed server. */
-	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
-	
-	if ([itemBeingCollapsed isClient]) {
-		if (itemBeingCollapsed == self.selectedClient) {
-			[self select:self.selectedClient];
-		}
-	}
+	;
 }
 
 - (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes

@@ -95,7 +95,7 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 - (void)adjustSelection;
 
-- (void)select:(id)item;
+- (void)select:(IRCTreeItem *)item;
 - (void)selectPreviousItem;
 
 - (void)expandClient:(IRCClient *)client;
