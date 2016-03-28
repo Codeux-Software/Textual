@@ -1933,13 +1933,9 @@
 - (void)memberInMemberListDoubleClicked:(id)sender
 {
     TVCMemberList *view = sender;
-    
-	NSPoint ml = [mainWindow() mouseLocationOutsideOfEventStream];
-	
-    NSPoint pt = [view convertPoint:ml fromView:nil];
-	
-    NSInteger n = [view rowAtPoint:pt];
-    
+
+	NSInteger n = [view rowUnderMouse];
+
     if (n >= 0) {
 		TXUserDoubleClickAction action = [TPCPreferences userDoubleClickOption];
         

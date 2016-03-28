@@ -44,4 +44,13 @@
 	return [NSFont systemFontOfSize:13.0];
 }
 
+- (NSInteger)rowUnderMouse
+{
+	NSPoint ml = [mainWindow() mouseLocationOutsideOfEventStream];
+
+	NSPoint pt = [self convertPoint:ml fromView:nil];
+
+	return [self rowAtPoint:pt];
+}
+
 @end
