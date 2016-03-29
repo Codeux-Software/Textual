@@ -90,7 +90,9 @@
 		}
 
 		[operation setController:sender];
+
 		[operation setIsStandalone:isStandalone];
+
 		[operation setExecutionBlock:callbackBlock];
 
 		/* Add the operations. */
@@ -133,15 +135,19 @@
 		 as ready or maybe is ready. */
 		PointerIsEmptyAssert(controller);
 
-		for (id operation in [self operations]) {
-			if ([operation controller] == controller) {
-				NSInteger depCount = [operation dependencyCount];
+		NSArray *operations = [self operations];
 
-				if ([operation isCancelled] == NO) {
-					if (depCount <= 0) {
-						[operation willChangeValueForKey:@"isReady"];
-						[operation didChangeValueForKey:@"isReady"];
-					}
+		for (id operation in operations) {
+			if ([operation controller] != controller) {
+				continue;
+			}
+
+			NSInteger depCount = [operation dependencyCount];
+
+			if ([operation isCancelled] == NO) {
+				if (depCount <= 0) {
+					[operation willChangeValueForKey:@"isReady"];
+					[operation didChangeValueForKey:@"isReady"];
 				}
 			}
 		}
@@ -155,13 +161,15 @@
 {
 	/* This is called internally already from a method that is running on the
 	 main queue so we will not wrap this in it. */
-	for (id operation in [[self operations] reverseObjectEnumerator]) {
-		if ([operation controller] == controller) {
-			if ([operation isCancelled] == NO) {
-				if ([operation isStandalone] == NO) {
-					return operation;
-				}
-			}
+	NSEnumerator *operationEnum = [[self operations] reverseObjectEnumerator];
+
+	for (id operation in operationEnum) {
+		if ([operation controller] != controller) {
+			continue;
+		}
+
+		if ([operation isCancelled] == NO && [operation isStandalone] == NO) {
+			return operation;
 		}
 	}
 
@@ -180,13 +188,27 @@
 	return [[self dependencies] count];
 }
 
+- (void)cancel
+{
+	[super cancel];
+
+	[self teardownOperation];
+}
+
 - (void)main
 {
-	/* Perform task. */
+	/* Perform task */
 	self.executionBlock(self);
 
+	/* Destroy operation */
+	[self teardownOperation];
+}
+
+- (void)teardownOperation
+{
 	/* Dereference everything associated with this operation. */
 	[self setController:nil];
+
 	[self setExecutionBlock:nil];
 
 	/* Kill existing dependency. */
