@@ -157,7 +157,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
-	if ([themeSettings() postPreferencesDidChangesNotification] == NO) {
+	if ([themeSettings() js_postPreferencesDidChangesNotifications] == NO) {
 		return; // Cancel operation...
 	}
 
