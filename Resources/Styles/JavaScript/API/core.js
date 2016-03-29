@@ -128,6 +128,9 @@ Textual.preferencesDidChange						= function() {};
 	so the previous style will actually have no knowledge of the new one unless it is
 	stored in a local database.
 */
+
+/*	A boolean entry with key name "Post Textual.handleEvent() Notifications" must be 
+	added to styleSettings.plist in order to enable the use of this callback. */
 Textual.handleEvent                            = function(eventToken) {};
 
 /* *********************************************************************** */

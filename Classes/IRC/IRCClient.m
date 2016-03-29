@@ -7970,18 +7970,31 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)postEventToViewController:(NSString *)eventToken
 {
-    [[self viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
+	if ([themeSettings() js_postHandleEventNotifications] == NO) {
+		return; // Cancel operation...
+	}
+
+	[self postEventToViewController:eventToken forItem:self];
 
 	@synchronized(self.channels) {
 		for (IRCChannel *channel in self.channels) {
-			[self postEventToViewController:eventToken forChannel:channel];
+			[self postEventToViewController:eventToken forItem:channel];
 		}
 	}
 }
 
 - (void)postEventToViewController:(NSString *)eventToken forChannel:(IRCChannel *)channel
 {
-	[[channel viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
+	if ([themeSettings() js_postHandleEventNotifications] == NO) {
+		return; // Cancel operation...
+	}
+
+	[self postEventToViewController:eventToken forItem:channel];
+}
+
+- (void)postEventToViewController:(NSString *)eventToken forItem:(IRCTreeItem *)item
+{
+	[[item viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
 }
 
 #pragma mark -
