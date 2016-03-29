@@ -368,6 +368,12 @@ Textual.newMessagePostedToView = function (line) {
       };
     }
   }
+
+  ConversationTracking.updateNicknameWithNewMessage(message);
+};
+
+Textual.nicknameSingleClicked = function (e) {
+  ConversationTracking.nicknameSingleClickEventCallback(e);
 };
 
 Textual.viewBodyDidLoad = function () {
