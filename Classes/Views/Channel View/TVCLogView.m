@@ -62,6 +62,11 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return nil;
 }
 
+- (void)dealloc
+{
+	self.webViewBacking = nil;
+}
+
 - (void)constructWebView
 {
 	BOOL isUsingWebKit2 = [TPCPreferences webKit2Enabled];

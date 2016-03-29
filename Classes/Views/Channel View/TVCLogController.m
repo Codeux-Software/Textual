@@ -80,6 +80,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)prepareForApplicationTermination
 {
+	self.isLoaded = NO;
+
+	self.backingView = nil;
+
 	[[self printingQueue] cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog:NO];
@@ -87,6 +91,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)prepareForPermanentDestruction
 {
+	self.isLoaded = NO;
+
+	self.backingView = nil;
+
 	[[self printingQueue] cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog:YES]; // YES forces a file deletion.
