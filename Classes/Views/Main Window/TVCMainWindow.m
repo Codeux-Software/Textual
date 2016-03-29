@@ -1095,16 +1095,17 @@
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
 {
-	[self storePreviousSelection];
-
-	self.selectedItem = selectedItem;
-
-	[self selectionDidChangePostflight];
+	[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
 }
 
 - (void)updateChannelViewBoxContentViewSelection
 {
 	[self.channelView populateSubviews];
+}
+
+- (BOOL)isItemSelected:(IRCTreeItem *)item
+{
+	return (self.selectedItems && [self.selectedItems containsObject:item]);
 }
 
 - (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows
@@ -1159,7 +1160,7 @@
 			selectedItem = self.selectedItem;
 		}
 
-		if ([self.selectedItems containsObject:selectedItem]) {
+		if ([self isItemSelected:selectedItem]) {
 			self.selectedItem = selectedItem;
 		} else {
 			self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
@@ -1220,7 +1221,11 @@
 		[itemChangedFrom resetState];
 	}
 
-	if ( itemChangedTo) {
+	if (itemChangedTo) {
+		if ([self multipleItemsSelected]) {
+			[self.serverList updateMessageCountForItem:itemChangedTo];
+		}
+
 		[itemChangedTo resetState];
 	}
 
@@ -1737,15 +1742,10 @@
 		self.ignoreNextOutlineViewSelectionChange = YES;
 
 		[self.serverList selectRowIndexes:itemRows byExtendingSelection:NO];
-
-		[self selectionDidChangeToRows:itemRows selectedItem:selectedItem];
-
-		/* End logic here */
-		return;
 	}
 
-	/* Select item if its in the current group */
-	[self selectItemInSelectedItems:selectedItem];
+	/* Perform selection logic */
+	[self selectionDidChangeToRows:itemRows selectedItem:selectedItem];
 }
 
 - (void)storePreviousSelection
@@ -1820,18 +1820,25 @@
 
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
 {
+	[self selectItemInSelectedItems:selectedItem refreshChannelView:YES];
+}
+
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
+{
 	/* Do nothing if items are the same */
 	if (self.selectedItem == selectedItem) {
 		return;
 	}
 
 	/* Select item if its in the current group */
-	if (self.selectedItems && [self.selectedItems containsObject:selectedItem]) {
+	if ([self isItemSelected:selectedItem]) {
 		[self storePreviousSelection];
 
 		self.selectedItem = selectedItem;
 
-		[self updateChannelViewBoxContentViewSelection];
+		if (refreshChannelView) {
+			[self updateChannelViewBoxContentViewSelection];
+		}
 
 		[self selectionDidChangePostflight];
 	}
