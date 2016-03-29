@@ -322,6 +322,19 @@
 	return [self menu];
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+	if ([[self window] isKeyWindow] == NO) {
+		NSUInteger keyboardKeys = ([theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+		if (keyboardKeys == NSCommandKeyMask) {
+				return;
+			}
+	}
+
+	[super mouseDown:theEvent];
+}
+
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 	[super rightMouseDown:theEvent];
