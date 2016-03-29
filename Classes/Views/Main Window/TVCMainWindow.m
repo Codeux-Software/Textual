@@ -1095,7 +1095,7 @@
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
 {
-	[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
+	(void)[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
 }
 
 - (void)updateChannelViewBoxContentViewSelection
@@ -1137,7 +1137,7 @@
 	/* Check whether arrays match */
 	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {
 		/* Update selected item even if group hasn't changed */
-		[self selectItemInSelectedItems:selectedItem];
+		(void)[self selectItemInSelectedItems:selectedItem];
 
 		/* Do nothing else if they match */
 		return;
@@ -1818,16 +1818,16 @@
 	[self adjustSelectionWithItems:itemsPrevious selectedItem:itemPrevious];
 }
 
-- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
+- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
 {
-	[self selectItemInSelectedItems:selectedItem refreshChannelView:YES];
+	return [self selectItemInSelectedItems:selectedItem refreshChannelView:YES];
 }
 
-- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
+- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
 {
 	/* Do nothing if items are the same */
 	if (self.selectedItem == selectedItem) {
-		return;
+		return NO;
 	}
 
 	/* Select item if its in the current group */
@@ -1841,11 +1841,20 @@
 		}
 
 		[self selectionDidChangePostflight];
+
+		return YES;
 	}
+
+	return NO;
 }
 
 - (void)select:(IRCTreeItem *)item
 {
+	/* Try to select the item in the current group first */
+	if ([self selectItemInSelectedItems:item]) {
+		return;
+	}
+
 	/* There is nothing to do if we are already selected */
 	if (self.selectedItem == item) {
 		return;

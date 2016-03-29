@@ -351,7 +351,7 @@
 		if ([self isRowSelected:rowUnderMouse]) {
 			IRCTreeItem *itemUnderMouse = [self itemAtRow:rowUnderMouse];
 
-			[mainWindow() selectItemInSelectedItems:itemUnderMouse];
+			(void)[mainWindow() selectItemInSelectedItems:itemUnderMouse];
 
 			return;
 		}
