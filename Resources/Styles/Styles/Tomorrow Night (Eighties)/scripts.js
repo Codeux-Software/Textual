@@ -3,10 +3,6 @@
 Textual.viewBodyDidLoad = function()
 {
 	Textual.fadeOutLoadingScreen(1.00, 0.95);
-
-	setTimeout(function() {
-		Textual.scrollToBottomOfView()
-	}, 500);
 }
 
 Textual.newMessagePostedToView = function(line)
