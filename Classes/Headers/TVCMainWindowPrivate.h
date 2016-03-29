@@ -47,5 +47,8 @@
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;
+
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
 @end

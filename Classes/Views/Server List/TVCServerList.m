@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "TVCMainWindowPrivate.h"
+
 @implementation TVCServerList
 
 #pragma mark -
@@ -307,15 +309,17 @@
 #pragma mark -
 #pragma mark Events
 
-- (NSMenu *)menuForEvent:(NSEvent *)e
+- (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
-	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
+	NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 
-	NSInteger i = [self rowAtPoint:p];
+	NSInteger rowUnderMouse = [self rowAtPoint:mouseLocation];
 
-	if (i >= 0 && NSDissimilarObjects(i, [self selectedRow])) {
-		[self selectItemAtIndex:i];
-	} else if (i == -1) {
+	if (rowUnderMouse >= 0 && rowUnderMouse != [self selectedRow]) {
+		[self selectItemAtIndex:rowUnderMouse];
+	}
+
+	if (rowUnderMouse == (-1)) {
 		return [menuController() addServerMenu];
 	}
 
@@ -324,14 +328,36 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	if ([[self window] isKeyWindow] == NO) {
-		NSUInteger keyboardKeys = ([theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	/* When certain keys are held, send the event upstream or ignore
+	 if the window is not in focus. */
+	NSUInteger keyboardKeys = ([theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
-		if (keyboardKeys == NSCommandKeyMask) {
+	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask ||
+		(keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask)
+	{
+		if ([[self window] isKeyWindow]) {
+			[super mouseDown:theEvent];
+		}
+
+		return;
+	}
+
+	/* If the item clicked is selected, then switch group selection to it. */
+	NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+
+	NSInteger rowUnderMouse = [self rowAtPoint:mouseLocation];
+
+	if (rowUnderMouse >= 0) {
+		if ([self isRowSelected:rowUnderMouse]) {
+			IRCTreeItem *itemUnderMouse = [self itemAtRow:rowUnderMouse];
+
+			[mainWindow() selectItemInSelectedItems:itemUnderMouse];
+
 			return;
 		}
 	}
 
+	/* Send action to super */
 	[super mouseDown:theEvent];
 }
 
