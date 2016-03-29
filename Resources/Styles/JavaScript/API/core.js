@@ -98,8 +98,8 @@ Textual.viewBodyDidLoad						= function() {};
 
 /*	No key is supplied to preferencesDidChange() because it is preferred that the style maintain
 	a cached state of any values that they wish to monitor and update accordingly. */
-/*	A boolean entry with key name "Post preferencesDidChange() Notifications" must be added to
-	styleSettings.plist in order to enable the use of this callback. */
+/*	A boolean entry with key name "Post Textual.preferencesDidChange() Notifications" must be 
+	added to styleSettings.plist in order to enable the use of this callback. */
 /*	This callback is rate-limit at one call per-second, per-view. */
 Textual.preferencesDidChange						= function() {};
 

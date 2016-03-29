@@ -50,8 +50,8 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 
 @interface TPCThemeSettings : NSObject
 @property (nonatomic, assign) BOOL forceInvertSidebarColors;
-@property (nonatomic, assign) BOOL postPreferencesDidChangesNotification;
 @property (nonatomic, assign) BOOL js_postHandleEventNotifications;
+@property (nonatomic, assign) BOOL js_postPreferencesDidChangesNotifications;
 @property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
 @property (nonatomic, copy) NSFont *channelViewFont;
 @property (nonatomic, copy) NSString *nicknameFormat;

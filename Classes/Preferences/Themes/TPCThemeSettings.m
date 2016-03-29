@@ -277,8 +277,8 @@
 
 		self.settingsKeyValueStoreName = [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
 
-		self.postPreferencesDidChangesNotification = [styleSettings boolForKey:@"Post preferencesDidChange() Notifications"];
 		self.js_postHandleEventNotifications = [styleSettings boolForKey:@"Post Textual.handleEvent() Notifications"];
+		self.js_postPreferencesDidChangesNotifications = [styleSettings boolForKey:@"Post Textual.preferencesDidChange() Notifications"];
 
 		/* Disable indentation? */
 		id indentationOffset = [styleSettings objectForKey:@"Indentation Offset"];
