@@ -81,7 +81,10 @@ ConversationTracking.updateNicknameWithNewMessage = function(lineElement)
 	var elementType = lineElement.getAttribute("ltype");
 
 	/* We only want to target plain text messages */
-	if (elementType === "privmsg" || elementType === "action") {
+	if (elementType === "privmsg" ||
+		elementType === "action" ||
+		elementType === "notice") 
+	{
 		var senderElement = lineElement.querySelector(".sender");
 
 		if (senderElement) {
