@@ -24,5 +24,7 @@
 	</dict>
 	<key>Nickname Color Style</key>
 	<string>HSL-dark</string>
+	<key>Post Textual.handleEvent() Notifications</key>
+	<true/>
 </dict>
 </plist>
