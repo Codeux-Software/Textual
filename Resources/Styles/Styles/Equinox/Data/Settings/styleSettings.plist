@@ -2,29 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Force Invert Sidebars</key>
+	<true/>
+	<key>Nickname Color Style</key>
+	<string>HSL-dark</string>
 	<key>Nickname Format</key>
 	<string>%@%n</string>
-	<key>Timestamp Format</key>
-	<string></string>
-	<key>Override Channel Font</key>
-	<dict>
-		<key>Font Name</key>
-		<string></string>
-		<key>Font Size</key>
-		<integer>0</integer>
-	</dict>
-	<key>Underlying Window Color</key>
-	<string>#232323</string>
-	<key>Force Invert Sidebars</key>
+	<key>Post Textual.handleEvent() Notifications</key>
 	<true/>
 	<key>Template Engine Versions</key>
 	<dict>
 		<key>default</key>
 		<integer>3</integer>
 	</dict>
-	<key>Nickname Color Style</key>
-	<string>HSL-dark</string>
-	<key>Post Textual.handleEvent() Notifications</key>
-	<true/>
+	<key>Underlying Window Color</key>
+	<string>#232323</string>
 </dict>
 </plist>
