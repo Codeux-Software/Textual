@@ -58,11 +58,9 @@ Textual.notifyDidBecomeHidden = function()
 
 Textual.notifySelectionChanged = function(isSelected)
 {
-	if (isSelected) {
-		Textual.setTopicBarVisible(true);
-	} else {
-		Textual.setTopicBarVisible(false);
-	}
+	Textual.setTopicBarVisible(isSelected);
+		
+	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
 };
 
 Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBacklog)

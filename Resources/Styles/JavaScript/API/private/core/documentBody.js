@@ -227,6 +227,19 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 	return removedChildren;
 };
 
+Textual.setDocumentBodyPointerEventsEnabled = function(enablePointerEvents)
+{
+	var documentBody = Textual.documentBodyElement();
+
+	if (documentBody) {
+		if (enablePointerEvents) {
+			documentBody.style.pointerEvents = "";
+		} else {
+			documentBody.style.pointerEvents = "none";
+		}
+	}
+};
+
 /* Text */
 Textual.changeTextSizeMultiplier = function(sizeMultiplier)
 {
