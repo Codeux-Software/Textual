@@ -51,6 +51,7 @@ Textual.initializeCore = function(resourcesPath)
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/core/scrollTo.js");
 	
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/autoScroll.js");
+	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/conversationTracking.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/liveresize.js");
 	Textual.includeScriptResourceFile(resourcesPath + "/JavaScript/API/private/scriptSink.js");
 };
