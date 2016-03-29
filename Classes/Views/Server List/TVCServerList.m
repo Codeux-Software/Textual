@@ -328,8 +328,8 @@
 		NSUInteger keyboardKeys = ([theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 		if (keyboardKeys == NSCommandKeyMask) {
-				return;
-			}
+			return;
+		}
 	}
 
 	[super mouseDown:theEvent];
