@@ -530,10 +530,12 @@
 	BOOL isSelectedFrontmost = [drawingContext boolForKey:@"isSelectedFrontmost"];
 
 	/* Gather information about this badge draw. */
+	BOOL multipleRowsSelected = ([mainWindowServerList() numberOfSelectedRows] > 1);
+
 	IRCChannel *channelPointer = (id)[self cellItem];
 
 	BOOL drawMessageBadge = (isSelected == NO ||
-							(isSelectedFrontmost == NO && isSelected) ||
+							(isSelectedFrontmost == NO && isSelected && multipleRowsSelected) ||
 							(isWindowActive == NO && isSelected));
 	
 	NSInteger channelTreeUnreadCount = [channelPointer treeUnreadCount];
