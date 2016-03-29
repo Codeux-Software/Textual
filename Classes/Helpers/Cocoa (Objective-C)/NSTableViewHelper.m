@@ -46,7 +46,7 @@
 
 - (NSInteger)rowUnderMouse
 {
-	NSPoint ml = [mainWindow() mouseLocationOutsideOfEventStream];
+	NSPoint ml = [[self window] mouseLocationOutsideOfEventStream];
 
 	NSPoint pt = [self convertPoint:ml fromView:nil];
 
