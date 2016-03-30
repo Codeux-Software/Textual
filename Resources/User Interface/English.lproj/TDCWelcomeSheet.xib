@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCWelcomeSheet">
@@ -35,7 +35,6 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="xcy-3h-buk"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Guest" usesSingleLineMode="YES" id="178" customClass="TVCTextFieldWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -54,7 +53,6 @@
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" id="173" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="242" height="19"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -81,19 +79,15 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="171">
                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="172">
                             <rect key="frame" x="224" y="0.0" width="15" height="119"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <connections>
                             <accessibilityConnection property="title" destination="150" id="DgH-Xk-Dmu"/>
@@ -104,7 +98,6 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="62" id="O6B-2L-ar8"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Channels:" id="170">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -117,7 +110,6 @@
                             <constraint firstAttribute="width" constant="21" id="Xpt-2B-Ogw"/>
                             <constraint firstAttribute="height" constant="21" id="Ydf-kY-0lt"/>
                         </constraints>
-                        <animations/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="166">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -133,7 +125,6 @@
                             <constraint firstAttribute="height" constant="21" id="4Nq-GV-efh"/>
                             <constraint firstAttribute="width" constant="21" id="dRq-y5-dze"/>
                         </constraints>
-                        <animations/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="165">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -145,7 +136,6 @@
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="159">
                         <rect key="frame" x="20" y="355" width="341" height="5"/>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -155,7 +145,6 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="cd5-vs-Wxp"/>
                         </constraints>
-                        <animations/>
                         <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="217" customClass="TVCTextFieldComboBoxWithValueValidationCell">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -167,7 +156,6 @@
                     </comboBox>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="145">
                         <rect key="frame" x="35" y="289" width="68" height="17"/>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Nickname:" id="179">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -176,14 +164,12 @@
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="201">
                         <rect key="frame" x="20" y="59" width="341" height="5"/>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="152">
                         <rect key="frame" x="241" y="13" width="126" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Start Chatting" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="168">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -195,7 +181,6 @@
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="153">
                         <rect key="frame" x="159" y="13" width="82" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="167">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -213,7 +198,6 @@ Gw
                         <constraints>
                             <constraint firstAttribute="height" constant="42" id="LmS-Nk-P30"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="UqM-De-aP8">
                             <font key="font" metaFont="smallSystem"/>
                             <string key="title">To get started, select a network to connect to using the the control labeled “Destination” or manually enter the desired server address. </string>
@@ -223,7 +207,6 @@ Gw
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="148">
                         <rect key="frame" x="26" y="317" width="77" height="17"/>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Destination:" id="176">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -236,10 +219,9 @@ Gw
                             <constraint firstAttribute="height" constant="56" id="UTe-zf-Olq"/>
                             <constraint firstAttribute="width" constant="244" id="j1U-fF-7Xo"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by control clicking the connection and selecting "Server Properties."</string>
+                            <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by control clicking the connection and selecting “Server Properties”</string>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -249,7 +231,6 @@ Gw
                         <constraints>
                             <constraint firstAttribute="height" constant="23" id="ALd-zn-XIc"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Welcome to Textual!" id="163">
                             <font key="font" metaFont="systemBold" size="19"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -258,7 +239,6 @@ Gw
                     </textField>
                     <imageView translatesAutoresizingMaskIntoConstraints="NO" id="zqh-Vb-fjj">
                         <rect key="frame" x="20" y="379" width="69" height="69"/>
-                        <animations/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="applicationIconYosemite" id="0YK-op-vRE"/>
                         <accessibility description="Textual Logo"/>
                     </imageView>
@@ -267,7 +247,6 @@ Gw
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="wvg-X2-tes"/>
                         </constraints>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Connect on launch" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="169">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -322,7 +301,6 @@ Gw
                     <constraint firstAttribute="trailing" secondItem="I1L-Fi-uaP" secondAttribute="trailing" constant="19" id="yp5-tZ-kSO"/>
                     <constraint firstItem="149" firstAttribute="trailing" secondItem="151" secondAttribute="trailing" constant="-1" id="yws-s2-0IA"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="213"/>

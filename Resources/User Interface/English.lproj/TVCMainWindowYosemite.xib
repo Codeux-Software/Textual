@@ -1921,7 +1921,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
             </connections>
         </customObject>
         <customObject id="U6M-jc-NbT" customClass="TXMenuControllerMainWindowProxy"/>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="asp-kn-ubA" customClass="TVCMainWindowTitlebarAccessoryView">
+        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="asp-kn-ubA" customClass="TVCMainWindowTitlebarAccessoryView">
             <rect key="frame" x="0.0" y="0.0" width="104" height="20"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFh-15-nxS" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">
