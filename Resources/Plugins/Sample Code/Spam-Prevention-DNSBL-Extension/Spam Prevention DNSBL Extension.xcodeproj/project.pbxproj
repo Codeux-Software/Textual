@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4C2E13A91AEA8F5A00F36D67 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = "/Applications/Textual 5.app/Contents/Frameworks/CocoaExtensions.framework"; sourceTree = "<absolute>"; };
+		4C2E13A91AEA8F5A00F36D67 /* CocoaExtensions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaExtensions.framework; path = /Applications/Textual.app/Contents/Frameworks/CocoaExtensions.framework; sourceTree = "<absolute>"; };
 		4C4EAD151AEABD23006E0E15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4C4EAD161AEABD23006E0E15 /* blacklist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = blacklist.plist; path = "Resources/Property Lists/blacklist.plist"; sourceTree = "<group>"; };
 		4C4EAD191AEABD4A006E0E15 /* TPI_SpamPrevention.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPI_SpamPrevention.h; path = Classes/TPI_SpamPrevention.h; sourceTree = "<group>"; };
