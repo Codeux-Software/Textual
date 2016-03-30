@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerChannelListDialog">
@@ -37,7 +37,6 @@
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="116" viewBased="YES" id="68" customClass="TVCBasicTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="598" height="186"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <animations/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +62,6 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vDn-ey-QTL">
                                                             <rect key="frame" x="0.0" y="0.0" width="124" height="17"/>
-                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="bAo-xK-qeb">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -79,7 +77,6 @@
                                                         <constraint firstItem="vDn-ey-QTL" firstAttribute="leading" secondItem="ZaB-VD-KCR" secondAttribute="leading" constant="2" id="QWR-fc-l3v"/>
                                                         <constraint firstAttribute="trailing" secondItem="vDn-ey-QTL" secondAttribute="trailing" constant="2" id="g4Y-cR-Kp1"/>
                                                     </constraints>
-                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="vDn-ey-QTL" id="BAW-q6-bMw"/>
                                                     </connections>
@@ -108,7 +105,6 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gnr-BE-kNx">
                                                             <rect key="frame" x="0.0" y="0.0" width="88" height="17"/>
-                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Mq5-qO-kdn">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -124,7 +120,6 @@
                                                         <constraint firstItem="gnr-BE-kNx" firstAttribute="leading" secondItem="FcK-bp-len" secondAttribute="leading" constant="2" id="jyv-BE-3ni"/>
                                                         <constraint firstAttribute="trailing" secondItem="gnr-BE-kNx" secondAttribute="trailing" constant="2" id="riQ-f8-KjW"/>
                                                     </constraints>
-                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="gnr-BE-kNx" id="Vrc-F8-0nu"/>
                                                     </connections>
@@ -153,7 +148,6 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="7s1-nc-Gl0">
                                                             <rect key="frame" x="0.0" y="0.0" width="377" height="17"/>
-                                                            <animations/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="urJ-pM-ab7">
                                                                 <font key="font" metaFont="system"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -169,7 +163,6 @@
                                                         <constraint firstItem="7s1-nc-Gl0" firstAttribute="leading" secondItem="Rj4-Hq-RWw" secondAttribute="leading" constant="2" id="hSX-8h-Q0F"/>
                                                         <constraint firstItem="7s1-nc-Gl0" firstAttribute="top" secondItem="Rj4-Hq-RWw" secondAttribute="top" id="iPk-Pm-Cg7"/>
                                                     </constraints>
-                                                    <animations/>
                                                     <connections>
                                                         <outlet property="textField" destination="7s1-nc-Gl0" id="lZ0-Vd-lHO"/>
                                                     </connections>
@@ -185,30 +178,24 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <animations/>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
-                        <animations/>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="115">
                             <rect key="frame" x="1" y="381" width="788" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="114">
                             <rect key="frame" x="773" y="16" width="15" height="357"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </scroller>
                         <tableHeaderView key="headerView" id="116">
                             <rect key="frame" x="0.0" y="0.0" width="598" height="17"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <animations/>
                         </tableHeaderView>
                         <accessibility description="Channel List"/>
                     </scrollView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="74">
                         <rect key="frame" x="511" y="6" width="75" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="111">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -223,7 +210,6 @@ Gw
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="76">
                         <rect key="frame" x="401" y="6" width="110" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Update List" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="112">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -235,7 +221,6 @@ Gw
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="132">
                         <rect key="frame" x="18" y="269" width="108" height="17"/>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="My IRC Network" id="133">
                             <font key="font" metaFont="systemBold"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -244,7 +229,6 @@ Gw
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="139">
                         <rect key="frame" x="14" y="6" width="182" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Join Selected Channels" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="140">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -259,7 +243,6 @@ Gw
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="fg4-E2-QNl"/>
                         </constraints>
-                        <animations/>
                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" bezelStyle="round" sendsSearchStringImmediately="YES" maximumRecents="0" recentsAutosaveName="" id="113">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -293,7 +276,6 @@ Gw
                     <constraint firstItem="139" firstAttribute="baseline" secondItem="76" secondAttribute="baseline" id="vck-zb-Gav"/>
                     <constraint firstItem="103" firstAttribute="top" secondItem="6" secondAttribute="top" constant="11" id="w1e-BN-ryI"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="118"/>

@@ -1955,7 +1955,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
             <accessibility description="User Information Popover"/>
             <point key="canvasLocation" x="284" y="314"/>
         </customView>
-        <customView translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">
+        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Pz-wu-9PV" customClass="TVCMainWindowTitlebarAccessoryView">
             <rect key="frame" x="0.0" y="0.0" width="124" height="20"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N9S-CI-zgv" customClass="TVCMainWindowTitlebarAccessoryViewLockButton">

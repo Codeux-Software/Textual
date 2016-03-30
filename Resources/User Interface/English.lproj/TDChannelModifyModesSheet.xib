@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelModifyModesSheet">
@@ -39,7 +39,6 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="5It-6s-7uW"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="213">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -301,7 +300,6 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="bw9-zM-uph"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" usesSingleLineMode="YES" id="214">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -321,7 +319,6 @@
                     </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="82">
                         <rect key="frame" x="18" y="110" width="112" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Password (+k):" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="217">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -333,7 +330,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="83">
                         <rect key="frame" x="18" y="83" width="182" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Limit number of users (+l):" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="218">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -345,7 +341,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="171">
                         <rect key="frame" x="18" y="272" width="141" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Secret channel (+s)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="219">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -357,7 +352,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="172">
                         <rect key="frame" x="18" y="245" width="145" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Private channel (+p)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="220">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -369,7 +363,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="192">
                         <rect key="frame" x="18" y="218" width="236" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="No external channel messages (+n)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="221">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -378,7 +371,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="194">
                         <rect key="frame" x="18" y="191" width="245" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Only operators can change topic (+t)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="222">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -387,7 +379,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="195">
                         <rect key="frame" x="18" y="164" width="162" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Invite-only channel (+i)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="223">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -396,7 +387,6 @@
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="197">
                         <rect key="frame" x="18" y="137" width="172" height="18"/>
-                        <animations/>
                         <buttonCell key="cell" type="check" title="Moderated channel (+m)" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="224">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -405,14 +395,12 @@
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="244">
                         <rect key="frame" x="12" y="59" width="295" height="5"/>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64">
                         <rect key="frame" x="153" y="13" width="82" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="215">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -427,7 +415,6 @@ Gw
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="65">
                         <rect key="frame" x="235" y="13" width="70" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="216">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -472,7 +459,6 @@ DQ
                     <constraint firstItem="82" firstAttribute="leading" secondItem="197" secondAttribute="leading" id="vDK-YJ-kXh"/>
                     <constraint firstItem="64" firstAttribute="top" secondItem="244" secondAttribute="bottom" constant="20" symbolic="YES" id="wwe-dJ-WsF"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>

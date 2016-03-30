@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8191"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDChannelPropertiesSheet">
@@ -47,11 +47,9 @@
                             <constraint firstAttribute="width" constant="325" id="cW1-Ut-AEa"/>
                             <constraint firstAttribute="height" constant="285" id="ydh-Kx-F2Z"/>
                         </constraints>
-                        <animations/>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RKI-lY-4zM">
                         <rect key="frame" x="238" y="13" width="70" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="vut-UU-V9o">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -66,7 +64,6 @@ DQ
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p4S-DM-ZI2">
                         <rect key="frame" x="159" y="13" width="82" height="32"/>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="3uS-Ah-Kpg">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -78,14 +75,12 @@ DQ
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4TH-0i-MkY">
                         <rect key="frame" x="12" y="59" width="301" height="5"/>
-                        <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="185">
                         <rect key="frame" x="89" y="345" width="147" height="20"/>
-                        <animations/>
                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="186">
                             <font key="font" metaFont="titleBar" size="12"/>
                             <segments>
@@ -117,7 +112,6 @@ DQ
                     <constraint firstItem="p4S-DM-ZI2" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="xLK-HX-RDd"/>
                     <constraint firstAttribute="trailing" secondItem="185" secondAttribute="trailing" constant="90" id="xou-d3-ghj"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="354"/>
@@ -133,7 +127,6 @@ DQ
                         <constraint firstAttribute="width" constant="212" id="cFa-vZ-Byo"/>
                         <constraint firstAttribute="height" constant="22" id="elf-Yf-UCA"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="129">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -143,7 +136,6 @@ DQ
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="122">
                     <rect key="frame" x="23" y="153" width="119" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Join on connect" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="131">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -155,7 +147,6 @@ DQ
                         <constraint firstAttribute="width" constant="212" id="Cgb-nt-TtE"/>
                         <constraint firstAttribute="height" constant="22" id="nl8-XD-eC7"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="#example" usesSingleLineMode="YES" id="130" customClass="TVCTextFieldWithValueValidationCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -165,7 +156,6 @@ DQ
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="112">
                     <rect key="frame" x="23" y="125" width="199" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Post notifications for channel" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="141">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -173,7 +163,6 @@ DQ
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="111">
                     <rect key="frame" x="23" y="44" width="130" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Disable highlights" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="142">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -181,7 +170,6 @@ DQ
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="279">
                     <rect key="frame" x="23" y="71" width="150" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Disable inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="280">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -196,7 +184,6 @@ DQ
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="HBZ-KH-HBg">
                     <rect key="frame" x="23" y="71" width="138" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show inline images" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="K3N-Px-fl5">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -208,7 +195,6 @@ DQ
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="281">
                     <rect key="frame" x="23" y="17" width="218" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Disable general event messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="282">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -219,14 +205,12 @@ DQ
                 </button>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="312">
                     <rect key="frame" x="12" y="187" width="301" height="5"/>
-                    <animations/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="356">
                     <rect key="frame" x="23" y="98" width="226" height="18"/>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Show unread count in channel list" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="357">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -234,7 +218,6 @@ DQ
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="118">
                     <rect key="frame" x="18" y="217" width="69" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Password:" id="135">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -243,7 +226,6 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="117">
                     <rect key="frame" x="37" y="206" width="47" height="11"/>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="(optional)" id="136">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
@@ -252,7 +234,6 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="119">
                     <rect key="frame" x="29" y="244" width="58" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Channel:" id="134">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -291,7 +272,6 @@ DQ
                 <constraint firstItem="111" firstAttribute="top" secondItem="279" secondAttribute="bottom" constant="13" id="u5r-nd-8QH"/>
                 <constraint firstItem="312" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="12" id="xmT-Q0-4tG"/>
             </constraints>
-            <animations/>
             <point key="canvasLocation" x="205.5" y="339"/>
         </view>
         <view translatesAutoresizingMaskIntoConstraints="NO" id="243">
@@ -302,7 +282,6 @@ DQ
                     <constraints>
                         <constraint firstAttribute="width" constant="37" id="UsB-2B-x2g"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Topic:" id="268">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -314,7 +293,6 @@ DQ
                     <constraints>
                         <constraint firstAttribute="height" constant="66" id="jhC-2M-Ecm"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="270">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -324,7 +302,6 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="253">
                     <rect key="frame" x="18" y="23" width="53" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Modes:" id="267">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -333,7 +310,6 @@ DQ
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="S13-Uc-xNq">
                     <rect key="frame" x="18" y="135" width="241" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Values to apply if the channel is empty:" id="Yvg-62-eMH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -345,7 +321,6 @@ DQ
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="O1P-Su-Zm1"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="269">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -371,7 +346,6 @@ DQ
                 <constraint firstItem="252" firstAttribute="leading" secondItem="243" secondAttribute="leading" constant="32" id="fif-fL-kCT"/>
                 <constraint firstItem="250" firstAttribute="leading" secondItem="252" secondAttribute="trailing" constant="8" symbolic="YES" id="qCM-Gy-JXL"/>
             </constraints>
-            <animations/>
             <point key="canvasLocation" x="179.5" y="272"/>
         </view>
         <userDefaultsController id="nwg-0t-IZ6" customClass="TPCPreferencesUserDefaultsController"/>
