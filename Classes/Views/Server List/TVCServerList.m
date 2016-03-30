@@ -342,6 +342,13 @@
 		return;
 	}
 
+	/* If the event is double click, then send logic straight to super */
+	if ([theEvent clickCount] > 1) {
+		[super mouseDown:theEvent];
+
+		return;
+	}
+
 	/* If the item clicked is selected, then switch group selection to it. */
 	NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
 
