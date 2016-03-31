@@ -63,7 +63,7 @@ Textual.notifySelectionChanged = function(isSelected)
 	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
 };
 
-Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBacklog)
+Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBacklog, textSizeMultiplier)
 {
 	if (isVisible) {
 		Textual.notifyDidBecomeVisible();
@@ -80,6 +80,8 @@ Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBack
 	} else {
 		Textual.viewFinishedLoading();
 	}
+	
+	Textual.changeTextSizeMultiplier(textSizeMultiplier);
 };
 
 /* Events */
