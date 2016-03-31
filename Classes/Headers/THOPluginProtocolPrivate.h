@@ -66,3 +66,10 @@
 @property (nonatomic, readwrite, copy) NSString *networkAddress;
 @property (nonatomic, readwrite, copy) NSString *networkName;
 @end
+
+#pragma mark -
+
+@interface THOPluginWebViewJavaScriptPayload ()
+@property (nonatomic, readwrite, copy) NSString *payloadLabel;
+@property (nonatomic, readwrite, copy) id payloadContents;
+@end

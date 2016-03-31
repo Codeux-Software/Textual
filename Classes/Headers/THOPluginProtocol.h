@@ -39,6 +39,7 @@
 
 @class THOPluginDidReceiveServerInputConcreteObject;
 @class THOPluginDidPostNewMessageConcreteObject;
+@class THOPluginWebViewJavaScriptPayload;
 
 /* All THOPluginProtocol messages are called within the primary class of a plugin and
  no where else. The primary class can be defined in the Info.plist of your bundle. The
@@ -46,9 +47,9 @@
  the lifetime management of your plugin. */
 
 /* Each plugin has access to the global variables [self worldController] and 
- [self masterController] which both have unrestricted access to every component of 
- Textual. There is no need to store pointers in your plugin for these. They are always
- available just by calling the above mentioned method names. */
+ [self masterController] which both have unrestricted access to every component 
+ of Textual. There is no need to store pointers in your plugin for these. They 
+ are always available just by calling the above mentioned method names. */
 
 #pragma mark -
 #pragma mark Localization
@@ -116,8 +117,8 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  subscribed to the command will be informed of when the command is performed.
  *
  * 4. To avoid conflicts, a plugin cannot subscribe to a command already
- *  defined by a script. If a script and a plugin both share the same command, then
- *  neither will be executed and an error will be printed to the OS X console.
+ *  defined by a script. If a script and a plugin both share the same command, 
+ *  then neither will be executed and an error will be printed to the console.
  */
 @property (nonatomic, readonly, copy) NSArray *subscribedUserInputCommands;
 
@@ -175,11 +176,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @brief Defines an NSView used by the Preferences window of Textual to
  *  allow user-interactive configuration of the plugin.
  *
- * @discussion Textual 5.1.2 and later use auto layout for the Preferences 
- *  window. Therefore, for a preference pane to be displayed properly,
- *  a width and height constraint must be set on the returned view.
- *
- * @return An instance of NSView with a width of at least 589. This width
+ * @return An instance of NSView with a width of at least 590. This width
  *  is not enforced, but having a view with a width lower than this magic
  *  number will result in one or more toolbar items not fitting on screen.
  */
@@ -192,7 +189,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 @property (nonatomic, readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
 
 #pragma mark -
-#pragma mark Renderer Events
+#pragma mark WebView Events
 
 /*!
  * @brief Method invoked when the Document Object Model (DOM) of a view has been modified.
@@ -202,11 +199,11 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *
  * @warning It is NOT recommended to do any heavy work when the -isProcessedInBulk property
  *  of the posted message is set to YES because thousand of other messages may be processing
- *  at the same time which can overload the user's Mac if you work on each message.
+ *  at the same time.
  *
  * @warning This method is invoked on an asynchronous background dispatch queue. Not the
- *  main thread. It is extremely important to remember this because WebKit will throw an
- *  exception if it is not interacted with on the main thread.
+ *  main thread. If you interact with WebKit when this method is invokved, then make sure
+ *  that you do so on the main thread. If you don't, WebKit will throw an exception.
  *
  * @param messageObject An instance of THOPluginDidPostNewMessageConcreteObject
  * @param logController The view responsible for the event
@@ -215,13 +212,31 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  */
 - (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)logController;
 
+/*!
+ * @brief Method invoked when the JavaScript function app.sendPluginPayload() is executed.
+ *
+ * @discussion A plugin that injects JavaScript into Textual's WebView can use this method
+ *  to send data back to the plugin from the WebView.
+ *
+ * @warning This method is invoked on an asynchronous background dispatch queue. Not the
+ *  main thread. If you interact with WebKit when this method is invokved, then make sure
+ *  that you do so on the main thread. If you don't, WebKit will throw an exception.
+ *
+ * @param payloadObject An instance of THOPluginWebViewJavaScriptPayload
+ * @param logController The view responsible for the event
+ *
+ * @see THOPluginWebViewJavaScriptPayload
+ */
+- (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayload *)payloadObject fromViewController:(TVCLogController *)logController;
+
 #pragma mark -
+#pragma mark Renderer Events
 
 /*!
  * @brief Method invoked prior to a message being converted to its HTML equivalent.
  *
  * @discussion This gives a plugin the chance to modify the text that will be displayed 
- * for a certain message by replacing one or more segments of it.
+ *  for a certain message by replacing one or more segments of it.
  * 
  * Considerations:
  *
@@ -344,7 +359,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  instance of NSString or NSAttributedString.
  * @param command Textual allows the end user to send text entered into the text field 
  *  without using the "/me" command. When this occurs, Textual informs lower-level APIs
- *  of this intent by changing the value of this parameter from "privmsg" to "action" -
+ *  of this intent by changing the value of this parameter from "privmsg" to "action"
  *  In most cases a plugin should disregard this parameter and pass it untouched.
  */
 - (id)interceptUserInput:(id)input command:(NSString *)command;
@@ -520,6 +535,23 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  * @brief The name of the IRC network
  */
 @property (readonly, copy) NSString *networkName;
+@end
+
+#pragma mark -
+
+@interface THOPluginWebViewJavaScriptPayload : NSObject
+/*!
+ * @brief A description of the payload
+ */
+@property (readonly, copy) NSString *payloadLabel;
+
+/*!
+ * @brief The payload contents
+ * 
+ * @discussion When the payload is an object (array or dictionary), then the payload will either 
+ *  be an NSArray, NSDictionary, or WebScriptObject; depending on the version of WebKit in use.
+ */
+@property (readonly, copy) id payloadContents;
 @end
 
 #pragma mark -
