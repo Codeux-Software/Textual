@@ -834,7 +834,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self appendToDocumentBody:html];
 
 				/* Inform the style of the new append. */
-				[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
+				[self executeQuickScriptCommand:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
 				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
