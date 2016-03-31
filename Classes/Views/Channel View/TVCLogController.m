@@ -601,27 +601,11 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeHidden" withArguments:nil];
 }
 
-- (void)changeTextSizeMultiplier
-{
-	[self changeTextSizeMultiplierIgnoringBaseline:YES];
-}
-
-- (void)changeTextSizeMultiplierIgnoringBaseline:(BOOL)ignoreBaseline
+- (void)changeTextSize:(BOOL)bigger
 {
 	float sizeMultiplier = [worldController() textSizeMultiplier];
 
-	if (ignoreBaseline == NO) {
-		if ([NSNumber compareCGFloat:sizeMultiplier toFloat:1.0f]) {
-			return;
-		}
-	}
-
 	[self executeQuickScriptCommand:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
-}
-
-- (void)changeTextSize:(BOOL)bigger
-{
-	[self changeTextSizeMultiplier];
 
 	[self executeQuickScriptCommand:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
@@ -1294,18 +1278,19 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		 NSDictionaryNilValue([self.associatedChannel name])
 	]];
 
+	float textSizeMultiplier = [worldController() textSizeMultiplier];
+
 	[self executeQuickScriptCommand:@"Textual.viewFinishedLoadingInt"
 					  withArguments:@[@([self isVisible]),
 									  @([self isSelected]),
-									  @(self.reloadingBacklog)]];
+									  @(self.reloadingBacklog),
+									  @(textSizeMultiplier)]];
 
 	[self setInitialTopic];
 
 	[RZNotificationCenter() postNotificationName:TVCLogControllerViewFinishedLoadingNotification object:self];
 
 	[[self printingQueue] updateReadinessState:self];
-
-	[self changeTextSizeMultiplierIgnoringBaseline:NO];
 }
 
 - (void)logViewWebViewClosedUnexpectedly
