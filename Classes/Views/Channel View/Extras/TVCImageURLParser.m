@@ -217,10 +217,12 @@
 				return [NSString stringWithFormat:@"https://v.leetfil.es/%@_thumb", vid];
 			}
         	} else {
-            		NSString *i = [path substringFromIndex:1];
+        		if ([host hasSuffix:@"i.leetfil.es"]) {
+            			NSString *i = [path substringFromIndex:1];
             
-            		if ([i isAlphabeticNumericOnly]) {
-                		return [NSString stringWithFormat:@"https://i.leetfil.es/%@", i];
+            			if ([i isAlphabeticNumericOnly]) {
+                			return [NSString stringWithFormat:@"https://i.leetfil.es/%@", i];
+            			}
             		}
         	}
 	} else if ([host hasSuffix:@"movapic.com"]) {
