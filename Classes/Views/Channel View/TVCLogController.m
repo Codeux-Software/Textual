@@ -414,47 +414,59 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 /* reloadOldLines: is supposed to be called from inside a queue. */
 - (void)reloadOldLines:(BOOL)markHistoric withOldLines:(NSArray *)oldLines
 {
-	/* What lines are we reloading? */
 	NSObjectIsEmptyAssert(oldLines);
 
-	/* Misc. data. */
+	/* Only create lines if plugins need them. Else, its just useless memroy. */
+	NSMutableArray *lines = nil;
+
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
+		lines = [NSMutableArray array];
+	}
+
+	/* Create temporary stores and begin process data */
 	NSMutableArray *lineNumbers = [NSMutableArray array];
 
 	NSMutableString *patchedAppend = [NSMutableString string];
 
 	NSMutableData *newHistoricArchive = [NSMutableData data];
 
-	/* Begin processing. */
 	for (NSData *chunkedData in oldLines) {
+		/* Convert JSON information to a format that Textual understands */
 		TVCLogLine *line = (id)[[TVCLogLine alloc] initWithRawJSONData:chunkedData];
 
 		PointerIsEmptyAssertLoopContinue(line);
 
+		/* Set historic */
 		if (markHistoric) {
 			[line setIsHistoric:YES];
 		}
 
-		/* Render everything. */
+		/* Render result info HTML */
 		NSDictionary *resultInfo = nil;
 
 		NSString *html = [self renderLogLine:line resultInfo:&resultInfo];
 
 		NSObjectIsEmptyAssertLoopContinue(html);
 
-		/* Gather result information. */
-		NSString *lineNumber = resultInfo[@"lineNumber"];
-
 		[patchedAppend appendString:html];
 
-		[lineNumbers addObject:@[lineNumber, resultInfo]];
+		/* Record information about rendering */
+		NSString *lineNumber = resultInfo[@"lineNumber"];
 
-		/* Write to JSON data. */
+		[lineNumbers addObject:lineNumber];
+
+		if (lines) {
+			[lines addObject:resultInfo];
+		}
+
+		/* Create a new entry for result */
 		NSData *jsondata = [line jsonDictionaryRepresentation];
 
 		[newHistoricArchive appendData:jsondata];
+
 		[newHistoricArchive appendData:[NSData lineFeed]];
 
-		/* Was it a highlight? */
+		/* Record highlights */
 		BOOL highlighted = [resultInfo boolForKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 
 		if (highlighted) {
@@ -464,37 +476,28 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		}
 	}
 
-	/* Update historic archive. */
+	/* Record new entries */
 	[self.historicLogFile writeNewEntryWithRawData:newHistoricArchive];
 
-	/* Update WebKit. */
+	/* Render the result in WebKit */
 	[self performBlockOnMainThread:^{
+		self.activeLineCount += [lineNumbers count];
+
 		[self appendHistoricMessageFragment:patchedAppend isReload:(markHistoric == NO)];
 
 		[self mark];
 
-		for (NSArray *lineInfo in lineNumbers) {
-			/* Update count. */
-			self.activeLineCount += 1;
-
-			/* Line info. */
-			NSString *lineNumber = lineInfo[0];
-
-			/* Inform the style of the addition. */
-			[self executeQuickScriptCommand:@"Textual.newMessagePostedToView" withArguments:@[lineNumber]];
-			
-			/* Inform plugins. */
-			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-				NSDictionary *resultInfo = lineInfo[1];
-
-				THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = resultInfo[@"pluginConcreteObject"];
-
-				[pluginConcreteObject setIsProcessedInBulk:YES];
-
-				[sharedPluginManager() postNewMessageEventForViewController:self withObject:pluginConcreteObject];
-			}
-		}
+		[self executeQuickScriptCommand:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 	}];
+
+	/* Inform plugins of new content */
+	for (NSDictionary *resultInfo in lines) {
+		THOPluginDidPostNewMessageConcreteObject *pluginConcreteObject = resultInfo[@"pluginConcreteObject"];
+
+		[pluginConcreteObject setIsProcessedInBulk:YES];
+
+		[sharedPluginManager() postNewMessageEventForViewController:self withObject:pluginConcreteObject];
+	}
 }
 
 - (void)reloadHistory
@@ -522,10 +525,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)reloadHistoryCompletionBlock:(NSArray *)objects
 {
 	[self reloadOldLines:YES withOldLines:objects];
-
-	[self performBlockOnMainThread:^{
-		[self moveToBottom];
-	}];
 
 	self.reloadingHistory = NO;
 }
@@ -561,10 +560,6 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)reloadThemeCompletionBlock:(NSArray *)objects
 {
 	[self reloadOldLines:NO withOldLines:objects];
-
-	[self performBlockOnMainThread:^{
-		[self moveToBottom];
-	}];
 
 	self.reloadingBacklog = NO;
 }
