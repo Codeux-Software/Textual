@@ -91,6 +91,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformation"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"retrievePreferencesWithMethodName"];
+		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sendPluginPayload"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverAddress"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverChannelCount"];
 		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverIsConnected"];

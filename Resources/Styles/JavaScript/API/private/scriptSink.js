@@ -407,3 +407,14 @@ app.displayContextMenu = function()
 		window.webkit.messageHandlers.displayContextMenu.postMessage(null);
 	}
 };
+
+app.sendPluginPayload = function(payloadLabel, payloadContent)
+{
+	var dataValue = {"values" : [payloadLabel, payloadContent]};
+
+	if (appInternal.isWebKit2()) {
+		window.webkit.messageHandlers.sendPluginPayload.postMessage(dataValue);
+	} else {
+		TextualScriptSink.sendPluginPayload(dataValue);
+	}
+};
