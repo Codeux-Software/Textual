@@ -203,20 +203,26 @@
 		if ([s isAlphabeticNumericOnly]) {
 			return [NSString stringWithFormat:@"http://img.ly/show/large/%@", s];
 		}
-	} else if ([host hasSuffix:@"leetfil.es"]) {
+	} else if ([host hasSuffix:@"leetfil.es"] || [host hasSuffix:@"i.leetfil.es"]) {
 		if ([path hasPrefix:@"/image/"]) {
 			NSString *s = [path substringFromIndex:7];
             
-            if ([s isAlphabeticNumericOnly]) {
+            		if ([s isAlphabeticNumericOnly]) {
 				return [NSString stringWithFormat:@"https://i.leetfil.es/%@", s];
 			}
 		} else if ([path hasPrefix:@"/video/"]) {
 			NSString *vid = [path substringFromIndex:7];
             
 			if ([vid isAlphabeticNumericOnly]) {
-				return [NSString stringWithFormat:@"https://leetfil.es/vid/%@_thumb.png", vid];
+				return [NSString stringWithFormat:@"https://v.leetfil.es/%@_thumb", vid];
 			}
-		}
+        	} else {
+            		NSString *i = [path substringFromIndex:1];
+            
+            		if ([i isAlphabeticNumericOnly]) {
+                		return [NSString stringWithFormat:@"https://i.leetfil.es/%@", i];
+            		}
+        	}
 	} else if ([host hasSuffix:@"movapic.com"]) {
 		if ([path hasPrefix:@"/pic/"]) {
 			NSString *s = [path substringFromIndex:5];
