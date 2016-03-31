@@ -130,6 +130,21 @@
 	return [scriptArray copy];
 }
 
++ (id)webScriptObjectToCommon:(id)object
+{
+	if ([object isKindOfClass:[NSNull class]] ||
+		[object isKindOfClass:[WebUndefined class]])
+	{
+		return nil;
+	}
+
+	if ([object isKindOfClass:[NSString class]]) {
+		return [object gtm_stringByUnescapingFromHTML];
+	}
+
+	return object;
+}
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
 	NSString *handlerName = [message name];
@@ -156,7 +171,7 @@
 			   inWebView:(id)webView
 			 forSelector:(SEL)selector
    minimumArgumentCount:(NSInteger)minimumArgumentCount
-		  withValidation:(Class (^)(NSInteger argumentIndex))validateArgumentBlock
+		  withValidation:(BOOL (^)(NSInteger argumentIndex, id argument))validateArgumentBlock
 {
 	TVCLogView *intWebView = nil;
 
@@ -226,6 +241,13 @@
 			values = inputData;
 		}
 	}
+	else if ([inputData isKindOfClass:[NSNull class]] ||
+			 [inputData isKindOfClass:[WebUndefined class]])
+	{
+		if (minimumArgumentCount > 0) {
+			values = @[[NSNull null]];
+		}
+	}
 
 	/* Perform validation if needed */
 	if (minimumArgumentCount > 0 && [values count] < minimumArgumentCount) {
@@ -238,9 +260,7 @@
 		__block BOOL validationPassed = YES;
 
 		[values enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-			Class expectedClass = validateArgumentBlock(index);
-
-			if ([object isKindOfClass:expectedClass] == NO) {
+			if (validateArgumentBlock(index, object) == NO) {
 				validationPassed = NO;
 
 				*stop = YES;
@@ -339,8 +359,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_logToConsole:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -350,8 +370,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_logToConsoleFile:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -366,8 +386,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_nicknameColorStyleHash:)
 	  minimumArgumentCount:2
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -382,8 +402,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_printDebugInformation:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -393,8 +413,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_printDebugInformationToConsole:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -404,8 +424,9 @@
 				 inWebView:webView
 			   forSelector:@selector(_retrievePreferencesWithMethodName:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
+			}];
 			}];
 }
 
@@ -430,8 +451,9 @@
 				 inWebView:webView
 			   forSelector:@selector(_setChannelName:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSNull class]] ||
+						[argument isKindOfClass:[NSString class]]);
 			}];
 }
 
@@ -441,8 +463,9 @@
 				 inWebView:webView
 			   forSelector:@selector(_setNickname:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSNull class]] ||
+						[argument isKindOfClass:[NSString class]]);
 			}];
 }
 
@@ -452,7 +475,10 @@
 				 inWebView:webView
 			   forSelector:@selector(_setSelection:)
 	  minimumArgumentCount:1
-			withValidation:nil];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSNull class]] ||
+						[argument isKindOfClass:[NSString class]]);
+			}];
 }
 
 - (void)setURLAddress:(id)inputData inWebView:(id)webView
@@ -461,8 +487,9 @@
 				 inWebView:webView
 			   forSelector:@selector(_setURLAddress:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return ([argument isKindOfClass:[NSNull class]] ||
+						[argument isKindOfClass:[NSString class]]);
 			}];
 }
 
@@ -477,8 +504,8 @@
 				 inWebView:webView
 			   forSelector:@selector(_styleSettingsRetrieveValue:)
 	  minimumArgumentCount:1
-			withValidation:^Class(NSInteger argumentIndex) {
-				return [NSString class];
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				return [argument isKindOfClass:[NSString class]];
 			}];
 }
 
@@ -487,8 +514,18 @@
 	[self processInputData:inputData
 				 inWebView:webView
 			   forSelector:@selector(_styleSettingsSetValue:)
-	  minimumArgumentCount:1
-			withValidation:nil];
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else {
+					return ([argument isKindOfClass:[NSArray class]] ||
+							[argument isKindOfClass:[NSDictionary class]] ||
+							[argument isKindOfClass:[NSNull class]] ||
+							[argument isKindOfClass:[NSNumber class]] ||
+							[argument isKindOfClass:[NSString class]]);
+				}
+			}];
 }
 
 - (void)topicBarDoubleClicked:(id)inputData inWebView:(id)webView
@@ -556,7 +593,9 @@
 
 - (void)_logToConsole:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *message = [context arguments][0];
+	NSArray *arguments = [context arguments];
+
+	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
 	LogToConsole(@"JavaScript: %@", message);
 }
@@ -626,8 +665,12 @@
 	[fileHandle seekToEndOfFile];
 
 	/* Write to file */
+	NSArray *arguments = [context arguments];
+
+	NSString *messageString = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+
 	NSString *message = [NSString stringWithFormat:@"(%f) %@\x0d\x0a",
-						 CFAbsoluteTimeGetCurrent(), [context arguments][0]];
+						 CFAbsoluteTimeGetCurrent(), messageString];
 
 	NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -646,9 +689,11 @@
 
 - (id)_nicknameColorStyleHash:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *inputString = [context arguments][0];
+	NSArray *arguments = [context arguments];
 
-	NSString *colorStyle = [context arguments][1];
+	NSString *inputString = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+
+	NSString *colorStyle = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[1]];
 
 	TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
 
@@ -668,21 +713,27 @@
 
 - (void)_printDebugInformation:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *message = [context arguments][0];
+	NSArray *arguments = [context arguments];
+
+	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
 	[[context associatedClient] printDebugInformation:message channel:[context associatedChannel]];
 }
 
 - (void)_printDebugInformationToConsole:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *message = [context arguments][0];
+	NSArray *arguments = [context arguments];
+
+	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
 	[[context associatedClient] printDebugInformationToConsole:message];
 }
 
 - (id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *methodName = [context arguments][0];
+	NSArray *arguments = [context arguments];
+
+	NSString *methodName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
 	SEL methodSelector = NSSelectorFromString(methodName);
 
@@ -724,38 +775,30 @@
 
 - (void)_setChannelName:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *value = [context arguments][0];
+	NSArray *arguments = [context arguments];
 
-	[[context webViewPolicy] setChannelName:[value gtm_stringByUnescapingFromHTML]];
+	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+
+	[[context webViewPolicy] setChannelName:value];
 }
 
 - (void)_setNickname:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *value = [context arguments][0];
+	NSArray *arguments = [context arguments];
 
-	[[context webViewPolicy] setNickname:[value gtm_stringByUnescapingFromHTML]];
+	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+
+	[[context webViewPolicy] setNickname:value];
 }
 
 - (void)_setSelection:(TVCLogScriptEventSinkContext *)context
 {
-	id selection = nil;
-
 	NSArray *arguments = [context arguments];
 
-	if (arguments && [arguments count] == 1) {
-		selection = arguments[0];
-	}
+	NSString *selection = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
-	if (selection && [selection isKindOfClass:[NSString class]] == NO) {
-		[self _throwJavaScriptException:@"Invalid type" inWebView:[context webView]];
-
-		return;
-	}
-
-	if ([selection length] == 0) {
+	if (selection && [selection length] == 0) {
 		selection = nil;
-	} else {
-		selection = [selection gtm_stringByUnescapingFromHTML];
 	}
 
 	[[context webView] setSelection:selection];
@@ -763,9 +806,11 @@
 
 - (void)_setURLAddress:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *value = [context arguments][0];
+	NSArray *arguments = [context arguments];
 
-	[[context webViewPolicy] setAnchorURL:[value gtm_stringByUnescapingFromHTML]];
+	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+
+	[[context webViewPolicy] setAnchorURL:value];
 }
 
 - (id)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
@@ -775,7 +820,9 @@
 
 - (id)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context
 {
-	NSString *keyName = [context arguments][0];
+	NSArray *arguments = [context arguments];
+
+	NSString *keyName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
 	NSString *errorValue = nil;
 
@@ -792,17 +839,9 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *keyName = arguments[0];
+	NSString *keyName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
 
-	id keyValue = nil;
-
-	if ([arguments count] > 1) {
-		if ([arguments[1] isKindOfClass:[NSNull class]] == NO &&
-			[arguments[1] isKindOfClass:[WebUndefined class]] == NO)
-		{
-			keyValue = arguments[1];
-		}
-	}
+	id keyValue = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[1]];
 
 	NSString *errorValue = nil;
 
