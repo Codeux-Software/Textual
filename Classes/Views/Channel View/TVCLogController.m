@@ -102,7 +102,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)preferencesChanged
 {
-	[self setMaximumLineCount:[TPCPreferences scrollbackLimit]];
+	self.maximumLineCount = [TPCPreferences scrollbackLimit];
 }
 
 - (void)dealloc
@@ -217,10 +217,10 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Properties
 
-- (void)setMaximumLineCount:(NSInteger)value
+- (void)setMaximumLineCount:(NSInteger)maximumLineCount
 {
-	if (NSDissimilarObjects(self.maximumLineCount, value)) {
-		_maximumLineCount = value;
+	if (_maximumLineCount != maximumLineCount) {
+		_maximumLineCount = maximumLineCount;
 
 		NSAssertReturn(self.isLoaded);
 
@@ -232,7 +232,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)setViewIsEncrypted:(BOOL)viewIsEncrypted
 {
-	if (NSDissimilarObjects(_viewIsEncrypted, viewIsEncrypted)) {
+	if (_viewIsEncrypted != viewIsEncrypted) {
 		_viewIsEncrypted = viewIsEncrypted;
 
 		if (viewIsEncrypted) {
