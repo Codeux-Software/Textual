@@ -84,6 +84,18 @@ Textual.viewFinishedLoadingInt = function(isVisible, isSelected, isReloadingBack
 	Textual.changeTextSizeMultiplier(textSizeMultiplier);
 };
 
+Textual.newMessagePostedToViewInt = function(lineNumber)
+{
+	/* Allow lineNumber to be an array of line numbers or a single line number. */
+	if (Array.isArray(lineNumber)) {
+		for (var i = 0; i < lineNumber.length; i++) {
+			Textual.newMessagePostedToView(lineNumber[i]);
+		}
+	} else {
+		Textual.newMessagePostedToView(lineNumber);
+	}
+};
+
 /* Events */
 Textual.mouseUpEventCallback = function()
 {
