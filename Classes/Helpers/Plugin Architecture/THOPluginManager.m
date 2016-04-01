@@ -517,6 +517,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	_ef(THOPluginItemSupportsWillRenderMessageEvent)
 	_ef(THOPluginItemSupportsDidReceivePlainTextMessageEvent)
 	_ef(THOPluginItemSupportsDidReceiveCommandEvent)
+	_ef(THOPluginItemSupportsWebViewJavaScriptPayloads)
 
 #undef _ef
 }
@@ -807,6 +808,22 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	});
 }
 
+- (void)postJavaScriptPayloadForViewController:(TVCLogController *)viewController withObject:(THOPluginWebViewJavaScriptPayload *)payloadObject
+{
+	if (viewController == nil || payloadObject == nil) {
+		return;
+	}
+
+	XRPerformBlockAsynchronouslyOnQueue(self.dispatchQueue, ^{
+		for (THOPluginItem *plugin in self.allLoadedPlugins)
+		{
+			if ([plugin supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads]) {
+				[[plugin primaryClass] didReceiveJavaScriptPayload:payloadObject fromViewController:viewController];
+			}
+		}
+	});
+}
+
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType
 {
 	if (newMessage == nil || viewController == nil) {
@@ -895,6 +912,9 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @end
 
 @implementation THOPluginDidReceiveServerInputConcreteObject
+@end
+
+@implementation THOPluginWebViewJavaScriptPayload
 @end
 
 @implementation THOPluginOutputSuppressionRule

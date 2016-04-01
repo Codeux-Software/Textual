@@ -52,7 +52,8 @@ typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
 	THOPluginItemSupportsUserInputDataInterception			= 1 << 7,
 	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 8,
 	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 9,
-	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 10
+	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 10,
+	THOPluginItemSupportsWebViewJavaScriptPayloads			= 1 << 11,
 };
 
 @interface THOPluginItem : NSObject
