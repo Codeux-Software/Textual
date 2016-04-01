@@ -40,6 +40,8 @@
 
 #import "TVCLogObjectsPrivate.h"
 
+#import <JavaScriptCore/JavaScriptCore.h>
+
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
@@ -229,7 +231,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[[self webViewBacking] executeJavaScript:code completionHandler:completionHandler];
 }
 
-- (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
++ (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
 {
 	if ([scriptResult isKindOfClass:[NSString class]])
 	{
@@ -262,7 +264,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 }
 
-- (NSString *)escapeJavaScriptString:(NSString *)string
++ (NSString *)escapeJavaScriptString:(NSString *)string
 {
 	NSString *escapedString = string;
 
@@ -270,136 +272,6 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
 
 	return escapedString;
-}
-
-- (NSString *)compileJavaScriptDictionaryArgument:(NSDictionary *)objects
-{
-	NSMutableString *compiledScript = [NSMutableString string];
-
-	[compiledScript appendString:@"{"];
-
-	NSInteger lastIndex = ([objects count] - 1);
-
-	__block NSInteger currentIndex = 0;
-
-	[objects enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-		/* Perform check to make sure the key we are using is actually a string. */
-		if ([key isKindOfClass:[NSString class]] == NO) {
-			LogToConsole(@"Silently ignoring non-string key: %@", NSStringFromClass([key class]));
-
-			return;
-		}
-
-		/* Add key and value to new object. */
-		NSString *keyString = [self escapeJavaScriptString:key];
-
-		NSString *objectString = [self compileJavaScriptGenericArgument:object];
-
-		if (currentIndex == lastIndex) {
-			[compiledScript appendFormat:@"\"%@\" : %@", keyString, objectString];
-		} else {
-			[compiledScript appendFormat:@"\"%@\" : %@, ", keyString, objectString];
-		}
-
-		currentIndex += 1;
-	}];
-
-	[compiledScript appendString:@"}"];
-
-	return [compiledScript copy];
-}
-
-- (NSString *)compileJavaScriptArrayArgument:(NSArray *)objects
-{
-	NSMutableString *compiledScript = [NSMutableString string];
-
-	[compiledScript appendString:@"["];
-
-	NSInteger lastIndex = ([objects count] - 1);
-
-	[objects enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-		NSString *objectString = [self compileJavaScriptGenericArgument:object];
-
-		if (index == lastIndex) {
-			[compiledScript appendString:objectString];
-		} else {
-			[compiledScript appendFormat:@"%@, ", objectString];
-		}
-	}];
-
-	[compiledScript appendString:@"]"];
-
-	return [compiledScript copy];
-}
-
-- (NSString *)compileJavaScriptGenericArgument:(id)object
-{
-	if ([object isKindOfClass:[NSString class]])
-	{
-		NSString *objectEscaped = [self escapeJavaScriptString:object];
-
-		return [NSString stringWithFormat:@"\"%@\"", objectEscaped];
-	}
-	else if ([object isKindOfClass:[NSNumber class]])
-	{
-		if (strcmp([object objCType], @encode(BOOL)) == 0) {
-			if ([object boolValue] == YES) {
-				return @"true";
-			} else {
-				return @"false";
-			}
-		} else {
-			return [object stringValue];
-		}
-	}
-	else if ([object isKindOfClass:[NSArray class]])
-	{
-		return [self compileJavaScriptArrayArgument:object];
-	}
-	else if ([object isKindOfClass:[NSDictionary class]])
-	{
-		return [self compileJavaScriptDictionaryArgument:object];
-	}
-	else if ([object isKindOfClass:[NSNull class]])
-	{
-		return @"null";
-	}
-	else
-	{
-		return @"undefined";
-	}
-}
-
-- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
-{
-	NSMutableString *compiledScript = [NSMutableString string];
-
-	NSInteger argumentCount = 0;
-
-	if ( arguments) {
-		argumentCount = [arguments count];
-
-		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
-		 {
-			 NSString *objectString = [self compileJavaScriptGenericArgument:object];
-
-			[compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, objectString];
-		 }];
-	}
-
-	[compiledScript appendFormat:@"%@(", command];
-
-	for (NSInteger i = 0; i < argumentCount; i++) {
-		if (i == (argumentCount - 1)) {
-			[compiledScript appendFormat:@"_argument_%ld_", i];
-		} else {
-			[compiledScript appendFormat:@"_argument_%ld_, ", i];
-		}
-	}
-
-	[compiledScript appendString:@");\n"];
-
-	return [compiledScript copy];
 }
 
 - (void)executeCommand:(NSString *)command
@@ -471,14 +343,259 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 		if (result && [result isKindOfClass:[NSArray class]]) {
 			resultArray = result;
-		} else if (result && [result isKindOfClass:[WebScriptObject class]]) {
-			resultArray = [TVCLogScriptEventSink webScriptObjectToArray:result];
 		}
 
 		if (completionHandler) {
 			completionHandler(resultArray);
 		}
 	}];
+}
+
+@end
+
+@implementation TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
+
+- (NSString *)compileJavaScriptDictionaryArgument:(NSDictionary *)objects
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	[compiledScript appendString:@"{"];
+
+	NSInteger lastIndex = ([objects count] - 1);
+
+	__block NSInteger currentIndex = 0;
+
+	[objects enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		/* Perform check to make sure the key we are using is actually a string. */
+		if ([key isKindOfClass:[NSString class]] == NO) {
+			LogToConsole(@"Silently ignoring non-string key: %@", NSStringFromClass([key class]));
+
+			return;
+		}
+
+		/* Add key and value to new object. */
+		NSString *keyString = [TVCLogView escapeJavaScriptString:key];
+
+		NSString *objectString = [self compileJavaScriptGenericArgument:object];
+
+		if (currentIndex == lastIndex) {
+			[compiledScript appendFormat:@"\"%@\" : %@", keyString, objectString];
+		} else {
+			[compiledScript appendFormat:@"\"%@\" : %@, ", keyString, objectString];
+		}
+
+		currentIndex += 1;
+	}];
+
+	[compiledScript appendString:@"}"];
+
+	return [compiledScript copy];
+}
+
+- (NSString *)compileJavaScriptArrayArgument:(NSArray *)objects
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	[compiledScript appendString:@"["];
+
+	NSInteger lastIndex = ([objects count] - 1);
+
+	[objects enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		NSString *objectString = [self compileJavaScriptGenericArgument:object];
+
+		if (index == lastIndex) {
+			[compiledScript appendString:objectString];
+		} else {
+			[compiledScript appendFormat:@"%@, ", objectString];
+		}
+	}];
+
+	[compiledScript appendString:@"]"];
+
+	return [compiledScript copy];
+}
+
+- (NSString *)compileJavaScriptGenericArgument:(id)object
+{
+	if ([object isKindOfClass:[NSString class]])
+	{
+		NSString *objectEscaped = [TVCLogView escapeJavaScriptString:object];
+
+		return [NSString stringWithFormat:@"\"%@\"", objectEscaped];
+	}
+	else if ([object isKindOfClass:[NSNumber class]])
+	{
+		if (strcmp([object objCType], @encode(BOOL)) == 0) {
+			if ([object boolValue] == YES) {
+				return @"true";
+			} else {
+				return @"false";
+			}
+		} else {
+			return [object stringValue];
+		}
+	}
+	else if ([object isKindOfClass:[NSArray class]])
+	{
+		return [self compileJavaScriptArrayArgument:object];
+	}
+	else if ([object isKindOfClass:[NSDictionary class]])
+	{
+		return [self compileJavaScriptDictionaryArgument:object];
+	}
+	else if ([object isKindOfClass:[NSNull class]])
+	{
+		return @"null";
+	}
+	else
+	{
+		return @"undefined";
+	}
+}
+
+- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
+{
+	NSMutableString *compiledScript = [NSMutableString string];
+
+	NSInteger argumentCount = 0;
+
+	if ( arguments) {
+		argumentCount = [arguments count];
+
+		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
+		 {
+			 NSString *objectString = [self compileJavaScriptGenericArgument:object];
+
+			 [compiledScript appendFormat:@"var _argument_%ld_ = %@;\n", objectIndex, objectString];
+		 }];
+	}
+
+	[compiledScript appendFormat:@"%@(", command];
+
+	for (NSInteger i = 0; i < argumentCount; i++) {
+		if (i == (argumentCount - 1)) {
+			[compiledScript appendFormat:@"_argument_%ld_", i];
+		} else {
+			[compiledScript appendFormat:@"_argument_%ld_, ", i];
+		}
+	}
+
+	[compiledScript appendString:@");\n"];
+	
+	return [compiledScript copy];
+}
+
+- (id)webScriptObjectToCommon:(WebScriptObject *)object
+{
+	/* Required sanity checks */
+	if ([self isUsingWebKit2]) {
+		NSAssert(NO, @"Cannot use feature when WebKit2 is in use");
+	}
+
+	if (object == nil) {
+		return nil;
+	}
+
+	/* Context information */
+	WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
+
+	JSGlobalContextRef jsContextRef = [webViewFrame globalContext];
+
+	JSObjectRef jsObjectRef = [object JSObject];
+
+	/* The object is useless if it is a function */
+	if (JSObjectIsFunction(jsContextRef, jsObjectRef)) {
+		LogToConsole(@"Ignoring a JSObject that is a function");
+
+		return nil;
+	}
+
+	/* If the object is an array, then parse it as such */
+	if ([TVCLogView jsObjectIsArray:jsObjectRef inContext:jsContextRef]) {
+		NSNumber *arrayLengthObject = [object valueForKey:@"length"];
+
+		NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
+
+		NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
+
+		for (NSUInteger i = 0; i < arrayLength; i++) {
+			id item = [object webScriptValueAtIndex:(unsigned)i];
+
+			if ([item isKindOfClass:[WebScriptObject class]]) {
+				 item = [self webScriptObjectToCommon:item];
+			} else if ([item isKindOfClass:[WebUndefined class]]) {
+				item = nil;
+			}
+
+			if (item) {
+				[scriptArray addObject:item];
+			} else {
+				[scriptArray addObject:[NSNull null]];
+			}
+		}
+
+		return [scriptArray copy];
+	}
+
+	/* If the object is an object (dictionary), then parse it as such */
+	if ([TVCLogView jsObjectIsObject:jsObjectRef inContext:jsContextRef]) {
+		JSPropertyNameArrayRef objectProperties = JSObjectCopyPropertyNames(jsContextRef, jsObjectRef);
+
+		size_t objectPropertiesCount = JSPropertyNameArrayGetCount(objectProperties);
+
+		NSMutableDictionary *scriptDictionary = [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)objectPropertiesCount];
+
+		for (NSInteger i = 0; i < objectPropertiesCount; i++) {
+			JSStringRef propertyName = JSPropertyNameArrayGetNameAtIndex(objectProperties, i);
+
+			NSString *propertyNameCocoa = (__bridge NSString *)JSStringCopyCFString(kCFAllocatorDefault, propertyName);
+
+			id item = [object valueForKey:propertyNameCocoa];
+
+			if ([item isKindOfClass:[WebScriptObject class]]) {
+				item = [self webScriptObjectToCommon:item];
+			} else if ([item isKindOfClass:[WebUndefined class]]) {
+				item = nil;
+			}
+
+			if (item) {
+				[scriptDictionary setObject:item forKey:propertyNameCocoa];
+			} else {
+				[scriptDictionary setObject:[NSNull null] forKey:propertyNameCocoa];
+			}
+		}
+
+		return [scriptDictionary copy];
+	}
+
+	/* When all else fails, default to nil */
+	return nil;
+}
+
++ (BOOL)jsObjectIsArray:(JSObjectRef)jsObjectRef inContext:(JSContextRef)jsContextRef
+{
+	JSObjectRef jsGlobalObjectRef = JSContextGetGlobalObject(jsContextRef);
+
+	JSStringRef arrayString = JSStringCreateWithUTF8CString("Array");
+
+	JSObjectRef arrayPrototype = (JSObjectRef)JSObjectGetProperty(jsContextRef, jsGlobalObjectRef, arrayString, NULL);
+
+	JSStringRelease(arrayString);
+
+	return JSValueIsInstanceOfConstructor(jsContextRef, jsObjectRef, arrayPrototype, NULL);
+}
+
++ (BOOL)jsObjectIsObject:(JSObjectRef)jsObjectRef inContext:(JSContextRef)jsContextRef
+{
+	JSObjectRef jsGlobalObjectRef = JSContextGetGlobalObject(jsContextRef);
+
+	JSStringRef objectString = JSStringCreateWithUTF8CString("Object");
+
+	JSObjectRef objectPrototype = (JSObjectRef)JSObjectGetProperty(jsContextRef, jsGlobalObjectRef, objectString, NULL);
+
+	JSStringRelease(objectString);
+
+	return JSValueIsInstanceOfConstructor(jsContextRef, jsObjectRef, objectPrototype, NULL);
 }
 
 @end

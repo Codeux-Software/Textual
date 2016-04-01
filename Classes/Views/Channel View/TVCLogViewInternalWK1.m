@@ -183,6 +183,10 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 				completionHandler(nil);
 			}
 		}
+		else if ([scriptResult isKindOfClass:[WebScriptObject class]])
+		{
+			scriptResult = [scriptResult webScriptObjectToCommon:scriptResult];
+		}
 	}
 
 	if (completionHandler) {

@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+#import "THOPluginProtocolPrivate.h"
+
 #import "TVCLogObjectsPrivate.h"
 
 #import "IRCUserPrivate.h"
@@ -91,7 +93,13 @@
 	}
 
 	if (args && [args count] > 0) {
-		(void)objc_msgSend(self, handlerSelector, args[0], [self parentView]);
+		id argument = args[0];
+
+		if ([argument isKindOfClass:[WebScriptObject class]]) {
+			argument = [[self parentView] webScriptObjectToCommon:argument];
+		}
+
+		(void)objc_msgSend(self, handlerSelector, argument, [self parentView]);
 	} else {
 		(void)objc_msgSend(self, handlerSelector, nil, [self parentView]);
 	}
@@ -109,28 +117,7 @@
 	return nil;
 }
 
-+ (NSArray *)webScriptObjectToArray:(WebScriptObject *)object
-{
-	id arrayLengthObject = [object valueForKey:@"length"];
-
-	if (arrayLengthObject == nil || [arrayLengthObject isKindOfClass:[NSNumber class]] == NO) {
-		return nil;
-	}
-
-	NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
-
-	NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
-
-	for (NSUInteger i = 0; i < arrayLength; i++) {
-		id item = [object webScriptValueAtIndex:(unsigned)i];
-
-		[scriptArray addObject:item];
-	}
-
-	return [scriptArray copy];
-}
-
-+ (id)webScriptObjectToCommon:(id)object
++ (id)objectValueToCommon:(id)object
 {
 	if ([object isKindOfClass:[NSNull class]] ||
 		[object isKindOfClass:[WebUndefined class]])
@@ -190,9 +177,7 @@
 	NSArray *values = nil;
 
 	/* Extract relevant information from inputData */
-	if ([inputData isKindOfClass:[NSDictionary class]] ||
-		[inputData isKindOfClass:[WebScriptObject class]])
-	{
+	if ([inputData isKindOfClass:[NSDictionary class]]) {
 		/* Check that the object exists in the dictionary before 
 		 setting the value. If the object does not exist and we
 		 do not do this, then -integerValue will return 0 which
@@ -212,12 +197,6 @@
 		/* Values should always be in an array */
 		if (minimumArgumentCount > 0) {
 			id valuesObj = [inputData valueForKey:@"values"];
-
-			if (valuesObj) {
-				if ([valuesObj isKindOfClass:[WebScriptObject class]]) {
-					 valuesObj = [TVCLogScriptEventSink webScriptObjectToArray:valuesObj];
-				}
-			}
 
 			if (valuesObj == nil || [valuesObj isKindOfClass:[NSArray class]] == NO) {
 				[self _throwJavaScriptException:@"'values' must be an array" inWebView:intWebView];
@@ -595,7 +574,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	LogToConsole(@"JavaScript: %@", message);
 }
@@ -667,7 +646,7 @@
 	/* Write to file */
 	NSArray *arguments = [context arguments];
 
-	NSString *messageString = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *messageString = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	NSString *message = [NSString stringWithFormat:@"(%f) %@\x0d\x0a",
 						 CFAbsoluteTimeGetCurrent(), messageString];
@@ -691,9 +670,9 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *inputString = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *inputString = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	NSString *colorStyle = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[1]];
+	NSString *colorStyle = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
 	TPCThemeSettingsNicknameColorStyle colorStyleEnum = TPCThemeSettingsNicknameColorLegacyStyle;
 
@@ -715,7 +694,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[[context associatedClient] printDebugInformation:message channel:[context associatedChannel]];
 }
@@ -724,7 +703,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *message = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[[context associatedClient] printDebugInformationToConsole:message];
 }
@@ -733,7 +712,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *methodName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *methodName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	SEL methodSelector = NSSelectorFromString(methodName);
 
@@ -777,7 +756,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[[context webViewPolicy] setChannelName:value];
 }
@@ -786,7 +765,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[[context webViewPolicy] setNickname:value];
 }
@@ -795,7 +774,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *selection = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *selection = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	if (selection && [selection length] == 0) {
 		selection = nil;
@@ -808,7 +787,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *value = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	[[context webViewPolicy] setAnchorURL:value];
 }
@@ -822,7 +801,7 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *keyName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *keyName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	NSString *errorValue = nil;
 
@@ -839,9 +818,9 @@
 {
 	NSArray *arguments = [context arguments];
 
-	NSString *keyName = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[0]];
+	NSString *keyName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	id keyValue = [TVCLogScriptEventSink webScriptObjectToCommon:arguments[1]];
+	id keyValue = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
 	NSString *errorValue = nil;
 
