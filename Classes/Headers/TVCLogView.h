@@ -81,6 +81,9 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 - (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *result))completionHandler;
 - (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
 
+- (void)dictionaryByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSDictionary *result))completionHandler;
+- (void)dictionaryByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *result))completionHandler;
+
 + (NSString *)escapeJavaScriptString:(NSString *)string;
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
