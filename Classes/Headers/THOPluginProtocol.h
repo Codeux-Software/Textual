@@ -547,9 +547,6 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 
 /*!
  * @brief The payload contents
- * 
- * @discussion When the payload is an object (array or dictionary), then the payload will either 
- *  be an NSArray, NSDictionary, or WebScriptObject; depending on the version of WebKit in use.
  */
 @property (readonly, copy) id payloadContents;
 @end

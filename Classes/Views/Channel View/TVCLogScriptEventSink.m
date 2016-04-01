@@ -406,6 +406,20 @@
 			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
+}
+
+- (void)sendPluginPayload:(id)inputData inWebView:(id)webView
+{
+	[self processInputData:inputData
+				 inWebView:webView
+			   forSelector:@selector(_sendPluginPayload:)
+	  minimumArgumentCount:2
+			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+				if (argumentIndex == 0) {
+					return [argument isKindOfClass:[NSString class]];
+				} else {
+					return YES;
+				}
 			}];
 }
 
@@ -735,6 +749,28 @@
 	}
 
 	return returnValue;
+}
+
+- (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
+{
+	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
+		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads" inWebView:[context webView]];
+
+		return;
+	}
+
+	NSArray *arguments = [context arguments];
+
+	NSString *payloadLabel = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
+
+	id payloadContents = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
+
+	THOPluginWebViewJavaScriptPayload *payloadObject = [THOPluginWebViewJavaScriptPayload new];
+
+	[payloadObject setPayloadLabel:payloadLabel];
+	[payloadObject setPayloadContents:payloadContents];
+
+	[sharedPluginManager() postJavaScriptPayloadForViewController:[context logController] withObject:payloadObject];
 }
 
 - (id)_serverAddress:(TVCLogScriptEventSinkContext *)context

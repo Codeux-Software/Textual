@@ -168,6 +168,10 @@
 	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
 		supportedFeatures |= THOPluginItemSupportsWillRenderMessageEvent;
 	}
+
+	if ([self.primaryClass respondsToSelector:@selector(didReceiveJavaScriptPayload:fromViewController:)]) {
+		supportedFeatures |= THOPluginItemSupportsWebViewJavaScriptPayloads;
+	}
 	
 	/* Inline media. */
 	if ([self.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
