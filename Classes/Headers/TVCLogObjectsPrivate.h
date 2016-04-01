@@ -59,12 +59,16 @@
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 @end
 
+@interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
+- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments;
+
+- (id)webScriptObjectToCommon:(WebScriptObject *)object;
+@end
+
 @interface TVCLogPolicy ()
 @property (nonatomic, weak) TVCLogView *parentView;
 @end
 
 @interface TVCLogScriptEventSink ()
 @property (nonatomic, weak) TVCLogView *parentView;
-
-+ (NSArray *)webScriptObjectToArray:(WebScriptObject *)object;
 @end

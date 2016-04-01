@@ -38,14 +38,12 @@
 
 #import "TextualApplication.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView : NSObject
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
-@property (readonly, nullable, copy) NSString *selection;
+@property (readonly, copy) NSString *selection;
 
 @property (readonly) BOOL isUsingWebKit2;
 
@@ -68,43 +66,24 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
 - (void)executeJavaScript:(NSString *)code;
-
-- (void)executeJavaScript:(NSString *)code
-		completionHandler:(void (^ __nullable)(id __nullable result))completionHandler;
+- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id result))completionHandler;
 
 - (void)executeCommand:(NSString *)command;
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
+- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments  completionHandler:(void (^)(id result))completionHandler;
 
-- (void)executeCommand:(NSString *)command
-		 withArguments:(nullable NSArray *)arguments;
+- (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL result))completionHandler;
+- (void)booleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL result))completionHandler;
 
-- (void)executeCommand:(NSString *)command
-		 withArguments:(nullable NSArray *)arguments
-	 completionHandler:(void (^ __nullable)(id __nullable result))completionHandler;
+- (void)stringByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSString *result))completionHandler;
+- (void)stringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *result))completionHandler;
 
-- (void)booleanByExecutingCommand:(NSString *)command
-				completionHandler:(void (^ __nullable)(BOOL result))completionHandler;
+- (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *result))completionHandler;
+- (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
 
-- (void)booleanByExecutingCommand:(NSString *)command
-					withArguments:(nullable NSArray *)arguments
-				completionHandler:(void (^ __nullable)(BOOL result))completionHandler;
++ (NSString *)escapeJavaScriptString:(NSString *)string;
 
-- (void)stringByExecutingCommand:(NSString *)command
-			   completionHandler:(void (^ __nullable)(NSString * __nullable result))completionHandler;
-
-- (void)stringByExecutingCommand:(NSString *)command
-				   withArguments:(nullable NSArray *)arguments
-			   completionHandler:(void (^ __nullable)(NSString *__nullable result))completionHandler;
-
-- (void)arrayByExecutingCommand:(NSString *)command
-			  completionHandler:(void (^ __nullable)(NSArray * __nullable result))completionHandler;
-
-- (void)arrayByExecutingCommand:(NSString *)command
-				  withArguments:(nullable NSArray *)arguments
-			  completionHandler:(void (^ __nullable)(NSArray * __nullable result))completionHandler;
-
-- (NSString *)escapeJavaScriptString:(NSString *)string;
-
-- (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
++ (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
 @end
 
 @protocol TVCLogViewDelegate <NSObject>
@@ -115,5 +94,3 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 - (void)logViewWebViewKeyDown:(NSEvent *)e;
 - (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
 @end
-
-NS_ASSUME_NONNULL_END

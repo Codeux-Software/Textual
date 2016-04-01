@@ -1007,6 +1007,9 @@
 		4CB2954F1B9CC8C2002B7972 /* THOPluginProtocolPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB2954C1B9CC8C2002B7972 /* THOPluginProtocolPrivate.h */; };
 		4CB4806F1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CB58C1B1CAE0DE20052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
+		4CB58C211CAE10BB0052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
+		4CB58C221CAE10C00052CA83 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */; };
 		4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CBBD1A516E3570800D2FEFE /* TVCMemberListUserInfoPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1921,6 +1924,7 @@
 		4CB295461B9CB88C002B7972 /* Textual-Extras-MAS.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras-MAS.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Mac App Store/Textual-Extras-MAS.pkg"; sourceTree = SOURCE_ROOT; };
 		4CB2954C1B9CC8C2002B7972 /* THOPluginProtocolPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginProtocolPrivate.h; sourceTree = "<group>"; };
 		4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCAnimatedContentNavigationOutlineView.h; sourceTree = "<group>"; };
+		4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOUnicodeHelper.m; path = Helpers/THOUnicodeHelper.m; sourceTree = "<group>"; };
 		4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListUserInfoPopover.h; sourceTree = "<group>"; };
 		4CBCF89B16C7CD9200DC3521 /* THOPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginManager.h; sourceTree = "<group>"; };
@@ -2084,6 +2088,7 @@
 				4C0BA6281990798800857343 /* Foundation.framework in Frameworks */,
 				4CF76A6B1A91157B0088BF9A /* Growl.framework in Frameworks */,
 				4CF76A6D1A91157B0088BF9A /* HockeySDK.framework in Frameworks */,
+				4CB58C211CAE10BB0052CA83 /* JavaScriptCore.framework in Frameworks */,
 				4C0BA62B1990798800857343 /* libmustache.a in Frameworks */,
 				4C0BA62C1990798800857343 /* QuartzCore.framework in Frameworks */,
 				4C0BA62D1990798800857343 /* Security.framework in Frameworks */,
@@ -2107,6 +2112,7 @@
 				4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */,
 				4CF76A891A9116510088BF9A /* Growl.framework in Frameworks */,
 				4CF76A8B1A9116510088BF9A /* HockeySDK.framework in Frameworks */,
+				4CB58C221CAE10C00052CA83 /* JavaScriptCore.framework in Frameworks */,
 				4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */,
 				4CF4D6B819837C3000FB5AF0 /* QuartzCore.framework in Frameworks */,
 				4C46CCC91580469E00846B64 /* Security.framework in Frameworks */,
@@ -2131,6 +2137,7 @@
 				4CBE7B711A9148BD008FB230 /* Foundation.framework in Frameworks */,
 				4CBE7B681A9148BD008FB230 /* Growl.framework in Frameworks */,
 				4CBE7B691A9148BD008FB230 /* HockeySDK.framework in Frameworks */,
+				4CB58C1B1CAE0DE20052CA83 /* JavaScriptCore.framework in Frameworks */,
 				4CBE7B6C1A9148BD008FB230 /* libmustache.a in Frameworks */,
 				4CBE7B721A9148BD008FB230 /* QuartzCore.framework in Frameworks */,
 				4CBE7B731A9148BD008FB230 /* Security.framework in Frameworks */,
@@ -2337,6 +2344,7 @@
 				4C46CCBC1580469E00846B64 /* Cocoa.framework */,
 				4CA8EC621B63C2970087BF72 /* CoreServices.framework */,
 				4C46CCBE1580469E00846B64 /* Foundation.framework */,
+				4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */,
 				4CF4D6B619837C1700FB5AF0 /* QuartzCore.framework */,
 				4C46CCC01580469E00846B64 /* Security.framework */,
 				4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */,
