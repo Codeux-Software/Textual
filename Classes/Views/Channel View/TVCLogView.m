@@ -351,6 +351,26 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
+- (void)dictionaryByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSDictionary *))completionHandler
+{
+	[self dictionaryByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
+}
+
+- (void)dictionaryByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *))completionHandler
+{
+	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+		NSDictionary *resultDictionary = nil;
+
+		if (result && [result isKindOfClass:[NSDictionary class]]) {
+			resultDictionary = result;
+		}
+
+		if (completionHandler) {
+			completionHandler(resultDictionary);
+		}
+	}];
+}
+
 @end
 
 @implementation TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
