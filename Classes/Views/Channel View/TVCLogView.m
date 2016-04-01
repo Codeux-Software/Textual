@@ -40,7 +40,7 @@
 
 #import "TVCLogObjectsPrivate.h"
 
-#import <JavaScriptCore/JavaScriptCore.h>
+#import "WebScriptObjectHelper.h"
 
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
@@ -521,101 +521,8 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 	JSGlobalContextRef jsContextRef = [webViewFrame globalContext];
 
-	JSObjectRef jsObjectRef = [object JSObject];
-
-	/* The object is useless if it is a function */
-	if (JSObjectIsFunction(jsContextRef, jsObjectRef)) {
-		LogToConsole(@"Ignoring a JSObject that is a function");
-
-		return nil;
-	}
-
-	/* If the object is an array, then parse it as such */
-	if ([TVCLogView jsObjectIsArray:jsObjectRef inContext:jsContextRef]) {
-		NSNumber *arrayLengthObject = [object valueForKey:@"length"];
-
-		NSUInteger arrayLength = [arrayLengthObject unsignedIntegerValue];
-
-		NSMutableArray *scriptArray = [NSMutableArray arrayWithCapacity:arrayLength];
-
-		for (NSUInteger i = 0; i < arrayLength; i++) {
-			id item = [object webScriptValueAtIndex:(unsigned)i];
-
-			if ([item isKindOfClass:[WebScriptObject class]]) {
-				 item = [self webScriptObjectToCommon:item];
-			} else if ([item isKindOfClass:[WebUndefined class]]) {
-				item = nil;
-			}
-
-			if (item) {
-				[scriptArray addObject:item];
-			} else {
-				[scriptArray addObject:[NSNull null]];
-			}
-		}
-
-		return [scriptArray copy];
-	}
-
-	/* If the object is an object (dictionary), then parse it as such */
-	if ([TVCLogView jsObjectIsObject:jsObjectRef inContext:jsContextRef]) {
-		JSPropertyNameArrayRef objectProperties = JSObjectCopyPropertyNames(jsContextRef, jsObjectRef);
-
-		size_t objectPropertiesCount = JSPropertyNameArrayGetCount(objectProperties);
-
-		NSMutableDictionary *scriptDictionary = [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)objectPropertiesCount];
-
-		for (NSInteger i = 0; i < objectPropertiesCount; i++) {
-			JSStringRef propertyName = JSPropertyNameArrayGetNameAtIndex(objectProperties, i);
-
-			NSString *propertyNameCocoa = (__bridge NSString *)JSStringCopyCFString(kCFAllocatorDefault, propertyName);
-
-			id item = [object valueForKey:propertyNameCocoa];
-
-			if ([item isKindOfClass:[WebScriptObject class]]) {
-				item = [self webScriptObjectToCommon:item];
-			} else if ([item isKindOfClass:[WebUndefined class]]) {
-				item = nil;
-			}
-
-			if (item) {
-				[scriptDictionary setObject:item forKey:propertyNameCocoa];
-			} else {
-				[scriptDictionary setObject:[NSNull null] forKey:propertyNameCocoa];
-			}
-		}
-
-		return [scriptDictionary copy];
-	}
-
-	/* When all else fails, default to nil */
-	return nil;
-}
-
-+ (BOOL)jsObjectIsArray:(JSObjectRef)jsObjectRef inContext:(JSContextRef)jsContextRef
-{
-	JSObjectRef jsGlobalObjectRef = JSContextGetGlobalObject(jsContextRef);
-
-	JSStringRef arrayString = JSStringCreateWithUTF8CString("Array");
-
-	JSObjectRef arrayPrototype = (JSObjectRef)JSObjectGetProperty(jsContextRef, jsGlobalObjectRef, arrayString, NULL);
-
-	JSStringRelease(arrayString);
-
-	return JSValueIsInstanceOfConstructor(jsContextRef, jsObjectRef, arrayPrototype, NULL);
-}
-
-+ (BOOL)jsObjectIsObject:(JSObjectRef)jsObjectRef inContext:(JSContextRef)jsContextRef
-{
-	JSObjectRef jsGlobalObjectRef = JSContextGetGlobalObject(jsContextRef);
-
-	JSStringRef objectString = JSStringCreateWithUTF8CString("Object");
-
-	JSObjectRef objectPrototype = (JSObjectRef)JSObjectGetProperty(jsContextRef, jsGlobalObjectRef, objectString, NULL);
-
-	JSStringRelease(objectString);
-
-	return JSValueIsInstanceOfConstructor(jsContextRef, jsObjectRef, objectPrototype, NULL);
+	/* Perform conversion */
+	return [object toCommonInContext:jsContextRef];
 }
 
 @end
