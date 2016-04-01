@@ -185,7 +185,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 		}
 		else if ([scriptResult isKindOfClass:[WebScriptObject class]])
 		{
-			scriptResult = [scriptResult webScriptObjectToCommon:scriptResult];
+			scriptResult = [[self t_parentView] webScriptObjectToCommon:scriptResult];
 		}
 	}
 

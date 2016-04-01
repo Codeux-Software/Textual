@@ -923,6 +923,12 @@
 		4C9A1D9E1836E6D700C14835 /* ZNCAdditions.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
 		4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C9E85B31B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib */; };
+		4C9F51221CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
+		4C9F51231CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
+		4C9F51241CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */; };
+		4C9F512C1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9F512B1CAEB10E00102F0D /* WebScriptObjectHelper.h */; };
+		4C9F512D1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9F512B1CAEB10E00102F0D /* WebScriptObjectHelper.h */; };
+		4C9F512E1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9F512B1CAEB10E00102F0D /* WebScriptObjectHelper.h */; };
 		4C9FFB9F19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C9FFBA019059C3A008C600C /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA110CC1955AA4A0062EC4E /* THOPluginItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */; };
@@ -1882,6 +1888,8 @@
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = ".tmp/SharedBuildProducts-Extensions/SystemProfiler.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D941836E6A100C14835 /* ZNCAdditions.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ZNCAdditions.bundle; path = ".tmp/SharedBuildProducts-Extensions/ZNCAdditions.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9E85B41B561AAC00B2670D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerRecoverLostLicenseSheet.xib"; sourceTree = SOURCE_ROOT; };
+		4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebScriptObjectHelper.m; path = "Helpers/External Libraries/WebKit/WebScriptObjectHelper.m"; sourceTree = "<group>"; };
+		4C9F512B1CAEB10E00102F0D /* WebScriptObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebScriptObjectHelper.h; path = "External Libraries/WebScriptObjectHelper.h"; sourceTree = "<group>"; };
 		4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCQueuedCertificateTrustPanel.h; sourceTree = "<group>"; };
 		4CA110CA1955AA4A0062EC4E /* THOPluginItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginItem.m; path = "Plugin Architecture/THOPluginItem.m"; sourceTree = "<group>"; };
 		4CA110CB1955AA4A0062EC4E /* THOPluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOPluginManager.m; path = "Plugin Architecture/THOPluginManager.m"; sourceTree = "<group>"; };
@@ -2710,6 +2718,7 @@
 				4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */,
 				4C9234B2195330E30009AAAE /* TXUserInterface.h */,
 				4C790FC81B82706400EB318C /* TXWindowController.h */,
+				4C9F512B1CAEB10E00102F0D /* WebScriptObjectHelper.h */,
 				4C530C741C8F7CDB00E70E1A /* WKWebViewPrivate.h */,
 			);
 			path = Headers;
@@ -2868,6 +2877,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5AA158E99520026668C /* Google */,
+				4C9F512A1CAEB0F200102F0D /* WebKit */,
 			);
 			name = "External Libraries";
 			sourceTree = "<group>";
@@ -2878,6 +2888,14 @@
 				4C95689E194A887D003D97FD /* SmileyConverter.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4C9F512A1CAEB0F200102F0D /* WebKit */ = {
+			isa = PBXGroup;
+			children = (
+				4C9F51211CAEB0EE00102F0D /* WebScriptObjectHelper.m */,
+			);
+			name = WebKit;
 			sourceTree = "<group>";
 		};
 		4CA110D31955AA6F0062EC4E /* iCloud */ = {
@@ -3402,6 +3420,7 @@
 				4C0BA5D01990798800857343 /* TPCPreferences.h in Headers */,
 				4C0BA5D11990798800857343 /* TPCThemeController.h in Headers */,
 				4C0BA5D21990798800857343 /* TVCDockIcon.h in Headers */,
+				4C9F512C1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */,
 				4C0BA5D31990798800857343 /* TVCImageURLParser.h in Headers */,
 				4C0BA5D41990798800857343 /* TVCInputPromptDialog.h in Headers */,
 				4C0BA5D51990798800857343 /* TVCMainWindowTextView.h in Headers */,
@@ -3584,6 +3603,7 @@
 				4C5BA44B16F1302F00A96CA2 /* TVCMainWindow.h in Headers */,
 				4C5BA44C16F1302F00A96CA2 /* TVCMemberList.h in Headers */,
 				4C5BA44D16F1302F00A96CA2 /* TVCMemberListCell.h in Headers */,
+				4C9F512D1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */,
 				4C5BA44E16F1302F00A96CA2 /* TVCServerList.h in Headers */,
 				4C5BA44F16F1302F00A96CA2 /* TVCServerListCell.h in Headers */,
 				4C361B1C1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */,
@@ -3750,6 +3770,7 @@
 				4C8AF681158E99520026668C /* TVCMainWindow.h in Headers */,
 				4C8AF682158E99520026668C /* TVCMemberList.h in Headers */,
 				4C8AF683158E99520026668C /* TVCMemberListCell.h in Headers */,
+				4C9F512E1CAEB10E00102F0D /* WebScriptObjectHelper.h in Headers */,
 				4C8AF684158E99520026668C /* TVCServerList.h in Headers */,
 				4C8AF685158E99520026668C /* TVCServerListCell.h in Headers */,
 				4C361B1D1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */,
@@ -4626,6 +4647,7 @@
 				4C0445AF16F1603C00EBB665 /* GCDAsyncSocketExtensions.m in Sources */,
 				4CF40E131AC1A4AC00A26BE0 /* TVCMainWindowTextViewYosemiteUserInterace.m in Sources */,
 				4CFC40E31969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */,
+				4C9F51231CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */,
 				4C0445B216F1603C00EBB665 /* TLOFileLogger.m in Sources */,
 				4CA110CF1955AA4A0062EC4E /* THOPluginManager.m in Sources */,
 				4CF40E5B1AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
@@ -4749,6 +4771,7 @@
 				4CF40E721AC1A4AC00A26BE0 /* TVCMemberListCell.m in Sources */,
 				4C0BA67D1990798800857343 /* IRCTreeItem.m in Sources */,
 				4CF40E661AC1A4AC00A26BE0 /* TVCInputPromptDialog.m in Sources */,
+				4C9F51221CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */,
 				4CF40E161AC1A4AC00A26BE0 /* TVCTextFieldComboBoxWithValueValidation.m in Sources */,
 				4CF621CB1C7F65DC000969CB /* TDCNicknameColorSheet.m in Sources */,
 				4C0BA67E1990798800857343 /* TPCPreferencesCloudSyncExtension.m in Sources */,
@@ -4911,6 +4934,7 @@
 				4CF40E141AC1A4AC00A26BE0 /* TVCMainWindowTextViewYosemiteUserInterace.m in Sources */,
 				4CFC40E21969B5A0004C6EF4 /* IRCWorldCloudExtension.m in Sources */,
 				4C8AF6C1158E99520026668C /* TLOGrowlController.m in Sources */,
+				4C9F51241CAEB0EE00102F0D /* WebScriptObjectHelper.m in Sources */,
 				4C8AF6C2158E99520026668C /* TLOInputHistory.m in Sources */,
 				4CA110CE1955AA4A0062EC4E /* THOPluginManager.m in Sources */,
 				4CF40E5C1AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m in Sources */,
