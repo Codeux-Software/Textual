@@ -397,34 +397,3 @@ create_normal_pool:
 }
 
 @end
-
-/* This is a workaround for a memory leak */
-@implementation NSExtension (NSExtensionSwizzle)
-
-+ (void)load
-{
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		XRExchangeClassMethod(@"NSExtension",
-			@"beginMatchingExtensionsWithAttributes:completion:",
-			@"__t_priv_beginMatchingExtensionsWithAttributes:completion:");
-	});
-}
-
-+ (id)__t_priv_beginMatchingExtensionsWithAttributes:(NSDictionary *)attributes completion:(void (^)(NSArray *matchingExtensions, NSError *error))handler
-{
-	NSString *callerStackSymbol = [NSThread callStackItemAtDepth:8];
-
-	if ([callerStackSymbol contains:@"TVCLogViewInternalWK2"] || [callerStackSymbol contains:@"WebKit"]) {
-		if (handler) {
-			handler(nil, nil);
-		}
-
-		return nil;
-	}
-
-	return [self __t_priv_beginMatchingExtensionsWithAttributes:attributes completion:handler];
-}
-
-@end
