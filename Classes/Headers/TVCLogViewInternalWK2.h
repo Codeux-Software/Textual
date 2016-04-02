@@ -42,7 +42,7 @@
 @property (nonatomic, assign) BOOL t_viewIsLoading;
 @property (nonatomic, assign) BOOL t_viewIsNavigating;
 
-+ (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView;
+- (instancetype)initWithHostView:(TVCLogView *)hostView;
 
 - (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler;
 

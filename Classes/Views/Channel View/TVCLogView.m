@@ -76,9 +76,9 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[self setIsUsingWebKit2:isUsingWebKit2];
 
 	if (isUsingWebKit2) {
-		self.webViewBacking = [TVCLogViewInternalWK2 createNewInstanceWithHostView:self];
+		self.webViewBacking = [[TVCLogViewInternalWK2 alloc] initWithHostView:self];
 	} else {
-		self.webViewBacking = [TVCLogViewInternalWK1 createNewInstanceWithHostView:self];
+		self.webViewBacking = [[TVCLogViewInternalWK1 alloc] initWithHostView:self];
 	}
 }
 
