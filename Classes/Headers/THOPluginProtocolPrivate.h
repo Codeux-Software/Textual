@@ -69,7 +69,7 @@
 
 #pragma mark -
 
-@interface THOPluginWebViewJavaScriptPayload ()
+@interface THOPluginWebViewJavaScriptPayloadConcreteObject ()
 @property (nonatomic, readwrite, copy) NSString *payloadLabel;
 @property (nonatomic, readwrite, copy) id payloadContents;
 @end

@@ -765,7 +765,8 @@
 
 	id payloadContents = [TVCLogScriptEventSink objectValueToCommon:arguments[1]];
 
-	THOPluginWebViewJavaScriptPayload *payloadObject = [THOPluginWebViewJavaScriptPayload new];
+	THOPluginWebViewJavaScriptPayloadConcreteObject *payloadObject =
+	[THOPluginWebViewJavaScriptPayloadConcreteObject new];
 
 	[payloadObject setPayloadLabel:payloadLabel];
 	[payloadObject setPayloadContents:payloadContents];

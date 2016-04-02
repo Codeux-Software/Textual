@@ -39,7 +39,7 @@
 
 @class THOPluginDidReceiveServerInputConcreteObject;
 @class THOPluginDidPostNewMessageConcreteObject;
-@class THOPluginWebViewJavaScriptPayload;
+@class THOPluginWebViewJavaScriptPayloadConcreteObject;
 
 /* All THOPluginProtocol messages are called within the primary class of a 
  plugin and no where else. The primary class can be defined in the Info.plist 
@@ -211,12 +211,12 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  main thread. If you interact with WebKit when this method is invoked, then make sure
  *  that you do so on the main thread. If you don't, WebKit will throw an exception.
  *
- * @param payloadObject An instance of THOPluginWebViewJavaScriptPayload
+ * @param payloadObject An instance of THOPluginWebViewJavaScriptPayloadConcreteObject
  * @param logController The view responsible for the event
  *
- * @see THOPluginWebViewJavaScriptPayload
+ * @see THOPluginWebViewJavaScriptPayloadConcreteObject
  */
-- (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayload *)payloadObject fromViewController:(TVCLogController *)logController;
+- (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)logController;
 
 #pragma mark -
 #pragma mark Renderer Events
@@ -519,7 +519,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 
 #pragma mark -
 
-@interface THOPluginWebViewJavaScriptPayload : NSObject
+@interface THOPluginWebViewJavaScriptPayloadConcreteObject : NSObject
 /*!
  * @brief A description of the payload
  */
