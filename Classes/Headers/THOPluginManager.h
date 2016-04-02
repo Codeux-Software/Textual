@@ -85,7 +85,7 @@
 
 - (void)postNewMessageEventForViewController:(TVCLogController *)viewController withObject:(THOPluginDidPostNewMessageConcreteObject *)messageObject;
 
-- (void)postJavaScriptPayloadForViewController:(TVCLogController *)viewController withObject:(THOPluginWebViewJavaScriptPayload *)payloadObject;
+- (void)postJavaScriptPayloadForViewController:(TVCLogController *)viewController withObject:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject;
 
 - (NSString *)postWillRenderMessageEvent:(NSString *)newMessage
 					   forViewController:(TVCLogController *)viewController

@@ -808,7 +808,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	});
 }
 
-- (void)postJavaScriptPayloadForViewController:(TVCLogController *)viewController withObject:(THOPluginWebViewJavaScriptPayload *)payloadObject
+- (void)postJavaScriptPayloadForViewController:(TVCLogController *)viewController withObject:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject
 {
 	if (viewController == nil || payloadObject == nil) {
 		return;
@@ -914,7 +914,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 @implementation THOPluginDidReceiveServerInputConcreteObject
 @end
 
-@implementation THOPluginWebViewJavaScriptPayload
+@implementation THOPluginWebViewJavaScriptPayloadConcreteObject
 @end
 
 @implementation THOPluginOutputSuppressionRule
