@@ -35,3 +35,6 @@ void WKInspectorShow(WKInspectorRef inspectorRef);
 
 @interface NSView (WKViewSwizzle)
 @end
+
+@interface NSExtension (NSExtensionSwizzle)
+@end
