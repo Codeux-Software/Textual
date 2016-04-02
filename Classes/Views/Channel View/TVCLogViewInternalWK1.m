@@ -63,7 +63,18 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	}
 }
 
-+ (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView
+- (instancetype)initWithHostView:(TVCLogView *)hostView
+{
+	if ((self = [self initWithFrame:NSZeroRect])) {
+		[self constructWebViewWithHostView:hostView];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)constructWebViewWithHostView:(TVCLogView *)hostView
 {
 	TVCLogScriptEventSink *webViewScriptSink = [TVCLogScriptEventSink new];
 	[webViewScriptSink setParentView:hostView];
@@ -71,29 +82,25 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 	TVCLogPolicy *webViewPolicy = [TVCLogPolicy new];
 	[webViewPolicy setParentView:hostView];
 
-	TVCLogViewInternalWK1 *webView = [[TVCLogViewInternalWK1 alloc] initWithFrame:NSZeroRect];
+	[self setT_parentView:hostView];
 
-	[webView setT_parentView:hostView];
+	[self setWebViewPolicy:webViewPolicy];
+	[self setWebViewScriptSink:webViewScriptSink];
 
-	[webView setWebViewPolicy:webViewPolicy];
-	[webView setWebViewScriptSink:webViewScriptSink];
+	[self setPreferences:_sharedWebViewPreferences];
 
-	[webView setPreferences:_sharedWebViewPreferences];
+	[self setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
+	[self setCustomUserAgent:TVCLogViewCommonUserAgentString];
 
-	[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	[self setFrameLoadDelegate:self];
+	[self setPolicyDelegate:self];
+	[self setResourceLoadDelegate:self];
+	[self setUIDelegate:self];
 
-	[webView setFrameLoadDelegate:webView];
-	[webView setPolicyDelegate:webView];
-	[webView setResourceLoadDelegate:webView];
-	[webView setUIDelegate:webView];
+	[self setShouldUpdateWhileOffscreen:NO];
 
-	[webView setShouldUpdateWhileOffscreen:NO];
-
-	[webView updateBackgroundColor];
-
-	return webView;
+	[self updateBackgroundColor];
 }
 
 - (void)dealloc

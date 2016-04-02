@@ -146,30 +146,37 @@ create_normal_pool:
 	_sharedProcessPool = [sharedProcessPool init];
 }
 
-+ (instancetype)createNewInstanceWithHostView:(TVCLogView *)hostView
+- (instancetype)initWithHostView:(TVCLogView *)hostView
 {
-	TVCLogViewInternalWK2 *webView = [[TVCLogViewInternalWK2 alloc] initWithFrame:NSZeroRect configuration:_sharedWebViewConfiguration];
+	if ((self = [self initWithFrame:NSZeroRect configuration:_sharedWebViewConfiguration])) {
+		[self constructWebViewWithHostView:hostView];
 
-	[webView setT_parentView:hostView];
-
-	[webView setAllowsBackForwardNavigationGestures:NO];
-	[webView setAllowsMagnification:YES];
-
-	[webView setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[webView setAllowsLinkPreview:YES];
-
-		[webView setCustomUserAgent:TVCLogViewCommonUserAgentString];
+		return self;
 	}
 
-	[webView setNavigationDelegate:webView];
+	return nil;
+}
 
-	[webView setUIDelegate:webView];
+- (void)constructWebViewWithHostView:(TVCLogView *)hostView
+{
+	[self setT_parentView:hostView];
 
-	[webView addObserver:webView forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
+	[self setAllowsBackForwardNavigationGestures:NO];
+	[self setAllowsMagnification:YES];
 
-	return webView;
+	[self setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		[self setAllowsLinkPreview:YES];
+
+		[self setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	}
+
+	[self setNavigationDelegate:self];
+
+	[self setUIDelegate:self];
+
+	[self addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)dealloc
