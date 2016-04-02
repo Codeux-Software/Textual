@@ -365,9 +365,9 @@ create_normal_pool:
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		XRExchangeImplementation(@"WKView", @"updateLayer", @"__t_priv_updateLayer");
+		XRExchangeInstanceMethod(@"WKView", @"updateLayer", @"__t_priv_updateLayer");
 
-		XRExchangeImplementation(@"WKView", @"performDragOperation:", @"__t_priv_performDragOperation:");
+		XRExchangeInstanceMethod(@"WKView", @"performDragOperation:", @"__t_priv_performDragOperation:");
 	});
 }
 
