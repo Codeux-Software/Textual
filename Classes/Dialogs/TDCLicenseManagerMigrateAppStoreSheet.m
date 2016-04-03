@@ -165,7 +165,7 @@
 {
 	CFURLRef searchScopeURL = (__bridge CFURLRef)[NSURL URLWithString:@"textual://knowledge-base"];
 
-	NSArray *matchedApplications = (__bridge NSArray *)LSCopyApplicationURLsForURL(searchScopeURL, kLSRolesViewer);
+	NSArray *matchedApplications = (__bridge_transfer NSArray *)LSCopyApplicationURLsForURL(searchScopeURL, kLSRolesViewer);
 
 	NSURL *matchedCopy = nil;
 
