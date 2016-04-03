@@ -847,7 +847,7 @@
 
 	BOOL parentItemInFilter = [[self filterLimitedToClientsIDs] containsObject:[parentItem uniqueIdentifier]];
 
-	NSArray *childrenItems = [outlineView rowsInGroup:parentItem];
+	NSArray *childrenItems = [outlineView itemsInGroup:parentItem];
 
 	for (id childItem in childrenItems) {
 		NSInteger childItemRow = [outlineView rowForItem:childItem];
@@ -914,7 +914,7 @@
 
 	/* Further process filters depending on state of other items */
 	if (isGroupItem && isEnablingItem) {
-		NSArray *childrenItems = [outlineView rowsFromParentGroup:currentItem];
+		NSArray *childrenItems = [outlineView itemsFromParentGroup:currentItem];
 
 		for (id childItem in childrenItems) {
 			[[parentDialog filterLimitedToChannelsIDs] removeObject:[childItem uniqueIdentifier]];
