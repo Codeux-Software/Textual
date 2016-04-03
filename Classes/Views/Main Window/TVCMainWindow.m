@@ -1481,7 +1481,7 @@
 
 - (void)addAccessoryViewsToTitlebar
 {
-	NSThemeFrame *themeFrame = [[self contentView] superview];
+	NSThemeFrame *themeFrame = (NSThemeFrame *)[[self contentView] superview];
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[themeFrame setUsesCustomTitlebarTitlePositioning:YES];

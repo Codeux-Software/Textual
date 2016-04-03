@@ -85,7 +85,7 @@
 		for (NSInteger i = 0; i < objectPropertiesCount; i++) {
 			JSStringRef propertyName = JSPropertyNameArrayGetNameAtIndex(objectProperties, i);
 
-			NSString *propertyNameCocoa = (__bridge NSString *)JSStringCopyCFString(kCFAllocatorDefault, propertyName);
+			NSString *propertyNameCocoa = (__bridge_transfer NSString *)JSStringCopyCFString(kCFAllocatorDefault, propertyName);
 
 			id item = [self valueForKey:propertyNameCocoa];
 
