@@ -534,7 +534,7 @@
 
 - (void)navigateChannelEntriesWithinServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
-	NSArray *scannedRows = [self.serverList rowsFromParentGroup:self.selectedClient];
+	NSArray *scannedRows = [self.serverList itemsFromParentGroup:self.selectedItem];
 	
 	/* We add selected server so navigation falls within its scope if its the selected item. */
 	scannedRows = [scannedRows arrayByAddingObject:self.selectedClient];
@@ -1095,7 +1095,7 @@
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
 {
-	(void)[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
+	[self selectItemInSelectedItems:selectedItem refreshChannelView:NO];
 }
 
 - (void)updateChannelViewBoxContentViewSelection
@@ -1103,7 +1103,17 @@
 	[self.channelView populateSubviews];
 }
 
+- (BOOL)isItemVisible:(IRCTreeItem *)item
+{
+	return ([self isItemSelected:item] || [self isItemInSelectedGroup:item]);
+}
+
 - (BOOL)isItemSelected:(IRCTreeItem *)item
+{
+	return (self.selectedItem == item);
+}
+
+- (BOOL)isItemInSelectedGroup:(IRCTreeItem *)item
 {
 	return (self.selectedItems && [self.selectedItems containsObject:item]);
 }
@@ -1137,7 +1147,7 @@
 	/* Check whether arrays match */
 	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {
 		/* Update selected item even if group hasn't changed */
-		(void)[self selectItemInSelectedItems:selectedItem];
+		[self selectItemInSelectedItems:selectedItem];
 
 		/* Do nothing else if they match */
 		return;
@@ -1160,7 +1170,7 @@
 			selectedItem = self.selectedItem;
 		}
 
-		if ([self isItemSelected:selectedItem]) {
+		if ([self isItemInSelectedGroup:selectedItem]) {
 			self.selectedItem = selectedItem;
 		} else {
 			self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
@@ -1510,7 +1520,7 @@
 
 - (void)updateTitleFor:(IRCTreeItem *)item
 {
-	if (self.selectedItem == item) {
+	if ([self isItemSelected:item]) {
 		[self updateTitle];
 	}
 }
@@ -1689,12 +1699,14 @@
 
 - (void)reloadTreeGroup:(id)item
 {
-	if ([item isClient]) {
-		[self reloadTreeItem:item];
-		
-		for (IRCChannel *channel in [item channelList]) {
-			[self reloadTreeItem:channel];
-		}
+	if ([item isClient] == NO) {
+		return;
+	}
+
+	[self reloadTreeItem:item];
+	
+	for (IRCChannel *channel in [item channelList]) {
+		[self reloadTreeItem:channel];
 	}
 }
 
@@ -1818,20 +1830,20 @@
 	[self adjustSelectionWithItems:itemsPrevious selectedItem:itemPrevious];
 }
 
-- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem
 {
-	return [self selectItemInSelectedItems:selectedItem refreshChannelView:YES];
+	[self selectItemInSelectedItems:selectedItem refreshChannelView:YES];
 }
 
-- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
 {
 	/* Do nothing if items are the same */
-	if (self.selectedItem == selectedItem) {
-		return NO;
+	if ([self isItemSelected:selectedItem]) {
+		return;
 	}
 
 	/* Select item if its in the current group */
-	if ([self isItemSelected:selectedItem]) {
+	if ([self isItemInSelectedGroup:selectedItem]) {
 		[self storePreviousSelection];
 
 		self.selectedItem = selectedItem;
@@ -1841,56 +1853,156 @@
 		}
 
 		[self selectionDidChangePostflight];
-
-		return YES;
 	}
-
-	return NO;
 }
 
 - (void)select:(IRCTreeItem *)item
 {
-	/* Try to select the item in the current group first */
-	if ([self selectItemInSelectedItems:item]) {
+	[self shiftSelection:self.selectedItem toItem:item options:(TVCMainWindowShiftSelectionMaintainGroupingFlag |
+																TVCMainWindowShiftSelectionPerformDeselectFlag)];
+}
+
+- (void)deselect:(IRCTreeItem *)item
+{
+	[self shiftSelection:item toItem:nil options:(TVCMainWindowShiftSelectionPerformDeselectFlag)];
+}
+
+- (void)deselectGroup:(IRCTreeItem *)item
+{
+	if ([item isClient] == NO) {
 		return;
 	}
 
-	/* There is nothing to do if we are already selected */
-	if (self.selectedItem == item) {
+	[self shiftSelection:item toItem:nil options:(TVCMainWindowShiftSelectionPerformDeselectFlag |
+												  TVCMainWindowShiftSelectionPerformDeselectChildrenFlag)];
+}
+
+- (void)shiftSelection:(IRCTreeItem *)oldItem toItem:(IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions
+{
+	NSAssertReturn(oldItem != newItem);
+
+	/* If the next item is a channel, then make sure the client
+	 it is associated with is expanded, or we can't switch to it. */
+	if (newItem && [newItem isClient] == NO) {
+		IRCClient *u = [newItem associatedClient];
+
+		[self expandClient:u];
+	}
+
+	/* Context */
+	BOOL optionMaintainGrouping = ((selectionOptions & TVCMainWindowShiftSelectionMaintainGroupingFlag) == TVCMainWindowShiftSelectionMaintainGroupingFlag);
+
+	BOOL optionPerformDeselectOld = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectFlag) == TVCMainWindowShiftSelectionPerformDeselectFlag);
+	BOOL optionPerformDeselectChildren = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectChildrenFlag) == TVCMainWindowShiftSelectionPerformDeselectChildrenFlag);
+
+	BOOL optionPerformDeselect = (optionPerformDeselectChildren || optionPerformDeselectOld);
+
+	/* Do nothing if item is not group */
+	NSInteger itemIndexOld = [self.serverList rowForItem:oldItem];
+	NSInteger itemIndexNew = [self.serverList rowForItem:newItem];
+
+	NSIndexSet *selectedRows = [self.serverList selectedRowIndexes];
+
+	NSIndexSet *selectedRowsForbidden = nil;
+
+	/* Maybe do nothing at all */
+	if (optionPerformDeselect && itemIndexOld >= 0 && [selectedRows containsIndex:itemIndexOld] == NO) {
 		return;
 	}
-	
-	/* We do support selecting nothing */
-	if (item == nil) {
+
+	/* If we are not performing a deselect for the old item and both items
+	 are selected, then simply update selection inside grouping. */
+	if (optionMaintainGrouping &&
+		(itemIndexOld >= 0 && [selectedRows containsIndex:itemIndexOld]) &&
+		(itemIndexNew >= 0 && [selectedRows containsIndex:itemIndexNew]))
+	{
+		[self selectItemInSelectedItems:newItem];
+
+		return;
+	}
+
+	/* Create a mutable copy of the current selection */
+	NSMutableIndexSet *selectedRowsNew = [selectedRows mutableCopy];
+
+	if (optionPerformDeselectOld) {
+		[selectedRowsNew removeIndex:itemIndexOld];
+	}
+
+	if (optionPerformDeselectChildren) {
+		NSIndexSet *childrenRowRange = [self.serverList indexesOfItemsInGroup:oldItem];
+
+		if (childrenRowRange) {
+			[selectedRowsNew removeIndexes:childrenRowRange];
+
+			selectedRowsForbidden = childrenRowRange;
+		}
+	}
+
+	/* If the next item is not nil and is a row, then select that */
+	if (newItem) {
+		if (itemIndexNew >= 0) {
+			[selectedRowsNew addIndex:itemIndexNew];
+		} else {
+			LogToConsole(@"Tried to shift selection to an item not in the server list");
+
+			return;
+		}
+	}
+
+	/* If no item to switch to is specified, then the current action is 
+	 treated as a deselect for the old item. In that case, we pick the 
+	 next best item to remain selected. */
+	if (newItem == nil) {
+		/* If there is an item in the current selection that is before 
+		 or after the row removed, then we can use that. */
+		BOOL selectedRowsComplete =
+		([selectedRowsNew indexLessThanIndex:itemIndexOld] != NSNotFound ||
+		 [selectedRowsNew indexGreaterThanIndex:itemIndexOld] != NSNotFound);
+
+		/* If there is not an item in the current selection that can take over,
+		 then the first step is to try to find an item newer than the current. */
+		if (selectedRowsComplete == NO) {
+			NSInteger numberOfRows = [self.serverList numberOfRows];
+
+			NSInteger nextSelectionRow = (itemIndexOld + 1);
+
+			/* Next row is in forbidden range */
+			if (selectedRowsForbidden && [selectedRowsForbidden containsIndex:nextSelectionRow]) {
+				nextSelectionRow = ([selectedRowsForbidden lastIndex] + 1);
+			}
+
+			/* Next row is above number of rows. Try to go one below instead. */
+			if (nextSelectionRow >= numberOfRows) {
+				nextSelectionRow = (itemIndexOld - 1);
+			}
+
+			/* Previous row is in forbidden range */
+			if (selectedRowsForbidden && [selectedRowsForbidden containsIndex:nextSelectionRow]) {
+				nextSelectionRow = ([selectedRowsForbidden firstIndex] - 1);
+			}
+
+			/* Previous row is less than zero. There is no where else to go. */
+			if (nextSelectionRow < 0) {
+				nextSelectionRow = (-1);
+			}
+
+			/* Add new selection index if there is one. */
+			if (nextSelectionRow >= 0) {
+				[selectedRowsNew addIndex:nextSelectionRow];
+			}
+		}
+	}
+
+	/* Save selection */
+	if ([selectedRowsNew count] == 0) {
 		[self storePreviousSelection];
 
 		self.selectedItem = nil;
 		self.selectedItems = nil;
 
 		[self selectionDidChangePostflight];
-		
-		return;
-	}
-
-	/* Perform some formal validation */
-	if ([item isKindOfClass:[IRCTreeItem class]] == NO) {
-		return;
-	}
-
-	/* Begin selection process */
-	IRCClient *u = [item associatedClient];
-	
-	/* If we are selecting a channel, then we expand the 
-	 client list if it was not already expanded. */
-	if ([item isClient] == NO) {
-		[[self.serverList animator] expandItem:u];
-	}
-
-	/* We now move the actual selection */
-	NSInteger i = [self.serverList rowForItem:item];
-
-	if (i >= 0) {
-		[self.serverList selectItemAtIndex:i];
+	} else {
+		[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
 	}
 }
 

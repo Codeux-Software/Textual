@@ -69,7 +69,7 @@
 
 	if ([parentItem isKindOfClass:[IRCClient class]]) {
 		/* We have a parent, get the index of the child. */
-		NSArray *childrenItems = [self rowsFromParentGroup:parentItem];
+		NSArray *childrenItems = [self itemsFromParentGroup:parentItem];
 
 		rowIndex = [childrenItems indexOfObject:oldObject];
 	} else {
@@ -315,8 +315,10 @@
 
 	NSInteger rowUnderMouse = [self rowAtPoint:mouseLocation];
 
-	if (rowUnderMouse >= 0 && rowUnderMouse != [self selectedRow]) {
-		[self selectItemAtIndex:rowUnderMouse];
+	if (rowUnderMouse >= 0) {
+		if ([self numberOfSelectedRows] > 1 || rowUnderMouse != [self selectedRow]) {
+			[self selectItemAtIndex:rowUnderMouse];
+		}
 	}
 
 	if (rowUnderMouse == (-1)) {
@@ -358,7 +360,7 @@
 		if ([self isRowSelected:rowUnderMouse]) {
 			IRCTreeItem *itemUnderMouse = [self itemAtRow:rowUnderMouse];
 
-			(void)[mainWindow() selectItemInSelectedItems:itemUnderMouse];
+			[mainWindow() selectItemInSelectedItems:itemUnderMouse];
 
 			return;
 		}
