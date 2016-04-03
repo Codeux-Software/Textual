@@ -738,70 +738,12 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	return c;
 }
 
-- (void)selectOtherAndDestroy:(IRCTreeItem *)target
+- (void)selectOtherBeforeDestroy:(IRCTreeItem *)target
 {
-	@synchronized(self.clients) {
-		NSInteger i = 0;
-		
-		IRCTreeItem *sel = nil;
-		
-		if ([target isClient]) {
-			i = [self.clients indexOfObjectIdenticalTo:target];
-			
-			NSUInteger n = (i + 1);
-			
-			if (n < [self.clients count]) {
-				sel = self.clients[n];
-			}
-			
-			i = [mainWindowServerList() rowForItem:target];
-		} else {		
-			i = [mainWindowServerList() rowForItem:target];
-			
-			NSInteger n = (i + 1);
-			
-			if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
-				sel = [mainWindowServerList() itemAtRow:n];
-			}
-			
-			if (sel && [sel isClient]) {
-				n = (i - 1);
-				
-				if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
-					sel = [mainWindowServerList() itemAtRow:n];
-				}
-			}
-		}
-		
-		if (sel) {
-			[mainWindow() select:sel];
-		} else {
-			NSInteger n = (i - 1);
-			
-			if (0 <= n && n < [mainWindowServerList() numberOfRows]) {
-				sel = [mainWindowServerList() itemAtRow:n];
-			}
-			
-			[mainWindow() select:sel];
-		}
-		
-		if ([target isClient]) {
-			[self.clients removeObjectIdenticalTo:target];
-
-			[self postClientListWasModifiedNotification];
-		} else {
-			IRCClient *u = [target associatedClient];
-			
-			[u removeChannel:(id)target];
-		}
-
-		[mainWindowServerList() removeItemFromList:target];
-		
-		id selectedItem = [mainWindow() selectedItem];
-		
-		if (selectedItem) {
-			[mainWindowServerList() selectItemAtIndex:[mainWindowServerList() rowForItem:sel]];
-		}
+	if ([target isClient]) {
+		[mainWindow() deselectGroup:target];
+	} else {
+		[mainWindow() deselect:target];
 	}
 }
 
@@ -825,31 +767,25 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		[u quit]; // Obviously we need to terminate it
 		
 		return; // Do not continue with operation. 
-	} else {
-		[u prepareForPermanentDestruction];
 	}
+
+	[self selectOtherBeforeDestroy:u];
+
+	[u prepareForPermanentDestruction];
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {
 		[self destroyClientInCloud:u];
 	}
 #endif
-	
-	id selectedItem = [mainWindow() selectedItem];
-	
-	if (selectedItem && [selectedItem associatedClient] == u) {
-		[self selectOtherAndDestroy:u];
-	} else {
-		@synchronized(self.clients) {
-			[self.clients removeObjectIdenticalTo:u];
-		}
 
-		[self postClientListWasModifiedNotification];
-		
-		[mainWindowServerList() removeItemFromList:u];
+	[mainWindowServerList() removeItemFromList:u];
 
-		[mainWindow() adjustSelection];
+	@synchronized(self.clients) {
+		[self.clients removeObjectIdenticalTo:u];
 	}
+
+	[self postClientListWasModifiedNotification];
 
 	(void)[mainWindow() reloadLoadingScreen];
 
@@ -865,13 +801,11 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	IRCClient *u = [c associatedClient];
 	
-	if ([u isLoggedIn] && [c isActive]) {
-		if ([c isChannel]) {
-			if (forcePart) {
-				[u partChannel:c];
-			}
-		}
+	if (forcePart) {
+		[u partChannel:c];
 	}
+
+	[self selectOtherBeforeDestroy:c];
 	
 	[u willDestroyChannel:c];
     
@@ -882,16 +816,12 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	}
 	
 	[[TXSharedApplication sharedInputHistoryManager] destroy:c];
-	
-	if ([mainWindow() selectedItem] == c) {
-		[self selectOtherAndDestroy:c];
-	} else {
-		[u removeChannel:c];
 
-		[mainWindowServerList() removeItemFromList:c];
+	[mainWindowServerList() removeItemFromList:c];
 
-		[mainWindow() adjustSelection];
-	}
+	[u removeChannel:c];
+
+	[mainWindow() adjustSelection];
 
 	[menuController() populateNavgiationChannelList];
 }

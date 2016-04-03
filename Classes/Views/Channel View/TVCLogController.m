@@ -286,9 +286,9 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (BOOL)isVisible
 {
 	if (self.associatedChannel) {
-		return [[mainWindow() selectedItems] containsObject:self.associatedChannel];
+		return [mainWindow() isItemVisible:self.associatedChannel];
 	} else {
-		return [[mainWindow() selectedItems] containsObject:self.associatedClient];
+		return [mainWindow() isItemVisible:self.associatedClient];
 	}
 }
 

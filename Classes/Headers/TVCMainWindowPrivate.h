@@ -37,6 +37,13 @@
 
 #import "TextualApplication.h"
 
+typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
+	TVCMainWindowShiftSelectionMaintainGroupingFlag			= 1 << 0,
+	TVCMainWindowShiftSelectionPerformDeselectFlag			= 1 << 1, // deselect previous selection
+	TVCMainWindowShiftSelectionPerformDeselectChildrenFlag	= 1 << 2, // deselect previous selection + children (if group item)
+//	TVCMainWindowShiftSelectionPerformDeselectAllFlag		= 1 << 2  // deselect all
+};
+
 @interface TVCMainWindow ()
 @property (nonatomic, readwrite, copy) NSArray *selectedItems;
 @property (nonatomic, readwrite, strong) IRCTreeItem *selectedItem;
@@ -47,8 +54,10 @@
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
 
-- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
-- (BOOL)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
+- (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;
+
+- (void)shiftSelection:(IRCTreeItem *)oldItem toItem:(IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
 @end

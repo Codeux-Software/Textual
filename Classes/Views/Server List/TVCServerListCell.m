@@ -828,7 +828,7 @@
 		@"isInverted"			: @([TPCPreferences invertSidebarColors]),
 		@"isRetina"				: @([mainWindow() runningInHighResolutionMode]),
 		@"isActiveWindow"		: @([mainWindow() isActiveForDrawing]),
-		@"isSelectedFrontmost"	: @([mainWindow() selectedItem] == cellItem),
+		@"isSelectedFrontmost"	: @([mainWindow() isItemSelected:cellItem]),
 		@"isSelected"			: @([mainWindowServerList() isRowSelected:rowIndex]),
 		@"isGraphite"			: @([NSColor currentControlTint] == NSGraphiteControlTint),
 		@"isVibrantDark"		: @([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode])

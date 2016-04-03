@@ -1325,7 +1325,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if ([TPCPreferences postNotificationsWhileInFocus]) {
 		if ([mainWindow() isInactive] == NO) {
-			if ([mainWindow() selectedItem] == target) {
+			if ([mainWindow() isItemSelected:target]) {
 				onlySpeakEvent = YES;
 			}
 		}
@@ -1412,7 +1412,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if ([TPCPreferences postNotificationsWhileInFocus]) {
 		if ([mainWindow() isInactive] == NO) {
-			if ([mainWindow() selectedItem] == target) {
+			if ([mainWindow() isItemSelected:target]) {
 				onlySpeakEvent = YES;
 			}
 		}
@@ -1438,7 +1438,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if ([TPCPreferences postNotificationsWhileInFocus]) {
 		if ([mainWindow() isInactive] == NO) {
-			if ([mainWindow() selectedItem] == target) {
+			if ([mainWindow() isItemSelected:target]) {
 				return YES;
 			}
 		}
@@ -1590,7 +1590,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	BOOL isActiveWindow = [mainWindow() isKeyWindow];
 
-	if (NSDissimilarObjects([mainWindow() selectedItem], t) || isActiveWindow == NO) {
+	if ([mainWindow() isItemSelected:t] == NO || isActiveWindow == NO) {
 		t.nicknameHighlightCount += 1;
 
 		[TVCDockIcon updateDockIcon];
@@ -1609,14 +1609,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	BOOL isActiveWindow = [mainWindow() isKeyWindow];
 
 	if (t.isPrivateMessage || ([TPCPreferences displayPublicMessageCountOnDockBadge] && t.isChannel)) {
-		if (NSDissimilarObjects([mainWindow() selectedItem], t) || isActiveWindow == NO) {
+		if ([mainWindow() isItemSelected:t] == NO || isActiveWindow == NO) {
 			t.dockUnreadCount += 1;
 			
 			[TVCDockIcon updateDockIcon];
 		}
 	}
 
-	if (isActiveWindow == NO || (NSDissimilarObjects([mainWindow() selectedItem], t) && isActiveWindow)) {
+	if (isActiveWindow == NO || ([mainWindow() isItemSelected:t] == NO && isActiveWindow)) {
 		t.treeUnreadCount += 1;
 
 		if (t.config.showTreeBadgeCount || (t.config.showTreeBadgeCount == NO && isHighlight)) {
