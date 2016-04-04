@@ -110,11 +110,11 @@
 		NSArray *clientList = [worldController() clientList];
 
 		for (IRCClient *client in self.observedClients) {
-			if ([self.observedClients containsObject:client] == NO) {
-				continue;
-			}
+			/* Only stop observing client if they are still in -clientList */
+			/* If they are not, then we are only dangling a reference to a
+			 client that no longer exists and can free it below. */
 
-			if ([clientList containsObject:client] == NO || observeClients == NO) {
+			if ([clientList containsObject:client] || observeClients == NO) {
 				[client removeObserver:self forKeyPath:@"isLoggedIn"];
 			}
 		}
