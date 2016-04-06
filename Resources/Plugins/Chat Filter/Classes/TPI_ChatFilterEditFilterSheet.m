@@ -76,6 +76,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *filterEventChannelModeChangedCheck;
 @property (nonatomic, weak) IBOutlet NSButton *filterLimitedToMyselfCheck;
 @property (nonatomic, weak) IBOutlet NSOutlineView *filterLimitToSelectionOutlineView;
+@property (nonatomic, copy) NSArray *filterActionAutoCompletedTokens;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToClientsIDs;
 @property (nonatomic, strong) NSMutableArray *filterLimitedToChannelsIDs;
 @property (nonatomic, copy) NSArray *cachedClientList;
@@ -97,6 +98,21 @@
 @interface TPI_ChatFilterFilterActionTokenField : NSTokenField
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, assign) NSSize lastIntrinsicSize;
+@end
+
+@interface TPI_ChatFilterFilterActionToken : NSObject
+@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy, readonly) NSString *tokenTitle;
+
++ (TPI_ChatFilterFilterActionToken *)tokenWithToken:(NSString *)token;
++ (TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle;
+
++ (NSArray *)tokens;
++ (NSArray *)tokenTitles;
+
++ (NSString *)titleForToken:(NSString *)token;
+
++ (BOOL)isToken:(NSString *)token;
 @end
 
 @interface TPI_ChatFilterLimitToTableCellView : NSTableCellView
@@ -157,9 +173,7 @@
 {
 	[self.filterMatchTextField setStringValue:[self.filter filterMatch]];
 
-	NSArray *filterActionTokenArray = [self tokensFromString:[self.filter filterAction]];
-
-	[self.filterActionTokenField setObjectValue:filterActionTokenArray];
+	[self setTokens:[self.filter filterAction] inTokenField:self.filterActionTokenField];
 
 	[self.filterTitleTextField setStringValue:[self.filter filterTitle]];
 	[self.filterNotesTextField setStringValue:[self.filter filterNotes]];
@@ -223,7 +237,7 @@
 {
 	[self.filter setFilterMatch:[self.filterMatchTextField stringValue]];
 
-	NSString *filterActionStringValue = [[self.filterActionTokenField objectValue] componentsJoinedByString:NSStringEmptyPlaceholder];
+	NSString *filterActionStringValue = [self stringValueForTokenField:self.filterActionTokenField];;
 
 	[self.filter setFilterAction:filterActionStringValue];
 
@@ -371,22 +385,17 @@
 
 	[self.filterActionTokenField setTokenizingCharacterSet:emptyCharacterSet];
 
-	[self.filterActionTokenChannelName setStringValue:@"%_channelName_%"];
-	[self.filterActionTokenLocalNickname setStringValue:@"%_localNickname_%"];
-	[self.filterActionTokenNetworkName setStringValue:@"%_networkName_%"];
-	[self.filterActionTokenOriginalMessage setStringValue:@"%_originalMessage_%"];
-	[self.filterActionTokenSenderAddress setStringValue:@"%_senderAddress_%"];
-	[self.filterActionTokenSenderHostmask setStringValue:@"%_senderHostmask_%"];
-	[self.filterActionTokenSenderNickname setStringValue:@"%_senderNickname_%"];
-	[self.filterActionTokenSenderUsername setStringValue:@"%_senderUsername_%"];
-	[self.filterActionTokenServerAddress setStringValue:@"%_serverAddress_%"];
-}
+	[self.filterActionTokenField setCompletionDelay:0.2];
 
-- (NSArray *)tokenField:(NSTokenField *)tokenField shouldAddObjects:(NSArray *)tokens atIndex:(NSUInteger)index
-{
-	NSString *stringContent = [tokens componentsJoinedByString:NSStringEmptyPlaceholder];
-
-	return [self tokensFromString:stringContent];
+	[self setToken:@"%_channelName_%" inTokenField:self.filterActionTokenChannelName];
+	[self setToken:@"%_localNickname_%" inTokenField:self.filterActionTokenLocalNickname];
+	[self setToken:@"%_networkName_%" inTokenField:self.filterActionTokenNetworkName];
+	[self setToken:@"%_originalMessage_%" inTokenField:self.filterActionTokenOriginalMessage];
+	[self setToken:@"%_senderAddress_%" inTokenField:self.filterActionTokenSenderAddress];
+	[self setToken:@"%_senderHostmask_%" inTokenField:self.filterActionTokenSenderHostmask];
+	[self setToken:@"%_senderNickname_%" inTokenField:self.filterActionTokenSenderNickname];
+	[self setToken:@"%_senderUsername_%" inTokenField:self.filterActionTokenSenderUsername];
+	[self setToken:@"%_serverAddress_%" inTokenField:self.filterActionTokenServerAddress];
 }
 
 - (NSArray *)tokenField:(NSTokenField *)tokenField readFromPasteboard:(NSPasteboard *)pboard
@@ -407,46 +416,77 @@
 
 - (NSTokenStyle)tokenField:(NSTokenField *)tokenField styleForRepresentedObject:(id)representedObject
 {
-	if ([representedObject hasPrefix:@"%_"] == NO && tokenField == self.filterActionTokenField) {
-		return NSPlainTextTokenStyle;
-	} else {
+	if ([representedObject isKindOfClass:[TPI_ChatFilterFilterActionToken class]]) {
 		return NSRoundedTokenStyle;
+	} else {
+		return NSPlainTextTokenStyle;
 	}
 }
 
 - (NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
 {
-	if ([representedObject isEqualToString:@"%_channelName_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0001]");
-	} else if ([representedObject isEqualToString:@"%_localNickname_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0002]");
-	} else if ([representedObject isEqualToString:@"%_networkName_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0003]");
-	} else if ([representedObject isEqualToString:@"%_originalMessage_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0004]");
-	} else if ([representedObject isEqualToString:@"%_serverAddress_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]");
-	} else if ([representedObject isEqualToString:@"%_senderHostmask_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]");
-	} else if ([representedObject isEqualToString:@"%_senderNickname_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0007]");
-	} else if ([representedObject isEqualToString:@"%_senderUsername_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0008]");
-	} else if ([representedObject isEqualToString:@"%_senderAddress_%"]) {
-		return TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]");
-	} else {
-		return nil;
+	if ([representedObject isKindOfClass:[TPI_ChatFilterFilterActionToken class]]) {
+		return [representedObject tokenTitle];
 	}
+
+	return representedObject;
 }
 
 - (id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString
 {
+	if (tokenField == self.filterActionTokenField) {
+		NSArray *tokenTitles = [self.filterActionAutoCompletedTokens filteredArrayUsingPredicate:
+				[NSPredicate predicateWithFormat:@"SELF beginswith[cd] %@", editingString]];
+
+		if ([tokenTitles count] > 0) {
+			NSString *tokenTitle = [tokenTitles firstObject];
+
+			return [TPI_ChatFilterFilterActionToken tokenWithTokenTitle:tokenTitle];
+		}
+	}
+
 	return editingString;
 }
 
-- (NSString *)tokenField:(NSTokenField *)tokenField editingStringForRepresentedObject:(id)representedObject
+- (NSArray *)tokenField:(NSTokenField *)tokenField completionsForSubstring:(NSString *)substring indexOfToken:(NSInteger)tokenIndex indexOfSelectedItem:(NSInteger *)selectedIndex
 {
+	if (tokenField == self.filterActionTokenField) {
+		NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
+
+		NSArray *tokenTitlesFiltered = [tokenTitles filteredArrayUsingPredicate:
+				[NSPredicate predicateWithFormat:@"SELF beginswith[cd] %@", substring]];
+
+		self.filterActionAutoCompletedTokens = tokenTitlesFiltered;
+
+		return tokenTitlesFiltered;
+	}
+
 	return nil;
+}
+
+- (void)performFilterActionTokenCompletion
+{
+	;
+}
+
+- (NSString *)stringValueForTokenField:(NSTokenField *)tokenField
+{
+	return [[tokenField objectValue] componentsJoinedByString:NSStringEmptyPlaceholder];
+}
+
+- (void)setTokens:(NSString *)tokens inTokenField:(NSTokenField *)tokenField
+{
+	NSArray *tokenObjects = [self tokensFromString:tokens];
+
+	[tokenField setObjectValue:tokenObjects];
+}
+
+- (void)setToken:(NSString *)token inTokenField:(NSTokenField *)tokenField
+{
+	 TPI_ChatFilterFilterActionToken *tokenObject =
+	[TPI_ChatFilterFilterActionToken tokenWithToken:token];
+
+	[tokenField setObjectValue:@[tokenObject]];
 }
 
 - (NSArray *)tokensFromString:(NSString *)string
@@ -488,7 +528,14 @@
 
 		NSString *tokenStringToken = [tokenString substringWithRange:r];
 
-		[tokens addObject:tokenStringToken];
+		if ([TPI_ChatFilterFilterActionToken isToken:tokenStringToken]) {
+			 TPI_ChatFilterFilterActionToken *token =
+			[TPI_ChatFilterFilterActionToken tokenWithToken:tokenStringToken];
+
+			[tokens addObject:token];
+		} else {
+			[tokens addObject:tokenStringToken];
+		}
 
 		start = NSMaxRange(r);
 	}
@@ -505,19 +552,38 @@
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
-	BOOL result = NO;
-
-	if (control == self.filterActionTokenField ||
-		control == self.filterNotesTextField)
-	{
-		if (commandSelector == @selector(insertNewline:)) {
-			[textView insertNewlineIgnoringFieldEditor:self];
-
-			result = YES;
-		}
+	if (control != self.filterActionTokenField && control != self.filterNotesTextField) {
+		return NO;
 	}
 
-	return result;
+	NSRange selectedRange = [textView selectedRange];
+
+	if (selectedRange.length > 0) {
+		return NO;
+	}
+
+	if (commandSelector == @selector(insertNewline:))
+	{
+		NSRange editedRange = [[textView textStorage] editedRange];
+
+		if (editedRange.length > 1) {
+			return NO;
+		}
+
+		[textView insertNewlineIgnoringFieldEditor:self];
+
+		return YES;
+	}
+	else if (commandSelector == @selector(insertTab:))
+	{
+//		if (control == self.filterActionTokenField) {
+//			[self performFilterActionTokenCompletion];
+//
+//			return YES;
+//		}
+	}
+
+	return NO;
 }
 
 - (void)controlTextDidChange:(NSNotification *)obj
@@ -1011,6 +1077,115 @@
 	}
 
 	return [self lastIntrinsicSize];
+}
+
+@end
+
+#pragma mark -
+#pragma mark Token Object
+
+@implementation TPI_ChatFilterFilterActionToken
+
++ (TPI_ChatFilterFilterActionToken *)tokenWithToken:(NSString *)token
+{
+	TPI_ChatFilterFilterActionToken *tokenField = [TPI_ChatFilterFilterActionToken new];
+
+	[tokenField setToken:token];
+
+	return tokenField;
+}
+
++ (TPI_ChatFilterFilterActionToken *)tokenWithTokenTitle:(NSString *)tokenTitle
+{
+	NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
+
+	NSInteger tokenTitleIndex = [tokenTitles indexOfObject:tokenTitle];
+
+	if (tokenTitleIndex == NSNotFound) {
+		return nil;
+	}
+
+	NSArray *tokens = [TPI_ChatFilterFilterActionToken tokens];
+
+	NSString *token = [tokens objectAtIndex:tokenTitleIndex];
+
+	return [TPI_ChatFilterFilterActionToken tokenWithToken:token];
+}
+
++ (BOOL)isToken:(NSString *)token
+{
+	NSArray *tokens = [TPI_ChatFilterFilterActionToken tokens];
+
+	return ([tokens indexOfObject:token] != NSNotFound);
+}
+
++ (NSArray *)tokens
+{
+	/* The index of this array should match the index of -tokenTitles */
+	static NSArray *tokens = nil;
+
+	if (tokens == nil) {
+		tokens = @[
+		   @"%_channelName_%",
+		   @"%_localNickname_%",
+		   @"%_networkName_%",
+		   @"%_originalMessage_%",
+		   @"%_senderAddress_%",
+		   @"%_senderHostmask_%",
+		   @"%_senderNickname_%",
+		   @"%_senderUsername_%",
+		   @"%_serverAddress_%"
+		];
+	}
+	
+	return tokens;
+}
+
++ (NSArray *)tokenTitles
+{
+	/* The index of this array should match the index of -tokens */
+	static NSArray *tokens = nil;
+
+	if (tokens == nil) {
+		tokens = @[
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0001]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0002]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0003]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0004]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0005]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0006]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0007]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0008]"),
+		   TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0009]")
+		];
+	}
+	
+	return tokens;
+}
+
++ (NSString *)titleForToken:(NSString *)token
+{
+	NSArray *tokens = [TPI_ChatFilterFilterActionToken tokens];
+
+	NSInteger tokenIndex = [tokens indexOfObject:token];
+
+	if (tokenIndex == NSNotFound) {
+		return nil;
+	}
+
+	NSArray *tokenTitles = [TPI_ChatFilterFilterActionToken tokenTitles];
+
+	return [tokenTitles objectAtIndex:tokenIndex];
+}
+
+- (NSString *)tokenTitle
+{
+	return [TPI_ChatFilterFilterActionToken titleForToken:[self token]];
+}
+
+- (NSString *)description
+{
+	return [self token];
 }
 
 @end
