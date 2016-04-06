@@ -170,7 +170,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
 	WebScriptObject *scriptObject = [self windowScriptObject];
 

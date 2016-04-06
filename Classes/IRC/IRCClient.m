@@ -7994,7 +7994,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)postEventToViewController:(NSString *)eventToken forItem:(IRCTreeItem *)item
 {
-	[[item viewController] executeScriptCommand:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
+	[[item viewController] evaluateFunction:@"Textual.handleEvent" withArguments:@[eventToken] onQueue:NO];
 }
 
 #pragma mark -

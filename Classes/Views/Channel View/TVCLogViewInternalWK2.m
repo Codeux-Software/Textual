@@ -280,7 +280,7 @@ create_normal_pool:
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
 		if (error) {

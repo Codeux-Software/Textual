@@ -65,24 +65,24 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
-- (void)executeJavaScript:(NSString *)code;
-- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id result))completionHandler;
+- (void)evaluateJavaScript:(NSString *)code;
+- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id result))completionHandler;
 
-- (void)executeCommand:(NSString *)command;
-- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments;
-- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments  completionHandler:(void (^)(id result))completionHandler;
+- (void)evaluateFunction:(NSString *)function;
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments;
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments  completionHandler:(void (^)(id result))completionHandler;
 
-- (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL result))completionHandler;
-- (void)booleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL result))completionHandler;
+- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(BOOL result))completionHandler;
+- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL result))completionHandler;
 
-- (void)stringByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSString *result))completionHandler;
-- (void)stringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *result))completionHandler;
+- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSString *result))completionHandler;
+- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *result))completionHandler;
 
-- (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *result))completionHandler;
-- (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
+- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSArray *result))completionHandler;
+- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
 
-- (void)dictionaryByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSDictionary *result))completionHandler;
-- (void)dictionaryByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *result))completionHandler;
+- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSDictionary *result))completionHandler;
+- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *result))completionHandler;
 
 + (NSString *)escapeJavaScriptString:(NSString *)string;
 
