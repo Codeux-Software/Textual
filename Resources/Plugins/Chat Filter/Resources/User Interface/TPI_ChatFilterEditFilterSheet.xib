@@ -113,6 +113,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <accessibilityConnection property="title" destination="vBs-bR-T5n" id="CKZ-DF-hYr"/>
                                                 <outlet property="delegate" destination="-2" id="Ao8-VB-zQk"/>
                                             </connections>
                                         </textField>
@@ -144,7 +145,7 @@ Gw
                                                 <action selector="viewFilterActionHelpText:" target="-2" id="f8o-6s-571"/>
                                             </connections>
                                         </button>
-                                        <box autoresizesSubviews="NO" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4wE-6t-SLO">
+                                        <box autoresizesSubviews="NO" title="Filter Action Tokens" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4wE-6t-SLO">
                                             <rect key="frame" x="30" y="21" width="482" height="96"/>
                                             <view key="contentView">
                                                 <rect key="frame" x="1" y="1" width="480" height="94"/>
@@ -307,6 +308,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <accessibilityConnection property="title" destination="IBT-nM-IFM" id="qe3-cj-Gt4"/>
                                                 <outlet property="delegate" destination="-2" id="7xK-Su-NFa"/>
                                             </connections>
                                         </textField>
@@ -316,12 +318,13 @@ Gw
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="107" id="CYM-AX-4zR"/>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="450" id="tMr-Vm-M36"/>
                                             </constraints>
-                                            <tokenFieldCell key="cell" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" allowsEditingTextAttributes="YES" id="ZM6-8W-zE6">
+                                            <tokenFieldCell key="cell" selectable="YES" editable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" allowsEditingTextAttributes="YES" completionDelay="1" id="ZM6-8W-zE6">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </tokenFieldCell>
                                             <connections>
+                                                <accessibilityConnection property="title" destination="CsT-6O-3Gc" id="BwP-NQ-JFX"/>
                                                 <outlet property="delegate" destination="-2" id="7fD-At-YYx"/>
                                             </connections>
                                         </tokenField>
@@ -353,6 +356,7 @@ Gw
                                         <constraint firstItem="vBs-bR-T5n" firstAttribute="leading" secondItem="TYu-Qh-WKq" secondAttribute="leading" id="zrt-S2-dKc"/>
                                     </constraints>
                                 </view>
+                                <accessibility description="General"/>
                             </tabViewItem>
                             <tabViewItem label="Channels" identifier="2" id="8ZK-wU-gg2">
                                 <view key="view" id="oIh-tI-HKB">
@@ -434,6 +438,7 @@ Gw
                                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                             <font key="font" metaFont="system"/>
                                                                                         </buttonCell>
+                                                                                        <accessibility description="Limit filter to item"/>
                                                                                         <connections>
                                                                                             <action selector="checkboxToggled:" target="YsM-TD-4tI" id="aIK-4f-eXk"/>
                                                                                         </connections>
@@ -454,6 +459,7 @@ Gw
                                                                         </prototypeCellViews>
                                                                     </tableColumn>
                                                                 </tableColumns>
+                                                                <accessibility description="Check checkbox for items to limit to"/>
                                                                 <connections>
                                                                     <outlet property="dataSource" destination="-2" id="Ghl-LE-NJv"/>
                                                                     <outlet property="delegate" destination="-2" id="FnP-3C-9nZ"/>
@@ -470,6 +476,9 @@ Gw
                                                         <rect key="frame" x="437" y="1" width="16" height="0.0"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                     </scroller>
+                                                    <connections>
+                                                        <accessibilityConnection property="title" destination="ogw-Wl-ucj" id="6Jr-wG-xVf"/>
+                                                    </connections>
                                                 </scrollView>
                                             </subviews>
                                             <constraints>
@@ -501,22 +510,27 @@ Gw
                                                     <buttonCell type="radio" title="Only Channels" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="ICX-1r-s75">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <accessibility description="Limit filter to only channels"/>
                                                     </buttonCell>
                                                     <buttonCell type="radio" title="Only Queries (Private Messages)" imagePosition="left" alignment="left" tag="2" inset="2" id="Q2E-uO-tiy">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <accessibility description="Limit filter to only queries"/>
                                                     </buttonCell>
                                                     <buttonCell type="radio" title="Specific Items" imagePosition="left" alignment="left" tag="3" inset="2" id="DUz-zW-Mca">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <accessibility description="Limit filter to specific items"/>
                                                     </buttonCell>
                                                     <buttonCell type="radio" title="Do Not Limit" imagePosition="left" alignment="left" inset="2" id="6UK-tM-xg2">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
+                                                        <accessibility description="Do not limit filter"/>
                                                     </buttonCell>
                                                 </column>
                                             </cells>
                                             <connections>
+                                                <accessibilityConnection property="title" destination="u00-83-eYs" id="LCQ-vZ-EPq"/>
                                                 <action selector="filteredLimitedToMatrixChanged:" target="-2" id="vox-YD-yW9"/>
                                             </connections>
                                         </matrix>
@@ -532,6 +546,7 @@ Gw
                                         <constraint firstItem="gTG-wG-y2s" firstAttribute="top" secondItem="bT2-rB-pWP" secondAttribute="bottom" constant="8" symbolic="YES" id="zA1-Su-3Bw"/>
                                     </constraints>
                                 </view>
+                                <accessibility description="Channels"/>
                             </tabViewItem>
                             <tabViewItem label="Events" identifier="" id="Wmc-xM-y3O">
                                 <view key="view" id="g73-Zu-4Qw">
@@ -553,6 +568,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter plain text messages"/>
                                             <connections>
                                                 <accessibilityConnection property="title" destination="i3Y-vE-Mwp" id="2yf-FD-yOi"/>
                                                 <action selector="filterEventTypeChanged:" target="-2" id="rdO-AY-qdf"/>
@@ -564,6 +580,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter action messages"/>
                                             <connections>
                                                 <action selector="filterEventTypeChanged:" target="-2" id="S7g-1l-7D2"/>
                                             </connections>
@@ -574,6 +591,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter notice messages"/>
                                             <connections>
                                                 <action selector="filterEventTypeChanged:" target="-2" id="uPX-A8-jum"/>
                                             </connections>
@@ -584,6 +602,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;User joined channel&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="haw-Qs-dgE">
                                             <rect key="frame" x="62" y="310" width="126" height="18"/>
@@ -591,6 +610,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;User left channel&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="gUd-LZ-E8a">
                                             <rect key="frame" x="61" y="290" width="137" height="18"/>
@@ -598,6 +618,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;User disconnected&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="7zc-fd-KcG">
                                             <rect key="frame" x="303" y="310" width="177" height="18"/>
@@ -605,6 +626,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;User kicked from channel&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="JQR-Gl-iQP">
                                             <rect key="frame" x="303" y="241" width="166" height="18"/>
@@ -612,6 +634,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;Channel mode changed&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="yrW-UY-o8N">
                                             <rect key="frame" x="62" y="261" width="161" height="18"/>
@@ -619,6 +642,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;Channel topic received&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="cyY-it-BgK">
                                             <rect key="frame" x="303" y="261" width="162" height="18"/>
@@ -626,6 +650,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;Channel topic changed&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="cEI-rg-wh9">
                                             <rect key="frame" x="303" y="330" width="169" height="18"/>
@@ -633,6 +658,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;User changed nickname&quot; event"/>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="lix-vw-M6p">
                                             <rect key="frame" x="62" y="241" width="165" height="18"/>
@@ -640,6 +666,7 @@ Gw
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
+                                            <accessibility description="Filter &quot;Channel mode received&quot; event"/>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SWQ-7s-2jI">
                                             <rect key="frame" x="49" y="191" width="49" height="17"/>
@@ -724,6 +751,7 @@ Gw
                                         <constraint firstItem="haw-Qs-dgE" firstAttribute="top" secondItem="mc1-xL-Gv7" secondAttribute="bottom" constant="6" symbolic="YES" id="rLX-94-w24"/>
                                     </constraints>
                                 </view>
+                                <accessibility description="Events"/>
                             </tabViewItem>
                             <tabViewItem label="Sender" identifier="" id="zzu-Mn-V6O">
                                 <view key="view" id="Sbg-tS-i4H">
@@ -767,6 +795,7 @@ Gw
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <connections>
+                                                <accessibilityConnection property="title" destination="k4d-KT-PP4" id="z3m-dT-TcP"/>
                                                 <outlet property="delegate" destination="-2" id="qWG-FW-1Ad"/>
                                             </connections>
                                         </textField>
@@ -816,6 +845,7 @@ Gw
                                         <constraint firstItem="X5X-m4-re0" firstAttribute="top" secondItem="1Ft-El-Wak" secondAttribute="bottom" constant="14" id="ypU-Is-03h"/>
                                     </constraints>
                                 </view>
+                                <accessibility description="Sender"/>
                             </tabViewItem>
                             <tabViewItem label="Notes" identifier="" id="G3J-4c-NKh">
                                 <view key="view" id="EWz-Am-gtB">
@@ -841,6 +871,7 @@ Gw
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
+                                            <accessibility description="Description of filter (optional)"/>
                                             <connections>
                                                 <outlet property="delegate" destination="-2" id="7Wu-Sl-dt9"/>
                                             </connections>
@@ -850,12 +881,12 @@ Gw
                                         <constraint firstItem="gXn-wi-BH2" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="18" id="0x3-VA-FNZ"/>
                                         <constraint firstAttribute="bottom" secondItem="Poo-f2-StF" secondAttribute="bottom" constant="17" id="Jbh-h4-OdV"/>
                                         <constraint firstAttribute="trailing" secondItem="gXn-wi-BH2" secondAttribute="trailing" constant="17" id="KW3-i1-wao"/>
-                                        <constraint firstItem="gXn-wi-BH2" firstAttribute="centerX" secondItem="Poo-f2-StF" secondAttribute="centerX" id="iYg-uH-xBI"/>
                                         <constraint firstAttribute="trailing" secondItem="Poo-f2-StF" secondAttribute="trailing" constant="16" id="rXW-BL-WBS"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="leading" secondItem="EWz-Am-gtB" secondAttribute="leading" constant="16" id="vrf-o9-n91"/>
                                         <constraint firstItem="Poo-f2-StF" firstAttribute="top" secondItem="gXn-wi-BH2" secondAttribute="bottom" constant="8" symbolic="YES" id="zwB-fj-66k"/>
                                     </constraints>
                                 </view>
+                                <accessibility description="Notes"/>
                             </tabViewItem>
                             <tabViewItem label="Advanced" identifier="" id="qOp-7g-85h">
                                 <view key="view" id="hsJ-a5-uAO">
@@ -944,9 +975,14 @@ Gw
                                         <constraint firstAttribute="trailing" secondItem="CCU-H7-ovf" secondAttribute="trailing" constant="68" id="oEd-kO-GLM"/>
                                         <constraint firstItem="1Dp-RH-HQY" firstAttribute="top" secondItem="FeH-nM-2Zz" secondAttribute="bottom" constant="20" id="uUz-X5-WWq"/>
                                     </constraints>
+                                    <connections>
+                                        <accessibilityConnection property="title" destination="1Dp-RH-HQY" id="jkj-QM-QCY"/>
+                                    </connections>
                                 </view>
+                                <accessibility description="Advanced"/>
                             </tabViewItem>
                         </tabViewItems>
+                        <accessibility description="Edit Filter Navigation Bar"/>
                     </tabView>
                 </subviews>
                 <constraints>
