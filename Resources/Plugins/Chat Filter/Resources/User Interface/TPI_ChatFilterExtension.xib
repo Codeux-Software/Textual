@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPI_ChatFilterExtension">
@@ -102,6 +102,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="547" height="17"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
+                    <accessibility description="List of Filters"/>
                 </scrollView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1xp-tp-X2E">
                     <rect key="frame" x="41" y="298" width="467" height="85"/>
@@ -124,6 +125,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Add Filter"/>
                     <connections>
                         <action selector="filterAdd:" target="-2" id="5bL-Qf-LPm"/>
                     </connections>
@@ -137,6 +139,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Remove Filter"/>
                     <connections>
                         <action selector="filterRemove:" target="-2" id="whW-fQ-9Ve"/>
                         <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="9H4-zs-t6R"/>
@@ -151,6 +154,7 @@ Click the + button in the bottom left corner to add your first filter.</string>
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <accessibility description="Edit Filter"/>
                     <connections>
                         <action selector="filterEdit:" target="-2" id="I6w-v3-Z3K"/>
                         <binding destination="gVm-uR-B4M" name="enabled" keyPath="canRemove" id="Bc1-fQ-e8I"/>
