@@ -307,17 +307,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 			NSAssertReturn([operation isCancelled] == NO);
 			
 			[self performBlockOnMainThread:^{
-				[self _executeFunction:function withArguments:arguments];
+				[self _evaluateFunction:function withArguments:arguments];
 			}];
 		};
 		
 		[[self printingQueue] enqueueMessageBlock:scriptBlock for:self];
 	} else {
-		[self _executeFunction:function withArguments:arguments];
+		[self _evaluateFunction:function withArguments:arguments];
 	}
 }
 
-- (void)_executeFunction:(NSString *)function withArguments:(NSArray *)arguments
+- (void)_evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments
 {
 	NSAssertReturn(self.isLoaded);
 
@@ -326,7 +326,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)appendToDocumentBody:(NSString *)html
 {
-	[self _executeFunction:@"Textual.documentBodyAppend" withArguments:@[html]];
+	[self _evaluateFunction:@"Textual.documentBodyAppend" withArguments:@[html]];
 }
 
 #pragma mark -
@@ -365,7 +365,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 												  resultInfo:NULL];
 
 		[self performBlockOnMainThread:^{
-			[self _executeFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
+			[self _evaluateFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
 		}];
 	} for:self];
 }
@@ -375,12 +375,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)moveToTop
 {
-	[self _executeFunction:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
+	[self _evaluateFunction:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
 }
 
 - (void)moveToBottom
 {
-	[self _executeFunction:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
+	[self _evaluateFunction:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
 }
 
 #pragma mark -
@@ -390,17 +390,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 {
 	NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	[self _executeFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+	[self _evaluateFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 }
 
 - (void)unmark
 {
-	[self _executeFunction:@"Textual.historyIndicatorRemove" withArguments:nil];
+	[self _evaluateFunction:@"Textual.historyIndicatorRemove" withArguments:nil];
 }
 
 - (void)goToMark
 {
-	[self _executeFunction:@"Textual.scrollToHistoryIndicator" withArguments:nil];
+	[self _evaluateFunction:@"Textual.scrollToHistoryIndicator" withArguments:nil];
 }
 
 #pragma mark -
@@ -408,7 +408,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)appendHistoricMessageFragment:(NSString *)html isReload:(BOOL)isReload
 {
-	[self _executeFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
+	[self _evaluateFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -487,7 +487,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 		[self mark];
 
-		[self _executeFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
+		[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 	}];
 
 	/* Inform plugins of new content */
@@ -581,28 +581,28 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	[self _executeFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
+	[self _evaluateFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 }
 
 - (void)notifySelectionChanged
 {
 	BOOL isSelected = [self isSelected];
 
-	[self _executeFunction:@"Textual.notifySelectionChanged" withArguments:@[@(isSelected)]];
+	[self _evaluateFunction:@"Textual.notifySelectionChanged" withArguments:@[@(isSelected)]];
 }
 
 - (void)notifyDidBecomeHidden
 {
-	[self _executeFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+	[self _evaluateFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
 	float sizeMultiplier = [worldController() textSizeMultiplier];
 
-	[self _executeFunction:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
+	[self _evaluateFunction:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
 
-	[self _executeFunction:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
+	[self _evaluateFunction:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
 #pragma mark -
@@ -834,7 +834,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self appendToDocumentBody:html];
 
 				/* Inform the style of the new append. */
-				[self _executeFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
+				[self _evaluateFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
 				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
@@ -1140,7 +1140,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
-	[self _executeFunction:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
+	[self _evaluateFunction:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
 }
 
 - (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID
@@ -1266,7 +1266,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	self.isLoaded = YES;
 
-	[self _executeFunction:@"Textual.viewInitiated" withArguments:@[
+	[self _evaluateFunction:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
 		 NSDictionaryNilValue([self.associatedClient uniqueIdentifier]),
 		 NSDictionaryNilValue([self.associatedChannel uniqueIdentifier]),
@@ -1275,7 +1275,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	float textSizeMultiplier = [worldController() textSizeMultiplier];
 
-	[self _executeFunction:@"Textual.viewFinishedLoadingInt"
+	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
 					  withArguments:@[@([self isVisible]),
 									  @([self isSelected]),
 									  @(self.reloadingBacklog),
