@@ -84,7 +84,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)copyContentString
 {
-	[self stringByExecutingCommand:@"Textual.documentHTML" completionHandler:^(NSString *result) {
+	[self stringByEvaluatingFunction:@"Textual.documentHTML" completionHandler:^(NSString *result) {
 		[RZPasteboard() setStringContent:result];
 	}];
 }
@@ -98,7 +98,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)clearSelection
 {
-	[self executeCommand:@"Textual.clearSelection"];
+	[self evaluateFunction:@"Textual.clearSelection"];
 }
 
 - (void)print
@@ -221,14 +221,14 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 @implementation TVCLogView (TVCLogViewJavaScriptHandler)
 
-- (void)executeJavaScript:(NSString *)code
+- (void)evaluateJavaScript:(NSString *)code
 {
-	[[self webViewBacking] executeJavaScript:code completionHandler:nil];
+	[[self webViewBacking] _t_evaluateJavaScript:code completionHandler:nil];
 }
 
-- (void)executeJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
 {
-	[[self webViewBacking] executeJavaScript:code completionHandler:completionHandler];
+	[[self webViewBacking] _t_evaluateJavaScript:code completionHandler:completionHandler];
 }
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
@@ -274,31 +274,31 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	return escapedString;
 }
 
-- (void)executeCommand:(NSString *)command
+- (void)evaluateFunction:(NSString *)function
 {
-	[self executeCommand:command withArguments:nil completionHandler:nil];
+	[self evaluateFunction:function withArguments:nil completionHandler:nil];
 }
 
-- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments
 {
-	[self executeCommand:command withArguments:arguments completionHandler:nil];
+	[self evaluateFunction:function withArguments:arguments completionHandler:nil];
 }
 
-- (void)executeCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(id))completionHandler
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(id))completionHandler
 {
-	NSString *compiledScript = [self compiledCommandCall:command withArguments:arguments];
+	NSString *compiledScript = [self compiledFunctionCall:function withArguments:arguments];
 
-	[self executeJavaScript:compiledScript completionHandler:completionHandler];
+	[self evaluateJavaScript:compiledScript completionHandler:completionHandler];
 }
 
-- (void)booleanByExecutingCommand:(NSString *)command completionHandler:(void (^)(BOOL))completionHandler
+- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(BOOL))completionHandler
 {
-	[self booleanByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
+	[self booleanByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)booleanByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL))completionHandler
+- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL))completionHandler
 {
-	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		BOOL resultBool = NO;
 
 		if (result && [result isKindOfClass:[NSNumber class]]) {
@@ -311,14 +311,14 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)stringByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSString *))completionHandler
+- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSString *))completionHandler
 {
-	[self stringByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
+	[self stringByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)stringByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *))completionHandler
+- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *))completionHandler
 {
-	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSString *resultString = nil;
 
 		if (result && [result isKindOfClass:[NSString class]]) {
@@ -331,14 +331,14 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)arrayByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSArray *))completionHandler
+- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSArray *))completionHandler
 {
-	[self arrayByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
+	[self arrayByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)arrayByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *))completionHandler
+- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *))completionHandler
 {
-	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSArray *resultArray = nil;
 
 		if (result && [result isKindOfClass:[NSArray class]]) {
@@ -351,14 +351,14 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)dictionaryByExecutingCommand:(NSString *)command completionHandler:(void (^)(NSDictionary *))completionHandler
+- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSDictionary *))completionHandler
 {
-	[self dictionaryByExecutingCommand:command withArguments:nil completionHandler:completionHandler];
+	[self dictionaryByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)dictionaryByExecutingCommand:(NSString *)command withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *))completionHandler
+- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *))completionHandler
 {
-	[self executeCommand:command withArguments:arguments completionHandler:^(id result) {
+	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSDictionary *resultDictionary = nil;
 
 		if (result && [result isKindOfClass:[NSDictionary class]]) {
@@ -473,7 +473,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 }
 
-- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments
+- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(NSArray *)arguments
 {
 	NSMutableString *compiledScript = [NSMutableString string];
 
@@ -490,7 +490,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 		 }];
 	}
 
-	[compiledScript appendFormat:@"%@(", command];
+	[compiledScript appendFormat:@"%@(", function];
 
 	for (NSInteger i = 0; i < argumentCount; i++) {
 		if (i == (argumentCount - 1)) {

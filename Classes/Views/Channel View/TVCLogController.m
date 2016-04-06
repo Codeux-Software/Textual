@@ -295,38 +295,38 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #pragma mark -
 #pragma mark Document Append & JavaScript Controller
 
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments
 {
-	[self executeScriptCommand:command withArguments:args onQueue:YES];
+	[self evaluateFunction:function withArguments:arguments onQueue:YES];
 }
 
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments onQueue:(BOOL)onQueue
 {
 	if (onQueue) {
 		TVCLogControllerOperationBlock scriptBlock = ^(id operation) {
 			NSAssertReturn([operation isCancelled] == NO);
 			
 			[self performBlockOnMainThread:^{
-				[self executeQuickScriptCommand:command withArguments:args];
+				[self _executeFunction:function withArguments:arguments];
 			}];
 		};
 		
 		[[self printingQueue] enqueueMessageBlock:scriptBlock for:self];
 	} else {
-		[self executeQuickScriptCommand:command withArguments:args];
+		[self _executeFunction:function withArguments:arguments];
 	}
 }
 
-- (void)executeQuickScriptCommand:(NSString *)command withArguments:(NSArray *)args
+- (void)_executeFunction:(NSString *)function withArguments:(NSArray *)arguments
 {
 	NSAssertReturn(self.isLoaded);
 
-	[self.backingView executeCommand:command withArguments:args];
+	[self.backingView evaluateFunction:function withArguments:arguments];
 }
 
 - (void)appendToDocumentBody:(NSString *)html
 {
-	[self executeQuickScriptCommand:@"Textual.documentBodyAppend" withArguments:@[html]];
+	[self _executeFunction:@"Textual.documentBodyAppend" withArguments:@[html]];
 }
 
 #pragma mark -
@@ -365,7 +365,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 												  resultInfo:NULL];
 
 		[self performBlockOnMainThread:^{
-			[self executeQuickScriptCommand:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
+			[self _executeFunction:@"Textual.setTopicBarValue" withArguments:@[topicString, topicTemplate]];
 		}];
 	} for:self];
 }
@@ -375,12 +375,12 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)moveToTop
 {
-	[self executeQuickScriptCommand:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
+	[self _executeFunction:@"Textual.scrollToTopOfView" withArguments:@[@(YES)]];
 }
 
 - (void)moveToBottom
 {
-	[self executeQuickScriptCommand:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
+	[self _executeFunction:@"Textual.scrollToBottomOfView" withArguments:@[@(YES)]];
 }
 
 #pragma mark -
@@ -390,17 +390,17 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 {
 	NSString *markTemplate = [TVCLogRenderer renderTemplate:@"historyIndicator"];
 
-	[self executeQuickScriptCommand:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
+	[self _executeFunction:@"Textual.historyIndicatorAdd" withArguments:@[markTemplate]];
 }
 
 - (void)unmark
 {
-	[self executeQuickScriptCommand:@"Textual.historyIndicatorRemove" withArguments:nil];
+	[self _executeFunction:@"Textual.historyIndicatorRemove" withArguments:nil];
 }
 
 - (void)goToMark
 {
-	[self executeQuickScriptCommand:@"Textual.scrollToHistoryIndicator" withArguments:nil];
+	[self _executeFunction:@"Textual.scrollToHistoryIndicator" withArguments:nil];
 }
 
 #pragma mark -
@@ -408,7 +408,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)appendHistoricMessageFragment:(NSString *)html isReload:(BOOL)isReload
 {
-	[self executeQuickScriptCommand:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
+	[self _executeFunction:@"Textual.documentBodyAppendHistoric" withArguments:@[html, @(isReload)]];
 }
 
 /* reloadOldLines: is supposed to be called from inside a queue. */
@@ -487,7 +487,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 		[self mark];
 
-		[self executeQuickScriptCommand:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
+		[self _executeFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumbers]];
 	}];
 
 	/* Inform plugins of new content */
@@ -574,35 +574,35 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)jumpToLine:(NSString *)lineNumber completionHandler:(void (^)(BOOL))completionHandler
 {
-	[self.backingView booleanByExecutingCommand:@"Textual.scrollToLine"
+	[self.backingView booleanByEvaluatingFunction:@"Textual.scrollToLine"
 								  withArguments:@[lineNumber]
 							  completionHandler:completionHandler];
 }
 
 - (void)notifyDidBecomeVisible /* When the view is switched to. */
 {
-	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeVisible" withArguments:nil];
+	[self _executeFunction:@"Textual.notifyDidBecomeVisible" withArguments:nil];
 }
 
 - (void)notifySelectionChanged
 {
 	BOOL isSelected = [self isSelected];
 
-	[self executeQuickScriptCommand:@"Textual.notifySelectionChanged" withArguments:@[@(isSelected)]];
+	[self _executeFunction:@"Textual.notifySelectionChanged" withArguments:@[@(isSelected)]];
 }
 
 - (void)notifyDidBecomeHidden
 {
-	[self executeQuickScriptCommand:@"Textual.notifyDidBecomeHidden" withArguments:nil];
+	[self _executeFunction:@"Textual.notifyDidBecomeHidden" withArguments:nil];
 }
 
 - (void)changeTextSize:(BOOL)bigger
 {
 	float sizeMultiplier = [worldController() textSizeMultiplier];
 
-	[self executeQuickScriptCommand:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
+	[self _executeFunction:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
 
-	[self executeQuickScriptCommand:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
+	[self _executeFunction:@"Textual.viewFontSizeChanged" withArguments:@[@(bigger)]];
 }
 
 #pragma mark -
@@ -715,7 +715,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		self.activeLineCount = 0;
 	}
 
-	[self.backingView arrayByExecutingCommand:@"Textual.reduceNumberOfLines"
+	[self.backingView arrayByEvaluatingFunction:@"Textual.reduceNumberOfLines"
 								withArguments:@[@(n)]
 							completionHandler:^(NSArray *result) {
 								if (result == nil) {
@@ -834,7 +834,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				[self appendToDocumentBody:html];
 
 				/* Inform the style of the new append. */
-				[self executeQuickScriptCommand:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
+				[self _executeFunction:@"Textual.newMessagePostedToViewInt" withArguments:@[lineNumber]];
 				
 				/* Inform plugins. */
 				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
@@ -1140,7 +1140,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)isSafeToPresentImageWithID:(NSString *)uniqueID
 {
-	[self executeQuickScriptCommand:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
+	[self _executeFunction:@"Textual.toggleInlineImageReally" withArguments:@[uniqueID]];
 }
 
 - (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID
@@ -1266,7 +1266,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	self.isLoaded = YES;
 
-	[self executeQuickScriptCommand:@"Textual.viewInitiated" withArguments:@[
+	[self _executeFunction:@"Textual.viewInitiated" withArguments:@[
 		 NSDictionaryNilValue(viewType),
 		 NSDictionaryNilValue([self.associatedClient uniqueIdentifier]),
 		 NSDictionaryNilValue([self.associatedChannel uniqueIdentifier]),
@@ -1275,7 +1275,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	float textSizeMultiplier = [worldController() textSizeMultiplier];
 
-	[self executeQuickScriptCommand:@"Textual.viewFinishedLoadingInt"
+	[self _executeFunction:@"Textual.viewFinishedLoadingInt"
 					  withArguments:@[@([self isVisible]),
 									  @([self isSelected]),
 									  @(self.reloadingBacklog),

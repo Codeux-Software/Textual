@@ -172,7 +172,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	self.preferencesDidChangeTimerIsActive = NO;
 
-	[self executeScriptCommandOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+	[self evaluateFunctionOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
 }
 
 #pragma mark -
@@ -424,11 +424,11 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if (fireNotification) {
 		[RZNotificationCenter() postNotificationName:IRCWorldDateHasChangedNotification object:nil userInfo:nil];
 
-		[self executeScriptCommandOnAllViews:@"Textual.dateChanged"
-								   arguments:@[@([currentDayComponents year]),
-											   @([currentDayComponents month]),
-											   @([currentDayComponents day])]
-									 onQueue:NO];
+		[self evaluateFunctionOnAllViews:@"Textual.dateChanged"
+							   arguments:@[@([currentDayComponents year]),
+										   @([currentDayComponents month]),
+										   @([currentDayComponents day])]
+								 onQueue:NO];
 	}
 }
 
@@ -597,21 +597,23 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments
 {
-	[self executeScriptCommandOnAllViews:command arguments:args onQueue:YES];
+	[self evaluateFunctionOnAllViews:function arguments:arguments onQueue:YES];
 }
 
-- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments onQueue:(BOOL)onQueue
 {
-	if ([masterController() applicationIsTerminating] == NO) {
-		@synchronized(self.clients) {
-			for (IRCClient *u in self.clients) {
-				[u.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
+	if ([masterController() applicationIsTerminating]) {
+		return;
+	}
 
-				for (IRCChannel *c in u.channelList) {
-					[c.viewController executeScriptCommand:command withArguments:args onQueue:onQueue];
-				}
+	@synchronized(self.clients) {
+		for (IRCClient *u in self.clients) {
+			[u.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
+
+			for (IRCChannel *c in u.channelList) {
+				[c.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
 			}
 		}
 	}

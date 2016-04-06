@@ -97,6 +97,6 @@ TEXTUAL_EXTERN NSString * const TVCLogControllerViewFinishedLoadingNotification;
 - (void)print:(TVCLogLine *)logLine;
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
 
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args; // Defaults to onQueue YES
-- (void)executeScriptCommand:(NSString *)command withArguments:(NSArray *)args onQueue:(BOOL)onQueue;
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments; // Defaults to onQueue YES
+- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments onQueue:(BOOL)onQueue;
 @end

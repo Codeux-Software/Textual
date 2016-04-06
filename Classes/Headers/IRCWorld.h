@@ -103,8 +103,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 - (void)destroyChannel:(IRCChannel *)c;
 - (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart;
 
-- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args; // Defaults to onQueue YES
-- (void)executeScriptCommandOnAllViews:(NSString *)command arguments:(NSArray *)args onQueue:(BOOL)onQueue;
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments; // Defaults to onQueue YES
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments onQueue:(BOOL)onQueue;
 
 - (void)clearContentsOfClient:(IRCClient *)u;
 - (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u;

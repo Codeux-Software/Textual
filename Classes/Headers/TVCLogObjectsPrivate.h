@@ -60,7 +60,7 @@
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
-- (NSString *)compiledCommandCall:(NSString *)command withArguments:(NSArray *)arguments;
+- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(NSArray *)arguments;
 
 - (id)webScriptObjectToCommon:(WebScriptObject *)object;
 @end

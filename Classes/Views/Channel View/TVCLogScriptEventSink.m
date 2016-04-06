@@ -269,19 +269,19 @@
 			returnValue = [NSNull null];
 		}
 
-		[intWebView executeCommand:@"appInternal.promiseKept"
-					 withArguments:@[@(promiseIndex), returnValue]];
+		[intWebView evaluateFunction:@"appInternal.promiseKept"
+					   withArguments:@[@(promiseIndex), returnValue]];
 	}
 }
 
 - (void)_logToJavaScriptConsole:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeCommand:@"console.log" withArguments:@[message]];
+	[webView evaluateFunction:@"console.log" withArguments:@[message]];
 }
 
 - (void)_throwJavaScriptException:(NSString *)message inWebView:(TVCLogView *)webView
 {
-	[webView executeCommand:@"console.error" withArguments:@[message]];
+	[webView evaluateFunction:@"console.error" withArguments:@[message]];
 }
 
 #pragma mark -
@@ -868,7 +868,7 @@
 	}
 
 	if (result) {
-		[worldController() executeScriptCommandOnAllViews:@"Textual.styleSettingDidChange" arguments:@[keyName]];
+		[worldController() evaluateFunctionOnAllViews:@"Textual.styleSettingDidChange" arguments:@[keyName]];
 	}
 
 	return @(result);
