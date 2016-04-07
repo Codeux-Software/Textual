@@ -105,9 +105,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (NSString *)temporaryPathLeading
 {
-	NSString *pathExtension = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
-
-	return [[TPCPathInfo applicationTemporaryFolderPath] stringByAppendingPathComponent:pathExtension];
+	return [TPCPathInfo applicationCachesFolderPath];
 }
 
 - (NSString *)temporaryPath
@@ -297,19 +295,6 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 {
 	/* Do not create temporary path if we do no need it. */
 	NSAssertReturn([self usesTemporaryPath]);
-
-	/* Create leading directory if it does not exist yet. */
-	NSString *temporaryPathLeading = [self temporaryPathLeading];
-
-	if ([RZFileManager() directoryExistsAtPath:temporaryPathLeading] == NO) {
-		NSError *directoryCreateError = nil;
-
-		if ([RZFileManager() createDirectoryAtPath:temporaryPathLeading withIntermediateDirectories:YES attributes:nil error:&directoryCreateError] == NO) {
-			LogToConsole(@"Failed to create leading temporary directory: %@", [directoryCreateError localizedDescription]);
-
-			return;
-		}
-	}
 
 	/* Perform copy operation */
 	NSString *temporaryPath = [self temporaryPath];
