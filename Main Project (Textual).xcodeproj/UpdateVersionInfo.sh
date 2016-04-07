@@ -24,7 +24,7 @@ if [ -f "${CODE_SIGN_ENTITLEMENTS}" ]; then
 fi
 
 if [ "${TEXTUAL_BUILD_SCHEME_TOKEN}" == "appstore" ]; then
-	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" ""
+	cp "${PROJECT_DIR}/Resources/Sandbox/Entitlements/TextualAppStore.entitlements" "${CODE_SIGN_ENTITLEMENTS}"
 else
 	if [[ "${GCC_PREPROCESSOR_DEFINITIONS}" == *"TEXTUAL_BUILT_INSIDE_SANDBOX=1"* ]]; then
 		# While we are here, check to make sure that the user
