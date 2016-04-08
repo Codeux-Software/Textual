@@ -1493,7 +1493,7 @@ Gw
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="1907">
                             <items>
-                                <menuItem title="None" state="on" id="1912"/>
+                                <menuItem title="None" id="1912"/>
                                 <menuItem isSeparatorItem="YES" id="1908"/>
                                 <menuItem title="Automatic" tag="1" id="1909"/>
                                 <menuItem title="SOCKS 4 Proxy" tag="4" id="1911"/>
@@ -2077,35 +2077,10 @@ Gw
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ti4-Q4-cYX" userLabel="CertFP View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="758-2B-Ka3">
-                    <rect key="frame" x="423" y="136" width="73" height="32"/>
-                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0nB-im-8PX">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Copy SHA-1 Fingerprint"/>
-                    <connections>
-                        <action selector="onClientCertificateFingerprintSHA1CopyRequested:" target="-2" id="vD0-Eo-j0y"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9F-WF-ubf">
-                    <rect key="frame" x="423" y="99" width="72" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="Oar-qK-SLj"/>
-                    </constraints>
-                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rDo-70-T0D">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Copy MD5 Fingerprint"/>
-                    <connections>
-                        <action selector="onClientCertificateFingerprintMD5CopyRequested:" target="-2" id="55B-xe-zVH"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="l36-PJ-JBU">
-                    <rect key="frame" x="265" y="18" width="156" height="32"/>
+                    <rect key="frame" x="265" y="24" width="156" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="144" id="xjv-Fa-AFE"/>
+                        <constraint firstAttribute="width" constant="144" id="HEc-bh-PKD"/>
                     </constraints>
                     <buttonCell key="cell" type="push" title="Select Certificate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uH8-BL-itx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2117,9 +2092,9 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sab-tw-7nn">
-                    <rect key="frame" x="109" y="18" width="156" height="32"/>
+                    <rect key="frame" x="109" y="24" width="156" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="144" id="Qfg-Mm-MVZ"/>
+                        <constraint firstAttribute="width" constant="144" id="587-8J-yXv"/>
                     </constraints>
                     <buttonCell key="cell" type="push" title="Reset Certificate" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="39U-39-9tk">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2130,57 +2105,41 @@ Gw
                         <action selector="onClientCertificateResetRequested:" target="-2" id="hl9-sg-Zmd"/>
                     </connections>
                 </button>
-                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Evr-Ef-5mJ">
-                    <rect key="frame" x="35" y="232" width="460" height="50"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="KQa-QA-Tni">
-                        <rect key="frame" x="0.0" y="0.0" width="460" height="50"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="5mc-Ue-SvB">
-                                <rect key="frame" x="0.0" y="0.0" width="460" height="50"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <size key="minSize" width="460" height="50"/>
-                                <size key="maxSize" width="480" height="10000000"/>
-                                <attributedString key="textStorage">
-                                    <fragment content="Many networks provide the ability to identify to NickServ services without a password using a client-side ">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="certificate">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <url key="NSLink" string="http://en.wikipedia.org/wiki/Public_key_certificate"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=". Click the button below to change the certificate which is sent for you when connecting.">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="460" height="50"/>
-                                <size key="maxSize" width="480" height="10000000"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="WJR-EI-P4T">
-                        <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Buc-PK-7HA">
-                        <rect key="frame" x="224" y="1" width="15" height="133"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zU1-IR-zpt">
+                    <rect key="frame" x="39" y="258" width="339" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Select a certificate to send when you connect securely." id="rIl-yx-VEH">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="758-2B-Ka3">
+                    <rect key="frame" x="423" y="140" width="73" height="32"/>
+                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0nB-im-8PX">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Copy SHA-1 Fingerprint"/>
+                    <connections>
+                        <action selector="onClientCertificateFingerprintSHA1CopyRequested:" target="-2" id="vD0-Eo-j0y"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9F-WF-ubf">
+                    <rect key="frame" x="423" y="103" width="72" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="Y0M-gM-sOI"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Copy" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rDo-70-T0D">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Copy MD5 Fingerprint"/>
+                    <connections>
+                        <action selector="onClientCertificateFingerprintMD5CopyRequested:" target="-2" id="55B-xe-zVH"/>
+                    </connections>
+                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vOo-Hg-7M0">
-                    <rect key="frame" x="34" y="183" width="119" height="17"/>
+                    <rect key="frame" x="34" y="187" width="119" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Certificate Name:" id="pxF-PC-Aax">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2188,7 +2147,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nly-3d-FIq">
-                    <rect key="frame" x="164" y="183" width="333" height="17"/>
+                    <rect key="frame" x="164" y="187" width="333" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="bvj-Qr-Ebk">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2199,7 +2158,7 @@ Gw
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fdC-a6-iNA">
-                    <rect key="frame" x="34" y="146" width="125" height="17"/>
+                    <rect key="frame" x="34" y="150" width="125" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="SHA-1 Fingerprint:" id="jhF-Ix-th5">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2207,7 +2166,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ie-9H-xb2">
-                    <rect key="frame" x="164" y="146" width="259" height="17"/>
+                    <rect key="frame" x="164" y="150" width="259" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Gbb-jh-4mY">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2218,9 +2177,9 @@ Gw
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h8M-bR-Uth">
-                    <rect key="frame" x="34" y="108" width="114" height="17"/>
+                    <rect key="frame" x="34" y="112" width="114" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="110" id="eDd-WC-Yld"/>
+                        <constraint firstAttribute="width" constant="110" id="8UH-i3-cPc"/>
                     </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="MD5 Fingerprint:" id="O13-rx-ewF">
                         <font key="font" metaFont="systemBold"/>
@@ -2229,7 +2188,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nFm-83-7HQ">
-                    <rect key="frame" x="164" y="108" width="259" height="17"/>
+                    <rect key="frame" x="164" y="112" width="259" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="Sia-Zk-rSR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2241,34 +2200,33 @@ Gw
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="nly-3d-FIq" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="leading" id="02k-bi-oXd"/>
-                <constraint firstItem="Evr-Ef-5mJ" firstAttribute="trailing" secondItem="nly-3d-FIq" secondAttribute="trailing" id="18q-7S-MQJ"/>
-                <constraint firstItem="sab-tw-7nn" firstAttribute="top" secondItem="h8M-bR-Uth" secondAttribute="bottom" constant="62" id="1Vz-NA-Hmk"/>
-                <constraint firstItem="2ie-9H-xb2" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="leading" id="7RE-7A-AhL"/>
-                <constraint firstItem="nFm-83-7HQ" firstAttribute="leading" secondItem="h8M-bR-Uth" secondAttribute="trailing" constant="20" id="8Hb-6z-i9M"/>
-                <constraint firstItem="758-2B-Ka3" firstAttribute="centerX" secondItem="f9F-WF-ubf" secondAttribute="centerX" id="8zI-Pm-aoq"/>
-                <constraint firstItem="Evr-Ef-5mJ" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="35" id="ARN-0h-0dJ"/>
-                <constraint firstItem="Evr-Ef-5mJ" firstAttribute="centerX" secondItem="Ti4-Q4-cYX" secondAttribute="centerX" id="F1f-Bb-UAR"/>
-                <constraint firstItem="fdC-a6-iNA" firstAttribute="leading" secondItem="h8M-bR-Uth" secondAttribute="leading" id="KTZ-qK-8lc"/>
-                <constraint firstItem="f9F-WF-ubf" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="trailing" constant="8" symbolic="YES" id="VUU-zY-yj4"/>
-                <constraint firstItem="l36-PJ-JBU" firstAttribute="leading" secondItem="sab-tw-7nn" secondAttribute="trailing" constant="12" symbolic="YES" id="Yf3-ed-f2t"/>
-                <constraint firstItem="h8M-bR-Uth" firstAttribute="baseline" secondItem="nFm-83-7HQ" secondAttribute="baseline" id="cVL-NF-nWw"/>
-                <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="cYW-Uw-duv"/>
-                <constraint firstItem="fdC-a6-iNA" firstAttribute="baseline" secondItem="2ie-9H-xb2" secondAttribute="baseline" id="dme-r3-W4C"/>
-                <constraint firstItem="Evr-Ef-5mJ" firstAttribute="top" secondItem="Ti4-Q4-cYX" secondAttribute="top" constant="25" id="efO-RZ-os2"/>
-                <constraint firstItem="sab-tw-7nn" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="115" id="fzN-Gx-T12"/>
-                <constraint firstItem="758-2B-Ka3" firstAttribute="leading" secondItem="f9F-WF-ubf" secondAttribute="leading" id="gOa-VY-pbn"/>
-                <constraint firstItem="vOo-Hg-7M0" firstAttribute="top" secondItem="Evr-Ef-5mJ" secondAttribute="bottom" constant="32" id="h0U-gO-PFd"/>
-                <constraint firstItem="nFm-83-7HQ" firstAttribute="centerY" secondItem="f9F-WF-ubf" secondAttribute="centerY" id="hFJ-fb-a4K"/>
-                <constraint firstItem="f9F-WF-ubf" firstAttribute="top" secondItem="758-2B-Ka3" secondAttribute="bottom" constant="16" id="hJe-Ip-eaU"/>
-                <constraint firstItem="vOo-Hg-7M0" firstAttribute="baseline" secondItem="nly-3d-FIq" secondAttribute="baseline" id="k7V-93-eDN"/>
-                <constraint firstItem="758-2B-Ka3" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="trailing" constant="8" symbolic="YES" id="ks6-kx-TtO"/>
-                <constraint firstItem="sab-tw-7nn" firstAttribute="baseline" secondItem="l36-PJ-JBU" secondAttribute="baseline" id="n0U-rc-PbS"/>
-                <constraint firstItem="2ie-9H-xb2" firstAttribute="baseline" secondItem="758-2B-Ka3" secondAttribute="baseline" id="or3-BP-Hfs"/>
-                <constraint firstAttribute="trailing" secondItem="758-2B-Ka3" secondAttribute="trailing" constant="40" id="rR7-Id-AM9"/>
-                <constraint firstItem="758-2B-Ka3" firstAttribute="top" secondItem="nly-3d-FIq" secondAttribute="bottom" constant="19" id="v6K-my-tR0"/>
-                <constraint firstItem="758-2B-Ka3" firstAttribute="centerY" secondItem="Ti4-Q4-cYX" secondAttribute="centerY" id="wot-IF-aFW"/>
-                <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="36" id="ztR-cW-u6e"/>
+                <constraint firstItem="sab-tw-7nn" firstAttribute="top" secondItem="h8M-bR-Uth" secondAttribute="bottom" constant="60" id="2XA-jm-zcv"/>
+                <constraint firstItem="h8M-bR-Uth" firstAttribute="baseline" secondItem="nFm-83-7HQ" secondAttribute="baseline" id="4Hg-jy-GQM"/>
+                <constraint firstItem="sab-tw-7nn" firstAttribute="baseline" secondItem="l36-PJ-JBU" secondAttribute="baseline" id="4eA-fd-BJh"/>
+                <constraint firstItem="fdC-a6-iNA" firstAttribute="baseline" secondItem="2ie-9H-xb2" secondAttribute="baseline" id="AaX-uM-CM9"/>
+                <constraint firstItem="vOo-Hg-7M0" firstAttribute="top" secondItem="zU1-IR-zpt" secondAttribute="bottom" constant="54" id="C0N-NU-Sll"/>
+                <constraint firstItem="zU1-IR-zpt" firstAttribute="top" secondItem="Ti4-Q4-cYX" secondAttribute="top" constant="32" id="C1v-NB-gRo"/>
+                <constraint firstAttribute="trailing" secondItem="nly-3d-FIq" secondAttribute="trailing" constant="35" id="DGh-yD-8LI"/>
+                <constraint firstItem="758-2B-Ka3" firstAttribute="centerY" secondItem="Ti4-Q4-cYX" secondAttribute="centerY" constant="-4" id="I8K-nu-dGq"/>
+                <constraint firstItem="f9F-WF-ubf" firstAttribute="top" secondItem="758-2B-Ka3" secondAttribute="bottom" constant="16" id="Idy-6V-a5D"/>
+                <constraint firstItem="758-2B-Ka3" firstAttribute="leading" secondItem="f9F-WF-ubf" secondAttribute="leading" id="KiX-3J-KO9"/>
+                <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="36" id="Mqy-5z-6rp"/>
+                <constraint firstItem="vOo-Hg-7M0" firstAttribute="leading" secondItem="fdC-a6-iNA" secondAttribute="leading" id="S9t-di-blm"/>
+                <constraint firstItem="2ie-9H-xb2" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="leading" id="UI8-lh-CaK"/>
+                <constraint firstItem="758-2B-Ka3" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="trailing" constant="8" symbolic="YES" id="W7B-yj-1DC"/>
+                <constraint firstItem="fdC-a6-iNA" firstAttribute="leading" secondItem="h8M-bR-Uth" secondAttribute="leading" id="Yyn-3X-uOh"/>
+                <constraint firstAttribute="trailing" secondItem="758-2B-Ka3" secondAttribute="trailing" constant="40" id="bHY-P5-CCW"/>
+                <constraint firstItem="nFm-83-7HQ" firstAttribute="leading" secondItem="h8M-bR-Uth" secondAttribute="trailing" constant="20" id="bXt-6w-AWf"/>
+                <constraint firstItem="758-2B-Ka3" firstAttribute="centerX" secondItem="f9F-WF-ubf" secondAttribute="centerX" id="cee-3W-sAr"/>
+                <constraint firstItem="vOo-Hg-7M0" firstAttribute="baseline" secondItem="nly-3d-FIq" secondAttribute="baseline" id="fWq-pe-QgC"/>
+                <constraint firstItem="f9F-WF-ubf" firstAttribute="leading" secondItem="nFm-83-7HQ" secondAttribute="trailing" constant="8" symbolic="YES" id="hJH-GO-nki"/>
+                <constraint firstItem="758-2B-Ka3" firstAttribute="top" secondItem="nly-3d-FIq" secondAttribute="bottom" constant="19" id="iIc-u0-WCy"/>
+                <constraint firstItem="zU1-IR-zpt" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="41" id="nF1-La-ZqG"/>
+                <constraint firstItem="sab-tw-7nn" firstAttribute="leading" secondItem="Ti4-Q4-cYX" secondAttribute="leading" constant="115" id="or6-Eh-u6z"/>
+                <constraint firstItem="l36-PJ-JBU" firstAttribute="leading" secondItem="sab-tw-7nn" secondAttribute="trailing" constant="12" symbolic="YES" id="pob-f5-QYo"/>
+                <constraint firstItem="nFm-83-7HQ" firstAttribute="centerY" secondItem="f9F-WF-ubf" secondAttribute="centerY" id="pzh-Kw-WWc"/>
+                <constraint firstItem="nly-3d-FIq" firstAttribute="leading" secondItem="2ie-9H-xb2" secondAttribute="leading" id="s60-OJ-3wF"/>
+                <constraint firstItem="2ie-9H-xb2" firstAttribute="baseline" secondItem="758-2B-Ka3" secondAttribute="baseline" id="waE-vC-DNJ"/>
             </constraints>
             <point key="canvasLocation" x="535" y="64.5"/>
         </customView>
