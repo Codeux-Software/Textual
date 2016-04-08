@@ -216,18 +216,19 @@ Textual.handleEvent                            = function(eventToken) {};
 
 		JavaScript				ObjC
 		----------				----------
+		array			=>		NSArray
+		boolean			=>		BOOL
 		number			=>		NSNumber
-		boolean			=>		CFBoolean
+		object			=>		NSDictionary
 		string			=>		NSString
-		object			=>		id
 
 		ObjC					JavaScript
 		----					----------
-		CFBoolean		=>		boolean
+		NSArray			=>		array
+		BOOL			=>		boolean
 		NSNumber		=>		number
+		NSDictionary	=>		object
 		NSString		=>		string
-		NSArray			=>		array object
-		WebScriptObject	=>		object
 
 	When the value of a setting is retrieved, null will be returned if key is not found.
  */
