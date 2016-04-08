@@ -89,8 +89,8 @@
 /* Custom client-side certificate selection */
 "TDCServerPropertiesSheet[1008]" = "No Certificate Selected";
 
-"TDCServerPropertiesSheet[1009][1]" = "Select Identity";
-"TDCServerPropertiesSheet[1009][2]" = "Below is a list of certificates (also known as “identities” or an “identity”) which Textual has found within the OS X keychain. Select a single certificate for Textual to use.";
+"TDCServerPropertiesSheet[1009][1]" = "Choose An Identity";
+"TDCServerPropertiesSheet[1009][2]" = "Select a certificate to send when you connect securely.";
 
 /* Welcome sheet help channel prompt for freenode servers */
 "TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
