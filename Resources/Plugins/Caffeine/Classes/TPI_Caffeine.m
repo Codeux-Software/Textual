@@ -115,7 +115,12 @@
 			 client that no longer exists and can free it below. */
 
 			if ([clientList containsObject:client] || observeClients == NO) {
-				[client removeObserver:self forKeyPath:@"isLoggedIn"];
+				@try {
+					[client removeObserver:self forKeyPath:@"isLoggedIn"];
+				} @catch (NSException *exception) {
+					LogToConsole(@"Caught exception: %@", [exception reason]);
+					LogToConsoleCurrentStackTrace
+				}
 			}
 		}
 
