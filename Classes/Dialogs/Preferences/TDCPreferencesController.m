@@ -46,7 +46,7 @@
 #define _inlineImageHeightMin		0
 
 #define _fileTransferPortRangeMin			1024
-#define _fileTransferPortRangeMax			65535
+#define _fileTransferPortRangeMax			TXMaximumTCPPort
 
 #define _toolbarItemIndexGeneral					101
 #define _toolbarItemIndexHighlights					102

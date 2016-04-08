@@ -9030,7 +9030,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		LogToConsole(@"Fatal error: Port cannot be zero without a transfer token");
 
 		goto present_error;
-	} else if (hostPortInt < 0 || hostPortInt > 65535) {
+	} else if (hostPortInt < 0 || hostPortInt > TXMaximumTCPPort) {
 		LogToConsole(@"Fatal error: Port cannot be less than zero or greater than 65535");
 
 		goto present_error;

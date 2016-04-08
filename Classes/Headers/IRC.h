@@ -42,6 +42,8 @@
 #define TXMaximumIRCNicknameLength					50
 #define TXMaximumIRCUsernameLength					40
 
+#define TXMaximumTCPPort							65535
+
 #define TXMaximumNodesPerModeCommand				4
 
 #define IRCProtocolDefaultNicknameMaximumLength			9
