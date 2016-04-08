@@ -82,6 +82,25 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return YES;
 }
 
+- (BOOL)isValidInternetPort
+{
+	if (NSObjectIsEmpty(self)) {
+		return NO;
+	}
+
+	if ([self isNumericOnly] == NO) {
+		return NO;
+	}
+
+	NSInteger selfInt = [self integerValue];
+
+	if (selfInt > 1 && selfInt <= TXMaximumTCPPort) {
+		return YES;
+	} else {
+		return NO;
+	}
+}
+
 - (NSString *)stringByAppendingIRCFormattingStop
 {
 	return [self stringByAppendingFormat:@"%C", IRCTextFormatterTerminatingCharacter];

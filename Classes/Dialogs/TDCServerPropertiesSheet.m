@@ -326,11 +326,7 @@
 		[self.serverPortTextField setStringValueUsesOnlyFirstToken:NO];
 		
 		[self.serverPortTextField setValidationBlock:^BOOL(NSString *currentValue) {
-			if ([currentValue isNumericOnly]) {
-				return ([currentValue length] < 7 && [currentValue integerValue] > 1);
-			} else {
-				return NO;
-			}
+			return [currentValue isValidInternetPort];
 		}];
 		
 		/* Proxy address. */
@@ -379,11 +375,7 @@
 				proxyType == IRCConnectionSocketHTTPProxyType ||
 				proxyType == IRCConnectionSocketHTTPSProxyType)
 			{
-				if ([currentValue isNumericOnly]) {
-					return ([currentValue length] < 7 && [currentValue integerValue] > 1);
-				} else {
-					return NO;
-				}
+				return [currentValue isValidInternetPort];
 			} else {
 				return YES;
 			}

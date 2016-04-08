@@ -76,6 +76,7 @@
 	 NSURL. If NSURL does not result in a valid result, then we can
 	 consider the beginning of our URL trash and invalid. */
 	NSString *serverInfo = locationValue;
+
 	NSString *channelInfo = nil;
 
 	if (totalSlashCount == 3) { // Only cut if we do have an extra slash.
@@ -240,7 +241,9 @@
 		}];
 
 		/* Erase end commas. */
-		[channelList deleteCharactersInRange:NSMakeRange(([channelList length] - 1), 1)];
+		if ([channelList length] > 1) {
+			[channelList deleteCharactersInRange:NSMakeRange(([channelList length] - 1), 1)];
+		}
 	}
 
 	/* We have parsed every part of our URL. Build the final result and
@@ -358,41 +361,31 @@
 	}
 
     /* Server Port */
-    if ([tempStore hasPrefix:@":"]) {
-        NSInteger chopIndex = 1;
+	NSString *tempServerPort = nil;
 
-		/* Does the port define an SSL connection? */
-        if ([tempStore hasPrefix:@":+"]) {
-            chopIndex = 2;
+	if ([tempStore hasPrefix:@":"]) {
+		tempServerPort = [tempServerPort substringFromIndex:1];
+	} else {
+		if (NSObjectIsNotEmpty(base)) {
+			tempServerPort = [base getToken];
+		}
+	}
 
-            connectionUsesSSL = YES;
-        }
+	if (tempServerPort) {
+		if ([tempServerPort hasPrefix:@"+"]) {
+			tempServerPort = [tempServerPort substringFromIndex:1];
 
-        tempStore = [tempStore substringFromIndex:chopIndex];
+			connectionUsesSSL = YES;
+		}
 
-		/* Make sure the port number matches a valid format. If it does,
-		 then we are all good, and done with the port. */
-        if ([XRRegularExpression string:tempStore isMatchedByRegex:@"^([0-9]{1,6})$"]) {
-            serverPort = [tempStore integerValue];
-        }
-    } else {
-		/* If our temporary store did not have a colon in front of it indicating
-		 a port, then we get our next token and see if that will parse correctly. */
-        if (NSObjectIsNotEmpty(base)) {
-            tempStore = [base getToken];
+		if ([tempServerPort isValidInternetPort] == NO) {
+			LogToConsole(@"Invalid internet port");
 
-            if ([XRRegularExpression string:tempStore isMatchedByRegex:@"^(\\+?[0-9]{1,6})$"]) {
-                if ([tempStore hasPrefix:@"+"]) {
-                    tempStore = [tempStore substringFromIndex:1];
-
-                    connectionUsesSSL = YES;
-                }
-
-				/* Looks like our token gave us a valid port. */
-				serverPort = [tempStore integerValue];
-            }
-        }
-    }
+			return;
+		} else {
+			serverPort = [tempServerPort integerValue];
+		}
+	}
 
     /* Server Password. */
 	/* If our base is still not empty after taking out the token for the
