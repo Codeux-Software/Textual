@@ -1892,6 +1892,7 @@
 	/* Context */
 	BOOL optionMaintainGrouping = ((selectionOptions & TVCMainWindowShiftSelectionMaintainGroupingFlag) == TVCMainWindowShiftSelectionMaintainGroupingFlag);
 
+	BOOL optionPerformDeselectAll = NO;
 	BOOL optionPerformDeselectOld = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectFlag) == TVCMainWindowShiftSelectionPerformDeselectFlag);
 	BOOL optionPerformDeselectChildren = ((selectionOptions & TVCMainWindowShiftSelectionPerformDeselectChildrenFlag) == TVCMainWindowShiftSelectionPerformDeselectChildrenFlag);
 
@@ -1919,15 +1920,23 @@
 		[self selectItemInSelectedItems:newItem];
 
 		return;
+	} else {
+		if (optionPerformDeselectOld) {
+			optionPerformDeselectAll = YES;
+		}
 	}
 
 	/* Create a mutable copy of the current selection */
 	NSMutableIndexSet *selectedRowsNew = [selectedRows mutableCopy];
 
-	if (optionPerformDeselectOld) {
+	if (optionPerformDeselectAll) {
+		[selectedRowsNew removeAllIndexes];
+	} else if (optionPerformDeselectOld) {
 		[selectedRowsNew removeIndex:itemIndexOld];
 	}
 
+	/* optionPerformDeselectChildren is still performed even if optionPerformDeselectAll
+	 is set so that the list of forbidden rows can be defined by it. */
 	if (optionPerformDeselectChildren) {
 		NSIndexSet *childrenRowRange = [self.serverList indexesOfItemsInGroup:oldItem];
 
