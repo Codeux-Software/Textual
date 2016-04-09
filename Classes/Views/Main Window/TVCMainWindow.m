@@ -2164,6 +2164,45 @@
 	;
 }
 
+- (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView
+{
+	/* If the server list does not have a mouse down event, allow change. */
+	if ([self.serverList leftMouseIsDownInView] == NO) {
+		return YES;
+	}
+
+	/* If command or shift are held down, allow change. */
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask ||
+		(keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask)
+	{
+		return YES;
+	}
+
+	/* Find which row is beneath the mouse */
+	NSInteger rowUnderMouse = [self.serverList rowUnderMouse];
+
+	/* If a row is not beneath the mouse or the row that is, is not
+	 selected, then the selection is allowed to be changed. */
+	if (rowUnderMouse < 0) {
+		return YES;
+	}
+
+	if ([self.serverList isRowSelected:rowUnderMouse] == NO) {
+		return YES;
+	}
+
+	/* If the item beneath the mouse is already selected and we did not 
+	 try to unselect it by holding command or shift, then tell the table
+	 view not to change the selection. That will be handled by us. */
+	IRCTreeItem *itemUnderMouse = [self.serverList itemAtRow:rowUnderMouse];
+
+	[mainWindow() selectItemInSelectedItems:itemUnderMouse];
+
+	return NO;
+}
+
 - (NSIndexSet *)outlineView:(NSOutlineView *)outlineView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
 {
 #define _maximumSelectedRows	6

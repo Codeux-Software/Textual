@@ -39,6 +39,10 @@
 
 #import "TVCMainWindowPrivate.h"
 
+@interface TVCServerList ()
+@property (nonatomic, assign, readwrite) BOOL leftMouseIsDownInView;
+@end
+
 @implementation TVCServerList
 
 #pragma mark -
@@ -330,44 +334,16 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	/* When certain keys are held, send the event upstream or ignore
-	 if the window is not in focus. */
-	NSUInteger keyboardKeys = ([theEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+	self.leftMouseIsDownInView = YES;
 
-	if ((keyboardKeys & NSCommandKeyMask) == NSCommandKeyMask ||
-		(keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask)
-	{
-		if ([[self window] isKeyWindow]) {
-			[super mouseDown:theEvent];
-		}
-
-		return;
-	}
-
-	/* If the event is double click, then send logic straight to super */
-	if ([theEvent clickCount] > 1) {
-		[super mouseDown:theEvent];
-
-		return;
-	}
-
-	/* If the item clicked is selected, then switch group selection to it. */
-	NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-
-	NSInteger rowUnderMouse = [self rowAtPoint:mouseLocation];
-
-	if (rowUnderMouse >= 0) {
-		if ([self isRowSelected:rowUnderMouse]) {
-			IRCTreeItem *itemUnderMouse = [self itemAtRow:rowUnderMouse];
-
-			[mainWindow() selectItemInSelectedItems:itemUnderMouse];
-
-			return;
-		}
-	}
-
-	/* Send action to super */
 	[super mouseDown:theEvent];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	self.leftMouseIsDownInView = NO;
+
+	[super mouseUp:theEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent

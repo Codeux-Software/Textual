@@ -44,6 +44,7 @@
 @property (nonatomic, copy) NSImage *outlineViewDefaultDisclosureTriangle;
 @property (nonatomic, copy) NSImage *outlineViewAlternateDisclosureTriangle;
 @property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
+@property (readonly) BOOL leftMouseIsDownInView;
 
 /* addItemToList and removeItemFromList work two completely different ways.
  addItemToList expects that you have already added the item to the data source
