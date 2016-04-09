@@ -5234,6 +5234,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "5f107133-9262-4b6b-9650-0ac36aae6a11";
 			};
 			name = Debug;
 		};
@@ -5242,6 +5243,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "5f107133-9262-4b6b-9650-0ac36aae6a11";
 			};
 			name = Release;
 		};
@@ -5250,6 +5252,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				PROVISIONING_PROFILE = "5f107133-9262-4b6b-9650-0ac36aae6a11";
 			};
 			name = "Release (App Store)";
 		};
