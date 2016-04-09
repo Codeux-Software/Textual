@@ -2180,6 +2180,11 @@
 		return YES;
 	}
 
+	/* If the window is not focused, don't allow change. */
+	if ([self isKeyWindow] == NO) {
+		return NO;
+	}
+
 	/* If command or shift are held down, allow change. */
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
