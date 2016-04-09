@@ -1982,7 +1982,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	NSString *uncutInput = [s string];
 
-	switch ([IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES]) {
+	NSInteger n = [IRCCommandIndex indexOfIRCommand:uppercaseCommand publicSearch:YES];
+
+	switch (n) {
 		case 5101: // Command: AUTOJOIN
 		{
 			[self performAutoJoin:YES];
@@ -2841,55 +2843,47 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			break;
 		}
 		case 5003: // Command: AMSG
-		{
-			NSObjectIsEmptyAssert(uncutInput);
-
-			if ([TPCPreferences amsgAllConnections]) {
-				for (IRCClient *client in [worldController() clientList]) {
-                    if ([client isConnected]) {
-                        for (IRCChannel *channel in [client channelList]) {
-                            if ([channel isActive]) {
-                                [client setUnreadState:channel];
-								
-                                [client sendText:s command:IRCPrivateCommandIndex("privmsg") channel:channel];
-                            }
-                        }
-                    }
-				}
-			} else {
-				@synchronized(self.channels) {
-					for (IRCChannel *channel in self.channels) {
-						[self setUnreadState:channel];
-						
-						[self sendText:s command:IRCPrivateCommandIndex("privmsg") channel:channel];
-					}
-				}
-			}
-
-			break;
-		}
 		case 5002: // Command: AME
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			if ([TPCPreferences amsgAllConnections]) {
-				for (IRCClient *client in [worldController() clientList]) {
-                    if ([client isConnected]) {
-                        for (IRCChannel *channel in [client channelList]) {
-                            if ([channel isActive]) {
-                                [client setUnreadState:channel];
-								
-                                [client sendText:s command:IRCPrivateCommandIndex("action") channel:channel];
-                            }
-                        }
-                    }
-				}
+			NSString *command = nil;
+
+			if (n == 5003) {
+				command = IRCPrivateCommandIndex("privmsg");
 			} else {
+				command = IRCPrivateCommandIndex("action");
+			}
+
+			if ([TPCPreferences amsgAllConnections])
+			{
+				for (IRCClient *client in [worldController() clientList]) {
+                    if ([client isConnected] == NO) {
+						continue;
+					}
+
+					for (IRCChannel *channel in [client channelList]) {
+						if ([channel isActive] == NO || [channel isChannel] == NO) {
+							continue;
+						}
+
+						[client setUnreadState:channel];
+							
+						[client sendText:s command:command channel:channel];
+					}
+				}
+			}
+			else
+			{
 				@synchronized(self.channels) {
 					for (IRCChannel *channel in self.channels) {
+						if ([channel isActive] == NO || [channel isChannel] == NO) {
+							continue;
+						}
+
 						[self setUnreadState:channel];
 					
-						[self sendText:s command:IRCPrivateCommandIndex("action") channel:channel];
+						[self sendText:s command:command channel:channel];
 					}
 				}
 			}
