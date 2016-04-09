@@ -796,10 +796,15 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)destroyChannel:(IRCChannel *)c
 {
-    [self destroyChannel:c part:YES];
+	[self destroyChannel:c reload:YES part:YES];
 }
 
-- (void)destroyChannel:(IRCChannel *)c part:(BOOL)forcePart
+- (void)destroyChannel:(IRCChannel *)c reload:(BOOL)reload
+{
+	[self destroyChannel:c reload:reload part:YES];
+}
+
+- (void)destroyChannel:(IRCChannel *)c reload:(BOOL)reload part:(BOOL)forcePart
 {
 	IRCClient *u = [c associatedClient];
 	
@@ -807,8 +812,10 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		[u partChannel:c];
 	}
 
-	[self selectOtherBeforeDestroy:c];
-	
+	if (reload) {
+		[self selectOtherBeforeDestroy:c];
+	}
+
 	[u willDestroyChannel:c];
     
 	[c prepareForPermanentDestruction];
@@ -816,16 +823,16 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if (u.lastSelectedChannel == c) {
 		u.lastSelectedChannel = nil;
 	}
-	
-	[[TXSharedApplication sharedInputHistoryManager] destroy:c];
 
-	[mainWindowServerList() removeItemFromList:c];
+	if (reload) {
+		[mainWindowServerList() removeItemFromList:c];
 
-	[u removeChannel:c];
+		[u removeChannel:c];
 
-	[mainWindow() adjustSelection];
+		[mainWindow() adjustSelection];
 
-	[menuController() populateNavgiationChannelList];
+		[menuController() populateNavgiationChannelList];
+	}
 }
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
