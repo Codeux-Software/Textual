@@ -390,7 +390,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	 above so they must be reinserted here. */
 	for (IRCChannel *c in originalChannelList) {
 		if ([c isChannel]) {
-			[self partChannel:c];
+			[worldController() destroyChannel:c reload:NO];
 		} else {
 			[newChannelList addObject:c];
 		}
