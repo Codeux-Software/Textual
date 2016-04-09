@@ -2195,7 +2195,7 @@
 	}
 
 	/* Find which row is beneath the mouse */
-	NSInteger rowUnderMouse = [self.serverList rowUnderMouse];
+	NSInteger rowUnderMouse = [outlineView rowUnderMouse];
 
 	/* If a row is not beneath the mouse or the row that is, is not
 	 selected, then the selection is allowed to be changed. */
@@ -2203,14 +2203,14 @@
 		return YES;
 	}
 
-	if ([self.serverList isRowSelected:rowUnderMouse] == NO) {
+	if ([outlineView isRowSelected:rowUnderMouse] == NO) {
 		return YES;
 	}
 
 	/* If the item beneath the mouse is already selected and we did not 
 	 try to unselect it by holding command or shift, then tell the table
 	 view not to change the selection. That will be handled by us. */
-	IRCTreeItem *itemUnderMouse = [self.serverList itemAtRow:rowUnderMouse];
+	IRCTreeItem *itemUnderMouse = [outlineView itemAtRow:rowUnderMouse];
 
 	[mainWindow() selectItemInSelectedItems:itemUnderMouse];
 
@@ -2402,10 +2402,6 @@
 	}
 
 	if ([i isClient]) {
-		if (item) {
-			return NO;
-		}
-
 		NSArray *ary = [worldController() clientList];
 
 		NSMutableArray *mutary = [ary mutableCopy];
@@ -2465,12 +2461,6 @@
 		} else {
 			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex: index inParent:u];
 		}
-	}
-
-	NSInteger n = [self.serverList rowForItem:self.selectedItem];
-	
-	if (n > -1) {
-		[self.serverList selectItemAtIndex:n];
 	}
 
 	[menuController() populateNavgiationChannelList];
