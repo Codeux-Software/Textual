@@ -174,7 +174,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)addChannel:(IRCChannel *)channel;
 - (void)addChannel:(IRCChannel *)channel atPosition:(NSInteger)pos;
-- (void)removeChannel:(IRCChannel *)channel;
+- (void)removeChannel:(IRCChannel *)channel; // This only removes the channel from channel array. Use world controller to properly destroy a channel.
 
 - (NSInteger)indexOfChannel:(IRCChannel *)channel;
 
