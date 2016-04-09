@@ -772,6 +772,8 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[self selectOtherBeforeDestroy:u];
 
 	[u prepareForPermanentDestruction];
+
+	[u setPrintingQueue:nil];
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {

@@ -41,6 +41,7 @@
 #import "THOPluginProtocolPrivate.h"
 
 @interface TVCLogController ()
+@property (nonatomic, assign) BOOL isTerminating;
 @property (nonatomic, assign) BOOL historyLoaded;
 @property (nonatomic, copy) NSString *lastVisitedHighlight;
 @property (nonatomic, strong) TVCLogControllerHistoricLogFile *historicLogFile;
@@ -80,6 +81,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)prepareForApplicationTermination
 {
+	self.isTerminating = YES;
+
 	self.isLoaded = NO;
 
 	self.backingView = nil;
@@ -87,10 +90,14 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	[[self printingQueue] cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog:NO];
+
+	self.historicLogFile = nil;
 }
 
 - (void)prepareForPermanentDestruction
 {
+	self.isTerminating = YES;
+
 	self.isLoaded = NO;
 
 	self.backingView = nil;
@@ -98,10 +105,14 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	[[self printingQueue] cancelOperationsForViewController:self];
 	
 	[self closeHistoricLog:YES]; // YES forces a file deletion.
+
+	self.historicLogFile = nil;
 }
 
 - (void)preferencesChanged
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	self.maximumLineCount = [TPCPreferences scrollbackLimit];
 }
 
@@ -134,21 +145,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 #endif
 
 	/* Playback history. */
-	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
-	
-	/* Even if we aren't playing back history, we still open it
-	 because theme reloads use it to playback messages. */
-	[self.historicLogFile setAssociatedController:self];
-
-	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
-		self.historyLoaded = YES;
-	} else {
-		if (self.historyLoaded == NO && (self.associatedChannel &&
-									   ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates])))
-		{
-			[self reloadHistory];
-		}
-	}
+	[self openHistoricLog];
 }
 
 - (void)buildBackingView
@@ -181,6 +178,26 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 #pragma mark -
 #pragma mark Manage Historic Log
+
+- (void)openHistoricLog
+{
+	/* Playback history. */
+	self.historicLogFile = [TVCLogControllerHistoricLogFile new];
+
+	/* Even if we aren't playing back history, we still open it
+	 because theme reloads use it to playback messages. */
+	[self.historicLogFile setAssociatedController:self];
+
+	if ([TPCPreferences reloadScrollbackOnLaunch] == NO) {
+		self.historyLoaded = YES;
+	} else {
+		if (self.historyLoaded == NO && (self.associatedChannel &&
+										 ([self.associatedChannel isPrivateMessage] == NO || [TPCPreferences rememberServerListQueryStates])))
+		{
+			[self reloadHistory];
+		}
+	}
+}
 
 - (void)closeHistoricLog
 {
@@ -302,6 +319,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments onQueue:(BOOL)onQueue
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	if (onQueue) {
 		TVCLogControllerOperationBlock scriptBlock = ^(id operation) {
 			NSAssertReturn([operation isCancelled] == NO);
@@ -320,6 +339,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)_evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments
 {
 	NSAssertReturn(self.isLoaded);
+	NSAssertReturn(self.isTerminating == NO);
 
 	[self.backingView evaluateFunction:function withArguments:arguments];
 }
@@ -345,6 +365,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)setTopic:(NSString *)topic
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	[[self printingQueue] enqueueMessageBlock:^(id operation) {
 		NSAssertReturn([operation isCancelled] == NO);
 
@@ -502,6 +524,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)reloadHistory
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	self.historyLoaded = YES;
 
 	if (self.viewIsEncrypted == NO)
@@ -531,6 +555,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)reloadTheme
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	if (self.reloadingHistory == NO) {
 		self.reloadingBacklog = YES;
 
@@ -611,6 +637,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (BOOL)highlightAvailable:(BOOL)previous
 {
 	NSAssertReturnR(self.isLoaded, NO);
+	NSAssertReturnR((self.isTerminating == NO), NO);
 
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssertReturn(self.highlightedLineNumbers, NO);
@@ -642,6 +669,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)nextHighlight
 {
 	NSAssertReturn(self.isLoaded);
+	NSAssertReturn(self.isTerminating == NO);
 	
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
@@ -668,6 +696,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 - (void)previousHighlight
 {
 	NSAssertReturn(self.isLoaded);
+	NSAssertReturn(self.isTerminating == NO);
 
 	@synchronized(self.highlightedLineNumbers) {
 		NSObjectIsEmptyAssert(self.highlightedLineNumbers);
@@ -701,6 +730,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)limitNumberOfLines
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	self.needsLimitNumberOfLines = NO;
 
 	NSInteger n = (self.activeLineCount - self.maximumLineCount);
@@ -770,11 +801,15 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)clear
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	[self clearWithReset:YES];
 }
 
 - (void)clearBackingView
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	[self rebuildBackingView];
 
 	[self clearWithReset:YES];
@@ -797,6 +832,8 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
 {
+	NSAssertReturn(self.isTerminating == NO);
+
 	/* Continue with a normal print job. */
 	TVCLogControllerOperationBlock printBlock = ^(id operation) {
 		NSAssertReturn([operation isCancelled] == NO);
