@@ -2956,7 +2956,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5013: // Command: CONN
 		{
 			if (NSObjectIsNotEmpty(uncutInput)) {
-				self.serverRedirectAddressTemporaryStore = [s getTokenAsString];
+				NSString *serverAddress = [s getTokenAsString];
+
+				if ([serverAddress isValidInternetAddress] == NO) {
+					LogToConsole(@"Silently ignoring bad server address");
+
+					return;
+				}
+
+				self.serverRedirectAddressTemporaryStore = serverAddress;
 			}
 			
 			if (self.isConnected) {
@@ -6511,7 +6519,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			self.disconnectType = IRCClientDisconnectServerRedirectMode;
 
 			[self disconnect]; // No worry about gracefully disconnecting by using quit: since it is just a redirect.
-			
+
+			/* If the address is thought to be invalid, then we still
+			 perform the disconnected suggested by the redirect, but
+			 we do not go any further than that. */
+			if ([address isValidInternetAddress] == NO) {
+				return;
+			}
+
 			/* -disconnect would destroy this so we set them after... */
 			self.serverRedirectAddressTemporaryStore = address;
 			self.serverRedirectPortTemporaryStore = [portraw integerValue];
