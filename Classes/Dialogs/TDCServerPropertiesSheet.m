@@ -1160,16 +1160,6 @@
 								   }
 							   }];
 	} else {
-		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-										  body:TXTLS(@"TDCServerPropertiesSheet[1003][2]")
-										 title:TXTLS(@"TDCServerPropertiesSheet[1003][1]")
-								 defaultButton:TXTLS(@"BasicLanguage[1186]")
-							   alternateButton:nil
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil
-							   completionBlock:nil];
-
 		self.requestCloudDeletionOnClose = NO;
 	}
 }
