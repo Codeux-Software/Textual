@@ -3272,8 +3272,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][06]")];
 				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][07]")];
 				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][08]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][09]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][10]")];
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
