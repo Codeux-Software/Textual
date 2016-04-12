@@ -560,7 +560,7 @@
 /* Server delete dialog */
 "BasicLanguage[1198][1]" = "Do you want to delete the selection?";
 "BasicLanguage[1198][2]" = "There is no undo and all data related to this server, except for logs, will be erased.";
-"BasicLanguage[1198][3]" = "There is no undo and all data related to this server held on this device and shared with iCloud, except for logs, will be erased.\n\nOpen Server Properties and select “Do not share with other devices using iCloud” to stop this server from being erased on all shared devices.";
+"BasicLanguage[1198][3]" = "Only delete server on this device";
 
 /* Misc. error */
 "BasicLanguage[1199]" = "Failed to send data to server. Not connected.";
@@ -791,6 +791,6 @@
 
 
 
-/* Next unusued key: 3003 */
+/* Next unusued key: 3004 */
 
 

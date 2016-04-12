@@ -508,9 +508,7 @@
 	BOOL performRemove = [TLOPopupPrompts dialogWindowWithMessage:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][2]")
 															title:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][1]")
 													defaultButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][3]")
-												  alternateButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][4]")
-												   suppressionKey:nil
-												  suppressionText:nil];
+												  alternateButton:TPILocalizedString(@"TPI_ChatFilterEditFilterSheet[0010][4]")];
 
 	if (performRemove == NO) {
 		return;

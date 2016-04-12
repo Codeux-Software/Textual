@@ -657,7 +657,7 @@
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
 								   [self closeChildSheets];
 								   [self endSheet];
@@ -1152,7 +1152,7 @@
 								   otherButton:nil
 								suppressionKey:nil
 							   suppressionText:nil
-							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 								   if (buttonClicked == TLOPopupPromptReturnSecondaryType) {
 									   self.requestCloudDeletionOnClose = YES;
 								   } else {

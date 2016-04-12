@@ -220,10 +220,7 @@
 										 title:TXTLS(@"BasicLanguage[1102][1]")
 								 defaultButton:BLS(1186)
 							   alternateButton:nil
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil
-							   completionBlock:nil];
+								   otherButton:nil];
 	} else {
 		[RZWorkspace() openFile:path];
 	}

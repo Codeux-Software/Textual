@@ -1515,29 +1515,47 @@
 	if (_noClient || _connectionLoggedIn) {
 		return;
 	}
-	
-	NSString *warningToken = @"BasicLanguage[1198][2]";
-	
+
+	NSString *suppressionText = nil;
+
+	BOOL suppressionResult = NO;
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	BOOL deleteFromCloudCheckboxShown = NO;
+
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if ([_serverCurrentConfig excludedFromCloudSyncing] == NO) {
-			warningToken = @"BasicLanguage[1198][3]";
+			deleteFromCloudCheckboxShown = YES;
+
+			suppressionText = TXTLS(@"BasicLanguage[1198][3]");
 		}
 	}
 #endif
-	
-	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(warningToken)
+
+	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1198][2]")
 													 title:TXTLS(@"BasicLanguage[1198][1]")
 											 defaultButton:BLS(1186)
 										   alternateButton:BLS(1009)
 											suppressionKey:nil
-										   suppressionText:nil];
-	
+										   suppressionText:suppressionText
+									   suppressionResponse:&suppressionResult];
+
 	if (result == NO) {
 		return;
 	}
-	
-	[worldController() destroyClient:u];
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	if (deleteFromCloudCheckboxShown && suppressionResult == NO) {
+		[worldController() destroyClient:u bySkippingCloud:NO];
+	} else {
+#endif
+
+		[worldController() destroyClient:u bySkippingCloud:YES];
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	}
+#endif
+
 	[worldController() save];
 }
 
@@ -2568,9 +2586,7 @@
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1110][2]")
 										   title:TXTLS(@"BasicLanguage[1110][1]")
 								   defaultButton:BLS(1186)
-								 alternateButton:nil
-								  suppressionKey:nil
-								 suppressionText:nil];
+								 alternateButton:nil];
 	}
 }
 

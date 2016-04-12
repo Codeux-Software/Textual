@@ -230,9 +230,7 @@
 							 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
 						   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
 							   otherButton:nil
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {
 								   [self close];
 

@@ -443,16 +443,12 @@
 				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1286][2]", [existingClient name])
 																	 title:TXTLS(@"BasicLanguage[1286][1]", serverAddress, channelListString)
 															 defaultButton:TXTLS(@"BasicLanguage[1286][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1286][4]")
-															suppressionKey:nil
-														   suppressionText:nil];
+														   alternateButton:TXTLS(@"BasicLanguage[1286][4]")];
 			} else {
 				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1285][2]", [existingClient name])
 																	 title:TXTLS(@"BasicLanguage[1285][1]", serverAddress, channelListArray[0])
 															 defaultButton:TXTLS(@"BasicLanguage[1285][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1285][4]")
-															suppressionKey:nil
-														   suppressionText:nil];
+														   alternateButton:TXTLS(@"BasicLanguage[1285][4]")];
 			}
 
 			// YES = default button (create new connection)

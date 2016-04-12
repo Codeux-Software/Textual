@@ -1096,9 +1096,7 @@ present_dialog:
 	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
 											 title:TXTLS(@"BasicLanguage[1287][1]")
 									 defaultButton:TXTLS(@"BasicLanguage[1186]")
-								   alternateButton:nil
-									suppressionKey:nil
-								   suppressionText:nil];
+								   alternateButton:nil];
 }
 
 - (void)onChangedInlineMediaOption:(id)sender
@@ -1222,10 +1220,7 @@ present_dialog:
 										 title:TXTLS(@"TDCPreferencesController[1000][1]")
 								 defaultButton:BLS(1186)
 							   alternateButton:nil
-								   otherButton:nil
-								suppressionKey:nil
-							   suppressionText:nil
-							   completionBlock:nil];
+								   otherButton:nil];
 
 		[sharedCloudManager() resetDataToSync];
 	} else {
@@ -1284,7 +1279,7 @@ present_dialog:
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked];
 						   }];
 #endif
@@ -1345,7 +1340,7 @@ present_dialog:
 								   otherButton:TXTLS(copyButton)
 								suppressionKey:nil
 							   suppressionText:nil
-							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 								   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
 							   }];
 		
@@ -1367,7 +1362,7 @@ present_dialog:
 										   otherButton:TXTLS(@"TDCPreferencesController[1009]")
 										suppressionKey:nil
 									   suppressionText:nil
-									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 										   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
 									   }];
 
@@ -1383,10 +1378,7 @@ present_dialog:
 												 title:TXTLS(@"BasicLanguage[1102][1]")
 										 defaultButton:BLS(1186)
 									   alternateButton:nil
-										   otherButton:nil
-										suppressionKey:nil
-									   suppressionText:nil
-									   completionBlock:nil];
+										   otherButton:nil];
 				
 				return;
 			}
