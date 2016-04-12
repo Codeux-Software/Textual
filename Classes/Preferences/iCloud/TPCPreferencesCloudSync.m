@@ -400,7 +400,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		 just use a static hash of the key name as the actual key, then have the
 		 value of the key a dictionary with the real key name in it and the value. */
 		[changedValues enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-			if ([self keyIsNotPermittedInCloud:key] == NO) {
+			if ([self keyIsNotPermittedInCloud:key]) {
 				return;
 			}
 
