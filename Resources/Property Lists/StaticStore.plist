@@ -35,6 +35,8 @@
 	</array>
 	<key>TPCPreferencesUserDefaults Keys Excluded from Export</key>
 	<dict>
+		<key>CG</key>
+		<string>PREFIX</string>
 		<key>NS</key>
 		<string>PREFIX</string>
 		<key>SU</key>
@@ -45,7 +47,7 @@
 		<string>PREFIX</string>
 		<key>WebKit</key>
 		<string>PREFIX</string>
-		<key>__Web</key>
+		<key>__</key>
 		<string>PREFIX</string>
 		<key>com.apple.</key>
 		<string>PREFIX</string>
