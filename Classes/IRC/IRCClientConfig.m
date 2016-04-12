@@ -653,7 +653,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setInteger:self.floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
 
 	if (isCloudDictionary == NO) {
-		[dic setDouble:self.lastMessageServerTime	forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
+		[dic setDouble:self.lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
 		[dic maybeSetObject:self.identityClientSideCertificate forKey:@"identityClientSideCertificate"];
 	}

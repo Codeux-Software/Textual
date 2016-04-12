@@ -38,6 +38,12 @@
 
 #import "TextualApplication.h"
 
+#import "TPCThemeControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+#import "TPCPreferencesCloudSyncPrivate.h"
+#endif
+
 #define _linesMin					100
 #define _linesMax					15000
 #define _inlineImageWidthMax		2000
@@ -702,7 +708,7 @@
 
 	NSString *userSoundFolder = [[userSoundFolderURL relativePath] stringByAppendingPathComponent:@"/Sounds"];
 
-	NSArray *soundPathList = [TPCPathInfo buildPathArray:userSoundFolder, systemSoundFolder, nil];
+	NSArray *soundPathList = [RZFileManager() buildPathArray:userSoundFolder, systemSoundFolder, nil];
 
 	NSMutableArray *soundList = [NSMutableArray array];
 
@@ -723,6 +729,7 @@
 	[soundList sortedArrayUsingSelector:@selector(compare:)];
 
 	[soundList insertObject:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel] atIndex:0];
+
 	[soundList insertObject:[NSMenuItem separatorItem] atIndex:1];
 
 	return [soundList copy];
@@ -1255,7 +1262,7 @@ present_dialog:
 - (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		NSString *path = [sharedCloudManager() ubiquitousContainerURLPath];
+		NSString *path = [sharedCloudManager() ubiquitousContainerPath];
 		
 		/* Try to see if we even have a path... */
 		if (path == nil) {
@@ -1268,13 +1275,6 @@ present_dialog:
 		NSError *delError = nil;
 		
 		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&delError];
-		
-		if (delError) {
-			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
-		}
-		
-		/* Delete local caches. */
-		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeCachedFolderPath] error:&delError];
 		
 		if (delError) {
 			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
@@ -1323,7 +1323,7 @@ present_dialog:
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *oldpath = [themeController() actualPath];
+		NSString *oldpath = [themeController() path];
 		
 		[RZWorkspace() openFile:oldpath];
 	}
@@ -1340,9 +1340,9 @@ present_dialog:
 #endif
 		
 		if (copyingToCloud) {
-			[themeController() copyActiveStyleToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openNewPathOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openNewPathOnCopy:YES];
 		} else {
-			[themeController() copyActiveStyleToDestinationLocation:TPCThemeControllerStorageCustomLocation reloadOnCopy:YES openNewPathOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCustomLocation reloadOnCopy:YES openNewPathOnCopy:YES];
 		}
 	}
 }
@@ -1424,7 +1424,7 @@ present_dialog:
 #endif
 		
 		/* pathOfTheme... is called to ignore the cloud cache location. */
-		NSString *filepath = [themeController() actualPath];
+		NSString *filepath = [themeController() path];
 		
 		[RZWorkspace() openFile:filepath];
     }

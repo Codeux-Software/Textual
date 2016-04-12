@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,10 +37,33 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
+/* Copy operation class is responsible for copying the active theme to a different
+ location when a user requests a local copy of the theme. */
+@interface TPCThemeControllerCopyOperation : NSObject
+@property (nonatomic, copy) NSString *themeName; // Name without source prefix
+@property (nonatomic, copy) NSString *pathBeingCopiedTo;
+@property (nonatomic, copy) NSString *pathBeingCopiedFrom;
+@property (nonatomic, assign) TPCThemeControllerStorageLocation destinationLocation;
+@property (nonatomic, assign) BOOL reloadThemeWhenCopied; // If YES, setThemeName: is called when copy completes. Otherwise, files are copied and nothing happens.
+@property (nonatomic, assign) BOOL openThemeWhenCopied;
+@property (nonatomic, strong) TDCProgressInformationSheet *progressIndicator;
 
-@interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
+- (void)beginOperation;
+@end
+
+/* Private header for theme controller that a plugin does not need access to. */
+@interface TPCThemeController ()
+@property (nonatomic, copy) NSString *cachedThemeName;
+@property (nonatomic, copy, readwrite) NSURL *baseURL;
+@property (nonatomic, strong, readwrite) TPCThemeSettings *customSettings;
+@property (nonatomic, assign, readwrite) TPCThemeControllerStorageLocation storageLocation;
+@property (nonatomic, assign) FSEventStreamRef eventStreamRef;
+@property (nonatomic, strong) TPCThemeControllerCopyOperation *currentCopyOperation;
+
+- (void)load; // Calling this more than once will throw an exception
+- (void)reload;
+
+- (void)prepareForApplicationTermination;
+
+- (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;
 @end

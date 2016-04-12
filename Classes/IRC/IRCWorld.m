@@ -40,6 +40,8 @@
 
 #import "IRCWorldPrivate.h"
 
+#import "TPCThemeControllerPrivate.h"
+
 #define _autoConnectDelay				1
 #define _reconnectAfterWakeupDelay		8
 

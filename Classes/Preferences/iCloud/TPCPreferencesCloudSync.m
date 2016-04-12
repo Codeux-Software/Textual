@@ -37,7 +37,8 @@
 
 #import "TextualApplication.h"
 
-#warning TPCPreferencesCloudSync FIXME: This file requires a significant overhaul.
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesImportExportPrivate.h"
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 NSString * const TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification	= @"TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification";
@@ -55,19 +56,6 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 #define _localKeysUpstreamSyncTimerInterval_1			60.0	// 1 minute
 #define _localKeysUpstreamSyncTimerInterval_2			630.0	// 10 minutes, 30 seconds
 
-@interface TPCPreferencesCloudSync ()
-@property (nonatomic, strong) id ubiquityIdentityToken;
-@property (nonatomic, assign) BOOL pushAllLocalKeysNextSync;
-@property (nonatomic, strong) dispatch_queue_t workerQueue;
-@property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
-@property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
-@property (nonatomic, copy) NSURL *ubiquitousContainerURL;
-@property (nonatomic, strong) NSMetadataQuery *cloudContainerNotificationQuery;
-@property (nonatomic, strong) NSMutableArray *unsavedLocalKeys;
-@property (nonatomic, strong) NSMutableArray *keysToRemoveNextSync;
-@property (nonatomic, copy) NSArray *remoteKeysBeingSynced;
-@end
-
 @implementation TPCPreferencesCloudSync
 
 #pragma mark -
@@ -75,47 +63,39 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)setValue:(id)value forKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key); // Yeah, we need a key...
-	
-	/* Set it and forget it. */
+	NSObjectIsEmptyAssert(key);
+
 	NSString *hashedKey = [key md5];
 	
 	if (value == nil) {
-		value = [NSNull null];
+		[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
+	} else {
+		[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : value} forKey:hashedKey];
 	}
-	
-	[RZUbiquitousKeyValueStore() setObject:@{@"key" : key, @"value" : value} forKey:hashedKey];
 }
 
 - (id)valueForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssertReturn(key, nil); // Yeah, we need a key...
-	
-	/* Insert pointless comment here. */
+	NSObjectIsEmptyAssertReturn(key, nil);
+
 	NSString *hashedKey = [key md5];
-	
-	/* Another pointless comment here. */
+
 	return [self valueForHashedKey:hashedKey actualKey:NULL];
 }
 
 - (id)valueForHashedKey:(NSString *)key actualKey:(NSString * __autoreleasing *)realKeyValue /* @private */
 {
-	/* Get initial value. */
 	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];
-	
-	/* We are only looking for dictionary entries... */
+
 	NSObjectIsKindOfClassAssertReturn(dictObject, NSDictionary, nil);
-	
-	/* Gather entry info. */
+
 	id keyname = [dictObject objectForKey:@"key"];
 	id objectValue = [dictObject objectForKey:@"value"];
-	
-	/* Some validation. Not strict, but meh... */
+
 	PointerIsEmptyAssertReturn(keyname, nil);
 	PointerIsEmptyAssertReturn(objectValue, nil);
-	
-	/* Give it back. */
-	if (NSDissimilarObjects(realKeyValue, NULL)) {
+
+	if ( realKeyValue) {
 		*realKeyValue = keyname;
 	}
 	
@@ -124,31 +104,29 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)removeObjectForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key); // Yeah, we need a key...
-	
-	/* Set it and forget it. */
+	NSObjectIsEmptyAssert(key);
+
 	NSString *hashedKey = [key md5];
-	
-	/* Umm, I just copy and paste these things. */
+
 	[RZUbiquitousKeyValueStore() removeObjectForKey:hashedKey];
 }
 
 - (void)removeObjectForKeyNextUpstreamSync:(NSString *)key
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
 
-	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
 
-	/* Add key to removal array. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		@synchronized([self keysToRemoveNextSync]) {
-			[[self keysToRemoveNextSync] addObject:key];
+	/* Add key to removal array */
+	NSObjectIsEmptyAssert(key);
+
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		@synchronized(self.keysToRemove) {
+			[self.keysToRemove addObject:key];
 		}
 	});
 }
@@ -157,44 +135,33 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 #pragma mark -
 #pragma mark URL Management
 
-- (void)setupUbiquitousContainerURLPath:(BOOL)isCalledFromInit
+- (void)setupUbiquitousContainerPath
 {
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Apple very clearly states not to do call this on the main thread
-		 since it does a lot of work, so we wont... */
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		NSURL *ucurl = [RZFileManager() URLForUbiquityContainerIdentifier:nil];
 		
 		if (ucurl) {
-			[self setUbiquitousContainerURL:ucurl];
+			self.ubiquitousContainerURL = ucurl;
 		} else {
-			[self setUbiquitousContainerURL:nil];
+			self.ubiquitousContainerURL = nil;
 			
 			LogToConsole(@"iCloud access is not available.");
 		}
-		
-		/* Update monitor based on state of container path. */
-		[self performBlockOnMainThread:^{
-			if ([self cloudContainerNotificationQuery] == nil) {
-				if ([self ubiquitousContainerURL]) {
-					[self startMonitoringUbiquitousContainer];
-				}
-			} else {
-				if ([self ubiquitousContainerURL] == nil) {
-					[self stopMonitoringUbiquitousContainer];
-				}
-			}
-		}];
 	});
 }
 
-- (NSString *)ubiquitousContainerURLPath
+- (NSString *)ubiquitousContainerPath
 {
-	return [[self ubiquitousContainerURL] path];
+	if (self.ubiquitousContainerURL == nil) {
+		return nil;
+	}
+
+	return [self.ubiquitousContainerURL path];
 }
 
 - (BOOL)ubiquitousContainerIsAvailable
 {
-	return NSObjectIsNotEmpty([self ubiquitousContainerURLPath]);
+	return (self.ubiquitousContainerURL != nil);
 }
 
 #pragma mark -
@@ -212,82 +179,37 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)performTenMinuteTimeBasedMaintenance
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
-	
-	/* We don't even want to sync if user doesn't want to. */
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
-	
-	/* Debug information. */
+
 	DebugLogToConsole(@"iCloud: Performing ten-minute based maintenance.");
-	
-	/* Perform actual maintenance tasks. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Compare fonts. */
-		BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
-		
-		if (fontMissing) {
-			NSString *remoteValue = [self valueForKey:TPCPreferencesThemeFontNameDefaultsKey];
-			
-			NSString *localFontVa = [TPCPreferences themeChannelViewFontName];
-			
-			/* Do the actual compare... */
-			if ([localFontVa isEqual:remoteValue] == NO) {
-				if ([NSFont fontIsAvailable:remoteValue]) {
-					DebugLogToConsole(@"iCloud: Remote font does not match local font. Setting font and reloading theme.");
-					
-					[TPCPreferences setThemeChannelViewFontName:remoteValue]; // Will remove the BOOL
-					
-					/* Font only applies to actual theme so we don't have to reload sidebars too... */
-					[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
-					
-					[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification object:nil];
-				}
-			}
-		}
+
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		[TPCPreferences fixThemeFontNameMissingDuringSync];
 	});
 }
 
 - (void)performOneMinuteTimeBasedMaintenance
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
-	
-	/* We don't even want to sync if user doesn't want to. */
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
 
-	/* Perform a sync. */
+	/* Perform a sync */
 	[self synchronizeToCloud];
 	
-	/* Perform actual maintenance tasks. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Have a theme in the temporary store? */
-		BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
-		
-		/* If we do, pass it through the set property to set it or continue to keep in store. */
-		if (missingTheme) {
-			NSString *temporaryTheme = [self valueForKey:TPCPreferencesThemeNameDefaultsKey];
-			
-			if ([TPCThemeController themeExists:temporaryTheme]) {
-				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store and will now be applied.", temporaryTheme);
-				
-				[TPCPreferences setThemeName:temporaryTheme]; // Will reset the BOOL
-				
-				[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
-			
-				[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
-			} else {
-				DebugLogToConsole(@"iCloud: Theme name \"%@\" is stored in the temporary store.", temporaryTheme);
-			}
-		}
+	/* Perform maintenance */
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		[TPCPreferences fixThemeNameMissingDuringSync];
 	});
 }
 
@@ -332,10 +254,11 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	 fucking stupid Textual's implementation of iCloud is. */
 
 	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
-								  @"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
+							@"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"AppleCloudMappedKeys"];
+		NSDictionary *staticValues =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"AppleCloudMappedKeys"];
 
 		[[masterController() sharedApplicationCacheObject] setObject:staticValues forKey:
 		 @"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
@@ -362,69 +285,64 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)syncPreferencesToCloud
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
-	
-	/* We don't even want to sync if user doesn't want to. */
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
-	
-	/* Begin work. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Only perform sync under strict conditions. */
-		if ([[self unsavedLocalKeys] count] == 0 &&
-			[[self keysToRemoveNextSync] count] == 0 &&
-			[self pushAllLocalKeysNextSync] == NO)
+
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		/* Only perform sync if there is something to sync */
+		if ([self.keysToSync count] == 0 &&
+			[self.keysToRemove count] == 0 &&
+			self.pushAllLocalKeysNextSync == NO)
 		{
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if ([self isSyncingLocalKeysDownstream]) {
+		if (self.isSyncingLocalKeysDownstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync was already running.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if ([self isSyncingLocalKeysUpstream]) {
+		if (self.isSyncingLocalKeysUpstream) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync was already running.");
 			
 			return; // Cancel this operation;
 		}
 		
-		if ([self hasUncommittedDataStoredInCloud]) {
+		if (self.hasUncommittedDataStoredInCloud) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because there is uncommitted data remaining in the cloud.");
 			
 			return; // Cancel this operation;
 		}
-		
-		/* Debug data. */
+
 		DebugLogToConsole(@"iCloud: Beginning sync upstream.");
-		
-		/* Continue normal work. */
-		[self setIsSyncingLocalKeysUpstream:YES];
+
+		self.isSyncingLocalKeysUpstream = YES;
 		
 		/* Compare to the remote. */
-		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		NSDictionary *remoteDictionary = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 		
-		NSArray *remotedictkeys = [remotedict allKeys];
+		NSArray *remoteDictionaryKeys = [remoteDictionary allKeys];
 		
 		/* Gather dictionary representation of all local preferences. */
-		NSMutableDictionary *changedValues = nil;
+		id changedValues = nil; // Can be NSDictionary or NSMutableDictionary
 		
-		if ([self pushAllLocalKeysNextSync]) {
-			changedValues = (id)[TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation];
+		if (self.pushAllLocalKeysNextSync) {
+			changedValues = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentationForCloud];
 			
 			[self setPushAllLocalKeysNextSync:NO];
 		} else {
 			changedValues = [NSMutableDictionary dictionary];
 
-			@synchronized([self unsavedLocalKeys]) {
-				for (id objectKey in [self unsavedLocalKeys]) {
+			@synchronized(self.keysToSync) {
+				for (id objectKey in self.keysToSync) {
 					id objectValue = [RZUserDefaults() objectForKey:objectKey];
 					
 					if (objectValue) {
@@ -436,7 +354,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 		/* If one of the values changed is our world controller, then we intercept
 		 that key and replace it with a few special values. */
-		if (NSDissimilarObjects(changedValues[IRCWorldControllerDefaultsStorageKey], nil)) {
+		if ([changedValues containsObject:IRCWorldControllerDefaultsStorageKey]) {
 			[changedValues removeObjectForKey:IRCWorldControllerDefaultsStorageKey];
 
 			NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
@@ -445,23 +363,21 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		}
 
 		/* Remove keys to sync even if we are syncing all. */
-		[[self unsavedLocalKeys] removeAllObjects];
+		@synchronized(self.keysToSync) {
+			[self.keysToSync removeAllObjects];
+		}
 
 		/* Remove any keys that were marked for removal */
-		@synchronized([self keysToRemoveNextSync]) {
-			if ([[self keysToRemoveNextSync] count] > 0) {
-				[[self keysToRemoveNextSync] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-					DebugLogToConsole(@"Key (%@) is being removed from iCloud as it was marked to be.", obj);
+		@synchronized(self.keysToRemove) {
+			[self.keysToRemove enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+				DebugLogToConsole(@"Key (%@) is being removed from iCloud as it was marked to be.", object);
 
-					[self removeObjectForKey:obj];
+				[self removeObjectForKey:object];
 
-					if ( changedValues[obj]) {
-						[changedValues removeObjectForKey:obj];
-					}
-				}];
+				[changedValues removeObjectForKey:object];
+			}];
 
-				[[self keysToRemoveNextSync] removeAllObjects];
-			}
+			[self.keysToRemove removeAllObjects];
 		}
 
 		/* Get a copy of our defaults. */
@@ -471,7 +387,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			defaults = [TPCPreferences defaultPreferences];
 		}
 		
-		NSArray *defaultskeys = [defaults allKeys];
+		NSArray *defaultsKeys = [defaults allKeys];
 		
 		/* Set the remote dictionary. */
 		/* Some people may look at this code and wonder what the fuck was this
@@ -483,164 +399,157 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		 the entire internals of Textual to use shorter keys? Ha, as-if... Instead
 		 just use a static hash of the key name as the actual key, then have the
 		 value of the key a dictionary with the real key name in it and the value. */
-		[changedValues enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			if ([self keyIsNotPermittedInCloud:key]) {
-				// Nobody cares about this...
-			} else {
-				/* Special save conditions. */
-				if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey]) {
-					/* Do not save the theme name, if we have something set in
-					 the temporary story. */
-					/* This defaults key as well as the one for TPCPreferencesThemeFontNameMissingLocallyDefaultsKey
-					 resets if user actually changes these value locally instead of the cloud doing it
-					 so if the user decided to change the value on this machine, it will still sync. */
-					
-					BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
-					
-					if (missingTheme) {
-						return; // Skip this entry. This only returns the block.
-					}
-				} else if ([key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey]) {
-					BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
-	
-					if (fontMissing) {
-						return; // Skip this entry. This only returns the block.
-					}
-				}
-				
-				/* If the key does not already exist in the cloud, then we check 
-				 if its value matches the default value maintained internally. If
-				 it has not changed from the default, why are we saving it? */
-				BOOL keyExistsInCloud = [remotedictkeys containsObject:key];
-				BOOL keyExistsInDefaults = [defaultskeys containsObject:key];
-				
-				if (keyExistsInCloud == NO && keyExistsInDefaults) {
-					id defaultsValue = [defaults objectForKey:key];
-					
-					if ([defaultsValue isEqual:obj]) {
-						return; // Nothing has changed...
-					}
-				}
-				
-				[self setValue:obj forKey:key];
+		[changedValues enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+			if ([self keyIsNotPermittedInCloud:key] == NO) {
+				return;
 			}
+
+			/* Special save conditions. */
+			if ([key isEqualToString:TPCPreferencesThemeNameDefaultsKey]) {
+				/* Do not save the theme name, if we have something set in
+				 the temporary story. */
+				/* This defaults key as well as the one for TPCPreferencesThemeFontNameMissingLocallyDefaultsKey
+				 resets if user actually changes these value locally instead of the cloud doing it
+				 so if the user decided to change the value on this machine, it will still sync. */
+				
+				BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
+				
+				if (missingTheme) {
+					return; // Skip this entry. This only returns the block.
+				}
+			} else if ([key isEqualToString:TPCPreferencesThemeFontNameDefaultsKey]) {
+				BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+
+				if (fontMissing) {
+					return; // Skip this entry. This only returns the block.
+				}
+			}
+			
+			/* If the key does not already exist in the cloud, then we check 
+			 if its value matches the default value maintained internally. If
+			 it has not changed from the default, why are we saving it? */
+			BOOL keyExistsInCloud = [remoteDictionaryKeys containsObject:key];
+
+			BOOL keyExistsInDefaults = [defaultsKeys containsObject:key];
+			
+			if (keyExistsInCloud == NO && keyExistsInDefaults) {
+				id defaultsValue = [defaults objectForKey:key];
+				
+				if ([defaultsValue isEqual:object]) {
+					return; // Nothing has changed...
+				}
+			}
+			
+			[self setValue:object forKey:key];
 		}];
 
-		/* Sync changes. */
 		[RZUbiquitousKeyValueStore() synchronize];
 
-		/* Allow us to continue work. */
-		[self setIsSyncingLocalKeysUpstream:NO];
+		self.isSyncingLocalKeysUpstream = NO;
 
-		/* Debug information. */
 		DebugLogToConsole(@"iCloud: Completeing sync upstream.");
 	});
 }
 
-- (void)syncPreferencesFromCloud:(NSArray *)changedKeys
+- (void)syncPreferencesFromCloud:(NSArray *)changedKeysHashed
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
 
-	/* We don't even want to sync if user doesn't want to. */
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
-	
-	/* Perform operation. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Debug data. */
+
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		DebugLogToConsole(@"iCloud: Beginning sync downstream.");
 
-		/* Announce our intents... */
-		[self setIsSyncingLocalKeysDownstream:YES];
+		self.isSyncingLocalKeysDownstream = YES;
 
-		/* Get the list of changed keys. */
-		if (PointerIsEmpty(changedKeys) || [changedKeys count] <= 0) {
-			/* If the list is empty, then we populate every single key. */
+		if (changedKeysHashed == nil || [changedKeysHashed count] <= 0) {
 			NSDictionary *upstreamRep = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
-			
-			[self setRemoteKeysBeingSynced:[upstreamRep allKeys]];
+
+			self.remoteKeysBeingSynced = [upstreamRep allKeys];
 		} else {
-			[self setRemoteKeysBeingSynced:changedKeys];
+			self.remoteKeysBeingSynced = changedKeysHashed;
 		}
 		
 		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
-		NSMutableArray *actualChangedKeys = [NSMutableArray array];
+		NSMutableArray *changedKeysUnhashed = [NSMutableArray array];
 		NSMutableArray *importedClients = [NSMutableArray array];
 		NSMutableArray *valuesToRemove = [NSMutableArray array];
 		
-		for (id hashedKey in [self remoteKeysBeingSynced]) {
-			id keyname = nil;
+		for (id hashedKey in self.remoteKeysBeingSynced) {
+			id unhashedKey = nil;
 			
-			id  objectValue = [self valueForHashedKey:hashedKey actualKey:&keyname];
+			id unhashedValue = [self valueForHashedKey:hashedKey actualKey:&unhashedKey];
 
-			if (objectValue == nil || keyname == nil) {
-				/* Maybe remove certain keys from the local defaults store depending
-				 on whether we are able to determine its actual name and whether it
-				 is allowed to be removed at all. */
-				NSString *unhashedKey = [self unhashedKeyFromHashedKey:hashedKey];
+			/* Maybe remove certain keys from the local defaults store */
+			if (unhashedKey == nil || unhashedValue == nil) {
+				unhashedKey = [self unhashedKeyFromHashedKey:hashedKey];
 
 				DebugLogToConsole(@"Hashed key (%@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
 
 				if (unhashedKey) {
 					DebugLogToConsole(@"Asking for permission to remove key (%@) from local defaults store.", unhashedKey);
 
-					if ([self keyIsNotPermittedFromCloud:unhashedKey] == NO) {
-						if ([self keyIsPermittedToBeRemovedThroughCloud:unhashedKey]) {
-							[valuesToRemove addObject:unhashedKey];
+					if ([self keyIsNotPermittedFromCloud:unhashedKey]) {
+						continue;
+					}
 
-							[actualChangedKeys addObject:unhashedKey];
-						}
+					if ([self keyIsPermittedToBeRemovedThroughCloud:unhashedKey]) {
+						[valuesToRemove addObject:unhashedKey];
+
+						[changedKeysUnhashed addObject:unhashedKey];
 					}
 				}
-			} else {
-				/* Block stuff from syncing that we did not want. */
-				if ([self keyIsNotPermittedFromCloud:keyname]) {
-					continue; // Do not continue operation...
-				}
+
+				continue;
+			}
+
+			/* Block stuff from syncing that we did not want. */
+			if ([self keyIsNotPermittedFromCloud:unhashedKey]) {
+				continue; // Do not continue operation...
+			}
+			
+			/* Compare the local to the new. */
+			/* This is for when we are going through the entire dictionary. */
+			id localValue = [RZUserDefaults() objectForKey:unhashedKey];
+			
+			if (localValue && [localValue isEqual:unhashedValue]) {
+				continue; // They are same. Don't even try to set.
+			}
+			
+			/* Set it to the new dictionary. */
+			if ([unhashedKey isEqual:IRCWorldControllerCloudDeletedClientsStorageKey])
+			{
+				NSObjectIsKindOfClassAssertContinue(unhashedValue, NSArray);
 				
-				/* Compare the local to the new. */
-				/* This is for when we are going through the entire dictionary. */
-				id localValue = [RZUserDefaults() objectForKey:keyname];
+				[self performBlockOnMainThread:^{
+					[worldController() processCloudCientDeletionList:unhashedValue];
+				}];
+			}
+			else if ([unhashedKey hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
+			{
+				NSObjectIsKindOfClassAssertContinue(unhashedValue, NSDictionary);
 				
-				if (localValue && [localValue isEqual:objectValue]) {
-					continue; // They are same. Don't even try to set.
-				}
+				/* Bet you're wondering why this is added to an array instead of
+				 just calling the importWorld... method. Well, it took me a long time
+				 to figure this out too. It used to just call the method directly,
+				 then I realized, doing that creates a new instance of TVCLogController
+				 for each client/channel added. That's all fine, but if the theme
+				 ends up changing when calling the TPCPreferences reload... method 
+				 below, then that will also reload the theme of thenewly created 
+				 view controller instance creating a race condition. Now, we just
+				 reload the theme then create the views afterwars. */
 				
-				/* Set it to the new dictionary. */
-				if ([keyname isEqual:IRCWorldControllerCloudDeletedClientsStorageKey])
-				{
-					NSObjectIsKindOfClassAssert(objectValue, NSArray);
-					
-					[self performBlockOnMainThread:^{
-						[worldController() processCloudCientDeletionList:objectValue];
-					}];
-				}
-				else if ([keyname hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix])
-				{
-					NSObjectIsKindOfClassAssert(objectValue, NSDictionary);
-					
-					/* Bet you're wondering why this is added to an array instead of
-					 just calling the importWorld... method. Well, it took me a long time
-					 to figure this out too. It used to just call the method directly,
-					 then I realized, doing that creates a new instance of TVCLogController
-					 for each client/channel added. That's all fine, but if the theme
-					 ends up changing when calling the TPCPreferences reload... method 
-					 below, then that will also reload the theme of thenewly created 
-					 view controller instance creating a race condition. Now, we just
-					 reload the theme then create the views afterwars. */
-					
-					[importedClients addObject:objectValue];
-				}
-				else
-				{
-					[actualChangedKeys addObject:keyname];
-					
-					[TPCPreferencesImportExport import:objectValue withKey:keyname];
-				}
+				[importedClients addObject:unhashedValue];
+			}
+			else
+			{
+				[changedKeysUnhashed addObject:unhashedKey];
+				
+				[TPCPreferencesImportExport import:unhashedValue withKey:unhashedKey];
 			}
 		}
 
@@ -652,8 +561,8 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 				}
 			}
 
-			if ([actualChangedKeys count] > 0) {
-				[TPCPreferences performReloadActionForKeyValues:actualChangedKeys];
+			if ([changedKeysUnhashed count] > 0) {
+				[TPCPreferences performReloadActionForKeyValues:changedKeysUnhashed];
 			}
 			
 			if ([importedClients count] > 0) {
@@ -661,99 +570,89 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 					[TPCPreferencesImportExport importWorldControllerClientConfiguration:seed isCloudBasedImport:YES];
 				}
 			}
-			
-			[self setRemoteKeysBeingSynced:nil];
+
+			self.remoteKeysBeingSynced = nil;
 		}];
 
-		/* Allow us to continue work. */
-		[self setIsSyncingLocalKeysDownstream:NO];
-		
-		/* If we made it this far, reset this notificaiton. */
-		[self setHasUncommittedDataStoredInCloud:NO];
-		
-		/* Debug data. */
+		self.isSyncingLocalKeysDownstream = NO;
+
+		self.hasUncommittedDataStoredInCloud = NO;
+
 		DebugLogToConsole(@"iCloud: Completeing sync downstream.");
 	});
 }
 
 - (void)syncPreferenceFromCloudNotification:(NSNotification *)aNote
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
 
-	/* Gather information about the sync request. */
 	NSInteger syncReason = [[aNote userInfo] integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
-	
-	/* Are we out of memory? */
+
 	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
 		[self cloudStorageLimitExceeded]; // We will not be syncing for this error.
 	} else {
 		/* It is kind of important to know this. */
 		/* Even if we do not handle it, we still want to know
 		 if iCloud tried to sync something to this client. */
-		[self setHasUncommittedDataStoredInCloud:YES];
-		
-		/* Get the list of changed keys. */
+		self.hasUncommittedDataStoredInCloud = YES;
+
 		NSArray *changedKeys = [[aNote userInfo] arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 
-		/* Do the work. */
 		[self syncPreferencesFromCloud:changedKeys];
 	}
 }
 
 - (void)resetDataToSync
 {
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		[self setPushAllLocalKeysNextSync:NO];
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		self.pushAllLocalKeysNextSync = NO;
 		
-		@synchronized([self unsavedLocalKeys]) {
-			[[self unsavedLocalKeys] removeAllObjects];
+		@synchronized(self.keysToSync) {
+			[self.keysToSync removeAllObjects];
 		}
 	});
 }
 
 - (void)syncEverythingNextSync
 {
-	[self setPushAllLocalKeysNextSync:YES];
+	self.pushAllLocalKeysNextSync = YES;
 }
 
 - (void)localKeysDidChangeNotification:(NSNotification *)aNote
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
-	
-	/* We don't even want to sync if user doesn't want to. */
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return; // Do not continue operation...
 	}
 
 	/* Downstream syncing will fire this notification so we
 	 check whether the key exists before adding it to our list. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		NSString *changedKey = [[aNote userInfo] objectForKey:@"changedKey"];
 		
-		if (changedKey) {
-			NSArray *pendingWrites = [self remoteKeysBeingSynced];
-			
-			if (pendingWrites) {
-				if ([pendingWrites containsObject:changedKey]) {
-					return; // Do not add this key...
-				}
-			}
+		if (changedKey == nil) {
+			return;
+		}
 
-			@synchronized([self unsavedLocalKeys]) {
-				[[self unsavedLocalKeys] addObject:changedKey];
+		NSArray *pendingWrites = self.remoteKeysBeingSynced;
+		
+		if (pendingWrites) {
+			if ([pendingWrites containsObject:changedKey]) {
+				return; // Do not add this key...
 			}
+		}
 
-			@synchronized([self keysToRemoveNextSync]) {
-				if ([[self keysToRemoveNextSync] containsObject:changedKey]) {
-					[[self keysToRemoveNextSync] removeObject:changedKey];
-				}
-			}
+		@synchronized(self.keysToSync) {
+			[self.keysToSync addObject:changedKey];
+		}
+
+		@synchronized(self.keysToRemove) {
+			[self.keysToRemove removeObject:changedKey];
 		}
 	});
 }
@@ -783,443 +682,150 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 }
 
 #pragma mark -
-#pragma mark Container Updates
-
-- (void)pauseCloudContainerMetadataUpdates
-{
-	[[self cloudContainerNotificationQuery] disableUpdates];
-}
-
-- (void)resumeCloudContainerMetadataUpdates
-{
-	[[self cloudContainerNotificationQuery] enableUpdates];
-}
-
-- (void)cloudMetadataQueryDidUpdate:(NSNotification *)notification
-{
-	/* Do not perform any actions during termination. */
-	if ([self applicationIsTerminating]) {
-		return; // Do not continue operation...
-	}
-
-	/* Begin work. */
-	BOOL isGatheringNotification = [NSMetadataQueryDidFinishGatheringNotification isEqualToString:[notification name]];
-	
-	DebugLogToConsole(@"iCloud: Metadata Query Update: isGathering = %i", isGatheringNotification);
-	
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Do not accept updates during work. */
-		[[self cloudContainerNotificationQuery] disableUpdates];
-		
-		/* Get the existing cache path. */
-		NSString *cachePath = [TPCPathInfo cloudCustomThemeCachedFolderPath];
-		NSString *ubiqdPath = [TPCPathInfo cloudCustomThemeFolderPath];
-		
-		if (NSObjectIsNotEmpty(ubiqdPath)) {
-			NSURL *cachePahtURL = [NSURL fileURLWithPath:cachePath];
-			NSURL *ubiqdPathURL = [NSURL fileURLWithPath:ubiqdPath];
-			
-			DebugLogToConsole(@"iCloud: Updating cache for container at path: \"%@\"", [ubiqdPathURL path]);
-
-			/* ========================================================== */
-		
-			/* We will now enumrate through all existing cache files gathering a list of those that
-			 exist and their modification dates. This information is stored in a dictionary with the
-			 file URL being the dictionary key and the value being its modification date. */
-			NSDirectoryEnumerator *enumerator = [RZFileManager() enumeratorAtURL:cachePahtURL
-													  includingPropertiesForKeys:@[NSURLIsDirectoryKey, NSURLContentModificationDateKey]
-																		 options:NSDirectoryEnumerationSkipsHiddenFiles
-																	errorHandler:^(NSURL *url, NSError *error)
-																	{
-																		LogToConsole(@"Enumeration Error: %@", [error localizedDescription]);
-																		
-																		return YES; // Continue regardless of error.
-																	}];
-			
-			/* Build list of files. */
-			NSMutableDictionary *cachedFiles = [NSMutableDictionary dictionary];
-			
-			/* Enumrate the cache. */
-			for (NSURL *itemURL in enumerator) {
-				NSError *error = nil;
-				
-				NSNumber *isDirectory = nil;
-				
-				/* Directories and files are handled differently. This handles that. */
-				if ([itemURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:&error]) {
-					/* Get the path of this item minus the prefix path. */
-					NSString *path = [[itemURL path] stringByDeletingPreifx:[cachePahtURL path]];
-					
-					/* Continus processing... */
-					if ([isDirectory boolValue]) {
-						/* We do not care about modification dates of directories. */
-						[cachedFiles setObject:[NSNull null] forKey:path];
-					} else {
-						/* Path is a file. We need it's modification date. */
-						NSDate *fileDate = nil;
-						
-						if ([itemURL getResourceValue:&fileDate forKey:NSURLContentModificationDateKey error:&error]) {
-							[cachedFiles setObject:fileDate forKey:path];
-						}
-					}
-				}
-			}
-			
-			/* ========================================================== */
-			
-			/* Now that we have an idea of our existing cache, we can
-			 go through our actual iCloud data and update files. */
-			
-			/* Go through each result item and do work. */
-			NSUInteger resultCount = [[self cloudContainerNotificationQuery] resultCount];
-			
-			for (NSUInteger i = 0; i < resultCount; i++) {
-				NSMetadataItem *item = [[self cloudContainerNotificationQuery] resultAtIndex:i];
-				
-				/* First thing first is to get the URL. */
-				NSURL *fileURL = [item valueForAttribute:NSMetadataItemURLKey];
-				
-				/* Build some relevant path information. */
-				/* First the path to the file minus its path prefix. */
-				NSString *basicFilePath = [[fileURL path] stringByDeletingPreifx:[ubiqdPathURL path]];
-
-				if ([basicFilePath length] <= 0) {
-					continue;
-				}
-				
-				/* Then the actual folder in which the file is stored. */
-				NSString *basicFolderPath = [basicFilePath stringByDeletingLastPathComponent];
-				
-				/* More paths, lol. */
-				NSURL *cachedFolderLocation = [cachePahtURL URLByAppendingPathComponent:basicFolderPath];
-				NSURL *cachedFileLocation = [cachePahtURL URLByAppendingPathComponent:basicFilePath];
-				
-				/* Now, we begin gathering relevant information about the file. */
-				BOOL updateOrAddFile = NO; // Used later on...
-				BOOL removeFromCacheArray = NO; // Setting to YES will remove the file from deletion pool.
-				
-				BOOL cloudFileExists = [RZFileManager() fileExistsAtPath:[fileURL path]];
-				BOOL cachedFileExists = [RZFileManager() fileExistsAtPath:[cachedFileLocation path]];
-				
-				BOOL isDownloaded = NO;
-				
-				if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-					NSString *_isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemDownloadingStatusKey];
-				
-					isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSMetadataUbiquitousItemDownloadingStatusCurrent) ||
-									NSObjectsAreEqual(_isDownloaded, NSMetadataUbiquitousItemDownloadingStatusDownloaded));
-				} else {
-					NSNumber *_isDownloaded = [item valueForAttribute:NSMetadataUbiquitousItemIsDownloadedKey];
-					
-					isDownloaded = [_isDownloaded boolValue];
-				}
-				
-				NSDate *lastChangeDate = [item valueForAttribute:NSMetadataItemFSContentChangeDateKey];
-				
-				/* ========================================================== */
-				
-				/* Begin work. */
-				if (isDownloaded == NO) {
-					if (cachedFileExists) {
-						removeFromCacheArray = YES; // Do not delete cached file.
-					}
-				} else {
-					if (cachedFileExists == NO) {
-						if (cloudFileExists) {
-							updateOrAddFile = YES;
-						}
-					} else {
-						/* This file exists in the cache, so let's get the modificaiton date we stored for it. */
-						id cachedFileModDate = [cachedFiles objectForKey:basicFilePath];
-
-						if (cloudFileExists) {
-							/* If for some reason we do not have either modificaiton date, then
-							 we do not try to change the cached version. */
-							
-							if (PointerIsEmpty(lastChangeDate) || NSObjectIsEmpty(cachedFileModDate)) {
-								removeFromCacheArray = YES;
-							} else {
-								NSTimeInterval timeDiff = [lastChangeDate timeIntervalSinceDate:cachedFileModDate];
-								
-								/* If we have a negative, then that means the change date for the file
-								 on the cloud is older than the one in the cache. What? Anyways, we
-								 only update the file if the date is in the future. */
-								
-								if (timeDiff > 0) {
-									updateOrAddFile = YES;
-								}
-							}
-						} else {
-							removeFromCacheArray = YES; // Do not delete cached file.
-						}
-					}
-				}
-				
-				/* ========================================================== */
-				
-				/* Begin actual update process for this file. */
-				if (updateOrAddFile || removeFromCacheArray) {
-					/* If a file is marked for update or it was marked to be
-					 removed from the cache array, then we remove it from that
-					 so that when the array is processed later on, the only
-					 files we want in it, are those that will be erased from
-					 the cache folder. */
-					/* Removing it from array reduces calls to fileExistsAtPath
-					 down the line. */
-					
-					/* Remove any known cache entries. */
-					[cachedFiles removeObjectForKey:basicFilePath]; // File cache.
-					[cachedFiles removeObjectForKey:basicFolderPath]; // Folder cache.
-					
-					/* Now we can copy the file if needed. */
-					NSError *updateError = nil;
-					
-					if (updateOrAddFile) {
-						/* Delete old file if we have to. */
-						if (cachedFileExists) {
-							[RZFileManager() removeItemAtURL:cachedFileLocation error:&updateError];
-							
-							if (updateError) {
-								LogToConsole(@"Error Deleting Cached File: %@", [updateError localizedDescription]);
-							}
-						}
-						
-						/* Create the destination. */
-						if ([RZFileManager() fileExistsAtPath:cachedFolderLocation.path] == NO) {
-							[RZFileManager() createDirectoryAtURL:cachedFolderLocation withIntermediateDirectories:YES attributes:nil error:&updateError];
-							
-							if (updateError) {
-								LogToConsole(@"Error Creating Destination Folder: %@", [updateError localizedDescription]);
-							}
-						}
-						
-						/* Copy new item into place. */
-						[RZFileManager() copyItemAtURL:fileURL toURL:cachedFileLocation error:&updateError];
-						
-						if (updateError) {
-							LogToConsole(@"Error Copying Cached File: %@", [updateError localizedDescription]);
-						} else {
-							DebugLogToConsole(@"Cached file \"%@\" updated with the file \"%@\" (%@)", cachedFileLocation, fileURL, lastChangeDate);
-						}
-					}
-				}
-				
-				/* We are done with this file. Do it all again for the next... */
-			};
-			
-			/* ========================================================== */
-			
-			/* Time to destroy old caches. */
-			[cachedFiles enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-				/* Check the folder to see if anything left in the cache does exist in cloud. */
-				NSURL *ubiqdFolderLocation = [ubiqdPathURL URLByAppendingPathComponent:key];
-				NSURL *cacheFolderLocation = [cachePahtURL URLByAppendingPathComponent:key];
-				
-				/* Destroy cached location. */
-				if ([RZFileManager() fileExistsAtPath:[ubiqdFolderLocation path]] == NO) {
-					[RZFileManager() removeItemAtURL:cacheFolderLocation error:NULL];
-					
-					DebugLogToConsole(@"Destroying cached item \"%@\" which no longer exists in the cloud.", cacheFolderLocation);
-				}
-			}];
-			
-			/* After everything is updated, run a validation on the
-			 theme to make sure the active still exists. */
-			[self performBlockOnMainThread:^{
-				[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification object:nil];
-			}];
-		}
-		
-		/* Accept updates again. */
-		[[self cloudContainerNotificationQuery] enableUpdates];
-	});
-}
-
-- (void)startMonitoringUbiquitousContainer
-{
-	/* Setup query for container changes. */
-	[self setCloudContainerNotificationQuery:[NSMetadataQuery new]];
-	
-	[[self cloudContainerNotificationQuery] setSearchScopes:@[NSMetadataQueryUbiquitousDocumentsScope]];
-	[[self cloudContainerNotificationQuery] setPredicate:[NSPredicate predicateWithFormat:@"%K LIKE %@", NSMetadataItemFSNameKey, @"*"]];
-	
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(cloudMetadataQueryDidUpdate:)
-								   name:NSMetadataQueryDidFinishGatheringNotification
-								 object:[self cloudContainerNotificationQuery]];
-	
-	[RZNotificationCenter() addObserver:self
-							   selector:@selector(cloudMetadataQueryDidUpdate:)
-								   name:NSMetadataQueryDidUpdateNotification
-								 object:[self cloudContainerNotificationQuery]];
-	
-	[[self cloudContainerNotificationQuery] startQuery];
-}
-
-- (void)stopMonitoringUbiquitousContainer
-{
-	if ( [self cloudContainerNotificationQuery]) {
-		[[self cloudContainerNotificationQuery] stopQuery];
-	}
-	
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidUpdateNotification object:[self cloudContainerNotificationQuery]];
-    [RZNotificationCenter() removeObserver:self name:NSMetadataQueryDidFinishGatheringNotification object:[self cloudContainerNotificationQuery]];
-
-	[self setCloudContainerNotificationQuery:nil];
-}
-
-#pragma mark -
 #pragma mark Session Management
 
 - (void)iCloudAccountAvailabilityChanged:(NSNotification *)aNote
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
 
-	/* Get new token first. */
+	id oldToken = self.ubiquityIdentityToken;
+
 	id newToken = [RZFileManager() cloudUbiquityIdentityToken];
-	
-	if (PointerIsNotEmpty(newToken)) {
-		if (NSDissimilarObjects(newToken, [self ubiquityIdentityToken])) {
-			/* If the new token is logged in and is different from the old,
-			 then mark local keys as changed to force an upstream sync. */
-			
-			[self setPushAllLocalKeysNextSync:YES];
-		}
+
+	if (newToken && newToken != oldToken) {
+		self.pushAllLocalKeysNextSync = YES;
 	}
+
+	self.ubiquityIdentityToken = newToken;
 	
-	[self setUbiquityIdentityToken:newToken];
-	
-	[self setupUbiquitousContainerURLPath:NO];
+	[self setupUbiquitousContainerPath];
 }
 
 - (void)initializeCloudSyncSession
 {
-	/* Debug data. */
+	if ([NSUbiquitousKeyValueStore defaultStore] == nil) {
+		LogToConsole(@"Key-value store for iCloud syncing not available.");
+
+		return;
+	}
+
 	DebugLogToConsole(@"iCloud: Beginning session.");
 
-	/* Begin actual session. */
-	if (RZUbiquitousKeyValueStore()) {
-		/* Create worker queue. */
-		[self setWorkerQueue:dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL)];
-		
-		[self setUbiquityIdentityToken:[RZFileManager() cloudUbiquityIdentityToken]];
-		
-		[self setupUbiquitousContainerURLPath:YES];
-		
-		[self setUnsavedLocalKeys:[NSMutableArray new]];
-		[self setKeysToRemoveNextSync:[NSMutableArray new]];
-		
-		/* Notification for when a local value through NSUserDefaults is changed. */
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(localKeysDidChangeNotification:)
-									   name:TPCPreferencesUserDefaultsDidChangeNotification
-									 object:nil];
-		
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(iCloudAccountAvailabilityChanged:)
-									   name:NSUbiquityIdentityDidChangeNotification
-									 object:nil];
-		
-		NSTimer *syncTimer1 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_1
-															  target:self
-															selector:@selector(performOneMinuteTimeBasedMaintenance)
-															userInfo:nil
-															  repeats:YES];
-		
-		NSTimer *syncTimer2 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_2
-															   target:self
-															 selector:@selector(performTenMinuteTimeBasedMaintenance)
-															 userInfo:nil
-															  repeats:YES];
-		
-		[self setCloudOneMinuteSyncTimer:syncTimer1];
-		[self setCloudTenMinuteSyncTimer:syncTimer2];
+	self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL);
 
-		/* Notification for when a remote value through the key-value store is changed. */
-		[RZNotificationCenter() addObserver:self
-								   selector:@selector(syncPreferenceFromCloudNotification:)
-									   name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
-									 object:nil];
-		
-		/* Sync latest changes from disc for the dictionary. */
-		[RZUbiquitousKeyValueStore() synchronize];
-	} else {
-		/* The key value store is not available. */
+	self.ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
 
-		LogToConsole(@"Key-value store for iCloud syncing not available.");
-	}
+	[self setupUbiquitousContainerPath];
+
+	self.keysToSync = [NSMutableArray array];
+	self.keysToRemove = [NSMutableArray array];
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(localKeysDidChangeNotification:)
+								   name:TPCPreferencesUserDefaultsDidChangeNotification
+								 object:nil];
+	
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(iCloudAccountAvailabilityChanged:)
+								   name:NSUbiquityIdentityDidChangeNotification
+								 object:nil];
+	
+	NSTimer *syncTimer1 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_1
+														  target:self
+														selector:@selector(performOneMinuteTimeBasedMaintenance)
+														userInfo:nil
+														  repeats:YES];
+	
+	NSTimer *syncTimer2 = [NSTimer scheduledTimerWithTimeInterval:_localKeysUpstreamSyncTimerInterval_2
+														   target:self
+														 selector:@selector(performTenMinuteTimeBasedMaintenance)
+														 userInfo:nil
+														  repeats:YES];
+
+	self.cloudOneMinuteSyncTimer = syncTimer1;
+	self.cloudTenMinuteSyncTimer = syncTimer2;
+
+	[RZNotificationCenter() addObserver:self
+							   selector:@selector(syncPreferenceFromCloudNotification:)
+								   name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification
+								 object:nil];
+
+	[RZUbiquitousKeyValueStore() synchronize];
 }
 
 - (void)purgeDataStoredWithCloud
 {
-	/* Do not perform any actions during termination. */
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
 	}
 
-	/* Perform work. */
-	XRPerformBlockAsynchronouslyOnQueue([self workerQueue], ^{
-		/* Sync latest changes from disc for the dictionary. */
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		[RZUbiquitousKeyValueStore() synchronize];
 
-		/* Get the remote. */
-		NSDictionary *remotedict = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		NSDictionary *remoteDictionary = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
 
-		/* Start destroying. */
-		[remotedict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		[remoteDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
 		}];
-		
-		/* Destroy local keys not stored on cloud. */
+
 		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 		[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+
+		self.pushAllLocalKeysNextSync = YES;
 	});
-	
-	[self setPushAllLocalKeysNextSync:YES];
+}
+
+- (void)prepareForApplicationTermination
+{
+	/* The cloud session is closed from within the worker queue so that 
+	 any operations that aren't already finished will have time to do so. */
+	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
+		self.applicationIsTerminating = YES;
+
+		[self closeCloudSyncSession];
+	});
 }
 
 - (void)closeCloudSyncSession
 {
-	/* Debug data. */
 	DebugLogToConsole(@"iCloud: Closing session.");
 
-	/* Stop listening for notification related to local changes. */
-	if ( [self cloudOneMinuteSyncTimer]) {
-		[[self cloudOneMinuteSyncTimer] invalidate];
+	if ( self.cloudOneMinuteSyncTimer) {
+		[self.cloudOneMinuteSyncTimer invalidate];
+		 self.cloudOneMinuteSyncTimer = nil;
 	}
 	
-	if ( [self cloudTenMinuteSyncTimer]) {
-		[[self cloudTenMinuteSyncTimer] invalidate];
+	if ( self.cloudTenMinuteSyncTimer) {
+		[self.cloudTenMinuteSyncTimer invalidate];
+		 self.cloudTenMinuteSyncTimer = nil;
 	}
 	
     [RZNotificationCenter() removeObserver:self name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
 	
 	[RZNotificationCenter() removeObserver:self name:NSUbiquityIdentityDidChangeNotification object:nil];
+
     [RZNotificationCenter() removeObserver:self name:NSUbiquitousKeyValueStoreDidChangeExternallyNotification object:nil];
 	
-	[self stopMonitoringUbiquitousContainer];
-	
-	/* Dispatch clean-up. */
-	if ([self workerQueue]) {
-		[self setWorkerQueue:NULL];
+	if (self.workerQueue) {
+		self.workerQueue = nil;
 	}
-	
-	[self setPushAllLocalKeysNextSync:NO];
 
-	[self setUnsavedLocalKeys:nil];
-	[self setRemoteKeysBeingSynced:nil];
-	
-	[self setIsSyncingLocalKeysDownstream:NO];
-	[self setIsSyncingLocalKeysUpstream:NO];
-	
-	[self setUbiquityIdentityToken:nil];
-	[self setUbiquitousContainerURL:nil];
-	
-	[self setCloudOneMinuteSyncTimer:nil];
-	[self setCloudTenMinuteSyncTimer:nil];
+	self.pushAllLocalKeysNextSync = NO;
+
+	self.keysToSync = nil;
+	self.keysToRemove = nil;
+
+	self.remoteKeysBeingSynced = nil;
+
+	self.isSyncingLocalKeysDownstream = NO;
+	self.isSyncingLocalKeysUpstream = NO;
+
+	self.ubiquityIdentityToken = nil;
+	self.ubiquitousContainerURL = nil;
+
+	self.isTerminated = YES;
 }
 
 @end

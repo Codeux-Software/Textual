@@ -312,4 +312,62 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 	}
 }
 
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+
++ (void)fixThemeNameMissingDuringSync
+{
+	BOOL missingTheme = [RZUserDefaults() boolForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
+
+	if (missingTheme == NO) {
+		return;
+	}
+
+	NSString *remoteValue = [self valueForKey:TPCPreferencesThemeNameDefaultsKey];
+
+	NSString *localValue = [TPCPreferences themeName];
+
+	if ([localValue isEqual:remoteValue]) {
+		return;
+	}
+
+	if ([TPCThemeController themeExists:remoteValue] == NO) {
+		return;
+	}
+
+	[TPCPreferences setThemeName:remoteValue]; // Will reset the BOOL
+
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleWithTableViewsAction];
+
+	[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification object:nil];
+}
+
++ (void)fixThemeFontNameMissingDuringSync
+{
+	BOOL fontMissing = [RZUserDefaults() boolForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
+
+	if (fontMissing == NO) {
+		return;
+	}
+
+	NSString *remoteValue = [self valueForKey:TPCPreferencesThemeFontNameDefaultsKey];
+
+	NSString *localValue = [TPCPreferences themeChannelViewFontName];
+
+	if ([localValue isEqual:remoteValue]) {
+		return;
+	}
+
+	if ([NSFont fontIsAvailable:remoteValue] == NO) {
+		return;
+	}
+
+	[TPCPreferences setThemeChannelViewFontName:remoteValue]; // Will remove the BOOL
+
+	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction];
+
+	[RZNotificationCenter() postNotificationName:TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification object:nil];
+}
+
+#endif
+
 @end

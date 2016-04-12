@@ -71,14 +71,10 @@
 + (NSString *)userDownloadFolderPath;
 + (NSString *)userPreferencesFolderPath;
 
-+ (NSArray *)buildPathArray:(NSString *)path, ...;
-+ (NSArray *)buildPathArrayWithPaths:(NSArray *)paths;
-
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (NSString *)applicationUbiquitousContainerPath;
 
-+ (NSString *)cloudCustomThemeFolderPath; // Actual iCloud folder.
-+ (NSString *)cloudCustomThemeCachedFolderPath; // Where iCloud folder is cached locally.
++ (NSString *)cloudCustomThemeFolderPath;
 
 + (void)openApplicationUbiquitousContainer;
 + (void)openCloudCustomThemeFolder;

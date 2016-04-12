@@ -57,21 +57,14 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 };
 
 @interface TPCThemeController : NSObject
-@property (nonatomic, copy) NSURL *baseURL;
-@property (nonatomic, copy) NSString *associatedThemeName;
-@property (nonatomic, strong) TPCThemeSettings *customSettings;
-@property (nonatomic, assign) TPCThemeControllerStorageLocation storageLocation;
+@property (readonly, copy) NSURL *baseURL;
+@property (readonly) TPCThemeSettings *customSettings;
+@property (readonly) TPCThemeControllerStorageLocation storageLocation;
 
 /* Calls for the active theme. */
-- (void)load; // Calling this more than once will throw an exception
-- (void)reload;
-
-- (void)prepareForApplicationTermination;
-
 @property (readonly, copy) NSDictionary *dictionaryOfAllThemes;
 
 @property (readonly, copy) NSString *path;
-@property (readonly, copy) NSString *actualPath; // Ignores iCloud cache and queries iCloud directly.
 @property (readonly, copy) NSString *temporaryPath;
 
 @property (readonly) BOOL usesTemporaryPath;
@@ -79,8 +72,6 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 @property (readonly, copy) NSString *name;
 
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
-
-- (void)copyActiveStyleToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;
 
 /* Returns YES if a theme reload was necessary. */
 - (BOOL)validateThemeAndRelaodIfNecessary;
@@ -91,7 +82,7 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 + (BOOL)themeExists:(NSString *)themeName;
 
 + (NSString *)pathOfThemeWithName:(NSString *)themeName;
-+ (NSString *)pathOfThemeWithName:(NSString *)themeName skipCloudCache:(BOOL)ignoreCloudCache storageLocation:(TPCThemeControllerStorageLocation *)storageLocation;
++ (NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(TPCThemeControllerStorageLocation *)storageLocation;
 
 + (NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeControllerStorageLocation)storageLocation;
 
@@ -99,5 +90,4 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 + (NSString *)extractThemeName:(NSString *)source;
 
 + (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName;
-+ (TPCThemeControllerStorageLocation)actaulStorageLocationOfThemeWithName:(NSString *)themeName;
 @end

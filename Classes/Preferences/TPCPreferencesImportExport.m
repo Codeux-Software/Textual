@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "TPCPreferencesImportExportPrivate.h"
+
 NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey		= @"Theme -> Name -> Did Not Exist During Last Sync";
 NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme -> Font Name -> Did Not Exist During Last Sync";
 
@@ -48,7 +50,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 									  body:TXTLS(@"BasicLanguage[1181][2]")
 									 title:TXTLS(@"BasicLanguage[1181][1]")
 							 defaultButton:TXTLS(@"BasicLanguage[1181][3]")
-						   alternateButton:BLS(1009)
+						   alternateButton:TXTLS(@"BasicLanguage[1009]")
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
@@ -108,22 +110,22 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 		/* Begin import. */
 		NSData *rawData = [NSData dataWithContentsOfURL:pathURL];
 
-		NSDictionary *plist = [NSPropertyListSerialization propertyListWithData:rawData
-																		options:NSPropertyListImmutable
-																		 format:NULL
-																		  error:NULL];
+		NSDictionary *propertyList = [NSPropertyListSerialization
+			propertyListWithData:rawData options:NSPropertyListImmutable format:NULL error:NULL];
 		
 		/* Perform actual import if we have the dictionary. */
-		if (plist) {
-			/* Import data. */
-			[self importContentsOfDictionary:plist withAutomaticReload:NO];
-			
-			/* Do not push the loading screen right away. Add a little delay to give everything
-			 a chance to settle down before presenting the changes to the user. */
-			[self performSelector:@selector(importPostflightCleanup:) withObject:[plist allKeys] afterDelay:2.0];
-		} else {
+		if (propertyList == nil) {
 			LogToConsole(@"Import failed. Could not read property list.");
+
+			return;
 		}
+
+		/* Import data */
+		[self importContentsOfDictionary:propertyList withAutomaticReload:NO];
+		
+		/* Do not push the loading screen right away. Add a little delay to give everything
+		 a chance to settle down before presenting the changes to the user. */
+		[self performSelector:@selector(importPostflightCleanup:) withObject:[propertyList allKeys] afterDelay:2.0];
 	});
 }
 
@@ -134,8 +136,8 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 + (void)importContentsOfDictionary:(NSDictionary *)aDict withAutomaticReload:(BOOL)reloadPreferences
 {
-	[aDict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		[self import:obj withKey:key];
+	[aDict enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		[self import:object withKey:key];
 	}];
 
 	if (reloadPreferences) {
@@ -165,8 +167,8 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 		
 		NSObjectIsEmptyAssert(clientList);
 
-		[clientList enumerateObjectsUsingBlock:^(id objd, NSUInteger idx, BOOL *stop) {
-			[self importWorldControllerClientConfiguration:objd isCloudBasedImport:NO];
+		[clientList enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+			[self importWorldControllerClientConfiguration:object isCloudBasedImport:NO];
 		}];
 	}
 
@@ -215,8 +217,6 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 + (void)importPostflightCleanup:(NSArray *)changedKeys
 {
-	[mainWindow() setupTree];
-
 	[TPCPreferences performReloadActionForKeyValues:changedKeys];
 
 	[worldController() setIsPopulatingSeeds:NO];
@@ -232,25 +232,41 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	return [TPCPreferencesUserDefaults keyIsExcludedFromBeingExported:key];
 }
 
++ (NSDictionary *)exportedPreferencesDictionaryRepresentationForCloud
+{
+	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:YES removeDefaults:NO];
+}
+
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation
 {
-	return [self exportedPreferencesDictionaryRepresentation:YES];
+	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:YES removeDefaults:YES];
 }
 
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk
 {
+	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:removeJunk removeDefaults:YES];
+}
+
++ (NSDictionary *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk removeDefaults:(BOOL)removeDefaults
+{
 	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
 
-	NSDictionary *defaults = [TPCPreferences defaultPreferences];
+	NSDictionary *defaults = nil;
+
+	if (removeDefaults) {
+		defaults = [TPCPreferences defaultPreferences];
+	}
 
 	NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
 
 	[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-		if (((removeJunk && [self isKeyNameSupposedToBeIgnored:key] == NO) || removeJunk == NO) &&
-			NSObjectsAreEqual(obj, defaults[key]) == NO)
-		{
-			fnlsettings[key] = obj;
+		if (removeJunk && [self isKeyNameSupposedToBeIgnored:key]) {
+			return;
+		} else if (removeDefaults && NSObjectsAreEqual(obj, defaults[key])) {
+			return;
 		}
+
+		fnlsettings[key] = obj;
 	}];
 
 	return fnlsettings;
@@ -266,23 +282,23 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	 trying to tamper with stuff. 2) Smaller, faster. Mostly #1. */
 	NSError *parseError = nil;
 
-	NSData *plist = [NSPropertyListSerialization dataWithPropertyList:mutsettings
-															   format:NSPropertyListBinaryFormat_v1_0
-															  options:0
-																error:&parseError];
+	NSData *propertyList = [NSPropertyListSerialization
+		dataWithPropertyList:mutsettings format:NSPropertyListBinaryFormat_v1_0 options:0 error:&parseError];
 
-	if (NSObjectIsEmpty(plist) || parseError) {
-		LogToConsole(@"Error Creating Property List: %@", [parseError localizedDescription]);
-		
-		return NO;
-	} else {
-		BOOL writeResult = [plist writeToURL:pathURL atomically:YES];
-
-		if (writeResult == NO) {
-			LogToConsole(@"Write failed.");
-
-			return NO;
+	if (propertyList == nil) {
+		if (parseError) {
+			LogToConsole(@"Error Creating Property List: %@", [parseError localizedDescription]);
 		}
+
+		return NO;
+	}
+
+	BOOL writeResult = [propertyList writeToURL:pathURL atomically:YES];
+
+	if (writeResult == NO) {
+		LogToConsole(@"Write failed.");
+
+		return NO;
 	}
 
 	return YES;

@@ -42,6 +42,12 @@
 #import "TLOLicenseManager.h"
 #endif
 
+#import "TPCThemeControllerPrivate.h"
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+#import "TPCPreferencesCloudSyncPrivate.h"
+#endif
+
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
@@ -190,7 +196,7 @@
 - (void)prepareThirdPartyServiceHockeyAppFramework
 {
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-	NSDictionary *hockeyAppData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreHockeyAppFramework"];
+	NSDictionary *hockeyAppData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreHockeyAppFramework"];
 
 	NSString *applicationIdentifier = hockeyAppData[@"Application Identifier"];
 
@@ -202,7 +208,7 @@
 - (void)prepareThirdPartyServiceSparkleFramework
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"3rdPartyStaticStoreSparkleFramework"];
+	NSDictionary *sparkleData = [TPCResourceManager loadContentsOfPropertyListInResources:@"3rdPartyStaticStoreSparkleFramework"];
 
 	BOOL receiveBetaUpdates = [TPCPreferences receiveBetaUpdates];
 
@@ -349,8 +355,7 @@
 				self.terminatingClientCount > 0 ||
 
 				/* iCloud is syncing. */
-				([sharedCloudManager() isSyncingLocalKeysDownstream] ||
-				 [sharedCloudManager() isSyncingLocalKeysUpstream])
+				[sharedCloudManager() isTerminated] == NO
 		);
 	} else {
 		return (self.terminatingClientCount > 0);
@@ -377,7 +382,7 @@
 	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[sharedCloudManager() setApplicationIsTerminating:YES];
+	[sharedCloudManager() prepareForApplicationTermination];
 #endif
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
@@ -407,10 +412,6 @@
 	[TXSharedApplication releaseSharedMutableSynchronizationSerialQueue];
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[sharedCloudManager() closeCloudSyncSession];
-#endif
 
 	[self.sharedApplicationCacheObject removeAllObjects];
 	

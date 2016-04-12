@@ -50,7 +50,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 
 	if (_dataPopulated == NO) {
 		/* Populate public data */
-		id publicValue = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"IRCCommandIndexPublicValues"];
+		id publicValue = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexPublicValues"];
 
 		if (publicValue) {
 			NSMutableDictionary *mutplist = [publicValue mutableCopy];
@@ -61,7 +61,7 @@ static NSDictionary *IRCCommandIndexPrivateValues = nil;
 		}
 
 		/* Populate private data */
-		id privateValue = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"IRCCommandIndexPrivateValues"];
+		id privateValue = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCCommandIndexPrivateValues"];
 
 		if (privateValue) {
 			NSMutableDictionary *mutplist = [privateValue mutableCopy];

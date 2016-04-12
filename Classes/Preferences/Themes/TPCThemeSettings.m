@@ -43,6 +43,17 @@
 #define _templateEngineVersionMinimum			3
 
 @interface TPCThemeSettings ()
+@property (nonatomic, assign, readwrite) BOOL forceInvertSidebarColors;
+@property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
+@property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
+@property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
+@property (nonatomic, copy, readwrite) NSFont *channelViewFont;
+@property (nonatomic, copy, readwrite) NSString *nicknameFormat;
+@property (nonatomic, copy, readwrite) NSString *timestampFormat;
+@property (nonatomic, copy, readwrite) NSString *settingsKeyValueStoreName;
+@property (nonatomic, copy, readwrite) NSColor *underlyingWindowColor;
+@property (nonatomic, assign, readwrite) double indentationOffset;
+@property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 @property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
 @property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
 @end
@@ -84,21 +95,19 @@
 {
 	NSDictionary *fontDict = [dict dictionaryForKey:key];
 
-	NSAssertReturnR(([fontDict count] == 2), nil);
-	
 	NSString *fontName = [fontDict stringForKey:@"Font Name"];
+
+	if ([NSFont fontIsAvailable:fontName] == NO) {
+		return nil;
+	}
 
 	NSInteger fontSize = [fontDict integerForKey:@"Font Size"];
 
-	NSObjectIsEmptyAssertReturn(fontName, nil);
-
-	if ([NSFont fontIsAvailable:fontName] && fontSize >= 5.0) {
-		NSFont *theFont = [NSFont fontWithName:fontName size:fontSize];
-
-		return theFont;
+	if (fontSize < 5) {
+		return nil;
 	}
 
-	return nil;
+	return [NSFont fontWithName:fontName size:fontSize];
 }
 
 #pragma mark -
@@ -235,9 +244,11 @@
 - (void)reloadWithPath:(NSString *)path
 {
 	/* Load any custom templates. */
-	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
+	NSString *templatesPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
 
-	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+	NSURL *templatesURL = [NSURL fileURLWithPath:templatesPath];
+
+	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesURL];
 
 	/* Reset old properties. */
 	self.channelViewFont = nil;
@@ -256,11 +267,11 @@
 	self.usesIncompatibleTemplateEngineVersion = YES;
 
 	/* Load style settings dictionary. */
-	NSInteger templateEngineVersion = TPCThemeSettingsLatestTemplateEngineVersion;
+	NSInteger templateEngineVersion = 0;
 
 	NSDictionary *styleSettings = nil;
 	
-	dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
+	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
 
 	if ([RZFileManager() fileExistsAtPath:dictPath]) {
 		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
