@@ -388,18 +388,14 @@
 				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
 																	 title:TXTLS(@"BasicLanguage[1272][1]")
 															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
-															suppressionKey:nil
-														   suppressionText:nil];
+														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")];
 
 				returnValue = (continueop == NO);
 			} else {
 				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][3]")
 																	 title:TXTLS(@"BasicLanguage[1272][1]")
 															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")
-															suppressionKey:nil
-														   suppressionText:nil];
+														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")];
 
 				returnValue = (continueop == NO);
 			}

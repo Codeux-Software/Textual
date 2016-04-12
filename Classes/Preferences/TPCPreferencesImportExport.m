@@ -54,7 +54,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   [self importPreflight:buttonClicked withOriginalAlert:originalAlert];
 						   }];
 }
