@@ -43,11 +43,8 @@
 "TDCServerPropertiesSheet[1001]" = "User Tracking";
 
 /* Server properties iCloud options */
-"TDCServerPropertiesSheet[1002][1]" = "iCloud Sharing Disabled";
-"TDCServerPropertiesSheet[1002][2]" = "iCloud sharing will be disabled for this server on save.\n\nWould you also like to remove it from devices that it has been shared with?\n\nThis action can be undone by enabling sharing or by clicking Cancel.";
-
-"TDCServerPropertiesSheet[1003][1]" = "iCloud Sharing Enabled";
-"TDCServerPropertiesSheet[1003][2]" = "iCloud sharing will be enabled for this server on save.\n\nBy saving, Textual will override any copy of this server's configuration already stored on iCloud.";
+"TDCServerPropertiesSheet[1002][1]" = "This server will no longer be shared with iCloud";
+"TDCServerPropertiesSheet[1002][2]" = "Do you want to remove this server from devices it has already been shared with?";
 
 /* Server specific highlight entry things */
 "TDCServerPropertiesSheet[1004]" = "All Channels";
@@ -92,10 +89,6 @@
 "TDCServerPropertiesSheet[1009][1]" = "Choose An Identity";
 "TDCServerPropertiesSheet[1009][2]" = "Select a certificate to send when you connect securely.";
 
-/* Welcome sheet help channel prompt for freenode servers */
-"TDCWelcomeSheet[1000][1]" = "Connect to Support Channel";
-"TDCWelcomeSheet[1000][2]" = "The support channel for Textual is located on freenode. Would you like to add this channel?";
-
 /* Channel list dialog */
 "TDCServerChannelListDialog[1000]" = "Channel List for “%@”";
 "TDCServerChannelListDialog[1001]" = "Channel List — %@ Public Channels"; // %@ = channel count.
@@ -106,14 +99,11 @@
 "TDChannelInviteSheet[1002]" = "%1$@ and %2$@";
 
 /* Preferences window iCloud options */
-"TDCPreferencesController[1000][1]" = "iCloud Sharing Disabled";
-"TDCPreferencesController[1000][2]" = "iCloud sharing has been disabled.\n\nIf sharing is enabled on any other devices, then please take note that it must be disabled on those as well for it to apply to all.\n\nData stored on iCloud will remain on iCloud unless it is erased by clicking the “Manage iCloud” button.";
-
-"TDCPreferencesController[1001][1]" = "Are you sure you wish to continue?";
-"TDCPreferencesController[1001][2]" = "Selecting “Continue” will erase all files stored by Textual on iCloud.\n\nThis erase will leave shared preferences intact. Only custom files such as shared styles will be erased.";
+"TDCPreferencesController[1000][1]" = "Sharing with iCloud has been disabled for this device";
+"TDCPreferencesController[1000][2]" = "Data stored on iCloud will remain there unless it is erased by clicking the “Manage iCloud” button.";
 
 "TDCPreferencesController[1002][1]" = "Are you sure you wish to continue?";
-"TDCPreferencesController[1002][2]" = "Selecting “Continue” will erase all data stored by Textual on iCloud including passwords and preferences.\n\nPlease keep in mind that if any other copy of Textual is still configured for sharing, then the data you just erased may be placed back on iCloud by the device running the enabled copy.";
+"TDCPreferencesController[1002][2]" = "This will erase everything stored on iCloud including connections, custom styles, and preferences.";
 
 "TDCPreferencesController[1003]" = "No Log Location Selected";
 "TDCPreferencesController[1004]" = "No Location Selected";
@@ -139,7 +129,7 @@
 "TDCPreferencesController[1015][3]" = "• Window Appearance";
 "TDCPreferencesController[1015][4]" = "• Channel View Font";
 
-"TDCPreferencesController[1016][1]" = "Cannot select iCloud Drive as a location to save data";
+"TDCPreferencesController[1016][1]" = "iCloud Drive cannot be used as a location to save data";
 "TDCPreferencesController[1016][2]" = "Please choose a location other than iCloud Drive to save data to.";
 
 /* Final transfer dialog */
@@ -308,16 +298,14 @@
 /* /defaults/ command */
 "BasicLanguage[1033]" = "Invalid Syntax. Type “/defaults help” for more information.";
 
-"BasicLanguage[1034][01]" = "The \002defaults\002 command provides the ability to enable or disable certain features of the selected server which are not";
-"BasicLanguage[1034][02]" = "accessible through the user interface. These features are made available through this command as they are rarely used";
-"BasicLanguage[1034][03]" = "and would otherwise waste unnecessary space being presented in an actual interactive list.";
-"BasicLanguage[1034][04]" = " ";
-"BasicLanguage[1034][05]" = "Usage:";
-"BasicLanguage[1034][06]" = "\t“/defaults enable <token>” — Enables the feature associated with \002<token>\002";
-"BasicLanguage[1034][07]" = "\t“/defaults disable <token>” — Disables the feature associated with \002<token>\002";
-"BasicLanguage[1034][08]" = "\t“/defaults features” — Opens Webpage in the default browser which contains list of supported features";
-"BasicLanguage[1034][09]" = " ";
-"BasicLanguage[1034][10]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
+"BasicLanguage[1034][01]" = "The \002defaults\002 command can be used to toggle very specific, rarely used features.";
+"BasicLanguage[1034][02]" = " ";
+"BasicLanguage[1034][03]" = "Usage:";
+"BasicLanguage[1034][04]" = "\t“/defaults enable <token>” — Enables the feature associated with \002<token>\002";
+"BasicLanguage[1034][05]" = "\t“/defaults disable <token>” — Disables the feature associated with \002<token>\002";
+"BasicLanguage[1034][06]" = "\t“/defaults features” — Opens Webpage in the default browser which contains list of supported features";
+"BasicLanguage[1034][07]" = " ";
+"BasicLanguage[1034][08]" = "The \002<token>\002 parameter supplied to this command can be encapsulated in double quotes (\") to allow for spaces.";
 
 "BasicLanguage[1035]" = "Cannot enable the feature “%@” because it is not supported";
 "BasicLanguage[1036]" = "Cannot disable the feature “%@” because it is not supported";
@@ -411,7 +399,7 @@
 
 /* iCloud */
 "BasicLanguage[1102][1]" = "iCloud is Not Available";
-"BasicLanguage[1102][2]" = "It appears iCloud may not be available right now. Please try again later.";
+"BasicLanguage[1102][2]" = "It appears iCloud may not be available right now. Please try again later.\n\n";
 
 /* /lagcheck/ command */
 "BasicLanguage[1106]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
@@ -782,13 +770,13 @@
 
 /* Inline content warning for tor users */
 "BasicLanguage[1287][1]" = "Warning: Enabling inline media may lead to the exposure of your IP address by users linking to specially crafted image URLs";
-"BasicLanguage[1287][2]" = "You have at least one connection configured to connect through the Tor Anonymity Network or have the “Tor Browser“ application open.\n\nNote that content shown inline with chat does NOT pass through the proxy that can be configured through Server Properties.\n\nIf you want to display content inline, then it is recommended that you enable a system-wide proxy through the Network section of System Preferences.";
+"BasicLanguage[1287][2]" = "You have at least one connection configured to connect through the Tor Anonymity Network or have the “Tor Browser“ application open.\n\nNote that content shown inline with chat does NOT pass through the proxy that can be configured in the Proxy Server section of Server Properties.\n\nConfigure a system-wide proxy in the Network section of System Preferences if you wish to use this feature.";
 
 /* Extras installer updates */
-"BasicLanguage[1287][1]" = "A new version of the “%@” addon is available!";
-"BasicLanguage[1287][2]" = "Would you like to launch the “Textual Extras” installer to perform update?";
-"BasicLanguage[1287][3]" = "Remind Me Later";
-"BasicLanguage[1287][4]" = "Launch Installer";
+"BasicLanguage[3002][1]" = "A new version of the “%@” addon is available!";
+"BasicLanguage[3002][2]" = "Would you like to launch the “Textual Extras” installer to perform an update?";
+"BasicLanguage[3002][3]" = "Remind Me Later";
+"BasicLanguage[3002][4]" = "Launch Installer";
 
 /* Non-HTTP link warning */
 "BasicLanguage[1290][1]" = "Please verify that you would like to open the following URL: %@";
@@ -803,6 +791,6 @@
 
 
 
-/* Next unusued key: 3002 */
+/* Next unusued key: 3003 */
 
 
