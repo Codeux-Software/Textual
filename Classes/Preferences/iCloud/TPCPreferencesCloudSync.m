@@ -612,6 +612,10 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		@synchronized(self.keysToSync) {
 			[self.keysToSync removeAllObjects];
 		}
+
+		@synchronized (self.keysToRemove) {
+			[self.keysToRemove removeAllObjects];
+		}
 	});
 }
 
