@@ -18,12 +18,28 @@
 	</array>
 	<key>-[NSString isValidInternetAddress] Performs Extended Validation</key>
 	<true/>
+	<key>ApplyCommandToAllConnections -&gt; amsg</key>
+	<false/>
+	<key>ApplyCommandToAllConnections -&gt; away</key>
+	<false/>
+	<key>ApplyCommandToAllConnections -&gt; clearall</key>
+	<true/>
+	<key>ApplyCommandToAllConnections -&gt; nick</key>
+	<false/>
+	<key>AutojoinChannelOnInvite</key>
+	<false/>
 	<key>AutojoinMaximumChannelJoinCount</key>
 	<integer>2</integer>
+	<key>AutojoinWaitsForNickservIdentification</key>
+	<false/>
 	<key>AutomaticallyAddScrollbackMarker</key>
 	<true/>
 	<key>AutomaticallyDetectHighlightSpam</key>
 	<true/>
+	<key>AutomaticallyFilterUnicodeTextSpam</key>
+	<false/>
+	<key>AutomaticallyReloadCustomThemesWhenTheyChange</key>
+	<false/>
 	<key>ChannelNavigationIsServerSpecific</key>
 	<true/>
 	<key>ChannelOperatorDefaultLocalization -&gt; Kick Reason</key>
@@ -32,6 +48,12 @@
 	<true/>
 	<key>ConfirmApplicationQuit</key>
 	<true/>
+	<key>ControlEnterSendsMessage</key>
+	<false/>
+	<key>ConversationTrackingIncludesUserModeSymbol</key>
+	<false/>
+	<key>CopyTextSelectionOnMouseUp</key>
+	<false/>
 	<key>DefaultBanCommandHostmaskFormat</key>
 	<integer>1</integer>
 	<key>DefaultIdentity -&gt; AwayNickname</key>
@@ -44,10 +66,20 @@
 	<string>textual</string>
 	<key>DestinationOfNonserverNotices</key>
 	<integer>0</integer>
+	<key>DisableMainWindowSegmentedController</key>
+	<false/>
+	<key>DisableRemoteNicknameColorHashing</key>
+	<false/>
+	<key>DisableSidebarTranslucency</key>
+	<false/>
 	<key>DisplayDockBadges</key>
 	<true/>
+	<key>DisplayEventInLogView -&gt; Inline Media</key>
+	<false/>
 	<key>DisplayEventInLogView -&gt; Join, Part, Quit</key>
 	<true/>
+	<key>DisplayPublicMessageCountInDockBadge</key>
+	<false/>
 	<key>DisplayServerMessageOfTheDayOnConnect</key>
 	<true/>
 	<key>DisplayUserListNoModeSymbol</key>
@@ -60,9 +92,13 @@
 	<integer>1115</integer>
 	<key>File Transfers -&gt; File Transfer Request Reply Action</key>
 	<integer>2</integer>
+	<key>File Transfers -&gt; File Transfer Requests Use Reverse DCC</key>
+	<false/>
 	<key>File Transfers -&gt; Idle System Sleep Prevented During File Transfer</key>
 	<true/>
 	<key>FocusSelectionOnMessageCommandExecution</key>
+	<true/>
+	<key>GCDAsyncSocket Cipher List Includes Deprecated Ciphers</key>
 	<true/>
 	<key>IRCopDefaultLocalizaiton -&gt; G:Line Reason</key>
 	<string>35d Your behavior is not conducive to the desired environment.</string>
@@ -76,12 +112,18 @@
 	<integer>0</integer>
 	<key>InlineMediaScalingWidth</key>
 	<integer>300</integer>
+	<key>InvertSidebarColors</key>
+	<false/>
 	<key>Keyboard -&gt; Command+W Key Action</key>
 	<integer>0</integer>
 	<key>Keyboard -&gt; Tab Key Action</key>
 	<integer>0</integer>
 	<key>LogHighlights</key>
 	<true/>
+	<key>LogTranscript</key>
+	<false/>
+	<key>MemberListSortFavorsServerStaff</key>
+	<false/>
 	<key>MemberListUpdatesUserInfoPopoverOnScroll</key>
 	<true/>
 	<key>Main Input Text Field -&gt; Font Size</key>
@@ -90,6 +132,8 @@
 	<true/>
 	<key>MainWindowTransparencyLevel</key>
 	<real>1</real>
+	<key>NicknameColorHashingComputesRGBValue</key>
+	<false/>
 	<key>NicknameHighlightMatchingType</key>
 	<integer>1</integer>
 	<key>NotificationType -&gt; Address Book Match -&gt; Enabled</key>
@@ -142,14 +186,38 @@
 	<true/>
 	<key>Off-the-Record Messaging -&gt; Require Encryption</key>
 	<false/>
+	<key>OpenClickedLinksInBackgroundBrowser</key>
+	<false/>
 	<key>PostNotificationsWhileInFocus</key>
 	<true/>
+	<key>ReceiveBetaUpdates</key>
+	<false/>
+	<key>RejoinChannelOnLocalKick</key>
+	<false/>
 	<key>ReloadScrollbackOnLaunch</key>
 	<true/>
+	<key>RightToLeftTextFormatting</key>
+	<false/>
+	<key>RemoveIRCTextFormatting</key>
+	<false/>
 	<key>ReplyUnignoredExternalCTCPRequests</key>
 	<true/>
+	<key>SaveInputHistoryPerSelection</key>
+	<false/>
+	<key>ServerListDoubleClickConnectServer</key>
+	<false/>
+	<key>ServerListDoubleClickDisconnectServer</key>
+	<false/>
+	<key>ServerListDoubleClickJoinChannel</key>
+	<false/>
+	<key>ServerListDoubleClickLeaveChannel</key>
+	<false/>
+	<key>ServerListRetainsQueriesBetweenRestarts</key>
+	<false/>
 	<key>Server List Unread Message Count Badge Colors -&gt; Highlight</key>
 	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgAAhg==</data>
+	<key>SetAwayOnScreenSleep</key>
+	<false/>
 	<key>ScrollbackMaximumLineCount</key>
 	<integer>300</integer>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
@@ -162,6 +230,10 @@
 	<false/>
 	<key>SyncPreferencesToTheCloudLimitedToServers</key>
 	<false/>
+	<key>Tab Completion -&gt; Completion Suffix Cut Forward Until Space</key>
+	<false/>
+	<key>Tab Completion -&gt; Do Not Use Whitespace for Missing Completion Suffix</key>
+	<false/>
 	<key>TextFieldAutomaticGrammarCheck</key>
 	<true/>
 	<key>TextFieldAutomaticSpellCheck</key>
@@ -170,6 +242,14 @@
 	<false/>
 	<key>TextFieldSmartCopyPaste</key>
 	<true/>
+	<key>TextFieldSmartDashes</key>
+	<false/>
+	<key>TextFieldDataDetectors</key>
+	<false/>
+	<key>TextFieldSmartLinks</key>
+	<false/>
+	<key>TextFieldSmartQuotes</key>
+	<false/>
 	<key>TextFieldTextReplacement</key>
 	<true/>
 	<key>TextualDeveloperEnvironment</key>
@@ -208,6 +288,8 @@
 	<true/>
 	<key>WebKitDeveloperExtras</key>
 	<true/>
+	<key>WebViewDoNotUsesCustomScrollers</key>
+	<false/>
 	<key>__WebInspectorPageGroupLevel1__.WebKit2InspectorStartsAttached</key>
 	<false/>
 </dict>
