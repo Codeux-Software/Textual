@@ -44,11 +44,6 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeNameP
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification;
 
 @interface TPCPreferencesCloudSync : NSObject
-@property (nonatomic, assign) BOOL applicationIsTerminating;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
-@property (nonatomic, assign) BOOL hasUncommittedDataStoredInCloud;
-
 // Next three methods use hashed keys.
 - (id)valueForKey:(NSString *)key;
 
@@ -56,24 +51,12 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontP
 - (void)removeObjectForKey:(NSString *)key;
 - (void)removeObjectForKeyNextUpstreamSync:(NSString *)key;
 
-- (void)synchronizeToCloud; /* Manually sync. Not recommended to call. */
-- (void)synchronizeFromCloud; /* Manually sync. Not recommended to call. */
-
 - (void)resetDataToSync;
 - (void)syncEverythingNextSync;
 
-- (void)pauseCloudContainerMetadataUpdates;
-- (void)resumeCloudContainerMetadataUpdates;
-
-- (NSString *)ubiquitousContainerURLPath;
+- (NSString *)ubiquitousContainerPath;
 
 - (BOOL)ubiquitousContainerIsAvailable;
-
-// Plugins should not be calling these.
-- (void)initializeCloudSyncSession;
-- (void)closeCloudSyncSession;
-
-- (void)purgeDataStoredWithCloud;
 @end
 
 #endif

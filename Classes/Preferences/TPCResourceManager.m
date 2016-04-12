@@ -52,30 +52,31 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	 about installing custom scripts. */
 	
 	/* Add a system link for the unsupervised scripts folder if it exists. */
-	NSString *sourePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
-	NSString *destnPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	NSString *sourcePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
+
+	NSString *destinationPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
 	
-	if ([RZFileManager() fileExistsAtPath:sourePath] &&
-		[RZFileManager() fileExistsAtPath:destnPath] == NO)
+	if ([RZFileManager() fileExistsAtPath:sourcePath] &&
+		[RZFileManager() fileExistsAtPath:destinationPath] == NO)
 	{
-		[RZFileManager() createSymbolicLinkAtPath:destnPath withDestinationPath:sourePath error:NULL];
+		[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL];
 	}
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Add a system link for the iCloud folder if the iCloud folder exists. */
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
-		destnPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
+		destinationPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
 		
-		sourePath = [sharedCloudManager() ubiquitousContainerURLPath];
+		sourcePath = [sharedCloudManager() ubiquitousContainerPath];
 		
-		if ([RZFileManager() fileExistsAtPath:destnPath] == NO) {
-			[RZFileManager() createSymbolicLinkAtPath:destnPath withDestinationPath:sourePath error:NULL]; // We don't care about errors.
+		if ([RZFileManager() fileExistsAtPath:destinationPath] == NO) {
+			[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL]; // We don't care about errors.
 		}
 	}
 #endif
 }
 
-+ (id)loadContentsOfPropertyListInResourcesFolderNamed:(NSString *)name
++ (id)loadContentsOfPropertyListInResources:(NSString *)name
 {
 	NSString *defaultsPath = [RZMainBundle() pathForResource:name ofType:@"plist"];
 
@@ -88,7 +89,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 @implementation TPCResourceManagerDocumentTypeImporter
 
-- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
 	PointerIsEmptyAssertReturn(url, NO);
 
@@ -148,9 +149,11 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #pragma mark -
 #pragma mark Custom Script Files
 
-- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError *__autoreleasing *)outError
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
 {
-	if ([[url relativePath] hasPrefix:[TPCPathInfo systemUnsupervisedScriptFolderPath]] == NO) {
+	NSString *scriptsPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
+
+	if ([[url relativePath] hasPrefix:scriptsPath] == NO) {
 		if (outError) {
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
@@ -219,13 +222,15 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {
-			if ([self import:url into:[d URL]]) {
-				NSString *filename = [[d URL] lastPathComponent];
-
-				XRPerformBlockAsynchronouslyOnMainQueue(^{
-					[self performImportOfScriptFilePostflight:filename];
-				});
+			if ([self import:url into:[d URL]] == NO) {
+				return;
 			}
+
+			NSString *filename = [[d URL] lastPathComponent];
+
+			XRPerformBlockAsynchronouslyOnMainQueue(^{
+				[self performImportOfScriptFilePostflight:filename];
+			});
 		}
 	}];
 #endif
@@ -246,31 +251,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (BOOL)import:(NSURL *)url into:(NSURL *)destination
 {
-	PointerIsEmptyAssertReturn(url, NO);
-	PointerIsEmptyAssertReturn(destination, NO);
-	
-	NSError *instError = nil;
-
-	if ([destination checkResourceIsReachableAndReturnError:NULL]) {
-		BOOL trashed = [RZFileManager() trashItemAtURL:destination resultingItemURL:nil error:&instError];
-		
-		if (trashed == NO && instError) {
-			LogToConsole(@"Install Error:\nFrom: %@\nTo: %@\nError: %@", url, destination, [instError localizedDescription]);
-			
-			return NO;
-		}
-	}
-
-	[RZFileManager() copyItemAtURL:url toURL:destination error:&instError];
-	
-	if (instError) {
-		LogToConsole(@"Install Error:\nFrom: %@\nTo: %@\nError: %@", url, destination, [instError localizedDescription]);
-		
-		return NO;
-	}
-	
-	return YES;
+	return [RZFileManager() replaceItemAtURL:destination
+							   withItemAtURL:url
+						   moveToDestination:NO
+					  moveDestinationToTrash:YES];
 }
 
 @end
-

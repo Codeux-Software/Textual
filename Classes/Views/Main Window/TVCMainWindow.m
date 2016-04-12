@@ -44,6 +44,8 @@
 
 #import "TVCMainWindowPrivate.h"
 
+#import "TPCThemeControllerPrivate.h"
+
 #define _treeDragItemType		@"tree"
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 

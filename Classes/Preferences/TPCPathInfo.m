@@ -194,7 +194,7 @@
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (NSString *)applicationUbiquitousContainerPath
 {
-	return [sharedCloudManager() ubiquitousContainerURLPath];
+	return [sharedCloudManager() ubiquitousContainerPath];
 }
 
 + (NSString *)cloudCustomThemeFolderPath
@@ -204,17 +204,6 @@
 	NSObjectIsEmptyAssertReturn(source, nil); // We need a source folder first...
 	
 	NSString *dest = [source stringByAppendingPathComponent:@"/Documents/Styles/"];
-	
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
-	
-	return dest;
-}
-
-+ (NSString *)cloudCustomThemeCachedFolderPath
-{
-	NSString *dest = [[TPCPathInfo applicationCachesFolderPath] stringByAppendingPathComponent:@"/iCloud Caches/Styles/"];
 	
 	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
 		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -338,63 +327,6 @@
 }
 
 #pragma mark -
-#pragma mark Factory
-
-
-+ (NSArray *)buildPathArrayWithPaths:(NSArray *)paths
-{
-	/* We now filter based on conditions. */
-	NSMutableArray *pathData = [NSMutableArray array];
-
-	/* What considers are path valid? */
-	void (^checkPath)(NSString *) = ^(NSString *pathInfo) {
-		if (pathInfo) {
-			if ([pathInfo length] > 0) {
-				BOOL isDirectory = NO;
-
-				BOOL pathExists = [RZFileManager() fileExistsAtPath:pathInfo isDirectory:&isDirectory];
-
-				if (pathExists) {
-					if (isDirectory) {
-						[pathData addObject:pathInfo];
-					}
-				}
-			}
-		}
-	};
-
-	/* Filter list. */
-	for (NSString *pathObject in paths) {
-		checkPath(pathObject);
-	}
-
-	/* Return results. */
-	return [pathData copy];
-}
-
-+ (NSArray *)buildPathArray:(NSString *)path, ...
-{
-	NSMutableArray *pathObjects = [NSMutableArray array];
-
-	if ( path) {
-		[pathObjects addObject:path];
-	}
-	
-	id pathObj;
-	
-	va_list args;
-	va_start(args, path);
-	
-	while ((pathObj = va_arg(args, id))) {
-		[pathObjects addObject:pathObj];
-	}
-	
-	va_end(args);
-
-	return [self buildPathArrayWithPaths:pathObjects];
-}
-
-#pragma mark -
 #pragma mark Logging
 
 static NSURL *logToDiskLocationResolvedBookmark;
@@ -440,16 +372,13 @@ static NSURL *logToDiskLocationResolvedBookmark;
 
 + (void)setLogFileFolderLocation:(id)value
 {
-	/* Destroy old pointer if needed. */
 	if ( logToDiskLocationResolvedBookmark) {
 		[logToDiskLocationResolvedBookmark stopAccessingSecurityScopedResource];
 		 logToDiskLocationResolvedBookmark = nil;
 	}
-	
-	/* Set new location. */
+
 	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark_5"];
-	
-	/* Reset our folder. */
+
 	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
 }
 

@@ -910,7 +910,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
-	return [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaults"];
+	return [TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaults"];
 }
 
 + (void)initPreferences

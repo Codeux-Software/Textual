@@ -115,7 +115,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 		}
 
 		NSArray *paths =
-		[TPCPathInfo buildPathArray:
+		[RZFileManager() buildPathArray:
 			[TPCPathInfo customExtensionFolderPath],
 			[TPCPathInfo bundledExtensionFolderPath],
 			nil];
@@ -140,7 +140,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 			}
 		}
 
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSArray *whitelistedBundles = [staticValues arrayForKey:@"THOPluginManager Version 6.0.0 Extension Whitelist"];
 
@@ -253,7 +253,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 	/* Begin building list. Topmost take priority. */
 	NSArray *scriptPaths =
-	[TPCPathInfo buildPathArray:
+	[RZFileManager() buildPathArray:
 		[TPCPathInfo systemUnsupervisedScriptFolderPath],
 		[TPCPathInfo bundledScriptFolderPath],
 		nil];
@@ -310,7 +310,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 							 @"THOPluginManager -> THOPluginManager List of Forbidden Commands"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"THOPluginManager List of Forbidden Commands"];
 
@@ -339,7 +339,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	}
 
 	/* Perform update check */
-	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 	NSDictionary *_latestVersions = [staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
 
@@ -397,7 +397,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 							 @"THOPluginManager -> THOPluginManager List of Reserved Commands"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"THOPluginManager List of Reserved Commands"];
 

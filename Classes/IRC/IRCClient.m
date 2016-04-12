@@ -1039,7 +1039,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 								  @"IRCClient -> IRCClient List of Nicknames that Encryption Forbids"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"IRCClient List of Nicknames that Encryption Forbids"];
 
@@ -4280,7 +4280,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							 @"IRCClient -> IRCClient List of NickServ Needs Identification Tokens"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Needs Identification Tokens"];
 
@@ -4299,7 +4299,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							 @"IRCClient -> IRCClient List of NickServ Successfully Identified Tokens"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Successfully Identified Tokens"];
 

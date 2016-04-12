@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,10 +37,12 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
+@interface TPCPreferencesImportExport ()
++ (void)import:(id)obj withKey:(id)key;
 
-@interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
++ (void)importContentsOfDictionary:(NSDictionary *)aDict;
++ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
+
++ (NSDictionary *)exportedPreferencesDictionaryRepresentationForCloud;
++ (NSDictionary *)exportedPreferencesDictionaryRepresentation;
 @end

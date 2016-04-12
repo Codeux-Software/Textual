@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -37,10 +37,31 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 
-@interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
+@interface TPCPreferencesCloudSync ()
+@property (nonatomic, strong) id ubiquityIdentityToken;
+@property (nonatomic, assign) BOOL pushAllLocalKeysNextSync;
+@property (nonatomic, strong) dispatch_queue_t workerQueue;
+@property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
+@property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
+@property (nonatomic, copy) NSURL *ubiquitousContainerURL;
+@property (nonatomic, strong) NSMutableArray *keysToSync;
+@property (nonatomic, strong) NSMutableArray *keysToRemove;
+@property (nonatomic, copy) NSArray *remoteKeysBeingSynced;
+@property (nonatomic, assign) BOOL applicationIsTerminating;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
+@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
+@property (nonatomic, assign) BOOL hasUncommittedDataStoredInCloud;
+@property (nonatomic, assign) BOOL isTerminated;
+
+- (void)initializeCloudSyncSession;
+
+- (void)prepareForApplicationTermination;
+
+- (void)synchronizeFromCloud;
+
+- (void)purgeDataStoredWithCloud;
 @end
+
+#endif

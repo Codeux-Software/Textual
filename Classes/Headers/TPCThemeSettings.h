@@ -49,17 +49,17 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 };
 
 @interface TPCThemeSettings : NSObject
-@property (nonatomic, assign) BOOL forceInvertSidebarColors;
-@property (nonatomic, assign) BOOL js_postHandleEventNotifications;
-@property (nonatomic, assign) BOOL js_postPreferencesDidChangesNotifications;
-@property (nonatomic, assign) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy) NSFont *channelViewFont;
-@property (nonatomic, copy) NSString *nicknameFormat;
-@property (nonatomic, copy) NSString *timestampFormat;
-@property (nonatomic, copy) NSString *settingsKeyValueStoreName;
-@property (nonatomic, copy) NSColor *underlyingWindowColor;
-@property (nonatomic, assign) double indentationOffset;
-@property (nonatomic, assign) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
+@property (readonly) BOOL forceInvertSidebarColors;
+@property (readonly) BOOL js_postHandleEventNotifications;
+@property (readonly) BOOL js_postPreferencesDidChangesNotifications;
+@property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
+@property (readonly, copy) NSFont *channelViewFont;
+@property (readonly, copy) NSString *nicknameFormat;
+@property (readonly, copy) NSString *timestampFormat;
+@property (readonly, copy) NSString *settingsKeyValueStoreName;
+@property (readonly, copy) NSColor *underlyingWindowColor;
+@property (readonly) double indentationOffset;
+@property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 
 - (void)reloadWithPath:(NSString *)path;
 

@@ -178,10 +178,10 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 {
 	/* Find cached list of excluded keys or build from disk. */
 	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
-								  @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
+			@"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
 
@@ -262,7 +262,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	/* Files are listed in priority from least important to most important. If a
 	 file with higher priority has a key thats already defined, then that file
 	 overrides the previously defined value. */
-	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"StaticStore"];
+	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 	NSArray *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
 
@@ -396,7 +396,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 			/* Retrieve values from property list. */
 			preferencesToMigrate = [NSDictionary dictionaryWithContentsOfFile:sourceMigrationPath];
 
-			remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResourcesFolderNamed:@"RegisteredUserDefaultsRemappedKeys"];
+			remappedPreferenceKeys = [TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaultsRemappedKeys"];
 
 			if (preferencesToMigrate == nil || remappedPreferenceKeys == nil) {
 				LogToConsole(@"'preferencesToMigrate' or 'remappedPreferenceKeys' is nil");
