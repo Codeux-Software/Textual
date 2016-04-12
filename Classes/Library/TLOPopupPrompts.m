@@ -41,11 +41,10 @@
 
 NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppression -> ";
 
-NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptSpecialSuppressionTextValue>";
-
 @interface TLOPopupPromptsContext : NSObject
+@property (nonatomic, assign) BOOL suppressionTextSet;
+@property (nonatomic, assign) BOOL suppressionKeySet;
 @property (nonatomic, copy) NSString *suppressionKey;
-@property (nonatomic, assign) BOOL isForcedSuppression;
 @property (nonatomic, copy) TLOPopupPromptsCompletionBlock completionBlock;
 @end
 
@@ -74,13 +73,15 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 
 + (void)_sheetWindowWithWindowCallback_stage2:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(TLOPopupPromptsContext *)contextInfo
 {
-	if ([contextInfo suppressionKey]) {
-		if ([contextInfo isForcedSuppression]) {
-			[RZUserDefaults() setBool:YES forKey:[contextInfo suppressionKey]];
-		} else {
-			NSButton *button = [alert suppressionButton];
+	BOOL suppressionState = NO;
 
-			[RZUserDefaults() setBool:[button state] forKey:[contextInfo suppressionKey]];
+	if ([alert showsSuppressionButton]) {
+		suppressionState = ([[alert suppressionButton] state] == NSOnState);
+	}
+
+	if (suppressionState) {
+		if ([contextInfo suppressionKeySet]) {
+			[RZUserDefaults() setBool:YES forKey:[contextInfo suppressionKey]];
 		}
 	}
 
@@ -95,8 +96,45 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 			returnValue = TLOPopupPromptReturnOtherType;
 		}
 
-		[contextInfo completionBlock](returnValue, alert);
+		[contextInfo completionBlock](returnValue, alert, suppressionState);
 	}
+}
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(NSString *)buttonAlternate
+				  otherButton:(NSString *)otherButton
+{
+	[TLOPopupPrompts sheetWindowWithWindow:window
+									  body:bodyText
+									 title:titleText
+							 defaultButton:buttonDefault
+						   alternateButton:buttonAlternate
+							   otherButton:otherButton
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:nil];
+}
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(NSString *)buttonAlternate
+				  otherButton:(NSString *)otherButton
+			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock
+{
+	[TLOPopupPrompts sheetWindowWithWindow:window
+									  body:bodyText
+									 title:titleText
+							 defaultButton:buttonDefault
+						   alternateButton:buttonAlternate
+							   otherButton:otherButton
+							suppressionKey:nil
+						   suppressionText:nil
+						   completionBlock:completionBlock];
 }
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
@@ -109,32 +147,46 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 			  suppressionText:(NSString *)suppressText
 			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock
 {
-	/* Check suppression. */
-	NSString *suppressionText = [suppressText copy];
 
-	BOOL useSupression = NSObjectIsNotEmpty(suppressKey);
+	/* Check which thread is accessed */
+	if ([NSThread isMainThread] == NO) {
+		[self performBlockOnMainThread:^{
+			[TLOPopupPrompts sheetWindowWithWindow:window
+											  body:bodyText
+											 title:titleText
+									 defaultButton:buttonDefault
+								   alternateButton:buttonAlternate
+									   otherButton:otherButton
+									suppressionKey:suppressKey
+								   suppressionText:suppressText
+								   completionBlock:completionBlock];
+		}];
 
-	NSString *privateSuppressionKey = nil;
+		return;
+	}
 
-	if (suppressKey) {
-		if ([suppressKey hasPrefix:TLOPopupPromptSuppressionPrefix] == NO) {
-			privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+	/* Prepare suppression */
+	BOOL suppressTextSet = NSObjectIsNotEmpty(suppressText);
+
+	BOOL suppressKeySet = NSObjectIsNotEmpty(suppressKey);
+
+	NSString *suppressKeyPrivate = suppressKey;
+
+	if (suppressKeySet) {
+		if ([suppressKeyPrivate hasPrefix:TLOPopupPromptSuppressionPrefix] == NO) {
+			suppressKeyPrivate = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKeyPrivate];
 		}
 
-		if (useSupression) {
-			if ([RZUserDefaults() boolForKey:privateSuppressionKey]) {
-				return;
-			}
+		if ([RZUserDefaults() boolForKey:suppressKeyPrivate]) {
+			return;
 		}
 	}
 
-	if (NSObjectIsEmpty(suppressionText)) {
-		suppressionText = BLS(1194);
+	if (suppressTextSet == NO) {
+		suppressText = BLS(1194);
 	}
 
-	BOOL isForcedSuppression = [suppressionText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
-
-	/* Pop sheet. */
+	/* Construct alert */
 	NSAlert *alert = [NSAlert new];
 
 	[alert setAlertStyle:NSInformationalAlertStyle];
@@ -145,32 +197,33 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 	[alert addButtonWithTitle:buttonAlternate];
 	[alert addButtonWithTitle:otherButton];
 
-	if (isForcedSuppression == NO) {
-		if (useSupression) {
-			[alert setShowsSuppressionButton:useSupression];
+	if (suppressTextSet) {
+		[alert setShowsSuppressionButton:YES];
 
-			[[alert suppressionButton] setTitle:suppressionText];
-		}
+		[[alert suppressionButton] setTitle:suppressText];
 	}
 
-	[self performBlockOnMainThread:^{
-		TLOPopupPromptsContext *promptObject = [TLOPopupPromptsContext new];
+	/* Construct alert context */
+	TLOPopupPromptsContext *promptObject = [TLOPopupPromptsContext new];
 
-		[promptObject setSuppressionKey:privateSuppressionKey];
-		[promptObject setIsForcedSuppression:isForcedSuppression];
-		[promptObject setCompletionBlock:completionBlock];
+	[promptObject setSuppressionTextSet:suppressTextSet];
+	[promptObject setSuppressionKeySet:suppressKeySet];
 
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
-				[TLOPopupPrompts _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptObject];
-			}];
-		} else {
-			[alert beginSheetModalForWindow:window
-							  modalDelegate:[TLOPopupPrompts class]
-							 didEndSelector:@selector(_sheetWindowWithWindowCallback_stage1:returnCode:contextInfo:)
-								contextInfo:(void *)CFBridgingRetain(promptObject)];
-		}
-	}];
+	[promptObject setSuppressionKey:suppressKeyPrivate];
+
+	[promptObject setCompletionBlock:completionBlock];
+
+	/* Pop alert */
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
+			[TLOPopupPrompts _sheetWindowWithWindowCallback_stage2:alert returnCode:returnCode contextInfo:promptObject];
+		}];
+	} else {
+		[alert beginSheetModalForWindow:window
+						  modalDelegate:[TLOPopupPrompts class]
+						 didEndSelector:@selector(_sheetWindowWithWindowCallback_stage1:returnCode:contextInfo:)
+							contextInfo:(void *)CFBridgingRetain(promptObject)];
+	}
 }
 
 #pragma mark -
@@ -180,33 +233,79 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
+{
+	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
+											  title:titleText
+									  defaultButton:buttonDefault
+									alternateButton:buttonAlternate
+									 suppressionKey:nil
+									suppressionText:nil];
+}
+
++ (BOOL)dialogWindowWithMessage:(NSString *)bodyText
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText
 {
-	/* Prepare suppression. */
-	BOOL useSupression = NSObjectIsNotEmpty(suppressKey);
+	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
+											  title:titleText
+									  defaultButton:buttonDefault
+									alternateButton:buttonAlternate
+									 suppressionKey:suppressKey
+									suppressionText:suppressText
+								suppressionResponse:NULL];
+}
 
-	NSString *privateSuppressionKey = nil;
++ (BOOL)dialogWindowWithMessage:(NSString *)bodyText
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate
+				 suppressionKey:(NSString *)suppressKey
+				suppressionText:(NSString *)suppressText
+			suppressionResponse:(BOOL *)suppressionResponse
+{
+	/* Check which thread is accessed */
+	if ([NSThread isMainThread] == NO) {
+		__block BOOL result = NO;
 
-	if (suppressKey) {
-		if ([suppressKey hasPrefix:TLOPopupPromptSuppressionPrefix] == NO) {
-			privateSuppressionKey = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKey];
+		[self performBlockOnMainThread:^{
+			result =
+			[TLOPopupPrompts dialogWindowWithMessage:bodyText
+											   title:titleText
+									   defaultButton:buttonDefault
+									 alternateButton:buttonAlternate
+									  suppressionKey:suppressKey
+									 suppressionText:suppressText
+								 suppressionResponse:suppressionResponse];
+		}];
+
+		return result;
+	}
+
+	/* Prepare suppression */
+	BOOL suppressTextSet = NSObjectIsNotEmpty(suppressText);
+
+	BOOL suppressKeySet = NSObjectIsNotEmpty(suppressKey);
+
+	NSString *suppressKeyPrivate = suppressKey;
+
+	if (suppressKeySet) {
+		if ([suppressKeyPrivate hasPrefix:TLOPopupPromptSuppressionPrefix] == NO) {
+			suppressKeyPrivate = [TLOPopupPromptSuppressionPrefix stringByAppendingString:suppressKeyPrivate];
 		}
 
-		if (useSupression) {
-			if ([RZUserDefaults() boolForKey:privateSuppressionKey]) {
-				return YES;
-			}
+		if ([RZUserDefaults() boolForKey:suppressKeyPrivate]) {
+			return YES;
 		}
 	}
 
-	if (NSObjectIsEmpty(suppressText)) {
+	if (suppressTextSet == NO) {
 		suppressText = BLS(1194);
 	}
 
-	BOOL isForcedSuppression = [suppressText isEqualToString:TLOPopupPromptSpecialSuppressionTextValue];
-
-	/* Pop dialog. */
+	/* Construct alert */
 	NSAlert *alert = [NSAlert new];
 
 	[alert setMessageText:titleText];
@@ -215,44 +314,36 @@ NSString * const TLOPopupPromptSpecialSuppressionTextValue		= @"<TLOPopupPromptS
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
 
-	if (isForcedSuppression == NO) {
-		if (useSupression) {
-			[alert setShowsSuppressionButton:useSupression];
+	if (suppressTextSet) {
+		[alert setShowsSuppressionButton:YES];
 
-			[[alert suppressionButton] setTitle:suppressText];
-		}
+		[[alert suppressionButton] setTitle:suppressText];
 	}
 
-	__block BOOL result = NO;
+	/* Pop alert */
+	NSModalResponse response = [alert runModal];
 
-	void(^runblock)(void) = ^{
-		/* Return result. */
-		NSModalResponse response = [alert runModal];
+	/* Record whether the user pressed the suppression button */
+	BOOL suppressionState = NO;
 
-		if (response == NSAlertFirstButtonReturn) {
-			if (useSupression) {
-				if (isForcedSuppression) {
-					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
-				} else {
-					[RZUserDefaults() setBool:[[alert suppressionButton] state] forKey:privateSuppressionKey];
-				}
-			}
+	if ([alert showsSuppressionButton]) {
+		suppressionState = ([[alert suppressionButton] state] == NSOnState);
+	}
 
-			result = YES;
-		} else {
-			if (useSupression) {
-				if (isForcedSuppression) {
-					[RZUserDefaults() setBool:YES forKey:privateSuppressionKey];
-				}
-			}
+	if ( suppressionResponse) {
+		*suppressionResponse = suppressionState;
+	}
 
-			result = NO;
+	/* Return final result */
+	if (response == NSAlertFirstButtonReturn) {
+		if (suppressionState && suppressKeySet) {
+			[RZUserDefaults() setBool:YES forKey:suppressKeyPrivate];
 		}
-	};
 
-	[self performBlockOnMainThread:runblock];
-
-	return result;
+		return YES;
+	} else {
+		return NO;
+	}
 }
 
 @end
