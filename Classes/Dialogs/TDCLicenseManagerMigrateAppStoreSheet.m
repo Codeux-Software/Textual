@@ -292,13 +292,7 @@
 
 	/* Pass to caller the application name of the bundle. */
 	if (applicationName) {
-		NSString *bundleDisplayName = [applicationBundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-
-		if (bundleDisplayName == nil) {
-			bundleDisplayName = [applicationBundle objectForInfoDictionaryKey:@"CFBundleName"];
-		}
-
-		*applicationName = bundleDisplayName;
+		*applicationName = [applicationBundle displayName];
 	}
 
 	/* Compare bundle identifier. */
