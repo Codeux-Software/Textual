@@ -376,10 +376,10 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	NSString *suppressionKey =
 	[@"plugin_manager_extension_update_dialog_" stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
 
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
-													   title:TXTLS(@"BasicLanguage[1287][1]", bundleName)
-											   defaultButton:TXTLS(@"BasicLanguage[1287][3]")
-											 alternateButton:TXTLS(@"BasicLanguage[1287][4]")
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[3002][2]")
+													   title:TXTLS(@"BasicLanguage[3002][1]", bundleName)
+											   defaultButton:TXTLS(@"BasicLanguage[3002][3]")
+											 alternateButton:TXTLS(@"BasicLanguage[3002][4]")
 											  suppressionKey:suppressionKey
 											 suppressionText:nil];
 
