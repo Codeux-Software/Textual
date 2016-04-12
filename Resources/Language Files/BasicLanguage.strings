@@ -779,9 +779,9 @@
 "BasicLanguage[3002][4]" = "Launch Installer";
 
 /* Non-HTTP link warning */
-"BasicLanguage[1290][1]" = "Please verify that you would like to open the following URL: %@";
-"BasicLanguage[1290][2]" = "The linked you clicked will launch an application other than your web browser which could possibly lead to the leak of your personal information.";
-"BasicLanguage[1290][3]" = "I Understand, Continue";
+"BasicLanguage[1290][1]" = "You have clicked on a link that will open the application “%@.”";
+"BasicLanguage[1290][2]" = "Are you sure you want to open “%@” with this application?";
+"BasicLanguage[1290][3]" = "Open";
 
 /* /setcolor/ responses */
 "BasicLanguage[1291]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";

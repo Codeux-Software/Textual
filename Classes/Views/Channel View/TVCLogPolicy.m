@@ -305,21 +305,25 @@
 
 - (void)openWebpage:(NSURL *)webpageURL
 {
-	if (NSObjectsAreEqual([webpageURL scheme], @"http") == NO &&
-		NSObjectsAreEqual([webpageURL scheme], @"https") == NO &&
-		NSObjectsAreEqual([webpageURL scheme], @"textual") == NO)
+	if (NSObjectsAreEqual([webpageURL scheme], @"http") ||
+		NSObjectsAreEqual([webpageURL scheme], @"https") ||
+		NSObjectsAreEqual([webpageURL scheme], @"textual"))
 	{
-		BOOL openLink =
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]")
-										   title:TXTLS(@"BasicLanguage[1290][1]", [webpageURL absoluteString])
-								   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
-								 alternateButton:TXTLS(@"BasicLanguage[1009]")
-								  suppressionKey:@"open_non_http_url_warning"
-								 suppressionText:nil];
+		return;
+	}
 
-		if (openLink == NO) {
-			return;
-		}
+	NSString *applicationName = [RZWorkspace() nameOfApplicationToOpenURL:webpageURL];
+
+	BOOL openLink =
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]", [webpageURL absoluteString])
+									   title:TXTLS(@"BasicLanguage[1290][1]", applicationName)
+							   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
+							 alternateButton:TXTLS(@"BasicLanguage[1009]")
+							  suppressionKey:@"open_non_http_url_warning"
+							 suppressionText:nil];
+
+	if (openLink == NO) {
+		return;
 	}
 
 	[TLOpenLink open:webpageURL];
