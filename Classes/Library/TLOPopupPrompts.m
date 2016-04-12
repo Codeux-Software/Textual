@@ -197,7 +197,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	[alert addButtonWithTitle:buttonAlternate];
 	[alert addButtonWithTitle:otherButton];
 
-	if (suppressTextSet) {
+	if (suppressKeySet || suppressTextSet) {
 		[alert setShowsSuppressionButton:YES];
 
 		[[alert suppressionButton] setTitle:suppressText];
@@ -314,7 +314,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
 
-	if (suppressTextSet) {
+	if (suppressKeySet || suppressTextSet) {
 		[alert setShowsSuppressionButton:YES];
 
 		[[alert suppressionButton] setTitle:suppressText];
