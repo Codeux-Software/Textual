@@ -335,9 +335,9 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		id changedValues = nil; // Can be NSDictionary or NSMutableDictionary
 		
 		if (self.pushAllLocalKeysNextSync) {
+			self.pushAllLocalKeysNextSync = NO;
+
 			changedValues = [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentationForCloud];
-			
-			[self setPushAllLocalKeysNextSync:NO];
 		} else {
 			changedValues = [NSMutableDictionary dictionary];
 

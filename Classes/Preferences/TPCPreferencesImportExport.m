@@ -259,14 +259,14 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
 
-	[settings enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+	[settings enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 		if (removeJunk && [self isKeyNameSupposedToBeIgnored:key]) {
 			return;
-		} else if (removeDefaults && NSObjectsAreEqual(obj, defaults[key])) {
+		} else if (removeDefaults && NSObjectsAreEqual(object, defaults[key])) {
 			return;
 		}
 
-		fnlsettings[key] = obj;
+		fnlsettings[key] = object;
 	}];
 
 	return fnlsettings;
