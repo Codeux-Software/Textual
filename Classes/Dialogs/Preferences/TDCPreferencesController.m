@@ -153,7 +153,6 @@
 
 - (IBAction)onManageiCloudButtonClicked:(id)sender;
 - (IBAction)onPurgeOfCloudDataRequested:(id)sender;
-- (IBAction)onPurgeOfCloudFilesRequested:(id)sender;
 
 - (IBAction)onChangedHighlightLogging:(id)sender;
 - (IBAction)onChangedHighlightType:(id)sender;
@@ -1233,6 +1232,7 @@ present_dialog:
 		[RZUbiquitousKeyValueStore() synchronize];
 		
 		[sharedCloudManager() syncEverythingNextSync];
+
 		[sharedCloudManager() synchronizeFromCloud];
 	}
 #endif
@@ -1242,42 +1242,29 @@ present_dialog:
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
-		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers] == NO) {
-			[RZUbiquitousKeyValueStore() synchronize];
-
-			[sharedCloudManager() synchronizeFromCloud];
+		if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers]) {
+			return;
 		}
+
+		[RZUbiquitousKeyValueStore() synchronize];
+
+		[sharedCloudManager() synchronizeFromCloud];
 	}
 #endif
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
+- (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode
 {
 	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+		/* Remove data stored with cloud */
 		[sharedCloudManager() purgeDataStoredWithCloud];
-	}
-}
 
-- (void)onPurgeOfCloudFilesRequestedCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
-{
-	if (returnCode == TLOPopupPromptReturnSecondaryType) {
-		NSString *path = [sharedCloudManager() ubiquitousContainerPath];
-		
-		/* Try to see if we even have a path... */
-		if (path == nil) {
-			LogToConsole(@"Cannot empty iCloud files at this time because iCloud is not available.");
-			
-			return;
-		}
-		
-		/* Delete styles folder. */
-		NSError *delError = nil;
-		
-		[RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&delError];
-		
-		if (delError) {
-			LogToConsole(@"Delete Error: %@", [delError localizedDescription]);
+		/* Delete styles folder */
+		NSError *deleteError = nil;
+
+		if ([RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&deleteError] == NO) {
+			LogToConsole(@"Delete Error: %@", [deleteError localizedDescription]);
 		}
 		
 		// We do not call performValidationForKeyValues here because the
@@ -1285,23 +1272,6 @@ present_dialog:
 	}
 }
 #endif
-
-- (void)onPurgeOfCloudFilesRequested:(id)sender
-{
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TXTLS(@"TDCPreferencesController[1001][2]")
-									 title:TXTLS(@"TDCPreferencesController[1001][1]")
-							 defaultButton:BLS(1009)
-						   alternateButton:BLS(1017)
-							   otherButton:nil
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
-							   [self onPurgeOfCloudFilesRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
-						   }];
-#endif
-}
 
 - (void)onPurgeOfCloudDataRequested:(id)sender
 {
@@ -1315,7 +1285,7 @@ present_dialog:
 							suppressionKey:nil
 						   suppressionText:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
-							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked withOriginalAlert:originalAlert];
+							   [self onPurgeOfCloudDataRequestedCallback:buttonClicked];
 						   }];
 #endif
 }

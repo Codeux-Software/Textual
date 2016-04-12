@@ -4,6 +4,8 @@
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -3615,16 +3617,16 @@ DQ
             <point key="canvasLocation" x="538.5" y="-4395.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="DSr-72-Tlk" userLabel="iCloud">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="325"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="225"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="34" affinity="minY"/>
             </userGuides>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Dyl-yk-tUI">
-                    <rect key="frame" x="84" y="276" width="273" height="18"/>
+                    <rect key="frame" x="84" y="176" width="273" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="269" id="C3d-0P-s5k"/>
+                        <constraint firstAttribute="width" constant="269" id="6PY-C1-2lp"/>
                     </constraints>
                     <buttonCell key="cell" type="check" title="Only share connections between devices" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="EyC-rV-GiN">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -3637,10 +3639,7 @@ DQ
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z0n-R7-U4w">
-                    <rect key="frame" x="103" y="242" width="383" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="379" id="aPe-26-JwL"/>
-                    </constraints>
+                    <rect key="frame" x="103" y="142" width="383" height="28"/>
                     <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="When enabled, this copy of Textual will synchronize only the configured connections and disregard all other preferences." id="qaR-hH-FZI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -3651,15 +3650,15 @@ DQ
                     </connections>
                 </textField>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="HX9-HF-6ub">
-                    <rect key="frame" x="74" y="221" width="442" height="5"/>
+                    <rect key="frame" x="74" y="121" width="442" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QXr-v8-iJ3">
-                    <rect key="frame" x="142" y="190" width="207" height="17"/>
+                    <rect key="frame" x="142" y="90" width="207" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="203" id="QI4-Wh-zLR"/>
+                        <constraint firstAttribute="width" constant="203" id="Lk3-0c-c4H"/>
                     </constraints>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="iCloud Custom Addons Location:" id="gy4-lQ-5Aw">
                         <font key="font" metaFont="systemBold" size="12"/>
@@ -3667,10 +3666,16 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fFP-yY-BHu">
+                    <rect key="frame" x="74" y="70" width="442" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jj-6v-xTN">
-                    <rect key="frame" x="355" y="189" width="103" height="19"/>
+                    <rect key="frame" x="355" y="88" width="103" height="19"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="103" id="0GA-Ik-Awi"/>
+                        <constraint firstAttribute="width" constant="103" id="vgB-nU-6Ld"/>
                     </constraints>
                     <buttonCell key="cell" type="roundRect" title="Open In Finder" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Dcb-jn-Evt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3682,85 +3687,38 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c4l-gT-o8c">
-                    <rect key="frame" x="302" y="33" width="174" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="174" id="7xA-ar-WyF"/>
-                    </constraints>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Files" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yvu-CD-znG">
+                    <rect key="frame" x="192" y="32" width="205" height="25"/>
+                    <buttonCell key="cell" type="roundTextured" title="Remove Everything from iCloud" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yvu-CD-znG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <accessibility description="Erase iCloud Custom Addons Files"/>
                     <connections>
-                        <action selector="onPurgeOfCloudFilesRequested:" target="-2" id="ISp-Lm-NzJ"/>
+                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="tft-Kx-4qi"/>
                     </connections>
                 </button>
-                <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fFP-yY-BHu">
-                    <rect key="frame" x="74" y="170" width="442" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="45r-PP-31W">
-                    <rect key="frame" x="114" y="33" width="180" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="180" id="JT3-VD-3o8"/>
-                    </constraints>
-                    <buttonCell key="cell" type="roundTextured" title="Erase Data" bezelStyle="texturedRounded" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G9e-eX-oHv">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Erase iCloud Data"/>
-                    <connections>
-                        <action selector="onPurgeOfCloudDataRequested:" target="-2" id="oOt-dw-jXL"/>
-                    </connections>
-                </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-xX-3cD">
-                    <rect key="frame" x="255" y="140" width="79" height="18"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Erase Data" id="9Gr-za-Ofr">
-                        <font key="font" metaFont="systemBold" size="14"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d2F-ek-xu2">
-                    <rect key="frame" x="71" y="74" width="447" height="56"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="fAa-Yr-uch">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">There are two options for erasing the data stored by Textual: The “Erase Data” button erases shared preferences leaving custom add-on files such as styles on iCloud. The “Erase Files” button does the complete opposite. Custom add-on files such as styles will be erased leaving shared preferences intact.</string>
-                        <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="45r-PP-31W" secondAttribute="bottom" constant="35" id="1hp-fV-Fpv"/>
-                <constraint firstItem="HX9-HF-6ub" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="74" id="71P-DV-UYN"/>
-                <constraint firstItem="c4l-gT-o8c" firstAttribute="leading" secondItem="45r-PP-31W" secondAttribute="trailing" constant="8" symbolic="YES" id="94D-S7-5j5"/>
-                <constraint firstItem="45r-PP-31W" firstAttribute="top" secondItem="d2F-ek-xu2" secondAttribute="bottom" constant="17" id="EbG-zP-Zah"/>
-                <constraint firstItem="HX9-HF-6ub" firstAttribute="top" secondItem="Z0n-R7-U4w" secondAttribute="bottom" constant="18" id="F8W-ip-0hN"/>
-                <constraint firstItem="QXr-v8-iJ3" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="144" id="Hr9-JI-9FR"/>
-                <constraint firstItem="Dyl-yk-tUI" firstAttribute="top" secondItem="DSr-72-Tlk" secondAttribute="top" constant="33" id="HzW-Fg-IaD"/>
-                <constraint firstItem="fFP-yY-BHu" firstAttribute="leading" secondItem="HX9-HF-6ub" secondAttribute="leading" id="I43-a1-5ms"/>
-                <constraint firstItem="3jj-6v-xTN" firstAttribute="top" secondItem="HX9-HF-6ub" secondAttribute="bottom" constant="15" id="JFb-b3-n6F"/>
-                <constraint firstItem="QXr-v8-iJ3" firstAttribute="top" secondItem="HX9-HF-6ub" secondAttribute="bottom" constant="16" id="L80-AB-WBv"/>
-                <constraint firstItem="HX9-HF-6ub" firstAttribute="trailing" secondItem="fFP-yY-BHu" secondAttribute="trailing" id="OvS-it-7je"/>
-                <constraint firstItem="d2F-ek-xu2" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="73" id="RUO-g2-XD1"/>
-                <constraint firstItem="Dyl-yk-tUI" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="86" id="UD2-WQ-Gvx"/>
-                <constraint firstItem="3jj-6v-xTN" firstAttribute="bottom" secondItem="QXr-v8-iJ3" secondAttribute="bottom" id="UuU-0R-Cal"/>
-                <constraint firstItem="d2F-ek-xu2" firstAttribute="top" secondItem="ft8-xX-3cD" secondAttribute="bottom" constant="10" id="VqK-Qo-awI"/>
-                <constraint firstItem="Z0n-R7-U4w" firstAttribute="top" secondItem="Dyl-yk-tUI" secondAttribute="bottom" constant="8" symbolic="YES" id="XYO-Tn-BsG"/>
-                <constraint firstItem="Z0n-R7-U4w" firstAttribute="centerX" secondItem="HX9-HF-6ub" secondAttribute="centerX" id="blo-pK-D6R"/>
-                <constraint firstItem="45r-PP-31W" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="114" id="cMu-QE-9PD"/>
-                <constraint firstItem="c4l-gT-o8c" firstAttribute="baseline" secondItem="45r-PP-31W" secondAttribute="baseline" id="cQG-qe-f5x"/>
-                <constraint firstItem="ft8-xX-3cD" firstAttribute="top" secondItem="fFP-yY-BHu" secondAttribute="bottom" constant="14" id="dFJ-BX-NDh"/>
-                <constraint firstItem="3jj-6v-xTN" firstAttribute="leading" secondItem="QXr-v8-iJ3" secondAttribute="trailing" constant="8" symbolic="YES" id="eLV-uv-90W"/>
-                <constraint firstItem="d2F-ek-xu2" firstAttribute="centerX" secondItem="DSr-72-Tlk" secondAttribute="centerX" id="pnL-i9-lbm"/>
-                <constraint firstItem="fFP-yY-BHu" firstAttribute="top" secondItem="QXr-v8-iJ3" secondAttribute="bottom" constant="17" id="qNI-L8-FnW"/>
-                <constraint firstItem="d2F-ek-xu2" firstAttribute="centerX" secondItem="ft8-xX-3cD" secondAttribute="centerX" id="tU8-UM-rai"/>
-                <constraint firstItem="fFP-yY-BHu" firstAttribute="trailing" secondItem="d2F-ek-xu2" secondAttribute="trailing" id="xFG-76-CAz"/>
+                <constraint firstItem="QXr-v8-iJ3" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="144" id="11r-KR-fpu"/>
+                <constraint firstItem="Dyl-yk-tUI" firstAttribute="top" secondItem="DSr-72-Tlk" secondAttribute="top" constant="33" id="1mS-rW-Mq6"/>
+                <constraint firstItem="Z0n-R7-U4w" firstAttribute="centerX" secondItem="DSr-72-Tlk" secondAttribute="centerX" id="2uz-Zh-ImH"/>
+                <constraint firstItem="fFP-yY-BHu" firstAttribute="centerX" secondItem="c4l-gT-o8c" secondAttribute="centerX" id="6YQ-3H-6AN"/>
+                <constraint firstItem="HX9-HF-6ub" firstAttribute="top" secondItem="Z0n-R7-U4w" secondAttribute="bottom" constant="18" id="9XU-Ij-U0Y"/>
+                <constraint firstItem="c4l-gT-o8c" firstAttribute="top" secondItem="fFP-yY-BHu" secondAttribute="bottom" constant="16" id="AKG-Hp-fve"/>
+                <constraint firstItem="QXr-v8-iJ3" firstAttribute="top" secondItem="HX9-HF-6ub" secondAttribute="bottom" constant="16" id="BKf-bg-VSJ"/>
+                <constraint firstItem="QXr-v8-iJ3" firstAttribute="firstBaseline" secondItem="3jj-6v-xTN" secondAttribute="firstBaseline" id="F18-Dy-Il2"/>
+                <constraint firstItem="HX9-HF-6ub" firstAttribute="leading" secondItem="fFP-yY-BHu" secondAttribute="leading" id="FLy-Ns-VmI"/>
+                <constraint firstItem="HX9-HF-6ub" firstAttribute="trailing" secondItem="fFP-yY-BHu" secondAttribute="trailing" id="FeC-f6-LQA"/>
+                <constraint firstItem="QXr-v8-iJ3" firstAttribute="centerY" secondItem="3jj-6v-xTN" secondAttribute="centerY" id="Mur-sU-oHe"/>
+                <constraint firstItem="fFP-yY-BHu" firstAttribute="top" secondItem="3jj-6v-xTN" secondAttribute="bottom" constant="16" id="W2p-fe-3v8"/>
+                <constraint firstItem="3jj-6v-xTN" firstAttribute="leading" secondItem="QXr-v8-iJ3" secondAttribute="trailing" constant="8" symbolic="YES" id="ZIv-p6-07Q"/>
+                <constraint firstItem="HX9-HF-6ub" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="74" id="axw-4m-Nz5"/>
+                <constraint firstItem="3jj-6v-xTN" firstAttribute="baseline" secondItem="QXr-v8-iJ3" secondAttribute="firstBaseline" id="gTs-B4-uv0"/>
+                <constraint firstItem="Z0n-R7-U4w" firstAttribute="top" secondItem="Dyl-yk-tUI" secondAttribute="bottom" constant="8" symbolic="YES" id="mVc-M0-ACk"/>
+                <constraint firstItem="Dyl-yk-tUI" firstAttribute="leading" secondItem="DSr-72-Tlk" secondAttribute="leading" constant="86" id="rWn-kF-lzu"/>
+                <constraint firstItem="Z0n-R7-U4w" firstAttribute="centerX" secondItem="HX9-HF-6ub" secondAttribute="centerX" id="tCp-AX-39h"/>
             </constraints>
-            <point key="canvasLocation" x="508.5" y="-4440.5"/>
+            <point key="canvasLocation" x="334.5" y="-4252.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="KpN-mD-prv" userLabel="Incoming Data">
             <rect key="frame" x="0.0" y="0.0" width="589" height="184"/>
