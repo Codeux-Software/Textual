@@ -124,9 +124,11 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 		return NO;
 	}
 
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([RZFileManager() isUbiquitousItemAtPathDownloaded:path] == NO) {
 		return NO;
 	}
+#endif
 
 	NSString *cssFile = [path stringByAppendingPathComponent:@"design.css"];
 
