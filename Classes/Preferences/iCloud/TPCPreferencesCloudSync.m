@@ -354,7 +354,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 		/* If one of the values changed is our world controller, then we intercept
 		 that key and replace it with a few special values. */
-		if ([changedValues containsObject:IRCWorldControllerDefaultsStorageKey]) {
+		if ([changedValues containsKey:IRCWorldControllerDefaultsStorageKey]) {
 			[changedValues removeObjectForKey:IRCWorldControllerDefaultsStorageKey];
 
 			NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
