@@ -249,35 +249,7 @@
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self askAboutTheSupportChannel];
-	
 	[self updateOKButton];
-}
-
-- (void)askAboutTheSupportChannel
-{
-	NSString *host = [self.serverAddressComboBox stringValue];
-
-	if ([host hasSuffix:@"freenode.net"] || [host isEqualIgnoringCase:@"freenode"]) {
-		NSString *key = [TLOPopupPrompts suppressionKeyWithBase:@"welcomesheet_join_support_channel"];
-
-		BOOL enableDialog = [RZUserDefaults() boolForKey:key];
-
-		if (enableDialog == NO) {
-			BOOL addSupportChannel = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TDCWelcomeSheet[1000][2]")
-																		title:TXTLS(@"TDCWelcomeSheet[1000][1]")
-																defaultButton:BLS(1219)
-															  alternateButton:BLS(1182)
-															   suppressionKey:@"welcomesheet_join_support_channel"
-															  suppressionText:TLOPopupPromptSpecialSuppressionTextValue];
-
-			if (addSupportChannel) {
-				[self.channelList addObjectWithoutDuplication:@"#textual"];
-
-				[self.channelTable reloadData];
-			}
-		}
-	}
 }
 
 - (void)updateOKButton
