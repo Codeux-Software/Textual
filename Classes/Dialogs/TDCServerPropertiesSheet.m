@@ -1143,6 +1143,10 @@
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)toggleCloudSyncExclusion:(id)sender
 {
+	if (self.clientID == nil) {
+		return;
+	}
+
 	if ([self.excludedFromCloudSyncingCheck state] == NSOnState) {
 		[TLOPopupPrompts sheetWindowWithWindow:self.sheet
 										  body:TXTLS(@"TDCServerPropertiesSheet[1002][2]")
