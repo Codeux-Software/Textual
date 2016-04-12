@@ -40,19 +40,13 @@
 
 TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;
 
-/* TLOPopupPromptSpecialSuppressionTextValue tells the dialog to force suppression on
- the dialog using the given key as soon as it closes instead of actually asking the user.
- When using this, it is the job of the caller to validate the suppression value. The alert
- will always return YES for suppressed alerts so make sure that is the value you want. */
-TEXTUAL_EXTERN NSString * const TLOPopupPromptSpecialSuppressionTextValue;
-
 typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
 	TLOPopupPromptReturnPrimaryType,
 	TLOPopupPromptReturnSecondaryType,
 	TLOPopupPromptReturnOtherType,
 };
 
-typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert);
+typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse);
 
 @interface TLOPopupPrompts : NSObject
 /* Return the actual suppression key used internally. Do not feed this to
@@ -64,9 +58,37 @@ typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonCl
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate;
+
++ (BOOL)dialogWindowWithMessage:(NSString *)bodyText
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
 				alternateButton:(NSString *)buttonAlternate
 				 suppressionKey:(NSString *)suppressKey
 				suppressionText:(NSString *)suppressText;
+
++ (BOOL)dialogWindowWithMessage:(NSString *)bodyText
+						  title:(NSString *)titleText
+				  defaultButton:(NSString *)buttonDefault
+				alternateButton:(NSString *)buttonAlternate
+				 suppressionKey:(NSString *)suppressKey
+				suppressionText:(NSString *)suppressText
+			suppressionResponse:(BOOL *)suppressionResponse;
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(NSString *)buttonAlternate
+				  otherButton:(NSString *)otherButton;
+
++ (void)sheetWindowWithWindow:(NSWindow *)window
+						 body:(NSString *)bodyText
+						title:(NSString *)titleText
+				defaultButton:(NSString *)buttonDefault
+			  alternateButton:(NSString *)buttonAlternate
+				  otherButton:(NSString *)otherButton
+			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock;
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
 						 body:(NSString *)bodyText
