@@ -259,6 +259,7 @@
 "BasicLanguage[1295]" = "Open Web Inspector";
 "BasicLanguage[1296]" = "Look Up in Dictionary";
 "BasicLanguage[1297]" = "Look Up “%@”";
+"BasicLanguage[3004]" = "Search With %@";
 
 /* DCC request console error */
 "BasicLanguage[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
@@ -785,6 +786,6 @@
 
 
 
-/* Next unusued key: 3004 */
+/* Next unusued key: 3005 */
 
 

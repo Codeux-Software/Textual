@@ -295,12 +295,16 @@
 	IRCChannel *c = [mainWindow() selectedChannel];
 
 	switch (tag) {
-		case 315: // "Search in Google"
-		case 1601: // "Search on Google"
+		case 315: // "Search With Google"
+		case 1601: // "Search With Google"
 		{
 			TVCLogView *web = [self currentLogControllerBackingView];
 
 			PointerIsEmptyAssertReturn(web, NO);
+
+			NSString *searchProviderName = [self searchProviderName];
+
+			[item setTitle:BLS(3004, searchProviderName)];
 
 			return [web hasSelection];
 		}
@@ -1250,6 +1254,22 @@
 	[TLOpenLink openWithString:@"https://help.codeux.com/textual/Writing-Scripts.kb"];
 }
 
+- (NSString *)searchProviderName
+{
+	NSDictionary *preferredWebServices =
+	[[NSUserDefaults standardUserDefaults] dictionaryForKey:@"NSPreferredWebServices"];
+
+	NSDictionary *defaultSearchProvider = [preferredWebServices dictionaryForKey:@"NSWebServicesProviderWebSearch"];
+
+	NSString *searchProviderName = [defaultSearchProvider stringForKey:@"NSDefaultDisplayName"];
+
+	if (searchProviderName == nil) {
+		return @"Google";
+	}
+
+	return searchProviderName;
+}
+
 - (void)searchGoogle:(id)sender
 {
 	TVCLogView *web = [self currentLogControllerBackingView];
@@ -1260,9 +1280,11 @@
 
 	NSObjectIsEmptyAssert(s);
 
-	NSString *urlStr = [NSString stringWithFormat:@"https://www.google.com/search?ie=UTF-8&q=%@", [s gtm_stringByEscapingForURLArgument]];
-		
-	[TLOpenLink openWithString:urlStr];
+	NSPasteboard *searchPasteboard = [NSPasteboard pasteboardWithUniqueName];
+
+	[searchPasteboard setStringContent:s];
+
+	NSPerformService(@"Search With %WebSearchProvider@", searchPasteboard);
 }
 
 - (void)lookUpInDictionary:(id)sender
