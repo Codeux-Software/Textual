@@ -1287,13 +1287,11 @@ present_dialog:
 
 - (void)openPathToThemesCallback:(TLOPopupPromptReturnType)returnCode withOriginalAlert:(NSAlert *)originalAlert
 {
-	if (returnCode == TLOPopupPromptReturnPrimaryType) {
-		NSString *oldpath = [themeController() path];
-		
-		[RZWorkspace() openFile:oldpath];
+	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+		[self openPathToTheme];
 	}
 
-	if (returnCode == TLOPopupPromptReturnOtherType) {
+	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		[[originalAlert window] orderOut:nil];
 
 		BOOL copyingToCloud = NO;
@@ -1315,29 +1313,12 @@ present_dialog:
 - (void)onOpenPathToThemes:(id)sender
 {
     if ([themeController() isBundledTheme]) {
-		NSString *dialogMessage = nil;
-		NSString *copyButton = nil;
-		
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
-			dialogMessage = @"TDCPreferencesController[1011]";
-			copyButton = @"TDCPreferencesController[1009]";
-		} else {
-#endif
-
-			dialogMessage = @"TDCPreferencesController[1010]";
-			copyButton = @"TDCPreferencesController[1008]";
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		}
-#endif
-
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(dialogMessage)
-										 title:TXTLS(@"TDCPreferencesController[1013]")
-								 defaultButton:BLS(1017)
-							   alternateButton:BLS(1009)
-								   otherButton:TXTLS(copyButton)
+										  body:TXTLS(@"TDCPreferencesController[1010][2]")
+										 title:TXTLS(@"TDCPreferencesController[1010][1]")
+								 defaultButton:BLS(1219)
+							   alternateButton:BLS(1182)
+								   otherButton:nil
 								suppressionKey:nil
 							   suppressionText:nil
 							   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
@@ -1345,51 +1326,16 @@ present_dialog:
 							   }];
 		
 		return;
-    } else {
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		BOOL containerAvlb = [sharedCloudManager() ubiquitousContainerIsAvailable];
-		
-		if (containerAvlb) {
-			if ([themeController() storageLocation] == TPCThemeControllerStorageCustomLocation) {
-				/* If the theme exists in app support folder, but cloud syncing is available,
-				 then offer to sync it to the cloud. */
-
-				[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-												  body:TXTLS(@"TDCPreferencesController[1012]")
-												 title:TXTLS(@"TDCPreferencesController[1013]")
-										 defaultButton:BLS(1017)
-									   alternateButton:BLS(1009)
-										   otherButton:TXTLS(@"TDCPreferencesController[1009]")
-										suppressionKey:nil
-									   suppressionText:nil
-									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-										   [self openPathToThemesCallback:buttonClicked withOriginalAlert:originalAlert];
-									   }];
-
-				return;
-			}
-		} else {
-			if ([themeController() storageLocation] == TPCThemeControllerStorageCloudLocation) {
-				/* If the current theme is stored in the cloud, but our container is not available, then
-				 we have to tell the user we can't open the files right now. */
-
-				[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-												  body:TXTLS(@"BasicLanguage[1102][2]")
-												 title:TXTLS(@"BasicLanguage[1102][1]")
-										 defaultButton:BLS(1186)
-									   alternateButton:nil
-										   otherButton:nil];
-				
-				return;
-			}
-		}
-#endif
-		
-		/* pathOfTheme... is called to ignore the cloud cache location. */
-		NSString *filepath = [themeController() path];
-		
-		[RZWorkspace() openFile:filepath];
     }
+		
+	[self openPathToTheme];
+}
+
+- (void)openPathToTheme
+{
+	NSString *filepath = [themeController() path];
+
+	[RZWorkspace() openFile:filepath];
 }
 
 #pragma mark -
