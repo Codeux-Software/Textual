@@ -106,7 +106,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 {
     BOOL connectionUP = YES;
 
-    if ((flags & kSCNetworkReachabilityFlagsReachable) == NO) {
+    if ((flags & kSCNetworkReachabilityFlagsReachable) == 0) {
         connectionUP = NO;
 	}
 
