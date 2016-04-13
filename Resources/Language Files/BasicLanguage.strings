@@ -112,14 +112,8 @@
 "TDCPreferencesController[1006]" = "Notifications will be posted using Notification Center.";
 "TDCPreferencesController[1007]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC */
 
-"TDCPreferencesController[1008]" = "Make Local Copy";
-"TDCPreferencesController[1009]" = "Copy to iCloud";
-
-"TDCPreferencesController[1010]" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a local copy of it?\n\nIt will become the selected style and can then be modified.";
-"TDCPreferencesController[1011]" = "The style being opened is a read-only version bundled with Textual.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and can then be modified across all shared devices.";
-"TDCPreferencesController[1012]" = "The style being opened is only available on this device.\n\nWould you like to create a copy of it in your iCloud folder?\n\nIt will become the selected style and will then be available across all shared devices.";
-
-"TDCPreferencesController[1013]" = "Resource Files";
+"TDCPreferencesController[1010][1]" = "Are you opening this style because you are interested in modifying it?";
+"TDCPreferencesController[1010][2]" = "Click “Yes” to create a copy of this style specifically for that purpose.";
 
 "TDCPreferencesController[1014][1]" = "Preferred Selection";
 "TDCPreferencesController[1014][2]" = "The style named “%1$@” has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
