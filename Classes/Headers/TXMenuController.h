@@ -83,7 +83,7 @@
 	312: "Spelling…"
 	313: "Check Spelling"
 	314: "Check Spelling as You Type"
-	315: "Search in Google"
+	315: "Search With Google"
 
 	400: "Mark Scrollback"
 	401: "Scrollback Marker"
@@ -251,7 +251,7 @@
  
 	The following tags apply to the "Channel View" menu:
 	1600: "Change Nickname…"
-	1601: "Search on Google"
+	1601: "Search With Google"
 	1602: "Look Up In Dictionary"
 	1603: "Copy"
 	1604: "Paste"
