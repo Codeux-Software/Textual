@@ -1534,8 +1534,8 @@
 
 	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1198][2]")
 													 title:TXTLS(@"BasicLanguage[1198][1]")
-											 defaultButton:BLS(1186)
-										   alternateButton:BLS(1009)
+											 defaultButton:BLS(1219)
+										   alternateButton:BLS(1182)
 											suppressionKey:nil
 										   suppressionText:suppressionText
 									   suppressionResponse:&suppressionResult];
@@ -1867,8 +1867,8 @@
 	if (_isChannel) {
 		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1010][1]")
 														 title:TXTLS(@"BasicLanguage[1010][2]")
-												 defaultButton:BLS(1186)
-											   alternateButton:BLS(1009)
+												 defaultButton:BLS(1219)
+											   alternateButton:BLS(1182)
 												suppressionKey:@"delete_channel"
 											   suppressionText:nil];
 		
