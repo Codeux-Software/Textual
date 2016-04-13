@@ -37,7 +37,7 @@
 
 static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info)
 {
-    OELReachability *reachability = ((__bridge OELReachability *)info);
+	OELReachability *reachability = ((__bridge OELReachability *)info);
 
 	[reachability reachabilityChanged:flags];
 }
@@ -46,7 +46,7 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 + (OELReachability *)reachabilityForInternetConnection
 {
-	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "localhost");
+	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "www.google.com");
 
 	if (ref) {
 		return [[self alloc] initWithReachabilityRef:ref];
@@ -57,37 +57,37 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (OELReachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref
 {
-    if ((self = [super init]))
-    {
-        self.reachabilityRef = ref;
-    }
+	if ((self = [super init]))
+	{
+		self.reachabilityRef = ref;
+	}
 
-    return self;
+	return self;
 }
 
 - (void)dealloc
 {
-    [self stopNotifier];
+	[self stopNotifier];
 
-    if (self.reachabilityRef)
-    {
-        CFRelease(self.reachabilityRef);
+	if (self.reachabilityRef)
+	{
+		CFRelease(self.reachabilityRef);
 				  self.reachabilityRef = nil;
-    }
+	}
 
-	self.reachableBlock		= nil;
-	self.unreachableBlock	= nil;
+	self.reachableBlock	= nil;
+	self.unreachableBlock = nil;
 }
 
 - (BOOL)startNotifier
 {
-    SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
+	SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
 
-    if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) {
+	if (SCNetworkReachabilitySetCallback(self.reachabilityRef, TMReachabilityCallback, &context)) {
 		if (SCNetworkReachabilityScheduleWithRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
-        {
-            return YES;
-        }
+		{
+			return YES;
+		}
 	}
 
 	return NO;
@@ -95,50 +95,42 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (void)stopNotifier
 {
-    SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
+	SCNetworkReachabilitySetCallback(self.reachabilityRef, NULL, NULL);
 
 	SCNetworkReachabilityUnscheduleFromRunLoop(self.reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
 }
 
-#define testcase (kSCNetworkReachabilityFlagsConnectionRequired | kSCNetworkReachabilityFlagsTransientConnection)
-
 - (BOOL)isReachableWithFlags:(SCNetworkReachabilityFlags)flags
 {
-    BOOL connectionUP = YES;
-
-    if ((flags & kSCNetworkReachabilityFlagsReachable) == 0) {
-        connectionUP = NO;
+	if ((flags & kSCNetworkReachabilityFlagsReachable) == kSCNetworkReachabilityFlagsReachable) {
+		return YES;
+	} else {
+		return NO;
 	}
-
-	if ((flags & testcase) == testcase) {
-		connectionUP = NO;
-	}
-	
-    return connectionUP;
 }
 
 - (BOOL)isReachable
 {
-    SCNetworkReachabilityFlags flags;
+	SCNetworkReachabilityFlags flags;
 
-    if (SCNetworkReachabilityGetFlags(self.reachabilityRef, &flags) == FALSE) {
-        return NO;
+	if (SCNetworkReachabilityGetFlags(self.reachabilityRef, &flags) == FALSE) {
+		return NO;
 	}
 
-    return [self isReachableWithFlags:flags];
+	return [self isReachableWithFlags:flags];
 }
 
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags
 {
-    if ([self isReachableWithFlags:flags]) {
-        if (self.reachableBlock) {
-            self.reachableBlock(self);
-        }
-    } else {
-        if (self.unreachableBlock) {
-            self.unreachableBlock(self);
-        }
-    }
+	if ([self isReachableWithFlags:flags]) {
+		if (self.reachableBlock) {
+			self.reachableBlock(self);
+		}
+	} else {
+		if (self.unreachableBlock) {
+			self.unreachableBlock(self);
+		}
+	}
 }
 
 @end
