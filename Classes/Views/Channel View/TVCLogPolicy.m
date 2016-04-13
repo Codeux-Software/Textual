@@ -309,6 +309,8 @@
 		NSObjectsAreEqual([webpageURL scheme], @"https") ||
 		NSObjectsAreEqual([webpageURL scheme], @"textual"))
 	{
+		[TLOpenLink open:webpageURL];
+
 		return;
 	}
 
