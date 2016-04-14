@@ -88,7 +88,7 @@ NSInteger const TLOLicenseManagerTrialModeMaximumLifespan = (-2592000); // 30 da
 BOOL TLOLicenseManagerGenerateNewKeyPair(void);
 BOOL TLOLicenseManagerLicenseDictionaryIsValid(NSDictionary *licenseDictionary);
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void);
-BOOL TLOLicenseManagerPublicKeyIsGenuine(void);
+void TLOLicenseManagerSetPublicKeyIsGenuine(void);
 BOOL TLOLicenseManagerUserLicenseFileExists(void);
 CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPublicKey);
 NSData *TLOLicenseManagerPublicKeyContents(void);
@@ -97,7 +97,6 @@ NSDictionary *TLOLicenseManagerLicenseDictionary(void);
 NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents);
 NSURL *TLOLicenseManagerTrialModeInformationFilePath(void);
 NSURL *TLOLicenseManagerUserLicenseFilePath(void);
-void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void);
 
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey			= @"licenseCreationDate";
 NSString * const TLOLicenseManagerLicenseDictionaryLicenseKeyKey					= @"licenseKey";
@@ -123,7 +122,7 @@ void TLOLicenseManagerSetup(void)
 		(void)TLOLicenseManagerPopulatePublicKeyRef();
 
 		XRPerformBlockAsynchronouslyOnGlobalQueue(^{
-			TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog();
+			TLOLicenseManagerSetPublicKeyIsGenuine();
 		});
 	}
 }
@@ -603,12 +602,12 @@ NSData *TLOLicenseManagerPublicKeyContents(void)
 	return publicKeyContents;
 }
 
-BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
+void TLOLicenseManagerSetPublicKeyIsGenuine(void)
 {
 	NSData *publicKeyContents = TLOLicenseManagerPublicKeyContents();
 
 	if (publicKeyContents == nil) {
-		return NO;
+		return;
 	}
 
 	NSString *actualPublicKeyHash = [publicKeyContents sha256];
@@ -618,31 +617,6 @@ BOOL TLOLicenseManagerPublicKeyIsGenuine(void)
 	} else {
 		TLOLicenseManagerPublicKeyIsGenuineResult = NO;
 	}
-
-	return TLOLicenseManagerPublicKeyIsGenuineResult;
-}
-
-void TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog(void)
-{
-	/* TLOLicenseManagerMaybeDisplayPublicKeyIsGenuineDialog() is expected
-	 to be called from the global queue to avoid overhead of hashing the
-	 public key file, which means we have to present dialog on main thread. */
-	BOOL publicKeyIsGenuine = TLOLicenseManagerPublicKeyIsGenuine();
-
-	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		if (publicKeyIsGenuine == NO) {
-			BOOL userAction = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1000][2]")
-																 title:TXTLS(@"TLOLicenseManager[1000][1]")
-														 defaultButton:TXTLS(@"BasicLanguage[1186]")
-													   alternateButton:TXTLS(@"TLOLicenseManager[1000][3]")
-														suppressionKey:@"license_manager_public_key_is_not_genuine"
-													   suppressionText:nil];
-
-			if (userAction == NO) { // NO = secondary button ("View Source Code")
-				[TLOpenLink openWithString:@"https://www.github.com/Codeux-Software/Textual"];
-			}
-		}
-	});
 }
 
 BOOL TLOLicenseManagerPopulatePublicKeyRef(void)

@@ -161,16 +161,12 @@
 "TDCFileTransferDialog[1021]" = "Select the folder in which this file will be saved";
 
 /* License Manager */
-"TLOLicenseManager[1000][1]" = "It appears that you may be using a copy of Textual that is not genuine.";
-"TLOLicenseManager[1000][2]" = "Textual is distributed as commercial software to support those that continue to put time into it. However, did you know that Textual is open source?\n\nWhile discouraged, if you possess the technical ability, then you can build Textual from its source code which is freely available.";
-"TLOLicenseManager[1000][3]" = "View Source Code";
-
 "TLOLicenseManager[1001][1]" = "A problem was encountered while communicating with the web server located at www.codeux.com";
-"TLOLicenseManager[1001][2]" = "Please try again in 10 to 15 minutes\n\nAfterwards, contact support for further assistance if the problem does not disappear.";
+"TLOLicenseManager[1001][2]" = "Try again in a few minutes then contact support if the problem persists.";
 "TLOLicenseManager[1001][3]" = "Contact Support";
 
-"TLOLicenseManager[1002][1]" = "The license key “%@“ cannot be activated because it has already been activated too many times.";
-"TLOLicenseManager[1002][2]" = "Contact support by clicking the button presented below for further assistance.";
+"TLOLicenseManager[1002][1]" = "The license key “%@“ cannot be activated because it is blacklisted";
+"TLOLicenseManager[1002][2]" = "Contact support for more information.";
 "TLOLicenseManager[1002][3]" = "Contact Support";
 
 "TLOLicenseManager[1003][1]" = "The following error was returned while processing request:";
@@ -180,32 +176,32 @@
 "TLOLicenseManager[1004][2]" = "Unknown or improperly formatted license key";
 
 "TLOLicenseManager[1005][1]" = "Successfully queued e-mail for %@";
-"TLOLicenseManager[1005][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing all license keys owned by this e-mail address.";
+"TLOLicenseManager[1005][2]" = "An e-mail which contains your license key will be delivered to %@ in the next few minutes.";
 
 "TLOLicenseManager[1006][1]" = "Thank you for your purchase of Textual!";
-"TLOLicenseManager[1006][2]" = "All limitations of your unregistered copy of Textual have been lifted.";
+"TLOLicenseManager[1006][2]" = "All limitations have been lifted.";
 
-"TLOLicenseManager[1007][1]" = "Are you sure that you would like to deactivate this copy of Textual?";
-"TLOLicenseManager[1007][2]" = "All limitations that apply to unregistered copies of Textual will immediately take effect once deactivated.";
+"TLOLicenseManager[1007][1]" = "Are you sure you want to deactivate this copy of Textual?";
+"TLOLicenseManager[1007][2]" = "All limitations that apply to the trial version of Textual will immediately take effect once deactivated.";
 
-"TLOLicenseManager[1008]" = "Select a copy of Textual installed through the Mac App Store to receive a free license key.";
+"TLOLicenseManager[1008]" = "Select a copy of Textual downloaded from the Mac App Store to receive a free license key.";
 
-"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key because it is not a copy of Textual 5 or newer version, or was not downloaded through the Mac App Store.";
-"TLOLicenseManager[1009][2]" = "Select another application and try again.";
+"TLOLicenseManager[1009][1]" = "The application “%@“ cannot be used to request a free license key";
+"TLOLicenseManager[1009][2]" = "This application is not Textual 5 or a newer version, or was not downloaded from the Mac App Store.";
 
-"TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase to new license system";
-"TLOLicenseManager[1010][2]" = "An e-mail will be delivered to %@ in the next five (5) to ten (10) minutes containing your new, free license key.";
+"TLOLicenseManager[1010][1]" = "Successfully migrated Mac App Store purchase";
+"TLOLicenseManager[1010][2]" = "An e-mail which contains your license key will be delivered to %@ in the next few minutes.";
 
-"TLOLicenseManager[1011][1]" = "Cannot migrate Mac App Store purchase because it has already been migrated to the new license system.";
-"TLOLicenseManager[1011][2]" = "To receive a copy of your license key, click the “Recover Lost License” button in the “Manage License” window and enter the e-mail address used when your purchase was originally migrated.";
+"TLOLicenseManager[1011][1]" = "Cannot migrate Mac App Store purchase because it has already been migrated";
+"TLOLicenseManager[1011][2]" = "Click the “Recover Lost License” button if you have lost your license key.";
 
 "TLOLicenseManager[1012][1]" = "The following error was returned while processing request:";
 "TLOLicenseManager[1012][2]" = "Improperly formatted e-mail address";
 
 "TLOLicenseManager[1013][1]" = "The following error was returned while processing request:";
-"TLOLicenseManager[1013][2]" = "Unable to locate any orders owned by the e-mail address “%@“";
+"TLOLicenseManager[1013][2]" = "Unable to locate an order that is linked to the e-mail address “%@“";
 
-"TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit.";
+"TLOLicenseManager[1014][1]" = "The license key “%@“ has exceeded its daily activation limit";
 "TLOLicenseManager[1014][2]" = "This license key cannot be activated more than %ld times in a twenty-four (24) hour period. Please try again at a later time.";
 
 "TLOLicenseManager[1015]" = "Your trial of Textual will expire in %@";
