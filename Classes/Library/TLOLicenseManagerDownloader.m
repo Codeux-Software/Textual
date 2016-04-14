@@ -355,7 +355,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1003][2]")
 														 title:TXTLS(@"TLOLicenseManager[1003][1]")
 												 defaultButton:TXTLS(@"BasicLanguage[1011]")
-											   alternateButton:nil;
+											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
 			}
