@@ -63,6 +63,8 @@
 - (void)load; // Calling this more than once will throw an exception
 - (void)reload;
 
+- (void)reloadMonitoringActiveThemePath;
+
 - (void)prepareForApplicationTermination;
 
 - (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;

@@ -667,6 +667,13 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 #undef _themeFilePath
 }
 
+- (void)reloadMonitoringActiveThemePath
+{
+	[self stopMonitoringActiveThemePath];
+
+	[self startMonitoringAcitveThemePath];
+}
+
 - (void)stopMonitoringActiveThemePath
 {
 	if (self.eventStreamRef == NULL) {
@@ -684,13 +691,19 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	void *callbackInfo = NULL;
 	
-	NSArray *pathsToWatch = @[
+	NSArray *pathsToWatch = nil;
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-		[TPCPathInfo cloudCustomThemeFolderPath],
+	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
+		pathsToWatch = @[[TPCPathInfo customThemeFolderPath], [TPCPathInfo cloudCustomThemeFolderPath]];
+	} else {
 #endif
-							  
-		[TPCPathInfo customThemeFolderPath]
-	];
+
+		pathsToWatch = @[[TPCPathInfo customThemeFolderPath]];
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	}
+#endif
 
 	CFArrayRef pathsToWatchRef = (__bridge CFArrayRef)(pathsToWatch);
 	

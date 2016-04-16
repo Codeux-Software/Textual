@@ -37,6 +37,7 @@
 
 #import "TextualApplication.h"
 
+#import "TPCThemeControllerPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
 
@@ -147,6 +148,8 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 			
 			LogToConsole(@"iCloud access is not available.");
 		}
+
+		[themeController() reloadMonitoringActiveThemePath];
 	});
 }
 
