@@ -117,14 +117,12 @@
 	 placed in the flood control queue. This writes them directly to the socket
 	 instead of actuallying waiting for the queue. We only need this check if
 	 we actually have flood control enabled. */
-	if (self.connectionUsesOutgoingFloodControl) {
-		BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
+	BOOL isPong = [line hasPrefix:IRCPrivateCommandIndex("pong")];
 
-		if (isPong) {
-			[self sendData:line removeFromQueue:NO];
+	if (isPong) {
+		[self sendData:line removeFromQueue:NO];
 
-			return; // Exit from entering the queue.
-		}
+		return; // Exit from entering the queue.
 	}
 
 	/* Normal send. */
@@ -144,13 +142,11 @@
 	}
 
 	if ([self.associatedClient isLoggedIn]) {
-		if (self.connectionUsesOutgoingFloodControl) {
-			if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
-				return NO;
-			}
-
-			self.floodControlCurrentMessageCount += 1;
+		if (self.floodControlCurrentMessageCount >= self.floodControlMaximumMessageCount) {
+			return NO;
 		}
+
+		self.floodControlCurrentMessageCount += 1;
 	}
 
 	[self sendNextLine];
@@ -199,10 +195,8 @@
 
 - (void)startTimer
 {
-	if (self.connectionUsesOutgoingFloodControl) {
-		if ([self.floodTimer timerIsActive] == NO) {
-			[self.floodTimer start:self.floodControlDelayInterval];
-		}
+	if ([self.floodTimer timerIsActive] == NO) {
+		[self.floodTimer start:self.floodControlDelayInterval];
 	}
 }
 

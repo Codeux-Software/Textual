@@ -64,7 +64,6 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 #endif
 
 @property (nonatomic, assign) BOOL hideNetworkUnavailabilityNotices;
-@property (nonatomic, assign) BOOL isOutgoingFloodControlEnabled;
 @property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign) BOOL performPongTimer;

@@ -221,7 +221,7 @@ Gw
                         </constraints>
                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" alignment="left" id="161">
                             <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Additional settings including NickServ password, username, real name, etc. can be edited later by control clicking the connection and selecting “Server Properties”</string>
+                            <string key="title">Additional options including NickServ password, username, real name, etc. can be edited later by control clicking the connection and selecting “Server Properties”</string>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>

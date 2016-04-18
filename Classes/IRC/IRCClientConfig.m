@@ -43,7 +43,11 @@ NSInteger const IRCConnectionDefaultServerPort = 6667;
 NSInteger const IRCConnectionDefaultProxyPort = 1080;
 
 #define IRCClientConfigFloodControlDefaultDelayTimer					2
+#define IRCClientConfigFloodControlMinimumDelayTimer					1
+#define IRCClientConfigFloodControlMaximumDelayTimer					60
 #define IRCClientConfigFloodControlDefaultMessageCount					6
+#define IRCClientConfigFloodControlMinimumMessageCount					1
+#define IRCClientConfigFloodControlMaximumMessageCount					60
 #define IRCClientConfigFloodControlDefaultMessageCountForFreenode		2 // freenode gets a special case 'cause they are strict about flood control
 
 @implementation IRCClientConfig
@@ -80,8 +84,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 			 @"prefersSecuredConnection" : @(NO),
 
 			 @"excludedFromCloudSyncing" : @(NO),
-
-			 @"isOutgoingFloodControlEnabled" : @(YES),
 
 			 @"performPongTimer" : @(YES),
 			 @"performDisconnectOnPongTimer" : @(NO),
@@ -173,8 +175,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.excludedFromCloudSyncing	= [defaults boolForKey:@"excludedFromCloudSyncing"];
 #endif
 
-	self.isOutgoingFloodControlEnabled	= [defaults boolForKey:@"isOutgoingFloodControlEnabled"];
-
 	self.floodControlDelayTimerInterval = [defaults integerForKey:@"floodControlDelayTimerInterval"];
 	self.floodControlMaximumMessages	= [defaults integerForKey:@"floodControlMaximumMessages"];
 
@@ -226,7 +226,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	 very strict about flood control so this is a tempoary, extremely ugly solution
 	 to the problem until a permanent one is developed. */
 
-	if ([self.serverAddress hasSuffix:@"freenode.net"]) {
+	if ([self.serverAddress hasSuffix:@".freenode.net"]) {
 		if (self.floodControlMaximumMessages == IRCClientConfigFloodControlDefaultMessageCount) {
 			NSInteger newValue = IRCClientConfigFloodControlDefaultMessageCountForFreenode;
 
@@ -462,15 +462,35 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	/* Flood control. */
 	/* This is here to migrate to the new properties. Saving these values
 	 in this dictionary key is no longer preferred. */
-	if ([dic containsKey:@"floodControl"]) {
-		NSDictionary *e = [dic dictionaryForKey:@"floodControl"];
+	BOOL floodControlSetToDisabled = NO;
 
-		if (e) {
-			[e assignBoolTo:&_isOutgoingFloodControlEnabled			forKey:@"serviceEnabled"];
+	NSDictionary *floodControlDict = [dic dictionaryForKey:@"floodControl"];
 
-			[e assignIntegerTo:&_floodControlMaximumMessages		forKey:@"maximumMessageCount"];
-			[e assignIntegerTo:&_floodControlDelayTimerInterval		forKey:@"delayTimerInterval"];
+	if (floodControlDict) {
+		NSNumber *serviceEnabled = [floodControlDict objectForKey:@"serviceEnabled"];
+
+		if (serviceEnabled && [serviceEnabled boolValue] == NO) {
+			floodControlSetToDisabled = YES;
 		}
+
+		[floodControlDict assignIntegerTo:&_floodControlMaximumMessages	forKey:@"maximumMessageCount"];
+		[floodControlDict assignIntegerTo:&_floodControlDelayTimerInterval forKey:@"delayTimerInterval"];
+	}
+
+	if (floodControlSetToDisabled == NO) {
+		NSNumber *floodControlEnabled = [dic objectForKey:@"isOutgoingFloodControlEnabled"];
+
+		if (floodControlEnabled && [floodControlEnabled boolValue] == NO) {
+			floodControlSetToDisabled = YES;
+		}
+	}
+
+	/* An option to disable flood control no longer exists.
+	 If the user had flood control disabled when the option did exist,
+	 then set the the current values to appear disabled. */
+	if (floodControlSetToDisabled) {
+		self.floodControlMaximumMessages = IRCClientConfigFloodControlMaximumMessageCount;
+		self.floodControlDelayTimerInterval = IRCClientConfigFloodControlMinimumDelayTimer;
 	}
 
 	/* Migrate to keychain. */
@@ -478,6 +498,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	if (proxyPassword) {
 		[self setProxyPassword:proxyPassword];
+
 		[self writeProxyPasswordKeychainItemToDisk];
 	}
 
@@ -513,7 +534,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignIntegerTo:&_fallbackEncoding					forKey:@"fallbackEncoding"];
 	[dic assignIntegerTo:&_primaryEncoding					forKey:@"primaryEncoding"];
 
-	[dic assignBoolTo:&_isOutgoingFloodControlEnabled		forKey:@"isOutgoingFloodControlEnabled"];
 	[dic assignIntegerTo:&_floodControlDelayTimerInterval	forKey:@"floodControlDelayTimerInterval"];
 	[dic assignIntegerTo:&_floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
 
@@ -648,7 +668,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setInteger:self.fallbackEncoding					forKey:@"fallbackEncoding"];
 	[dic setInteger:self.primaryEncoding					forKey:@"primaryEncoding"];
 
-	[dic setBool:self.isOutgoingFloodControlEnabled			forKey:@"isOutgoingFloodControlEnabled"];
 	[dic setInteger:self.floodControlDelayTimerInterval		forKey:@"floodControlDelayTimerInterval"];
 	[dic setInteger:self.floodControlMaximumMessages		forKey:@"floodControlMaximumMessages"];
 

@@ -789,6 +789,9 @@ Gw
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ovl-ei-0Qj">
                                             <rect key="frame" x="155" y="335" width="301" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="KuG-Bu-o5D"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="3UV-cQ-6XT">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -940,6 +943,9 @@ Gw
                                         </textField>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="muN-88-pns" customClass="TVCTextFieldWithValueValidation">
                                             <rect key="frame" x="145" y="335" width="301" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="f6r-Lf-gam"/>
+                                            </constraints>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" id="Vqv-i7-xCm" customClass="TVCTextFieldWithValueValidationCell">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

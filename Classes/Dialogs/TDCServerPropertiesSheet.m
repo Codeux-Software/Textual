@@ -66,7 +66,6 @@
 @property (nonatomic, weak) IBOutlet NSButton *editHighlightButton;
 @property (nonatomic, weak) IBOutlet NSButton *editIgnoreButton;
 @property (nonatomic, weak) IBOutlet NSButton *excludedFromCloudSyncingCheck;
-@property (nonatomic, weak) IBOutlet NSButton *isOutgoingFloodControlEnabledCheck;
 @property (nonatomic, weak) IBOutlet NSButton *setInvisibleModeOnConnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *performDisconnectOnPongTimerCheck;
@@ -116,7 +115,6 @@
 @property (nonatomic, strong) IBOutlet NSView *contentViewEncoding;
 @property (nonatomic, strong) IBOutlet NSView *contentViewDisconnectMessages;
 @property (nonatomic, strong) IBOutlet NSView *contentViewFloodControl;
-@property (nonatomic, strong) IBOutlet NSView *contentViewFloodControlToolView;
 @property (nonatomic, strong) IBOutlet NSView *contentViewGeneral;
 @property (nonatomic, strong) IBOutlet NSView *contentViewHighlights;
 @property (nonatomic, strong) IBOutlet NSView *contentViewIdentity;
@@ -142,7 +140,6 @@
 #endif
 
 - (IBAction)proxyTypeChanged:(id)sender;
-- (IBAction)floodControlChanged:(id)sender;
 - (IBAction)toggleAdvancedEncodings:(id)sender;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -768,8 +765,6 @@
 	[self.connectCommandsField setString:loginCommands];
 
 	/* Flood Control */
-	[self.isOutgoingFloodControlEnabledCheck setState:self.config.isOutgoingFloodControlEnabled];
-
 	self.floodControlDelayTimerSliderTempValue = self.config.floodControlDelayTimerInterval;
 	self.floodControlMessageCountSliderTempValue = self.config.floodControlMaximumMessages;
 
@@ -786,7 +781,6 @@
 	[self updateClientCertificatePage];
 
 	[self proxyTypeChanged:nil];
-	[self floodControlChanged:nil];
 
 	[self reloadChannelTable];
 	[self reloadHighlightsTable];
@@ -902,8 +896,6 @@
 	self.config.loginCommands = newConnectCommandsList;
 
 	/* Flood Control */
-	self.config.isOutgoingFloodControlEnabled = [self.isOutgoingFloodControlEnabledCheck state];
-	
 	self.config.floodControlMaximumMessages = [self.floodControlMessageCountSlider integerValue];
 	self.config.floodControlDelayTimerInterval = [self.floodControlDelayTimerSlider integerValue];
 	
@@ -1002,13 +994,6 @@
 - (void)reloadHighlightsTable
 {
 	[self.highlightsTable reloadData];
-}
-
-- (void)floodControlChanged:(id)sender
-{
-	BOOL match = ([self.isOutgoingFloodControlEnabledCheck state] == NSOffState);
-	
-	[self.contentViewFloodControlToolView setHidden:match];
 }
 
 - (void)useSSLCheckChanged:(id)sender
