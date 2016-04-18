@@ -41,7 +41,7 @@
 
 "BasicLanguage[1005]" = "Successful key exchange. Messages sent to \002%@\002 will now be encrypted.";
 "BasicLanguage[1006]" = "To view the actual key used to encrypt these messages, use the \002key\002 command.";
-"BasicLanguage[1007]" = "\0034\002Warning:\002\003 If this query is closed, then a new key exchange is required to continue encrypted chat.";
+"BasicLanguage[1007]" = "\0034\002Warning:\002\003 If this query is closed, then a new key exchange is required to continue the encrypted chat.";
 "BasicLanguage[1008]" = "Key exchange is for queries only.";
 "BasicLanguage[1009]" = "A key exchange request already exists for \002%@\002. Please wait for the current one to expire before requesting a new one.";
 "BasicLanguage[1010]" = "Received key exchange request from \002%@\002. Processing…";
@@ -63,7 +63,9 @@
 "BasicLanguage[1024]" = "Encryption key changed; adjusting accordingly.";
 "BasicLanguage[1025]" = "Encryption started";
 "BasicLanguage[1026]" = "Encryption stopped";
-"BasicLanguage[1030]" = "\0034\002Decryption lost data!\002\003 When decrypting message, %ld bytes were found at the end of the message which do not form a complete 8 byte encryption block. These bytes were removed and could not be decrypted.";
+"BasicLanguage[1031]" = "\0034\002Decryption lost data!\002\003 When decrypting message, %ld bytes were found at the end of the message which do not form a complete 8 byte encryption block. These bytes were removed and could not be decrypted.";
+
+"BasicLanguage[1032]" = "The key you entered is longer than 56 bytes. The Blowfish block cipher has a maximum key length of 56 bytes. \002Your key will be truncated.\002";
 
 "BasicLanguage[1028]" = "Blowfish Encryption";
 

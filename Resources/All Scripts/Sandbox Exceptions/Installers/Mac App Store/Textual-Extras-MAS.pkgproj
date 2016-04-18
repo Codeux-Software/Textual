@@ -1183,7 +1183,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0.2</string>
+				<string>1.0.3</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -2975,7 +2975,7 @@
 				<key>OVERWRITE_PERMISSIONS</key>
 				<false/>
 				<key>VERSION</key>
-				<string>1.0.3</string>
+				<string>1.0.4</string>
 			</dict>
 			<key>TYPE</key>
 			<integer>0</integer>
@@ -5069,7 +5069,7 @@
 												<key>LANGUAGE</key>
 												<string>English</string>
 												<key>VALUE</key>
-												<string>The Wiki-style Link Parser automatically replaces [[&lt;title&gt;]] text blocks with the link that they represent. The parser can be configured on a per-channel basis from its preference pane.</string>
+												<string>The Wiki-style Link Parser replaces Wiki markup title blocks, similar to [[&lt;title&gt;]], with a link to the article they represent.</string>
 											</dict>
 										</array>
 										<key>OPTIONS</key>

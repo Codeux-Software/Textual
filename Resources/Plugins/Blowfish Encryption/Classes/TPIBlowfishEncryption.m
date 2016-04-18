@@ -110,10 +110,7 @@
 									 title:TPILocalizedString(@"BasicLanguage[1027][1]")
 							 defaultButton:TPILocalizedString(@"BasicLanguage[1027][3]")
 						   alternateButton:nil
-							   otherButton:nil
-							suppressionKey:nil
-						   suppressionText:nil
-						   completionBlock:nil];
+							   otherButton:nil];
 }
 
 - (void)didReceiveServerInput:(THOPluginDidReceiveServerInputConcreteObject *)inputObject onClient:(IRCClient *)client
@@ -202,6 +199,12 @@
 						} else {
 							[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1025]") channel:c];
 						}
+					}
+
+					if ([_messageString length] > 56) {
+						 _messageString = [_messageString substringToIndex:56];
+
+						[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1032]") channel:c];
 					}
 
 					[TPIBlowfishEncryption setEncryptionKey:_messageString forChannel:c];

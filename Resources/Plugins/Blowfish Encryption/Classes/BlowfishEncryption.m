@@ -47,7 +47,7 @@
 	}
 	
 	if ([phrase length] > 56) {
-		NSLog(@"[EKBlowfishEncryption] WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
+		NSLog(@"[EKBlowfishEncryption] WARNING: Using a key length greater than 56 will result in that key itself being truncated to the first 56 characters.");
 
 		phrase = [phrase substringToIndex:56];
 	}
@@ -102,7 +102,7 @@
 	}
 	
 	if ([phrase length] > 56) {
-		NSLog(@"[EKBlowfishEncryption] WARNING: Using a key length greater than 56 will result in that key itself being struncted to the first 56 characters.");
+		NSLog(@"[EKBlowfishEncryption] WARNING: Using a key length greater than 56 will result in that key itself being truncated to the first 56 characters.");
 
 		phrase = [phrase substringToIndex:56];
 	}
