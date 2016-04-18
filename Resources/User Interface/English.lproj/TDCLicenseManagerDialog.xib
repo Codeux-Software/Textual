@@ -97,6 +97,7 @@
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kAU-WO-mIJ">
                     <rect key="frame" x="195" y="192" width="374" height="22"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="22" id="IMt-PZ-l4D"/>
                         <constraint firstAttribute="width" constant="374" id="oh9-t9-g8H"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="gYL-gB-e0X">

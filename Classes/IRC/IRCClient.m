@@ -8491,8 +8491,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	[self printDebugInformationToConsole:BLS(1140, socketAddress, socketPort)];
 
-	self.socket.connectionUsesOutgoingFloodControl = self.config.isOutgoingFloodControlEnabled;
-
 	self.socket.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
 	self.socket.floodControlMaximumMessageCount = self.config.floodControlMaximumMessages;
 
