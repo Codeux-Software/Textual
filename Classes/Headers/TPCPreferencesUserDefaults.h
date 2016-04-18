@@ -67,12 +67,3 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 @interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
 + (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
 @end
-
-/* The following class is no longer used and is considered dangerous to use. */
-#define RZUserDefaultsValueProxy()				[TPCPreferencesUserDefaultsObjectProxy userDefaultValues]
-
-TEXTUAL_DEPRECATED("Use NSUserDefaultsController instead")
-@interface TPCPreferencesUserDefaultsObjectProxy : NSObject
-+ (id)userDefaultValues;
-+ (id)localDefaultValues;
-@end
