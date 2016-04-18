@@ -550,29 +550,3 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 }
 
 @end
-
-#pragma mark -
-
-@implementation TPCPreferencesUserDefaultsObjectProxy
-
-+ (id)userDefaultValues
-{
-	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] values];
-}
-
-+ (id)localDefaultValues
-{
-	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] values];
-}
-
-- (id)valueForKey:(NSString *)key
-{
-	return [[TPCPreferencesUserDefaultsController sharedUserDefaultsController] valueForKey:key];
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-	[[TPCPreferencesUserDefaultsController sharedUserDefaultsController] setValue:value forKey:key];
-}
-
-@end
