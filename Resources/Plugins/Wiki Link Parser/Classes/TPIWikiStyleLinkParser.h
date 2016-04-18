@@ -37,5 +37,5 @@
 
 #import "TextualApplication.h"
 
-@interface TPIWikiStyleLinkParser : NSObject <THOPluginProtocol, NSTextDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface TPIWikiStyleLinkParser : NSObject <THOPluginProtocol, NSTableViewDataSource, NSTableViewDelegate>
 @end

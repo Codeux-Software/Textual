@@ -37,10 +37,10 @@
 
 + (void)load
 {
-	XRExchangeImplementation(@"IRCClient", @"encryptionAllowedForNickname:", @"__tpi_encryptionAllowedForNickname:");
-	XRExchangeImplementation(@"IRCClient", @"decryptMessage:referenceMessage:decodingCallback:", @"__tpi_decryptMessage:referenceMessage:decodingCallback:");
-	XRExchangeImplementation(@"IRCClient", @"encryptMessage:directedAt:encodingCallback:injectionCallback:", @"__tpi_encryptMessage:directedAt:encodingCallback:injectionCallback:");
-	XRExchangeImplementation(@"IRCClient", @"lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:", @"__tpi_lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:");
+	XRExchangeInstanceMethod(@"IRCClient", @"encryptionAllowedForNickname:", @"__tpi_encryptionAllowedForNickname:");
+	XRExchangeInstanceMethod(@"IRCClient", @"decryptMessage:referenceMessage:decodingCallback:", @"__tpi_decryptMessage:referenceMessage:decodingCallback:");
+	XRExchangeInstanceMethod(@"IRCClient", @"encryptMessage:directedAt:encodingCallback:injectionCallback:", @"__tpi_encryptMessage:directedAt:encodingCallback:injectionCallback:");
+	XRExchangeInstanceMethod(@"IRCClient", @"lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:", @"__tpi_lengthOfEncryptedMessageDirectedAt:thatFitsWithinBounds:");
 }
 
 - (BOOL)__tpi_encryptionAllowedForNickname:(NSString *)nickname
@@ -146,7 +146,7 @@
 						[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1022]") channel:targetChannel];
 					} else {
 						if (lostBytes > 0) {
-							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1030]", lostBytes) channel:targetChannel];
+							[self printDebugInformation:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1031]", lostBytes) channel:targetChannel];
 						}
 
 						if (NSObjectIsNotEmpty(newstr)) {
@@ -173,8 +173,8 @@
 
 + (void)load
 {
-	XRExchangeImplementation(@"IRCChannel", @"prepareForApplicationTermination", @"__tpi_prepareForApplicationTermination");
-	XRExchangeImplementation(@"IRCChannel", @"prepareForPermanentDestruction", @"__tpi_prepareForPermanentDestruction");
+	XRExchangeInstanceMethod(@"IRCChannel", @"prepareForApplicationTermination", @"__tpi_prepareForApplicationTermination");
+	XRExchangeInstanceMethod(@"IRCChannel", @"prepareForPermanentDestruction", @"__tpi_prepareForPermanentDestruction");
 }
 
 - (void)__tpi_destroyEncryptionKeychain
@@ -211,8 +211,8 @@ static BOOL _offTheRecordWarningSheetDisplayed = NO;
 
 + (void)load
 {
-	XRExchangeImplementation(@"TPCPreferencesUserDefaults", @"objectForKey:", @"__tpi_objectForKey:");
-	XRExchangeImplementation(@"TPCPreferencesUserDefaults", @"setObject:forKey:", @"__tpi_setObject:forKey:");
+	XRExchangeInstanceMethod(@"TPCPreferencesUserDefaults", @"objectForKey:", @"__tpi_objectForKey:");
+	XRExchangeInstanceMethod(@"TPCPreferencesUserDefaults", @"setObject:forKey:", @"__tpi_setObject:forKey:");
 }
 
 - (void)__tpi_setObject:(id)value forKey:(NSString *)defaultName
@@ -228,9 +228,7 @@ static BOOL _offTheRecordWarningSheetDisplayed = NO;
 										 defaultButton:TXLocalizedStringAlternative([NSBundle bundleForClass:[TPIBlowfishEncryption class]], @"BasicLanguage[1029][3]")
 									   alternateButton:nil
 										   otherButton:nil
-										suppressionKey:nil
-									   suppressionText:nil
-									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert) {
+									   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 										   _offTheRecordWarningSheetDisplayed = NO;
 									   }];
 			}
