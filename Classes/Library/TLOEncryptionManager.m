@@ -371,7 +371,7 @@
 	return currentState;
 }
 
-- (BOOL)safeToContinueFileTransferTo:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
+- (BOOL)safeToTransferFile:(NSString *)filename to:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
 {
 	PointerIsEmptyAssertReturn(messageTo, NO)
 	PointerIsEmptyAssertReturn(messageFrom, NO)
@@ -386,16 +386,18 @@
 		if (currentState == OTRKitMessageStateEncrypted) {
 			if (isIncomingFileTransfer) {
 				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
-																	 title:TXTLS(@"BasicLanguage[1272][1]")
-															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")];
+																	 title:TXTLS(@"BasicLanguage[1272][1]", filename)
+															 defaultButton:TXTLS(@"BasicLanguage[1272][3]")
+														   alternateButton:TXTLS(@"BasicLanguage[1272][4]")];
 
 				returnValue = (continueop == NO);
 			} else {
-				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][3]")
-																	 title:TXTLS(@"BasicLanguage[1272][1]")
-															 defaultButton:TXTLS(@"BasicLanguage[1272][4]")
-														   alternateButton:TXTLS(@"BasicLanguage[1272][5]")];
+				NSString *nickname = [self nicknameFromAccountName:messageTo];
+
+				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[3005][2]")
+																	 title:TXTLS(@"BasicLanguage[3005][1]", filename, nickname)
+															 defaultButton:TXTLS(@"BasicLanguage[3005][3]")
+														   alternateButton:TXTLS(@"BasicLanguage[3005][4]")];
 
 				returnValue = (continueop == NO);
 			}

@@ -179,11 +179,34 @@
 	}
 }
 
+- (BOOL)receiveUnencryptedFile
+{
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+	if ([TPCPreferences textEncryptionIsEnabled]) {
+		BOOL allowWithOTR = [sharedEncryptionManager()
+			safeToTransferFile:self.filename
+							to:[self.associatedClient encryptionAccountNameForUser:self.peerNickname]
+						  from:[self.associatedClient encryptionAccountNameForLocalUser]
+		isIncomingFileTransfer:YES];
+
+		if (allowWithOTR == NO) {
+			return NO; // This operation is not allowed...
+		}
+	}
+#endif
+
+	return YES;
+}
+
 - (void)open
 {
 	if ([self isSender]) {
 		[self openTransfer];
 	} else {
+		if ([self receiveUnencryptedFile] == NO) {
+			return;
+		}
+
 		[self sendTransferResumeRequestToClient];
 	}
 }
