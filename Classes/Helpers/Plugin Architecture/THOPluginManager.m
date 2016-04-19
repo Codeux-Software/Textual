@@ -343,25 +343,23 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 	NSDictionary *_latestVersions = [staticValues dictionaryForKey:@"THOPluginManager Extras Installer Latest Extension Versions"];
 
-	for (NSBundle *pluginBundle in self.allLoadedBundles) {
-		/* Find latest verison information if the bundle name is known. */
-		NSDictionary *infoDictionary = [pluginBundle infoDictionary];
+	for (NSBundle *bundle in self.allLoadedBundles) {
+		NSString *bundleIdentifier = [bundle bundleIdentifier];
 
-		NSString *bundleName = infoDictionary[@"CFBundleName"];
-
-		NSString *latestVersion = _latestVersions[bundleName];
+		NSString *latestVersion = _latestVersions[bundleIdentifier];
 
 		if (latestVersion == nil) {
 			continue;
 		}
 
-		/* Perform comparison of the current version number. */
+		NSDictionary *infoDictionary = [bundle infoDictionary];
+
 		NSString *bundleVersion = infoDictionary[@"CFBundleVersion"];
 
 		NSComparisonResult comparisonResult = [bundleVersion compare:latestVersion options:NSNumericSearch];
 
 		if (comparisonResult == NSOrderedAscending) {
-			[self extrasInstallerInformUserAboutUpdateForBundleNamed:bundleName];
+			[self extrasInstallerInformUserAboutUpdateForBundle:bundle];
 		}
 	}
 
@@ -369,7 +367,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	[RZUserDefaults() setDouble:currentTime forKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
 }
 
-- (void)extrasInstallerInformUserAboutUpdateForBundleNamed:(NSString *)bundleName
+- (void)extrasInstallerInformUserAboutUpdateForBundle:(NSBundle *)bundle
 {
 	/* Append the current version to the suppression key so that updates 
 	 aren't refused forever. Only until the next verison of Textual is out. */
@@ -377,7 +375,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	[@"plugin_manager_extension_update_dialog_" stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
 
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[3002][2]")
-													   title:TXTLS(@"BasicLanguage[3002][1]", bundleName)
+													   title:TXTLS(@"BasicLanguage[3002][1]", [bundle displayName])
 											   defaultButton:TXTLS(@"BasicLanguage[3002][3]")
 											 alternateButton:TXTLS(@"BasicLanguage[3002][4]")
 											  suppressionKey:suppressionKey
