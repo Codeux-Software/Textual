@@ -910,7 +910,8 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (NSDictionary *)defaultPreferences
 {
-	return [TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaults"];
+	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
+
 }
 
 + (void)initPreferences
@@ -923,7 +924,10 @@ static NSMutableArray *excludeKeywords = nil;
 	[TPCPreferencesUserDefaults migrateKeyValuesAwayFromGroupContainer];
 #endif
 
-	[RZUserDefaults() registerDefaults:[TPCPreferences defaultPreferences]];
+	NSDictionary *defaults =
+	[TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaults"];
+
+	[RZUserDefaults() registerDefaults:defaults];
 
 	[TPCPreferences populateDefaultNickname];
 
