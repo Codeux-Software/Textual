@@ -465,7 +465,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]")
 													   title:TXTLS(@"BasicLanguage[1236][1]", command)
 											   defaultButton:TXTLS(@"BasicLanguage[1236][3]")
-											 alternateButton:BLS(1009)
+											 alternateButton:TXTLS(@"BasicLanguage[1009]")
 											  suppressionKey:@"plugin_manager_reserved_command_dialog"
 											 suppressionText:nil];
 

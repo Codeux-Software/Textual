@@ -459,13 +459,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	BOOL cipherDeprecated = [self.socketConnection sslConnectedWithDeprecatedCipher];
 
 	if (plainText && cipherDeprecated) {
-		return BLS(1289, protocol, cipher);
+		return TXTLS(@"BasicLanguage[1289]", protocol, cipher);
 	} else if (plainText && cipherDeprecated == NO) {
-		return BLS(1288, protocol, cipher);
+		return TXTLS(@"BasicLanguage[1288]", protocol, cipher);
 	} else if (plainText == NO && cipherDeprecated) {
-		return BLS(1250, protocol, cipher);
+		return TXTLS(@"BasicLanguage[1250]", protocol, cipher);
 	} else {
-		return BLS(1248, protocol, cipher);
+		return TXTLS(@"BasicLanguage[1248]", protocol, cipher);
 	}
 }
 
@@ -481,7 +481,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-	[panel setDefaultButtonTitle:BLS(1011)];
+	[panel setDefaultButtonTitle:TXTLS(@"BasicLanguage[1011]")];
 	[panel setAlternateButtonTitle:nil];
 
 	if (protocolString == nil) {

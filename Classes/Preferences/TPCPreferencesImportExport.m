@@ -310,9 +310,9 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	[d setCanCreateDirectories:YES];
 
-	[d setNameFieldStringValue:@"TextualPreferences.plist"];
+		[d setCanCreateDirectories:YES];
 
-	[d setMessage:BLS(1180)];
+		[d setNameFieldStringValue:@"TextualPreferences.plist"];
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {

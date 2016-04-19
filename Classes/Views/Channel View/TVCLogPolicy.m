@@ -158,18 +158,18 @@
 			_addItem([NSMenuItem separatorItem])
 
 			_addItem(
-			 [NSMenuItem menuItemWithTitle:BLS(1018)
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1018]")
 									target:menuController()
 									action:@selector(copyLogAsHtml:)])
 
 			_addItem(
-			 [NSMenuItem menuItemWithTitle:BLS(1019)
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1019]")
 									target:menuController()
 									action:@selector(forceReloadTheme:)])
 
 			if (isWebKit2) {
 				_addItem(
-				 [NSMenuItem menuItemWithTitle:BLS(1295)
+				 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1295]")
 										target:menuController()
 										action:@selector(openWebInspector:)])
 			} else {

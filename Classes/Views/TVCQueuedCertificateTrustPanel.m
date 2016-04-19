@@ -148,7 +148,7 @@
 
 		 self.currentPanel = [SFCertificateTrustPanel new];
 		
-		[self.currentPanel setAlternateButtonTitle:BLS(1009)];
+		[self.currentPanel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 		
 		[self.currentPanel setInformativeText:description];
 		

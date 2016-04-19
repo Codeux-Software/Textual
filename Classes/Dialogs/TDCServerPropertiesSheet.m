@@ -1257,7 +1257,7 @@
 		
 		[panel setInformativeText:TXTLS(@"TDCServerPropertiesSheet[1009][2]")];
 		
-		[panel setAlternateButtonTitle:BLS(1009)];
+		[panel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
 		
 		NSInteger returnCode = [panel runModalForIdentities:(__bridge NSArray *)(identities)
 													message:TXTLS(@"TDCServerPropertiesSheet[1009][1]")];

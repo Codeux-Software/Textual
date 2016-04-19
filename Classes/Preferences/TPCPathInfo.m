@@ -218,7 +218,7 @@
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"BasicLanguage[1102][2]")
 										 title:TXTLS(@"BasicLanguage[1102][1]")
-								 defaultButton:BLS(1186)
+								 defaultButton:TXTLS(@"BasicLanguage[1186]")
 							   alternateButton:nil
 								   otherButton:nil];
 	} else {

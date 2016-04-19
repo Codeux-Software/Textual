@@ -39,7 +39,6 @@
 
 /* Localization. */
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
-TEXTUAL_EXTERN NSString *BLS(NSInteger key, ...);
 
 TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
 TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);

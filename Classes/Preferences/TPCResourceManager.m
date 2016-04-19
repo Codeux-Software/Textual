@@ -122,8 +122,8 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
 															 title:TXTLS(@"BasicLanguage[1192][1]")
-													 defaultButton:BLS(1182)
-												   alternateButton:BLS(1219)];
+													 defaultButton:TXTLS(@"BasicLanguage[1182]")
+												   alternateButton:TXTLS(@"BasicLanguage[1219]")];
 
 	/* YES == No in dialog. */
 	if (performInstall) {
@@ -137,7 +137,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	if (didImport) {
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1189][2]", [filename stringByDeletingPathExtension])
 										   title:TXTLS(@"BasicLanguage[1189][1]")
-								   defaultButton:BLS(1186)
+								   defaultButton:TXTLS(@"BasicLanguage[1186]")
 								 alternateButton:nil];
 	}
 }
@@ -173,8 +173,8 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
 															 title:TXTLS(@"BasicLanguage[1192][1]")
-													 defaultButton:BLS(1182)
-												   alternateButton:BLS(1219)];
+													 defaultButton:TXTLS(@"BasicLanguage[1182]")
+												   alternateButton:TXTLS(@"BasicLanguage[1219]")];
 
 	/* YES == No in dialog. */
 	if (performInstall) {
@@ -234,7 +234,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 {
 	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1188][2]", [filename stringByDeletingPathExtension])
 									   title:TXTLS(@"BasicLanguage[1188][1]")
-							   defaultButton:BLS(1186)
+							   defaultButton:TXTLS(@"BasicLanguage[1186]")
 							 alternateButton:nil];
 }
 
