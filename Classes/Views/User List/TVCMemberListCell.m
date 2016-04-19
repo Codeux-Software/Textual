@@ -105,7 +105,7 @@
 
 	NSString *nickname = [associatedUser nickname];
 
-	[XRAccessibility setAccessibilityValueDescription:BLS(1277, nickname) forObject:[[self textField] cell]];
+	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1277]", nickname) forObject:[[self textField] cell]];
 }
 
 #pragma mark -
@@ -520,19 +520,19 @@
 	}
 
 	if (userRank == IRCUserIRCopByModeRank) {
-		permissions = BLS(1212);
+		permissions = TXTLS(@"BasicLanguage[1212]");
 	} else if (userRank == IRCUserChannelOwnerRank) {
-		permissions = BLS(1211);
+		permissions = TXTLS(@"BasicLanguage[1211]");
 	} else if (userRank == IRCUserSuperOperatorRank) {
-		permissions = BLS(1210);
+		permissions = TXTLS(@"BasicLanguage[1210]");
 	} else if (userRank == IRCUserNormalOperatorRank) {
-		permissions = BLS(1209);
+		permissions = TXTLS(@"BasicLanguage[1209]");
 	} else if (userRank == IRCUserHalfOperatorRank) {
-		permissions = BLS(1208);
+		permissions = TXTLS(@"BasicLanguage[1208]");
 	} else if (userRank == IRCUserVoicedRank) {
-		permissions = BLS(1207);
+		permissions = TXTLS(@"BasicLanguage[1207]");
 	} else {
-		permissions = BLS(1206);
+		permissions = TXTLS(@"BasicLanguage[1206]");
 	}
 
     /* User info. */
@@ -543,15 +543,15 @@
 	NSString *realname = [associatedUser realname];
 
     if (NSObjectIsEmpty(username)) {
-        username = BLS(1215);
+        username = TXTLS(@"BasicLanguage[1215]");
     }
 
     if (NSObjectIsEmpty(address)) {
-        address = BLS(1215);
+        address = TXTLS(@"BasicLanguage[1215]");
 	}
 	
 	if (NSObjectIsEmpty(realname)) {
-		realname = BLS(1215);
+		realname = TXTLS(@"BasicLanguage[1215]");
 	}
 
     /* Where is our cell? */
@@ -578,9 +578,9 @@
 	
 	/* Update away status. */
 	if ([associatedUser isAway]) {
-		[[userInfoPopover awayStatusField] setStringValue:BLS(1213)];
+		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"BasicLanguage[1213]")];
 	} else {
-		[[userInfoPopover awayStatusField] setStringValue:BLS(1214)];
+		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"BasicLanguage[1214]")];
 	}
 
 	id currentFirstResponder = [mainWindow() firstResponder];

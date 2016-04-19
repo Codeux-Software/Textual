@@ -796,7 +796,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:BLS(1225)];
+		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self fileTransferDownloadDestinationButton] selectItemAtIndex:0];
@@ -866,7 +866,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:BLS(1225)];
+		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self transcriptFolderButton] selectItemAtIndex:0];
@@ -974,7 +974,7 @@
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1014][2]", [item title], tsf)
 									 title:TXTLS(@"TDCPreferencesController[1014][1]")
-							 defaultButton:BLS(1186)
+							 defaultButton:TXTLS(@"BasicLanguage[1186]")
 						   alternateButton:nil
 							   otherButton:nil
 							suppressionKey:@"theme_override_info"
@@ -1274,8 +1274,8 @@ present_dialog:
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 									  body:TXTLS(@"TDCPreferencesController[1002][2]")
 									 title:TXTLS(@"TDCPreferencesController[1002][1]")
-							 defaultButton:BLS(1009)
-						   alternateButton:BLS(1017)
+							 defaultButton:TXTLS(@"BasicLanguage[1219]")
+						   alternateButton:TXTLS(@"BasicLanguage[1182]")
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
@@ -1316,8 +1316,8 @@ present_dialog:
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"TDCPreferencesController[1010][2]")
 										 title:TXTLS(@"TDCPreferencesController[1010][1]")
-								 defaultButton:BLS(1219)
-							   alternateButton:BLS(1182)
+								 defaultButton:TXTLS(@"BasicLanguage[1219]")
+							   alternateButton:TXTLS(@"BasicLanguage[1182]")
 								   otherButton:nil
 								suppressionKey:nil
 							   suppressionText:nil

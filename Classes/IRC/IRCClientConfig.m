@@ -113,14 +113,14 @@ TEXTUAL_IGNORE_DEPRECATION_END
 			 @"floodControlDelayTimerInterval" : @(IRCClientConfigFloodControlDefaultDelayTimer),
 			 @"floodControlMaximumMessages" : @(IRCClientConfigFloodControlDefaultMessageCount),
 
-			 @"connectionName" : BLS(1022),
+			 @"connectionName" : TXTLS(@"BasicLanguage[1022]"),
 
 			 @"serverPort" : @(IRCConnectionDefaultServerPort),
 
 			 @"cachedLastServerTimeCapacityReceivedAtTimestamp" : @(0),
 
-			 @"normalLeavingComment" : BLS(1021),
-			 @"sleepModeLeavingComment" : BLS(1235)
+			 @"normalLeavingComment" : TXTLS(@"BasicLanguage[1021]"),
+			 @"sleepModeLeavingComment" : TXTLS(@"BasicLanguage[1235]")
 		};
 
 		_defaults = [defaults copy];
@@ -212,7 +212,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.normalLeavingComment = [defaults stringForKey:@"normalLeavingComment"];
 
 	if (macintoshModel) {
-		self.sleepModeLeavingComment = BLS(1185, macintoshModel);
+		self.sleepModeLeavingComment = TXTLS(@"BasicLanguage[1185]", macintoshModel);
 	} else {
 		self.sleepModeLeavingComment = [defaults stringForKey:@"sleepModeLeavingComment"];
 	}

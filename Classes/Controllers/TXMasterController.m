@@ -312,7 +312,7 @@
 		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1000][1]")
 														 title:TXTLS(@"BasicLanguage[1000][2]")
 												 defaultButton:TXTLS(@"BasicLanguage[1000][3]")
-											   alternateButton:BLS(1009)];
+											   alternateButton:TXTLS(@"BasicLanguage[1009]")];
 
 		return result;
 	}

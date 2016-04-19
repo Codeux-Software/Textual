@@ -227,20 +227,6 @@ NSString *TXTLS(NSString *key, ...)
 	return result;
 }
 
-NSString *BLS(NSInteger key, ...)
-{
-	va_list args;
-	va_start(args, key);
-	
-	NSString *resultKey = [NSString stringWithFormat:@"BasicLanguage[%li]", (long)key];
-	
-	NSString *result = TXLocalizedString(RZMainBundle(), resultKey, args);
-	
-	va_end(args);
-
-	return result;
-}
-
 NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
 	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];

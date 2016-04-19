@@ -187,7 +187,7 @@
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:BLS(1269)];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"BasicLanguage[1269]")];
 }
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
@@ -205,14 +205,14 @@
 													   accountName:messageFrom
 														  protocol:[self otrKitProtocol]];
 		} else {
-			[self presentErrorMessage:BLS(1270) withAccountName:messageTo];
+			[self presentErrorMessage:TXTLS(@"BasicLanguage[1270]") withAccountName:messageTo];
 		}
 	}];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:BLS(1260)];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"BasicLanguage[1260]")];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
@@ -257,7 +257,7 @@
 															 accountName:messageFrom
 																protocol:[self otrKitProtocol]];
 		} else {
-			[self presentErrorMessage:BLS(1263) withAccountName:messageTo];
+			[self presentErrorMessage:TXTLS(@"BasicLanguage[1263]") withAccountName:messageTo];
 		}
 	}];
 }

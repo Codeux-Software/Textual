@@ -373,7 +373,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		NSString *topicString = nil;
 
 		if (NSObjectIsEmpty(topic)) {
-			topicString = BLS(1122);
+			topicString = TXTLS(@"BasicLanguage[1122]");
 		} else {
 			topicString = topic;
 		}
