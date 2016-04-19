@@ -249,20 +249,34 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 + (NSDictionary *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk removeDefaults:(BOOL)removeDefaults
 {
-	NSDictionary *settings = [RZUserDefaults() dictionaryRepresentation];
+	NSDictionary *exportedPreferences = [RZUserDefaults() dictionaryRepresentation];
 
-	NSDictionary *defaults = nil;
+	NSDictionary *argumentsDomain = [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSArgumentDomain];
+
+	NSDictionary *defaultsDomain = nil;
+
+	NSDictionary *globalsDomain = nil;
 
 	if (removeDefaults) {
-		defaults = [TPCPreferences defaultPreferences];
+		defaultsDomain = [TPCPreferences defaultPreferences];
+	}
+
+	if (removeJunk) {
+		globalsDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
 	}
 
 	NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
 
-	[settings enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+	[exportedPreferences enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		if (NSObjectsAreEqual(object, argumentsDomain[key])) {
+			return;
+		}
+
 		if (removeJunk && [self isKeyNameSupposedToBeIgnored:key]) {
 			return;
-		} else if (removeDefaults && NSObjectsAreEqual(object, defaults[key])) {
+		} else if (removeJunk && NSObjectsAreEqual(object, globalsDomain[key])) {
+			return;
+		} else if (removeDefaults && NSObjectsAreEqual(object, defaultsDomain[key])) {
 			return;
 		}
 
