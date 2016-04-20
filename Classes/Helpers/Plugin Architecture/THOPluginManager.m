@@ -374,10 +374,10 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 	NSString *suppressionKey =
 	[@"plugin_manager_extension_update_dialog_" stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
 
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[3002][2]")
-													   title:TXTLS(@"BasicLanguage[3002][1]", [bundle displayName])
-											   defaultButton:TXTLS(@"BasicLanguage[3002][3]")
-											 alternateButton:TXTLS(@"BasicLanguage[3002][4]")
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1112][2]")
+													   title:TXTLS(@"Prompts[1112][1]", [bundle displayName])
+											   defaultButton:TXTLS(@"Prompts[1112][3]")
+											 alternateButton:TXTLS(@"Prompts[1112][4]")
 											  suppressionKey:suppressionKey
 											 suppressionText:nil];
 
@@ -462,10 +462,10 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribu
 
 - (void)extrasInstallerAskUserIfTheyWantToInstallCommand:(NSString *)command
 {
-	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1236][2]")
-													   title:TXTLS(@"BasicLanguage[1236][1]", command)
-											   defaultButton:TXTLS(@"BasicLanguage[1236][3]")
-											 alternateButton:TXTLS(@"BasicLanguage[1009]")
+	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1113][2]")
+													   title:TXTLS(@"Prompts[1113][1]", command)
+											   defaultButton:TXTLS(@"Prompts[1113][3]")
+											 alternateButton:TXTLS(@"Prompts[0004]")
 											  suppressionKey:@"plugin_manager_reserved_command_dialog"
 											 suppressionText:nil];
 

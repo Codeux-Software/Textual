@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,52 +35,30 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1025 */
+/* Next unusued key: 1012 */
 
-"BasicLanguage[1001]" = "None";
-"BasicLanguage[1002]" = "Unknown";
+"TDCPreferencesController[1001][1]" = "Are you sure you want to delete everything uploaded to iCloud thats related to Textual?";
+"TDCPreferencesController[1001][2]" = "This action will not effect the configuration of this device or others.";
 
-"BasicLanguage[1003]" = "Textual IRC Client: www.textualapp.com";
-"BasicLanguage[1004]" = "Untitled Connection";
+"TDCPreferencesController[1002]" = "No Log Location Selected";
+"TDCPreferencesController[1003]" = "No Location Selected";
 
-"BasicLanguage[1005]" = "My %@ has gone to sleep. ZZZzzz…";
-"BasicLanguage[1006]" = "My Mac has gone to sleep. ZZZzzz…";
+"TDCPreferencesController[1004]" = "Growl is running. Notifications will be forwarded to it.";
+"TDCPreferencesController[1005]" = "Notifications will be posted using Notification Center.";
+"TDCPreferencesController[1006]" = "Growl is not running. Notifications will not be posted."; /* For Lion. It does not have NC */
 
-"BasicLanguage[1007]" = "Close Query";
-"BasicLanguage[1008]" = "Close Window";
-"BasicLanguage[1009]" = "Disconnect from %@";
-"BasicLanguage[1010]" = "Leave Channel";
-"BasicLanguage[1011]" = "Quit Textual & IRC";
+"TDCPreferencesController[1007][1]" = "Are you opening this style because you are interested in modifying it?";
+"TDCPreferencesController[1007][2]" = "Click “Yes” to create a copy of this style specifically for that purpose.";
 
-"BasicLanguage[1012]" = "Delete Channel";
-"BasicLanguage[1013]" = "Close Query";
+"TDCPreferencesController[1008][1]" = "Preferred Selection";
+"TDCPreferencesController[1008][2]" = "The style named “%1$@” has chosen to override the following preferences with ones that it prefers for the best viewing experience:\n\n%2$@";
 
-"BasicLanguage[1014][1]" = "Connect";
-"BasicLanguage[1014][2]" = "Connect using IPv4";
-"BasicLanguage[1014][3]" = "Connect using IPv6";
+"TDCPreferencesController[1009][1]" = "• Nickname Format";
+"TDCPreferencesController[1009][2]" = "• Timestamp Format";
+"TDCPreferencesController[1009][3]" = "• Window Appearance";
+"TDCPreferencesController[1009][4]" = "• Channel View Font";
 
-"BasicLanguage[1015]" = "Copy Log as HTML";
-"BasicLanguage[1016]" = "Force Reload Style";
-"BasicLanguage[1017]" = "Open Web Inspector";
-"BasicLanguage[1018]" = "Look Up in Dictionary";
-"BasicLanguage[1019]" = "Look Up “%@”";
-"BasicLanguage[1020]" = "Search With %@";
+"TDCPreferencesController[1010][1]" = "Please choose a location other than iCloud Drive to save data to";
+"TDCPreferencesController[1010][2]" = "";
 
-"BasicLanguage[1021]" = "%@";
-"BasicLanguage[1022]" = "%@";
-
-"BasicLanguage[1023][DAY]" = "days";
-"BasicLanguage[1023][HOUR]" = "hours";
-"BasicLanguage[1023][MINUTE]" = "minutes";
-"BasicLanguage[1023][MONTH]" = "months";
-"BasicLanguage[1023][SECOND]" = "seconds";
-"BasicLanguage[1023][YEAR]" = "years";
-
-"BasicLanguage[1024][DAY]" = "day";
-"BasicLanguage[1024][HOUR]" = "hour";
-"BasicLanguage[1024][MINUTE]" = "minute";
-"BasicLanguage[1024][MONTH]" = "month";
-"BasicLanguage[1024][SECOND]" = "second";
-"BasicLanguage[1024][YEAR]" = "year";
-
-"BasicLanguage[1025]" = "%@ ago";
+"TDCPreferencesController[1011]" = "None";

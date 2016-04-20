@@ -1176,22 +1176,22 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 #define _dc(event, id)			case (event): {return ((id)); }
 
 	switch (event) {
-		_dc(TXNotificationChannelMessageType, @"BasicLanguage[1043]")
-		_dc(TXNotificationChannelNoticeType, @"BasicLanguage[1044]")
-		_dc(TXNotificationConnectType, @"BasicLanguage[1051]")
-		_dc(TXNotificationDisconnectType, @"BasicLanguage[1052]")
-		_dc(TXNotificationInviteType, @"BasicLanguage[1046]")
-		_dc(TXNotificationKickType, @"BasicLanguage[1047]")
-		_dc(TXNotificationNewPrivateMessageType, @"BasicLanguage[1048]")
-		_dc(TXNotificationPrivateMessageType, @"BasicLanguage[1049]")
-		_dc(TXNotificationPrivateNoticeType, @"BasicLanguage[1050]")
-		_dc(TXNotificationHighlightType, @"BasicLanguage[1045]")
+		_dc(TXNotificationChannelMessageType, @"Notifications[1001]")
+		_dc(TXNotificationChannelNoticeType, @"Notifications[1002]")
+		_dc(TXNotificationConnectType, @"Notifications[1009]")
+		_dc(TXNotificationDisconnectType, @"Notifications[1010]")
+		_dc(TXNotificationInviteType, @"Notifications[1004]")
+		_dc(TXNotificationKickType, @"Notifications[1005]")
+		_dc(TXNotificationNewPrivateMessageType, @"Notifications[1006]")
+		_dc(TXNotificationPrivateMessageType, @"Notifications[1007]")
+		_dc(TXNotificationPrivateNoticeType, @"Notifications[1008]")
+		_dc(TXNotificationHighlightType, @"Notifications[1003]")
 
-		_dc(TXNotificationFileTransferSendSuccessfulType, @"BasicLanguage[1053]")
-		_dc(TXNotificationFileTransferReceiveSuccessfulType, @"BasicLanguage[1054]")
-		_dc(TXNotificationFileTransferSendFailedType, @"BasicLanguage[1055]")
-		_dc(TXNotificationFileTransferReceiveFailedType, @"BasicLanguage[1056]")
-		_dc(TXNotificationFileTransferReceiveRequestedType, @"BasicLanguage[1057]")
+		_dc(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1011]")
+		_dc(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1012]")
+		_dc(TXNotificationFileTransferSendFailedType, @"Notifications[1012]")
+		_dc(TXNotificationFileTransferReceiveFailedType, @"Notifications[1014]")
+		_dc(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1015]")
 
 		default: { break; }
 	}
@@ -1511,7 +1511,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			
 			title = [target name];
 			
-			desc = TXTLS(@"BasicLanguage[1077]", nick, text);
+			desc = TXTLS(@"Notifications[1035]", nick, text);
 
 			break;
 		}
@@ -1519,7 +1519,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			title = [self altNetworkName];
 			
-			desc = TXTLS(@"BasicLanguage[1076]", nick, text);
+			desc = TXTLS(@"Notifications[1034]", nick, text);
 
 			break;
 		}
@@ -1676,7 +1676,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)sendLine:(NSString *)str
 {
 	if (self.isConnected == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1199]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1005]")];
+
+		return;
 	}
 
 	[self.socket sendLine:str];
@@ -1736,10 +1738,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* Warn if the split value is above 4 lines or if the total string 
 	 length exceeds TXMaximumIRCBodyLength times 4. */
 	if ([lines count] > 4 || ([str length] > (TXMaximumIRCBodyLength * 4))) {
-		BOOL continueInput = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1284][2]")
-																title:TXTLS(@"BasicLanguage[1284][1]")
-														defaultButton:TXTLS(@"BasicLanguage[1284][3]")
-													  alternateButton:TXTLS(@"BasicLanguage[1009]")
+		BOOL continueInput = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1108][2]")
+																title:TXTLS(@"Prompts[1108][1]")
+														defaultButton:TXTLS(@"Prompts[0001]")
+													  alternateButton:TXTLS(@"Prompts[0002]")
 													   suppressionKey:@"input_text_possible_flood_warning"
 													  suppressionText:nil];
 
@@ -1994,7 +1996,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5004: // Command: AWAY
 		{
 			if (NSObjectIsEmpty(uncutInput)) {
-                uncutInput = TXTLS(@"BasicLanguage[1115]");
+                uncutInput = TXTLS(@"IRC[1031]");
 			}
             
             if (self.isAway) {
@@ -2525,7 +2527,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				BOOL modeHSupported = [[self supportInfo] modeIsSupportedUserPrefix:@"h"];
 
 				if (modeHSupported == NO) {
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1042]")];
+					[self printDebugInformation:TXTLS(@"IRC[1021]")];
 
 					return;
 				}
@@ -2790,7 +2792,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				[self addCommandToCommandQueue:cmd];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1173]")];
+				[self printDebugInformation:TXTLS(@"IRC[1090]")];
 			}
 
 			break;
@@ -2805,15 +2807,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				[RZWorkspace() launchApplication:@"Console"];
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1175]")];
+				[self printDebugInformation:TXTLS(@"IRC[1092]")];
 
-				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1177]"));
+				LogToConsole(@"%@", TXTLS(@"IRC[1094]"));
 			} else if ([uncutInput isEqualIgnoringCase:@"raw off"]) {
 				self.rawModeEnabled = NO;
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1174]")];
+				[self printDebugInformation:TXTLS(@"IRC[1091]")];
 
-				LogToConsole(@"%@", TXTLS(@"BasicLanguage[1176]"));
+				LogToConsole(@"%@", TXTLS(@"IRC[1093]"));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
 				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
@@ -2991,17 +2993,17 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *downloadSource = nil;
 
 			if ([buildScheme isEqualToString:@"appstore"]) {
-				downloadSource = TXTLS(@"BasicLanguage[3000]");
+				downloadSource = TXTLS(@"IRC[1028]");
 			} else {
-				downloadSource = TXTLS(@"BasicLanguage[3001]");
+				downloadSource = TXTLS(@"IRC[1029]");
 			}
 
-			NSString *text = TXTLS(@"BasicLanguage[1112]", name, versionShort, versionLong, downloadSource);
+			NSString *text = TXTLS(@"IRC[1027]", name, versionShort, versionLong, downloadSource);
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:text];
 			} else {
-				text = TXTLS(@"BasicLanguage[1114]", text);
+				text = TXTLS(@"IRC[1030]", text);
 
 				[self sendPrivmsg:text toChannel:selChannel];
 			}
@@ -3011,9 +3013,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5044: // Command: MUTE
 		{
 			if ([sharedGrowlController() areNotificationSoundsDisabled]) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1220]")];
+				[self printDebugInformation:TXTLS(@"IRC[1097]")];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1223]")];
+				[self printDebugInformation:TXTLS(@"IRC[1100]")];
 				
 				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
 			}
@@ -3023,11 +3025,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5075: // Command: UNMUTE
 		{
 			if ([sharedGrowlController() areNotificationSoundsDisabled]) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1221]")];
+				[self printDebugInformation:TXTLS(@"IRC[1098]")];
 				
 				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1222]")];
+				[self printDebugInformation:TXTLS(@"IRC[1099]")];
 			}
 
 			break;
@@ -3038,7 +3040,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
 
-			NSString *message = TXTLS(@"BasicLanguage[1226]", TXHumanReadableTimeInterval(timeDiff, NO, 0));
+			NSString *message = TXTLS(@"IRC[1101]", TXHumanReadableTimeInterval(timeDiff, NO, 0));
 
 			if (PointerIsEmpty(selChannel)) {
 				[self printDebugInformationToConsole:message];
@@ -3059,7 +3061,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			[self sendCTCPQuery:[self localNickname] command:IRCPrivateCommandIndex("ctcp_lagcheck") text:[NSString stringWithDouble:self.lastLagCheck]];
 
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1107]")];
+			[self printDebugInformation:TXTLS(@"IRC[1023]")];
 
 			break;
 		}
@@ -3157,9 +3159,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *caps = [self enabledCapacitiesStringValue];
 			
 			if (NSObjectIsNotEmpty(caps)) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1121]", caps)];
+				[self printDebugInformation:TXTLS(@"IRC[1037]", caps)];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1120]")];
+				[self printDebugInformation:TXTLS(@"IRC[1036]")];
 			}
 
 			break;
@@ -3235,7 +3237,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			/* Check base string. */
 			if (NSObjectIsEmpty(uncutInput)) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+				[self printDebugInformation:TXTLS(@"IRC[1012]")];
 
 				break;
 			}
@@ -3264,14 +3266,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				
 			if (NSObjectsAreEqual(section1, @"help"))
 			{
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][01]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][02]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][03]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][04]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][05]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][06]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][07]")];
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1034][08]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][01]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][02]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][03]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][04]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][05]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][06]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][07]")];
+				[self printDebugInformation:TXTLS(@"IRC[1013][08]")];
 			}
 			else if (NSObjectsAreEqual(section1, @"features"))
 			{
@@ -3282,15 +3284,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+					[self printDebugInformation:TXTLS(@"IRC[1012]")];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsKey:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsKey:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section3)];
+							[self printDebugInformation:TXTLS(@"IRC[1014]", section3)];
 						} else {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1035]", section2)];
+							[self printDebugInformation:TXTLS(@"IRC[1014]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -3298,15 +3300,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 								applyKey(uu, section3, YES);
 
 								if (uu == self) {
-									[uu printDebugInformation:TXTLS(@"BasicLanguage[1037]", section3)];
+									[uu printDebugInformation:TXTLS(@"IRC[1016]", section3)];
 								} else {
-									[uu printDebugInformationToConsole:TXTLS(@"BasicLanguage[1037]", section3)];
+									[uu printDebugInformationToConsole:TXTLS(@"IRC[1016]", section3)];
 								}
 							}
 						} else {
 							applyKey(self, section2, YES);
 
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1037]", section2)];
+							[self printDebugInformation:TXTLS(@"IRC[1016]", section2)];
 						}
 
 						[worldController() save];
@@ -3318,15 +3320,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				if ((applyToAll == NO && NSObjectIsEmpty(section2)) ||
 					(applyToAll		  && NSObjectIsEmpty(section3)))
 				{
-					[self printDebugInformation:TXTLS(@"BasicLanguage[1033]")];
+					[self printDebugInformation:TXTLS(@"IRC[1012]")];
 				} else {
 					if ((applyToAll == NO && [providedKeys containsKey:section2] == NO) ||
 						(applyToAll		  && [providedKeys containsKey:section3] == NO))
 					{
 						if (applyToAll) {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section3)];
+							[self printDebugInformation:TXTLS(@"IRC[1015]", section3)];
 						} else {
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1036]", section2)];
+							[self printDebugInformation:TXTLS(@"IRC[1015]", section2)];
 						}
 					} else {
 						if (applyToAll) {
@@ -3334,15 +3336,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 								applyKey(uu, section3, NO);
 
 								if (uu == self) {
-									[uu printDebugInformation:TXTLS(@"BasicLanguage[1038]", section3)];
+									[uu printDebugInformation:TXTLS(@"IRC[1017]", section3)];
 								} else {
-									[uu printDebugInformationToConsole:TXTLS(@"BasicLanguage[1038]", section3)];
+									[uu printDebugInformationToConsole:TXTLS(@"IRC[1017]", section3)];
 								}
 							}
 						} else {
 							applyKey(self, section2, NO);
 
-							[self printDebugInformation:TXTLS(@"BasicLanguage[1038]", section2)];
+							[self printDebugInformation:TXTLS(@"IRC[1017]", section2)];
 						}
 
 						[worldController() save];
@@ -3357,19 +3359,19 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSObjectIsEmptyAssert(uncutInput);
 
 			if ([TPCPreferences disableNicknameColorHashing]) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1291]")];
+				[self printDebugInformation:TXTLS(@"IRC[1108]")];
 
 				return;
 			}
 
 			if ([TPCPreferences nicknameColorHashingComputesRGBValue] == NO) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1292]")];
+				[self printDebugInformation:TXTLS(@"IRC[1109]")];
 
 				return;
 			}
 
 			if ([themeSettings() nicknameColorStyle] == TPCThemeSettingsNicknameColorLegacyStyle) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1294]")];
+				[self printDebugInformation:TXTLS(@"IRC[1111]")];
 
 				return;
 			}
@@ -3377,7 +3379,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname = [[s getTokenAsString] lowercaseString];
 
 			if ([nickname isChannelName:self] || [nickname isHostmaskNickname] == NO) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1293]", nickname)];
+				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
 
 				return;
 			}
@@ -3404,7 +3406,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
-				LogToConsole(TXTLS(@"BasicLanguage[1193]"), uppercaseCommand);
+				LogToConsole(@"%@", TXTLS(@"IRC[1001]", uppercaseCommand))
 			} else {
 				if (pluginFound) {
 					[self processBundlesUserMessage:uncutInput command:lowercaseCommand];
@@ -3473,35 +3475,37 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)logFileRecordSessionChanges:(BOOL)newSession /* @private */
 {
-	NSString *langkey = @"BasicLanguage[1178]";
+	NSString *localization = nil;
 
-	if (newSession == NO) {
-		langkey = @"BasicLanguage[1179]";
+	if (newSession) {
+		localization = @"IRC[1095]";
+	} else {
+		localization = @"IRC[1096]";
 	}
 
-	TVCLogLine *top = [TVCLogLine new];
-	TVCLogLine *mid = [TVCLogLine new];
-	TVCLogLine *end = [TVCLogLine new];
+	TVCLogLine *topLine = [TVCLogLine new];
+	TVCLogLine *middleLine = [TVCLogLine new];
+	TVCLogLine *bottomLine = [TVCLogLine new];
 
-	[mid setMessageBody:TXTLS(langkey)];
-	[top setMessageBody:NSStringWhitespacePlaceholder];
-	[end setMessageBody:NSStringWhitespacePlaceholder];
+	[topLine setMessageBody:NSStringWhitespacePlaceholder];
+	[middleLine setMessageBody:TXTLS(localization)];
+	[bottomLine setMessageBody:NSStringWhitespacePlaceholder];
 
-	[self writeToLogFile:top];
-	[self writeToLogFile:mid];
-	[self writeToLogFile:end];
+	[self writeToLogFile:topLine];
+	[self writeToLogFile:middleLine];
+	[self writeToLogFile:bottomLine];
 	
 	@synchronized(self.channels) {
 		for (IRCChannel *channel in self.channels) {
-			[channel writeToLogFile:top];
-			[channel writeToLogFile:mid];
-			[channel writeToLogFile:end];
+			[channel writeToLogFile:topLine];
+			[channel writeToLogFile:middleLine];
+			[channel writeToLogFile:bottomLine];
 		}
 	}
 
-	top = nil;
-	mid = nil;
-	end = nil;
+	topLine = nil;
+	middleLine = nil;
+	bottomLine = nil;
 }
 
 - (void)logFileWriteSessionBegin
@@ -3801,7 +3805,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)printErrorReply:(IRCMessage *)m channel:(IRCChannel *)channel
 {
-	NSString *text = TXTLS(@"BasicLanguage[1139]", [m commandNumeric], [m sequence]);
+	NSString *text = TXTLS(@"IRC[1055]", [m commandNumeric], [m sequence]);
 
 	[self printToWebView:channel type:TVCLogLineDebugType command:[m command] nickname:nil messageBody:text isEncrypted:NO receivedAt:[m receivedAt] referenceMessage:nil completionBlock:nil];
 }
@@ -3894,11 +3898,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if (disconnectMessages == nil) {
 		disconnectMessages = @{
-			@(IRCClientDisconnectNormalMode) :				@"BasicLanguage[1136]",
-			@(IRCClientDisconnectComputerSleepMode) :		@"BasicLanguage[1131]",
-			@(IRCClientDisconnectBadSSLCertificateMode) :	@"BasicLanguage[1133]",
-			@(IRCClientDisconnectServerRedirectMode) :		@"BasicLanguage[1132]",
-			@(IRCClientDisconnectReachabilityChangeMode) :	@"BasicLanguage[1135]"
+			@(IRCClientDisconnectNormalMode) :				@"IRC[1052]",
+			@(IRCClientDisconnectComputerSleepMode) :		@"IRC[1048]",
+			@(IRCClientDisconnectBadSSLCertificateMode) :	@"IRC[1050]",
+			@(IRCClientDisconnectServerRedirectMode) :		@"IRC[1049]",
+			@(IRCClientDisconnectReachabilityChangeMode) :	@"IRC[1051]"
 		};
 	}
 	
@@ -3937,11 +3941,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)ircConnectionWillConnectToProxy:(NSString *)proxyHost port:(NSInteger)proxyPort
 {
 	if (self.socket.proxyType == IRCConnectionSocketSocks4ProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1141]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1057]", proxyHost, proxyPort)];
 	} else if (self.socket.proxyType == IRCConnectionSocketSocks5ProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1142]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1058]", proxyHost, proxyPort)];
 	} else if (self.socket.proxyType == IRCConnectionSocketHTTPProxyType) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1273]", proxyHost, proxyPort)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1059]", proxyHost, proxyPort)];
 	}
 }
 
@@ -3955,7 +3959,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *sslProtocolString = [self.socket localizedSecureConnectionProtocolString:NO];
 
 	if (sslProtocolString) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1249]", sslProtocolString)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1047]", sslProtocolString)];
 	}
 }
 
@@ -3972,9 +3976,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *connectedAddress = [self.socket connectedAddress];
 
 	if (connectedAddress == nil || [self.socket.serverAddress isIPAddress]) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1129]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1045]")];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1130]", [self.socket connectedAddress])];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1046]", connectedAddress)];
 	}
 
 	self.isLoggedIn	= NO;
@@ -4876,7 +4880,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSObjectIsEmptyAssert(command);
 
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1116]", command, sendern)];
+		return [self printDebugInformationToConsole:TXTLS(@"IRC[1032]", command, sendern)];
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
@@ -4890,7 +4894,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			target = [mainWindow() selectedChannelOn:self];
 		}
 
-		NSString *textm = TXTLS(@"BasicLanguage[1148]", command, sendern);
+		NSString *textm = TXTLS(@"IRC[1065]", command, sendern);
 
 		if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")] == NO) {
 			[self print:target
@@ -4912,7 +4916,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self sendCTCPReply:sendern command:command text:textm];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_cap")]) {
 			if ([s isEqualIgnoringCase:@"LS"]) {
-				[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1117]")];
+				[self sendCTCPReply:sendern command:command text:TXTLS(@"IRC[1033]")];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_userinfo")] ||
 				   [command isEqualToString:IRCPrivateCommandIndex("ctcp_version")])
@@ -4925,14 +4929,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				NSString *name = [TPCApplicationInfo applicationName];
 				NSString *vers = [TPCApplicationInfo applicationVersionShort];
 
-				NSString *textoc = TXTLS(@"BasicLanguage[1111]", name, vers);
+				NSString *textoc = TXTLS(@"IRC[1026]", name, vers);
 
 				[self sendCTCPReply:sendern command:command text:textoc];
 			}
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_finger")]) {
-			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1119]")];
+			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRC[1035]")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
-			[self sendCTCPReply:sendern command:command text:TXTLS(@"BasicLanguage[1118]")];
+			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRC[1034]")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
 			double time = [NSDate unixTime];
 
@@ -4941,20 +4945,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				NSString *rating = nil;
 
-					   if (delta < 0.01) {						rating = TXTLS(@"BasicLanguage[1109][00]");
-				} else if (delta >= 0.01 && delta < 0.1) {		rating = TXTLS(@"BasicLanguage[1109][01]");
-				} else if (delta >= 0.1 && delta < 0.2) {		rating = TXTLS(@"BasicLanguage[1109][02]");
-				} else if (delta >= 0.2 && delta < 0.5) {		rating = TXTLS(@"BasicLanguage[1109][03]");
-				} else if (delta >= 0.5 && delta < 1.0) {		rating = TXTLS(@"BasicLanguage[1109][04]");
-				} else if (delta >= 1.0 && delta < 2.0) {		rating = TXTLS(@"BasicLanguage[1109][05]");
-				} else if (delta >= 2.0 && delta < 5.0) {		rating = TXTLS(@"BasicLanguage[1109][06]");
-				} else if (delta >= 5.0 && delta < 10.0) {		rating = TXTLS(@"BasicLanguage[1109][07]");
-				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"BasicLanguage[1109][08]");
-				} else if (delta >= 30.0) {						rating = TXTLS(@"BasicLanguage[1109][09]"); }
+					   if (delta < 0.01) {						rating = TXTLS(@"IRC[1025][00]");
+				} else if (delta >= 0.01 && delta < 0.1) {		rating = TXTLS(@"IRC[1025][01]");
+				} else if (delta >= 0.1 && delta < 0.2) {		rating = TXTLS(@"IRC[1025][02]");
+				} else if (delta >= 0.2 && delta < 0.5) {		rating = TXTLS(@"IRC[1025][03]");
+				} else if (delta >= 0.5 && delta < 1.0) {		rating = TXTLS(@"IRC[1025][04]");
+				} else if (delta >= 1.0 && delta < 2.0) {		rating = TXTLS(@"IRC[1025][05]");
+				} else if (delta >= 2.0 && delta < 5.0) {		rating = TXTLS(@"IRC[1025][06]");
+				} else if (delta >= 5.0 && delta < 10.0) {		rating = TXTLS(@"IRC[1025][07]");
+				} else if (delta >= 10.0 && delta < 30.0) {		rating = TXTLS(@"IRC[1025][08]");
+				} else if (delta >= 30.0) {						rating = TXTLS(@"IRC[1025][09]"); }
 
-				textm = TXTLS(@"BasicLanguage[1106]", [self networkAddress], delta, rating);
+				textm = TXTLS(@"IRC[1022]", [self networkAddress], delta, rating);
 			} else {
-				textm = TXTLS(@"BasicLanguage[1108]");
+				textm = TXTLS(@"IRC[1024]");
 			}
 
 			if (self.lagCheckDestinationChannel) {
@@ -4994,9 +4998,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
 		double delta = ([NSDate unixTime] - [s doubleValue]);
 		
-		text = TXTLS(@"BasicLanguage[1146]", sendern, command, delta);
+		text = TXTLS(@"IRC[1063]", sendern, command, delta);
 	} else {
-		text = TXTLS(@"BasicLanguage[1147]", sendern, command, s);
+		text = TXTLS(@"IRC[1064]", sendern, command, s);
 	}
 
 	[self print:c
@@ -5069,7 +5073,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[self print:query
 						   type:TVCLogLineJoinType
 					   nickname:nil
-					messageBody:TXTLS(@"BasicLanguage[1155]", sendern)
+					messageBody:TXTLS(@"IRC[1071]", sendern)
 					 receivedAt:[m receivedAt]
 						command:[m command]];
 					
@@ -5102,7 +5106,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if (printMessage) {
 		NSString *senderAddress = [m senderAddress];
 
-		NSString *text = TXTLS(@"BasicLanguage[1161]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
+		NSString *text = TXTLS(@"IRC[1077]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 		[self print:c
 			   type:TVCLogLineJoinType
@@ -5174,10 +5178,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if (printMessage) {
 		NSString *senderAddress = [m senderAddress];
 
-		NSString *message = TXTLS(@"BasicLanguage[1163]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
+		NSString *message = TXTLS(@"IRC[1079]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 		if (NSObjectIsNotEmpty(comment)) {
-			message = TXTLS(@"BasicLanguage[1164]", message, [comment stringByAppendingIRCFormattingStop]);
+			message = TXTLS(@"IRC[1080]", message, [comment stringByAppendingIRCFormattingStop]);
 		}
 		
 		[self print:c
@@ -5218,7 +5222,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self notifyEvent:TXNotificationKickType lineType:TVCLogLineKickType target:c nickname:sendern text:comment];
 
 			if ([TPCPreferences rejoinOnKick] && [c errorOnLastJoinAttempt] == NO) {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1127]") channel:c];
+				[self printDebugInformation:TXTLS(@"IRC[1043]") channel:c];
 
 				[self cancelPerformRequestsWithSelector:@selector(joinKickedChannel:) object:c];
 				
@@ -5247,7 +5251,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	if (printMessage) {
-		NSString *message = TXTLS(@"BasicLanguage[1162]", sendern, targetu, [comment stringByAppendingIRCFormattingStop]);
+		NSString *message = TXTLS(@"IRC[1078]", sendern, targetu, [comment stringByAppendingIRCFormattingStop]);
 
 		[self print:c
 			   type:TVCLogLineKickType
@@ -5290,10 +5294,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	/* Continue. */
 	NSString *senderAddress = [m senderAddress];
 
-	NSString *text = TXTLS(@"BasicLanguage[1153]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
+	NSString *text = TXTLS(@"IRC[1069]", sendern, [m senderUsername], [senderAddress stringByAppendingIRCFormattingStop]);
 
 	if (NSObjectIsNotEmpty(comment)) {
-		text = TXTLS(@"BasicLanguage[1150]", text, [comment stringByAppendingIRCFormattingStop]);
+		text = TXTLS(@"IRC[1066]", text, [comment stringByAppendingIRCFormattingStop]);
 	}
 
 #define	_hideQuitInChannel		([TPCPreferences showJoinLeave] == NO || [ignoreChecks ignoreGeneralEventMessages] || c.config.ignoreGeneralEventMessages)
@@ -5341,7 +5345,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 						}
 					}
 				} else {
-					text = TXTLS(@"BasicLanguage[1154]", sendern);
+					text = TXTLS(@"IRC[1070]", sendern);
 				}
 
 				if (printMessage) {
@@ -5452,9 +5456,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *text = nil;
 			
 			if (printMessage && myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO) {
-				text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+				text = TXTLS(@"IRC[1068][0]", oldNick, newNick);
 			} else if (printMessage && myself == YES) {
-				text = TXTLS(@"BasicLanguage[1152][1]", newNick);
+				text = TXTLS(@"IRC[1068][1]", newNick);
 			}
 			
 			if (text) {
@@ -5481,9 +5485,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				NSString *text = nil;
 				
 				if ((printMessage && myself == NO && [TPCPreferences showJoinLeave] && [ignoreChecks ignoreGeneralEventMessages] == NO && c.config.ignoreGeneralEventMessages == NO)) {
-					text = TXTLS(@"BasicLanguage[1152][0]", oldNick, newNick);
+					text = TXTLS(@"IRC[1068][0]", oldNick, newNick);
 				} else if (printMessage && myself == YES) {
-					text = TXTLS(@"BasicLanguage[1152][1]", newNick);
+					text = TXTLS(@"IRC[1068][1]", newNick);
 				}
 				
 				if (text) {
@@ -5562,7 +5566,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self print:c
 				   type:TVCLogLineModeType
 			   nickname:nil
-			messageBody:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
+			messageBody:TXTLS(@"IRC[1062]", sendern, modestr)
 			 receivedAt:[m receivedAt]
 				command:[m command]];
 		}
@@ -5577,7 +5581,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self print:nil
 				   type:TVCLogLineModeType
 			   nickname:nil
-			messageBody:TXTLS(@"BasicLanguage[1145]", sendern, modestr)
+			messageBody:TXTLS(@"IRC[1062]", sendern, modestr)
 			 receivedAt:[m receivedAt]
 				command:[m command]];
 		}
@@ -5605,7 +5609,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[self print:c
 			   type:TVCLogLineTopicType
 		   nickname:nil
-		messageBody:TXTLS(@"BasicLanguage[1128]", sendern, topicav)
+		messageBody:TXTLS(@"IRC[1044]", sendern, topicav)
 		isEncrypted:NO
 		 receivedAt:[m receivedAt]
 			command:[m command]];
@@ -5620,7 +5624,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	NSString *channel = [m paramAt:1];
 	
-	NSString *text = TXTLS(@"BasicLanguage[1158]", sendern, [m senderUsername], [m senderAddress], channel);
+	NSString *text = TXTLS(@"IRC[1074]", sendern, [m senderUsername], [m senderAddress], channel);
 	
 	/* Invite notifications are sent to frontmost channel on server of if it is
 	 not on server, then it will be redirected to console. */
@@ -6607,7 +6611,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			[self print:nil
 				   type:TVCLogLineDebugType
 			   nickname:nil
-			messageBody:TXTLS(@"BasicLanguage[1156]", [self localNickname], modestr)
+			messageBody:TXTLS(@"IRC[1072]", [self localNickname], modestr)
 			 receivedAt:[m receivedAt]
 				command:[m command]];
 
@@ -6640,7 +6644,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			IRCChannel *ac = [self findChannel:awaynick];
 
-			NSString *text = TXTLS(@"BasicLanguage[1159]", awaynick, comment);
+			NSString *text = TXTLS(@"IRC[1075]", awaynick, comment);
 
             if (ac == nil) {
 				ac = [mainWindow() selectedChannelOn:self];
@@ -6772,7 +6776,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			if (self.inUserInvokedWhowasRequest) {
 				if (printMessage) {
-					text = TXTLS(@"BasicLanguage[1170]", nickname, username, hostmask, realname);
+					text = TXTLS(@"IRC[1086]", nickname, username, hostmask, realname);
 				}
 			} else {
 				/* Update local cache of our hostmask. */
@@ -6784,7 +6788,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				/* Continue normal WHOIS event. */
 				if (printMessage) {
-					text = TXTLS(@"BasicLanguage[1167]", nickname, username, hostmask, realname);
+					text = TXTLS(@"IRC[1083]", nickname, username, hostmask, realname);
 				}
 			}
 
@@ -6814,9 +6818,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if (self.inUserInvokedWhowasRequest) {
 				NSString *timeInfo = TXFormatDateTimeStringToCommonFormat(serverInfo, YES);
 				
-				text = TXTLS(@"BasicLanguage[1169]", nickname, serverHost, timeInfo);
+				text = TXTLS(@"IRC[1085]", nickname, serverHost, timeInfo);
 			} else {
-				text = TXTLS(@"BasicLanguage[1166]", nickname, serverHost, serverInfo);
+				text = TXTLS(@"IRC[1082]", nickname, serverHost, serverInfo);
 			}
 			
 			[self print:[mainWindow() selectedChannelOn:self]
@@ -6844,7 +6848,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			connTime = TXFormatDateTimeStringToCommonFormat(connTimeDate, NO);
 
-			NSString *text = TXTLS(@"BasicLanguage[1168]", nickname, connTime, idleTime);
+			NSString *text = TXTLS(@"IRC[1084]", nickname, connTime, idleTime);
 			
 			[self print:[mainWindow() selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -6864,7 +6868,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname = [m paramAt:1];
 			NSString *channels = [m paramAt:2];
 
-			NSString *text = TXTLS(@"BasicLanguage[1165]", nickname, channels);
+			NSString *text = TXTLS(@"IRC[1081]", nickname, channels);
 			
 			[self print:[mainWindow() selectedChannelOn:self]
 				   type:TVCLogLineDebugType
@@ -6904,7 +6908,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[self print:c
 						   type:TVCLogLineModeType
 					   nickname:nil
-					messageBody:TXTLS(@"BasicLanguage[1123]", fmodestr)
+					messageBody:TXTLS(@"IRC[1039]", fmodestr)
 					 receivedAt:[m receivedAt]
 						command:[m command]];
 				}
@@ -6938,7 +6942,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[self print:c
 						   type:TVCLogLineTopicType
 					   nickname:nil
-					messageBody:TXTLS(@"BasicLanguage[1124]", topicva)
+					messageBody:TXTLS(@"IRC[1040]", topicva)
 					isEncrypted:NO
 					 receivedAt:[m receivedAt]
 						command:[m command]];
@@ -6968,7 +6972,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			PointerIsEmptyAssert(c);
 
 			if ([c isActive]) {
-				NSString *text = TXTLS(@"BasicLanguage[1125]", topicow, settime);
+				NSString *text = TXTLS(@"IRC[1041]", topicow, settime);
 
 				[self print:c
 					   type:TVCLogLineTopicType
@@ -6997,7 +7001,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[self print:c
 					   type:TVCLogLineDebugType
 				   nickname:nil
-				messageBody:TXTLS(@"BasicLanguage[1157]", nickname, channel)
+				messageBody:TXTLS(@"IRC[1073]", nickname, channel)
 				 receivedAt:[m receivedAt]
 					command:[m command]];
 			}
@@ -7033,7 +7037,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							 users in this reply, then they are considered gone. Log that. */
 							if ([users containsObjectIgnoringCase:name] == NO) {
 								if (self.isInvokingISONCommandForFirstTime == NO) {
-									localization = @"BasicLanguage[1084]";
+									localization = @"Notifications[1042]";
 								}
 								
 								[self.trackedUsers setBool:NO forKey:name];
@@ -7042,9 +7046,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 							/* If they were not on but now are, then log that too. */
 							if ([users containsObjectIgnoringCase:name]) {
 								if (self.isInvokingISONCommandForFirstTime) {
-									localization = @"BasicLanguage[1083]";
+									localization = @"Notifications[1041]";
 								} else {
-									localization = @"BasicLanguage[1085]";
+									localization = @"Notifications[1043]";
 								}
 								
 								[self.trackedUsers setBool:YES forKey:name];
@@ -7436,7 +7440,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *channelName = [m paramAt:1];
 
 			NSString *entryMask = [m paramAt:2];
-			NSString *entryAuthor = TXTLS(@"BasicLanguage[1218]");
+			NSString *entryAuthor = TXTLS(@"BasicLanguage[1002]");
 
 			BOOL extendedLine = ([m paramsCount] > 4);
 
@@ -7463,28 +7467,28 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					return;
 				}
 
-				NSString *languageKey = nil;
+				NSString *localization = nil;
 
 				if (n == 367) { // RPL_BANLIST
-					languageKey = @"1230";
+					localization = @"1102";
 				} else if (n == 346) { // RPL_INVITELIST
-					languageKey = @"1231";
+					localization = @"1103";
 				} else if (n == 348) { // RPL_EXCEPTLIST
-					languageKey = @"1232";
+					localization = @"1104";
 				}
 
 				if (extendedLine) {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][1]", languageKey];
+					localization = [NSString stringWithFormat:@"IRC[%@][1]", localization];
 				} else {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[%@][2]", languageKey];
+					localization = [NSString stringWithFormat:@"IRC[%@][2]", localization];
 				}
 
 				NSString *text = nil;
 
 				if (extendedLine) {
-					text = TXTLS(languageKey, channelName, entryMask, entryAuthor, entryCreationDate);
+					text = TXTLS(localization, channelName, entryMask, entryAuthor, entryCreationDate);
 				} else {
-					text = TXTLS(languageKey, channelName, entryMask);
+					text = TXTLS(localization, channelName, entryMask);
 				}
 
 				[self print:nil
@@ -7524,7 +7528,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[self print:nil
 						   type:TVCLogLineDebugType
 					   nickname:nil
-					messageBody:TXTLS(@"BasicLanguage[1160]", [m senderNickname])
+					messageBody:TXTLS(@"IRC[1076]", [m senderNickname])
 					 receivedAt:[m receivedAt]
 						command:[m command]];
 				}
@@ -7550,7 +7554,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					[self print:c
 						   type:TVCLogLineWebsiteType
 					   nickname:nil
-					messageBody:TXTLS(@"BasicLanguage[1126]", website)
+					messageBody:TXTLS(@"IRC[1042]", website)
 					 receivedAt:[m receivedAt]
 						command:[m command]];
 				}
@@ -7629,11 +7633,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			if (n == 600) // logged online
 			{
-				[self handleUserTrackingNotification:ignoreChecks nickname:nickname localization:@"BasicLanguage[1085]"];
+				[self handleUserTrackingNotification:ignoreChecks nickname:nickname localization:@"Notifications[1043]"];
 			}
 			else if (n == 601) // logged offline
 			{
-				[self handleUserTrackingNotification:ignoreChecks nickname:nickname localization:@"BasicLanguage[1084]"];
+				[self handleUserTrackingNotification:ignoreChecks nickname:nickname localization:@"Notifications[1042]"];
 			}
 			else if (n == 604 || // is online
 					 n == 605)   // is offline
@@ -7659,7 +7663,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSString *sendern = [m paramAt:1];
 			
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1171]", sendern)];
+			[self printDebugInformation:TXTLS(@"IRC[1088]", sendern)];
 			
 			break;
 		}
@@ -7675,9 +7679,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
 				IRCChannel *c = [mainWindow() selectedChannelOn:self];
 
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask) channel:c];
+				[self printDebugInformation:TXTLS(@"IRC[1089]", sendern, hostmask) channel:c];
 			} else {
-				[self printDebugInformation:TXTLS(@"BasicLanguage[1172]", sendern, hostmask)];
+				[self printDebugInformation:TXTLS(@"IRC[1089]", sendern, hostmask)];
 			}
 
 			break;
@@ -7768,7 +7772,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn(printMessage);
 
-			NSString *text = TXTLS(@"BasicLanguage[1139]", n, [m sequence:1]);
+			NSString *text = TXTLS(@"IRC[1055]", n, [m sequence:1]);
 			
 			[self print:nil
 				   type:TVCLogLineDebugType
@@ -7798,7 +7802,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSAssertReturn(printMessage);
 
-			NSString *text = TXTLS(@"BasicLanguage[1139]", n, [m sequence:2]);
+			NSString *text = TXTLS(@"IRC[1055]", n, [m sequence:2]);
 
 			IRCChannel *c = [self findChannel:[m paramAt:1]];
 			
@@ -8042,13 +8046,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if (timeSpent >= _timeoutInterval) {
 		if (self.config.performDisconnectOnPongTimer) {
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1137]", (timeSpent / 60.0)) channel:nil];
+			[self printDebugInformation:TXTLS(@"IRC[1053]", (timeSpent / 60.0)) channel:nil];
 
 			[self performBlockOnMainThread:^{
 				[self disconnect];
 			}];
 		} else if (self.timeoutWarningShownToUser == NO) {
-			[self printDebugInformation:TXTLS(@"BasicLanguage[1138]", (timeSpent / 60.0)) channel:nil];
+			[self printDebugInformation:TXTLS(@"IRC[1054]", (timeSpent / 60.0)) channel:nil];
 			
 			self.timeoutWarningShownToUser = YES;
 		}
@@ -8079,7 +8083,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	if ([self isHostReachable] == NO) {
 		if (self.config.hideNetworkUnavailabilityNotices == NO) {
-			[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1032]", _reconnectInterval)];
+			[self printDebugInformationToConsole:TXTLS(@"IRC[1011]", _reconnectInterval)];
 		}
 	} else {
 		if (self.isConnected == NO) {
@@ -8182,9 +8186,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		scriptInput = @"(null)";
 	}
 
-	[self printDebugInformation:TXTLS(@"BasicLanguage[1196]", script, scriptInput, errord)];
+	[self printDebugInformation:TXTLS(@"IRC[1003]", script, scriptInput, errord)];
 
-	LogToConsole(TXTLS(@"BasicLanguage[1195]", errorb));
+	LogToConsole(@"%@", TXTLS(@"IRC[1002]", errorb))
 }
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
@@ -8456,9 +8460,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self logFileWriteSessionBegin];
 
 	if (mode == IRCClientConnectReconnectMode) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1143]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1060]")];
 	} else if (mode == IRCClientConnectRetryMode) {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1144]")];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1061]")];
 	}
 
 	/* Create socket. */
@@ -8491,7 +8495,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		self.socket.proxyUsername = self.config.proxyUsername;
 	}
 
-	[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1140]", socketAddress, socketPort)];
+	[self printDebugInformationToConsole:TXTLS(@"IRC[1056]", socketAddress, socketPort)];
 
 	self.socket.floodControlDelayInterval = self.config.floodControlDelayTimerInterval;
 	self.socket.floodControlMaximumMessageCount = self.config.floodControlMaximumMessages;
@@ -8526,7 +8530,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if (self.connectDelay <= 0 || [self isHostReachable]) {
 		[self connect:IRCClientConnectReconnectMode];
 	} else {
-		[self printDebugInformationToConsole:TXTLS(@"BasicLanguage[1031]", self.connectDelay)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", self.connectDelay)];
 
 		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
 	}
@@ -8814,7 +8818,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)toggleAwayStatus:(BOOL)setAway
 {
-    [self toggleAwayStatus:setAway withReason:TXTLS(@"BasicLanguage[1115]")];
+    [self toggleAwayStatus:setAway withReason:TXTLS(@"IRC[1031]")];
 }
 
 - (void)toggleAwayStatus:(BOOL)setAway withReason:(NSString *)reason
@@ -8871,31 +8875,31 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	switch (type) {
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			description = TXTLS(@"BasicLanguage[1078]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[1036]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			description = TXTLS(@"BasicLanguage[1079]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[1037]", filename, totalFilesize);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			description = TXTLS(@"BasicLanguage[1080]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[1038]", filename);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			description = TXTLS(@"BasicLanguage[1081]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[1039]", filename);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			description = TXTLS(@"BasicLanguage[1082]", filename, totalFilesize);
+			description = TXTLS(@"Notifications[1040]", filename, totalFilesize);
 			
 			break;
 		}
@@ -9141,13 +9145,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	// Report an error
 present_error:
-	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:TXTLS(@"BasicLanguage[1020]", nickname) command:TVCLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:TXTLS(@"IRC[1020]", nickname) command:TVCLogLineDefaultRawCommandValue];
 }
 
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	/* Inform of the DCC and possibly ignore it. */
-	NSString *message = TXTLS(@"BasicLanguage[1040]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"IRC[1019]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultRawCommandValue];
 	
@@ -9213,7 +9217,7 @@ present_error:
 	
 	[self sendCTCPQuery:nickname command:@"DCC SEND" text:trail];
 	
-	NSString *message = TXTLS(@"BasicLanguage[1039]", nickname, filename, totalFilesize);
+	NSString *message = TXTLS(@"IRC[1018]", nickname, filename, totalFilesize);
 	
 	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultRawCommandValue];
 }
@@ -9627,7 +9631,7 @@ present_error:
 		/* Notification Type: JOIN Command. */
 		if ([[message command] isEqualIgnoringCase:@"JOIN"]) {
 			if (ison == NO) {
-				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"BasicLanguage[1085]"];
+				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"Notifications[1043]"];
 				
 				[self.trackedUsers setBool:YES forKey:tracker];
 			}
@@ -9638,7 +9642,7 @@ present_error:
 		/* Notification Type: QUIT Command. */
 		if ([[message command] isEqualIgnoringCase:@"QUIT"]) {
 			if (ison) {
-				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"BasicLanguage[1084]"];
+				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"Notifications[1042]"];
 				
 				[self.trackedUsers setBool:NO forKey:tracker];
 			}
@@ -9649,9 +9653,9 @@ present_error:
 		/* Notification Type: NICK Command. */
 		if ([[message command] isEqualIgnoringCase:@"NICK"]) {
 			if (ison) {
-				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"BasicLanguage[1084]"];
+				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"Notifications[1042]"];
 			} else {
-				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"BasicLanguage[1085]"];
+				[self handleUserTrackingNotification:abEntry nickname:[message senderNickname] localization:@"Notifications[1043]"];
 			}
 			
 			[self.trackedUsers setBool:(ison == NO) forKey:tracker];

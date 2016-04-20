@@ -105,7 +105,7 @@
 
 	NSString *nickname = [associatedUser nickname];
 
-	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"BasicLanguage[1277]", nickname) forObject:[[self textField] cell]];
+	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", nickname) forObject:[[self textField] cell]];
 }
 
 #pragma mark -
@@ -520,19 +520,19 @@
 	}
 
 	if (userRank == IRCUserIRCopByModeRank) {
-		permissions = TXTLS(@"BasicLanguage[1212]");
+		permissions = TXTLS(@"TVCMainWindow[1007]");
 	} else if (userRank == IRCUserChannelOwnerRank) {
-		permissions = TXTLS(@"BasicLanguage[1211]");
+		permissions = TXTLS(@"TVCMainWindow[1006]");
 	} else if (userRank == IRCUserSuperOperatorRank) {
-		permissions = TXTLS(@"BasicLanguage[1210]");
+		permissions = TXTLS(@"TVCMainWindow[1005]");
 	} else if (userRank == IRCUserNormalOperatorRank) {
-		permissions = TXTLS(@"BasicLanguage[1209]");
+		permissions = TXTLS(@"TVCMainWindow[1004]");
 	} else if (userRank == IRCUserHalfOperatorRank) {
-		permissions = TXTLS(@"BasicLanguage[1208]");
+		permissions = TXTLS(@"TVCMainWindow[1003]");
 	} else if (userRank == IRCUserVoicedRank) {
-		permissions = TXTLS(@"BasicLanguage[1207]");
+		permissions = TXTLS(@"TVCMainWindow[1002]");
 	} else {
-		permissions = TXTLS(@"BasicLanguage[1206]");
+		permissions = TXTLS(@"TVCMainWindow[1001]");
 	}
 
     /* User info. */
@@ -543,15 +543,15 @@
 	NSString *realname = [associatedUser realname];
 
     if (NSObjectIsEmpty(username)) {
-        username = TXTLS(@"BasicLanguage[1215]");
+        username = TXTLS(@"TVCMainWindow[1010]");
     }
 
     if (NSObjectIsEmpty(address)) {
-        address = TXTLS(@"BasicLanguage[1215]");
+        address = TXTLS(@"TVCMainWindow[1010]");
 	}
 	
 	if (NSObjectIsEmpty(realname)) {
-		realname = TXTLS(@"BasicLanguage[1215]");
+		realname = TXTLS(@"TVCMainWindow[1010]");
 	}
 
     /* Where is our cell? */
@@ -578,9 +578,9 @@
 	
 	/* Update away status. */
 	if ([associatedUser isAway]) {
-		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"BasicLanguage[1213]")];
+		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"TVCMainWindow[1008]")];
 	} else {
-		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"BasicLanguage[1214]")];
+		[[userInfoPopover awayStatusField] setStringValue:TXTLS(@"TVCMainWindow[1009]")];
 	}
 
 	id currentFirstResponder = [mainWindow() firstResponder];

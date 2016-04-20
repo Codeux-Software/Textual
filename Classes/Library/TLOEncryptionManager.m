@@ -187,7 +187,7 @@
 
 - (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"BasicLanguage[1269]")];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[1006]")];
 }
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
@@ -205,14 +205,14 @@
 													   accountName:messageFrom
 														  protocol:[self otrKitProtocol]];
 		} else {
-			[self presentErrorMessage:TXTLS(@"BasicLanguage[1270]") withAccountName:messageTo];
+			[self presentErrorMessage:TXTLS(@"OffTheRecord[1009]") withAccountName:messageTo];
 		}
 	}];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"BasicLanguage[1260]")];
+	[self refreshConversationWith:messageTo from:messageFrom presentMessage:TXTLS(@"OffTheRecord[1005]")];
 }
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
@@ -257,7 +257,7 @@
 															 accountName:messageFrom
 																protocol:[self otrKitProtocol]];
 		} else {
-			[self presentErrorMessage:TXTLS(@"BasicLanguage[1263]") withAccountName:messageTo];
+			[self presentErrorMessage:TXTLS(@"OffTheRecord[1008]") withAccountName:messageTo];
 		}
 	}];
 }
@@ -385,19 +385,19 @@
 
 		if (currentState == OTRKitMessageStateEncrypted) {
 			if (isIncomingFileTransfer) {
-				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1272][2]")
-																	 title:TXTLS(@"BasicLanguage[1272][1]", filename)
-															 defaultButton:TXTLS(@"BasicLanguage[1272][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1272][4]")];
+				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1132][2]")
+																	 title:TXTLS(@"Prompts[1132][1]", filename)
+															 defaultButton:TXTLS(@"Prompts[0004]")
+														   alternateButton:TXTLS(@"Prompts[1132][3]")];
 
 				returnValue = (continueop == NO);
 			} else {
 				NSString *nickname = [self nicknameFromAccountName:messageTo];
 
-				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[3005][2]")
-																	 title:TXTLS(@"BasicLanguage[3005][1]", filename, nickname)
-															 defaultButton:TXTLS(@"BasicLanguage[3005][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[3005][4]")];
+				BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1133][2]")
+																	 title:TXTLS(@"Prompts[1133][1]", filename, nickname)
+															 defaultButton:TXTLS(@"Prompts[0004]")
+														   alternateButton:TXTLS(@"Prompts[1133][3]")];
 
 				returnValue = (continueop == NO);
 			}
@@ -424,18 +424,18 @@
 																						 protocol:[self otrKitProtocol]];
 
 			if (hasVerifiedKey) {
-				[button setTitle:TXTLS(@"BasicLanguage[1265][3]")];
+				[button setTitle:TXTLS(@"OffTheRecord[1011][3]")];
 
 				[button setIconAsLocked];
 			} else {
-				[button setTitle:TXTLS(@"BasicLanguage[1265][2]")];
+				[button setTitle:TXTLS(@"OffTheRecord[1011][2]")];
 
 				/* Even though we are encrypted, our icon is still set to unlocked because
 				 the identity of messageTo still has not been authenticated. */
 				[button setIconAsUnlocked];
 			}
 		} else {
-			[button setTitle:TXTLS(@"BasicLanguage[1265][1]")];
+			[button setTitle:TXTLS(@"OffTheRecord[1011][1]")];
 
 			[button setIconAsUnlocked];
 		}
@@ -491,7 +491,7 @@
 #undef _dv
 
 	if (localeKey) {
-		localeKey = [NSString stringWithFormat:@"BasicLanguage[1254][%@]", localeKey];
+		localeKey = [NSString stringWithFormat:@"OffTheRecord[1007][%@]", localeKey];
 	}
 
 	if (localeKey) {
@@ -546,9 +546,9 @@
 {
 	[self performBlockInRelationToAccountName:accountName block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
 		if (isVerified) {
-			[self printMessage:TXTLS(@"BasingLanguage[1259][01]", nickname) inChannel:channel onClient:client];
+			[self printMessage:TXTLS(@"OffTheRecord[1002]", nickname) inChannel:channel onClient:client];
 		} else {
-			[self printMessage:TXTLS(@"BasingLanguage[1259][02]", nickname) inChannel:channel onClient:client];
+			[self printMessage:TXTLS(@"OffTheRecord[1003]", nickname) inChannel:channel onClient:client];
 		}
 
 		[channel noteEncryptionStateDidChange];
@@ -601,7 +601,7 @@
 	if (numMatches == 1) {
 		NSArray *messageComponents = [message componentsSeparatedByString:NSStringNewlinePlaceholder];
 
-		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"BasicLanguage[1255]")];
+		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"OffTheRecord[1010]")];
 	} else {
 		return message;
 	}
@@ -666,14 +666,14 @@
 																				 protocol:[self otrKitProtocol]];
 
 		if (isVerified) {
-			[self presentMessage:TXTLS(@"BasicLanguage[1253][02]") withAccountName:username];
+			[self presentMessage:TXTLS(@"OffTheRecord[1001][02]") withAccountName:username];
 		} else {
-			[self presentMessage:TXTLS(@"BasicLanguage[1253][01]") withAccountName:username];
+			[self presentMessage:TXTLS(@"OffTheRecord[1001][01]") withAccountName:username];
 		}
 	} else if (messageState == OTRKitMessageStateFinished ||
 			   messageState == OTRKitMessageStatePlaintext)
 	{
-		[self presentMessage:TXTLS(@"BasicLanguage[1256]") withAccountName:username];
+		[self presentMessage:TXTLS(@"OffTheRecord[1004]") withAccountName:username];
 	}
 }
 

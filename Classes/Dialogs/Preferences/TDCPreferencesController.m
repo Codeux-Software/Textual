@@ -241,9 +241,9 @@
 	/* We only have notification center on mountain lion or newer so we have to
 	 check what OS we are running on before we even doing anything. */
 	if (growlRunning) {
-		[[self alertNotificationDestinationTextField] setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
+		[[self alertNotificationDestinationTextField] setStringValue:TXTLS(@"TDCPreferencesController[1004]")];
 	} else {
-		[[self alertNotificationDestinationTextField] setStringValue:TXTLS(@"TDCPreferencesController[1006]")];
+		[[self alertNotificationDestinationTextField] setStringValue:TXTLS(@"TDCPreferencesController[1005]")];
 	}
 
 	// Complete startup of preferences.
@@ -748,8 +748,9 @@
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
 			[userInfo setObject:url forKey:NSURLErrorKey];
-			[userInfo setObject:TXTLS(@"TDCPreferencesController[1016][1]") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:TXTLS(@"TDCPreferencesController[1016][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+
+			[userInfo setObject:TXTLS(@"TDCPreferencesController[1010][1]") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:TXTLS(@"TDCPreferencesController[1010][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
 
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -769,7 +770,7 @@
 	NSMenuItem *item = [[self fileTransferDownloadDestinationButton] itemAtIndex:0];
 	
 	if (path == nil) {
-		[item setTitle:TXTLS(@"TDCPreferencesController[1004]")];
+		[item setTitle:TXTLS(@"TDCPreferencesController[1003]")];
 		
 		[item setImage:nil];
 	} else {
@@ -796,7 +797,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
+		[d setPrompt:TXTLS(@"Prompts[0006]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self fileTransferDownloadDestinationButton] selectItemAtIndex:0];
@@ -841,7 +842,7 @@
 	NSMenuItem *item = [[self transcriptFolderButton] itemAtIndex:0];
 
 	if (path == nil) {
-		[item setTitle:TXTLS(@"TDCPreferencesController[1003]")];
+		[item setTitle:TXTLS(@"TDCPreferencesController[1002]")];
 		
 		[item setImage:nil];
 	} else {
@@ -866,7 +867,7 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
+		[d setPrompt:TXTLS(@"Prompts[0006]")];
 
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger returnCode) {
 			[[self transcriptFolderButton] selectItemAtIndex:0];
@@ -948,22 +949,22 @@
 	NSMutableString *sf = [NSMutableString string];
 
 	if (NSObjectIsNotEmpty([themeSettings() nicknameFormat])) {
-		[sf appendString:TXTLS(@"TDCPreferencesController[1015][1]")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1009][1]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if (NSObjectIsNotEmpty([themeSettings() timestampFormat])) {
-		[sf appendString:TXTLS(@"TDCPreferencesController[1015][2]")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1009][2]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if ([themeSettings() channelViewFont]) {
-		[sf appendString:TXTLS(@"TDCPreferencesController[1015][4]")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1009][4]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
 	if ([themeSettings() forceInvertSidebarColors]) {
-		[sf appendString:TXTLS(@"TDCPreferencesController[1015][3]")];
+		[sf appendString:TXTLS(@"TDCPreferencesController[1009][3]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
@@ -972,9 +973,9 @@
 	NSObjectIsEmptyAssert(tsf);
 
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TXTLS(@"TDCPreferencesController[1014][2]", [item title], tsf)
-									 title:TXTLS(@"TDCPreferencesController[1014][1]")
-							 defaultButton:TXTLS(@"BasicLanguage[1186]")
+									  body:TXTLS(@"TDCPreferencesController[1008][2]", [item title], tsf)
+									 title:TXTLS(@"TDCPreferencesController[1008][1]")
+							 defaultButton:TXTLS(@"Prompts[0005]")
 						   alternateButton:nil
 							   otherButton:nil
 							suppressionKey:@"theme_override_info"
@@ -1076,27 +1077,62 @@
 
 + (void)presentTorAnonymityNetworkInlineMediaWarning
 {
+	BOOL presentDialog = NO;
+
 	for (IRCClient *u in [worldController() clientList]) {
 		if ([[u config] proxyType] == IRCConnectionSocketTorBrowserType) {
-			goto present_dialog;
+			presentDialog = YES;
 		}
 	}
 
-	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
-		if (NSObjectsAreEqual([application localizedName], @"TorBrowser") ||
-			NSObjectsAreEqual([application localizedName], @"Tor Browser"))
-		{
-			goto present_dialog;
+	if (presentDialog == NO) {
+		for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
+			if (NSObjectsAreEqual([application localizedName], @"TorBrowser") ||
+				NSObjectsAreEqual([application localizedName], @"Tor Browser"))
+			{
+				presentDialog = YES;
+			}
 		}
 	}
 
-	return;
+	if (presentDialog == NO) {
+		return;
+	}
 
-present_dialog:
-	(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1287][2]")
-											 title:TXTLS(@"BasicLanguage[1287][1]")
-									 defaultButton:TXTLS(@"BasicLanguage[1186]")
-								   alternateButton:nil];
+	BOOL clickResult =
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1111][2]")
+									   title:TXTLS(@"Prompts[1111][1]")
+							   defaultButton:TXTLS(@"Prompts[0005]")
+							 alternateButton:TXTLS(@"Prompts[1111][3]")];
+
+	if (clickResult == NO) {
+		[TDCPreferencesController openProxySettingsInSystemPreferences];
+	}
+}
+
++ (void)openProxySettingsInSystemPreferences
+{
+	AEDesc aeDesc = { typeNull, NULL };
+
+	OSStatus aeDescStatus = AECreateDesc('ptru', "Proxies", 7,  &aeDesc);
+
+	if (aeDescStatus != noErr) {
+		LogToConsole(@"aeDescStatus returned value other than noErr: %i", aeDescStatus);
+
+		return;
+	}
+
+	NSURL *prefPaneURL = [NSURL fileURLWithPath:@"/System/Library/PreferencePanes/Network.prefPane"];
+
+	LSLaunchURLSpec launchSpec = { 0 };
+
+	launchSpec.appURL = NULL;
+	launchSpec.asyncRefCon = NULL;
+	launchSpec.itemURLs = (__bridge CFArrayRef)[NSArray arrayWithObject:prefPaneURL];
+	launchSpec.launchFlags = (kLSLaunchAsync | kLSLaunchDontAddToRecents);
+	launchSpec.passThruParams = &aeDesc;
+
+	(void)LSOpenFromURLSpec(&launchSpec, NULL);
 }
 
 - (void)onChangedInlineMediaOption:(id)sender
@@ -1215,13 +1251,6 @@ present_dialog:
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
-		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(@"TDCPreferencesController[1000][2]")
-										 title:TXTLS(@"TDCPreferencesController[1000][1]")
-								 defaultButton:BLS(1186)
-							   alternateButton:nil
-								   otherButton:nil];
-
 		[sharedCloudManager() resetDataToSync];
 	} else {
 		[RZUbiquitousKeyValueStore() synchronize];
@@ -1251,7 +1280,7 @@ present_dialog:
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)onPurgeOfCloudDataRequestedCallback:(TLOPopupPromptReturnType)returnCode
 {
-	if (returnCode == TLOPopupPromptReturnSecondaryType) {
+	if (returnCode == TLOPopupPromptReturnPrimaryType) {
 		/* Remove data stored with cloud */
 		[sharedCloudManager() purgeDataStoredWithCloud];
 
@@ -1272,10 +1301,10 @@ present_dialog:
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-									  body:TXTLS(@"TDCPreferencesController[1002][2]")
-									 title:TXTLS(@"TDCPreferencesController[1002][1]")
-							 defaultButton:TXTLS(@"BasicLanguage[1219]")
-						   alternateButton:TXTLS(@"BasicLanguage[1182]")
+									  body:TXTLS(@"TDCPreferencesController[1001][2]")
+									 title:TXTLS(@"TDCPreferencesController[1001][1]")
+							 defaultButton:TXTLS(@"Prompts[0001]")
+						   alternateButton:TXTLS(@"Prompts[0002]")
 							   otherButton:nil
 							suppressionKey:nil
 						   suppressionText:nil
@@ -1314,10 +1343,10 @@ present_dialog:
 {
     if ([themeController() isBundledTheme]) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(@"TDCPreferencesController[1010][2]")
-										 title:TXTLS(@"TDCPreferencesController[1010][1]")
-								 defaultButton:TXTLS(@"BasicLanguage[1219]")
-							   alternateButton:TXTLS(@"BasicLanguage[1182]")
+										  body:TXTLS(@"TDCPreferencesController[1007][2]")
+										 title:TXTLS(@"TDCPreferencesController[1007][1]")
+								 defaultButton:TXTLS(@"Prompts[0001]")
+							   alternateButton:TXTLS(@"Prompts[0002]")
 								   otherButton:nil
 								suppressionKey:nil
 							   suppressionText:nil

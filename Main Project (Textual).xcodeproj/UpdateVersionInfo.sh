@@ -78,6 +78,8 @@ echo "#define TXBundleBuildVersionShort						@\"${bundleVersionShort}\"" >> Buil
 
 echo "#define TXBundleBuildScheme							@\"${TEXTUAL_BUILD_SCHEME_TOKEN}\"" >> BuildConfig.h
 
+echo "#define TXBundleBuildDate								@\"$(date +%s)\"" >> BuildConfig.h
+
 if [ -z "$CODE_SIGN_IDENTITY" ]; then
 echo "#define TXBundleBuiltWithoutCodeSigning				1" >> BuildConfig.h
 fi

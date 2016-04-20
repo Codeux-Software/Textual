@@ -167,7 +167,7 @@
 			case TDCFileTransferDialogTransferInitializingStatus:
 			{
 				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1012]", [self peerNickname])];
+					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1013]", [self peerNickname])];
 				} else {
 					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1004]", [self peerNickname])];
 				}
@@ -182,7 +182,7 @@
 			}
 			case TDCFileTransferDialogTransferIsListeningAsReceiverStatus:
 			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1013]", [self peerNickname])];
+				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1014]", [self peerNickname])];
 				
 				break;
 			}
@@ -196,7 +196,7 @@
 			case TDCFileTransferDialogTransferCompleteStatus:
 			{
 				if ([self isReceiving]) {
-					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1014]", [self peerNickname])];
+					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1015]", [self peerNickname])];
 				} else {
 					[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1006]", [self peerNickname])];
 				}
@@ -247,7 +247,7 @@
 			}
 			case TDCFileTransferDialogTransferConnectingStatus:
 			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1015]", [self peerNickname])];
+				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1016]", [self peerNickname])];
 				
 				break;
 			}
@@ -259,7 +259,7 @@
 			}
 			case TDCFileTransferDialogTransferWaitingForResumeAcceptStatus:
 			{
-				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1023]", [self peerNickname])];
+				[self.transferProgressTextField setStringValue:TXTLS(@"TDCFileTransferDialog[1012]", [self peerNickname])];
 
 				break;
 			}

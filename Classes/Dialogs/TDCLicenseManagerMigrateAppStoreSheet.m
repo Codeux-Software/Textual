@@ -208,7 +208,7 @@
 
 	[d setAllowedFileTypes:@[@"app"]];
 
-	[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
+	[d setPrompt:TXTLS(@"Prompts[0006]")];
 
 	[d setMessage:TXTLS(@"TLOLicenseManager[1008]")];
 

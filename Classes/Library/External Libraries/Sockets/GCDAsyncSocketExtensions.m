@@ -198,7 +198,7 @@
 
 							if (shortResult) {
 								if (issuerOrganization) {
-									builtResult = TXTLS(@"BasicLanguage[1229][4]", issuerOrganization);
+									builtResult = TXTLS(@"Prompts[1131][4]", issuerOrganization);
 								}
 							} else {
 								id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
@@ -220,7 +220,7 @@
 									subjectLocationState &&
 									subjectLocationCity)
 								{
-									builtResult = TXTLS(@"BasicLanguage[1229][3]",
+									builtResult = TXTLS(@"Prompts[1131][3]",
 														issuerOrganization,
 														subjectOrganization,
 														subjectLocationCity,

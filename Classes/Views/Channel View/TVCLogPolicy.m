@@ -158,18 +158,18 @@
 			_addItem([NSMenuItem separatorItem])
 
 			_addItem(
-			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1018]")
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1015]")
 									target:menuController()
 									action:@selector(copyLogAsHtml:)])
 
 			_addItem(
-			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1019]")
+			 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1016]")
 									target:menuController()
 									action:@selector(forceReloadTheme:)])
 
 			if (isWebKit2) {
 				_addItem(
-				 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1295]")
+				 [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1017]")
 										target:menuController()
 										action:@selector(openWebInspector:)])
 			} else {
@@ -317,10 +317,10 @@
 	NSString *applicationName = [RZWorkspace() nameOfApplicationToOpenURL:webpageURL];
 
 	BOOL openLink =
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1290][2]", [webpageURL absoluteString])
-									   title:TXTLS(@"BasicLanguage[1290][1]", applicationName)
-							   defaultButton:TXTLS(@"BasicLanguage[1290][3]")
-							 alternateButton:TXTLS(@"BasicLanguage[1009]")
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1114][2]", [webpageURL absoluteString])
+									   title:TXTLS(@"Prompts[1114][1]", applicationName)
+							   defaultButton:TXTLS(@"Prompts[0001]")
+							 alternateButton:TXTLS(@"Prompts[0002]")
 							  suppressionKey:@"open_non_http_url_warning"
 							 suppressionText:nil];
 

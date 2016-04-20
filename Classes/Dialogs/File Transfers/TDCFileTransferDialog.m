@@ -500,8 +500,9 @@
 		[d setCanCreateDirectories:YES];
 		[d setAllowsMultipleSelection:NO];
 		
-		[d setPrompt:TXTLS(@"BasicLanguage[1225]")];
-		[d setMessage:TXTLS(@"TDCFileTransferDialog[1021]")];
+		[d setPrompt:TXTLS(@"Prompts[0006]")];
+
+		[d setMessage:TXTLS(@"TDCFileTransferDialog[1023]")];
 		
 		[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 			if (result == NSModalResponseOK) {

@@ -216,9 +216,9 @@
 {
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
-										  body:TXTLS(@"BasicLanguage[1102][2]")
-										 title:TXTLS(@"BasicLanguage[1102][1]")
-								 defaultButton:TXTLS(@"BasicLanguage[1186]")
+										  body:TXTLS(@"Prompts[1105][2]")
+										 title:TXTLS(@"Prompts[1105][1]")
+								 defaultButton:TXTLS(@"Prompts[1040]")
 							   alternateButton:nil
 								   otherButton:nil];
 	} else {

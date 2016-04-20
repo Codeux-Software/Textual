@@ -207,7 +207,7 @@
 - (NSString *)entryCreationDateString
 {
 	if (self.entryCreationDate == nil) {
-		return TXTLS(@"BasicLanguage[1218]"); // "Unknown"
+		return TXTLS(@"BasicLanguage[1002]"); // "Unknown"
 	} else {
 		return TXFormatDateTimeStringToCommonFormat(self.entryCreationDate, NO);
 	}

@@ -225,10 +225,10 @@
 	IRCChannel *channel = [notification object];
 
 	[TLOPopupPrompts sheetWindowWithWindow:self.sheet
-									  body:TXTLS(@"BasicLanguage[1241][2]", [channel name])
-									 title:TXTLS(@"BasicLanguage[1241][1]")
-							 defaultButton:TXTLS(@"BasicLanguage[1241][3]")
-						   alternateButton:TXTLS(@"BasicLanguage[1241][4]")
+									  body:TXTLS(@"Prompts[1117][2]")
+									 title:TXTLS(@"Prompts[1117][1]")
+							 defaultButton:TXTLS(@"Prompts[0001]")
+						   alternateButton:TXTLS(@"Prompts[0002]")
 							   otherButton:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   if (buttonClicked == TLOPopupPromptReturnPrimaryType) {

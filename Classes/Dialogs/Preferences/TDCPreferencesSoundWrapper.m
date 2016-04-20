@@ -55,7 +55,7 @@ NSString * const TXEmptySoundAlertPreferenceValue = @"None";
 
 + (NSString *)localizedEmptySoundSelectionLabel
 {
-	return TXTLS(@"BasicLanguage[1234]");
+	return TXTLS(@"TDCPreferencesController[1011]");
 }
 
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
