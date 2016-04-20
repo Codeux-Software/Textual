@@ -7960,21 +7960,96 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		NSMutableArray *ary = [NSMutableArray array];
 		
 		for (IRCChannel *c in self.channels) {
-			if ([c isChannel]) {
-				if ([c isActive] == NO) {
-					if (c.config.autoJoin) {
-						[ary addObject:c];
-					}
+			if ([c isChannel] && [c isActive] == NO) {
+				if (c.config.autoJoin) {
+					[ary addObject:c];
 				}
 			}
 		}
-		
-		[self quickJoin:ary];
+
+		[self joinAutoJoinChannels:ary withKeys:NO];
+		[self joinAutoJoinChannels:ary withKeys:YES];
 		
 		/* Update status later. */
 		[self cancelPerformRequestsWithSelector:@selector(autojoinInProgress) object:nil]; // User might invoke -performAutojoin while timer is active
 
 		[self performSelector:@selector(updateAutoJoinStatus) withObject:nil afterDelay:25.0];
+	}
+}
+
+
+- (void)joinAutoJoinChannels:(NSArray *)channels withKeys:(BOOL)passKeys
+{
+	NSMutableString *channelList = [NSMutableString string];
+	NSMutableString *passwordList = [NSMutableString string];
+
+	NSInteger channelCount = 0;
+
+	for (IRCChannel *c in channels) {
+		if ([c status] != IRCChannelStatusParted) {
+			LogToConsole(@"Refusing to join %@ because of status: %ld", [c name], [c status]);
+
+			continue;
+		}
+
+		NSMutableString *previousChannelList = [channelList mutableCopy];
+		NSMutableString *previousPasswordList = [passwordList mutableCopy];
+
+		BOOL channelListEmpty = NSObjectIsEmpty(channelList);
+		BOOL passwordListEmpty = NSObjectIsEmpty(passwordList);
+
+		NSString *secretKey = [c secretKey];
+
+		if (NSObjectIsNotEmpty(secretKey)) {
+			if (passKeys == NO) {
+				continue;
+			}
+
+			if ( passwordListEmpty == NO) {
+				[passwordList appendString:@","];
+			}
+
+			[passwordList appendString:secretKey];
+		} else {
+			if (passKeys) {
+				continue;
+			}
+		}
+
+		if ( channelListEmpty == NO) {
+			[channelList appendString:@","];
+		}
+
+		[channelList appendString:[c name]];
+
+		[c setStatus:IRCChannelStatusJoining];
+
+		if (channelCount > [TPCPreferences autojoinMaxChannelJoins]) {
+			/* Send previous lists. */
+			if (NSObjectIsEmpty(previousPasswordList)) {
+				[self send:IRCPrivateCommandIndex("join"), previousChannelList, nil];
+			} else {
+				[self send:IRCPrivateCommandIndex("join"), previousChannelList, previousPasswordList, nil];
+			}
+
+			[channelList setString:[c name]];
+
+			if (NSObjectIsNotEmpty(secretKey)) {
+				[passwordList setString:secretKey];
+			}
+
+			channelCount = 1; // To match setString: statements up above.
+		} else {
+			channelCount += 1;
+		}
+	}
+
+	if (NSObjectIsNotEmpty(channelList)) {
+		if (NSObjectIsEmpty(passwordList)) {
+			[self send:IRCPrivateCommandIndex("join"), channelList, nil];
+		} else {
+			[self send:IRCPrivateCommandIndex("join"), channelList, passwordList, nil];
+		}
 	}
 }
 
@@ -8735,85 +8810,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSAssertReturn(self.isLoggedIn);
 
 	[self send:IRCPrivateCommandIndex("kick"), [channel name], nick, [TPCPreferences defaultKickMessage], nil];
-}
-
-- (void)quickJoin:(NSArray *)chans withKeys:(BOOL)passKeys
-{
-	NSAssertReturn(self.isLoggedIn);
-
-	NSMutableString *channelList = [NSMutableString string];
-	NSMutableString *passwordList = [NSMutableString string];
-
-	NSInteger channelCount = 0;
-
-	for (IRCChannel *c in chans) {
-		if ([c status] == IRCChannelStatusParted) {
-			NSMutableString *previousChannelList = [channelList mutableCopy];
-			NSMutableString *previousPasswordList = [passwordList mutableCopy];
-			
-			BOOL channelListEmpty = NSObjectIsEmpty(channelList);
-			BOOL passwordListEmpty = NSObjectIsEmpty(passwordList);
-			
-			NSString *secretKey = [c secretKey];
-
-			if (NSObjectIsNotEmpty(secretKey)) {
-				if (passKeys == NO) {
-					continue;
-				}
-				
-				if ( passwordListEmpty == NO) {
-					[passwordList appendString:@","];
-				}
-
-				[passwordList appendString:secretKey];
-			} else {
-				if (passKeys) {
-					continue;
-				}
-			}
-
-			if ( channelListEmpty == NO) {
-				[channelList appendString:@","];
-			}
-
-			[channelList appendString:[c name]];
-			
-			[c setStatus:IRCChannelStatusJoining];
-
-			if (channelCount > [TPCPreferences autojoinMaxChannelJoins]) {
-				/* Send previous lists. */
-				if (NSObjectIsEmpty(previousPasswordList)) {
-					[self send:IRCPrivateCommandIndex("join"), previousChannelList, nil];
-				} else {
-					[self send:IRCPrivateCommandIndex("join"), previousChannelList, previousPasswordList, nil];
-				}
-
-				[channelList setString:[c name]];
-
-				if (NSObjectIsNotEmpty(secretKey)) {
-					[passwordList setString:secretKey];
-				}
-
-				channelCount = 1; // To match setString: statements up above.
-			} else {
-				channelCount += 1;
-			}
-		}
-	}
-
-	if (NSObjectIsNotEmpty(channelList)) {
-		if (NSObjectIsEmpty(passwordList)) {
-			[self send:IRCPrivateCommandIndex("join"), channelList, nil];
-		} else {
-			[self send:IRCPrivateCommandIndex("join"), channelList, passwordList, nil];
-		}
-	}
-}
-
-- (void)quickJoin:(NSArray *)chans
-{
-	[self quickJoin:chans withKeys:NO];
-	[self quickJoin:chans withKeys:YES];
 }
 
 - (void)toggleAwayStatus:(BOOL)setAway
