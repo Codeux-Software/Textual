@@ -120,7 +120,8 @@
 			[self performBlockOnMainThread:^{
 				SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-				[panel setDefaultButtonTitle:TXTLS(@"BasicLanguage[1011]")];
+				[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
+
 				[panel setAlternateButtonTitle:nil];
 
 				[panel beginSheetForWindow:[NSApp mainWindow]

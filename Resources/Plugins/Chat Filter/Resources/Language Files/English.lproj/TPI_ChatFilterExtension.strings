@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,23 +35,8 @@
 
  *********************************************************************** */
 
-"TPI_ChatFilter[0001]" = "Filter “%@“";
-
 "TPI_ChatFilterExtension[0001]" = "Chat Filter";
 "TPI_ChatFilterExtension[0002]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“";
 "TPI_ChatFilterExtension[0003]" = "Performing action defined by the filter “%1$@“ against the user “%2$@“ in the channel “%3$@“";
 
-"TPI_ChatFilterEditFilterSheet[0001]" = "Channel Name";
-"TPI_ChatFilterEditFilterSheet[0002]" = "My Nickname";
-"TPI_ChatFilterEditFilterSheet[0003]" = "Network Name";
-"TPI_ChatFilterEditFilterSheet[0004]" = "Original Message";
-"TPI_ChatFilterEditFilterSheet[0005]" = "Server Address";
-"TPI_ChatFilterEditFilterSheet[0006]" = "Sender Hostmask";
-"TPI_ChatFilterEditFilterSheet[0007]" = "Sender Nickname";
-"TPI_ChatFilterEditFilterSheet[0008]" = "Sender Username";
-"TPI_ChatFilterEditFilterSheet[0009]" = "Sender Address";
-
-"TPI_ChatFilterEditFilterSheet[0010][1]" = "Are you sure that you want to delete this filter?";
-"TPI_ChatFilterEditFilterSheet[0010][2]" = "There is no undo and all data related to this filter will be erased.";
-"TPI_ChatFilterEditFilterSheet[0010][3]" = "Yes";
-"TPI_ChatFilterEditFilterSheet[0010][4]" = "No";
+"TPI_ChatFilterExtension[0004]" = "Filter “%@“";
