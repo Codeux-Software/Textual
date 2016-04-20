@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8164.2" systemVersion="15A244d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8164.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCHighlightEntrySheet">
@@ -32,7 +32,6 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="94" id="nPm-5S-cdY"/>
                         </constraints>
-                        <animations/>
                         <popUpButtonCell key="cell" type="push" title="Exclude" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" tag="2" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="308" id="305">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -47,7 +46,6 @@
                     </popUpButton>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="312">
                         <rect key="frame" x="120" y="91" width="79" height="17"/>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="the keyword" id="313">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -59,7 +57,6 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="87" id="txM-n6-h4c"/>
                         </constraints>
-                        <animations/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="in the channel" id="315">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -67,42 +64,24 @@
                         </textFieldCell>
                     </textField>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="316">
-                        <rect key="frame" x="113" y="59" width="304" height="26"/>
-                        <animations/>
-                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="317">
+                        <rect key="frame" x="113" y="58" width="304" height="26"/>
+                        <popUpButtonCell key="cell" type="push" title="All Channels" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="319" id="317">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" title="OtherViews" id="318">
                                 <items>
-                                    <menuItem title="All Channels" id="319"/>
+                                    <menuItem title="All Channels" state="on" id="319"/>
                                     <menuItem isSeparatorItem="YES" id="322"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
                         <accessibility description="Limit Highlight to Channel"/>
                     </popUpButton>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="205" y="88" width="209" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="bgs-dK-eW3"/>
-                        </constraints>
-                        <animations/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="the keyword" usesSingleLineMode="YES" id="311" customClass="TVCTextFieldWithValueValidationCell">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <accessibility description="Highlight Match Keyword"/>
-                        <connections>
-                            <outlet property="delegate" destination="-2" id="337"/>
-                        </connections>
-                    </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="323">
-                        <rect key="frame" x="226" y="14" width="97" height="32"/>
+                        <rect key="frame" x="226" y="13" width="97" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="85" id="vZV-OE-BYC"/>
                         </constraints>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="324">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -113,11 +92,10 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="325">
-                        <rect key="frame" x="323" y="14" width="97" height="32"/>
+                        <rect key="frame" x="323" y="13" width="97" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="85" id="0W9-T0-FSE"/>
                         </constraints>
-                        <animations/>
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="326">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -130,6 +108,21 @@ DQ
                             <action selector="ok:" target="-2" id="335"/>
                         </connections>
                     </button>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="310" customClass="TVCTextFieldWithValueValidation">
+                        <rect key="frame" x="205" y="88" width="209" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="bgs-dK-eW3"/>
+                        </constraints>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" usesSingleLineMode="YES" id="311" customClass="TVCTextFieldWithValueValidationCell">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <accessibility description="Highlight Match Keyword"/>
+                        <connections>
+                            <outlet property="delegate" destination="-2" id="337"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="304" firstAttribute="top" secondItem="303" secondAttribute="top" constant="20" symbolic="YES" id="8Ue-l8-Eye"/>
@@ -137,7 +130,7 @@ DQ
                     <constraint firstItem="310" firstAttribute="bottom" secondItem="304" secondAttribute="bottom" id="JdS-Jc-OWW"/>
                     <constraint firstItem="312" firstAttribute="baseline" secondItem="310" secondAttribute="baseline" id="Kh2-fk-ILh"/>
                     <constraint firstAttribute="trailing" secondItem="310" secondAttribute="trailing" constant="20" symbolic="YES" id="TAy-9k-0ne"/>
-                    <constraint firstItem="316" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="8" symbolic="YES" id="UD9-t2-G7q"/>
+                    <constraint firstItem="316" firstAttribute="top" secondItem="312" secondAttribute="bottom" constant="9" id="UD9-t2-G7q"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="314" secondAttribute="leading" id="V7b-IE-ocg"/>
                     <constraint firstItem="325" firstAttribute="baseline" secondItem="323" secondAttribute="baseline" id="Vh4-nG-WCx"/>
                     <constraint firstItem="316" firstAttribute="leading" secondItem="314" secondAttribute="trailing" constant="8" symbolic="YES" id="YmC-KU-NA3"/>
@@ -149,7 +142,6 @@ DQ
                     <constraint firstItem="304" firstAttribute="leading" secondItem="303" secondAttribute="leading" constant="20" symbolic="YES" id="vVj-mk-k6a"/>
                     <constraint firstItem="312" firstAttribute="leading" secondItem="304" secondAttribute="trailing" constant="8" symbolic="YES" id="xXJ-9S-Z1h"/>
                 </constraints>
-                <animations/>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="336"/>

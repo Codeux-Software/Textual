@@ -883,7 +883,7 @@ Gw
                         <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ujo-Zq-Cf1">
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -932,7 +932,7 @@ Gw
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2599">
                     <rect key="frame" x="127" y="30" width="281" height="14"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These options target version 1.2 of ZNC and later." id="2600">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="These options target version 1.2 of ZNC and later." id="2600">
                         <font key="font" metaFont="smallSystemBold"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -976,7 +976,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1796">
-                    <rect key="frame" x="83" y="24" width="30" height="23"/>
+                    <rect key="frame" x="84" y="24" width="30" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="7lQ-aI-3GP"/>
                     </constraints>
@@ -1094,7 +1094,7 @@ Gw
                 <constraint firstItem="1793" firstAttribute="leading" secondItem="1794" secondAttribute="leading" id="Dha-v7-Elv"/>
                 <constraint firstItem="1796" firstAttribute="top" secondItem="1795" secondAttribute="top" id="K85-TQ-VXh"/>
                 <constraint firstItem="1793" firstAttribute="centerX" secondItem="1738" secondAttribute="centerX" id="TQZ-eV-n5G"/>
-                <constraint firstItem="1796" firstAttribute="leading" secondItem="1738" secondAttribute="leading" constant="83" id="riL-7x-LJ2"/>
+                <constraint firstItem="1796" firstAttribute="leading" secondItem="1794" secondAttribute="trailing" id="fcm-AY-gL1"/>
                 <constraint firstItem="1796" firstAttribute="top" secondItem="1794" secondAttribute="top" id="rrQ-tO-mqZ"/>
                 <constraint firstItem="1793" firstAttribute="trailing" secondItem="1795" secondAttribute="trailing" id="xGC-jw-RTO"/>
             </constraints>
@@ -1133,7 +1133,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2447">
-                    <rect key="frame" x="83" y="24" width="30" height="23"/>
+                    <rect key="frame" x="84" y="24" width="30" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="xRJ-d1-aVe"/>
                     </constraints>
@@ -1232,12 +1232,12 @@ Gw
                 <constraint firstItem="2447" firstAttribute="bottom" secondItem="2449" secondAttribute="bottom" id="JeB-lw-RaU"/>
                 <constraint firstItem="2449" firstAttribute="top" secondItem="2450" secondAttribute="bottom" constant="8" symbolic="YES" id="MnF-OW-BB6"/>
                 <constraint firstItem="2450" firstAttribute="centerX" secondItem="2445" secondAttribute="centerX" id="QIC-47-BcF"/>
+                <constraint firstItem="2447" firstAttribute="leading" secondItem="2449" secondAttribute="trailing" id="Y3M-ct-QaK"/>
                 <constraint firstItem="2447" firstAttribute="top" secondItem="2449" secondAttribute="top" id="ZgH-aH-P6w"/>
                 <constraint firstItem="2449" firstAttribute="leading" secondItem="2450" secondAttribute="leading" id="b8w-f0-UII"/>
                 <constraint firstItem="2450" firstAttribute="trailing" secondItem="2448" secondAttribute="trailing" id="kCm-3u-bcf"/>
                 <constraint firstItem="2450" firstAttribute="top" secondItem="2445" secondAttribute="top" constant="26" id="pQz-Md-S0m"/>
                 <constraint firstAttribute="bottom" secondItem="2449" secondAttribute="bottom" constant="25" id="pR0-Rw-OLg"/>
-                <constraint firstItem="2447" firstAttribute="leading" secondItem="2445" secondAttribute="leading" constant="83" id="qDk-YZ-7mJ"/>
                 <constraint firstItem="2448" firstAttribute="top" secondItem="2447" secondAttribute="top" id="u9J-RO-yds"/>
                 <constraint firstItem="2450" firstAttribute="leading" secondItem="2445" secondAttribute="leading" constant="54" id="uWX-aV-Mxo"/>
             </constraints>
@@ -1350,7 +1350,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1845">
-                    <rect key="frame" x="83" y="24" width="30" height="23"/>
+                    <rect key="frame" x="84" y="24" width="30" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="KNr-DJ-KBv"/>
                     </constraints>
@@ -1368,12 +1368,12 @@ Gw
                 <constraint firstItem="2358" firstAttribute="leading" secondItem="1817" secondAttribute="leading" constant="54" id="5bF-9i-gSz"/>
                 <constraint firstItem="2358" firstAttribute="top" secondItem="1817" secondAttribute="top" constant="25" id="9z4-Kb-aMe"/>
                 <constraint firstItem="1842" firstAttribute="trailing" secondItem="1844" secondAttribute="trailing" id="BbI-5J-oM8"/>
-                <constraint firstItem="1845" firstAttribute="leading" secondItem="1817" secondAttribute="leading" constant="83" id="F7R-vC-5bx"/>
                 <constraint firstItem="1843" firstAttribute="baseline" secondItem="1844" secondAttribute="baseline" id="Ki1-QA-ec8"/>
                 <constraint firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" constant="25" id="NnW-gF-U0A"/>
                 <constraint firstItem="1842" firstAttribute="leading" secondItem="1843" secondAttribute="leading" id="Nrs-R8-DJM"/>
                 <constraint firstItem="1842" firstAttribute="leading" secondItem="2358" secondAttribute="leading" id="UaA-6j-V21"/>
                 <constraint firstItem="1845" firstAttribute="bottom" secondItem="1843" secondAttribute="bottom" id="b8z-xk-ov5"/>
+                <constraint firstItem="1845" firstAttribute="leading" secondItem="1843" secondAttribute="trailing" id="gK4-AG-7rt"/>
                 <constraint firstItem="1842" firstAttribute="top" secondItem="2358" secondAttribute="bottom" constant="8" symbolic="YES" id="o17-Ew-zWm"/>
                 <constraint firstItem="1843" firstAttribute="top" secondItem="1845" secondAttribute="top" id="s8q-wM-N88"/>
                 <constraint firstItem="1842" firstAttribute="centerX" secondItem="1817" secondAttribute="centerX" id="uSN-bT-G7e"/>
@@ -1697,13 +1697,13 @@ Gw
                         <constraint firstItem="1903" firstAttribute="leading" secondItem="1901" secondAttribute="leading" id="zHN-he-cYC"/>
                     </constraints>
                 </customView>
-                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CGs-VH-G07">
+                <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="CGs-VH-G07">
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="hIR-WT-lAK">
+                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.80332623106060608" green="0.022336987241245485" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1913,7 +1913,7 @@ Gw
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CGo-eo-J2e">
                     <rect key="frame" x="18" y="260" width="376" height="17"/>
-                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="Do not send more than X number of commands in Y seconds." id="XQt-eN-ufQ">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" title="Do not send more than X number of commands in Y seconds." id="XQt-eN-ufQ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

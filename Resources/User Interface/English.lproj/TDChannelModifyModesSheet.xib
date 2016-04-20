@@ -395,6 +395,9 @@
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="244">
                         <rect key="frame" x="12" y="59" width="295" height="5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="295" id="odm-dp-O25"/>
+                        </constraints>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -436,6 +439,7 @@ DQ
                     <constraint firstAttribute="bottom" secondItem="64" secondAttribute="bottom" constant="20" symbolic="YES" id="4Y5-te-pde"/>
                     <constraint firstItem="197" firstAttribute="leading" secondItem="195" secondAttribute="leading" id="5C9-2x-Sr0"/>
                     <constraint firstItem="171" firstAttribute="leading" secondItem="172" secondAttribute="leading" id="9VR-Of-q0q"/>
+                    <constraint firstItem="244" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="C9c-gD-HOc"/>
                     <constraint firstItem="194" firstAttribute="top" secondItem="192" secondAttribute="bottom" constant="13" id="DfD-ZG-e0p"/>
                     <constraint firstItem="63" firstAttribute="trailing" secondItem="65" secondAttribute="trailing" id="EWg-fv-cUv"/>
                     <constraint firstItem="63" firstAttribute="baseline" secondItem="83" secondAttribute="baseline" constant="-1" id="Gow-aM-93x"/>
@@ -446,9 +450,7 @@ DQ
                     <constraint firstItem="171" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="Pzg-fw-sbr"/>
                     <constraint firstItem="192" firstAttribute="leading" secondItem="172" secondAttribute="leading" id="Qra-a5-8Sd"/>
                     <constraint firstItem="172" firstAttribute="top" secondItem="171" secondAttribute="bottom" constant="13" id="Tog-5H-4tw"/>
-                    <constraint firstItem="244" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="12" id="UYQ-T4-DDP"/>
                     <constraint firstItem="65" firstAttribute="leading" secondItem="64" secondAttribute="trailing" constant="12" symbolic="YES" id="Xqq-v8-bP3"/>
-                    <constraint firstAttribute="trailing" secondItem="244" secondAttribute="trailing" constant="12" id="ZFQ-9U-FxZ"/>
                     <constraint firstItem="63" firstAttribute="top" secondItem="62" secondAttribute="bottom" constant="5" id="ejG-eE-ohZ"/>
                     <constraint firstAttribute="trailing" secondItem="62" secondAttribute="trailing" constant="20" symbolic="YES" id="fsS-eB-dQ6"/>
                     <constraint firstItem="64" firstAttribute="baseline" secondItem="65" secondAttribute="baseline" id="gs0-4M-cEK"/>

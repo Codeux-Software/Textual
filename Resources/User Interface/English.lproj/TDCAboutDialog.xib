@@ -32,7 +32,7 @@
                         <accessibility description="Logo Image"/>
                     </imageView>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="58" y="90" width="102" height="18"/>
+                        <rect key="frame" x="80" y="90" width="59" height="18"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Textual" id="6">
                             <font key="font" metaFont="systemBold" size="14"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -40,7 +40,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7">
-                        <rect key="frame" x="26" y="68" width="166" height="14"/>
+                        <rect key="frame" x="34" y="68" width="150" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Version 1.0.0 (Build #2335)" id="8">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -80,17 +80,16 @@ Gw
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="MDL-oh-scd" secondAttribute="trailing" id="4s6-UM-qYJ"/>
-                    <constraint firstItem="7" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="28" id="5Yf-bW-iQV"/>
                     <constraint firstItem="40" firstAttribute="centerX" secondItem="7" secondAttribute="centerX" id="7Cy-qY-XZK"/>
+                    <constraint firstItem="3" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="Gmx-1B-Kee"/>
                     <constraint firstItem="5" firstAttribute="top" secondItem="3" secondAttribute="bottom" constant="18" id="LqP-v5-xwR"/>
-                    <constraint firstItem="3" firstAttribute="leading" secondItem="5" secondAttribute="leading" id="QfP-c9-8Cg"/>
                     <constraint firstAttribute="bottom" secondItem="MDL-oh-scd" secondAttribute="bottom" id="S9R-MU-Zvh"/>
                     <constraint firstItem="3" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="TSu-8F-A7d"/>
                     <constraint firstAttribute="bottom" secondItem="40" secondAttribute="bottom" constant="20" symbolic="YES" id="VzH-QN-2U2"/>
                     <constraint firstItem="40" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="cgP-eI-aZl"/>
+                    <constraint firstItem="7" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="ckB-g5-Adn"/>
                     <constraint firstItem="7" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="eHu-4Q-o7e"/>
-                    <constraint firstItem="3" firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="pgv-Vg-Vkb"/>
-                    <constraint firstItem="7" firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="z7T-S8-UJB"/>
+                    <constraint firstItem="5" firstAttribute="centerX" secondItem="2" secondAttribute="centerX" id="gpD-Wb-ugP"/>
                 </constraints>
             </view>
             <connections>

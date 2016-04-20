@@ -75,6 +75,9 @@ DQ
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="4TH-0i-MkY">
                         <rect key="frame" x="12" y="59" width="301" height="5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="301" id="CdG-ff-goS"/>
+                        </constraints>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -95,18 +98,16 @@ DQ
                     </segmentedControl>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="4TH-0i-MkY" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="12" id="1oU-wq-hfV"/>
                     <constraint firstItem="187" firstAttribute="top" secondItem="185" secondAttribute="bottom" id="5AD-mn-qgo"/>
-                    <constraint firstAttribute="trailing" secondItem="4TH-0i-MkY" secondAttribute="trailing" constant="12" id="6yS-ag-bSY"/>
                     <constraint firstItem="185" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" id="8vf-wM-e5J"/>
                     <constraint firstItem="RKI-lY-4zM" firstAttribute="leading" secondItem="p4S-DM-ZI2" secondAttribute="trailing" constant="9" id="Equ-64-l9C"/>
                     <constraint firstItem="RKI-lY-4zM" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="IbY-Qw-l7n"/>
+                    <constraint firstItem="4TH-0i-MkY" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="Q7c-g2-WTK"/>
                     <constraint firstItem="187" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="dqx-Ws-uBR"/>
                     <constraint firstItem="4TH-0i-MkY" firstAttribute="top" secondItem="187" secondAttribute="bottom" constant="-1" id="h5f-YL-65X"/>
                     <constraint firstAttribute="trailing" secondItem="RKI-lY-4zM" secondAttribute="trailing" constant="23" id="irU-vt-YTa"/>
                     <constraint firstItem="185" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="90" id="p4t-Ey-aUe"/>
                     <constraint firstAttribute="trailing" secondItem="187" secondAttribute="trailing" id="ryd-02-ZcK"/>
-                    <constraint firstItem="p4S-DM-ZI2" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="tMA-kd-6nt"/>
                     <constraint firstAttribute="bottom" secondItem="RKI-lY-4zM" secondAttribute="bottom" constant="20" id="v4F-ey-NcZ"/>
                     <constraint firstAttribute="bottom" secondItem="p4S-DM-ZI2" secondAttribute="bottom" constant="20" id="wYh-XI-5ZX"/>
                     <constraint firstItem="p4S-DM-ZI2" firstAttribute="top" secondItem="4TH-0i-MkY" secondAttribute="bottom" constant="20" id="xLK-HX-RDd"/>
@@ -205,6 +206,9 @@ DQ
                 </button>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="312">
                     <rect key="frame" x="12" y="187" width="301" height="5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="301" id="lr6-Ke-ahF"/>
+                    </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
@@ -270,7 +274,7 @@ DQ
                 <constraint firstItem="281" firstAttribute="top" secondItem="111" secondAttribute="bottom" constant="13" id="tN4-ep-Fcc"/>
                 <constraint firstItem="124" firstAttribute="trailing" secondItem="123" secondAttribute="trailing" id="tsV-O4-sNc"/>
                 <constraint firstItem="111" firstAttribute="top" secondItem="279" secondAttribute="bottom" constant="13" id="u5r-nd-8QH"/>
-                <constraint firstItem="312" firstAttribute="leading" secondItem="109" secondAttribute="leading" constant="12" id="xmT-Q0-4tG"/>
+                <constraint firstItem="312" firstAttribute="centerX" secondItem="109" secondAttribute="centerX" id="z5p-bq-26v"/>
             </constraints>
             <point key="canvasLocation" x="205.5" y="339"/>
         </view>
