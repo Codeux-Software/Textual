@@ -3,7 +3,6 @@
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TPIWikiStyleLinkParser">
@@ -23,9 +22,6 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1">
             <rect key="frame" x="0.0" y="0.0" width="588" height="446"/>
-            <userGuides>
-                <userLayoutGuide location="441" affinity="minY"/>
-            </userGuides>
             <subviews>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="60">
                     <rect key="frame" x="61" y="296" width="467" height="120"/>
@@ -36,21 +32,21 @@
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="61">
                                 <rect key="frame" x="0.0" y="0.0" width="467" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="467" height="120"/>
                                 <size key="maxSize" width="488" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="This addon replaces Wiki markup title blocks, similar to ">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="[[&lt;title&gt;]]">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="13" name=".AppleSystemUIFontBold"/>
                                             <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -63,14 +59,14 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
 
 </string>
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" metaFont="system"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="Title blocks that are replaced are only visible to you.">
                                         <attributes>
-                                            <color key="NSColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="13" name=".AppleSystemUIFontBold"/>
                                             <font key="NSOriginalFont" size="13" name=".AppleSystemUIFontBold"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
@@ -211,15 +207,15 @@ Each channel is assigned a “Link Prefix” which is the URL prepended to the t
                 <constraint firstItem="273" firstAttribute="leading" secondItem="284" secondAttribute="leading" id="Lcf-fb-BR0"/>
                 <constraint firstItem="284" firstAttribute="top" secondItem="273" secondAttribute="bottom" constant="8" symbolic="YES" id="NdQ-pP-7AQ"/>
                 <constraint firstItem="68" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="49" id="Pue-oj-1MS"/>
+                <constraint firstItem="286" firstAttribute="bottom" secondItem="284" secondAttribute="bottom" id="Qht-i9-Lxc"/>
                 <constraint firstItem="60" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="61" id="Qwf-8t-mVI"/>
-                <constraint firstItem="284" firstAttribute="baseline" secondItem="286" secondAttribute="baseline" id="R9P-NX-uPJ"/>
                 <constraint firstItem="273" firstAttribute="top" secondItem="68" secondAttribute="bottom" constant="8" symbolic="YES" id="TUc-iM-2d5"/>
                 <constraint firstItem="64" firstAttribute="top" secondItem="60" secondAttribute="bottom" constant="8" symbolic="YES" id="Taf-Ox-BPO"/>
                 <constraint firstItem="60" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="YnO-Bm-phb"/>
                 <constraint firstItem="273" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="47" id="aYl-YB-IJi"/>
                 <constraint firstAttribute="bottom" secondItem="284" secondAttribute="bottom" constant="30" id="crk-i5-yrb"/>
                 <constraint firstItem="60" firstAttribute="top" secondItem="1" secondAttribute="top" constant="30" id="jGq-yp-ByY"/>
-                <constraint firstItem="284" firstAttribute="firstBaseline" secondItem="286" secondAttribute="firstBaseline" id="jXh-AL-t1z"/>
+                <constraint firstItem="286" firstAttribute="top" secondItem="284" secondAttribute="top" id="ndf-ZJ-85f"/>
                 <constraint firstItem="68" firstAttribute="top" secondItem="64" secondAttribute="bottom" constant="14" id="uzQ-tN-oSt"/>
             </constraints>
             <point key="canvasLocation" x="593" y="460"/>
