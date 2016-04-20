@@ -192,7 +192,7 @@
 
 - (NSString *)filterDescription
 {
-	return TPILocalizedString(@"TPI_ChatFilter[0001]", [self filterTitle]);
+	return TPILocalizedString(@"TPI_ChatFilterExtension[0004]", [self filterTitle]);
 }
 
 @end
