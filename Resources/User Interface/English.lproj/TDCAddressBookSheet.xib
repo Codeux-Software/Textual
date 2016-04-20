@@ -39,6 +39,9 @@
                 <subviews>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="539">
                         <rect key="frame" x="18" y="228" width="333" height="5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="333" id="JkK-ya-pfX"/>
+                        </constraints>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -158,6 +161,9 @@ DQ
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </clipView>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="323" id="bjz-39-PqC"/>
+                        </constraints>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gki-G1-LfW">
                             <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                             <autoresizingMask key="autoresizingMask"/>
@@ -195,10 +201,10 @@ DQ
                     <constraint firstItem="530" firstAttribute="baseline" secondItem="529" secondAttribute="baseline" id="5TE-1o-2Bb"/>
                     <constraint firstItem="cib-aW-lDk" firstAttribute="centerX" secondItem="522" secondAttribute="centerX" id="6px-w5-hqR"/>
                     <constraint firstItem="541" firstAttribute="leading" secondItem="522" secondAttribute="leading" constant="16" id="78W-k0-oEv"/>
-                    <constraint firstItem="539" firstAttribute="leading" secondItem="522" secondAttribute="leading" constant="18" id="7OK-rq-HMu"/>
                     <constraint firstItem="539" firstAttribute="trailing" secondItem="566" secondAttribute="trailing" id="8be-Ag-J3c"/>
                     <constraint firstItem="540" firstAttribute="leading" secondItem="541" secondAttribute="trailing" constant="8" symbolic="YES" id="BRT-6z-UXD"/>
                     <constraint firstItem="cib-aW-lDk" firstAttribute="top" secondItem="566" secondAttribute="bottom" constant="18" id="CND-X2-iht"/>
+                    <constraint firstItem="539" firstAttribute="centerX" secondItem="522" secondAttribute="centerX" id="Eyr-Rp-gM2"/>
                     <constraint firstItem="566" firstAttribute="top" secondItem="563" secondAttribute="bottom" constant="18" id="HPr-d0-cZi"/>
                     <constraint firstItem="540" firstAttribute="top" secondItem="522" secondAttribute="top" constant="20" symbolic="YES" id="IU2-n2-Fue"/>
                     <constraint firstItem="531" firstAttribute="top" secondItem="cib-aW-lDk" secondAttribute="bottom" constant="18" id="LD7-yH-xnD"/>
@@ -207,13 +213,11 @@ DQ
                     <constraint firstItem="540" firstAttribute="baseline" secondItem="541" secondAttribute="baseline" constant="-1" id="R15-96-WrE"/>
                     <constraint firstAttribute="trailing" secondItem="529" secondAttribute="trailing" constant="20" symbolic="YES" id="T2U-sC-OFF"/>
                     <constraint firstItem="563" firstAttribute="top" secondItem="539" secondAttribute="bottom" constant="18" id="WYl-yw-Thm"/>
-                    <constraint firstItem="cib-aW-lDk" firstAttribute="centerX" secondItem="566" secondAttribute="centerX" id="Xst-H4-awN"/>
                     <constraint firstItem="563" firstAttribute="leading" secondItem="522" secondAttribute="leading" constant="29" id="afm-L6-UoA"/>
                     <constraint firstItem="566" firstAttribute="leading" secondItem="531" secondAttribute="leading" id="eMH-RC-67j"/>
                     <constraint firstItem="566" firstAttribute="leading" secondItem="539" secondAttribute="leading" id="m1B-Qr-LlP"/>
                     <constraint firstAttribute="trailing" secondItem="540" secondAttribute="trailing" constant="16" id="mMG-EG-2oB"/>
                     <constraint firstItem="539" firstAttribute="top" secondItem="540" secondAttribute="bottom" constant="18" id="qrc-NA-9o4"/>
-                    <constraint firstItem="cib-aW-lDk" firstAttribute="leading" secondItem="522" secondAttribute="leading" constant="23" id="tpB-i8-FrX"/>
                     <constraint firstItem="529" firstAttribute="leading" secondItem="530" secondAttribute="trailing" constant="12" symbolic="YES" id="xPS-99-XYL"/>
                 </constraints>
             </view>
@@ -230,11 +234,6 @@ DQ
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="526" height="422"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <userGuides>
-                    <userLayoutGuide location="215" affinity="minY"/>
-                    <userLayoutGuide location="215" affinity="minY"/>
-                    <userLayoutGuide location="264" affinity="minX"/>
-                </userGuides>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
                         <rect key="frame" x="93" y="380" width="413" height="22"/>
@@ -313,6 +312,9 @@ DQ
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="314">
                         <rect key="frame" x="38" y="275" width="450" height="5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="450" id="6qa-Fy-fTC"/>
+                        </constraints>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
@@ -474,6 +476,7 @@ DQ
                     <constraint firstItem="476" firstAttribute="baseline" secondItem="479" secondAttribute="baseline" id="IBa-TA-kGg"/>
                     <constraint firstItem="482" firstAttribute="leading" secondItem="480" secondAttribute="leading" id="IP6-C5-0Xe"/>
                     <constraint firstItem="296" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="JST-eo-Rn2"/>
+                    <constraint firstItem="314" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="K0I-XJ-6Ix"/>
                     <constraint firstAttribute="trailing" secondItem="298" secondAttribute="trailing" constant="20" symbolic="YES" id="Ney-ZY-meW"/>
                     <constraint firstItem="485" firstAttribute="baseline" secondItem="484" secondAttribute="baseline" id="Q90-dv-YnK"/>
                     <constraint firstItem="479" firstAttribute="top" secondItem="480" secondAttribute="bottom" constant="14" id="Sd9-rf-MIH"/>
@@ -488,7 +491,6 @@ DQ
                     <constraint firstItem="636" firstAttribute="leading" secondItem="632" secondAttribute="leading" id="gBh-53-Csn"/>
                     <constraint firstItem="302" firstAttribute="trailing" secondItem="594" secondAttribute="trailing" id="gLt-VL-8jX"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="hi2-A9-vwX"/>
-                    <constraint firstItem="314" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="38" id="iSb-70-ipE"/>
                     <constraint firstItem="314" firstAttribute="top" secondItem="309" secondAttribute="bottom" constant="18" id="jCP-Ku-yxu"/>
                     <constraint firstItem="298" firstAttribute="leading" secondItem="296" secondAttribute="trailing" constant="8" symbolic="YES" id="kZO-a5-URC"/>
                     <constraint firstItem="300" firstAttribute="leading" secondItem="594" secondAttribute="trailing" constant="6" id="pGp-Ox-fW2"/>
