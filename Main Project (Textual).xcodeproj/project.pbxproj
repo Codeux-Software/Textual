@@ -459,48 +459,6 @@
 		4C361B1D1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */; };
 		4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C38526319721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C3BDF7B1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF7A1CC6674A00246C00 /* TDCAboutDialog.strings */; };
-		4C3BDF7C1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF7A1CC6674A00246C00 /* TDCAboutDialog.strings */; };
-		4C3BDF7D1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF7A1CC6674A00246C00 /* TDCAboutDialog.strings */; };
-		4C3BDF891CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF881CC667AC00246C00 /* TDCServerChannelListDialog.strings */; };
-		4C3BDF8A1CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF881CC667AC00246C00 /* TDCServerChannelListDialog.strings */; };
-		4C3BDF8B1CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF881CC667AC00246C00 /* TDCServerChannelListDialog.strings */; };
-		4C3BDF8D1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF8C1CC667E600246C00 /* TDChannelInviteSheet.strings */; };
-		4C3BDF8E1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF8C1CC667E600246C00 /* TDChannelInviteSheet.strings */; };
-		4C3BDF8F1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF8C1CC667E600246C00 /* TDChannelInviteSheet.strings */; };
-		4C3BDF911CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF901CC6680000246C00 /* TDCServerPropertiesSheet.strings */; };
-		4C3BDF921CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF901CC6680000246C00 /* TDCServerPropertiesSheet.strings */; };
-		4C3BDF931CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF901CC6680000246C00 /* TDCServerPropertiesSheet.strings */; };
-		4C3BDF951CC668C100246C00 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF941CC668C100246C00 /* TDCPreferencesController.strings */; };
-		4C3BDF961CC668C100246C00 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF941CC668C100246C00 /* TDCPreferencesController.strings */; };
-		4C3BDF971CC668C100246C00 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF941CC668C100246C00 /* TDCPreferencesController.strings */; };
-		4C3BDF991CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF981CC668FA00246C00 /* TDCFileTransferDialog.strings */; };
-		4C3BDF9A1CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF981CC668FA00246C00 /* TDCFileTransferDialog.strings */; };
-		4C3BDF9B1CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF981CC668FA00246C00 /* TDCFileTransferDialog.strings */; };
-		4C3BDF9D1CC6693300246C00 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF9C1CC6693300246C00 /* TLOLicenseManager.strings */; };
-		4C3BDF9E1CC6693300246C00 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF9C1CC6693300246C00 /* TLOLicenseManager.strings */; };
-		4C3BDF9F1CC6693300246C00 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDF9C1CC6693300246C00 /* TLOLicenseManager.strings */; };
-		4C3BDFA11CC6699000246C00 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA01CC6699000246C00 /* TVCMainWindow.strings */; };
-		4C3BDFA21CC6699000246C00 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA01CC6699000246C00 /* TVCMainWindow.strings */; };
-		4C3BDFA31CC6699000246C00 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA01CC6699000246C00 /* TVCMainWindow.strings */; };
-		4C3BDFA51CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA41CC669B100246C00 /* TDChannelBanListSheet.strings */; };
-		4C3BDFA61CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA41CC669B100246C00 /* TDChannelBanListSheet.strings */; };
-		4C3BDFA71CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA41CC669B100246C00 /* TDChannelBanListSheet.strings */; };
-		4C3BDFA91CC669C900246C00 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA81CC669C900246C00 /* IRC.strings */; };
-		4C3BDFAA1CC669C900246C00 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA81CC669C900246C00 /* IRC.strings */; };
-		4C3BDFAB1CC669C900246C00 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFA81CC669C900246C00 /* IRC.strings */; };
-		4C3BDFAD1CC669D700246C00 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFAC1CC669D700246C00 /* Prompts.strings */; };
-		4C3BDFAE1CC669D700246C00 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFAC1CC669D700246C00 /* Prompts.strings */; };
-		4C3BDFAF1CC669D700246C00 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFAC1CC669D700246C00 /* Prompts.strings */; };
-		4C3BDFB11CC66BEB00246C00 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB01CC66BEB00246C00 /* Notifications.strings */; };
-		4C3BDFB21CC66BEB00246C00 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB01CC66BEB00246C00 /* Notifications.strings */; };
-		4C3BDFB31CC66BEB00246C00 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB01CC66BEB00246C00 /* Notifications.strings */; };
-		4C3BDFB51CC66C3C00246C00 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB41CC66C3C00246C00 /* OffTheRecord.strings */; };
-		4C3BDFB61CC66C3C00246C00 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB41CC66C3C00246C00 /* OffTheRecord.strings */; };
-		4C3BDFB71CC66C3C00246C00 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFB41CC66C3C00246C00 /* OffTheRecord.strings */; };
-		4C3BDFBD1CC66C9300246C00 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFBC1CC66C9300246C00 /* Accessibility.strings */; };
-		4C3BDFBE1CC66C9300246C00 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFBC1CC66C9300246C00 /* Accessibility.strings */; };
-		4C3BDFBF1CC66C9300246C00 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3BDFBC1CC66C9300246C00 /* Accessibility.strings */; };
 		4C3E729717C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3E729817C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -656,9 +614,6 @@
 		4C5BA45416F1302F00A96CA2 /* TXGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF595158E99520026668C /* TXGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45516F1302F00A96CA2 /* TXMasterController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF596158E99520026668C /* TXMasterController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA45616F1302F00A96CA2 /* TXMenuController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF597158E99520026668C /* TXMenuController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BAEAF1AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */; };
-		4C5BAEB01AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */; };
-		4C5BAEB11AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */; };
 		4C5E4D1818260131001F3E6B /* TVCLogControllerHistoricLogFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FA197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5FB0FB197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1070,6 +1025,54 @@
 		4CB9980917C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CB9980A17C39E83008F56D7 /* THOUnicodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */; };
 		4CBBD1A516E3570800D2FEFE /* TVCMemberListUserInfoPopover.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CBC76AD1CC72B5100484A13 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768D1CC72B5100484A13 /* Accessibility.strings */; };
+		4CBC76AE1CC72B5100484A13 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768D1CC72B5100484A13 /* Accessibility.strings */; };
+		4CBC76AF1CC72B5100484A13 /* Accessibility.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768D1CC72B5100484A13 /* Accessibility.strings */; };
+		4CBC76B01CC72B5100484A13 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768F1CC72B5100484A13 /* BasicLanguage.strings */; };
+		4CBC76B11CC72B5100484A13 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768F1CC72B5100484A13 /* BasicLanguage.strings */; };
+		4CBC76B21CC72B5100484A13 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC768F1CC72B5100484A13 /* BasicLanguage.strings */; };
+		4CBC76B31CC72B5100484A13 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76911CC72B5100484A13 /* IRC.strings */; };
+		4CBC76B41CC72B5100484A13 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76911CC72B5100484A13 /* IRC.strings */; };
+		4CBC76B51CC72B5100484A13 /* IRC.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76911CC72B5100484A13 /* IRC.strings */; };
+		4CBC76B61CC72B5100484A13 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76931CC72B5100484A13 /* Notifications.strings */; };
+		4CBC76B71CC72B5100484A13 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76931CC72B5100484A13 /* Notifications.strings */; };
+		4CBC76B81CC72B5100484A13 /* Notifications.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76931CC72B5100484A13 /* Notifications.strings */; };
+		4CBC76B91CC72B5100484A13 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76951CC72B5100484A13 /* OffTheRecord.strings */; };
+		4CBC76BA1CC72B5100484A13 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76951CC72B5100484A13 /* OffTheRecord.strings */; };
+		4CBC76BB1CC72B5100484A13 /* OffTheRecord.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76951CC72B5100484A13 /* OffTheRecord.strings */; };
+		4CBC76BC1CC72B5100484A13 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76971CC72B5100484A13 /* Prompts.strings */; };
+		4CBC76BD1CC72B5100484A13 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76971CC72B5100484A13 /* Prompts.strings */; };
+		4CBC76BE1CC72B5100484A13 /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76971CC72B5100484A13 /* Prompts.strings */; };
+		4CBC76BF1CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76991CC72B5100484A13 /* SecureTransportErrorCodes.strings */; };
+		4CBC76C01CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76991CC72B5100484A13 /* SecureTransportErrorCodes.strings */; };
+		4CBC76C11CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76991CC72B5100484A13 /* SecureTransportErrorCodes.strings */; };
+		4CBC76C21CC72B5100484A13 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */; };
+		4CBC76C31CC72B5100484A13 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */; };
+		4CBC76C41CC72B5100484A13 /* TDCAboutDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */; };
+		4CBC76C51CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */; };
+		4CBC76C61CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */; };
+		4CBC76C71CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */; };
+		4CBC76C81CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769F1CC72B5100484A13 /* TDChannelBanListSheet.strings */; };
+		4CBC76C91CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769F1CC72B5100484A13 /* TDChannelBanListSheet.strings */; };
+		4CBC76CA1CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC769F1CC72B5100484A13 /* TDChannelBanListSheet.strings */; };
+		4CBC76CB1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A11CC72B5100484A13 /* TDChannelInviteSheet.strings */; };
+		4CBC76CC1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A11CC72B5100484A13 /* TDChannelInviteSheet.strings */; };
+		4CBC76CD1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A11CC72B5100484A13 /* TDChannelInviteSheet.strings */; };
+		4CBC76CE1CC72B5100484A13 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */; };
+		4CBC76CF1CC72B5100484A13 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */; };
+		4CBC76D01CC72B5100484A13 /* TDCPreferencesController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */; };
+		4CBC76D11CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */; };
+		4CBC76D21CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */; };
+		4CBC76D31CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */; };
+		4CBC76D41CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */; };
+		4CBC76D51CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */; };
+		4CBC76D61CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */; };
+		4CBC76D71CC72B5100484A13 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */; };
+		4CBC76D81CC72B5100484A13 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */; };
+		4CBC76D91CC72B5100484A13 /* TLOLicenseManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */; };
+		4CBC76DA1CC72B5100484A13 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */; };
+		4CBC76DB1CC72B5100484A13 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */; };
+		4CBC76DC1CC72B5100484A13 /* TVCMainWindow.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */; };
 		4CBCF89C16C7CD9200DC3521 /* THOPluginManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCF89B16C7CD9200DC3521 /* THOPluginManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CBE542A1979F4EA00034B0C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CCE521A18C7BE0600D49601 /* AudioToolbox.framework */; };
 		4CBE64C71743720600831D69 /* TDCHighlightEntrySheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */; };
@@ -1341,9 +1344,6 @@
 		4CF40E8A1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8B1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
 		4CF40E8C1AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */; };
-		4CF40EBF1AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
-		4CF40EC01AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
-		4CF40EC11AC1A56500A26BE0 /* BasicLanguage.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */; };
 		4CF40ECA1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */; };
 		4CF40ECB1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */; };
 		4CF40ECC1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */; };
@@ -1680,20 +1680,6 @@
 		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
 		4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerMigrateAppStoreSheet.h; sourceTree = "<group>"; };
 		4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSharedProtocolDefinitions.h; sourceTree = "<group>"; };
-		4C3BDF7A1CC6674A00246C00 /* TDCAboutDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCAboutDialog.strings; path = "Resources/Language Files/TDCAboutDialog.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF881CC667AC00246C00 /* TDCServerChannelListDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCServerChannelListDialog.strings; path = "Resources/Language Files/TDCServerChannelListDialog.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF8C1CC667E600246C00 /* TDChannelInviteSheet.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDChannelInviteSheet.strings; path = "Resources/Language Files/TDChannelInviteSheet.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF901CC6680000246C00 /* TDCServerPropertiesSheet.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCServerPropertiesSheet.strings; path = "Resources/Language Files/TDCServerPropertiesSheet.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF941CC668C100246C00 /* TDCPreferencesController.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCPreferencesController.strings; path = "Resources/Language Files/TDCPreferencesController.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF981CC668FA00246C00 /* TDCFileTransferDialog.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDCFileTransferDialog.strings; path = "Resources/Language Files/TDCFileTransferDialog.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDF9C1CC6693300246C00 /* TLOLicenseManager.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TLOLicenseManager.strings; path = "Resources/Language Files/TLOLicenseManager.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFA01CC6699000246C00 /* TVCMainWindow.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TVCMainWindow.strings; path = "Resources/Language Files/TVCMainWindow.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFA41CC669B100246C00 /* TDChannelBanListSheet.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = TDChannelBanListSheet.strings; path = "Resources/Language Files/TDChannelBanListSheet.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFA81CC669C900246C00 /* IRC.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = IRC.strings; path = "Resources/Language Files/IRC.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFAC1CC669D700246C00 /* Prompts.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Prompts.strings; path = "Resources/Language Files/Prompts.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFB01CC66BEB00246C00 /* Notifications.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Notifications.strings; path = "Resources/Language Files/Notifications.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFB41CC66C3C00246C00 /* OffTheRecord.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = OffTheRecord.strings; path = "Resources/Language Files/OffTheRecord.strings"; sourceTree = SOURCE_ROOT; };
-		4C3BDFBC1CC66C9300246C00 /* Accessibility.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Accessibility.strings; path = "Resources/Language Files/Accessibility.strings"; sourceTree = SOURCE_ROOT; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOUnicodeHelper.h; sourceTree = "<group>"; };
 		4C3EB79C17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCLogControllerHistoricLogFile.h; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -1739,7 +1725,6 @@
 		4C58B570186011AC00834882 /* Acknowledgments.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Acknowledgments.pdf; sourceTree = SOURCE_ROOT; };
 		4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesImportExport.h; sourceTree = "<group>"; };
 		4C5BA4E616F1302F00A96CA2 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = SecureTransportErrorCodes.strings; path = "Resources/Language Files/SecureTransportErrorCodes.strings"; sourceTree = SOURCE_ROOT; };
 		4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewMavericksUserInterace.h; sourceTree = "<group>"; };
 		4C5FB0FC197D358E009C6760 /* TVCMainWindowTextViewYosemiteUserInterace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTextViewYosemiteUserInterace.h; sourceTree = "<group>"; };
 		4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowChannelView.m; sourceTree = "<group>"; };
@@ -2003,6 +1988,22 @@
 		4CB58C1A1CAE0DE20052CA83 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4CB9980817C39E83008F56D7 /* THOUnicodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = THOUnicodeHelper.m; path = Helpers/THOUnicodeHelper.m; sourceTree = "<group>"; };
 		4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListUserInfoPopover.h; sourceTree = "<group>"; };
+		4CBC768E1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/Accessibility.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76901CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/BasicLanguage.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76921CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/IRC.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76941CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/Notifications.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76961CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/OffTheRecord.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76981CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/Prompts.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC769A1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/SecureTransportErrorCodes.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC769C1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCAboutDialog.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC769E1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCFileTransferDialog.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76A01CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDChannelBanListSheet.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76A21CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDChannelInviteSheet.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76A41CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCPreferencesController.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76A61CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCServerChannelListDialog.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76A81CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TDCServerPropertiesSheet.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76AA1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TLOLicenseManager.strings"; sourceTree = SOURCE_ROOT; };
+		4CBC76AC1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCMainWindow.strings"; sourceTree = SOURCE_ROOT; };
 		4CBCF89B16C7CD9200DC3521 /* THOPluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginManager.h; sourceTree = "<group>"; };
 		4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDCHighlightEntrySheet.m; path = Dialogs/TDCHighlightEntrySheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCHighlightEntrySheet.h; sourceTree = "<group>"; };
@@ -2105,7 +2106,6 @@
 		4CF40DE01AC1A4AC00A26BE0 /* TVCMemberListLightYosemiteUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListLightYosemiteUserInterface.m; sourceTree = "<group>"; };
 		4CF40DE11AC1A4AC00A26BE0 /* TVCMemberListUserInfoPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMemberListUserInfoPopover.m; sourceTree = "<group>"; };
 		4CF40E9D1AC1A4ED00A26BE0 /* Auxiliary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Auxiliary.entitlements; path = Resources/Sandbox/Entitlements/Auxiliary.entitlements; sourceTree = SOURCE_ROOT; };
-		4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = BasicLanguage.strings; path = "Resources/Language Files/BasicLanguage.strings"; sourceTree = SOURCE_ROOT; };
 		4CF40EC31AC1A57800A26BE0 /* AppleCloudMappedKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppleCloudMappedKeys.plist; path = "Resources/Property Lists/AppleCloudMappedKeys.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC41AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPrivateValues.plist; path = "Resources/Property Lists/IRCCommandIndexPrivateValues.plist"; sourceTree = SOURCE_ROOT; };
 		4CF40EC51AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = IRCCommandIndexPublicValues.plist; path = "Resources/Property Lists/IRCCommandIndexPublicValues.plist"; sourceTree = SOURCE_ROOT; };
@@ -2506,22 +2506,22 @@
 		4C51B8B7196ACDBB00003A87 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C3BDFBC1CC66C9300246C00 /* Accessibility.strings */,
-				4CF40EBE1AC1A56500A26BE0 /* BasicLanguage.strings */,
-				4C3BDFA81CC669C900246C00 /* IRC.strings */,
-				4C3BDFB01CC66BEB00246C00 /* Notifications.strings */,
-				4C3BDFB41CC66C3C00246C00 /* OffTheRecord.strings */,
-				4C3BDFAC1CC669D700246C00 /* Prompts.strings */,
-				4C5BAEAE1AF44EE200FA2559 /* SecureTransportErrorCodes.strings */,
-				4C3BDF7A1CC6674A00246C00 /* TDCAboutDialog.strings */,
-				4C3BDF981CC668FA00246C00 /* TDCFileTransferDialog.strings */,
-				4C3BDFA41CC669B100246C00 /* TDChannelBanListSheet.strings */,
-				4C3BDF8C1CC667E600246C00 /* TDChannelInviteSheet.strings */,
-				4C3BDF941CC668C100246C00 /* TDCPreferencesController.strings */,
-				4C3BDF881CC667AC00246C00 /* TDCServerChannelListDialog.strings */,
-				4C3BDF901CC6680000246C00 /* TDCServerPropertiesSheet.strings */,
-				4C3BDF9C1CC6693300246C00 /* TLOLicenseManager.strings */,
-				4C3BDFA01CC6699000246C00 /* TVCMainWindow.strings */,
+				4CBC768D1CC72B5100484A13 /* Accessibility.strings */,
+				4CBC768F1CC72B5100484A13 /* BasicLanguage.strings */,
+				4CBC76911CC72B5100484A13 /* IRC.strings */,
+				4CBC76931CC72B5100484A13 /* Notifications.strings */,
+				4CBC76951CC72B5100484A13 /* OffTheRecord.strings */,
+				4CBC76971CC72B5100484A13 /* Prompts.strings */,
+				4CBC76991CC72B5100484A13 /* SecureTransportErrorCodes.strings */,
+				4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */,
+				4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */,
+				4CBC769F1CC72B5100484A13 /* TDChannelBanListSheet.strings */,
+				4CBC76A11CC72B5100484A13 /* TDChannelInviteSheet.strings */,
+				4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */,
+				4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */,
+				4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */,
+				4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */,
+				4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */,
 			);
 			name = "Language Files";
 			sourceTree = "<group>";
@@ -4153,7 +4153,6 @@
 				4C0BA5051990798800857343 /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4C0BA5061990798800857343 /* DIGreenBadgeLeftMavericks.png in Resources */,
 				4CF40F661AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */,
-				4C3BDF891CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */,
 				4C0BA5071990798800857343 /* channelRoomStatusIconYosemiteLightActive@2x.tif in Resources */,
 				4CF40F5E1AC1A59500A26BE0 /* TVCMainWindowMavericks.xib in Resources */,
 				4C0BA5081990798800857343 /* DIGreenBadgeLeftYosemite.png in Resources */,
@@ -4161,39 +4160,42 @@
 				4CF40F561AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4C0BA50A1990798800857343 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
 				4C0BA50C1990798800857343 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
+				4CBC76CB1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */,
 				4CF621D41C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4CCFA67E1ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
+				4CBC76D71CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,
 				4CF40F521AC1A59500A26BE0 /* TDChannelModifyTopicSheet.xib in Resources */,
-				4C3BDF9D1CC6693300246C00 /* TLOLicenseManager.strings in Resources */,
 				4C0BA50D1990798800857343 /* DIRedBadgeRightMavericks.png in Resources */,
-				4C3BDFA91CC669C900246C00 /* IRC.strings in Resources */,
 				4C0BA50E1990798800857343 /* DIGreenBadgeRightYosemite.png in Resources */,
 				4C0BA50F1990798800857343 /* DIRedBadgeLeftYosemite.png in Resources */,
 				4C0BA5101990798800857343 /* FormattingColor_0.png in Resources */,
 				4C0BA5111990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4C0BA5121990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
 				4CCFA66E1ABCF36A0083620F /* TPWTB_General.png in Resources */,
+				4CBC76C51CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */,
 				4C0BA5141990798800857343 /* Scripts in Resources */,
 				4C0BA5181990798800857343 /* FormattingColor_6.png in Resources */,
-				4C3BDFAD1CC669D700246C00 /* Prompts.strings in Resources */,
 				4CF40F2E1AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib in Resources */,
 				4C0BA51A1990798800857343 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
+				4CBC76C81CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */,
 				4CF40F4A1AC1A59500A26BE0 /* TDCProgressInformationSheet.xib in Resources */,
 				4CF40F1A1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
-				4C3BDFA11CC6699000246C00 /* TVCMainWindow.strings in Resources */,
 				4C0BA51B1990798800857343 /* FormattingColor_13.png in Resources */,
 				4C0BA51C1990798800857343 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
 				4C0BA51D1990798800857343 /* DIRedBadgeRightYosemite.png in Resources */,
 				4CCFA65E1ABCF36A0083620F /* TPWTB_Advanced.png in Resources */,
+				4CBC76CE1CC72B5100484A13 /* TDCPreferencesController.strings in Resources */,
 				4C0BA51E1990798800857343 /* DIGreenBadgeCenterMavericks.png in Resources */,
 				4CF40F161AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
 				4CF40F361AC1A59500A26BE0 /* TDChannelInviteSheet.xib in Resources */,
 				4CCFA68E1ABCF36A0083620F /* TPWTB_Style.png in Resources */,
 				4C0BA51F1990798800857343 /* DIGreenBadgeCenterYosemite.png in Resources */,
+				4CBC76C21CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
 				4C0BA5201990798800857343 /* FormattingColor_Rainbow.tif in Resources */,
+				4CBC76D41CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */,
 				4CCFA6921ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
-				4C3BDF8D1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */,
 				4C0BA5221990798800857343 /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
+				4CBC76B91CC72B5100484A13 /* OffTheRecord.strings in Resources */,
 				4C8223721B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist in Resources */,
 				4CF40F5A1AC1A59500A26BE0 /* TVCInputPromptDialog.xib in Resources */,
 				4C0BA5241990798800857343 /* FormattingColor_15.png in Resources */,
@@ -4216,45 +4218,47 @@
 				4C0BA5391990798800857343 /* FormattingColor_3.png in Resources */,
 				4CB295471B9CB88C002B7972 /* Textual-Extras-MAS.pkg in Resources */,
 				4CF40EDA1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
+				4CBC76BC1CC72B5100484A13 /* Prompts.strings in Resources */,
+				4CBC76AD1CC72B5100484A13 /* Accessibility.strings in Resources */,
 				4C0BA53B1990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4C0BA53C1990798800857343 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
-				4C5BAEAF1AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */,
 				4C0BA53D1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
+				4CBC76B01CC72B5100484A13 /* BasicLanguage.strings in Resources */,
 				4C0BA53E1990798800857343 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4C0BA53F1990798800857343 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CF40ED21AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
 				4C1383271AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
 				4C0BA5411990798800857343 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4CCFA6621ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
+				4CBC76DA1CC72B5100484A13 /* TVCMainWindow.strings in Resources */,
 				4C0BA5451990798800857343 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4C0BA5461990798800857343 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C3BDFB51CC66C3C00246C00 /* OffTheRecord.strings in Resources */,
 				4C0BA5491990798800857343 /* FormattingColor_5.png in Resources */,
 				4CF40F1E1AC1A59500A26BE0 /* TDChannelBanListSheet.xib in Resources */,
+				4CBC76B31CC72B5100484A13 /* IRC.strings in Resources */,
 				4C0BA54A1990798800857343 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4CF40F3E1AC1A59500A26BE0 /* TDChannelModifyModesSheet.xib in Resources */,
 				4CCFA6761ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6561ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
+				4CBC76D11CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
 				4C0BA54B1990798800857343 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
 				4CCD93FD1CA7291300335381 /* JavaScript in Resources */,
-				4C3BDFA51CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */,
-				4CF40EBF1AC1A56500A26BE0 /* BasicLanguage.strings in Resources */,
 				4C0BA54C1990798800857343 /* FormattingColor_9.png in Resources */,
 				4C0BA54D1990798800857343 /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67A1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
 				4CF40EDE1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CF40F121AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4C0BA54E1990798800857343 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
+				4CBC76B61CC72B5100484A13 /* Notifications.strings in Resources */,
 				4CF40F621AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
 				4C0BA54F1990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
-				4C3BDFB11CC66BEB00246C00 /* Notifications.strings in Resources */,
+				4CBC76BF1CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */,
 				4C0BA5511990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CCFA66A1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
 				4C0BA5541990798800857343 /* encryptionLockIconLight@2x.tif in Resources */,
 				4C0BA5551990798800857343 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4CF40EE21AC1A57800A26BE0 /* StaticStore.plist in Resources */,
 				4CD6F7BC1CA7747600842597 /* ExportArchive.sh in Resources */,
-				4C3BDF911CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */,
 				4C0BA5571990798800857343 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4C0BA5591990798800857343 /* DIRedBadgeCenterMavericks.png in Resources */,
 				4C0BA55B1990798800857343 /* channelRoomStatusIconYosemiteDarkInactive.tif in Resources */,
@@ -4267,10 +4271,8 @@
 				4C0BA5601990798800857343 /* FormattingColor_4.png in Resources */,
 				4C0BA5611990798800857343 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
 				4CCFA6721ABCF36A0083620F /* TPWTB_General@2x.png in Resources */,
-				4C3BDF951CC668C100246C00 /* TDCPreferencesController.strings in Resources */,
 				4C0BA5621990798800857343 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CF40F421AC1A59500A26BE0 /* TDCServerChangeNicknameSheet.xib in Resources */,
-				4C3BDF7B1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */,
 				4CCFA68A1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
 				4C0BA5641990798800857343 /* FormattingColor_11.png in Resources */,
 				4C0BA5651990798800857343 /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
@@ -4285,10 +4287,8 @@
 				4C0BA56C1990798800857343 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ECE1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4C0BA56E1990798800857343 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
-				4C3BDFBD1CC66C9300246C00 /* Accessibility.strings in Resources */,
 				4CF40ECA1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */,
 				4C0BA56F1990798800857343 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
-				4C3BDF991CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4301,28 +4301,27 @@
 				4CF621D61C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4C46F4731943A654004CA8BA /* FormattingColor_8.png in Resources */,
 				4C46F45B1943A654004CA8BA /* FormattingColor_10.png in Resources */,
+				4CBC76DC1CC72B5100484A13 /* TVCMainWindow.strings in Resources */,
 				4CCFA6841ABCF36A0083620F /* TPWTB_Interface@2x.png in Resources */,
 				4CCFA6681ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F341AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
 				4CB229261978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
-				4C3BDFB71CC66C3C00246C00 /* OffTheRecord.strings in Resources */,
 				4C46F4791943A654004CA8BA /* FormattingColor_Rainbow@2x.tif in Resources */,
 				4CC164B01943B17100B0D4B6 /* DIGreenBadgeLeftMavericks.png in Resources */,
 				4CF40F681AC1A59500A26BE0 /* TXCMainMenu.xib in Resources */,
 				4CB229401978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive@2x.tif in Resources */,
 				4CF40F601AC1A59500A26BE0 /* TVCMainWindowMavericks.xib in Resources */,
+				4CBC76C11CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */,
 				4CC164B61943B17100B0D4B6 /* DIGreenBadgeLeftYosemite.png in Resources */,
-				4C3BDFAB1CC669C900246C00 /* IRC.strings in Resources */,
 				4CB229381978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4CF40F581AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
 				4CB229301978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
 				4C77663C1978CECA00759774 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
+				4CBC76B21CC72B5100484A13 /* BasicLanguage.strings in Resources */,
 				4CCFA6801ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
 				4CF40F541AC1A59500A26BE0 /* TDChannelModifyTopicSheet.xib in Resources */,
 				4CC164BE1943B17100B0D4B6 /* DIRedBadgeRightMavericks.png in Resources */,
-				4C3BDFBF1CC66C9300246C00 /* Accessibility.strings in Resources */,
 				4CC164B81943B17100B0D4B6 /* DIGreenBadgeRightYosemite.png in Resources */,
-				4C3BDFA31CC6699000246C00 /* TVCMainWindow.strings in Resources */,
 				4CC164C21943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */,
 				4C46F4571943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C77664E1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
@@ -4330,6 +4329,8 @@
 				4C9E85B61B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CCFA6701ABCF36A0083620F /* TPWTB_General.png in Resources */,
 				4CCC6B61158E8C48003A102B /* Scripts in Resources */,
+				4CBC76D61CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */,
+				4CBC76B81CC72B5100484A13 /* Notifications.strings in Resources */,
 				4C46F46F1943A654004CA8BA /* FormattingColor_6.png in Resources */,
 				4CF40F301AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib in Resources */,
 				4CB229461978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
@@ -4341,7 +4342,6 @@
 				4CCFA6601ABCF36A0083620F /* TPWTB_Advanced.png in Resources */,
 				4CC164AE1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
 				4CF40F181AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
-				4C3BDF9F1CC6693300246C00 /* TLOLicenseManager.strings in Resources */,
 				4CF40F381AC1A59500A26BE0 /* TDChannelInviteSheet.xib in Resources */,
 				4CCFA6901ABCF36A0083620F /* TPWTB_Style.png in Resources */,
 				4C699C711B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */,
@@ -4357,6 +4357,7 @@
 				4CF40ED81AC1A57800A26BE0 /* IRCNetworks.plist in Resources */,
 				4C46F4531943A654004CA8BA /* encryptionLockIconLight.tif in Resources */,
 				4C7766361978CECA00759774 /* MavericksDarkChannelCellSelection.tif in Resources */,
+				4CBC76C71CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */,
 				4CB2292E1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
 				4C77663E1978CECA00759774 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2293C1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive@2x.tif in Resources */,
@@ -4364,6 +4365,7 @@
 				4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4591943A654004CA8BA /* FormattingColor_1.png in Resources */,
 				4C1383241AA9F9C90099F887 /* applicationIconYosemite.icns in Resources */,
+				4CBC76B51CC72B5100484A13 /* IRC.strings in Resources */,
 				4C46F4711943A654004CA8BA /* FormattingColor_7.png in Resources */,
 				4C46F4671943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */,
@@ -4372,32 +4374,27 @@
 				4CC164C01943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C46F4691943A654004CA8BA /* FormattingColor_3.png in Resources */,
 				4CF40EDC1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
-				4C3BDF7D1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */,
-				4C3BDF8F1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */,
 				4C7A21971979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229281978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
 				4CCD93FF1CA7291300335381 /* JavaScript in Resources */,
-				4C5BAEB11AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */,
 				4CB229661978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293E1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4CB229641978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
-				4C3BDFB31CC66BEB00246C00 /* Notifications.strings in Resources */,
 				4CF40ED41AC1A57800A26BE0 /* IRCCommandIndexPublicValues.plist in Resources */,
 				4C1383291AA9F9CF0099F887 /* birthdayIcon.icns in Resources */,
 				4CB2296C1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureUp.tif in Resources */,
 				4CCFA6641ABCF36A0083620F /* TPWTB_Advanced@2x.png in Resources */,
 				4CB229421978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive.tif in Resources */,
 				4CB229441978811700EB02D3 /* channelRoomStatusIconYosemiteLightInactive@2x.tif in Resources */,
-				4C3BDF971CC668C100246C00 /* TDCPreferencesController.strings in Resources */,
 				4C79EDD91B6140AC00CA60C8 /* TDCLicenseManagerMigrateAppStoreSheet.xib in Resources */,
 				4C46F46D1943A654004CA8BA /* FormattingColor_5.png in Resources */,
+				4CBC76BE1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4CF40F201AC1A59500A26BE0 /* TDChannelBanListSheet.xib in Resources */,
 				4CB229341978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4CF40F401AC1A59500A26BE0 /* TDChannelModifyModesSheet.xib in Resources */,
 				4CCFA6781ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6581ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
 				4CB2294A1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
-				4CF40EC11AC1A56500A26BE0 /* BasicLanguage.strings in Resources */,
 				4C46F4751943A654004CA8BA /* FormattingColor_9.png in Resources */,
 				4C46F4511943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67C1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
@@ -4407,32 +4404,35 @@
 				4CF40F641AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
 				4C7766421978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C7A21951979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
+				4CBC76D31CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
 				4CCFA66C1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
 				4C46F4551943A654004CA8BA /* encryptionLockIconLight@2x.tif in Resources */,
 				4C7766481978CECA00759774 /* MavericksDarkServerListViewDisclosureUp@2x.tif in Resources */,
 				4CF40EE41AC1A57800A26BE0 /* StaticStore.plist in Resources */,
 				4CC164B21943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4CC164BA1943B17100B0D4B6 /* DIRedBadgeCenterMavericks.png in Resources */,
-				4C3BDF9B1CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */,
 				4CB2293A1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive.tif in Resources */,
-				4C3BDFAF1CC669D700246C00 /* Prompts.strings in Resources */,
+				4CBC76CD1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */,
 				4CB229681978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
 				4CCFA65C1ABCF36A0083620F /* TPWTB_Addons@2x.png in Resources */,
 				4CF40F481AC1A59500A26BE0 /* TDCPreferences.xib in Resources */,
+				4CBC76BB1CC72B5100484A13 /* OffTheRecord.strings in Resources */,
 				4C46F45F1943A654004CA8BA /* FormattingColor_12.png in Resources */,
 				4CCFA6881ABCF36A0083620F /* TPWTB_Notifications.png in Resources */,
 				4C7A21931979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */,
 				4C46F46B1943A654004CA8BA /* FormattingColor_4.png in Resources */,
-				4C3BDF8B1CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */,
 				4C7766501978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserInactive.tif in Resources */,
 				4CCFA6741ABCF36A0083620F /* TPWTB_General@2x.png in Resources */,
 				4C7766441978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
+				4CBC76CA1CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */,
 				4CF40F441AC1A59500A26BE0 /* TDCServerChangeNicknameSheet.xib in Resources */,
 				4CCFA68C1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
-				4C3BDF931CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */,
 				4C46F45D1943A654004CA8BA /* FormattingColor_11.png in Resources */,
 				4C7A21991979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
+				4CBC76D91CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,
 				4C77663A1978CECA00759774 /* MavericksDarkServerCellSelection.tif in Resources */,
+				4CBC76C41CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
+				4CBC76D01CC72B5100484A13 /* TDCPreferencesController.strings in Resources */,
 				4C52379415C18F6700414852 /* Style Default Templates in Resources */,
 				4CB229481978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CF40F501AC1A59500A26BE0 /* TDCServerPropertiesSheet.xib in Resources */,
@@ -4443,9 +4443,9 @@
 				4CB229361978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ED01AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4CB229241978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
-				4C3BDFA71CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */,
 				4CF40ECC1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */,
 				4C7766401978CECA00759774 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
+				4CBC76AF1CC72B5100484A13 /* Accessibility.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4457,6 +4457,7 @@
 				4C46F4741943A654004CA8BA /* FormattingColor_8.png in Resources */,
 				4C46F45C1943A654004CA8BA /* FormattingColor_10.png in Resources */,
 				4CCFA6831ABCF36A0083620F /* TPWTB_Interface@2x.png in Resources */,
+				4CBC76C31CC72B5100484A13 /* TDCAboutDialog.strings in Resources */,
 				4CCFA6671ABCF36A0083620F /* TPWTB_Controls.png in Resources */,
 				4CF40F331AC1A59500A26BE0 /* TDCServerHighlightListSheet.xib in Resources */,
 				4CB229271978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive@2x.tif in Resources */,
@@ -4468,14 +4469,18 @@
 				4CC164B71943B17100B0D4B6 /* DIGreenBadgeLeftYosemite.png in Resources */,
 				4CB229391978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive@2x.tif in Resources */,
 				4CF40F571AC1A59500A26BE0 /* TDCWelcomeSheet.xib in Resources */,
+				4CBC76D51CC72B5100484A13 /* TDCServerPropertiesSheet.strings in Resources */,
 				4CCD93FE1CA7291300335381 /* JavaScript in Resources */,
 				4CB229311978811700EB02D3 /* channelRoomStatusIconMavericksLightActive@2x.tif in Resources */,
+				4CBC76BA1CC72B5100484A13 /* OffTheRecord.strings in Resources */,
 				4C77663D1978CECA00759774 /* MavericksDarkServerCellSelection@2x.tif in Resources */,
+				4CBC76D21CC72B5100484A13 /* TDCServerChannelListDialog.strings in Resources */,
 				4CCFA67F1ABCF36A0083620F /* TPWTB_Interface.png in Resources */,
 				4CF40F531AC1A59500A26BE0 /* TDChannelModifyTopicSheet.xib in Resources */,
 				4CC164BF1943B17100B0D4B6 /* DIRedBadgeRightMavericks.png in Resources */,
 				4CC164B91943B17100B0D4B6 /* DIGreenBadgeRightYosemite.png in Resources */,
 				4CC164C31943B17100B0D4B6 /* DIRedBadgeLeftYosemite.png in Resources */,
+				4CBC76B71CC72B5100484A13 /* Notifications.strings in Resources */,
 				4C46F4581943A654004CA8BA /* FormattingColor_0.png in Resources */,
 				4C77664F1978CECA00759774 /* MavericksDarkServerListViewSelectedPrivateMessageUserActive.tif in Resources */,
 				4CB229631978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive.tif in Resources */,
@@ -4483,11 +4488,9 @@
 				4C5BA38D16F1302F00A96CA2 /* Scripts in Resources */,
 				4C46F4701943A654004CA8BA /* FormattingColor_6.png in Resources */,
 				4CF40F2F1AC1A59500A26BE0 /* TDCHighlightEntrySheet.xib in Resources */,
-				4C3BDFB61CC66C3C00246C00 /* OffTheRecord.strings in Resources */,
 				4CB229471978811700EB02D3 /* MainWindowSegmentedControlUserTemplate.pdf in Resources */,
 				4C9E85B51B561AAC00B2670D /* TDCLicenseManagerRecoverLostLicenseSheet.xib in Resources */,
 				4CF40F4B1AC1A59500A26BE0 /* TDCProgressInformationSheet.xib in Resources */,
-				4C3BDFB21CC66BEB00246C00 /* Notifications.strings in Resources */,
 				4CF40F1B1AC1A59500A26BE0 /* TDCFileTransferDialog.xib in Resources */,
 				4C46F4621943A654004CA8BA /* FormattingColor_13.png in Resources */,
 				4C77664D1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected@2x.tif in Resources */,
@@ -4495,7 +4498,6 @@
 				4CCFA65F1ABCF36A0083620F /* TPWTB_Advanced.png in Resources */,
 				4CC164AF1943B17100B0D4B6 /* DIGreenBadgeCenterMavericks.png in Resources */,
 				4CF40F171AC1A59500A26BE0 /* TDCAddressBookSheet.xib in Resources */,
-				4C3BDF961CC668C100246C00 /* TDCPreferencesController.strings in Resources */,
 				4CF40F371AC1A59500A26BE0 /* TDChannelInviteSheet.xib in Resources */,
 				4CCFA68F1ABCF36A0083620F /* TPWTB_Style.png in Resources */,
 				4CC164B51943B17100B0D4B6 /* DIGreenBadgeCenterYosemite.png in Resources */,
@@ -4503,14 +4505,16 @@
 				4CCFA6931ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */,
 				4C7766471978CECA00759774 /* MavericksDarkServerListViewDisclosureUp.tif in Resources */,
 				4CF40F5B1AC1A59500A26BE0 /* TVCInputPromptDialog.xib in Resources */,
+				4CBC76CF1CC72B5100484A13 /* TDCPreferencesController.strings in Resources */,
 				4C46F4661943A654004CA8BA /* FormattingColor_15.png in Resources */,
+				4CBC76BD1CC72B5100484A13 /* Prompts.strings in Resources */,
 				4C77664B1978CECA00759774 /* MavericksDarkServerListViewDisclosureUpSelected.tif in Resources */,
 				4C46F4641943A654004CA8BA /* FormattingColor_14.png in Resources */,
 				4CF40ED71AC1A57800A26BE0 /* IRCNetworks.plist in Resources */,
+				4CBC76B11CC72B5100484A13 /* BasicLanguage.strings in Resources */,
 				4C46F4541943A654004CA8BA /* encryptionLockIconLight.tif in Resources */,
 				4C7766371978CECA00759774 /* MavericksDarkChannelCellSelection.tif in Resources */,
 				4CB2292F1978811700EB02D3 /* channelRoomStatusIconMavericksLightActive.tif in Resources */,
-				4C3BDF921CC6680000246C00 /* TDCServerPropertiesSheet.strings in Resources */,
 				4C77663F1978CECA00759774 /* MavericksDarkServerListViewDisclosureDown.tif in Resources */,
 				4CB2293D1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive@2x.tif in Resources */,
 				4CC164BD1943B17100B0D4B6 /* DIRedBadgeLeftMavericks.png in Resources */,
@@ -4520,16 +4524,14 @@
 				4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */,
 				4C46F4681943A654004CA8BA /* FormattingColor_2.png in Resources */,
 				4CB2296B1978811700EB02D3 /* YosemiteDarkServerListViewDisclosureDown.tif in Resources */,
-				4C3BDFAA1CC669C900246C00 /* IRC.strings in Resources */,
 				4CB2292B1978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive@2x.tif in Resources */,
 				4CC164C11943B17100B0D4B6 /* DIRedBadgeCenterYosemite.png in Resources */,
 				4C46F46A1943A654004CA8BA /* FormattingColor_3.png in Resources */,
-				4C3BDFBE1CC66C9300246C00 /* Accessibility.strings in Resources */,
 				4CF40EDB1AC1A57800A26BE0 /* RegisteredUserDefaults.plist in Resources */,
+				4CBC76CC1CC72B5100484A13 /* TDChannelInviteSheet.strings in Resources */,
 				4CF621D51C7F675A000969CB /* TDCNicknameColorSheet.xib in Resources */,
 				4C7A21981979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB229291978811700EB02D3 /* channelRoomStatusIconMavericksDarkInactive.tif in Resources */,
-				4C5BAEB01AF44EE200FA2559 /* SecureTransportErrorCodes.strings in Resources */,
 				4CB229671978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive.tif in Resources */,
 				4CB2293F1978811700EB02D3 /* channelRoomStatusIconYosemiteLightActive.tif in Resources */,
 				4CB229651978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
@@ -4543,22 +4545,20 @@
 				4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */,
 				4C46F46E1943A654004CA8BA /* FormattingColor_5.png in Resources */,
 				4CF40F1F1AC1A59500A26BE0 /* TDChannelBanListSheet.xib in Resources */,
-				4C3BDF7C1CC6674A00246C00 /* TDCAboutDialog.strings in Resources */,
 				4CB229351978811700EB02D3 /* channelRoomStatusIconMavericksLightInctive@2x.tif in Resources */,
 				4CF40F3F1AC1A59500A26BE0 /* TDChannelModifyModesSheet.xib in Resources */,
 				4CCFA6771ABCF36A0083620F /* TPWTB_Highlights.png in Resources */,
 				4CCFA6571ABCF36A0083620F /* TPWTB_Addons.png in Resources */,
+				4CBC76C61CC72B5100484A13 /* TDCFileTransferDialog.strings in Resources */,
 				4CB2294B1978811700EB02D3 /* ProperlyFormattedTextFieldValueIndicator.tif in Resources */,
-				4CF40EC01AC1A56500A26BE0 /* BasicLanguage.strings in Resources */,
 				4C46F4761943A654004CA8BA /* FormattingColor_9.png in Resources */,
-				4C3BDF8A1CC667AC00246C00 /* TDCServerChannelListDialog.strings in Resources */,
 				4C46F4521943A654004CA8BA /* encryptionLockIconDark@2x.tif in Resources */,
 				4CCFA67B1ABCF36A0083620F /* TPWTB_Highlights@2x.png in Resources */,
+				4CBC76B41CC72B5100484A13 /* IRC.strings in Resources */,
 				4CF40EDF1AC1A57800A26BE0 /* RegisteredUserDefaultsRemappedKeys.plist in Resources */,
 				4CF40F131AC1A59500A26BE0 /* TDCAboutDialog.xib in Resources */,
 				4CB229331978811700EB02D3 /* channelRoomStatusIconMavericksLightInactive.tif in Resources */,
 				4CF40F631AC1A59500A26BE0 /* TVCMainWindowYosemite.xib in Resources */,
-				4C3BDFA21CC6699000246C00 /* TVCMainWindow.strings in Resources */,
 				4C7766431978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected.tif in Resources */,
 				4C7A21961979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive@2x.tif in Resources */,
 				4CCFA66B1ABCF36A0083620F /* TPWTB_Controls@2x.png in Resources */,
@@ -4568,10 +4568,11 @@
 				4CC164B31943B17100B0D4B6 /* DIGreenBadgeRightMavericks.png in Resources */,
 				4CC164BB1943B17100B0D4B6 /* DIRedBadgeCenterMavericks.png in Resources */,
 				4CB2293B1978811700EB02D3 /* channelRoomStatusIconYosemiteDarkInactive.tif in Resources */,
-				4C3BDF9E1CC6693300246C00 /* TLOLicenseManager.strings in Resources */,
 				4CB229691978811700EB02D3 /* VibrantLightServerListViewPrivateMessageUserIconInactive@2x.tif in Resources */,
 				4CCFA65B1ABCF36A0083620F /* TPWTB_Addons@2x.png in Resources */,
 				4CF40F471AC1A59500A26BE0 /* TDCPreferences.xib in Resources */,
+				4CBC76C91CC72B5100484A13 /* TDChannelBanListSheet.strings in Resources */,
+				4CBC76DB1CC72B5100484A13 /* TVCMainWindow.strings in Resources */,
 				4C46F4601943A654004CA8BA /* FormattingColor_12.png in Resources */,
 				4CCFA6871ABCF36A0083620F /* TPWTB_Notifications.png in Resources */,
 				4C7A21941979C54400449C1F /* VibrantDarkServerListViewPrivateMessageUserIconActive.tif in Resources */,
@@ -4580,6 +4581,7 @@
 				4CCFA6731ABCF36A0083620F /* TPWTB_General@2x.png in Resources */,
 				4C7766451978CECA00759774 /* MavericksDarkServerListViewDisclosureDownSelected@2x.tif in Resources */,
 				4CF40F431AC1A59500A26BE0 /* TDCServerChangeNicknameSheet.xib in Resources */,
+				4CBC76AE1CC72B5100484A13 /* Accessibility.strings in Resources */,
 				4CCFA68B1ABCF36A0083620F /* TPWTB_Notifications@2x.png in Resources */,
 				4C699C701B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub in Resources */,
 				4C46F45E1943A654004CA8BA /* FormattingColor_11.png in Resources */,
@@ -4589,18 +4591,16 @@
 				4CB229491978811700EB02D3 /* ErroneousTextFieldValueIndicator.tif in Resources */,
 				4CF40F4F1AC1A59500A26BE0 /* TDCServerPropertiesSheet.xib in Resources */,
 				4CF40F3B1AC1A59500A26BE0 /* TDCServerChannelListDialog.xib in Resources */,
-				4C3BDFA61CC669B100246C00 /* TDChannelBanListSheet.strings in Resources */,
 				4C46F4501943A654004CA8BA /* encryptionLockIconDark.tif in Resources */,
+				4CBC76C01CC72B5100484A13 /* SecureTransportErrorCodes.strings in Resources */,
 				4C5BA3CC16F1302F00A96CA2 /* Styles in Resources */,
 				4CF40F2B1AC1A59500A26BE0 /* TDChannelPropertiesSheet.xib in Resources */,
-				4C3BDF9A1CC668FA00246C00 /* TDCFileTransferDialog.strings in Resources */,
-				4C3BDFAE1CC669D700246C00 /* Prompts.strings in Resources */,
 				4CB229371978811700EB02D3 /* channelRoomStatusIconYosemiteDarkActive.tif in Resources */,
 				4CF40ECF1AC1A57800A26BE0 /* IRCCommandIndexPrivateValues.plist in Resources */,
 				4CB229251978811700EB02D3 /* channelRoomStatusIconMavericksDarkActive.tif in Resources */,
 				4CF40ECB1AC1A57800A26BE0 /* AppleCloudMappedKeys.plist in Resources */,
 				4C7766411978CECA00759774 /* MavericksDarkServerListViewDisclosureDown@2x.tif in Resources */,
-				4C3BDF8E1CC667E600246C00 /* TDChannelInviteSheet.strings in Resources */,
+				4CBC76D81CC72B5100484A13 /* TLOLicenseManager.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5150,6 +5150,134 @@
 				4C9E85B41B561AAC00B2670D /* English */,
 			);
 			name = TDCLicenseManagerRecoverLostLicenseSheet.xib;
+			sourceTree = "<group>";
+		};
+		4CBC768D1CC72B5100484A13 /* Accessibility.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC768E1CC72B5100484A13 /* English */,
+			);
+			name = Accessibility.strings;
+			sourceTree = "<group>";
+		};
+		4CBC768F1CC72B5100484A13 /* BasicLanguage.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76901CC72B5100484A13 /* English */,
+			);
+			name = BasicLanguage.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76911CC72B5100484A13 /* IRC.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76921CC72B5100484A13 /* English */,
+			);
+			name = IRC.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76931CC72B5100484A13 /* Notifications.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76941CC72B5100484A13 /* English */,
+			);
+			name = Notifications.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76951CC72B5100484A13 /* OffTheRecord.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76961CC72B5100484A13 /* English */,
+			);
+			name = OffTheRecord.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76971CC72B5100484A13 /* Prompts.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76981CC72B5100484A13 /* English */,
+			);
+			name = Prompts.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76991CC72B5100484A13 /* SecureTransportErrorCodes.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC769A1CC72B5100484A13 /* English */,
+			);
+			name = SecureTransportErrorCodes.strings;
+			sourceTree = "<group>";
+		};
+		4CBC769B1CC72B5100484A13 /* TDCAboutDialog.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC769C1CC72B5100484A13 /* English */,
+			);
+			name = TDCAboutDialog.strings;
+			sourceTree = "<group>";
+		};
+		4CBC769D1CC72B5100484A13 /* TDCFileTransferDialog.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC769E1CC72B5100484A13 /* English */,
+			);
+			name = TDCFileTransferDialog.strings;
+			sourceTree = "<group>";
+		};
+		4CBC769F1CC72B5100484A13 /* TDChannelBanListSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76A01CC72B5100484A13 /* English */,
+			);
+			name = TDChannelBanListSheet.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76A11CC72B5100484A13 /* TDChannelInviteSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76A21CC72B5100484A13 /* English */,
+			);
+			name = TDChannelInviteSheet.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76A31CC72B5100484A13 /* TDCPreferencesController.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76A41CC72B5100484A13 /* English */,
+			);
+			name = TDCPreferencesController.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76A51CC72B5100484A13 /* TDCServerChannelListDialog.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76A61CC72B5100484A13 /* English */,
+			);
+			name = TDCServerChannelListDialog.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76A71CC72B5100484A13 /* TDCServerPropertiesSheet.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76A81CC72B5100484A13 /* English */,
+			);
+			name = TDCServerPropertiesSheet.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76A91CC72B5100484A13 /* TLOLicenseManager.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76AA1CC72B5100484A13 /* English */,
+			);
+			name = TLOLicenseManager.strings;
+			sourceTree = "<group>";
+		};
+		4CBC76AB1CC72B5100484A13 /* TVCMainWindow.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4CBC76AC1CC72B5100484A13 /* English */,
+			);
+			name = TVCMainWindow.strings;
 			sourceTree = "<group>";
 		};
 		4CF40EE61AC1A59500A26BE0 /* TDCAboutDialog.xib */ = {
