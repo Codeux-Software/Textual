@@ -91,7 +91,7 @@
 "Prompts[1110][4]" = "Create New Connection";
 
 "Prompts[1111][1]" = "WARNING: The inline image feature may leak your IP address if you do not have a system-wide proxy setup";
-"Prompts[1111][2]" = "Click “Configure Proxy” open System Preferences.";
+"Prompts[1111][2]" = "Click “Configure Proxy” to open System Preferences.";
 "Prompts[1111][3]" = "Configure Proxy";
 
 "Prompts[1112][1]" = "A new version of the “%@” addon is available!";
