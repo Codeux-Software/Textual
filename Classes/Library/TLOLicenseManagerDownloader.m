@@ -227,7 +227,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 				if (self.isSilentOnSuccess == NO) {
 					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1006][2]")
 															 title:TXTLS(@"TLOLicenseManager[1006][1]")
-													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+													 defaultButton:TXTLS(@"Prompts[0005]")
 												   alternateButton:nil];
 				}
 
@@ -252,7 +252,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1005][2]", licenseOwnerContactAddress)
 															 title:TXTLS(@"TLOLicenseManager[1005][1]", licenseOwnerContactAddress)
-													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+													 defaultButton:TXTLS(@"Prompts[0005]")
 												   alternateButton:nil];
 				}
 				
@@ -277,7 +277,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 					(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1010][2]", licenseOwnerContactAddress)
 															 title:TXTLS(@"TLOLicenseManager[1010][1]", licenseOwnerContactAddress)
-													 defaultButton:TXTLS(@"BasicLanguage[1011]")
+													 defaultButton:TXTLS(@"Prompts[0005]")
 												   alternateButton:nil];
 				}
 
@@ -291,7 +291,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1004][2]")
 														 title:TXTLS(@"TLOLicenseManager[1004][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -314,7 +314,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				BOOL userResponse = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1002][2]")
 																	   title:TXTLS(@"TLOLicenseManager[1002][1]", licenseKey)
-															   defaultButton:TXTLS(@"BasicLanguage[1011]")
+															   defaultButton:TXTLS(@"Prompts[0005]")
 															 alternateButton:TXTLS(@"TLOLicenseManager[1002][3]")];
 
 				if (userResponse == NO) { // NO = alternate button
@@ -343,7 +343,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1014][2]", licenseKeyActivationLimit)
 														 title:TXTLS(@"TLOLicenseManager[1014][1]", licenseKey)
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -354,7 +354,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1003][2]")
 														 title:TXTLS(@"TLOLicenseManager[1003][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -377,7 +377,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1013][2]", originalInput)
 														 title:TXTLS(@"TLOLicenseManager[1013][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -388,7 +388,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1012][2]")
 														 title:TXTLS(@"TLOLicenseManager[1012][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -417,7 +417,7 @@ static BOOL TLOLicenseManagerDownloaderConnectionSelected = NO;
 			{
 				(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1011][2]")
 														 title:TXTLS(@"TLOLicenseManager[1011][1]")
-												 defaultButton:TXTLS(@"BasicLanguage[1011]")
+												 defaultButton:TXTLS(@"Prompts[0005]")
 											   alternateButton:nil];
 
 				_performCompletionBlockAndReturn(NO)
@@ -437,7 +437,7 @@ present_fatal_error:
 {
 	BOOL userResponse = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1001][2]")
 														   title:TXTLS(@"TLOLicenseManager[1001][1]")
-												   defaultButton:TXTLS(@"BasicLanguage[1011]")
+												   defaultButton:TXTLS(@"Prompts[0005]")
 												 alternateButton:TXTLS(@"TLOLicenseManager[1001][3]")];
 
 	if (userResponse == NO) { // NO = alternate button

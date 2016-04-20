@@ -322,7 +322,7 @@
 		};
 		
 		self.placeholderString = nil;
-		self.placeholderString = [NSAttributedString attributedStringWithString:TXTLS(@"TDCMainWindow[1000]") attributes:attrs];
+		self.placeholderString = [NSAttributedString attributedStringWithString:TXTLS(@"TVCMainWindow[1011]") attributes:attrs];
 
 		/* Prepare draw. */
 		[self setNeedsDisplay:YES];

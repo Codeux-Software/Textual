@@ -47,13 +47,11 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 + (void)import
 {
 	[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
-									  body:TXTLS(@"BasicLanguage[1181][2]")
-									 title:TXTLS(@"BasicLanguage[1181][1]")
-							 defaultButton:TXTLS(@"BasicLanguage[1181][3]")
-						   alternateButton:TXTLS(@"BasicLanguage[1009]")
+									  body:TXTLS(@"Prompts[1124][2]")
+									 title:TXTLS(@"Prompts[1124][1]")
+							 defaultButton:TXTLS(@"Prompts[1124][3]")
+						   alternateButton:TXTLS(@"Prompts[0004]")
 							   otherButton:nil
-							suppressionKey:nil
-						   suppressionText:nil
 						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
 							   [self importPreflight:buttonClicked withOriginalAlert:originalAlert];
 						   }];
@@ -320,19 +318,32 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 + (void)export
 {
-	NSSavePanel *d = [NSSavePanel savePanel];
+	[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
+									  body:TXTLS(@"Prompts[1123][2]")
+									 title:TXTLS(@"Prompts[1123][1]")
+							 defaultButton:TXTLS(@"Prompts[1123][3]")
+						   alternateButton:TXTLS(@"Prompts[0004]")
+							   otherButton:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   [self exportPreflight:buttonClicked withOriginalAlert:originalAlert];
+						   }];
+}
 
-	[d setCanCreateDirectories:YES];
++ (void)exportPreflight:(TLOPopupPromptReturnType)buttonPressed withOriginalAlert:(NSAlert *)originalAlert
+{
+	if (buttonPressed == TLOPopupPromptReturnPrimaryType) {
+		NSSavePanel *d = [NSSavePanel savePanel];
 
 		[d setCanCreateDirectories:YES];
 
 		[d setNameFieldStringValue:@"TextualPreferences.plist"];
 
-	[d beginWithCompletionHandler:^(NSInteger returnCode) {
-		if (returnCode == NSModalResponseOK) {
-			(void)[self exportPostflightForURL:[d URL] filterJunk:YES];
-		}
-	}];
+		[d beginWithCompletionHandler:^(NSInteger returnCode) {
+			if (returnCode == NSModalResponseOK) {
+				(void)[self exportPostflightForURL:[d URL] filterJunk:YES];
+			}
+		}];
+	}
 }
 
 @end

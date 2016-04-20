@@ -93,7 +93,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 {
 	PointerIsEmptyAssertReturn(url, NO);
 
-	if ([[url absoluteString] hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
+	NSString *filePath = [[url filePathURL] absoluteString];
+
+	if ([filePath hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		[self performImportOfScriptFile:url];
 		
 		return YES;
@@ -101,7 +103,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSString *pluginSuffix = [TPCResourceManagerBundleDocumentTypeExtension stringByAppendingString:@"/"];
 	
-	if ([[url absoluteString] hasSuffix:pluginSuffix]) {
+	if ([filePath hasSuffix:pluginSuffix]) {
 		[self performImportOfPluginFile:url];
 		
 		return YES;
@@ -120,13 +122,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
-															 title:TXTLS(@"BasicLanguage[1192][1]")
-													 defaultButton:TXTLS(@"BasicLanguage[1182]")
-												   alternateButton:TXTLS(@"BasicLanguage[1219]")];
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
+															 title:TXTLS(@"Prompts[1130][1]", filename)
+													 defaultButton:TXTLS(@"Prompts[0001]")
+												   alternateButton:TXTLS(@"Prompts[0002]")];
 
-	/* YES == No in dialog. */
-	if (performInstall) {
+	if (performInstall == NO) {
 		return; // Do not install.
 	}
 
@@ -135,9 +136,11 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
 
 	if (didImport) {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1189][2]", [filename stringByDeletingPathExtension])
-										   title:TXTLS(@"BasicLanguage[1189][1]")
-								   defaultButton:TXTLS(@"BasicLanguage[1186]")
+		NSString *_filename = [filename stringByDeletingPathExtension];
+
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1128][2]")
+										   title:TXTLS(@"Prompts[1128][1]", [_filename stringByDeletingPathExtension])
+								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil];
 	}
 }
@@ -154,8 +157,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
 			[userInfo setObject:url forKey:NSURLErrorKey];
-			[userInfo setObject:TXTLS(@"BasicLanguage[1252][1]") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:TXTLS(@"BasicLanguage[1252][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+
+			[userInfo setObject:TXTLS(@"Prompts[1126][1]") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:TXTLS(@"Prompts[1126][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
 
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -171,13 +175,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	NSString *filename = [url lastPathComponent];
 
 	/* Ask user before installing. */
-	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1192][2]", filename)
-															 title:TXTLS(@"BasicLanguage[1192][1]")
-													 defaultButton:TXTLS(@"BasicLanguage[1182]")
-												   alternateButton:TXTLS(@"BasicLanguage[1219]")];
+	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
+															 title:TXTLS(@"Prompts[1130][1]", filename)
+													 defaultButton:TXTLS(@"Prompts[0001]")
+												   alternateButton:TXTLS(@"Prompts[0002]")];
 
-	/* YES == No in dialog. */
-	if (performInstall) {
+	if (performInstall == NO) {
 		return; // Do not install.
 	}
 
@@ -205,8 +208,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	[d setCanCreateDirectories:YES];
 	[d setDirectoryURL:folderRep];
 
-	[d setTitle:TXTLS(@"BasicLanguage[1187][1]")];
-	[d setMessage:TXTLS(@"BasicLanguage[1187][2]", bundleID)];
+	[d setTitle:TXTLS(@"Prompts[1125][1]")];
+
+	[d setMessage:TXTLS(@"Prompts[1125][2]", bundleID)];
 
 	[d setNameFieldStringValue:[url lastPathComponent]];
 
@@ -232,9 +236,11 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (void)performImportOfScriptFilePostflight:(NSString *)filename
 {
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1188][2]", [filename stringByDeletingPathExtension])
-									   title:TXTLS(@"BasicLanguage[1188][1]")
-							   defaultButton:TXTLS(@"BasicLanguage[1186]")
+	NSString *_filename = [filename stringByDeletingPathExtension];
+
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1127][2]", _filename)
+									   title:TXTLS(@"Prompts[1127][1]", _filename)
+							   defaultButton:TXTLS(@"Prompts[0005]")
 							 alternateButton:nil];
 }
 

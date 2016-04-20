@@ -285,8 +285,8 @@
 {
 	BOOL deactivateCopy = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"TLOLicenseManager[1007][2]")
 															 title:TXTLS(@"TLOLicenseManager[1007][1]")
-													 defaultButton:TXTLS(@"BasicLanguage[1219]")
-												   alternateButton:TXTLS(@"BasicLanguage[1182]")];
+													 defaultButton:TXTLS(@"Prompts[0001]")
+												   alternateButton:TXTLS(@"Prompts[0002]")];
 
 	if (deactivateCopy == NO) {
 		return; // Cancel operation...

@@ -459,13 +459,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 	BOOL cipherDeprecated = [self.socketConnection sslConnectedWithDeprecatedCipher];
 
 	if (plainText && cipherDeprecated) {
-		return TXTLS(@"BasicLanguage[1289]", protocol, cipher);
+		return TXTLS(@"Prompts[1122][2]", protocol, cipher);
 	} else if (plainText && cipherDeprecated == NO) {
-		return TXTLS(@"BasicLanguage[1288]", protocol, cipher);
+		return TXTLS(@"Prompts[1122][1]", protocol, cipher);
 	} else if (plainText == NO && cipherDeprecated) {
-		return TXTLS(@"BasicLanguage[1250]", protocol, cipher);
+		return TXTLS(@"IRC[1112][2]", protocol, cipher);
 	} else {
-		return TXTLS(@"BasicLanguage[1248]", protocol, cipher);
+		return TXTLS(@"IRC[1112][1]", protocol, cipher);
 	}
 }
 
@@ -481,13 +481,13 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 	SFCertificateTrustPanel *panel = [SFCertificateTrustPanel new];
 
-	[panel setDefaultButtonTitle:TXTLS(@"BasicLanguage[1011]")];
+	[panel setDefaultButtonTitle:TXTLS(@"Prompts[0008]")];
 	[panel setAlternateButtonTitle:nil];
 
 	if (protocolString == nil) {
-		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][2]", policyName)];
+		[panel setInformativeText:TXTLS(@"Prompts[1121][2]", policyName)];
 	} else {
-		[panel setInformativeText:TXTLS(@"BasicLanguage[1247][3]", policyName, protocolString)];
+		[panel setInformativeText:TXTLS(@"Prompts[1121][3]", policyName, protocolString)];
 	}
 
 	[panel beginSheetForWindow:[NSApp mainWindow]
@@ -495,7 +495,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 				didEndSelector:NULL
 				   contextInfo:NULL
 						 trust:trust
-					   message:TXTLS(@"BasicLanguage[1247][1]", policyName)];
+					   message:TXTLS(@"Prompts[1121][1]", policyName)];
 }
 
 #pragma mark -

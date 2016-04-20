@@ -217,7 +217,7 @@
 
 	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
 
-	return TXTLS(@"BasicLanguage[1216]", formattedTimeInterval);
+	return TXTLS(@"BasicLanguage[1025]", formattedTimeInterval);
 }
 
 - (IRCChannel *)channel

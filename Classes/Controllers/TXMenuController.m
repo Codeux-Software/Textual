@@ -304,7 +304,7 @@
 
 			NSString *searchProviderName = [self searchProviderName];
 
-			[item setTitle:TXTLS(@"BasicLanguage[3004]", searchProviderName)];
+			[item setTitle:TXTLS(@"BasicLanguage[1020]", searchProviderName)];
 
 			return [web hasSelection];
 		}
@@ -317,7 +317,7 @@
 			NSString *selection = [web selection];
 
 			if (NSObjectIsEmpty(selection) || [selection length] > 40) {
-				[item setTitle:TXTLS(@"BasicLanguage[1296]")];
+				[item setTitle:TXTLS(@"BasicLanguage[1018]")];
 
 				return NO;
 			} else {
@@ -327,7 +327,7 @@
 					selection = [NSString stringWithFormat:@"%@…", [selection trim]];
 				}
 
-				[item setTitle:TXTLS(@"BasicLanguage[1297]", selection)];
+				[item setTitle:TXTLS(@"BasicLanguage[1019]", selection)];
 
 				return YES;
 			}
@@ -415,14 +415,14 @@
 				if (prefersIPv6) {
 					prefersIPv6 = NO;
 
-					[item setTitle:TXTLS(@"BasicLanguage[1233][2]")];
+					[item setTitle:TXTLS(@"BasicLanguage[1014][2]")];
 				} else {
 					prefersIPv6 = YES;
 
-					[item setTitle:TXTLS(@"BasicLanguage[1233][3]")];
+					[item setTitle:TXTLS(@"BasicLanguage[1014][3]")];
 				}
 			} else {
-				[item setTitle:TXTLS(@"BasicLanguage[1233][1]")];
+				[item setTitle:TXTLS(@"BasicLanguage[1014][1]")];
 			}
 
 			if (prefersIPv6) {
@@ -510,11 +510,11 @@
 		case 604: // "Delete Channel"
 		{
 			if (_isQuery) {
-				[item setTitle:TXTLS(@"BasicLanguage[1025]")];
+				[item setTitle:TXTLS(@"BasicLanguage[1013]")];
 				
 				return YES;
 			} else {
-				[item setTitle:TXTLS(@"BasicLanguage[1024]")];
+				[item setTitle:TXTLS(@"BasicLanguage[1012]")];
 				
 				return _isChannel;
 			}
@@ -555,25 +555,25 @@
 				switch (keyAction) {
 					case TXCommandWKeyCloseWindowAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+						[item setTitle:TXTLS(@"BasicLanguage[1008]")];
 
 						break;
 					}
 					case TXCommandWKeyPartChannelAction:
 					{
 						if (_noChannel) {
-							[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+							[item setTitle:TXTLS(@"BasicLanguage[1008]")];
 
 							return NO;
 						} else {
 							if (_isChannel) {
-								[item setTitle:TXTLS(@"BasicLanguage[1015]")];
+								[item setTitle:TXTLS(@"BasicLanguage[1010]")];
 								
 								if (_notActive) {
 									return NO;
 								}
 							} else {
-								[item setTitle:TXTLS(@"BasicLanguage[1012]")];
+								[item setTitle:TXTLS(@"BasicLanguage[1007]")];
 							}
 						}
 						
@@ -581,7 +581,7 @@
 					}
 					case TXCommandWKeyDisconnectAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1014]", [u altNetworkName])];
+						[item setTitle:TXTLS(@"BasicLanguage[1009]", [u altNetworkName])];
 						
 						if (_notConnected) {
 							return NO;
@@ -591,13 +591,13 @@
 					}
 					case TXCommandWKeyTerminateAction:
 					{
-						[item setTitle:TXTLS(@"BasicLanguage[1016]")];
+						[item setTitle:TXTLS(@"BasicLanguage[1011]")];
 						
 						break;
 					}
 				}
 			} else {
-				[item setTitle:TXTLS(@"BasicLanguage[1013]")];
+				[item setTitle:TXTLS(@"BasicLanguage[1007]")];
 			}
 			
 			return YES;
@@ -883,7 +883,7 @@
 		/* Create a menu item for the client title. */
 		NSMenuItem *serverNewMenuItem = [NSMenuItem new];
 
-		[serverNewMenuItem setTitle:TXTLS(@"BasicLanguage[1183]", [u name])];
+		[serverNewMenuItem setTitle:TXTLS(@"BasicLanguage[1021]", [u name])];
 
 		NSMenu *serverNewMenu = [NSMenu new];
 
@@ -897,7 +897,7 @@
 			NSMenuItem *channelNewMenuItem = nil;
 
 			if (channelCount >= 10) {
-				channelNewMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", [c name])
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", [c name])
 															target:self
 															action:@selector(navigateToSpecificChannelInNavigationList:)];
 			} else {
@@ -907,7 +907,7 @@
 					keyboardIndex = 0; // Have 0 as the last item.
 				}
 				
-				channelNewMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1184]", [c name])
+				channelNewMenuItem = [NSMenuItem menuItemWithTitle:TXTLS(@"BasicLanguage[1022]", [c name])
 															target:self
 															action:@selector(navigateToSpecificChannelInNavigationList:)
 													 keyEquivalent:[NSString stringWithUniChar:('0' + keyboardIndex)]
@@ -1045,10 +1045,10 @@
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1026][3]")
-					defaultButton:TXTLS(@"BasicLanguage[1026][1]")
-				  alternateButton:TXTLS(@"BasicLanguage[1009]")
-				  informativeText:TXTLS(@"BasicLanguage[1026][2]")
+	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1106][1]")
+					defaultButton:TXTLS(@"Prompts[1106][3]")
+				  alternateButton:TXTLS(@"Prompts[0004]")
+				  informativeText:TXTLS(@"Prompts[1106][2]")
 				 defaultUserInput:self.currentSearchPhrase
 				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {
@@ -1549,15 +1549,15 @@
 		if ([_serverCurrentConfig excludedFromCloudSyncing] == NO) {
 			deleteFromCloudCheckboxShown = YES;
 
-			suppressionText = TXTLS(@"BasicLanguage[1198][3]");
+			suppressionText = TXTLS(@"Prompts[1107][3]");
 		}
 	}
 #endif
 
-	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1198][2]")
-													 title:TXTLS(@"BasicLanguage[1198][1]")
-											 defaultButton:TXTLS(@"BasicLanguage[1219]")
-										   alternateButton:TXTLS(@"BasicLanguage[1182]")
+	BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1107][2]")
+													 title:TXTLS(@"Prompts[1107][1]")
+											 defaultButton:TXTLS(@"Prompts[0001]")
+										   alternateButton:TXTLS(@"Prompts[0002]")
 											suppressionKey:nil
 										   suppressionText:suppressionText
 									   suppressionResponse:&suppressionResult];
@@ -1887,10 +1887,10 @@
 	}
 	
 	if (_isChannel) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1010][1]")
-														 title:TXTLS(@"BasicLanguage[1010][2]")
-												 defaultButton:TXTLS(@"BasicLanguage[1219]")
-											   alternateButton:TXTLS(@"BasicLanguage[1182]")
+		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1103][2]")
+														 title:TXTLS(@"Prompts[1103][1]")
+												 defaultButton:TXTLS(@"Prompts[0001]")
+											   alternateButton:TXTLS(@"Prompts[0002]")
 												suppressionKey:@"delete_channel"
 											   suppressionText:nil];
 		
@@ -2496,7 +2496,7 @@
 	
 	for (NSString *nickname in [self selectedMembersNicknames:sender]) {
         if ([nickname isEqualIgnoringCase:[u localNickname]]) {
-            [u printDebugInformation:TXTLS(@"BasicLanguage[1197]", [u networkAddress]) channel:c];
+            [u printDebugInformation:TXTLS(@"IRC[1004]", [u networkAddress]) channel:c];
         } else {
             [u sendCommand:[NSString stringWithFormat:@"%@ %@ %@", IRCPublicCommandIndex("gline"), nickname, [TPCPreferences IRCopDefaultGlineMessage]]];
         }
@@ -2605,9 +2605,9 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1110][2]")
-										   title:TXTLS(@"BasicLanguage[1110][1]")
-								   defaultButton:TXTLS(@"BasicLanguage[1186]")
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1104][2]")
+										   title:TXTLS(@"Prompts[1104][1]")
+								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil];
 	}
 }
@@ -2626,9 +2626,9 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1110][2]")
-										   title:TXTLS(@"BasicLanguage[1110][1]")
-								   defaultButton:TXTLS(@"BasicLanguage[1186]")
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[0005][2]")
+										   title:TXTLS(@"Prompts[0005][1]")
+								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil
 								  suppressionKey:nil
 								 suppressionText:nil];
@@ -2664,10 +2664,10 @@
 
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
-	[dialog alertWithMessageTitle:TXTLS(@"BasicLanguage[1228][1]")
-					defaultButton:TXTLS(@"BasicLanguage[1186]")
-				  alternateButton:TXTLS(@"BasicLanguage[1009]")
-				  informativeText:TXTLS(@"BasicLanguage[1228][2]")
+	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1102][1]")
+					defaultButton:TXTLS(@"Prompts[0005]")
+				  alternateButton:TXTLS(@"Prompts[0004]")
+				  informativeText:TXTLS(@"Prompts[1102][2]")
 				 defaultUserInput:nil
 				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {

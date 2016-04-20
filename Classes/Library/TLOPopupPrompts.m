@@ -183,7 +183,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	}
 
 	if (suppressTextSet == NO) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = TXTLS(@"Prompts[1040]");
 	}
 
 	/* Construct alert */
@@ -302,7 +302,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	}
 
 	if (suppressTextSet == NO) {
-		suppressText = TXTLS(@"BasicLanguage[1194]");
+		suppressText = TXTLS(@"Prompts[1040]");
 	}
 
 	/* Construct alert */

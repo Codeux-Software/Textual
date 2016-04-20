@@ -76,22 +76,22 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 #define _df(key, num)			case (key): { return TXTLS((num)); }
 
 	switch (event) {
-		_df(TXNotificationAddressBookMatchType, @"BasicLanguage[1086]")
-		_df(TXNotificationChannelMessageType, @"BasicLanguage[1087]")
-		_df(TXNotificationChannelNoticeType, @"BasicLanguage[1088]")
-		_df(TXNotificationConnectType, @"BasicLanguage[1089]")
-		_df(TXNotificationDisconnectType, @"BasicLanguage[1090]")
-		_df(TXNotificationInviteType, @"BasicLanguage[1092]")
-		_df(TXNotificationKickType, @"BasicLanguage[1093]")
-		_df(TXNotificationNewPrivateMessageType, @"BasicLanguage[1094]")
-		_df(TXNotificationPrivateMessageType, @"BasicLanguage[1095]")
-		_df(TXNotificationPrivateNoticeType, @"BasicLanguage[1096]")
-		_df(TXNotificationHighlightType, @"BasicLanguage[1091]")
-		_df(TXNotificationFileTransferSendSuccessfulType, @"BasicLanguage[1097]")
-		_df(TXNotificationFileTransferReceiveSuccessfulType, @"BasicLanguage[1098]")
-		_df(TXNotificationFileTransferSendFailedType, @"BasicLanguage[1099]")
-		_df(TXNotificationFileTransferReceiveFailedType, @"BasicLanguage[1100]")
-		_df(TXNotificationFileTransferReceiveRequestedType, @"BasicLanguage[1101]")
+		_df(TXNotificationAddressBookMatchType, @"Notifications[1045]")
+		_df(TXNotificationChannelMessageType, @"Notifications[1046]")
+		_df(TXNotificationChannelNoticeType, @"Notifications[1047]")
+		_df(TXNotificationConnectType, @"Notifications[1048]")
+		_df(TXNotificationDisconnectType, @"Notifications[1049]")
+		_df(TXNotificationInviteType, @"Notifications[1051]")
+		_df(TXNotificationKickType, @"Notifications[1052]")
+		_df(TXNotificationNewPrivateMessageType, @"Notifications[1053]")
+		_df(TXNotificationPrivateMessageType, @"Notifications[1054]")
+		_df(TXNotificationPrivateNoticeType, @"Notifications[1055]")
+		_df(TXNotificationHighlightType, @"Notifications[1050]")
+		_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1056]")
+		_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1057]")
+		_df(TXNotificationFileTransferSendFailedType, @"Notifications[1058]")
+		_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[1059]")
+		_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1060]")
 	}
 
 #undef _df
@@ -114,100 +114,100 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		case TXNotificationHighlightType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"BasicLanguage[1063]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1021]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationNewPrivateMessageType:
 		{
 			eventPriority = 1;
-			eventTitle = TXTLS(@"BasicLanguage[1066]");
+			eventTitle = TXTLS(@"Notifications[1024]");
 			
 			break;
 		}
 		case TXNotificationChannelMessageType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1059]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1017]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1060]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1018]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationPrivateMessageType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1067]");
+			eventTitle = TXTLS(@"Notifications[1025]");
 			
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1068]");
+			eventTitle = TXTLS(@"Notifications[1026]");
 			
 			break;
 		}
 		case TXNotificationKickType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1065]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1023]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationInviteType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1064]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1022]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationConnectType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1061]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1074]");
+			eventTitle = TXTLS(@"Notifications[1019]", eventTitle);
+			eventDescription = TXTLS(@"Notifications[1032]");
 			
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1062]", eventTitle);
-			eventDescription = TXTLS(@"BasicLanguage[1075]");
+			eventTitle = TXTLS(@"Notifications[1020]", eventTitle);
+			eventDescription = TXTLS(@"Notifications[1033]");
 			
 			break;
 		}
 		case TXNotificationAddressBookMatchType: 
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1058]");
+			eventTitle = TXTLS(@"Notifications[1016]");
 			
 			break;
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1069]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1070]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1071]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1029]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1072]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1030]", eventTitle);
 			
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
-			eventTitle = TXTLS(@"BasicLanguage[1073]", eventTitle);
+			eventTitle = TXTLS(@"Notifications[1031]", eventTitle);
 			
 			break;
 		}
@@ -232,7 +232,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 				/* sshhhh... you didn't see nothing. */
 				[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-				[notification setActionButtonTitle:TXTLS(@"BasicLanguage[1244]")];
+				[notification setActionButtonTitle:TXTLS(@"Prompts[0009]")];
 			}
 
 			/* These are the only event types we want to support for now. */
@@ -240,7 +240,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 				eventType == TXNotificationPrivateMessageType)
 			{
 				[notification setHasReplyButton:YES];
-				[notification setResponsePlaceholder:TXTLS(@"BasicLanguage[1239]")];
+
+				[notification setResponsePlaceholder:TXTLS(@"Notifications[1044]")];
 			}
 		}
 
@@ -319,22 +320,22 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 - (NSDictionary *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-		TXTLS(@"BasicLanguage[1086]"),
-		TXTLS(@"BasicLanguage[1087]"),
-		TXTLS(@"BasicLanguage[1088]"),
-		TXTLS(@"BasicLanguage[1089]"),
-		TXTLS(@"BasicLanguage[1090]"),
-		TXTLS(@"BasicLanguage[1091]"),
-		TXTLS(@"BasicLanguage[1092]"),
-		TXTLS(@"BasicLanguage[1093]"),
-		TXTLS(@"BasicLanguage[1094]"),
-		TXTLS(@"BasicLanguage[1095]"),
-		TXTLS(@"BasicLanguage[1096]"),
-		TXTLS(@"BasicLanguage[1097]"),
-		TXTLS(@"BasicLanguage[1098]"),
-		TXTLS(@"BasicLanguage[1099]"),
-		TXTLS(@"BasicLanguage[1100]"),
-		TXTLS(@"BasicLanguage[1101]"),
+		TXTLS(@"Notifications[1045]"),
+		TXTLS(@"Notifications[1046]"),
+		TXTLS(@"Notifications[1047]"),
+		TXTLS(@"Notifications[1048]"),
+		TXTLS(@"Notifications[1049]"),
+		TXTLS(@"Notifications[1050]"),
+		TXTLS(@"Notifications[1051]"),
+		TXTLS(@"Notifications[1052]"),
+		TXTLS(@"Notifications[1053]"),
+		TXTLS(@"Notifications[1054]"),
+		TXTLS(@"Notifications[1055]"),
+		TXTLS(@"Notifications[1056]"),
+		TXTLS(@"Notifications[1057]"),
+		TXTLS(@"Notifications[1058]"),
+		TXTLS(@"Notifications[1059]"),
+		TXTLS(@"Notifications[1060]"),
 	];
 	
 	return @{

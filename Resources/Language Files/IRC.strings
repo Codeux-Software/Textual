@@ -1,0 +1,215 @@
+/* ********************************************************************* 
+                  _____         _               _
+                 |_   _|____  _| |_ _   _  __ _| |
+                   | |/ _ \ \/ / __| | | |/ _` | |
+                   | |  __/>  <| |_| |_| | (_| | |
+                   |_|\___/_/\_\\__|\__,_|\__,_|_|
+
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+        Please see Acknowledgements.pdf for additional information.
+
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
+      names of its contributors may be used to endorse or promote products 
+      derived from this software without specific prior written permission.
+
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+
+ *********************************************************************** */
+
+/* Next unusued key: 1114 */
+
+/* Script errors */
+"IRC[1001]" = "Error: The command %@ is defined by a plugin and a script. Sending to server because of inability to determine priority.";
+
+"IRC[1002]" = "Script Execution Failure: %@";
+"IRC[1003]" = "Script Execution Failure (%1$@: %2$@): %3$@";
+
+/* Generic messages */
+"IRC[1004]" = "Textual has prevented you from banning yourself on %@";
+
+"IRC[1005]" = "Failed to send data to server. Not connected.";
+
+/* Default G:Line reason */
+"IRC[1006]" = "35d Your behavior is not conducive to the desired environment";
+"IRC[1007]" = "Your behavior is not conducive to the desired environment";
+"IRC[1008]" = "Your behavior is not conducive to the desired environment";
+"IRC[1009]" = "1d Shunned";
+
+/* Network not available messages */
+"IRC[1010]" = "Delaying auto connect for %ld seconds because the Internet is not available.";
+"IRC[1011]" = "Delaying reconnect for %ld seconds because the Internet is not available.";
+
+/* /defaults/ command */
+"IRC[1012]" = "Invalid Syntax. Type “/defaults help” for more information.";
+
+"IRC[1013][01]" = "The \002defaults\002 command can be used to toggle very specific, rarely used features.";
+"IRC[1013][02]" = " ";
+"IRC[1013][03]" = "Usage:";
+"IRC[1013][04]" = "\t“/defaults enable <token>” — Enables the feature defined by \002<token>\002";
+"IRC[1013][05]" = "\t“/defaults disable <token>” — Disables the feature defined by \002<token>\002";
+"IRC[1013][06]" = "\t“/defaults features” — View list of supported features";
+"IRC[1013][07]" = " ";
+"IRC[1013][08]" = "Surround \002<token>\002 with double quotes (\") if it contains a space.";
+
+"IRC[1014]" = "Cannot enable the feature “%@” because it is not supported";
+"IRC[1015]" = "Cannot disable the feature “%@” because it is not supported";
+
+"IRC[1016]" = "Enabled Feature: %@";
+"IRC[1017]" = "Disabled Feature: %@";
+
+/* File transfer server console messages */
+"IRC[1018]" = "Trying file transfer to %1$@, %2$@ (%3$qi bytes)";
+"IRC[1019]" = "Received file transfer request from %1$@, %2$@ (%3$qi bytes)";
+"IRC[1020]" = "Textual has received a DCC request from %@ that could not be processed.";
+
+/* /mode/ command */
+"IRC[1021]" = "The half-op (+h) mode is not supported on this server";
+
+/* /lagcheck/ command */
+"IRC[1022]" = "Received lag check reply from %1$@. Time elapsed: %2$1.5f seconds. (Rating: %3$@)";
+"IRC[1023]" = "Waiting for response from lag check…";
+"IRC[1024]" = "Received lag check reply even though we never sent a request for one. Exploit attempt?";
+
+"IRC[1025][00]" = "Yeah, okay…";
+"IRC[1025][01]" = "Are you plugged into the server?";
+"IRC[1025][02]" = "Almost No Lag";
+"IRC[1025][03]" = "Very Fast";
+"IRC[1025][04]" = "Fast";
+"IRC[1025][05]" = "Average";
+"IRC[1025][06]" = "Slow";
+"IRC[1025][07]" = "Very Slow";
+"IRC[1025][08]" = "Dang! Call your ISP";
+"IRC[1025][09]" = "You Fail!";
+
+/* Version info */
+"IRC[1026]" = "%1$@ IRC Client: www.textualapp.com — v%2$@";
+
+/* /myversion/ command */
+"IRC[1027]" = "%1$@ %2$@ (Build %3$@) (%4$@)";
+"IRC[1028]" = "Mac App Store";
+"IRC[1029]" = "Standalone Version";
+"IRC[1030]" = "I am using %@";
+
+/* Miscellaneous messages related to IRC events */
+"IRC[1031]" = "Be back later";
+"IRC[1032]" = "\002-CTCP-\002 %1$@ from %2$@ was ignored";
+"IRC[1033]" = "away-notify multi-prefix userhost-in-names sasl server-time";
+"IRC[1034]" = "CAP CLIENTINFO DCC FINGER PING TIME USERINFO VERSION";
+"IRC[1035]" = "Stop fingering me pervert!";
+"IRC[1036]" = "There are no capabilities that are enabled";
+"IRC[1037]" = "The following capabilities are currently enabled: %@";
+"IRC[1038]" = "(No Topic)";
+"IRC[1039]" = "Mode is \002%@\002";
+"IRC[1040]" = "Topic is \002%@\002";
+"IRC[1041]" = "Set by \002%1$@\002 on %2$@";
+"IRC[1042]" = "Website is \002%@\002";
+"IRC[1043]" = "Attempting to rejoin channel in three seconds";
+"IRC[1044]" = "\002%1$@\002 changed the topic to \002%2$@\002";
+"IRC[1045]" = "Connection to host established";
+"IRC[1046]" = "Connection to host at [%@] established";
+"IRC[1047]" = "Connection secured using %@";
+"IRC[1048]" = "Disconnected for Sleep Mode";
+"IRC[1049]" = "Disconnected for server redirect";
+"IRC[1050]" = "Disconnected from server because of an untrusted certificate";
+"IRC[1051]" = "Disconnected from server because the Internet is not reachable";
+"IRC[1052]" = "Disconnected";
+"IRC[1053]" = "%.0f minutes have elapsed since last response from this connection. Disconnecting due to timeout.";
+"IRC[1054]" = "%.0f minutes have elapsed since last response from this connection. It's possible the connection is timing out.";
+"IRC[1055]" = "Message(%1$d): %2$@";
+"IRC[1056]" = "Connecting to [%1$@] on port %2$ld";
+"IRC[1057]" = "Connecting using SOCKS4 proxy [%1$@] on port %2$ld";
+"IRC[1058]" = "Connecting using SOCKS5 proxy [%1$@] on port %2$ld";
+"IRC[1059]" = "Connecting using HTTP proxy [%1$@] on port %2$ld";
+"IRC[1060]" = "Reconnecting…";
+"IRC[1061]" = "Retrying…";
+"IRC[1062]" = "\002%1$@\002 sets mode \002%2$@\002";
+"IRC[1063]" = "\002-%1$@ CTCP-\002 %2$@ (%3$1.5f sec)";
+"IRC[1064]" = "\002-%1$@ CTCP-\002 %2$@ %3$@";
+"IRC[1065]" = "\002-CTCP-\002 %1$@ from %2$@";
+"IRC[1066]" = "%1$@ (%2$@)";
+"IRC[1067]" = "%@ IRC Network";
+"IRC[1068][0]" = "%1$@ is now known as \002%2$@\002";
+"IRC[1068][1]" = "You're now known as \002%2$@\002";
+"IRC[1069]" = "\002%1$@\002 (%2$@@%3$@) left IRC";
+"IRC[1070]" = "\002%1$@\002 left the query by disconnecting from IRC";
+"IRC[1071]" = "\002%1$@\002 joined the query by connecting to IRC";
+"IRC[1072]" = "%@, your user modes are %@";
+"IRC[1073]" = "Inviting %1$@ to join %2$@";
+"IRC[1074]" = "%1$@!%2$@@%3$@ invited you to join %4$@";
+"IRC[1075]" = "%1$@ is away (%2$@)";
+"IRC[1076]" = "You are now an IRC Operator on %@";
+"IRC[1077]" = "\002%1$@\002 (%2$@@%3$@) joined the channel";
+"IRC[1078]" = "\002%1$@\002 kicked \002%2$@\002 from the channel (%3$@)";
+"IRC[1079]" = "\002%1$@\002 (%2$@@%3$@) left the channel";
+"IRC[1080]" = "%1$@ (%2$@)";
+"IRC[1081]" = "%1$@ is in %2$@";
+"IRC[1082]" = "%1$@ is connected on %2$@ (%3$@)";
+"IRC[1083]" = "%1$@ has userhost %2$@@%3$@ and real name “%4$@”";
+"IRC[1084]" = "%1$@ signed on at %2$@ and has been idle for %3$@";
+"IRC[1085]" = "%1$@ was connected to %2$@ on %3$@";
+"IRC[1086]" = "%1$@ had userhost %2$@@%3$@ and real name “%4$@”";
+"IRC[1088]" = "You cannot send private messages to %@. Anything that you send to them will be ignored until you are added to their list of recognized users.";
+"IRC[1089]" = "%1$@ (%2$@) tried to send you a private message, but it was ignored due to \002umode +g\002. Perform “/accept %1$@” to allow this user to communicate with you.";
+
+/* /timer/ command */
+"IRC[1090]" = "Timer command requires a whole number for interval. Syntax: “/timer <seconds> <command>”";
+
+/* Raw mode messages */
+"IRC[1091]" = "Raw data will no longer be output.";
+"IRC[1092]" = "Raw data will now be output to the ”Console” application until you disable it by performing “/debug raw off” or by disconnecting.";
+"IRC[1093]" = "------------- End Raw Mode Session -------------";
+"IRC[1094]" = "------------- Begin Raw Mode Session -------------";
+
+/* Log file session headers */
+"IRC[1095]" = "------------- Begin Session -------------";
+"IRC[1096]" = "------------- End Session -------------";
+
+/* /mute/ command */
+"IRC[1097]" = "Sound is already muted";
+"IRC[1098]" = "Sound is no longer muted";
+"IRC[1099]" = "Sound is not muted";
+"IRC[1100]" = "Sound has been muted";
+
+/* /tage/ command */
+"IRC[1101]" = "\002Time Since First Commit:\002 %@";
+
+/* Ban list */
+"IRC[1102][1]" = "Ban in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1102][2]" = "Ban in %1$@: %2$@";
+
+/* Invite exception list */
+"IRC[1103][1]" = "Invite Exception in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1103][2]" = "Invite Exception in %1$@: %2$@";
+
+/* Ban exception list */
+"IRC[1104][1]" = "Ban exception in %1$@: %2$@ set by %3$@ on %4$@";
+"IRC[1104][2]" = "Ban exception in %1$@: %2$@";
+
+/* /setcolor/ command */
+"IRC[1108]" = "Error: This command cannot be used unless the checkbox labeled “Disable nickname colors” is unchecked in the \002Style\002 section of \002Preferences\002.";
+"IRC[1109]" = "Error: This command cannot be used unless the checkbox labeled “Enable new nickname color system” is checked in the \002Experimental Settings\002 section of \002Preferences\002.";
+"IRC[1110]" = "Error: Cannot set color for “%@“ because that does not appear to be a valid nickname.";
+"IRC[1111]" = "Error: The style that is in use is not compatible with this command";
+
+/* Cipher suite information */
+"IRC[1112][1]" = "\002%1$@\002 with the cipher suite: \002%2$@\002";
+"IRC[1112][2]" = "\002%1$@\002 with the cipher suite: \002%2$@\002 \0034\002(deprecated)\002\003";

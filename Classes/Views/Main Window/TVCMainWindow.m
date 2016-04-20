@@ -1548,20 +1548,20 @@
 	
 	if (u && c == nil) { // = Client
 		/* Append basic info. */
-		[title appendString:TXTLS(@"BasicLanguage[1008]", [u localNickname], [u altNetworkName])];
+		[title appendString:TXTLS(@"TVCMainWindow[1015]", [u localNickname], [u altNetworkName])];
 		
 		/* If we have the actual server that the client is connected
 		 to, then we we append that. Otherwise, we just leave it blank. */
 		NSString *networkAddress = [u networkAddress];
 		
 		if (NSObjectIsNotEmpty(networkAddress)) {
-			[title appendString:TXTLS(@"BasicLanguage[1005]")];
+			[title appendString:TXTLS(@"TVCMainWindow[1012]")];
 			[title appendString:networkAddress];
 		}
 	} else {
 		/* Append basic info. */
-		[title appendString:TXTLS(@"BasicLanguage[1008]", [u localNickname], [u altNetworkName])];
-		[title appendString:TXTLS(@"BasicLanguage[1005]")];
+		[title appendString:TXTLS(@"TVCMainWindow[1015]", [u localNickname], [u altNetworkName])];
+		[title appendString:TXTLS(@"TVCMainWindow[1012]")];
 		
 		if ([c isPrivateMessage]) {
 			/* Textual defines the topic of a private message as the user host. */
@@ -1581,13 +1581,13 @@
 			NSString *userCount = TXFormattedNumber([c numberOfMembers]);
 
 			[title appendString:[c name]];
-			[title appendString:TXTLS(@"BasicLanguage[1007]", userCount)];
+			[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
 			
 			/* If we are aware of the channel modes, then we append that. */
 			NSString *modes = [[c modeInfo] titleString];
 			
 			if ([modes length] > 1) {
-				[title appendString:TXTLS(@"BasicLanguage[1006]", modes)];
+				[title appendString:TXTLS(@"TVCMainWindow[1013]", modes)];
 			}
 		}
 	}
@@ -1595,7 +1595,7 @@
 	/* Set final title. */
 	[self setTitle:title];
 
-	[XRAccessibility setAccessibilityTitle:TXTLS(@"BasicLanguage[1281]") forObject:self];
+	[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[1004]") forObject:self];
 }
 
 #pragma mark -

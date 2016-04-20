@@ -267,7 +267,7 @@
 		}
 
 		/* Could not establish base connection, error. */
-		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1016]"];
+		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
 		
 		return; // Break chain.
 	}
@@ -297,7 +297,7 @@
         self.transferPort += 1;
 
 		if (self.transferPort > [TPCPreferences fileTransferPortRangeEnd]) {
-			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 
 			return; // Break the chain.
 		}
@@ -394,7 +394,7 @@
 		LogToConsole(@"Port mapping failed with error code: %i", [self.portMapping error]);
 
 		if ([self isReversed]) {
-			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1017]"];
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
 		} else {
 			/* If mapping fails, we silently fail. */
 			/* We tried and it was successful, then that is good, but if we
@@ -544,7 +544,7 @@
 
 		/* If we had problem reading file, then we need to stop now... */
 		if (PointerIsEmpty(fileAttrs)) {
-			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
+			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1019]"];
 
 			return; // Break chain.
 		}
@@ -668,7 +668,7 @@
 
 - (void)setDidErrorOnBadSenderAddress
 {
-	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1019]"];
+	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1020]"];
 }
 
 #pragma mark -
@@ -720,7 +720,7 @@
 
 	if (self.fileHandle == nil) {
 		/* There was a problem opening the file handle. */
-		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
+		[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1019]"];
 
 		return NO;
 	} else if ([self isResume]) {
@@ -828,7 +828,7 @@
 	}
 	
 	/* Normal operations. */
-	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1020]"];
+	[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1021]"];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag

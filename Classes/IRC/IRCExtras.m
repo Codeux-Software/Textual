@@ -440,15 +440,15 @@
 			if (totalChannelCount > 1) {
 				NSString *channelListString = [channelListArray componentsJoinedByString:@", "];
 
-				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1286][2]", [existingClient name])
-																	 title:TXTLS(@"BasicLanguage[1286][1]", serverAddress, channelListString)
-															 defaultButton:TXTLS(@"BasicLanguage[1286][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1286][4]")];
+				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1110][2]", [existingClient name])
+																	 title:TXTLS(@"Prompts[1110][1]", serverAddress, channelListString)
+															 defaultButton:TXTLS(@"Prompts[1110][3]")
+														   alternateButton:TXTLS(@"Prompts[1110][4]")];
 			} else {
-				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1285][2]", [existingClient name])
-																	 title:TXTLS(@"BasicLanguage[1285][1]", serverAddress, channelListArray[0])
-															 defaultButton:TXTLS(@"BasicLanguage[1285][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1285][4]")];
+				mergeConnection = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1109][2]", [existingClient name])
+																	 title:TXTLS(@"Prompts[1109][1]", serverAddress, channelListArray[0])
+															 defaultButton:TXTLS(@"Prompts[1109][3]")
+														   alternateButton:TXTLS(@"Prompts[1109][4]")];
 			}
 
 			// YES = default button (create new connection)

@@ -37,13 +37,13 @@
 
 #import "TextualApplication.h"
 
-/* Localization. */
+/* Localization */
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 
 TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
 TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
 
-/* Time. */
+/* Time */
 TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format); // Acts as a forward for strftime(). TXDefaultTextualTimestampFormat is used when format is empty.
 
 TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
@@ -54,10 +54,10 @@ TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 // return the result or nil, or optionally return the original if result is nil.
 TEXTUAL_EXTERN NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail);
 
-/* Grand Central Dispatch. */
+/* Grand Central Dispatch */
 TEXTUAL_EXTERN void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
 
-/* Everything else. */
+/* Everything els. */
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);

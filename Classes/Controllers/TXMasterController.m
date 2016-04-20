@@ -171,10 +171,10 @@
 				}
 			}
 
-			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1237][2]")
-																	 title:TXTLS(@"BasicLanguage[1237][1]")
-															 defaultButton:TXTLS(@"BasicLanguage[1237][3]")
-														   alternateButton:TXTLS(@"BasicLanguage[1237][4]")];
+			BOOL continueLaunch = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1115][2]")
+																	 title:TXTLS(@"Prompts[1115][1]")
+															 defaultButton:TXTLS(@"Prompts[0001]")
+														   alternateButton:TXTLS(@"Prompts[0002]")];
 
 			if (continueLaunch == NO) {
 				self.skipTerminateSave = YES;
@@ -245,9 +245,9 @@
 	NSTimeInterval timeleft = (_betaTesterMaxApplicationLifespan - timeSpent);
 
 	if (timeSpent > _betaTesterMaxApplicationLifespan) {
-		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1243][2]")
-												 title:TXTLS(@"BasicLanguage[1243][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1186]")
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1120][2]")
+												 title:TXTLS(@"Prompts[1120][1]")
+										 defaultButton:TXTLS(@"Prompts[0005]")
 									   alternateButton:nil];
 
 		self.skipTerminateSave = YES;
@@ -257,9 +257,9 @@
 	} else {
 		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
 
-		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1242][2]", formattedTime)
-												 title:TXTLS(@"BasicLanguage[1242][1]")
-										 defaultButton:TXTLS(@"BasicLanguage[1186]")
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1119][2]", formattedTime)
+												 title:TXTLS(@"Prompts[1119][1]")
+										 defaultButton:TXTLS(@"Prompts[0005]")
 									   alternateButton:nil];
 	}
 }
@@ -309,10 +309,10 @@
 	}
 	
 	if ([TPCPreferences confirmQuit]) {
-		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"BasicLanguage[1000][1]")
-														 title:TXTLS(@"BasicLanguage[1000][2]")
-												 defaultButton:TXTLS(@"BasicLanguage[1000][3]")
-											   alternateButton:TXTLS(@"BasicLanguage[1009]")];
+		BOOL result = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1101][2]")
+														 title:TXTLS(@"Prompts[1101][1]")
+												 defaultButton:TXTLS(@"Prompts[1101][3]")
+											   alternateButton:TXTLS(@"Prompts[0004]")];
 
 		return result;
 	}

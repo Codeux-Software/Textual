@@ -135,7 +135,7 @@
 
 		NSMutableString *description = [NSMutableString string];
 
-		[description appendString:TXTLS(@"BasicLanguage[1229][2]", certificateHost)];
+		[description appendString:TXTLS(@"Prompts[1131][2]", certificateHost)];
 
 		if (ownershipInformation) {
 			[description appendString:NSStringNewlinePlaceholder];
@@ -143,12 +143,12 @@
 			[description appendString:ownershipInformation];
 		}
 #else
-		NSString *description = TXTLS(@"BasicLanguage[1229][2]", certificateHost);
+		NSString *description = TXTLS(@"Prompts[1131][2]", certificateHost);
 #endif
 
 		 self.currentPanel = [SFCertificateTrustPanel new];
 		
-		[self.currentPanel setAlternateButtonTitle:TXTLS(@"BasicLanguage[1009]")];
+		[self.currentPanel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
 		
 		[self.currentPanel setInformativeText:description];
 		
@@ -158,7 +158,7 @@
 							didEndSelector:@selector(_certificateSheetDidEnd_stage1:returnCode:contextInfo:)
 							   contextInfo:(__bridge void *)(contextInfo)
 									 trust:trustInfo
-								   message:TXTLS(@"BasicLanguage[1229][1]", certificateHost)];
+								   message:TXTLS(@"Prompts[1131][1]", certificateHost)];
 	});
 }
 

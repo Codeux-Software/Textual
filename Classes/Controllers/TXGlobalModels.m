@@ -134,9 +134,9 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 				NSString *languageKey = nil;
 				
 				if (total > 1 || total < 1) {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1204][%@]", [unit uppercaseString]];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", [unit uppercaseString]];
 				} else {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1205][%@]", [unit uppercaseString]];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", [unit uppercaseString]];
 				}
 				
 				/* shortValue returns only the first time component. */
@@ -155,7 +155,7 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 			[finalResult deleteCharactersInRange:cutRange];
 		} else {
 			/* Return "0 seconds" when there are no results. */
-			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1204][SECOND]")];
+			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][SECOND]")];
 			
 			[finalResult setString:emptyTime];
 		}
@@ -229,7 +229,15 @@ NSString *TXTLS(NSString *key, ...)
 
 NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
-	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];
+	NSInteger openBracketPosition = [key stringPosition:@"["];
+
+	if (openBracketPosition > 0) {
+		NSString *table = [key substringToIndex:openBracketPosition];
+
+		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:table arguments:args];
+	} else {
+		return [TLOLanguagePreferences localizedStringWithKey:key from:bundle arguments:args];
+	}
 }
 
 NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
