@@ -408,7 +408,7 @@
 {
 	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
 
-	if (timeLeft <= 0) {
+	if (timeLeft >= 0) {
 		return TXTLS(@"TLOLicenseManager[1016]");
 	} else {
 		NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
