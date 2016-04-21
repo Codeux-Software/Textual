@@ -69,18 +69,18 @@
 "BasicLanguage[1021]" = "%@";
 "BasicLanguage[1022]" = "%@";
 
-"BasicLanguage[1023][DAY]" = "days";
-"BasicLanguage[1023][HOUR]" = "hours";
-"BasicLanguage[1023][MINUTE]" = "minutes";
-"BasicLanguage[1023][MONTH]" = "months";
-"BasicLanguage[1023][SECOND]" = "seconds";
-"BasicLanguage[1023][YEAR]" = "years";
+"BasicLanguage[1023][day]" = "days";
+"BasicLanguage[1023][hour]" = "hours";
+"BasicLanguage[1023][minute]" = "minutes";
+"BasicLanguage[1023][month]" = "months";
+"BasicLanguage[1023][second]" = "seconds";
+"BasicLanguage[1023][year]" = "years";
 
-"BasicLanguage[1024][DAY]" = "day";
-"BasicLanguage[1024][HOUR]" = "hour";
-"BasicLanguage[1024][MINUTE]" = "minute";
-"BasicLanguage[1024][MONTH]" = "month";
-"BasicLanguage[1024][SECOND]" = "second";
-"BasicLanguage[1024][YEAR]" = "year";
+"BasicLanguage[1024][day]" = "day";
+"BasicLanguage[1024][hour]" = "hour";
+"BasicLanguage[1024][minute]" = "minute";
+"BasicLanguage[1024][month]" = "month";
+"BasicLanguage[1024][second]" = "second";
+"BasicLanguage[1024][year]" = "year";
 
 "BasicLanguage[1025]" = "%@ ago";
