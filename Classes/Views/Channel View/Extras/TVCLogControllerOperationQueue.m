@@ -37,15 +37,21 @@
 
 #import "TextualApplication.h"
 
+#define _compileDebugCode			1
+
 #pragma mark -
 #pragma mark Define Private Header
 
 @interface TVCLogControllerOperationItem : NSOperation
-@property (nonatomic, weak) TVCLogController *controller;
+@property (nonatomic, weak) TVCLogController *logController;
 @property (nonatomic, copy) TVCLogControllerOperationBlock executionBlock;
 @property (nonatomic, assign) BOOL isStandalone;
 
-- (NSInteger)dependencyCount;
+#if _compileDebugCode == 1
+@property (nonatomic, copy) NSString *operationDescription;
+#endif
+
+@property (readonly) NSInteger dependencyCount;
 @end
 
 #pragma mark -
@@ -71,10 +77,15 @@
 
 - (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender
 {
-	[self enqueueMessageBlock:callbackBlock for:sender isStandalone:NO];
+	[self enqueueMessageBlock:callbackBlock for:sender description:nil isStandalone:NO];
 }
 
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender isStandalone:(BOOL)isStandalone
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description
+{
+	[self enqueueMessageBlock:callbackBlock for:sender description:description isStandalone:NO];
+}
+
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description isStandalone:(BOOL)isStandalone
 {
 	[self performBlockOnMainThread:^{
 		PointerIsEmptyAssert(callbackBlock);
@@ -89,11 +100,19 @@
 			[operation addDependency:lastOp];
 		}
 
-		[operation setController:sender];
+		[operation setLogController:sender];
 
 		[operation setIsStandalone:isStandalone];
 
 		[operation setExecutionBlock:callbackBlock];
+
+#if _compileDebugCode == 1
+		if (description) {
+			[operation setOperationDescription:description];
+		} else {
+			[operation setOperationDescription:@"No Description"];
+		}
+#endif
 
 		/* Add the operations. */
 		[self addOperation:operation];
@@ -108,7 +127,7 @@
 {
 	/* Cancel all. */
 	for (id operation in [self operations]) {
-		if ([operation controller] == controller) {
+		if ([operation logController] == controller) {
 			[operation cancel];
 		}
 	}
@@ -129,27 +148,31 @@
 
 - (void)updateReadinessState:(TVCLogController *)controller
 {
+	PointerIsEmptyAssert(controller);
+
 	[self performBlockOnMainThread:^{
 		/* Mark all objects part of this controller
 		 that are not cancelled and have no dependencies
 		 as ready or maybe is ready. */
-		PointerIsEmptyAssert(controller);
-
 		NSArray *operations = [self operations];
 
 		for (id operation in operations) {
-			if ([operation controller] != controller) {
+			if ([operation logController] != controller) {
+				continue;
+			}
+
+			if ([operation isCancelled]) {
 				continue;
 			}
 
 			NSInteger depCount = [operation dependencyCount];
 
-			if ([operation isCancelled] == NO) {
-				if (depCount <= 0) {
-					[operation willChangeValueForKey:@"isReady"];
-					[operation didChangeValueForKey:@"isReady"];
-				}
+			if (depCount > 0) {
+				continue;
 			}
+
+			[operation willChangeValueForKey:@"isReady"];
+			[operation didChangeValueForKey:@"isReady"];
 		}
 	}];
 }
@@ -164,7 +187,7 @@
 	NSEnumerator *operationEnum = [[self operations] reverseObjectEnumerator];
 
 	for (id operation in operationEnum) {
-		if ([operation controller] != controller) {
+		if ([operation logController] != controller) {
 			continue;
 		}
 
@@ -197,19 +220,38 @@
 
 - (void)main
 {
-	/* Perform task */
-	self.executionBlock(self);
+	[self executeBlock];
 
-	/* Destroy operation */
 	[self teardownOperation];
+}
+
+- (void)executeBlock
+{
+#if _compileDebugCode == 1
+	if (self.executionBlock == nil) {
+		NSMutableString *exceptionMessage = [NSMutableString string];
+
+		[exceptionMessage appendString:@"\n\nExecution block is nil when it probably shouldn't be.\n"];
+
+		[exceptionMessage appendFormat:@"\tOperation: %@\n", [self description]];
+		[exceptionMessage appendFormat:@"\tisCancelled: %d\n", [self isCancelled]];
+		[exceptionMessage appendFormat:@"\tisExecuting: %d\n", [self isExecuting]];
+		[exceptionMessage appendFormat:@"\tisReady: %d\n", [self isReady]];
+		[exceptionMessage appendFormat:@"\tDescription: '%@'\n\n", self.operationDescription];
+
+		NSAssert(NO, exceptionMessage);
+	}
+#endif
+
+	self.executionBlock(self);
 }
 
 - (void)teardownOperation
 {
 	/* Dereference everything associated with this operation. */
-	[self setController:nil];
+	self.logController = nil;
 
-	[self setExecutionBlock:nil];
+	self.executionBlock = nil;
 
 	/* Kill existing dependency. */
 	/* Discussion: Normally NSOperationQueue removes all strong references to
@@ -219,20 +261,23 @@
 	 have executed the block we wanted, we release any dependency assigned. */
 	NSArray *operations = [self dependencies];
 
-	for (id operation in operations) {
-		[self removeDependency:operation];
-	}
+	[self removeDependency:[operations firstObject]];
 }
 
 - (BOOL)isReady
 {
 	NSInteger depCount = [self dependencyCount];
 
-	if (depCount < 1 || [self isStandalone]) {
-		return ([super isReady] && [[self controller] isLoaded]);
+	if (depCount < 1 || self.isStandalone) {
+		return ([super isReady] && [self viewIsLoaded]);
 	} else {
 		return  [super isReady];
 	}
+}
+
+- (BOOL)viewIsLoaded
+{
+	return [self.logController isLoaded];
 }
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
