@@ -73,16 +73,16 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 
 #pragma mark -
 
-#define _rendererURLAttribute					(1 << 1)
-#define _rendererChannelNameAttribute			(1 << 2)
-#define _rendererBoldFormatAttribute			(1 << 3)
-#define _rendererUnderlineFormatAttribute		(1 << 4)
-#define _rendererItalicFormatAttribute			(1 << 5)
-#define _rendererTextColorAttribute				(1 << 6)
-#define _rendererBackgroundColorAttribute		(1 << 7)
-#define _rendererConversationTrackerAttribute	(1 << 8)
-#define _rendererKeywordHighlightAttribute		(1 << 9)
-#define _rendererStrikethroughFormatAttribute	(1 << 10)
+#define _rendererURLAttribute					(1 << 10)
+#define _rendererChannelNameAttribute			(1 << 11)
+#define _rendererBoldFormatAttribute			(1 << 12)
+#define _rendererUnderlineFormatAttribute		(1 << 13)
+#define _rendererItalicFormatAttribute			(1 << 14)
+#define _rendererTextColorAttribute				(1 << 15)
+#define _rendererBackgroundColorAttribute		(1 << 16)
+#define _rendererConversationTrackerAttribute	(1 << 17)
+#define _rendererKeywordHighlightAttribute		(1 << 18)
+#define _rendererStrikethroughFormatAttribute	(1 << 19)
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
