@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#define _textContainerPadding		3
-
 @interface TVCInputPromptDialog ()
 @property (nonatomic, weak) IBOutlet NSButton *defaultButton;
 @property (nonatomic, weak) IBOutlet NSButton *alternateButton;

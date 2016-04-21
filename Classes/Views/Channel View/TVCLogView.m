@@ -112,9 +112,9 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 {
 	NSUInteger m = [e modifierFlags];
 
-	BOOL cmd = (m & NSCommandKeyMask);
-	BOOL alt = (m & NSAlternateKeyMask);
-	BOOL ctrl = (m & NSControlKeyMask);
+	BOOL cmd = ((m & NSCommandKeyMask) == NSCommandKeyMask);
+	BOOL alt = ((m & NSAlternateKeyMask) == NSAlternateKeyMask);
+	BOOL ctrl = ((m & NSControlKeyMask) == NSControlKeyMask);
 
 	if (ctrl == NO && alt == NO && cmd == NO) {
 		[[self logController] logViewWebViewKeyDown:e];

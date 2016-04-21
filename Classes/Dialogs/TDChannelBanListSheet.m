@@ -45,6 +45,7 @@
 @end
 
 @interface TDChannelBanListSheet ()
+@property (nonatomic, copy, readwrite) NSArray *changeModeList;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *entryTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *entryTableController;
@@ -183,7 +184,7 @@
 		[changeArray addObject:combinedModeSet];
 	}
 
-	_changeModeList = [changeArray copy];
+	self.changeModeList = changeArray;
 
 	[super cancel:nil];
 }

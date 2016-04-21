@@ -99,7 +99,7 @@
 	NSTableRowView *tableRow = [self recursivelyFindTableRowViewRelativeTo:[self controlView]];
 
 	if (tableRow == nil) {
-		return NO;
+		return nil;
 	}
 
 	if ([tableRow respondsToSelector:@selector(fontSmoothingBackgroundColor)]) {

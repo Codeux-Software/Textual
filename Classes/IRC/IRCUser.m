@@ -44,7 +44,7 @@
 
 #define _colorNumberMax				 30
 
-#define _presentAwayMessageFor301Threshold			300.0f
+#define _presentAwayMessageFor301Threshold			300.0
 
 @interface IRCUser ()
 @property (nonatomic, weak) IRCISupportInfo *supportInfo;
@@ -89,7 +89,7 @@
 
 		if (_isAway == NO) {
 			if (self.presentAwayMessageFor301LastEvent > 0.0) {
-				self.presentAwayMessageFor301LastEvent = 0.0f;
+				self.presentAwayMessageFor301LastEvent = 0.0;
 			}
 		}
 	}
@@ -103,7 +103,7 @@
 
 	CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
 
-	if ((self.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301LastEvent) < now) {
+	if ((self.presentAwayMessageFor301LastEvent + _presentAwayMessageFor301Threshold) < now) {
 		 self.presentAwayMessageFor301LastEvent = now;
 
 		return YES;
@@ -549,7 +549,7 @@
 			}
 		}
 
-		return [NSString stringWithFormat:@"hsl(%ld,%ld%%,%ld%%)", h, s, l];
+		return [NSString stringWithFormat:@"hsl(%i,%i%%,%i%%)", h, s, l];
 	} else {
 		return nil;
 	}

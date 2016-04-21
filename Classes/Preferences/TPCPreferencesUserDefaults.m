@@ -80,7 +80,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 		return [super initWithSuiteName:nil];
 #endif
 	} else {
-		return [super initWithUser:nil];
+		return [super initWithUser:NSUserName()];
 	}
 }
 

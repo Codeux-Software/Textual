@@ -87,11 +87,11 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 - (BOOL)reloadLoadingScreen;
 
 - (void)updateTitle;
-- (void)updateTitleFor:(id)item;
+- (void)updateTitleFor:(IRCTreeItem *)item;
 
 - (void)reloadTree;
-- (void)reloadTreeItem:(id)item; // Can be either IRCClient or IRCChannel
-- (void)reloadTreeGroup:(id)item; // Will do not unless item is a IRCClient
+- (void)reloadTreeItem:(IRCTreeItem *)item; // Can be either IRCClient or IRCChannel
+- (void)reloadTreeGroup:(IRCTreeItem *)item; // Will do not unless item is a IRCClient
 
 - (void)adjustSelection;
 
@@ -150,9 +150,4 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 @property (getter=isServerListVisible, readonly) BOOL serverListVisible;
 
 - (NSRect)defaultWindowFrame;
-
-- (void)setKeyHandlerTarget:(id)target;
-
-- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
-- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
 @end

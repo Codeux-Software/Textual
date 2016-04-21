@@ -77,7 +77,7 @@
 #pragma mark -
 #pragma mark NSOutlineViewDelegate Delegates
 
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(NSDictionary *)item
+- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
 {
 	if (item) {
 		return [item[@"children"] count];
@@ -86,7 +86,7 @@
 	}
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(NSDictionary *)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item) {
 		return item[@"children"][index];
@@ -95,12 +95,12 @@
 	}
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(NSDictionary *)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
 {
 	return ([item boolForKey:@"blockCollapse"] == NO);
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(NSDictionary *)item
+- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
 {
 	return [item containsKey:@"children"];
 }
@@ -122,7 +122,7 @@
 	}
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(NSDictionary *)item
+- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
 	return item[@"name"];
 }
@@ -132,7 +132,7 @@
 	return ([item containsKey:@"children"] == NO);
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(NSDictionary *)item
+- (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	NSTableCellView *newView = [outlineView makeViewWithIdentifier:@"navEntry" owner:self];
 	

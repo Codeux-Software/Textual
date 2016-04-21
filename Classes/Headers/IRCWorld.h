@@ -52,7 +52,7 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, copy) NSArray *clientList; // clientList as a proxy setter/getter for the internal storage.
-@property (nonatomic, assign) float textSizeMultiplier;
+@property (nonatomic, assign) double textSizeMultiplier;
 
 - (void)setupConfiguration;
 - (void)setupOtherServices;

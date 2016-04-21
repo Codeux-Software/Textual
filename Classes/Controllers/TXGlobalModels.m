@@ -37,8 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import <objc/objc-runtime.h>
-
 #import <time.h>
 
 #pragma mark -
@@ -123,39 +121,52 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 		for (NSString *unit in orderStrings) {
 			/* For each entry in the orderMatrix, we call that selector name on the
 			 comparison result to retreive whatever information it contains. */
-			NSInteger total = (NSInteger)objc_msgSend(breakdownInfo, NSSelectorFromString(unit));
-			
-			if (total < 0) {
-				total *= -1;
-			}
+			/* NSDateComponents has a -valueForComponent: method, but that doesn't 
+			 support Mountain Lion */
+			SEL unitSelector = NSSelectorFromString(unit);
+
+			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
+			[[NSDateComponents class] instanceMethodSignatureForSelector:unitSelector]];
+
+			[invocation setTarget:breakdownInfo];
+			[invocation setSelector:unitSelector];
+
+			[invocation invoke];
+
+			NSInteger unitValue = 0;
+			[invocation getReturnValue:&unitValue];
 			
 			/* If results isn't zero, we show it. */
-			if (total >= 1) {
+			if (unitValue < 0) {
+				unitValue *= -1;
+			}
+
+			if (unitValue >= 1) {
 				NSString *languageKey = nil;
 				
-				if (total > 1 || total < 1) {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", [unit uppercaseString]];
+				if (unitValue > 1 || unitValue < 1) {
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", unit];
 				} else {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", [unit uppercaseString]];
+					languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", unit];
 				}
 				
 				/* shortValue returns only the first time component. */
 				if (shortValue) {
-					return [NSString stringWithFormat:@"%ld %@", total, TXTLS(languageKey)];
+					return [NSString stringWithFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
 				} else {
-					[finalResult appendFormat:@"%ld %@, ", total, TXTLS(languageKey)];
+					[finalResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
 				}
 			}
 		}
 		
-		if ([finalResult length]) {
+		if ([finalResult length] > 0) {
 			/* Delete the end ", " */
 			NSRange cutRange = NSMakeRange(([finalResult length] - 2), 2);
 			
 			[finalResult deleteCharactersInRange:cutRange];
 		} else {
 			/* Return "0 seconds" when there are no results. */
-			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][SECOND]")];
+			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][second]")];
 			
 			[finalResult setString:emptyTime];
 		}
