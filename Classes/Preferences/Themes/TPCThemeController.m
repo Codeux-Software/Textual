@@ -150,7 +150,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return [TPCThemeController pathOfThemeWithName:themeName storageLocation:NULL];
 }
 
-+ (NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(TPCThemeControllerStorageLocation *)storageLocation;
++ (NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(TPCThemeControllerStorageLocation *)storageLocation
 {
 	if ( storageLocation) { // Reset value of pointer
 		*storageLocation = TPCThemeControllerStorageUnknownLocation;

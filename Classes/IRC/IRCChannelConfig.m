@@ -112,13 +112,13 @@
 
 - (NSString *)temporarySecretKey
 {
-	return self.secretKey;
+	return _secretKey;
 }
 
 - (NSString *)secretKeyValue
 {
-	if (self.secretKey) {
-		return self.secretKey;
+	if (_secretKey) {
+		return _secretKey;
 	} else {
 		return [self secretKey];
 	}

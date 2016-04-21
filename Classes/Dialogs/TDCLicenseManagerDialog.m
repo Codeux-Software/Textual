@@ -327,7 +327,7 @@
 - (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
 							convertReceipt:(NSString *)receiptData
 						  licenseOwnerName:(NSString *)licenseOwnerName
-				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
+				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
@@ -408,7 +408,7 @@
 {
 	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
 
-	if (timeLeft == 0) {
+	if (timeLeft <= 0) {
 		return TXTLS(@"TLOLicenseManager[1016]");
 	} else {
 		NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);

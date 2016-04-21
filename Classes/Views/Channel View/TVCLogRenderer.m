@@ -73,19 +73,20 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 
 #pragma mark -
 
-#define _rendererURLAttribute					(1 << 31)
-#define _rendererChannelNameAttribute			(1 << 29)
-#define _rendererBoldFormatAttribute			(1 << 28)
-#define _rendererUnderlineFormatAttribute		(1 << 27)
-#define _rendererItalicFormatAttribute			(1 << 26)
-#define _rendererTextColorAttribute				(1 << 25)
-#define _rendererBackgroundColorAttribute		(1 << 24)
-#define _rendererConversationTrackerAttribute	(1 << 23)
-#define _rendererKeywordHighlightAttribute		(1 << 22)
-#define _rendererStrikethroughFormatAttribute	(1 << 21)
+#define _rendererURLAttribute					(1 << 1)
+#define _rendererChannelNameAttribute			(1 << 2)
+#define _rendererBoldFormatAttribute			(1 << 3)
+#define _rendererUnderlineFormatAttribute		(1 << 4)
+#define _rendererItalicFormatAttribute			(1 << 5)
+#define _rendererTextColorAttribute				(1 << 6)
+#define _rendererBackgroundColorAttribute		(1 << 7)
+#define _rendererConversationTrackerAttribute	(1 << 8)
+#define _rendererKeywordHighlightAttribute		(1 << 9)
+#define _rendererStrikethroughFormatAttribute	(1 << 10)
 
 #define _backgroundColorMask	(0xF0)
 #define _textColorMask			(0x0F)
+
 #define _effectMask				(												\
 									_rendererBoldFormatAttribute |				\
 									_rendererUnderlineFormatAttribute |			\
@@ -94,8 +95,6 @@ NSString * const TVCLogRendererResultsOriginalBodyWithoutEffectsAttribute		= @"T
 									_rendererTextColorAttribute |				\
 									_rendererBackgroundColorAttribute			\
 								)
-
-#define TXDirtyCGFloatMatch(s, r)			[NSNumber compareCGFloat:s toFloat:r]
 
 #pragma mark -
 
@@ -770,9 +769,9 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			 also only begins counting after a certain number of
 			 users are present in the message. */
 			if ([TPCPreferences automaticallyDetectHighlightSpam]) {
-				CGFloat nhsp = (((CGFloat)totalNicknameLength / (CGFloat)length) * 100.00f);
+				CGFloat nhsp = (((CGFloat)totalNicknameLength / (CGFloat)length) * 100.00);
 
-				if (nhsp > 75.0f && totalNicknameCount > 10) {
+				if (nhsp > 75.0 && totalNicknameCount > 10) {
 					[_outputDictionary setBool:NO forKey:TVCLogRendererResultsKeywordMatchFoundAttribute];
 				}
 			}

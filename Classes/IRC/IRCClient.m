@@ -91,8 +91,6 @@
 #define _retryInterval				240
 #define _timeoutInterval			360
 
-#define _reconnectTimerMaximumAttempts		100
-
 enum {
 	ClientIRCv3SupportedCapacitySASLGeneric			= 1 << 9,
 	ClientIRCv3SupportedCapacitySASLPlainText		= 1 << 10, // YES if SASL=plain CAP is supported.
@@ -4880,7 +4878,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSObjectIsEmptyAssert(command);
 
 	if ([TPCPreferences replyToCTCPRequests] == NO) {
-		return [self printDebugInformationToConsole:TXTLS(@"IRC[1032]", command, sendern)];
+		[self printDebugInformationToConsole:TXTLS(@"IRC[1032]", command, sendern)];
+
+		return;
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("dcc")]) {
@@ -6471,7 +6471,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSInteger n = [m commandNumeric];
 
 	if (400 <= n && n < 600 && (n == 403) == NO && (n == 422) == NO) {
-		return [self receiveErrorNumericReply:m];
+		[self receiveErrorNumericReply:m];
+
+		return;
 	}
 
 	BOOL printMessage = YES;
@@ -8105,7 +8107,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)onPongTimer:(id)sender
 {
 	if (self.isLoggedIn == NO) {
-		return [self stopPongTimer];
+		[self stopPongTimer];
+
+		return;
 	}
 
 	/* Instead of stopping and starting the timer every time this changes, it

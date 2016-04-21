@@ -116,7 +116,7 @@
 
 		CGFloat calculatedTextHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
 
-		CGFloat finalRowHeight = (ceilf(calculatedTextHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
+		CGFloat finalRowHeight = (ceil(calculatedTextHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
 
 		[entryItem setRowHeight:finalRowHeight];
 

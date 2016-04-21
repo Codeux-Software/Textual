@@ -283,7 +283,7 @@
 			 not draw too often. Current maximum is 1.0 second. */
 			NSTimeInterval timeDifference = ([NSDate unixTime] - [self lastKeyWindowStateChange]);
 			
-			if (timeDifference > 1.0f) {
+			if (timeDifference > 1.0) {
 				[self reloadSubviewDrawings];
 			}
 		}
@@ -1694,12 +1694,12 @@
 	}
 }
 
-- (void)reloadTreeItem:(id)item
+- (void)reloadTreeItem:(IRCTreeItem *)item
 {
 	[self.serverList updateDrawingForItem:item];
 }
 
-- (void)reloadTreeGroup:(id)item
+- (void)reloadTreeGroup:(IRCTreeItem *)item
 {
 	if ([item isClient] == NO) {
 		return;
@@ -1707,7 +1707,7 @@
 
 	[self reloadTreeItem:item];
 	
-	for (IRCChannel *channel in [item channelList]) {
+	for (IRCChannel *channel in [(IRCClient *)item channelList]) {
 		[self reloadTreeItem:channel];
 	}
 }
@@ -2075,7 +2075,7 @@
 	return ([item numberOfChildren] > 0);
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(IRCTreeItem *)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item) {
 		return [item childAtIndex:index];
@@ -2089,7 +2089,7 @@
 	return [item label];
 }
 
-- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(IRCTreeItem *)item
+- (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
 	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
 	
@@ -2107,7 +2107,7 @@
 	return rowView;
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(IRCTreeItem *)item
+- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	/* Ask our view controller what we are. */
 	if ([item isClient]) {
@@ -2160,12 +2160,12 @@
 	[[u config] setSidebarItemExpanded:YES];
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(IRCTreeItem *)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item
 {
 	return YES;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(IRCTreeItem *)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
 {
 	return YES;
 }

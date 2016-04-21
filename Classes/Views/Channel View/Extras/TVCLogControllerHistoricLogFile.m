@@ -39,8 +39,6 @@
 
 #warning TVCLogControllerHistoricLogFile FIXME: This file requires a significant overhaul.
 
-#define _usesBackgroundActivityTask			0
-
 #define _maximumRowCountPerClient			1000
 
 @interface TVCLogControllerHistoricLogFile ()
@@ -68,7 +66,8 @@
 		@catch (NSException *exception) {
 			self.fileHandle = nil;
 
-			LogToConsole(@"An exception happened to a non-critical component of Textual.");
+			LogToConsole(@"Caught exception: %@", [exception reason]);
+			LogToConsoleCurrentStackTrace
 		}
 	}
 }

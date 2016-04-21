@@ -69,7 +69,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if ((self = [super init])) {
 		self.clients = [NSMutableArray new];
 		
-		self.textSizeMultiplier = 1.0f;
+		self.textSizeMultiplier = 1.0;
 
 		self.preferencesDidChangeTimerIsActive = NO;
 
@@ -557,11 +557,11 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 - (void)changeTextSize:(BOOL)bigger
 {
 	/* These defines are from WebKit herself. */
-#define MinimumZoomMultiplier       0.5f
-#define MaximumZoomMultiplier       3.0f
-#define ZoomMultiplierRatio         1.2f
+#define MinimumZoomMultiplier       0.5
+#define MaximumZoomMultiplier       3.0
+#define ZoomMultiplierRatio         1.2
 	
-	float newMultiplier = self.textSizeMultiplier;
+	double newMultiplier = self.textSizeMultiplier;
 	
 	if (bigger) {
 		newMultiplier *= ZoomMultiplierRatio;

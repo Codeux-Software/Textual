@@ -344,7 +344,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	};
 }
 
-- (void)growlNotificationWasClicked:(NSDictionary *)context
+- (void)growlNotificationWasClicked:(id)context
 {
 	[self notificationWasClicked:context activationType:0 withReplyMessage:nil];
 }

@@ -817,8 +817,6 @@
 			PointerIsEmptyAssertReturn(web, NO);
 
 			return [web hasSelection];
-
-			break;
 		}
 		case 304: // "Paste"
 		case 1604: // "Paste" (WebView)

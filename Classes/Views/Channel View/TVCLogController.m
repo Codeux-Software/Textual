@@ -624,7 +624,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	float sizeMultiplier = [worldController() textSizeMultiplier];
+	double sizeMultiplier = [worldController() textSizeMultiplier];
 
 	[self _evaluateFunction:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
 
@@ -1310,7 +1310,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 		 NSDictionaryNilValue([self.associatedChannel name])
 	]];
 
-	float textSizeMultiplier = [worldController() textSizeMultiplier];
+	double textSizeMultiplier = [worldController() textSizeMultiplier];
 
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
 					  withArguments:@[@([self isVisible]),
