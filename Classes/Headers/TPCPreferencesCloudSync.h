@@ -38,8 +38,6 @@
 #import "TextualApplication.h"
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncUbiquitousContainerCacheWasRebuiltNotification;
-
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification;
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification;
 
