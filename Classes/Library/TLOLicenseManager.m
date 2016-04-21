@@ -147,7 +147,7 @@ BOOL TLOLicenseManagerIsTrialExpired(void)
 {
 	NSTimeInterval timeLeft = TLOLicenseManagerTimeReaminingInTrial();
 
-	return (timeLeft <= 0);
+	return (timeLeft >= 0);
 }
 
 NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
