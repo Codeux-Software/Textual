@@ -227,8 +227,14 @@
 
 - (void)executeBlock
 {
+	if ([self isCancelled]) {
+		return;
+	}
+
+	TVCLogControllerOperationBlock executionBlock = self.executionBlock;
+
 #if _compileDebugCode == 1
-	if (self.executionBlock == nil) {
+	if (executionBlock == nil) {
 		NSMutableString *exceptionMessage = [NSMutableString string];
 
 		[exceptionMessage appendString:@"\n\nExecution block is nil when it probably shouldn't be.\n"];
@@ -236,14 +242,15 @@
 		[exceptionMessage appendFormat:@"\tOperation: %@\n", [self description]];
 		[exceptionMessage appendFormat:@"\tisCancelled: %d\n", [self isCancelled]];
 		[exceptionMessage appendFormat:@"\tisExecuting: %d\n", [self isExecuting]];
-		[exceptionMessage appendFormat:@"\tisReady: %d\n", [self isReady]];
+		[exceptionMessage appendFormat:@"\tisFinished: %d\n", [self isFinished]];
+		[exceptionMessage appendFormat:@"\tisReady: %d\n", [super isReady]];
 		[exceptionMessage appendFormat:@"\tDescription: '%@'\n\n", self.operationDescription];
 
 		NSAssert(NO, exceptionMessage);
 	}
 #endif
 
-	self.executionBlock(self);
+	executionBlock(self);
 }
 
 - (void)teardownOperation
@@ -261,7 +268,11 @@
 	 have executed the block we wanted, we release any dependency assigned. */
 	NSArray *operations = [self dependencies];
 
-	[self removeDependency:[operations firstObject]];
+	NSOperation *firstDependency = [operations firstObject];
+
+	if (firstDependency) {
+		[self removeDependency:firstDependency];
+	}
 }
 
 - (BOOL)isReady
