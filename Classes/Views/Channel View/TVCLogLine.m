@@ -61,10 +61,6 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 		/* Define defaults. */
 		self.receivedAt = [NSDate date];
 
-		self.nickname = NSStringEmptyPlaceholder;
-
-		self.messageBody = NSStringEmptyPlaceholder;
-
 		self.rawCommand = TVCLogLineDefaultRawCommandValue;
 
 		self.highlightKeywords = @[];
@@ -130,25 +126,33 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 
 - (NSString *)lineTypeString
 {
-	return [TVCLogLine lineTypeString:[self lineType]];
+	return [TVCLogLine lineTypeString:self.lineType];
 }
 
 - (NSString *)memberTypeString
 {
-	return [TVCLogLine memberTypeString:[self memberType]];
+	return [TVCLogLine memberTypeString:self.memberType];
 }
 
 - (NSString *)formattedTimestamp
 {
-	return [self formattedTimestampWithForcedFormat:[themeSettings() timestampFormat]];
+	return [self formattedTimestampWithFormat:nil];
 }
 
-- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format
+- (NSString *)formattedTimestampWithFormat:(NSString *)format
 {
-	NSObjectIsEmptyAssertReturn(self.receivedAt, nil);
+	PointerIsEmptyAssertReturn(self.receivedAt, nil);
 
-	if (format == nil) {
+	if (NSObjectIsEmpty(format)) {
+		format = [themeSettings() themeTimestampFormat];
+	}
+
+	if (NSObjectIsEmpty(format)) {
 		format = [TPCPreferences themeTimestampFormat];
+	}
+
+	if (NSObjectIsEmpty(format)) {
+		format = [TPCPreferences themeTimestampFormatDefault];
 	}
 	
 	NSString *time = TXFormattedTimestamp(self.receivedAt, format);
@@ -156,52 +160,52 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 	return [time stringByAppendingString:NSStringWhitespacePlaceholder];
 }
 
-- (NSString *)formattedNickname:(IRCChannel *)owner
+- (NSString *)formattedNickname:(IRCChannel *)inChannel
 {
-	return [self formattedNickname:owner withForcedFormat:nil];
+	return [self formattedNickname:inChannel withFormat:nil];
 }
 
-- (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format
+- (NSString *)formattedNickname:(IRCChannel *)inChannel withFormat:(NSString *)format
 {
+	PointerIsEmptyAssertReturn(inChannel, nil);
+
 	NSObjectIsEmptyAssertReturn(self.nickname, nil);
-	
+
 	if (format == nil) {
-		if ([self lineType] == TVCLogLineActionType) {
+		if (self.lineType == TVCLogLineActionType) {
 			return [NSString stringWithFormat:TVCLogLineActionNicknameFormat, self.nickname];
-		} else if ([self lineType] == TVCLogLineNoticeType) {
+		} else if (self.lineType == TVCLogLineNoticeType) {
 			return [NSString stringWithFormat:TVCLogLineNoticeNicknameFormat, self.nickname];
 		}
 	}
 
-	return [[owner associatedClient] formatNickname:self.nickname channel:owner formatOverride:format];
+	return [[inChannel associatedClient] formatNickname:self.nickname inChannel:inChannel withFormat:format];
 }
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel
 {
-	NSObjectIsEmptyAssertReturn(self.messageBody, nil);
-
 	NSMutableString *s = [NSMutableString string];
 
 	/* Format time into a 24 hour universal time. */
-	NSString *time = [self formattedTimestampWithForcedFormat:TLOFileLoggerISOStandardClockFormat];
+	NSString *time = [self formattedTimestampWithFormat:TLOFileLoggerISOStandardClockFormat];
 
 	if (time) {
 		[s appendString:time];
 	}
 
 	/* Format nickname into a standard format ignoring user preference. */
-	NSString *nick = nil;
+	NSString *nickname = nil;
 
-	if ([self lineType] == TVCLogLineActionType) {
-		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerActionNicknameFormat];
-	} else if ([self lineType] == TVCLogLineNoticeType) {
-		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerNoticeNicknameFormat];
+	if (self.lineType == TVCLogLineActionType) {
+		nickname = [self formattedNickname:channel withFormat:TLOFileLoggerActionNicknameFormat];
+	} else if (self.lineType == TVCLogLineNoticeType) {
+		nickname = [self formattedNickname:channel withFormat:TLOFileLoggerNoticeNicknameFormat];
 	} else {
-		nick = [self formattedNickname:channel withForcedFormat:TLOFileLoggerUndefinedNicknameFormat];
+		nickname = [self formattedNickname:channel withFormat:TLOFileLoggerUndefinedNicknameFormat];
 	}
 
-	if (nick) {
-		[s appendString:nick];
+	if (nickname) {
+		[s appendString:nickname];
 		[s appendString:NSStringWhitespacePlaceholder];
 	}
 
@@ -242,25 +246,25 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 - (NSData *)jsonDictionaryRepresentation
 {
 	/* Create dictionary with associated data. */
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 
-	NSString *dateValue = [NSString stringWithDouble:[self.receivedAt timeIntervalSince1970]];
+	NSTimeInterval receivedAt = [self.receivedAt timeIntervalSince1970];
 
-	[dict maybeSetObject:dateValue					forKey:@"receivedAt"];
+	[dic setDouble:receivedAt forKey:@"receivedAt"];
 
-	[dict maybeSetObject:self.excludeKeywords			forKey:@"excludeKeywords"];
-	[dict maybeSetObject:self.highlightKeywords			forKey:@"highlightKeywords"];
+	[dic maybeSetObject:self.excludeKeywords forKey:@"excludeKeywords"];
+	[dic maybeSetObject:self.highlightKeywords	forKey:@"highlightKeywords"];
 
-	[dict maybeSetObject:self.nickname					forKey:@"nickname"];
+	[dic maybeSetObject:self.nickname forKey:@"nickname"];
 
-	[dict maybeSetObject:self.rawCommand				forKey:@"rawCommand"];
-	[dict maybeSetObject:self.messageBody				forKey:@"messageBody"];
+	[dic maybeSetObject:self.messageBody forKey:@"messageBody"];
+	[dic maybeSetObject:self.rawCommand forKey:@"rawCommand"];
 
-	[dict maybeSetObject:@(self.lineType)				forKey:@"lineType"];
-	[dict maybeSetObject:@(self.memberType)				forKey:@"memberType"];
+	[dic setUnsignedInteger:self.lineType forKey:@"lineType"];
+	[dic setUnsignedInteger:self.memberType forKey:@"memberType"];
 
-	[dict setBool:self.isEncrypted						forKey:@"isEncrypted"];
-	[dict setBool:self.isHistoric						forKey:@"isHistoric"];
+	[dic setBool:self.isEncrypted forKey:@"isEncrypted"];
+	[dic setBool:self.isHistoric forKey:@"isHistoric"];
 
 	/* Convert dictionary to JSON. */
 	/* Why JSON? Because a binary property list would have to be loaded into memory
@@ -270,64 +274,68 @@ NSString * const TVCLogLineDefaultRawCommandValue			= @"-100";
 	 to make maximum number of lines apply. */
 	/* We used to have Core Data but that had too many instablities and performance
 	 overhead to justify keeping it around. */
-	NSError *jsonerror = nil;
+	NSError *serializeError = nil;
 
-	NSData *jsondata = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&jsonerror];
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&serializeError];
 
-	if (jsonerror) {
-		LogToConsole(@"JSON Serialization Error: %@", [jsonerror localizedDescription]);
+	if (jsonData == nil) {
+		LogToConsole(@"JSON Serialization Error: %@", [serializeError localizedDescription]);
 
 		NSAssert(NO, @"JSON serialization error in TVCLogLine. See Console for more information.");
 	}
 
-	return jsondata;
+	return jsonData;
 }
 
-- (TVCLogLine *)initWithRawJSONData:(NSData *)input
+- (TVCLogLine *)initWithRawJSONData:(NSData *)data
 {
-	NSError *jsonconverr = nil;
+	NSError *serializeError = nil;
 
-	NSDictionary *jsondata = [NSJSONSerialization JSONObjectWithData:input options:0 error:&jsonconverr];
+	NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializeError];
 
-	if (jsonconverr) {
-		LogToConsole(@"An error occured converting raw data into an JSON object: %@", [jsonconverr localizedDescription]);
+	if (jsonDictionary == nil) {
+		LogToConsole(@"An error occured converting raw data into an JSON object: %@", [serializeError localizedDescription]);
 
 		return nil; // Failed to init.
 	} else {
-		return [self initWithJSONRepresentation:jsondata];
+		return [self initWithJSONRepresentation:jsonDictionary];
 	}
 }
 
-
-- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input
+- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)dic
 {
-	if ((self = [self init])) {;
-		/* If any key does not exist, then its value is inherited from the -init method. */
-		double receivedAt = [input doubleForKey:@"receivedAt" orUseDefault:[NSDate unixTime]];
-		
-		self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
-		
-		[input assignStringTo:&_nickname forKey:@"nickname"];
-
-		[input assignStringTo:&_messageBody forKey:@"messageBody"];
-
-		[input assignStringTo:&_rawCommand forKey:@"rawCommand"];
-		
-		[input assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
-		[input assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];
-
-		[input assignUnsignedIntegerTo:&_lineType forKey:@"lineType"];
-		[input assignUnsignedIntegerTo:&_memberType forKey:@"memberType"];
-		
-		[input assignBoolTo:&_isHistoric forKey:@"isHistoric"];
-		[input assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];
-
-		[self computeNicknameColorStyle];
+	if ((self = [self init])) {
+		[self populateDictionaryValues:dic];
 
 		return self;
 	}
-		
+
 	return nil;
+}
+
+- (void)populateDictionaryValues:(nonnull NSDictionary *)dic
+{
+	/* If any key does not exist, then its value is inherited from the -init method. */
+	double receivedAt = [dic doubleForKey:@"receivedAt" orUseDefault:[NSDate unixTime]];
+	
+	self.receivedAt	= [NSDate dateWithTimeIntervalSince1970:receivedAt];
+	
+	[dic assignStringTo:&_nickname forKey:@"nickname"];
+
+	[dic assignStringTo:&_messageBody forKey:@"messageBody"];
+
+	[dic assignStringTo:&_rawCommand forKey:@"rawCommand"];
+	
+	[dic assignArrayTo:&_highlightKeywords forKey:@"highlightKeywords"];
+	[dic assignArrayTo:&_excludeKeywords forKey:@"excludeKeywords"];
+
+	[dic assignUnsignedIntegerTo:&_lineType forKey:@"lineType"];
+	[dic assignUnsignedIntegerTo:&_memberType forKey:@"memberType"];
+	
+	[dic assignBoolTo:&_isHistoric forKey:@"isHistoric"];
+	[dic assignBoolTo:&_isEncrypted forKey:@"isEncrypted"];
+
+	[self computeNicknameColorStyle];
 }
 
 @end

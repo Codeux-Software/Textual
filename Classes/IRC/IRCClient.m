@@ -1363,7 +1363,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if (ltype == TVCLogLineActionType || ltype == TVCLogLineActionNoHighlightType) {
 		desc = [NSString stringWithFormat:TXNotificationDialogActionNicknameFormat, nick, text];
 	} else {
-		nick = [self formatNickname:nick channel:target];
+		nick = [self formatNickname:nick inChannel:target];
 
 		desc = [NSString stringWithFormat:TXNotificationDialogStandardNicknameFormat, nick, text];
 	}
@@ -3519,43 +3519,36 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 #pragma mark -
 #pragma mark Print
 
-- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel
 {
-	return [self formatNickname:nick channel:channel formatOverride:nil];
+	return [self formatNickname:nickname inChannel:channel withFormat:nil];
 }
 
-- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel withFormat:(NSString *)format
 {
 	/* Validate input. */
-	NSObjectIsEmptyAssertReturn(nick, nil);
+	NSObjectIsEmptyAssertReturn(nickname, nil);
 
 	PointerIsEmptyAssertReturn(channel, nil);
 
 	/* Define default formats. */
-	NSString *nmformat = [TPCPreferences themeNicknameFormat];
-
-	NSString *override = [themeSettings() nicknameFormat];
-
-	/* Use theme based format? */
-	if (NSObjectIsNotEmpty(override)) {
-		nmformat = override;
+	if (NSObjectIsEmpty(format)) {
+		format = [themeSettings() themeNicknameFormat];
 	}
 
-	/* Use default format? */
-	if (NSObjectIsEmpty(nmformat)) {
-		nmformat = TVCLogLineUndefinedNicknameFormat;
+	if (NSObjectIsEmpty(format)) {
+		format = [TPCPreferences themeNicknameFormat];
 	}
 
-	/* Use a forced format? */
-	if (NSObjectIsNotEmpty(forcedFormat)) {
-		nmformat = forcedFormat;
+	if (NSObjectIsEmpty(format)) {
+		format = [TPCPreferences themeNicknameFormatDefault];
 	}
 
 	/* Find mark character. */
 	NSString *mark = NSStringEmptyPlaceholder;
 
-	if (channel && [channel isChannel]) {
-		IRCUser *m = [channel findMember:nick];
+	if ([channel isChannel]) {
+		IRCUser *m = [channel findMember:nickname];
 
 		if (m) {
 			NSString *_mark = [m mark];
@@ -3571,7 +3564,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	NSString *chunk = nil;
 
-	NSScanner *scanner = [NSScanner scannerWithString:nmformat];
+	NSScanner *scanner = [NSScanner scannerWithString:format];
 
 	[scanner setCharactersToBeSkipped:nil];
 
@@ -3600,7 +3593,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		if ([scanner scanString:@"@" intoString:nil] == YES) {
 			oValue = mark; // User mode mark.
 		} else if ([scanner scanString:@"n" intoString:nil] == YES) {
-			oValue = nick; // Actual nickname.
+			oValue = nickname; // Actual nickname.
 		} else if ([scanner scanString:formatMarker intoString:nil] == YES) {
 			oValue = formatMarker; // Format marker.
 		}
@@ -3622,7 +3615,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	return [NSString stringWithString:buffer];
 }
 
-- (void)printAndLog:(TVCLogLine *)line completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock
+- (void)printAndLog:(TVCLogLine *)line completionBlock:(IRCClientPrintToWebViewCompletionBlock)completionBlock
 {
 	[self.viewController print:line completionBlock:completionBlock];
 	
