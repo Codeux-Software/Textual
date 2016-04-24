@@ -367,7 +367,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	return logToDiskLocationResolvedBookmark;
 }
 
-+ (void)setLogFileFolderLocation:(id)value
++ (void)setLogFileFolderLocation:(NSData *)value
 {
 	if ( logToDiskLocationResolvedBookmark) {
 		[logToDiskLocationResolvedBookmark stopAccessingSecurityScopedResource];

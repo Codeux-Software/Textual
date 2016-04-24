@@ -38,17 +38,10 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const TXDefaultIdentityNicknamePrefix;
-
-TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewTheme;
-TEXTUAL_EXTERN NSString * const TXDefaultTextualChannelViewFont;
-
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
 
 TEXTUAL_EXTERN NSInteger const TPCPreferencesDictionaryVersion;
-
-#define TXDefaultTextualTimestampFormat				TLOFileLoggerTwentyFourHourClockFormat
 
 typedef NS_ENUM(NSUInteger, TXNicknameHighlightMatchType) {
 	TXNicknameHighlightPartialMatchType = 0,
@@ -107,10 +100,14 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 };
 
 @interface TPCPreferences : NSObject
++ (BOOL)developerModeEnabled;
++ (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled;
+
 + (NSString *)masqueradeCTCPVersion;
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 + (BOOL)receiveBetaUpdates;
++ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
 #endif
 
 + (BOOL)channelNavigationIsServerSpecific;
@@ -120,6 +117,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)rememberServerListQueryStates;
 
 + (TVCMainWindowTextViewFontSize)mainTextViewFontSize;
++ (BOOL)focusMainTextViewOnSelectionChange;
 
 + (BOOL)logToDisk; // Checks whether checkbox for logging is checked.
 + (BOOL)logToDiskIsEnabled; // Checks whether checkbox is checked and whether an actual path is configured.
@@ -140,6 +138,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSString *)IRCopDefaultGlineMessage;
 + (NSString *)IRCopDefaultShunMessage;
 
++ (BOOL)appendReasonToCommonIRCopCommands;
+
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (BOOL)textEncryptionIsOpportunistic;
 + (BOOL)textEncryptionIsRequired;
@@ -155,6 +155,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (BOOL)memberListSortFavorsServerStaff;
 + (BOOL)memberListUpdatesUserInfoPopoverOnScroll;
++ (BOOL)memberListDisplayNoModeSymbol;
 
 + (TXNoticeSendLocationType)locationToSendNotices;
 
@@ -176,6 +177,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSInteger)trackUserAwayStatusMaximumChannelSize;
 
 + (BOOL)invertSidebarColors;
++ (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
+
++ (BOOL)invertSidebarColorsPreferenceUserConfigurable;
++ (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable;
+
 + (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
 
@@ -220,15 +226,22 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (void)setInlineImagesMaxHeight:(NSInteger)value;
 
 + (BOOL)webKit2Enabled;
++ (BOOL)webKit2ProcessPoolSizeLimited;;
 
 + (NSString *)themeName;
-+ (NSString *)themeNicknameFormat;
-+ (NSString *)themeTimestampFormat;
++ (NSString *)themeNameDefault;
 
-+ (double)themeTransparency;
++ (NSString *)themeNicknameFormat;
++ (NSString *)themeNicknameFormatDefault;
+
++ (NSString *)themeTimestampFormat;
++ (NSString *)themeTimestampFormatDefault;
+
++ (double)mainWindowTransparency;
 
 + (NSFont *)themeChannelViewFont;
 + (NSString *)themeChannelViewFontName;
++ (NSString *)themeChannelViewFontNameDefault;
 + (double)themeChannelViewFontSize;
 
 + (void)setThemeName:(NSString *)value;
@@ -238,6 +251,17 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value;
 
 + (void)setThemeChannelViewFontSize:(double)value;
+
++ (BOOL)themeNicknameFormatPreferenceUserConfigurable;
++ (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable;
+
++ (BOOL)themeTimestampFormatPreferenceUserConfigurable;
++ (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable;
+
++ (BOOL)themeChannelViewFontPreferenceUserConfigurable;
++ (void)setThemeChannelViewFontPreferenceUserConfigurable:(BOOL)themeChannelViewFontPreferenceUserConfigurable;
+
++ (BOOL)themeChannelViewUsesCustomScrollers;
 
 + (NSInteger)scrollbackLimit;
 + (void)setScrollbackLimit:(NSInteger)value;
@@ -276,6 +300,9 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (NSString *)tabCompletionSuffix;
 + (void)setTabCompletionSuffix:(NSString *)value;
+
++ (BOOL)tabCompletionDoNotAppendWhitespace;
++ (BOOL)tabCompletionCutForwardToFirstWhitespace;
 
 + (NSDictionary *)loadWorld;
 + (void)saveWorld:(NSDictionary *)value;

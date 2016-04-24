@@ -43,13 +43,13 @@
 #define _templateEngineVersionMinimum			3
 
 @interface TPCThemeSettings ()
-@property (nonatomic, assign, readwrite) BOOL forceInvertSidebarColors;
+@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
 @property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
 @property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
 @property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy, readwrite) NSFont *channelViewFont;
-@property (nonatomic, copy, readwrite) NSString *nicknameFormat;
-@property (nonatomic, copy, readwrite) NSString *timestampFormat;
+@property (nonatomic, copy, readwrite) NSFont *themeChannelViewFont;
+@property (nonatomic, copy, readwrite) NSString *themeNicknameFormat;
+@property (nonatomic, copy, readwrite) NSString *themeTimestampFormat;
 @property (nonatomic, copy, readwrite) NSString *settingsKeyValueStoreName;
 @property (nonatomic, copy, readwrite) NSColor *underlyingWindowColor;
 @property (nonatomic, assign, readwrite) double indentationOffset;
@@ -251,14 +251,14 @@
 	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesURL];
 
 	/* Reset old properties. */
-	self.channelViewFont = nil;
+	self.themeChannelViewFont = nil;
 
-	self.nicknameFormat = nil;
-	self.timestampFormat = nil;
-	
+	self.themeNicknameFormat = nil;
+	self.themeTimestampFormat = nil;
+
 	self.settingsKeyValueStoreName = nil;
 
-	self.forceInvertSidebarColors = NO;
+	self.invertSidebarColors = NO;
 
 	self.underlyingWindowColor = nil;
 
@@ -277,12 +277,12 @@
 		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
 
 		/* Parse the dictionary values. */
-		self.channelViewFont = [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
+		self.themeChannelViewFont = [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.nicknameFormat	= [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
-		self.timestampFormat = [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
+		self.themeNicknameFormat = [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
+		self.themeTimestampFormat = [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
-		self.forceInvertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
+		self.invertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
 
 		self.underlyingWindowColor = [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
@@ -348,11 +348,10 @@
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
 	 window that the active theme has overrode a few user configurable options. The window then 
 	 blanks out the options specified to prevent the user from modifying. */
-
-	[RZUserDefaults() setObject:@(NSObjectIsEmpty(self.nicknameFormat))			forKey:@"Theme -> Nickname Format Preference Enabled"];
-	[RZUserDefaults() setObject:@(NSObjectIsEmpty(self.timestampFormat))		forKey:@"Theme -> Timestamp Format Preference Enabled"];
-	[RZUserDefaults() setObject:@(self.channelViewFont == nil)					forKey:@"Theme -> Channel Font Preference Enabled"];
-	[RZUserDefaults() setObject:@(self.forceInvertSidebarColors == NO)			forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+	[TPCPreferences setInvertSidebarColorsPreferenceUserConfigurable:(self.invertSidebarColors == NO)];
+	[TPCPreferences setThemeChannelViewFontPreferenceUserConfigurable:(self.themeChannelViewFont == nil)];
+	[TPCPreferences setThemeNicknameFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeNicknameFormat)];
+	[TPCPreferences setThemeTimestampFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeTimestampFormat)];
 }
 
 @end

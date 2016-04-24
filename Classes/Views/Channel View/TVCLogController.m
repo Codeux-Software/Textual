@@ -1190,7 +1190,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 {
 	BOOL onlyShowDuringScrolling = [TXUserInterface onlyShowScrollbarWhileScrolling];
 
-	BOOL usesCustomScrollers = ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
+	BOOL usesCustomScrollers = [TPCPreferences themeChannelViewUsesCustomScrollers];
 
 	BOOL usingWebKit2 = [self.backingView isUsingWebKit2];
 

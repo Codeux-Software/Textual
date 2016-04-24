@@ -882,7 +882,7 @@
 	}
 }
 
-- (void)setDownloadDestinationFolder:(id)value
+- (void)setDownloadDestinationFolder:(NSData *)value
 {
 	/* Destroy old pointer if needed. */
 	if ( self.downloadDestination) {
