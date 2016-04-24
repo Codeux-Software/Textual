@@ -38,10 +38,7 @@
 
 #import "TextualApplication.h"
 
-NSString * const TXDefaultIdentityNicknamePrefix				= @"Guest"; // see +populateDefaultNickname
-
-NSString * const TXDefaultTextualChannelViewTheme				= @"resource:Simplified Light";
-NSString * const TXDefaultTextualChannelViewFont				= @"Lucida Grande";
+#import "TPCPreferencesUserDefaultsMigrate.h"
 
 NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
 NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
@@ -53,6 +50,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark Default Identity
 
++ (NSString *)defaultNicknamePrefix
+{
+	return [[TPCPreferences defaultPreferences] objectForKey:@"DefaultIdentity -> Nickname"];
+}
+
 + (void)populateDefaultNickname
 {
 	/* On large IRC networks using "Guest" as the default nickname may create 
@@ -60,7 +62,9 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	 the value looking for the next available match. To help with this, a 
 	 random number is appended to the end of the default nickname. */
 
-	NSString *nickname = [NSString stringWithFormat:@"%@%lu", TXDefaultIdentityNicknamePrefix, TXRandomNumber(100)];
+	NSString *defaultNickname = [[TPCPreferences defaultPreferences] stringForKey:@"DefaultIdentity -> Nickname"];
+
+	NSString *nickname = [NSString stringWithFormat:@"%@%lu", defaultNickname, TXRandomNumber(100)];
 
 	[RZUserDefaults() registerDefaults:@{@"DefaultIdentity -> Nickname" : nickname}];
 }
@@ -92,6 +96,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 + (NSInteger)autojoinMaxChannelJoins
 {
 	return [RZUserDefaults() integerForKey:@"AutojoinMaximumChannelJoinCount"];
+}
+
++ (BOOL)appendReasonToCommonIRCopCommands
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyAppendReasonToCommonIRCopCommands"];
 }
 
 + (NSString *)defaultKickMessage
@@ -127,15 +136,6 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 + (BOOL)setAwayOnScreenSleep
 {
 	return [RZUserDefaults() boolForKey:@"SetAwayOnScreenSleep"];
-}
-
-+ (BOOL)invertSidebarColors
-{
-	if ([themeSettings() forceInvertSidebarColors]) {
-		return YES;
-	}
-
-	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
 }
 
 + (BOOL)disableSidebarTranslucency
@@ -211,6 +211,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 }
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
++ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates
+{
+	[RZUserDefaults() setBool:receiveBetaUpdates forKey:@"ReceiveBetaUpdates"];
+}
+
 + (BOOL)receiveBetaUpdates
 {
 	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
@@ -265,6 +270,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 + (BOOL)memberListUpdatesUserInfoPopoverOnScroll
 {
 	return [RZUserDefaults() boolForKey:@"MemberListUpdatesUserInfoPopoverOnScroll"];
+}
+
++ (BOOL)memberListDisplayNoModeSymbol
+{
+	return [RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"];
 }
 
 + (BOOL)postNotificationsWhileInFocus
@@ -422,8 +432,55 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return (TVCMainWindowTextViewFontSize)[RZUserDefaults() integerForKey:@"Main Input Text Field -> Font Size"];
 }
 
++ (BOOL)focusMainTextViewOnSelectionChange
+{
+	return [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+}
+
+#pragma mark -
+#pragma mark Developer Mode
+
++ (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled
+{
+	[RZUserDefaults() setBool:developerModeEnabled forKey:@"TextualDeveloperEnvironment"];
+}
+
++ (BOOL)developerModeEnabled
+{
+	return [RZUserDefaults() boolForKey:@"TextualDeveloperEnvironment"];
+}
+
 #pragma mark -
 #pragma mark Theme
+
++ (BOOL)invertSidebarColorsPreferenceUserConfigurable
+{
+	return [RZUserDefaults() boolForKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+}
+
++ (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable
+{
+	[RZUserDefaults() setBool:invertSidebarColorsPreferenceUserConfigurable forKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
+}
+
++ (void)setInvertSidebarColors:(BOOL)invertSidebarColors
+{
+	[RZUserDefaults() boolForKey:@"InvertSidebarColors"];
+}
+
++ (BOOL)invertSidebarColors
+{
+	if ([themeSettings() invertSidebarColors]) {
+		return YES;
+	}
+
+	return [RZUserDefaults() boolForKey:@"InvertSidebarColors"];
+}
+
++ (NSString *)themeNameDefault
+{
+	return [[TPCPreferences defaultPreferences] objectForKey:TPCPreferencesThemeNameDefaultsKey];
+}
 
 + (NSString *)themeName
 {
@@ -445,6 +502,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	} else {
 		[TPCPreferences setThemeName:value];
 	}
+}
+
++ (NSString *)themeChannelViewFontNameDefault
+{
+	return [[TPCPreferences defaultPreferences] objectForKey:TPCPreferencesThemeFontNameDefaultsKey];
 }
 
 + (NSString *)themeChannelViewFontName
@@ -484,9 +546,39 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 						   size:[TPCPreferences themeChannelViewFontSize]];
 }
 
++ (BOOL)themeChannelViewFontPreferenceUserConfigurable
+{
+	return [RZUserDefaults() boolForKey:@"Theme -> Channel Font Preference Enabled"];
+}
+
++ (void)setThemeChannelViewFontPreferenceUserConfigurable:(BOOL)themeChannelViewFontPreferenceUserConfigurable
+{
+	[RZUserDefaults() setBool:themeChannelViewFontPreferenceUserConfigurable forKey:@"Theme -> Channel Font Preference Enabled"];
+}
+
++ (NSString *)themeNicknameFormatDefault
+{
+	return [[TPCPreferences defaultPreferences] objectForKey:@"Theme -> Nickname Format"];
+}
+
 + (NSString *)themeNicknameFormat
 {
 	return [RZUserDefaults() objectForKey:@"Theme -> Nickname Format"];
+}
+
++ (BOOL)themeNicknameFormatPreferenceUserConfigurable
+{
+	return [RZUserDefaults() boolForKey:@"Timestamp Format Preference Enabled"];
+}
+
++ (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable
+{
+	[RZUserDefaults() setBool:themeNicknameFormatPreferenceUserConfigurable forKey:@"Theme -> Nickname Format Preference Enabled"];
+}
+
++ (NSString *)themeTimestampFormatDefault
+{
+	return [[TPCPreferences defaultPreferences] objectForKey:@"Theme -> Timestamp Format"];
 }
 
 + (NSString *)themeTimestampFormat
@@ -494,7 +586,17 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() objectForKey:@"Theme -> Timestamp Format"];
 }
 
-+ (double)themeTransparency
++ (BOOL)themeTimestampFormatPreferenceUserConfigurable
+{
+	return [RZUserDefaults() boolForKey:@"Timestamp Format Preference Enabled"];
+}
+
++ (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable
+{
+	[RZUserDefaults() setBool:themeTimestampFormatPreferenceUserConfigurable forKey:@"Timestamp Format Preference Enabled"];
+}
+
++ (double)mainWindowTransparency
 {
 	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
 }
@@ -519,6 +621,16 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return NO;
 }
 
++ (BOOL)webKit2ProcessPoolSizeLimited
+{
+	return [RZUserDefaults() boolForKey:@"WKProcessPoolSizeIsLimited"];
+}
+
++ (BOOL)themeChannelViewUsesCustomScrollers
+{
+	return ([RZUserDefaults() boolForKey:@"WebViewDoNotUsesCustomScrollers"] == NO);
+}
+
 #pragma mark -
 #pragma mark Completion Suffix
 
@@ -530,6 +642,16 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 + (void)setTabCompletionSuffix:(NSString *)value
 {
 	[RZUserDefaults() setObject:value forKey:@"Keyboard -> Tab Key Completion Suffix"];
+}
+
++ (BOOL)tabCompletionDoNotAppendWhitespace
+{
+	return [RZUserDefaults() boolForKey:@"Tab Completion -> Do Not Use Whitespace for Missing Completion Suffix"];
+}
+
++ (BOOL)tabCompletionCutForwardToFirstWhitespace
+{
+	return [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
 }
 
 #pragma mark -
@@ -911,7 +1033,6 @@ static NSMutableArray *excludeKeywords = nil;
 + (NSDictionary *)defaultPreferences
 {
 	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
-
 }
 
 + (void)initPreferences
@@ -940,7 +1061,6 @@ static NSMutableArray *excludeKeywords = nil;
 	[IRCCommandIndex populateCommandIndex];
 
 	/* Sandbox Check */
-
 	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
 
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXLionOrLater]				forKey:@"System -> Running Mac OS Lion Or Newer"];
@@ -998,9 +1118,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticSpellCheck:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCheck])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCheck"];
 }
 
 + (BOOL)textFieldAutomaticGrammarCheck
@@ -1010,9 +1128,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticGrammarCheck:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticGrammarCheck])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticGrammarCheck"];
 }
 
 + (BOOL)textFieldAutomaticSpellCorrection
@@ -1022,9 +1138,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldAutomaticSpellCorrection:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldAutomaticSpellCorrection])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldAutomaticSpellCorrection"];
 }
 
 + (BOOL)textFieldSmartCopyPaste
@@ -1034,9 +1148,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartCopyPaste:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartCopyPaste])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartCopyPaste"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldSmartCopyPaste"];
 }
 
 + (BOOL)textFieldSmartQuotes
@@ -1046,9 +1158,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartQuotes:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartQuotes])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartQuotes"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldSmartQuotes"];
 }
 
 + (BOOL)textFieldSmartDashes
@@ -1058,9 +1168,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartDashes:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartDashes])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartDashes"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldSmartDashes"];
 }
 
 + (BOOL)textFieldSmartLinks
@@ -1070,9 +1178,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldSmartLinks:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldSmartLinks])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldSmartLinks"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldSmartLinks"];
 }
 
 + (BOOL)textFieldDataDetectors
@@ -1082,9 +1188,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldDataDetectors:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldDataDetectors])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldDataDetectors"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldDataDetectors"];
 }
 
 + (BOOL)textFieldTextReplacement
@@ -1094,9 +1198,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)setTextFieldTextReplacement:(BOOL)value
 {
-	if (NSDissimilarObjects(value, [TPCPreferences textFieldTextReplacement])) {
-		[RZUserDefaults() setBool:value forKey:@"TextFieldTextReplacement"];
-	}
+	[RZUserDefaults() setBool:value forKey:@"TextFieldTextReplacement"];
 }
 
 @end

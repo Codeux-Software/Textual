@@ -2815,9 +2815,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				LogToConsole(@"%@", TXTLS(@"IRC[1093]"));
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
-				[RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
+				[TPCPreferences setDeveloperModeEnabled:YES];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
-				[RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+				[TPCPreferences setDeveloperModeEnabled:NO];
 			} else {
 				[self printDebugInformation:uncutInput];
 			}

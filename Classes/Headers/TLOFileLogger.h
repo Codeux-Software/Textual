@@ -48,7 +48,6 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerActionNicknameFormat;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerNoticeNicknameFormat;
 
 TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
-TEXTUAL_EXTERN NSString * const TLOFileLoggerTwentyFourHourClockFormat;
 
 @interface TLOFileLogger : NSObject
 @property (nonatomic, weak) IRCClient *client;

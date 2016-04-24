@@ -47,7 +47,6 @@ NSString * const TLOFileLoggerActionNicknameFormat		= @"\u2022 %n:";
 NSString * const TLOFileLoggerNoticeNicknameFormat		= @"-%n-";
 
 NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"; // 2008-07-09T16:13:30+12:00
-NSString * const TLOFileLoggerTwentyFourHourClockFormat		= @"[%H:%M:%S]";
 
 @interface TLOFileLogger ()
 @property (readonly, copy) NSURL *fileWritePath;

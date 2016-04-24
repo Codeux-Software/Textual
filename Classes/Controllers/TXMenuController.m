@@ -608,7 +608,7 @@
 		}
         case 920: // Developer Mode
         {
-            if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken] == YES) {
+			if ([TPCPreferences developerModeEnabled]) {
                 [item setState:NSOnState];
             } else {  
                 [item setState:NSOffState];
@@ -841,9 +841,7 @@
 		}
 		case 804: // "Toggle Window Appearance"
 		{
-			BOOL condition = [RZUserDefaults() boolForKey:@"Theme -> Invert Sidebar Colors Preference Enabled"];
-
-			return condition;
+			return [TPCPreferences invertSidebarColorsPreferenceUserConfigurable];
 		}
 		default:
 		{
@@ -2875,12 +2873,12 @@
 - (void)toggleDeveloperMode:(id)sender
 {
     if ([sender state] == NSOnState) {
-        [RZUserDefaults() setBool:NO forKey:TXDeveloperEnvironmentToken];
+		[TPCPreferences setDeveloperModeEnabled:NO];
         
         [sender setState:NSOffState];
-    } else {
-        [RZUserDefaults() setBool:YES forKey:TXDeveloperEnvironmentToken];
-        
+	} else {
+		[TPCPreferences setDeveloperModeEnabled:YES];
+
         [sender setState:NSOnState];
     }
 }
@@ -3069,9 +3067,9 @@
 - (void)toggleMainWindowAppearance:(id)sender
 {
 	if ([TPCPreferences invertSidebarColors]) {
-		[RZUserDefaults() setBool:NO forKey:@"InvertSidebarColors"];
+		[TPCPreferences setInvertSidebarColors:NO];
 	} else {
-		[RZUserDefaults() setBool:YES forKey:@"InvertSidebarColors"];
+		[TPCPreferences setInvertSidebarColors:YES];
 	}
 	
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
@@ -3135,11 +3133,11 @@
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 	if ([sender state] == NSOnState) {
-		[RZUserDefaults() setBool:NO forKey:@"ReceiveBetaUpdates"];
+		[TPCPreferences setReceiveBetaUpdates:NO];
 
 		[sender setState:NSOffState];
 	} else {
-		[RZUserDefaults() setBool:YES forKey:@"ReceiveBetaUpdates"];
+		[TPCPreferences setReceiveBetaUpdates:YES];
 
 		[sender setState:NSOnState];
 	}

@@ -116,7 +116,7 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 	 that we go above and beyond for error checking incase this stuff is changed. */
 	WKProcessPool *sharedProcessPool = [WKProcessPool alloc];
 
-	if ([RZUserDefaults() boolForKey:@"WKProcessPoolSizeIsLimited"] == NO) {
+	if ([TPCPreferences webKit2ProcessPoolSizeLimited] == NO) {
 		goto create_normal_pool;
 	}
 

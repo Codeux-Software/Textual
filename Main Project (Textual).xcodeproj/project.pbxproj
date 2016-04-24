@@ -1194,6 +1194,15 @@
 		4CCFA6921ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */; };
 		4CCFA6931ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */; };
 		4CCFA6941ABCF36A0083620F /* TPWTB_Style@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */; };
+		4CD0A2251CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */; };
+		4CD0A2261CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */; };
+		4CD0A2271CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */; };
+		4CD0A22E1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; };
+		4CD0A22F1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; };
+		4CD0A2301CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */; };
+		4CD0A2321CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A2311CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h */; };
+		4CD0A2331CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A2311CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h */; };
+		4CD0A2341CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD0A2311CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h */; };
 		4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344701A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD344711A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2063,6 +2072,9 @@
 		4CCFA6531ABCF36A0083620F /* TPWTB_Notifications@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TPWTB_Notifications@2x.png"; sourceTree = "<group>"; };
 		4CCFA6541ABCF36A0083620F /* TPWTB_Style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TPWTB_Style.png; sourceTree = "<group>"; };
 		4CCFA6551ABCF36A0083620F /* TPWTB_Style@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TPWTB_Style@2x.png"; sourceTree = "<group>"; };
+		4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TPCPreferencesUserDefaultsMigrate.m; path = Preferences/TPCPreferencesUserDefaultsMigrate.m; sourceTree = "<group>"; };
+		4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaultsMigrate.h; sourceTree = "<group>"; };
+		4CD0A2311CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPreferencesUserDefaultsPrivate.h; sourceTree = "<group>"; };
 		4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketCipherNames.h; sourceTree = "<group>"; };
 		4CD4165A184065E3005B134D /* TDCProgressInformationSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCProgressInformationSheet.m; path = Dialogs/TDCProgressInformationSheet.m; sourceTree = "<group>"; };
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
@@ -2765,6 +2777,8 @@
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
 				4CA643D91CBC89C0008F3DED /* TPCPreferencesImportExportPrivate.h */,
 				4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */,
+				4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */,
+				4CD0A2311CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
 				4C8AF57F158E99520026668C /* TPCThemeController.h */,
 				4CB356141CBB496C00CB126D /* TPCThemeControllerPrivate.h */,
@@ -3306,11 +3320,12 @@
 				4CA110D31955AA6F0062EC4E /* iCloud */,
 				4C92FEC217A8C8BD003888F4 /* Resource Management */,
 				4C8AF5EB158E99520026668C /* Theme */,
-				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
-				4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */,
 				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
 				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
+				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
 				4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */,
+				4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */,
+				4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -3488,6 +3503,7 @@
 				4CA15D1F1BD1BCBA00D89DF0 /* IRCUserPrivate.h in Headers */,
 				4C0BA59C1990798800857343 /* IRCUser.h in Headers */,
 				4C0BA59D1990798800857343 /* IRCWorld.h in Headers */,
+				4CD0A22E1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4C0BA59F1990798800857343 /* NSColorHelper.h in Headers */,
 				4C0BA5A81990798800857343 /* NSStringHelper.h in Headers */,
 				4C0BA5AB1990798800857343 /* StaticDefinitions.h in Headers */,
@@ -3510,6 +3526,7 @@
 				4C0BA5BF1990798800857343 /* TextualApplication.h in Headers */,
 				4C0BA5C01990798800857343 /* THOPluginItem.h in Headers */,
 				4C0BA5C11990798800857343 /* THOPluginProtocol.h in Headers */,
+				4CD0A2321CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4C0BA5C21990798800857343 /* TLOFileLogger.h in Headers */,
 				4C0BA5C31990798800857343 /* TLOGrowlController.h in Headers */,
 				4C0BA5C41990798800857343 /* TLOInputHistory.h in Headers */,
@@ -3730,11 +3747,13 @@
 				4C3EB79E17898FD600D21A07 /* TVCLogControllerHistoricLogFile.h in Headers */,
 				5D4846CB171F0ACD0015F2B0 /* OELReachability.h in Headers */,
 				4CC6F51D1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
+				4CD0A22F1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4C5A0318170C31010016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4CBE64CB1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4C1893F417980F460091D173 /* TVCImageURLoader.h in Headers */,
 				4C92FECC17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
 				4C3E729817C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
+				4CD0A2331CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4C17385F18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C49494F18735BC400B7F00A /* TDCFileTransferDialogTableCell.h in Headers */,
 				4C49494D18735BC400B7F00A /* TDCFileTransferDialog.h in Headers */,
@@ -3902,11 +3921,13 @@
 				4C937BDB170618A80050CEF3 /* TLOSpeechSynthesizer.h in Headers */,
 				4C5A0317170C2C170016BB1A /* TPCPreferencesImportExport.h in Headers */,
 				4CC6F51C1778AB2E00930E6E /* TVCLogControllerOperationQueue.h in Headers */,
+				4CD0A2301CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h in Headers */,
 				4CBE64CA1743722100831D69 /* TDCHighlightEntrySheet.h in Headers */,
 				4C1893F317980F460091D173 /* TVCImageURLoader.h in Headers */,
 				4C17385E18197F800099EEC2 /* TPCPreferencesCloudSync.h in Headers */,
 				4C3E729717C39DD7008F2B08 /* THOUnicodeHelper.h in Headers */,
 				4C92FECB17A8C8F2003888F4 /* TPCResourceManager.h in Headers */,
+				4CD0A2341CCD873300513EA2 /* TPCPreferencesUserDefaultsPrivate.h in Headers */,
 				4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */,
 				4C0095A81952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h in Headers */,
 				4C0095AE1952AB9C008A81C7 /* TXSharedApplication.h in Headers */,
@@ -4822,6 +4843,7 @@
 				4C0445B716F1603C00EBB665 /* TLOLinkParser.m in Sources */,
 				4CA110CD1955AA4A0062EC4E /* THOPluginItem.m in Sources */,
 				4CA110D21955AA5A0062EC4E /* IRCAddressBook.m in Sources */,
+				4CD0A2261CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
 				4C0445B816F1603C00EBB665 /* TLONicknameCompletionStatus.m in Sources */,
 				4C0445B916F1603C00EBB665 /* TLOpenLink.m in Sources */,
 				4C0445BA16F1603C00EBB665 /* TLOPopupPrompts.m in Sources */,
@@ -4893,6 +4915,7 @@
 				4CF40E2A1AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m in Sources */,
 				4C0BA6551990798800857343 /* NSColorHelper.m in Sources */,
 				4C0BA65F1990798800857343 /* NSStringHelper.m in Sources */,
+				4CD0A2251CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
 				4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */,
 				4C0BA6631990798800857343 /* GTMEncodeURL.m in Sources */,
@@ -5113,6 +5136,7 @@
 				4CA110CC1955AA4A0062EC4E /* THOPluginItem.m in Sources */,
 				4CA110D11955AA5A0062EC4E /* IRCAddressBook.m in Sources */,
 				4C8AF6C7158E99520026668C /* TLOpenLink.m in Sources */,
+				4CD0A2271CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
 				4C8AF6C8158E99520026668C /* TLOPopupPrompts.m in Sources */,
 				4C8AF6CB158E99520026668C /* TLOSoundPlayer.m in Sources */,
 				4C8AF6CC158E99520026668C /* TLOTimer.m in Sources */,

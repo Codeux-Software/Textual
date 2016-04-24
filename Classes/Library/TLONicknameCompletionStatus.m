@@ -421,7 +421,7 @@
 			}
 		} else {
 			if (userCompletionSuffixLength == 0) {
-				BOOL doNotAppendWhitespace = [RZUserDefaults() boolForKey:@"Tab Completion -> Do Not Use Whitespace for Missing Completion Suffix"];
+				BOOL doNotAppendWhitespace = [TPCPreferences tabCompletionDoNotAppendWhitespace];
 
 				if (doNotAppendWhitespace == NO) {
 					newCompletionSuffix = NSStringWhitespacePlaceholder;
@@ -669,7 +669,7 @@
 	}
 
 	/* Search for interesting characters. */
-	BOOL cutNextWord = [RZUserDefaults() boolForKey:@"Tab Completion -> Completion Suffix Cut Forward Until Space"];
+	BOOL cutNextWord = [TPCPreferences tabCompletionCutForwardToFirstWhitespace];
 
 	if (cutNextWord) {
 		NSInteger maximumCompletionSuffixEndPoint = (totalTextLength - 1);

@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,36 +37,8 @@
 
 #import "TextualApplication.h"
 
-#define TPCThemeSettingsDisabledIndentationOffset     -99
-
-#define TPCThemeSettingsLatestTemplateEngineVersion		3
-
-typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorLegacyStyle,
-	TPCThemeSettingsNicknameColorHashHueDarkStyle,
-	TPCThemeSettingsNicknameColorHashHueLightStyle
-};
-
-@interface TPCThemeSettings : NSObject
-@property (readonly) BOOL invertSidebarColors;
-@property (readonly) BOOL js_postHandleEventNotifications;
-@property (readonly) BOOL js_postPreferencesDidChangesNotifications;
-@property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
-@property (readonly, copy) NSFont *themeChannelViewFont;
-@property (readonly, copy) NSString *themeNicknameFormat;
-@property (readonly, copy) NSString *themeTimestampFormat;
-@property (readonly, copy) NSString *settingsKeyValueStoreName;
-@property (readonly, copy) NSColor *underlyingWindowColor;
-@property (readonly) double indentationOffset;
-@property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-
-- (void)reloadWithPath:(NSString *)path;
-
-- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
-
-- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError;
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError;
-
-- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (GRMustacheTemplate *)templateWithName:(NSString *)name;
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+@interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
++ (void)migrateKeyValuesAwayFromGroupContainer;
 @end
+#endif

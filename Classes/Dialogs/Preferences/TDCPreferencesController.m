@@ -948,22 +948,22 @@
 
 	NSMutableString *sf = [NSMutableString string];
 
-	if (NSObjectIsNotEmpty([themeSettings() nicknameFormat])) {
+	if ([TPCPreferences themeNicknameFormatPreferenceUserConfigurable] == NO) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1009][1]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if (NSObjectIsNotEmpty([themeSettings() timestampFormat])) {
+	if ([TPCPreferences themeTimestampFormatPreferenceUserConfigurable] == NO) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1009][2]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if ([themeSettings() channelViewFont]) {
+	if ([TPCPreferences themeChannelViewFontPreferenceUserConfigurable] == NO) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1009][4]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}
 
-	if ([themeSettings() forceInvertSidebarColors]) {
+	if ([TPCPreferences invertSidebarColorsPreferenceUserConfigurable] == NO) {
 		[sf appendString:TXTLS(@"TDCPreferencesController[1009][3]")];
 		[sf appendString:NSStringNewlinePlaceholder];
 	}

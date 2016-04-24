@@ -77,7 +77,7 @@
 		
 		[self setAllowsConcurrentViewDrawing:NO];
 		
-		[self setAlphaValue:[TPCPreferences themeTransparency]];
+		[self setAlphaValue:[TPCPreferences mainWindowTransparency]];
 		
 		[self.loadingScreen hideAll:NO];
 		[self.loadingScreen popLoadingConfigurationView];
@@ -187,7 +187,7 @@
 - (void)updateAlphaValueToReflectPreferencesAnimiated:(BOOL)animate
 {
 	if ([self isInFullscreenMode] == NO) {
-		double alphaValue = [TPCPreferences themeTransparency];
+		double alphaValue = [TPCPreferences mainWindowTransparency];
 
 		if (animate) {
 			[[self animator] setAlphaValue:alphaValue];
@@ -1295,7 +1295,7 @@
 	}
 
 	/* Begin work on text field */
-	BOOL autoFocusInputTextField = [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
+	BOOL autoFocusInputTextField = [TPCPreferences focusMainTextViewOnSelectionChange];
 
 	if (autoFocusInputTextField && [XRAccessibility isVoiceOverEnabled] == NO) {
 		[self.inputTextField focus];

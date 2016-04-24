@@ -154,7 +154,7 @@
 			}
 		}
 
-		if ([RZUserDefaults() boolForKey:TXDeveloperEnvironmentToken]) {
+		if ([TPCPreferences developerModeEnabled]) {
 			_addItem([NSMenuItem separatorItem])
 
 			_addItem(

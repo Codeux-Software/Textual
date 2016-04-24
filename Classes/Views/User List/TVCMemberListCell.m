@@ -382,7 +382,7 @@
 	
 	/* Maybe set a default mark. */
 	if (mcstring == nil) {
-		if ([RZUserDefaults() boolForKey:@"DisplayUserListNoModeSymbol"]) {
+		if ([TPCPreferences memberListDisplayNoModeSymbol]) {
 			mcstring = @"×";
 		} else {
 			mcstring = NSStringEmptyPlaceholder;
