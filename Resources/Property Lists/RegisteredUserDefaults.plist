@@ -35,6 +35,8 @@
 	<false/>
 	<key>AutomaticallyAddScrollbackMarker</key>
 	<true/>
+	<key>AutomaticallyAppendReasonToCommonIRCopCommands</key>
+	<true/>
 	<key>AutomaticallyDetectHighlightSpam</key>
 	<true/>
 	<key>AutomaticallyFilterUnicodeTextSpam</key>
