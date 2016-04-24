@@ -37,8 +37,6 @@
 
 #import "TPI_ChatFilterEditFilterSheet.h"
 
-@class TPI_ChatFilterFilterActionTokenField;
-
 @interface TPI_ChatFilterEditFilterSheet ()
 @property (nonatomic, copy) TPI_ChatFilter *filter;
 @property (nonatomic, weak) IBOutlet NSTextField *filterMatchTextField;
@@ -47,7 +45,7 @@
 @property (nonatomic, weak) IBOutlet NSTextField *filterNotesTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterEventNumericTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *filterForwardToDestinationTextField;
-@property (nonatomic, weak) IBOutlet TPI_ChatFilterFilterActionTokenField *filterActionTokenField;
+@property (nonatomic, weak) IBOutlet TVCAutoExpandingTokenField *filterActionTokenField;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenChannelName;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenLocalNickname;
 @property (nonatomic, weak) IBOutlet NSTokenField *filterActionTokenNetworkName;
@@ -91,13 +89,6 @@
 - (IBAction)filterIgnoreContentCheckChanged:(id)sender;
 - (IBAction)filterEventTypeChanged:(id)sender;
 - (IBAction)filterLimitedToMyselfChanged:(id)sender;
-@end
-
-#define TPI_ChatFilterFilterActionTokenFieldBottomPadding		6
-
-@interface TPI_ChatFilterFilterActionTokenField : NSTokenField
-@property (nonatomic, assign) BOOL isEditing;
-@property (nonatomic, assign) NSSize lastIntrinsicSize;
 @end
 
 @interface TPI_ChatFilterFilterActionToken : NSObject
@@ -1027,56 +1018,6 @@
 
 		return [outlineView viewAtColumn:0 row:parentItemViewRow makeIfNecessary:NO];
 	}
-}
-
-@end
-
-#pragma mark -
-#pragma mark Filter Action Token Field
-
-@implementation TPI_ChatFilterFilterActionTokenField
-
-- (void)awakeFromNib
-{
-	[self setLastIntrinsicSize:NSZeroSize];
-}
-
-- (void)textDidBeginEditing:(NSNotification *)notification
-{
-	[super textDidBeginEditing:notification];
-
-	[self setIsEditing:YES];
-}
-
-- (void)textDidEndEditing:(NSNotification *)notification
-{
-	[super textDidEndEditing:notification];
-
-	[self setIsEditing:NO];
-}
-
-- (void)textDidChange:(NSNotification *)notification
-{
-	[super textDidChange:notification];
-
-	[self invalidateIntrinsicContentSize];
-}
-
-- (NSSize)intrinsicContentSize
-{
-	if ([self isEditing] || NSEqualSizes([self lastIntrinsicSize], NSZeroSize)) {
-		NSRect fieldFrame = [self frame];
-
-		CGFloat fieldFrameWidth = NSWidth(fieldFrame);
-
-		CGFloat attributedStringHeight = [[self attributedStringValue] pixelHeightInWidth:fieldFrameWidth lineBreakMode:NSLineBreakByWordWrapping];
-
-		attributedStringHeight += TPI_ChatFilterFilterActionTokenFieldBottomPadding;
-
-		[self setLastIntrinsicSize:NSMakeSize(fieldFrameWidth, attributedStringHeight)];
-	}
-
-	return [self lastIntrinsicSize];
 }
 
 @end

@@ -312,7 +312,7 @@ Gw
                                                 <outlet property="delegate" destination="-2" id="7xK-Su-NFa"/>
                                             </connections>
                                         </textField>
-                                        <tokenField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wGy-N2-oQL" customClass="TPI_ChatFilterFilterActionTokenField">
+                                        <tokenField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="wGy-N2-oQL" customClass="TVCAutoExpandingTokenField">
                                             <rect key="frame" x="33" y="123" width="476" height="107"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="107" id="CYM-AX-4zR"/>
