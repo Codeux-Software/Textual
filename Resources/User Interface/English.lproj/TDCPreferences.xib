@@ -2106,7 +2106,7 @@
                         </tabViewItem>
                         <tabViewItem label="Main Text Field" identifier="2" id="lJH-z2-zrz">
                             <view key="view" id="Jbg-Wd-zzj">
-                                <rect key="frame" x="10" y="25" width="557" height="414"/>
+                                <rect key="frame" x="10" y="25" width="543" height="414"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="10g-d7-Fnj">
@@ -2141,7 +2141,7 @@
                                         </connections>
                                     </button>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7dN-Dw-p6U">
-                                        <rect key="frame" x="39" y="252" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="252" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="VW6-wy-Jxx"/>
                                         </constraints>
@@ -2150,7 +2150,7 @@
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tcb-mG-sBA">
-                                        <rect key="frame" x="39" y="145" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="145" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="wlT-Ud-72q"/>
                                         </constraints>
@@ -2192,7 +2192,7 @@
                                         </connections>
                                     </button>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pwx-16-f5L">
-                                        <rect key="frame" x="39" y="359" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="359" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="oFE-sf-yT7"/>
                                         </constraints>
@@ -2201,7 +2201,7 @@
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="z2E-fq-Jyq">
-                                        <rect key="frame" x="39" y="92" width="478" height="5"/>
+                                        <rect key="frame" x="33" y="92" width="478" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="478" id="AwG-eu-SJe"/>
                                         </constraints>
@@ -2574,7 +2574,7 @@
                         </tabViewItem>
                         <tabViewItem label="Server List Colors" identifier="" id="HCE-kN-Cdc">
                             <view key="view" id="hBO-c8-FmJ">
-                                <rect key="frame" x="10" y="25" width="521" height="360"/>
+                                <rect key="frame" x="10" y="25" width="543" height="360"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aSj-pP-pk3">
@@ -2586,7 +2586,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="DUy-zX-hVp">
-                                        <rect key="frame" x="337" y="315" width="48" height="24"/>
+                                        <rect key="frame" x="337" y="315" width="44" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="HCO-Ic-pbc"/>
+                                        </constraints>
                                         <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <accessibilityConnection property="title" destination="aSj-pP-pk3" id="Y4p-bJ-NC4"/>
@@ -2599,7 +2602,7 @@
                                         </connections>
                                     </colorWell>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pZM-BH-WK6">
-                                        <rect key="frame" x="393" y="314" width="75" height="25"/>
+                                        <rect key="frame" x="389" y="314" width="75" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="75" id="mfo-D2-V0P"/>
                                         </constraints>
@@ -2627,7 +2630,6 @@
                                 <constraints>
                                     <constraint firstItem="DUy-zX-hVp" firstAttribute="top" secondItem="hBO-c8-FmJ" secondAttribute="top" constant="21" id="25n-rl-WPz"/>
                                     <constraint firstItem="pZM-BH-WK6" firstAttribute="baseline" secondItem="aSj-pP-pk3" secondAttribute="baseline" id="4K0-xU-fck"/>
-                                    <constraint firstAttribute="trailing" secondItem="pZM-BH-WK6" secondAttribute="trailing" constant="53" id="Xi8-jg-eJN"/>
                                     <constraint firstItem="aSj-pP-pk3" firstAttribute="leading" secondItem="hBO-c8-FmJ" secondAttribute="leading" constant="45" id="cj8-Lg-xI6"/>
                                     <constraint firstItem="voi-Jo-rXf" firstAttribute="top" secondItem="DUy-zX-hVp" secondAttribute="bottom" constant="4" id="dya-Ig-sfc"/>
                                     <constraint firstItem="pZM-BH-WK6" firstAttribute="centerY" secondItem="DUy-zX-hVp" secondAttribute="centerY" id="ffj-cd-mA4"/>
@@ -2640,7 +2642,7 @@
                         </tabViewItem>
                         <tabViewItem label="User List Colors" identifier="2" id="ozM-AW-weC">
                             <view key="view" id="wAG-b4-1dF">
-                                <rect key="frame" x="10" y="25" width="521" height="360"/>
+                                <rect key="frame" x="10" y="25" width="543" height="360"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="JhD-ZF-Sav">
@@ -2786,7 +2788,10 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaQ-rf-529">
-                                        <rect key="frame" x="78" y="307" width="365" height="32"/>
+                                        <rect key="frame" x="77.5" y="307" width="388" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="384" id="jUi-CP-9l5"/>
+                                        </constraints>
                                         <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" title="These colors represent the various user modes shown on the user list for each channel." id="2QW-Qh-FdK">
                                             <font key="font" metaFont="cellTitle"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2794,7 +2799,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="yGR-pH-h8S">
-                                        <rect key="frame" x="39" y="286" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="286" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="iSY-RY-XRQ"/>
                                         </constraints>
@@ -2803,13 +2808,13 @@
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1GB-Dc-JXA">
-                                        <rect key="frame" x="39" y="71" width="443" height="5"/>
+                                        <rect key="frame" x="50" y="71" width="443" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="awz-7b-J7x">
-                                        <rect key="frame" x="181" y="29" width="158" height="25"/>
+                                        <rect key="frame" x="192" y="29" width="158" height="25"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="158" id="xp3-Ib-MOr"/>
                                         </constraints>
@@ -2827,10 +2832,10 @@
                                     <constraint firstItem="FS5-lg-ZQk" firstAttribute="leading" secondItem="XeX-Ma-9Hc" secondAttribute="leading" id="1YN-Ah-aWz"/>
                                     <constraint firstItem="O44-GT-9T4" firstAttribute="top" secondItem="YGS-3n-rXC" secondAttribute="bottom" constant="8" symbolic="YES" id="449-FO-LCx"/>
                                     <constraint firstItem="S7K-Fn-yaj" firstAttribute="top" secondItem="QgH-Fh-Jts" secondAttribute="bottom" constant="15" id="4HI-c8-3gZ"/>
+                                    <constraint firstItem="awz-7b-J7x" firstAttribute="centerX" secondItem="wAG-b4-1dF" secondAttribute="centerX" id="4Ry-eM-Sds"/>
                                     <constraint firstItem="yGR-pH-h8S" firstAttribute="trailing" secondItem="1GB-Dc-JXA" secondAttribute="trailing" id="5o1-Te-MzU"/>
                                     <constraint firstItem="um4-jh-YFM" firstAttribute="top" secondItem="yGR-pH-h8S" secondAttribute="bottom" constant="21" id="89z-0u-wwy"/>
                                     <constraint firstItem="yGR-pH-h8S" firstAttribute="top" secondItem="KaQ-rf-529" secondAttribute="bottom" constant="18" id="9ml-nn-iBg"/>
-                                    <constraint firstItem="KaQ-rf-529" firstAttribute="leading" secondItem="wAG-b4-1dF" secondAttribute="leading" constant="80" id="DdM-Oc-lgL"/>
                                     <constraint firstItem="um4-jh-YFM" firstAttribute="leading" secondItem="wAG-b4-1dF" secondAttribute="leading" constant="134" id="Dh4-98-l1A"/>
                                     <constraint firstItem="YGS-3n-rXC" firstAttribute="leading" secondItem="JXn-pJ-hWs" secondAttribute="leading" id="Doa-01-SlN"/>
                                     <constraint firstItem="KaQ-rf-529" firstAttribute="top" secondItem="wAG-b4-1dF" secondAttribute="top" constant="21" id="ENa-e3-6kB"/>
@@ -2845,7 +2850,6 @@
                                     <constraint firstItem="JhD-ZF-Sav" firstAttribute="top" secondItem="yGR-pH-h8S" secondAttribute="bottom" constant="18" id="U44-Nr-xJw"/>
                                     <constraint firstItem="JhD-ZF-Sav" firstAttribute="leading" secondItem="JXn-pJ-hWs" secondAttribute="leading" id="W36-Vn-fQO"/>
                                     <constraint firstItem="yGR-pH-h8S" firstAttribute="centerX" secondItem="wAG-b4-1dF" secondAttribute="centerX" id="W3D-B4-405"/>
-                                    <constraint firstItem="awz-7b-J7x" firstAttribute="centerX" secondItem="1GB-Dc-JXA" secondAttribute="centerX" id="Wqd-oA-4eN"/>
                                     <constraint firstItem="4Ej-1Y-15S" firstAttribute="top" secondItem="O44-GT-9T4" secondAttribute="bottom" constant="8" symbolic="YES" id="XlE-c0-3qw"/>
                                     <constraint firstItem="hfA-Bg-ot8" firstAttribute="top" secondItem="um4-jh-YFM" secondAttribute="bottom" constant="15" id="b1U-hA-sfx"/>
                                     <constraint firstItem="JhD-ZF-Sav" firstAttribute="trailing" secondItem="JXn-pJ-hWs" secondAttribute="trailing" id="bhC-xS-pxM"/>
@@ -3831,7 +3835,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                     <tabViewItems>
                         <tabViewItem label="General" identifier="1" id="yKL-ON-PSA">
                             <view key="view" id="bCO-56-p1h">
-                                <rect key="frame" x="10" y="25" width="521" height="322"/>
+                                <rect key="frame" x="10" y="25" width="529" height="322"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ICa-wc-PBy">
@@ -3871,7 +3875,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wbm-Z3-lDn">
-                                        <rect key="frame" x="39" y="258" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="258" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="BpY-Xc-j0l"/>
                                         </constraints>
@@ -3880,7 +3884,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="nPR-cs-1aS">
-                                        <rect key="frame" x="39" y="202" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="202" width="443" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
@@ -3962,7 +3966,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wmq-Ee-waL">
-                                        <rect key="frame" x="316" y="280" width="140" height="19"/>
+                                        <rect key="frame" x="316" y="280" width="148" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Browse Style Files" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gtM-zH-PMU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="cellTitle"/>
@@ -4146,7 +4150,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                         </tabViewItem>
                         <tabViewItem label="Inline Media" identifier="" id="IHG-45-OZD">
                             <view key="view" id="FCz-lg-PH1">
-                                <rect key="frame" x="10" y="25" width="521" height="322"/>
+                                <rect key="frame" x="10" y="25" width="529" height="322"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="MVd-EC-hxF">
@@ -4177,7 +4181,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1Qb-Of-v0f">
-                                        <rect key="frame" x="39" y="142" width="442" height="5"/>
+                                        <rect key="frame" x="43" y="142" width="442" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
@@ -4211,7 +4215,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-1W-6Ke">
-                                        <rect key="frame" x="39" y="221" width="442" height="5"/>
+                                        <rect key="frame" x="43.5" y="221" width="442" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="442" id="veE-CR-Exq"/>
                                         </constraints>
@@ -4452,7 +4456,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                         </tabViewItem>
                         <tabViewItem label="Advanced" identifier="2" id="ze5-c7-Zra">
                             <view key="view" id="GFi-uq-h4X">
-                                <rect key="frame" x="10" y="25" width="521" height="322"/>
+                                <rect key="frame" x="10" y="25" width="529" height="322"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="mRh-IR-wdO">
@@ -4478,13 +4482,13 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="5MC-Eg-biZ">
-                                        <rect key="frame" x="39" y="84" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="84" width="443" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <box verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="INF-xe-gUm">
-                                        <rect key="frame" x="39" y="191" width="443" height="5"/>
+                                        <rect key="frame" x="43" y="191" width="443" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="443" id="p9z-VG-m4F"/>
                                         </constraints>
@@ -4503,7 +4507,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="WH0-Df-kRL">
-                                        <rect key="frame" x="83" y="28" width="356" height="17"/>
+                                        <rect key="frame" x="86.5" y="28" width="356" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="crJ-r5-VO3">
                                             <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
