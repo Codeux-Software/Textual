@@ -6,6 +6,7 @@
 	<array>
 		<string>feed</string>
 		<string>ftp</string>
+		<string>gopher</string>
 		<string>irc</string>
 		<string>ircs</string>
 		<string>itms</string>
