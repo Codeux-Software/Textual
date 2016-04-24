@@ -1020,7 +1020,7 @@ CQ
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="vgt-gi-rFQ"/>
-                <menuItem title="Authenticate Chat Partner" tag="9933" id="9eO-kw-9HG">
+                <menuItem title="Authenticate Chat Partner" tag="1404" id="9eO-kw-9HG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="encryptionAuthenticateChatPartner:" target="267" id="F1j-kX-1Dw"/>

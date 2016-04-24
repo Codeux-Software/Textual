@@ -64,8 +64,8 @@
 "OffTheRecord[1007][14]" = "Off-the-Record Messaging: The message received was sent in a format that is not recognized.";
 "OffTheRecord[1007][16]" = "Off-the-Record Messaging: Received and discarded a message intended for another instance.";
 
-"OffTheRecord[1008]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not open.";
-"OffTheRecord[1009]" = "Off-the-Record Messaging: Cannot end private conversation because there is not one open.";
+"OffTheRecord[1008]" = "Off-the-Record Messaging: Cannot authenticate user because a private conversation is not active.";
+"OffTheRecord[1009]" = "Off-the-Record Messaging: Cannot end private conversation because there is not one that's active.";
 
 "OffTheRecord[1010]" = "Requesting an off-the-record private conversation. However, you do not have a plugin to support that. See http://otr.cypherpunks.ca/ for more information.";
 
