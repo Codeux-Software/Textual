@@ -669,10 +669,8 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 			[mainWindowServerList() addItemToList:index inParent:nil];
 		}
 
-		if (self.isPopulatingSeeds == NO) {
-			if ([self.clients count] == 1) {
-				[mainWindow() select:c];
-			}
+		if ([self.clients count] == 1) {
+			[mainWindow() select:c];
 		}
 	}
 
