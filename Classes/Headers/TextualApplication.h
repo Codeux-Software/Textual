@@ -127,6 +127,8 @@
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCAnimatedContentNavigationOutlineView;
+	@class TVCAutoExpandingTextField;
+	@class TVCAutoExpandingTokenField;
 	@class TVCBasicTableView;
 	@class TVCDockIcon;
 	@class TVCImageURLoader;
@@ -367,6 +369,8 @@
 
 	/* View Controllers. */
 	#import "TVCAnimatedContentNavigationOutlineView.h"
+	#import "TVCAutoExpandingTextField.h"
+	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
 	#import "TVCImageURLoader.h"
