@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Localization */
 TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 
@@ -44,7 +46,7 @@ TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_l
 TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
 
 /* Time */
-TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format); // Acts as a forward for strftime(). TXDefaultTextualTimestampFormat is used when format is empty.
+TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);
 
 TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
 
@@ -63,3 +65,5 @@ TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
 
 TEXTUAL_EXTERN NSComparator NSDefaultComparator;
+
+NS_ASSUME_NONNULL_END

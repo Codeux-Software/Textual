@@ -67,7 +67,7 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17  // YES if the ZNC vendor specific CAP supported.
 };
 
-typedef void (^IRCClientPrintToWebViewCallbackBlock)(BOOL isHighlight);
+typedef void (^IRCClientPrintToWebViewCompletionBlock)(BOOL isHighlight);
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
@@ -267,8 +267,8 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 - (NSData *)convertToCommonEncoding:(NSString *)data;
 - (NSString *)convertFromCommonEncoding:(NSData *)data;
 
-- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel; // Defaults to TVCLogLineUndefinedNicknameFormat
-- (NSString *)formatNickname:(NSString *)nick channel:(IRCChannel *)channel formatOverride:(NSString *)forcedFormat;
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel;
+- (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel withFormat:(NSString *)format;
 
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype;
 - (BOOL)notifyEvent:(TXNotificationType)type lineType:(TVCLogLineType)ltype target:(IRCChannel *)target nickname:(NSString *)nick text:(NSString *)text;
@@ -319,7 +319,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
 			receivedAt:(NSDate *)receivedAt											// The time the message was received at for the timestamp.
 	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
-	   completionBlock:(IRCClientPrintToWebViewCallbackBlock)completionBlock;		// A block to call when the actual print occurs.
+	   completionBlock:(IRCClientPrintToWebViewCompletionBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
 - (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command;

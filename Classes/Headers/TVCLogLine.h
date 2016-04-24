@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TVCLogLineUndefinedNicknameFormat;
 TEXTUAL_EXTERN NSString * const TVCLogLineActionNicknameFormat;
 TEXTUAL_EXTERN NSString * const TVCLogLineNoticeNicknameFormat;
@@ -84,32 +86,32 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 @property (nonatomic, copy) NSDate *receivedAt;
 @property (readonly, copy) NSString *nicknameColorStyle;
 @property (readonly, assign) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
-@property (nonatomic, copy) NSString *nickname;
+@property (nonatomic, copy, nullable) NSString *nickname;
 @property (nonatomic, copy) NSString *messageBody;
 @property (nonatomic, copy) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
 @property (nonatomic, assign) TVCLogLineType lineType;
 @property (nonatomic, assign) TVCLogLineMemberType memberType;
-@property (nonatomic, copy) NSArray *highlightKeywords;
-@property (nonatomic, copy) NSArray *excludeKeywords;
+@property (nonatomic, copy, nullable) NSArray *highlightKeywords;
+@property (nonatomic, copy, nullable) NSArray *excludeKeywords;
 
-- (TVCLogLine *)initWithRawJSONData:(NSData *)input; // This automatically calls the appropriate initWithJSON... call.
-- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)input;
+- (TVCLogLine *)initWithRawJSONData:(NSData *)data; // This automatically calls the appropriate initWithJSON... call.
+- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)dic;
 
 @property (readonly, copy) NSData *jsonDictionaryRepresentation;
 
 @property (readonly, copy) NSString *formattedTimestamp;
-- (NSString *)formattedTimestampWithForcedFormat:(NSString *)format;
 
-- (NSString *)formattedNickname:(IRCChannel *)owner;
-- (NSString *)formattedNickname:(IRCChannel *)owner withForcedFormat:(NSString *)format;
+- (NSString *)formattedNickname:(IRCChannel *)inChannel;
 
 @property (readonly, copy) NSString *lineTypeString;
-@property (readonly, copy) NSString *memberTypeString;
+@property (readonly, copy, nullable) NSString *memberTypeString;
 
 - (void)computeNicknameColorStyle;
 
 - (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel;
 
-+ (NSString *)lineTypeString:(TVCLogLineType)type;
++ (nullable NSString *)lineTypeString:(TVCLogLineType)type;
 + (NSString *)memberTypeString:(TVCLogLineMemberType)type;
 @end
+
+NS_ASSUME_NONNULL_END

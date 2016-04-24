@@ -1251,7 +1251,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 	// ---- //
 
-	NSFont *channelFont = [themeSettings() channelViewFont];
+	NSFont *channelFont = [themeSettings() themeChannelViewFont];
 
 	if (channelFont == nil) {
 		channelFont = [TPCPreferences themeChannelViewFont];
@@ -1269,7 +1269,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
 		
-		NSString *timeFormat = [themeSettings() timestampFormat];
+		NSString *timeFormat = [themeSettings() themeTimestampFormat];
 		
 		if (timeFormat == nil) {
 			timeFormat = [TPCPreferences themeTimestampFormat];

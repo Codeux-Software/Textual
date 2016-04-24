@@ -44,11 +44,10 @@
 
 NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 {
-	/* If the format is empty, a default is called. */
-	if (format == nil || [format length] == 0) {
-		format = TXDefaultTextualTimestampFormat;
-	}
-	
+	PointerIsEmptyAssertReturn(date, nil)
+
+	NSObjectIsEmptyAssertReturn(format, nil)
+
 	/* Convert time to C object. */
 	time_t global = (time_t)[date timeIntervalSince1970];
 	
