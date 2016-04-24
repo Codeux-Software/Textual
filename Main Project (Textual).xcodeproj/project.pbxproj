@@ -1218,6 +1218,18 @@
 		4CF09D1A195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF09D1B195D4AAF00A29486 /* IRCWorldCloudExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
+		4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */; };
+		4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */; };
+		4CF304DF1CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E01CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E11CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E31CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E41CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E51CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CF304E61CCD37D50005EA64 /* TVCAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */; };
+		4CF304E71CCD37D50005EA64 /* TVCAutoExpandingTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */; };
+		4CF304E81CCD37DC0005EA64 /* TVCAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */; };
+		4CF304E91CCD37DC0005EA64 /* TVCAutoExpandingTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */; };
 		4CF40DE21AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */; };
 		4CF40DE31AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */; };
 		4CF40DE41AC1A4AC00A26BE0 /* TVCImageURLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */; };
@@ -2063,6 +2075,10 @@
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF09D19195D4AAF00A29486 /* IRCWorldCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorldCloudExtension.h; sourceTree = "<group>"; };
+		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCAutoExpandingTextField.m; sourceTree = "<group>"; };
+		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCAutoExpandingTokenField.m; sourceTree = "<group>"; };
+		4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCAutoExpandingTextField.h; sourceTree = "<group>"; };
+		4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCAutoExpandingTokenField.h; sourceTree = "<group>"; };
 		4CF40DB31AC1A4AC00A26BE0 /* TVCImageURLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLoader.m; sourceTree = "<group>"; };
 		4CF40DB41AC1A4AC00A26BE0 /* TVCImageURLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCImageURLParser.m; sourceTree = "<group>"; };
 		4CF40DB51AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogControllerHistoricLogFile.m; sourceTree = "<group>"; };
@@ -2754,6 +2770,8 @@
 				4CB356141CBB496C00CB126D /* TPCThemeControllerPrivate.h */,
 				4C8AF57D158E99520026668C /* TPCThemeSettings.h */,
 				4CB4806E1965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h */,
+				4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */,
+				4CF304E21CCD34700005EA64 /* TVCAutoExpandingTokenField.h */,
 				4C8AF585158E99520026668C /* TVCBasicTableView.h */,
 				4C8AF580158E99520026668C /* TVCDockIcon.h */,
 				4C1893F217980F460091D173 /* TVCImageURLoader.h */,
@@ -3357,6 +3375,8 @@
 		4CF40DBE1AC1A4AC00A26BE0 /* Input Text Field */ = {
 			isa = PBXGroup;
 			children = (
+				4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */,
+				4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */,
 				4CF40DBF1AC1A4AC00A26BE0 /* TVCMainWindowTextViewMavericksUserInterace.m */,
 				4CF40DC01AC1A4AC00A26BE0 /* TVCMainWindowTextViewYosemiteUserInterace.m */,
 				4CF40DC11AC1A4AC00A26BE0 /* TVCTextFieldComboBoxWithValueValidation.m */,
@@ -3582,6 +3602,8 @@
 				4C0BA61A1990798800857343 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C0BA61B1990798800857343 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C0BA61C1990798800857343 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
+				4CF304DF1CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */,
+				4CF304E31CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */,
 				4C0BA61D1990798800857343 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4CD3446F1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C77FF261991F02E00E8A7B8 /* NSObjectHelper.h in Headers */,
@@ -3748,6 +3770,8 @@
 				4C7E0FA619AC25900084173D /* GRMustacheContentType.h in Headers */,
 				4C77662019789F9A00759774 /* TVCServerListMavericksUserInterface.h in Headers */,
 				4C36091B18B4E89500243B3A /* TVCTextFieldWithValueValidation.h in Headers */,
+				4CF304E01CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */,
+				4CF304E41CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */,
 				4C790FCA1B82706400EB318C /* TXWindowController.h in Headers */,
 				4C77661D19789F8E00759774 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4CB480701965345200E0782E /* TVCAnimatedContentNavigationOutlineView.h in Headers */,
@@ -3917,6 +3941,8 @@
 				4C7E0FA719AC25900084173D /* GRMustacheContentType.h in Headers */,
 				4C7766251978A74D00759774 /* TVCServerListSharedUserInterface.h in Headers */,
 				4CBFB2E21979AF9C005BB6B5 /* TVCMemberListMavericksUserInterface.h in Headers */,
+				4CF304E11CCD345E0005EA64 /* TVCAutoExpandingTextField.h in Headers */,
+				4CF304E51CCD34700005EA64 /* TVCAutoExpandingTokenField.h in Headers */,
 				4CBFB2E81979AFBD005BB6B5 /* TVCMemberListSharedUserInterface.h in Headers */,
 				4CBFB2E51979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h in Headers */,
 				4C38526219721E9100A6845C /* TDCSharedProtocolDefinitions.h in Headers */,
@@ -4822,6 +4848,8 @@
 				4C741C431C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C195A941ABBC9300009BCB6 /* NSViewHelper.m in Sources */,
 				4C0EC1251AB49ACA00D0015C /* TPCResourceManager.m in Sources */,
+				4CF304E61CCD37D50005EA64 /* TVCAutoExpandingTextField.m in Sources */,
+				4CF304E71CCD37D50005EA64 /* TVCAutoExpandingTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4963,6 +4991,8 @@
 				4C0BA6C41990798800857343 /* OELReachability.m in Sources */,
 				4C0BA6C61990798800857343 /* TDCHighlightEntrySheet.m in Sources */,
 				4C0EC1281AB49DE400D0015C /* TPCResourceManager.m in Sources */,
+				4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */,
+				4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5109,6 +5139,8 @@
 				4C741C441C8CAD450090970C /* TVCLogViewInternalWK2.m in Sources */,
 				4C0EC1261AB49DD000D0015C /* TPCResourceManager.m in Sources */,
 				4C195A951ABBC9350009BCB6 /* NSViewHelper.m in Sources */,
+				4CF304E81CCD37DC0005EA64 /* TVCAutoExpandingTextField.m in Sources */,
+				4CF304E91CCD37DC0005EA64 /* TVCAutoExpandingTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
