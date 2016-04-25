@@ -1808,7 +1808,7 @@
 		4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreSparkleFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreSparkleFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Chat Filter Extension.xcodeproj"; path = "Resources/Plugins/Chat Filter/Chat Filter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ChatFilterExtension.bundle; path = ".tmp/SharedBuildProducts-Extensions/ChatFilterExtension.bundle"; sourceTree = SOURCE_ROOT; };
-		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXGlobalModels.m; sourceTree = "<group>"; };
+		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXGlobalModels.m; path = Controllers/TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
 		4C8AF515158E99520026668C /* TDCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesController.m; sourceTree = "<group>"; };
@@ -2358,6 +2358,7 @@
 		4C46CB001580429D00846B64 /* Source Code */ = {
 			isa = PBXGroup;
 			children = (
+				4C7408FD1CCDA336002F026F /* Textual 6 */,
 				4CA8AD25195B475600B99BFB /* Textual 5 */,
 			);
 			name = "Source Code";
@@ -2581,6 +2582,47 @@
 			name = Installers;
 			sourceTree = "<group>";
 		};
+		4C7408FD1CCDA336002F026F /* Textual 6 */ = {
+			isa = PBXGroup;
+			children = (
+				4C7409031CCDA33F002F026F /* Controllers */,
+				4C7409041CCDA344002F026F /* Preferences */,
+			);
+			name = "Textual 6";
+			sourceTree = "<group>";
+		};
+		4C7409031CCDA33F002F026F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4C8AF510158E99520026668C /* TXGlobalModels.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4C7409041CCDA344002F026F /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				4C7409051CCDA355002F026F /* iCloud */,
+				4C92FEC217A8C8BD003888F4 /* Resource Management */,
+				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
+				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
+				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
+				4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */,
+				4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */,
+				4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		4C7409051CCDA355002F026F /* iCloud */ = {
+			isa = PBXGroup;
+			children = (
+				4CA110D41955AA7E0062EC4E /* TPCPreferencesCloudSync.m */,
+				4CA110D51955AA7E0062EC4E /* TPCPreferencesCloudSyncExtension.m */,
+			);
+			name = iCloud;
+			sourceTree = "<group>";
+		};
 		4C74FBB91B557A6200DD1615 /* License Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -2668,7 +2710,6 @@
 			children = (
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
 				4C8AF56A158E99520026668C /* TextualApplication.h */,
-				4C8AF510158E99520026668C /* TXGlobalModels.m */,
 				4C8AF511158E99520026668C /* TXMasterController.m */,
 				4C8AF512158E99520026668C /* TXMenuController.m */,
 				4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */,
@@ -3015,15 +3056,6 @@
 			name = WebKit;
 			sourceTree = "<group>";
 		};
-		4CA110D31955AA6F0062EC4E /* iCloud */ = {
-			isa = PBXGroup;
-			children = (
-				4CA110D41955AA7E0062EC4E /* TPCPreferencesCloudSync.m */,
-				4CA110D51955AA7E0062EC4E /* TPCPreferencesCloudSyncExtension.m */,
-			);
-			name = iCloud;
-			sourceTree = "<group>";
-		};
 		4CA8AD25195B475600B99BFB /* Textual 5 */ = {
 			isa = PBXGroup;
 			children = (
@@ -3317,15 +3349,7 @@
 		4CD1FB0E16D7D4500085BC82 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				4CA110D31955AA6F0062EC4E /* iCloud */,
-				4C92FEC217A8C8BD003888F4 /* Resource Management */,
 				4C8AF5EB158E99520026668C /* Theme */,
-				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
-				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
-				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
-				4CA110DC1955AA890062EC4E /* TPCPreferencesImportExport.m */,
-				4CFC40DE1969B58F004C6EF4 /* TPCPreferencesUserDefaults.m */,
-				4CD0A2241CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";

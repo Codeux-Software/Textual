@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSUInteger, TPCPreferencesKeyReloadActionMask) {
 	TPCPreferencesKeyReloadDockIconBadgesAction							= 1 << 0,
 	TPCPreferencesKeyReloadHighlightKeywordsAction						= 1 << 1,
@@ -75,6 +77,8 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimi
 + (void)fixThemeFontNameMissingDuringSync;
 #endif
 
-+ (void)performReloadActionForKeyValues:(NSArray *)prefKeys;
++ (void)performReloadActionForKeyValues:(NSArray<NSString *> *)prefKeys;
 + (void)performReloadActionForActionType:(TPCPreferencesKeyReloadActionMask)reloadAction;
 @end
+
+NS_ASSUME_NONNULL_END

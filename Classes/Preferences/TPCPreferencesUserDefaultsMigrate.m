@@ -40,6 +40,8 @@
 #import "TPCPreferencesUserDefaultsMigrate.h"
 #import "TPCPreferencesUserDefaultsPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
 @implementation TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
 
@@ -92,7 +94,7 @@
 	 overrides the previously defined value. */
 	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
-	NSArray *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
+	NSArray<NSDictionary *> *pathsToMigrate = [staticValues arrayForKey:@"TPCPreferencesUserDefaults Paths to Migrate"];
 
 	for (NSDictionary *pathToMigrateDict in pathsToMigrate) {
 		@autoreleasepool {
@@ -215,9 +217,9 @@
 	}
 
 	/* Retrieve values from property list. */
-	NSDictionary *preferencesToMigrate = nil;
+	NSDictionary<NSString *, id> *preferencesToMigrate = nil;
 
-	NSDictionary *remappedPreferenceKeys = nil;
+	NSDictionary<NSString *, NSString *> *remappedPreferenceKeys = nil;
 
 	if (sourceMigrationPathExists) {
 		if (isPropertyList) {
@@ -316,3 +318,5 @@
 
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

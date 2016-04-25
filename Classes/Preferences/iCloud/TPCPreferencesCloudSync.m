@@ -41,6 +41,8 @@
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification	= @"TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification";
 NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification	= @"TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification";
@@ -60,9 +62,9 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 #pragma mark -
 #pragma mark Public API
 
-- (void)setValue:(id)value forKey:(NSString *)key
+- (void)setValue:(nullable id)value forKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key);
+	PointerIsEmptyAssert(value)
 
 	NSString *hashedKey = [key md5];
 	
@@ -73,16 +75,16 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	}
 }
 
-- (id)valueForKey:(NSString *)key
+- (nullable id)valueForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssertReturn(key, nil);
+	PointerIsEmptyAssertReturn(key, nil);
 
 	NSString *hashedKey = [key md5];
 
 	return [self valueForHashedKey:hashedKey actualKey:NULL];
 }
 
-- (id)valueForHashedKey:(NSString *)key actualKey:(NSString * __autoreleasing *)realKeyValue /* @private */
+- (nullable id)valueForHashedKey:(NSString *)key actualKey:(NSString **)realKeyValue /* @private */
 {
 	id dictObject = [RZUbiquitousKeyValueStore() objectForKey:key];
 
@@ -103,7 +105,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (void)removeObjectForKey:(NSString *)key
 {
-	NSObjectIsEmptyAssert(key);
+	PointerIsEmptyAssert(key);
 
 	NSString *hashedKey = [key md5];
 
@@ -121,7 +123,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	}
 
 	/* Add key to removal array */
-	NSObjectIsEmptyAssert(key);
+	PointerIsEmptyAssert(key);
 
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		@synchronized(self.keysToRemove) {
@@ -151,7 +153,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	});
 }
 
-- (NSString *)ubiquitousContainerPath
+- (nullable NSString *)ubiquitousContainerPath
 {
 	if (self.ubiquitousContainerURL == nil) {
 		return nil;
@@ -216,6 +218,8 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (BOOL)keyIsNotPermittedInCloud:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, NO)
+
 	if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers]) {
 		return ([key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix] == NO);
 	} else {
@@ -230,6 +234,8 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (BOOL)keyIsNotPermittedFromCloud:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, NO)
+
 	if ([TPCPreferences syncPreferencesToTheCloudLimitedToServers]) {
 		return ([self keyIsRelatedToSavedServerState:key] == NO);
 	} else {
@@ -243,28 +249,30 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 
 - (BOOL)keyIsRelatedToSavedServerState:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, NO)
+
 	return ([key isEqualToString:IRCWorldControllerCloudDeletedClientsStorageKey] ||
 				  [key hasPrefix:IRCWorldControllerCloudClientEntryKeyPrefix]);
 }
 
-- (NSString *)unhashedKeyFromHashedKey:(NSString *)key
+- (nullable NSString *)unhashedKeyFromHashedKey:(NSString *)key
 {
 	/* This method only lists specific keys that we need to know which cannot
 	 be viewed directly by asking for the key-value entry in iCloud. */
 	/* It was at the point that I wrote this method that I realized how
 	 fucking stupid Textual's implementation of iCloud is. */
+	PointerIsEmptyAssertReturn(key, nil)
 
-	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
-							@"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
+	NSDictionary<NSString *, NSString *> *cachedValues =
+	[[masterController() sharedApplicationCacheObject] objectForKey:
+	@"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues =
+		cachedValues =
 		[TPCResourceManager loadContentsOfPropertyListInResources:@"AppleCloudMappedKeys"];
 
-		[[masterController() sharedApplicationCacheObject] setObject:staticValues forKey:
+		[[masterController() sharedApplicationCacheObject] setObject:cachedValues forKey:
 		 @"TPCPreferencesCloudSync -> Apple iCloud List of Mapped Hashed Keys"];
-
-		cachedValues = staticValues;
 	}
 
 	return [cachedValues objectForKey:key];
@@ -274,6 +282,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 {
 	/* List of keys that when synced downstream are allowed to be removed
 	 from NSUserDefaults if they no longer exist in the cloud. */
+	PointerIsEmptyAssertReturn(key, NO)
 
 	return ([key isEqualToString:@"User List Mode Badge Colors -> +y"] ||
 			[key isEqualToString:@"User List Mode Badge Colors -> +q"] ||
@@ -382,7 +391,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		}
 
 		/* Get a copy of our defaults. */
-		static NSDictionary *defaults = nil;
+		static NSDictionary<NSString *, NSString *> *defaults = nil;
 
 		if (defaults == nil) {
 			defaults = [TPCPreferences defaultPreferences];
@@ -452,7 +461,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 	});
 }
 
-- (void)syncPreferencesFromCloud:(NSArray *)changedKeysHashed
+- (void)syncPreferencesFromCloud:(NSArray<NSString *> *)changedKeysHashed
 {
 	if ([self applicationIsTerminating]) {
 		return; // Do not continue operation...
@@ -476,12 +485,12 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		}
 		
 		/* See the code of syncPreferencesToCloud: for an expalantion of how these keys are hashed. */
-		NSMutableArray *changedKeysUnhashed = [NSMutableArray array];
-		NSMutableArray *importedClients = [NSMutableArray array];
+		NSMutableArray<NSString *> *changedKeysUnhashed = [NSMutableArray array];
+		NSMutableArray<NSDictionary *> *importedClients = [NSMutableArray array];
 		NSMutableArray *valuesToRemove = [NSMutableArray array];
 		
 		for (id hashedKey in self.remoteKeysBeingSynced) {
-			id unhashedKey = nil;
+			NSString *unhashedKey = nil;
 			
 			id unhashedValue = [self valueForHashedKey:hashedKey actualKey:&unhashedKey];
 
@@ -836,3 +845,5 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 @end
 
 #endif
+
+NS_ASSUME_NONNULL_END

@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
 
@@ -44,3 +46,5 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefault
 + (void)import;
 + (void)export;
 @end
+
+NS_ASSUME_NONNULL_END

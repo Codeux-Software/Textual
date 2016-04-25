@@ -39,6 +39,8 @@
 
 #import "TPCPreferencesImportExportPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey		= @"Theme -> Name -> Did Not Exist During Last Sync";
 NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme -> Font Name -> Did Not Exist During Last Sync";
 
@@ -127,13 +129,15 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	});
 }
 
-+ (void)importContentsOfDictionary:(NSDictionary *)aDict
++ (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict
 {
 	[self importContentsOfDictionary:aDict withAutomaticReload:YES];
 }
 
-+ (void)importContentsOfDictionary:(NSDictionary *)aDict withAutomaticReload:(BOOL)reloadPreferences
++ (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict withAutomaticReload:(BOOL)reloadPreferences
 {
+	PointerIsEmptyAssert(aDict)
+
 	[aDict enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 		[self import:object withKey:key];
 	}];
@@ -143,25 +147,28 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	}
 }
 
-+ (void)import:(id)obj withKey:(id)key
++ (void)import:(id)object withKey:(id)key
 {
+	PointerIsEmptyAssert(object)
+	PointerIsEmptyAssert(key)
+
 	if ([key isEqual:TPCPreferencesThemeNameDefaultsKey])
 	{
-		NSObjectIsKindOfClassAssert(obj, NSString);
+		NSObjectIsKindOfClassAssert(object, NSString);
 		
-		[TPCPreferences setThemeNameWithExistenceCheck:obj];
+		[TPCPreferences setThemeNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:TPCPreferencesThemeFontNameDefaultsKey])
 	{
-		NSObjectIsKindOfClassAssert(obj, NSString);
+		NSObjectIsKindOfClassAssert(object, NSString);
 		
-		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:obj];
+		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:object];
 	}
 	else if ([key isEqual:IRCWorldControllerDefaultsStorageKey])
 	{
-		NSObjectIsKindOfClassAssert(obj, NSDictionary);
+		NSObjectIsKindOfClassAssert(object, NSDictionary);
 
-		NSArray *clientList = obj[IRCWorldControllerClientListDefaultsStorageKey];
+		NSArray<NSDictionary *> *clientList = object[IRCWorldControllerClientListDefaultsStorageKey];
 		
 		NSObjectIsEmptyAssert(clientList);
 
@@ -180,13 +187,13 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 
 	else
 	{
-		[RZUserDefaults() setObject:obj forKey:key];
+		[RZUserDefaults() setObject:object forKey:key];
 	}
 }
 
-+ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport
++ (void)importWorldControllerClientConfiguration:(NSDictionary<NSString *, id> *)client isCloudBasedImport:(BOOL)isCloudImport
 {
-	NSObjectIsEmptyAssert(client);
+	PointerIsEmptyAssert(client)
 
 	IRCClientConfig *config = [[IRCClientConfig alloc] initWithDictionary:client];
 
@@ -213,7 +220,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	}
 }
 
-+ (void)importPostflightCleanup:(NSArray *)changedKeys
++ (void)importPostflightCleanup:(NSArray<NSString *> *)changedKeys
 {
 	[TPCPreferences performReloadActionForKeyValues:changedKeys];
 
@@ -230,22 +237,22 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	return [TPCPreferencesUserDefaults keyIsExcludedFromBeingExported:key];
 }
 
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentationForCloud
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentationForCloud
 {
 	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:YES removeDefaults:NO];
 }
 
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentation
 {
 	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:YES removeDefaults:YES];
 }
 
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk
 {
 	return [TPCPreferencesImportExport exportedPreferencesDictionaryRepresentation:removeJunk removeDefaults:YES];
 }
 
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk removeDefaults:(BOOL)removeDefaults
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentation:(BOOL)removeJunk removeDefaults:(BOOL)removeDefaults
 {
 	NSDictionary *exportedPreferences = [RZUserDefaults() dictionaryRepresentation];
 
@@ -263,7 +270,7 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 		globalsDomain = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
 	}
 
-	NSMutableDictionary *fnlsettings = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, id> *fnlsettings = [NSMutableDictionary dictionary];
 
 	[exportedPreferences enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 		if (NSObjectsAreEqual(object, argumentsDomain[key])) {
@@ -282,6 +289,19 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	}];
 
 	return fnlsettings;
+}
+
++ (void)export
+{
+	[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
+									  body:TXTLS(@"Prompts[1123][2]")
+									 title:TXTLS(@"Prompts[1123][1]")
+							 defaultButton:TXTLS(@"Prompts[1123][3]")
+						   alternateButton:TXTLS(@"Prompts[0004]")
+							   otherButton:nil
+						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
+							   [self exportPreflight:buttonClicked withOriginalAlert:originalAlert];
+						   }];
 }
 
 /* +exportPostflightForURL: handles the actual export. */
@@ -316,19 +336,6 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 	return YES;
 }
 
-+ (void)export
-{
-	[TLOPopupPrompts sheetWindowWithWindow:mainWindow()
-									  body:TXTLS(@"Prompts[1123][2]")
-									 title:TXTLS(@"Prompts[1123][1]")
-							 defaultButton:TXTLS(@"Prompts[1123][3]")
-						   alternateButton:TXTLS(@"Prompts[0004]")
-							   otherButton:nil
-						   completionBlock:^(TLOPopupPromptReturnType buttonClicked, NSAlert *originalAlert, BOOL suppressionResponse) {
-							   [self exportPreflight:buttonClicked withOriginalAlert:originalAlert];
-						   }];
-}
-
 + (void)exportPreflight:(TLOPopupPromptReturnType)buttonPressed withOriginalAlert:(NSAlert *)originalAlert
 {
 	if (buttonPressed == TLOPopupPromptReturnPrimaryType) {
@@ -347,3 +354,5 @@ NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey	= @"Theme 
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

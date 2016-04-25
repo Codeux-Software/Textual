@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
 #define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
 
@@ -50,9 +52,9 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 @interface TPCPreferencesUserDefaults : NSUserDefaults
 + (TPCPreferencesUserDefaults *)sharedUserDefaults;
 
-- (void)setColor:(NSColor *)color forKey:(NSString *)defaultName;
+- (void)setColor:(nullable NSColor *)color forKey:(NSString *)defaultName;
 
-- (NSColor *)colorForKey:(NSString *)defaultName;
+- (nullable NSColor *)colorForKey:(NSString *)defaultName;
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
 @end
@@ -62,3 +64,5 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
 @interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
 + (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
 @end
+
+NS_ASSUME_NONNULL_END

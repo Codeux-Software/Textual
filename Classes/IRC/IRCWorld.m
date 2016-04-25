@@ -113,7 +113,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
 }
 
-- (NSMutableDictionary *)dictionaryValue
+- (NSDictionary *)dictionaryValue
 {
 	NSMutableArray *ary = [NSMutableArray array];
 

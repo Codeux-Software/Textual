@@ -41,6 +41,8 @@
 
 #import "BuildConfig.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferencesUserDefaultsDidChangeNotification";
 
 #pragma mark -
@@ -61,17 +63,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return sharedSelf;
 }
 
-+ (id)alloc
++ (instancetype)alloc
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-+ (id)allocWithZone:(struct _NSZone *)zone
++ (instancetype)allocWithZone:(struct _NSZone *)zone
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (id)protectedInit
+- (instancetype)protectedInit
 {
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
@@ -91,24 +93,26 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (instancetype)initWithSuiteName:(NSString *)suitename
+- (nullable instancetype)initWithSuiteName:(nullable NSString *)suitename
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (instancetype)initWithUser:(NSString *)username
+- (nullable instancetype)initWithUser:(NSString *)username
 {
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 #pragma clang diagnostic pop
 
-- (void)setObject:(id)value forKey:(NSString *)defaultName
+- (void)setObject:(nullable id)value forKey:(NSString *)defaultName
 {
 	[self setObject:value forKey:defaultName postNotification:YES];
 }
 
-- (void)setObject:(id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification
+- (void)setObject:(nullable id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification
 {
+	PointerIsEmptyAssert(defaultName)
+
 	[self willChangeValueForKey:defaultName];
 
 	if (value == nil) {
@@ -148,18 +152,26 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	[self setObject:@(value) forKey:defaultName];
 }
 
-- (void)setURL:(NSURL *)url forKey:(NSString *)defaultName
+- (void)setURL:(nullable NSURL *)url forKey:(NSString *)defaultName
 {
 	[self setObject:url forKey:defaultName];
 }
 
-- (void)setColor:(NSColor *)color forKey:(NSString *)defaultName
+- (void)setColor:(nullable NSColor *)color forKey:(NSString *)defaultName
 {
-	[self setObject:[NSArchiver archivedDataWithRootObject:color] forKey:defaultName];
+	PointerIsEmptyAssert(defaultName)
+
+	if (color) {
+		[self setObject:[NSArchiver archivedDataWithRootObject:color] forKey:defaultName];
+	} else {
+		[self setObject:nil forKey:defaultName];
+	}
 }
 
-- (NSColor *)colorForKey:(NSString *)defaultName
+- (nullable NSColor *)colorForKey:(NSString *)defaultName
 {
+	PointerIsEmptyAssertReturn(defaultName, nil)
+
 	id objectValue = [self objectForKey:defaultName];
 
 	if (objectValue == nil) {
@@ -176,19 +188,22 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, NO)
+
 	/* Find cached list of excluded keys or build from disk. */
-	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
-			@"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
+	NSDictionary<NSString *, NSString *> *cachedValues =
+	[[masterController() sharedApplicationCacheObject] objectForKey:
+	@"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
 
 	if (cachedValues == nil) {
-		NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
+		NSDictionary *staticValues =
+		[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
-		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
+		cachedValues =
+		[staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
 
-		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		[[masterController() sharedApplicationCacheObject] setObject:cachedValues forKey:
 		 @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
-
-		cachedValues = _blockedNames;
 	}
 
 	/* Using cached list of excluded keys, perform comparison on each. */
@@ -236,17 +251,17 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return sharedSelf;
 }
 
-- (id)protectedInitWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
+- (instancetype)protectedInitWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *,id> *)initialValues
 {
 	return [super initWithDefaults:defaults initialValues:initialValues];
 }
 
-+ (id)alloc
++ (instancetype)alloc
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-+ (id)allocWithZone:(struct _NSZone *)zone
++ (instancetype)allocWithZone:(struct _NSZone *)zone
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
@@ -258,12 +273,12 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
+- (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-- (instancetype)initWithDefaults:(NSUserDefaults *)defaults initialValues:(NSDictionary *)initialValues
+- (instancetype)initWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *,id> *)initialValues
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
@@ -275,3 +290,5 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -37,12 +37,16 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPCPreferencesImportExport ()
-+ (void)import:(id)obj withKey:(id)key;
++ (void)import:(id)object withKey:(id)key;
 
-+ (void)importContentsOfDictionary:(NSDictionary *)aDict;
-+ (void)importWorldControllerClientConfiguration:(NSDictionary *)client isCloudBasedImport:(BOOL)isCloudImport;
++ (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict;
++ (void)importWorldControllerClientConfiguration:(NSDictionary<NSString *, id> *)client isCloudBasedImport:(BOOL)isCloudImport;
 
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentationForCloud;
-+ (NSDictionary *)exportedPreferencesDictionaryRepresentation;
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentationForCloud;
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentation;
 @end
+
+NS_ASSUME_NONNULL_END

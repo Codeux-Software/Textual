@@ -37,24 +37,28 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification;
 TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotification;
 
 @interface TPCPreferencesCloudSync : NSObject
 // Next three methods use hashed keys.
-- (id)valueForKey:(NSString *)key;
+- (nullable id)valueForKey:(NSString *)key;
 
-- (void)setValue:(id)value forKey:(NSString *)key;
+- (void)setValue:(nullable id)value forKey:(NSString *)key;
 - (void)removeObjectForKey:(NSString *)key;
 - (void)removeObjectForKeyNextUpstreamSync:(NSString *)key;
 
 - (void)resetDataToSync;
 - (void)syncEverythingNextSync;
 
-- (NSString *)ubiquitousContainerPath;
+- (nullable NSString *)ubiquitousContainerPath;
 
 - (BOOL)ubiquitousContainerIsAvailable;
 @end
 
 #endif
+
+NS_ASSUME_NONNULL_END

@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation TPCPreferences (TPCPreferencesCloudSyncExtension)
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
@@ -54,8 +56,10 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 }
 #endif
 
-+ (void)performReloadActionForKeyValues:(NSArray *)prefKeys
++ (void)performReloadActionForKeyValues:(NSArray<NSString *> *)prefKeys
 {
+	PointerIsEmptyAssert(prefKeys)
+
 	/* Begin the process... */
 	/* Some of these keys may be repeated because they are shared amongst different elements... */
 	/* The -performReloadActionForActionType: method the keys are used to update is smart enough
@@ -371,3 +375,5 @@ NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimitedToServersDef
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END
