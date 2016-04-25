@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPCApplicationInfo : NSObject
 + (BOOL)sandboxEnabled;
 
@@ -61,5 +63,7 @@
 
 + (NSInteger)applicationProcessID;
 
-+ (NSDictionary *)applicationInfoPlist;
++ (NSDictionary<NSString *, id> *)applicationInfoPlist;
 @end
+
+NS_ASSUME_NONNULL_END

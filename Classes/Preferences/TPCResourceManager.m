@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";
 NSString * const TPCResourceManagerBundleDocumentTypeExtensionWithoutPeriod		= @"bundle";
 
@@ -76,8 +78,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #endif
 }
 
-+ (id)loadContentsOfPropertyListInResources:(NSString *)name
++ (nullable NSDictionary<NSString *, id> *)loadContentsOfPropertyListInResources:(NSString *)name
 {
+	PointerIsEmptyAssertReturn(name, nil)
+
 	NSString *defaultsPath = [RZMainBundle() pathForResource:name ofType:@"plist"];
 
 	NSDictionary *localDefaults = [NSDictionary dictionaryWithContentsOfFile:defaultsPath];
@@ -154,7 +158,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	if ([[url relativePath] hasPrefix:scriptsPath] == NO) {
 		if (outError) {
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+			NSMutableDictionary<NSDictionary *, id> *userInfo = [NSMutableDictionary dictionary];
 
 			[userInfo setObject:url forKey:NSURLErrorKey];
 
@@ -256,3 +260,5 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

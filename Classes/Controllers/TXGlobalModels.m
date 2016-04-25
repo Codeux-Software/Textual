@@ -39,10 +39,12 @@
 
 #import <time.h>
 
-#pragma mark -
-#pragma mark Time.
+NS_ASSUME_NONNULL_BEGIN
 
-NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
+#pragma mark -
+#pragma mark Time
+
+NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format)
 {
 	PointerIsEmptyAssertReturn(date, nil)
 
@@ -66,7 +68,7 @@ NSString *TXFormattedTimestamp(NSDate *date, NSString *format)
 	return [NSString stringWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
 }
 
-NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix)
+NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix)
 {
 	/* Default what we will return. */
 	if (orderMatrix == 0) {
@@ -79,7 +81,7 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 	}
 	
 	/* Convert calander units to a text rep. */
-	NSMutableArray *orderStrings = [NSMutableArray array];
+	NSMutableArray<NSString *> *orderStrings = [NSMutableArray array];
 	
 	if (orderMatrix & NSCalendarUnitYear) {
 		[orderStrings addObject:@"year"];
@@ -176,8 +178,10 @@ NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, N
 	return nil;
 }
 
-NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail)
+NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail)
 {
+	PointerIsEmptyAssertReturn(dateTime, nil)
+
 	NSDateFormatter *formatter = [NSDateFormatter new];
 
 	[formatter setDoesRelativeDateFormatting:YES];
@@ -197,12 +201,10 @@ NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalO
 
 	if (timeInfo) {
 		return timeInfo;
+	} else if (returnOriginalOnFail) {
+		return dateTime;
 	} else {
-		if (returnOriginalOnFail) {
-			return dateTime;
-		} else {
-			return nil;
-		}
+		return nil;
 	}
 }
 
@@ -223,10 +225,12 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 }
 
 #pragma mark -
-#pragma mark Localized String File.
+#pragma mark Localized String File
 
-NSString *TXTLS(NSString *key, ...)
+NSString * _Nullable TXTLS(NSString *key, ...)
 {
+	PointerIsEmptyAssertReturn(key, nil)
+
 	va_list args;
 	va_start(args, key);
 	
@@ -237,8 +241,12 @@ NSString *TXTLS(NSString *key, ...)
 	return result;
 }
 
-NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
+NSString * _Nullable TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
+	PointerIsEmptyAssertReturn(bundle, nil)
+	PointerIsEmptyAssertReturn(key, nil)
+	PointerIsEmptyAssertReturn(args, nil)
+
 	NSInteger openBracketPosition = [key stringPosition:@"["];
 
 	if (openBracketPosition > 0) {
@@ -250,8 +258,11 @@ NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 	}
 }
 
-NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
+NSString * _Nullable TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 {
+	PointerIsEmptyAssertReturn(bundle, nil)
+	PointerIsEmptyAssertReturn(key, nil)
+
 	va_list args;
 	va_start(args, key);
 	
@@ -267,6 +278,8 @@ NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 
 void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
 {
+	PointerIsEmptyAssert(block)
+
 	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
 	
 	dispatch_queue_set_specific(workerQueue, (__bridge const void *)(workerQueue), (void *)1, NULL);
@@ -279,7 +292,7 @@ void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 }
 
 #pragma mark -
-#pragma mark Misc.
+#pragma mark Misc
 
 NSInteger TXRandomNumber(NSInteger maxset)
 {
@@ -297,3 +310,5 @@ NSComparator NSDefaultComparator = ^(id obj1, id obj2)
 {
 	return [obj1 compare:obj2];
 };
+
+NS_ASSUME_NONNULL_END

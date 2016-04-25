@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TPCResourceManagerBundleDocumentTypeExtension;
 TEXTUAL_EXTERN NSString * const TPCResourceManagerBundleDocumentTypeExtensionWithoutPeriod;
 
@@ -46,8 +48,10 @@ TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtensionWit
 @interface TPCResourceManager : NSObject
 + (void)copyResourcesToCustomAddonsFolder;
 
-+ (id)loadContentsOfPropertyListInResources:(NSString *)name;
++ (nullable NSDictionary<NSString *, id> *)loadContentsOfPropertyListInResources:(NSString *)name;
 @end
 
 @interface TPCResourceManagerDocumentTypeImporter : NSDocument <NSOpenSavePanelDelegate>
 @end
+
+NS_ASSUME_NONNULL_END

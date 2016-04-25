@@ -37,22 +37,24 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TPCPathInfo : NSObject
-+ (NSURL *)logFileFolderLocation;
++ (nullable NSURL *)logFileFolderLocation;
 + (void)setLogFileFolderLocation:(id)value;
 
 + (void)startUsingLogLocationSecurityScopedBookmark;
 
 + (NSString *)applicationBundlePath;
 + (NSString *)applicationTemporaryFolderPath;
-+ (NSString *)applicationCachesFolderPath;
-+ (NSString *)applicationLogsFolderPath;
++ (nullable NSString *)applicationCachesFolderPath;
++ (nullable NSString *)applicationLogsFolderPath;
 + (NSString *)applicationResourcesFolderPath;
-+ (NSString *)applicationGroupContainerPath;
++ (nullable NSString *)applicationGroupContainerPath;
 
-+ (NSString *)applicationSupportFolderPath TEXTUAL_DEPRECATED("Use -applicationGroupContainerApplicationSupportPath; instead");
-+ (NSString *)applicationGroupContainerApplicationSupportPath;
-+ (NSString *)applicationLocalContainerApplicationSupportPath;
++ (nullable NSString *)applicationSupportFolderPath TEXTUAL_DEPRECATED("Use -applicationGroupContainerApplicationSupportPath; instead");
++ (nullable NSString *)applicationGroupContainerApplicationSupportPath;
++ (nullable NSString *)applicationLocalContainerApplicationSupportPath;
 
 + (NSString *)localUserDiagnosticReportsFolderPath;
 + (NSString *)systemDiagnosticReportsFolderPath;
@@ -64,19 +66,21 @@
 + (NSString *)bundledExtensionFolderPath;
 + (NSString *)bundledScriptFolderPath;
 
-+ (NSString *)systemUnsupervisedScriptFolderPath; // Textual's folder.
-+ (NSString *)systemUnsupervisedScriptFolderRootPath; // Root path.
++ (nullable NSString *)systemUnsupervisedScriptFolderPath; // Textual's folder.
++ (nullable NSString *)systemUnsupervisedScriptFolderRootPath; // Root path.
 
 + (NSString *)userHomeDirectoryPathOutsideSandbox;
-+ (NSString *)userDownloadFolderPath;
-+ (NSString *)userPreferencesFolderPath;
++ (nullable NSString *)userDownloadFolderPath;
++ (nullable NSString *)userPreferencesFolderPath;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (NSString *)applicationUbiquitousContainerPath;
++ (nullable NSString *)applicationUbiquitousContainerPath;
 
-+ (NSString *)cloudCustomThemeFolderPath;
++ (nullable NSString *)cloudCustomThemeFolderPath;
 
 + (void)openApplicationUbiquitousContainer;
 + (void)openCloudCustomThemeFolder;
 #endif
 @end
+
+NS_ASSUME_NONNULL_END

@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
 
@@ -103,7 +105,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)developerModeEnabled;
 + (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled;
 
-+ (NSString *)masqueradeCTCPVersion;
++ (nullable NSString *)masqueradeCTCPVersion;
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 + (BOOL)receiveBetaUpdates;
@@ -131,7 +133,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSString *)defaultRealname;
 + (NSString *)defaultUsername;
 + (NSString *)defaultNickname;
-+ (NSString *)defaultAwayNickname;
++ (nullable NSString *)defaultAwayNickname;
 + (NSString *)defaultKickMessage;
 
 + (NSString *)IRCopDefaultKillMessage;
@@ -266,7 +268,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSInteger)scrollbackLimit;
 + (void)setScrollbackLimit:(NSInteger)value;
 
-+ (NSString *)soundForEvent:(TXNotificationType)event;
++ (nullable NSString *)soundForEvent:(TXNotificationType)event;
 
 + (BOOL)speakEvent:(TXNotificationType)event;
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event;
@@ -296,16 +298,16 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (void)setFileTransferPortRangeStart:(NSInteger)value;
 + (void)setFileTransferPortRangeEnd:(NSInteger)value;
 
-+ (NSString *)fileTransferManuallyEnteredIPAddress;
++ (nullable NSString *)fileTransferManuallyEnteredIPAddress;
 
-+ (NSString *)tabCompletionSuffix;
++ (nullable NSString *)tabCompletionSuffix;
 + (void)setTabCompletionSuffix:(NSString *)value;
 
 + (BOOL)tabCompletionDoNotAppendWhitespace;
 + (BOOL)tabCompletionCutForwardToFirstWhitespace;
 
-+ (NSDictionary *)loadWorld;
-+ (void)saveWorld:(NSDictionary *)value;
++ (nullable NSDictionary<NSString *, id> *)loadWorld;
++ (void)saveWorld:(nullable NSDictionary<NSString *, id> *)value;
 
 + (TXNicknameHighlightMatchType)highlightMatchingMethod;
 
@@ -314,12 +316,12 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (CGFloat)swipeMinimumLength;
 
-+ (NSArray *)highlightMatchKeywords;
-+ (NSArray *)highlightExcludeKeywords;
++ (nullable NSArray<NSString *> *)highlightMatchKeywords;
++ (nullable NSArray<NSString *> *)highlightExcludeKeywords;
 
 + (void)cleanUpHighlightKeywords;
 
-+ (NSDictionary *)defaultPreferences;
++ (NSDictionary<NSString *, id> *)defaultPreferences;
 
 + (void)initPreferences;
 
@@ -350,3 +352,5 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)textFieldTextReplacement;
 + (void)setTextFieldTextReplacement:(BOOL)value;
 @end
+
+NS_ASSUME_NONNULL_END

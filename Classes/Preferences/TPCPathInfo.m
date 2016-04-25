@@ -43,6 +43,8 @@
 #include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
 #include <pwd.h>            // -------
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation TPCPathInfo
 
 #pragma mark -
@@ -53,7 +55,7 @@
 	return NSTemporaryDirectory();
 }
 
-+ (NSString *)applicationCachesFolderPath
++ (nullable NSString *)applicationCachesFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 	
@@ -72,7 +74,7 @@
 	return nil;
 }
 
-+ (NSString *)applicationLogsFolderPath
++ (nullable NSString *)applicationLogsFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 
@@ -91,7 +93,7 @@
 	return nil;
 }
 
-+ (NSString *)applicationGroupContainerPath
++ (nullable NSString *)applicationGroupContainerPath
 {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
@@ -118,7 +120,7 @@
 #endif
 }
 
-+ (NSString *)applicationLocalContainerApplicationSupportPath
++ (nullable NSString *)applicationLocalContainerApplicationSupportPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
 
@@ -135,12 +137,12 @@
 	return nil;
 }
 
-+ (NSString *)applicationSupportFolderPath
++ (nullable NSString *)applicationSupportFolderPath
 {
 	return [TPCPathInfo applicationGroupContainerApplicationSupportPath];
 }
 
-+ (NSString *)applicationGroupContainerApplicationSupportPath
++ (nullable NSString *)applicationGroupContainerApplicationSupportPath
 {
 	NSString *dest = [TPCPathInfo applicationGroupContainerPath];
 	
@@ -192,16 +194,16 @@
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (NSString *)applicationUbiquitousContainerPath
++ (nullable NSString *)applicationUbiquitousContainerPath
 {
 	return [sharedCloudManager() ubiquitousContainerPath];
 }
 
-+ (NSString *)cloudCustomThemeFolderPath
++ (nullable NSString *)cloudCustomThemeFolderPath
 {
 	NSString *source = [TPCPathInfo applicationUbiquitousContainerPath];
 	
-	NSObjectIsEmptyAssertReturn(source, nil); // We need a source folder first...
+	PointerIsEmptyAssertReturn(source, nil); // We need a source folder first...
 	
 	NSString *dest = [source stringByAppendingPathComponent:@"/Documents/Styles/"];
 	
@@ -262,14 +264,14 @@
 	return [RZMainBundle() bundlePath];
 }
 
-+ (NSString *)systemUnsupervisedScriptFolderRootPath
++ (nullable NSString *)systemUnsupervisedScriptFolderRootPath
 {
 	NSString *oldpath = [TPCPathInfo systemUnsupervisedScriptFolderPath]; // Returns our path.
 		
 	return [oldpath stringByDeletingLastPathComponent]; // Remove bundle ID from path.
 }
 
-+ (NSString *)systemUnsupervisedScriptFolderPath
++ (nullable NSString *)systemUnsupervisedScriptFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
 
@@ -292,7 +294,7 @@
 	return nil;
 }
 
-+ (NSString *)userDownloadFolderPath
++ (nullable NSString *)userDownloadFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
 	
@@ -303,7 +305,7 @@
 	return nil;
 }
 
-+ (NSString *)userPreferencesFolderPath
++ (nullable NSString *)userPreferencesFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 
@@ -338,8 +340,8 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	}
 	
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark_5"];
-	
-	NSObjectIsEmptyAssert(bookmark);
+
+	PointerIsEmptyAssert(bookmark)
 	
 	NSError *resolveError = nil;
 	
@@ -362,7 +364,7 @@ static NSURL *logToDiskLocationResolvedBookmark;
 	}
 }
 
-+ (NSURL *)logFileFolderLocation
++ (nullable NSURL *)logFileFolderLocation
 {
 	return logToDiskLocationResolvedBookmark;
 }
@@ -380,3 +382,5 @@ static NSURL *logToDiskLocationResolvedBookmark;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

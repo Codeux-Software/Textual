@@ -40,21 +40,21 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /* Localization */
-TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
+TEXTUAL_EXTERN NSString * _Nullable TXTLS(NSString *key, ...);
 
-TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
-TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
+TEXTUAL_EXTERN NSString * _Nullable TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
+TEXTUAL_EXTERN NSString * _Nullable TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
 
 /* Time */
-TEXTUAL_EXTERN NSString *TXFormattedTimestamp(NSDate *date, NSString *format);
+TEXTUAL_EXTERN NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format);
 
-TEXTUAL_EXTERN NSString *TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
+TEXTUAL_EXTERN NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
 
 TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
 
 // Pass dateTime through NSDateFormatter with style NSDateFormatterLongStyle and
 // return the result or nil, or optionally return the original if result is nil.
-TEXTUAL_EXTERN NSString *TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail);
+TEXTUAL_EXTERN NSString  * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail);
 
 /* Grand Central Dispatch */
 TEXTUAL_EXTERN void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);

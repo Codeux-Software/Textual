@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 
 @interface TPCPreferencesCloudSync ()
@@ -46,9 +48,9 @@
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
 @property (nonatomic, copy) NSURL *ubiquitousContainerURL;
-@property (nonatomic, strong) NSMutableArray *keysToSync;
-@property (nonatomic, strong) NSMutableArray *keysToRemove;
-@property (nonatomic, copy) NSArray *remoteKeysBeingSynced;
+@property (nonatomic, strong) NSMutableArray<NSString *> *keysToSync;
+@property (nonatomic, strong) NSMutableArray<NSString *> *keysToRemove;
+@property (nonatomic, copy) NSArray<NSString *> *remoteKeysBeingSynced;
 @property (nonatomic, assign) BOOL applicationIsTerminating;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
 @property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
@@ -65,3 +67,5 @@
 @end
 
 #endif
+
+NS_ASSUME_NONNULL_END

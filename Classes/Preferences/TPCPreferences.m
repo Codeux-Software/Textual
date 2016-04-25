@@ -40,6 +40,8 @@
 
 #import "TPCPreferencesUserDefaultsMigrate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
 NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
 
@@ -74,7 +76,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Nickname"];
 }
 
-+ (NSString *)defaultAwayNickname
++ (nullable NSString *)defaultAwayNickname
 {
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> AwayNickname"];
 }
@@ -123,7 +125,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() objectForKey:@"IRCopDefaultLocalizaiton -> Shun Reason"];
 }
 
-+ (NSString *)masqueradeCTCPVersion
++ (nullable NSString *)masqueradeCTCPVersion
 {
 	return [RZUserDefaults() objectForKey:@"ApplicationCTCPVersionMasquerade"];
 }
@@ -634,7 +636,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark Completion Suffix
 
-+ (NSString *)tabCompletionSuffix
++ (nullable NSString *)tabCompletionSuffix
 {
 	return [RZUserDefaults() objectForKey:@"Keyboard -> Tab Key Completion Suffix"];
 }
@@ -739,7 +741,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	[RZUserDefaults() setInteger:value forKey:@"File Transfers -> File Transfer Port Range End"];
 }
 
-+ (NSString *)fileTransferManuallyEnteredIPAddress
++ (nullable NSString *)fileTransferManuallyEnteredIPAddress
 {
 	return [RZUserDefaults() objectForKey:@"File Transfers -> File Transfer Manually Entered IP Address"];
 }
@@ -785,11 +787,11 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return nil;
 }
 
-+ (NSString *)soundForEvent:(TXNotificationType)event
++ (nullable NSString *)soundForEvent:(TXNotificationType)event
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssertReturn(okey, nil);
+	PointerIsEmptyAssertReturn(okey, nil);
 
 	NSString *key = [okey stringByAppendingString:@" -> Sound"];
 
@@ -800,7 +802,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Sound"];
 
@@ -811,7 +813,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssertReturn(okey, NO);
+	PointerIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
 
@@ -822,7 +824,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
 
@@ -833,7 +835,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssertReturn(okey, NO);
+	PointerIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
 
@@ -844,7 +846,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
 
@@ -855,7 +857,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
     NSString *okey = [TPCPreferences keyForEvent:event];
     
-    NSObjectIsEmptyAssertReturn(okey, NO);
+    PointerIsEmptyAssertReturn(okey, NO);
     
     NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
     
@@ -866,7 +868,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
     NSString *okey = [TPCPreferences keyForEvent:event];
     
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
     
 	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
     
@@ -877,7 +879,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssertReturn(okey, NO);
+	PointerIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
@@ -888,7 +890,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
@@ -899,7 +901,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssertReturn(okey, NO);
+	PointerIsEmptyAssertReturn(okey, NO);
 
 	NSString *key = [okey stringByAppendingString:@" -> Speak"];
 
@@ -910,7 +912,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	NSString *okey = [TPCPreferences keyForEvent:event];
 
-	NSObjectIsEmptyAssert(okey);
+	PointerIsEmptyAssert(okey);
 
 	NSString *key = [okey stringByAppendingString:@" -> Speak"];
 
@@ -920,12 +922,12 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark World
 
-+ (NSDictionary *)loadWorld
++ (nullable NSDictionary<NSString *, id> *)loadWorld
 {
 	return [RZUserDefaults() objectForKey:IRCWorldControllerDefaultsStorageKey];
 }
 
-+ (void)saveWorld:(NSDictionary *)value
++ (void)saveWorld:(nullable NSDictionary<NSString *, id> *)value
 {
 	[RZUserDefaults() setObject:value forKey:IRCWorldControllerDefaultsStorageKey];
 }
@@ -933,8 +935,8 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray *matchKeywords = nil;
-static NSMutableArray *excludeKeywords = nil;
+static NSMutableArray<NSString *> *matchKeywords = nil;
+static NSMutableArray<NSString *> *excludeKeywords = nil;
 
 + (void)loadMatchKeywords
 {
@@ -944,9 +946,9 @@ static NSMutableArray *excludeKeywords = nil;
 		matchKeywords = [NSMutableArray new];
 	}
 
-	NSArray *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
+	NSArray<NSDictionary *> *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
 
-	for (NSDictionary *e in ary) {
+	for (NSDictionary<NSString *, NSString *> *e in ary) {
 		NSString *s = e[@"string"];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
@@ -963,9 +965,9 @@ static NSMutableArray *excludeKeywords = nil;
 		excludeKeywords = [NSMutableArray new];
 	}
 
-	NSArray *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
+	NSArray<NSDictionary *> *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
 
-	for (NSDictionary *e in ary) {
+	for (NSDictionary<NSString *, NSString *> *e in ary) {
 		NSString *s = e[@"string"];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
@@ -976,11 +978,11 @@ static NSMutableArray *excludeKeywords = nil;
 
 + (void)cleanUpKeywords:(NSString *)key
 {
-	NSArray *src = [RZUserDefaults() objectForKey:key];
+	NSArray<NSDictionary *> *src = [RZUserDefaults() objectForKey:key];
 
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray<NSString *> *ary = [NSMutableArray array];
 
-	for (NSDictionary *e in src) {
+	for (NSDictionary<NSString *, NSString *> *e in src) {
 		NSString *s = e[@"string"];
 
 		NSObjectIsEmptyAssertLoopContinue(s);
@@ -990,7 +992,7 @@ static NSMutableArray *excludeKeywords = nil;
 
 	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
 
-	NSMutableArray *saveAry = [NSMutableArray array];
+	NSMutableArray<NSDictionary *> *saveAry = [NSMutableArray array];
 
 	for (NSString *s in ary) {
 		[saveAry addObject:[@{@"string" : s} mutableCopy]];
@@ -1005,12 +1007,12 @@ static NSMutableArray *excludeKeywords = nil;
 	[TPCPreferences cleanUpKeywords:@"Highlight List -> Excluded Matches"];
 }
 
-+ (NSArray *)highlightMatchKeywords
++ (nullable NSArray<NSString *> *)highlightMatchKeywords
 {
 	return matchKeywords;
 }
 
-+ (NSArray *)highlightExcludeKeywords
++ (nullable NSArray<NSString *> *)highlightExcludeKeywords
 {
 	return excludeKeywords;
 }
@@ -1030,7 +1032,7 @@ static NSMutableArray *excludeKeywords = nil;
 #pragma mark -
 #pragma mark Initialization
 
-+ (NSDictionary *)defaultPreferences
++ (NSDictionary<NSString *, id> *)defaultPreferences
 {
 	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
 }
@@ -1202,3 +1204,5 @@ static NSMutableArray *excludeKeywords = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
