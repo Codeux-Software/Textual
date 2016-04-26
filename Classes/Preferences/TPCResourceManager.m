@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+#import "TPCResourceManagerPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";

@@ -39,6 +39,7 @@
 #import "TextualApplication.h"
 
 #import "THOPluginProtocolPrivate.h"
+#import "TPCThemeSettingsPrivate.h"
 
 #define _enqueueBlock(operationBlock)			\
 	[[self printingQueue] enqueueMessageBlock:(operationBlock) for:self description:NSStringFromSelector(_cmd) isStandalone:NO];
