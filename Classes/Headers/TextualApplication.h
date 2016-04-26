@@ -254,10 +254,10 @@
 		#define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 0
 	#endif
 
-	/* Protocol defenitions. (see file) */
+	/* Protocol defenitions (see file) */
 	#import "TDCSharedProtocolDefinitions.h"
 
-	/* 3rd-party Extensions. */
+	/* 3rd-party Extensions */
 	#import "GCDAsyncSocket.h"
 	#import "GCDAsyncSocketExtensions.h"
 	#import "GCDAsyncSocketCipherNames.h"
@@ -277,10 +277,9 @@
 	#import "GRMustacheTemplateRepository.h"
 	#import "GRMustacheVersion.h"
 	#import "GTMEncodeHTML.h"
-	#import "GTMEncodeURL.h"
 	#import "OELReachability.h"
 
-	/* IRC Controllers — Core. */
+	/* IRC Controllers — Core */
 	#import "IRC.h"
 	#import "IRCAddressBook.h"
 	#import "IRCChannel.h"
@@ -303,14 +302,14 @@
 	#import "IRCWorld.h"
 	#import "IRCWorldCloudExtension.h"
 
-	/* Framework Extensions (Helpers). */
+	/* Framework Extensions (Helpers) */
 	#import "NSColorHelper.h"
 	#import "NSObjectHelper.h"
 	#import "NSStringHelper.h"
 	#import "NSTableVIewHelper.h"
 	#import "NSViewHelper.h"
 
-	/* Dialogs. */
+	/* Dialogs */
 	#import "TDCSheetBase.h"
 	#import "TDCAboutDialog.h"
 	#import "TDCAddressBookSheet.h"
@@ -333,13 +332,13 @@
 	#import "TDChannelModifyTopicSheet.h"
 	#import "TDChannelPropertiesSheet.h"
 
-	/* Helpers. */
+	/* Helpers */
 	#import "THOPluginProtocol.h"
 	#import "THOPluginItem.h"
 	#import "THOPluginManager.h"
 	#import "THOUnicodeHelper.h"
 
-	/* Library. */
+	/* Library */
 	#import "TLOEncryptionManager.h"
 	#import "TLOFileLogger.h"
 	#import "TLOGrowlController.h"
@@ -355,7 +354,7 @@
 	#import "TLOTimerCommand.h"
 	#import "TLOpenLink.h"
 
-	/* Preferences. */
+	/* Preferences */
 	#import "TPCApplicationInfo.h"
 	#import "TPCPathInfo.h"
 	#import "TPCPreferences.h"
@@ -367,7 +366,7 @@
 	#import "TPCThemeController.h"
 	#import "TPCThemeSettings.h"
 
-	/* View Controllers. */
+	/* View Controllers */
 	#import "TVCAnimatedContentNavigationOutlineView.h"
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
@@ -412,7 +411,7 @@
 	#import "TVCTextViewWithIRCFormatter.h"
 	#import "TVCTextFormatterMenu.h"
 
-	/* Master Controllers — Root. */
+	/* Master Controllers — Root */
 	#import "TXGlobalModels.h"
 	#import "TXMasterController.h"
 	#import "TXMenuController.h"

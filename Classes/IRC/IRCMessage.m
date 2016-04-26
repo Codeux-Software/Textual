@@ -149,7 +149,7 @@
 			NSString *batchToken = valueMatrix[@"batch"];
 
 			if (batchToken) {
-				if ([batchToken onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
+				if ([batchToken onlyContainsCharacters:CS_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
 					self.batchToken = batchToken;
 				}
 			}

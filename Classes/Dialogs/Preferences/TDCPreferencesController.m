@@ -414,7 +414,7 @@
 	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedAppleScriptCommands]];
 	[scriptsInstalled addObjectsFromArray:[sharedPluginManager() supportedUserInputCommands]];
 
-	return [scriptsInstalled stringArryControllerObjects];
+	return [scriptsInstalled stringArrayControllerObjects];
 }
 
 - (NSString *)maxLogLines

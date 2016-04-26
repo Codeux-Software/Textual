@@ -74,13 +74,6 @@
 
 #define NSIsCurrentThreadMain()					[[NSThread currentThread] isEqual:[NSThread mainThread]]
 
-/* Developer extras. */
-/* The developer environment token is saved to the user defaults
- dictionary and is used to tell Textual whether or not developer
- mode is enabled. Developer Mode enables extra features such as
- the WebKit web inspector. */
-#define TXDeveloperEnvironmentToken				@"TextualDeveloperEnvironment"
-
 /* The reference date is the date & time of the first commit to the
  Textual repo. Textual existed before then, of course, but the date
  will remain as the official reference date for its birthday. */

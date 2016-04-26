@@ -433,7 +433,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignStringTo:&_realName	forKey:@"identityRealname"];
 	[dic assignStringTo:&_username	forKey:@"identityUsername"];
 
-	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"IdentitySSLCertificate" performCopy:YES];
+	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"IdentitySSLCertificate"];
 
 	[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
 
@@ -539,7 +539,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 	[dic assignDoubleTo:&_lastMessageServerTime forKey:@"cachedLastServerTimeCapacityReceivedAtTimestamp"];
 
-	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"identityClientSideCertificate" performCopy:YES];
+	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"identityClientSideCertificate"];
 
 	[dic assignStringTo:&_itemUUID					forKey:@"uniqueIdentifier"];
 

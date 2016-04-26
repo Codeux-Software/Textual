@@ -1293,7 +1293,7 @@
 
 	NSObjectIsEmptyAssert(s);
 
-	NSString *urlStr = [NSString stringWithFormat:@"dict://%@", [s gtm_stringByEscapingForURLArgument]];
+	NSString *urlStr = [NSString stringWithFormat:@"dict://%@", [s percentEncodedString]];
 
 	[TLOpenLink openWithString:urlStr];
 }

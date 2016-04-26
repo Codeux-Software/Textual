@@ -5734,7 +5734,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return; // Cancel operation...
 	}
 
-	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet] == NO) {
+	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CS_LatinAlphabetIncludingUnderscoreDashCharacterSet] == NO) {
 		LogToConsole(@"Cannot process BATCH command because the batch token contains illegal characters");
 
 		return; // Cancel operation...

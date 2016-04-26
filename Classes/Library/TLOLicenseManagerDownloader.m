@@ -478,7 +478,7 @@ present_fatal_error:
 
 - (NSString *)encodedRequestContextValue:(NSString *)contextKey
 {
-	return [self.requestContextInfo[contextKey] encodeURIComponent];
+	return [self.requestContextInfo[contextKey] percentEncodedString];
 }
 
 - (BOOL)populateRequestPostData:(NSMutableURLRequest *)connectionRequest
