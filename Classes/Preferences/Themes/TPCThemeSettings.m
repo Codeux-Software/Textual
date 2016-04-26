@@ -39,26 +39,12 @@
 
 #import "BuildConfig.h"
 
+#import "TPCThemeSettingsPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 #define _templateEngineVersionMaximum			3
 #define _templateEngineVersionMinimum			3
-
-@interface TPCThemeSettings ()
-@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
-@property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
-@property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
-@property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
-@property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
-@property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
-@property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
-@property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
-@property (nonatomic, assign, readwrite) double indentationOffset;
-@property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
-@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
-@end
 
 @implementation TPCThemeSettings
 

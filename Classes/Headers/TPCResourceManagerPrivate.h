@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,34 +39,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define TPCThemeSettingsDisabledIndentationOffset     -99
+@interface TPCResourceManager ()
++ (void)copyResourcesToCustomAddonsFolder;
+@end
 
-#define TPCThemeSettingsLatestTemplateEngineVersion		3
-
-typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorLegacyStyle,
-	TPCThemeSettingsNicknameColorHashHueDarkStyle,
-	TPCThemeSettingsNicknameColorHashHueLightStyle
-};
-
-@interface TPCThemeSettings : NSObject
-@property (readonly) BOOL invertSidebarColors;
-@property (readonly) BOOL js_postHandleEventNotifications;
-@property (readonly) BOOL js_postPreferencesDidChangesNotifications;
-@property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
-@property (readonly, copy, nullable) NSFont *themeChannelViewFont;
-@property (readonly, copy, nullable) NSString *themeNicknameFormat;
-@property (readonly, copy, nullable) NSString *themeTimestampFormat;
-@property (readonly, copy, nullable) NSString *settingsKeyValueStoreName;
-@property (readonly, copy, nullable) NSColor *underlyingWindowColor;
-@property (readonly) double indentationOffset;
-@property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-
-- (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable * _Nullable)resultError;
-- (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable * _Nullable)resultError;
-
-- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name;
+@interface TPCResourceManagerDocumentTypeImporter : NSDocument <NSOpenSavePanelDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,34 +39,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define TPCThemeSettingsDisabledIndentationOffset     -99
+@interface TPCThemeSettings ()
+@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
+@property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
+@property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
+@property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
+@property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
+@property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
+@property (nonatomic, assign, readwrite) double indentationOffset;
+@property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
+@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
 
-#define TPCThemeSettingsLatestTemplateEngineVersion		3
+- (void)reloadWithPath:(NSString *)path;
 
-typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
-	TPCThemeSettingsNicknameColorLegacyStyle,
-	TPCThemeSettingsNicknameColorHashHueDarkStyle,
-	TPCThemeSettingsNicknameColorHashHueLightStyle
-};
-
-@interface TPCThemeSettings : NSObject
-@property (readonly) BOOL invertSidebarColors;
-@property (readonly) BOOL js_postHandleEventNotifications;
-@property (readonly) BOOL js_postPreferencesDidChangesNotifications;
-@property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
-@property (readonly, copy, nullable) NSFont *themeChannelViewFont;
-@property (readonly, copy, nullable) NSString *themeNicknameFormat;
-@property (readonly, copy, nullable) NSString *themeTimestampFormat;
-@property (readonly, copy, nullable) NSString *settingsKeyValueStoreName;
-@property (readonly, copy, nullable) NSColor *underlyingWindowColor;
-@property (readonly) double indentationOffset;
-@property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-
-- (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable * _Nullable)resultError;
-- (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable * _Nullable)resultError;
-
-- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name;
+- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
 @end
 
 NS_ASSUME_NONNULL_END

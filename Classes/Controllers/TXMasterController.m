@@ -42,6 +42,8 @@
 #import "TLOLicenseManager.h"
 #endif
 
+#import "TPCPreferencesPrivate.h"
+#import "TPCResourceManagerPrivate.h"
 #import "TPCThemeControllerPrivate.h"
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

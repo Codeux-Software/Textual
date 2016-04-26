@@ -46,12 +46,7 @@ TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtension;
 TEXTUAL_EXTERN NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod;
 
 @interface TPCResourceManager : NSObject
-+ (void)copyResourcesToCustomAddonsFolder;
-
 + (nullable NSDictionary<NSString *, id> *)loadContentsOfPropertyListInResources:(NSString *)name;
-@end
-
-@interface TPCResourceManagerDocumentTypeImporter : NSDocument <NSOpenSavePanelDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

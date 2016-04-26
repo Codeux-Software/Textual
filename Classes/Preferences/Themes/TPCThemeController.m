@@ -39,6 +39,7 @@
 #import "TextualApplication.h"
 
 #import "TPCThemeControllerPrivate.h"
+#import "TPCThemeSettingsPrivate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

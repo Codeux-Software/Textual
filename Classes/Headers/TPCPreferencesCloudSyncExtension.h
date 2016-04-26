@@ -72,9 +72,6 @@ TEXTUAL_EXTERN NSString * const TPCPreferencesCloudSyncKeyValueStoreServicesLimi
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 + (BOOL)syncPreferencesToTheCloud;
 + (BOOL)syncPreferencesToTheCloudLimitedToServers;
-
-+ (void)fixThemeNameMissingDuringSync;
-+ (void)fixThemeFontNameMissingDuringSync;
 #endif
 
 + (void)performReloadActionForKeyValues:(NSArray<NSString *> *)prefKeys;
