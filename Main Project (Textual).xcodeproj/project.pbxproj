@@ -76,7 +76,6 @@
 		4C04458816F1603B00EBB665 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59C158E99520026668C /* NSColorHelper.m */; };
 		4C04459316F1603B00EBB665 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
 		4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C04459D16F1603B00EBB665 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
 		4C04459E16F1603B00EBB665 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
 		4C04459F16F1603B00EBB665 /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
@@ -204,7 +203,6 @@
 		4C0BA5851990798800857343 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5861990798800857343 /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA5881990798800857343 /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C0BA5891990798800857343 /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58C1990798800857343 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF533158E99520026668C /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF534158E99520026668C /* IRCAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0BA58E1990798800857343 /* IRCChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF535158E99520026668C /* IRCChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -353,7 +351,6 @@
 		4C0BA6551990798800857343 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59C158E99520026668C /* NSColorHelper.m */; };
 		4C0BA65F1990798800857343 /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
 		4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C0BA6631990798800857343 /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C0BA6671990798800857343 /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
 		4C0BA6681990798800857343 /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
 		4C0BA6691990798800857343 /* TPCPathInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA110DB1955AA890062EC4E /* TPCPathInfo.m */; };
@@ -537,7 +534,6 @@
 		4C5BA3F316F1302F00A96CA2 /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F416F1302F00A96CA2 /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3F616F1302F00A96CA2 /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C5BA3F716F1302F00A96CA2 /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3FA16F1302F00A96CA2 /* IRC.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF533158E99520026668C /* IRC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3FB16F1302F00A96CA2 /* IRCAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF534158E99520026668C /* IRCAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C5BA3FC16F1302F00A96CA2 /* IRCChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF535158E99520026668C /* IRCChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -854,7 +850,6 @@
 		4C8AF68F158E99520026668C /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF59C158E99520026668C /* NSColorHelper.m */; };
 		4C8AF699158E99520026668C /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5A6158E99520026668C /* NSStringHelper.m */; };
 		4C8AF69D158E99520026668C /* GTMEncodeHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5AD158E99520026668C /* GTMEncodeURL.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B6158E99520026668C /* IRCChannel.m */; };
 		4C8AF6A5158E99520026668C /* IRCChannelConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B7158E99520026668C /* IRCChannelConfig.m */; };
 		4C8AF6A6158E99520026668C /* IRCChannelMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5B8158E99520026668C /* IRCChannelMode.m */; };
@@ -892,7 +887,6 @@
 		4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8EE97C16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C8F2F5F1AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
 		4C8F2F601AAE6467007821CC /* EncryptionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */; };
@@ -1905,7 +1899,6 @@
 		4C8AF59C158E99520026668C /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
 		4C8AF5A6158E99520026668C /* NSStringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHelper.m; sourceTree = "<group>"; };
 		4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMEncodeHTML.m; sourceTree = "<group>"; };
-		4C8AF5AD158E99520026668C /* GTMEncodeURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMEncodeURL.m; sourceTree = "<group>"; };
 		4C8AF5B6158E99520026668C /* IRCChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannel.m; path = IRC/IRCChannel.m; sourceTree = "<group>"; };
 		4C8AF5B7158E99520026668C /* IRCChannelConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = IRCChannelConfig.m; path = IRC/IRCChannelConfig.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C8AF5B8158E99520026668C /* IRCChannelMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCChannelMode.m; path = IRC/IRCChannelMode.m; sourceTree = "<group>"; };
@@ -1943,7 +1936,6 @@
 		4C8AF742158EB6CA0026668C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocketExtensions.h; sourceTree = "<group>"; };
 		4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeHTML.h; sourceTree = "<group>"; };
-		4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMEncodeURL.h; sourceTree = "<group>"; };
 		4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowLoadingScreen.h; path = Classes/Headers/TVCMainWindowLoadingScreen.h; sourceTree = SOURCE_ROOT; };
 		4C8F2F5D1AAE6467007821CC /* EncryptionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EncryptionKit.framework; path = ".tmp/SharedBuildResults-Frameworks/EncryptionKit.framework"; sourceTree = "<group>"; };
 		4C9234AA195330D30009AAAE /* TXUserInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXUserInterface.m; sourceTree = "<group>"; };
@@ -2900,7 +2892,6 @@
 			isa = PBXGroup;
 			children = (
 				4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */,
-				4C8AF5AD158E99520026668C /* GTMEncodeURL.m */,
 			);
 			name = Google;
 			path = "Helpers/External Libraries/Google";
@@ -2960,7 +2951,6 @@
 				4CD3446E1A80EFCE004994DD /* GCDAsyncSocketCipherNames.h */,
 				4C8AF743158EB6CA0026668C /* GCDAsyncSocketExtensions.h */,
 				4C8AF746158EB6CA0026668C /* GTMEncodeHTML.h */,
-				4C8AF747158EB6CA0026668C /* GTMEncodeURL.h */,
 				4C8BC0EB16DE552900360EEF /* Mustache */,
 				5D4846C9171F0ACD0015F2B0 /* OELReachability.h */,
 			);
@@ -3506,7 +3496,6 @@
 				4C0BA5851990798800857343 /* GCDAsyncSocket.h in Headers */,
 				4C0BA5861990798800857343 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C0BA5881990798800857343 /* GTMEncodeHTML.h in Headers */,
-				4C0BA5891990798800857343 /* GTMEncodeURL.h in Headers */,
 				4C0BA58C1990798800857343 /* IRC.h in Headers */,
 				4C0BA58D1990798800857343 /* IRCAddressBook.h in Headers */,
 				4C0BA58E1990798800857343 /* IRCChannel.h in Headers */,
@@ -3678,7 +3667,6 @@
 				4C5BA3F316F1302F00A96CA2 /* GCDAsyncSocket.h in Headers */,
 				4C5BA3F416F1302F00A96CA2 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C5BA3F616F1302F00A96CA2 /* GTMEncodeHTML.h in Headers */,
-				4C5BA3F716F1302F00A96CA2 /* GTMEncodeURL.h in Headers */,
 				4C5BA3FA16F1302F00A96CA2 /* IRC.h in Headers */,
 				4C5BA3FB16F1302F00A96CA2 /* IRCAddressBook.h in Headers */,
 				4C5BA3FC16F1302F00A96CA2 /* IRCChannel.h in Headers */,
@@ -3852,7 +3840,6 @@
 				4C8AF74E158EB6CA0026668C /* GCDAsyncSocket.h in Headers */,
 				4C8AF74F158EB6CA0026668C /* GCDAsyncSocketExtensions.h in Headers */,
 				4C8AF752158EB6CA0026668C /* GTMEncodeHTML.h in Headers */,
-				4C8AF753158EB6CA0026668C /* GTMEncodeURL.h in Headers */,
 				4C8AF628158E99520026668C /* IRC.h in Headers */,
 				4C8AF629158E99520026668C /* IRCAddressBook.h in Headers */,
 				4C8AF62A158E99520026668C /* IRCChannel.h in Headers */,
@@ -4796,7 +4783,6 @@
 				4C04459616F1603B00EBB665 /* GTMEncodeHTML.m in Sources */,
 				4CF40DF31AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E231AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
-				4C04459716F1603B00EBB665 /* GTMEncodeURL.m in Sources */,
 				4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */,
 				4CF40E3B1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m in Sources */,
 				4CF40DEB1AC1A4AC00A26BE0 /* TVCLogControllerHistoricLogFile.m in Sources */,
@@ -4942,7 +4928,6 @@
 				4CD0A2251CCD85CC00513EA2 /* TPCPreferencesUserDefaultsMigrate.m in Sources */,
 				4CF40E7A1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C0BA6621990798800857343 /* GTMEncodeHTML.m in Sources */,
-				4C0BA6631990798800857343 /* GTMEncodeURL.m in Sources */,
 				4CF40DF21AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E221AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C790FCD1B82725C00EB318C /* TXWindowController.m in Sources */,
@@ -5086,7 +5071,6 @@
 				4C8AF699158E99520026668C /* NSStringHelper.m in Sources */,
 				4CF40E7C1AC1A4AC00A26BE0 /* TVCMemberListLightMavericksUserInterface.m in Sources */,
 				4C8AF69D158E99520026668C /* GTMEncodeHTML.m in Sources */,
-				4C8AF69E158E99520026668C /* GTMEncodeURL.m in Sources */,
 				4CF40DF41AC1A4AC00A26BE0 /* TVCLogController.m in Sources */,
 				4CF40E241AC1A4AC00A26BE0 /* TVCTextViewWithIRCFormatter.m in Sources */,
 				4C8AF6A4158E99520026668C /* IRCChannel.m in Sources */,

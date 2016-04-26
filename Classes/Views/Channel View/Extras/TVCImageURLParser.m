@@ -66,9 +66,9 @@
 	
 	NSString *host = [[u host] lowercaseString];
 
-	NSString *path = [[u path] encodeURIFragment];
+	NSString *path = [[u path] percentEncodedURLPath];
 
-	NSString *query = [[u query] encodeURIFragment];
+	NSString *query = [[u query] percentEncodedURLQuery];
 
 	BOOL hadExtension = NO;
 
@@ -175,14 +175,14 @@
 		if ([path hasPrefix:@"/p/"]) {
 			path = [path substringFromIndex:3];
 
-			if ([path onlyContainsCharacters:CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
+			if ([path onlyContainsCharacters:CS_LatinAlphabetIncludingUnderscoreDashCharacterSet]) {
 				return [NSString stringWithFormat:@"https://www.instagram.com/p/%@/media/?size=l", path];
 			}
 		}
 	} else if ([host hasSuffix:@"tweetphoto.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 
-		return [NSString stringWithFormat:@"http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url encodeURIComponent]];
+		return [NSString stringWithFormat:@"http://TweetPhotoAPI.com/api/TPAPI.svc/imagefromurl?size=medium&url=%@", [url percentEncodedString]];
 	} else if ([host hasSuffix:@"yfrog.com"]) {
 		NSObjectIsEmptyAssertReturn(path, nil);
 

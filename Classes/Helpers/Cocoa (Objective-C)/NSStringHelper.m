@@ -388,7 +388,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 					UniChar d = src[(i + 1)];
 					
-					if (CSCEF_StringIsBase10Numeric(d) == NO) {
+					if (CS_StringIsBase10Numeric(d) == NO) {
 						continue;
 					}
 					
@@ -402,7 +402,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 					UniChar e = src[(i + 1)];
 					
-					if (CSCEF_StringIsBase10Numeric(e) == NO && NSDissimilarObjects(e, ',')) {
+					if (CS_StringIsBase10Numeric(e) == NO && NSDissimilarObjects(e, ',')) {
 						continue;
 					}
 					
@@ -432,7 +432,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 					UniChar g = src[(i + 1)];
 
-					if (CSCEF_StringIsBase10Numeric(g) == NO) {
+					if (CS_StringIsBase10Numeric(g) == NO) {
 						i--;
 						
 						continue;
@@ -448,7 +448,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 					UniChar h = src[(i + 1)];
 
-					if (CSCEF_StringIsBase10Numeric(h) == NO) {
+					if (CS_StringIsBase10Numeric(h) == NO) {
 						continue;
 					}
 					

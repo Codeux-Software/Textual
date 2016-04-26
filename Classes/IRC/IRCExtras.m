@@ -52,7 +52,7 @@
 	/* Basic input clean up. */
 	NSString *locationValue = location;
 
-	locationValue = [locationValue decodeURIFragment];
+	locationValue = [locationValue percentDecodedString];
 	locationValue = [locationValue trim];
 
 	/* We will scan our input to look for each slash in it.
