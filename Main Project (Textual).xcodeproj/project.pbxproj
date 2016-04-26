@@ -1846,7 +1846,7 @@
 		4C8AF544158E99520026668C /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorld.h; sourceTree = "<group>"; };
 		4C8AF548158E99520026668C /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSColorHelper.h; sourceTree = "<group>"; };
 		4C8AF552158E99520026668C /* NSStringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringHelper.h; sourceTree = "<group>"; };
-		4C8AF557158E99520026668C /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = ../Headers/StaticDefinitions.h; sourceTree = "<group>"; };
+		4C8AF557158E99520026668C /* StaticDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaticDefinitions.h; path = Headers/StaticDefinitions.h; sourceTree = "<group>"; };
 		4C8AF558158E99520026668C /* TDCAboutDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCAboutDialog.h; sourceTree = "<group>"; };
 		4C8AF559158E99520026668C /* TDCAddressBookSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCAddressBookSheet.h; sourceTree = "<group>"; };
 		4C8AF55B158E99520026668C /* TDChannelBanListSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDChannelBanListSheet.h; sourceTree = "<group>"; };
@@ -1862,7 +1862,7 @@
 		4C8AF567158E99520026668C /* TDCSheetBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSheetBase.h; sourceTree = "<group>"; };
 		4C8AF568158E99520026668C /* TDChannelModifyTopicSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDChannelModifyTopicSheet.h; sourceTree = "<group>"; };
 		4C8AF569158E99520026668C /* TDCWelcomeSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCWelcomeSheet.h; sourceTree = "<group>"; };
-		4C8AF56A158E99520026668C /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = ../Headers/TextualApplication.h; sourceTree = "<group>"; };
+		4C8AF56A158E99520026668C /* TextualApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextualApplication.h; path = Headers/TextualApplication.h; sourceTree = "<group>"; };
 		4C8AF56B158E99520026668C /* THOPluginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginItem.h; sourceTree = "<group>"; };
 		4C8AF56C158E99520026668C /* THOPluginProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THOPluginProtocol.h; sourceTree = "<group>"; usesTabs = 0; };
 		4C8AF56E158E99520026668C /* TLOFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOFileLogger.h; sourceTree = "<group>"; };
@@ -2594,6 +2594,8 @@
 		4C7409031CCDA33F002F026F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4C8AF557158E99520026668C /* StaticDefinitions.h */,
+				4C8AF56A158E99520026668C /* TextualApplication.h */,
 				4C8AF510158E99520026668C /* TXGlobalModels.m */,
 			);
 			name = Controllers;
@@ -2604,6 +2606,7 @@
 			children = (
 				4C7409051CCDA355002F026F /* iCloud */,
 				4C92FEC217A8C8BD003888F4 /* Resource Management */,
+				4C8AF5EB158E99520026668C /* Theme */,
 				4CA110DA1955AA890062EC4E /* TPCApplicationInfo.m */,
 				4CA110DB1955AA890062EC4E /* TPCPathInfo.m */,
 				4C8AF5EE158E99520026668C /* TPCPreferences.m */,
@@ -2708,8 +2711,6 @@
 		4C8AF50F158E99520026668C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF557158E99520026668C /* StaticDefinitions.h */,
-				4C8AF56A158E99520026668C /* TextualApplication.h */,
 				4C8AF511158E99520026668C /* TXMasterController.m */,
 				4C8AF512158E99520026668C /* TXMenuController.m */,
 				4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */,
@@ -3349,7 +3350,6 @@
 		4CD1FB0E16D7D4500085BC82 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF5EB158E99520026668C /* Theme */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";

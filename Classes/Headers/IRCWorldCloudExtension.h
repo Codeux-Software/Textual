@@ -37,12 +37,14 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudDeletedClientsStorageKey;
 TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientEntryKeyPrefix;
 
 @interface IRCWorld (IRCWorldCloudExtension)
-- (NSMutableDictionary *)cloudDictionaryValue;
+- (NSDictionary<NSString *, id> *)cloudDictionaryValue;
 
 - (void)destroyClientInCloud:(IRCClient *)client;
 
@@ -51,6 +53,8 @@ TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientEntryKeyPrefix;
 
 - (void)addClientToListOfDeletedClients:(NSString *)clientID;
 
-- (void)processCloudCientDeletionList:(NSArray *)deletedClients;
+- (void)processCloudCientDeletionList:(NSArray<NSArray *> *)deletedClients;
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

@@ -40,6 +40,8 @@
 
 #import "TPCThemeControllerPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const TPCThemeControllerCloudThemeNameBasicPrefix			= @"cloud";
 NSString * const TPCThemeControllerCloudThemeNameCompletePrefix			= @"cloud:";
 
@@ -145,13 +147,15 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return YES;
 }
 
-+ (NSString *)pathOfThemeWithName:(NSString *)themeName
++ (nullable NSString *)pathOfThemeWithName:(NSString *)themeName
 {
 	return [TPCThemeController pathOfThemeWithName:themeName storageLocation:NULL];
 }
 
-+ (NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(TPCThemeControllerStorageLocation *)storageLocation
++ (nullable NSString *)pathOfThemeWithName:(NSString *)themeName storageLocation:(nullable TPCThemeControllerStorageLocation *)storageLocation
 {
+	PointerIsEmptyAssertReturn(themeName, nil)
+
 	if ( storageLocation) { // Reset value of pointer
 		*storageLocation = TPCThemeControllerStorageUnknownLocation;
 	}
@@ -325,6 +329,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (BOOL)resetPreferencesForFaultedTheme:(NSString *)themeName
 {
+	PointerIsEmptyAssertReturn(themeName, NO)
+
 	NSString *suggestedThemeName = nil;
 	NSString *suggestedFontName = nil;
 	
@@ -354,6 +360,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 - (BOOL)performValidationForTheme:(NSString *)validatedTheme suggestedTheme:(NSString **)suggestedThemeName suggestedFont:(NSString **)suggestedFontName
 {
+	PointerIsEmptyAssertReturn(validatedTheme, NO)
+	PointerIsEmptyAssertReturn(suggestedThemeName, NO)
+	PointerIsEmptyAssertReturn(suggestedFontName, NO)
+
 	/* Validate font. */
 	BOOL keyChanged = NO;
 
@@ -464,8 +474,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return ([self storageLocation] == TPCThemeControllerStorageBundleLocation);
 }
 
-+ (NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeControllerStorageLocation)storageLocation
++ (nullable NSString *)buildFilename:(NSString *)name forStorageLocation:(TPCThemeControllerStorageLocation)storageLocation
 {
+	PointerIsEmptyAssertReturn(name, nil)
+
 	switch (storageLocation) {
 		case TPCThemeControllerStorageBundleLocation:
 		{
@@ -488,8 +500,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return nil;
 }
 
-+ (NSString *)extractThemeSource:(NSString *)source
++ (nullable NSString *)extractThemeSource:(NSString *)source
 {
+	PointerIsEmptyAssertReturn(source, nil)
+
 	if ([source hasPrefix:TPCThemeControllerCloudThemeNameCompletePrefix] == NO &&
 		[source hasPrefix:TPCThemeControllerCustomThemeNameCompletePrefix] == NO &&
 		[source hasPrefix:TPCThemeControllerBundledThemeNameCompletePrefix] == NO)
@@ -502,8 +516,10 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	return [source substringToIndex:colonIndex];
 }
 
-+ (NSString *)extractThemeName:(NSString *)source
++ (nullable NSString *)extractThemeName:(NSString *)source
 {
+	PointerIsEmptyAssertReturn(source, nil)
+
 	if ([source hasPrefix:TPCThemeControllerCloudThemeNameCompletePrefix] == NO &&
 		[source hasPrefix:TPCThemeControllerCustomThemeNameCompletePrefix] == NO &&
 		[source hasPrefix:TPCThemeControllerBundledThemeNameCompletePrefix] == NO)
@@ -518,6 +534,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 
 + (TPCThemeControllerStorageLocation)expectedStorageLocationOfThemeWithName:(NSString *)themeName
 {
+	PointerIsEmptyAssertReturn(themeName, TPCThemeControllerStorageUnknownLocation)
+
 	if ([themeName hasPrefix:TPCThemeControllerCloudThemeNameCompletePrefix]) {
 		return TPCThemeControllerStorageCloudLocation;
 	} else if ([themeName hasPrefix:TPCThemeControllerCustomThemeNameCompletePrefix]) {
@@ -529,9 +547,9 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	}
 }
 
-- (NSDictionary *)dictionaryOfAllThemes
++ (NSDictionary<NSString *, NSString *> *)dictionaryOfAllThemes
 {
-	NSMutableDictionary *allThemes = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, NSString *> *allThemes = [NSMutableDictionary dictionary];
 
 	void (^checkPath)(NSString *, NSString *) = ^(NSString *storagePath, NSString *storageType) {
 		if ([RZFileManager() fileExistsAtPath:storagePath] == NO) {
@@ -691,7 +709,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 {
 	void *callbackInfo = NULL;
 	
-	NSArray *pathsToWatch = nil;
+	NSArray<NSString *> *pathsToWatch = nil;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
@@ -936,3 +954,5 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
