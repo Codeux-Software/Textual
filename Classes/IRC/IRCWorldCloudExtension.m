@@ -39,13 +39,15 @@
 
 #import "IRCWorldPrivate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 NSString * const IRCWorldControllerCloudDeletedClientsStorageKey	= @"World Controller -> Cloud Deleted Clients";
 NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controller -> Cloud Synced Client -> ";
 
 @implementation IRCWorld (IRCWorldCloudExtension)
 
-- (NSMutableDictionary *)cloudDictionaryValue
+- (NSDictionary *)cloudDictionaryValue
 {
 	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 	
@@ -79,6 +81,8 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 
 - (void)addClientToListOfDeletedClients:(NSString *)clientID
 {
+	PointerIsEmptyAssert(clientID)
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
@@ -103,6 +107,8 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
  client is again set to sync to the cloud. */
 - (void)removeClientFromListOfDeletedClients:(NSString *)clientID
 {
+	PointerIsEmptyAssert(clientID)
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
@@ -124,6 +130,8 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 
 - (void)removeClientConfigurationCloudEntry:(NSString *)clientID
 {
+	PointerIsEmptyAssert(clientID)
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
@@ -133,13 +141,13 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 	[sharedCloudManager() removeObjectForKey:prefKey];
 }
 
-- (void)processCloudCientDeletionList:(NSArray *)deletedClients
+- (void)processCloudCientDeletionList:(NSArray<NSArray *> *)deletedClients
 {
+	PointerIsEmptyAssert(deletedClients)
+
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
-
-	NSObjectIsEmptyAssert(deletedClients);
 		
 	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		IRCClient *u = [self findClientById:obj];
@@ -152,3 +160,5 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

@@ -909,7 +909,7 @@
 {
 	[[self themeSelectionButton] removeAllItems];
 	
-	NSDictionary *allThemes = [themeController() dictionaryOfAllThemes];
+	NSDictionary *allThemes = [TPCThemeController dictionaryOfAllThemes];
 
 	NSArray *allThemesKeys = [allThemes sortedDictionaryKeys];
 	

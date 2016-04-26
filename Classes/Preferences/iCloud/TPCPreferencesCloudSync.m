@@ -367,7 +367,7 @@ NSString * const TPCPreferencesCloudSyncDidChangeGlobalThemeFontPreferenceNotifi
 		if ([changedValues containsKey:IRCWorldControllerDefaultsStorageKey]) {
 			[changedValues removeObjectForKey:IRCWorldControllerDefaultsStorageKey];
 
-			NSMutableDictionary *clientDict = [worldController() cloudDictionaryValue];
+			NSDictionary *clientDict = [worldController() cloudDictionaryValue];
 
 			[changedValues addEntriesFromDictionary:clientDict];
 		}

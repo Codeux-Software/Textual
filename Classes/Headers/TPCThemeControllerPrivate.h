@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Copy operation class is responsible for copying the active theme to a different
  location when a user requests a local copy of the theme. */
 @interface TPCThemeControllerCopyOperation : NSObject
@@ -69,3 +71,5 @@
 
 - (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;
 @end
+
+NS_ASSUME_NONNULL_END

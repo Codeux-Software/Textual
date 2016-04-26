@@ -39,6 +39,8 @@
 
 #import "BuildConfig.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define _templateEngineVersionMaximum			3
 #define _templateEngineVersionMinimum			3
 
@@ -47,11 +49,11 @@
 @property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
 @property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
 @property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy, readwrite) NSFont *themeChannelViewFont;
-@property (nonatomic, copy, readwrite) NSString *themeNicknameFormat;
-@property (nonatomic, copy, readwrite) NSString *themeTimestampFormat;
-@property (nonatomic, copy, readwrite) NSString *settingsKeyValueStoreName;
-@property (nonatomic, copy, readwrite) NSColor *underlyingWindowColor;
+@property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
+@property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
 @property (nonatomic, assign, readwrite) double indentationOffset;
 @property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 @property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
@@ -68,7 +70,7 @@
  are redundant because NSDictionaryHelper already handles them, but it
  is better to be safe than sorry. */
 
-- (NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
+- (nullable NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
 {
 	NSString *hexValue = dict[key];
 
@@ -79,7 +81,7 @@
 	return hexValue;
 }
 
-- (NSColor *)colorForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
+- (nullable NSColor *)colorForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
 {
 	NSString *hexValue = dict[key];
 
@@ -91,7 +93,7 @@
 	return nil;
 }
 
-- (NSFont *)fontForKey:(NSString *)key fromDictionary:(NSDictionary *)dict
+- (nullable NSFont *)fontForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
 {
 	NSDictionary *fontDict = [dict dictionaryForKey:key];
 
@@ -120,13 +122,17 @@
 	return [@"Line Types/" stringByAppendingString:typestr];
 }
 
-- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
+- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
 {
-	return [self templateWithName:[self templateNameWithLineType:type]];
+	NSString *templateName = [self templateNameWithLineType:type];
+
+	return [self templateWithName:templateName];
 }
 
-- (GRMustacheTemplate *)templateWithName:(NSString *)name
+- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name
 {
+	PointerIsEmptyAssertReturn(name, nil)
+
 	NSError *load_error = nil;
 
 	GRMustacheTemplate *localTemplate = [self.styleTemplateRepository templateNamed:name error:&load_error];
@@ -154,7 +160,7 @@
 #pragma mark -
 #pragma mark Style Settings
 
-- (NSString *)keyValueStoreActualName
+- (nullable NSString *)keyValueStoreActualName
 {
 	NSString *storeName = [self settingsKeyValueStoreName];
 	
@@ -165,62 +171,74 @@
 	return nil;
 }
 
-- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * __autoreleasing *)resultError
+- (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable *)resultError
 {
-	if ([key length] <= 0) {
-		*resultError = @"Empty key value";
-	} else {
-		NSString *storeKey = [self keyValueStoreActualName];
-		
-		if (storeKey == nil) {
-			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
-		} else {
-			NSDictionary *styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
-			
-			return styleSettings[key];
+	if (key == nil || [key length] == 0) {
+		if ( resultError) {
+			*resultError = @"Empty key value";
 		}
+
+		return nil;
 	}
 
-	return nil;
+	NSString *storeKey = [self keyValueStoreActualName];
+	
+	if (storeKey == nil) {
+		if ( resultError) {
+			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
+		}
+
+		return nil;
+	}
+
+	NSDictionary *styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
+	
+	return styleSettings[key];
 }
 
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString * __autoreleasing *)resultError
+- (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable *)resultError
 {
-	if ([objectKey length] <= 0) {
-		*resultError = @"Empty key value";
-	} else {
-		NSString *storeKey = [self keyValueStoreActualName];
+	if (objectKey == nil || [objectKey length] <= 0) {
+		if (resultError) {
+			*resultError = @"Empty key value";
+		}
+
+		return NO;
+	}
+
+	NSString *storeKey = [self keyValueStoreActualName];
 		
-		if (storeKey == nil) {
+	if (storeKey == nil) {
+		if (resultError) {
 			*resultError = @"Empty key-value store name in styleSettings.plist — Set the key \"Key-value Store Name\" in styleSettings.plist as a string. The current style name is the recommended value.";
-		} else {
-			BOOL removeValue = (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]);
-			
-			id styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
-			
-			if (styleSettings == nil) {
-				if (removeValue) {
-					return YES;
-				}
-				
-				styleSettings = [NSMutableDictionary dictionaryWithCapacity:1]; // We are only inserting one value
-			} else {
-				styleSettings = [styleSettings mutableCopy];
-			}
-			
-			if (removeValue) {
-				[styleSettings removeObjectForKey:objectKey];
-			} else {
-				styleSettings[objectKey] = objectValue;
-			}
-		
-			[RZUserDefaults() setObject:[styleSettings copy] forKey:storeKey];
-				
+		}
+
+		return NO;
+	}
+
+	BOOL removeValue = (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]);
+	
+	id styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
+	
+	if (styleSettings == nil) {
+		if (removeValue) {
 			return YES;
 		}
+		
+		styleSettings = [NSMutableDictionary dictionaryWithCapacity:1]; // We are only inserting one value
+	} else {
+		styleSettings = [styleSettings mutableCopy];
 	}
 	
-	return NO;
+	if (removeValue) {
+		[styleSettings removeObjectForKey:objectKey];
+	} else {
+		styleSettings[objectKey] = objectValue;
+	}
+
+	[RZUserDefaults() setObject:[styleSettings copy] forKey:storeKey];
+		
+	return YES;
 }
 
 #pragma mark -
@@ -243,6 +261,8 @@
 
 - (void)reloadWithPath:(NSString *)path
 {
+	PointerIsEmptyAssert(path)
+
 	/* Load any custom templates. */
 	NSString *templatesPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
 
@@ -269,7 +289,7 @@
 	/* Load style settings dictionary. */
 	NSInteger templateEngineVersion = 0;
 
-	NSDictionary *styleSettings = nil;
+	NSDictionary<NSString *, id> *styleSettings = nil;
 	
 	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
 
@@ -320,7 +340,7 @@
 		}
 
 		/* Get style template version */
-		NSDictionary *templateVersions = [styleSettings dictionaryForKey:@"Template Engine Versions"];
+		NSDictionary<NSString *, NSNumber *> *templateVersions = [styleSettings dictionaryForKey:@"Template Engine Versions"];
 
 		if (templateVersions) {
 			NSInteger targetVersion = [templateVersions integerForKey:[TPCApplicationInfo applicationVersionShort]];
@@ -355,3 +375,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

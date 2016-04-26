@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define TPCThemeSettingsDisabledIndentationOffset     -99
 
 #define TPCThemeSettingsLatestTemplateEngineVersion		3
@@ -53,11 +55,11 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 @property (readonly) BOOL js_postHandleEventNotifications;
 @property (readonly) BOOL js_postPreferencesDidChangesNotifications;
 @property (readonly) BOOL usesIncompatibleTemplateEngineVersion;
-@property (readonly, copy) NSFont *themeChannelViewFont;
-@property (readonly, copy) NSString *themeNicknameFormat;
-@property (readonly, copy) NSString *themeTimestampFormat;
-@property (readonly, copy) NSString *settingsKeyValueStoreName;
-@property (readonly, copy) NSColor *underlyingWindowColor;
+@property (readonly, copy, nullable) NSFont *themeChannelViewFont;
+@property (readonly, copy, nullable) NSString *themeNicknameFormat;
+@property (readonly, copy, nullable) NSString *themeTimestampFormat;
+@property (readonly, copy, nullable) NSString *settingsKeyValueStoreName;
+@property (readonly, copy, nullable) NSColor *underlyingWindowColor;
 @property (readonly) double indentationOffset;
 @property (readonly) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
 
@@ -65,9 +67,11 @@ typedef NS_ENUM(NSUInteger, TPCThemeSettingsNicknameColorStyle) {
 
 - (NSString *)templateNameWithLineType:(TVCLogLineType)type;
 
-- (id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString **)resultError;
-- (BOOL)styleSettingsSetValue:(id)objectValue forKey:(NSString *)objectKey error:(NSString **)resultError;
+- (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable * _Nullable)resultError;
+- (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable * _Nullable)resultError;
 
-- (GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
-- (GRMustacheTemplate *)templateWithName:(NSString *)name;
+- (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type;
+- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name;
 @end
+
+NS_ASSUME_NONNULL_END
