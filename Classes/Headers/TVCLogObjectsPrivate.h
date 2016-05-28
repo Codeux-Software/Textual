@@ -54,7 +54,7 @@
 - (void)informDelegateWebViewClosedUnexpectedly;
 - (void)informDelegateWebViewFinishedLoading;
 
-- (void)keyDown:(NSEvent *)e inView:(NSView *)view;
+- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view;
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 @end

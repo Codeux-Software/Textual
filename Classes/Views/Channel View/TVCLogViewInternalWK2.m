@@ -198,7 +198,9 @@ create_normal_pool:
 
 - (void)keyDown:(NSEvent *)e
 {
-	[[self t_parentView] keyDown:e inView:self];
+	if ([[self t_parentView] keyDown:e inView:self] == NO) {
+		[super keyDown:e];
+	}
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender

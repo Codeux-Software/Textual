@@ -108,7 +108,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[[self webView] print:nil];
 }
 
-- (void)keyDown:(NSEvent *)e inView:(NSView *)view
+- (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view
 {
 	NSUInteger m = [e modifierFlags];
 
@@ -119,10 +119,10 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	if (ctrl == NO && alt == NO && cmd == NO) {
 		[[self logController] logViewWebViewKeyDown:e];
 
-		return;
+		return YES;
 	}
 
-	[view keyDown:e];
+	return NO;
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
