@@ -2256,13 +2256,13 @@
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)note
 {
-	if (self.ignoreOutlineViewSelectionChanges) {
-		return;
-	}
-
 	if (self.ignoreNextOutlineViewSelectionChange) {
 		self.ignoreNextOutlineViewSelectionChange = NO;
 
+		return;
+	}
+
+	if (self.ignoreOutlineViewSelectionChanges) {
 		return;
 	}
 
