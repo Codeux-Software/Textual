@@ -38,6 +38,7 @@
 #import "TextualApplication.h"
 
 #import "TPCThemeControllerPrivate.h"
+#import "TPCPreferencesPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"
 #import "TPCPreferencesImportExportPrivate.h"
 
