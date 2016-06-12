@@ -2034,7 +2034,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isHostmaskNickname] && [nick isChannelName:self] == NO) {
+				if ([nick isHostmaskNicknameOnClient:self] && [nick isChannelName:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -2754,7 +2754,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname = [s getTokenAsString];
 
 			if (NSObjectIsNotEmpty(nickname)) {
-				if ([nickname isChannelName:self] == NO && [nickname isHostmaskNickname]) {
+				if ([nickname isChannelName:self] == NO && [nickname isHostmaskNicknameOnClient:self]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[mainWindow() select:channel];
@@ -3396,7 +3396,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSString *nickname = [[s getTokenAsString] lowercaseString];
 
-			if ([nickname isChannelName:self] || [nickname isHostmaskNickname] == NO) {
+			if ([nickname isChannelName:self] || [nickname isHostmaskNicknameOnClient:self] == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
 
 				return;
@@ -7314,7 +7314,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				NSString *usernameInt = nil;
 				NSString *addressInt = nil;
 
-				if ([newNickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt] == NO) {
+				if ([newNickname hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:self] == NO) {
 					/* When NAMES reply is not a host, then set the nicknameInt
 					 to the value of nickname and leave the rest as nil. */
 
@@ -9414,7 +9414,7 @@ present_error:
 		if ([g trackUserActivity]) {
 			NSString *lname = [g trackingNickname];
 
-			if ([lname isHostmaskNickname]) {
+			if ([lname isHostmaskNicknameOnClient:self]) {
 				/* Check if we have a value that already exists. */
 				if (populatingForFirstTime == NO) {
 					if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {

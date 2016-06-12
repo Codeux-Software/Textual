@@ -108,6 +108,11 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)hostmaskComponents:(NSString *__autoreleasing *)nickname username:(NSString *__autoreleasing *)username address:(NSString *__autoreleasing *)address
 {
+	return [self hostmaskComponents:nickname username:username address:address onClient:nil];
+}
+
+- (BOOL)hostmaskComponents:(NSString *__autoreleasing *)nickname username:(NSString *__autoreleasing *)username address:(NSString *__autoreleasing *)address onClient:(IRCClient *)client
+{
 	/* Gather basic information. */
 
 	/* Find first ! starting from left side of string. */
@@ -129,9 +134,9 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	NSString *addressInt = [self substringAfterIndex:bang2pos.location];
 	
 	/* Perform basic validation. */
-	NSAssertReturnR([nicknameInt isHostmaskNickname], NO);
-	NSAssertReturnR([usernameInt isHostmaskUsername], NO);
-	NSAssertReturnR([nicknameInt isHostmaskAddress], NO);
+	NSAssertReturnR([nicknameInt isHostmaskNicknameOnClient:client], NO);
+	NSAssertReturnR([usernameInt isHostmaskUsernameOnClient:client], NO);
+	NSAssertReturnR([nicknameInt isHostmaskAddressOnClient:client], NO);
 
 	/* The host checks out so far, so define the output. */
 	if (NSDissimilarObjects(nickname, NULL)) {
@@ -156,10 +161,22 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isHostmaskAddress
 {
+	return [self isHostmaskAddressOnClient:nil];
+}
+
+- (BOOL)isHostmaskAddressOnClient:(IRCClient *)client
+{
+#pragma unused(client)
+
 	return ([self length] > 0 && [self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
 - (BOOL)isHostmaskUsername
+{
+	return [self isHostmaskUsernameOnClient:nil];
+}
+
+- (BOOL)isHostmaskUsernameOnClient:(IRCClient *)client
 {
 #if _useStrictHostmaskUsernameTypeChecking == 1
 	NSString *bob = self;
@@ -196,6 +213,21 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isHostmaskNickname
 {
+	return [self isHostmaskNicknameOnClient:nil];
+}
+
+- (BOOL)isHostmaskNicknameOnClient:(IRCClient *)client
+{
+	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
+
+	if (client) {
+		maximumLength = [[client supportInfo] nicknameLength];
+	}
+
+	if (maximumLength == 0) {
+		maximumLength = TXMaximumIRCNicknameLength;
+	}
+
 	return ([self isNotEqualTo:@"*"] &&
 			[self length] > 0 &&
 			[self length] <= TXMaximumIRCNicknameLength &&

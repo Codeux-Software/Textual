@@ -212,7 +212,7 @@
 	NSString *usernameInt = nil;
 	NSString *addressInt = nil;
 	
-	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
+	if ([hostmask hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
 		if (NSObjectsAreEqual(nicknameInt, [client localNickname])) {
 			return nil; // Do not post these events for self.
 		}

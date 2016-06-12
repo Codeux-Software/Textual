@@ -197,7 +197,7 @@
 		[sender setIsServer:NO]; // Do not set as server until host is parsed...
 		
 		/* Parse the user info into their appropriate sections or return NO if we can't. */
-		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt]) {
+		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
 			[sender setNickname:nicknameInt];
 			[sender setUsername:usernameInt];
 			[sender setAddress:addressInt];
