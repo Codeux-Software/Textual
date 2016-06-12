@@ -68,12 +68,17 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @property (getter=isModeChannelName, readonly) BOOL modeChannelName;
 
 - (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address;
+- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address onClient:(IRCClient *)client;
 
 @property (getter=isNickname, readonly) BOOL nickname TEXTUAL_DEPRECATED("Use -isHostmaskNickname instead");
 
 @property (getter=isHostmaskNickname, readonly) BOOL hostmaskNickname;
-@property (getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
 @property (getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
+@property (getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
+
+- (BOOL)isHostmaskNicknameOnClient:(IRCClient *)client;
+- (BOOL)isHostmaskUsernameOnClient:(IRCClient *)client;
+- (BOOL)isHostmaskAddressOnClient:(IRCClient *)client;
 
 @property (getter=isChannelName, readonly) BOOL channelName;
 - (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
