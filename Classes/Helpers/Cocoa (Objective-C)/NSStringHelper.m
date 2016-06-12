@@ -178,6 +178,8 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isHostmaskUsernameOnClient:(IRCClient *)client
 {
+#pragma unused(client)
+
 #if _useStrictHostmaskUsernameTypeChecking == 1
 	NSString *bob = self;
 
@@ -230,7 +232,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 	return ([self isNotEqualTo:@"*"] &&
 			[self length] > 0 &&
-			[self length] <= TXMaximumIRCNicknameLength &&
+			[self length] <= maximumLength &&
 			[self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
