@@ -4105,11 +4105,13 @@
 		4C1DC5491580420500A47BC9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Codeux Software, LLC";
 				TargetAttributes = {
 					4C0BA4F81990798800857343 = {
 						DevelopmentTeam = 8482Q6EPL6;
+						DevelopmentTeamName = "Codeux Software, LLC";
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -4120,6 +4122,9 @@
 						};
 					};
 					4C1DC5511580420500A47BC9 = {
+						DevelopmentTeam = 8482Q6EPL6;
+						DevelopmentTeamName = "Codeux Software, LLC";
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -4127,6 +4132,9 @@
 						};
 					};
 					4C5BA37216F1302F00A96CA2 = {
+						DevelopmentTeam = 8482Q6EPL6;
+						DevelopmentTeamName = "Codeux Software, LLC";
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
 								enabled = 1;
@@ -5592,27 +5600,31 @@
 		4C0BA6D51990798800857343 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "ca4c7dbd-80ce-4e65-a7d0-cc219f24c33f";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
 		4C0BA6D61990798800857343 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "ca4c7dbd-80ce-4e65-a7d0-cc219f24c33f";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
 		4C0BA6D81990798800857343 /* Release (App Store) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				PROVISIONING_PROFILE = "ca4c7dbd-80ce-4e65-a7d0-cc219f24c33f";
+				PROVISIONING_PROFILE = "8ff3f60c-eb16-4140-b27f-a4000a4741b4";
+				PROVISIONING_PROFILE_SPECIFIER = "8482Q6EPL6/Mac App: com.codeux.irc.textual5";
 			};
 			name = "Release (App Store)";
 		};

@@ -85,6 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *fontName = [fontDict stringForKey:@"Font Name"];
 
+	if (fontName == nil) {
+		return nil;
+	}
+
 	if ([NSFont fontIsAvailable:fontName] == NO) {
 		return nil;
 	}

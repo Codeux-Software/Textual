@@ -54,9 +54,9 @@
 #pragma mark -
 #pragma mark Awakening
 
-- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
-	if ((self = [super initWithContentRect:contentRect styleMask:windowStyle backing:bufferingType defer:deferCreation])) {
+	if ((self = [super initWithContentRect:contentRect styleMask:style backing:bufferingType defer:flag])) {
 		self.keyEventHandler = [TLOKeyEventHandler new];
 	}
 	
@@ -1490,7 +1490,11 @@
 
 		NSTitlebarAccessoryViewController *accessoryView = [self titlebarAccessoryViewController];
 
-		[accessoryView setLayoutAttribute:NSLayoutAttributeRight];
+		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+			[accessoryView setLayoutAttribute:NSLayoutAttributeTrailing];
+		} else {
+			[accessoryView setLayoutAttribute:NSLayoutAttributeRight];
+		}
 
 		[self addTitlebarAccessoryViewController:accessoryView];
 	} else {

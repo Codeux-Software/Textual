@@ -105,7 +105,7 @@
 
 	NSString *nickname = [associatedUser nickname];
 
-	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", nickname) forObject:[[self textField] cell]];
+	[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1000]", nickname) forObject:[[self cellTextField] cell]];
 }
 
 #pragma mark -

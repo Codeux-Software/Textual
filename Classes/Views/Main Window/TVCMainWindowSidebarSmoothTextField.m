@@ -163,7 +163,7 @@
 
 	NSRect drawFrame = cellFrame;
 
-	NSInteger coreTextFrameOffset = 0;
+	CGFloat coreTextFrameOffset = 0;
 
 	NSImage *stringValueImage = [stringValue imageRepWithSize:drawFrame.size
 												  scaleFactor:[self backingScaleFactor]
@@ -174,8 +174,8 @@
 	 to the height when drawing with a height of 16 which is the height we are
 	 drawing into right now. I will eventually fix this to scale to any size, 
 	 but as long as this works for now... */
-	if (coreTextFrameOffset == 4) {
-		drawFrame.origin.y += 1;
+	if (fabs(coreTextFrameOffset) == 4.0) {
+		drawFrame.origin.y += 1.0;
 	}
 
 	[stringValueImage drawInRect:drawFrame

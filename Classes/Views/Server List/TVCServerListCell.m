@@ -102,23 +102,23 @@
 
 	if (isGroupItem) {
 		if (isActive) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", [cellItem label]) forObject:[[self textField] cell]];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][1]", [cellItem label]) forObject:[[self cellTextField] cell]];
 		} else {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", [cellItem label]) forObject:[[self textField] cell]];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1001][2]", [cellItem label]) forObject:[[self cellTextField] cell]];
 		}
 	} else {
 		if ([cellItem isPrivateMessage]) {
-			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", [cellItem label]) forObject:[[self textField] cell]];
+			[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1003]", [cellItem label]) forObject:[[self cellTextField] cell]];
 		} else {
 			if (isActive) {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", [cellItem label]) forObject:[[self textField] cell]];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][1]", [cellItem label]) forObject:[[self cellTextField] cell]];
 			} else {
-				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", [cellItem label]) forObject:[[self textField] cell]];
+				[XRAccessibility setAccessibilityValueDescription:TXTLS(@"Accessibility[1002][2]", [cellItem label]) forObject:[[self cellTextField] cell]];
 			}
 		}
-	}
 
-	[XRAccessibility setAccessibilityLabel:nil forObject:[[self imageView] cell]];
+		[XRAccessibility setAccessibilityLabel:nil forObject:[[self imageView] cell]];
+	}
 }
 
 - (void)updateTextFieldValue
