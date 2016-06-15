@@ -258,7 +258,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 
 NSURL *TLOLicenseManagerTrialModeInformationFilePath(void)
 {
-	NSString *cachesFolder = [TPCPathInfo applicationLocalContainerApplicationSupportPath];
+	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPathInLocalContainer];
 
 	if (cachesFolder == nil) {
 		return nil;
@@ -413,7 +413,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 
 NSURL *TLOLicenseManagerUserLicenseFilePath(void)
 {
-	NSString *cachesFolder = [TPCPathInfo applicationLocalContainerApplicationSupportPath];
+	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPathInLocalContainer];
 
 	if (cachesFolder == nil) {
 		return nil;

@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,30 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
+@interface THOPluginDispatcher : NSObject
++ (dispatch_queue_t)dispatchQueue;
 
-/* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
-
-/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
- notifications for changed keys on a per-key basis so that the iCloud controller can
- know what keys change instead of having to sync every single key, every time that it
- performs an upstream sync. */
-@interface TPCPreferencesUserDefaults : NSUserDefaults
-+ (TPCPreferencesUserDefaults *)sharedUserDefaults;
-
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
-@end
-
-/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
- return the value of +sharedUserDefaultsController */
-@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
-+ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
++ (BOOL)receivedCommand:(NSString *)command withText:(nullable NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt;
++ (BOOL)receivedText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(nullable IRCChannel *)textDestination asLineType:(TVCLogLineType)lineType onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt wasEncrypted:(BOOL)wasEncrypted;
++ (nullable IRCMessage *)interceptServerInput:(IRCMessage *)inputObject for:(IRCClient *)client;
++ (nullable id)interceptUserInput:(id)inputObject command:(NSString *)commandString;
++ (NSString *)willRenderMessage:(NSString *)newMessage forViewController:(TVCLogController *)viewController lineType:(TVCLogLineType)lineType memberType:(TVCLogLineMemberType)memberType;
++ (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
++ (void)userInputCommandInvokedOnClient:(IRCClient *)client commandString:(NSString *)commandString messageString:(NSString *)messageString;
++ (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)viewController;
++ (void)didReceiveServerInput:(IRCMessage *)inputObject onClient:(IRCClient *)client;
++ (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)viewController;
 @end
 
 NS_ASSUME_NONNULL_END

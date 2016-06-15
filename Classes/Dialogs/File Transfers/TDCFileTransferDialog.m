@@ -223,7 +223,7 @@
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyAutomaticallyDownloadAction) {
 		/* If the user is set to automatically download, then just save to the downloads folder. */
 		if ([groupItem path] == nil) {
-			[groupItem setPath:[TPCPathInfo userDownloadFolderPath]];
+			[groupItem setPath:[TPCPathInfo userDownloadsFolderPath]];
 		}
 
 		/* Begin the transfer. */
@@ -490,7 +490,7 @@
 	if ([incomingTransfers count] > 0) {
 		NSOpenPanel *d = [NSOpenPanel openPanel];
 		
-		NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo userDownloadFolderPath]];
+		NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo userDownloadsFolderPath]];
 		
 		[d setDirectoryURL:folderRep];
 		

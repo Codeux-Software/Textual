@@ -49,10 +49,10 @@
 	/* Convert URL. */
 	NSURL *u = [url URLUsingWebKitPasteboard];
 
-	NSString *plguinResult = [sharedPluginManager() processInlineMediaContentURL:[u absoluteString]];
+	NSString *pluginResult = [THOPluginDispatcher processInlineMediaContentURL:[u absoluteString]];
 
-	if (plguinResult) {
-		return plguinResult;
+	if (pluginResult) {
+		return pluginResult;
 	}
 
 	NSString *scheme = [u scheme];

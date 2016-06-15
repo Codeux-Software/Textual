@@ -149,7 +149,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"diagnostic-reports-folder"])
 		{
-			[RZWorkspace() openFile:[TPCPathInfo localUserDiagnosticReportsFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo userDiagnosticReportsFolderPath]];
 			[RZWorkspace() openFile:[TPCPathInfo systemDiagnosticReportsFolderPath]];
 		}
 		else if ([serverAddress isEqualToString:@"support-channel"])
@@ -164,13 +164,13 @@
 				 [serverAddress isEqualToString:@"icloud-styles-folder"])
 		{
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-			[TPCPathInfo openCloudCustomThemeFolder];
+			[TPCPathInfo openCloudCustomThemeFolderPath];
 #endif
 		}
 		else if ([serverAddress isEqualToString:@"unsupervised-script-folder"] ||
 				 [serverAddress isEqualToString:@"unsupervised-scripts-folder"])
 		{
-			[RZWorkspace() openFile:[TPCPathInfo systemUnsupervisedScriptFolderPath]];
+			[RZWorkspace() openFile:[TPCPathInfo customScriptsFolderPath]];
 		}
 		else if ([serverAddress isEqualToString:@"knowledge-base"])
 		{
@@ -178,7 +178,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"application-support-folder"])
 		{
-			[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
+			[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPathInGroupContainer]];
 		}
 
 		return;

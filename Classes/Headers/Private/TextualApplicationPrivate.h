@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,39 +35,33 @@
 
  *********************************************************************** */
 
+#import "BuildConfig.h"
+
 #import "TextualApplication.h"
 
-/* Please DO NOT use any code declared within this header inside of a plugin.
- The code contained by this header file was designed to be used internally for
- Textual and may be dangerous to use otherwise. */
-
-typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
-	THOPluginItemSupportsInlineMediaManipulation			= 1 << 0,
-	THOPluginItemSupportsNewMessagePostedEvent				= 1 << 1,
-	THOPluginItemSupportsOutputSuppressionRules				= 1 << 2,
-	THOPluginItemSupportsPreferencePane						= 1 << 3,
-	THOPluginItemSupportsServerInputDataInterception		= 1 << 4,
-	THOPluginItemSupportsSubscribedServerInputCommands		= 1 << 5,
-	THOPluginItemSupportsSubscribedUserInputCommands		= 1 << 6,
-	THOPluginItemSupportsUserInputDataInterception			= 1 << 7,
-	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 8,
-	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 9,
-	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 10,
-	THOPluginItemSupportsWebViewJavaScriptPayloads			= 1 << 11,
-};
-
-@interface THOPluginItem : NSObject
-@property (readonly, strong) id primaryClass;
-@property (readonly) THOPluginItemSupportedFeatures supportedFeatures;
-@property (readonly, copy) NSArray *supportedUserInputCommands;
-@property (readonly, copy) NSArray *supportedServerInputCommands;
-@property (readonly, copy) NSArray *outputSuppressionRules;
-@property (readonly, strong) NSView *pluginPreferencesPaneView;
-@property (readonly, copy) NSString *pluginPreferencesPaneMenuItemName;
-
-- (BOOL)loadBundle:(NSBundle *)bundle;
-
-- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
-
-- (void)sendDealloc;
-@end
+#import "IRCConnectionPrivate.h"
+#import "IRCUserPrivate.h"
+#import "IRCWorldPrivate.h"
+#import "IRCWorldPrivateCloudExtension.h"
+#import "NSObjectHelperPrivate.h"
+#import "NSTableVIewHelperPrivate.h"
+#import "NSViewHelperPrivate.h"
+#import "THOPluginDispatcherPrivate.h"
+#import "THOPluginItemPrivate.h"
+#import "THOPluginManagerPrivate.h"
+#import "THOPluginProtocolPrivate.h"
+#import "TPCApplicationInfoPrivate.h"
+#import "TPCPathInfoPrivate.h"
+#import "TPCPreferencesCloudSyncPrivate.h"
+#import "TPCPreferencesImportExportPrivate.h"
+#import "TPCPreferencesPrivate.h"
+#import "TPCPreferencesUserDefaultsMigratePrivate.h"
+#import "TPCPreferencesUserDefaultsPrivate.h"
+#import "TPCResourceManagerPrivate.h"
+#import "TPCThemeControllerPrivate.h"
+#import "TPCThemeSettingsPrivate.h"
+#import "TVCLogObjectsPrivate.h"
+#import "TVCLogViewInternalWK1.h"
+#import "TVCLogViewInternalWK2.h"
+#import "TVCMainWindowPrivate.h"
+#import "WKWebViewPrivate.h"

@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -39,22 +39,35 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudDeletedClientsStorageKey;
-TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientEntryKeyPrefix;
+typedef NS_ENUM(NSUInteger, TPCPreferencesReloadActionMask) {
+	TPCPreferencesReloadDockIconBadgesAction						= 1 << 0,
+	TPCPreferencesReloadHighlightKeywordsAction						= 1 << 1,
+	TPCPreferencesReloadHighlightLoggingAction						= 1 << 2,
+	TPCPreferencesReloadInputHistoryScopeAction						= 1 << 3,
+	TPCPreferencesReloadMainWindowAppearanceAction					= 1 << 4,
+	TPCPreferencesReloadMainWindowTransparencyLevelAction			= 1 << 5,
+	TPCPreferencesReloadMemberListAction							= 1 << 6,
+	TPCPreferencesReloadMemberListSortOrderAction					= 1 << 7,
+	TPCPreferencesReloadMemberListUserBadgesAction					= 1 << 8,
+	TPCPreferencesReloadPreferencesChangedAction					= 1 << 9,
+	TPCPreferencesReloadServerListAction							= 1 << 10,
+	TPCPreferencesReloadServerListUnreadBadgesAction				= 1 << 11,
+	TPCPreferencesReloadStyleAction									= 1 << 12,
+	TPCPreferencesReloadStyleWithTableViewsAction					= 1 << 13,
+	TPCPreferencesReloadTextDirectionAction							= 1 << 14,
+	TPCPreferencesReloadTextFieldFontSizeAction						= 1 << 15,
+	TPCPreferencesReloadTextFieldSegmentedControllerOriginAction	= 1 << 16,
 
-@interface IRCWorld (IRCWorldCloudExtension)
-- (NSDictionary<NSString *, id> *)cloudDictionaryValue;
-
-- (void)destroyClientInCloud:(IRCClient *)client;
-
-- (void)removeClientFromListOfDeletedClients:(NSString *)clientID;
-- (void)removeClientConfigurationCloudEntry:(NSString *)clientID;
-
-- (void)addClientToListOfDeletedClients:(NSString *)clientID;
-
-- (void)processCloudCientDeletionList:(NSArray<NSArray *> *)deletedClients;
-@end
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
+	TPCPreferencesReloadSparkleFrameworkFeedURLAction				= 1 << 17,
 #endif
+
+	TPCPreferencesReloadInlineMediaCacheAction						= 1 << 18
+};
+
+@interface TPCPreferences (TPCPreferencesReload)
++ (void)performReloadActionForKeys:(NSArray<NSString *> *)keys;
++ (void)performReloadAction:(TPCPreferencesReloadActionMask)reloadAction;
+@end
 
 NS_ASSUME_NONNULL_END

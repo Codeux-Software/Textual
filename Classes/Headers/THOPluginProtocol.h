@@ -37,13 +37,12 @@
 
 #import "TextualApplication.h"
 
-@class THOPluginDidReceiveServerInputConcreteObject;
-@class THOPluginDidPostNewMessageConcreteObject;
-@class THOPluginWebViewJavaScriptPayloadConcreteObject;
+NS_ASSUME_NONNULL_BEGIN
 
-/* Each plugin has access to the global variables [self worldController] and 
- [self masterController] which both have unrestricted access to every component 
- of Textual. There is no need to store pointers to these in your plugin.  */
+@class THOPluginDidPostNewMessageConcreteObject;
+@class THOPluginDidReceiveServerInputConcreteObject;
+@class THOPluginOutputSuppressionRule;
+@class THOPluginWebViewJavaScriptPayloadConcreteObject;
 
 #pragma mark -
 #pragma mark Localization
@@ -135,7 +134,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  */
 - (BOOL)receivedText:(NSString *)text
           authoredBy:(IRCPrefix *)textAuthor
-         destinedFor:(IRCChannel *)textDestination
+         destinedFor:(nullable IRCChannel *)textDestination
           asLineType:(TVCLogLineType)lineType
             onClient:(IRCClient *)client
           receivedAt:(NSDate *)receivedAt
@@ -158,7 +157,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return The original and/or modified copy of `IRCMessage` or `nil` to prevent the data
  *  from being processed altogether.
  */
-- (IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client;
+- (nullable IRCMessage *)interceptServerInput:(IRCMessage *)input for:(IRCClient *)client;
 
 /**
  * @brief Method used to modify and/or completely ignore text entered into the main text
@@ -178,7 +177,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return The original and/or modified copy of input or `nil` to prevent the data from
  *  being processed altogether.
  */
-- (id)interceptUserInput:(id)input command:(NSString *)command;
+- (nullable id)interceptUserInput:(id)input command:(NSString *)command;
 
 #pragma mark -
 #pragma mark Preferences Pane
@@ -254,7 +253,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return A URL that can be shown as an inline image in relation to resource or `nil`
  *  if there is no interest in the URL.
  */
-- (NSString *)processInlineMediaContentURL:(NSString *)resource;
+- (nullable NSString *)processInlineMediaContentURL:(NSString *)resource;
 
 #pragma mark -
 #pragma mark Subscribed Events
@@ -280,7 +279,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @return An `NSArray` containing a lowercase list of commands that the plugin
  *  will support as user input from the main text field.
  */
-@property (nonatomic, readonly, copy) NSArray *subscribedUserInputCommands;
+@property (nonatomic, readonly, copy) NSArray<NSString *> *subscribedUserInputCommands;
 
 /**
  * @brief Method invoked when a subscribed user input command requires processing.
@@ -299,7 +298,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *
  * @discussion If a command is a number, then insert it into the array as an `NSString`
  */
-@property (nonatomic, readonly, copy) NSArray *subscribedServerInputCommands;
+@property (nonatomic, readonly, copy) NSArray<NSString *> *subscribedServerInputCommands;
 
 /**
  * @brief Method invoked when a subscribed server input command requires processing.
@@ -320,7 +319,7 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  * @brief Method invoked when the Document Object Model (DOM) of a view has been modified.
  *
  * @discussion This method is invoked when a message has been added to the Document Object
- *  Model (DOM) of logController
+ *  Model (DOM) of viewController
  *
  * @warning Do not do any heavy work when the
  *  [isProcessedInBulk]([THOPluginDidPostNewMessageConcreteObject isProcessedInBulk]) property 
@@ -332,11 +331,11 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  that you do so on the main thread. If you don't, WebKit will throw an exception.
  *
  * @param messageObject An instance of THOPluginDidPostNewMessageConcreteObject
- * @param logController The view responsible for the event
+ * @param viewController The view responsible for the event
  *
  * @see THOPluginDidPostNewMessageConcreteObject
  */
-- (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)logController;
+- (void)didPostNewMessage:(THOPluginDidPostNewMessageConcreteObject *)messageObject forViewController:(TVCLogController *)viewController;
 
 /**
  * @brief Method invoked when the JavaScript function `app.sendPluginPayload()` is executed.
@@ -349,11 +348,11 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
  *  that you do so on the main thread. If you don't, WebKit will throw an exception.
  *
  * @param payloadObject An instance of THOPluginWebViewJavaScriptPayloadConcreteObject
- * @param logController The view responsible for the event
+ * @param viewController The view responsible for the event
  *
  * @see THOPluginWebViewJavaScriptPayloadConcreteObject
  */
-- (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)logController;
+- (void)didReceiveJavaScriptPayload:(THOPluginWebViewJavaScriptPayloadConcreteObject *)payloadObject fromViewController:(TVCLogController *)viewController;
 
 #pragma mark -
 #pragma mark Reserved Calls
@@ -361,12 +360,14 @@ extern NSString * const THOPluginProtocolCompatibilityMinimumVersion;
 /* The behavior of this method call is undefined. It exists for internal
  purposes for the plugins packaged with Textual by default. It is not
  recommended to use it, or try to understand it. */
-@property (nonatomic, readonly, copy) NSArray *pluginOutputSuppressionRules;
+@property (nonatomic, readonly, copy) NSArray<THOPluginOutputSuppressionRule *> *pluginOutputSuppressionRules;
 
 #pragma mark -
 #pragma mark Deprecated
 
-- (void)didReceiveServerInputOnClient:(IRCClient *)client senderInformation:(NSDictionary *)senderDict messageInformation:(NSDictionary *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
+- (void)didReceiveServerInputOnClient:(IRCClient *)client
+                    senderInformation:(NSDictionary<NSString *, id> *)senderDict
+                   messageInformation:(NSDictionary<NSString *, id> *)messageDict TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderIsServerAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputSenderHostmaskAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
@@ -381,7 +382,10 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageSeq
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkAddressAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidReceiveServerInputMessageNetworkNameAttribute TEXTUAL_DEPRECATED("Use -didReceiveServerInput:onClient: instead");
 
-- (void)didPostNewMessageForViewController:(TVCLogController *)logController messageInfo:(NSDictionary *)messageInfo isThemeReload:(BOOL)isThemeReload isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
+- (void)didPostNewMessageForViewController:(TVCLogController *)viewController
+                               messageInfo:(NSDictionary<NSString *, id> *)messageInfo
+                             isThemeReload:(BOOL)isThemeReload
+                           isHistoryReload:(BOOL)isHistoryReload TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageLineNumberAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
 TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageSenderNicknameAttribute TEXTUAL_DEPRECATED("Use -didPostNewMessage:forViewController: instead");
@@ -422,7 +426,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  *
  * @discussion This value may be empty.
  */
-@property (readonly, copy) NSString *senderNickname;
+@property (readonly, copy, nullable) NSString *senderNickname;
 
 /**
  * @brief The line type of the message
@@ -440,20 +444,14 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 @property (readonly, copy) NSDate *receivedAt;
 
 /**
- * @brief Array of ranges (`NSRange`) of text in the message body believed to be a URL.
- *
- * @discussion Each entry in this array is another array containing two indexes. First
- *  index (0) is the range in messageContents that the URL was at. The second index (1)
- *  is the URL that was found. The URL may differ from the value in the range as URL 
- *  schemes may have been appended. For example, the text at the given range may be 
- *  "www.example.com" whereas the entry at index 1 is "http://www.example.com"
+ * @brief Array of URLs found in the message body
  */
 @property (readonly, copy) NSArray *listOfHyperlinks;
 
 /**
  * @brief List of users from the channel that appear in the message
  */
-@property (readonly, copy) NSSet *listOfUsers;
+@property (readonly, copy) NSSet<NSString *> *listOfUsers;
 
 /**
  * @brief Whether or not a highlight word was matched
@@ -483,12 +481,12 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The username (ident) section of the sender's hostmask
  */
-@property (readonly, copy) NSString *senderUsername;
+@property (readonly, copy, nullable) NSString *senderUsername;
 
 /**
  * @brief The address section of the sender's hostmask
  */
-@property (readonly, copy) NSString *senderAddress;
+@property (readonly, copy, nullable) NSString *senderAddress;
 
 /**
  * @brief The combined hostmask of the sender
@@ -512,7 +510,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The input, split up into sections
  */
-@property (readonly, copy) NSArray *messageParamaters;
+@property (readonly, copy) NSArray<NSString *> *messageParamaters;
 
 /**
  * @brief The input's command
@@ -522,7 +520,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The value of -messageCommand as an integer
  */
-@property (readonly) NSInteger messageCommandNumeric;
+@property (readonly) NSUInteger messageCommandNumeric;
 
 /**
  * @brief The server address of the IRC network
@@ -531,12 +529,12 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
  *  Textual is currently connected to and may differ from senderNickanme even
  *  if senderIsServer is `YES`
  */
-@property (readonly, copy) NSString *networkAddress;
+@property (readonly, copy, nullable) NSString *networkAddress;
 
 /**
  * @brief The name of the IRC network
  */
-@property (readonly, copy) NSString *networkName;
+@property (readonly, copy, nullable) NSString *networkName;
 @end
 
 #pragma mark -
@@ -554,7 +552,7 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief The payload contents
  */
-@property (readonly, copy) id payloadContents;
+@property (readonly, copy, nullable) id payloadContents;
 @end
 
 #pragma mark -
@@ -565,3 +563,5 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 @property (nonatomic, assign) BOOL restrictChannel;
 @property (nonatomic, assign) BOOL restrictPrivateMessage;
 @end
+
+NS_ASSUME_NONNULL_END

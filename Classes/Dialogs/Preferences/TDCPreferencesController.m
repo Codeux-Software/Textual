@@ -271,7 +271,7 @@
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[RZNotificationCenter() addObserver:self
 							   selector:@selector(onCloudSyncControllerDidChangeThemeName:)
-								   name:TPCPreferencesCloudSyncDidChangeGlobalThemeNamePreferenceNotification
+								   name:TPCPreferencesCloudSyncDidChangeThemeNameNotification
 								 object:nil];
 #endif
 
@@ -323,7 +323,7 @@
 	for (THOPluginItem *plugin in bundles) {
 		NSInteger tagIndex = ([bundles indexOfObject:plugin] + _addonsToolbarItemMultiplier);
 
-		NSMenuItem *pluginMenu = [NSMenuItem menuItemWithTitle:[plugin pluginPreferencesPaneMenuItemName]
+		NSMenuItem *pluginMenu = [NSMenuItem menuItemWithTitle:[plugin pluginPreferencesPaneMenuItemTitle]
 														target:self
 														action:@selector(onPrefPaneSelected:)];
 
@@ -741,7 +741,7 @@
 {
 	/* The path is hardcoded because we run this check on all build schemes with means
 	 the value of our ubiquitous container URL will not be available in all situations. */
-	NSString *cloudPath = [[TPCPathInfo userHomeDirectoryPathOutsideSandbox] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
+	NSString *cloudPath = [[TPCPathInfo userHomeFolderPath] stringByAppendingPathComponent:@"/Library/Mobile Documents/"];
 
 	if ([[url relativePath] hasPrefix:cloudPath]) {
 		if (outError) {
@@ -837,7 +837,7 @@
 
 - (void)updateTranscriptFolder
 {
-	NSURL *path = [TPCPathInfo logFileFolderLocation];
+	NSURL *path = [TPCPathInfo transcriptFolderURL];
 
 	NSMenuItem *item = [[self transcriptFolderButton] itemAtIndex:0];
 
@@ -885,7 +885,7 @@
 				if (error) {
 					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
 				} else {
-					[TPCPathInfo setLogFileFolderLocation:bookmark];
+					[TPCPathInfo setTranscriptFolderURL:bookmark];
 				}
 
 				[self updateTranscriptFolder];
@@ -895,8 +895,8 @@
 	else if ([[self transcriptFolderButton] selectedTag] == 3)
 	{
 		[[self transcriptFolderButton] selectItemAtIndex:0];
-		
-		[TPCPathInfo setLogFileFolderLocation:nil];
+
+		[TPCPathInfo setTranscriptFolderURL:nil];
 		
 		[self updateTranscriptFolder];
 	}
@@ -1178,32 +1178,32 @@
 
 - (void)onChangedInputHistoryScheme:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadInputHistoryScopeAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadInputHistoryScopeAction];
 }
 
 - (void)onChangedSidebarColorInversion:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
 }
 
 - (void)onChangedStyle:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:(TPCPreferencesKeyReloadStyleWithTableViewsAction | TPCPreferencesKeyReloadTextDirectionAction)];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadStyleWithTableViewsAction | TPCPreferencesReloadTextDirectionAction)];
 }
 
 - (void)onChangedMainWindowSegmentedController:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadTextFieldSegmentedControllerOriginAction];
 }
 
 - (void)onChangedUserListModeColor:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:(TPCPreferencesKeyReloadMemberListUserBadgesAction | TPCPreferencesKeyReloadMemberListAction)];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadMemberListUserBadgesAction | TPCPreferencesReloadMemberListAction)];
 }
 
 - (void)onChangedMainInputTextFieldFontSize:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldFontSizeAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadTextFieldFontSizeAction];
 }
 
 - (void)onFileTransferIPAddressDetectionMethodChanged:(id)sender
@@ -1215,29 +1215,29 @@
 
 - (void)onChangedHighlightLogging:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadHighlightLoggingAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadHighlightLoggingAction];
 }
 
 - (void)onChangedUserListModeSortOrder:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListSortOrderAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadMemberListSortOrderAction];
 }
 
 - (void)onChangedServerListUnreadBadgeColor:(id)sender
 {
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListUnreadBadgesAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadServerListUnreadBadgesAction];
 }
 
 - (void)onOpenPathToCloudFolder:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	[TPCPathInfo openApplicationUbiquitousContainer];
+	[TPCPathInfo openApplicationUbiquitousContainerPath];
 #endif
 }
 
 - (void)onOpenPathToScripts:(id)sender
 {
-	[RZWorkspace() openFile:[TPCPathInfo applicationGroupContainerApplicationSupportPath]];
+	[RZWorkspace() openFile:[TPCPathInfo applicationSupportFolderPathInGroupContainer]];
 }
 
 - (void)onManageiCloudButtonClicked:(id)sender
@@ -1332,9 +1332,9 @@
 #endif
 		
 		if (copyingToCloud) {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openNewPathOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCloudLocation reloadOnCopy:YES openOnCopy:YES];
 		} else {
-			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCustomLocation reloadOnCopy:YES openNewPathOnCopy:YES];
+			[themeController() copyActiveThemeToDestinationLocation:TPCThemeControllerStorageCustomLocation reloadOnCopy:YES openOnCopy:YES];
 		}
 	}
 }

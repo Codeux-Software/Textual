@@ -150,7 +150,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.nickname		= [TPCPreferences defaultNickname];
 	self.awayNickname	= [TPCPreferences defaultAwayNickname];
 	self.username		= [TPCPreferences defaultUsername];
-	self.realName		= [TPCPreferences defaultRealname];
+	self.realName		= [TPCPreferences defaultRealName];
 
 	self.alternateNicknames		= @[];
 	self.loginCommands			= @[];

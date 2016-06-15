@@ -726,7 +726,7 @@
 	}
 
 	if (NSObjectIsEmpty(self.config.realName)) {
-		[self.realNameTextField setStringValue:[TPCPreferences defaultRealname]];
+		[self.realNameTextField setStringValue:[TPCPreferences defaultRealName]];
 	} else {
 		[self.realNameTextField setStringValue:self.config.realName];
 	}

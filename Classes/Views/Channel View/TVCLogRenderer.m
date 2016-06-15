@@ -1141,10 +1141,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 		[renderer setRendererAttributes:inputDictionary];
 	}
 
-	body = [sharedPluginManager() postWillRenderMessageEvent:body
-										   forViewController:controller
-													lineType:[inputDictionary integerForKey:TVCLogRendererConfigurationLineTypeAttribute]
-												  memberType:[inputDictionary integerForKey:TVCLogRendererConfigurationMemberTypeAttribute]];
+	body = [THOPluginDispatcher willRenderMessage:body
+								forViewController:controller
+										 lineType:[inputDictionary integerForKey:TVCLogRendererConfigurationLineTypeAttribute]
+									   memberType:[inputDictionary integerForKey:TVCLogRendererConfigurationMemberTypeAttribute]];
 
 	[renderer setBody:body];
 

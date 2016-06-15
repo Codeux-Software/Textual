@@ -39,12 +39,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
-TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
-
 @interface TPCPreferencesImportExport : NSObject
-+ (void)import;
-+ (void)export;
++ (void)importInWindow:(NSWindow *)window;
+
++ (void)exportInWindow:(NSWindow *)window;
+
++ (NSDictionary<NSString *, id> *)exportedPreferencesDictionary;
 @end
 
 NS_ASSUME_NONNULL_END

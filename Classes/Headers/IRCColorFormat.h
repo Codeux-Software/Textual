@@ -57,6 +57,7 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; //
 #define IRCTextFormatterColorEffectCharacter			0x03
 #define IRCTextFormatterBoldEffectCharacter				0x02
 #define IRCTextFormatterItalicEffectCharacter			0x1d
+#define IRCTextFormatterItalicEffectCharacterOld		0x16
 #define IRCTextFormatterStrikethroughEffectCharacter	0x1e
 #define IRCTextFormatterUnderlineEffectCharacter		0x1F
 #define IRCTextFormatterTerminatingCharacter			0x0F

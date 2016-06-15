@@ -42,8 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameDefaultsKey;
 TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameDefaultsKey;
+TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontSizeDefaultsKey;
 
-TEXTUAL_EXTERN NSInteger const TPCPreferencesDictionaryVersion;
+TEXTUAL_EXTERN NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey;
+TEXTUAL_EXTERN NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey;
+
+TEXTUAL_EXTERN NSUInteger const TPCPreferencesDictionaryVersion;
 
 typedef NS_ENUM(NSUInteger, TXNicknameHighlightMatchType) {
 	TXNicknameHighlightPartialMatchType = 0,
@@ -52,7 +56,7 @@ typedef NS_ENUM(NSUInteger, TXNicknameHighlightMatchType) {
 };
 
 typedef NS_ENUM(NSUInteger, TXTabKeyAction) {
-	TXTabKeyNickCompleteAction = 0,
+	TXTabKeyNicknameCompleteAction = 0,
 	TXTabKeyUnreadChannelAction,
 	TXTabKeyNoneTypeAction = 100,
 };
@@ -65,7 +69,7 @@ typedef NS_ENUM(NSUInteger, TXUserDoubleClickAction) {
 
 typedef NS_ENUM(NSUInteger, TXNoticeSendLocationType) {
 	TXNoticeSendServerConsoleType = 0,
-	TXNoticeSendCurrentChannelType = 1,
+	TXNoticeSendSelectedChannelType = 1,
 	TXNoticeSendToQueryDestinationType = 2,
 };
 
@@ -94,7 +98,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferRequestReplyAction) {
 	TXFileTransferRequestReplyIgnoreAction						= 1,
 	TXFileTransferRequestReplyOpenDialogAction					= 2,
 	TXFileTransferRequestReplyAutomaticallyDownloadAction		= 3,
-} ;
+};
 
 typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 	TXFileTransferIPAddressAutomaticDetectionMethod			= 1,
@@ -103,13 +107,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 @interface TPCPreferences : NSObject
 + (BOOL)developerModeEnabled;
-+ (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled;
 
 + (nullable NSString *)masqueradeCTCPVersion;
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 + (BOOL)receiveBetaUpdates;
-+ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
 #endif
 
 + (BOOL)channelNavigationIsServerSpecific;
@@ -130,7 +132,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (BOOL)conversationTrackingIncludesUserModeSymbol;
 
-+ (NSString *)defaultRealname;
++ (NSString *)defaultRealName;
 + (NSString *)defaultUsername;
 + (NSString *)defaultNickname;
 + (nullable NSString *)defaultAwayNickname;
@@ -176,13 +178,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)rightToLeftFormatting;
 + (BOOL)removeAllFormatting;
 
-+ (NSInteger)trackUserAwayStatusMaximumChannelSize;
++ (NSUInteger)trackUserAwayStatusMaximumChannelSize;
 
 + (BOOL)invertSidebarColors;
-+ (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
 
 + (BOOL)invertSidebarColorsPreferenceUserConfigurable;
-+ (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable;
 
 + (BOOL)disableSidebarTranslucency;
 + (BOOL)hideMainWindowSegmentedController;
@@ -213,7 +213,7 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)joinOnDoubleclick;
 + (BOOL)leaveOnDoubleclick;
 
-+ (NSInteger)autojoinMaxChannelJoins;
++ (NSUInteger)autojoinMaximumChannelJoins;
 
 + (TXUserDoubleClickAction)userDoubleClickOption;
 
@@ -221,14 +221,11 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (TXUnsignedLongLong)inlineImagesMaxFilesize;
 
-+ (NSInteger)inlineImagesMaxWidth;
-+ (void)setInlineImagesMaxWidth:(NSInteger)value;
-
-+ (NSInteger)inlineImagesMaxHeight;
-+ (void)setInlineImagesMaxHeight:(NSInteger)value;
++ (NSUInteger)inlineImagesMaxWidth;
++ (NSUInteger)inlineImagesMaxHeight;
 
 + (BOOL)webKit2Enabled;
-+ (BOOL)webKit2ProcessPoolSizeLimited;;
++ (BOOL)webKit2ProcessPoolSizeLimited;
 
 + (NSString *)themeName;
 + (NSString *)themeNameDefault;
@@ -241,32 +238,20 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 
 + (double)mainWindowTransparency;
 
-+ (NSFont *)themeChannelViewFont;
++ (nullable NSFont *)themeChannelViewFont;
 + (NSString *)themeChannelViewFontName;
 + (NSString *)themeChannelViewFontNameDefault;
 + (double)themeChannelViewFontSize;
 
-+ (void)setThemeName:(NSString *)value;
-+ (void)setThemeNameWithExistenceCheck:(NSString *)value;
-
-+ (void)setThemeChannelViewFontName:(NSString *)value;
-+ (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value;
-
-+ (void)setThemeChannelViewFontSize:(double)value;
-
 + (BOOL)themeNicknameFormatPreferenceUserConfigurable;
-+ (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable;
-
 + (BOOL)themeTimestampFormatPreferenceUserConfigurable;
-+ (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable;
-
 + (BOOL)themeChannelViewFontPreferenceUserConfigurable;
-+ (void)setThemeChannelViewFontPreferenceUserConfigurable:(BOOL)themeChannelViewFontPreferenceUserConfigurable;
 
 + (BOOL)themeChannelViewUsesCustomScrollers;
 
-+ (NSInteger)scrollbackLimit;
-+ (void)setScrollbackLimit:(NSInteger)value;
++ (NSUInteger)scrollbackLimit;
+
++ (BOOL)soundIsMuted;
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event;
 
@@ -276,14 +261,6 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event;
 + (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event;
 
-+ (void)setSound:(NSString *)value forEvent:(TXNotificationType)event;
-
-+ (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event;
-+ (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event;
-
 + (TXTabKeyAction)tabKeyAction;
 
 + (BOOL)fileTransferRequestsAreReversed;
@@ -292,22 +269,17 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction;
 + (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod;
 
-+ (NSInteger)fileTransferPortRangeStart;
-+ (NSInteger)fileTransferPortRangeEnd;
-
-+ (void)setFileTransferPortRangeStart:(NSInteger)value;
-+ (void)setFileTransferPortRangeEnd:(NSInteger)value;
++ (uint16_t)fileTransferPortRangeStart;
++ (uint16_t)fileTransferPortRangeEnd;
 
 + (nullable NSString *)fileTransferManuallyEnteredIPAddress;
 
 + (nullable NSString *)tabCompletionSuffix;
-+ (void)setTabCompletionSuffix:(NSString *)value;
 
 + (BOOL)tabCompletionDoNotAppendWhitespace;
 + (BOOL)tabCompletionCutForwardToFirstWhitespace;
 
-+ (nullable NSDictionary<NSString *, id> *)loadWorld;
-+ (void)saveWorld:(nullable NSDictionary<NSString *, id> *)value;
++ (nullable NSArray<NSDictionary *> *)clientList;
 
 + (TXNicknameHighlightMatchType)highlightMatchingMethod;
 
@@ -319,38 +291,17 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (nullable NSArray<NSString *> *)highlightMatchKeywords;
 + (nullable NSArray<NSString *> *)highlightExcludeKeywords;
 
-+ (void)cleanUpHighlightKeywords;
-
 + (NSDictionary<NSString *, id> *)defaultPreferences;
 
-+ (void)initPreferences;
-
 + (BOOL)textFieldAutomaticSpellCheck;
-+ (void)setTextFieldAutomaticSpellCheck:(BOOL)value;
-
 + (BOOL)textFieldAutomaticGrammarCheck;
-+ (void)setTextFieldAutomaticGrammarCheck:(BOOL)value;
-
 + (BOOL)textFieldAutomaticSpellCorrection;
-+ (void)setTextFieldAutomaticSpellCorrection:(BOOL)value;
-
 + (BOOL)textFieldSmartCopyPaste;
-+ (void)setTextFieldSmartCopyPaste:(BOOL)value;
-
 + (BOOL)textFieldSmartQuotes;
-+ (void)setTextFieldSmartQuotes:(BOOL)value;
-
 + (BOOL)textFieldSmartDashes;
-+ (void)setTextFieldSmartDashes:(BOOL)value;
-
 + (BOOL)textFieldSmartLinks;
-+ (void)setTextFieldSmartLinks:(BOOL)value;
-
 + (BOOL)textFieldDataDetectors;
-+ (void)setTextFieldDataDetectors:(BOOL)value;
-
 + (BOOL)textFieldTextReplacement;
-+ (void)setTextFieldTextReplacement:(BOOL)value;
 @end
 
 NS_ASSUME_NONNULL_END

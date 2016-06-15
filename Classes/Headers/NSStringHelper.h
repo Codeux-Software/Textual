@@ -36,7 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 TEXTUAL_EXTERN NSStringEncoding const TXDefaultPrimaryStringEncoding;
 TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
@@ -44,15 +44,15 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @interface NSString (TXStringHelper)
 @property (readonly, copy) NSString *stringByAppendingIRCFormattingStop;
 
-@property (readonly, copy) NSString *channelNameToken;
-- (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client;
+@property (readonly, copy, nullable) NSString *channelNameWithoutBang; // "#channel" -> "channel", "##channel" -> "#channel"
+- (nullable NSString *)channelNameWithoutBangOn:(IRCClient *)client;
 
-@property (readonly, copy) NSString *nicknameFromHostmask;
-@property (readonly, copy) NSString *usernameFromHostmask;
-@property (readonly, copy) NSString *addressFromHostmask;
+@property (readonly, copy, nullable) NSString *nicknameFromHostmask;
+@property (readonly, copy, nullable) NSString *usernameFromHostmask;
+@property (readonly, copy, nullable) NSString *addressFromHostmask;
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor;
-- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference;
+- (nullable NSAttributedString *)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(nullable NSColor *)preferredFontColor;
+- (nullable NSAttributedString *)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(nullable NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference;
 
 @property (readonly, copy) NSString *stripIRCEffects;
 
@@ -67,23 +67,31 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 
 @property (getter=isModeChannelName, readonly) BOOL modeChannelName;
 
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address;
-- (BOOL)hostmaskComponents:(NSString **)nickname username:(NSString **)username address:(NSString **)address onClient:(IRCClient *)client;
+- (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname
+				  username:(NSString * _Nullable * _Nullable)username
+				   address:(NSString * _Nullable * _Nullable)address;
+
+- (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname
+				  username:(NSString * _Nullable * _Nullable)username
+				   address:(NSString * _Nullable * _Nullable)address
+				  onClient:(nullable IRCClient *)client;
 
 @property (getter=isNickname, readonly) BOOL nickname TEXTUAL_DEPRECATED("Use -isHostmaskNickname instead");
 
 @property (getter=isHostmaskNickname, readonly) BOOL hostmaskNickname;
-@property (getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
 @property (getter=isHostmaskAddress, readonly) BOOL hostmaskAddress;
+@property (getter=isHostmaskUsername, readonly) BOOL hostmaskUsername;
 
-- (BOOL)isHostmaskNicknameOnClient:(IRCClient *)client;
-- (BOOL)isHostmaskUsernameOnClient:(IRCClient *)client;
-- (BOOL)isHostmaskAddressOnClient:(IRCClient *)client;
+- (BOOL)isHostmaskNicknameOn:(IRCClient *)client;
+- (BOOL)isHostmaskUsernameOn:(IRCClient *)client;
+- (BOOL)isHostmaskAddressOn:(IRCClient *)client;
 
 @property (getter=isChannelName, readonly) BOOL channelName;
-- (BOOL)isChannelName:(IRCClient *)client; // Client to parse CHANTYPES from.
+- (BOOL)isChannelNameOn:(IRCClient *)client; // Client to parse CHANTYPES from
 
-@property (readonly, copy) NSString *stringWithValidURIScheme;
+@property (readonly, copy, nullable) NSString *stringWithValidURIScheme;
 
-- (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength;
+- (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength;
 @end
+
+NS_ASSUME_NONNULL_END

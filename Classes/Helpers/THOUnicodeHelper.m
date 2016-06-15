@@ -36,7 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 static NSUInteger TABLE1[] = {
 	9,
@@ -403,20 +403,20 @@ static NSUInteger OTHERS_TABLE[] = {
 
 + (BOOL)isIdeographic:(UniChar)c
 {
-	return ((0x2e80 <= c && c <= 0x9fff)
-			|| (0xa000 <= c && c <= 0xa4cf)
-			|| (0xf900 <= c && c <= 0xfaff)
-			|| (0xfe30 <= c && c <= 0xfe4f)
-			|| (0xff00 <= c && c <= 0xffef));
+	return ((0x2e80 <= c && c <= 0x9fff) ||
+			(0xa000 <= c && c <= 0xa4cf) ||
+			(0xf900 <= c && c <= 0xfaff) ||
+			(0xfe30 <= c && c <= 0xfe4f) ||
+			(0xff00 <= c && c <= 0xffef));
 }
 
 + (BOOL)isIdeographicOrPrivate:(UniChar)c
 {
-	return ((0x2e80 <= c && c <= 0x9fff)
-			|| (0xa000 <= c && c <= 0xa4cf)
-			|| (0xe000 <= c && c <= 0xfaff)
-			|| (0xfe30 <= c && c <= 0xfe4f)
-			|| (0xff00 <= c && c <= 0xffef));
+	return ((0x2e80 <= c && c <= 0x9fff) ||
+			(0xa000 <= c && c <= 0xa4cf) ||
+			(0xe000 <= c && c <= 0xfaff) ||
+			(0xfe30 <= c && c <= 0xfe4f) ||
+			(0xff00 <= c && c <= 0xffef));
 }
 
 + (BOOL)isAlphabeticalCodePoint:(NSInteger)c
@@ -424,7 +424,8 @@ static NSUInteger OTHERS_TABLE[] = {
 	NSUInteger *T = 0;
 	
 	if (c <= 0x7f) {
-		return ((0x41 <= c && c <= 0x5a) || (0x61 <= c && c <= 0x7a));
+		return ((0x41 <= c && c <= 0x5a) ||
+				(0x61 <= c && c <= 0x7a));
 	}
 	
 	if (0xaa <= c && c <= 0x2ee) {
@@ -478,3 +479,5 @@ static NSUInteger OTHERS_TABLE[] = {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

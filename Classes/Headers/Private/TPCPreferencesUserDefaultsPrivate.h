@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface IRCWorld ()
-@property (nonatomic, strong) NSMutableArray *clients;
+@interface TPCPreferencesUserDefaults ()
+- (void)setObject:(nullable id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification;
 @end
+
+NS_ASSUME_NONNULL_END

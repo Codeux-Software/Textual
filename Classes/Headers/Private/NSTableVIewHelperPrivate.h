@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,15 +35,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCResourceManager ()
-+ (void)copyResourcesToCustomAddonsFolder;
-@end
+@interface NSTableView (TXTableViewHelper)
+@property (readonly) NSInteger rowUnderMouse;
 
-@interface TPCResourceManagerDocumentTypeImporter : NSDocument <NSOpenSavePanelDelegate>
++ (NSFont *)preferredGlobalTableViewFont;
 @end
 
 NS_ASSUME_NONNULL_END

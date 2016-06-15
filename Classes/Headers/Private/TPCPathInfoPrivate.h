@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,28 +35,13 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCThemeSettings ()
-@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
-@property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
-@property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
-@property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
-@property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
-@property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
-@property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
-@property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
-@property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
-@property (nonatomic, assign, readwrite) double indentationOffset;
-@property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
-@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
-@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
+@interface TPCPathInfo (TPCPathInfoTranscriptFolderExtension)
++ (nullable NSURL *)transcriptFolderURL;
++ (void)setTranscriptFolderURL:(nullable NSData *)transcriptFolderURL;
 
-- (void)reloadWithPath:(NSString *)path;
-
-- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
++ (void)startUsingTranscriptFolderURL;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -36,7 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #define TXCalibratedRGBColor(r, g, b)		([NSColor calibratedColorWithRed:r green:g blue:b alpha:1.0])
 
@@ -140,12 +140,16 @@
 
 @end
 
+#pragma mark -
+
 @implementation NSGradient (TXGradientHelper)
 
-+ (NSGradient *)sourceListBackgroundGradientColor
++ (nullable NSGradient *)sourceListBackgroundGradientColor
 {
 	return [self gradientWithStartingColor:[NSColor colorWithCalibratedRed:0.917 green:0.929 blue:0.949 alpha:1.0]
 							   endingColor:[NSColor colorWithCalibratedRed:0.780 green:0.811 blue:0.847 alpha:1.0]];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

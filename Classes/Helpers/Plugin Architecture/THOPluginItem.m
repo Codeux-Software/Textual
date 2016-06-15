@@ -35,18 +35,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "BuildConfig.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface THOPluginItem ()
-@property (nonatomic, readwrite, strong) id primaryClass;
-@property (nonatomic, readwrite, assign) THOPluginItemSupportedFeatures supportedFeatures;
-@property (nonatomic, readwrite, copy) NSArray *supportedUserInputCommands;
-@property (nonatomic, readwrite, copy) NSArray *supportedServerInputCommands;
-@property (nonatomic, readwrite, copy) NSArray *outputSuppressionRules;
-@property (nonatomic, readwrite, strong) NSView *pluginPreferencesPaneView;
-@property (nonatomic, readwrite, copy) NSString *pluginPreferencesPaneMenuItemName;
+@property (nonatomic, strong, readwrite, nullable) NSBundle *bundle;
+@property (nonatomic, strong, readwrite, nullable) id primaryClass;
+@property (nonatomic, assign, readwrite) THOPluginItemSupportedFeatures supportedFeatures;
+@property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *supportedUserInputCommands;
+@property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *supportedServerInputCommands;
+@property (nonatomic, copy, readwrite, nullable) NSArray<THOPluginOutputSuppressionRule *> *outputSuppressionRules;
+@property (nonatomic, copy, readwrite, nullable) NSString *pluginPreferencesPaneMenuItemTitle;
+@property (nonatomic, strong, readwrite, nullable) NSView *pluginPreferencesPaneView;
 @end
 
 @implementation THOPluginItem
@@ -56,39 +55,38 @@
 
 - (BOOL)loadBundle:(NSBundle *)bundle
 {
-	/* Only load once. */
-	if (self.primaryClass != nil) {
-		NSAssert(NO, @"-loadBundle: called a THOPluginItem instance that is already loaded");
-	}
-	
-	/* Initialize the principal class. */
+	NSParameterAssert(bundle != nil);
+
+	/* Initialize the principal class */
 	Class principalClass = [bundle principalClass];
 
 	if (principalClass == nil) {
 		return NO;
 	}
 
-	self.primaryClass = [principalClass new];
+	id <THOPluginProtocol> primaryClass = [[principalClass alloc] init];
 
-	if ([self.primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)]) {
-		[self.primaryClass pluginLoadedIntoMemory];
+	if ([primaryClass respondsToSelector:@selector(pluginLoadedIntoMemory)]) {
+		[primaryClass pluginLoadedIntoMemory];
 	}
 
-	/* Build list of supported features. */
+	/* Build list of supported features */
 	THOPluginItemSupportedFeatures supportedFeatures = 0;
 
-	/* Process server output suppression rules. */
-	if ([self.primaryClass respondsToSelector:@selector(pluginOutputSuppressionRules)])
+	/* Process server output suppression rules */
+	if ([primaryClass respondsToSelector:@selector(pluginOutputSuppressionRules)])
 	{
-		id outputRules = [self.primaryClass pluginOutputSuppressionRules];
+		id outputRules = primaryClass.pluginOutputSuppressionRules;
 
 		if (VTAE(outputRules, NSArray)) {
 			NSMutableArray *sharedRules = [NSMutableArray array];
 
 			for (id outputRule in outputRules) {
-				if (VOCT(outputRule, THOPluginOutputSuppressionRule)) {
-					[sharedRules addObject:outputRule];
+				if (VOCT(outputRule, THOPluginOutputSuppressionRule) == NO) {
+					continue;
 				}
+
+				[sharedRules addObject:outputRule];
 			}
 
 			self.outputSuppressionRules = sharedRules;
@@ -98,33 +96,35 @@
 	}
 
 	/* Does the bundle have a preference pane?... */
-	if ([self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
-		[self.primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)])
+	if ([primaryClass respondsToSelector:@selector(pluginPreferencesPaneMenuItemName)] &&
+		[primaryClass respondsToSelector:@selector(pluginPreferencesPaneView)])
 	{
-		id itemView = [self.primaryClass pluginPreferencesPaneView];
-		id itemName = [self.primaryClass pluginPreferencesPaneMenuItemName];
+		id itemTitle = primaryClass.pluginPreferencesPaneMenuItemName;
+		id itemView = primaryClass.pluginPreferencesPaneView;
 
-		if (VTAE(itemName, NSString) && VOCT(itemView, NSView)) {
+		if (VTAE(itemTitle, NSString) && VOCT(itemView, NSView)) {
+			self.pluginPreferencesPaneMenuItemTitle = itemTitle;
 			self.pluginPreferencesPaneView = itemView;
-			self.pluginPreferencesPaneMenuItemName = itemName;
 
 			supportedFeatures |= THOPluginItemSupportsPreferencePane;
 		}
 	}
 
-	/* Process user input commands. */
-	if ([self.primaryClass respondsToSelector:@selector(subscribedUserInputCommands)] &&
-		[self.primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)])
+	/* Process user input commands */
+	if ([primaryClass respondsToSelector:@selector(subscribedUserInputCommands)] &&
+		[primaryClass respondsToSelector:@selector(userInputCommandInvokedOnClient:commandString:messageString:)])
 	{
-		id subscribedCommands = [self.primaryClass subscribedUserInputCommands];
-		
+		id subscribedCommands = primaryClass.subscribedUserInputCommands;
+
 		if (VTAE(subscribedCommands, NSArray)) {
 			NSMutableArray *supportedCommands = [NSMutableArray array];
 
 			for (id command in subscribedCommands) {
-				if (VTAE(command, NSString))  {
-					[supportedCommands addObject:[command lowercaseString]];
+				if (VTAE(command, NSString) == NO)  {
+					continue;
 				}
+
+				[supportedCommands addObject:[command lowercaseString]];
 			}
 
 			self.supportedUserInputCommands = supportedCommands;
@@ -133,20 +133,22 @@
 		}
 	}
 
-	/* Process server input commands. */
-	if ( [self.primaryClass respondsToSelector:@selector(subscribedServerInputCommands)] &&
-		([self.primaryClass respondsToSelector:@selector(didReceiveServerInput:onClient:)] ||
-		 [self.primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]))
+	/* Process server input commands */
+	if ( [primaryClass respondsToSelector:@selector(subscribedServerInputCommands)] &&
+		([primaryClass respondsToSelector:@selector(didReceiveServerInput:onClient:)] ||
+		 [primaryClass respondsToSelector:@selector(didReceiveServerInputOnClient:senderInformation:messageInformation:)]))
 	{
-		id subscribedCommands = [self.primaryClass subscribedServerInputCommands];
+		id subscribedCommands = primaryClass.subscribedServerInputCommands;
 
 		if (VTAE(subscribedCommands, NSArray)) {
 			NSMutableArray *supportedCommands = [NSMutableArray array];
 
 			for (id command in subscribedCommands) {
-				if (VTAE(command, NSString))  {
-					[supportedCommands addObject:[command lowercaseString]];
+				if (VTAE(command, NSString) == NO)  {
+					continue;
 				}
+
+				[supportedCommands addObject:[command lowercaseString]];
 			}
 
 			self.supportedServerInputCommands = supportedCommands;
@@ -156,65 +158,75 @@
 	}
 	
 	/* Check whether plugin supports certain evnets so we do not have
-	 to ask if it responds to the responder everytime we call it. */
+	 to ask if it responds to the selector every time we call it. */
 
-	/* Renderer events. */
-	if ([self.primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)] ||
-		[self.primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
+	/* Renderer events */
+	if ([primaryClass respondsToSelector:@selector(didPostNewMessage:forViewController:)] ||
+		[primaryClass respondsToSelector:@selector(didPostNewMessageForViewController:messageInfo:isThemeReload:isHistoryReload:)])
 	{
 		supportedFeatures |= THOPluginItemSupportsNewMessagePostedEvent;
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
+	if ([primaryClass respondsToSelector:@selector(willRenderMessage:forViewController:lineType:memberType:)]) {
 		supportedFeatures |= THOPluginItemSupportsWillRenderMessageEvent;
 	}
 
-	if ([self.primaryClass respondsToSelector:@selector(didReceiveJavaScriptPayload:fromViewController:)]) {
+	if ([primaryClass respondsToSelector:@selector(didReceiveJavaScriptPayload:fromViewController:)]) {
 		supportedFeatures |= THOPluginItemSupportsWebViewJavaScriptPayloads;
 	}
 	
-	/* Inline media. */
-	if ([self.primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
+	/* Inline media */
+	if ([primaryClass respondsToSelector:@selector(processInlineMediaContentURL:)]) {
 		supportedFeatures |= THOPluginItemSupportsInlineMediaManipulation;
 	}
 	
-	/* Data interception. */
-	if ([self.primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
+	/* Data interception */
+	if ([primaryClass respondsToSelector:@selector(interceptServerInput:for:)]) {
 		supportedFeatures |= THOPluginItemSupportsServerInputDataInterception;
 	}
 	
-	if ([self.primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
+	if ([primaryClass respondsToSelector:@selector(interceptUserInput:command:)]) {
 		supportedFeatures |= THOPluginItemSupportsUserInputDataInterception;
 	}
 
-	if ([self.primaryClass respondsToSelector:@selector(receivedText:authoredBy:destinedFor:asLineType:onClient:receivedAt:wasEncrypted:)]) {
+	if ([primaryClass respondsToSelector:@selector(receivedText:authoredBy:destinedFor:asLineType:onClient:receivedAt:wasEncrypted:)]) {
 		supportedFeatures |= THOPluginItemSupportsDidReceivePlainTextMessageEvent;
 	}
 
-	if ([self.primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:)] ) {
+	if ([primaryClass respondsToSelector:@selector(receivedCommand:withText:authoredBy:destinedFor:onClient:receivedAt:)] ) {
 		supportedFeatures |= THOPluginItemSupportsDidReceiveCommandEvent;
 	}
 
 	/* Finish up */
+	self.bundle = bundle;
+
 	self.supportedFeatures = supportedFeatures;
+
+	self.primaryClass = primaryClass;
 	
 	return YES;
 }
 
-- (void)sendDealloc
+- (void)unloadBundle
 {
 	if (self.primaryClass == nil) {
-		return; // Send to where... ?
+		return;
 	}
 
 	if ([self.primaryClass respondsToSelector:@selector(pluginWillBeUnloadedFromMemory)]) {
 		[self.primaryClass pluginWillBeUnloadedFromMemory];
 	}
+
+	self.primaryClass = nil;
+
+	self.bundle = nil;
 }
 
 - (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature
 {
-	return ((_supportedFeatures & feature) == feature);
+	return ((self->_supportedFeatures & feature) == feature);
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

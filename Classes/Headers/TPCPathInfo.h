@@ -40,47 +40,41 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TPCPathInfo : NSObject
-+ (nullable NSURL *)logFileFolderLocation;
-+ (void)setLogFileFolderLocation:(id)value;
-
-+ (void)startUsingLogLocationSecurityScopedBookmark;
-
 + (NSString *)applicationBundlePath;
-+ (NSString *)applicationTemporaryFolderPath;
 + (nullable NSString *)applicationCachesFolderPath;
++ (nullable NSString *)applicationGroupContainerPath;
 + (nullable NSString *)applicationLogsFolderPath;
 + (NSString *)applicationResourcesFolderPath;
-+ (nullable NSString *)applicationGroupContainerPath;
++ (NSString *)applicationTemporaryFolderPath;
 
-+ (nullable NSString *)applicationSupportFolderPath TEXTUAL_DEPRECATED("Use -applicationGroupContainerApplicationSupportPath; instead");
-+ (nullable NSString *)applicationGroupContainerApplicationSupportPath;
-+ (nullable NSString *)applicationLocalContainerApplicationSupportPath;
++ (nullable NSString *)applicationSupportFolderPathInGroupContainer;
++ (nullable NSString *)applicationSupportFolderPathInLocalContainer;
 
-+ (NSString *)localUserDiagnosticReportsFolderPath;
 + (NSString *)systemDiagnosticReportsFolderPath;
++ (NSString *)userDiagnosticReportsFolderPath;
 
-+ (NSString *)customExtensionFolderPath;
-+ (NSString *)customThemeFolderPath;
++ (nullable NSString *)customExtensionFolderPath;
++ (nullable NSString *)customScriptsFolderPath;
++ (nullable NSString *)customScriptsFolderPathLeading;
++ (nullable NSString *)customThemeFolderPath;
 
-+ (NSString *)bundledThemeFolderPath;
 + (NSString *)bundledExtensionFolderPath;
 + (NSString *)bundledScriptFolderPath;
++ (NSString *)bundledThemeFolderPath;
 
-+ (nullable NSString *)systemUnsupervisedScriptFolderPath; // Textual's folder.
-+ (nullable NSString *)systemUnsupervisedScriptFolderRootPath; // Root path.
-
-+ (NSString *)userHomeDirectoryPathOutsideSandbox;
-+ (nullable NSString *)userDownloadFolderPath;
++ (nullable NSString *)userDownloadsFolderPath;
++ (NSString *)userHomeFolderPath;
 + (nullable NSString *)userPreferencesFolderPath;
+@end
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+@interface TPCPathInfo (TPCPathInfoCloudExtension)
 + (nullable NSString *)applicationUbiquitousContainerPath;
++ (void)openApplicationUbiquitousContainerPath;
 
 + (nullable NSString *)cloudCustomThemeFolderPath;
-
-+ (void)openApplicationUbiquitousContainer;
-+ (void)openCloudCustomThemeFolder;
-#endif
++ (void)openCloudCustomThemeFolderPath;
 @end
+#endif
 
 NS_ASSUME_NONNULL_END

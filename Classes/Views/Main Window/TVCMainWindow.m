@@ -89,7 +89,7 @@
 
 		[self addAccessoryViewsToTitlebar];
 		
-		[themeController() load];
+		[themeController() prepareInitialState];
 		
 		[menuController() setupOtherServices];
 		
@@ -647,7 +647,7 @@
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 	
-	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
 		[self completeNickname:YES];
 	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
 		[self navigateChannelEntries:YES withNavigationType:TVCServerListNavigationMovementUnreadType];
@@ -658,7 +658,7 @@
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
 	
-	if (tabKeyAction == TXTabKeyNickCompleteAction) {
+	if (tabKeyAction == TXTabKeyNicknameCompleteAction) {
 		[self completeNickname:NO];
 	} else if (tabKeyAction == TXTabKeyUnreadChannelAction) {
 		[self navigateChannelEntries:NO withNavigationType:TVCServerListNavigationMovementUnreadType];
@@ -911,7 +911,7 @@
 - (void)inputText:(id)str command:(NSString *)command
 {
 	if (self.selectedItem) {
-		str = [sharedPluginManager() processInterceptedUserInput:str command:command];
+		str = [THOPluginDispatcher interceptUserInput:str command:command];
 	
 		[self.selectedClient inputText:str command:command];
 	}
@@ -1389,7 +1389,7 @@
 	/* This method returns YES (success) if the loading screen is dismissed
 	 when called. NO indicates an error that resulted in it staying on screen. */
 
-	if ([worldController() isPopulatingSeeds] == NO) {
+	if ([worldController() isImportingConfiguration] == NO) {
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 		if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {

@@ -35,41 +35,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/* Copy operation class is responsible for copying the active theme to a different
- location when a user requests a local copy of the theme. */
-@interface TPCThemeControllerCopyOperation : NSObject
-@property (nonatomic, copy) NSString *themeName; // Name without source prefix
-@property (nonatomic, copy) NSString *pathBeingCopiedTo;
-@property (nonatomic, copy) NSString *pathBeingCopiedFrom;
-@property (nonatomic, assign) TPCThemeControllerStorageLocation destinationLocation;
-@property (nonatomic, assign) BOOL reloadThemeWhenCopied; // If YES, setThemeName: is called when copy completes. Otherwise, files are copied and nothing happens.
-@property (nonatomic, assign) BOOL openThemeWhenCopied;
-@property (nonatomic, strong) TDCProgressInformationSheet *progressIndicator;
-
-- (void)beginOperation;
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+@interface TPCPreferencesUserDefaults (TPCPreferencesUserDefaultsMigrate)
++ (void)migrateKeyValuesAwayFromGroupContainer;
 @end
-
-/* Private header for theme controller that a plugin does not need access to. */
-@interface TPCThemeController ()
-@property (nonatomic, copy) NSString *cachedThemeName;
-@property (nonatomic, copy, readwrite) NSURL *baseURL;
-@property (nonatomic, strong, readwrite) TPCThemeSettings *customSettings;
-@property (nonatomic, assign, readwrite) TPCThemeControllerStorageLocation storageLocation;
-@property (nonatomic, assign) FSEventStreamRef eventStreamRef;
-@property (nonatomic, strong) TPCThemeControllerCopyOperation *currentCopyOperation;
-
-- (void)load; // Calling this more than once will throw an exception
-- (void)reload;
-
-- (void)reloadMonitoringActiveThemePath;
-
-- (void)prepareForApplicationTermination;
-
-- (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openNewPathOnCopy:(BOOL)openNewPathOnCopy;
-@end
+#endif
 
 NS_ASSUME_NONNULL_END

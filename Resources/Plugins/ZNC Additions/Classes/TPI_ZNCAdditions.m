@@ -150,7 +150,7 @@
 		
 		IRCChannel *matchedChannel = nil;
 		
-		if ([messageString isChannelName:client]) {
+		if ([messageString isChannelNameOn:client]) {
 			matchedChannel = [client findChannel:messageString];
 		} else {
 			matchedChannel = [mainWindow() selectedChannel];

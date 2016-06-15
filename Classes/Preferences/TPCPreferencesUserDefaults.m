@@ -35,12 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TPCPreferencesUserDefaultsPrivate.h"
-
-#import "BuildConfig.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferencesUserDefaultsDidChangeNotification";
@@ -57,7 +51,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		sharedSelf = [[super allocWithZone:NULL] protectedInit];
+		sharedSelf = [[super allocWithZone:NULL] _t_init];
 	});
 
 	return sharedSelf;
@@ -73,7 +67,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return [TPCPreferencesUserDefaults sharedUserDefaults];
 }
 
-- (instancetype)protectedInit
+- (instancetype)_t_init
 {
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
@@ -111,14 +105,18 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 - (void)setObject:(nullable id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification
 {
-	PointerIsEmptyAssert(defaultName)
+	NSParameterAssert(defaultName != nil);
+
+	id oldValue = [self objectForKey:defaultName];
+
+	if (oldValue && NSObjectsAreEqual(value, oldValue)) {
+		return;
+	}
 
 	[self willChangeValueForKey:defaultName];
 
 	if (value == nil) {
-		if ([self objectForKey:defaultName] == nil) {
-			;
-		} else {
+		if (oldValue) {
 			[super setObject:nil forKey:defaultName];
 		}
 	} else {
@@ -128,11 +126,48 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	[self didChangeValueForKey:defaultName];
 
 	if (postNotification) {
-		[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification object:self userInfo:@{@"changedKey" : defaultName}];
+		[RZNotificationCenter() postNotificationName:TPCPreferencesUserDefaultsDidChangeNotification
+											  object:self
+											userInfo:@{@"changedKey" : defaultName}];
 	}
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setUnsignedInteger:(NSUInteger)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setShort:(short)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setUnsignedShort:(unsigned short)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setLong:(long)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setUnsignedLong:(unsigned long)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setLongLong:(long long)value forKey:(NSString *)defaultName
+{
+	[self setObject:@(value) forKey:defaultName];
+}
+
+- (void)setUnsignedLongLong:(unsigned long long)value forKey:(NSString *)defaultName
 {
 	[self setObject:@(value) forKey:defaultName];
 }
@@ -152,33 +187,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	[self setObject:@(value) forKey:defaultName];
 }
 
-- (void)setURL:(nullable NSURL *)url forKey:(NSString *)defaultName
+- (void)setURL:(nullable NSURL *)value forKey:(NSString *)defaultName
 {
-	[self setObject:url forKey:defaultName];
-}
-
-- (void)setColor:(nullable NSColor *)color forKey:(NSString *)defaultName
-{
-	PointerIsEmptyAssert(defaultName)
-
-	if (color) {
-		[self setObject:[NSArchiver archivedDataWithRootObject:color] forKey:defaultName];
-	} else {
-		[self setObject:nil forKey:defaultName];
-	}
-}
-
-- (nullable NSColor *)colorForKey:(NSString *)defaultName
-{
-	PointerIsEmptyAssertReturn(defaultName, nil)
-
-	id objectValue = [self objectForKey:defaultName];
-
-	if (objectValue == nil) {
-		return nil;
-	}
-
-	return [NSUnarchiver unarchiveObjectWithData:objectValue];
+	[self setObject:value forKey:defaultName];
 }
 
 - (void)removeObjectForKey:(NSString *)defaultName
@@ -188,45 +199,43 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 
 + (BOOL)keyIsExcludedFromBeingExported:(NSString *)key
 {
-	PointerIsEmptyAssertReturn(key, NO)
+	NSParameterAssert(key != nil);
 
-	/* Find cached list of excluded keys or build from disk. */
-	NSDictionary<NSString *, NSString *> *cachedValues =
-	[[masterController() sharedApplicationCacheObject] objectForKey:
-	@"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
+	static NSDictionary<NSString *, NSString *> *cachedValues = nil;
 
-	if (cachedValues == nil) {
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
 		NSDictionary *staticValues =
 		[TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
 		cachedValues =
 		[staticValues dictionaryForKey:@"TPCPreferencesUserDefaults Keys Excluded from Export"];
+	});
 
-		[[masterController() sharedApplicationCacheObject] setObject:cachedValues forKey:
-		 @"TPCPreferencesUserDefaults -> TPCPreferencesUserDefaults Keys Excluded from Export"];
-	}
+	__block BOOL returnValue = NO;
 
-	/* Using cached list of excluded keys, perform comparison on each. */
-	for (NSString *blockedName in cachedValues) {
-		NSString *comparisonOperator = cachedValues[blockedName];
-
-		if ([comparisonOperator isEqualToString:@"="]) {
-			if ([key isEqualToString:blockedName]) {
-				return YES;
+	[cachedValues enumerateKeysAndObjectsUsingBlock:^(NSString *cachedKey, NSString *cachedObject, BOOL *stop) {
+		if ([cachedObject isEqualToString:@"="]) {
+			if ([key isEqualToString:cachedKey] == NO) {
+				return;
 			}
-		} else if ([comparisonOperator isEqualToString:@"PREFIX"]) {
-			if ([key hasPrefix:blockedName]) {
-				return YES;
+		} else if ([cachedObject isEqualToString:@"PREFIX"]) {
+			if ([key hasPrefix:cachedKey] == NO) {
+				return;
 			}
-		} else if ([comparisonOperator isEqualToString:@"SUFFIX"]) {
-			if ([key hasSuffix:blockedName]) {
-				return YES;
+		} else if ([cachedObject isEqualToString:@"SUFFIX"]) {
+			if ([key hasSuffix:cachedKey] == NO) {
+				return;
 			}
 		}
-	}
 
-	/* Default to the key not being excluded. */
-	return NO;
+		*stop = YES;
+			
+		returnValue = YES;
+	}];
+
+	return returnValue;
 }
 
 @end
@@ -243,7 +252,9 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		 sharedSelf = [[super allocWithZone:NULL] protectedInitWithDefaults:[TPCPreferencesUserDefaults sharedUserDefaults] initialValues:nil];
+		TPCPreferencesUserDefaults *defaults = [TPCPreferencesUserDefaults sharedUserDefaults];
+
+		 sharedSelf = [[super allocWithZone:NULL] _t_initWithDefaults:defaults initialValues:nil];
 
 		[sharedSelf setAppliesImmediately:YES];
 	});
@@ -251,7 +262,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return sharedSelf;
 }
 
-- (instancetype)protectedInitWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *,id> *)initialValues
+- (instancetype)_t_initWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *, id> *)initialValues
 {
 	return [super initWithDefaults:defaults initialValues:initialValues];
 }
@@ -278,7 +289,7 @@ NSString * const TPCPreferencesUserDefaultsDidChangeNotification = @"TPCPreferen
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }
 
-- (instancetype)initWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *,id> *)initialValues
+- (instancetype)initWithDefaults:(nullable NSUserDefaults *)defaults initialValues:(nullable NSDictionary<NSString *, id> *)initialValues
 {
 	return [TPCPreferencesUserDefaultsController sharedUserDefaultsController];
 }

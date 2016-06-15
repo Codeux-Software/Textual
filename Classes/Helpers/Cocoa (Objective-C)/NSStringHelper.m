@@ -36,69 +36,40 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define _useStrictHostmaskUsernameTypeChecking		0
-
-NSStringEncoding const TXDefaultPrimaryStringEncoding		= NSUTF8StringEncoding;
-NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncoding;
+NSStringEncoding const TXDefaultPrimaryStringEncoding = NSUTF8StringEncoding;
+NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncoding;
 
 @implementation NSString (TXStringHelper)
 
 - (BOOL)isValidInternetAddress
 {
-	if (NSObjectIsEmpty(self)) {
+	if (self.length == 0) {
 		return NO;
 	}
 
-	if (NSObjectsAreEqual(self, @"localhost")) {
+	if (self.isIPAddress || NSObjectsAreEqual(self, @"localhost")) {
 		return YES;
 	}
 
-	if ([self isIPAddress]) {
-		return YES;
-	}
-
-	BOOL performExtendedValidation = [RZUserDefaults() boolForKey:@"-[NSString isValidInternetAddress] Performs Extended Validation"];
-
-	if (performExtendedValidation) {
-		static NSCharacterSet *_validationCharacterSet = nil;
-
-		if (_validationCharacterSet == nil) {
-			NSMutableCharacterSet *alphaNumericCharacterSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
-
-			[alphaNumericCharacterSet addCharactersInString:@".-"];
-
-			[alphaNumericCharacterSet invert];
-
-			_validationCharacterSet = [alphaNumericCharacterSet copy];
-		}
-
-		if ([self onlyContainsCharactersFromCharacterSet:_validationCharacterSet] == NO) {
-			return NO;
-		}
-	}
-
-	return YES;
+	return [self onlyContainsCharacters:
+		@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-"];
 }
 
 - (BOOL)isValidInternetPort
 {
-	if (NSObjectIsEmpty(self)) {
+	if (self.length == 0) {
 		return NO;
 	}
 
-	if ([self isNumericOnly] == NO) {
+	if (self.isNumericOnly == NO) {
 		return NO;
 	}
 
-	NSInteger selfInt = [self integerValue];
+	NSInteger selfInt = self.integerValue;
 
-	if (selfInt > 1 && selfInt <= TXMaximumTCPPort) {
-		return YES;
-	} else {
-		return NO;
-	}
+	return (selfInt > 1 && selfInt <= TXMaximumTCPPort);
 }
 
 - (NSString *)stringByAppendingIRCFormattingStop
@@ -106,48 +77,50 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return [self stringByAppendingFormat:@"%C", IRCTextFormatterTerminatingCharacter];
 }
 
-- (BOOL)hostmaskComponents:(NSString *__autoreleasing *)nickname username:(NSString *__autoreleasing *)username address:(NSString *__autoreleasing *)address
+- (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname username:(NSString * _Nullable * _Nullable)username address:(NSString * _Nullable * _Nullable)address
 {
 	return [self hostmaskComponents:nickname username:username address:address onClient:nil];
 }
 
-- (BOOL)hostmaskComponents:(NSString *__autoreleasing *)nickname username:(NSString *__autoreleasing *)username address:(NSString *__autoreleasing *)address onClient:(IRCClient *)client
+- (BOOL)hostmaskComponents:(NSString * _Nullable * _Nullable)nickname username:(NSString * _Nullable * _Nullable)username address:(NSString * _Nullable * _Nullable)address onClient:(nullable IRCClient *)client
 {
-	/* Gather basic information. */
-
-	/* Find first ! starting from left side of string. */
+	/* Find first ! starting from left side of string */
 	NSRange bang1pos = [self rangeOfString:@"!" options:0];
 
-	/* Find first @ starting from the right side of string. */
+	/* Find first @ starting from the right side of string */
 	NSRange bang2pos = [self rangeOfString:@"@" options:NSBackwardsSearch];
 
-	NSAssertReturnR((bang1pos.location != NSNotFound), NO);
-	NSAssertReturnR((bang2pos.location != NSNotFound), NO);
-	NSAssertReturnR((bang2pos.location > bang1pos.location), NO);
+	if ((bang1pos.location == NSNotFound) ||
+		(bang2pos.location == NSNotFound) ||
+		(bang2pos.location <= bang1pos.location))
+	{
+		return NO;
+	}
 
-	/* Bind sections of the host. */
 	NSString *nicknameInt = [self substringToIndex:bang1pos.location];
 
-	NSString *usernameInt = [self substringWithRange:NSMakeRange((bang1pos.location + 1),
-																 (bang2pos.location - (bang1pos.location + 1)))];
+	NSString *usernameInt = [self substringWithRange:
+							 NSMakeRange((bang1pos.location + 1),
+										 (bang2pos.location - (bang1pos.location + 1)))];
 
 	NSString *addressInt = [self substringAfterIndex:bang2pos.location];
-	
-	/* Perform basic validation. */
-	NSAssertReturnR([nicknameInt isHostmaskNicknameOnClient:client], NO);
-	NSAssertReturnR([usernameInt isHostmaskUsernameOnClient:client], NO);
-	NSAssertReturnR([nicknameInt isHostmaskAddressOnClient:client], NO);
 
-	/* The host checks out so far, so define the output. */
-	if (NSDissimilarObjects(nickname, NULL)) {
+	if ([nicknameInt isHostmaskNicknameOn:client] == NO ||
+		[usernameInt isHostmaskUsernameOn:client] == NO ||
+		[addressInt isHostmaskAddressOn:client] == NO)
+	{
+		return NO;
+	}
+
+	if ( nickname) {
 		*nickname = nicknameInt;
 	}
 
-	if (NSDissimilarObjects(username, NULL)) {
+	if ( username) {
 		*username = usernameInt;
 	}
 
-	if (NSDissimilarObjects(address, NULL)) {
+	if ( address) {
 		*address = addressInt;
 	}
 
@@ -161,69 +134,38 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isHostmaskAddress
 {
-	return [self isHostmaskAddressOnClient:nil];
+	return [self isHostmaskAddressOn:nil];
 }
 
-- (BOOL)isHostmaskAddressOnClient:(IRCClient *)client
+- (BOOL)isHostmaskAddressOn:(IRCClient *)client
 {
-#pragma unused(client)
-
-	return ([self length] > 0 && [self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
+	return (self.length > 0 &&
+			[self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
 - (BOOL)isHostmaskUsername
 {
-	return [self isHostmaskUsernameOnClient:nil];
+	return [self isHostmaskUsernameOn:nil];
 }
 
-- (BOOL)isHostmaskUsernameOnClient:(IRCClient *)client
+- (BOOL)isHostmaskUsernameOn:(IRCClient *)client
 {
-#pragma unused(client)
-
-#if _useStrictHostmaskUsernameTypeChecking == 1
-	NSString *bob = self;
-
-	if ([bob hasPrefix:@"~"]) {
-		bob = [bob substringFromIndex:1];
-	}
-
-	static NSCharacterSet *_badChars = nil;
-
-	if (_badChars == nil) {
-		NSMutableCharacterSet *characters = [NSMutableCharacterSet characterSetWithRange:NSMakeRange(1, 127)];
-
-		[characters removeCharactersInRange:NSMakeRange(32, 1)]; // Remove SPACE
-		[characters removeCharactersInRange:NSMakeRange(13, 1)]; // Remove CR
-		[characters removeCharactersInRange:NSMakeRange(10, 1)]; // Remove LF
-		
-		[characters invert];
-
-		_badChars = [characters copy];
-	}
-
-	NSRange rr = [bob rangeOfCharacterFromSet:_badChars];
-
-	if (NSDissimilarObjects(rr.location, NSNotFound)) {
-		return NO;
-	}
-#else
-	return ([self length] > 0 &&
-			[self length] <= TXMaximumIRCUsernameLength &&
+	return (self.length > 0 &&
+			self.length <= TXMaximumIRCUsernameLength &&
 			[self containsCharacters:@"\x000\x020\x00d\x00a"] == NO);
-#endif
 }
 
 - (BOOL)isHostmaskNickname
 {
-	return [self isHostmaskNicknameOnClient:nil];
+	return [self isHostmaskNicknameOn:nil];
 }
 
-- (BOOL)isHostmaskNicknameOnClient:(IRCClient *)client
+- (BOOL)isHostmaskNicknameOn:(IRCClient *)client
 {
 	NSUInteger maximumLength = TXMaximumIRCNicknameLength;
 
 	if (client) {
-		maximumLength = [[client supportInfo] nicknameLength];
+		maximumLength = client.supportInfo.nicknameLength;
 	}
 
 	if (maximumLength == 0) {
@@ -231,44 +173,46 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	}
 
 	return ([self isNotEqualTo:@"*"] &&
-			[self length] > 0 &&
-			[self length] <= maximumLength &&
+			self.length > 0 &&
+			self.length <= maximumLength &&
 			[self containsCharacters:@"\x021\x040\x000\x020\x00d\x00a"] == NO);
 }
 
 - (BOOL)isNickname
 {
-	return [self isHostmaskNickname];
+	return self.isHostmaskNickname;
 }
 
-- (BOOL)isChannelName:(IRCClient *)client
+- (BOOL)isChannelNameOn:(IRCClient *)client
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
-	
-	if (client == nil) {
-		return [self isChannelName];
+	NSParameterAssert(client != nil);
+
+	if (self.length == 0) {
+		return NO;
 	}
 
-	NSString *validChars = [[client supportInfo] channelNamePrefixes];
+	NSString *namePrefixes = client.supportInfo.channelNamePrefixes;
 
-	if ([self length] == 1) {
-		NSString *c = [self stringCharacterAtIndex:0];
+	if (self.length == 1) {
+		NSString *character = [self stringCharacterAtIndex:0];
 
-		return [c onlyContainsCharacters:validChars];
-	} else {
-		NSString *c1 = [self stringCharacterAtIndex:0];
-		NSString *c2 = [self stringCharacterAtIndex:1];
+		return [namePrefixes contains:character];
+	}
+
+	NSString *character1 = [self stringCharacterAtIndex:0];
+	NSString *character2 = [self stringCharacterAtIndex:1];
 		
-		/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
-		BOOL isPartyline = ([c1 isEqualToString:@"~"] && [c2 isEqualToString:@"#"]);
+	/* The ~ prefix is considered special. It is used by the ZNC partyline plugin. */
+	BOOL isPartyline = ([character1 isEqualToString:@"~"] && [character2 isEqualToString:@"#"]);
 
-		return ([c1 onlyContainsCharacters:validChars] || isPartyline);
-	}
+	return (isPartyline || [namePrefixes contains:character1]);
 }
 
 - (BOOL)isChannelName
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
+	if (self.length == 0) {
+		return NO;
+	}
 
 	UniChar c = [self characterAtIndex:0];
 
@@ -282,7 +226,9 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 
 - (BOOL)isModeChannelName
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
+	if (self.length == 0) {
+		return NO;
+	}
 
 	UniChar c = [self characterAtIndex:0];
 
@@ -293,47 +239,50 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 		    c == '?');
 }
 
-- (NSString *)channelNameToken
+- (nullable NSString *)channelNameWithoutBang
 {
-	/* Remove any prefix from in front of channel (e.g. #) or return
-	 an untouched copy of the string if there is none. */
+	if (self.isChannelName == NO) {
+		return self;
+	}
 
-	if ([self isChannelName] && [self length] > 1) {
+	return [self substringFromIndex:1];
+}
+
+- (nullable NSString *)channelNameWithoutBangOn:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	if ([self isChannelNameOn:client] == NO) {
+		return self;
+	}
+
+	if (self.length < 2) { // Do not turn "#" into empty string
+		return self;
+	}
+
+	NSString *namePrefixes = client.supportInfo.channelNamePrefixes;
+
+	NSString *character = [self stringCharacterAtIndex:0];
+
+	if ([namePrefixes contains:character]) {
 		return [self substringFromIndex:1];
 	}
 
 	return self;
 }
 
-- (NSString *)channelNameTokenByTrimmingAllPrefixes:(IRCClient *)client
-{
-	NSObjectIsEmptyAssertReturn(self, nil);
-	
-	if (client == nil) {
-		return [self channelNameToken];
-	}
-	
-	NSString *prefixes = [[client supportInfo] channelNamePrefixes];
-	
-	NSCharacterSet *validChars = [NSCharacterSet characterSetWithCharactersInString:prefixes];
-	
-	return [self stringByTrimmingCharactersInSet:validChars];
-}
-
-- (NSString *)nicknameFromHostmask
+- (nullable NSString *)nicknameFromHostmask
 {
 	NSString *nickname = nil;
 
 	if ([self hostmaskComponents:&nickname username:nil address:nil]) {
 		return nickname;
-	} else {
-		return self;
 	}
 
-	return nil;
+	return self;
 }
 
-- (NSString *)usernameFromHostmask
+- (nullable NSString *)usernameFromHostmask
 {
 	NSString *username = nil;
 
@@ -344,7 +293,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return nil;
 }
 
-- (NSString *)addressFromHostmask
+- (nullable NSString *)addressFromHostmask
 {
 	NSString *address = nil;
 
@@ -355,17 +304,17 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return nil;
 }
 
-- (NSString *)stringWithValidURIScheme
+- (nullable NSString *)stringWithValidURIScheme
 {
 	return [AHHyperlinkScanner URLWithProperScheme:self];
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference
+- (nullable NSAttributedString *)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(nullable NSColor *)preferredFontColor honorFormattingPreference:(BOOL)formattingPreference
 {
-	if (formattingPreference) {
-		if ([TPCPreferences removeAllFormatting]) {
-			return [self stripIRCEffects];
-		}
+	if (formattingPreference && [TPCPreferences removeAllFormatting]) {
+		NSString *string = self.stripIRCEffects;
+
+		return [NSAttributedString attributedStringWithString:string];
 	}
 
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
@@ -381,158 +330,130 @@ NSStringEncoding const TXDefaultFallbackStringEncoding		= NSISOLatin1StringEncod
 	return [TVCLogRenderer renderBodyIntoAttributedString:self withAttributes:attributes];
 }
 
-- (id)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(NSColor *)preferredFontColor
+- (nullable NSAttributedString *)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(nullable NSColor *)preferredFontColor
 {
 	return [self attributedStringWithIRCFormatting:preferredFont preferredFontColor:preferredFontColor honorFormattingPreference:NO];
 }
 
 - (NSString *)stripIRCEffects
 {
-	NSObjectIsEmptyAssertReturn(self, nil);
+	NSUInteger stringLength = self.length;
 
-	NSInteger pos = 0;
-	NSInteger len = [self length];
-	
-	NSInteger buflen = (len * sizeof(UniChar));
-	
-	UniChar *src = alloca(buflen);
-	UniChar *buf = alloca(buflen);
-	
-	[self getCharacters:src range:NSMakeRange(0, len)];
-	
-	for (NSInteger i = 0; i < len; ++i) {
-		unichar c = src[i];
-		
-		if (c < 0x20) {
-			switch (c) {
-				case IRCTextFormatterBoldEffectCharacter:
-				case 0x16: // Old character used for italic text
-				case IRCTextFormatterItalicEffectCharacter:
-				case IRCTextFormatterStrikethroughEffectCharacter:
-				case IRCTextFormatterUnderlineEffectCharacter:
-				case IRCTextFormatterTerminatingCharacter:
-				{
-					break;
-				}
-				case IRCTextFormatterColorEffectCharacter:
-				{
-					if ((i + 1) >= len) {
-						continue;
-					}
+	if (stringLength == 0) {
+		return self;
+	}
 
-					UniChar d = src[(i + 1)];
-					
-					if (CS_StringIsBase10Numeric(d) == NO) {
-						continue;
-					}
-					
-					i++;
+	NSUInteger currentPosition = 0;
 
-					// ---- //
-					
-					if ((i + 1) >= len) {
-						continue;
-					}
+	NSUInteger bufferLength = (stringLength * sizeof(UniChar));
 
-					UniChar e = src[(i + 1)];
-					
-					if (CS_StringIsBase10Numeric(e) == NO && NSDissimilarObjects(e, ',')) {
-						continue;
-					}
-					
-					i++;
+	UniChar *inputBuffer = alloca(bufferLength);
+	UniChar *outputBuffer = alloca(bufferLength);
 
-					// ---- //
-					
-					if ((e == ',') == NO) {
-						if ((i + 1) >= len) {
-							continue;
-						}
-						
-						UniChar f = src[(i + 1)];
-						
-						if (NSDissimilarObjects(f, ',')) {
-							continue;
-						}
-						
-						i++;
-					}
+	[self getCharacters:inputBuffer range:self.range];
 
-					// ---- //
+	for (NSUInteger i = 0; i < stringLength; i++) {
+		UniChar character = inputBuffer[i];
 
-					if ((i + 1) >= len) {
-						continue;
-					}
-
-					UniChar g = src[(i + 1)];
-
-					if (CS_StringIsBase10Numeric(g) == NO) {
-						i--;
-						
-						continue;
-					}
-					
-					i++;
-
-					// ---- //
-
-					if ((i + 1) >= len) {
-						continue;
-					}
-
-					UniChar h = src[(i + 1)];
-
-					if (CS_StringIsBase10Numeric(h) == NO) {
-						continue;
-					}
-					
-					i++;
-
-					// ---- //
-					
-					break;
-				}
-				default:
-				{
-					buf[pos++] = c;
-					
-					break;
-				}
+		switch (character) {
+			case IRCTextFormatterBoldEffectCharacter:
+			case IRCTextFormatterItalicEffectCharacter:
+			case IRCTextFormatterItalicEffectCharacterOld:
+			case IRCTextFormatterStrikethroughEffectCharacter:
+			case IRCTextFormatterUnderlineEffectCharacter:
+			case IRCTextFormatterTerminatingCharacter:
+			{
+				break;
 			}
-		} else {
-			buf[pos++] = c;
+			case IRCTextFormatterColorEffectCharacter:
+			{
+#define _checkNextCharacter							\
+				if ((i + 1) >= stringLength)		\
+					break;							\
+
+				_checkNextCharacter
+
+				UniChar a = inputBuffer[(i + 1)];
+
+				if (CS_StringIsBase10Numeric(a) == NO) {
+					break;
+				}
+
+				i++;
+
+				_checkNextCharacter
+
+				UniChar b = inputBuffer[(i + 1)];
+
+				if (CS_StringIsBase10Numeric(b) == NO && b != ',' ) {
+					break;
+				}
+
+				i++;
+
+				if (b != ',') {
+					_checkNextCharacter
+
+					UniChar c = inputBuffer[(i + 1)];
+
+					if (c != ',') {
+						break;
+					}
+
+					i++;
+				}
+
+				_checkNextCharacter
+
+				UniChar d = inputBuffer[(i + 1)];
+
+				if (CS_StringIsBase10Numeric(d) == NO) {
+					/* Minus index by 1 to allow trailing comma to appear
+					 in the string incase a user configured a foreground
+					 color without background but still had a comma. */
+
+					i--;
+
+					break;
+				}
+
+				i++;
+
+				_checkNextCharacter
+
+				UniChar e = inputBuffer[(i + 1)];
+
+				if (CS_StringIsBase10Numeric(e) == NO) {
+					break;
+				}
+
+				i++;
+
+				break;
+
+#undef _checkNextCharacter
+			}
+			default:
+			{
+				outputBuffer[currentPosition++] = character;
+
+				break;
+			}
 		}
 	}
-	
-	return [NSString stringWithCharacters:buf length:pos];
+
+	return [NSString stringWithCharacters:outputBuffer length:currentPosition];
 }
 
-- (NSString *)base64EncodingWithLineLength:(NSUInteger)lineLength
+- (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength
 {
-	NSData *baseData = [self dataUsingEncoding:NSUTF8StringEncoding];
-	
-	NSString *encodedResult = [XRBase64Encoding encodeData:baseData];
-	
-	NSObjectIsEmptyAssertReturn(encodedResult, nil);
-	
-	NSMutableString *resultString = [NSMutableString string];
-	
-	if ([encodedResult length] > lineLength) {
-		NSInteger rlc = ceil([encodedResult length] / lineLength);
+	NSData *selfData = [self dataUsingEncoding:NSUTF8StringEncoding];
 
-		for (NSInteger i = 1; i <= rlc; i++) {
-			NSString *append = [encodedResult substringToIndex:lineLength];
+	NSString *encodedString = [XRBase64Encoding encodeData:selfData];
 
-			[resultString appendString:append];
-			[resultString appendString:NSStringNewlinePlaceholder];
-
-			encodedResult = [encodedResult substringFromIndex:lineLength];
-		}
-	}
-	
-	[resultString appendString:encodedResult];
-
-	return resultString;
+	return [encodedString splitWithMaximumLength:lineLength];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

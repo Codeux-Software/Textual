@@ -37,39 +37,7 @@
 
 #import "TextualApplication.h"
 
-@interface THOPluginDidPostNewMessageConcreteObject ()
-@property (nonatomic, readwrite, assign) BOOL isProcessedInBulk;
-@property (nonatomic, readwrite, copy) NSString *messageContents;
-@property (nonatomic, readwrite, copy) NSString *lineNumber;
-@property (nonatomic, readwrite, copy) NSString *senderNickname;
-@property (nonatomic, readwrite, assign) TVCLogLineType lineType;
-@property (nonatomic, readwrite, assign) TVCLogLineMemberType memberType;
-@property (nonatomic, readwrite, copy) NSDate *receivedAt;
-@property (nonatomic, readwrite, copy) NSArray *listOfHyperlinks;
-@property (nonatomic, readwrite, copy) NSSet *listOfUsers;
-@property (nonatomic, readwrite, assign) BOOL keywordMatchFound;
-@end
-
-#pragma mark -
-
-@interface THOPluginDidReceiveServerInputConcreteObject ()
-@property (nonatomic, readwrite, assign) BOOL senderIsServer;
-@property (nonatomic, readwrite, copy) NSString *senderNickname;
-@property (nonatomic, readwrite, copy) NSString *senderUsername;
-@property (nonatomic, readwrite, copy) NSString *senderAddress;
-@property (nonatomic, readwrite, copy) NSString *senderHostmask;
-@property (nonatomic, readwrite, copy) NSDate *receivedAt;
-@property (nonatomic, readwrite, copy) NSString *messageSequence;
-@property (nonatomic, readwrite, copy) NSArray *messageParamaters;
-@property (nonatomic, readwrite, copy) NSString *messageCommand;
-@property (nonatomic, readwrite, assign) NSInteger messageCommandNumeric;
-@property (nonatomic, readwrite, copy) NSString *networkAddress;
-@property (nonatomic, readwrite, copy) NSString *networkName;
-@end
-
-#pragma mark -
-
-@interface THOPluginWebViewJavaScriptPayloadConcreteObject ()
-@property (nonatomic, readwrite, copy) NSString *payloadLabel;
-@property (nonatomic, readwrite, copy) id payloadContents;
+@interface IRCWorld ()
+@property (nonatomic, assign) BOOL isImportingConfiguration;
+@property (nonatomic, strong) NSMutableArray *clients;
 @end

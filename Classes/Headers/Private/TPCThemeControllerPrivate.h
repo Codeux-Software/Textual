@@ -35,15 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCPreferences ()
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (void)fixThemeNameMissingDuringSync;
-+ (void)fixThemeFontNameMissingDuringSync;
-#endif
+@interface TPCThemeController ()
+- (void)reload;
+
+- (void)reloadMonitoringActiveThemePath;
+
+- (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openOnCopy:(BOOL)openOnCopy;
 @end
 
 NS_ASSUME_NONNULL_END
