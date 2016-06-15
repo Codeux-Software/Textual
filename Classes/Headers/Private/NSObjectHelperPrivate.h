@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,37 +35,38 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+#define DESIGNATED_INITIALIZER_EXCEPTION	\
+	NSAssert(NO, @"-init called in class with a designated initializer");
 
-@interface TPCPreferencesCloudSync ()
-@property (nonatomic, strong) id ubiquityIdentityToken;
-@property (nonatomic, assign) BOOL pushAllLocalKeysNextSync;
-@property (nonatomic, strong) dispatch_queue_t workerQueue;
-@property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
-@property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
-@property (nonatomic, copy) NSURL *ubiquitousContainerURL;
-@property (nonatomic, strong) NSMutableArray<NSString *> *keysToSync;
-@property (nonatomic, strong) NSMutableArray<NSString *> *keysToRemove;
-@property (nonatomic, copy) NSArray<NSString *> *remoteKeysBeingSynced;
-@property (nonatomic, assign) BOOL applicationIsTerminating;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysDownstream;
-@property (nonatomic, assign) BOOL isSyncingLocalKeysUpstream;
-@property (nonatomic, assign) BOOL hasUncommittedDataStoredInCloud;
-@property (nonatomic, assign) BOOL isTerminated;
+#define DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN							\
+	_Pragma("clang diagnostic push")										\
+	_Pragma("clang diagnostic ignored \"-Wobjc-designated-initializers\"")
 
-- (void)initializeCloudSyncSession;
+#define DESIGNATED_INITIALIZER_EXCEPTION_BODY_END	\
+	_Pragma("clang diagnostic pop")
 
+#define DESIGNATED_INITIALIZER_EXCEPTION_BODY			\
+	DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN			\
+														\
+	- (instancetype)init								\
+	{													\
+		DESIGNATED_INITIALIZER_EXCEPTION				\
+														\
+		return nil;										\
+	}													\
+														\
+	DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+#define ClassWithDesignatedInitializerInitMethod	DESIGNATED_INITIALIZER_EXCEPTION_BODY
+
+@interface NSObject (TXObjectHelper)
+- (void)preferencesChanged;
+
+- (void)prepareInitialState;
 - (void)prepareForApplicationTermination;
-
-- (void)synchronizeFromCloud;
-
-- (void)purgeDataStoredWithCloud;
+- (void)prepareForPermanentDestruction;
 @end
-
-#endif
 
 NS_ASSUME_NONNULL_END

@@ -69,7 +69,7 @@
 
 - (NSString *)pathToStoreEncryptionSecrets
 {
-	NSString *cachesFolder = [TPCPathInfo applicationGroupContainerApplicationSupportPath];
+	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
 
 	if (cachesFolder == nil) {
 		return nil;

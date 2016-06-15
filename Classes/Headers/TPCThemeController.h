@@ -52,10 +52,10 @@ TEXTUAL_EXTERN NSString * const TPCThemeControllerBundledThemeNameCompletePrefix
 TEXTUAL_EXTERN NSString * const TPCThemeControllerThemeListDidChangeNotification;
 
 typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
+	TPCThemeControllerStorageUnknownLocation = 0,
 	TPCThemeControllerStorageBundleLocation,
 	TPCThemeControllerStorageCustomLocation,
-	TPCThemeControllerStorageCloudLocation,
-	TPCThemeControllerStorageUnknownLocation
+	TPCThemeControllerStorageCloudLocation
 };
 
 @interface TPCThemeController : NSObject
@@ -63,20 +63,20 @@ typedef NS_ENUM(NSUInteger, TPCThemeControllerStorageLocation) {
 @property (readonly) TPCThemeSettings *customSettings;
 @property (readonly) TPCThemeControllerStorageLocation storageLocation;
 
-/* Calls for the active theme. */
-@property (readonly, copy) NSString *path;
-@property (readonly, copy) NSString *temporaryPath;
+/* Calls for the active theme */
+@property (readonly, copy) NSString *name;
 
 @property (readonly) BOOL usesTemporaryPath;
+@property (readonly, copy) NSString *temporaryPath;
 
-@property (readonly, copy) NSString *name;
+@property (readonly, copy) NSString *path;
 
 @property (getter=isBundledTheme, readonly) BOOL bundledTheme;
 
-/* Returns YES if a theme reload was necessary. */
+/* Returns YES if a theme reload was necessary */
 - (BOOL)validateThemeAndRelaodIfNecessary;
 
-/* Calls for all themes. */
+/* Calls for all themes */
 /* A theme is considered existent if the designated design.css file and scripts.js for
  it exists. Otherwise, the theme is considered nonexistent even if the folder exists. */
 + (NSDictionary<NSString *, NSString *> *)dictionaryOfAllThemes;

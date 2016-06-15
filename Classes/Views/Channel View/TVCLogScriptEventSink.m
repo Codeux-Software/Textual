@@ -36,14 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "THOPluginProtocolPrivate.h"
-
-#import "TVCLogObjectsPrivate.h"
-
-#import "IRCUserPrivate.h"
-
 #include <objc/message.h>
 
 @interface TVCLogScriptEventSink ()
@@ -730,25 +722,37 @@
 
 	SEL methodSelector = NSSelectorFromString(methodName);
 
-	NSArray *resultErrors = nil;
+	NSMethodSignature *methodSignature =
+	[TPCPreferences methodSignatureForSelector:methodSelector];
 
-	id returnValue = [TPCPreferences performSelector:methodSelector
-									   withArguments:nil
-								   returnsPrimitives:YES
-									usesTypeChecking:NO
-											   error:&resultErrors];
+	if (methodSignature == nil) {
+		NSString *errorMessage = [NSString stringWithFormat:@"Unknown method named: '%@'", methodName];
 
-	if (resultErrors) {
-		for (NSDictionary *error in resultErrors) {
-			if ([error boolForKey:@"isWarning"]) {
-				[self _logToJavaScriptConsole:error[@"errorMessage"] inWebView:[context webView]];
-			} else {
-				[self _throwJavaScriptException:error[@"errorMessage"] inWebView:[context webView]];
-			}
-		}
+		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+
+		return nil;
+	} else if (strcmp([methodSignature methodReturnType], @encode(void)) == 0) {
+		NSString *errorMessage = [NSString stringWithFormat:@"Method named '%@' does not return a value", methodName];
+
+		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+
+		return nil;
 	}
 
-	return returnValue;
+	NSInvocation *invocation =
+	[NSInvocation invocationWithMethodSignature:methodSignature];
+
+	[invocation setTarget:[TPCPreferences class]];
+
+	[invocation setSelector:methodSelector];
+
+	[invocation invoke];
+
+	void *returnValue;
+
+	[invocation getReturnValue:&returnValue];
+
+	return [NSValue valueWithPrimitive:returnValue withType:[methodSignature methodReturnType]];
 }
 
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
@@ -771,7 +775,7 @@
 	[payloadObject setPayloadLabel:payloadLabel];
 	[payloadObject setPayloadContents:payloadContents];
 
-	[sharedPluginManager() postJavaScriptPayloadForViewController:[context logController] withObject:payloadObject];
+	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:[context logController]];
 }
 
 - (id)_serverAddress:(TVCLogScriptEventSinkContext *)context

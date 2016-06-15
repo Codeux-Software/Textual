@@ -35,21 +35,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "IRCWorldPrivate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-NSString * const IRCWorldControllerCloudDeletedClientsStorageKey	= @"World Controller -> Cloud Deleted Clients";
-NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controller -> Cloud Synced Client -> ";
+NSString * const IRCWorldControllerCloudListOfDeletedClientsDefaultsKey = @"World Controller -> Cloud Deleted Clients";
+NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Controller -> Cloud Synced Client -> ";
 
 @implementation IRCWorld (IRCWorldCloudExtension)
 
-- (NSDictionary *)cloudDictionaryValue
+- (NSDictionary<NSString *, id> *)cloud_clientConfigurations
 {
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
 	
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {
@@ -59,64 +55,66 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 
 			NSDictionary *prefs = [u dictionaryValue:YES];
 			
-			NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:[u uniqueIdentifier]];
+			NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:[u uniqueIdentifier]];
 			
-			[dict setObject:prefs forKey:prefKey];
+			[dic setObject:prefs forKey:prefKey];
 		}
 	}
 	
-	return dict;
+	return [dic copy];
 }
 
-- (void)destroyClientInCloud:(IRCClient *)client
+- (void)cloud_destroyClient:(IRCClient *)client
 {
-	if (client == nil || client.config.excludedFromCloudSyncing) {
+	NSParameterAssert(client != nil);
+
+	if (client.config.excludedFromCloudSyncing) {
 		return;
 	}
 
-	[self addClientToListOfDeletedClients:[client uniqueIdentifier]];
+	[self cloud_addClientToListOfDeletedClients:[client uniqueIdentifier]];
 
-	[self removeClientConfigurationCloudEntry:[client uniqueIdentifier]];
+	[self cloud_removeClientConfigurationCloudEntry:[client uniqueIdentifier]];
 }
 
-- (void)addClientToListOfDeletedClients:(NSString *)clientID
+- (void)cloud_addClientToListOfDeletedClients:(NSString *)clientId
 {
-	PointerIsEmptyAssert(clientID)
+	NSParameterAssert(clientId != nil);
 
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
 
-	NSArray *deletedClients = [sharedCloudManager() valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	NSArray *deletedClients = [sharedCloudManager() valueForKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
 
 	if (deletedClients == nil) {
-		deletedClients = @[clientID];
+		deletedClients = @[clientId];
 	} else {
-		if ([deletedClients containsObject:clientID]) {
+		if ([deletedClients containsObject:clientId]) {
 			return;
 		}
 
-		deletedClients = [deletedClients arrayByAddingObject:clientID];
+		deletedClients = [deletedClients arrayByAddingObject:clientId];
 	}
 
-	[sharedCloudManager() setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	[sharedCloudManager() setValue:deletedClients forKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
 }
 
 /* If a client set locally was set to not be synced from the cloud, but its UUID appears as a
  deleted item from another client, then remove that UUID from the deleted clients list if that
  client is again set to sync to the cloud. */
-- (void)removeClientFromListOfDeletedClients:(NSString *)clientID
+- (void)cloud_removeClientFromListOfDeletedClients:(NSString *)clientId
 {
-	PointerIsEmptyAssert(clientID)
+	NSParameterAssert(clientId != nil);
 
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
 
-	NSArray *deletedClients = [sharedCloudManager() valueForKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+	NSArray *deletedClients = [sharedCloudManager() valueForKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
 	
 	if (deletedClients) {
-		NSInteger clientIndex = [deletedClients indexOfObject:clientID];
+		NSUInteger clientIndex = [deletedClients indexOfObject:clientId];
 		
 		if (clientIndex == NSNotFound) {
 			return;
@@ -124,33 +122,33 @@ NSString * const IRCWorldControllerCloudClientEntryKeyPrefix		= @"World Controll
 
 		deletedClients = [deletedClients arrayByRemovingObjectAtIndex:clientIndex];
 			
-		[sharedCloudManager() setValue:deletedClients forKey:IRCWorldControllerCloudDeletedClientsStorageKey];
+		[sharedCloudManager() setValue:deletedClients forKey:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey];
 	}
 }
 
-- (void)removeClientConfigurationCloudEntry:(NSString *)clientID
+- (void)cloud_removeClientConfigurationCloudEntry:(NSString *)clientId
 {
-	PointerIsEmptyAssert(clientID)
+	NSParameterAssert(clientId != nil);
 
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
 
-	NSString *prefKey = [IRCWorldControllerCloudClientEntryKeyPrefix stringByAppendingString:clientID];
+	NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:clientId];
 	
 	[sharedCloudManager() removeObjectForKey:prefKey];
 }
 
-- (void)processCloudCientDeletionList:(NSArray<NSArray *> *)deletedClients
+- (void)cloud_processDeletedClientsList:(NSArray<NSString *> *)deletedClients
 {
-	PointerIsEmptyAssert(deletedClients)
+	NSParameterAssert(deletedClients != nil);
 
 	if ([TPCPreferences syncPreferencesToTheCloud] == NO) {
 		return;
 	}
 		
-	[deletedClients enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		IRCClient *u = [self findClientById:obj];
+	[deletedClients enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		IRCClient *u = [self findClientById:object];
 
 		if (u && u.config.excludedFromCloudSyncing == NO) {
 			[self destroyClient:u bySkippingCloud:YES];

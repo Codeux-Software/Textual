@@ -36,37 +36,37 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TPCPreferencesUserDefaultsMigrate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-NSString * const TPCPreferencesThemeNameDefaultsKey				= @"Theme -> Name";
-NSString * const TPCPreferencesThemeFontNameDefaultsKey			= @"Theme -> Font Name";
+NSString * const TPCPreferencesThemeNameDefaultsKey	= @"Theme -> Name";
 
-NSInteger const TPCPreferencesDictionaryVersion		= 100;
+NSString * const TPCPreferencesThemeFontNameDefaultsKey	= @"Theme -> Font Name";
+NSString * const TPCPreferencesThemeFontSizeDefaultsKey	= @"Theme -> Font Size";
+
+NSString * const TPCPreferencesThemeNameMissingLocallyDefaultsKey = @"Theme -> Name -> Did Not Exist During Last Sync";
+
+NSString * const TPCPreferencesThemeFontNameMissingLocallyDefaultsKey = @"Theme -> Font Name -> Did Not Exist During Last Sync";
+
+NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 @implementation TPCPreferences
 
 #pragma mark -
 #pragma mark Default Identity
 
-+ (NSString *)defaultNicknamePrefix
++ (NSString *)_defaultNicknamePrefix
 {
 	return [[TPCPreferences defaultPreferences] objectForKey:@"DefaultIdentity -> Nickname"];
 }
 
-+ (void)populateDefaultNickname
++ (void)_populateDefaultNickname
 {
-	/* On large IRC networks using "Guest" as the default nickname may create 
-	 conflicts as nickname guesses are exhausted while pending underscores to
-	 the value looking for the next available match. To help with this, a 
-	 random number is appended to the end of the default nickname. */
+	/* Using "Guest" as the default nickname may create conflicts as nickname guesses are 
+	 exhausted while appending underscores. To fix this, a random number is appended to 
+	 the end of the default nickname. */
+	NSString *nicknamePrefix = [TPCPreferences _defaultNicknamePrefix];
 
-	NSString *defaultNickname = [[TPCPreferences defaultPreferences] stringForKey:@"DefaultIdentity -> Nickname"];
-
-	NSString *nickname = [NSString stringWithFormat:@"%@%lu", defaultNickname, TXRandomNumber(100)];
+	NSString *nickname = [nicknamePrefix stringByAppendingFormat:@"%lu", TXRandomNumber(100)];
 
 	[RZUserDefaults() registerDefaults:@{@"DefaultIdentity -> Nickname" : nickname}];
 }
@@ -86,7 +86,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Username"];
 }
 
-+ (NSString *)defaultRealname
++ (NSString *)defaultRealName
 {
 	return [RZUserDefaults() objectForKey:@"DefaultIdentity -> Realname"];
 }
@@ -94,20 +94,19 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark General Preferences
 
-/* There is no specific order to these. */
-+ (NSInteger)autojoinMaxChannelJoins
++ (NSUInteger)autojoinMaximumChannelJoins
 {
-	return [RZUserDefaults() integerForKey:@"AutojoinMaximumChannelJoinCount"];
-}
-
-+ (BOOL)appendReasonToCommonIRCopCommands
-{
-	return [RZUserDefaults() boolForKey:@"AutomaticallyAppendReasonToCommonIRCopCommands"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"AutojoinMaximumChannelJoinCount"];
 }
 
 + (NSString *)defaultKickMessage
 {
 	return [RZUserDefaults() objectForKey:@"ChannelOperatorDefaultLocalization -> Kick Reason"];
+}
+
++ (BOOL)appendReasonToCommonIRCopCommands
+{
+	return [RZUserDefaults() boolForKey:@"AutomaticallyAppendReasonToCommonIRCopCommands"];
 }
 
 + (NSString *)IRCopDefaultKillMessage
@@ -211,18 +210,6 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 {
 	return [RZUserDefaults() boolForKey:@"AutomaticallyDetectHighlightSpam"];
 }
-
-#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-+ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates
-{
-	[RZUserDefaults() setBool:receiveBetaUpdates forKey:@"ReceiveBetaUpdates"];
-}
-
-+ (BOOL)receiveBetaUpdates
-{
-	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
-}
-#endif
 
 + (BOOL)disableNicknameColorHashing
 {
@@ -346,7 +333,8 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (BOOL)logToDiskIsEnabled
 {
-	return ([RZUserDefaults() boolForKey:@"LogTranscript"] && [TPCPathInfo logFileFolderLocation]);
+	return ([RZUserDefaults() boolForKey:@"LogTranscript"] &&
+			[TPCPathInfo transcriptFolderURL] != nil);
 }
 
 + (BOOL)openBrowserInBackground
@@ -394,50 +382,65 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() doubleForKey:@"SwipeMinimumLength"];
 }
 
-+ (NSInteger)trackUserAwayStatusMaximumChannelSize
++ (NSUInteger)trackUserAwayStatusMaximumChannelSize
 {
-    return [RZUserDefaults() integerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
+    return [RZUserDefaults() unsignedIntegerForKey:@"TrackUserAwayStatusMaximumChannelSize"];
 }
 
 + (TXTabKeyAction)tabKeyAction
 {
-	return (TXTabKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Tab Key Action"];
+	return (TXTabKeyAction)[RZUserDefaults() unsignedIntegerForKey:@"Keyboard -> Tab Key Action"];
 }
 
 + (TXNicknameHighlightMatchType)highlightMatchingMethod
 {
-	return (TXNicknameHighlightMatchType)[RZUserDefaults() integerForKey:@"NicknameHighlightMatchingType"];
+	return (TXNicknameHighlightMatchType)[RZUserDefaults() unsignedIntegerForKey:@"NicknameHighlightMatchingType"];
 }
 
 + (TXUserDoubleClickAction)userDoubleClickOption
 {
-	return (TXUserDoubleClickAction)[RZUserDefaults() integerForKey:@"UserListDoubleClickAction"];
+	return (TXUserDoubleClickAction)[RZUserDefaults() unsignedIntegerForKey:@"UserListDoubleClickAction"];
 }
 
 + (TXNoticeSendLocationType)locationToSendNotices
 {
-	return (TXNoticeSendLocationType)[RZUserDefaults() integerForKey:@"DestinationOfNonserverNotices"];
+	return (TXNoticeSendLocationType)[RZUserDefaults() unsignedIntegerForKey:@"DestinationOfNonserverNotices"];
 }
 
 + (TXCommandWKeyAction)commandWKeyAction
 {
-	return (TXCommandWKeyAction)[RZUserDefaults() integerForKey:@"Keyboard -> Command+W Key Action"];
+	return (TXCommandWKeyAction)[RZUserDefaults() unsignedIntegerForKey:@"Keyboard -> Command+W Key Action"];
 }
 
 + (TXHostmaskBanFormat)banFormat
 {
-	return (TXHostmaskBanFormat)[RZUserDefaults() integerForKey:@"DefaultBanCommandHostmaskFormat"];
+	return (TXHostmaskBanFormat)[RZUserDefaults() unsignedIntegerForKey:@"DefaultBanCommandHostmaskFormat"];
 }
 
 + (TVCMainWindowTextViewFontSize)mainTextViewFontSize
 {
-	return (TVCMainWindowTextViewFontSize)[RZUserDefaults() integerForKey:@"Main Input Text Field -> Font Size"];
+	return (TVCMainWindowTextViewFontSize)[RZUserDefaults() unsignedIntegerForKey:@"Main Input Text Field -> Font Size"];
 }
 
 + (BOOL)focusMainTextViewOnSelectionChange
 {
 	return [RZUserDefaults() boolForKey:@"Main Input Text Field -> Focus When Changing Views"];
 }
+
+#pragma mark -
+#pragma mark Updates
+
+#if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
++ (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates
+{
+	[RZUserDefaults() setBool:receiveBetaUpdates forKey:@"ReceiveBetaUpdates"];
+}
+
++ (BOOL)receiveBetaUpdates
+{
+	return [RZUserDefaults() boolForKey:@"ReceiveBetaUpdates"];
+}
+#endif
 
 #pragma mark -
 #pragma mark Developer Mode
@@ -472,7 +475,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (BOOL)invertSidebarColors
 {
-	if ([themeSettings() invertSidebarColors]) {
+	if (themeSettings().invertSidebarColors) {
 		return YES;
 	}
 
@@ -491,6 +494,8 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (void)setThemeName:(NSString *)value
 {
+	NSParameterAssert(value != nil);
+
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeNameDefaultsKey];
 	
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
@@ -498,11 +503,12 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (void)setThemeNameWithExistenceCheck:(NSString *)value
 {
-	/* Did it exist anywhere at all? */
-	if ([TPCThemeController themeExists:value] == NO) {
-		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
-	} else {
+	NSParameterAssert(value != nil);
+
+	if ([TPCThemeController themeExists:value]) {
 		[TPCPreferences setThemeName:value];
+	} else {
+		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeNameMissingLocallyDefaultsKey];
 	}
 }
 
@@ -518,6 +524,8 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (void)setThemeChannelViewFontName:(NSString *)value
 {
+	NSParameterAssert(value != nil);
+
 	[RZUserDefaults() setObject:value forKey:TPCPreferencesThemeFontNameDefaultsKey];
 	
 	[RZUserDefaults() removeObjectForKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
@@ -525,10 +533,12 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value
 {
-	if ([NSFont fontIsAvailable:value] == NO) {
-		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
-	} else {
+	NSParameterAssert(value != nil);
+
+	if ([NSFont fontIsAvailable:value]) {
 		[TPCPreferences setThemeChannelViewFontName:value];
+	} else {
+		[RZUserDefaults() setBool:YES forKey:TPCPreferencesThemeFontNameMissingLocallyDefaultsKey];
 	}
 }
 
@@ -542,7 +552,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	[RZUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
 }
 
-+ (NSFont *)themeChannelViewFont
++ (nullable NSFont *)themeChannelViewFont
 {
 	return [NSFont fontWithName:[TPCPreferences themeChannelViewFontName]
 						   size:[TPCPreferences themeChannelViewFontSize]];
@@ -570,7 +580,7 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (BOOL)themeNicknameFormatPreferenceUserConfigurable
 {
-	return [RZUserDefaults() boolForKey:@"Timestamp Format Preference Enabled"];
+	return [RZUserDefaults() boolForKey:@"Theme -> Nickname Format Preference Enabled"];
 }
 
 + (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable
@@ -590,12 +600,12 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (BOOL)themeTimestampFormatPreferenceUserConfigurable
 {
-	return [RZUserDefaults() boolForKey:@"Timestamp Format Preference Enabled"];
+	return [RZUserDefaults() boolForKey:@"Theme -> Timestamp Format Preference Enabled"];
 }
 
 + (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable
 {
-	[RZUserDefaults() setBool:themeTimestampFormatPreferenceUserConfigurable forKey:@"Timestamp Format Preference Enabled"];
+	[RZUserDefaults() setBool:themeTimestampFormatPreferenceUserConfigurable forKey:@"Theme -> Timestamp Format Preference Enabled"];
 }
 
 + (double)mainWindowTransparency
@@ -643,6 +653,8 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (void)setTabCompletionSuffix:(NSString *)value
 {
+	NSParameterAssert(value != nil);
+
 	[RZUserDefaults() setObject:value forKey:@"Keyboard -> Tab Key Completion Suffix"];
 }
 
@@ -661,41 +673,46 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (TXUnsignedLongLong)inlineImagesMaxFilesize
 {
-	NSInteger filesizeTag = [RZUserDefaults() integerForKey:@"InlineMediaMaximumFilesize"];
+	NSUInteger filesizeTag = [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumFilesize"];
 
 	switch (filesizeTag) {
-		case 1: { return			(TXUnsignedLongLong)1048576;			} // 1 MB
-		case 2: { return			(TXUnsignedLongLong)2097152;			} // 2 MB
-		case 3: { return			(TXUnsignedLongLong)3145728;			} // 3 MB
-		case 4: { return			(TXUnsignedLongLong)4194304;			} // 4 MB
-		case 5: { return			(TXUnsignedLongLong)5242880;			} // 5 MB
-		case 6: { return			(TXUnsignedLongLong)10485760;			} // 10 MB
-		case 7: { return			(TXUnsignedLongLong)15728640;			} // 15 MB
-		case 8: { return			(TXUnsignedLongLong)20971520;			} // 20 MB
-		case 9: { return			(TXUnsignedLongLong)52428800;			} // 50 MB
-		case 10: { return			(TXUnsignedLongLong)104857600;			} // 100 MB
-		default: { return			(TXUnsignedLongLong)2097152;			} // 2 MB
+#define _dv(key, value)		case (key): { return (value); }
+
+		_dv(1, (TXUnsignedLongLong)1048576) // 1 MB
+		_dv(2, (TXUnsignedLongLong)2097152) // 2 MB
+		_dv(3, (TXUnsignedLongLong)3145728) // 3 MB
+		_dv(4, (TXUnsignedLongLong)4194304) // 4 MB
+		_dv(5, (TXUnsignedLongLong)5242880) // 5 MB
+		_dv(6, (TXUnsignedLongLong)10485760) // 10 MB
+		_dv(7, (TXUnsignedLongLong)15728640) // 15 MB
+		_dv(8, (TXUnsignedLongLong)20971520) // 20 MB
+		_dv(9, (TXUnsignedLongLong)52428800) // 50 MB
+		_dv(10, (TXUnsignedLongLong)104857600) // 100 MB
+
+#undef _dv
 	}
+
+	return (TXUnsignedLongLong)2097152; // 2 MB
 }
 
-+ (NSInteger)inlineImagesMaxWidth
++ (NSUInteger)inlineImagesMaxWidth
 {
-	return [RZUserDefaults() integerForKey:@"InlineMediaScalingWidth"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaScalingWidth"];
 }
 
-+ (NSInteger)inlineImagesMaxHeight
++ (NSUInteger)inlineImagesMaxHeight
 {
-	return [RZUserDefaults() integerForKey:@"InlineMediaMaximumHeight"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"InlineMediaMaximumHeight"];
 }
 
-+ (void)setInlineImagesMaxWidth:(NSInteger)value
++ (void)setInlineImagesMaxWidth:(NSUInteger)value
 {
-	[RZUserDefaults() setInteger:value forKey:@"InlineMediaScalingWidth"];
+	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaScalingWidth"];
 }
 
-+ (void)setInlineImagesMaxHeight:(NSInteger)value
++ (void)setInlineImagesMaxHeight:(NSUInteger)value
 {
-	[RZUserDefaults() setInteger:value forKey:@"InlineMediaMaximumHeight"];
+	[RZUserDefaults() setUnsignedInteger:value forKey:@"InlineMediaMaximumHeight"];
 }
 
 #pragma mark -
@@ -703,12 +720,12 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (TXFileTransferRequestReplyAction)fileTransferRequestReplyAction
 {
-	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Request Reply Action"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"File Transfers -> File Transfer Request Reply Action"];
 }
 
 + (TXFileTransferIPAddressDetectionMethod)fileTransferIPAddressDetectionMethod
 {
-	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer IP Address Detection Method"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"File Transfers -> File Transfer IP Address Detection Method"];
 }
 
 + (BOOL)fileTransferRequestsAreReversed
@@ -721,24 +738,24 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 	return [RZUserDefaults() boolForKey:@"File Transfers -> Idle System Sleep Prevented During File Transfer"];
 }
 
-+ (NSInteger)fileTransferPortRangeStart
++ (uint16_t)fileTransferPortRangeStart
 {
-	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range Start"];
+	return [RZUserDefaults() unsignedShortForKey:@"File Transfers -> File Transfer Port Range Start"];
 }
 
-+ (void)setFileTransferPortRangeStart:(NSInteger)value
++ (void)setFileTransferPortRangeStart:(uint16_t)value
 {
-	[RZUserDefaults() setInteger:value forKey:@"File Transfers -> File Transfer Port Range Start"];
+	[RZUserDefaults() setUnsignedShort:value forKey:@"File Transfers -> File Transfer Port Range Start"];
 }
 
-+ (NSInteger)fileTransferPortRangeEnd
++ (uint16_t)fileTransferPortRangeEnd
 {
-	return [RZUserDefaults() integerForKey:@"File Transfers -> File Transfer Port Range End"];
+	return [RZUserDefaults() unsignedShortForKey:@"File Transfers -> File Transfer Port Range End"];
 }
 
-+ (void)setFileTransferPortRangeEnd:(NSInteger)value
++ (void)setFileTransferPortRangeEnd:(uint16_t)value
 {
-	[RZUserDefaults() setInteger:value forKey:@"File Transfers -> File Transfer Port Range End"];
+	[RZUserDefaults() setUnsignedShort:value forKey:@"File Transfers -> File Transfer Port Range End"];
 }
 
 + (nullable NSString *)fileTransferManuallyEnteredIPAddress
@@ -749,39 +766,52 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 #pragma mark -
 #pragma mark Max Log Lines
 
-+ (NSInteger)scrollbackLimit
++ (NSUInteger)scrollbackLimit
 {
-	return [RZUserDefaults() integerForKey:@"ScrollbackMaximumLineCount"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"ScrollbackMaximumLineCount"];
 }
 
-+ (void)setScrollbackLimit:(NSInteger)value
++ (void)setScrollbackLimit:(NSUInteger)value
 {
-	[RZUserDefaults() setInteger:value forKey:@"ScrollbackMaximumLineCount"];
+	[RZUserDefaults() setUnsignedInteger:value forKey:@"ScrollbackMaximumLineCount"];
 }
 
 #pragma mark -
 #pragma mark Growl
 
-+ (NSString *)keyForEvent:(TXNotificationType)event
++ (BOOL)soundIsMuted
+{
+	return [RZUserDefaults() boolForKey:@"Notification Sound Is Muted"];
+}
+
++ (void)setSoundIsMuted:(BOOL)soundIsMuted
+{
+	[RZUserDefaults() setBool:soundIsMuted forKey:@"Notification Sound Is Muted"];
+}
+
++ (nullable NSString *)_keyForEvent:(TXNotificationType)event
 {
 	switch (event) {
-		case TXNotificationAddressBookMatchType:	{ return @"NotificationType -> Address Book Match";				}
-		case TXNotificationChannelMessageType:		{ return @"NotificationType -> Public Message";					}
-		case TXNotificationChannelNoticeType:		{ return @"NotificationType -> Public Notice";					}
-		case TXNotificationConnectType:				{ return @"NotificationType -> Connected";						}
-		case TXNotificationDisconnectType:			{ return @"NotificationType -> Disconnected";					}
-		case TXNotificationHighlightType:			{ return @"NotificationType -> Highlight";						}
-		case TXNotificationInviteType:				{ return @"NotificationType -> Channel Invitation";				}
-		case TXNotificationKickType:				{ return @"NotificationType -> Kicked from Channel";			}
-		case TXNotificationNewPrivateMessageType:	{ return @"NotificationType -> Private Message (New)";			}
-		case TXNotificationPrivateMessageType:		{ return @"NotificationType -> Private Message";				}
-		case TXNotificationPrivateNoticeType:		{ return @"NotificationType -> Private Notice";					}
-			
-		case TXNotificationFileTransferSendSuccessfulType:		{ return @"NotificationType -> Successful File Transfer (Sending)";			}
-		case TXNotificationFileTransferReceiveSuccessfulType:	{ return @"NotificationType -> Successful File Transfer (Receiving)";		}
-		case TXNotificationFileTransferSendFailedType:			{ return @"NotificationType -> Failed File Transfer (Sending)";				}
-		case TXNotificationFileTransferReceiveFailedType:		{ return @"NotificationType -> Failed File Transfer (Receiving)";			}
-		case TXNotificationFileTransferReceiveRequestedType:	{ return @"NotificationType -> File Transfer Request";						}
+#define _dv(key, value)		case (key): { return (value); }
+
+		_dv(TXNotificationAddressBookMatchType, @"NotificationType -> Address Book Match")
+		_dv(TXNotificationChannelMessageType, @"NotificationType -> Public Message")
+		_dv(TXNotificationChannelNoticeType, @"NotificationType -> Public Notice")
+		_dv(TXNotificationConnectType, @"NotificationType -> Connected")
+		_dv(TXNotificationDisconnectType, @"NotificationType -> Disconnected")
+		_dv(TXNotificationHighlightType, @"NotificationType -> Highlight")
+		_dv(TXNotificationInviteType, @"NotificationType -> Channel Invitation")
+		_dv(TXNotificationKickType, @"NotificationType -> Kicked from Channel")
+		_dv(TXNotificationNewPrivateMessageType, @"NotificationType -> Private Message (New)")
+		_dv(TXNotificationPrivateMessageType, @"NotificationType -> Private Message")
+		_dv(TXNotificationPrivateNoticeType, @"NotificationType -> Private Notice")
+		_dv(TXNotificationFileTransferSendSuccessfulType, @"NotificationType -> Successful File Transfer (Sending)")
+		_dv(TXNotificationFileTransferReceiveSuccessfulType, @"NotificationType -> Successful File Transfer (Receiving)")
+		_dv(TXNotificationFileTransferSendFailedType, @"NotificationType -> Failed File Transfer (Sending)")
+		_dv(TXNotificationFileTransferReceiveFailedType, @"NotificationType -> Failed File Transfer (Receiving)")
+		_dv(TXNotificationFileTransferReceiveRequestedType, @"NotificationType -> File Transfer Request")
+
+#undef _dv
 	}
 
 	return nil;
@@ -789,232 +819,278 @@ NSInteger const TPCPreferencesDictionaryVersion		= 100;
 
 + (nullable NSString *)soundForEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssertReturn(okey, nil);
+	if (eventKeyPrefix == nil) {
+		return nil;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Sound"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Sound"];
 
-	return [RZUserDefaults() objectForKey:key];
+	return [RZUserDefaults() objectForKey:eventKey];
 }
 
-+ (void)setSound:(NSString *)value forEvent:(TXNotificationType)event
++ (void)setSound:(nullable NSString *)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssert(okey);
+	if (eventKeyPrefix == nil) {
+		return;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Sound"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Sound"];
 
-	[RZUserDefaults() setObject:value forKey:key];
+	[RZUserDefaults() setObject:value forKey:eventKey];
 }
 
 + (BOOL)growlEnabledForEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssertReturn(okey, NO);
+	if (eventKeyPrefix == nil) {
+		return NO;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Enabled"];
 
-	return [RZUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setGrowlEnabled:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssert(okey);
+	if (eventKeyPrefix == nil) {
+		return;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Enabled"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Enabled"];
 
-	[RZUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)disabledWhileAwayForEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssertReturn(okey, NO);
+	if (eventKeyPrefix == nil) {
+		return NO;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Disable While Away"];
 
-	return [RZUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setDisabledWhileAway:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssert(okey);
+	if (eventKeyPrefix == nil) {
+		return;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Disable While Away"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Disable While Away"];
 
-	[RZUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)bounceDockIconForEvent:(TXNotificationType)event
 {
-    NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+
+	if (eventKeyPrefix == nil) {
+		return NO;
+	}
     
-    PointerIsEmptyAssertReturn(okey, NO);
+    NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon"];
     
-    NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
-    
-    return [RZUserDefaults() boolForKey:key];
+    return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIcon:(BOOL)value forEvent:(TXNotificationType)event
 {
-    NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
+
+	if (eventKeyPrefix == nil) {
+		return;
+	}
     
-	PointerIsEmptyAssert(okey);
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon"];
     
-	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon"];
-    
-	[RZUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)bounceDockIconRepeatedlyForEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssertReturn(okey, NO);
+	if (eventKeyPrefix == nil) {
+		return NO;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
-	return [RZUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setBounceDockIconRepeatedly:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssert(okey);
+	if (eventKeyPrefix == nil) {
+		return;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Bounce Dock Icon Repeatedly"];
 
-	[RZUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 + (BOOL)speakEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssertReturn(okey, NO);
+	if (eventKeyPrefix == nil) {
+		return NO;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Speak"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak"];
 
-	return [RZUserDefaults() boolForKey:key];
+	return [RZUserDefaults() boolForKey:eventKey];
 }
 
 + (void)setEventIsSpoken:(BOOL)value forEvent:(TXNotificationType)event
 {
-	NSString *okey = [TPCPreferences keyForEvent:event];
+	NSString *eventKeyPrefix = [TPCPreferences _keyForEvent:event];
 
-	PointerIsEmptyAssert(okey);
+	if (eventKeyPrefix == nil) {
+		return;
+	}
 
-	NSString *key = [okey stringByAppendingString:@" -> Speak"];
+	NSString *eventKey = [eventKeyPrefix stringByAppendingString:@" -> Speak"];
 
-	[RZUserDefaults() setBool:value forKey:key];
+	[RZUserDefaults() setBool:value forKey:eventKey];
 }
 
 #pragma mark -
 #pragma mark World
 
-+ (nullable NSDictionary<NSString *, id> *)loadWorld
++ (nullable NSArray<NSDictionary *> *)clientList
 {
-	return [RZUserDefaults() objectForKey:IRCWorldControllerDefaultsStorageKey];
+	return [RZUserDefaults() objectForKey:IRCWorldControllerClientListDefaultsKey];
 }
 
-+ (void)saveWorld:(nullable NSDictionary<NSString *, id> *)value
++ (void)setClientList:(nullable NSArray<NSDictionary *> *)clientList
 {
-	[RZUserDefaults() setObject:value forKey:IRCWorldControllerDefaultsStorageKey];
+	[RZUserDefaults() setObject:clientList forKey:IRCWorldControllerClientListDefaultsKey];
+}
+
++ (void)_migrateWorldControllerToVersion600
+{
+#define _defaultsKey @"World Controller Migrated (600)"
+
+	BOOL clientListMigrated = [RZUserDefaults() boolForKey:_defaultsKey];
+
+	if (clientListMigrated) {
+		return;
+	}
+
+	NSDictionary *worldController = [RZUserDefaults() dictionaryForKey:@"World Controller"];
+
+	NSArray<NSDictionary *> *clientList = [worldController arrayForKey:@"clients"];
+
+	if (clientList.count > 0) {
+		[TPCPreferences setClientList:clientList];
+	}
+
+	BOOL soundIsMuted = [worldController boolForKey:@"soundIsMuted"];
+
+	if (soundIsMuted) {
+		[TPCPreferences setSoundIsMuted:soundIsMuted];
+	}
+
+	[RZUserDefaults() setBool:YES forKey:_defaultsKey];
+
+#undef _defaultsKey
 }
 
 #pragma mark -
 #pragma mark Keywords
 
-static NSMutableArray<NSString *> *matchKeywords = nil;
-static NSMutableArray<NSString *> *excludeKeywords = nil;
+static NSArray<NSString *> *_excludeKeywords = nil;
+static NSArray<NSString *> *_matchKeywords = nil;
 
-+ (void)loadMatchKeywords
++ (void)_loadExcludeKeywords
 {
-	if (matchKeywords) {
-		[matchKeywords removeAllObjects];
-	} else {
-		matchKeywords = [NSMutableArray new];
+	NSArray<NSDictionary *> *keywordArrayIn = [RZUserDefaults() arrayForKey:@"Highlight List -> Excluded Matches"];
+
+	NSMutableArray<NSString *> *keywordArrayOut = [NSMutableArray array];
+
+	for (NSDictionary<NSString *, NSString *> *keyword in keywordArrayIn) {
+		NSString *s = keyword[@"string"];
+
+		if (s && s.length > 0) {
+			[keywordArrayOut addObject:s];
+		}
 	}
 
-	NSArray<NSDictionary *> *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Primary Matches"];
-
-	for (NSDictionary<NSString *, NSString *> *e in ary) {
-		NSString *s = e[@"string"];
-
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		[matchKeywords addObject:s];
-	}
+	_excludeKeywords = [keywordArrayOut copy];
 }
 
-+ (void)loadExcludeKeywords
++ (void)_loadMatchKeywords
 {
-	if (excludeKeywords) {
-		[excludeKeywords removeAllObjects];
-	} else {
-		excludeKeywords = [NSMutableArray new];
+	NSArray<NSDictionary *> *keywordArrayIn = [RZUserDefaults() arrayForKey:@"Highlight List -> Primary Matches"];
+
+	NSMutableArray<NSString *> *keywordArrayOut = [NSMutableArray array];
+
+	for (NSDictionary<NSString *, NSString *> *keyword in keywordArrayIn) {
+		NSString *s = keyword[@"string"];
+
+		if (s && s.length > 0) {
+			[keywordArrayOut addObject:s];
+		}
 	}
 
-	NSArray<NSDictionary *> *ary = [RZUserDefaults() objectForKey:@"Highlight List -> Excluded Matches"];
-
-	for (NSDictionary<NSString *, NSString *> *e in ary) {
-		NSString *s = e[@"string"];
-
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		[excludeKeywords addObject:s];
-	}
+	_matchKeywords = [keywordArrayOut copy];
 }
 
-+ (void)cleanUpKeywords:(NSString *)key
++ (void)_cleanUpKeywords:(NSString *)key
 {
-	NSArray<NSDictionary *> *src = [RZUserDefaults() objectForKey:key];
+	NSArray<NSDictionary *> *keywordArrayIn = [RZUserDefaults() arrayForKey:key];
 
-	NSMutableArray<NSString *> *ary = [NSMutableArray array];
+	NSMutableArray<NSString *> *keywordArrayOut = [NSMutableArray array];
 
-	for (NSDictionary<NSString *, NSString *> *e in src) {
-		NSString *s = e[@"string"];
+	for (NSDictionary<NSString *, NSString *> *keyword in keywordArrayIn) {
+		NSString *s = keyword[@"string"];
 
-		NSObjectIsEmptyAssertLoopContinue(s);
-
-		[ary addObject:s];
+		if (s && s.length > 0) {
+			[keywordArrayOut addObject:s];
+		}
 	}
 
-	[ary sortUsingSelector:@selector(caseInsensitiveCompare:)];
+	[keywordArrayOut sortUsingSelector:@selector(caseInsensitiveCompare:)];
 
-	NSMutableArray<NSDictionary *> *saveAry = [NSMutableArray array];
+	NSArray *arrayToSave = keywordArrayOut.stringArrayControllerObjects;
 
-	for (NSString *s in ary) {
-		[saveAry addObject:[@{@"string" : s} mutableCopy]];
-	}
-
-	[RZUserDefaults() setObject:saveAry forKey:key];
+	[RZUserDefaults() setObject:arrayToSave forKey:key];
 }
 
 + (void)cleanUpHighlightKeywords
 {
-	[TPCPreferences cleanUpKeywords:@"Highlight List -> Primary Matches"];
-	[TPCPreferences cleanUpKeywords:@"Highlight List -> Excluded Matches"];
+	[TPCPreferences _cleanUpKeywords:@"Highlight List -> Primary Matches"];
+
+	[TPCPreferences _cleanUpKeywords:@"Highlight List -> Excluded Matches"];
 }
 
 + (nullable NSArray<NSString *> *)highlightMatchKeywords
 {
-	return matchKeywords;
+	return _matchKeywords;
 }
 
 + (nullable NSArray<NSString *> *)highlightExcludeKeywords
 {
-	return excludeKeywords;
+	return _excludeKeywords;
 }
 
 #pragma mark -
@@ -1023,9 +1099,9 @@ static NSMutableArray<NSString *> *excludeKeywords = nil;
 + (void)observeValueForKeyPath:(NSString *)key ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([key isEqualToString:@"Highlight List -> Primary Matches"]) {
-		[TPCPreferences loadMatchKeywords];
+		[TPCPreferences _loadMatchKeywords];
 	} else if ([key isEqualToString:@"Highlight List -> Excluded Matches"]) {
-		[TPCPreferences loadExcludeKeywords];
+		[TPCPreferences _loadExcludeKeywords];
 	}
 }
 
@@ -1039,7 +1115,7 @@ static NSMutableArray<NSString *> *excludeKeywords = nil;
 
 + (void)initPreferences
 {
-	[TPCApplicationInfo updateApplicationRunCount];
+	[TPCApplicationInfo incrementApplicationRunCount];
 
 	// ====================================================== //
 
@@ -1052,15 +1128,15 @@ static NSMutableArray<NSString *> *excludeKeywords = nil;
 
 	[RZUserDefaults() registerDefaults:defaults];
 
-	[TPCPreferences populateDefaultNickname];
+	[TPCPreferences _migrateWorldControllerToVersion600];
 
-	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches"  options:NSKeyValueObservingOptionNew context:NULL];
+	[TPCPreferences _populateDefaultNickname];
+
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
+	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
-	[TPCPreferences loadMatchKeywords];
-	[TPCPreferences loadExcludeKeywords];
-	
-	[IRCCommandIndex populateCommandIndex];
+	[TPCPreferences _loadExcludeKeywords];
+	[TPCPreferences _loadMatchKeywords];
 
 	/* Sandbox Check */
 	[RZUserDefaults() setBool:[TPCApplicationInfo sandboxEnabled]						forKey:@"Security -> Sandbox Enabled"];
@@ -1069,6 +1145,8 @@ static NSMutableArray<NSString *> *excludeKeywords = nil;
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMountainLionOrLater]		forKey:@"System -> Running Mac OS Mountain Lion Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXMavericksOrLater]			forKey:@"System -> Running Mac OS Mavericks Or Newer"];
 	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXYosemiteOrLater]			forKey:@"System -> Running Mac OS Yosemite Or Newer"];
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXElCapitanOrLater]			forKey:@"System -> Running Mac OS El Capitan Or Newer"];
+	[RZUserDefaults() setBool:[XRSystemInformation isUsingOSXSierraOrLater]				forKey:@"System -> Running Mac OS Sierra Or Newer"];
 
 #if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
 	[RZUserDefaults() setBool:YES forKey:@"System -> 3rd-party Services -> Built with HockeyApp Framework"];
@@ -1104,10 +1182,7 @@ static NSMutableArray<NSString *> *excludeKeywords = nil;
 	[RZUserDefaults() setBool:NO forKey:@"System -> Built with Off-the-Record Messaging Support"];
 #endif
 
-	[RZUserDefaults() setInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
-
-	/* Setup loggin. */
-	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
+	[RZUserDefaults() setUnsignedInteger:TPCPreferencesDictionaryVersion forKey:@"TPCPreferencesDictionaryVersion"];
 }
 
 #pragma mark -

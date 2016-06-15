@@ -38,8 +38,7 @@
 
 #import "TextualApplication.h"
 
-TEXTUAL_EXTERN NSString * const IRCWorldControllerDefaultsStorageKey;
-TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsStorageKey; // the key within world controller maintaining the client list
+TEXTUAL_EXTERN NSString * const IRCWorldControllerClientListDefaultsKey;
 
 TEXTUAL_EXTERN NSString * const IRCWorldDateHasChangedNotification;
 
@@ -50,7 +49,6 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 @property (nonatomic, assign) NSInteger messagesReceived;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthIn;
 @property (nonatomic, assign) TXUnsignedLongLong bandwidthOut;
-@property (nonatomic, assign) BOOL isPopulatingSeeds;
 @property (nonatomic, copy) NSArray *clientList; // clientList as a proxy setter/getter for the internal storage.
 @property (nonatomic, assign) double textSizeMultiplier;
 
@@ -60,7 +58,7 @@ TEXTUAL_EXTERN NSString * const IRCWorldClientListWasModifiedNotification;
 - (void)save;
 - (void)savePeriodically;
 
-- (NSDictionary *)dictionaryValue;
+- (NSArray *)clientConfigurations;
 
 - (void)prepareForApplicationTermination;
 

@@ -523,7 +523,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 		[pluginConcreteObject setIsProcessedInBulk:YES];
 
-		[sharedPluginManager() postNewMessageEventForViewController:self withObject:pluginConcreteObject];
+		[THOPluginDispatcher didPostNewMessage:pluginConcreteObject forViewController:self];
 	}
 }
 
@@ -874,7 +874,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 				
 				/* Inform plugins. */
 				if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsNewMessagePostedEvent]) {
-					[sharedPluginManager() postNewMessageEventForViewController:self withObject:resultInfo[@"pluginConcreteObject"]];
+					[THOPluginDispatcher didPostNewMessage:resultInfo[@"pluginConcreteObject"] forViewController:self];
 				}
 
 				/* Limit lines. */

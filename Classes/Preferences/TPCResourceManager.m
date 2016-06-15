@@ -35,10 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TPCResourceManagerPrivate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const TPCResourceManagerBundleDocumentTypeExtension					= @".bundle";
@@ -49,16 +45,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 @implementation TPCResourceManager
 
-+ (void)copyResourcesToCustomAddonsFolder
++ (void)copyResourcesToApplicationSupportFolder
 {
-	/* Copy specific resource files to the custom addons folder. */
-	/* For now, we only are copying the text file containing information
-	 about installing custom scripts. */
-	
 	/* Add a system link for the unsupervised scripts folder if it exists. */
-	NSString *sourcePath =  [TPCPathInfo systemUnsupervisedScriptFolderPath];
+	NSString *sourcePath = [TPCPathInfo customScriptsFolderPath];
 
-	NSString *destinationPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Custom Scripts/"];
+	NSString *destinationPath = [[TPCPathInfo applicationSupportFolderPathInGroupContainer] stringByAppendingPathComponent:@"/Custom Scripts/"];
 	
 	if ([RZFileManager() fileExistsAtPath:sourcePath] &&
 		[RZFileManager() fileExistsAtPath:destinationPath] == NO)
@@ -69,12 +61,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Add a system link for the iCloud folder if the iCloud folder exists. */
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
-		destinationPath = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/iCloud Resources/"];
+		destinationPath = [[TPCPathInfo applicationSupportFolderPathInGroupContainer] stringByAppendingPathComponent:@"/iCloud Resources/"];
 		
 		sourcePath = [sharedCloudManager() ubiquitousContainerPath];
 		
 		if ([RZFileManager() fileExistsAtPath:destinationPath] == NO) {
-			[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL]; // We don't care about errors.
+			[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL];
 		}
 	}
 #endif
@@ -82,7 +74,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 + (nullable NSDictionary<NSString *, id> *)loadContentsOfPropertyListInResources:(NSString *)name
 {
-	PointerIsEmptyAssertReturn(name, nil)
+	NSParameterAssert(name != nil);
 
 	NSString *defaultsPath = [RZMainBundle() pathForResource:name ofType:@"plist"];
 
@@ -93,13 +85,13 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 @end
 
+#pragma mark -
+
 @implementation TPCResourceManagerDocumentTypeImporter
 
 - (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError
 {
-	PointerIsEmptyAssertReturn(url, NO);
-
-	NSString *filePath = [[url filePathURL] absoluteString];
+	NSString *filePath = url.filePathURL.absoluteString;
 
 	if ([filePath hasSuffix:TPCResourceManagerScriptDocumentTypeExtension]) {
 		[self performImportOfScriptFile:url];
@@ -123,18 +115,17 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (void)performImportOfPluginFile:(NSURL *)url
 {
-	PointerIsEmptyAssert(url);
+	NSParameterAssert(url != nil);
 
-	NSString *filename = [url lastPathComponent];
+	NSString *filename = url.lastPathComponent;
 
-	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
 															 title:TXTLS(@"Prompts[1130][1]", filename)
 													 defaultButton:TXTLS(@"Prompts[0001]")
 												   alternateButton:TXTLS(@"Prompts[0002]")];
 
 	if (performInstall == NO) {
-		return; // Do not install.
+		return;
 	}
 
 	NSString *newPath = [[TPCPathInfo customExtensionFolderPath] stringByAppendingPathComponent:filename];
@@ -142,10 +133,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
 
 	if (didImport) {
-		NSString *_filename = [filename stringByDeletingPathExtension];
+		NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
 
 		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1128][2]")
-										   title:TXTLS(@"Prompts[1128][1]", [_filename stringByDeletingPathExtension])
+										   title:TXTLS(@"Prompts[1128][1]", filenameWithoutExtension)
 								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil];
 	}
@@ -156,9 +147,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
 {
-	NSString *scriptsPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
+	NSString *scriptsPath = [TPCPathInfo customScriptsFolderPath];
 
-	if ([[url relativePath] hasPrefix:scriptsPath] == NO) {
+	if ([url.relativePath hasPrefix:scriptsPath] == NO) {
 		if (outError) {
 			NSMutableDictionary<NSDictionary *, id> *userInfo = [NSMutableDictionary dictionary];
 
@@ -178,7 +169,9 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (void)performImportOfScriptFile:(NSURL *)url
 {
-	NSString *filename = [url lastPathComponent];
+	NSParameterAssert(url != nil);
+
+	NSString *filename = url.lastPathComponent;
 
 	/* Ask user before installing. */
 	BOOL performInstall = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1130][2]")
@@ -191,7 +184,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	}
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
-	NSString *newPath = [[TPCPathInfo systemUnsupervisedScriptFolderPath] stringByAppendingPathComponent:filename];
+	NSString *newPath = [[TPCPathInfo customScriptsFolderPath] stringByAppendingPathComponent:filename];
 
 	BOOL didImport = [self import:url into:[NSURL fileURLWithPath:newPath]];
 
@@ -199,19 +192,20 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		[self performImportOfScriptFilePostflight:filename];
 	}
 #else
-	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderPath] isDirectory:YES];
+	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPath] isDirectory:YES];
 
 	if ([RZFileManager() fileExistsAtPath:[folderRep relativePath]] == NO) {
-		folderRep = [NSURL fileURLWithPath:[TPCPathInfo systemUnsupervisedScriptFolderRootPath]];
+		folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPathLeading] isDirectory:YES];
 	}
 
 	NSString *bundleID = [TPCApplicationInfo applicationBundleIdentifier];
 
 	NSSavePanel *d = [NSSavePanel savePanel];
 
-	[d setDelegate:self];
+	[d setDelegate:(id)self];
 
 	[d setCanCreateDirectories:YES];
+
 	[d setDirectoryURL:folderRep];
 
 	[d setTitle:TXTLS(@"Prompts[1125][1]")];
@@ -242,10 +236,12 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 - (void)performImportOfScriptFilePostflight:(NSString *)filename
 {
-	NSString *_filename = [filename stringByDeletingPathExtension];
+	NSParameterAssert(filename != nil);
 
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1127][2]", _filename)
-									   title:TXTLS(@"Prompts[1127][1]", _filename)
+	NSString *filenameWithoutExtension = filename.stringByDeletingPathExtension;
+
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1127][2]", filenameWithoutExtension)
+									   title:TXTLS(@"Prompts[1127][1]", filenameWithoutExtension)
 							   defaultButton:TXTLS(@"Prompts[0005]")
 							 alternateButton:nil];
 }

@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSTableView (TXTableViewHelper)
 
@@ -46,7 +46,7 @@
 
 - (NSInteger)rowUnderMouse
 {
-	NSPoint ml = [[self window] mouseLocationOutsideOfEventStream];
+	NSPoint ml = self.window.mouseLocationOutsideOfEventStream;
 
 	NSPoint pt = [self convertPoint:ml fromView:nil];
 
@@ -54,3 +54,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

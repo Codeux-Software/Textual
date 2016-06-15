@@ -47,8 +47,7 @@
 
 #define _savePeriodicallyThreshold		300
 
-NSString * const IRCWorldControllerDefaultsStorageKey = @"World Controller";
-NSString * const IRCWorldControllerClientListDefaultsStorageKey = @"clients";
+NSString * const IRCWorldControllerClientListDefaultsKey = @"World Controller Client Configurations";
 
 NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
 
@@ -89,19 +88,19 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)setupConfiguration
 {
-	self.isPopulatingSeeds = YES;
+	self.isImportingConfiguration = YES;
 	
-	NSDictionary *config = [TPCPreferences loadWorld];
+	NSArray *config = [TPCPreferences clientList];
 
-	for (NSDictionary *e in config[IRCWorldControllerClientListDefaultsStorageKey]) {
+	for (NSDictionary *e in config) {
 		[self createClient:e reload:YES];
 	}
 
-	if ([config boolForKey:@"soundIsMuted"]) {
+	if ([TPCPreferences soundIsMuted]) {
 		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
 	}
 
-	self.isPopulatingSeeds = NO;
+	self.isImportingConfiguration = NO;
 }
 
 - (void)setupOtherServices
@@ -113,7 +112,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[RZNotificationCenter() addObserver:self selector:@selector(userDefaultsDidChange:) name:TPCPreferencesUserDefaultsDidChangeNotification object:nil];
 }
 
-- (NSDictionary *)dictionaryValue
+- (NSArray *)clientConfigurations
 {
 	NSMutableArray *ary = [NSMutableArray array];
 
@@ -121,18 +120,12 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		[ary addObject:[u dictionaryValue]];
 	}
 
-	NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-	
-	dict[IRCWorldControllerClientListDefaultsStorageKey] = ary;
-	
-	dict[@"soundIsMuted"] = @([sharedGrowlController() areNotificationSoundsDisabled]);
-
-	return dict;
+	return [ary copy];
 }
 
 - (void)save
 {
-	[TPCPreferences saveWorld:[self dictionaryValue]];
+	[TPCPreferences setClientList:[self clientConfigurations]];
 }
 
 - (void)savePeriodically
@@ -777,7 +770,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {
-		[self destroyClientInCloud:u];
+		[self cloud_destroyClient:u];
 	}
 #endif
 

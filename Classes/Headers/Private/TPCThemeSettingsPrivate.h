@@ -35,18 +35,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCPreferencesImportExport ()
-+ (void)import:(id)object withKey:(id)key;
+@interface TPCThemeSettings ()
+- (void)reloadWithPath:(NSString *)path;
 
-+ (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict;
-+ (void)importWorldControllerClientConfiguration:(NSDictionary<NSString *, id> *)client isCloudBasedImport:(BOOL)isCloudImport;
-
-+ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentationForCloud;
-+ (NSDictionary<NSString *, id> *)exportedPreferencesDictionaryRepresentation;
+- (NSString *)templateNameWithLineType:(TVCLogLineType)type;
 @end
 
 NS_ASSUME_NONNULL_END

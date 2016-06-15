@@ -174,7 +174,7 @@ NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"
 
 - (NSURL *)fileWritePath
 {
-	return [TPCPathInfo logFileFolderLocation];
+	return [TPCPathInfo transcriptFolderURL];
 }
 
 - (NSURL *)buildPath

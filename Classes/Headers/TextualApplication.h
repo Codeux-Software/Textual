@@ -300,14 +300,10 @@
 	#import "IRCTreeItem.h"
 	#import "IRCUser.h"
 	#import "IRCWorld.h"
-	#import "IRCWorldCloudExtension.h"
 
 	/* Framework Extensions (Helpers) */
 	#import "NSColorHelper.h"
-	#import "NSObjectHelper.h"
 	#import "NSStringHelper.h"
-	#import "NSTableVIewHelper.h"
-	#import "NSViewHelper.h"
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
@@ -334,8 +330,6 @@
 
 	/* Helpers */
 	#import "THOPluginProtocol.h"
-	#import "THOPluginItem.h"
-	#import "THOPluginManager.h"
 	#import "THOUnicodeHelper.h"
 
 	/* Library */
@@ -361,6 +355,7 @@
 	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesCloudSyncExtension.h"
 	#import "TPCPreferencesImportExport.h"
+	#import "TPCPreferencesReload.h"
 	#import "TPCPreferencesUserDefaults.h"
 	#import "TPCResourceManager.h"
 	#import "TPCThemeController.h"

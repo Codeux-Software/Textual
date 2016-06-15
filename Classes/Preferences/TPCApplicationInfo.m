@@ -35,25 +35,13 @@
 
  *********************************************************************** */
 
-#import "BuildConfig.h"
-
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCApplicationInfo
 
 + (NSString *)applicationName
 {
-	NSString *name = TXBundleBuildProductName;
-
-	NSInteger spacePosition = [name stringPosition:NSStringWhitespacePlaceholder];
-	
-	if (spacePosition > 0) {
-		return [name substringToIndex:spacePosition];
-	} else {
-		return  name;
-	}
+	return TXBundleBuildProductName;
 }
 
 + (NSString *)applicationVersion
@@ -66,9 +54,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return TXBundleBuildVersionShort;
 }
 
-+ (NSInteger)applicationProcessID
++ (int)applicationProcessID
 {
-	return [RZProcessInfo() processIdentifier];
+	return RZProcessInfo().processIdentifier;
 }
 
 + (NSString *)applicationBundleIdentifier
@@ -88,53 +76,62 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSDictionary<NSString *, id> *)applicationInfoPlist
 {
-	return [RZMainBundle() infoDictionary];
+	return RZMainBundle().infoDictionary;
 }
 
 + (BOOL)sandboxEnabled
 {
-	NSString *suffix = [NSString stringWithFormat:@"Containers/%@/Data", [TPCApplicationInfo applicationBundleIdentifier]];
-	
-	return [NSHomeDirectory() hasSuffix:suffix];
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	return YES;
+#else
+	return NO;
+#endif
 }
 
-+ (NSDate *)applicationLaunchDate
++ (nullable NSDate *)applicationLaunchDate
 {
 	NSRunningApplication *runningApp = [NSRunningApplication currentApplication];
-	
-	/* This can be nil when launched from something not launchd. i.e. Xcode */
-	return [runningApp launchDate];
+
+	return runningApp.launchDate;
 }
 
 + (NSTimeInterval)timeIntervalSinceApplicationLaunch
 {
 	NSDate *launchDate = [TPCApplicationInfo applicationLaunchDate];
-	
-	PointerIsEmptyAssertReturn(launchDate, 0);
-	
-	return [NSDate secondsSinceUnixTimestamp:[launchDate timeIntervalSince1970]];
+
+	if (launchDate == nil) {
+		return 0;
+	}
+
+	return (launchDate.timeIntervalSinceNow * (-1));
 }
 
 + (NSTimeInterval)timeIntervalSinceApplicationInstall
 {
-	NSTimeInterval appStartTime = [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
-	
-	return ([RZUserDefaults() integerForKey:@"TXRunTime"] + appStartTime);
+	NSTimeInterval runTime = [TPCApplicationInfo timeIntervalSinceApplicationLaunch];
+
+	NSTimeInterval runTimeTotal = [RZUserDefaults() doubleForKey:@"TXRunTime"];
+
+	return (runTimeTotal + runTime);
 }
 
 + (void)saveTimeIntervalSinceApplicationInstall
 {
-	[RZUserDefaults() setInteger:[TPCApplicationInfo timeIntervalSinceApplicationInstall] forKey:@"TXRunTime"];
+	NSTimeInterval timeInterval = [TPCApplicationInfo timeIntervalSinceApplicationInstall];
+
+	[RZUserDefaults() setDouble:timeInterval forKey:@"TXRunTime"];
 }
 
-+ (NSInteger)applicationRunCount
++ (NSUInteger)applicationRunCount
 {
-	return [RZUserDefaults() integerForKey:@"TXRunCount"];
+	return [RZUserDefaults() unsignedIntegerForKey:@"TXRunCount"];
 }
 
-+ (void)updateApplicationRunCount
++ (void)incrementApplicationRunCount
 {
-	[RZUserDefaults() setInteger:([TPCApplicationInfo applicationRunCount] + 1) forKey:@"TXRunCount"];
+	NSUInteger runCount = ([TPCApplicationInfo applicationRunCount] + 1);
+
+	[RZUserDefaults() setUnsignedInteger:runCount forKey:@"TXRunCount"];
 }
 
 @end

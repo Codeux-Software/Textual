@@ -35,10 +35,18 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface NSTableView (TXTableViewHelper)
-@property (readonly) NSInteger rowUnderMouse;
+@interface NSView (TXViewHelper)
+/* If this view is attached to an instance of TXMainWindow,
+ then this returns the instance its attached to. */
+@property (readonly, nullable) TVCMainWindow *mainWindow;
 
-+ (NSFont *)preferredGlobalTableViewFont;
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint;
 @end
+
+@interface NSCell (TXCellHelper)
+@property (readonly, nullable) TVCMainWindow *mainWindow;
+@end
+
+NS_ASSUME_NONNULL_END

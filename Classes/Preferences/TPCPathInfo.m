@@ -35,128 +35,140 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "BuildConfig.h"
-
-#include <unistd.h>         // -------
-#include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
 #include <pwd.h>            // -------
+#include <sys/types.h>      // --- | For +userHomeDirectoryPathOutsideSandbox
+#include <unistd.h>         // -------
+#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPathInfo
 
-#pragma mark -
-#pragma mark Misc. Paths
++ (void)_createDirectoryOrOutputError:(NSString *)path
+{
+	NSParameterAssert(path != nil);
+
+	if ([RZFileManager() fileExistsAtPath:path]) {
+		return;
+	}
+
+	NSError *createDirectoryError = nil;
+
+	if ([RZFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
+		LogToConsole(@"Failed to create directory at path: '%@' - %@",
+			path, [createDirectoryError localizedDescription])
+	}
+}
+
++ (NSString *)applicationBundlePath
+{
+	return RZMainBundle().bundlePath;
+}
+
++ (nullable NSString *)applicationCachesFolderPath
+{
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+	
+	if (pathArray.count == 0) {
+		return nil;
+	}
+
+	NSString *endPath = [NSString stringWithFormat:@"/%@/", TXBundleBuildProductIdentifier];
+	
+	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+	
+	return basePath;
+}
+
++ (nullable NSString *)applicationGroupContainerPath
+{
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+
+	NSURL *basePath = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
+
+	if (basePath == nil) {
+		return nil;
+	}
+
+	return [basePath relativePath];
+
+#else
+
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if (pathArray.count == 0) {
+		return nil;
+	}
+
+	NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
+
+	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
+
+#endif
+}
+
++ (nullable NSString *)applicationLogsFolderPath
+{
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if (pathArray.count == 0) {
+		return nil;
+	}
+
+	NSString *endPath = [NSString stringWithFormat:@"/Logs/%@/", TXBundleBuildProductIdentifier];
+
+	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:endPath];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
+}
+
++ (NSString *)applicationResourcesFolderPath
+{
+	return RZMainBundle().resourcePath;
+}
 
 + (NSString *)applicationTemporaryFolderPath
 {
 	return NSTemporaryDirectory();
 }
 
-+ (nullable NSString *)applicationCachesFolderPath
++ (nullable NSString *)applicationSupportFolderPathInGroupContainer
 {
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-	
-	if ([searchArray count]) {
-		NSString *endPath = [NSString stringWithFormat:@"/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
-		
-		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:endPath];
-		
-		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
-			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-		
-		return basePath;
-	}
-	
-	return nil;
-}
+	NSString *sourcePath = [TPCPathInfo applicationGroupContainerPath];
 
-+ (nullable NSString *)applicationLogsFolderPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-
-	if ([searchArray count]) {
-		NSString *endPath = [NSString stringWithFormat:@"/Logs/%@/", [TPCApplicationInfo applicationBundleIdentifier]];
-
-		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:endPath];
-
-		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
-			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-
-		return basePath;
+	if (sourcePath == nil) {
+		return nil;
 	}
 
-	return nil;
-}
-
-+ (nullable NSString *)applicationGroupContainerPath
-{
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-	NSURL *url = [RZFileManager() containerURLForSecurityApplicationGroupIdentifier:TXBundleBuildGroupContainerIdentifier];
-
-	return [url relativePath];
-#else
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-
-	if ([searchArray count]) {
-		NSString *endPath = [NSString stringWithFormat:@"/Group Containers/%@/", TXBundleBuildGroupContainerIdentifier];
-
-		NSString *dest = [searchArray[0] stringByAppendingPathComponent:endPath];
-
-		if (dest) {
-			if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-				[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-			}
-
-			return dest;
-		}
-	}
-
-	return nil;
-#endif
-}
-
-+ (nullable NSString *)applicationLocalContainerApplicationSupportPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-
-	if ([searchArray count]) {
-		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Textual/"];
-
-		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
-			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-
-		return basePath;
-	}
-
-	return nil;
-}
-
-+ (nullable NSString *)applicationSupportFolderPath
-{
-	return [TPCPathInfo applicationGroupContainerApplicationSupportPath];
-}
-
-+ (nullable NSString *)applicationGroupContainerApplicationSupportPath
-{
-	NSString *dest = [TPCPathInfo applicationGroupContainerPath];
-	
-	if (dest) {
-		dest = [dest stringByAppendingPathComponent:@"/Library/Application Support/Textual/"];
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Library/Application Support/Textual/"];
 		
-		if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-			[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
 		
-		return dest;
+	return basePath;
+}
+
++ (nullable NSString *)applicationSupportFolderPathInLocalContainer
+{
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+
+	if (pathArray.count == 0) {
+		return nil;
 	}
-	
-	return nil;
+
+	NSString *basePath = [pathArray.firstObject stringByAppendingPathComponent:@"/Textual/"];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
 }
 
 + (NSString *)systemDiagnosticReportsFolderPath
@@ -164,36 +176,134 @@ NS_ASSUME_NONNULL_BEGIN
 	return @"/Library/Logs/DiagnosticReports";
 }
 
-+ (NSString *)localUserDiagnosticReportsFolderPath
++ (NSString *)userDiagnosticReportsFolderPath
 {
-	NSString *homefolder = [TPCPathInfo userHomeDirectoryPathOutsideSandbox];
+	NSString *sourcePath = [TPCPathInfo userHomeFolderPath];
 
-	return [homefolder stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
+	return [sourcePath stringByAppendingPathComponent:@"/Library/Logs/DiagnosticReports"];
 }
 
-+ (NSString *)customThemeFolderPath
++ (nullable NSString *)customExtensionFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Styles/"];
-	
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
+
+	if (sourcePath == nil) {
+		return nil;
 	}
-	
-	return dest;
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Extensions/"];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
 }
 
-+ (NSString *)customExtensionFolderPath
++ (nullable NSString *)customThemeFolderPath
 {
-	NSString *dest = [[TPCPathInfo applicationGroupContainerApplicationSupportPath] stringByAppendingPathComponent:@"/Extensions/"];
-	
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
+
+	if (sourcePath == nil) {
+		return nil;
 	}
-	
-	return dest;
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Styles/"];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
 }
+
++ (nullable NSString *)customScriptsFolderPath
+{
+	NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
+
+	if (pathArray.count == 0) {
+		return nil;
+	}
+
+	NSString *basePath = pathArray.firstObject;
+
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 0
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+#endif
+	
+	return basePath;
+}
+
++ (nullable NSString *)customScriptsFolderPathLeading
+{
+	NSString *sourcePath = [TPCPathInfo customScriptsFolderPath];
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	return sourcePath.stringByDeletingLastPathComponent;
+}
+
++ (NSString *)bundledExtensionFolderPath
+{
+	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+
+	return [sourcePath stringByAppendingPathComponent:@"/Extensions/"];
+}
+
++ (NSString *)bundledScriptFolderPath
+{
+	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+
+	return [sourcePath stringByAppendingPathComponent:@"/Scripts/"];
+}
+
++ (NSString *)bundledThemeFolderPath
+{
+	NSString *sourcePath = [TPCPathInfo applicationResourcesFolderPath];
+
+	return [sourcePath stringByAppendingPathComponent:@"/Styles/"];
+}
+
++ (nullable NSString *)userDownloadsFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
+	
+	if (searchArray.count == 0) {
+		return nil;
+	}
+
+	return searchArray.firstObject;
+}
+
++ (nullable NSString *)userPreferencesFolderPath
+{
+	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+
+	if (searchArray.count == 0) {
+		return nil;
+	}
+
+	return [searchArray.firstObject stringByAppendingPathComponent:@"/Preferences/"];
+}
+
++ (NSString *)userHomeFolderPath
+{
+#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
+	uid_t userId = getuid();
+
+	struct passwd *pw = getpwuid(userId);
+	
+	return @(pw->pw_dir);
+#else
+	return NSHomeDirectory();
+#endif
+}
+
+@end
+
+#pragma mark -
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+@implementation TPCPathInfo (TPCPathInfoCloudExtension)
+
 + (nullable NSString *)applicationUbiquitousContainerPath
 {
 	return [sharedCloudManager() ubiquitousContainerPath];
@@ -201,21 +311,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)cloudCustomThemeFolderPath
 {
-	NSString *source = [TPCPathInfo applicationUbiquitousContainerPath];
-	
-	PointerIsEmptyAssertReturn(source, nil); // We need a source folder first...
-	
-	NSString *dest = [source stringByAppendingPathComponent:@"/Documents/Styles/"];
-	
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
+	NSString *sourcePath = [TPCPathInfo applicationUbiquitousContainerPath];
+
+	if (sourcePath == nil) {
+		return nil;
 	}
-	
-	return dest;
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Documents/Styles/"];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
 }
 
-+ (void)openCloudPathOrErrorIfUnavailable:(NSString *)path
++ (void)_openCloudPathOrErrorIfUnavailable:(NSString *)path
 {
+	NSParameterAssert(path != nil);
+
 	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"Prompts[1105][2]")
@@ -223,162 +335,91 @@ NS_ASSUME_NONNULL_BEGIN
 								 defaultButton:TXTLS(@"Prompts[1040]")
 							   alternateButton:nil
 								   otherButton:nil];
-	} else {
-		[RZWorkspace() openFile:path];
-	}
-}
 
-+ (void)openApplicationUbiquitousContainer
-{
-	[TPCPathInfo openCloudPathOrErrorIfUnavailable:[TPCPathInfo applicationUbiquitousContainerPath]];
-}
-
-+ (void)openCloudCustomThemeFolder
-{
-	[TPCPathInfo openCloudPathOrErrorIfUnavailable:[TPCPathInfo cloudCustomThemeFolderPath]];
-}
-#endif
-
-+ (NSString *)bundledScriptFolderPath
-{
-	return [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Scripts/"];
-}
-
-+ (NSString *)bundledThemeFolderPath
-{
-	return [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Styles/"];
-}
-
-+ (NSString *)bundledExtensionFolderPath
-{
-	return [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:@"/Extensions/"];
-}
-
-+ (NSString *)applicationResourcesFolderPath
-{
-	return [RZMainBundle() resourcePath];
-}
-
-+ (NSString *)applicationBundlePath
-{
-	return [RZMainBundle() bundlePath];
-}
-
-+ (nullable NSString *)systemUnsupervisedScriptFolderRootPath
-{
-	NSString *oldpath = [TPCPathInfo systemUnsupervisedScriptFolderPath]; // Returns our path.
-		
-	return [oldpath stringByDeletingLastPathComponent]; // Remove bundle ID from path.
-}
-
-+ (nullable NSString *)systemUnsupervisedScriptFolderPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationScriptsDirectory, NSUserDomainMask, YES);
-
-	if ([searchArray count]) {
-
-#if TEXTUAL_BUILT_INSIDE_SANDBOX == 1
-		return searchArray[0];
-#else
-		NSString *basePath = searchArray[0];
-
-		if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
-			[RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:NULL];
-		}
-
-		return basePath;
-#endif
-
-	}
-	
-	return nil;
-}
-
-+ (nullable NSString *)userDownloadFolderPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES);
-	
-	if ([searchArray count]) {
-		return searchArray[0];
-	}
-	
-	return nil;
-}
-
-+ (nullable NSString *)userPreferencesFolderPath
-{
-	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-
-	if ([searchArray count]) {
-		NSString *basePath = [searchArray[0] stringByAppendingPathComponent:@"/Preferences/"];
-
-		return basePath;
-	}
-
-	return nil;
-}
-
-+ (NSString *)userHomeDirectoryPathOutsideSandbox
-{
-	struct passwd *pw = getpwuid(getuid());
-	
-	return @(pw->pw_dir);
-}
-
-#pragma mark -
-#pragma mark Logging
-
-static NSURL *logToDiskLocationResolvedBookmark;
-
-+ (void)startUsingLogLocationSecurityScopedBookmark
-{
-	// URLByResolvingBookmarkData throws some weird shit during shutdown.
-	// We're just going to loose whatever long we were wanting to save.
-	// Probably the disconnect message. Oh well.
-	if ([masterController() applicationIsTerminating]) {
 		return;
 	}
-	
+
+	(void)[RZWorkspace() openFile:path];
+}
+
++ (void)openApplicationUbiquitousContainerPath
+{
+	NSString *sourcePath = [TPCPathInfo applicationUbiquitousContainerPath];
+
+	[TPCPathInfo _openCloudPathOrErrorIfUnavailable:sourcePath];
+}
+
++ (void)openCloudCustomThemeFolderPath
+{
+	NSString *sourcePath = [TPCPathInfo cloudCustomThemeFolderPath];
+
+	[TPCPathInfo _openCloudPathOrErrorIfUnavailable:sourcePath];
+}
+
+@end
+#endif
+
+#pragma mark -
+
+@implementation TPCPathInfo (TPCPathInfoTranscriptFolderExtension)
+
+static NSURL *_transcriptFolderURL = nil;
+
++ (nullable NSURL *)transcriptFolderURL
+{
+	return _transcriptFolderURL;
+}
+
++ (void)setTranscriptFolderURL:(nullable NSData *)transcriptFolderURL
+{
+	if ( _transcriptFolderURL) {
+		[_transcriptFolderURL stopAccessingSecurityScopedResource];
+		 _transcriptFolderURL = nil;
+	}
+
+	[RZUserDefaults() setObject:transcriptFolderURL forKey:@"LogTranscriptDestinationSecurityBookmark_5"];
+
+	[TPCPathInfo startUsingTranscriptFolderURL];
+}
+
++ (void)startUsingTranscriptFolderURL
+{
 	NSData *bookmark = [RZUserDefaults() dataForKey:@"LogTranscriptDestinationSecurityBookmark_5"];
 
-	PointerIsEmptyAssert(bookmark)
+	if (bookmark == nil) {
+		return;
+	}
+
+	BOOL resolvedBookmarkIsStale = YES;
 	
-	NSError *resolveError = nil;
+	NSError *resolvedBookmarkError = nil;
 	
-	BOOL isStale = YES;
-	
-	NSURL *resolvedBookmark = [NSURL URLByResolvingBookmarkData:bookmark
-														options:NSURLBookmarkResolutionWithSecurityScope
-												  relativeToURL:nil
-											bookmarkDataIsStale:&isStale
-														  error:&resolveError];
-	
-	if (resolveError) {
-		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
-	} else {
-			 logToDiskLocationResolvedBookmark = [resolvedBookmark copy];
+	NSURL *resolvedBookmark =
+	[NSURL URLByResolvingBookmarkData:bookmark
+							  options:NSURLBookmarkResolutionWithSecurityScope
+						relativeToURL:nil
+				  bookmarkDataIsStale:&resolvedBookmarkIsStale
+								error:&resolvedBookmarkError];
+
+	if (resolvedBookmarkIsStale) {
+		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1134][2]")
+												 title:TXTLS(@"Prompts[1134][1]")
+										 defaultButton:TXTLS(@"Prompts[0005]")
+									   alternateButton:nil];
+	}
+
+	if (resolvedBookmark == nil) {
+		LogToConsole(@"Error creating bookmark for URL: %@",
+			[resolvedBookmarkError localizedDescription])
+
+		return;
+	}
+
+	_transcriptFolderURL = resolvedBookmark;
 		
-		if ([logToDiskLocationResolvedBookmark startAccessingSecurityScopedResource] == NO) {
-			DebugLogToConsole(@"Failed to access bookmark.");
-		}
+	if ([_transcriptFolderURL startAccessingSecurityScopedResource] == NO) {
+		LogToConsole(@"Failed to access bookmark")
 	}
-}
-
-+ (nullable NSURL *)logFileFolderLocation
-{
-	return logToDiskLocationResolvedBookmark;
-}
-
-+ (void)setLogFileFolderLocation:(NSData *)value
-{
-	if ( logToDiskLocationResolvedBookmark) {
-		[logToDiskLocationResolvedBookmark stopAccessingSecurityScopedResource];
-		 logToDiskLocationResolvedBookmark = nil;
-	}
-
-	[RZUserDefaults() setObject:value forKey:@"LogTranscriptDestinationSecurityBookmark_5"];
-
-	[TPCPathInfo startUsingLogLocationSecurityScopedBookmark];
 }
 
 @end

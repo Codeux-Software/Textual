@@ -294,7 +294,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	if ([TPCPreferences syncPreferencesToTheCloud]) {
 		if (syncToCloudIsSame == NO) {
 			if (self.config.excludedFromCloudSyncing == NO) {
-				[worldController() removeClientFromListOfDeletedClients:[self uniqueIdentifier]];
+				[worldController() cloud_removeClientFromListOfDeletedClients:[self uniqueIdentifier]];
 			}
 		}
 	}
@@ -1057,7 +1057,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if ([TPCPreferences textEncryptionIsEnabled] == NO) {
 		return NO;
-	} else if ([nickname isChannelName:self]) { // Do not allow channel names...
+	} else if ([nickname isChannelNameOn:self]) { // Do not allow channel names...
 		return NO;
 	} else if ([[self localNickname] isEqualIgnoringCase:nickname]) { // Do not allow the local user...
 		return NO;
@@ -1133,7 +1133,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	NSString *target = [referenceMessage paramAt:0];
 
-	if ([referenceMessage senderIsServer] || [target isChannelName:self]) {
+	if ([referenceMessage senderIsServer] || [target isChannelNameOn:self]) {
 		if (decodingCallback) {
 			decodingCallback(messageBody, NO);
 		}
@@ -1218,7 +1218,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 			
-			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick, text);
+			formattedMessage = TXTLS(nformatString, [[target name] channelNameWithoutBang], nick, text);
 
 			break;
 		}
@@ -1238,7 +1238,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, [[target name] channelNameToken], nick);
+			formattedMessage = TXTLS(nformatString, [[target name] channelNameWithoutBang], nick);
 
 			break;
 		}
@@ -1246,7 +1246,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSString *nformatString = [self localizedSpokenMessageForEvent:type];
 
-			formattedMessage = TXTLS(nformatString, [text channelNameToken], nick);
+			formattedMessage = TXTLS(nformatString, [text channelNameWithoutBang], nick);
 
 			break;
 		}
@@ -2019,7 +2019,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSArray *nicks = [uncutInput componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 
-			if (NSObjectIsNotEmpty(nicks) && [[nicks lastObject] isChannelName:self]) {
+			if (NSObjectIsNotEmpty(nicks) && [[nicks lastObject] isChannelNameOn:self]) {
 				targetChannelName = [nicks lastObject];
 
 				NSMutableArray *nicksMutable = [nicks mutableCopy];
@@ -2034,7 +2034,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			for (NSString *nick in nicks) {
-				if ([nick isHostmaskNicknameOnClient:self] && [nick isChannelName:self] == NO) {
+				if ([nick isHostmaskNicknameOn:self] && [nick isChannelNameOn:self] == NO) {
 					[self send:uppercaseCommand, nick, targetChannelName, nil];
 				}
 			}
@@ -2051,7 +2051,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				targetChannelName = [s getTokenAsString];
 
-				if ([targetChannelName isChannelName:self] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
+				if ([targetChannelName isChannelNameOn:self] == NO && [targetChannelName isEqualToString:@"0"] == NO) {
 					targetChannelName = [@"#" stringByAppendingString:targetChannelName];
 				}
 			}
@@ -2066,13 +2066,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 				
-			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelNameOn:self] == NO) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
 			}
 
-			NSAssertReturn([targetChannelName isChannelName:self]);
+			NSAssertReturn([targetChannelName isChannelNameOn:self]);
 
 			NSString *nickname = [s getTokenAsString];
 			NSString *reason = [s trimmedString];
@@ -2193,7 +2193,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			/* Destination. */
 			if (selChannel && type == TVCLogLineActionType && secretMessage == NO) {
 				targetChannelName = [selChannel name];
-			} else if (selChannel && [selChannel isChannel] && [[s string] isChannelName:self] == NO && destinationPrefix) {
+			} else if (selChannel && [selChannel isChannel] && [[s string] isChannelNameOn:self] == NO && destinationPrefix) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
@@ -2244,7 +2244,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				if (secretMessage == NO) {
 					if (channel == nil) {
-						if ([destinationChannelName isChannelName:self] == NO) {
+						if ([destinationChannelName isChannelNameOn:self] == NO) {
 							channel = [worldController() createPrivateMessage:destinationChannelName client:self];
 						}
 					}
@@ -2281,7 +2281,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 						NSString *sendMessage = encodedString;
 
-						if ([sendChannelName isChannelName:self]) {
+						if ([sendChannelName isChannelNameOn:self]) {
 							if (destinationPrefix) {
 								sendChannelName = [destinationPrefix stringByAppendingString:sendChannelName];
 							}
@@ -2313,9 +2313,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5054: // Command: PART
 		case 5036: // Command: LEAVE
 		{
-			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelNameOn:self] == NO) {
 				targetChannelName = [selChannel name];
-			} else if (selChannel && [selChannel isPrivateMessage] && [uncutInput isChannelName:self] == NO) {
+			} else if (selChannel && [selChannel isPrivateMessage] && [uncutInput isChannelNameOn:self] == NO) {
 				[worldController() destroyChannel:selChannel];
 
 				return;
@@ -2325,7 +2325,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				targetChannelName = [s getTokenAsString];
 			}
 
-			NSAssertReturn([targetChannelName isChannelName:self]);
+			NSAssertReturn([targetChannelName isChannelNameOn:self]);
 
 			NSString *reason = [s trimmedString];
 
@@ -2346,13 +2346,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5070: // Command: TOPIC
 		case 5067: // Command: T
 		{
-			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelNameOn:self] == NO) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
 			}
 
-			NSAssertReturn([targetChannelName isChannelName:self]);
+			NSAssertReturn([targetChannelName isChannelNameOn:self]);
 
 			NSString *topic = [s attributedStringToASCIIFormatting];
 
@@ -2470,13 +2470,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 			
-			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelNameOn:self] == NO) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
 			}
 
-			NSAssertReturn([targetChannelName isChannelName:self]);
+			NSAssertReturn([targetChannelName isChannelNameOn:self]);
 
 			NSString *banmask = [s getTokenAsString];
 			
@@ -2597,7 +2597,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					 channel, then we set flag so when we return channel modes, they
 					 are handled properly. */
 					
-					if ([targetChannelName isChannelName:self]) {
+					if ([targetChannelName isChannelNameOn:self]) {
 						[self enableInUserInvokedCommandProperty:&_inUserInvokedModeRequest];
 					}
 				}
@@ -2754,7 +2754,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *nickname = [s getTokenAsString];
 
 			if (NSObjectIsNotEmpty(nickname)) {
-				if ([nickname isChannelName:self] == NO && [nickname isHostmaskNicknameOnClient:self]) {
+				if ([nickname isChannelNameOn:self] == NO && [nickname isHostmaskNicknameOn:self]) {
 					IRCChannel *channel = [self findChannelOrCreate:nickname isPrivateMessage:YES];
 
 					[mainWindow() select:channel];
@@ -2895,13 +2895,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			NSObjectIsEmptyAssert(uncutInput);
 
-			if (selChannel && [selChannel isChannel] && [uncutInput isChannelName:self] == NO) {
+			if (selChannel && [selChannel isChannel] && [uncutInput isChannelNameOn:self] == NO) {
 				targetChannelName = [selChannel name];
 			} else {
 				targetChannelName = [s getTokenAsString];
 			}
 
-			NSAssertReturn([targetChannelName isChannelName:self]);
+			NSAssertReturn([targetChannelName isChannelNameOn:self]);
 
 			NSString *nickname = [s getTokenAsString];
 			
@@ -3396,7 +3396,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			NSString *nickname = [[s getTokenAsString] lowercaseString];
 
-			if ([nickname isChannelName:self] || [nickname isHostmaskNicknameOnClient:self] == NO) {
+			if ([nickname isChannelNameOn:self] || [nickname isHostmaskNicknameOn:self] == NO) {
 				[self printDebugInformation:TXTLS(@"IRC[1110]", nickname)];
 
 				return;
@@ -3415,8 +3415,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			BOOL scriptFound = NO;
 
 			BOOL commandIsReserved = NO;
-			
-			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand scriptPath:&scriptPath isReserved:&commandIsReserved isScript:&scriptFound isExtension:&pluginFound];
+
+			[sharedPluginManager() findHandlerForOutgoingCommand:lowercaseCommand path:&scriptPath isReserved:&commandIsReserved isScript:&scriptFound isExtension:&pluginFound];
 
 			if (commandIsReserved) {
 				[sharedPluginManager() extrasInstallerAskUserIfTheyWantToInstallCommand:lowercaseCommand];
@@ -4088,7 +4088,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	PointerIsEmptyAssert([m params]);
 
-    m = [sharedPluginManager() processInterceptedServerInput:m for:self];
+	m = [THOPluginDispatcher interceptServerInput:m for:self];
 
     PointerIsEmptyAssert(m);
 
@@ -4463,7 +4463,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
-	if ([target isChannelName:self]) {
+	if ([target isChannelNameOn:self]) {
 		if ([ignoreChecks ignorePublicMessages]) {
 			return;
 		}
@@ -4472,13 +4472,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	} else {
 		if ([referenceMessage senderIsServer]) {
 			if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
-				BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
-																				  authoredBy:[referenceMessage sender]
-																				 destinedFor:nil
-																				  asLineType:type
-																					onClient:self
-																				  receivedAt:[referenceMessage receivedAt]
-																				wasEncrypted:wasEncrypted];
+				BOOL pluginResult = [THOPluginDispatcher receivedText:text
+														   authoredBy:[referenceMessage sender]
+														  destinedFor:nil
+														   asLineType:type
+															 onClient:self
+														   receivedAt:[referenceMessage receivedAt]
+														 wasEncrypted:wasEncrypted];
 
 				if (pluginResult == NO) {
 					return;
@@ -4504,13 +4504,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	PointerIsEmptyAssert(c);
 
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
-		BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
-																		  authoredBy:[referenceMessage sender]
-																		 destinedFor:c
-																		  asLineType:type
-																			onClient:self
-																		  receivedAt:[referenceMessage receivedAt]
-																		wasEncrypted:wasEncrypted];
+		BOOL pluginResult = [THOPluginDispatcher receivedText:text
+												   authoredBy:[referenceMessage sender]
+												  destinedFor:c
+												   asLineType:type
+													 onClient:self
+												   receivedAt:[referenceMessage receivedAt]
+												 wasEncrypted:wasEncrypted];
 
 		if (pluginResult == NO) {
 			return;
@@ -4609,7 +4609,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if (type == TVCLogLineNoticeType) {
 		/* Determine where to send notice messages. */
-		if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+		if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
 			c = [mainWindow() selectedChannelOn:self];
 		}
 
@@ -4629,7 +4629,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					textHead = [textHead substringToIndex:([textHead length] - 1)]; // Remove the ]
 					textHead = [textHead substringFromIndex:1]; // Remove the [
 
-					if ([textHead isChannelName:self]) {
+					if ([textHead isChannelNameOn:self]) {
 						IRCChannel *thisChannel = [self findChannel:textHead];
 
 						if (thisChannel) {
@@ -4736,13 +4736,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 
 		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
-			BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
-																			  authoredBy:[referenceMessage sender]
-																			 destinedFor:c
-																			  asLineType:type
-																				onClient:self
-																			  receivedAt:[referenceMessage receivedAt]
-																			wasEncrypted:wasEncrypted];
+			BOOL pluginResult = [THOPluginDispatcher receivedText:text
+													   authoredBy:[referenceMessage sender]
+													  destinedFor:c
+													   asLineType:type
+														 onClient:self
+													   receivedAt:[referenceMessage receivedAt]
+													 wasEncrypted:wasEncrypted];
 
 			if (pluginResult == NO) {
 				return;
@@ -4787,13 +4787,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 
 		if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsDidReceivePlainTextMessageEvent]) {
-			BOOL pluginResult = [sharedPluginManager() postReceivedPlainTextMessageEvent:text
-																			  authoredBy:[referenceMessage sender]
-																			 destinedFor:c
-																			  asLineType:type
-																				onClient:self
-																			  receivedAt:[referenceMessage receivedAt]
-																			wasEncrypted:wasEncrypted];
+			BOOL pluginResult = [THOPluginDispatcher receivedText:text
+													   authoredBy:[referenceMessage sender]
+													  destinedFor:c
+													   asLineType:type
+														 onClient:self
+													   receivedAt:[referenceMessage receivedAt]
+													 wasEncrypted:wasEncrypted];
 
 			if (pluginResult == NO) {
 				return;
@@ -4903,7 +4903,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	} else {
 		IRCChannel *target = nil;
 
-		if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+		if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
 			target = [mainWindow() selectedChannelOn:self];
 		}
 
@@ -5004,7 +5004,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	IRCChannel *c = nil;
 
-	if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+	if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
 		c = [mainWindow() selectedChannelOn:self];
 	}
 
@@ -5554,7 +5554,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *targetc = [m paramAt:0];
 	NSString *modestr = [m sequence:1];
 
-	if ([targetc isChannelName:self]) {
+	if ([targetc isChannelNameOn:self]) {
 		IRCChannel *c = [self findChannel:targetc];
 
 		PointerIsEmptyAssert(c);
@@ -6247,14 +6247,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if ((_capacitiesPending & ClientIRCv3SupportedCapacitySASLPlainText) == ClientIRCv3SupportedCapacitySASLPlainText)
 	{
-		NSString *authStringD = [NSString stringWithFormat:@"%@%C%@%C%@",
+		NSString *authString = [NSString stringWithFormat:@"%@%C%@%C%@",
 								 self.config.username, 0x00,
 								 self.config.username, 0x00,
 								 self.config.nicknamePassword];
 
-		NSString *authStringE = [authStringD base64EncodingWithLineLength:400];
-
-		NSArray *authStrings = [authStringE componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+		NSArray *authStrings = [authString base64EncodingWithLineLength:400];
 
 		for (NSString *string in authStrings) {
 			[self send:IRCPrivateCommandIndex("cap_authenticate"), string, nil];
@@ -7691,7 +7689,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSString *sendern = [m paramAt:1];
 			NSString *hostmask = [m paramAt:2];
 
-			if ([TPCPreferences locationToSendNotices] == TXNoticeSendCurrentChannelType) {
+			if ([TPCPreferences locationToSendNotices] == TXNoticeSendSelectedChannelType) {
 				IRCChannel *c = [mainWindow() selectedChannelOn:self];
 
 				[self printDebugInformation:TXTLS(@"IRC[1089]", sendern, hostmask) channel:c];
@@ -8039,7 +8037,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		[c setStatus:IRCChannelStatusJoining];
 
-		if (channelCount > [TPCPreferences autojoinMaxChannelJoins]) {
+		if (channelCount > [TPCPreferences autojoinMaximumChannelJoins]) {
 			/* Send previous lists. */
 			if (NSObjectIsEmpty(previousPasswordList)) {
 				[self send:IRCPrivateCommandIndex("join"), previousChannelList, nil];
@@ -8296,7 +8294,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)executeTextualCmdScript:(NSDictionary *)details
 {
-	XRPerformBlockAsynchronouslyOnQueue([sharedPluginManager() dispatchQueue], ^{
+	XRPerformBlockAsynchronouslyOnQueue([THOPluginDispatcher dispatchQueue], ^{
 		[self internalExecuteTextualCmdScript:details];
 	});
 }
@@ -8315,7 +8313,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	/* MLNonsandboxedScript tells this call that the script can
 	 be ran outside of the Mac OS sandbox attached to Textual. */
-	NSString *userScriptsPath = [TPCPathInfo systemUnsupervisedScriptFolderPath];
+	NSString *userScriptsPath = [TPCPathInfo customScriptsFolderPath];
 
 	if ([scriptPath hasPrefix:userScriptsPath]) {
 		MLNonsandboxedScript = YES;
@@ -8463,12 +8461,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)processBundlesUserMessage:(NSString *)message command:(NSString *)command
 {
-	[sharedPluginManager() sendUserInputDataToBundles:self message:message command:command];
+	[THOPluginDispatcher userInputCommandInvokedOnClient:self commandString:command messageString:message];
 }
 
 - (void)processBundlesServerMessage:(IRCMessage *)message
 {
-	[sharedPluginManager() sendServerInputDataToBundles:self message:message];
+	[THOPluginDispatcher didReceiveServerInput:message onClient:self];
 }
 
 - (BOOL)postReceivedMessage:(IRCMessage *)referenceMessage
@@ -8483,12 +8481,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (BOOL)postReceivedCommand:(NSString *)command withText:(NSString *)text destinedFor:(IRCChannel *)textDestination referenceMessage:(IRCMessage *)referenceMessage
 {
-	return [sharedPluginManager() postReceivedCommand:command
-											 withText:text
-										   authoredBy:[referenceMessage sender]
-										  destinedFor:textDestination
-											 onClient:self
-										   receivedAt:[referenceMessage receivedAt]];
+	return [THOPluginDispatcher receivedCommand:command
+									   withText:text
+									 authoredBy:[referenceMessage sender]
+									destinedFor:textDestination
+									   onClient:self
+									 receivedAt:[referenceMessage receivedAt]];
 }
 
 #pragma mark -
@@ -8743,7 +8741,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName:self]) {
+	if ([channel isChannelNameOn:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {
@@ -8788,7 +8786,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	NSObjectIsEmptyAssert(channel);
 	
-	if ([channel isChannelName:self]) {
+	if ([channel isChannelNameOn:self]) {
 		IRCChannel *chan = [self findChannel:channel];
 
 		if (chan) {
@@ -9414,7 +9412,7 @@ present_error:
 		if ([g trackUserActivity]) {
 			NSString *lname = [g trackingNickname];
 
-			if ([lname isHostmaskNicknameOnClient:self]) {
+			if ([lname isHostmaskNicknameOn:self]) {
 				/* Check if we have a value that already exists. */
 				if (populatingForFirstTime == NO) {
 					if ([oldEntriesNicknames containsKeyIgnoringCase:lname]) {

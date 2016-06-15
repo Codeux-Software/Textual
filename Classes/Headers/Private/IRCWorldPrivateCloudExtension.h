@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,30 +35,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix;
+TEXTUAL_EXTERN NSString * const IRCWorldControllerCloudListOfDeletedClientsDefaultsKey;
 
-/* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
+@interface IRCWorld (IRCWorldCloudExtension)
+- (NSDictionary<NSString *, id> *)cloud_clientConfigurations;
 
-/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
- notifications for changed keys on a per-key basis so that the iCloud controller can
- know what keys change instead of having to sync every single key, every time that it
- performs an upstream sync. */
-@interface TPCPreferencesUserDefaults : NSUserDefaults
-+ (TPCPreferencesUserDefaults *)sharedUserDefaults;
+- (void)cloud_destroyClient:(IRCClient *)client;
 
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
+- (void)cloud_addClientToListOfDeletedClients:(NSString *)clientId;
+- (void)cloud_removeClientFromListOfDeletedClients:(NSString *)clientId;
+
+- (void)cloud_processDeletedClientsList:(NSArray<NSString *> *)deletedClients;
 @end
-
-/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
- return the value of +sharedUserDefaultsController */
-@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
-+ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
-@end
+#endif
 
 NS_ASSUME_NONNULL_END

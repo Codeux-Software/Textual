@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-/* Next unusued key: 1134 */
+/* Next unusued key: 1135 */
 
 "Prompts[0001]" = "Yes";
 "Prompts[0002]" = "No";
@@ -166,3 +166,7 @@
 "Prompts[1133][1]" = "Are you sure you want to transfer the file named “%1$@“ to %2$@?";
 "Prompts[1133][2]" = "This file will be sent without encryption.";
 "Prompts[1133][3]" = "Transfer File";
+
+"Prompts[1134][1]" = "Textual is unable to access the folder that's configured for your log location because the resource is 'stale'";
+"Prompts[1134][2]" = "Browse to Preferences \U279C Advanced \U279C Log Location to repair this preference";
+

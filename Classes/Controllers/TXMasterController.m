@@ -114,7 +114,7 @@
 	/* Cloud files are synced regardless of user preference
 	 so we still have to initalize it at some point. */
 
-	[sharedCloudManager() initializeCloudSyncSession];
+	[sharedCloudManager() prepareInitialState];
 #endif
 	
 	self.world = [IRCWorld new];
@@ -125,6 +125,8 @@
 #ifndef DEBUG
 	[self checkForOtherCopiesOfTextualRunning];
 #endif
+
+	[IRCCommandIndex populateCommandIndex];
 
 	[[TXSharedApplication sharedNetworkReachabilityObject] startNotifier];
 	
@@ -141,7 +143,7 @@
 	[sharedPluginManager() loadPlugins];
 
 	[self performBlockOnGlobalQueue:^{
-		[TPCResourceManager copyResourcesToCustomAddonsFolder];
+		[TPCResourceManager copyResourcesToApplicationSupportFolder];
 	}];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1

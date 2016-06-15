@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,30 +35,35 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
+@interface THOPluginManager : NSObject
+- (void)loadPlugins;
+- (void)unloadPlugins;
 
-/* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
+@property (readonly, copy) NSArray<THOPluginItem *> *loadedPlugins;
 
-/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
- notifications for changed keys on a per-key basis so that the iCloud controller can
- know what keys change instead of having to sync every single key, every time that it
- performs an upstream sync. */
-@interface TPCPreferencesUserDefaults : NSUserDefaults
-+ (TPCPreferencesUserDefaults *)sharedUserDefaults;
+@property (readonly, copy) NSArray<NSString *> *supportedServerInputCommands;
+@property (readonly, copy) NSArray<NSString *> *supportedUserInputCommands;
 
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
-@end
+@property (readonly, copy) NSArray<NSString *> *supportedAppleScriptCommands;
+@property (readonly, copy) NSDictionary<NSString *, NSString *> *supportedAppleScriptCommandsAndPaths;
 
-/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
- return the value of +sharedUserDefaultsController */
-@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
-+ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
+@property (readonly, copy) NSArray<THOPluginItem *> *pluginsWithPreferencePanes;
+
+@property (readonly, copy) NSArray<THOPluginOutputSuppressionRule *> *pluginOutputSuppressionRules;
+
+/* Returns YES if at least one loaded plugin supports the feature */
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
+
+- (void)findHandlerForOutgoingCommand:(NSString *)command
+								 path:(NSString * _Nullable * _Nullable)path
+						   isReserved:(BOOL *)isReserved
+							 isScript:(BOOL *)isScript
+						  isExtension:(BOOL *)isExtension;
+
+- (void)extrasInstallerAskUserIfTheyWantToInstallCommand:(NSString *)command;
+- (void)extrasInstallerLaunchInstaller;
 @end
 
 NS_ASSUME_NONNULL_END

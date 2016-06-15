@@ -418,7 +418,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 					
 						if (transferStatus == TDCFileTransferDialogTransferStoppedStatus) {
 							if ([transfer path] == nil) {
-								[transfer setPath:[TPCPathInfo userDownloadFolderPath]];
+								[transfer setPath:[TPCPathInfo userDownloadsFolderPath]];
 							}
 							
 							[transfer open];

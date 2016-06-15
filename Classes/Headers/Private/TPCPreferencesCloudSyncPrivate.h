@@ -35,12 +35,25 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TPCPreferencesUserDefaults ()
-- (void)setObject:(nullable id)value forKey:(NSString *)defaultName postNotification:(BOOL)postNotification;
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+@interface TPCPreferencesCloudSync ()
+- (BOOL)isTerminated;
+
+- (void)setValue:(nullable id)value forKey:(NSString *)key;
+
+- (void)removeObjectForKey:(NSString *)key;
+- (void)removeObjectForKeyNextUpstreamSync:(NSString *)key;
+
+- (void)resetDataToSync;
+
+- (void)syncEverythingNextSync;
+
+- (void)synchronizeFromCloud;
+
+- (void)purgeDataStoredWithCloud;
 @end
+#endif
 
 NS_ASSUME_NONNULL_END

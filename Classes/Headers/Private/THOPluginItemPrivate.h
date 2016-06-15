@@ -35,30 +35,37 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define RZUserDefaults()						[TPCPreferencesUserDefaults sharedUserDefaults]
-#define RZUserDefaultsController()				[TPCPreferencesUserDefaultsController sharedUserDefaultsController]
+typedef NS_OPTIONS(NSUInteger, THOPluginItemSupportedFeatures) {
+	THOPluginItemSupportsDidReceiveCommandEvent				= 1 << 1,
+	THOPluginItemSupportsDidReceivePlainTextMessageEvent	= 1 << 2,
+	THOPluginItemSupportsInlineMediaManipulation			= 1 << 3,
+	THOPluginItemSupportsNewMessagePostedEvent				= 1 << 4,
+	THOPluginItemSupportsOutputSuppressionRules				= 1 << 5,
+	THOPluginItemSupportsPreferencePane						= 1 << 6,
+	THOPluginItemSupportsServerInputDataInterception		= 1 << 7,
+	THOPluginItemSupportsSubscribedServerInputCommands		= 1 << 8,
+	THOPluginItemSupportsSubscribedUserInputCommands		= 1 << 9,
+	THOPluginItemSupportsUserInputDataInterception			= 1 << 10,
+	THOPluginItemSupportsWebViewJavaScriptPayloads			= 1 << 11,
+	THOPluginItemSupportsWillRenderMessageEvent				= 1 << 12,
+};
 
-/* The user info dictionary of this notification contains the changed key. */
-TEXTUAL_EXTERN NSString * const TPCPreferencesUserDefaultsDidChangeNotification;
+@interface THOPluginItem : NSObject
+@property (readonly, nullable) NSBundle *bundle;
+@property (readonly, nullable) id primaryClass;
+@property (readonly, assign) THOPluginItemSupportedFeatures supportedFeatures;
+@property (readonly, copy, nullable) NSArray<NSString *> *supportedServerInputCommands;
+@property (readonly, copy, nullable) NSArray<NSString *> *supportedUserInputCommands;
+@property (readonly, copy, nullable) NSArray<THOPluginOutputSuppressionRule *> *outputSuppressionRules;
+@property (readonly, copy, nullable) NSString *pluginPreferencesPaneMenuItemTitle;
+@property (readonly, nullable) NSView *pluginPreferencesPaneView;
 
-/* TPCPreferencesUserDefaults subclasses NSUserDefaults to allow Textual to fire off
- notifications for changed keys on a per-key basis so that the iCloud controller can
- know what keys change instead of having to sync every single key, every time that it
- performs an upstream sync. */
-@interface TPCPreferencesUserDefaults : NSUserDefaults
-+ (TPCPreferencesUserDefaults *)sharedUserDefaults;
+- (BOOL)loadBundle:(NSBundle *)bundle;
+- (void)unloadBundle;
 
-+ (BOOL)keyIsExcludedFromBeingExported:(NSString *)key;
-@end
-
-/* Trying to create a new instance of TPCPreferencesUserDefaultsController will
- return the value of +sharedUserDefaultsController */
-@interface TPCPreferencesUserDefaultsController : NSUserDefaultsController
-+ (TPCPreferencesUserDefaultsController *)sharedUserDefaultsController;
+- (BOOL)supportsFeature:(THOPluginItemSupportedFeatures)feature;
 @end
 
 NS_ASSUME_NONNULL_END

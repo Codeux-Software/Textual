@@ -1639,7 +1639,7 @@
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender
 {
-	[worldController() addClientToListOfDeletedClients:[[sender config] itemUUID]];
+	[worldController() cloud_addClientToListOfDeletedClients:[[sender config] itemUUID]];
 }
 #endif
 
@@ -2596,7 +2596,7 @@
 
 - (void)openLogLocation:(id)sender
 {	
-	NSURL *path = [TPCPathInfo logFileFolderLocation];
+	NSURL *path = [TPCPathInfo transcriptFolderURL];
 	
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
@@ -2922,12 +2922,12 @@
 
 - (void)importPreferences:(id)sender
 {
-	[TPCPreferencesImportExport import];
+	[TPCPreferencesImportExport importInWindow:mainWindow()];
 }
 
 - (void)exportPreferences:(id)sender
 {
-	[TPCPreferencesImportExport export];
+	[TPCPreferencesImportExport exportInWindow:mainWindow()];
 }
 
 #pragma mark -
@@ -3072,7 +3072,7 @@
 		[TPCPreferences setInvertSidebarColors:YES];
 	}
 	
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMainWindowAppearanceAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadMainWindowAppearanceAction];
 }
 
 #pragma mark -
@@ -3142,7 +3142,7 @@
 		[sender setState:NSOnState];
 	}
 
-	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadSparkleFrameworkFeedURLAction];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadSparkleFrameworkFeedURLAction];
 
 	if ([TPCPreferences receiveBetaUpdates]) {
 		[self checkForUpdates:sender];

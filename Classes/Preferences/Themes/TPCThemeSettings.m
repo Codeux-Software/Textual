@@ -35,67 +35,82 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "BuildConfig.h"
-
-#import "TPCThemeSettingsPrivate.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 #define _templateEngineVersionMaximum			3
 #define _templateEngineVersionMinimum			3
+
+@interface TPCThemeSettings ()
+@property (nonatomic, assign, readwrite) BOOL invertSidebarColors;
+@property (nonatomic, assign, readwrite) BOOL js_postHandleEventNotifications;
+@property (nonatomic, assign, readwrite) BOOL js_postPreferencesDidChangesNotifications;
+@property (nonatomic, assign, readwrite) BOOL usesIncompatibleTemplateEngineVersion;
+@property (nonatomic, copy, readwrite, nullable) NSFont *themeChannelViewFont;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeNicknameFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *themeTimestampFormat;
+@property (nonatomic, copy, readwrite, nullable) NSString *settingsKeyValueStoreName;
+@property (nonatomic, copy, readwrite, nullable) NSColor *underlyingWindowColor;
+@property (nonatomic, assign, readwrite) double indentationOffset;
+@property (nonatomic, assign, readwrite) TPCThemeSettingsNicknameColorStyle nicknameColorStyle;
+@property (nonatomic, strong) GRMustacheTemplateRepository *styleTemplateRepository;
+@property (nonatomic, strong) GRMustacheTemplateRepository *appTemplateRepository;
+@end
 
 @implementation TPCThemeSettings
 
 #pragma mark -
 #pragma mark Setting Loaders
 
-/* The following methods read the dictionary of a theme and validates
- their setting values based on the type provided. Most of these calls
- are redundant because NSDictionaryHelper already handles them, but it
- is better to be safe than sorry. */
-
-- (nullable NSString *)stringForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
+- (nullable NSString *)_stringForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dic
 {
-	NSString *hexValue = dict[key];
+	NSParameterAssert(key != nil);
+	NSParameterAssert(dic != nil);
 
-	if ([hexValue length] == 0) {
+	NSString *stringValue = [dic stringForKey:key];
+
+	/* An empty string should not be considered a valid value */
+	if (stringValue.length == 0) {
 		return nil;
 	}
 
-	return hexValue;
+	return stringValue;
 }
 
-- (nullable NSColor *)colorForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
+- (nullable NSColor *)_colorForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dic
 {
-	NSString *hexValue = dict[key];
+	NSParameterAssert(key != nil);
+	NSParameterAssert(dic != nil);
+
+	NSString *colorValue = [dic stringForKey:key];
 
 	/* Supported format: #FFF or #FFFFFF */
-	if ([hexValue length] == 7 || [hexValue length] == 4) {
-		return [NSColor colorWithHexadecimalValue:hexValue];
+	if (colorValue.length != 4 && colorValue.length != 7) {
+		return nil;
 	}
 
-	return nil;
+	return [NSColor colorWithHexadecimalValue:colorValue];
 }
 
-- (nullable NSFont *)fontForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dict
+- (nullable NSFont *)_fontForKey:(NSString *)key fromDictionary:(NSDictionary<NSString *, id> *)dic
 {
-	NSDictionary *fontDict = [dict dictionaryForKey:key];
+	NSParameterAssert(key != nil);
+	NSParameterAssert(dic != nil);
 
-	NSString *fontName = [fontDict stringForKey:@"Font Name"];
+	NSDictionary<NSString *, id> *fontDictionary = [dic dictionaryForKey:key];
 
-	if (fontName == nil) {
+	if (fontDictionary == nil) {
 		return nil;
 	}
 
-	if ([NSFont fontIsAvailable:fontName] == NO) {
+	NSString *fontName = [fontDictionary stringForKey:@"Font Name"];
+
+	if (fontName == nil || [NSFont fontIsAvailable:fontName] == NO) {
 		return nil;
 	}
 
-	NSInteger fontSize = [fontDict integerForKey:@"Font Size"];
+	CGFloat fontSize = [fontDictionary doubleForKey:@"Font Size"];
 
-	if (fontSize < 5) {
+	if (fontSize < 5.0) {
 		return nil;
 	}
 
@@ -107,9 +122,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)templateNameWithLineType:(TVCLogLineType)type
 {
-	NSString *typestr = [TVCLogLine lineTypeString:type];
+	NSParameterAssert(type != TVCLogLineUndefinedType);
 
-	return [@"Line Types/" stringByAppendingString:typestr];
+	NSString *typeString = [TVCLogLine lineTypeString:type];
+
+	return [@"Line Types/" stringByAppendingString:typeString];
 }
 
 - (nullable GRMustacheTemplate *)templateWithLineType:(TVCLogLineType)type
@@ -119,51 +136,46 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self templateWithName:templateName];
 }
 
-- (nullable GRMustacheTemplate *)templateWithName:(NSString *)name
+- (nullable GRMustacheTemplate *)templateWithName:(NSString *)templateName
 {
-	PointerIsEmptyAssertReturn(name, nil)
+	NSParameterAssert(templateName != nil);
 
-	NSError *load_error = nil;
+	NSError *loadError = nil;
 
-	GRMustacheTemplate *localTemplate = [self.styleTemplateRepository templateNamed:name error:&load_error];
+	GRMustacheTemplate *template = [self.styleTemplateRepository templateNamed:templateName error:&loadError];
 
-	if (localTemplate == nil || load_error) {
-		if ([load_error code] == GRMustacheErrorCodeTemplateNotFound || [load_error code] == 260) {
-			GRMustacheTemplate *defaultTemplate = [self.appTemplateRepository templateNamed:name error:&load_error];
+	if (loadError && (loadError.code == GRMustacheErrorCodeTemplateNotFound || loadError.code == 260)) {
+		loadError = nil;
 
-			if (defaultTemplate) {
-				return defaultTemplate;
-			}
-		}
-
-        if (load_error) {
-			LogToConsole(@"Failed to load template \"%@\" with error: %@", name, [load_error localizedDescription]);
-			LogToConsoleCurrentStackTrace
-        }
-
-		return nil;
+		template = [self.appTemplateRepository templateNamed:templateName error:&loadError];
 	}
 
-	return localTemplate;
+	if (loadError) {
+		LogToConsole(@"Failed to load template '%@' with error: '%@'",
+			templateName, [loadError localizedDescription])
+		LogToConsoleCurrentStackTrace
+	}
+
+	return template;
 }
 
 #pragma mark -
 #pragma mark Style Settings
 
-- (nullable NSString *)keyValueStoreActualName
+- (nullable NSString *)_keyValueStoreName
 {
-	NSString *storeName = [self settingsKeyValueStoreName];
+	NSString *storeName = self.settingsKeyValueStoreName;
 	
-	if ([storeName length] > 0) {
-		return [NSString stringWithFormat:@"Internal Theme Settings Key-value Store -> %@", storeName];
+	if (storeName.length == 0) {
+		return nil;
 	}
-	
-	return nil;
+
+	return [NSString stringWithFormat:@"Internal Theme Settings Key-value Store -> %@", storeName];
 }
 
 - (nullable id)styleSettingsRetrieveValueForKey:(NSString *)key error:(NSString * _Nullable *)resultError
 {
-	if (key == nil || [key length] == 0) {
+	if (key == nil || key.length == 0) {
 		if ( resultError) {
 			*resultError = @"Empty key value";
 		}
@@ -171,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	NSString *storeKey = [self keyValueStoreActualName];
+	NSString *storeKey = [self _keyValueStoreName];
 	
 	if (storeKey == nil) {
 		if ( resultError) {
@@ -182,13 +194,17 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSDictionary *styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
-	
+
+	if (styleSettings == nil) {
+		return nil;
+	}
+
 	return styleSettings[key];
 }
 
 - (BOOL)styleSettingsSetValue:(nullable id)objectValue forKey:(NSString *)objectKey error:(NSString * _Nullable *)resultError
 {
-	if (objectKey == nil || [objectKey length] <= 0) {
+	if (objectKey == nil || objectKey.length <= 0) {
 		if (resultError) {
 			*resultError = @"Empty key value";
 		}
@@ -196,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-	NSString *storeKey = [self keyValueStoreActualName];
+	NSString *storeKey = [self _keyValueStoreName];
 		
 	if (storeKey == nil) {
 		if (resultError) {
@@ -206,27 +222,31 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-	BOOL removeValue = (objectValue == nil || [objectValue isEqual:[WebUndefined undefined]]);
+	BOOL removeValue = ( objectValue == nil ||
+						[objectValue isKindOfClass:[NSNull class]] ||
+						[objectValue isKindOfClass:[WebUndefined class]]);
 	
-	id styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
-	
+	NSDictionary *styleSettings = [RZUserDefaults() dictionaryForKey:storeKey];
+
+	NSMutableDictionary<NSString *, id> *styleSettingsMutable = nil;
+
 	if (styleSettings == nil) {
 		if (removeValue) {
 			return YES;
 		}
 		
-		styleSettings = [NSMutableDictionary dictionaryWithCapacity:1]; // We are only inserting one value
+		styleSettingsMutable = [NSMutableDictionary dictionaryWithCapacity:1];
 	} else {
-		styleSettings = [styleSettings mutableCopy];
+		styleSettingsMutable = [styleSettings mutableCopy];
 	}
 	
 	if (removeValue) {
-		[styleSettings removeObjectForKey:objectKey];
+		[styleSettingsMutable removeObjectForKey:objectKey];
 	} else {
-		styleSettings[objectKey] = objectValue;
+		styleSettingsMutable[objectKey] = objectValue;
 	}
 
-	[RZUserDefaults() setObject:[styleSettings copy] forKey:storeKey];
+	[RZUserDefaults() setObject:[styleSettingsMutable copy] forKey:storeKey];
 		
 	return YES;
 }
@@ -234,33 +254,32 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Load Settings
 
-- (void)loadApplicationStyleRespository:(NSInteger)version
+- (void)loadApplicationTemplateRespository:(NSUInteger)version
 {
-	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %li/", (long)version];
+	NSString *filename = [NSString stringWithFormat:@"/Style Default Templates/Version %lu/", version];
 
-	NSString *dictPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
+	NSString *templatesPath = [[TPCPathInfo applicationResourcesFolderPath] stringByAppendingPathComponent:filename];
 
-	self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:[NSURL fileURLWithPath:dictPath]];
+	NSURL *templatesPathURL = [NSURL fileURLWithPath:templatesPath isDirectory:YES];
 
-	if (self.appTemplateRepository == nil) {
-		/* Throw exception if we could not load repository. */
+	self.appTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesPathURL];
 
-		NSAssert(NO, @"Default template repository not found.");
-	}
+	NSAssert((self.appTemplateRepository != nil),
+		@"Default template repository not found");
 }
 
 - (void)reloadWithPath:(NSString *)path
 {
-	PointerIsEmptyAssert(path)
+	NSParameterAssert(path != nil);
 
-	/* Load any custom templates. */
+	/* Load any custom templates */
 	NSString *templatesPath = [path stringByAppendingPathComponent:@"/Data/Templates"];
 
-	NSURL *templatesURL = [NSURL fileURLWithPath:templatesPath];
+	NSURL *templatesPathURL = [NSURL fileURLWithPath:templatesPath isDirectory:YES];
 
-	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesURL];
+	self.styleTemplateRepository = [GRMustacheTemplateRepository templateRepositoryWithBaseURL:templatesPathURL];
 
-	/* Reset old properties. */
+	/* Reset properties */
 	self.themeChannelViewFont = nil;
 
 	self.themeNicknameFormat = nil;
@@ -276,27 +295,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.usesIncompatibleTemplateEngineVersion = YES;
 
-	/* Load style settings dictionary. */
-	NSInteger templateEngineVersion = 0;
+	/* Load style settings dictionary */
+	NSUInteger templateEngineVersion = 0;
 
-	NSDictionary<NSString *, id> *styleSettings = nil;
-	
-	NSString *dictPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
+	NSString *settingsPath = [path stringByAppendingPathComponent:@"/Data/Settings/styleSettings.plist"];
 
-	if ([RZFileManager() fileExistsAtPath:dictPath]) {
-		styleSettings = [NSDictionary dictionaryWithContentsOfFile:dictPath];
+	NSDictionary<NSString *, id> *styleSettings = [NSDictionary dictionaryWithContentsOfFile:settingsPath];
 
-		/* Parse the dictionary values. */
-		self.themeChannelViewFont = [self fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
+	if (styleSettings) {
+		self.themeChannelViewFont = [self _fontForKey:@"Override Channel Font" fromDictionary:styleSettings];
 
-		self.themeNicknameFormat = [self stringForKey:@"Nickname Format" fromDictionary:styleSettings];
-		self.themeTimestampFormat = [self stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
+		self.themeNicknameFormat = [self _stringForKey:@"Nickname Format" fromDictionary:styleSettings];
+		self.themeTimestampFormat = [self _stringForKey:@"Timestamp Format" fromDictionary:styleSettings];
 
 		self.invertSidebarColors = [styleSettings boolForKey:@"Force Invert Sidebars"];
 
-		self.underlyingWindowColor = [self colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
+		self.underlyingWindowColor = [self _colorForKey:@"Underlying Window Color" fromDictionary:styleSettings];
 
-		self.settingsKeyValueStoreName = [self stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
+		self.settingsKeyValueStoreName = [self _stringForKey:@"Key-value Store Name" fromDictionary:styleSettings];
 
 		self.js_postHandleEventNotifications = [styleSettings boolForKey:@"Post Textual.handleEvent() Notifications"];
 		self.js_postPreferencesDidChangesNotifications = [styleSettings boolForKey:@"Post Textual.preferencesDidChange() Notifications"];
@@ -332,35 +348,46 @@ NS_ASSUME_NONNULL_BEGIN
 		/* Get style template version */
 		NSDictionary<NSString *, NSNumber *> *templateVersions = [styleSettings dictionaryForKey:@"Template Engine Versions"];
 
-		if (templateVersions) {
-			NSInteger targetVersion = [templateVersions integerForKey:[TPCApplicationInfo applicationVersionShort]];
+		{
+			NSString *applicationVersion = [TPCApplicationInfo applicationVersionShort];
+
+			NSUInteger targetVersion = [templateVersions unsignedIntegerForKey:applicationVersion];
 
 			if (NSNumberInRange(targetVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
 				templateEngineVersion = targetVersion;
 
 				self.usesIncompatibleTemplateEngineVersion = NO;
-			} else {
-				NSInteger defaultVersion = [templateVersions integerForKey:@"default"];
+			}
+		}
 
-				if (NSNumberInRange(defaultVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
-					templateEngineVersion = defaultVersion;
+		if (templateEngineVersion == 0) {
+			NSUInteger defaultVersion = [templateVersions unsignedIntegerForKey:@"default"];
 
-					self.usesIncompatibleTemplateEngineVersion = NO;
-				}
+			if (NSNumberInRange(defaultVersion, _templateEngineVersionMinimum, _templateEngineVersionMaximum)) {
+				templateEngineVersion = defaultVersion;
+
+				self.usesIncompatibleTemplateEngineVersion = NO;
 			}
 		}
 	}
 
-	/* Fall back to the default repository. */
-	[self loadApplicationStyleRespository:templateEngineVersion];
+	if (templateEngineVersion == 0) {
+		templateEngineVersion = _templateEngineVersionMaximum;
+	}
+
+	/* Fall back to the default repository */
+	[self loadApplicationTemplateRespository:templateEngineVersion];;
 
 	/* Inform our defaults controller about a few overrides. */
 	/* These setValue calls basically tell the NSUserDefaultsController for the "Preferences" 
 	 window that the active theme has overrode a few user configurable options. The window then 
 	 blanks out the options specified to prevent the user from modifying. */
 	[TPCPreferences setInvertSidebarColorsPreferenceUserConfigurable:(self.invertSidebarColors == NO)];
+
 	[TPCPreferences setThemeChannelViewFontPreferenceUserConfigurable:(self.themeChannelViewFont == nil)];
+
 	[TPCPreferences setThemeNicknameFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeNicknameFormat)];
+
 	[TPCPreferences setThemeTimestampFormatPreferenceUserConfigurable:NSObjectIsEmpty(self.themeTimestampFormat)];
 }
 

@@ -35,33 +35,29 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import <objc/runtime.h>
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSView (TXViewHelper)
 
-static void *internal_tx_contentViewSubviewConstraints = nil;
-
-- (NSArray *)tx_contentViewSubviewConstraints
+- (nullable TVCMainWindow *)mainWindow
 {
-	return objc_getAssociatedObject(self, internal_tx_contentViewSubviewConstraints);
-}
+	NSWindow *window = self.window;
 
-- (void)setTx_contentViewSubviewConstraints:(NSArray *)tx_contentViewSubviewConstraints
-{
-	objc_setAssociatedObject(self, internal_tx_contentViewSubviewConstraints, tx_contentViewSubviewConstraints, OBJC_ASSOCIATION_COPY_NONATOMIC);
+	if ([window isMemberOfClass:[TVCMainWindow class]] == NO) {
+		return nil;
+	}
+
+	return (TVCMainWindow *)window;
 }
 
 - (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint
 {
-	/* Validate input */
 	NSParameterAssert(subview != nil);
 
 	/* Remove any views that may already be in place. */
-	NSArray *contentSubviews = [self subviews];
+	NSArray *contentSubviews = self.subviews;
 
-	if ([contentSubviews count] > 0) {
+	if (contentSubviews.count > 0) {
 		[contentSubviews[0] removeFromSuperview];
 	}
 
@@ -69,22 +65,17 @@ static void *internal_tx_contentViewSubviewConstraints = nil;
 
 	/* Adjust constraints of parent view to maintain the same size
 	 of the subview that is being added. */
-	NSRect subviewFrame = [subview frame];
+	NSRect subviewFrame = subview.frame;
 
 	CGFloat subviewFrameWidth = NSWidth(subviewFrame);
 	CGFloat subviewFrameHeight = NSHeight(subviewFrame);
 
 	if ( parentViewWidthConstraint) {
-		[parentViewWidthConstraint setConstant:subviewFrameWidth];
+		parentViewWidthConstraint.constant = subviewFrameWidth;
 	}
 
 	if ( parentViewHeightConstraint) {
-		[parentViewHeightConstraint setConstant:subviewFrameHeight];
-	}
-
-	/* Remove all constraints that already exists related to margins. */
-	if (self.tx_contentViewSubviewConstraints) {
-		[self removeConstraints:self.tx_contentViewSubviewConstraints];
+		parentViewHeightConstraint.constant = subviewFrameHeight;
 	}
 
 	/* Add new constraints. */
@@ -110,9 +101,20 @@ static void *internal_tx_contentViewSubviewConstraints = nil;
 								   constant:subviewFrameHeight]
 	 ];
 
-	self.tx_contentViewSubviewConstraints = constraints;
-
-	[subview addConstraints:self.tx_contentViewSubviewConstraints];
+	[subview addConstraints:constraints];
 }
 
 @end
+
+#pragma mark -
+
+@implementation NSCell (TXCellHelper)
+
+- (nullable TVCMainWindow *)mainWindow
+{
+	return self.controlView.mainWindow;
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
