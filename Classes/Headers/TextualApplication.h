@@ -63,11 +63,10 @@
 	@class IRCCommandIndex;
 	@class IRCConnection;
 	@class IRCExtras;
-	@class IRCISupportInfo;
 	@class IRCHighlightLogEntry;
-	@class IRCHighlightLogEntryMutable;
 	@class IRCHighlightMatchCondition;
 	@class IRCHighlightMatchConditionMutable;
+	@class IRCISupportInfo;
 	@class IRCMessage;
 	@class IRCMessageBatchMessage;
 	@class IRCMessageBatchMessageContainer;
@@ -99,33 +98,29 @@
 	@class TDChannelModifyModesSheet;
 	@class TDChannelModifyTopicSheet;
 	@class TDChannelPropertiesSheet;
-	@class THOPluginItem;
-	@class THOPluginManager;
 	@class THOUnicodeHelper;
 	@class TLOEncryptionManager;
 	@class TLOFileLogger;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
-	@class TLOInputHistoryObject;
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
 	@class TLONicknameCompletionStatus;
-	@class TLOpenLink;
 	@class TLOPopupPrompts;
 	@class TLOSoundPlayer;
 	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
 	@class TLOTimerCommand;
+	@class TLOpenLink;
 	@class TPCApplicationInfo;
 	@class TPCPathInfo;
 	@class TPCPreferences;
 	@class TPCPreferencesCloudSync;
 	@class TPCPreferencesImportExport;
 	@class TPCPreferencesUserDefaults;
-	@class TPCPreferencesUserDefaultsObjectProxy;
+	@class TPCPreferencesUserDefaultsController;
 	@class TPCResourceManager;
-	@class TPCResourceManagerDocumentTypeImporter;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
 	@class TVCAnimatedContentNavigationOutlineView;
@@ -133,13 +128,11 @@
 	@class TVCAutoExpandingTokenField;
 	@class TVCBasicTableView;
 	@class TVCDockIcon;
-	@class TVCImageURLoader;
 	@class TVCImageURLParser;
+	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
 	@class TVCLogController;
 	@class TVCLogControllerHistoricLogFile;
-	@class TVCLogControllerOperationQueue;
-	@class TVCLogControllerOperationItem;
 	@class TVCLogLine;
 	@class TVCLogPolicy;
 	@class TVCLogRenderer;
@@ -162,11 +155,8 @@
 	@class TVCMainWindowTitlebarAccessoryView;
 	@class TVCMainWindowTitlebarAccessoryViewController;
 	@class TVCMainWindowTitlebarAccessoryViewLockButton;
-	@class TVCMemberLisCellYosemiteTextFieldInterior;
 	@class TVCMemberList;
 	@class TVCMemberListCell;
-	@class TVCMemberListCellMavericksTextField;
-	@class TVCMemberListCellMavericksTextFieldBackingLayer;
 	@class TVCMemberListDarkYosemiteUserInterface;
 	@class TVCMemberListLightYosemiteUserInterface;
 	@class TVCMemberListMavericksDarkUserInterface;
@@ -182,9 +172,6 @@
 	@class TVCServerListCell;
 	@class TVCServerListCellChildItem;
 	@class TVCServerListCellGroupItem;
-	@class TVCServerListCellMavericksTextField;
-	@class TVCServerListCellMavericksTextFieldBackingLayer;
-	@class TVCServerListCellYosemiteTextFieldInterior;
 	@class TVCServerListDarkYosemiteUserInterface;
 	@class TVCServerListLightYosemiteUserInterface;
 	@class TVCServerListMavericksDarkUserInterface;
@@ -194,13 +181,12 @@
 	@class TVCServerListRowCell;
 	@class TVCServerListSharedUserInterface;
 	@class TVCServerListYosemiteUserInterface;
-	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidationCell;
+	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextViewIRCFormattingMenu;
 	@class TVCTextViewWithIRCFormatter;
-	@class TXMasterController;
 	@class TXMasterController;
 	@class TXMenuController;
 	@class TXMenuControllerMainWindowProxy;
@@ -354,8 +340,12 @@
 	#import "TPCApplicationInfo.h"
 	#import "TPCPathInfo.h"
 	#import "TPCPreferences.h"
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	#import "TPCPreferencesCloudSync.h"
 	#import "TPCPreferencesCloudSyncExtension.h"
+#endif
+
 	#import "TPCPreferencesImportExport.h"
 	#import "TPCPreferencesReload.h"
 	#import "TPCPreferencesUserDefaults.h"
