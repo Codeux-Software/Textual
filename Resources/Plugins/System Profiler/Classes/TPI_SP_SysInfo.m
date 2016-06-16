@@ -84,7 +84,7 @@
 	}
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		if ([TXUserInterface systemWideDarkModeEnabledInYosemite]) {
+		if ([TXUserInterface systemWideDarkModeEnabledOnYosemite]) {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1051]", [XRSystemInformation systemOperatingSystemName])];
 		} else {
 			[resultString appendString:TPILocalizedString(@"BasicLanguage[1050]", [XRSystemInformation systemOperatingSystemName])];

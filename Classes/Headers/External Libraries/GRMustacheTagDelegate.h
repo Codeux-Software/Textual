@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
-
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros.h"
 
 @class GRMustacheTag;

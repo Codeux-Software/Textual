@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,54 +37,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation IRCSendingMessage
-
-+ (NSString *)stringWithCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments
+@interface IRCHighlightMatchCondition ()
 {
-	NSParameterAssert(command != nil);
+@protected
+	BOOL _matchIsExcluded;
+	NSString *_matchChannelId;
+	NSString *_matchKeyword;
 
-	NSString *commandUppercase = command.uppercaseString;
-
-	if (arguments.count == 0) {
-		return commandUppercase;
-	}
-
-	NSMutableString *builtString = [NSMutableString stringWithString:commandUppercase];
-
-	NSInteger colonIndexBase = [IRCCommandIndex colonIndexForCommand:command];
-
-	NSInteger colonIndexCount = 0;
-
-	for (NSString *argument in arguments) {
-		[builtString appendString:NSStringWhitespacePlaceholder];
-
-		if (colonIndexBase == (-1)) {
-			// Guess where the colon (:) should go.
-			//
-			// A colon is supposed to represent a section of an outgoing command
-			// that has a paramater which contains spaces. For example, PRIVMSG
-			// is in the formoat "PRIVMSG #channel :long message" — The message
-			// will have spaces part of it, so we inform the server.
-			
-			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:NSStringWhitespacePlaceholder])) {
-				[builtString appendString:@":"];
-			}
-		} else {
-			// We know where it goes thanks to the command index
-
-			if (colonIndexCount == colonIndexBase) {
-				[builtString appendString:@":"];
-			}
-		}
-
-		[builtString appendString:argument];
-
-		colonIndexCount += 1;
-	}
-
-	return builtString.copy;
+@private
+	BOOL _objectInitialized;
+	NSString *_uniqueIdentifier;
 }
 
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

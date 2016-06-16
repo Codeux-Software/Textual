@@ -35,24 +35,24 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <objc/objc-runtime.h>
 
-NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppression -> ";
+NS_ASSUME_NONNULL_BEGIN
+
+NSString * const TLOPopupPromptSuppressionPrefix = @"Text Input Prompt Suppression -> ";
 
 @interface TLOPopupPromptsContext : NSObject
 @property (nonatomic, assign) BOOL suppressionTextSet;
 @property (nonatomic, assign) BOOL suppressionKeySet;
-@property (nonatomic, copy) NSString *suppressionKey;
-@property (nonatomic, copy) TLOPopupPromptsCompletionBlock completionBlock;
+@property (nonatomic, copy, nullable) NSString *suppressionKey;
+@property (nonatomic, copy, nullable) TLOPopupPromptsCompletionBlock completionBlock;
 @end
 
 @implementation TLOPopupPrompts
 
 + (NSString *)suppressionKeyWithBase:(NSString *)base
 {
-	NSObjectIsEmptyAssertReturn(base, nil);
+	NSParameterAssert(base != nil);
 
 	if ([base hasPrefix:TLOPopupPromptSuppressionPrefix]) {
 		return base;
@@ -75,17 +75,17 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 {
 	BOOL suppressionState = NO;
 
-	if ([alert showsSuppressionButton]) {
-		suppressionState = ([[alert suppressionButton] state] == NSOnState);
+	if (alert.showsSuppressionButton) {
+		suppressionState = (alert.suppressionButton.state == NSOnState);
 	}
 
 	if (suppressionState) {
-		if ([contextInfo suppressionKeySet]) {
-			[RZUserDefaults() setBool:YES forKey:[contextInfo suppressionKey]];
+		if (contextInfo.suppressionKeySet) {
+			[RZUserDefaults() setBool:YES forKey:contextInfo.suppressionKey];
 		}
 	}
 
-	if ([contextInfo completionBlock]) {
+	if (contextInfo.completionBlock) {
 		TLOPopupPromptReturnType returnValue = TLOPopupPromptReturnPrimaryType;
 
 		if (returnCode == NSAlertSecondButtonReturn) {
@@ -96,7 +96,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 			returnValue = TLOPopupPromptReturnOtherType;
 		}
 
-		[contextInfo completionBlock](returnValue, alert, suppressionState);
+		contextInfo.completionBlock(returnValue, alert, suppressionState);
 	}
 }
 
@@ -104,8 +104,8 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
 {
 	[TLOPopupPrompts sheetWindowWithWindow:window
 									  body:bodyText
@@ -122,9 +122,9 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton
-			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
 {
 	[TLOPopupPrompts sheetWindowWithWindow:window
 									  body:bodyText
@@ -141,12 +141,16 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton
-			   suppressionKey:(NSString *)suppressKey
-			  suppressionText:(NSString *)suppressText
-			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock
 {
+	NSParameterAssert(window != nil);
+	NSParameterAssert(bodyText != nil);
+	NSParameterAssert(titleText != nil);
+	NSParameterAssert(buttonDefault != nil);
 
 	/* Check which thread is accessed */
 	if ([NSThread isMainThread] == NO) {
@@ -189,10 +193,10 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	/* Construct alert */
 	NSAlert *alert = [NSAlert new];
 
-	[alert setAlertStyle:NSInformationalAlertStyle];
+	alert.alertStyle = NSInformationalAlertStyle;
 
-	[alert setMessageText:titleText];
-	[alert setInformativeText:bodyText];
+	alert.messageText = titleText;
+	alert.informativeText = bodyText;
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
 	[alert addButtonWithTitle:otherButton];
@@ -200,18 +204,18 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	if (suppressKeySet || suppressTextSet) {
 		[alert setShowsSuppressionButton:YES];
 
-		[[alert suppressionButton] setTitle:suppressText];
+		alert.suppressionButton.title = suppressText;
 	}
 
 	/* Construct alert context */
 	TLOPopupPromptsContext *promptObject = [TLOPopupPromptsContext new];
 
-	[promptObject setSuppressionTextSet:suppressTextSet];
-	[promptObject setSuppressionKeySet:suppressKeySet];
+	promptObject.suppressionTextSet = suppressTextSet;
+	promptObject.suppressionKeySet = suppressKeySet;
 
-	[promptObject setSuppressionKey:suppressKeyPrivate];
+	promptObject.suppressionKey = suppressKeyPrivate;
 
-	[promptObject setCompletionBlock:completionBlock];
+	promptObject.completionBlock = completionBlock;
 
 	/* Pop alert */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
@@ -232,7 +236,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
+				alternateButton:(nullable NSString *)buttonAlternate
 {
 	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
 											  title:titleText
@@ -245,9 +249,9 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText
+				alternateButton:(nullable NSString *)buttonAlternate
+				 suppressionKey:(nullable NSString *)suppressKey
+				suppressionText:(nullable NSString *)suppressText
 {
 	return [TLOPopupPrompts dialogWindowWithMessage:bodyText
 											  title:titleText
@@ -261,11 +265,15 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText
-			suppressionResponse:(BOOL *)suppressionResponse
+				alternateButton:(nullable NSString *)buttonAlternate
+				 suppressionKey:(nullable NSString *)suppressKey
+				suppressionText:(nullable NSString *)suppressText
+			suppressionResponse:(nullable BOOL *)suppressionResponse
 {
+	NSParameterAssert(bodyText != nil);
+	NSParameterAssert(titleText != nil);
+	NSParameterAssert(buttonDefault != nil);
+
 	/* Check which thread is accessed */
 	if ([NSThread isMainThread] == NO) {
 		__block BOOL result = NO;
@@ -308,8 +316,8 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	/* Construct alert */
 	NSAlert *alert = [NSAlert new];
 
-	[alert setMessageText:titleText];
-	[alert setInformativeText:bodyText];
+	alert.messageText = titleText;
+	alert.informativeText = bodyText;
 
 	[alert addButtonWithTitle:buttonDefault];
 	[alert addButtonWithTitle:buttonAlternate];
@@ -317,7 +325,7 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	if (suppressKeySet || suppressTextSet) {
 		[alert setShowsSuppressionButton:YES];
 
-		[[alert suppressionButton] setTitle:suppressText];
+		alert.suppressionButton.title = suppressText;
 	}
 
 	/* Pop alert */
@@ -326,8 +334,8 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 	/* Record whether the user pressed the suppression button */
 	BOOL suppressionState = NO;
 
-	if ([alert showsSuppressionButton]) {
-		suppressionState = ([[alert suppressionButton] state] == NSOnState);
+	if (alert.showsSuppressionButton) {
+		suppressionState = (alert.suppressionButton.state == NSOnState);
 	}
 
 	if ( suppressionResponse) {
@@ -350,3 +358,5 @@ NSString * const TLOPopupPromptSuppressionPrefix				= @"Text Input Prompt Suppre
 
 @implementation TLOPopupPromptsContext
 @end
+
+NS_ASSUME_NONNULL_END

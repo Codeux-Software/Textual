@@ -598,7 +598,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	NSMutableArray *highlightList = [NSMutableArray array];
 
 	for (NSDictionary *e in [dic arrayForKey:@"highlightList"]) {
-		TDCHighlightEntryMatchCondition *c = [[TDCHighlightEntryMatchCondition alloc] initWithDictionary:e];
+		IRCHighlightMatchCondition *c = [[IRCHighlightMatchCondition alloc] initWithDictionary:e];
 
 		[highlightList addObject:c];
 	}
@@ -715,7 +715,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		[ignoreAry addObject:[e dictionaryValue]];
 	}
 
-	for (TDCHighlightEntryMatchCondition *e in self.highlightList) {
+	for (IRCHighlightMatchCondition *e in self.highlightList) {
 		[highlightAry addObject:[e dictionaryValue]];
 	}
 

@@ -38,24 +38,10 @@
 
 #import "TextualApplication.h"
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TLOLicenseManager.h"
-#endif
-
-#import "TPCPreferencesPrivate.h"
-#import "TPCResourceManagerPrivate.h"
-#import "TPCThemeControllerPrivate.h"
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-#import "TPCPreferencesCloudSyncPrivate.h"
-#endif
-
 #define KInternetEventClass		1196773964
 #define KAEGetURL				1196773964
 
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
-#import "BuildConfig.h"
-
 #define _betaTesterMaxApplicationLifespan			5184000 // 60 days
 #endif
 
@@ -128,7 +114,7 @@
 
 	[IRCCommandIndex populateCommandIndex];
 
-	[[TXSharedApplication sharedNetworkReachabilityObject] startNotifier];
+	[self prepareNetworkReachabilityNotifier];
 	
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerDidWakeUp:) name:NSWorkspaceDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerWillSleep:) name:NSWorkspaceWillSleepNotification object:nil];
@@ -236,6 +222,21 @@
 {
 	[self prepareThirdPartyServiceHockeyAppFramework];
 	[self prepareThirdPartyServiceSparkleFramework];
+}
+
+- (void)prepareNetworkReachabilityNotifier
+{
+	OELReachability *notifier = [TXSharedApplication sharedNetworkReachabilityNotifier];
+
+	[notifier setReachableBlock:^(OELReachability *reachability) {
+		[worldController() reachabilityChanged:YES];
+	}];
+
+	[notifier setUnreachableBlock:^(OELReachability *reachability) {
+		[worldController() reachabilityChanged:NO];
+	}];
+
+	[notifier startNotifier];
 }
 
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
@@ -375,7 +376,7 @@
 
 	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
 	
-	[[TXSharedApplication sharedNetworkReachabilityObject] stopNotifier];
+	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() prepareForApplicationTermination];

@@ -38,7 +38,11 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TLOpenLink : NSObject
 + (void)open:(NSURL *)url;
 + (void)openWithString:(NSString *)url;
 @end
+
+NS_ASSUME_NONNULL_END

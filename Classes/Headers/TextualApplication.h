@@ -53,7 +53,7 @@
 	#import <CocoaExtensions/CocoaExtensions.h>
 	#import <EncryptionKit/EncryptionKit.h>
 
-	/* Class Forwarders. */
+	/* Class Forwarders */
 	@class IRCAddressBookEntry;
 	@class IRCChannel;
 	@class IRCChannelConfig;
@@ -64,6 +64,10 @@
 	@class IRCConnection;
 	@class IRCExtras;
 	@class IRCISupportInfo;
+	@class IRCHighlightLogEntry;
+	@class IRCHighlightLogEntryMutable;
+	@class IRCHighlightMatchCondition;
+	@class IRCHighlightMatchConditionMutable;
 	@class IRCMessage;
 	@class IRCMessageBatchMessage;
 	@class IRCMessageBatchMessageContainer;
@@ -79,7 +83,6 @@
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCHighlightEntryMatchCondition;
 	@class TDCHighlightEntrySheet;
 	@class TDCNicknameColorSheet;
 	@class TDCPreferencesController;
@@ -88,7 +91,6 @@
 	@class TDCServerChangeNicknameSheet;
 	@class TDCServerChannelListDialog;
 	@class TDCServerHighlightListSheet;
-	@class TDCServerHighlightListSheetEntry;
 	@class TDCServerPropertiesSheet;
 	@class TDCSheetBase;
 	@class TDCWelcomeSheet;
@@ -206,10 +208,10 @@
 	@class TXUserInterface;
 	@class TXWindowController;
 
-	/* Static Defeinitions. */
+	/* Static Defeinitions */
 	#import "StaticDefinitions.h"
 
-	/* Import frameworks based on defines. */
+	/* Import frameworks based on defines */
 	#ifndef TEXTUAL_BUILT_INSIDE_SANDBOX
 		#define TEXTUAL_BUILT_INSIDE_SANDBOX 0
 	#endif
@@ -259,8 +261,6 @@
 
 	/* 3rd-party Extensions */
 	#import "GCDAsyncSocket.h"
-	#import "GCDAsyncSocketExtensions.h"
-	#import "GCDAsyncSocketCipherNames.h"
 	#import "GRMustacheAvailabilityMacros.h"
 	#import "GRMustache.h"
 	#import "GRMustacheConfiguration.h"
@@ -285,13 +285,15 @@
 	#import "IRCChannel.h"
 	#import "IRCChannelConfig.h"
 	#import "IRCChannelMode.h"
-	#import "IRCClient.h"
 	#import "IRCClientConfig.h"
+	#import "IRCClient.h"
 	#import "IRCColorFormat.h"
 	#import "IRCCommandIndex.h"
 	#import "IRCConnection.h"
 	#import "IRCConnectionSocket.h"
 	#import "IRCExtras.h"
+	#import "IRCHighlightLogEntry.h"
+	#import "IRCHighlightMatchCondition.h"
 	#import "IRCISupportInfo.h"
 	#import "IRCMessage.h"
 	#import "IRCModeInfo.h"
@@ -373,7 +375,6 @@
 	#import "TVCBasicTableView.h"
 	#import "TVCLogController.h"
 	#import "TVCLogControllerHistoricLogFile.h"
-	#import "TVCLogControllerOperationQueue.h"
 	#import "TVCLogLine.h"
 	#import "TVCLogPolicy.h"
 	#import "TVCLogRenderer.h"

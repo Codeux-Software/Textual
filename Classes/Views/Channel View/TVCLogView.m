@@ -36,12 +36,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCLogObjectsPrivate.h"
-
-#import "WebScriptObjectHelper.h"
-
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;

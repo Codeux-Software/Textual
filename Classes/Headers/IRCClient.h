@@ -36,6 +36,18 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
+#import "IRCConnection.h"
+#import "IRCTreeItem.h"
+
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+#import "TLOEncryptionManager.h" // typdef enum
+#endif
+
+#import "TLOGrowlController.h"
+#import "TVCLogLine.h"
+
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
 	IRCClientConnectNormalMode,
 	IRCClientConnectRetryMode,
@@ -72,18 +84,7 @@ typedef void (^IRCClientPrintToWebViewCompletionBlock)(BOOL isHighlight);
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
-#import "IRCTreeItem.h" // superclass
-
-#import "TVCLogLine.h"			// typedef enum
-#import "TLOGrowlController.h"	// typedef enum
-
-#import "IRCConnection.h" // @protocol
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-#import "TLOEncryptionManager.h" // typdef enum
-#endif
-
-@interface IRCClient : IRCTreeItem <IRCConnectionDelegate, TDChannelBanListSheetDelegate, TDCServerChannelListDialogDelegate>
+@interface IRCClient : IRCTreeItem <IRCConnectionDelegate>
 @property (nonatomic, copy) IRCClientConfig *config;
 @property (nonatomic, strong) IRCISupportInfo *supportInfo;
 @property (nonatomic, assign) IRCClientConnectMode connectType;

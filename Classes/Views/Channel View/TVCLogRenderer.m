@@ -450,10 +450,10 @@ static NSInteger getNextAttributeRange(attr_t *attrBuf, NSInteger start, NSInteg
 			excludedWords = [excludedWords mutableCopy];
 		}
 
-		for (TDCHighlightEntryMatchCondition *e in clientHighlightList) {
+		for (IRCHighlightMatchCondition *e in clientHighlightList) {
 			BOOL addKeyword = NO;
 
-			NSString *matchChannel = [e matchChannelID];
+			NSString *matchChannel = [e matchChannelId];
 
 			if ([matchChannel length] > 0) {
 				NSString *channelID = [channel uniqueIdentifier];

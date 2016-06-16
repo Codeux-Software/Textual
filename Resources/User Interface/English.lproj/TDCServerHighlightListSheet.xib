@@ -255,7 +255,7 @@ Gw
             </connections>
             <point key="canvasLocation" x="949" y="181.5"/>
         </window>
-        <arrayController objectClassName="TDCServerHighlightListSheetEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
+        <arrayController objectClassName="IRCHighlightLogEntry" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" automaticallyRearrangesObjects="YES" id="5mx-Dm-tKI">
             <declaredKeys>
                 <string>channelName</string>
                 <string>renderedMessage</string>

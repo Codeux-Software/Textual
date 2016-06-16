@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <time.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -46,31 +44,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format)
 {
-	PointerIsEmptyAssertReturn(date, nil)
+	NSCParameterAssert(date != nil);
+	NSCParameterAssert(format != nil);
 
-	NSObjectIsEmptyAssertReturn(format, nil)
+	time_t global = (time_t)date.timeIntervalSince1970;
 
-	/* Convert time to C object. */
-	time_t global = (time_t)[date timeIntervalSince1970];
+	const size_t outputBufferSize = 256;
+
+	char outputBuffer[(outputBufferSize + 1)];
 	
-	/* Format time. */
-	const NSInteger _timeBufferSize = 256;
+	struct tm *localTime = localtime(&global);
 	
-	struct tm *local = localtime(&global);
-	
-	char buf[(_timeBufferSize + 1)];
-	
-	strftime(buf, _timeBufferSize, [format UTF8String], local);
-	
-	buf[_timeBufferSize] = 0;
-	
-	/* Return results as UTF-8 string. */
-	return [NSString stringWithBytes:buf length:strlen(buf) encoding:NSUTF8StringEncoding];
+	if (strftime(outputBuffer, outputBufferSize, format.UTF8String, localTime) == 0) {
+		return nil;
+	}
+
+	return @(outputBuffer);
 }
 
-NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix)
+NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix)
 {
-	/* Default what we will return. */
+	/* Default what we will return */
 	if (orderMatrix == 0) {
 		orderMatrix = (NSCalendarUnitYear			|
 					   NSCalendarUnitMonth			|
@@ -80,7 +74,7 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL sh
 					   NSCalendarUnitSecond);
 	}
 	
-	/* Convert calander units to a text rep. */
+	/* Convert calander units to a text rep */
 	NSMutableArray<NSString *> *orderStrings = [NSMutableArray array];
 	
 	if (orderMatrix & NSCalendarUnitYear) {
@@ -108,79 +102,89 @@ NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL sh
 	}
 	
 	/* Build compare information. */
-	NSCalendar *sysCalendar = [NSCalendar currentCalendar];
+	NSCalendar *systemCalendar = [NSCalendar currentCalendar];
 	
 	NSDate *date1 = [NSDate date];
+
 	NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:(-(dateInterval + 1))];
 	
 	/* Perform comparison. */
-	NSDateComponents *breakdownInfo = [sysCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
+	NSDateComponents *breakdownInfo = [systemCalendar components:orderMatrix fromDate:date1 toDate:date2 options:0];
 	
-	if (breakdownInfo) {
-		NSMutableString *finalResult = [NSMutableString string];
+	if (breakdownInfo == nil) {
+		return nil;
+	}
+
+	NSMutableString *finalResult = nil;
+
+	for (NSString *unit in orderStrings) {
+		/* For each entry in the orderMatrix, we call that selector name on the
+		 comparison result to retreive whatever information it contains. */
+		/* NSDateComponents has a -valueForComponent: method, but that doesn't 
+		 support Mountain Lion */
+		SEL unitSelector = NSSelectorFromString(unit);
+
+		NSMethodSignature *unitSelectorSignature =
+		[[NSDateComponents class] instanceMethodSignatureForSelector:unitSelector];
+
+		NSInvocation *invocation =
+		[NSInvocation invocationWithMethodSignature:unitSelectorSignature];
+
+		invocation.target = breakdownInfo;
+
+		invocation.selector = unitSelector;
+
+		[invocation invoke];
+
+		NSInteger unitValue = 0;
+
+		[invocation getReturnValue:&unitValue];
 		
-		for (NSString *unit in orderStrings) {
-			/* For each entry in the orderMatrix, we call that selector name on the
-			 comparison result to retreive whatever information it contains. */
-			/* NSDateComponents has a -valueForComponent: method, but that doesn't 
-			 support Mountain Lion */
-			SEL unitSelector = NSSelectorFromString(unit);
-
-			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
-			[[NSDateComponents class] instanceMethodSignatureForSelector:unitSelector]];
-
-			[invocation setTarget:breakdownInfo];
-			[invocation setSelector:unitSelector];
-
-			[invocation invoke];
-
-			NSInteger unitValue = 0;
-			[invocation getReturnValue:&unitValue];
-			
-			/* If results isn't zero, we show it. */
-			if (unitValue < 0) {
-				unitValue *= -1;
-			}
-
-			if (unitValue >= 1) {
-				NSString *languageKey = nil;
-				
-				if (unitValue > 1 || unitValue < 1) {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", unit];
-				} else {
-					languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", unit];
-				}
-				
-				/* shortValue returns only the first time component. */
-				if (shortValue) {
-					return [NSString stringWithFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
-				} else {
-					[finalResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
-				}
-			}
+		/* If results isn't zero, we show it */
+		if (unitValue == 0) {
+			continue;
 		}
+
+		if (unitValue < 0) {
+			unitValue *= (-1);
+		}
+
+		NSString *languageKey = nil;
 		
-		if ([finalResult length] > 0) {
-			/* Delete the end ", " */
-			NSRange cutRange = NSMakeRange(([finalResult length] - 2), 2);
-			
-			[finalResult deleteCharactersInRange:cutRange];
+		if (unitValue == 1) { // plurals
+			languageKey = [NSString stringWithFormat:@"BasicLanguage[1024][%@]", unit];
 		} else {
-			/* Return "0 seconds" when there are no results. */
-			NSString *emptyTime = [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][second]")];
-			
-			[finalResult setString:emptyTime];
+			languageKey = [NSString stringWithFormat:@"BasicLanguage[1023][%@]", unit];
 		}
 		
-		return finalResult;
+		/* shortValue returns only the first time component */
+		if (shortValue) {
+			return [NSString stringWithFormat:@"%ld %@", unitValue, TXTLS(languageKey)];
+		}
+
+		if (finalResult == nil) {
+			finalResult = [NSMutableString string];
+		}
+
+		[finalResult appendFormat:@"%ld %@, ", unitValue, TXTLS(languageKey)];
 	}
 	
-	return nil;
+	if (finalResult.length > 0) {
+		/* Delete the end ", " */
+		NSRange deleteRange = NSMakeRange((finalResult.length - 2), 2);
+		
+		[finalResult deleteCharactersInRange:deleteRange];
+
+		return [finalResult copy];
+	}
+
+	/* Return "0 seconds" when there are no results. */
+	return [NSString stringWithFormat:@"0 %@", TXTLS(@"BasicLanguage[1023][second]")];
 }
 
-NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail)
+NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalForNil)
 {
-	PointerIsEmptyAssertReturn(dateTime, nil)
+	NSCParameterAssert(dateTime != nil);
 
 	NSDateFormatter *formatter = [NSDateFormatter new];
 
@@ -188,8 +192,8 @@ NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL retu
 
 	[formatter setLenient:YES];
 
-	[formatter setDateStyle:NSDateFormatterLongStyle];
-	[formatter setTimeStyle:NSDateFormatterLongStyle];
+	formatter.dateStyle = NSDateFormatterLongStyle;
+	formatter.timeStyle = NSDateFormatterLongStyle;
 
 	NSString *timeInfo = nil;
 
@@ -201,22 +205,25 @@ NSString * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL retu
 
 	if (timeInfo) {
 		return timeInfo;
-	} else if (returnOriginalOnFail) {
-		return dateTime;
-	} else {
-		return nil;
 	}
+
+	if (returnOriginalForNil) {
+		return dateTime;
+	}
+
+	return nil;
 }
 
 NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 {
-	static NSDateFormatter *_isoStandardDateFormatter;
+	static NSDateFormatter *_isoStandardDateFormatter = nil;
 	
 	if (_isoStandardDateFormatter == nil) {
 		NSDateFormatter *dateFormatter = [NSDateFormatter new];
 		
-		[dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"]; //2011-10-19T16:40:51.620Z
+		dateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+
+		dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"; //2011-10-19T16:40:51.620Z
 		
 		_isoStandardDateFormatter = dateFormatter;
 	}
@@ -227,25 +234,25 @@ NSDateFormatter *TXSharedISOStandardDateFormatter(void)
 #pragma mark -
 #pragma mark Localized String File
 
-NSString * _Nullable TXTLS(NSString *key, ...)
+NSString *TXTLS(NSString *key, ...)
 {
-	PointerIsEmptyAssertReturn(key, nil)
+	NSCParameterAssert(key != nil);
 
-	va_list args;
-	va_start(args, key);
+	va_list arguments;
+	va_start(arguments, key);
 	
-	NSString *result = TXLocalizedString(RZMainBundle(), key, args);
+	NSString *result = TXLocalizedString(RZMainBundle(), key, arguments);
 	
-	va_end(args);
+	va_end(arguments);
 
 	return result;
 }
 
-NSString * _Nullable TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
+NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list args)
 {
-	PointerIsEmptyAssertReturn(bundle, nil)
-	PointerIsEmptyAssertReturn(key, nil)
-	PointerIsEmptyAssertReturn(args, nil)
+	NSCParameterAssert(bundle != nil);
+	NSCParameterAssert(key != nil);
+	NSCParameterAssert(args != NULL);
 
 	NSInteger openBracketPosition = [key stringPosition:@"["];
 
@@ -258,17 +265,17 @@ NSString * _Nullable TXLocalizedString(NSBundle *bundle, NSString *key, va_list 
 	}
 }
 
-NSString * _Nullable TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
+NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...)
 {
-	PointerIsEmptyAssertReturn(bundle, nil)
-	PointerIsEmptyAssertReturn(key, nil)
+	NSCParameterAssert(bundle != nil);
+	NSCParameterAssert(key != nil);
 
-	va_list args;
-	va_start(args, key);
+	va_list arguments;
+	va_start(arguments, key);
 	
-	NSString *result = TXLocalizedString(bundle, key, args);
+	NSString *result = TXLocalizedString(bundle, key, arguments);
 	
-	va_end(args);
+	va_end(arguments);
 
 	return result;
 }
@@ -278,13 +285,19 @@ NSString * _Nullable TXLocalizedStringAlternative(NSBundle *bundle, NSString *ke
 
 void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block)
 {
-	PointerIsEmptyAssert(block)
+	NSCParameterAssert(block != NULL);
 
 	dispatch_queue_t workerQueue = [TXSharedApplication sharedMutableSynchronizationSerialQueue];
-	
-	dispatch_queue_set_specific(workerQueue, (__bridge const void *)(workerQueue), (void *)1, NULL);
-	
-	if (dispatch_get_specific((__bridge const void *)(workerQueue))) {
+
+	static void *IsOnWorkerQueueKey = NULL;
+
+	if (IsOnWorkerQueueKey == NULL) {
+		IsOnWorkerQueueKey = &IsOnWorkerQueueKey;
+
+		dispatch_queue_set_specific(workerQueue, IsOnWorkerQueueKey, (void *)1, NULL);
+	}
+
+	if (dispatch_get_specific(IsOnWorkerQueueKey)) {
 		block();
 	} else {
 		XRPerformBlockOnDispatchQueue(workerQueue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
@@ -294,11 +307,9 @@ void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t 
 #pragma mark -
 #pragma mark Misc
 
-NSInteger TXRandomNumber(NSInteger maxset)
+NSUInteger TXRandomNumber(u_int32_t maximum)
 {
-	NSAssertReturnR((maxset > 0), 0);
-	
-	return ((1 + arc4random()) % (maxset + 1));
+	return arc4random_uniform(maximum);
 }
 
 NSString *TXFormattedNumber(NSInteger number)
@@ -306,9 +317,9 @@ NSString *TXFormattedNumber(NSInteger number)
 	return [NSNumberFormatter localizedStringFromNumber:@(number) numberStyle:NSNumberFormatterDecimalStyle];
 }
 
-NSComparator NSDefaultComparator = ^(id obj1, id obj2)
+NSComparator NSDefaultComparator = ^(id object1, id object2)
 {
-	return [obj1 compare:obj2];
+	return [object1 compare:object2];
 };
 
 NS_ASSUME_NONNULL_END

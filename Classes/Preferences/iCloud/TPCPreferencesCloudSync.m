@@ -48,12 +48,12 @@ NS_ASSUME_NONNULL_BEGIN
 #define _localKeysUpstreamSyncTimerInterval_2			630.0	// 10 minutes, 30 seconds
 
 @interface TPCPreferencesCloudSync ()
-@property (nonatomic, strong) id ubiquityIdentityToken;
+@property (nonatomic, strong, nullable) id ubiquityIdentityToken;
 @property (nonatomic, assign) BOOL pushAllLocalKeysNextSync;
 @property (nonatomic, strong) dispatch_queue_t workerQueue;
 @property (nonatomic, strong) NSTimer *cloudOneMinuteSyncTimer;
 @property (nonatomic, strong) NSTimer *cloudTenMinuteSyncTimer;
-@property (nonatomic, copy) NSURL *ubiquitousContainerURL;
+@property (nonatomic, copy, nullable) NSURL *ubiquitousContainerURL;
 @property (nonatomic, strong) NSMutableArray<NSString *> *keysToSync;
 @property (nonatomic, strong) NSMutableArray<NSString *> *keysToRemove;
 @property (nonatomic, copy) NSArray<NSString *> *remoteKeysBeingSynced;
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(key != nil);
 
-	NSString *keyHashed = [key md5];
+	NSString *keyHashed = key.md5;
 	
 	if (value == nil) {
 		[RZUbiquitousKeyValueStore() removeObjectForKey:keyHashed];
@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(key != nil);
 
-	NSString *keyHashed = [key md5];
+	NSString *keyHashed = key.md5;
 
 	return [self valueForHashedKey:keyHashed unhashedKey:NULL];
 }
@@ -105,8 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSObjectIsKindOfClassAssertReturn(dictObject, NSDictionary, nil)
 
-	id keyValue = [dictObject objectForKey:@"key"];
-	id objectValue = [dictObject objectForKey:@"value"];
+	id keyValue = dictObject[@"key"];
+	id objectValue = dictObject[@"value"];
 
 	PointerIsEmptyAssertReturn(keyValue, nil)
 	PointerIsEmptyAssertReturn(objectValue, nil)
@@ -122,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(key != nil);
 
-	NSString *keyHashed = [key md5];
+	NSString *keyHashed = key.md5;
 
 	[RZUbiquitousKeyValueStore() removeObjectForKey:keyHashed];
 }
@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)ubiquitousContainerPath
 {
-	return [self.ubiquitousContainerURL path];
+	return (self.ubiquitousContainerURL).path;
 }
 
 - (BOOL)ubiquitousContainerIsAvailable
@@ -235,7 +235,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Only perform sync if there is something to sync */
-		if (self.pushAllLocalKeysNextSync == NO && [self.keysToRemove count] == 0 && [self.keysToSync count] == 0) {
+		if (self.pushAllLocalKeysNextSync == NO && (self.keysToRemove).count == 0 && (self.keysToSync).count == 0) {
 			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed")
 			
 			return;
@@ -264,7 +264,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.isSyncingLocalKeysUpstream = YES;
 		
 		/* Compare to the remote */
-		NSDictionary *remoteValues = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		NSDictionary *remoteValues = RZUbiquitousKeyValueStore().dictionaryRepresentation;
 		
 		/* Gather dictionary representation of all local preferences */
 		NSMutableDictionary<NSString *, id> *changedValues = [NSMutableDictionary dictionary];
@@ -377,10 +377,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.isSyncingLocalKeysDownstream = YES;
 
-		if (keysChangedHashed == nil || [keysChangedHashed count] == 0) {
-			NSDictionary *upstreamValues = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		if (keysChangedHashed == nil || keysChangedHashed.count == 0) {
+			NSDictionary *upstreamValues = RZUbiquitousKeyValueStore().dictionaryRepresentation;
 
-			self.remoteKeysBeingSynced = [upstreamValues allKeys];
+			self.remoteKeysBeingSynced = upstreamValues.allKeys;
 		} else {
 			self.remoteKeysBeingSynced = keysChangedHashed;
 		}
@@ -460,7 +460,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		/* Perform reload */
 		[self performBlockOnMainThread:^{
-			if ([listOfDeletedClients count] > 0) {
+			if (listOfDeletedClients.count > 0) {
 				[worldController() cloud_processDeletedClientsList:listOfDeletedClients];
 			}
 
@@ -468,7 +468,7 @@ NS_ASSUME_NONNULL_BEGIN
 				[RZUserDefaults() removeObjectForKey:key];
 			}
 
-			if ([keysChanged count] > 0) {
+			if (keysChanged.count > 0) {
 				[TPCPreferences performReloadActionForKeys:keysChanged];
 			}
 
@@ -519,7 +519,7 @@ NS_ASSUME_NONNULL_BEGIN
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		[RZUbiquitousKeyValueStore() synchronize];
 
-		NSDictionary *remoteValues = [RZUbiquitousKeyValueStore() dictionaryRepresentation];
+		NSDictionary *remoteValues = RZUbiquitousKeyValueStore().dictionaryRepresentation;
 
 		[remoteValues enumerateKeysAndObjectsUsingBlock:^(NSString *key, id object, BOOL *stop) {
 			[RZUbiquitousKeyValueStore() removeObjectForKey:key];
@@ -629,7 +629,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	NSInteger syncReason =
-	[[aNote userInfo] integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
+	[aNote.userInfo integerForKey:NSUbiquitousKeyValueStoreChangeReasonKey];
 
 	if (syncReason == NSUbiquitousKeyValueStoreQuotaViolationChange) {
 		[self cloudStorageLimitExceeded];
@@ -639,7 +639,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.hasUncommittedDataStoredInCloud = YES;
 
 		NSArray<NSString *> *keysChangedHashed =
-		[[aNote userInfo] arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
+		[aNote.userInfo arrayForKey:NSUbiquitousKeyValueStoreChangedKeysKey];
 
 		[self syncPreferencesFromCloud:keysChangedHashed];
 	}
@@ -656,7 +656,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
-		NSString *changedKey = [[aNote userInfo] objectForKey:@"changedKey"];
+		NSString *changedKey = aNote.userInfo[@"changedKey"];
 
 		if (changedKey == nil) {
 			return;
@@ -688,7 +688,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	id newToken = [RZFileManager() cloudUbiquityIdentityToken];
+	id newToken = RZFileManager().cloudUbiquityIdentityToken;
 
 	id oldToken = self.ubiquityIdentityToken;
 
@@ -710,7 +710,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL);
 
-	self.ubiquityIdentityToken = [RZFileManager() cloudUbiquityIdentityToken];
+	self.ubiquityIdentityToken = RZFileManager().cloudUbiquityIdentityToken;
 
 	[self setupUbiquitousContainerPath];
 

@@ -36,35 +36,41 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOLinkParser
 
-+ (NSArray *)locatedLinksForString:(NSString *)body
++ (NSArray *)locatedLinksForString:(NSString *)string
 {
+	NSParameterAssert(string != nil);
+
 	AHHyperlinkScanner *scanner = [AHHyperlinkScanner new];
 	
-	NSArray *result = [scanner matchesForString:body];
+	NSArray *result = [scanner matchesForString:string];
 	
 	scanner = nil;
 	
 	return result;
 }
 
-+ (NSArray *)bannedLineTypes
++ (NSArray<NSString *> *)bannedLineTypes
 {
-	static id _bannedLines = nil;
+	__block NSArray<NSString *> *cachedValues = nil;
 
-	if (_bannedLines == nil) {
-		_bannedLines = @[
-			 [TVCLogLine lineTypeString:TVCLogLineModeType],
-			 [TVCLogLine lineTypeString:TVCLogLineJoinType],
-			 [TVCLogLine lineTypeString:TVCLogLineNickType],
-			 [TVCLogLine lineTypeString:TVCLogLineInviteType]
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		cachedValues = @[
+			[TVCLogLine lineTypeString:TVCLogLineModeType],
+			[TVCLogLine lineTypeString:TVCLogLineJoinType],
+			[TVCLogLine lineTypeString:TVCLogLineNickType],
+			[TVCLogLine lineTypeString:TVCLogLineInviteType]
 		];
-	}
+	});
 
-	return _bannedLines;
+	return cachedValues;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

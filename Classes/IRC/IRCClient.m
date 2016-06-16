@@ -216,28 +216,28 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		 self.reconnectTimer = [TLOTimer new];
 		[self.reconnectTimer setReqeatTimer:YES];
-		[self.reconnectTimer setDelegate:self];
-		[self.reconnectTimer setSelector:@selector(onReconnectTimer:)];
+		[self.reconnectTimer setTarget:self];
+		[self.reconnectTimer setAction:@selector(onReconnectTimer:)];
 
 		 self.retryTimer = [TLOTimer new];
 		[self.retryTimer setReqeatTimer:NO];
-		[self.retryTimer setDelegate:self];
-		[self.retryTimer setSelector:@selector(onRetryTimer:)];
+		[self.retryTimer setTarget:self];
+		[self.retryTimer setAction:@selector(onRetryTimer:)];
 
 		 self.commandQueueTimer = [TLOTimer new];
 		[self.commandQueueTimer setReqeatTimer:NO];
-		[self.commandQueueTimer setDelegate:self];
-		[self.commandQueueTimer setSelector:@selector(onCommandQueueTimer:)];
+		[self.commandQueueTimer setTarget:self];
+		[self.commandQueueTimer setAction:@selector(onCommandQueueTimer:)];
 
 		 self.pongTimer = [TLOTimer new];
 		[self.pongTimer setReqeatTimer:YES];
-		[self.pongTimer setDelegate:self];
-		[self.pongTimer setSelector:@selector(onPongTimer:)];
+		[self.pongTimer setTarget:self];
+		[self.pongTimer setAction:@selector(onPongTimer:)];
 
 	  	 self.isonTimer	= [TLOTimer new];
 		[self.isonTimer setReqeatTimer:YES];
-		[self.isonTimer setDelegate:self];
-		[self.isonTimer setSelector:@selector(onISONTimer:)];
+		[self.isonTimer setTarget:self];
+		[self.isonTimer setAction:@selector(onISONTimer:)];
 	}
 	
 	return self;
@@ -253,11 +253,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self.reconnectTimer stop];
 	[self.retryTimer stop];
 
-	[self.commandQueueTimer setDelegate:nil];
-	[self.isonTimer	setDelegate:nil];
-	[self.pongTimer	setDelegate:nil];
-	[self.reconnectTimer setDelegate:nil];
-	[self.retryTimer setDelegate:nil];
+	[self.commandQueueTimer setTarget:nil];
+	[self.isonTimer setTarget:nil];
+	[self.pongTimer setTarget:nil];
+	[self.reconnectTimer setTarget:nil];
+	[self.retryTimer setTarget:nil];
 
 	[self cancelPerformRequests];
 }
@@ -712,9 +712,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		/* Create entry. */
 		NSAttributedString *renderedMessage = [messageBody attributedStringWithIRCFormatting:[NSTableView preferredGlobalTableViewFont] preferredFontColor:[NSColor blackColor]];
 
-		TDCServerHighlightListSheetEntry *newEntry = [TDCServerHighlightListSheetEntry new];
+		IRCHighlightLogEntryMutable *newEntry = [IRCHighlightLogEntryMutable new];
 
-		[newEntry setChannelID:[channel uniqueIdentifier]];
+		[newEntry setClientId:[self uniqueIdentifier]];
+		[newEntry setChannelId:[channel uniqueIdentifier]];
 
 		[newEntry setLineNumber:lineNumber];
 
@@ -739,7 +740,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		TDCServerHighlightListSheet *highlightSheet = [windowController() windowFromWindowList:@"TDCServerHighlightListSheet"];
 		
 		if ( highlightSheet) {
-			[highlightSheet addEntry:newEntry];
+			[highlightSheet addEntry:[newEntry copy]];
 		}
 	}
 }
@@ -749,7 +750,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (BOOL)isHostReachable
 {
-	return [[TXSharedApplication sharedNetworkReachabilityObject] isReachable];
+	return [[TXSharedApplication sharedNetworkReachabilityNotifier] isReachable];
 }
 
 - (void)reachabilityChanged:(BOOL)reachable

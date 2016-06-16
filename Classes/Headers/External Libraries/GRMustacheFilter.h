@@ -23,9 +23,9 @@
 #ifndef GRMUSTACHE_FILTER
 #define GRMUSTACHE_FILTER
 
-#import "TextualApplication.h"
-
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros.h"
+
 
 // =============================================================================
 #pragma mark - <GRMustacheFilter>
@@ -34,7 +34,7 @@
 /**
  * The protocol for implementing GRMustache filters.
  *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime/filters.md
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/filters.md
  *
  * The responsability of a GRMustacheFilter is to transform a value into
  * another.
@@ -73,7 +73,7 @@
  * The GRMustacheFilter class helps building mustache filters without writing a
  * custom class that conforms to the GRMustacheFilter protocol.
  *
- * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/runtime/filters.md
+ * **Companion guide:** https://github.com/groue/GRMustache/blob/master/Guides/filters.md
  *
  * @see GRMustacheFilter protocol
  *

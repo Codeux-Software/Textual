@@ -55,9 +55,9 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 
 			NSDictionary *prefs = [u dictionaryValue:YES];
 			
-			NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:[u uniqueIdentifier]];
+			NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:u.uniqueIdentifier];
 			
-			[dic setObject:prefs forKey:prefKey];
+			dic[prefKey] = prefs;
 		}
 	}
 	
@@ -72,9 +72,9 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 		return;
 	}
 
-	[self cloud_addClientToListOfDeletedClients:[client uniqueIdentifier]];
+	[self cloud_addClientToListOfDeletedClients:client.uniqueIdentifier];
 
-	[self cloud_removeClientConfigurationCloudEntry:[client uniqueIdentifier]];
+	[self cloud_removeClientConfigurationCloudEntry:client.uniqueIdentifier];
 }
 
 - (void)cloud_addClientToListOfDeletedClients:(NSString *)clientId

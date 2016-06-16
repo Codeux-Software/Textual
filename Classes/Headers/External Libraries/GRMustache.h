@@ -20,10 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
+#import <Foundation/Foundation.h>
+#import "GRMustacheAvailabilityMacros.h"
 
 @protocol GRMustacheRendering;
-
 @class GRMustacheTag;
 @class GRMustacheContext;
 
@@ -156,3 +156,17 @@ typedef struct {
 + (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER_BUT_DEPRECATED;
 
 @end
+
+#import "GRMustacheTemplate.h"
+#import "GRMustacheTagDelegate.h"
+#import "GRMustacheTemplateRepository.h"
+#import "GRMustacheFilter.h"
+#import "GRMustacheError.h"
+#import "GRMustacheVersion.h"
+#import "GRMustacheContentType.h"
+#import "GRMustacheContext.h"
+#import "GRMustacheRendering.h"
+#import "GRMustacheTag.h"
+#import "GRMustacheConfiguration.h"
+#import "GRMustacheLocalizer.h"
+#import "GRMustacheSafeKeyAccess.h"

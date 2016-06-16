@@ -20,14 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "TextualApplication.h"
-
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros.h"
 #import "GRMustacheRendering.h"
 
 @class GRMustacheContext;
 @class GRMustacheTemplateRepository;
-
 @protocol GRMustacheTagDelegate;
 
 /**
@@ -41,7 +39,7 @@
 @interface GRMustacheTemplate: NSObject<GRMustacheRendering> {
 @private
     GRMustacheTemplateRepository *_templateRepository;
-    id _partial;
+    id _templateAST;
     GRMustacheContext *_baseContext;
 }
 

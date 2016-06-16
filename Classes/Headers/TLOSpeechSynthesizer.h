@@ -37,11 +37,9 @@
 
 #import "TextualApplication.h"
 
-/* Please DO NOT use any code declared within this header inside of a plugin.
- The code contained by this header file was designed to be used internally for
- Textual and may be dangerous to use otherwise. */
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TLOSpeechSynthesizer : NSObject <NSSpeechSynthesizerDelegate>
+@interface TLOSpeechSynthesizer : NSObject
 /* If stopped, any items supplied to speak: will be completely ignored. */
 /* Setting the synthesizer to stopped does not clear the queue. Just 
  forces speaking to stop and does not allow additions. */
@@ -53,3 +51,5 @@
 
 - (void)stopSpeakingAndMoveForward;
 @end
+
+NS_ASSUME_NONNULL_END

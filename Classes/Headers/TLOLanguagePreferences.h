@@ -37,6 +37,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TLOLanguagePreferences : NSObject 
 + (NSString *)localizedStringWithKey:(NSString *)key;
 + (NSString *)localizedStringWithKey:(NSString *)key table:(NSString *)table;
@@ -45,3 +47,5 @@
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table;
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments;
 @end
+
+NS_ASSUME_NONNULL_END

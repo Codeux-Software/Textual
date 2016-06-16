@@ -1317,7 +1317,7 @@
 	self.highlightSheet.delegate = self;
 	self.highlightSheet.window = self.sheet;
 
-	self.highlightSheet.config = [TDCHighlightEntryMatchCondition new];
+	self.highlightSheet.config = [IRCHighlightMatchCondition new];
 
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
 }
@@ -1343,7 +1343,7 @@
 
 - (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender
 {
-	TDCHighlightEntryMatchCondition *match = [sender config];
+	IRCHighlightMatchCondition *match = [sender config];
 	
 	BOOL emptyKeyword = NSObjectIsEmpty([match matchKeyword]);
 	
@@ -1355,7 +1355,7 @@
 		__block NSInteger matchedIndex = -1;
 
 		[self.mutableHighlightList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			if ([[obj itemUUID] isEqualToString:[match itemUUID]]) {
+			if ([[obj uniqueIdentifier] isEqualToString:[match uniqueIdentifier]]) {
 				matchedIndex = idx;
 
 				*stop = YES;
@@ -1673,18 +1673,18 @@
 	else if (sender == self.highlightsTable)
 	{
 		/* Highlight Table. */
-		TDCHighlightEntryMatchCondition *c = self.mutableHighlightList[row];
+		IRCHighlightMatchCondition *c = self.mutableHighlightList[row];
 
 		if ([columnId isEqualToString:@"keyword"]) {
 			return [c matchKeyword];
 		} else if ([columnId isEqualToString:@"channel"]) {
-			if ([c matchChannelID] == nil) {
+			if ([c matchChannelId] == nil) {
 				return TXTLS(@"TDCServerPropertiesSheet[1003]");
 			} else {
 				IRCChannelConfig *channel = nil;
 				
 				for (IRCChannelConfig *cc in self.mutableChannelList) {
-					if ([[cc itemUUID] isEqualToString:[c matchChannelID]]) {
+					if ([[cc itemUUID] isEqualToString:[c matchChannelId]]) {
 						channel = cc;
 					}
 				}

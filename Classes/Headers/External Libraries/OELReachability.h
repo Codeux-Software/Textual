@@ -27,19 +27,25 @@
 
 #import <Foundation/Foundation.h>
 
+#warning TODO: Investigate why reachability may be broken
+
+NS_ASSUME_NONNULL_BEGIN
+
 @class OELReachability;
 
 typedef void (^OELReachabilityNetworkReachableBlock)(OELReachability *reachability);
 typedef void (^OELReachabilityNetworkUnreachableBlock)(OELReachability *reachability);
 
 @interface OELReachability : NSObject
-@property (nonatomic, copy) OELReachabilityNetworkReachableBlock reachableBlock;
-@property (nonatomic, copy) OELReachabilityNetworkUnreachableBlock unreachableBlock;
+@property (nonatomic, copy, nullable) OELReachabilityNetworkReachableBlock reachableBlock;
+@property (nonatomic, copy, nullable) OELReachabilityNetworkUnreachableBlock unreachableBlock;
 
-+ (OELReachability *)reachabilityForInternetConnection;
++ (nullable OELReachability *)reachabilityForInternetConnection;
 
 @property (getter=isReachable, readonly) BOOL reachable;
 
 - (BOOL)startNotifier;
 - (void)stopNotifier;
 @end
+
+NS_ASSUME_NONNULL_END

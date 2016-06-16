@@ -39,8 +39,6 @@
 
 #import <objc/message.h>
 
-#define _descriptionIncludesAdditionalInformation			0
-
 @interface TVCQueuedCertificateTrustPanel ()
 @property (nonatomic, strong) NSMutableArray *queuedEntries;
 @property (nonatomic, strong) SFCertificateTrustPanel *currentPanel;
@@ -130,21 +128,7 @@
 
 		NSString *certificateHost = [self.activeSocket sslCertificateTrustPolicyName];
 
-#if _descriptionIncludesAdditionalInformation == 1
-		NSString *ownershipInformation = [_activeSocket sslCertificateLocalizedOwnershipInformation:YES];
-
-		NSMutableString *description = [NSMutableString string];
-
-		[description appendString:TXTLS(@"Prompts[1131][2]", certificateHost)];
-
-		if (ownershipInformation) {
-			[description appendString:NSStringNewlinePlaceholder];
-			[description appendString:NSStringNewlinePlaceholder];
-			[description appendString:ownershipInformation];
-		}
-#else
 		NSString *description = TXTLS(@"Prompts[1131][2]", certificateHost);
-#endif
 
 		 self.currentPanel = [SFCertificateTrustPanel new];
 		

@@ -55,8 +55,8 @@
 		
 		self.floodTimer = [TLOTimer new];
 		
-		[self.floodTimer setDelegate:self];
-		[self.floodTimer setSelector:@selector(timerOnTimer:)];
+		[self.floodTimer setTarget:self];
+		[self.floodTimer setAction:@selector(timerOnTimer:)];
 		
 		self.floodControlCurrentMessageCount = 0;
 	}
@@ -67,7 +67,7 @@
 - (void)dealloc
 {
 	[self.floodTimer stop];
-	[self.floodTimer setDelegate:nil];
+	[self.floodTimer setTarget:nil];
 
 	[self close];
 }

@@ -23,8 +23,7 @@
 #ifndef GRMUSTACHE_RENDERING
 #define GRMUSTACHE_RENDERING
 
-#import "TextualApplication.h"
-
+#import <Foundation/Foundation.h>
 #import "GRMustacheAvailabilityMacros.h"
 
 @class GRMustacheContext;
@@ -67,12 +66,13 @@
  * @see GRMustacheTag
  * @see GRMustacheContext
  * @see GRMustacheContentType
+ *
+ * @since v6.0
  */
 - (NSString *)renderForMustacheTag:(GRMustacheTag *)tag
                            context:(GRMustacheContext *)context
                           HTMLSafe:(BOOL *)HTMLSafe
                              error:(NSError **)error AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
-
 @end
 
 
@@ -112,10 +112,10 @@
 /**
  * Returns a rendering object that renders with the provided block.
  *
- * @param block  A block that follows the semantics of the
- *               renderForMustacheTag:context:HTMLSafe:error: method defined by
- *               the GRMustacheRendering protocol. See the documentation of this
- *               method.
+ * @param renderingBlock  A block that follows the semantics of the
+ *                        renderForMustacheTag:context:HTMLSafe:error: method
+ *                        defined by the GRMustacheRendering protocol. See the
+ *                        documentation of this method.
  *
  * @return A rendering object
  *
@@ -123,7 +123,7 @@
  *
  * @since v7.0
  */
-+ (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))block AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
++ (id<GRMustacheRendering>)renderingObjectWithBlock:(NSString *(^)(GRMustacheTag *tag, GRMustacheContext *context, BOOL *HTMLSafe, NSError **error))renderingBlock AVAILABLE_GRMUSTACHE_VERSION_7_0_AND_LATER;
 
 @end
 
