@@ -32,6 +32,8 @@
 	<string>irc.interlinked.me</string>
 	<key>Mibbit</key>
 	<string>irc.mibbit.com</string>
+	<key>MindForge</key>
+	<string>irc.mindforge.org</string>
 	<key>Mozilla</key>
 	<string>irc.mozilla.org</string>
 	<key>Mozor</key>
