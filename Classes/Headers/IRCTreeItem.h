@@ -38,25 +38,23 @@
 
 #import "TextualApplication.h"
 
-@interface IRCTreeItem : NSObject <NSTableViewDataSource, NSTableViewDelegate>
-@property (readonly) NSString *label;
-@property (readonly) NSString *name;
-@property (nonatomic, copy) NSString *treeUUID; // Unique Identifier (UUID)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface IRCTreeItem : NSObject
 @property (readonly) BOOL isActive;
 @property (readonly) BOOL isUnread;
 @property (readonly) BOOL isClient;
 @property (readonly) BOOL isChannel;
 @property (readonly) BOOL isPrivateMessage;
-@property (nonatomic, strong) IRCClient *associatedClient;
-@property (nonatomic, strong) IRCChannel *associatedChannel;
-@property (nonatomic, assign) NSInteger dockUnreadCount;
-@property (nonatomic, assign) NSInteger treeUnreadCount;
-@property (nonatomic, assign) NSInteger nicknameHighlightCount;
-@property (nonatomic, strong) TVCLogController *viewController;
-@property (nonatomic, strong) TVCLogControllerOperationQueue *printingQueue;
-
-- (void)resetState;
-
-@property (readonly) NSInteger numberOfChildren;
-- (IRCTreeItem *)childAtIndex:(NSInteger)index;
+@property (readonly) IRCClient *associatedClient;
+@property (readonly, nullable) IRCChannel *associatedChannel;
+@property (readonly) NSString *label;
+@property (readonly) NSString *name;
+@property (readonly) NSString *uniqueIdentifier;
+@property (readonly) NSUInteger dockUnreadCount;
+@property (readonly) NSUInteger nicknameHighlightCount;
+@property (readonly) NSUInteger treeUnreadCount;
+@property (readonly) TVCLogController *viewController;
 @end
+
+NS_ASSUME_NONNULL_END

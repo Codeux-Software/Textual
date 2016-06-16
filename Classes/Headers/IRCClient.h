@@ -155,8 +155,6 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)willDestroyChannel:(IRCChannel *)channel; // Callback for IRCWorld
 
-@property (readonly, copy) NSString *uniqueIdentifier;
-
 @property (readonly, copy) NSString *networkName; // Only returns the actual network name or nil.
 @property (readonly, copy) NSString *altNetworkName; // Will return the configured name if the actual name is not available.
 @property (readonly, copy) NSString *networkAddress;

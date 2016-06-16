@@ -911,12 +911,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	return nil;
 }
 
-- (NSInteger)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return [self channelCount];
 }
 
-- (id)childAtIndex:(NSInteger)index
+- (id)childAtIndex:(NSUInteger)index
 {
 	@synchronized(self.channels) {
 		return self.channels[index];
@@ -1373,7 +1373,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		desc = [NSString stringWithFormat:TXNotificationDialogStandardNicknameFormat, nick, text];
 	}
 
-	NSDictionary *userInfo = @{@"client" : self.treeUUID, @"channel" : target.treeUUID};
+	NSDictionary *userInfo = @{@"client" : self.uniqueIdentifier, @"channel" : target.uniqueIdentifier};
 	
 	[sharedGrowlController() notify:type title:title description:desc userInfo:userInfo];
 
@@ -1476,9 +1476,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		info = userInfo;
 	} else {
 		if (target) {
-			info = @{@"client": self.treeUUID, @"channel": target.treeUUID};
+			info = @{@"client": self.uniqueIdentifier, @"channel": target.uniqueIdentifier};
 		} else {
-			info = @{@"client": self.treeUUID};
+			info = @{@"client": self.uniqueIdentifier};
 		}
 	}
 
@@ -9296,7 +9296,7 @@ present_error:
 			if ([m timerInterval] <= now) {
 				NSString *target = nil;
 
-				IRCChannel *c = [worldController() findChannelByClientId:[self treeUUID] channelId:[m channelID]];
+				IRCChannel *c = [worldController() findChannelByClientId:[self uniqueIdentifier] channelId:[m channelID]];
 
 				if (c) {
 					target = [c name];

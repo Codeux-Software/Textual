@@ -36,50 +36,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation IRCTreeItem
-
-- (instancetype)init
-{
-    if ((self = [super init])) {
-		self.treeUUID = [NSString stringWithUUID];
-
-		return self;
-    }
-	
-    return nil;
-}
-
-- (IRCClient *)associatedClient
-{
-	return nil;
-}
-
-- (IRCChannel *)associatedChannel
-{
-	return nil;
-}
-
-- (BOOL)isClient
-{
-	return NO;
-}
-
-- (BOOL)isChannel
-{
-	return NO;
-}
-
-- (BOOL)isPrivateMessage
-{
-	return NO;
-}
-
-- (BOOL)isActive
-{
-	return NO;
-}
 
 - (BOOL)isUnread
 {
@@ -89,29 +50,13 @@
 - (void)resetState
 {
 	self.dockUnreadCount = 0;
-	self.treeUnreadCount = 0;
-	
+
 	self.nicknameHighlightCount = 0;
-}
 
-- (NSInteger)numberOfChildren
-{
-	return 0;
-}
-
-- (IRCTreeItem *)childAtIndex:(NSInteger)index
-{
-	return nil;
-}
-
-- (NSString *)label
-{
-	return nil;
-}
-
-- (NSString *)name
-{
-	return nil;
+	self.treeUnreadCount = 0;
 }
 
 @end
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_END

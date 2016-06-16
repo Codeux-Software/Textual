@@ -35,43 +35,20 @@
 
  *********************************************************************** */
 
-@class TVCLogControllerOperationQueue;
+NS_ASSUME_NONNULL_BEGIN
 
-#import "BuildConfig.h"
+@interface IRCTreeItem ()
+@property (nonatomic, assign, readwrite) NSUInteger dockUnreadCount;
+@property (nonatomic, assign, readwrite) NSUInteger nicknameHighlightCount;
+@property (nonatomic, assign, readwrite) NSUInteger treeUnreadCount;
+@property (nonatomic, strong, readwrite) IRCClient *associatedClient;
+@property (nonatomic, strong, readwrite) TVCLogController *viewController;
+@property (nonatomic, strong, readwrite) TVCLogControllerOperationQueue *printingQueue;
 
-#import "TextualApplication.h"
+- (void)resetState;
 
-#import "GCDAsyncSocketCipherNames.h"
-#import "GCDAsyncSocketExtensions.h"
-#import "IRCConnectionPrivate.h"
-#import "IRCHighlightLogEntryPrivate.h"
-#import "IRCTreeItemPrivate.h"
-#import "IRCUserPrivate.h"
-#import "IRCWorldPrivate.h"
-#import "IRCWorldPrivateCloudExtension.h"
-#import "NSObjectHelperPrivate.h"
-#import "NSTableVIewHelperPrivate.h"
-#import "NSViewHelperPrivate.h"
-#import "THOPluginDispatcherPrivate.h"
-#import "THOPluginItemPrivate.h"
-#import "THOPluginManagerPrivate.h"
-#import "THOPluginProtocolPrivate.h"
-#import "TLOLicenseManager.h"
-#import "TPCApplicationInfoPrivate.h"
-#import "TPCPathInfoPrivate.h"
-#import "TPCPreferencesCloudSyncPrivate.h"
-#import "TPCPreferencesImportExportPrivate.h"
-#import "TPCPreferencesPrivate.h"
-#import "TPCPreferencesUserDefaultsMigratePrivate.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCResourceManagerPrivate.h"
-#import "TPCThemeControllerPrivate.h"
-#import "TPCThemeSettingsPrivate.h"
-#import "TVCLogControllerOperationQueuePrivate.h"
-#import "TVCLogObjectsPrivate.h"
-#import "TVCLogViewInternalWK1.h"
-#import "TVCLogViewInternalWK2.h"
-#import "TVCMainWindowPrivate.h"
-#import "TXGlobalModelsPrivate.h"
-#import "TXSharedApplicationPrivate.h"
-#import "WebScriptObjectHelperPrivate.h"
+@property (readonly) NSUInteger numberOfChildren;
+- (IRCTreeItem *)childAtIndex:(NSUInteger)index;
+@end
+
+NS_ASSUME_NONNULL_END

@@ -1018,6 +1018,9 @@
 		4C992DC91AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */; };
 		4C992DCA1AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */; };
 		4C992DCB1AB5138A0072AB0B /* TLOEncryptionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */; };
+		4C99A7301D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */; };
+		4C99A7311D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */; };
+		4C99A7321D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */; };
 		4C9A1D9B1836E6D200C14835 /* BragSpam.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D911836E6A100C14835 /* BragSpam.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9C1836E6D300C14835 /* SpammerParadise.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4C9A1D9D1836E6D500C14835 /* SystemProfiler.bundle in Copy Extensions */ = {isa = PBXBuildFile; fileRef = 4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1908,7 +1911,7 @@
 		4C8AF53F158E99520026668C /* IRCModeInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCModeInfo.h; sourceTree = "<group>"; };
 		4C8AF540158E99520026668C /* IRCPrefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCPrefix.h; sourceTree = "<group>"; };
 		4C8AF541158E99520026668C /* IRCSendingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCSendingMessage.h; path = Headers/IRCSendingMessage.h; sourceTree = "<group>"; };
-		4C8AF542158E99520026668C /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCTreeItem.h; sourceTree = "<group>"; };
+		4C8AF542158E99520026668C /* IRCTreeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItem.h; path = Headers/IRCTreeItem.h; sourceTree = "<group>"; };
 		4C8AF543158E99520026668C /* IRCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCUser.h; sourceTree = "<group>"; };
 		4C8AF544158E99520026668C /* IRCWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IRCWorld.h; sourceTree = "<group>"; };
 		4C8AF548158E99520026668C /* NSColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSColorHelper.h; path = Headers/NSColorHelper.h; sourceTree = "<group>"; };
@@ -2018,6 +2021,7 @@
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
 		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOEncryptionManager.h; sourceTree = "<group>"; };
+		4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItemPrivate.h; path = Headers/Private/IRCTreeItemPrivate.h; sourceTree = "<group>"; };
 		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = ".tmp/SharedBuildProducts-Extensions/BragSpam.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D931836E6A100C14835 /* SystemProfiler.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SystemProfiler.bundle; path = ".tmp/SharedBuildProducts-Extensions/SystemProfiler.bundle"; sourceTree = SOURCE_ROOT; };
@@ -2361,6 +2365,7 @@
 				4CB17ECF1D125E0100FAEAD4 /* IRCHighlightLogEntry.m */,
 				4CB17ED01D125E0100FAEAD4 /* IRCHighlightMatchCondition.m */,
 				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
+				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
 				4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */,
 			);
 			name = IRC;
@@ -2649,6 +2654,7 @@
 				4C4A1AF31D122707004FBF12 /* External Libraries */,
 				4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */,
 				4CB17ED71D12603300FAEAD4 /* IRCHighlightLogEntryPrivate.h */,
+				4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */,
 				4C673ED51D10FB5000979B60 /* IRCUserPrivate.h */,
 				4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */,
 				4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */,
@@ -2899,7 +2905,6 @@
 				4C8AF53E158E99520026668C /* IRCMessage.h */,
 				4C8AF53F158E99520026668C /* IRCModeInfo.h */,
 				4C8AF540158E99520026668C /* IRCPrefix.h */,
-				4C8AF542158E99520026668C /* IRCTreeItem.h */,
 				4C8AF543158E99520026668C /* IRCUser.h */,
 				4C8AF544158E99520026668C /* IRCWorld.h */,
 				4C8AF558158E99520026668C /* TDCAboutDialog.h */,
@@ -3071,6 +3076,7 @@
 				4CB17EBA1D125B3700FAEAD4 /* IRCHighlightLogEntry.h */,
 				4CB17EBB1D125B3700FAEAD4 /* IRCHighlightMatchCondition.h */,
 				4C8AF541158E99520026668C /* IRCSendingMessage.h */,
+				4C8AF542158E99520026668C /* IRCTreeItem.h */,
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
@@ -3233,7 +3239,6 @@
 				4C8AF5BE158E99520026668C /* IRCMessage.m */,
 				4C8AF5BF158E99520026668C /* IRCModeInfo.m */,
 				4C8AF5C0158E99520026668C /* IRCPrefix.m */,
-				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
 				4C8AF5C3158E99520026668C /* IRCUser.m */,
 				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 			);
@@ -3645,6 +3650,7 @@
 				4C7B032A1D1210A100295E82 /* GTMEncodeHTML.h in Headers */,
 				4C7B032B1D1210A100295E82 /* GRMustache.h in Headers */,
 				4C7B032C1D1210A100295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
+				4C99A7301D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4C7B032D1D1210A100295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B032E1D1210A100295E82 /* GRMustacheContentType.h in Headers */,
 				4C7B032F1D1210A100295E82 /* GRMustacheContext.h in Headers */,
@@ -3933,6 +3939,7 @@
 				4C7B04101D1210A800295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C7B04111D1210A800295E82 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C7B04121D1210A800295E82 /* TVCMainWindowTitlebarAccessoryView.h in Headers */,
+				4C99A7311D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4C7B04131D1210A800295E82 /* TVCMemberList.h in Headers */,
 				4C7B04141D1210A800295E82 /* TVCMemberListCell.h in Headers */,
 				4C7B04151D1210A800295E82 /* TVCMemberListMavericksUserInterface.h in Headers */,
@@ -4120,6 +4127,7 @@
 				4C7B04911D1210B000295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C7B04921D1210B000295E82 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
 				4C7B04931D1210B000295E82 /* TVCMainWindowTitlebarAccessoryView.h in Headers */,
+				4C99A7321D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4C7B04941D1210B000295E82 /* TVCMemberList.h in Headers */,
 				4C7B04951D1210B000295E82 /* TVCMemberListCell.h in Headers */,
 				4C7B04961D1210B000295E82 /* TVCMemberListMavericksUserInterface.h in Headers */,
