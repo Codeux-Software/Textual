@@ -446,12 +446,12 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {
-			if ([uid isEqualToString:[u treeUUID]]) {
+			if ([uid isEqualToString:[u uniqueIdentifier]]) {
 				return u;
 			}
 
 			for (IRCChannel *c in u.channelList) {
-				if ([uid isEqualToString:[c treeUUID]]) {
+				if ([uid isEqualToString:[c uniqueIdentifier]]) {
 					return c;
 				}
 			}
@@ -465,8 +465,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	@synchronized(self.clients) {
 		for (IRCClient *u in self.clients) {
-			if ([uid isEqualToString:[u treeUUID]] ||
-				[uid isEqualToString:[u uniqueIdentifier]])
+			if ([uid isEqualToString:[u uniqueIdentifier]])
 			{
 				return u;
 			}
@@ -482,8 +481,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	
 	if (u) {
 		for (IRCChannel *c in u.channelList) {
-			if ([cid isEqualToString:[c treeUUID]] ||
-				[cid isEqualToString:[c uniqueIdentifier]])
+			if ([cid isEqualToString:[c uniqueIdentifier]])
 			{
 				return c;
 			}
@@ -498,9 +496,9 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	NSString *s = nil;
 
 	if ([item isClient] == NO) {
-		s = [NSString stringWithFormat:@"%@ %@", [item treeUUID], [[item associatedClient] treeUUID]];
+		s = [NSString stringWithFormat:@"%@ %@", [item uniqueIdentifier], [[item associatedClient] uniqueIdentifier]];
 	} else {
-		s = [NSString stringWithFormat:@"%@", [item treeUUID]];
+		s = [NSString stringWithFormat:@"%@", [item uniqueIdentifier]];
 	}
 
 	return s;

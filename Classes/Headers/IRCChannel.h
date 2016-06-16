@@ -74,8 +74,6 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 
 - (void)setName:(NSString *)value;
 
-@property (readonly, copy) NSString *uniqueIdentifier;
-
 @property (readonly, copy) NSString *secretKey;
 
 @property (getter=isChannel, readonly) BOOL channel;

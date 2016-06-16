@@ -927,12 +927,12 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	return NO;
 }
 
-- (NSInteger)numberOfChildren
+- (NSUInteger)numberOfChildren
 {
 	return 0;
 }
 
-- (id)childAtIndex:(NSInteger)index
+- (id)childAtIndex:(NSUInteger)index
 {
 	return nil;
 }

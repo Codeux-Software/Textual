@@ -1772,7 +1772,7 @@
 
 - (void)storePreviousSelection
 {
-	self.previousSelectedItemId = [self.selectedItem treeUUID];
+	self.previousSelectedItemId = [self.selectedItem uniqueIdentifier];
 
 	[self storePreviousSelections];
 }
@@ -1786,7 +1786,7 @@
 			previousSelectedItems = [NSMutableArray array];
 		}
 
-		[previousSelectedItems addObject:[item treeUUID]];
+		[previousSelectedItems addObject:[item uniqueIdentifier]];
 	}
 
 	self.previousSelectedItemsId = previousSelectedItems;

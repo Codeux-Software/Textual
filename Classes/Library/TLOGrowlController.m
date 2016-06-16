@@ -301,8 +301,8 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		NSString *uid = context[@"client"];
 		NSString *cid = context[@"channel"];
 		
-		if (NSObjectsAreEqual(uid, [client treeUUID]) &&
-			NSObjectsAreEqual(cid, [channel treeUUID]))
+		if (NSObjectsAreEqual(uid, [client uniqueIdentifier]) &&
+			NSObjectsAreEqual(cid, [channel uniqueIdentifier]))
 		{
 			[RZUserNotificationCenter() removeDeliveredNotification:note];
 		}
