@@ -104,17 +104,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if _compileDebugCode == 1
 		if (description) {
-			[operation setOperationDescription:description];
+			operation.operationDescription = description;
 		} else {
-			[operation setOperationDescription:@"No Description"];
+			operation.operationDescription = @"No Description";
 		}
 #endif
 
-		[operation setExecutionBlock:callbackBlock];
+		operation.executionBlock = callbackBlock;
 
-		[operation setIsStandalone:isStandalone];
+		operation.isStandalone = isStandalone;
 
-		[operation setViewController:viewController];
+		operation.viewController = viewController;
 
 		/* Add the operations */
 		[self addOperation:operation];
@@ -242,11 +242,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[exceptionMessage appendString:@"\n\nExecution block is nil when it probably shouldn't be.\n"];
 
-		[exceptionMessage appendFormat:@"\tOperation: %@\n", [self description]];
-		[exceptionMessage appendFormat:@"\tisCancelled: %d\n", [self isCancelled]];
-		[exceptionMessage appendFormat:@"\tisExecuting: %d\n", [self isExecuting]];
-		[exceptionMessage appendFormat:@"\tisFinished: %d\n", [self isFinished]];
-		[exceptionMessage appendFormat:@"\tisReady: %d\n", [super isReady]];
+		[exceptionMessage appendFormat:@"\tOperation: %@\n", self.description];
+		[exceptionMessage appendFormat:@"\tisCancelled: %d\n", self.isCancelled];
+		[exceptionMessage appendFormat:@"\tisExecuting: %d\n", self.isExecuting];
+		[exceptionMessage appendFormat:@"\tisFinished: %d\n", self.isFinished];
+		[exceptionMessage appendFormat:@"\tisReady: %d\n", super.isReady];
 		[exceptionMessage appendFormat:@"\tDescription: '%@'\n\n", self.operationDescription];
 
 		NSAssert(NO, exceptionMessage);
