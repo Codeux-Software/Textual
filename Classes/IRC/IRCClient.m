@@ -9542,36 +9542,21 @@ present_error:
 
 	NSInteger startingPosition = self.lastWhoRequestChannelListIndex;
 
+	NSInteger endingPosition = (startingPosition + _maximumChannelCountPerWhoBatchRequest);
+
 	if (startingPosition >= channelCount) {
 		startingPosition = 0;
 	}
 
-	NSInteger currentPosition = startingPosition;
+	if (endingPosition >= channelCount) {
+		endingPosition = (channelCount - 1);
+	}
 
 	NSInteger memberCount = 0;
 
 	NSMutableArray *channelsToQuery = nil;
 
-	while (1 == 1) {
-		/* Break loop once if we will exceed hard limit by adding another channel. */
-		if ([channelsToQuery count] == _maximumChannelCountPerWhoBatchRequest) {
-			break;
-		}
-
-		/* Take current value and add it */
-		NSInteger i = currentPosition;
-
-		currentPosition += 1;
-
-		if (currentPosition == channelCount) {
-			currentPosition = 0;
-		}
-
-		if (currentPosition == startingPosition) {
-			break;
-		}
-
-		/* Get channel and disregard it if it is not joined */
+	for (NSInteger i = startingPosition; i <= endingPosition; i++) {
 		IRCChannel *c = self.channels[i];
 
 		if ([c isChannel] == NO || [c isActive] == NO) {
@@ -9619,13 +9604,19 @@ present_error:
 		memberCount += memberCountC;
 
 		if (memberCount > _maximumTotalChannelSizePerWhoBatchRequest) {
+			endingPosition = i;
+
 			break;
 		}
 	}
 
-	self.lastWhoRequestChannelListIndex = currentPosition;
+	self.lastWhoRequestChannelListIndex = (endingPosition + 1);
 
 	/* Send WHO requests */
+	if (channelsToQuery == nil) {
+		return;
+	}
+
 	for (IRCChannel *c in channelsToQuery) {
 		[self send:IRCPrivateCommandIndex("who"), [c name], nil];
 	}
