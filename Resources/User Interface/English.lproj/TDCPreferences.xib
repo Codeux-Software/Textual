@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCPreferencesController">
@@ -399,10 +398,10 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="fbu-cf-Xto">
-                    <rect key="frame" x="56" y="191" width="468" height="30"/>
+                    <rect key="frame" x="56" y="190" width="468" height="31"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="c5W-EH-b7w">
-                            <rect key="frame" x="-2" y="0.0" width="255" height="18"/>
+                            <rect key="frame" x="-2" y="1" width="255" height="18"/>
                             <buttonCell key="cell" type="check" title="Share data between devices using iCloud" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="t1q-vI-QwV">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="titleBar" size="12"/>
@@ -435,7 +434,7 @@
                         <constraint firstItem="c5W-EH-b7w" firstAttribute="top" secondItem="fbu-cf-Xto" secondAttribute="top" constant="14" id="Jqg-GW-xtK"/>
                         <constraint firstItem="c5W-EH-b7w" firstAttribute="leading" secondItem="fbu-cf-Xto" secondAttribute="leading" id="Ojy-nd-vSb"/>
                         <constraint firstItem="hh5-tO-5kd" firstAttribute="baseline" secondItem="c5W-EH-b7w" secondAttribute="baseline" id="PIb-Lf-y02"/>
-                        <constraint firstAttribute="height" constant="30" id="Uli-Q4-Wl0"/>
+                        <constraint firstAttribute="height" constant="31" id="Uli-Q4-Wl0"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -452,7 +451,7 @@
                 <constraint firstItem="xLO-uz-XOC" firstAttribute="top" secondItem="8Fb-fd-M3x" secondAttribute="bottom" constant="18" id="hoz-Y8-KQS"/>
                 <constraint firstItem="8Fb-fd-M3x" firstAttribute="centerX" secondItem="Eyz-5p-IkU" secondAttribute="centerX" id="icg-aw-jJZ"/>
                 <constraint firstItem="Ff1-Og-uiT" firstAttribute="leading" secondItem="Ylx-4Q-89W" secondAttribute="leading" id="nY1-di-SXD"/>
-                <constraint firstItem="8Fb-fd-M3x" firstAttribute="top" secondItem="fbu-cf-Xto" secondAttribute="bottom" constant="16" id="qht-Kc-yuc"/>
+                <constraint firstItem="8Fb-fd-M3x" firstAttribute="top" secondItem="fbu-cf-Xto" secondAttribute="bottom" constant="15" id="qht-Kc-yuc"/>
                 <constraint firstItem="Lkb-Lh-vGq" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="56" id="rtN-JZ-KpP"/>
                 <constraint firstItem="VZ3-Xb-j91" firstAttribute="top" secondItem="xLO-uz-XOC" secondAttribute="bottom" constant="14" id="w44-57-p1H"/>
                 <constraint firstItem="fbu-cf-Xto" firstAttribute="leading" secondItem="Eyz-5p-IkU" secondAttribute="leading" constant="56" id="yk4-qS-s6f"/>
@@ -641,7 +640,7 @@
                     <rect key="frame" x="38" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
@@ -700,7 +699,7 @@
                     <rect key="frame" x="301" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
@@ -1096,7 +1095,7 @@
                     <rect key="frame" x="132" y="220" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aR8-Ov-hTp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="v9S-yX-kbj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -1295,7 +1294,7 @@
                     <rect key="frame" x="59" y="126" width="471" height="210"/>
                     <clipView key="contentView" id="AXK-zU-57a">
                         <rect key="frame" x="1" y="1" width="468" height="208"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="rGf-Ih-C97">
                                 <rect key="frame" x="0.0" y="0.0" width="469" height="0.0"/>
@@ -1559,14 +1558,14 @@
             <point key="canvasLocation" x="348.5" y="-607.5"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n4A-Pk-quE" userLabel="Flood Control">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="183"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="182"/>
             <userGuides>
                 <userLayoutGuide location="373" affinity="minY"/>
                 <userLayoutGuide location="33" affinity="minY"/>
             </userGuides>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcy-2K-Z0C">
-                    <rect key="frame" x="41" y="137" width="240" height="16"/>
+                    <rect key="frame" x="41" y="136" width="240" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="236" id="j6M-xw-uxq"/>
                     </constraints>
@@ -1577,7 +1576,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVq-cn-ftD">
-                    <rect key="frame" x="44" y="71" width="503" height="56"/>
+                    <rect key="frame" x="44" y="70" width="503" height="56"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" id="juM-7X-6WQ">
                         <font key="font" metaFont="smallSystem"/>
                         <string key="title">Textual sends a WHO command to five (5) channels per-server every thirty (30) seconds to monitor the away status of users. This preference will define the maximum number of users a channel can have before Textual does not check the channel. Zero (0) disables this behavior with four-hundred (400) as a recommended value.</string>
@@ -1586,7 +1585,7 @@
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tfY-TP-YZN">
-                    <rect key="frame" x="65" y="30" width="458" height="19"/>
+                    <rect key="frame" x="65" y="30" width="458" height="18"/>
                     <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="2000" doubleValue="120" tickMarkPosition="below" numberOfTickMarks="51" allowsTickMarkValuesOnly="YES" sliderType="linear" id="JHI-LK-miQ"/>
                     <connections>
                         <accessibilityConnection property="title" destination="wcy-2K-Z0C" id="cW8-Bg-bLX"/>
@@ -1594,7 +1593,7 @@
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V7m-3A-nss">
-                    <rect key="frame" x="243" y="49" width="102" height="14"/>
+                    <rect key="frame" x="243" y="48" width="102" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Current Value: 100" id="J0v-lX-lSI">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1609,7 +1608,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ovt-cD-DOK">
-                    <rect key="frame" x="48" y="35" width="11" height="14"/>
+                    <rect key="frame" x="48" y="34" width="11" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="0" id="yQ3-ZF-7V3">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1617,7 +1616,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xYi-8b-aQD">
-                    <rect key="frame" x="529" y="35" width="35" height="14"/>
+                    <rect key="frame" x="529" y="34" width="35" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="2,000" id="lYL-2U-2IR">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1757,7 +1756,7 @@
                     <rect key="frame" x="94" y="141" width="371" height="31"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Dog-4X-w01">
                         <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="Ncp-xZ-uCx">
                                 <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
@@ -2526,7 +2525,7 @@
                                         </connections>
                                     </button>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-IU-HIb">
-                                        <rect key="frame" x="222" y="93" width="222" height="17"/>
+                                        <rect key="frame" x="222" y="91" width="222" height="15"/>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" minValue="0.20000000000000001" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="4bQ-HS-Zy3"/>
                                         <accessibility description="Main Window Transparency Percent"/>
                                         <connections>
@@ -2788,7 +2787,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KaQ-rf-529">
-                                        <rect key="frame" x="77.5" y="307" width="388" height="32"/>
+                                        <rect key="frame" x="78" y="307" width="388" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="384" id="jUi-CP-9l5"/>
                                         </constraints>
@@ -2947,7 +2946,7 @@
                     <rect key="frame" x="78" y="229" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9lZ-9k-jqr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="1u5-gL-g0d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -2994,7 +2993,7 @@
                     <rect key="frame" x="78" y="201" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="lmN-R7-tw0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="72N-cr-Sqw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3041,7 +3040,7 @@
                     <rect key="frame" x="78" y="122" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="DqJ-lp-N4v">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="DYY-sZ-cVa">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3104,7 +3103,7 @@
                     <rect key="frame" x="78" y="257" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="QkK-PM-KFq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="wpc-xg-MzG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3169,7 +3168,7 @@
                     <rect key="frame" x="78" y="173" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="I6u-3p-MbT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="SUi-M8-HBn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -3980,7 +3979,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="108" y="39" width="320" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zWf-tX-IOX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ubi-Bg-XAW">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -4181,7 +4180,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </textFieldCell>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="1Qb-Of-v0f">
-                                        <rect key="frame" x="43" y="142" width="442" height="5"/>
+                                        <rect key="frame" x="44" y="142" width="442" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
@@ -4215,7 +4214,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </textField>
                                     <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="V9v-1W-6Ke">
-                                        <rect key="frame" x="43.5" y="221" width="442" height="5"/>
+                                        <rect key="frame" x="44" y="221" width="442" height="5"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="442" id="veE-CR-Exq"/>
                                         </constraints>
@@ -4227,7 +4226,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="54" y="242" width="394" height="27"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="lQy-z8-Ufr">
                                             <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="UqK-4p-c7Q">
                                                     <rect key="frame" x="0.0" y="0.0" width="394" height="27"/>
@@ -4355,7 +4354,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="61" y="56" width="407" height="43"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="tYM-TV-SCh">
                                             <rect key="frame" x="0.0" y="0.0" width="407" height="43"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="MHv-vv-IRm">
                                                     <rect key="frame" x="0.0" y="42" width="407" height="43"/>
@@ -4507,10 +4506,10 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </connections>
                                     </button>
                                     <scrollView appearanceType="aqua" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="WH0-Df-kRL">
-                                        <rect key="frame" x="86.5" y="28" width="356" height="17"/>
+                                        <rect key="frame" x="87" y="28" width="356" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="crJ-r5-VO3">
                                             <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="Fjg-k0-aT5">
                                                     <rect key="frame" x="0.0" y="107" width="356" height="17"/>
@@ -4555,7 +4554,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <constraint firstAttribute="height" constant="17" id="sB9-kl-Fdi"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="nfo-Dq-br0">
-                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <rect key="frame" x="-101" y="-100" width="88" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="1wN-Wz-OYV">
@@ -4603,7 +4602,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="156" y="264" width="296" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
@@ -4660,7 +4659,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="107" y="212" width="340" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
