@@ -157,7 +157,7 @@ NSString * const TVCLogControllerViewFinishedLoadingNotification = @"TVCLogContr
 
 - (void)buildBackingView
 {
-	self.backingView = [[TVCLogView alloc] initWithLogController:self];
+	self.backingView = [[TVCLogView alloc] initWithViewController:self];
 }
 
 - (void)rebuildBackingView

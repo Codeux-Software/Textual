@@ -45,7 +45,7 @@
 @interface TVCLogScriptEventSinkContext : NSObject
 @property (nonatomic, weak) TVCLogView *webView;
 @property (readonly) TVCLogPolicy *webViewPolicy;
-@property (readonly) TVCLogController *logController;
+@property (readonly) TVCLogController *viewController;
 @property (readonly) IRCClient *associatedClient;
 @property (readonly) IRCChannel *associatedChannel;
 @property (nonatomic, copy) NSArray *arguments;
@@ -563,7 +563,7 @@
 
 - (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context logController] inlineImagesEnabledForView]);
+	return @([[context viewController] inlineImagesEnabledForView]);
 }
 
 - (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
@@ -775,7 +775,7 @@
 	[payloadObject setPayloadLabel:payloadLabel];
 	[payloadObject setPayloadContents:payloadContents];
 
-	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:[context logController]];
+	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:[context viewController]];
 }
 
 - (id)_serverAddress:(TVCLogScriptEventSinkContext *)context
@@ -887,9 +887,9 @@
 
 @implementation TVCLogScriptEventSinkContext
 
-- (TVCLogController *)logController
+- (TVCLogController *)viewController
 {
-	return [[self webView] logController];
+	return [[self webView] viewController];
 }
 
 - (TVCLogPolicy *)webViewPolicy
@@ -899,12 +899,12 @@
 
 - (IRCClient *)associatedClient
 {
-	return [[self logController] associatedClient];
+	return [[self viewController] associatedClient];
 }
 
 - (IRCChannel *)associatedChannel
 {
-	return [[self logController] associatedChannel];
+	return [[self viewController] associatedChannel];
 }
 
 @end

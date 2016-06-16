@@ -826,9 +826,9 @@
 - (void)focusWebview
 {
 	if ([self attachedSheet] == nil) {
-		TVCLogController *logController = self.selectedViewController;
+		TVCLogController *viewController = self.selectedViewController;
 
-		NSView *webView = [[logController backingView] webView];
+		NSView *webView = [[viewController backingView] webView];
 
 		[self makeFirstResponder:webView];
 	}

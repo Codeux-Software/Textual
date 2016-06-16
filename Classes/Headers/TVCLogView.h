@@ -47,7 +47,7 @@ TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @property (readonly) BOOL isUsingWebKit2;
 
-- (instancetype)initWithLogController:(TVCLogController *)logController;
+- (instancetype)initWithViewController:(TVCLogController *)viewController;
 
 - (void)copyContentString;
 
