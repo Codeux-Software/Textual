@@ -161,7 +161,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 			[subview setOverlayVisible:YES];
 		}
 
-		[subview setuniqueIdentifier:itemIdentifier];
+		[subview setUniqueIdentifier:itemIdentifier];
 
 		if (subviewIsNew) {
 			[self addSubview:subview];
