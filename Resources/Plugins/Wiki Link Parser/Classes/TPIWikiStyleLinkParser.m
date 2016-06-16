@@ -141,7 +141,7 @@
 				linkInside = [linkInside trim];
 			}
 
-			linkInside = [linkInside encodeURIComponent];
+			linkInside = [linkInside percentEncodedString];
 
 			linkInside = [linkPrefix stringByAppendingString:linkInside];
 			

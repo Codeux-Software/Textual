@@ -126,7 +126,7 @@
 
 			IRCChannel *targetChannel = nil;
 
-			if ([target isChannelName:self]) {
+			if ([target isChannelNameOn:self]) {
 				targetChannel = [self findChannel:target];
 			} else {
 				targetChannel = [self findChannel:sender];
