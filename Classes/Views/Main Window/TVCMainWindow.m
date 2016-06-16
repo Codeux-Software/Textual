@@ -54,7 +54,11 @@
 #pragma mark -
 #pragma mark Awakening
 
+#ifdef TXSystemIsOSXSierraOrLater
 - (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSWindowStyleMask)style backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+#else
+- (instancetype)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)style backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+#endif
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:style backing:bufferingType defer:flag])) {
 		self.keyEventHandler = [TLOKeyEventHandler new];
