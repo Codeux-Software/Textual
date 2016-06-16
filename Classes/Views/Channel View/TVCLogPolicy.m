@@ -53,7 +53,7 @@
 
 - (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	TVCLogController *logController = [webView logController];
+	TVCLogController *viewController = [webView viewController];
 
 	BOOL isWebKit2 = [webView isUsingWebKit2];
 
@@ -71,7 +71,7 @@
 										[newMenu addObject:(_itemValue_)];	\
 									}
 
-	if ([logController associatedChannel] == nil) {
+	if ([viewController associatedChannel] == nil) {
 		self.nickname = nil;
 	}
 

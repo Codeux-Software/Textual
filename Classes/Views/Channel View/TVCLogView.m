@@ -45,10 +45,10 @@
 
 NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.codeux.com/textual/Inline-Media-Scanner-User-Agent.kb)";
 
-- (instancetype)initWithLogController:(TVCLogController *)logController
+- (instancetype)initWithViewController:(TVCLogController *)viewController
 {
 	if ((self = [super init])) {
-		[self setLogController:logController];
+		[self setViewController:viewController];
 
 		[self constructWebView];
 
@@ -111,7 +111,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	BOOL ctrl = ((m & NSControlKeyMask) == NSControlKeyMask);
 
 	if (ctrl == NO && alt == NO && cmd == NO) {
-		[[self logController] logViewWebViewKeyDown:e];
+		[[self viewController] logViewWebViewKeyDown:e];
 
 		return YES;
 	}
@@ -126,7 +126,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	if (fileURL) {
 		NSString *filename = [fileURL relativePath];
 
-		[[self logController] logViewWebViewRecievedDropWithFile:filename];
+		[[self viewController] logViewWebViewRecievedDropWithFile:filename];
 	}
 
 	return NO;
@@ -134,12 +134,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)informDelegateWebViewFinishedLoading
 {
-	[[self logController] logViewWebViewFinishedLoading];
+	[[self viewController] logViewWebViewFinishedLoading];
 }
 
 - (void)informDelegateWebViewClosedUnexpectedly
 {
-	[[self logController] logViewWebViewClosedUnexpectedly];
+	[[self viewController] logViewWebViewClosedUnexpectedly];
 }
 
 - (TVCLogPolicy *)webViewPolicy

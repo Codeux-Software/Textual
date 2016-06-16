@@ -45,7 +45,7 @@
 @end
 
 @interface TVCLogView ()
-@property (nonatomic, weak) TVCLogController *logController;
+@property (nonatomic, weak) TVCLogController *viewController;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
