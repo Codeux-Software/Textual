@@ -42,7 +42,7 @@
 @interface TVCMainWindowChannelViewSubview ()
 @property (nonatomic, assign) NSInteger itemIndex;
 @property (nonatomic, readwrite, assign) BOOL overlayVisible;
-@property (nonatomic, copy) NSString *treeUUID;
+@property (nonatomic, copy) NSString *uniqueIdentifier;
 @property (nonatomic, weak) NSView *webView;
 @property (nonatomic, strong) TVCMainWindowChannelViewSubviewOverlayView *overlayView;
 
@@ -110,7 +110,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 			subviews = [NSMutableDictionary dictionary];
 		}
 
-		[subviews setObject:subview forKey:[subview treeUUID]];
+		[subviews setObject:subview forKey:[subview uniqueIdentifier]];
 	}
 
 	/* Once selectedItems is processed, the value of subviewsUnclaimed will
@@ -127,7 +127,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	__block NSInteger itemIndexSelected = 0;
 
 	[selectedItems enumerateObjectsUsingBlock:^(id item, NSUInteger index, BOOL *stop) {
-		NSString *itemIdentifier = [item treeUUID];
+		NSString *itemIdentifier = [item uniqueIdentifier];
 
 		TVCMainWindowChannelViewSubview *subview = nil;
 
@@ -161,7 +161,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 			[subview setOverlayVisible:YES];
 		}
 
-		[subview setTreeUUID:itemIdentifier];
+		[subview setuniqueIdentifier:itemIdentifier];
 
 		if (subviewIsNew) {
 			[self addSubview:subview];
