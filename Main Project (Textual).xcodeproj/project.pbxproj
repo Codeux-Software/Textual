@@ -45,6 +45,9 @@
 /* Begin PBXBuildFile section */
 		4C0095AB1952AB88008A81C7 /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */; };
 		4C0095AC1952AB88008A81C7 /* TXSharedApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */; };
+		4C035B5B1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -1713,6 +1716,7 @@
 		4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesCloudSyncExtension.h; path = Headers/TPCPreferencesCloudSyncExtension.h; sourceTree = "<group>"; };
 		4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXSharedApplication.m; path = Controllers/TXSharedApplication.m; sourceTree = "<group>"; };
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXSharedApplication.h; path = Headers/TXSharedApplication.h; sourceTree = "<group>"; };
+		4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReload.h; path = Headers/TPCPreferencesReload.h; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3096,6 +3100,7 @@
 				4C17385D18197F800099EEC2 /* TPCPreferencesCloudSync.h */,
 				4C0095A71952AA73008A81C7 /* TPCPreferencesCloudSyncExtension.h */,
 				4C5A0316170C2C170016BB1A /* TPCPreferencesImportExport.h */,
+				4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */,
 				4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */,
 				4CD0A22D1CCD85E300513EA2 /* TPCPreferencesUserDefaultsMigrate.h */,
 				4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */,
@@ -3628,6 +3633,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C035B5B1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C4A1AE81D12245B004FBF12 /* TXGlobalModelsPrivate.h in Headers */,
 				4C7B03181D12107500295E82 /* NSColorHelper.h in Headers */,
 				4C7B03191D12107500295E82 /* NSStringHelper.h in Headers */,
@@ -3815,6 +3821,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B02FA1D12105D00295E82 /* NSColorHelper.h in Headers */,
 				4C7B02FB1D12105D00295E82 /* NSStringHelper.h in Headers */,
 				4C7B02FC1D12105D00295E82 /* StaticDefinitions.h in Headers */,
@@ -4003,6 +4010,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */,
 				4C7B03091D12106300295E82 /* NSColorHelper.h in Headers */,
 				4C7B030A1D12106300295E82 /* NSStringHelper.h in Headers */,
 				4C7B030B1D12106300295E82 /* StaticDefinitions.h in Headers */,
