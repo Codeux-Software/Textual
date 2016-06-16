@@ -1495,7 +1495,13 @@
 		NSTitlebarAccessoryViewController *accessoryView = [self titlebarAccessoryViewController];
 
 		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+
+#ifdef TXSystemIsOSXSierraOrLater
 			[accessoryView setLayoutAttribute:NSLayoutAttributeTrailing];
+#else
+			[accessoryView setLayoutAttribute:NSLayoutAttributeLeft];
+#endif
+
 		} else {
 			[accessoryView setLayoutAttribute:NSLayoutAttributeRight];
 		}
