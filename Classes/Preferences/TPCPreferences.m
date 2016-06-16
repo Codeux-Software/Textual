@@ -56,7 +56,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (NSString *)_defaultNicknamePrefix
 {
-	return [[TPCPreferences defaultPreferences] objectForKey:@"DefaultIdentity -> Nickname"];
+	return [TPCPreferences defaultPreferences][@"DefaultIdentity -> Nickname"];
 }
 
 + (void)_populateDefaultNickname
@@ -484,7 +484,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (NSString *)themeNameDefault
 {
-	return [[TPCPreferences defaultPreferences] objectForKey:TPCPreferencesThemeNameDefaultsKey];
+	return [TPCPreferences defaultPreferences][TPCPreferencesThemeNameDefaultsKey];
 }
 
 + (NSString *)themeName
@@ -514,7 +514,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (NSString *)themeChannelViewFontNameDefault
 {
-	return [[TPCPreferences defaultPreferences] objectForKey:TPCPreferencesThemeFontNameDefaultsKey];
+	return [TPCPreferences defaultPreferences][TPCPreferencesThemeFontNameDefaultsKey];
 }
 
 + (NSString *)themeChannelViewFontName
@@ -570,7 +570,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (NSString *)themeNicknameFormatDefault
 {
-	return [[TPCPreferences defaultPreferences] objectForKey:@"Theme -> Nickname Format"];
+	return [TPCPreferences defaultPreferences][@"Theme -> Nickname Format"];
 }
 
 + (NSString *)themeNicknameFormat
@@ -590,7 +590,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (NSString *)themeTimestampFormatDefault
 {
-	return [[TPCPreferences defaultPreferences] objectForKey:@"Theme -> Timestamp Format"];
+	return [TPCPreferences defaultPreferences][@"Theme -> Timestamp Format"];
 }
 
 + (NSString *)themeTimestampFormat

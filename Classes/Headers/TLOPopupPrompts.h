@@ -38,10 +38,12 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TLOPopupPromptSuppressionPrefix;
 
 typedef NS_ENUM(NSUInteger, TLOPopupPromptReturnType) {
-	TLOPopupPromptReturnPrimaryType,
+	TLOPopupPromptReturnPrimaryType = 0,
 	TLOPopupPromptReturnSecondaryType,
 	TLOPopupPromptReturnOtherType,
 };
@@ -54,49 +56,50 @@ typedef void (^TLOPopupPromptsCompletionBlock)(TLOPopupPromptReturnType buttonCl
  turns into once the alert is processed. */
 + (NSString *)suppressionKeyWithBase:(NSString *)base;
 
-/* Alerts. */
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate;
+				alternateButton:(nullable NSString *)buttonAlternate;
 
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText;
+				alternateButton:(nullable NSString *)buttonAlternate
+				 suppressionKey:(nullable NSString *)suppressKey
+				suppressionText:(nullable NSString *)suppressText;
 
 + (BOOL)dialogWindowWithMessage:(NSString *)bodyText
 						  title:(NSString *)titleText
 				  defaultButton:(NSString *)buttonDefault
-				alternateButton:(NSString *)buttonAlternate
-				 suppressionKey:(NSString *)suppressKey
-				suppressionText:(NSString *)suppressText
-			suppressionResponse:(BOOL *)suppressionResponse;
+				alternateButton:(nullable NSString *)buttonAlternate
+				 suppressionKey:(nullable NSString *)suppressKey
+				suppressionText:(nullable NSString *)suppressText
+			suppressionResponse:(nullable BOOL *)suppressionResponse;
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton;
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton;
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton
-			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock;
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock;
 
 + (void)sheetWindowWithWindow:(NSWindow *)window
 						 body:(NSString *)bodyText
 						title:(NSString *)titleText
 				defaultButton:(NSString *)buttonDefault
-			  alternateButton:(NSString *)buttonAlternate
-				  otherButton:(NSString *)otherButton
-			   suppressionKey:(NSString *)suppressKey
-			  suppressionText:(NSString *)suppressText
-			  completionBlock:(TLOPopupPromptsCompletionBlock)completionBlock;
+			  alternateButton:(nullable NSString *)buttonAlternate
+				  otherButton:(nullable NSString *)otherButton
+			   suppressionKey:(nullable NSString *)suppressKey
+			  suppressionText:(nullable NSString *)suppressText
+			  completionBlock:(nullable TLOPopupPromptsCompletionBlock)completionBlock;
 @end
+
+NS_ASSUME_NONNULL_END

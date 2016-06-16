@@ -156,8 +156,6 @@
 
 "Prompts[1131][1]" = "Textual can’t verify the identity of the server “%@”";
 "Prompts[1131][2]" = "The certificate for this server is invalid. You might be connecting to a server that is pretending to be “%@”, which could put your confidential information at risk. Would you like to connect to the server anyway?";
-"Prompts[1131][3]" = "The certificate was issued by “%1$@” for “%2$@” located in %3$@, %4$@, %5$@"; // Long reply
-"Prompts[1131][4]" = "The certificate was issued by “%1$@”"; // Short reply
 
 "Prompts[1132][1]" = "Are you sure you want to transfer the file named “%@“?";
 "Prompts[1132][2]" = "This file will be sent without encryption.";

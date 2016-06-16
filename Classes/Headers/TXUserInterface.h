@@ -37,10 +37,14 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TXUserInterface : NSObject
 + (BOOL)runningInHighResolutionMode;
 
-+ (BOOL)systemWideDarkModeEnabledInYosemite;
++ (BOOL)systemWideDarkModeEnabledOnYosemite;
 
 + (BOOL)onlyShowScrollbarWhileScrolling;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDictionary<NSString *, NSString *> *)supportedAppleScriptCommandsAndPaths
 {
-	return [self supportedAppleScriptCommands:NO];
+	return [self supportedAppleScriptCommands:YES];
 }
 
 - (id)supportedAppleScriptCommands:(BOOL)returnPathInfo
@@ -282,7 +282,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)extrasInstallerCheckForUpdates
 {
 	/* Do not check for updates too often */
-	NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+	NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
 
 	NSTimeInterval lastUpdateTime =
 	[RZUserDefaults() doubleForKey:@"THOPluginManager -> Extras Installer Last Check for Update"];
@@ -335,7 +335,7 @@ NS_ASSUME_NONNULL_BEGIN
 	 stringByAppendingString:[TPCApplicationInfo applicationVersionShort]];
 
 	BOOL download = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1112][2]")
-													   title:TXTLS(@"Prompts[1112][1]", [bundle displayName])
+													   title:TXTLS(@"Prompts[1112][1]", bundle.displayName)
 											   defaultButton:TXTLS(@"Prompts[1112][3]")
 											 alternateButton:TXTLS(@"Prompts[1112][4]")
 											  suppressionKey:suppressionKey

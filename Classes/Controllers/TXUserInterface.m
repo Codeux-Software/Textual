@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TXUserInterface
 
@@ -44,7 +44,7 @@
 	return [[[NSApp mainWindow] screen] runningInHighResolutionMode];
 }
 
-+ (BOOL)systemWideDarkModeEnabledInYosemite
++ (BOOL)systemWideDarkModeEnabledOnYosemite
 {
 	NSString *objectValue = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
 
@@ -67,3 +67,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

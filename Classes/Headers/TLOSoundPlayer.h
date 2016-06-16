@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TLOSoundPlayer : NSObject
 + (void)playAlertSound:(NSString *)name;
 @end
+
+NS_ASSUME_NONNULL_END

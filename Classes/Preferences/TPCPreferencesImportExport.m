@@ -126,6 +126,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[worldController() setIsImportingConfiguration:YES];
 
+	[mainWindowServerList() beginUpdates];
+
 	/* Import data */
 	[TPCPreferencesImportExport importContentsOfDictionary:propertyList reloadPreferences:NO];
 	
@@ -239,6 +241,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)importPostflightCleanup:(NSArray<NSString *> *)changedKeys
 {
 	[TPCPreferences performReloadActionForKeys:changedKeys];
+
+	[mainWindowServerList() endUpdates];
 
 	[worldController() setIsImportingConfiguration:NO];
 

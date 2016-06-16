@@ -17,9 +17,9 @@
 //  the License.
 //
 
-// Last Update: Google — Jan 28, 2008
+#import <Foundation/Foundation.h>
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /// Utilities for NSStrings containing HTML
 @interface NSString (GTMNSStringHTMLAdditions)
@@ -37,7 +37,7 @@
 //  Returns:
 //    Autoreleased NSString
 //
-@property (nonatomic, readonly, copy) NSString *gtm_stringByEscapingForHTML;
+@property (readonly, copy, nullable) NSString *gtm_stringByEscapingForHTML;
 
 /// Get a string where internal characters that need escaping for HTML are escaped
 //
@@ -53,7 +53,7 @@
 //  Returns:
 //    Autoreleased NSString
 //
-@property (nonatomic, readonly, copy) NSString *gtm_stringByEscapingForAsciiHTML;
+@property (readonly, copy) NSString *gtm_stringByEscapingForAsciiHTML;
 
 /// Get a string where internal characters that are escaped for HTML are unescaped
 //
@@ -63,6 +63,8 @@
 //  Returns:
 //    Autoreleased NSString
 //
-@property (nonatomic, readonly, copy) NSString *gtm_stringByUnescapingFromHTML;
+@property (readonly, copy) NSString *gtm_stringByUnescapingFromHTML;
 
 @end
+
+NS_ASSUME_NONNULL_END

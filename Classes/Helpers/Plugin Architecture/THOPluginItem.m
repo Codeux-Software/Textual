@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(bundle != nil);
 
 	/* Initialize the principal class */
-	Class principalClass = [bundle principalClass];
+	Class principalClass = bundle.principalClass;
 
 	if (principalClass == nil) {
 		return NO;

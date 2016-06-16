@@ -47,13 +47,6 @@
 - (IBAction)onClearList:(id)sender;
 @end
 
-@interface TDCServerHighlightListSheetEntry ()
-@property (readonly, weak) IRCChannel *channel;
-@property (readonly, copy) NSString *channelName;
-@property (readonly, copy) NSString *timeLoggedFormatted;
-@property (nonatomic, assign) CGFloat rowHeight;
-@end
-
 @implementation TDCServerHighlightListSheet
 
 - (instancetype)init
@@ -95,7 +88,7 @@
 			[self addEntry:arrayObject];
 		}
 	}
-	else if (newEntry && [newEntry isKindOfClass:[TDCServerHighlightListSheetEntry class]])
+	else if (newEntry && [newEntry isKindOfClass:[IRCHighlightLogEntry class]])
 	{
 		[self.highlightListController addObject:newEntry];
 	}
@@ -112,7 +105,7 @@
 	NSRect textFieldFrame = [[cellView textField] frame];
 
 	[self performBlockOnGlobalQueue:^{
-		TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+		IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
 		CGFloat calculatedTextHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
 
@@ -148,7 +141,7 @@
 	NSInteger row = [self.highlightListTable clickedRow];
 
 	if (row >= 0) {
-		TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+		IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
 		IRCChannel *channel = [entryItem channel];
 
@@ -171,7 +164,7 @@
 
 - (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
 {
-	TDCServerHighlightListSheetEntry *entryItem = [self.highlightListController arrangedObjects][row];
+	IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
 
 	if ([entryItem rowHeight] > 0) {
 		return [entryItem rowHeight];
@@ -203,39 +196,6 @@
 	if ([self.delegate respondsToSelector:@selector(serverHighlightListSheetWillClose:)]) {
 		[self.delegate serverHighlightListSheetWillClose:self];
 	}
-}
-
-@end
-
-#pragma mark -
-
-@implementation TDCServerHighlightListSheetEntry
-
-- (NSString *)timeLoggedFormatted
-{
-	NSTimeInterval timeInterval = [self.timeLogged timeIntervalSinceNow];
-
-	NSString *formattedTimeInterval = TXHumanReadableTimeInterval(timeInterval, YES, 0);
-
-	return TXTLS(@"BasicLanguage[1025]", formattedTimeInterval);
-}
-
-- (IRCChannel *)channel
-{
-	IRCClient *client = [mainWindow() selectedClient];
-
-	IRCChannel *channel = [worldController() findChannelByClientId:[client uniqueIdentifier] channelId:self.channelID];
-
-	return channel;
-}
-
-- (NSString *)channelName
-{
-	IRCChannel *channel = [self channel];
-
-	PointerIsEmptyAssertReturn(channel, nil);
-
-	return [channel name];
 }
 
 @end

@@ -40,29 +40,20 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /* Localization */
-TEXTUAL_EXTERN NSString * _Nullable TXTLS(NSString *key, ...);
+TEXTUAL_EXTERN NSString *TXTLS(NSString *key, ...);
 
-TEXTUAL_EXTERN NSString * _Nullable TXLocalizedString(NSBundle *bundle, NSString *key, va_list args);
-TEXTUAL_EXTERN NSString * _Nullable TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
+TEXTUAL_EXTERN NSString *TXLocalizedString(NSBundle *bundle, NSString *key, va_list arguments);
+TEXTUAL_EXTERN NSString *TXLocalizedStringAlternative(NSBundle *bundle, NSString *key, ...);
 
 /* Time */
 TEXTUAL_EXTERN NSString * _Nullable TXFormattedTimestamp(NSDate *date, NSString *format);
 
-TEXTUAL_EXTERN NSString * _Nullable TXHumanReadableTimeInterval(NSInteger dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
+TEXTUAL_EXTERN NSString * _Nullable TXHumanReadableTimeInterval(NSTimeInterval dateInterval, BOOL shortValue, NSCalendarUnit orderMatrix);
 
-TEXTUAL_EXTERN NSDateFormatter *TXSharedISOStandardDateFormatter(void);
-
-// Pass dateTime through NSDateFormatter with style NSDateFormatterLongStyle and
-// return the result or nil, or optionally return the original if result is nil.
-TEXTUAL_EXTERN NSString  * _Nullable TXFormatDateTimeStringToCommonFormat(id dateTime, BOOL returnOriginalOnFail);
-
-/* Grand Central Dispatch */
-TEXTUAL_EXTERN void XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(dispatch_block_t block);
-
-/* Everything els. */
+/* Everything else */
 TEXTUAL_EXTERN NSString *TXFormattedNumber(NSInteger number);
 
-TEXTUAL_EXTERN NSInteger TXRandomNumber(NSInteger maxset);
+TEXTUAL_EXTERN NSUInteger TXRandomNumber(u_int32_t maximum);
 
 TEXTUAL_EXTERN NSComparator NSDefaultComparator;
 

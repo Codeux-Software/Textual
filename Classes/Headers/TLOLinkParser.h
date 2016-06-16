@@ -38,8 +38,12 @@
 
 #import "TextualApplication.h"
 
-@interface TLOLinkParser : NSObject
-+ (NSArray *)locatedLinksForString:(NSString *)body;
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSArray *)bannedLineTypes;
+@interface TLOLinkParser : NSObject
++ (NSArray *)locatedLinksForString:(NSString *)string;
+
++ (NSArray<NSString *> *)bannedLineTypes;
 @end
+
+NS_ASSUME_NONNULL_END

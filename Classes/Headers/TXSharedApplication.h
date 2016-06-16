@@ -37,10 +37,11 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define masterController()			[self masterController]
 #define menuController()			[masterController() menuController]
 #define worldController()			[masterController() world]
-#define windowController()			[TXSharedApplication sharedWindowController]
 
 #define mainWindow()				[masterController() mainWindow]
 
@@ -53,42 +54,13 @@
 
 #define themeSettings()				[themeController() customSettings]
 
-#define sharedGrowlController()			[TXSharedApplication sharedGrowlController]
-
-#define sharedPluginManager()			[TXSharedApplication applicationPluginManager]
-#define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
-
 @interface TXSharedApplication : NSObject
-+ (TXWindowController *)sharedWindowController;
-+ (OELReachability *)sharedNetworkReachabilityObject;
-+ (THOPluginManager *)applicationPluginManager;
-+ (TLOGrowlController *)sharedGrowlController;
-+ (TLOInputHistory *)sharedInputHistoryManager;
-+ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
-+ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
 + (TPCThemeController *)sharedThemeController;
-+ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-+ (TLOEncryptionManager *)sharedEncryptionManager;
-#endif
-
-/* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
- and this queue alone to prevent accessing on different threads at same time 
- which could result in corrupted data access. It is not recommended to call 
- this serial queue for any reason from a plugin. It is a work horse for Textual
- and should be respected as such. */
-+ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue;
-+ (void)releaseSharedMutableSynchronizationSerialQueue;
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (TPCPreferencesCloudSync *)sharedCloudSyncManager;
-#endif
 @end
 
 @interface NSObject (TXSharedApplicationObjectExtension)
 - (TXMasterController *)masterController;
 + (TXMasterController *)masterController;
-
-+ (void)setGlobalMasterControllerClassReference:(id)masterController;
 @end
+
+NS_ASSUME_NONNULL_END

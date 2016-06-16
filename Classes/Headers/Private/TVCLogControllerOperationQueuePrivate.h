@@ -5,7 +5,6 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -36,56 +35,24 @@
 
  *********************************************************************** */
 
-NS_ASSUME_NONNULL_BEGIN
+#import "TextualApplication.h"
 
-@implementation IRCSendingMessage
+/* No plugins should be accessing this. */
+@class TVCLogControllerOperationItem;
 
-+ (NSString *)stringWithCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments
-{
-	NSParameterAssert(command != nil);
+typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
 
-	NSString *commandUppercase = command.uppercaseString;
+@interface TVCLogControllerOperationQueue : NSOperationQueue
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description isStandalone:(BOOL)isStandalone;
 
-	if (arguments.count == 0) {
-		return commandUppercase;
-	}
+/* Limit scope of cancelAllOperations. */
+- (void)cancelOperationsForClient:(IRCClient *)client;
+- (void)cancelOperationsForChannel:(IRCChannel *)channel;
 
-	NSMutableString *builtString = [NSMutableString stringWithString:commandUppercase];
+- (void)cancelOperationsForViewController:(TVCLogController *)controller;
 
-	NSInteger colonIndexBase = [IRCCommandIndex colonIndexForCommand:command];
-
-	NSInteger colonIndexCount = 0;
-
-	for (NSString *argument in arguments) {
-		[builtString appendString:NSStringWhitespacePlaceholder];
-
-		if (colonIndexBase == (-1)) {
-			// Guess where the colon (:) should go.
-			//
-			// A colon is supposed to represent a section of an outgoing command
-			// that has a paramater which contains spaces. For example, PRIVMSG
-			// is in the formoat "PRIVMSG #channel :long message" — The message
-			// will have spaces part of it, so we inform the server.
-			
-			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:NSStringWhitespacePlaceholder])) {
-				[builtString appendString:@":"];
-			}
-		} else {
-			// We know where it goes thanks to the command index
-
-			if (colonIndexCount == colonIndexBase) {
-				[builtString appendString:@":"];
-			}
-		}
-
-		[builtString appendString:argument];
-
-		colonIndexCount += 1;
-	}
-
-	return builtString.copy;
-}
-
+/* Update state. */
+- (void)updateReadinessState:(TVCLogController *)controller;
 @end
-
-NS_ASSUME_NONNULL_END

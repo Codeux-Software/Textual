@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation GCDAsyncSocket (GCDsyncSocketExtensions)
 
@@ -44,7 +44,7 @@
     return [[self alloc] initWithDelegate:aDelegate delegateQueue:dq socketQueue:sq];
 }
 
-+ (NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode
++ (nullable NSString *)sslHandshakeErrorStringFromError:(NSUInteger)errorCode
 {
 	NSInteger positiveErrorCode = (errorCode * (-1));
 
@@ -63,17 +63,19 @@
 
 		/* Maybe format the error message. */
 		return [NSString stringWithFormat:headingFormat, localizedError, errorCode];
-	} else {
-		return nil;
 	}
+
+	return nil;
 }
 
 + (BOOL)badSSLCertificateErrorFound:(NSError *)error
 {
-	if ([[error domain] isEqualToString:@"kCFStreamErrorDomainSSL"]) {
+	NSParameterAssert(error != nil);
+
+	if ([error.domain isEqualToString:@"kCFStreamErrorDomainSSL"]) {
 		BOOL isBadCertError = NO;
 
-		switch ([error code]) {
+		switch (error.code) {
 			case errSSLBadCert:
 			case errSSLNoRootCert:
 			case errSSLCertExpired:
@@ -104,7 +106,7 @@
 	return NO;
 }
 
-+ (NSString *)posixErrorStringFromError:(NSInteger)errorCode
++ (nullable NSString *)posixErrorStringFromError:(NSUInteger)errorCode
 {
 	const char *error = strerror((int)errorCode);
 
@@ -130,155 +132,43 @@
 	return trust;
 }
 
-- (NSString *)sslCertificateLocalizedOwnershipInformation:(BOOL)shortResult
-{
-	SecTrustRef trustRef = [self sslCertificateTrustInformation];
-
-	if (trustRef) {
-		CFIndex certificateCount = SecTrustGetCertificateCount(trustRef);
-
-		if (certificateCount > 0) {
-			SecCertificateRef certificate = SecTrustGetCertificateAtIndex(trustRef, (certificateCount - 1)); // Get last certificate in chain.
-
-			if (certificate) {
-				if (CFGetTypeID(certificate) == SecCertificateGetTypeID()) {
-					CFDictionaryRef certificateProperties = SecCertificateCopyValues(certificate, NULL, NULL);
-
-					if (certificateProperties) {
-						if (CFGetTypeID(certificateProperties) == CFDictionaryGetTypeID()) {
-							static id (^getTopLevelObjectValue)(id, CFTypeRef) = ^id (id inputValues, CFTypeRef childKey)
-							{
-								id childValue = [inputValues objectForKey:(__bridge id)childKey];
-
-								if (childValue) {
-									if ([childValue isKindOfClass:[NSDictionary class]]) {
-										return [childValue objectForKey:(__bridge id)kSecPropertyKeyValue];
-									}
-								}
-
-								return nil;
-							};
-
-							static id (^getObjectValueForChild)(id, CFTypeRef) = ^id (id inputValues, CFTypeRef childKey)
-							{
-								if ([inputValues isKindOfClass:[NSArray class]] == NO) {
-									return nil;
-								}
-
-								NSString *childKeyString = (__bridge NSString *)(childKey);
-
-								for (id object in inputValues) {
-									if ([object isKindOfClass:[NSDictionary class]]) {
-										id objectLabel = [object objectForKey:(__bridge id)(kSecPropertyKeyLabel)];
-
-										if (objectLabel) {
-											if ([childKeyString isEqual:objectLabel] == NO) {
-												continue; // Skp this entry...
-											}
-										}
-
-										return [object objectForKey:(__bridge id)kSecPropertyKeyValue];
-									}
-								}
-
-								return nil;
-							};
-
-							NSString *builtResult = nil;
-
-							id issuerInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1IssuerName);
-
-							if (issuerInformation == nil) {
-								CFRelease(certificateProperties);
-
-								return nil;
-							}
-
-							NSString *issuerOrganization = getObjectValueForChild(issuerInformation, kSecOIDOrganizationName);
-
-							if (shortResult) {
-								if (issuerOrganization) {
-									builtResult = TXTLS(@"Prompts[1131][4]", issuerOrganization);
-								}
-							} else {
-								id subjectInformation = getTopLevelObjectValue((__bridge NSDictionary *)(certificateProperties), kSecOIDX509V1SubjectName);
-
-								if (subjectInformation == nil) {
-									CFRelease(certificateProperties);
-
-									return nil;
-								}
-
-								NSString *subjectOrganization = getObjectValueForChild(subjectInformation, kSecOIDOrganizationName);
-								NSString *subjectLocationCountry = getObjectValueForChild(subjectInformation, kSecOIDCountryName);
-								NSString *subjectLocationState = getObjectValueForChild(subjectInformation, kSecOIDStateProvinceName);
-								NSString *subjectLocationCity = getObjectValueForChild(subjectInformation, kSecOIDLocalityName);
-
-								if (issuerOrganization &&
-									subjectOrganization &&
-									subjectLocationCountry &&
-									subjectLocationState &&
-									subjectLocationCity)
-								{
-									builtResult = TXTLS(@"Prompts[1131][3]",
-														issuerOrganization,
-														subjectOrganization,
-														subjectLocationCity,
-														subjectLocationState,
-														subjectLocationCountry);
-								}
-							}
-
-							CFRelease(certificateProperties);
-
-							return builtResult;
-						}
-
-						CFRelease(certificateProperties); // Placed here to quiet analyzer
-					}
-				}
-			}
-		}
-	}
-
-	return nil;
-}
-
-- (NSString *)sslCertificateTrustPolicyName
+- (nullable NSString *)sslCertificateTrustPolicyName
 {
 	NSString *certificateHost = nil;
 
-	SecTrustRef trustRef = [self sslCertificateTrustInformation];
+	SecTrustRef trustRef = self.sslCertificateTrustInformation;
 
-	if (trustRef) {
-		CFArrayRef trustPolicies = NULL;
+	if (trustRef == NULL) {
+		return nil;
+	}
 
-		SecTrustCopyPolicies(trustRef, &trustPolicies);
+	CFArrayRef trustPolicies = NULL;
 
-		CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
+	SecTrustCopyPolicies(trustRef, &trustPolicies);
 
-		for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
-			SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
+	CFIndex trustPolicyCount = CFArrayGetCount(trustPolicies);
 
-			CFDictionaryRef properties = SecPolicyCopyProperties(policy);
+	for (CFIndex trustPolicyIndex = 0; trustPolicyIndex < trustPolicyCount; trustPolicyIndex++) {
+		SecPolicyRef policy = (SecPolicyRef)CFArrayGetValueAtIndex(trustPolicies, trustPolicyIndex);
 
-			if (properties) {
-				if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
-					CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
+		CFDictionaryRef properties = SecPolicyCopyProperties(policy);
 
-					if (name) {
-						if (CFGetTypeID(name) == CFStringGetTypeID()) {
-							certificateHost = (__bridge NSString *)(name);
-						}
-					}
+		if (CFGetTypeID(properties) == CFDictionaryGetTypeID()) {
+			CFStringRef name = CFDictionaryGetValue(properties, kSecPolicyName);
+
+			if (name) {
+				if (CFGetTypeID(name) == CFStringGetTypeID()) {
+					certificateHost = (__bridge NSString *)(name);
 				}
-
-				CFRelease(properties);
 			}
 		}
+
+		CFRelease(properties);
 	}
 
 	return certificateHost;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

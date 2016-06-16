@@ -30,10 +30,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <JavaScriptCore/JavaScriptCore.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface WebScriptObject (TXWebScriptObjectHelper)
-- (id)toCommonInContext:(JSContextRef)jsContextRef;
+- (nullable id)toCommonInContext:(JSContextRef)jsContextRef;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -36,12 +36,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import <objc/objc-runtime.h>
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOTimer ()
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) BOOL actionValidated;
+@property (nonatomic, strong, nullable) NSTimer *timer;
 @end
 
 @implementation TLOTimer
@@ -49,13 +48,17 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.reqeatTimer = YES;
-		
-		self.selector = nil;
-		self.delegate = nil;
+		[self prepareInitalState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitalState
+{
+	self.reqeatTimer = YES;
 }
 
 - (void)dealloc
@@ -63,23 +66,35 @@
 	[self stop];
 }
 
+- (void)setAction:(nullable SEL)action
+{
+	if (self->_action != action) {
+		self->_action = action;
+
+		[self invalidateActionValidation];
+	}
+}
+
+- (void)invalidateActionValidation
+{
+	self.actionValidated = NO;
+}
+
 - (BOOL)timerIsActive
 {
-	return ((self.timer == nil) == NO);
+	return (self.timer != nil);
 }
 
 - (void)start:(NSTimeInterval)interval
 {
-	PointerIsEmptyAssert(self.delegate);
-	PointerIsEmptyAssert(self.selector);
-
 	[self stop];
 
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:interval
-											  target:self
-											selector:@selector(onTimer:)
-											userInfo:nil
-											 repeats:self.reqeatTimer];
+	self.timer =
+	[NSTimer scheduledTimerWithTimeInterval:interval
+									 target:self
+								   selector:@selector(onTimer:)
+								   userInfo:nil
+									repeats:self.reqeatTimer];
 
 	[RZCurrentRunLoop() addTimer:self.timer forMode:NSEventTrackingRunLoopMode];
 }
@@ -94,15 +109,49 @@
 
 - (void)onTimer:(id)sender
 {
-	NSAssertReturn([self timerIsActive]);
+	if (self.timerIsActive == NO) {
+		return;
+	}
 
 	if (self.reqeatTimer == NO) {
 		[self stop];
 	}
 
-	if ([self.delegate respondsToSelector:self.selector]) {
-		objc_msgSend(self.delegate, self.selector, self);
+	if (self.target == nil || self.action == NULL) {
+		return;
 	}
+
+	if (self.actionValidated == NO) {
+		NSMethodSignature *actionSignature = [self.target methodSignatureForSelector:self.action];
+
+		if (actionSignature == nil) {
+			LogToConsole(@"Selector '%@' is not declared by '%@'",
+				NSStringFromSelector(self.action), [self.target description])
+
+			return;
+		} else if (strcmp(actionSignature.methodReturnType, @encode(void)) != 0) {
+			LogToConsole(@"Selector '%@' should not return a value",
+				NSStringFromSelector(self.action))
+
+			return;
+		} else if (actionSignature.numberOfArguments != 3) {
+			LogToConsole(@"Selector '%@' should take only one argument",
+				NSStringFromSelector(self.action))
+			
+			return;
+		}
+
+		// Set after validation is performed so that if validation fails,
+		// the return statements will not allow this property to equal YES
+		self.actionValidated = YES;
+	}
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+	(void)[self.target performSelector:self.action withObject:self];
+#pragma clang diagnostic pop
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

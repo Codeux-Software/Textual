@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,17 +35,21 @@
 
  *********************************************************************** */
 
-#import "IRCClientConfig.h" // typedef enum
+NS_ASSUME_NONNULL_BEGIN
 
-@interface GCDAsyncSocket (GCDsyncSocketExtensions)
-+ (instancetype)socketWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq;
-
-+ (BOOL)badSSLCertificateErrorFound:(NSError *)error;
-+ (NSString *)sslHandshakeErrorStringFromError:(NSInteger)errorCode;
-+ (NSString *)posixErrorStringFromError:(NSInteger)errorCode;
-
-@property (readonly) SecTrustRef sslCertificateTrustInformation;
-@property (readonly) NSString *sslCertificateTrustPolicyName;
-
-- (NSString *)sslCertificateLocalizedOwnershipInformation:(BOOL)shortResult;
+@interface IRCHighlightLogEntry ()
+@property (readonly, weak, nullable) IRCChannel *channel;
+@property (readonly, copy) NSString *channelName;
+@property (readonly, copy) NSString *timeLoggedFormatted;
+@property (nonatomic, assign) CGFloat rowHeight;
 @end
+
+@interface IRCHighlightLogEntryMutable : IRCHighlightLogEntry
+@property (nonatomic, copy, readwrite) NSAttributedString *renderedMessage;
+@property (nonatomic, copy, readwrite) NSDate *timeLogged;
+@property (nonatomic, copy, readwrite) NSString *clientId;
+@property (nonatomic, copy, readwrite) NSString *channelId;
+@property (nonatomic, copy, readwrite) NSString *lineNumber;
+@end
+
+NS_ASSUME_NONNULL_END

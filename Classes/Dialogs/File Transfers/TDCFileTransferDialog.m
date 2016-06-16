@@ -71,8 +71,8 @@
 		
 		self.maintenanceTimer = [TLOTimer new];
 		
-		[self.maintenanceTimer setDelegate:self];
-		[self.maintenanceTimer setSelector:@selector(onMaintenanceTimer:)];
+		[self.maintenanceTimer setTarget:self];
+		[self.maintenanceTimer setAction:@selector(onMaintenanceTimer:)];
 		[self.maintenanceTimer setReqeatTimer:YES];
 	}
 	
@@ -82,7 +82,7 @@
 - (void)dealloc
 {
 	[self.maintenanceTimer stop];
-	[self.maintenanceTimer setDelegate:nil];
+	[self.maintenanceTimer setTarget:nil];
 }
 
 - (void)show:(BOOL)key restorePosition:(BOOL)restoreFrame

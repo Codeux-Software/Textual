@@ -80,7 +80,7 @@
 	for (IRCChannelConfig *channel in self.channelList) {
 		[self.matchChannelPopupButton addItemWithTitle:[channel channelName]];
 
-		if (NSObjectsAreEqual([channel itemUUID], [self.config matchChannelID])) {
+		if (NSObjectsAreEqual([channel itemUUID], [self.config matchChannelId])) {
 			[self.matchChannelPopupButton selectItemWithTitle:[channel channelName]];
 		}
 
@@ -99,12 +99,14 @@
 
 - (void)ok:(id)sender
 {
+	IRCHighlightMatchConditionMutable *config = [self.config mutableCopy];
+
 	NSInteger selectedChannelItem = [self.matchChannelPopupButton indexOfSelectedItem];
 
 	NSString *selectedChannelTitle = [self.matchChannelPopupButton titleOfSelectedItem];
 
 	if (selectedChannelItem == 0) { // 0 = ALL CHANNELS
-		[self.config setMatchChannelID:nil];
+		[config setMatchChannelId:nil];
 	} else {
 		IRCChannelConfig *channel = nil;
 		
@@ -115,15 +117,17 @@
 		}
 		
 		if (channel) {
-			[self.config setMatchChannelID:[channel itemUUID]];
+			[config setMatchChannelId:[channel itemUUID]];
 		} else {
-			[self.config setMatchChannelID:nil];
+			[config setMatchChannelId:nil];
 		}
 	}
 
-	[self.config setMatchIsExcluded:([self.matchTypePopupButton selectedTag] == 2)];
+	[config setMatchIsExcluded:([self.matchTypePopupButton selectedTag] == 2)];
 
-	[self.config setMatchKeyword:[self.matchKeywordTextField value]];
+	[config setMatchKeyword:[self.matchKeywordTextField value]];
+
+	self.config = config;
 
 	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetOnOK:)]) {
 		[self.delegate highlightEntrySheetOnOK:self];
@@ -150,53 +154,6 @@
 	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
 		[self.delegate highlightEntrySheetWillClose:self];
 	}
-}
-
-@end
-
-#pragma mark -
-#pragma mark Highlight Condition Storage.
-
-@implementation TDCHighlightEntryMatchCondition
-
-- (instancetype)initWithDictionary:(NSDictionary *)dic
-{
-	if ((self = [super init])) {
-		self.itemUUID = [NSString stringWithUUID];
-
-		[self populateDictionaryValues:dic];
-	}
-
-	return self;
-}
-
-- (void)populateDictionaryValues:(NSDictionary *)dic
-{
-	[dic assignStringTo:&_itemUUID forKey:@"uniqueIdentifier"];
-
-	[dic assignStringTo:&_matchKeyword forKey:@"matchKeyword"];
-	[dic assignStringTo:&_matchChannelID forKey:@"matchChannelID"];
-
-	[dic assignBoolTo:&_matchIsExcluded forKey:@"matchIsExcluded"];
-}
-
-- (NSDictionary *)dictionaryValue
-{
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-
-	[dic maybeSetObject:self.itemUUID forKey:@"uniqueIdentifier"];
-
-	[dic maybeSetObject:self.matchKeyword	forKey:@"matchKeyword"];
-	[dic maybeSetObject:self.matchChannelID	forKey:@"matchChannelID"];
-
-	[dic setBool:self.matchIsExcluded forKey:@"matchIsExcluded"];
-
-	return dic;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	return [[TDCHighlightEntryMatchCondition allocWithZone:zone] initWithDictionary:[self dictionaryValue]];
 }
 
 @end

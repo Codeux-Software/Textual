@@ -153,10 +153,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 		if (outError) {
 			NSMutableDictionary<NSDictionary *, id> *userInfo = [NSMutableDictionary dictionary];
 
-			[userInfo setObject:url forKey:NSURLErrorKey];
+			userInfo[NSURLErrorKey] = url;
 
-			[userInfo setObject:TXTLS(@"Prompts[1126][1]") forKey:NSLocalizedDescriptionKey];
-			[userInfo setObject:TXTLS(@"Prompts[1126][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"Prompts[1126][1]");
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"Prompts[1126][2]");
 
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
 		}
@@ -194,7 +194,7 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 #else
 	NSURL *folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPath] isDirectory:YES];
 
-	if ([RZFileManager() fileExistsAtPath:[folderRep relativePath]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:folderRep.relativePath] == NO) {
 		folderRep = [NSURL fileURLWithPath:[TPCPathInfo customScriptsFolderPathLeading] isDirectory:YES];
 	}
 
@@ -202,17 +202,17 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	NSSavePanel *d = [NSSavePanel savePanel];
 
-	[d setDelegate:(id)self];
+	d.delegate = (id)self;
 
 	[d setCanCreateDirectories:YES];
 
-	[d setDirectoryURL:folderRep];
+	d.directoryURL = folderRep;
 
-	[d setTitle:TXTLS(@"Prompts[1125][1]")];
+	d.title = TXTLS(@"Prompts[1125][1]");
 
-	[d setMessage:TXTLS(@"Prompts[1125][2]", bundleID)];
+	d.message = TXTLS(@"Prompts[1125][2]", bundleID);
 
-	[d setNameFieldStringValue:[url lastPathComponent]];
+	d.nameFieldStringValue = url.lastPathComponent;
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[d setShowsTagField:NO];
@@ -220,11 +220,11 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 
 	[d beginWithCompletionHandler:^(NSInteger returnCode) {
 		if (returnCode == NSModalResponseOK) {
-			if ([self import:url into:[d URL]] == NO) {
+			if ([self import:url into:d.URL] == NO) {
 				return;
 			}
 
-			NSString *filename = [[d URL] lastPathComponent];
+			NSString *filename = d.URL.lastPathComponent;
 
 			XRPerformBlockAsynchronouslyOnMainQueue(^{
 				[self performImportOfScriptFilePostflight:filename];

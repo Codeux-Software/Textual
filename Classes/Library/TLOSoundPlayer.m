@@ -36,165 +36,161 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <AudioToolbox/AudioToolbox.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOSoundPlayer
 
-+ (NSDictionary *)soundFilesAtPath:(NSString *)path
++ (NSDictionary<NSString *, NSString *> *)soundFilesAtPath:(NSString *)path
 {
-	NSMutableDictionary *resultData = [NSMutableDictionary dictionary];
+	NSMutableDictionary<NSString *, NSString *> *resultData = [NSMutableDictionary dictionary];
 
 	NSArray *files = [RZFileManager() contentsOfDirectoryAtPath:path error:NULL];
 
-	for (NSString *filename in files) {
-		NSString *namewoext = [filename stringByDeletingPathExtension];
-		
-		NSString *namewpath = [path stringByAppendingPathComponent:filename];
+	for (NSString *file in files) {
+		NSString *filePath = [path stringByAppendingPathComponent:file];
 
-		resultData[namewoext] = namewpath;
+		NSString *fileWithoutExtension = file.stringByDeletingPathExtension;
+
+		resultData[fileWithoutExtension] = filePath;
 	}
 
 	return resultData;
 }
 
-+ (NSDictionary *)systemAlertSoundFiles
++ (nullable NSDictionary<NSString *, NSString *> *)systemAlertSoundFiles
 {
 	NSArray *folders = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSSystemDomainMask, YES);
 
-	if ([folders count] > 0) {
-		NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
-
-		return [TLOSoundPlayer soundFilesAtPath:folder];
+	if (folders.count == 0) {
+		return nil;
 	}
 
-	return nil;
+	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
+
+	return [TLOSoundPlayer soundFilesAtPath:folder];
 }
 
-+ (NSDictionary *)systemLibrarySoundFiles
++ (nullable NSDictionary<NSString *, NSString *> *)systemLibrarySoundFiles
 {
 	NSArray *folders = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSLocalDomainMask, YES);
 
-	if ([folders count] > 0) {
-		NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
-
-		return [TLOSoundPlayer soundFilesAtPath:folder];
+	if (folders.count == 0) {
+		return nil;
 	}
 
-	return nil;
+	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
+
+	return [TLOSoundPlayer soundFilesAtPath:folder];
 }
 
-+ (NSDictionary *)localLibrarySoundFiles
++ (nullable NSDictionary<NSString *, NSString *> *)userLibrarySoundFiles
 {
 	NSArray *folders = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
 
-	if ([folders count] > 0) {
-		NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
-
-		return [TLOSoundPlayer soundFilesAtPath:folder];
+	if (folders.count == 0) {
+		return nil;
 	}
 
-	return nil;
+	NSString *folder = [folders[0] stringByAppendingPathComponent:@"/Sounds/"];
+
+	return [TLOSoundPlayer soundFilesAtPath:folder];
 }
 
-+ (BOOL)doesSoundFileDictionary:(NSDictionary *)fileList containName:(NSString *)name returnedPath:(NSString * __autoreleasing *)path
++ (void)doesSoundFileDictionary:(NSDictionary<NSString *, NSString *> *)fileList containName:(NSString *)name returnedPath:(NSString **)path
 {
-	/* Scan input and return based on name. */
-	for (NSString *filename in [fileList allKeys])
-	{
-		if (NSObjectsAreEqual(filename, name))
-		{
-			NSString *exactPath = fileList[filename];
+	NSString *filePath = [fileList firstKeyForObject:name];
 
-			/* Can we init a sound with this file? */
-			NSSound *isSound = [[NSSound alloc] initWithContentsOfFile:exactPath byReference:YES];
-
-			if (isSound) {
-				isSound = nil;
-
-				*path = [exactPath copy];
-
-				return YES;
-			}
-		}
+	if (filePath == nil) {
+		return;
 	}
 
-	return NO;
+	NSString *fileExtension = filePath.pathExtension;
+
+	CFStringRef fileUTI = UTTypeCreatePreferredIdentifierForTag(
+		kUTTagClassFilenameExtension, (__bridge CFStringRef)fileExtension, NULL);
+
+	if (UTTypeConformsTo(fileUTI, kUTTypeAudio) == false) {
+		LogToConsole(@"File is not audio file: '%@'", filePath)
+
+		CFRelease(fileUTI);
+
+		return;
+	}
+
+	CFRelease(fileUTI);
+
+	if ( path) {
+		*path = filePath;
+	}
 }
 
 + (SystemSoundID)alertSoundNamed:(NSString *)name
 {
-	/* Check user folder first. */
-	BOOL hasSoundPath = NO;
-
 	NSString *soundPath = nil;
 
-	NSDictionary *soundFiles = nil;
-	
-	/* I know the condition will always be NO, but there are three
-	 blocks of copy and pasted code. I wanted them to look the same. */
-	if (hasSoundPath == NO) {
-		soundFiles = [TLOSoundPlayer localLibrarySoundFiles];
+	NSDictionary *soundFiles = [TLOSoundPlayer userLibrarySoundFiles];
 
-		if ([TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath]) {
-			hasSoundPath = YES;
-		}
-	}
+	[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 
-	/* Check local library? */
-	if (hasSoundPath == NO) {
+	if (soundPath == nil) {
 		soundFiles = [TLOSoundPlayer systemLibrarySoundFiles];
 
-		if ([TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath]) {
-			hasSoundPath = YES;
-		}
+		[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 	}
 
-	/* Check system library? */
-	if (hasSoundPath == NO) {
+	if (soundPath == nil) {
 		soundFiles = [TLOSoundPlayer systemAlertSoundFiles];
 
-		if ([TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath]) {
-			hasSoundPath = YES;
-		}
+		[TLOSoundPlayer doesSoundFileDictionary:soundFiles containName:name returnedPath:&soundPath];
 	}
 
-	/* Return an object. */
-	if (hasSoundPath) {
-		NSURL *pathURL = [NSURL fileURLWithPath:soundPath];
-
-		SystemSoundID soundID;
-
-		OSStatus err = AudioServicesCreateSystemSoundID((__bridge CFURLRef)(pathURL), &soundID);
-
-		if (err) {
-			return 0; // We had an error.
-		} else {
-			return soundID; // Operation was succesful.
-		}
+	if (soundPath == nil) {
+		return 0;
 	}
+
+	NSURL *soundPathURL = [NSURL fileURLWithPath:soundPath];
+
+	SystemSoundID soundID;
+
+	OSStatus soundLoadError = AudioServicesCreateSystemSoundID((__bridge CFURLRef)(soundPathURL), &soundID);
+
+	if (soundLoadError == noErr) {
+		return soundID;
+	}
+
+	LogToConsole(@"Returned error code %d when loading file at path: %@",
+		soundLoadError, [soundPathURL description])
 
 	return 0;
 }
 
 + (void)playAlertSound:(NSString *)name
 {
-	NSObjectIsEmptyAssert(name);
+	NSParameterAssert(name != nil);
 	
 	if ([name isEqualToString:TXEmptySoundAlertPreferenceValue]) {
 		return;
-	} else if ([name isEqualToString:@"Beep"]) {
+	}
+
+	if ([name isEqualToString:@"Beep"]) {
 		NSBeep();
+
+		return;
+	}
+
+	SystemSoundID soundID = [TLOSoundPlayer alertSoundNamed:name];
+	
+	if (soundID) {
+		AudioServicesPlayAlertSound(soundID);
+
+		AudioServicesDisposeSystemSoundID(soundID);
 	} else {
-		SystemSoundID soundID = [TLOSoundPlayer alertSoundNamed:name];
-		
-		if (soundID) {
-			AudioServicesPlayAlertSound(soundID);
-		} else {
-			LogToConsole(@"Error: Unable to find sound \"%@\"", name);
-		}
+		LogToConsole(@"Error: Unable to locate sound '%@'", name)
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

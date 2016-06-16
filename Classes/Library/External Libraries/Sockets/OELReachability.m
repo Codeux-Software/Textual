@@ -25,9 +25,9 @@
  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "OELReachability.h"
-
 #import <SystemConfiguration/SystemConfiguration.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface OELReachability ()
 @property (nonatomic, assign) SCNetworkReachabilityRef reachabilityRef;
@@ -44,15 +44,15 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 @implementation OELReachability
 
-+ (OELReachability *)reachabilityForInternetConnection
++ (nullable OELReachability *)reachabilityForInternetConnection
 {
 	SCNetworkReachabilityRef ref = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "www.google.com");
 
 	if (ref) {
 		return [[self alloc] initWithReachabilityRef:ref];
-	} else {
-		return nil;
 	}
+
+	return nil;
 }
 
 - (OELReachability *)initWithReachabilityRef:(SCNetworkReachabilityRef)ref
@@ -134,3 +134,5 @@ static void TMReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

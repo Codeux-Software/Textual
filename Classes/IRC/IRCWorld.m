@@ -89,12 +89,16 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 - (void)setupConfiguration
 {
 	self.isImportingConfiguration = YES;
-	
+
+	[mainWindowServerList() beginUpdates];
+
 	NSArray *config = [TPCPreferences clientList];
 
 	for (NSDictionary *e in config) {
 		[self createClient:e reload:YES];
 	}
+
+	[mainWindowServerList() endUpdates];
 
 	if ([TPCPreferences soundIsMuted]) {
 		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];

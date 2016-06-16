@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOLanguagePreferences
 
@@ -61,18 +61,24 @@
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table
 {
-	return [self localizedStringWithKey:key from:bundle table:table arguments:NULL];
+	return [TLOLanguagePreferences localizedStringWithKey:key from:bundle table:table arguments:NULL];
 }
 
 + (NSString *)localizedStringWithKey:(NSString *)key from:(NSBundle *)bundle table:(NSString *)table arguments:(va_list)arguments
 {
+	NSParameterAssert(key != nil);
+	NSParameterAssert(bundle != nil);
+	NSParameterAssert(table != nil);
+
 	NSString *localValue = [bundle localizedStringForKey:key value:NSStringEmptyPlaceholder table:table];
 
-	if (arguments) {
-		return [[NSString alloc] initWithFormat:localValue arguments:arguments];
-	} else {
+	if (arguments == NULL) {
 		return localValue;
 	}
+
+	return [[NSString alloc] initWithFormat:localValue arguments:arguments];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

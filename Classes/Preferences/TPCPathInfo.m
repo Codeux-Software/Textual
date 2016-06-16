@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	return [basePath relativePath];
+	return basePath.relativePath;
 
 #else
 
@@ -363,7 +363,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TPCPathInfo (TPCPathInfoTranscriptFolderExtension)
 
-static NSURL *_transcriptFolderURL = nil;
+static NSURL * _Nullable _transcriptFolderURL = nil;
 
 + (nullable NSURL *)transcriptFolderURL
 {

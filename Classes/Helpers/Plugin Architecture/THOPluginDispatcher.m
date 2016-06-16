@@ -37,8 +37,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#warning TODO: It would be nice if plugin concrete objects supported copying
-
 NSString * const THOPluginProtocolCompatibilityMinimumVersion = @"6.0.0";
 
 NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFoundAttribute = @"wordMatchFound";

@@ -36,29 +36,37 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOpenLink
 
 + (void)open:(NSURL *)url
 {
+	NSParameterAssert(url != nil);
+
 	if ([TPCPreferences openBrowserInBackground])
 	{
-		[RZWorkspace() openURLs:@[url]
-		withAppBundleIdentifier:nil
-						options:NSWorkspaceLaunchWithoutActivation
- additionalEventParamDescriptor:nil
-			  launchIdentifiers:nil];
+		(void)[RZWorkspace() openURLs:@[url]
+			  withAppBundleIdentifier:nil
+							  options:NSWorkspaceLaunchWithoutActivation
+	   additionalEventParamDescriptor:nil
+					launchIdentifiers:NULL];
 	}
 	else
 	{
-		[RZWorkspace() openURL:url];
+		(void)[RZWorkspace() openURL:url];
 	}
 }
 
 + (void)openWithString:(NSString *)url
 {
-	[self open:[NSURL URLWithString:url]];
+	NSParameterAssert(url != nil);
+
+	NSURL *urlObject = [NSURL URLWithString:url];
+
+	[self open:urlObject];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

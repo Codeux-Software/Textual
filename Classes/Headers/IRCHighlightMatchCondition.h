@@ -1,12 +1,11 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,56 +35,30 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation IRCSendingMessage
+#pragma mark -
+#pragma mark Immutable Object
 
-+ (NSString *)stringWithCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments
-{
-	NSParameterAssert(command != nil);
+@interface IRCHighlightMatchCondition : NSObject <NSCopying, NSMutableCopying>
+@property (readonly, copy) NSString *uniqueIdentifier;
+@property (readonly, copy) NSString *matchKeyword;
+@property (readonly, copy, nullable) NSString *matchChannelId;
+@property (readonly) BOOL matchIsExcluded;
 
-	NSString *commandUppercase = command.uppercaseString;
+- (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
+- (NSDictionary<NSString *, id> *)dictionaryValue;
+@end
 
-	if (arguments.count == 0) {
-		return commandUppercase;
-	}
+#pragma mark -
+#pragma mark Mutable Object
 
-	NSMutableString *builtString = [NSMutableString stringWithString:commandUppercase];
-
-	NSInteger colonIndexBase = [IRCCommandIndex colonIndexForCommand:command];
-
-	NSInteger colonIndexCount = 0;
-
-	for (NSString *argument in arguments) {
-		[builtString appendString:NSStringWhitespacePlaceholder];
-
-		if (colonIndexBase == (-1)) {
-			// Guess where the colon (:) should go.
-			//
-			// A colon is supposed to represent a section of an outgoing command
-			// that has a paramater which contains spaces. For example, PRIVMSG
-			// is in the formoat "PRIVMSG #channel :long message" — The message
-			// will have spaces part of it, so we inform the server.
-			
-			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:NSStringWhitespacePlaceholder])) {
-				[builtString appendString:@":"];
-			}
-		} else {
-			// We know where it goes thanks to the command index
-
-			if (colonIndexCount == colonIndexBase) {
-				[builtString appendString:@":"];
-			}
-		}
-
-		[builtString appendString:argument];
-
-		colonIndexCount += 1;
-	}
-
-	return builtString.copy;
-}
-
+@interface IRCHighlightMatchConditionMutable : IRCHighlightMatchCondition
+@property (nonatomic, copy, readwrite) NSString *matchKeyword;
+@property (nonatomic, copy, readwrite, nullable) NSString *matchChannelId;
+@property (nonatomic, assign, readwrite) BOOL matchIsExcluded;
 @end
 
 NS_ASSUME_NONNULL_END

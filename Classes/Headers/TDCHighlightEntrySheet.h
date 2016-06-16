@@ -42,18 +42,7 @@
  of highlights for a server by using Command+5 or the actual Windows menu bar item. */
 @interface TDCHighlightEntrySheet : TDCSheetBase
 @property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) TDCHighlightEntryMatchCondition *config;
+@property (nonatomic, copy) IRCHighlightMatchCondition *config;
 
 - (void)startWithChannels:(NSArray *)channels;
-@end
-
-@interface TDCHighlightEntryMatchCondition : NSObject <NSCopying>
-@property (nonatomic, copy) NSString *itemUUID; // Unique Identifier (UUID)
-@property (nonatomic, copy) NSString *matchKeyword;
-@property (nonatomic, copy) NSString *matchChannelID; // The itemUUID of the IRCChannelConfig
-@property (nonatomic, assign) BOOL matchIsExcluded;
-
-- (instancetype)initWithDictionary:(NSDictionary *)dic;
-- (NSDictionary *)dictionaryValue;
-- (void)populateDictionaryValues:(NSDictionary *)dic;
 @end

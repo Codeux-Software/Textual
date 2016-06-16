@@ -80,7 +80,7 @@
 /* The date decodes to July 23, 2010 03:53:00 AM */
 #define TXBirthdayReferenceDate					1279871580.000000
 
-/* typedef for filesize information. */
+/* typedef for filesize information */
 typedef unsigned long long						TXUnsignedLongLong;
 
 /* Empty block for cleaner paramaters. */
@@ -92,7 +92,7 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Include Off-the-Record Messaging (OTR) support */
 #define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
 
-/* Standard out logging. */
+/* Standard out logging */
 /* It is recommended to always use these calls above plain-ol' NSLog. */
 #ifdef DEBUG
 	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
@@ -125,5 +125,14 @@ typedef void (^TXEmtpyBlockDataType)(void);
 #ifndef keyASSubroutineName
 	#define keyASSubroutineName 'snam'
 #endif
+
+/* Helper function */
+#define SetVariableIfNil(variable, value)					\
+	if ((variable) == nil) {								\
+		(variable) = (value);								\
+	}
+
+#define SetVariableIfNilCopy(variable, value)				\
+	SetVariableIfNil((variable), [(value) copy])
 
 /* @end */

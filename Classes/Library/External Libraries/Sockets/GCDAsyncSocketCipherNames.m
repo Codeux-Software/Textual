@@ -54,7 +54,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 static const int kAEADMACValue = 7;
 
@@ -314,9 +314,9 @@ static const char *kMacNames[] = {
 	return cipher;
 }
 
-- (NSString *)sslNegotiatedProtocolString
+- (nullable NSString *)sslNegotiatedProtocolString
 {
-	SSLProtocol protocol = [self sslNegotiatedProtocol];
+	SSLProtocol protocol = self.sslNegotiatedProtocol;
 
 	NSString *protocolString = @"Unknown";
 
@@ -360,39 +360,40 @@ static const char *kMacNames[] = {
 	return protocolString;
 }
 
-- (NSString *)sslNegotiatedCipherSuiteString
+- (nullable NSString *)sslNegotiatedCipherSuiteString
 {
-	SSLCipherSuite cipher = [self sslNegotiatedCipherSuite];
+	SSLCipherSuite cipher = self.sslNegotiatedCipherSuite;
 
 	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
 		CipherSuite cs = kCipherSuites[pos];
 
-		if (cs.cipher_suite == cipher) {
-			/* Begin building cipher suite string. */
-			NSMutableString *resultString = [NSMutableString string];
+		if (cs.cipher_suite != cipher) {
+			continue;
+		}
 
-#define _append(store, index)	[resultString appendString:[NSString stringWithUTF8String:(store)[(index)]]];
+		NSMutableString *resultString = [NSMutableString string];
 
-			_append(kKeyExchangeNames, (cs.encoded >> 8))
+#define _append(store, index)	[resultString appendString:@(store[index])];
 
+		_append(kKeyExchangeNames, (cs.encoded >> 8))
+
+		[resultString appendString:@"-"];
+
+		_append(kCipherNames, ((cs.encoded >> 3) & 0x1f));
+
+		NSInteger macIndex = (cs.encoded & 0x7);
+
+		if (macIndex == kAEADMACValue) {
+			;
+		} else {
 			[resultString appendString:@"-"];
 
-			_append(kCipherNames, ((cs.encoded >> 3) & 0x1f));
-
-			NSInteger macIndex = (cs.encoded & 0x7);
-
-			if (macIndex == kAEADMACValue) {
-				;
-			} else {
-				[resultString appendString:@"-"];
-
-				_append(kMacNames, macIndex);
-			}
+			_append(kMacNames, macIndex);
+		}
 
 #undef _append
 
-			return resultString;
-		}
+		return resultString;
 	}
 	
 	return @"Unknown";
@@ -400,28 +401,28 @@ static const char *kMacNames[] = {
 
 - (BOOL)sslConnectedWithDeprecatedCipher
 {
-	SSLCipherSuite cipher = [self sslNegotiatedCipherSuite];
+	SSLCipherSuite cipher = self.sslNegotiatedCipherSuite;
 
 	return [[GCDAsyncSocket cipherListDeprecated] containsObject:@(cipher)];
 }
 
-+ (NSArray *)cipherList
++ (NSArray<NSNumber *> *)cipherList
 {
 	id allowDeprecatedCiphers = [RZUserDefaults() objectForKey:@"GCDAsyncSocket Cipher List Includes Deprecated Ciphers"];
 
 	if (allowDeprecatedCiphers && [allowDeprecatedCiphers boolValue] == NO) {
 		return [GCDAsyncSocket cipherListModern];
-	} else {
-		NSMutableArray *_cipherList = [NSMutableArray array];
-
-		[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListModern]];
-		[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListDeprecated]];
-
-		return [_cipherList copy];
 	}
+
+	NSMutableArray<NSNumber *> *_cipherList = [NSMutableArray array];
+
+	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListModern]];
+	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListDeprecated]];
+
+	return _cipherList.copy;
 }
 
-+ (NSArray *)cipherListModern
++ (NSArray<NSNumber *> *)cipherListModern
 {
 	/* The following list of ciphers, which is ordered from most important
 	 to least important, was aquired from Mozilla's wiki on December 2, 2015. */
@@ -452,7 +453,7 @@ static const char *kMacNames[] = {
 	];
 }
 
-+ (NSArray *)cipherListDeprecated
++ (NSArray<NSNumber *> *)cipherListDeprecated
 {
 	// These were originally going to be excluded but certain large
 	// IRC networks including OFTC (~10,000 users) still use older
@@ -468,5 +469,6 @@ static const char *kMacNames[] = {
 	];
 }
 
-
 @end
+
+NS_ASSUME_NONNULL_END

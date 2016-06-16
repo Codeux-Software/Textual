@@ -38,12 +38,19 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* The value of -action is validated to ensure that it returns 
+ no value (void) and that it takes only one argument, an object */
 @interface TLOTimer : NSObject
-@property (nonatomic, weak) id delegate;
-@property (nonatomic, assign) SEL selector;
+@property (nonatomic, weak, nullable) id target;
+@property (nonatomic, assign, nullable) SEL action;
 @property (nonatomic, assign) BOOL reqeatTimer;
+
 @property (readonly) BOOL timerIsActive;
 
 - (void)start:(NSTimeInterval)interval;
 - (void)stop;
 @end
+
+NS_ASSUME_NONNULL_END

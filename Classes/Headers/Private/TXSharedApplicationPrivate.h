@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -38,54 +37,47 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation IRCSendingMessage
+#define windowController()				[TXSharedApplication sharedWindowController]
 
-+ (NSString *)stringWithCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments
-{
-	NSParameterAssert(command != nil);
+#define sharedGrowlController()			[TXSharedApplication sharedGrowlController]
 
-	NSString *commandUppercase = command.uppercaseString;
+#define sharedPluginManager()			[TXSharedApplication sharedPluginManager]
+#define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
-	if (arguments.count == 0) {
-		return commandUppercase;
-	}
+@class OELReachability;
 
-	NSMutableString *builtString = [NSMutableString stringWithString:commandUppercase];
+@interface TXSharedApplication ()
++ (NSCache *)sharedApplicationCache;
 
-	NSInteger colonIndexBase = [IRCCommandIndex colonIndexForCommand:command];
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
++ (TPCPreferencesCloudSync *)sharedCloudSyncManager;
+#endif
 
-	NSInteger colonIndexCount = 0;
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
++ (TLOEncryptionManager *)sharedEncryptionManager;
+#endif
 
-	for (NSString *argument in arguments) {
-		[builtString appendString:NSStringWhitespacePlaceholder];
++ (TLOGrowlController *)sharedGrowlController;
++ (TLOInputHistory *)sharedInputHistoryManager;
++ (OELReachability *)sharedNetworkReachabilityNotifier;
++ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
++ (THOPluginManager *)sharedPluginManager;
++ (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
++ (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;
++ (TXWindowController *)sharedWindowController;
 
-		if (colonIndexBase == (-1)) {
-			// Guess where the colon (:) should go.
-			//
-			// A colon is supposed to represent a section of an outgoing command
-			// that has a paramater which contains spaces. For example, PRIVMSG
-			// is in the formoat "PRIVMSG #channel :long message" — The message
-			// will have spaces part of it, so we inform the server.
-			
-			if (colonIndexCount == (arguments.count - 1) && ([argument hasPrefix:@":"] || [argument contains:NSStringWhitespacePlaceholder])) {
-				[builtString appendString:@":"];
-			}
-		} else {
-			// We know where it goes thanks to the command index
+/* Mutable sets in Textual (e.g. channel user lists) are accessed on this queue
+ and this queue alone to prevent accessing on different threads at same time
+ which could result in corrupted data access. It is not recommended to call
+ this serial queue for any reason from a plugin. It is a work horse for Textual
+ and should be respected as such. */
++ (dispatch_queue_t)sharedMutableSynchronizationSerialQueue;
 
-			if (colonIndexCount == colonIndexBase) {
-				[builtString appendString:@":"];
-			}
-		}
++ (void)releaseSharedMutableSynchronizationSerialQueue;
+@end
 
-		[builtString appendString:argument];
-
-		colonIndexCount += 1;
-	}
-
-	return builtString.copy;
-}
-
+@interface NSObject (TXSharedApplicationObjectExtensionPrivate)
++ (void)setGlobalMasterControllerClassReference:(TXMasterController *)masterController;
 @end
 
 NS_ASSUME_NONNULL_END

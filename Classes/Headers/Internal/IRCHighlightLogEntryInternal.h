@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,24 +35,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-/* No plugins should be accessing this. */
-@class TVCLogControllerOperationItem;
+@interface IRCHighlightLogEntry ()
+{
+@protected
+	NSAttributedString *_renderedMessage;
+	NSString *_clientId;
+	NSString *_channelId;
+	NSString *_lineNumber;
+	NSDate *_timeLogged;
 
-typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
+@private
+	BOOL _objectInitialized;
+}
 
-@interface TVCLogControllerOperationQueue : NSOperationQueue
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description isStandalone:(BOOL)isStandalone;
-
-/* Limit scope of cancelAllOperations. */
-- (void)destroyOperationsForChannel:(IRCChannel *)channel;
-- (void)destroyOperationsForClient:(IRCClient *)client;
-
-- (void)cancelOperationsForViewController:(TVCLogController *)controller;
-
-/* Update state. */
-- (void)updateReadinessState:(TVCLogController *)controller;
+- (BOOL)isMutable;
 @end
+
+NS_ASSUME_NONNULL_END

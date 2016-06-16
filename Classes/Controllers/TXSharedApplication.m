@@ -35,61 +35,43 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define _defineSharedInstance(si_name, si_class)	+ (si_class *)si_name						\
-													{											\
-														static id sharedSelf = nil;				\
-																								\
-														static dispatch_once_t onceToken;		\
-																								\
-														dispatch_once(&onceToken, ^{			\
-															sharedSelf = [si_class new];		\
-														});										\
-																								\
-														return sharedSelf;						\
-													}
+#define _defineSharedInstance(si_name, si_class, si_init_method)	\
+			+ (si_class *)si_name									\
+			{														\
+				static id sharedSelf = nil;							\
+																	\
+				static dispatch_once_t onceToken;					\
+																	\
+				dispatch_once(&onceToken, ^{						\
+					sharedSelf = [si_class si_init_method];			\
+				});													\
+																	\
+				return sharedSelf;									\
+			}
 
 @implementation TXSharedApplication
 
-_defineSharedInstance(applicationPluginManager, THOPluginManager)
-_defineSharedInstance(sharedGrowlController, TLOGrowlController)
-_defineSharedInstance(sharedInputHistoryManager, TLOInputHistory)
-_defineSharedInstance(sharedNicknameCompletionStatus, TLONicknameCompletionStatus)
-_defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel)
-_defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer)
-_defineSharedInstance(sharedThemeController, TPCThemeController)
-_defineSharedInstance(sharedWindowController, TXWindowController)
+_defineSharedInstance(sharedApplicationCache, NSCache, new)
 
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-_defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+_defineSharedInstance(sharedCloudSyncManager, TPCPreferencesCloudSync, new)
 #endif
 
-+ (OELReachability *)sharedNetworkReachabilityObject
-{
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [OELReachability reachabilityForInternetConnection];
-		
-		[sharedSelf setReachableBlock:^(OELReachability *reachability) {
-			[worldController() reachabilityChanged:YES];
-		}];
-		
-		[sharedSelf setUnreachableBlock:^(OELReachability *reachability) {
-			[worldController() reachabilityChanged:NO];
-		}];
-	});
-	
-	return sharedSelf;
-}
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
+_defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager, new)
+#endif
 
-+ (void)releaseSharedMutableSynchronizationSerialQueue
-{
-	(void)[TXSharedApplication sharedMutableSynchronizationSerialQueue:YES];
-}
+_defineSharedInstance(sharedGrowlController, TLOGrowlController, new)
+_defineSharedInstance(sharedInputHistoryManager, TLOInputHistory, new)
+_defineSharedInstance(sharedNetworkReachabilityNotifier, OELReachability, reachabilityForInternetConnection)
+_defineSharedInstance(sharedNicknameCompletionStatus, TLONicknameCompletionStatus, new)
+_defineSharedInstance(sharedPluginManager, THOPluginManager, new)
+_defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel, new)
+_defineSharedInstance(sharedSpeechSynthesizer, TLOSpeechSynthesizer, new)
+_defineSharedInstance(sharedThemeController, TPCThemeController, new)
+_defineSharedInstance(sharedWindowController, TXWindowController, new)
 
 + (dispatch_queue_t)sharedMutableSynchronizationSerialQueue:(BOOL)performRelease
 {
@@ -115,22 +97,14 @@ _defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager)
 	return [TXSharedApplication sharedMutableSynchronizationSerialQueue:NO];
 }
 
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-+ (TPCPreferencesCloudSync *)sharedCloudSyncManager
++ (void)releaseSharedMutableSynchronizationSerialQueue
 {
-	static id sharedSelf = nil;
-	
-	static dispatch_once_t onceToken;
-	
-	dispatch_once(&onceToken, ^{
-		sharedSelf = [TPCPreferencesCloudSync new];
-	});
-	
-	return sharedSelf;
+	(void)[TXSharedApplication sharedMutableSynchronizationSerialQueue:YES];
 }
-#endif
 
 @end
+
+#pragma mark -
 
 @implementation NSObject (TXSharedApplicationObjectExtension)
 
@@ -153,22 +127,24 @@ __weak static TXMasterController *TXGlobalMasterControllerClassReference;
 
 - (IRCWorld *)worldController
 {
-	return [TXGlobalMasterControllerClassReference world];
+	return TXGlobalMasterControllerClassReference.world;
 }
 
 + (IRCWorld *)worldController
 {
-	return [TXGlobalMasterControllerClassReference world];
+	return TXGlobalMasterControllerClassReference.world;
 }
 
 - (TXMenuController *)menuController
 {
-	return [TXGlobalMasterControllerClassReference menuController];
+	return TXGlobalMasterControllerClassReference.menuController;
 }
 
 + (TXMenuController *)menuController
 {
-	return [TXGlobalMasterControllerClassReference menuController];
+	return TXGlobalMasterControllerClassReference.menuController;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -38,6 +38,10 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface IRCSendingMessage : NSObject
-+ (NSString *)stringWithCommand:(NSString *)command arguments:(NSArray *)argList;
++ (NSString *)stringWithCommand:(NSString *)command arguments:(nullable NSArray<NSString *> *)arguments;
 @end
+
+NS_ASSUME_NONNULL_END
