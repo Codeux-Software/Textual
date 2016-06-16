@@ -3704,24 +3704,7 @@
 																	<array>
 																		<dict>
 																			<key>CHILDREN</key>
-																			<array>
-																				<dict>
-																					<key>CHILDREN</key>
-																					<array/>
-																					<key>GID</key>
-																					<integer>20</integer>
-																					<key>PATH</key>
-																					<string>../../Installation Hierarchy/com.codeux.apps.textual/Extensions/TXTunes.bundle</string>
-																					<key>PATH_TYPE</key>
-																					<integer>1</integer>
-																					<key>PERMISSIONS</key>
-																					<integer>493</integer>
-																					<key>TYPE</key>
-																					<integer>3</integer>
-																					<key>UID</key>
-																					<integer>0</integer>
-																				</dict>
-																			</array>
+																			<array/>
 																			<key>GID</key>
 																			<integer>20</integer>
 																			<key>PATH</key>
@@ -4300,24 +4283,7 @@
 																	<array>
 																		<dict>
 																			<key>CHILDREN</key>
-																			<array>
-																				<dict>
-																					<key>CHILDREN</key>
-																					<array/>
-																					<key>GID</key>
-																					<integer>20</integer>
-																					<key>PATH</key>
-																					<string>../../Installation Hierarchy/com.codeux.apps.textual/Extensions/TXURLDumper.bundle</string>
-																					<key>PATH_TYPE</key>
-																					<integer>1</integer>
-																					<key>PERMISSIONS</key>
-																					<integer>493</integer>
-																					<key>TYPE</key>
-																					<integer>3</integer>
-																					<key>UID</key>
-																					<integer>0</integer>
-																				</dict>
-																			</array>
+																			<array/>
 																			<key>GID</key>
 																			<integer>20</integer>
 																			<key>PATH</key>
@@ -5215,11 +5181,11 @@
 								<key>OPTIONS</key>
 								<dict>
 									<key>HIDDEN</key>
-									<false/>
+									<true/>
 									<key>HIDE_CHILDREN</key>
 									<false/>
 									<key>STATE</key>
-									<integer>4</integer>
+									<integer>5</integer>
 								</dict>
 								<key>TITLE</key>
 								<array>
