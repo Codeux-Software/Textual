@@ -1332,7 +1332,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
 		if (onlySpeakEvent == NO) {
-			[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
+			NSString *soundName = [TPCPreferences soundForEvent:type];
+
+			if (soundName) {
+				[TLOSoundPlayer playAlertSound:soundName];
+			}
 		}
 		
 		if ([TPCPreferences speakEvent:type]) {
@@ -1419,7 +1423,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	
 	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
 		if (onlySpeakEvent == NO) {
-			[TLOSoundPlayer playAlertSound:[TPCPreferences soundForEvent:type]];
+			NSString *soundName = [TPCPreferences soundForEvent:type];
+
+			if (soundName) {
+				[TLOSoundPlayer playAlertSound:soundName];
+			}
 		}
 	
 		if ([TPCPreferences speakEvent:type]) {
