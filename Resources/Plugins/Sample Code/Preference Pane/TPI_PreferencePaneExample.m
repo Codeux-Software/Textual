@@ -45,7 +45,7 @@
 
 	if (self) {
 		if ([TPIBundleFromClass() loadNibNamed:@"PreferencePane" owner:self topLevelObjects:nil] == NO) {
-			NSAssert(NO, @"TPI_PrefsTest: Failed to load view.");
+			NSAssert(NO, @"TPI_PreferencePaneExample: Failed to load view");
 		}
     }
 
