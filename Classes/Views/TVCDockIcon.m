@@ -53,7 +53,7 @@ static NSInteger _cachedHighlightCount = -1;
 	
 	for (IRCClient *u in [worldController() clientList]) {
 		for (IRCChannel *c in [u channelList]) {
-			if (c.config.pushNotifications) {
+			if (c.config.pushNotifications && c.config.showTreeBadgeCount) {
 				messageCount += c.dockUnreadCount;
 			}
 			
