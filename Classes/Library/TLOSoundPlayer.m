@@ -100,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)doesSoundFileDictionary:(NSDictionary<NSString *, NSString *> *)fileList containName:(NSString *)name returnedPath:(NSString **)path
 {
-	NSString *filePath = [fileList firstKeyForObject:name];
+	NSString *filePath = fileList[name];
 
 	if (filePath == nil) {
 		return;
@@ -185,7 +185,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (soundID) {
 		AudioServicesPlayAlertSound(soundID);
 
-		AudioServicesDisposeSystemSoundID(soundID);
+		// AudioServicesDisposeSystemSoundID(soundID);
 	} else {
 		LogToConsole(@"Error: Unable to locate sound '%@'", name)
 	}
