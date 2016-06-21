@@ -36,7 +36,9 @@
 								coloroverride="true"
 							{{/nicknameColorStyleOverride}}
 
+							{{^ isEmpty(nicknameColorStyle) }}
 							style="color: {{nicknameColorStyle}};"
+							{{/ isEmpty(nicknameColorStyle) }}
 						{{^nicknameColorHashingIsStyleBased}}
 							colornumber="{{nicknameColorNumber}}"
 						{{/nicknameColorHashingIsStyleBased}}
