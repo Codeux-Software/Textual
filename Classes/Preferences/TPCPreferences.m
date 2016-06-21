@@ -1132,6 +1132,8 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[TPCPreferences _populateDefaultNickname];
 
+	[TPCPathInfo startUsingTranscriptFolderURL];
+
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Excluded Matches" options:NSKeyValueObservingOptionNew context:NULL];
 	[RZUserDefaults() addObserver:(id)self forKeyPath:@"Highlight List -> Primary Matches" options:NSKeyValueObservingOptionNew context:NULL];
 
