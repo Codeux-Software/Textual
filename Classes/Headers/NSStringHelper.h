@@ -92,6 +92,10 @@ TEXTUAL_EXTERN NSStringEncoding const TXDefaultFallbackStringEncoding;
 @property (readonly, copy, nullable) NSString *stringWithValidURIScheme;
 
 - (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength;
+
+- (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart
+				   foregroundColor:(NSUInteger *)foregroundColor
+				   backgroundColor:(NSUInteger *)backgroundColor;
 @end
 
 NS_ASSUME_NONNULL_END
