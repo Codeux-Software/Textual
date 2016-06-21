@@ -35,22 +35,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #define _imageLoaderMaxCacheSize			10
 
-#define _imageLoaderMaxRequestTime			30
+#define _imageLoaderRequestTimeout			30
 
-#define _imageMaximumImageWidth				7200
+#define _imageMaximumWidth					7200
 
 @interface TVCImageURLoader ()
-@property (nonatomic, strong) NSMutableData *responseData;
-@property (nonatomic, copy) NSString *requestImageUniqeID;
+@property (nonatomic, copy) NSString *requestImageUniqeId;
 @property (nonatomic, copy) NSString *requestImageURL;
 @property (nonatomic, copy) NSString *requestImageURLCacheToken;
 @property (nonatomic, strong) NSURLConnection *requestConnection;
 @property (nonatomic, strong) NSHTTPURLResponse *requestResponse;
-@property (nonatomic, assign) BOOL isInRequestWithCheckForMaximumHeight;
+@property (nonatomic, strong) NSMutableData *requestResponseData;
+@property (nonatomic, assign) BOOL checkDimensionsOfImage;
 @end
 
 static NSCache *_internalCache = nil;
@@ -64,8 +64,7 @@ static NSCache *_internalCache = nil;
 {
 	if (_internalCache == nil) {
 		_internalCache = [NSCache new];
-
-		[_internalCache setCountLimit:_imageLoaderMaxCacheSize];
+		_internalCache.countLimit = _imageLoaderMaxCacheSize;
 	}
 }
 
@@ -83,11 +82,11 @@ static NSCache *_internalCache = nil;
 	self.requestImageURL = nil;
 	self.requestImageURLCacheToken = nil;
 
-	self.requestImageUniqeID = nil;
+	self.requestImageUniqeId = nil;
+
 	self.requestConnection = nil;
 	self.requestResponse = nil;
-
-	self.responseData = nil;
+	self.requestResponseData = nil;
 }
 
 - (void)dealloc
@@ -95,19 +94,17 @@ static NSCache *_internalCache = nil;
 	self.delegate = nil;
 }
 
-- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID
+- (void)assesURL:(NSString *)baseURL withId:(NSString *)uniqueId
 {
-	NSObjectIsEmptyAssert(baseURL);
-	NSObjectIsEmptyAssert(uniqueID);
+	NSParameterAssert(baseURL != nil);
+	NSParameterAssert(uniqueId != nil);
 
-	/* Determine whether this URL has already been cached. If so, inform
-	 the callback of the cached value for the URL. */
-	NSString *baseURLCacheToken = [baseURL md5];
+	NSString *baseURLCacheToken = baseURL.md5;
 
 	id cachedValue = [_internalCache objectForKey:baseURLCacheToken];
 
 	if (cachedValue) {
-		[self informDelegateWhetherImageIsSafe:[cachedValue boolValue] withUniqueID:uniqueID];
+		[self informDelegateWhetherImageIsSafe:[cachedValue boolValue] withUniqueId:uniqueId];
 
 		return;
 	}
@@ -118,27 +115,27 @@ static NSCache *_internalCache = nil;
 	self.requestImageURL = baseURL;
 	self.requestImageURLCacheToken = baseURLCacheToken;
 
-	self.requestImageUniqeID = uniqueID;
+	self.requestImageUniqeId = uniqueId;
 
-	/* Create the request. */
-	/* We use a mutable request because we are going to set the HTTP method. */
+	/* Create the request */
 	NSMutableURLRequest *baseRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:baseURL]
 															   cachePolicy:NSURLRequestReloadIgnoringCacheData
-														   timeoutInterval:_imageLoaderMaxRequestTime];
+														   timeoutInterval:_imageLoaderRequestTimeout];
 
 	[baseRequest setValue:TVCLogViewCommonUserAgentString forHTTPHeaderField:@"User-Agent"];
 
-	/* This is stored in a local variable so that a user changing something during a load in
-	 progess, it does not fuck up any of the already existing requests. */
-		self.isInRequestWithCheckForMaximumHeight = ([TPCPreferences inlineImagesMaxHeight] > 0);
+	/* GET is used instead of HEAD because some services block the use of HEAD. */
+	baseRequest.HTTPMethod = @"GET";
 
-	if (self.isInRequestWithCheckForMaximumHeight) {
-		self.responseData = [NSMutableData data];
+	/* This is stored in a local variable so that a user changing something during a 
+	 load in progess, it does not message up any of the already existing requests. */
+	self.checkDimensionsOfImage = ([TPCPreferences inlineImagesMaxHeight] > 0);
+
+	if (self.checkDimensionsOfImage) {
+		self.requestResponseData = [NSMutableData data];
 	}
 
-	[baseRequest setHTTPMethod:@"GET"];
-
-	/* Send the actual request off. */
+	/* Send the actual request off */
 	 self.requestConnection = [[NSURLConnection alloc] initWithRequest:baseRequest delegate:self startImmediately:NO];
 
 	[self.requestConnection start];
@@ -147,20 +144,25 @@ static NSCache *_internalCache = nil;
 #pragma mark -
 #pragma mark NSURLConnection Delegate
 
-- (void)informDelegateWhetherImageIsSafe:(BOOL)isSafeToLoadImage withUniqueID:(NSString *)uniqueID
+- (void)informDelegateWhetherImageIsSafe:(BOOL)isSafeToLoadImage withUniqueId:(NSString *)uniqueId
 {
-	if (isSafeToLoadImage) {
-		if ([self.delegate respondsToSelector:@selector(isSafeToPresentImageWithID:)]) {
-			[self.delegate isSafeToPresentImageWithID:uniqueID];
+	NSParameterAssert(uniqueId != nil);
+
+	if (isSafeToLoadImage)
+	{
+		if ([self.delegate respondsToSelector:@selector(isSafeToPresentImageWithId:)]) {
+			[self.delegate isSafeToPresentImageWithId:uniqueId];
 		}
-	} else {
-		if ([self.delegate respondsToSelector:@selector(isNotSafeToPresentImageWithID:)]) {
-			[self.delegate isNotSafeToPresentImageWithID:uniqueID];
+	}
+	else
+	{
+		if ([self.delegate respondsToSelector:@selector(isNotSafeToPresentImageWithId:)]) {
+			[self.delegate isNotSafeToPresentImageWithId:uniqueId];
 		}
 	}
 }
 
-- (BOOL)continueWithImageProcessing
+- (BOOL)headersAreValid
 {
 	/* Fix for very unfortunate logic oversight. Loading an image that ends up redirecting
 	 to a data image will result in self.requestResponse existing as an of NSURLResponse
@@ -169,22 +171,55 @@ static NSCache *_internalCache = nil;
 		return NO;
 	}
 
-	/* Get data from headers. */
-	NSDictionary *headers = [self.requestResponse allHeaderFields];
+	/* Get data from headers */
+	NSDictionary *headerFields = self.requestResponse.allHeaderFields;
 
-	TXUnsignedLongLong sizeInBytes = [headers longLongForKey:@"Content-Length"];
+	TXUnsignedLongLong contentLength = [headerFields longLongForKey:@"Content-Length"];
 
-	NSString *imageContentType = [headers stringForKey:@"Content-Type"];
-
-	/* Check size. */
-	if (sizeInBytes > [TPCPreferences inlineImagesMaxFilesize]) {
+	if (contentLength > [TPCPreferences inlineImagesMaxFilesize]) {
 		return NO;
 	}
 
-	/* Check type. */
+	NSString *contentType = [headerFields stringForKey:@"Content-Type"];
+
 	NSArray *validContentTypes = [TVCImageURLParser validImageContentTypes];
 
-	if ([validContentTypes containsObject:imageContentType] == NO) {
+	if ([validContentTypes containsObject:contentType] == NO) {
+		return NO;
+	}
+
+	return YES;
+}
+
+- (BOOL)imageIsValid
+{
+	if (self.requestResponseData == nil) {
+		return NO;
+	}
+
+	CGImageSourceRef image = CGImageSourceCreateWithData((__bridge CFDataRef)self.requestResponseData, NULL);
+
+	if (image == NULL) {
+		return NO;
+	}
+
+	CFDictionaryRef imageProperties = CGImageSourceCopyPropertiesAtIndex(image, 0, NULL);
+
+	if (imageProperties == NULL) {
+		CFRelease(image);
+
+		return NO;
+	}
+
+	NSNumber *imageWidth = CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth);
+	NSNumber *imageHeight = CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelHeight);
+
+	CFRelease(image);
+	CFRelease(imageProperties);
+
+	if (imageWidth.integerValue > _imageMaximumWidth) {
+		return NO;
+	} else if (imageHeight.integerValue > [TPCPreferences inlineImagesMaxHeight]) {
 		return NO;
 	}
 
@@ -193,48 +228,15 @@ static NSCache *_internalCache = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	BOOL isSafeToLoadImage = NO;
+	BOOL isSafeToLoadImage = (self.requestResponse.statusCode == 200);
 
-	BOOL isValidResponse = ([self.requestResponse statusCode] == 200);
-
-    if (isValidResponse) {
-		if (self.isInRequestWithCheckForMaximumHeight) {
-			if (self.responseData == nil) {
-				goto destroy_connection;
-			}
-			
-			CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)self.responseData, NULL);
-			
-			if (PointerIsEmpty(imageSource)) {
-				goto destroy_connection;
-			}
-			
-			CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, NULL);
-		
-			if (PointerIsEmpty(properties)) {
-				CFRelease(imageSource);
-
-				goto destroy_connection;
-			}
-
-			NSNumber *width = CFDictionaryGetValue(properties, kCGImagePropertyPixelWidth);
-			NSNumber *height = CFDictionaryGetValue(properties, kCGImagePropertyPixelHeight);
-
-			CFRelease(imageSource);
-			CFRelease(properties);
-
-			if ([height integerValue] <= [TPCPreferences inlineImagesMaxHeight] && [width integerValue] <= _imageMaximumImageWidth) {
-				isSafeToLoadImage = YES;
-			}
-		} else {
-			isSafeToLoadImage = YES;
-		}
+	if (self.checkDimensionsOfImage) {
+		isSafeToLoadImage = (isSafeToLoadImage && [self imageIsValid]);
 	}
 
-destroy_connection:
 	[_internalCache setObject:@(isSafeToLoadImage) forKey:self.requestImageURLCacheToken];
 
-	[self informDelegateWhetherImageIsSafe:isSafeToLoadImage withUniqueID:self.requestImageUniqeID];
+	[self informDelegateWhetherImageIsSafe:isSafeToLoadImage withUniqueId:self.requestImageUniqeId];
 
 	[self cleanupConnectionRequest];
 }
@@ -243,21 +245,24 @@ destroy_connection:
 {
 	[self cleanupConnectionRequest];
 
-	LogToConsole(@"Failed to complete connection request with error: %@", [error localizedDescription]);
+	LogToConsole(@"Failed to complete connection request with error: %@",
+			error.localizedDescription)
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-	if (self.isInRequestWithCheckForMaximumHeight) {
-		[self.responseData appendData:data];
+	if (self.checkDimensionsOfImage == NO) {
+		return;
+	}
 
-		/* If the Content-Length header was not available, then we
-		 still go ahead and check the downloaded data length here. */
-		if ([self.responseData length] > [TPCPreferences inlineImagesMaxFilesize]) {
-			LogToConsole(@"Inline image exceeds maximum file length.");
-			
-			[self cleanupConnectionRequest];
-		}
+	[self.requestResponseData appendData:data];
+
+	/* If the Content-Length header was not available, then we
+	 still go ahead and check the downloaded data length here. */
+	if (self.requestResponseData.length > [TPCPreferences inlineImagesMaxFilesize]) {
+		LogToConsole(@"Inline image exceeds maximum file length")
+		
+		[self cleanupConnectionRequest];
 	}
 }
 
@@ -265,23 +270,27 @@ destroy_connection:
 {
 	self.requestResponse = (id)response;
 
-	if ([self continueWithImageProcessing] == NO) {
+	if ([self headersAreValid] == NO) {
 		[self cleanupConnectionRequest];
-	} else {
-		if (self.isInRequestWithCheckForMaximumHeight == NO) {
-			/* If we do not care about the height, then we are going
-			 to fake a successful download at this point so that we
-			 can post the image without waiting for the entire thing
-			 to download and waste bandwidth. */
 
-			[self connectionDidFinishLoading:nil];
-		}
+		return;
+	}
+
+	if (self.checkDimensionsOfImage == NO) {
+		/* If we do not care about the height, then we are going
+		 to fake a successful download at this point so that we
+		 can post the image without waiting for the entire thing
+		 to download and waste bandwidth. */
+
+		[self connectionDidFinishLoading:nil];
 	}
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {
-	return nil; /* Do not return any cache. */
+	return nil; /* Do not return any cache */
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
