@@ -36,7 +36,8 @@
 
  *********************************************************************** */
 
-#import "IRCTreeItem.h" // superclass
+#import "IRCTreeItem.h"
+#import "TVCLogController.h"
 
 typedef NS_ENUM(NSUInteger, IRCChannelStatus) {
 	IRCChannelStatusParted,
@@ -95,7 +96,7 @@ TEXTUAL_EXTERN NSString * const IRCChannelConfigurationWasUpdatedNotification;
 - (void)writeToLogFile:(TVCLogLine *)line;
 
 - (void)print:(TVCLogLine *)logLine;
-- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock;
+- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
 - (BOOL)memberExists:(NSString *)nickname;
 

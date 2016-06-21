@@ -419,7 +419,7 @@ static const char *kMacNames[] = {
 	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListModern]];
 	[_cipherList addObjectsFromArray:[GCDAsyncSocket cipherListDeprecated]];
 
-	return _cipherList.copy;
+	return [_cipherList copy];
 }
 
 + (NSArray<NSNumber *> *)cipherListModern

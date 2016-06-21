@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 		colonIndexCount += 1;
 	}
 
-	return builtString.copy;
+	return [builtString copy];
 }
 
 @end

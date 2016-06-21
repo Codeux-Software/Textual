@@ -124,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(type != TVCLogLineUndefinedType);
 
-	NSString *typeString = [TVCLogLine lineTypeString:type];
+	NSString *typeString = [TVCLogLine stringForLineType:type];
 
 	return [@"Line Types/" stringByAppendingString:typeString];
 }

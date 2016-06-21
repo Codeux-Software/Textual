@@ -42,8 +42,6 @@
 #import "TLOLicenseManager.h"
 #endif
 
-#import "TVCLogObjectsPrivate.h"
-
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
 #define _connected					(u && [u isConnected])

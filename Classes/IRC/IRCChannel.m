@@ -307,7 +307,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		[self addMember:m2];
 	}
 
-	self.channelJoinTime = [NSDate unixTime];
+	self.channelJoinTime = [NSDate timeIntervalSince1970];
 }
 
 - (void)deactivate
@@ -405,7 +405,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	[self print:logLine completionBlock:NULL];
 }
 
-- (void)print:(TVCLogLine *)logLine completionBlock:(void(^)(BOOL highlighted))completionBlock
+- (void)print:(TVCLogLine *)logLine completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
 	[self.viewController print:logLine completionBlock:completionBlock];
 	

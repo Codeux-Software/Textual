@@ -327,7 +327,7 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 		attributes[TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute] = preferredFontColor;
 	}
 
-	return [TVCLogRenderer renderBodyIntoAttributedString:self withAttributes:attributes];
+	return [TVCLogRenderer renderBodyAsAttributedString:self withAttributes:attributes];
 }
 
 - (nullable NSAttributedString *)attributedStringWithIRCFormatting:(NSFont *)preferredFont preferredFontColor:(nullable NSColor *)preferredFontColor

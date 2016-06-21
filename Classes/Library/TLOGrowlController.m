@@ -359,7 +359,7 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 - (void)notificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
 {
-	NSTimeInterval now = [NSDate unixTime];
+	NSTimeInterval now = [NSDate timeIntervalSince1970];
 	
 	if ((now - self.lastClickedTime) < _clickInterval) {
 		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {

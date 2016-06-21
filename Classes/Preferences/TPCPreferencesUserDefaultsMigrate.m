@@ -35,8 +35,6 @@
 
  *********************************************************************** */
 
-#warning TODO: This needs to be tested
-
 NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 0

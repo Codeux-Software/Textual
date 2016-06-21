@@ -513,7 +513,7 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}
 
-		cachedValue = allRules.copy;
+		cachedValue = [allRules copy];
 	});
 
 	return cachedValue;
@@ -542,7 +542,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[allCommands sortUsingComparator:NSDefaultComparator];
 
-		cachedValue = allCommands.copy;
+		cachedValue = [allCommands copy];
 	});
 
 	return cachedValue;
@@ -571,7 +571,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[allCommands sortUsingComparator:NSDefaultComparator];
 
-		cachedValue = allCommands.copy;
+		cachedValue = [allCommands copy];
 	});
 
 	return cachedValue;
@@ -599,7 +599,7 @@ NS_ASSUME_NONNULL_BEGIN
 					object2.pluginPreferencesPaneMenuItemTitle];
 		}];
 
-		cachedValue = allExtensions.copy;
+		cachedValue = [allExtensions copy];
 	});
 
 	return cachedValue;
