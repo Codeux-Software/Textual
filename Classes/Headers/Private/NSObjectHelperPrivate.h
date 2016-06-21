@@ -61,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define ClassWithDesignatedInitializerInitMethod	DESIGNATED_INITIALIZER_EXCEPTION_BODY
 
+#define ObjectIsAlreadyInitializedAssert			\
+	NSAssert((self->_objectInitialized == NO),		\
+		@"Object is already initialized");
+
 @interface NSObject (TXObjectHelper)
 - (void)preferencesChanged;
 
