@@ -35,24 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-/* No plugins should be accessing this. */
-@class TVCLogControllerOperationItem;
+NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^TVCLogControllerOperationBlock)(NSOperation *sender);
 
 @interface TVCLogControllerOperationQueue : NSOperationQueue
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description;
-- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)sender description:(NSString *)description isStandalone:(BOOL)isStandalone;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description;
+- (void)enqueueMessageBlock:(TVCLogControllerOperationBlock)callbackBlock for:(TVCLogController *)viewController description:(nullable NSString *)description isStandalone:(BOOL)isStandalone;
 
-/* Limit scope of cancelAllOperations. */
 - (void)cancelOperationsForClient:(IRCClient *)client;
 - (void)cancelOperationsForChannel:(IRCChannel *)channel;
 
-- (void)cancelOperationsForViewController:(TVCLogController *)controller;
+- (void)cancelOperationsForViewController:(TVCLogController *)viewController;
 
-/* Update state. */
-- (void)updateReadinessState:(TVCLogController *)controller;
+- (void)updateReadinessState:(TVCLogController *)viewController;
 @end
+
+NS_ASSUME_NONNULL_END

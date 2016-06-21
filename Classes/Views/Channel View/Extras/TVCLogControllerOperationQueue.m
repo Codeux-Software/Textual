@@ -52,8 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 #if _compileDebugCode == 1
 @property (nonatomic, copy, nullable) NSString *operationDescription;
 #endif
-
-@property (readonly) NSUInteger dependencyCount;
 @end
 
 #pragma mark -
@@ -93,13 +91,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(viewController != nil);
 
 	[self performBlockOnMainThread:^{
-		/* Create operation */
 		TVCLogControllerOperationItem *operation = [TVCLogControllerOperationItem new];
 
-		TVCLogControllerOperationItem *lastOperation = (id)[self dependencyOfLastOperation:viewController];
+		TVCLogControllerOperationItem *operationParent = (id)[self dependencyOfLastOperation:viewController];
 
-		if (lastOperation) {
-			[operation addDependency:lastOperation];
+		if (operationParent) {
+			[operation addDependency:operationParent];
 		}
 
 #if _compileDebugCode == 1
@@ -156,19 +153,12 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(viewController != nil);
 
 	[self performBlockOnMainThread:^{
-		/* Mark all objects part of this controller
-		 that are not cancelled and have no dependencies
-		 as ready or maybe is ready. */
 		for (TVCLogControllerOperationItem *operation in self.operations) {
 			if (operation.viewController != viewController) {
 				continue;
 			}
 
-			if (operation.isCancelled) {
-				continue;
-			}
-
-			if (operation.dependencyCount > 0) {
+			if (operation.isCancelled || operation.dependencies.count > 0) {
 				continue;
 			}
 
@@ -208,11 +198,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Operation Queue Items
 
 @implementation TVCLogControllerOperationItem
-
-- (NSUInteger)dependencyCount
-{
-	return self.dependencies.count;
-}
 
 - (void)cancel
 {
@@ -278,8 +263,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isReady
 {
-	if (self.dependencyCount < 1 || self.isStandalone) {
-		return (super.isReady && self.viewController.isLoaded);
+	if (self.dependencies.count < 1 || self.isStandalone) {
+		return (super.isReady && self.viewController.viewIsLoaded);
 	} else {
 		return  super.isReady;
 	}

@@ -38,62 +38,43 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 TEXTUAL_EXTERN NSString * const TVCLogViewCommonUserAgentString;
 
 @interface TVCLogView : NSObject
 @property (readonly) BOOL hasSelection;
 - (void)clearSelection;
-@property (readonly, copy) NSString *selection;
+@property (readonly, copy, nullable) NSString *selection;
 
 @property (readonly) BOOL isUsingWebKit2;
 
-- (instancetype)initWithViewController:(TVCLogController *)viewController;
-
-- (void)copyContentString;
-
-- (void)print;
-@end
-
-@interface TVCLogView (TVCLogViewBackingProxy)
 @property (readonly) NSView *webView;
-
-- (void)stopLoading;
-
-- (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL;
-
-- (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 @end
 
 @interface TVCLogView (TVCLogViewJavaScriptHandler)
 - (void)evaluateJavaScript:(NSString *)code;
-- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id result))completionHandler;
+- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable result))completionHandler;
 
 - (void)evaluateFunction:(NSString *)function;
-- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments;
-- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments  completionHandler:(void (^)(id result))completionHandler;
+- (void)evaluateFunction:(NSString *)function withArguments:(nullable NSArray *)arguments;
+- (void)evaluateFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(id _Nullable result))completionHandler;
 
-- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(BOOL result))completionHandler;
-- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL result))completionHandler;
+- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(BOOL result))completionHandler;
+- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(BOOL result))completionHandler;
 
-- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSString *result))completionHandler;
-- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *result))completionHandler;
+- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSString * _Nullable result))completionHandler;
+- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSString * _Nullable result))completionHandler;
 
-- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSArray *result))completionHandler;
-- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *result))completionHandler;
+- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSArray * _Nullable result))completionHandler;
+- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSArray * _Nullable result))completionHandler;
 
-- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSDictionary *result))completionHandler;
-- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *result))completionHandler;
+- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSDictionary<NSString *, id> * _Nullable result))completionHandler;
+- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSDictionary<NSString *, id> * _Nullable result))completionHandler;
 
 + (NSString *)escapeJavaScriptString:(NSString *)string;
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult;
 @end
 
-@protocol TVCLogViewDelegate <NSObject>
-@required
-
-- (void)logViewWebViewClosedUnexpectedly;
-- (void)logViewWebViewFinishedLoading;
-- (void)logViewWebViewKeyDown:(NSEvent *)e;
-- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
-@end
+NS_ASSUME_NONNULL_END

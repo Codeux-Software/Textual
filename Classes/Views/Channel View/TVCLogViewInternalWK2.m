@@ -35,29 +35,31 @@
 
  *********************************************************************** */
 
-#import "TVCLogObjectsPrivate.h"
-
 #import "WKWebViewPrivate.h"
 
 #include <objc/message.h>
 #include <objc/runtime.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define _maximumProcessCount			15
 
 @implementation TVCLogViewInternalWK2
 
-static WKWebViewConfiguration *_sharedWebViewConfiguration = nil;
-static WKUserContentController *_sharedUserContentController = nil;
 static WKProcessPool *_sharedProcessPool = nil;
-static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
+static WKUserContentController *_sharedUserContentController = nil;
+static WKWebViewConfiguration *_sharedWebViewConfiguration = nil;
 static TVCLogPolicy *_sharedWebPolicy = nil;
+static TVCLogScriptEventSink *_sharedWebViewScriptSink = nil;
 
 #pragma mark -
 #pragma mark Factory
 
 + (void)initialize
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return;
+	}
 
 	static dispatch_once_t onceToken;
 
@@ -66,47 +68,46 @@ static TVCLogPolicy *_sharedWebPolicy = nil;
 
 		_sharedWebViewConfiguration = [WKWebViewConfiguration new];
 
-		[_sharedWebViewConfiguration setProcessPool:_sharedProcessPool];
+		_sharedWebViewConfiguration.processPool = _sharedProcessPool;
 
-		[[_sharedWebViewConfiguration preferences] setValue:@(YES) forKey:@"developerExtrasEnabled"];
+		[_sharedWebViewConfiguration.preferences setValue:@(YES) forKey:@"developerExtrasEnabled"];
 
-		_sharedWebViewScriptSink = [TVCLogScriptEventSink new];
+		_sharedWebViewScriptSink = [[TVCLogScriptEventSink alloc] initWithWebView:nil];
 
 		_sharedUserContentController = [WKUserContentController new];
 
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelIsJoined"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelMemberCount"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelName"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"displayContextMenu"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserHostmask"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"localUserNickname"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsole"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"logToConsoleFile"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"networkName"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameColorStyleHash"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformation"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"retrievePreferencesWithMethodName"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sendPluginPayload"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverAddress"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverChannelCount"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"serverIsConnected"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setChannelName"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setNickname"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setSelection"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"setURLAddress"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
-		[_sharedUserContentController addScriptMessageHandler:_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelIsJoined"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelMemberCount"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelName"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"channelNameDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"displayContextMenu"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"copySelectionWhenPermitted"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"inlineImagesEnabledForView"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"localUserHostmask"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"localUserNickname"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"logToConsole"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"networkName"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"nicknameColorStyleHash"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"nicknameDoubleClicked"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"printDebugInformation"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"printDebugInformationToConsole"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"retrievePreferencesWithMethodName"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"sendPluginPayload"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"serverAddress"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"serverChannelCount"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"serverIsConnected"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setChannelName"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setNickname"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setSelection"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"setURLAddress"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"sidebarInversionIsEnabled"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"styleSettingsRetrieveValue"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"styleSettingsSetValue"];
+		[_sharedUserContentController addScriptMessageHandler:(id)_sharedWebViewScriptSink name:@"topicBarDoubleClicked"];
 
-		[_sharedWebViewConfiguration setUserContentController:_sharedUserContentController];
+		_sharedWebViewConfiguration.userContentController = _sharedUserContentController;
 
-		_sharedWebPolicy = [TVCLogPolicy new];
+		_sharedWebPolicy = [[TVCLogPolicy alloc] initWithWebView:nil];
 	});
 }
 
@@ -159,22 +160,24 @@ create_normal_pool:
 
 - (void)constructWebViewWithHostView:(TVCLogView *)hostView
 {
-	[self setT_parentView:hostView];
+	NSParameterAssert(hostView != nil);
 
-	[self setAllowsBackForwardNavigationGestures:NO];
-	[self setAllowsMagnification:YES];
+	self.t_parentView = hostView;
 
-	[self setTranslatesAutoresizingMaskIntoConstraints:NO];
+	self.allowsBackForwardNavigationGestures = NO;
+	self.allowsMagnification = NO;
+
+	self.translatesAutoresizingMaskIntoConstraints = NO;
 
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		[self setAllowsLinkPreview:YES];
+		self.allowsLinkPreview = YES;
 
-		[self setCustomUserAgent:TVCLogViewCommonUserAgentString];
+		self.customUserAgent = TVCLogViewCommonUserAgentString;
 	}
 
-	[self setNavigationDelegate:self];
+	self.navigationDelegate = (id)self;
 
-	[self setUIDelegate:self];
+	self.UIDelegate = (id)self;
 
 	[self addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:NULL];
 }
@@ -183,9 +186,9 @@ create_normal_pool:
 {
 	[self removeObserver:self forKeyPath:@"loading"];
 
-	[self setNavigationDelegate:nil];
+	self.navigationDelegate = nil;
 
-	[self setUIDelegate:nil];
+	self.UIDelegate = nil;
 }
 
 - (TVCLogPolicy *)webViewPolicy
@@ -198,23 +201,25 @@ create_normal_pool:
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([[self t_parentView] keyDown:e inView:self] == NO) {
-		[super keyDown:e];
+	if ([self.t_parentView keyDown:e inView:self]) {
+		return;
 	}
+
+	[super keyDown:e];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	return [[self t_parentView] performDragOperation:sender];
+	return [self.t_parentView performDragOperation:sender];
 }
 
 #pragma mark -
 #pragma mark Utilities
 
-- (void)emptyCaches:(void (^)(void))completionHandler
+- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
 	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
-		WKWebsiteDataStore *wk2WebsiteDataStore = [_sharedWebViewConfiguration websiteDataStore];
+		WKWebsiteDataStore *wk2WebsiteDataStore = _sharedWebViewConfiguration.websiteDataStore;
 
 		if ( wk2WebsiteDataStore) {
 			NSSet *itemsToRemove = [NSSet setWithArray:@[
@@ -237,7 +242,7 @@ create_normal_pool:
 
 - (void)openWebInspector
 {
-	WKView *webViewParent = (id)[self subviews][0];
+	WKView *webViewParent = (id)self.subviews[0];
 
 	WKPageRef pageRef = [webViewParent pageRef];
 
@@ -248,6 +253,8 @@ create_normal_pool:
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
+	NSParameterAssert(searchString != nil);
+
 	_WKFindOptions findOptions = (_WKFindOptionsCaseInsensitive	| _WKFindOptionsShowOverlay	| _WKFindOptionsShowFindIndicator | _WKFindOptionsWrapAround);
 
 	if (movingForward == NO) {
@@ -262,13 +269,13 @@ create_normal_pool:
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewIsLoading == NO && self.t_viewIsNavigating == NO) {
-		[[self t_parentView] performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+		[self.t_parentView performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
 
 - (void)webViewClosedUnexpectedly
 {
-	[[self t_parentView] informDelegateWebViewClosedUnexpectedly];
+	[self.t_parentView informDelegateWebViewClosedUnexpectedly];
 }
 
 #pragma mark -
@@ -282,11 +289,13 @@ create_normal_pool:
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable))completionHandler
 {
+	NSParameterAssert(code != nil);
+
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
 		if (error) {
-			LogToConsole(@"Error: %@", [error localizedDescription]);
+			LogToConsole(@"Error: %@", error.localizedDescription)
 		}
 
 		if (result) {
@@ -310,17 +319,17 @@ create_normal_pool:
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
 {
-	NSAssertReturn(self == webView);
+	NSParameterAssert(webView == self);
 
 	[self webViewClosedUnexpectedly];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSString *, id> *)change context:(nullable void *)context
 {
-	NSAssertReturn(self == object);
+	NSParameterAssert(object == self);
 
 	if ([keyPath isEqualToString:@"loading"]) {
-		self.t_viewIsLoading = [self isLoading];
+		self.t_viewIsLoading = self.loading;
 
 		[self maybeInformDelegateWebViewFinishedLoading];
 	}
@@ -328,24 +337,28 @@ create_normal_pool:
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
+	NSParameterAssert(webView == self);
+
 	[_sharedWebPolicy webView:webView decidePolicyForNavigationAction:navigationAction decisionHandler:decisionHandler];
 }
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential *))completionHandler
 {
+	NSParameterAssert(webView == self);
+
 	[_sharedWebPolicy webView:webView didReceiveAuthenticationChallenge:challenge completionHandler:completionHandler];
 }
 
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-	NSAssertReturn(self == webView);
+	NSParameterAssert(webView == self);
 
 	self.t_viewIsNavigating = YES;
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-	NSAssertReturn(self == webView);
+	NSParameterAssert(webView == self);
 
 	self.t_viewIsNavigating = NO;
 
@@ -362,7 +375,9 @@ create_normal_pool:
 
 + (void)load
 {
-	NSAssertReturn([XRSystemInformation isUsingOSXYosemiteOrLater]);
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return;
+	}
 
 	static dispatch_once_t onceToken;
 
@@ -377,7 +392,7 @@ create_normal_pool:
 {
 	/* Override drag and drop to allow files to be sent to a user instead
 	 of WebKit thinking that it should load the file as a resource. */
-	NSView *superview = [self superview];
+	NSView *superview = self.superview;
 
 	if ([superview respondsToSelector:@selector(performDragOperation:)]) {
 		return [superview performDragOperation:sender];
@@ -389,13 +404,15 @@ create_normal_pool:
 - (void)__t_priv_updateLayer
 {
 	/* Set the style defined background color for the layer. */
-	NSColor *windowColor = [themeSettings() underlyingWindowColor];
+	NSColor *windowColor = themeSettings().underlyingWindowColor;
 
 	if (windowColor == nil) {
 		windowColor = [NSColor blackColor];
 	}
 
-	[[self layer] setBackgroundColor:[windowColor CGColor]];
+	self.layer.backgroundColor = windowColor.CGColor;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

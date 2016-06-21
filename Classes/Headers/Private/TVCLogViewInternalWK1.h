@@ -35,20 +35,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogViewInternalWK1 : WebView <WebFrameLoadDelegate, WebPolicyDelegate, WebResourceLoadDelegate, WebUIDelegate>
+@interface TVCLogViewInternalWK1 : WebView
 @property (nonatomic, weak) TVCLogView *t_parentView;
 @property (nonatomic, assign) BOOL t_viewHasLoaded;
 @property (nonatomic, assign) BOOL t_viewHasScriptObject;
 
 - (instancetype)initWithHostView:(TVCLogView *)hostView;
 
-- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler;
+- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable))completionHandler;
 
 @property (readonly) TVCLogPolicy *webViewPolicy;
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward;
 
-- (void)emptyCaches:(void (^)(void))completionHandler;
+- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler;
 @end
+
+NS_ASSUME_NONNULL_END

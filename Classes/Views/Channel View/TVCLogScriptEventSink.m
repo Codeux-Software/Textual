@@ -38,8 +38,11 @@
 
 #include <objc/message.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCLogScriptEventSink ()
-@property (nonatomic, strong) WKUserContentController *userContentController;
+@property (nonatomic, strong, nullable) TVCLogView *webView;
+@property (nonatomic, strong, nullable) WKUserContentController *userContentController;
 @end
 
 @interface TVCLogScriptEventSinkContext : NSObject
@@ -47,24 +50,42 @@
 @property (readonly) TVCLogPolicy *webViewPolicy;
 @property (readonly) TVCLogController *viewController;
 @property (readonly) IRCClient *associatedClient;
-@property (readonly) IRCChannel *associatedChannel;
+@property (readonly, nullable) IRCChannel *associatedChannel;
 @property (nonatomic, copy) NSArray *arguments;
 @end
 
 @implementation TVCLogScriptEventSink
 
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithWebView:(nullable TVCLogView *)webView
 {
-	if (sel == @selector(init) ||
-		sel == @selector(webView) ||
-		sel == @selector(webViewPolicy) ||
- 		sel == @selector(associatedClient) ||
-		sel == @selector(associatedChannel))
+	if ((self = [super init])) {
+		self.webView = webView;
+
+		return self;
+	}
+
+	return nil;
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)selector
+{
+	if (selector == @selector(init) ||
+		selector == @selector(initWithWebView:) ||
+		selector == @selector(webView) ||
+		selector == @selector(webViewPolicy) ||
+ 		selector == @selector(associatedClient) ||
+		selector == @selector(associatedChannel) ||
+		selector == @selector(objectValueToCommon:) ||
+		selector == @selector(userContentController:didReceiveScriptMessage:) ||
+		selector == @selector(processInputData:inWebView:forSelector:) ||
+		selector == @selector(processInputData:inWebView:forSelector:minimumArgumentCount:withValidation:))
 	{
 		return YES;
 	}
 
-	if ([NSStringFromSelector(sel) hasPrefix:@"_"]) {
+	if ([NSStringFromSelector(selector) hasPrefix:@"_"]) {
 		return NO;
 	}
 
@@ -76,7 +97,7 @@
 	return nil;
 }
 
-- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)args
+- (id)invokeUndefinedMethodFromWebScript:(NSString *)name withArguments:(NSArray *)arguments
 {
 	SEL handlerSelector = NSSelectorFromString([name stringByAppendingString:@":inWebView:"]);
 
@@ -84,16 +105,16 @@
 		return @(NO);
 	}
 
-	if (args && [args count] > 0) {
-		id argument = args[0];
+	if (arguments && arguments.count > 0) {
+		id argument = arguments[0];
 
 		if ([argument isKindOfClass:[WebScriptObject class]]) {
-			argument = [[self parentView] webScriptObjectToCommon:argument];
+			argument = [self.webView webScriptObjectToCommon:argument];
 		}
 
-		(void)objc_msgSend(self, handlerSelector, argument, [self parentView]);
+		(void)objc_msgSend(self, handlerSelector, argument, self.webView);
 	} else {
-		(void)objc_msgSend(self, handlerSelector, nil, [self parentView]);
+		(void)objc_msgSend(self, handlerSelector, nil, self.webView);
 	}
 
 	return @(YES);
@@ -126,7 +147,7 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
-	NSString *handlerName = [message name];
+	NSString *handlerName = message.name;
 
 	SEL handlerSelector = NSSelectorFromString([handlerName stringByAppendingString:@":inWebView:"]);
 
@@ -138,7 +159,7 @@
 		return;
 	}
 
-	(void)objc_msgSend(self, handlerSelector, [message body], [message webView]);
+	(void)objc_msgSend(self, handlerSelector, message.body, message.webView);
 }
 
 - (void)processInputData:(id)inputData inWebView:(id)webView forSelector:(SEL)selector
@@ -150,7 +171,7 @@
 			   inWebView:(id)webView
 			 forSelector:(SEL)selector
    minimumArgumentCount:(NSInteger)minimumArgumentCount
-		  withValidation:(BOOL (^)(NSInteger argumentIndex, id argument))validateArgumentBlock
+		  withValidation:(BOOL (^ _Nullable)(NSUInteger argumentIndex, id argument))validateArgumentBlock
 {
 	TVCLogView *intWebView = nil;
 
@@ -221,7 +242,7 @@
 	}
 
 	/* Perform validation if needed */
-	if (minimumArgumentCount > 0 && [values count] < minimumArgumentCount) {
+	if (minimumArgumentCount > 0 && values.count < minimumArgumentCount) {
 		[self _throwJavaScriptException:@"Minimum number of arguments condition not met" inWebView:intWebView];
 
 		return;
@@ -248,11 +269,11 @@
 	/* Pass validated data to selector */
 	TVCLogScriptEventSinkContext *context = [TVCLogScriptEventSinkContext new];
 
-	[context setWebView:intWebView];
+	context.webView = intWebView;
 
-	[context setArguments:values];
+	context.arguments = values;
 
-	if (promiseIndex == (-1)) {
+	if (promiseIndex <= (-1)) {
 		(void)objc_msgSend(self, selector, context);
 	} else {
 		id returnValue = objc_msgSend(self, selector, context);
@@ -330,18 +351,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_logToConsole:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
-				return [argument isKindOfClass:[NSString class]];
-			}];
-}
-
-- (void)logToConsoleFile:(id)inputData inWebView:(id)webView
-{
-	[self processInputData:inputData
-				 inWebView:webView
-			   forSelector:@selector(_logToConsoleFile:)
-	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -357,7 +367,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_nicknameColorStyleHash:)
 	  minimumArgumentCount:2
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -373,7 +383,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_printDebugInformation:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -384,7 +394,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_printDebugInformationToConsole:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -395,7 +405,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_retrievePreferencesWithMethodName:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -406,7 +416,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_sendPluginPayload:)
 	  minimumArgumentCount:2
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
 					return [argument isKindOfClass:[NSString class]];
 				} else {
@@ -436,7 +446,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_setChannelName:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
 						[argument isKindOfClass:[NSString class]]);
 			}];
@@ -448,7 +458,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_setNickname:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
 						[argument isKindOfClass:[NSString class]]);
 			}];
@@ -460,7 +470,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_setSelection:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
 						[argument isKindOfClass:[NSString class]]);
 			}];
@@ -472,7 +482,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_setURLAddress:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return ([argument isKindOfClass:[NSNull class]] ||
 						[argument isKindOfClass:[NSString class]]);
 			}];
@@ -489,7 +499,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_styleSettingsRetrieveValue:)
 	  minimumArgumentCount:1
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				return [argument isKindOfClass:[NSString class]];
 			}];
 }
@@ -500,7 +510,7 @@
 				 inWebView:webView
 			   forSelector:@selector(_styleSettingsSetValue:)
 	  minimumArgumentCount:2
-			withValidation:^BOOL(NSInteger argumentIndex, id argument) {
+			withValidation:^BOOL(NSUInteger argumentIndex, id argument) {
 				if (argumentIndex == 0) {
 					return [argument isKindOfClass:[NSString class]];
 				} else {
@@ -523,36 +533,36 @@
 
 - (id)_channelIsJoined:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context associatedChannel] isActive]);
+	return @(context.associatedChannel.isActive);
 }
 
 - (id)_channelMemberCount:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context associatedChannel] numberOfMembers]);
+	return @(context.associatedChannel.numberOfMembers);
 }
 
 - (id)_channelName:(TVCLogScriptEventSinkContext *)context
 {
-	return [[context associatedChannel] name];
+	return context.associatedChannel.name;
 }
 
 - (void)_channelNameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
-	[[context webViewPolicy] channelNameDoubleClicked];
+	[context.webViewPolicy channelNameDoubleClicked];
 }
 
 - (void)_displayContextMenu:(TVCLogScriptEventSinkContext *)context
 {
-	[[context webViewPolicy] displayContextMenuInWebView:[context webView]];
+	[context.webViewPolicy displayContextMenuInWebView:context.webView];
 }
 
 - (id)_copySelectionWhenPermitted:(TVCLogScriptEventSinkContext *)context
 {
 	if ([TPCPreferences copyOnSelect]) {
-		NSString *selection = [[context webView] selection];
+		NSString *selection = context.webView.selection;
 
 		if (selection) {
-			[RZPasteboard() setStringContent:selection];
+			RZPasteboard().stringContent = selection;
 
 			return @(YES);
 		}
@@ -563,118 +573,35 @@
 
 - (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context viewController] inlineImagesEnabledForView]);
+	return @(context.viewController.inlineImagesEnabledForView);
 }
 
 - (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
 {
-	return [[context associatedClient] localHostmask];
+	return context.associatedClient.localHostmask;
 }
 
 - (id)_localUserNickname:(TVCLogScriptEventSinkContext *)context
 {
-	return [[context associatedClient] localNickname];
+	return context.associatedClient.localNickname;
 }
 
 - (void)_logToConsole:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
 	LogToConsole(@"JavaScript: %@", message);
 }
-
-- (void)_logToConsoleFile:(TVCLogScriptEventSinkContext *)context
-{
-	/* Define the file path in which the data is written to. */
-	IRCClient *u = [context associatedClient];
-
-	IRCChannel *c = [context associatedChannel];
-
-	NSString *basePath = [[TPCPathInfo applicationLogsFolderPath] stringByAppendingPathComponent:@"/JavaScript-Console/"];
-
-	NSString *filename = nil;
-
-	if (c) {
-		NSString *subPath = [NSString stringWithFormat:@"/%@/", [u  uniqueIdentifier]];
-
-		basePath = [basePath stringByAppendingPathComponent:subPath];
-
-		filename = [NSString stringWithFormat:@"%@.txt", [[c name] safeFilename]];
-	}
-	else // c != nil
-	{
-		filename = [NSString stringWithFormat:@"%@.txt", [u uniqueIdentifier]];
-	}
-
-	/* Create folder in which the log files will be kept or throw error. */
-	if ([RZFileManager() fileExistsAtPath:basePath] == NO) {
-		NSError *createDirectoryError = nil;
-
-		if ([RZFileManager() createDirectoryAtPath:basePath withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
-			NSString *errorMessage = [NSString stringWithFormat:@"Failed to create directory to write files in: %@", [createDirectoryError localizedDescription]];
-
-			[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
-
-			return;
-		}
-	}
-
-	/* Try to create blank file if it does not exist yet or throw error. */
-	NSString *writePath = [basePath stringByAppendingPathComponent:filename];
-
-	if ([RZFileManager() fileExistsAtPath:writePath] == NO) {
-		NSError *writeToFileError = nil;
-
-		if ([NSStringEmptyPlaceholder writeToFile:writePath atomically:NO encoding:NSUTF8StringEncoding error:&writeToFileError] == NO) {
-			NSString *errorMessage = [NSString stringWithFormat:@"Failed to write blank file: %@", [writeToFileError localizedDescription]];
-
-			[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
-
-			return;
-		}
-	}
-
-	/* Get file handle for writing or throw error */
-	NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:writePath];
-
-	if (fileHandle == nil) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Failed to open file handle for file: %@", writePath];
-
-		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
-
-		return;
-	}
-
-	[fileHandle seekToEndOfFile];
-
-	/* Write to file */
-	NSArray *arguments = [context arguments];
-
-	NSString *messageString = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
-
-	NSString *message = [NSString stringWithFormat:@"(%f) %@\x0d\x0a",
-						 CFAbsoluteTimeGetCurrent(), messageString];
-
-	NSData *messageData = [message dataUsingEncoding:NSUTF8StringEncoding];
-
-	[fileHandle writeData:messageData];
-
-	/* Close access to file */
-	[fileHandle closeFile];
-
-	 fileHandle = nil;
-}
-
 - (id)_networkName:(TVCLogScriptEventSinkContext *)context
 {
-	return [[context associatedClient] networkName];
+	return context.associatedClient.networkName;
 }
 
 - (id)_nicknameColorStyleHash:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *inputString = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
@@ -693,30 +620,30 @@
 
 - (void)_nicknameDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
-	[[context webViewPolicy] nicknameDoubleClicked];
+	[context.webViewPolicy nicknameDoubleClicked];
 }
 
 - (void)_printDebugInformation:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[[context associatedClient] printDebugInformation:message channel:[context associatedChannel]];
+	[context.associatedClient printDebugInformation:message channel:context.associatedChannel];
 }
 
 - (void)_printDebugInformationToConsole:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[[context associatedClient] printDebugInformationToConsole:message];
+	[context.associatedClient printDebugInformationToConsole:message];
 }
 
 - (id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *methodName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
@@ -728,13 +655,13 @@
 	if (methodSignature == nil) {
 		NSString *errorMessage = [NSString stringWithFormat:@"Unknown method named: '%@'", methodName];
 
-		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
 
 		return nil;
-	} else if (strcmp([methodSignature methodReturnType], @encode(void)) == 0) {
+	} else if (strcmp(methodSignature.methodReturnType, @encode(void)) == 0) {
 		NSString *errorMessage = [NSString stringWithFormat:@"Method named '%@' does not return a value", methodName];
 
-		[self _throwJavaScriptException:errorMessage inWebView:[context webView]];
+		[self _throwJavaScriptException:errorMessage inWebView:context.webView];
 
 		return nil;
 	}
@@ -742,9 +669,9 @@
 	NSInvocation *invocation =
 	[NSInvocation invocationWithMethodSignature:methodSignature];
 
-	[invocation setTarget:[TPCPreferences class]];
+	invocation.target = [TPCPreferences class];
 
-	[invocation setSelector:methodSelector];
+	invocation.selector = methodSelector;
 
 	[invocation invoke];
 
@@ -752,18 +679,18 @@
 
 	[invocation getReturnValue:&returnValue];
 
-	return [NSValue valueWithPrimitive:returnValue withType:[methodSignature methodReturnType]];
+	return [NSValue valueWithPrimitive:returnValue withType:methodSignature.methodReturnType];
 }
 
 - (void)_sendPluginPayload:(TVCLogScriptEventSinkContext *)context
 {
 	if ([sharedPluginManager() supportsFeature:THOPluginItemSupportsWebViewJavaScriptPayloads] == NO) {
-		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads" inWebView:[context webView]];
+		[self _throwJavaScriptException:@"There are no plugins loaded that support JavaScritp payloads" inWebView:context.webView];
 
 		return;
 	}
 
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *payloadLabel = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
@@ -772,65 +699,65 @@
 	THOPluginWebViewJavaScriptPayloadConcreteObject *payloadObject =
 	[THOPluginWebViewJavaScriptPayloadConcreteObject new];
 
-	[payloadObject setPayloadLabel:payloadLabel];
-	[payloadObject setPayloadContents:payloadContents];
+	payloadObject.payloadLabel = payloadLabel;
+	payloadObject.payloadContents = payloadContents;
 
-	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:[context viewController]];
+	[THOPluginDispatcher didReceiveJavaScriptPayload:payloadObject fromViewController:context.viewController];
 }
 
 - (id)_serverAddress:(TVCLogScriptEventSinkContext *)context
 {
-	return [[context associatedClient] networkAddress];
+	return context.associatedClient.networkAddress;
 }
 
 - (id)_serverChannelCount:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context associatedClient] channelCount]);
+	return @(context.associatedClient.channelCount);
 }
 
 - (id)_serverIsConnected:(TVCLogScriptEventSinkContext *)context
 {
-	return @([[context associatedClient] isLoggedIn]);
+	return @(context.associatedClient.isLoggedIn);
 }
 
 - (void)_setChannelName:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[[context webViewPolicy] setChannelName:value];
+	context.webViewPolicy.channelName = value;
 }
 
 - (void)_setNickname:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[[context webViewPolicy] setNickname:value];
+	context.webViewPolicy.nickname = value;
 }
 
 - (void)_setSelection:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *selection = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	if (selection && [selection length] == 0) {
+	if (selection && selection.length == 0) {
 		selection = nil;
 	}
 
-	[[context webView] setSelection:selection];
+	context.webView.selection = selection;
 }
 
 - (void)_setURLAddress:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *value = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	[[context webViewPolicy] setAnchorURL:value];
+	context.webViewPolicy.anchorURL = value;
 }
 
 - (id)_sidebarInversionIsEnabled:(TVCLogScriptEventSinkContext *)context
@@ -840,7 +767,7 @@
 
 - (id)_styleSettingsRetrieveValue:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *keyName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
@@ -849,7 +776,7 @@
 	id result = [themeSettings() styleSettingsRetrieveValueForKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue inWebView:[context webView]];
+		[self _throwJavaScriptException:errorValue inWebView:context.webView];
 	}
 
 	return result;
@@ -857,7 +784,7 @@
 
 - (id)_styleSettingsSetValue:(TVCLogScriptEventSinkContext *)context
 {
-	NSArray *arguments = [context arguments];
+	NSArray *arguments = context.arguments;
 
 	NSString *keyName = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
@@ -868,7 +795,7 @@
 	BOOL result = [themeSettings() styleSettingsSetValue:keyValue forKey:keyName error:&errorValue];
 
 	if (errorValue) {
-		[self _throwJavaScriptException:errorValue inWebView:[context webView]];
+		[self _throwJavaScriptException:errorValue inWebView:context.webView];
 	}
 
 	if (result) {
@@ -880,31 +807,35 @@
 
 - (void)_topicBarDoubleClicked:(TVCLogScriptEventSinkContext *)context
 {
-	[[context webViewPolicy] topicBarDoubleClicked];
+	[context.webViewPolicy topicBarDoubleClicked];
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCLogScriptEventSinkContext
 
 - (TVCLogController *)viewController
 {
-	return [[self webView] viewController];
+	return self.webView.viewController;
 }
 
 - (TVCLogPolicy *)webViewPolicy
 {
-	return [[self webView] webViewPolicy];
+	return self.webView.webViewPolicy;
 }
 
 - (IRCClient *)associatedClient
 {
-	return [[self viewController] associatedClient];
+	return self.viewController.associatedClient;
 }
 
-- (IRCChannel *)associatedChannel
+- (nullable IRCChannel *)associatedChannel
 {
-	return [[self viewController] associatedChannel];
+	return self.viewController.associatedChannel;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
