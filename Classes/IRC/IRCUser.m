@@ -168,7 +168,7 @@
 	if (highestRank) {
 		return [self.supportInfo userModePrefixSymbolWithMode:highestRank];
 	} else {
-		return nil;
+		return NSStringEmptyPlaceholder;
 	}
 }
 

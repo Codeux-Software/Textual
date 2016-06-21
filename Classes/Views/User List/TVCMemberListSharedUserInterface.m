@@ -64,7 +64,11 @@
 
 - (NSString *)keyForRetrievingCachedUserMarkBadgeWithSymbol:(NSString *)mark rank:(IRCUserRank)rank
 {
-	return [NSString stringWithFormat:@"%lu > %@", rank, mark];
+	if ([mark length] == 0) {
+		return [NSString stringWithFormat:@"%lu > (No Rank)", rank];
+	} else {
+		return [NSString stringWithFormat:@"%lu > %@", rank, mark];
+	}
 }
 
 - (NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)mark rank:(IRCUserRank)rank
