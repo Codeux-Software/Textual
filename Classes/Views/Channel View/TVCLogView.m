@@ -36,6 +36,8 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCLogView ()
 @property (nonatomic, strong) id webViewBacking;
 @property (nonatomic, readwrite, assign) BOOL isUsingWebKit2;
@@ -45,10 +47,14 @@
 
 NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.codeux.com/textual/Inline-Media-Scanner-User-Agent.kb)";
 
+ClassWithDesignatedInitializerInitMethod
+
 - (instancetype)initWithViewController:(TVCLogController *)viewController
 {
+	NSParameterAssert(viewController != nil);
+
 	if ((self = [super init])) {
-		[self setViewController:viewController];
+		self.viewController = viewController;
 
 		[self constructWebView];
 
@@ -67,7 +73,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 {
 	BOOL isUsingWebKit2 = [TPCPreferences webKit2Enabled];
 
-	[self setIsUsingWebKit2:isUsingWebKit2];
+	self.isUsingWebKit2 = isUsingWebKit2;
 
 	if (isUsingWebKit2) {
 		self.webViewBacking = [[TVCLogViewInternalWK2 alloc] initWithHostView:self];
@@ -79,13 +85,13 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 - (void)copyContentString
 {
 	[self stringByEvaluatingFunction:@"Textual.documentHTML" completionHandler:^(NSString *result) {
-		[RZPasteboard() setStringContent:result];
+		RZPasteboard().stringContent = result;
 	}];
 }
 
 - (BOOL)hasSelection
 {
-	NSString *selection = [self selection];
+	NSString *selection = self.selection;
 
 	return (NSObjectIsEmpty(selection) == NO);
 }
@@ -99,19 +105,22 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 {
 	// Printing is probably broken: <http://www.openradar.me/20217859>
 
-	[[self webView] print:nil];
+	[self.webView print:nil];
 }
 
 - (BOOL)keyDown:(NSEvent *)e inView:(NSView *)view
 {
-	NSUInteger m = [e modifierFlags];
+	NSParameterAssert(e != nil);
+	NSParameterAssert(view != nil);
+
+	NSUInteger m = e.modifierFlags;
 
 	BOOL cmd = ((m & NSCommandKeyMask) == NSCommandKeyMask);
 	BOOL alt = ((m & NSAlternateKeyMask) == NSAlternateKeyMask);
 	BOOL ctrl = ((m & NSControlKeyMask) == NSControlKeyMask);
 
 	if (ctrl == NO && alt == NO && cmd == NO) {
-		[[self viewController] logViewWebViewKeyDown:e];
+		[self.viewController logViewWebViewKeyDown:e];
 
 		return YES;
 	}
@@ -121,12 +130,14 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
+	NSParameterAssert(sender != nil);
+
 	NSURL *fileURL = [NSURL URLFromPasteboard:[sender draggingPasteboard]];
 
 	if (fileURL) {
-		NSString *filename = [fileURL relativePath];
+		NSString *filename = fileURL.relativePath;
 
-		[[self viewController] logViewWebViewRecievedDropWithFile:filename];
+		[self.viewController logViewWebViewRecievedDropWithFile:filename];
 	}
 
 	return NO;
@@ -134,42 +145,47 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)informDelegateWebViewFinishedLoading
 {
-	[[self viewController] logViewWebViewFinishedLoading];
+	[self.viewController logViewWebViewFinishedLoading];
 }
 
 - (void)informDelegateWebViewClosedUnexpectedly
 {
-	[[self viewController] logViewWebViewClosedUnexpectedly];
+	[self.viewController logViewWebViewClosedUnexpectedly];
 }
 
 - (TVCLogPolicy *)webViewPolicy
 {
-	return [[self webViewBacking] webViewPolicy];
+	return [self.webViewBacking webViewPolicy];
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCLogView (TVCLogViewBackingProxy)
 
 - (NSView *)webView
 {
-	return [self webViewBacking];
+	return self.webViewBacking;
 }
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
-	[[self webViewBacking] emptyCaches:^{
+	[self.webViewBacking emptyCaches:^{
 		[self _loadHTMLString:string baseURL:baseURL];
 	}];
 }
 
 - (void)_loadHTMLString:(NSString *)string baseURL:(NSURL *)baseURL
 {
-	if ([self isUsingWebKit2])
-	{
-		WKWebView *webView = [self webViewBacking];
+	NSParameterAssert(string != nil);
+	NSParameterAssert(baseURL != nil);
 
-		if ([themeController() usesTemporaryPath]) {
+	if (self.isUsingWebKit2)
+	{
+		WKWebView *webView = self.webViewBacking;
+
+		if (themeController().usesTemporaryPath) {
 			NSString *filename = [NSString stringWithFormat:@"%@.html", [NSString stringWithUUID]];
 
 			NSURL *filePath = [baseURL URLByAppendingPathComponent:filename];
@@ -187,7 +203,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 	else
 	{
-		WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
+		WebFrame *webViewFrame = [self.webViewBacking mainFrame];
 
 		[webViewFrame loadHTMLString:string baseURL:baseURL];
 	}
@@ -195,12 +211,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)stopLoading
 {
-	if ([self isUsingWebKit2]) {
-		WKWebView *webView = [self webViewBacking];
+	if (self.isUsingWebKit2) {
+		WKWebView *webView = self.webViewBacking;
 
 		[webView stopLoading];
 	} else {
-		WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
+		WebFrame *webViewFrame = [self.webViewBacking mainFrame];
 
 		[webViewFrame stopLoading];
 	}
@@ -208,25 +224,33 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
-	[[self webViewBacking] findString:searchString movingForward:movingForward];
+	NSParameterAssert(searchString != nil);
+
+	[self.webViewBacking findString:searchString movingForward:movingForward];
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCLogView (TVCLogViewJavaScriptHandler)
 
 - (void)evaluateJavaScript:(NSString *)code
 {
-	[[self webViewBacking] _t_evaluateJavaScript:code completionHandler:nil];
+	[self evaluateJavaScript:code completionHandler:nil];
 }
 
-- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable result))completionHandler
 {
-	[[self webViewBacking] _t_evaluateJavaScript:code completionHandler:completionHandler];
+	NSParameterAssert(code != nil);
+
+	[self.webViewBacking _t_evaluateJavaScript:code completionHandler:completionHandler];
 }
 
 + (NSString *)descriptionOfJavaScriptResult:(id)scriptResult
 {
+	NSParameterAssert(scriptResult != nil);
+
 	if ([scriptResult isKindOfClass:[NSString class]])
 	{
 		return scriptResult;
@@ -260,6 +284,8 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 + (NSString *)escapeJavaScriptString:(NSString *)string
 {
+	NSParameterAssert(string != nil);
+
 	NSString *escapedString = string;
 
 	escapedString = [escapedString stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
@@ -273,24 +299,26 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	[self evaluateFunction:function withArguments:nil completionHandler:nil];
 }
 
-- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments
+- (void)evaluateFunction:(NSString *)function withArguments:(nullable NSArray *)arguments
 {
 	[self evaluateFunction:function withArguments:arguments completionHandler:nil];
 }
 
-- (void)evaluateFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(id))completionHandler
+- (void)evaluateFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(id _Nullable result))completionHandler
 {
+	NSParameterAssert(function != nil);
+
 	NSString *compiledScript = [self compiledFunctionCall:function withArguments:arguments];
 
 	[self evaluateJavaScript:compiledScript completionHandler:completionHandler];
 }
 
-- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(BOOL))completionHandler
+- (void)booleanByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(BOOL result))completionHandler
 {
 	[self booleanByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(BOOL))completionHandler
+- (void)booleanByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(BOOL result))completionHandler
 {
 	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		BOOL resultBool = NO;
@@ -305,12 +333,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSString *))completionHandler
+- (void)stringByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSString * _Nullable result))completionHandler
 {
 	[self stringByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSString *))completionHandler
+- (void)stringByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSString * _Nullable result))completionHandler
 {
 	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSString *resultString = nil;
@@ -325,12 +353,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSArray *))completionHandler
+- (void)arrayByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSArray * _Nullable result))completionHandler
 {
 	[self arrayByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSArray *))completionHandler
+- (void)arrayByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSArray * _Nullable result))completionHandler
 {
 	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSArray *resultArray = nil;
@@ -345,12 +373,12 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}];
 }
 
-- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^)(NSDictionary *))completionHandler
+- (void)dictionaryByEvaluatingFunction:(NSString *)function completionHandler:(void (^ _Nullable)(NSDictionary<NSString *, id> * _Nullable result))completionHandler
 {
 	[self dictionaryByEvaluatingFunction:function withArguments:nil completionHandler:completionHandler];
 }
 
-- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(NSArray *)arguments completionHandler:(void (^)(NSDictionary *))completionHandler
+- (void)dictionaryByEvaluatingFunction:(NSString *)function withArguments:(nullable NSArray *)arguments completionHandler:(void (^ _Nullable)(NSDictionary<NSString *, id> * _Nullable result))completionHandler
 {
 	[self evaluateFunction:function withArguments:arguments completionHandler:^(id result) {
 		NSDictionary *resultDictionary = nil;
@@ -367,15 +395,19 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 @end
 
+#pragma mark -
+
 @implementation TVCLogView (TVCLogViewJavaScriptHandlerPrivate)
 
-- (NSString *)compileJavaScriptDictionaryArgument:(NSDictionary *)objects
+- (NSString *)compileJavaScriptDictionaryArgument:(NSDictionary<NSString *, id> *)objects
 {
+	NSParameterAssert(objects != nil);
+
 	NSMutableString *compiledScript = [NSMutableString string];
 
 	[compiledScript appendString:@"{"];
 
-	NSInteger lastIndex = ([objects count] - 1);
+	NSInteger lastIndex = (objects.count - 1);
 
 	__block NSInteger currentIndex = 0;
 
@@ -408,11 +440,13 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)compileJavaScriptArrayArgument:(NSArray *)objects
 {
+	NSParameterAssert(objects != nil);
+
 	NSMutableString *compiledScript = [NSMutableString string];
 
 	[compiledScript appendString:@"["];
 
-	NSInteger lastIndex = ([objects count] - 1);
+	NSInteger lastIndex = (objects.count - 1);
 
 	[objects enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 		NSString *objectString = [self compileJavaScriptGenericArgument:object];
@@ -431,6 +465,8 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (NSString *)compileJavaScriptGenericArgument:(id)object
 {
+	NSParameterAssert(object != nil);
+
 	if ([object isKindOfClass:[NSString class]])
 	{
 		NSString *objectEscaped = [TVCLogView escapeJavaScriptString:object];
@@ -467,14 +503,16 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 	}
 }
 
-- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(NSArray *)arguments
+- (NSString *)compiledFunctionCall:(NSString *)function withArguments:(nullable NSArray *)arguments
 {
+	NSParameterAssert(function != nil);
+
 	NSMutableString *compiledScript = [NSMutableString string];
 
-	NSInteger argumentCount = 0;
+	NSUInteger argumentCount = 0;
 
 	if ( arguments) {
-		argumentCount = [arguments count];
+		argumentCount = arguments.count;
 
 		[arguments enumerateObjectsUsingBlock:^(id object, NSUInteger objectIndex, BOOL *stop)
 		 {
@@ -486,7 +524,7 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 	[compiledScript appendFormat:@"%@(", function];
 
-	for (NSInteger i = 0; i < argumentCount; i++) {
+	for (NSUInteger i = 0; i < argumentCount; i++) {
 		if (i == (argumentCount - 1)) {
 			[compiledScript appendFormat:@"_argument_%ld_", i];
 		} else {
@@ -501,22 +539,18 @@ NSString * const TVCLogViewCommonUserAgentString = @"Textual/1.0 (+https://help.
 
 - (id)webScriptObjectToCommon:(WebScriptObject *)object
 {
-	/* Required sanity checks */
-	if ([self isUsingWebKit2]) {
-		NSAssert(NO, @"Cannot use feature when WebKit2 is in use");
-	}
+	NSParameterAssert(object != nil);
 
-	if (object == nil) {
-		return nil;
-	}
+	NSAssert((self.isUsingWebKit2 == NO),
+		@"Cannot use feature when WebKit2 is in use");
 
-	/* Context information */
-	WebFrame *webViewFrame = [[self webViewBacking] mainFrame];
+	WebFrame *webViewFrame = [self.webViewBacking mainFrame];
 
-	JSGlobalContextRef jsContextRef = [webViewFrame globalContext];
+	JSGlobalContextRef jsContextRef = webViewFrame.globalContext;
 
-	/* Perform conversion */
 	return [object toCommonInContext:jsContextRef];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

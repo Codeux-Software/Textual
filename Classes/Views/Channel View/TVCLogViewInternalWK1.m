@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TVCLogObjectsPrivate.h"
-
 #include <objc/message.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogViewInternalWK1 ()
 @property (nonatomic, readwrite, strong) TVCLogPolicy *webViewPolicy;
@@ -53,10 +53,10 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 + (void)initialize
 {
-	 _sharedWebViewPreferences = [[WebPreferences alloc] initWithIdentifier:@"TVCLogViewInternalWK1SharedWebPreferencesObject"];
+	_sharedWebViewPreferences = [[WebPreferences alloc] initWithIdentifier:@"TVCLogViewInternalWK1SharedWebPreferencesObject"];
 
-	[_sharedWebViewPreferences setCacheModel:WebCacheModelDocumentViewer];
-	[_sharedWebViewPreferences setUsesPageCache:NO];
+	_sharedWebViewPreferences.cacheModel = WebCacheModelDocumentViewer;
+	_sharedWebViewPreferences.usesPageCache = NO;
 
 	if ([_sharedWebViewPreferences respondsToSelector:@selector(setShouldRespectImageOrientation:)]) {
 		(void)objc_msgSend(_sharedWebViewPreferences, @selector(setShouldRespectImageOrientation:), YES);
@@ -76,39 +76,41 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 - (void)constructWebViewWithHostView:(TVCLogView *)hostView
 {
-	TVCLogScriptEventSink *webViewScriptSink = [TVCLogScriptEventSink new];
-	[webViewScriptSink setParentView:hostView];
+	NSParameterAssert(hostView != nil);
 
-	TVCLogPolicy *webViewPolicy = [TVCLogPolicy new];
-	[webViewPolicy setParentView:hostView];
+	self.t_parentView = hostView;
 
-	[self setT_parentView:hostView];
+	TVCLogScriptEventSink *webViewScriptSink =
+	[[TVCLogScriptEventSink alloc] initWithWebView:hostView];
 
-	[self setWebViewPolicy:webViewPolicy];
-	[self setWebViewScriptSink:webViewScriptSink];
+	TVCLogPolicy *webViewPolicy =
+	[[TVCLogPolicy alloc] initWithWebView:hostView];
 
-	[self setPreferences:_sharedWebViewPreferences];
+	self.webViewPolicy = webViewPolicy;
+	self.webViewScriptSink = webViewScriptSink;
 
-	[self setTranslatesAutoresizingMaskIntoConstraints:NO];
+	self.preferences = _sharedWebViewPreferences;
 
-	[self setCustomUserAgent:TVCLogViewCommonUserAgentString];
+	self.translatesAutoresizingMaskIntoConstraints = NO;
 
-	[self setFrameLoadDelegate:self];
-	[self setPolicyDelegate:self];
-	[self setResourceLoadDelegate:self];
-	[self setUIDelegate:self];
+	self.customUserAgent = TVCLogViewCommonUserAgentString;
 
-	[self setShouldUpdateWhileOffscreen:NO];
+	self.frameLoadDelegate = (id)self;
+	self.policyDelegate = (id)self;
+	self.resourceLoadDelegate = (id)self;
+	self.UIDelegate = (id)self;
+
+	self.shouldUpdateWhileOffscreen = NO;
 
 	[self updateBackgroundColor];
 }
 
 - (void)dealloc
 {
-	[self setFrameLoadDelegate:nil];
-	[self setPolicyDelegate:nil];
-	[self setResourceLoadDelegate:nil];
-	[self setUIDelegate:nil];
+	self.frameLoadDelegate = nil;
+	self.policyDelegate = nil;
+	self.resourceLoadDelegate = nil;
+	self.UIDelegate = nil;
 
 	[self emptyCaches:nil];
 }
@@ -118,20 +120,22 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 - (void)keyDown:(NSEvent *)e
 {
-	if ([[self t_parentView] keyDown:e inView:self] == NO) {
-		[super keyDown:e];
+	if ([self.t_parentView keyDown:e inView:self]) {
+		return;
 	}
+
+	[super keyDown:e];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-	return [[self t_parentView] performDragOperation:sender];
+	return [self.t_parentView performDragOperation:sender];
 }
 
 #pragma mark -
 #pragma mark Utilities
 
-- (void)emptyCaches:(void (^)(void))completionHandler
+- (void)emptyCaches:(void (^ _Nullable)(void))completionHandler
 {
 	if (completionHandler) {
 		completionHandler();
@@ -140,7 +144,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 
 - (void)updateBackgroundColor
 {
-	NSColor *windowColor = [themeSettings() underlyingWindowColor];
+	NSColor *windowColor = themeSettings().underlyingWindowColor;
 
 	if (windowColor == nil) {
 		windowColor = [NSColor blackColor];
@@ -152,12 +156,14 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 - (void)maybeInformDelegateWebViewFinishedLoading
 {
 	if (self.t_viewHasLoaded && self.t_viewHasScriptObject) {
-		[[self t_parentView] performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
+		[self.t_parentView performSelector:@selector(informDelegateWebViewFinishedLoading) withObject:nil afterDelay:1.2];
 	}
 }
 
 - (void)findString:(NSString *)searchString movingForward:(BOOL)movingForward
 {
+	NSParameterAssert(searchString != nil);
+
 	[self searchFor:searchString direction:movingForward caseSensitive:NO wrap:YES];
 }
 
@@ -172,9 +178,11 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^)(id))completionHandler
+- (void)_t_evaluateJavaScript:(NSString *)code completionHandler:(void (^ _Nullable)(id _Nullable))completionHandler
 {
-	WebScriptObject *scriptObject = [self windowScriptObject];
+	NSParameterAssert(code != nil);
+
+	WebScriptObject *scriptObject = self.windowScriptObject;
 
 	if (scriptObject == nil || [scriptObject isKindOfClass:[WebUndefined class]]) {
 		if (completionHandler) {
@@ -194,7 +202,7 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 		}
 		else if ([scriptResult isKindOfClass:[WebScriptObject class]])
 		{
-			scriptResult = [[self t_parentView] webScriptObjectToCommon:scriptResult];
+			scriptResult = [self.t_parentView webScriptObjectToCommon:scriptResult];
 		}
 	}
 
@@ -206,40 +214,48 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 #pragma mark -
 #pragma mark Web View Delegate
 
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray *)webView:(WebView *)webView contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	return [[self webViewPolicy] webView:sender contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
+	NSParameterAssert(webView == self);
+
+	return [self.webViewPolicy webView:webView contextMenuItemsForElement:element defaultMenuItems:defaultMenuItems];
 }
 
 - (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
 {
-	return [[self webViewPolicy] webView:webView dragDestinationActionMaskForDraggingInfo:draggingInfo];
+	NSParameterAssert(webView == self);
+
+	return [self.webViewPolicy webView:webView dragDestinationActionMaskForDraggingInfo:draggingInfo];
 }
 
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-	[[self webViewPolicy] webView:webView decidePolicyForNavigationAction:actionInformation request:request frame:frame decisionListener:listener];
+	NSParameterAssert(webView == self);
+
+	[self.webViewPolicy webView:webView decidePolicyForNavigationAction:actionInformation request:request frame:frame decisionListener:listener];
 }
 
-- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+- (void)webView:(WebView *)webView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
 {
-	[[self webViewPolicy] webView:sender resource:identifier didReceiveAuthenticationChallenge:challenge fromDataSource:dataSource];
+	NSParameterAssert(webView == self);
+
+	[self.webViewPolicy webView:webView resource:identifier didReceiveAuthenticationChallenge:challenge fromDataSource:dataSource];
 }
 
 - (void)webView:(WebView *)webView didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame
 {
-	NSAssertReturn(self == webView);
+	NSParameterAssert(webView == self);
 
 	self.t_viewHasScriptObject = YES;
 
-	[windowObject setValue:[self webViewScriptSink] forKey:@"TextualScriptSink"];
+	[windowObject setValue:self.webViewScriptSink forKey:@"TextualScriptSink"];
 
 	[self maybeInformDelegateWebViewFinishedLoading];
 }
 
 - (void)webView:(WebView *)webView didFinishLoadForFrame:(WebFrame *)frame
 {
-	NSAssertReturn(self == webView);
+	NSParameterAssert(webView == self);
 
 	self.t_viewHasLoaded = YES;
 
@@ -249,3 +265,5 @@ static WebPreferences *_sharedWebViewPreferences = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
