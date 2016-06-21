@@ -35,21 +35,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol TVCImageURLoaderDelegate;
 
-@interface TVCImageURLoader : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
-@property (nonatomic, unsafe_unretained) id <TVCImageURLoaderDelegate> delegate;
+@interface TVCImageURLoader : NSObject
+@property (nonatomic, weak, nullable) id <TVCImageURLoaderDelegate> delegate;
 
 + (void)invalidateInternalCache;
 
-- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID;
+- (void)assesURL:(NSString *)baseURL withId:(NSString *)uniqueId;
 @end
 
 @protocol TVCImageURLoaderDelegate <NSObject>
 @required
 
-- (void)isSafeToPresentImageWithID:(NSString *)uniqueID;
-- (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID;
+- (void)isSafeToPresentImageWithId:(NSString *)uniqueId;
+- (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId;
 @end
+
+NS_ASSUME_NONNULL_END

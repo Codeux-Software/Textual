@@ -37,8 +37,12 @@
 
 #import "TextualApplication.h"
 
-@interface TVCImageURLParser : NSObject
-+ (NSArray *)validImageContentTypes;
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSString *)imageURLFromBase:(NSString *)url;
+@interface TVCImageURLParser : NSObject
++ (NSArray<NSString *> *)validImageContentTypes;
+
++ (nullable NSString *)imageURLFromBase:(NSString *)url;
 @end
+
+NS_ASSUME_NONNULL_END
