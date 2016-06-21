@@ -41,23 +41,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCHighlightMatchCondition
 
-- (void)populateDefaultsPostflight
-{
-	NSAssert((self->_objectInitialized == NO),
-		@"Object is already initialized");
-
-	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
-}
-
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)init
 {
-	return [self initWithDictionary:@{}];
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		if ([self isMutable] == NO) {
+			DESIGNATED_INITIALIZER_EXCEPTION
+		}
+
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
 {
-	NSAssert((self->_objectInitialized == NO),
-		@"Object is already initialized");
+	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
 		[self populateDictionaryValues:dic];
@@ -76,8 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(dic != nil);
 
-	NSAssert((self->_objectInitialized == NO),
-		@"Object is already initialized");
+	ObjectIsAlreadyInitializedAssert
 
 	[dic assignBoolTo:&self->_matchIsExcluded forKey:@"matchIsExcluded"];
 
@@ -86,6 +90,15 @@ NS_ASSUME_NONNULL_BEGIN
 	[dic assignStringTo:&self->_uniqueIdentifier forKey:@"uniqueIdentifier"];
 
 	NSParameterAssert(self->_matchKeyword.length > 0);
+}
+
+- (void)populateDefaultsPostflight
+{
+	ObjectIsAlreadyInitializedAssert
+
+	SetVariableIfNil(self->_matchKeyword, NSStringEmptyPlaceholder)
+
+	SetVariableIfNil(self->_uniqueIdentifier, [NSString stringWithUUID])
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
@@ -98,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[dic setBool:self.matchIsExcluded forKey:@"matchIsExcluded"];
 
-	return dic.copy;
+	return [dic copy];
 }
 
 - (id)copyWithZone:(nullable NSZone *)zone
@@ -147,14 +160,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMatchChannelId:(nullable NSString *)matchChannelId
 {
 	if (self->_matchChannelId != matchChannelId) {
-		self->_matchChannelId = matchChannelId.copy;
+		self->_matchChannelId = [matchChannelId copy];
 	}
 }
 
 - (void)setMatchKeyword:(NSString *)matchKeyword
 {
+	NSParameterAssert(matchKeyword != nil);
+
 	if (self->_matchKeyword != matchKeyword) {
-		self->_matchKeyword = matchKeyword.copy;
+		self->_matchKeyword = [matchKeyword copy];
 	}
 }
 
