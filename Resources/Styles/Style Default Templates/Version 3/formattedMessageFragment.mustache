@@ -5,7 +5,9 @@
 			coloroverride="true"
 		{{/nicknameColorStyleOverride}}
 
+		{{^ isEmpty(inlineNicknameColorStyle) }}
 		style="color: {{inlineNicknameColorStyle}};"
+		{{^ isEmpty(inlineNicknameColorStyle) }}
 	{{^nicknameColorHashingIsStyleBased}}
 		colornumber="{{inlineNicknameColorNumber}}"
 	{{/nicknameColorHashingIsStyleBased}}>
