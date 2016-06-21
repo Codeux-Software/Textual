@@ -46,12 +46,12 @@ TEXTUAL_EXTERN NSString * const TVCLogLineNoticeNicknameFormat;
 
 TEXTUAL_EXTERN NSString * const TVCLogLineSpecialNoticeMessageFormat;
 
-TEXTUAL_EXTERN NSString * const TVCLogLineDefaultRawCommandValue;
+TEXTUAL_EXTERN NSString * const TVCLogLineDefaultCommandValue;
 
 typedef NS_ENUM(NSUInteger, TVCLogLineType) {
 	TVCLogLineUndefinedType					= 0,
 	TVCLogLineActionType,
-	TVCLogLineActionNoHighlightType, // Used internally, avoid
+	TVCLogLineActionNoHighlightType,
 	TVCLogLineCTCPType,
 	TVCLogLineCTCPQueryType,
 	TVCLogLineCTCPReplyType,
@@ -67,51 +67,68 @@ typedef NS_ENUM(NSUInteger, TVCLogLineType) {
 	TVCLogLineOffTheRecordEncryptionStatusType,
 	TVCLogLinePartType,
 	TVCLogLinePrivateMessageType,
-	TVCLogLinePrivateMessageNoHighlightType, // Used internally, avoid
+	TVCLogLinePrivateMessageNoHighlightType,
 	TVCLogLineQuitType,
 	TVCLogLineTopicType,
 	TVCLogLineWebsiteType,
 };
 
 typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
-	TVCLogLineMemberNormalType,
+	TVCLogLineMemberNormalType = 0,
 	TVCLogLineMemberLocalUserType,
 };
 
-#define IRCCommandFromLineType(t)		[TVCLogLine lineTypeString:t]
+#define IRCCommandFromLineType(t)		[TVCLogLine stringForLineType:t]
 
-@interface TVCLogLine : NSObject
-@property (nonatomic, assign) BOOL isEncrypted;
-@property (nonatomic, assign) BOOL isHistoric; /* Identifies a line restored from previous session. */
-@property (nonatomic, copy) NSDate *receivedAt;
+#pragma mark -
+#pragma mark Immutable Object
+
+@interface TVCLogLine : NSObject <NSCopying>
+@property (readonly) BOOL isEncrypted;
+@property (readonly) BOOL isHistoric; /* Identifies a line restored from previous session */
+@property (readonly, copy) NSDate *receivedAt;
 @property (readonly, copy) NSString *nicknameColorStyle;
-@property (readonly, assign) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
-@property (nonatomic, copy, nullable) NSString *nickname;
-@property (nonatomic, copy) NSString *messageBody;
-@property (nonatomic, copy) NSString *rawCommand; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
-@property (nonatomic, assign) TVCLogLineType lineType;
-@property (nonatomic, assign) TVCLogLineMemberType memberType;
-@property (nonatomic, copy, nullable) NSArray *highlightKeywords;
-@property (nonatomic, copy, nullable) NSArray *excludeKeywords;
+@property (readonly) BOOL nicknameColorStyleOverride; // YES if the nicknameColorStyle was set by the user
+@property (readonly, copy, nullable) NSString *nickname;
+@property (readonly, copy) NSString *messageBody;
+@property (readonly, copy) NSString *command; // Can be the actual command (PRIVMSG, NOTICE, etc.) or the raw numeric (001, 002, etc.)
+@property (readonly, copy) NSString *uniqueIdentifier;
+@property (readonly) TVCLogLineType lineType;
+@property (readonly) TVCLogLineMemberType memberType;
+@property (readonly, copy, nullable) NSArray<NSString *> *highlightKeywords;
+@property (readonly, copy, nullable) NSArray<NSString *> *excludeKeywords;
 
-- (TVCLogLine *)initWithRawJSONData:(NSData *)data; // This automatically calls the appropriate initWithJSON... call.
-- (TVCLogLine *)initWithJSONRepresentation:(NSDictionary *)dic;
+- (nullable TVCLogLine *)initWithJSONData:(NSData *)data NS_DESIGNATED_INITIALIZER;
+- (TVCLogLine *)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 
-@property (readonly, copy) NSData *jsonDictionaryRepresentation;
+@property (readonly, copy) NSData *jsonRepresentation;
 
 @property (readonly, copy) NSString *formattedTimestamp;
 
-- (NSString *)formattedNickname:(IRCChannel *)inChannel;
+@property (readonly, copy) NSString *formattedNickname;
+- (nullable NSString *)formattedNicknameInChannel:(nullable IRCChannel *)channel;
 
-@property (readonly, copy) NSString *lineTypeString;
-@property (readonly, copy, nullable) NSString *memberTypeString;
+@property (readonly, copy, nullable) NSString *lineTypeString;
+@property (readonly, copy) NSString *memberTypeString;
 
-- (void)computeNicknameColorStyle;
++ (nullable NSString *)stringForLineType:(TVCLogLineType)type;
++ (NSString *)stringForMemberType:(TVCLogLineMemberType)type;
+@end
 
-- (NSString *)renderedBodyForTranscriptLogInChannel:(IRCChannel *)channel;
+#pragma mark -
+#pragma mark Mutable Object
 
-+ (nullable NSString *)lineTypeString:(TVCLogLineType)type;
-+ (NSString *)memberTypeString:(TVCLogLineMemberType)type;
+@interface TVCLogLineMutable : TVCLogLine
+@property (nonatomic, assign, readwrite) BOOL isEncrypted;
+@property (nonatomic, assign, readwrite) BOOL isHistoric;
+@property (nonatomic, copy, readwrite) NSDate *receivedAt;
+@property (nonatomic, copy, readwrite, nullable) NSString *nickname;
+@property (nonatomic, copy, readwrite) NSString *messageBody;
+@property (nonatomic, copy, readwrite) NSString *command;
+@property (nonatomic, assign, readwrite) TVCLogLineType lineType;
+@property (nonatomic, assign, readwrite) TVCLogLineMemberType memberType;
+@property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *highlightKeywords;
+@property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *excludeKeywords;
 @end
 
 NS_ASSUME_NONNULL_END
