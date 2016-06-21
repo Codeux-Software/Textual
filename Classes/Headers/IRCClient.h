@@ -46,6 +46,7 @@
 #endif
 
 #import "TLOGrowlController.h"
+#import "TVCLogController.h"
 #import "TVCLogLine.h"
 
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
@@ -78,8 +79,6 @@ typedef NS_OPTIONS(NSUInteger, ClientIRCv3SupportedCapacities) {
 	ClientIRCv3SupportedCapacityBatch					= 1 << 16, // YES if batch CAP supported.
 	ClientIRCv3SupportedCapacityZNCCertInfoModule		= 1 << 17  // YES if the ZNC vendor specific CAP supported.
 };
-
-typedef void (^IRCClientPrintToWebViewCompletionBlock)(BOOL isHighlight);
 
 TEXTUAL_EXTERN NSString * const IRCClientConfigurationWasUpdatedNotification;
 TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
@@ -181,7 +180,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)selectFirstChannelInChannelList;
 
-- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine lineNumber:(NSString *)lineNumber;
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine;
 - (void)clearCachedHighlights;
 
 - (BOOL)nicknameIsPrivateZNCUser:(NSString *)nickname;
@@ -318,7 +317,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 		   isEncrypted:(BOOL)isEncrypted											// Is the text encrypted? This flag DOES NOT encrypt it. It informs the WebView if it was in fact encrypted so it can be treated with more privacy.
 			receivedAt:(NSDate *)receivedAt											// The time the message was received at for the timestamp.
 	  referenceMessage:(IRCMessage *)referenceMessage								// Actual IRCMessage to associate with the print job.
-	   completionBlock:(IRCClientPrintToWebViewCompletionBlock)completionBlock;		// A block to call when the actual print occurs.
+	   completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock;		// A block to call when the actual print occurs.
 /* ------ */
 
 - (void)print:(id)chan type:(TVCLogLineType)type nickname:(NSString *)nickname messageBody:(NSString *)messageBody command:(NSString *)command;

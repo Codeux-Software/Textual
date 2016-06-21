@@ -146,7 +146,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			return nil;
 		} else if (NSObjectsAreEqual(returnedValue, returnValue) == NO) {
 //			if ([returnedValue isKindOfClass:[IRCMessageMutable class]]) {
-//				returnValue = returnedValue.copy;
+//				returnValue = [returnedValue copy];
 //			} else {
 				returnValue = returnedValue;
 //			}
@@ -211,7 +211,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			continue;
 		}
 
-		returnValue = returnedValue.copy;
+		returnValue = [returnedValue copy];
 	}
 
 	return returnValue;
@@ -221,7 +221,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 {
 	NSParameterAssert(resource != nil);
 
-	NSString *returnValue = resource;
+	NSString *returnValue = nil;
 
 	for (THOPluginItem *plugin in sharedPluginManager().loadedPlugins)
 	{
@@ -249,7 +249,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			continue;
 		}
 
-		returnValue = returnedValue.copy;
+		returnValue = [returnedValue copy];
 
 		break;
 	}
@@ -449,7 +449,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 TEXTUAL_IGNORE_DEPRECATION_END
 
-	return dictionaryValue.copy;
+	return [dictionaryValue copy];
 }
 
 @end
@@ -473,7 +473,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 TEXTUAL_IGNORE_DEPRECATION_END
 
-	return dictionaryValue.copy;
+	return [dictionaryValue copy];
 }
 
 - (NSDictionary<NSString *, id> *)messageDictionary
@@ -496,7 +496,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 
 TEXTUAL_IGNORE_DEPRECATION_END
 
-	return dictionaryValue.copy;
+	return [dictionaryValue copy];
 }
 
 @end

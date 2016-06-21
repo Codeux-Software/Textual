@@ -119,35 +119,35 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setRenderedMessage:(NSAttributedString *)renderedMessage
 {
 	if (self->_renderedMessage != renderedMessage) {
-		self->_renderedMessage = renderedMessage.copy;
+		self->_renderedMessage = [renderedMessage copy];
 	}
 }
 
 - (void)setClientId:(NSString *)clientId
 {
 	if (self->_clientId != clientId) {
-		self->_clientId = clientId.copy;
+		self->_clientId = [clientId copy];
 	}
 }
 
 - (void)setChannelId:(NSString *)channelId
 {
 	if (self->_channelId != channelId) {
-		self->_channelId = channelId.copy;
+		self->_channelId = [channelId copy];
 	}
 }
 
 - (void)setLineNumber:(NSString *)lineNumber
 {
 	if (self->_lineNumber != lineNumber) {
-		self->_lineNumber = lineNumber.copy;
+		self->_lineNumber = [lineNumber copy];
 	}
 }
 
 - (void)setTimeLogged:(NSDate *)timeLogged
 {
 	if (self->_timeLogged != timeLogged) {
-		self->_timeLogged = timeLogged.copy;
+		self->_timeLogged = [timeLogged copy];
 	}
 }
 

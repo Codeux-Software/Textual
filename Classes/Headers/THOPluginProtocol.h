@@ -446,12 +446,12 @@ TEXTUAL_EXTERN NSString * const THOPluginProtocolDidPostNewMessageKeywordMatchFo
 /**
  * @brief Array of URLs found in the message body
  */
-@property (readonly, copy) NSArray *listOfHyperlinks;
+@property (readonly, copy) NSArray<AHHyperlinkScannerResult *> *listOfHyperlinks;
 
 /**
  * @brief List of users from the channel that appear in the message
  */
-@property (readonly, copy) NSSet<NSString *> *listOfUsers;
+@property (readonly, copy) NSSet<IRCUser *> *listOfUsers;
 
 /**
  * @brief Whether or not a highlight word was matched

@@ -686,18 +686,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 }
 
-- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine lineNumber:(NSString *)lineNumber
+- (void)cacheHighlightInChannel:(IRCChannel *)channel withLogLine:(TVCLogLine *)logLine
 {
 	PointerIsEmptyAssert(channel);
 	PointerIsEmptyAssert(logLine);
-
-	NSObjectIsEmptyAssert(lineNumber);
 	
 	if ([TPCPreferences logHighlights]) {
 		/* Render message. */
 		NSString *messageBody = nil;
 
-		NSString *nicknameBody = [logLine formattedNickname:channel];
+		NSString *nicknameBody = [logLine formattedNicknameInChannel:channel];
 		
 		if ([logLine lineType] == TVCLogLineActionType) {
 			if ([nicknameBody hasSuffix:@":"]) {
@@ -717,7 +715,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[newEntry setClientId:[self uniqueIdentifier]];
 		[newEntry setChannelId:[channel uniqueIdentifier]];
 
-		[newEntry setLineNumber:lineNumber];
+		[newEntry setLineNumber:[logLine uniqueIdentifier]];
 
 		[newEntry setRenderedMessage:renderedMessage];
 
@@ -1946,7 +1944,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	[self sendCTCPQuery:target
 				command:IRCPrivateCommandIndex("ctcp_ping")
-				   text:[NSString stringWithFormat:@"%f", [NSDate unixTime]]];
+				   text:[NSString stringWithFormat:@"%f", [NSDate timeIntervalSince1970]]];
 }
 
 #pragma mark -
@@ -2795,7 +2793,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				
 				[cmd setRawInput:[s string]];
 				
-				[cmd setTimerInterval:([NSDate unixTime] + interval)];
+				[cmd setTimerInterval:([NSDate timeIntervalSince1970] + interval)];
 
 				[self addCommandToCommandQueue:cmd];
 			} else {
@@ -3045,7 +3043,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		{
 			/* Textual Age — Developr mode only. */
 
-			NSTimeInterval timeDiff = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
+			NSTimeInterval timeDiff = [NSDate timeIntervalSinceNow:TXBirthdayReferenceDate];
 
 			NSString *message = TXTLS(@"IRC[1101]", TXHumanReadableTimeInterval(timeDiff, NO, 0));
 
@@ -3060,7 +3058,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5084: // Command: LAGCHECK
 		case 5045: // Command: MYLAG
 		{
-			self.lastLagCheck = [NSDate unixTime];
+			self.lastLagCheck = [NSDate timeIntervalSince1970];
 
 			if ([uppercaseCommand isEqualIgnoringCase:IRCPublicCommandIndex("mylag")]) {
 				self.lagCheckDestinationChannel = [mainWindow() selectedChannelOn:self];
@@ -3510,9 +3508,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		localization = @"IRC[1096]";
 	}
 
-	TVCLogLine *topLine = [TVCLogLine new];
-	TVCLogLine *middleLine = [TVCLogLine new];
-	TVCLogLine *bottomLine = [TVCLogLine new];
+	TVCLogLineMutable *topLine = [TVCLogLineMutable new];
+	TVCLogLineMutable *middleLine = [TVCLogLineMutable new];
+	TVCLogLineMutable *bottomLine = [TVCLogLineMutable new];
 
 	[topLine setMessageBody:NSStringWhitespacePlaceholder];
 	[middleLine setMessageBody:TXTLS(localization)];
@@ -3555,12 +3553,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (NSString *)formatNickname:(NSString *)nickname inChannel:(IRCChannel *)channel withFormat:(NSString *)format
 {
-	/* Validate input. */
-	NSObjectIsEmptyAssertReturn(nickname, nil);
+	NSParameterAssert(nickname != nil);
 
-	PointerIsEmptyAssertReturn(channel, nil);
-
-	/* Define default formats. */
 	if (NSObjectIsEmpty(format)) {
 		format = [themeSettings() themeNicknameFormat];
 	}
@@ -3573,22 +3567,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		format = [TPCPreferences themeNicknameFormatDefault];
 	}
 
-	/* Find mark character. */
-	NSString *mark = NSStringEmptyPlaceholder;
+	NSString *modeSymbol = NSStringEmptyPlaceholder;
 
 	if ([channel isChannel]) {
 		IRCUser *m = [channel findMember:nickname];
 
 		if (m) {
-			NSString *_mark = [m mark];
-			
-			if (_mark) {
-			 	 mark = _mark;
-			}
+			modeSymbol = [m mark];
 		}
 	}
 
-	/* Begin parsing format string. */
 	NSString *formatMarker = @"%";
 	
 	NSString *chunk = nil;
@@ -3599,44 +3587,44 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	NSMutableString *buffer = [NSMutableString new];
 
-	/* Loop for actual scanner. */
 	while ([scanner isAtEnd] == NO) {
-		/* Read any static characters into buffer. */
-		if ([scanner scanUpToString:formatMarker intoString:&chunk] == YES) {
+		if ([scanner scanUpToString:formatMarker intoString:&chunk]) {
 			[buffer appendString:chunk];
 		}
 
-		/* Eat the format marker. */
 		if ([scanner scanString:formatMarker intoString:nil] == NO) {
 			break;
 		}
 
-		/* Read width specifier (may be empty). */
-		NSInteger width = 0;
+		NSInteger paddingWidth = 0;
 
-		[scanner scanInteger:&width];
+		[scanner scanInteger:&paddingWidth];
 
 		/* Read the output type marker. */
 		NSString *oValue = nil;
 
-		if ([scanner scanString:@"@" intoString:nil] == YES) {
-			oValue = mark; // User mode mark.
-		} else if ([scanner scanString:@"n" intoString:nil] == YES) {
-			oValue = nickname; // Actual nickname.
-		} else if ([scanner scanString:formatMarker intoString:nil] == YES) {
-			oValue = formatMarker; // Format marker.
+		if ([scanner scanString:@"@" intoString:nil]) {
+			oValue = modeSymbol; // User mode mark
+		} else if ([scanner scanString:@"n" intoString:nil]) {
+			oValue = nickname; // Actual nickname
+		} else if ([scanner scanString:formatMarker intoString:nil]) {
+			oValue = formatMarker; // Format marker
 		}
 
 		if (oValue) {
 			/* Check math and perform final append. */
-			if (width < 0 && ABS(width) > [oValue length]) {
-				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(width) - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0]];
+			if (paddingWidth < 0 && ABS(paddingWidth) > [oValue length]) {
+				NSString *paddedString = [NSStringEmptyPlaceholder stringByPaddingToLength:(ABS(paddingWidth) - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0];
+
+				[buffer appendString:paddedString];
 			}
 
 			[buffer appendString:oValue];
 
-			if (width > 0 && width > [oValue length]) {
-				[buffer appendString:[NSStringEmptyPlaceholder stringByPaddingToLength:(width - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0]];
+			if (paddingWidth > 0 && paddingWidth > [oValue length]) {
+				NSString *paddedString = [NSStringEmptyPlaceholder stringByPaddingToLength:(paddingWidth - [oValue length]) withString:NSStringWhitespacePlaceholder startingAtIndex:0];
+
+				[buffer appendString:paddedString];
 			}
 		}
 	}
@@ -3644,7 +3632,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	return [NSString stringWithString:buffer];
 }
 
-- (void)printAndLog:(TVCLogLine *)line completionBlock:(IRCClientPrintToWebViewCompletionBlock)completionBlock
+- (void)printAndLog:(TVCLogLine *)line completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
 	[self.viewController print:line completionBlock:completionBlock];
 	
@@ -3671,7 +3659,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self printToWebView:chan type:type command:command nickname:nickname messageBody:messageBody isEncrypted:isEncrypted receivedAt:receivedAt referenceMessage:referenceMessage completionBlock:nil];
 }
 
-- (void)printToWebView:(id)channel type:(TVCLogLineType)type command:(NSString *)command nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt referenceMessage:(IRCMessage *)referenceMessage completionBlock:(void (^)(BOOL))completionBlock
+- (void)printToWebView:(id)channel type:(TVCLogLineType)type command:(NSString *)command nickname:(NSString *)nickname messageBody:(NSString *)messageBody isEncrypted:(BOOL)isEncrypted receivedAt:(NSDate *)receivedAt referenceMessage:(IRCMessage *)referenceMessage completionBlock:(TVCLogControllerPrintOperationCompletionBlock)completionBlock
 {
 	NSObjectIsEmptyAssert(messageBody);
 	NSObjectIsEmptyAssert(command);
@@ -3714,12 +3702,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
-	if (type == TVCLogLineActionNoHighlightType) {
-		type = TVCLogLineActionType;
-	} else if (type == TVCLogLinePrivateMessageNoHighlightType) {
-		type = TVCLogLinePrivateMessageType;
-	}
-
 	/* If client is not connected, we set our configured nickname when we have none. */
 	if (self.isLoggedIn == NO && NSObjectIsEmpty(nickname)) {
 		if (type == TVCLogLinePrivateMessageType ||
@@ -3733,7 +3715,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	/* Create new log entry. */
-	TVCLogLine *c = [TVCLogLine new];
+	TVCLogLineMutable *c = [TVCLogLineMutable new];
 
 	/* Data types. */
 	c.lineType				= type;
@@ -3756,7 +3738,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	c.receivedAt			= receivedAt;
 
 	/* Actual command. */
-	c.rawCommand			= [command lowercaseString];
+	c.command			= [command lowercaseString];
 
 	if (channel) {
 		if ([TPCPreferences autoAddScrollbackMark]) {
@@ -3790,7 +3772,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)printDebugInformation:(NSString *)m
 {
-	[self printToWebView:[mainWindow() selectedChannelOn:self] type:TVCLogLineDebugType command:TVCLogLineDefaultRawCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
+	[self printToWebView:[mainWindow() selectedChannelOn:self] type:TVCLogLineDebugType command:TVCLogLineDefaultCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
 }
 
 - (void)printDebugInformation:(NSString *)m forCommand:(NSString *)command
@@ -3800,7 +3782,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)printDebugInformationToConsole:(NSString *)m
 {
-	[self printToWebView:nil type:TVCLogLineDebugType command:TVCLogLineDefaultRawCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
+	[self printToWebView:nil type:TVCLogLineDebugType command:TVCLogLineDefaultCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
 }
 
 - (void)printDebugInformationToConsole:(NSString *)m forCommand:(NSString *)command
@@ -3810,7 +3792,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel
 {
-	[self printToWebView:channel type:TVCLogLineDebugType command:TVCLogLineDefaultRawCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
+	[self printToWebView:channel type:TVCLogLineDebugType command:TVCLogLineDefaultCommandValue nickname:nil messageBody:m isEncrypted:NO receivedAt:[NSDate date] referenceMessage:nil completionBlock:nil];
 }
 
 - (void)printDebugInformation:(NSString *)m channel:(IRCChannel *)channel command:(NSString *)command
@@ -4064,7 +4046,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return; // No reason to show this.
 	}
 	
-	[self printError:error forCommand:TVCLogLineDefaultRawCommandValue];
+	[self printError:error forCommand:TVCLogLineDefaultCommandValue];
 }
 
 - (void)ircConnectionDidReceive:(NSString *)data
@@ -4078,7 +4060,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	NSString *s = data;
 
-	self.lastMessageReceived = [NSDate unixTime];
+	self.lastMessageReceived = [NSDate timeIntervalSince1970];
 
 	NSObjectIsEmptyAssert(s);
 
@@ -4548,8 +4530,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				 isEncrypted:NO
 				  receivedAt:[referenceMessage receivedAt]
 			referenceMessage:referenceMessage
-			 completionBlock:^(BOOL isHighlight)
+			completionBlock:^(TVCLogControllerPrintOperationContext *context)
 		 {
+			 BOOL isHighlight = [context isHighlight];
+
 			 if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
 				 BOOL postevent = NO;
 
@@ -4767,7 +4751,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				 isEncrypted:wasEncrypted
 				  receivedAt:[referenceMessage receivedAt]
 			referenceMessage:referenceMessage
-			 completionBlock:^(BOOL isHighlight)
+			 completionBlock:^(TVCLogControllerPrintOperationContext * _Nonnull context)
 		 {
 			 /* Set the query as unread and inform Growl. */
 			 [self setUnreadState:c];
@@ -4817,8 +4801,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				 isEncrypted:wasEncrypted
 				  receivedAt:[referenceMessage receivedAt]
 			referenceMessage:referenceMessage
-			 completionBlock:^(BOOL isHighlight)
+			 completionBlock:^(TVCLogControllerPrintOperationContext *context)
 		 {
+			 BOOL isHighlight = [context isHighlight];
+
 			 if ([self isSafeToPostNotificationForMessage:referenceMessage inChannel:c]) {
 				 if (isSelfMessage == NO) { // Do not notify for self
 					 BOOL postevent = NO;
@@ -4960,7 +4946,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_clientinfo")]) {
 			[self sendCTCPReply:sendern command:command text:TXTLS(@"IRC[1034]")];
 		} else if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_lagcheck")]) {
-			double time = [NSDate unixTime];
+			double time = [NSDate timeIntervalSince1970];
 
 			if (time > self.lastLagCheck && self.lastLagCheck > 0 && [sendern isEqualIgnoringCase:[self localNickname]]) {
 				double delta = (time -		self.lastLagCheck);
@@ -5018,7 +5004,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	if ([command isEqualToString:IRCPrivateCommandIndex("ctcp_ping")]) {
-		double delta = ([NSDate unixTime] - [s doubleValue]);
+		double delta = ([NSDate timeIntervalSince1970] - [s doubleValue]);
 		
 		text = TXTLS(@"IRC[1063]", sendern, command, delta);
 	} else {
@@ -5743,7 +5729,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return; // Cancel operation...
 	}
 
-	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CS_LatinAlphabetIncludingUnderscoreDashCharacterSet] == NO) {
+	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters] == NO) {
 		LogToConsole(@"Cannot process BATCH command because the batch token contains illegal characters");
 
 		return; // Cancel operation...
@@ -8141,7 +8127,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		return;
 	}
 
-	NSInteger timeSpent = [NSDate secondsSinceUnixTimestamp:self.lastMessageReceived];
+	NSInteger timeSpent = [NSDate timeIntervalSinceNow:self.lastMessageReceived];
 
 	if (timeSpent >= _timeoutInterval) {
 		if (self.config.performDisconnectOnPongTimer) {
@@ -9165,7 +9151,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	// Report an error
 present_error:
-	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:TXTLS(@"IRC[1020]", nickname) command:TVCLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:TXTLS(@"IRC[1020]", nickname) command:TVCLogLineDefaultCommandValue];
 }
 
 - (void)receivedDCCSend:(NSString *)nickname filename:(NSString *)filename address:(NSString *)address port:(NSInteger)port filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
@@ -9173,7 +9159,7 @@ present_error:
 	/* Inform of the DCC and possibly ignore it. */
 	NSString *message = TXTLS(@"IRC[1019]", nickname, filename, totalFilesize);
 	
-	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultCommandValue];
 	
 	if ([TPCPreferences fileTransferRequestReplyAction] == TXFileTransferRequestReplyIgnoreAction) {
 		return;
@@ -9239,7 +9225,7 @@ present_error:
 	
 	NSString *message = TXTLS(@"IRC[1018]", nickname, filename, totalFilesize);
 	
-	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultRawCommandValue];
+	[self print:nil type:TVCLogLineDCCFileTransferType nickname:nil messageBody:message command:TVCLogLineDefaultCommandValue];
 }
 
 - (NSString *)DCCSendEscapeFilename:(NSString *)filename
@@ -9287,7 +9273,7 @@ present_error:
 
 - (void)processCommandsInCommandQueue
 {
-	NSTimeInterval now = [NSDate unixTime];
+	NSTimeInterval now = [NSDate timeIntervalSince1970];
 
 	@synchronized(self.commandQueue) {
 		while ([self.commandQueue count]) {
@@ -9313,7 +9299,7 @@ present_error:
 		if ([self.commandQueue count]) {
 			TLOTimerCommand *m = self.commandQueue[0];
 
-			NSTimeInterval delta = ([m timerInterval] - [NSDate unixTime]);
+			NSTimeInterval delta = ([m timerInterval] - [NSDate timeIntervalSince1970]);
 
 			[self.commandQueueTimer start:delta];
 		} else {

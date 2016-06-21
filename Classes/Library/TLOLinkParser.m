@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TLOLinkParser
 
-+ (NSArray *)locatedLinksForString:(NSString *)string
++ (NSArray<AHHyperlinkScannerResult *> *)locatedLinksForString:(NSString *)string
 {
 	NSParameterAssert(string != nil);
 
@@ -61,10 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	dispatch_once(&onceToken, ^{
 		cachedValues = @[
-			[TVCLogLine lineTypeString:TVCLogLineModeType],
-			[TVCLogLine lineTypeString:TVCLogLineJoinType],
-			[TVCLogLine lineTypeString:TVCLogLineNickType],
-			[TVCLogLine lineTypeString:TVCLogLineInviteType]
+			[TVCLogLine stringForLineType:TVCLogLineModeType],
+			[TVCLogLine stringForLineType:TVCLogLineJoinType],
+			[TVCLogLine stringForLineType:TVCLogLineNickType],
+			[TVCLogLine stringForLineType:TVCLogLineInviteType]
 		];
 	});
 

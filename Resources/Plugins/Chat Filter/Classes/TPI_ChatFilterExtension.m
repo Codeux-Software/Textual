@@ -333,7 +333,9 @@
 							   isEncrypted:wasEncrypted
 								receivedAt:receivedAt
 						  referenceMessage:nil
-						   completionBlock:^(BOOL isHighlight) {
+						   completionBlock:^(TVCLogControllerPrintOperationContext *context) {
+							   BOOL isHighlight = [context isHighlight];
+
 							   if (lineType == TVCLogLineNoticeType) {
 								   [client setUnreadState:destinationChannel];
 							   } else {
@@ -414,7 +416,7 @@
 			formattedMessage = TPILocalizedString(@"TPI_ChatFilterExtension[0003]", [filter filterTitle], [textAuthor nickname], [textDestination name]);
 		}
 
-		[client print:filterActionReportQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultRawCommandValue];
+		[client print:filterActionReportQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultCommandValue];
 
 		[client setUnreadState:filterActionReportQuery];
 	}

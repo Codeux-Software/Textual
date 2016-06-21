@@ -832,15 +832,14 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
 {
-	TVCLogController *c = [TVCLogController new];
+	TVCLogController *c = nil;
 
-	[c setAssociatedClient:client];
-	[c setAssociatedChannel:channel];
+	if (channel == nil) {
+		c = [[TVCLogController alloc] initWithClient:client inWindow:mainWindow()];
+	} else {
+		c = [[TVCLogController alloc] initWithChannel:channel inWindow:mainWindow()];
+	}
 
-	[c setMaximumLineCount:[TPCPreferences scrollbackLimit]];
-	
-	[c setUp];
-	
 	return c;
 }
 

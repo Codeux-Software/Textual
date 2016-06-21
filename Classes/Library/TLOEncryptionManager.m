@@ -506,7 +506,7 @@
 			 type:TVCLogLineOffTheRecordEncryptionStatusType
 		 nickname:nil
 	  messageBody:message
-		  command:TVCLogLineDefaultRawCommandValue];
+		  command:TVCLogLineDefaultCommandValue];
 }
 
 - (void)presentMessage:(NSString *)message withAccountName:(NSString *)accountName

@@ -41,7 +41,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOLinkParser : NSObject
-+ (NSArray *)locatedLinksForString:(NSString *)string;
++ (NSArray<AHHyperlinkScannerResult *> *)locatedLinksForString:(NSString *)string;
 
 + (NSArray<NSString *> *)bannedLineTypes;
 @end

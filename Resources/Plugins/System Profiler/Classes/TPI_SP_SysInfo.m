@@ -108,7 +108,7 @@
 {
 	IRCClient *client = [mainWindow() selectedClient];
 
-	NSTimeInterval lastMsg = [NSDate secondsSinceUnixTimestamp:[client lastMessageReceived]];
+	NSTimeInterval lastMsg = [NSDate timeIntervalSinceNow:[client lastMessageReceived]];
 	
 	return TPILocalizedString(@"BasicLanguage[1049]",
 				  TXFormattedNumber([worldController() messagesSent]),
@@ -195,7 +195,7 @@
 {
 	NSTimeInterval runtime = [TPCApplicationInfo timeIntervalSinceApplicationInstall];
 
-	NSTimeInterval birthday = [NSDate secondsSinceUnixTimestamp:TXBirthdayReferenceDate];
+	NSTimeInterval birthday = [NSDate timeIntervalSinceNow:TXBirthdayReferenceDate];
 
 	if (runtime > birthday) {
 		runtime = birthday;
@@ -677,7 +677,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 		boottime.tv_sec = 0;
 	}
 	
-	return [NSDate secondsSinceUnixTimestamp:boottime.tv_sec];
+	return [NSDate timeIntervalSinceNow:boottime.tv_sec];
 }
 
 + (NSInteger)applicationUptime
