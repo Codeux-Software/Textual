@@ -367,71 +367,9 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 			}
 			case IRCTextFormatterColorEffectCharacter:
 			{
-#define _checkNextCharacter							\
-				if ((i + 1) >= stringLength)		\
-					break;							\
-
-				_checkNextCharacter
-
-				UniChar a = inputBuffer[(i + 1)];
-
-				if (CS_StringIsBase10Numeric(a) == NO) {
-					break;
-				}
-
-				i++;
-
-				_checkNextCharacter
-
-				UniChar b = inputBuffer[(i + 1)];
-
-				if (CS_StringIsBase10Numeric(b) == NO && b != ',' ) {
-					break;
-				}
-
-				i++;
-
-				if (b != ',') {
-					_checkNextCharacter
-
-					UniChar c = inputBuffer[(i + 1)];
-
-					if (c != ',') {
-						break;
-					}
-
-					i++;
-				}
-
-				_checkNextCharacter
-
-				UniChar d = inputBuffer[(i + 1)];
-
-				if (CS_StringIsBase10Numeric(d) == NO) {
-					/* Minus index by 1 to allow trailing comma to appear
-					 in the string incase a user configured a foreground
-					 color without background but still had a comma. */
-
-					i--;
-
-					break;
-				}
-
-				i++;
-
-				_checkNextCharacter
-
-				UniChar e = inputBuffer[(i + 1)];
-
-				if (CS_StringIsBase10Numeric(e) == NO) {
-					break;
-				}
-
-				i++;
+				i += [self colorCodesStartingAt:i foregroundColor:NULL backgroundColor:NULL];
 
 				break;
-
-#undef _checkNextCharacter
 			}
 			default:
 			{
@@ -443,6 +381,118 @@ NSStringEncoding const TXDefaultFallbackStringEncoding = NSISOLatin1StringEncodi
 	}
 
 	return [NSString stringWithCharacters:outputBuffer length:currentPosition];
+}
+
+- (NSUInteger)colorCodesStartingAt:(NSUInteger)rangeStart foregroundColor:(NSUInteger *)foregroundColor backgroundColor:(NSUInteger *)backgroundColor
+{
+	NSUInteger selfLength = self.length;
+
+	NSParameterAssert(rangeStart < selfLength);
+
+	NSUInteger currentPosition = rangeStart;
+
+	NSUInteger m_foregoundColor = NSNotFound;
+	NSUInteger m_backgroundColor = NSNotFound;
+
+	// ========================================== //
+
+	if ((currentPosition + 1) >= selfLength) {
+		goto return_method;
+	}
+
+	UniChar a = [self characterAtIndex:(currentPosition + 1)];
+
+	if (CS_StringIsBase10Numeric(a) == NO) {
+		goto return_method;
+	}
+
+	m_foregoundColor = (a - '0');
+
+	currentPosition++;
+
+	// ========================================== //
+
+	if ((currentPosition + 1) >= selfLength) {
+		goto return_method;
+	}
+
+	UniChar b = [self characterAtIndex:(currentPosition + 1)];
+
+	if (CS_StringIsBase10Numeric(b) == NO && b != ',' ) {
+		goto return_method;
+	}
+
+	currentPosition++;
+
+	// ========================================== //
+
+	if (b != ',') { // Eat up comma if /b/ is a number
+		m_foregoundColor = (m_foregoundColor * 10 + b - '0');
+
+		if ((currentPosition + 1) >= selfLength) {
+			goto return_method;
+		}
+
+		UniChar c = [self characterAtIndex:(currentPosition + 1)];
+
+		if (c != ',') {
+			goto return_method;
+		}
+
+		currentPosition++;
+	}
+
+	// ========================================== //
+
+	/* Minus index by 1 to allow trailing comma to appear
+	 in the string incase a user configured a foreground
+	 color without background but still had a comma. */
+	if ((currentPosition + 1) >= selfLength) {
+		currentPosition--;
+
+		goto return_method;
+	}
+
+	UniChar d = [self characterAtIndex:(currentPosition + 1)];
+
+	if (CS_StringIsBase10Numeric(d) == NO) {
+		currentPosition--;
+
+		goto return_method;
+	}
+
+	m_backgroundColor = (d - '0');
+
+	currentPosition++;
+
+	// ========================================== //
+
+	if ((currentPosition + 1) >= selfLength) {
+		goto return_method;
+	}
+
+	UniChar e = [self characterAtIndex:(currentPosition + 1)];
+
+	if (CS_StringIsBase10Numeric(e) == NO) {
+		goto return_method;
+	}
+
+	m_backgroundColor = (m_backgroundColor * 10 + e - '0');
+
+	currentPosition++;
+
+	// ========================================== //
+
+return_method:
+	if ( foregroundColor) {
+		*foregroundColor = m_foregoundColor;
+	}
+
+	if ( backgroundColor) {
+		*backgroundColor = m_backgroundColor;
+	}
+
+	return (currentPosition - rangeStart);
 }
 
 - (NSArray<NSString *> *)base64EncodingWithLineLength:(NSUInteger)lineLength
