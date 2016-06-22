@@ -69,7 +69,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 	return nil;
 }
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (nullable TVCLogLine *)initWithJSONData:(NSData *)data
 {
@@ -88,6 +87,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 	return [self initWithDictionary:jsonDictionary];
 }
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (TVCLogLine *)initWithDictionary:(NSDictionary<NSString *, id> *)dic
 {
