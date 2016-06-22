@@ -302,7 +302,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 - (BOOL)scanForKeywords
 {
-	return ([self isRenderingPRIVMSG] || self->_memberType == TVCLogLineMemberNormalType);
+	return ([self isRenderingPRIVMSG] && self->_memberType == TVCLogLineMemberNormalType);
 }
 
 - (void)stripDangerousUnicodeCharactersFromBody
