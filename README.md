@@ -2,7 +2,7 @@
 
 Textual is a [hackable](#about) IRC client for OS X developed by [Codeux](https://www.codeux.com/textual/) available on the [Mac App Store](http://www.textualapp.com/mac-app-store).
 
-![Textual 5 printscreen](printscreen.png)
+![Textual Yosemite Light Fullscreen](https://www.codeux.com/textual/private/images/v600media/YosemiteLightFullscreen.png)
 
 ## About
 
