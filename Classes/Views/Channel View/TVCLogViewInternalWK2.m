@@ -242,9 +242,19 @@ create_normal_pool:
 
 - (void)openWebInspector
 {
-	WKView *webViewParent = (id)self.subviews[0];
+	WKPageRef pageRef = NULL;
 
-	WKPageRef pageRef = [webViewParent pageRef];
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		pageRef = [self _pageForTesting];
+	} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		WKView *webViewParent = (id)self.subviews[0];
+
+		pageRef = [webViewParent pageRef];
+	}
+
+	if (pageRef == NULL) {
+		return;
+	}
 
 	WKInspectorRef inspectorRef = WKPageGetInspector(pageRef);
 
