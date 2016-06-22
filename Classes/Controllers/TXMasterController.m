@@ -388,6 +388,8 @@
 
 	[menuController() prepareForApplicationTermination];
 
+	[TVCLogControllerHistoricLogFile prepareForPermanentDestruction];
+
 	if (self.skipTerminateSave == NO) {
 		self.terminatingClientCount = [worldController() clientCount];
 

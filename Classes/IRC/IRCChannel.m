@@ -248,7 +248,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 - (void)noteEncryptionStateDidChange
 {
-	[[self viewController] setViewIsEncrypted:[self encryptionStateIsEncrypted]];
+	[[self viewController] setEncrypted:[self encryptionStateIsEncrypted]];
 
 	[mainWindow() updateTitleFor:self];
 }

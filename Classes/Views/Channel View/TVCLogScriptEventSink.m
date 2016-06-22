@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TVCLogController *viewController;
 @property (readonly) IRCClient *associatedClient;
 @property (readonly, nullable) IRCChannel *associatedChannel;
-@property (nonatomic, copy) NSArray *arguments;
+@property (nonatomic, copy, nullable) NSArray *arguments;
 @end
 
 @implementation TVCLogScriptEventSink
@@ -92,7 +92,7 @@ ClassWithDesignatedInitializerInitMethod
 	return NO;
 }
 
-+ (NSString *)webScriptNameForSelector:(SEL)sel
++ (nullable NSString *)webScriptNameForSelector:(SEL)sel
 {
 	return nil;
 }
@@ -125,12 +125,12 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
-+ (NSString *)webScriptNameForKey:(const char *)name
++ (nullable NSString *)webScriptNameForKey:(const char *)name
 {
 	return nil;
 }
 
-+ (id)objectValueToCommon:(id)object
++ (nullable id)objectValueToCommon:(id)object
 {
 	if ([object isKindOfClass:[NSNull class]] ||
 		[object isKindOfClass:[WebUndefined class]])
@@ -330,9 +330,9 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
-- (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
+- (void)inlineMediaEnabledForView:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineImagesEnabledForView:)];
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineMediaEnabledForView:)];
 }
 
 - (void)localUserHostmask:(id)inputData inWebView:(id)webView
@@ -571,9 +571,9 @@ ClassWithDesignatedInitializerInitMethod
 	return @(NO);
 }
 
-- (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
+- (id)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.viewController.inlineImagesEnabledForView);
+	return @(context.viewController.inlineMediaEnabledForView);
 }
 
 - (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context
@@ -641,7 +641,7 @@ ClassWithDesignatedInitializerInitMethod
 	[context.associatedClient printDebugInformationToConsole:message];
 }
 
-- (id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
+- (nullable id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 

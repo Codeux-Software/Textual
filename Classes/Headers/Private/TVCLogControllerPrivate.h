@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,21 +35,29 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@protocol TVCImageURLoaderDelegate;
+@interface TVCLogController ()
+@property (nonatomic, assign, readwrite, getter=viewIsEncrypted) BOOL encrypted;
 
-@interface TVCImageURLoader : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
-@property (nonatomic, unsafe_unretained) id <TVCImageURLoaderDelegate> delegate;
+- (instancetype)initWithClient:(IRCClient *)client inWindow:(TVCMainWindow *)window NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithChannel:(IRCChannel *)channel inWindow:(TVCMainWindow *)window NS_DESIGNATED_INITIALIZER;
 
-+ (void)invalidateInternalCache;
+- (void)notifyDidBecomeHidden;
+- (void)notifyDidBecomeVisible;
+- (void)notifySelectionChanged;
 
-- (void)assesURL:(NSString *)baseURL withID:(NSString *)uniqueID;
+- (void)clearBackingView;
+
+- (void)reloadTheme;
+
+- (void)print:(TVCLogLine *)logLine;
+- (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
+
+- (void)logViewWebViewClosedUnexpectedly;
+- (void)logViewWebViewFinishedLoading;
+- (void)logViewWebViewKeyDown:(NSEvent *)e;
+- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
 @end
 
-@protocol TVCImageURLoaderDelegate <NSObject>
-@required
-
-- (void)isSafeToPresentImageWithID:(NSString *)uniqueID;
-- (void)isNotSafeToPresentImageWithID:(NSString *)uniqueID;
-@end
+NS_ASSUME_NONNULL_END

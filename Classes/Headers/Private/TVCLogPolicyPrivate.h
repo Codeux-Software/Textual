@@ -5,6 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
+ Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -35,18 +36,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCLogControllerHistoricLogFile : NSObject
-@property (nonatomic, weak) TVCLogController *associatedController;
+@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
+- (instancetype)initWithWebView:(nullable TVCLogView *)hostView NS_DESIGNATED_INITIALIZER;
 
-- (void)writeNewEntryForLogLine:(TVCLogLine *)logLine;
-- (void)writeNewEntryWithRawData:(NSData *)jsondata; // Does not automatically append newline.
+@property (nonatomic, copy) NSString *anchorURL;
+@property (nonatomic, copy) NSString *channelName;
+@property (nonatomic, copy) NSString *nickname;
 
-- (void)open;
-- (void)close;
+- (void)displayContextMenuInWebView:(TVCLogView *)webView;
 
-- (void)resetData;
-
-- (NSArray *)listEntriesWithFetchLimit:(NSUInteger)maxEntryCount;
+- (void)channelNameDoubleClicked;
+- (void)nicknameDoubleClicked;
+- (void)topicBarDoubleClicked;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -10,7 +10,7 @@
 		encrypted="true"
 {{/isEncrypted}}
 
-		command="{{rawCommand}}"
+		command="{{command}}"
 		highlight="{{highlightAttributeRepresentation}}" 
 		class="line {{lineClassAttributeRepresentation}}" 
 		id="line-{{lineNumber}}"
@@ -36,7 +36,9 @@
 								coloroverride="true"
 							{{/nicknameColorStyleOverride}}
 
+							{{^ isEmpty(nicknameColorStyle) }}
 							style="color: {{nicknameColorStyle}};"
+							{{/ isEmpty(nicknameColorStyle) }}
 						{{^nicknameColorHashingIsStyleBased}}
 							colornumber="{{nicknameColorNumber}}"
 						{{/nicknameColorHashingIsStyleBased}}

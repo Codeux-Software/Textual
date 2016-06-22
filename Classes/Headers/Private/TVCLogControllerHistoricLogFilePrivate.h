@@ -5,7 +5,6 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -36,21 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#ifdef TXSystemIsOSXElCapitanOrLater
-@interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
-#else
-@interface TVCLogPolicy : NSObject
-#endif
+@interface TVCLogControllerHistoricLogFile : NSObject
+- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
 
-@property (nonatomic, copy) NSString *anchorURL;
-@property (nonatomic, copy) NSString *channelName;
-@property (nonatomic, copy) NSString *nickname;
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine;
+- (void)writeNewEntryWithData:(NSData *)data; // Does not automatically append new line
 
-- (void)displayContextMenuInWebView:(TVCLogView *)webView;
+- (void)open;
+- (void)close;
 
-- (void)channelNameDoubleClicked;
-- (void)nicknameDoubleClicked;
-- (void)topicBarDoubleClicked;
+- (void)reset;
+
+- (NSArray<NSData *> *)listEntriesWithFetchLimit:(NSUInteger)fetchLimit;
 @end
+
+NS_ASSUME_NONNULL_END
