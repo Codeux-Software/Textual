@@ -286,7 +286,7 @@ static NSCache *_internalCache = nil;
 	}
 }
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
+- (nullable NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse
 {
 	return nil; /* Do not return any cache */
 }
