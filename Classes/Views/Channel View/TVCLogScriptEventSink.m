@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) TVCLogController *viewController;
 @property (readonly) IRCClient *associatedClient;
 @property (readonly, nullable) IRCChannel *associatedChannel;
-@property (nonatomic, copy) NSArray *arguments;
+@property (nonatomic, copy, nullable) NSArray *arguments;
 @end
 
 @implementation TVCLogScriptEventSink
@@ -92,7 +92,7 @@ ClassWithDesignatedInitializerInitMethod
 	return NO;
 }
 
-+ (NSString *)webScriptNameForSelector:(SEL)sel
++ (nullable NSString *)webScriptNameForSelector:(SEL)sel
 {
 	return nil;
 }
@@ -125,12 +125,12 @@ ClassWithDesignatedInitializerInitMethod
 	return YES;
 }
 
-+ (NSString *)webScriptNameForKey:(const char *)name
++ (nullable NSString *)webScriptNameForKey:(const char *)name
 {
 	return nil;
 }
 
-+ (id)objectValueToCommon:(id)object
++ (nullable id)objectValueToCommon:(id)object
 {
 	if ([object isKindOfClass:[NSNull class]] ||
 		[object isKindOfClass:[WebUndefined class]])
@@ -641,7 +641,7 @@ ClassWithDesignatedInitializerInitMethod
 	[context.associatedClient printDebugInformationToConsole:message];
 }
 
-- (id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
+- (nullable id)_retrievePreferencesWithMethodName:(TVCLogScriptEventSinkContext *)context
 {
 	NSArray *arguments = context.arguments;
 
