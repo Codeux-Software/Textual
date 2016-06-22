@@ -35,18 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogControllerHistoricLogFile : NSObject
-@property (nonatomic, weak) TVCLogController *associatedController;
+- (instancetype)initWithViewController:(TVCLogController *)viewController NS_DESIGNATED_INITIALIZER;
 
-- (void)writeNewEntryForLogLine:(TVCLogLine *)logLine;
-- (void)writeNewEntryWithRawData:(NSData *)jsondata; // Does not automatically append newline.
+- (void)writeNewEntryWithLogLine:(TVCLogLine *)logLine;
+- (void)writeNewEntryWithData:(NSData *)data; // Does not automatically append new line
 
 - (void)open;
 - (void)close;
 
-- (void)resetData;
+- (void)reset;
 
-- (NSArray *)listEntriesWithFetchLimit:(NSUInteger)maxEntryCount;
+- (NSArray<NSData *> *)listEntriesWithFetchLimit:(NSUInteger)fetchLimit;
 @end
+
+NS_ASSUME_NONNULL_END
