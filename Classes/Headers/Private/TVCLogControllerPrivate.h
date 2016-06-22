@@ -1,4 +1,4 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,72 +35,29 @@
 
  *********************************************************************** */
 
-/* ************************************************** */
-/*                                                    */
-/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
-/*                                                    */
-/* ************************************************** */
+NS_ASSUME_NONNULL_BEGIN
 
-/* State management */
-Textual.notifyDidBecomeVisible = function()
-{
-	TextualScroller.enableScrollingTimer();
+@interface TVCLogController ()
+@property (nonatomic, assign, readwrite, getter=viewIsEncrypted) BOOL encrypted;
 
-	Textual.clearSelection();
-};
+- (instancetype)initWithClient:(IRCClient *)client inWindow:(TVCMainWindow *)window NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithChannel:(IRCChannel *)channel inWindow:(TVCMainWindow *)window NS_DESIGNATED_INITIALIZER;
 
-Textual.notifyDidBecomeHidden = function()
-{
-	TextualScroller.disableScrollingTimer();
+- (void)notifyDidBecomeHidden;
+- (void)notifyDidBecomeVisible;
+- (void)notifySelectionChanged;
 
-	Textual.clearSelection();
-};
+- (void)clearBackingView;
 
-Textual.notifySelectionChanged = function(isSelected)
-{
-	Textual.setTopicBarVisible(isSelected);
-		
-	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
-};
+- (void)reloadTheme;
 
-Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingBacklog, textSizeMultiplier)
-{
-	if (isVisible) {
-		Textual.notifyDidBecomeVisible();
-	
-		if (isSelected) {
-			Textual.notifySelectionChanged(true);
-		} else {
-			Textual.notifySelectionChanged(false);
-		}
-	}
-	
-	if (isReloadingBacklog) {
-		Textual.viewFinishedReload();
-	} else {
-		Textual.viewFinishedLoading();
-	}
-	
-	Textual.changeTextSizeMultiplier(textSizeMultiplier);
-};
+- (void)print:(TVCLogLine *)logLine;
+- (void)print:(TVCLogLine *)logLine completionBlock:(nullable TVCLogControllerPrintOperationCompletionBlock)completionBlock;
 
-Textual.newMessagePostedToViewInt = function(lineNumber)
-{
-	/* Allow lineNumber to be an array of line numbers or a single line number. */
-	if (Array.isArray(lineNumber)) {
-		for (var i = 0; i < lineNumber.length; i++) {
-			Textual.newMessagePostedToView(lineNumber[i]);
-		}
-	} else {
-		Textual.newMessagePostedToView(lineNumber);
-	}
-};
+- (void)logViewWebViewClosedUnexpectedly;
+- (void)logViewWebViewFinishedLoading;
+- (void)logViewWebViewKeyDown:(NSEvent *)e;
+- (void)logViewWebViewRecievedDropWithFile:(NSString *)filename;
+@end
 
-/* Events */
-Textual.mouseUpEventCallback = function()
-{
-	Textual.copySelectionOnMouseUpEvent();
-};
-
-/* Bind to events */
-document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
+NS_ASSUME_NONNULL_END
