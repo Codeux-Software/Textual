@@ -1,8 +1,26 @@
-## Introduction to Textual
+# Textual [![GitHub release](https://img.shields.io/github/tag/Codeux-Software/Textual.svg)](https://github.com/Codeux-Software/Textual/blob/master) [![Platform](https://img.shields.io/badge/platform-OS%20X-lightgrey.svg)](http://www.textualapp.com/mac-app-store)
+
+Textual is a [hackable](#about) IRC client for OS X developed by [Codeux](https://www.codeux.com/textual/) available on the [Mac App Store](http://www.textualapp.com/mac-app-store).
+
+![Textual 5 printscreen](printscreen.png)
+
+## About
 
 Textual is an application for interacting with Internet Relay Chat (IRC) on OS X. Much of the app uses the open standard of [WebKit](http://webkit.org/) which makes customization easy through the use of CSS 3 and HTML 5. [Plugins](https://help.codeux.com/textual/Writing-Plugins.kb) written in Objective-C and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb) made with AppleScript (and other languages) are also supported.
 
-Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, Textual has since evolved into one of the most popular applications for interacting with IRC on OS X. 
+Forked from the project [LimeChat](https://github.com/psychs/limechat) in 2010, Textual has since evolved into one of the most popular applications for interacting with IRC on OS X.
+
+[![Download in the Mac App Store](appstore.png)](http://www.textualapp.com/mac-app-store)
+
+## Resources
+
+- [Homepage](https://codeux.com/textual)
+- [FAQ](https://help.codeux.com/textual/Frequently-Asked-Questions.kb)
+- [Support](https://help.codeux.com/textual/Support.kb)
+- [Contact](mailto:support@codeux.com)
+- [Mac App Store](http://www.textualapp.com/mac-app-store)
+- Writing [plugins](https://help.codeux.com/textual/Writing-Plugins.kb) and [scripts](https://help.codeux.com/textual/Writing-Scripts.kb)
+- #textual on irc.freenode.net
 
 ## Supporting Textual
 
@@ -28,7 +46,7 @@ Failing to follow these steps will result in several "file not found" errors res
 
 ## Note Regarding Code Signing
 
-**It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment. 
+**It is HIGHLY DISCOURAGED to turn off code signing.** Certain features rely on the fact that Textual is properly signed and is within a sandboxed environment.
 
 **TEXTUAL DOES NOT REQUIRE A CERTIFICATE ISSUED BY APPLE TO BUILD** which means there is absolutely no reason to turn code signing off.
 
@@ -36,7 +54,7 @@ Failing to follow these steps will result in several "file not found" errors res
 
 To avoid patch files and/or a separate repository; the code which is responsible for licensing paid copies of Textual is in the source code that you download from here.
 
-If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag to 0 in the Standard Release configuration file to disable the inclusion of this code at build time. 
+If you do not have a license key, then set the ``TEXTUAL_BUILT_WITH_LICENSE_MANAGER`` flag to 0 in the Standard Release configuration file to disable the inclusion of this code at build time.
 
 ## Building Textual
 
@@ -62,7 +80,7 @@ The source code of Limechat did not fall under its current GPL license at the ti
 The New BSD License
 
 Copyright (c) 2008 - 2010 Satoshi Nakagawa < psychs AT limechat DOT net >
-All rights reserved. 
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -105,8 +123,8 @@ are met:
    * Redistributions in binary form must reproduce the above copyright
      notice, this list of conditions and the following disclaimer in the
      documentation and/or other materials provided with the distribution.
-   * Neither the name of Textual and/or "Codeux Software, LLC", nor the 
-     names of its contributors may be used to endorse or promote products 
+   * Neither the name of Textual and/or "Codeux Software, LLC", nor the
+     names of its contributors may be used to endorse or promote products
      derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
