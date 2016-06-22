@@ -1405,8 +1405,6 @@
 
 - (void)addChannel:(id)sender
 {
-	NSInteger sel = [self.channelTable selectedRow];
-	
 	IRCChannelConfig *config = [IRCChannelConfig new];
 	
 	self.channelSheet = nil;
