@@ -381,7 +381,7 @@
 	}
 	
 	/* Maybe set a default mark. */
-	if (mcstring == nil) {
+	if ([mcstring length] == 0) {
 		if ([TPCPreferences memberListDisplayNoModeSymbol]) {
 			mcstring = @"×";
 		} else {
