@@ -741,7 +741,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 - (void)copyActiveThemeToDestinationLocation:(TPCThemeControllerStorageLocation)destinationLocation reloadOnCopy:(BOOL)reloadOnCopy openOnCopy:(BOOL)openOnCopy
 {
-	NSAssert((self.currentCopyOperation != nil),
+	NSAssert((self.currentCopyOperation == nil),
 		@"Tried to create a new copy operation with operation already in progress");
 
 	if (self.storageLocation == destinationLocation) {
