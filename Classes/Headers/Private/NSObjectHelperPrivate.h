@@ -71,6 +71,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState;
 - (void)prepareForApplicationTermination;
 - (void)prepareForPermanentDestruction;
+
++ (void)preferencesChanged;
+
++ (void)prepareInitialState;
++ (void)prepareForApplicationTermination;
++ (void)prepareForPermanentDestruction;
 @end
 
 NS_ASSUME_NONNULL_END
