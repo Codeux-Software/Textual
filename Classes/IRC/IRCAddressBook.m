@@ -47,7 +47,6 @@ NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey	
 NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey		= @"ignoreGeneralEventMessages";
 NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey		= @"ignoreFileTransferRequests";
 NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey	= @"ignoreClientToClientProtocol";
-NSString * const IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey	= @"ignoreMessagesContainingMatch";
 
 NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackUserActivity";
 
@@ -105,7 +104,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 			 @"ignoreClientToClientProtocol"		: @(NO),
 			 @"ignoreGeneralEventMessages"			: @(NO),
-			 @"ignoreMessagesContainingMatch"		: @(NO),
 			 @"ignoreNoticeMessages"				: @(NO),
 			 @"ignorePrivateMessages"				: @(NO),
 			 @"ignorePrivateMessageHighlights"		: @(NO),
@@ -138,8 +136,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	self.ignorePrivateMessages				= [defaults boolForKey:@"ignorePrivateMessages"];
 	self.ignorePublicMessageHighlights		= [defaults boolForKey:@"ignorePublicMessageHighlights"];
 	self.ignorePublicMessages				= [defaults boolForKey:@"ignorePublicMessages"];
-
-	self.ignoreMessagesContainingMatchh		= [defaults boolForKey:@"ignoreMessagesContainingMatch"];
 }
 
 - (instancetype)init
@@ -175,15 +171,12 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
 	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
 
-	[dic assignBoolTo:&_ignoreMessagesContainingMatchh		forKey:@"hideMessagesContainingMatch"];
-
 	/* With the old keys populated, try to fill in the new ones. */
 	[dic assignBoolTo:&_trackUserActivity				forKey:@"trackUserActivity"];
 
 	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreClientToClientProtocol"];
 	[dic assignBoolTo:&_ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
 	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-	[dic assignBoolTo:&_ignoreMessagesContainingMatchh	forKey:@"ignoreMessagesContainingMatch"];
 	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNoticeMessages"];
 	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePrivateMessageHighlights"];
 	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMessages"];
@@ -261,7 +254,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	[dic setBool:self.ignoreClientToClientProtocol		forKey:@"ignoreClientToClientProtocol"];
 	[dic setBool:self.ignoreFileTransferRequests		forKey:@"ignoreFileTransferRequests"];
 	[dic setBool:self.ignoreGeneralEventMessages		forKey:@"ignoreGeneralEventMessages"];
-	[dic setBool:self.ignoreMessagesContainingMatchh	forKey:@"ignoreMessagesContainingMatch"];
 	[dic setBool:self.ignoreNoticeMessages				forKey:@"ignoreNoticeMessages"];
 	[dic setBool:self.ignorePublicMessages				forKey:@"ignorePublicMessages"];
 	[dic setBool:self.ignorePrivateMessages				forKey:@"ignorePrivateMessages"];
