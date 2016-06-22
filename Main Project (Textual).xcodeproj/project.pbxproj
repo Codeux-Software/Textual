@@ -1294,6 +1294,9 @@
 		4CD6252A1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD6252B1870B934002FEA17 /* TDCFileTransferDialogTransferController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */; };
 		4CD6F7BC1CA7747600842597 /* ExportArchive.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4CD6F7BB1CA7747600842597 /* ExportArchive.sh */; };
+		4CDDF24E1D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CEA09C41875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CEA09C51875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
@@ -2161,6 +2164,7 @@
 		4CD625271870B934002FEA17 /* TDCFileTransferDialogTransferController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTransferController.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTransferController.m"; sourceTree = "<group>"; };
 		4CD6F7BB1CA7747600842597 /* ExportArchive.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = ExportArchive.sh; path = "Main Project (Textual).xcodeproj/ExportArchive.sh"; sourceTree = SOURCE_ROOT; };
 		4CDB24A018CAB914007EF6DE /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Frameworks/HockeySDK.framework; sourceTree = "<group>"; };
+		4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSViewHelper.h; path = Headers/NSViewHelper.h; sourceTree = "<group>"; };
 		4CE204EF196989FB00D7E220 /* TPCPreferencesUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesUserDefaults.h; path = Headers/TPCPreferencesUserDefaults.h; sourceTree = "<group>"; };
 		4CE8683D1ABEBDDB0060F5F9 /* TVCMainWindowTitlebarAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowTitlebarAccessoryView.h; sourceTree = "<group>"; };
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
@@ -3101,6 +3105,7 @@
 				4C8AF542158E99520026668C /* IRCTreeItem.h */,
 				4C8AF548158E99520026668C /* NSColorHelper.h */,
 				4C8AF552158E99520026668C /* NSStringHelper.h */,
+				4CDDF24D1D1B1D0C0095D031 /* NSViewHelper.h */,
 				4C8AF557158E99520026668C /* StaticDefinitions.h */,
 				4C8AF56A158E99520026668C /* TextualApplication.h */,
 				4C8AF56C158E99520026668C /* THOPluginProtocol.h */,
@@ -3791,6 +3796,7 @@
 				4C7B03911D1210A100295E82 /* TVCMainWindowTitlebarAccessoryView.h in Headers */,
 				4C7B03921D1210A100295E82 /* TVCMemberList.h in Headers */,
 				4C7B49131D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
+				4CDDF24E1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B03931D1210A100295E82 /* TVCMemberListCell.h in Headers */,
 				4C7B03941D1210A100295E82 /* TVCMemberListMavericksUserInterface.h in Headers */,
 				4C7B03951D1210A100295E82 /* TVCMemberListSharedUserInterface.h in Headers */,
@@ -3982,6 +3988,7 @@
 				4C7B04171D1210A800295E82 /* TVCMemberListUserInfoPopover.h in Headers */,
 				4C7B49141D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4C7B04181D1210A800295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */,
+				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B04191D1210A800295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
 				4C7B041B1D1210A800295E82 /* TVCServerListCell.h in Headers */,
@@ -4174,6 +4181,7 @@
 				4C7B04981D1210B000295E82 /* TVCMemberListUserInfoPopover.h in Headers */,
 				4C7B49151D131A2A008D7926 /* TVCLogViewPrivate.h in Headers */,
 				4C7B04991D1210B000295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */,
+				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049A1D1210B000295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
 				4C7B049C1D1210B000295E82 /* TVCServerListCell.h in Headers */,
