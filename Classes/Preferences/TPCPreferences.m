@@ -470,7 +470,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors
 {
-	[RZUserDefaults() boolForKey:@"InvertSidebarColors"];
+	[RZUserDefaults() setBool:invertSidebarColors forKey:@"InvertSidebarColors"];
 }
 
 + (BOOL)invertSidebarColors
