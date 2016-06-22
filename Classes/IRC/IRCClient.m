@@ -2692,7 +2692,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				[g setIgnoreClientToClientProtocol:YES];
 				[g setIgnoreGeneralEventMessages:YES];
 				[g setIgnoreFileTransferRequests:YES];
-				[g setIgnoreMessagesContainingMatchh:NO];
 				[g setIgnoreNoticeMessages:YES];
 				[g setIgnorePrivateMessageHighlights:YES];
 				[g setIgnorePrivateMessages:YES];

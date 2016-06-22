@@ -59,7 +59,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	[newEntry setIgnoreClientToClientProtocol:YES];
 	[newEntry setIgnoreFileTransferRequests:YES];
 	[newEntry setIgnoreGeneralEventMessages:YES];
-	[newEntry setIgnoreMessagesContainingMatchh:NO];
 	[newEntry setIgnoreNoticeMessages:YES];
 	[newEntry setIgnorePrivateMessageHighlights:YES];
 	[newEntry setIgnorePrivateMessages:YES];
@@ -80,7 +79,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	[newEntry setIgnoreClientToClientProtocol:NO];
 	[newEntry setIgnoreFileTransferRequests:NO];
 	[newEntry setIgnoreGeneralEventMessages:NO];
-	[newEntry setIgnoreMessagesContainingMatchh:NO];
 	[newEntry setIgnoreNoticeMessages:NO];
 	[newEntry setIgnorePrivateMessageHighlights:NO];
 	[newEntry setIgnorePrivateMessages:NO];
