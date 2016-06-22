@@ -1092,10 +1092,10 @@
                     </connections>
                 </button>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="hTp-FD-YPZ">
-                    <rect key="frame" x="132" y="220" width="320" height="17"/>
+                    <rect key="frame" x="132" y="219" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aR8-Ov-hTp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="v9S-yX-kbj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -1172,7 +1172,7 @@
                 <constraint firstItem="Izn-3U-WFY" firstAttribute="baseline" secondItem="lHl-sy-SBb" secondAttribute="baseline" id="5Ki-mS-vv6"/>
                 <constraint firstItem="SM5-3p-JK0" firstAttribute="top" secondItem="0Hy-Fo-BoC" secondAttribute="bottom" constant="23" id="6A4-mk-Gwe"/>
                 <constraint firstItem="GjT-uP-Qs3" firstAttribute="trailing" secondItem="SM5-3p-JK0" secondAttribute="trailing" id="8aZ-Dt-FO4"/>
-                <constraint firstItem="hTp-FD-YPZ" firstAttribute="bottom" secondItem="pyR-Yq-9tk" secondAttribute="bottom" constant="2" id="B1f-vW-kaN"/>
+                <constraint firstItem="hTp-FD-YPZ" firstAttribute="bottom" secondItem="pyR-Yq-9tk" secondAttribute="bottom" constant="3" id="B1f-vW-kaN"/>
                 <constraint firstItem="1jd-UU-VQN" firstAttribute="leading" secondItem="09H-hp-iIC" secondAttribute="leading" constant="135" id="DEH-56-qGr"/>
                 <constraint firstItem="O82-On-A00" firstAttribute="leading" secondItem="0Hy-Fo-BoC" secondAttribute="leading" id="GPB-ZH-uAN"/>
                 <constraint firstItem="fyC-tf-kOI" firstAttribute="top" secondItem="1jd-UU-VQN" secondAttribute="bottom" constant="22" id="GyM-ta-zCJ"/>
@@ -1193,7 +1193,7 @@
                 <constraint firstItem="xvN-SN-jAW" firstAttribute="leading" secondItem="0Hy-Fo-BoC" secondAttribute="trailing" constant="8" symbolic="YES" id="geG-8D-AUF"/>
                 <constraint firstItem="O82-On-A00" firstAttribute="top" secondItem="fyC-tf-kOI" secondAttribute="bottom" constant="8" symbolic="YES" id="h3d-7v-PLE"/>
                 <constraint firstItem="aAm-Wb-rMO" firstAttribute="top" secondItem="GjT-uP-Qs3" secondAttribute="bottom" constant="14" id="iVh-nW-ied"/>
-                <constraint firstItem="lHl-sy-SBb" firstAttribute="top" secondItem="hTp-FD-YPZ" secondAttribute="bottom" constant="12" id="ii8-DI-fja"/>
+                <constraint firstItem="lHl-sy-SBb" firstAttribute="top" secondItem="hTp-FD-YPZ" secondAttribute="bottom" constant="11" id="ii8-DI-fja"/>
                 <constraint firstItem="pyR-Yq-9tk" firstAttribute="top" secondItem="pPF-N7-ZNY" secondAttribute="bottom" constant="13" id="iiZ-TI-Ay2"/>
                 <constraint firstItem="pPF-N7-ZNY" firstAttribute="top" secondItem="O82-On-A00" secondAttribute="bottom" constant="11" id="kYS-Ss-Psh"/>
                 <constraint firstItem="WuE-Q5-q8G" firstAttribute="top" secondItem="09H-hp-iIC" secondAttribute="top" constant="30" id="lJo-iS-vwQ"/>
@@ -3979,7 +3979,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="108" y="39" width="320" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="zWf-tX-IOX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="ubi-Bg-XAW">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
