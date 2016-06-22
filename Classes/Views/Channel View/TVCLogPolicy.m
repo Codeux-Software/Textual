@@ -36,9 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCLogObjectsPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /* The actual tag value for the Inspect Element item is in a private
  enum in WebKit so we have to define it based on whatever version of
@@ -49,13 +47,30 @@
 #define _WebMenuItemTagSearchInGoogle		1601 // Tag for Textual's menu, not WebKit
 #define _WebMenuItemTagLookUpDictionary		1608 // Tag for Textual's meny, not WebKit
 
+@interface TVCLogPolicy ()
+@property (nonatomic, strong, nullable) TVCLogView *webView;
+@end
+
 @implementation TVCLogPolicy
 
-- (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(NSArray *)defaultMenuItems
-{
-	TVCLogController *viewController = [webView viewController];
+ClassWithDesignatedInitializerInitMethod
 
-	BOOL isWebKit2 = [webView isUsingWebKit2];
+- (instancetype)initWithWebView:(nullable TVCLogView *)webView
+{
+	if ((self = [super init])) {
+		self.webView = webView;
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (id)constructContextMenuInWebView:(TVCLogView *)webView defaultMenuItems:(nullable NSArray<NSMenuItem *> *)defaultMenuItems
+{
+	TVCLogController *viewController = webView.viewController;
+
+	BOOL isWebKit2 = webView.isUsingWebKit2;
 
 	id newMenu = nil;
 
@@ -71,15 +86,15 @@
 										[newMenu addObject:(_itemValue_)];	\
 									}
 
-	if ([viewController associatedChannel] == nil) {
+	if (viewController.associatedChannel == nil) {
 		self.nickname = nil;
 	}
 
 	if (self.anchorURL)
 	{
-		NSMenu *urlMenu = [menuController() tcopyURLMenu];
+		NSMenu *urlMenu = menuController().tcopyURLMenu;
 
-		for (NSMenuItem *item in [urlMenu itemArray]) {
+		for (NSMenuItem *item in urlMenu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
 			[newItem setUserInfo:self.anchorURL recursively:YES];
@@ -91,9 +106,9 @@
 	}
 	else if (self.nickname)
 	{
-		NSMenu *memberMenu = [menuController() userControlMenu];
+		NSMenu *memberMenu = menuController().userControlMenu;
 
-		for (NSMenuItem *item in [memberMenu itemArray]) {
+		for (NSMenuItem *item in memberMenu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
 			[newItem setUserInfo:self.nickname recursively:YES];
@@ -105,9 +120,9 @@
 	}
 	else if (self.channelName)
 	{
-		NSMenu *chanMenu = [menuController() joinChannelMenu];
+		NSMenu *chanMenu = menuController().joinChannelMenu;
 
-		for (NSMenuItem *item in [chanMenu itemArray]) {
+		for (NSMenuItem *item in chanMenu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
 			[newItem setUserInfo:self.channelName recursively:YES];
@@ -119,35 +134,35 @@
 	}
 	else
 	{
-		NSMenu *menu = [menuController() channelViewMenu];
+		NSMenu *menu = menuController().channelViewMenu;
 
 		NSMenuItem *inspectElementItem		= nil;
 		NSMenuItem *lookupInDictionaryItem	= nil;
 
 		if (isWebKit2 == NO) {
 			for (NSMenuItem *item in defaultMenuItems) {
-				if ([item tag] == WebMenuItemTagLookUpInDictionary) {
+				if (item.tag == WebMenuItemTagLookUpInDictionary) {
 					lookupInDictionaryItem = item;
-				} else if ([item tag] == _WebMenuItemTagInspectElementLion ||
-						   [item tag] == _WebMenuItemTagInspectElementMountainLion)
+				} else if (item.tag == _WebMenuItemTagInspectElementLion ||
+						   item.tag == _WebMenuItemTagInspectElementMountainLion)
 				{
 					inspectElementItem = item;
 				}
 			}
 		}
 
-		for (NSMenuItem *item in [menu itemArray]) {
+		for (NSMenuItem *item in menu.itemArray) {
 			NSMenuItem *newItem = [item copy];
 
 			if (isWebKit2 == NO) {
-				if ([newItem tag] == _WebMenuItemTagLookUpDictionary) {
+				if (newItem.tag == _WebMenuItemTagLookUpDictionary) {
 					continue;
 				}
 			}
 
 			_addItem(newItem);
 
-			if ([newItem tag] == _WebMenuItemTagSearchInGoogle) {
+			if (newItem.tag == _WebMenuItemTagSearchInGoogle) {
 				if (lookupInDictionaryItem) {
 					_addItem(lookupInDictionaryItem)
 				}
@@ -185,13 +200,15 @@
 
 - (void)displayContextMenuInWebView:(TVCLogView *)webView
 {
-	NSAssertReturn([webView isUsingWebKit2] == YES);
+	if (webView.isUsingWebKit2 == NO) {
+		return;
+	}
 
 	NSMenu *newMenu = [self constructContextMenuInWebView:webView defaultMenuItems:nil];
 
-	NSView *webViewBacking = [webView webView];
+	NSView *webViewBacking = webView.webView;
 
-	NSWindow *webViewWindow = [webViewBacking window];
+	NSWindow *webViewWindow = webViewBacking.window;
 
 	NSPoint mouseLocationGlobal = [NSEvent mouseLocation];
 
@@ -202,7 +219,7 @@
 										location:mouseLocationLocal.origin
 								   modifierFlags:0
 									   timestamp:0
-									windowNumber:[webViewWindow windowNumber]
+									windowNumber:webViewWindow.windowNumber
 										 context:nil
 									 eventNumber:0
 									  clickCount:0
@@ -214,21 +231,21 @@
 #pragma mark -
 #pragma mark WebKit Delegate
 
-- (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray *)webView:(WebView *)webView contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	return [self constructContextMenuInWebView:[self parentView] defaultMenuItems:defaultMenuItems];
+	return [self constructContextMenuInWebView:self.webView defaultMenuItems:defaultMenuItems];
 }
 
-- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
+- (void)webView:(WebView *)webView resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource
 {
-	[[challenge sender] cancelAuthenticationChallenge:challenge];
+	[challenge.sender cancelAuthenticationChallenge:challenge];
 }
 
 - (NSUInteger)webView:(WebView *)webView dragDestinationActionMaskForDraggingInfo:(id<NSDraggingInfo>)draggingInfo
 {
 	NSPasteboard *pboard = [draggingInfo draggingPasteboard];
 
-	if ([[pboard types] containsObject:NSFilenamesPboardType]) {
+	if ([pboard.types containsObject:NSFilenamesPboardType]) {
 		return WebDragDestinationActionAny;
 	}
 
@@ -255,7 +272,7 @@
 
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
-	NSString *authenticationMethod = [[challenge protectionSpace] authenticationMethod];
+	NSString *authenticationMethod = challenge.protectionSpace.authenticationMethod;
 
 	if ([authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
 		completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
@@ -266,12 +283,12 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-	WKNavigationType action = [navigationAction navigationType];
+	WKNavigationType action = navigationAction.navigationType;
 
 	if (action == WKNavigationTypeLinkActivated) {
 		decisionHandler(WKNavigationActionPolicyCancel);
 
-		NSURL *actionURL = [[navigationAction request] URL];
+		NSURL *actionURL = navigationAction.request.URL;
 
 		[self openWebpage:actionURL];
 	} else {
@@ -291,11 +308,11 @@
 
 - (void)nicknameDoubleClicked
 {
-	[menuController() setPointedNickname:self.nickname];
-
-	self.nickname = nil;
+	menuController().pointedNickname = self.nickname;
 
 	[menuController() memberInChannelViewDoubleClicked:nil];
+
+	self.nickname = nil;
 }
 
 - (void)topicBarDoubleClicked
@@ -305,9 +322,11 @@
 
 - (void)openWebpage:(NSURL *)webpageURL
 {
-	if (NSObjectsAreEqual([webpageURL scheme], @"http") ||
-		NSObjectsAreEqual([webpageURL scheme], @"https") ||
-		NSObjectsAreEqual([webpageURL scheme], @"textual"))
+	NSParameterAssert(webpageURL != nil);
+
+	if (NSObjectsAreEqual(webpageURL.scheme, @"http") ||
+		NSObjectsAreEqual(webpageURL.scheme, @"https") ||
+		NSObjectsAreEqual(webpageURL.scheme, @"textual"))
 	{
 		[TLOpenLink open:webpageURL];
 
@@ -317,7 +336,7 @@
 	NSString *applicationName = [RZWorkspace() nameOfApplicationToOpenURL:webpageURL];
 
 	BOOL openLink =
-	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1114][2]", [webpageURL absoluteString])
+	[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1114][2]", webpageURL.absoluteString)
 									   title:TXTLS(@"Prompts[1114][1]", applicationName)
 							   defaultButton:TXTLS(@"Prompts[0001]")
 							 alternateButton:TXTLS(@"Prompts[0002]")
@@ -332,3 +351,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -36,13 +36,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#ifdef TXSystemIsOSXElCapitanOrLater
 @interface TVCLogPolicy : NSObject <WKNavigationDelegate, WebResourceLoadDelegate, WebPolicyDelegate, WebUIDelegate>
-#else
-@interface TVCLogPolicy : NSObject
-#endif
+- (instancetype)initWithWebView:(nullable TVCLogView *)hostView NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, copy) NSString *anchorURL;
 @property (nonatomic, copy) NSString *channelName;
@@ -54,3 +51,5 @@
 - (void)nicknameDoubleClicked;
 - (void)topicBarDoubleClicked;
 @end
+
+NS_ASSUME_NONNULL_END
