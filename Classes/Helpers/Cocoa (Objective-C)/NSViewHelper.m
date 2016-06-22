@@ -37,7 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation NSView (TXViewHelper)
+@implementation NSView (TXViewHelperPrivate)
 
 - (nullable TVCMainWindow *)mainWindow
 {
@@ -49,6 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	return (TVCMainWindow *)window;
 }
+
+@end
+
+#pragma mark -
+
+@implementation NSView (TXViewHelper)
 
 - (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint
 {
@@ -108,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 
-@implementation NSCell (TXCellHelper)
+@implementation NSCell (TXCellHelperPrivate)
 
 - (nullable TVCMainWindow *)mainWindow
 {

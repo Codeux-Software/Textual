@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,16 +35,12 @@
 
  *********************************************************************** */
 
+#import "TextualApplication.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSView (TXViewHelperPrivate)
-/* If this view is attached to an instance of TXMainWindow,
- then this returns the instance its attached to. */
-@property (readonly, nullable) TVCMainWindow *mainWindow;
-@end
-
-@interface NSCell (TXCellHelperPrivate)
-@property (readonly, nullable) TVCMainWindow *mainWindow;
+@interface NSView (TXViewHelper)
+- (void)attachSubview:(NSView *)subview adjustedWidthConstraint:(NSLayoutConstraint *)parentViewWidthConstraint adjustedHeightConstraint:(NSLayoutConstraint *)parentViewHeightConstraint;
 @end
 
 NS_ASSUME_NONNULL_END

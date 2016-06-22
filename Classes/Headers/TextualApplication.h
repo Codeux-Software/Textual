@@ -292,6 +292,7 @@
 	/* Framework Extensions (Helpers) */
 	#import "NSColorHelper.h"
 	#import "NSStringHelper.h"
+	#import "NSViewHelper.h"
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
