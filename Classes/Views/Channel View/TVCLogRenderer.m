@@ -731,7 +731,7 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 			}
 		}
 
-		if (self->_viewController.inlineImagesEnabledForView) {
+		if (self->_viewController.inlineMediaEnabledForView) {
 			NSDictionary *linksMapped = self->_outputDictionary[TVCLogRendererResultsListOfLinksMappedInBodyAttribute];
 
 			NSString *uniqueIdentifier = linksMapped[anchorLocation];
