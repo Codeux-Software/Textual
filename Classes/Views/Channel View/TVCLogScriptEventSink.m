@@ -330,9 +330,9 @@ ClassWithDesignatedInitializerInitMethod
 	[self processInputData:inputData inWebView:webView forSelector:@selector(_copySelectionWhenPermitted:)];
 }
 
-- (void)inlineImagesEnabledForView:(id)inputData inWebView:(id)webView
+- (void)inlineMediaEnabledForView:(id)inputData inWebView:(id)webView
 {
-	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineImagesEnabledForView:)];
+	[self processInputData:inputData inWebView:webView forSelector:@selector(_inlineMediaEnabledForView:)];
 }
 
 - (void)localUserHostmask:(id)inputData inWebView:(id)webView
@@ -571,9 +571,9 @@ ClassWithDesignatedInitializerInitMethod
 	return @(NO);
 }
 
-- (id)_inlineImagesEnabledForView:(TVCLogScriptEventSinkContext *)context
+- (id)_inlineMediaEnabledForView:(TVCLogScriptEventSinkContext *)context
 {
-	return @(context.viewController.inlineImagesEnabledForView);
+	return @(context.viewController.inlineMediaEnabledForView);
 }
 
 - (id)_localUserHostmask:(TVCLogScriptEventSinkContext *)context

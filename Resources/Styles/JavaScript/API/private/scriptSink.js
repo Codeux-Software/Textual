@@ -314,16 +314,16 @@ app.sidebarInversionIsEnabled = function()
 	}
 };
 
-app.inlineImagesEnabledForView = function(callbackFunction)
+app.inlineMediaEnabledForView = function(callbackFunction)
 {
 	var promiseIndex = appInternal.makePromise(callbackFunction);
 
 	var dataValue = {"promiseIndex" : promiseIndex};
 
 	if (appInternal.isWebKit2()) {
-		window.webkit.messageHandlers.inlineImagesEnabledForView.postMessage(dataValue);
+		window.webkit.messageHandlers.inlineMediaEnabledForView.postMessage(dataValue);
 	} else {
-		TextualScriptSink.inlineImagesEnabledForView(dataValue);
+		TextualScriptSink.inlineMediaEnabledForView(dataValue);
 	}
 };
 
