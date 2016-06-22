@@ -1405,22 +1405,7 @@
 
 - (void)addChannel:(id)sender
 {
-	NSInteger sel = [self.channelTable selectedRow];
-	
-	IRCChannelConfig *config = nil;
-	
-	if (sel < 0) {
-		config = [IRCChannelConfig new];
-	} else {
-		IRCChannelConfig *c = self.mutableChannelList[sel];
-		
-		config = [c copy];
-		
-		config.itemUUID			= [NSString stringWithUUID];
-		
-		config.channelName		= NSStringEmptyPlaceholder;
-		config.secretKey		= NSStringEmptyPlaceholder;
-	}
+	IRCChannelConfig *config = [IRCChannelConfig new];
 	
 	self.channelSheet = nil;
 	self.channelSheet = [TDChannelPropertiesSheet new];

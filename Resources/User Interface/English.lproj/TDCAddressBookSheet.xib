@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCAddressBookSheet">
@@ -14,7 +13,6 @@
                 <outlet property="ignoreEntryView" destination="5" id="nse-Nb-KaW"/>
                 <outlet property="ignoreFileTransferRequestsCheck" destination="rur-OE-BUc" id="j5n-cr-6wF"/>
                 <outlet property="ignoreGeneralEventMessagesCheck" destination="477" id="b5y-ct-VK8"/>
-                <outlet property="ignoreMessagesContainingMatchCheck" destination="617" id="x9E-oR-gCC"/>
                 <outlet property="ignoreNoticeMessagesCheck" destination="476" id="S3r-Hr-k0A"/>
                 <outlet property="ignorePrivateMessageHighlightsCheck" destination="44o-H8-79C" id="4Nm-VY-TNd"/>
                 <outlet property="ignorePrivateMessagesCheck" destination="481" id="613"/>
@@ -229,14 +227,14 @@ DQ
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" restorable="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="Ignore User Window">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="407" y="164" width="526" height="422"/>
+            <rect key="contentRect" x="407" y="164" width="526" height="371"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="6">
-                <rect key="frame" x="0.0" y="0.0" width="526" height="422"/>
+                <rect key="frame" x="0.0" y="0.0" width="526" height="371"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="298" customClass="TVCTextFieldWithValueValidation">
-                        <rect key="frame" x="93" y="380" width="413" height="22"/>
+                        <rect key="frame" x="93" y="329" width="413" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="NhJ-Fz-bJp"/>
                         </constraints>
@@ -250,7 +248,7 @@ DQ
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="300">
-                        <rect key="frame" x="159" y="351" width="205" height="14"/>
+                        <rect key="frame" x="160" y="300" width="205" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="&lt;nickname&gt;!&lt;username&gt;@&lt;address&gt;" id="301">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -259,7 +257,7 @@ DQ
                         <accessibility description="Format for Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="594">
-                        <rect key="frame" x="110" y="351" width="47" height="14"/>
+                        <rect key="frame" x="111" y="300" width="47" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Syntax:" id="595">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -267,7 +265,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="302">
-                        <rect key="frame" x="95" y="335" width="62" height="14"/>
+                        <rect key="frame" x="96" y="284" width="62" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Examples:" id="303">
                             <font key="font" metaFont="smallSystemBold"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -275,7 +273,7 @@ DQ
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="304">
-                        <rect key="frame" x="159" y="335" width="309" height="14"/>
+                        <rect key="frame" x="160" y="284" width="309" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@* (matches every possible user — not recommended)" id="305">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -284,7 +282,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="306">
-                        <rect key="frame" x="159" y="322" width="316" height="14"/>
+                        <rect key="frame" x="160" y="271" width="315" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="frank*!*@* (matches any nickname that starts with &quot;frank&quot;)" id="307">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -293,7 +291,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="308">
-                        <rect key="frame" x="159" y="309" width="304" height="14"/>
+                        <rect key="frame" x="160" y="258" width="304" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!matt@* (matches any username that is equal to &quot;matt&quot;)" id="311">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -302,7 +300,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="309">
-                        <rect key="frame" x="159" y="296" width="265" height="14"/>
+                        <rect key="frame" x="160" y="245" width="265" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="*!*@*.info (matches any address ending in &quot;.info&quot;)" id="310">
                             <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" red="0.1651115866" green="0.1651115866" blue="0.1651115866" alpha="1" colorSpace="calibratedRGB"/>
@@ -311,7 +309,7 @@ DQ
                         <accessibility description="Example Ignore Entry"/>
                     </textField>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="314">
-                        <rect key="frame" x="38" y="275" width="450" height="5"/>
+                        <rect key="frame" x="38" y="224" width="450" height="5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="450" id="6qa-Fy-fTC"/>
                         </constraints>
@@ -320,7 +318,7 @@ DQ
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="476">
-                        <rect key="frame" x="280" y="157" width="127" height="18"/>
+                        <rect key="frame" x="280" y="106" width="127" height="18"/>
                         <buttonCell key="cell" type="check" title="Notice Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="494">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -328,7 +326,7 @@ DQ
                         <accessibility description="Ignore Private Notices from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="479">
-                        <rect key="frame" x="74" y="157" width="171" height="18"/>
+                        <rect key="frame" x="74" y="106" width="171" height="18"/>
                         <buttonCell key="cell" type="check" title="Client-to-Client Protocol" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="491">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -336,7 +334,7 @@ DQ
                         <accessibility description="Ignore Client-to-Client Protocol (CTCP) Requests"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="480">
-                        <rect key="frame" x="74" y="185" width="158" height="18"/>
+                        <rect key="frame" x="74" y="134" width="158" height="18"/>
                         <buttonCell key="cell" type="check" title="Highlights in Channels" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="490">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -344,7 +342,7 @@ DQ
                         <accessibility description="Ignore Highlights by User in a Channel"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="481">
-                        <rect key="frame" x="280" y="213" width="129" height="18"/>
+                        <rect key="frame" x="280" y="162" width="129" height="18"/>
                         <buttonCell key="cell" type="check" title="Private Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="489">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -352,7 +350,7 @@ DQ
                         <accessibility description="Ignore Private Messages from User"/>
                     </button>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="482">
-                        <rect key="frame" x="74" y="213" width="124" height="18"/>
+                        <rect key="frame" x="74" y="162" width="124" height="18"/>
                         <buttonCell key="cell" type="check" title="Public Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="488">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -360,25 +358,51 @@ DQ
                         <accessibility description="Ignore Public Messages from User"/>
                     </button>
                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="632">
-                        <rect key="frame" x="38" y="110" width="450" height="5"/>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <font key="titleFont" metaFont="system"/>
-                    </box>
-                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="636">
                         <rect key="frame" x="38" y="59" width="450" height="5"/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="rur-OE-BUc">
-                        <rect key="frame" x="74" y="129" width="157" height="18"/>
+                        <rect key="frame" x="74" y="78" width="157" height="18"/>
                         <buttonCell key="cell" type="check" title="File Transfer Requests" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Cq8-TN-59m">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <accessibility description="Ignore File Transfer Requests from User"/>
                     </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
+                        <rect key="frame" x="280" y="134" width="149" height="18"/>
+                        <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Ignore Highlights by User in a Private Message"/>
+                    </button>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
+                        <rect key="frame" x="36" y="193" width="454" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
+                        <rect key="frame" x="280" y="78" width="172" height="18"/>
+                        <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
+                    </button>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="296">
+                        <rect key="frame" x="18" y="331" width="69" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="484">
                         <rect key="frame" x="342" y="13" width="85" height="32"/>
                         <constraints>
@@ -408,46 +432,6 @@ DQ
                             <action selector="ok:" target="-2" id="587"/>
                         </connections>
                     </button>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="44o-H8-79C">
-                        <rect key="frame" x="280" y="185" width="149" height="18"/>
-                        <buttonCell key="cell" type="check" title="Highlights in Queries" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5Dh-LG-xCS">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Highlights by User in a Private Message"/>
-                    </button>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PQp-5W-SVj">
-                        <rect key="frame" x="36" y="244" width="454" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" alignment="center" title="Select one or more of the following items to ignore from this user:" id="exY-LJ-Izn">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button toolTip="Ignore join, part, quit, and other activity related to the ignored user." translatesAutoresizingMaskIntoConstraints="NO" id="477">
-                        <rect key="frame" x="280" y="129" width="172" height="18"/>
-                        <buttonCell key="cell" type="check" title="General Event Messages" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="493">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Ignore Join, Part, and Quit Activity of User"/>
-                    </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="296">
-                        <rect key="frame" x="18" y="382" width="69" height="17"/>
-                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Hostmask:" id="297">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button translatesAutoresizingMaskIntoConstraints="NO" id="617">
-                        <rect key="frame" x="74" y="78" width="251" height="18"/>
-                        <buttonCell key="cell" type="check" title="Hide messages that mention this user" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="618">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <accessibility description="Hide messages that mention the ignored user."/>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="top" secondItem="314" secondAttribute="bottom" constant="16" id="0qb-KL-3Y6"/>
@@ -463,14 +447,11 @@ DQ
                     <constraint firstItem="298" firstAttribute="top" secondItem="6" secondAttribute="top" constant="20" symbolic="YES" id="BR4-Fl-myM"/>
                     <constraint firstItem="482" firstAttribute="top" secondItem="PQp-5W-SVj" secondAttribute="bottom" constant="15" id="Bf7-Sa-qdR"/>
                     <constraint firstItem="PQp-5W-SVj" firstAttribute="trailing" secondItem="314" secondAttribute="trailing" id="BvZ-KD-MmD"/>
-                    <constraint firstItem="484" firstAttribute="top" secondItem="636" secondAttribute="bottom" constant="20" symbolic="YES" id="CAs-57-Ks3"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="CXj-wL-SUJ"/>
                     <constraint firstItem="304" firstAttribute="baseline" secondItem="302" secondAttribute="baseline" id="Dgq-fR-czw"/>
                     <constraint firstItem="594" firstAttribute="top" secondItem="298" secondAttribute="bottom" constant="15" id="G1Q-Vh-L5K"/>
                     <constraint firstAttribute="trailing" secondItem="306" secondAttribute="trailing" constant="53" id="Grb-6Z-8ZJ"/>
-                    <constraint firstItem="rur-OE-BUc" firstAttribute="leading" secondItem="617" secondAttribute="leading" id="H4r-wX-PuX"/>
                     <constraint firstItem="632" firstAttribute="trailing" secondItem="PQp-5W-SVj" secondAttribute="trailing" id="H5Z-lB-Tm0"/>
-                    <constraint firstItem="636" firstAttribute="trailing" secondItem="632" secondAttribute="trailing" id="HTS-Na-KlR"/>
                     <constraint firstItem="480" firstAttribute="top" secondItem="482" secondAttribute="bottom" constant="14" id="HUb-bd-cbs"/>
                     <constraint firstItem="485" firstAttribute="trailing" secondItem="298" secondAttribute="trailing" id="Hvg-9U-IrZ"/>
                     <constraint firstItem="476" firstAttribute="baseline" secondItem="479" secondAttribute="baseline" id="IBa-TA-kGg"/>
@@ -482,13 +463,11 @@ DQ
                     <constraint firstItem="479" firstAttribute="top" secondItem="480" secondAttribute="bottom" constant="14" id="Sd9-rf-MIH"/>
                     <constraint firstItem="302" firstAttribute="top" secondItem="594" secondAttribute="bottom" constant="2" id="TCq-bu-JyI"/>
                     <constraint firstAttribute="bottom" secondItem="484" secondAttribute="bottom" constant="20" symbolic="YES" id="W2y-wz-igA"/>
-                    <constraint firstItem="617" firstAttribute="top" secondItem="632" secondAttribute="bottom" constant="18" id="WlE-xA-80J"/>
                     <constraint firstItem="rur-OE-BUc" firstAttribute="baseline" secondItem="477" secondAttribute="baseline" id="Xqy-2v-IW1"/>
                     <constraint firstItem="480" firstAttribute="baseline" secondItem="44o-H8-79C" secondAttribute="baseline" id="ckp-bM-zDS"/>
                     <constraint firstItem="485" firstAttribute="leading" secondItem="484" secondAttribute="trailing" constant="12" symbolic="YES" id="dKr-Zg-Chb"/>
                     <constraint firstItem="306" firstAttribute="top" secondItem="300" secondAttribute="bottom" constant="15" id="dcV-d8-ojs"/>
                     <constraint firstItem="308" firstAttribute="top" secondItem="304" secondAttribute="bottom" constant="12" id="fhQ-8f-WAX"/>
-                    <constraint firstItem="636" firstAttribute="leading" secondItem="632" secondAttribute="leading" id="gBh-53-Csn"/>
                     <constraint firstItem="302" firstAttribute="trailing" secondItem="594" secondAttribute="trailing" id="gLt-VL-8jX"/>
                     <constraint firstItem="304" firstAttribute="leading" secondItem="306" secondAttribute="leading" id="hi2-A9-vwX"/>
                     <constraint firstItem="314" firstAttribute="top" secondItem="309" secondAttribute="bottom" constant="18" id="jCP-Ku-yxu"/>
@@ -500,15 +479,15 @@ DQ
                     <constraint firstItem="314" firstAttribute="leading" secondItem="PQp-5W-SVj" secondAttribute="leading" id="ryK-RP-yiN"/>
                     <constraint firstItem="476" firstAttribute="leading" secondItem="44o-H8-79C" secondAttribute="leading" id="s6u-BD-lvn"/>
                     <constraint firstItem="309" firstAttribute="top" secondItem="306" secondAttribute="bottom" constant="12" id="sUo-oc-VZu"/>
+                    <constraint firstItem="484" firstAttribute="top" secondItem="632" secondAttribute="bottom" constant="20" id="x2o-Lh-hhK"/>
                     <constraint firstItem="44o-H8-79C" firstAttribute="leading" secondItem="481" secondAttribute="leading" id="xib-Yx-EM4"/>
                     <constraint firstItem="308" firstAttribute="leading" secondItem="309" secondAttribute="leading" id="yi4-Qh-uRn"/>
-                    <constraint firstItem="636" firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="z4I-5F-L4Z"/>
                 </constraints>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="228"/>
             </connections>
-            <point key="canvasLocation" x="287" y="285"/>
+            <point key="canvasLocation" x="287" y="259.5"/>
         </window>
     </objects>
 </document>

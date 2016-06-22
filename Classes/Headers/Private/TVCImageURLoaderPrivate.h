@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,72 +35,23 @@
 
  *********************************************************************** */
 
-/* ************************************************** */
-/*                                                    */
-/* DO NOT OVERRIDE ANYTHING BELOW THIS LINE           */
-/*                                                    */
-/* ************************************************** */
+NS_ASSUME_NONNULL_BEGIN
 
-/* State management */
-Textual.notifyDidBecomeVisible = function()
-{
-	TextualScroller.enableScrollingTimer();
+@protocol TVCImageURLoaderDelegate;
 
-	Textual.clearSelection();
-};
+@interface TVCImageURLoader : NSObject
+@property (nonatomic, weak, nullable) id <TVCImageURLoaderDelegate> delegate;
 
-Textual.notifyDidBecomeHidden = function()
-{
-	TextualScroller.disableScrollingTimer();
++ (void)invalidateInternalCache;
 
-	Textual.clearSelection();
-};
+- (void)assesURL:(NSString *)baseURL withId:(NSString *)uniqueId;
+@end
 
-Textual.notifySelectionChanged = function(isSelected)
-{
-	Textual.setTopicBarVisible(isSelected);
-		
-	Textual.setDocumentBodyPointerEventsEnabled(isSelected);
-};
+@protocol TVCImageURLoaderDelegate <NSObject>
+@required
 
-Textual.viewFinishedLoadingInt = function(isSelected, isVisible, isReloadingBacklog, textSizeMultiplier)
-{
-	if (isVisible) {
-		Textual.notifyDidBecomeVisible();
-	
-		if (isSelected) {
-			Textual.notifySelectionChanged(true);
-		} else {
-			Textual.notifySelectionChanged(false);
-		}
-	}
-	
-	if (isReloadingBacklog) {
-		Textual.viewFinishedReload();
-	} else {
-		Textual.viewFinishedLoading();
-	}
-	
-	Textual.changeTextSizeMultiplier(textSizeMultiplier);
-};
+- (void)isSafeToPresentImageWithId:(NSString *)uniqueId;
+- (void)isNotSafeToPresentImageWithId:(NSString *)uniqueId;
+@end
 
-Textual.newMessagePostedToViewInt = function(lineNumber)
-{
-	/* Allow lineNumber to be an array of line numbers or a single line number. */
-	if (Array.isArray(lineNumber)) {
-		for (var i = 0; i < lineNumber.length; i++) {
-			Textual.newMessagePostedToView(lineNumber[i]);
-		}
-	} else {
-		Textual.newMessagePostedToView(lineNumber);
-	}
-};
-
-/* Events */
-Textual.mouseUpEventCallback = function()
-{
-	Textual.copySelectionOnMouseUpEvent();
-};
-
-/* Bind to events */
-document.addEventListener("mouseup", Textual.mouseUpEventCallback, false);
+NS_ASSUME_NONNULL_END

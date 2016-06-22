@@ -144,7 +144,7 @@ Textual.handleEvent                            = function(eventToken) {};
 	defining the return value.
 
 	For example:
-		app.inlineImagesEnabledForView(
+		app.inlineMediaEnabledForView(
 			function(returnValue) {
 				console.log(returnValue);
 			}
@@ -153,7 +153,7 @@ Textual.handleEvent                            = function(eventToken) {};
 
 /* Checks whether inline images are enabled for this particular view. Inline images can be enabled and 
    on a per-view basis so querying preferences alone for the value will only give the global value. */
-// app.inlineImagesEnabledForView(callbackFunction)
+// app.inlineMediaEnabledForView(callbackFunction)
 
 /* Returns true if the sidebar colors are inverted (dark mode). The preferencesDidChange() callback 
    can be used to monitor changes to the value of this function. */

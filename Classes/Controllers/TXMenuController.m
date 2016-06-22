@@ -1507,13 +1507,29 @@
 	
 	NSString *newName = [[config connectionName] stringByAppendingString:@"_"];
 
+	NSString *proxyPassword = [config proxyPassword];
+	NSString *serverPassword = [config serverPassword];
+	NSString *nicknamePassword = [config nicknamePassword];
+
 	[config setItemUUID:[NSString stringWithUUID]];
 	
 	[config setConnectionName:newName];
 	
-	[config setProxyPassword:NSStringEmptyPlaceholder];
-	[config setServerPassword:NSStringEmptyPlaceholder];
-	[config setNicknamePassword:NSStringEmptyPlaceholder];
+	[config setProxyPassword:proxyPassword];
+	[config setServerPassword:serverPassword];
+	[config setNicknamePassword:nicknamePassword];
+
+	[config writeKeychainItemsToDisk];
+
+	for (IRCChannelConfig *channelConfig in [config channelList]) {
+		NSString *secretKey = [channelConfig secretKey];
+
+		[channelConfig setItemUUID:[NSString stringWithUUID]];
+
+		[channelConfig setSecretKey:secretKey];
+
+		[channelConfig writeKeychainItemsToDisk];
+	}
 	
 	IRCClient *n = [worldController() createClient:config reload:YES];
 	
