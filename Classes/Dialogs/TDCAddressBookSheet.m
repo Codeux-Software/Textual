@@ -38,7 +38,6 @@
 #import "TextualApplication.h"
 
 @interface TDCAddressBookSheet ()
-@property (nonatomic, weak) IBOutlet NSButton *ignoreMessagesContainingMatchCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
@@ -129,7 +128,6 @@
 	[self.ignoreClientToClientProtocolCheck		setState:[self.ignore ignoreClientToClientProtocol]];
 	[self.ignoreGeneralEventMessagesCheck		setState:[self.ignore ignoreGeneralEventMessages]];
 	[self.ignoreFileTransferRequestsCheck		setState:[self.ignore ignoreFileTransferRequests]];
-	[self.ignoreMessagesContainingMatchCheck	setState:[self.ignore ignoreMessagesContainingMatchh]];
 	[self.ignoreNoticeMessagesCheck				setState:[self.ignore ignoreNoticeMessages]];
 	[self.ignorePrivateMessageHighlightsCheck	setState:[self.ignore ignorePrivateMessageHighlights]];
 	[self.ignorePrivateMessagesCheck			setState:[self.ignore ignorePrivateMessages]];
@@ -152,7 +150,6 @@
 	[self.ignore setIgnoreClientToClientProtocol:		[self.ignoreClientToClientProtocolCheck state]];
 	[self.ignore setIgnoreFileTransferRequests:			[self.ignoreFileTransferRequestsCheck state]];
 	[self.ignore setIgnoreGeneralEventMessages:			[self.ignoreGeneralEventMessagesCheck state]];
-	[self.ignore setIgnoreMessagesContainingMatchh:		[self.ignoreMessagesContainingMatchCheck state]];
 	[self.ignore setIgnoreNoticeMessages:				[self.ignoreNoticeMessagesCheck state]];
 	[self.ignore setIgnorePrivateMessageHighlights:		[self.ignorePrivateMessageHighlightsCheck state]];
 	[self.ignore setIgnorePrivateMessages:				[self.ignorePrivateMessagesCheck state]];

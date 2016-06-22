@@ -51,7 +51,6 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessag
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnorePrivateMessageHighlightsKey;
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreGeneralEventMessagesKey;
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreFileTransferRequestsKey;
-TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreMessagesContainingMatchKey;
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueIgnoreClientToClientProtocolKey;
 
 TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey;
@@ -69,7 +68,6 @@ TEXTUAL_EXTERN NSString * const IRCAddressBookDictionaryValueTrackUserActivityKe
 @property (nonatomic, assign) BOOL ignorePublicMessageHighlights;
 @property (nonatomic, assign) BOOL ignorePublicMessages;
 @property (nonatomic, assign) BOOL ignoreFileTransferRequests;
-@property (nonatomic, assign) BOOL ignoreMessagesContainingMatchh;
 @property (nonatomic, assign) BOOL trackUserActivity;
 
 + (instancetype)newIgnoreEntry;
