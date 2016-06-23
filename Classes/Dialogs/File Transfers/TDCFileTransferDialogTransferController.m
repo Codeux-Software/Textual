@@ -61,7 +61,7 @@
 
 #define _connectTimeout			30.0
 #define _sendDataTimeout		30.0
-#define _resumeAcceptTimeout	6.0
+#define _resumeAcceptTimeout	10.0
 
 #import "TextualApplication.h"
 
