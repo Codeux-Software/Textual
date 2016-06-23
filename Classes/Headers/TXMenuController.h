@@ -193,6 +193,7 @@
 	925: "Import Preferences"
 	926: "Download Beta Updates"
 	927: "End User License Agreement"
+	928: "Enable App Nap"
  
 	The following tags apply to the "Join Channel" menu:
 	1000: "Join Channel"
@@ -327,6 +328,8 @@
 
 - (IBAction)toggleDeveloperMode:(id)sender;
 - (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
+
+- (IBAction)toggleAppNap:(id)sender;
 
 - (IBAction)showHighlightSheet:(id)sender;
 

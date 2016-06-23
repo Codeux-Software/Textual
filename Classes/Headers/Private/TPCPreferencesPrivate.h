@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TPCPreferences ()
 + (void)initPreferences;
 
++ (void)setAppNapEnabled:(BOOL)appNapEnabled;
+
 + (void)setDeveloperModeEnabled:(BOOL)developerModeEnabled;
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
