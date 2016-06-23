@@ -67,9 +67,9 @@
 	BOOL isSomethingChecked = [RZUserDefaults() boolForKey:@"TPIPreferencesSomethingCheckboxIsChecked"];
 	
 	if (isSomethingChecked) {
-		LogToConsole(@"Checkbox is checked");
+		LogToConsole("Checkbox is checked");
 	} else {
-		LogToConsole(@"Checkbox is not checked");
+		LogToConsole("Checkbox is not checked");
 	}
 }
 

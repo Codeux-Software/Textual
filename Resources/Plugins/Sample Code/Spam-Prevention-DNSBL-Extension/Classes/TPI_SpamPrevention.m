@@ -28,7 +28,7 @@
 		//{
 			NSString *userAddress = [inputObject senderAddress];
 
-			DebugLogToConsole(@"Attempting to resolve address: %@", userAddress);
+			LogToConsoleDebug("Attempting to resolve address: %@", userAddress);
 			
 			if (userAddress) {
 				NSDictionary *lookupResults = [self resolveBlacklistEntryFromAddress:userAddress];
@@ -194,7 +194,7 @@
 {
 	IRCChannel *dataQuery = [client findChannelOrCreate:TPILocalizedString(@"BasicLanguage[1001]") isPrivateMessage:YES];
 	
-	[client print:dataQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultRawCommandValue];
+	[client print:dataQuery type:TVCLogLinePrivateMessageType nickname:nil messageBody:formattedMessage command:TVCLogLineDefaultCommandValue];
 	
 	[client performSelector:@selector(setUnreadState:) withObject:dataQuery];
 }
