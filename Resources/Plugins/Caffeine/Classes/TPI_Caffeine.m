@@ -57,7 +57,7 @@
 {
 	self.progressObject = [RZProcessInfo() beginActivityWithOptions:NSActivityUserInitiated reason:@"Disable sleep mode"];
 
-	LogToConsole(@"Disabled sleep mode");
+	LogToConsole("Disabled sleep mode")
 }
 
 - (void)enableSleepMode
@@ -68,7 +68,7 @@
 		self.progressObject = nil;
 	}
 
-	LogToConsole(@"Enabled sleep mode");
+	LogToConsole("Enabled sleep mode")
 }
 
 - (void)toggleSleepMode
@@ -118,7 +118,7 @@
 				@try {
 					[client removeObserver:self forKeyPath:@"isLoggedIn"];
 				} @catch (NSException *exception) {
-					LogToConsole(@"Caught exception: %@", [exception reason]);
+					LogToConsole("Caught exception: %@", [exception reason])
 					LogToConsoleCurrentStackTrace
 				}
 			}

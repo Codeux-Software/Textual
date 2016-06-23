@@ -412,10 +412,10 @@
 		requestData =  requestDataRaw;
 	}
 
-	//DebugLogToConsole(@"Key Exchange Request Received:");
-	//DebugLogToConsole(@"	Client: %@", client);
-	//DebugLogToConsole(@"	Channel: %@", channel);
-	//DebugLogToConsole(@"	Message: %@", requestData);
+	//LogToConsoleDebug("Key Exchange Request Received:");
+	//LogToConsoleDebug("	Client: %@", client);
+	//LogToConsoleDebug("	Channel: %@", channel);
+	//LogToConsoleDebug("	Message: %@", requestData);
 	
 	if ([requestData length] <= 0) {
 		[client printDebugInformation:TPILocalizedString(@"BasicLanguage[1019]") channel:channel];
@@ -446,7 +446,7 @@
 				return;
 			}
 
-			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+			//LogToConsoleDebug("	Shared Secret: %@", theSecret);
 
 			[TPIBlowfishEncryption setEncryptionKey:theSecret forChannel:channel];
 			[TPIBlowfishEncryption setEncryptionModeOfOperation:mode forChannel:channel];
@@ -500,10 +500,10 @@
 			responseData =  responseDataRaw;
 		}
 		
-		//DebugLogToConsole(@"Key Exchange Response Received:");
-		//DebugLogToConsole(@"	Response Key: %@", responseKey);
-		//DebugLogToConsole(@"	Response Info: %@", exchangeData);
-		//DebugLogToConsole(@"	Message: %@", responseData);
+		//LogToConsoleDebug("Key Exchange Response Received:");
+		//LogToConsoleDebug("	Response Key: %@", responseKey);
+		//LogToConsoleDebug("	Response Info: %@", exchangeData);
+		//LogToConsoleDebug("	Message: %@", responseData);
 
 		EKBlowfishEncryptionKeyExchange *request = exchangeData[0];
 		
@@ -531,7 +531,7 @@
 				return [client printDebugInformation:TPILocalizedString(@"BasicLanguage[1004]") channel:channel];
 			}
 			
-			//DebugLogToConsole(@"	Shared Secret: %@", theSecret);
+			//LogToConsoleDebug("	Shared Secret: %@", theSecret);
 
 			[TPIBlowfishEncryption setEncryptionKey:theSecret forChannel:channel];
 			[TPIBlowfishEncryption setEncryptionModeOfOperation:mode forChannel:channel];
