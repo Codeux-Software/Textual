@@ -80,7 +80,7 @@
 
 	if (filterLimitedToValue != TPI_ChatFilterLimitToNoLimitValue || [filter filterIgnoresOperators]) {
 		if (textDestination == nil && [textAuthor isServer] == NO) {
-			DebugLogToConsole(@"textDestination == nil — Returning input instead of continuing with filter");
+			LogToConsoleDebug("textDestination == nil — Returning input instead of continuing with filter");
 
 			return NO;
 		}
@@ -182,8 +182,6 @@
 - (BOOL)receivedCommand:(NSString *)command withText:(NSString *)text authoredBy:(IRCPrefix *)textAuthor destinedFor:(IRCChannel *)textDestination onClient:(IRCClient *)client receivedAt:(NSDate *)receivedAt
 {
 	/* Begin processing filters */
-	DebugLogToConsole(@"Received command: %@; text “%@“; sender “%@“", command, text, [textAuthor hostmask]);
-
 	@synchronized([self.filterArrayController arrangedObjects]) {
 		NSArray *arrangedObjects = [self.filterArrayController arrangedObjects];
 
@@ -288,7 +286,7 @@
 									continue;
 								}
 							} else {
-								LogToConsole(@"senderUser == nil — Skipping to next filter");
+								LogToConsoleDebug("senderUser == nil — Skipping to next filter")
 								
 								continue;
 							}

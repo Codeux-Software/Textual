@@ -193,7 +193,7 @@ ClassWithDesignatedInitializerInitMethod
 			NSError *fileWriteError = nil;
 
 			if ([string writeToURL:filePath atomically:NO encoding:NSUTF8StringEncoding error:&fileWriteError] == NO) {
-				LogToConsole(@"Failed to write temporary file: %@", [fileWriteError localizedDescription]);
+				LogToConsoleError("Failed to write temporary file: %{public}@", [fileWriteError localizedDescription])
 			}
 
 			[webView loadFileURL:filePath allowingReadAccessToURL:baseURL];
@@ -414,7 +414,7 @@ ClassWithDesignatedInitializerInitMethod
 	[objects enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 		/* Perform check to make sure the key we are using is actually a string. */
 		if ([key isKindOfClass:[NSString class]] == NO) {
-			LogToConsole(@"Silently ignoring non-string key: %@", NSStringFromClass([key class]));
+			LogToConsoleDebug("Silently ignoring non-string key: %{public}@", NSStringFromClass([key class]))
 
 			return;
 		}

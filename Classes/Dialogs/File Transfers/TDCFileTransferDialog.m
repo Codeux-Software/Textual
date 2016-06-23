@@ -189,7 +189,7 @@
 - (NSString *)addReceiverForClient:(IRCClient *)client nickname:(NSString *)nickname address:(NSString *)hostAddress port:(NSInteger)hostPort filename:(NSString *)filename filesize:(TXUnsignedLongLong)totalFilesize token:(NSString *)transferToken
 {
 	if ([self countNumberOfReceivers] > _addReceiverHardLimit) {
-		LogToConsole(@"Max receiver count of %i exceeded.", _addReceiverHardLimit);
+		LogToConsoleError("Max receiver count of %{public}i exceeded.", _addReceiverHardLimit)
 		
 		return nil;
 	}
@@ -260,7 +260,7 @@
 	TXUnsignedLongLong filesize = [fileAttributes fileSize];
 
 	if (filesize == 0) {
-		LogToConsole(@"Fatal error: Cannot create sender because filesize == 0");
+		LogToConsoleError("Fatal error: Cannot create sender because filesize == 0")
 
 		return nil;
 	}
@@ -742,7 +742,7 @@
 
 - (void)fileTransferRemoteAddressRequestDidCloseWithError:(NSError *)errPntr
 {
-	LogToConsole(@"Failed to complete connection request with error: %@", [errPntr localizedDescription]);
+	LogToConsoleError("Failed to complete connection request with error: %{public}@", [errPntr localizedDescription])
 	
 	self.sourceIPAddressRequestPending = NO;
 	
@@ -872,12 +872,12 @@
 														  error:&resolveError];
 	
 	if (resolveError) {
-		DebugLogToConsole(@"Error creating bookmark for URL: %@", [resolveError localizedDescription]);
+		LogToConsoleError("Error creating bookmark for URL: %{public}@", [resolveError localizedDescription]);
 	} else {
 		self.downloadDestination = resolvedBookmark;
 		
 		if ([self.downloadDestination startAccessingSecurityScopedResource] == NO) {
-			DebugLogToConsole(@"Failed to access bookmark.");
+			LogToConsoleError("Failed to access bookmark");
 		}
 	}
 }

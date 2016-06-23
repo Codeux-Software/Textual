@@ -813,7 +813,7 @@
 															  error:&error];
 				
 				if (error) {
-					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
+					LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@", pathURL, [error localizedDescription])
 				} else {
 					[transferController setDownloadDestinationFolder:bookmark];
 				}
@@ -883,7 +883,7 @@
 															  error:&error];
 
 				if (error) {
-					LogToConsole(@"Error creating bookmark for URL (%@): %@", pathURL, [error localizedDescription]);
+					LogToConsoleError("Error creating bookmark for URL (%{public}@): %{public}@", pathURL, [error localizedDescription])
 				} else {
 					[TPCPathInfo setTranscriptFolderURL:bookmark];
 				}
@@ -1117,7 +1117,7 @@
 	OSStatus aeDescStatus = AECreateDesc('ptru', "Proxies", 7,  &aeDesc);
 
 	if (aeDescStatus != noErr) {
-		LogToConsole(@"aeDescStatus returned value other than noErr: %i", aeDescStatus);
+		LogToConsoleError("aeDescStatus returned value other than noErr: %{public}i", aeDescStatus)
 
 		return;
 	}
@@ -1288,7 +1288,7 @@
 		NSError *deleteError = nil;
 
 		if ([RZFileManager() removeItemAtPath:[TPCPathInfo cloudCustomThemeFolderPath] error:&deleteError] == NO) {
-			LogToConsole(@"Delete Error: %@", [deleteError localizedDescription]);
+			LogToConsoleError("Delete Error: %{public}@", [deleteError localizedDescription])
 		}
 		
 		// We do not call performValidationForKeyValues here because the

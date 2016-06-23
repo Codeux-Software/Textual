@@ -316,7 +316,7 @@
 		NSString *tempServerAddress = [tempStore substringWithRange:serverAddressRange];
 
 		if ([tempServerAddress isIPv6Address] == NO) {
-			LogToConsole(@"Server address was surrounded by square brackets but the enclosed value was not an IPv6 address");
+			LogToConsoleError("Server address was surrounded by square brackets but the enclosed value was not an IPv6 address")
 
 			return;
 		} else {
@@ -352,7 +352,7 @@
 		}
 
 		if ([serverAddress isValidInternetAddress] == NO) {
-			LogToConsole(@"Invalid internet address");
+			LogToConsoleError("Invalid internet address")
 
 			return;
 		} else {
@@ -379,7 +379,7 @@
 		}
 
 		if ([tempServerPort isValidInternetPort] == NO) {
-			LogToConsole(@"Invalid internet port");
+			LogToConsoleError("Invalid internet port")
 
 			return;
 		} else {

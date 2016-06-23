@@ -161,7 +161,7 @@ NS_ASSUME_NONNULL_BEGIN
 		} else {
 			self.ubiquitousContainerURL = nil;
 			
-			LogToConsole(@"iCloud access is not available.");
+			LogToConsoleInfo("iCloud access is not available.")
 		}
 
 		[themeController() reloadMonitoringActiveThemePath];
@@ -236,30 +236,30 @@ NS_ASSUME_NONNULL_BEGIN
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
 		/* Only perform sync if there is something to sync */
 		if (self.pushAllLocalKeysNextSync == NO && (self.keysToRemove).count == 0 && (self.keysToSync).count == 0) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because nothing has changed")
+			LogToConsoleDebug("iCloud: Upstream sync cancelled because nothing has changed")
 			
 			return;
 		}
 		
 		if (self.isSyncingLocalKeysDownstream) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because a downstream sync is in progress")
+			LogToConsoleDebug("iCloud: Upstream sync cancelled because a downstream sync is in progress")
 			
 			return;
 		}
 		
 		if (self.isSyncingLocalKeysUpstream) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because an upstream sync is in progress")
+			LogToConsoleDebug("iCloud: Upstream sync cancelled because an upstream sync is in progress")
 			
 			return;
 		}
 		
 		if (self.hasUncommittedDataStoredInCloud) {
-			DebugLogToConsole(@"iCloud: Upstream sync cancelled because there is uncommitted data remaining in the cloud")
+			LogToConsoleDebug("iCloud: Upstream sync cancelled because there is uncommitted data remaining in the cloud")
 			
 			return;
 		}
 
-		DebugLogToConsole(@"iCloud: Beginning sync upstream")
+		LogToConsoleDebug("iCloud: Beginning sync upstream")
 
 		self.isSyncingLocalKeysUpstream = YES;
 		
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		/* Remove any keys that were marked for removal */
 		for (NSString *key in self.keysToRemove) {
-			DebugLogToConsole(@"Key (%@) is being removed from iCloud as it was marked to be", key)
+			LogToConsoleDebug("Key (%{public}@) is being removed from iCloud as it was marked to be", key)
 
 			[self removeObjectForKey:key];
 
@@ -358,7 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.isSyncingLocalKeysUpstream = NO;
 
-		DebugLogToConsole(@"iCloud: Completeing sync upstream")
+		LogToConsoleDebug("iCloud: Completeing sync upstream")
 	});
 }
 
@@ -373,7 +373,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	XRPerformBlockAsynchronouslyOnQueue(self.workerQueue, ^{
-		DebugLogToConsole(@"iCloud: Beginning sync downstream")
+		LogToConsoleDebug("iCloud: Beginning sync downstream")
 
 		self.isSyncingLocalKeysDownstream = YES;
 
@@ -402,10 +402,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (unhashedKey == nil || unhashedValue == nil) {
 				unhashedKey = [self unhashedKeyFromHashedKey:hashedKey];
 
-				DebugLogToConsole(@"Hashed key (%@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
+				LogToConsoleDebug("Hashed key (%{public}@) is missing a value or key name. Possible key name: %@", hashedKey, unhashedKey);
 
 				if (unhashedKey) {
-					DebugLogToConsole(@"Asking for permission to remove key (%@) from local defaults store", unhashedKey);
+					LogToConsoleDebug("Asking for permission to remove key (%{public}@) from local defaults store", unhashedKey);
 
 					if ([self keyIsNotPermittedFromCloud:unhashedKey]) {
 						continue;
@@ -483,7 +483,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		self.remoteKeysBeingSynced = nil;
 
-		DebugLogToConsole(@"iCloud: Completeing sync downstream")
+		LogToConsoleDebug("iCloud: Completeing sync downstream")
 	});
 }
 
@@ -676,7 +676,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)cloudStorageLimitExceeded
 {
-	LogToConsole(@"The cloud storage limit was exceeded")
+	LogToConsoleError("The cloud storage limit was exceeded")
 }
 
 #pragma mark -
@@ -706,7 +706,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
-	DebugLogToConsole(@"iCloud: Beginning session")
+	LogToConsoleDebug("iCloud: Beginning session")
 
 	self.workerQueue = dispatch_queue_create("iCloudSyncWorkerQueue", DISPATCH_QUEUE_SERIAL);
 
@@ -770,7 +770,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	DebugLogToConsole(@"iCloud: Closing session")
+	LogToConsoleDebug("iCloud: Closing session")
 
 	if ( self.cloudOneMinuteSyncTimer) {
 		[self.cloudOneMinuteSyncTimer invalidate];

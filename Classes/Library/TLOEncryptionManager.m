@@ -103,7 +103,7 @@
 	NSError *attributesChangeError = nil;
 
 	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
-		LogToConsole(@"Failed to hide the folder at the path '%@': %@", componentPathURL, [attributesChangeError localizedDescription]);
+		LogToConsoleError("Failed to hide the folder at the path '%{public}@': %{public}@", componentPathURL, [attributesChangeError localizedDescription])
 	}
 
 	[otrKit setMaximumProtocolSize:[self otrKitProtocolMaximumMessageSize]
@@ -119,7 +119,7 @@
 		NSError *writeError = nil;
 
 		if ([NSStringEmptyPlaceholder writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
-			LogToConsole(@"Failed to create base file for encryption component at path: %@", [writeError localizedDescription]);
+			LogToConsoleError("Failed to create base file for encryption component at path: %@", [writeError localizedDescription])
 		}
 	}
 
@@ -130,7 +130,7 @@
 	NSError *attributesChangeError = nil;
 
 	if ([pathURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&attributesChangeError] == NO) {
-		LogToConsole(@"Failed to exclude the files at the path '%@' from backup: %@", pathURL, [attributesChangeError localizedDescription]);
+		LogToConsoleError("Failed to exclude the files at the path '%{public}@' from backup: %{public}@", pathURL, [attributesChangeError localizedDescription])
 	}
 }
 
@@ -429,7 +429,7 @@
 		IRCClient *client = [self connectionFromAccountName:accountName];
 
 		if (client == nil) {
-			LogToConsole(@"-connectionFromAccountName: returned a nil value, failing");
+			LogToConsoleError("-connectionFromAccountName: returned a nil value, failing")
 		} else {
 			IRCChannel *channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
 

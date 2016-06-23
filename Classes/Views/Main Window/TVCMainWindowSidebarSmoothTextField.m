@@ -138,7 +138,7 @@
 		if (superviewSmoothingColor) {
 			return superviewSmoothingColor;
 		} else {
-			LogToConsole(@"*** WARNING: -fontSmoothingBackgroundColorForParentTableRow returned nil value");
+			LogToConsoleError("*** WARNING: -fontSmoothingBackgroundColorForParentTableRow returned nil value")
 
 			return [NSColor clearColor];
 		}

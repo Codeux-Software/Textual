@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (sourcePathExists) {
 		/* Create a backup of the source */
 		if ([TPCPreferencesUserDefaults createBackupOfPath:sourcePath] == NO) {
-			LogToConsole(@"Failed to create backup of source path: '%@'", sourcePath)
+			LogToConsoleError("Failed to create backup of source path: '%{public}@'", sourcePath)
 
 			return;
 		}
@@ -132,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 		preferencesKeysRemapped = [TPCResourceManager loadContentsOfPropertyListInResources:@"RegisteredUserDefaultsRemappedKeys"];
 
 		if (preferencesToMigrate == nil || preferencesKeysRemapped == nil) {
-			LogToConsole(@"'preferencesToMigrate' or 'preferencesKeysRemapped' is nil")
+			LogToConsoleError("'preferencesToMigrate' or 'preferencesKeysRemapped' is nil")
 
 			return;
 		}
@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSError *removeSourcePathError = nil;
 
 		if ([RZFileManager() removeItemAtPath:sourcePath error:&removeSourcePathError] == NO) {
-			LogToConsole(@"Failed to erase source path: '%@' - '%@'",
+			LogToConsoleError("Failed to erase source path: '%{public}@' - '%{public}@'",
 				sourcePath, [removeSourcePathError localizedDescription])
 
 			return;
@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if ([RZFileManager() fileExistsAtPath:sourcePathLeading] == NO) {
 			if ([RZFileManager() createDirectoryAtPath:sourcePathLeading withIntermediateDirectories:YES attributes:nil error:&createSourcePathLeadingError] == NO) {
-				LogToConsole(@"Failed to create source path: '%@' - '%@'",
+				LogToConsoleError("Failed to create source path: '%{public}@' - '%{public}@'",
 					sourcePathLeading, [createSourcePathLeadingError localizedDescription])
 
 				return;
@@ -173,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *createSymbolicLinkError = nil;
 
 	if ([RZFileManager() createSymbolicLinkAtPath:sourcePath withDestinationPath:destinationPath error:&createSymbolicLinkError] == NO) {
-		LogToConsole(@"Failed to create symbolic link to destination path: '%@' -> '%@' - %@",
+		LogToConsoleError("Failed to create symbolic link to destination path: '%{public}@' -> '%{public}@' - %{public}@",
 			sourcePath, destinationPath, [createSymbolicLinkError localizedDescription])
 	}
 
@@ -184,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSError *modifySourcePathAttributesError = nil;
 
 		if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifySourcePathAttributesError] == NO) {
-			LogToConsole(@"Failed to modify attributes of source path: '%@' - '%@'",
+			LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
 				[sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
 		}
 	}
@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSError *modifySourcePathAttributesError = nil;
 
 		if ([sourcePathURL setResourceValue:@(YES) forKey:NSURLIsUserImmutableKey error:&modifySourcePathAttributesError] == NO) {
-			LogToConsole(@"Failed to modify attributes of source path: '%@' - '%@'",
+			LogToConsoleError("Failed to modify attributes of source path: '%{public}@' - '%{public}@'",
 				[sourcePathURL absoluteString], [modifySourcePathAttributesError localizedDescription])
 		}
 	}

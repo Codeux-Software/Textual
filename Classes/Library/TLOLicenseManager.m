@@ -178,7 +178,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 													error:&trialInformationPropertyListError];
 
 		if (trialInformationPropertyList == nil) {
-			LogToConsole(@"Failed to create trial information property list: %@", [trialInformationPropertyListError localizedDescription]);
+			LogToConsoleError("Failed to create trial information property list: %{public}@", [trialInformationPropertyListError localizedDescription])
 
 			return 0; // Cannot continue function...
 		}
@@ -186,7 +186,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *trialInformationWriteError = nil;
 
 		if ([trialInformationPropertyList writeToURL:trialInformationFilePath options:NSDataWritingAtomic error:&trialInformationWriteError] == NO) {
-			LogToConsole(@"Failed to write trial information to disk: %@", trialInformationWriteError);
+			LogToConsoleError("Failed to write trial information to disk: %{public}@", trialInformationWriteError)
 
 			return 0; // Cannot continue function...
 		}
@@ -194,7 +194,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *modifyTrialInformationAttributesError = nil;
 
 		if ([trialInformationFilePath setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&modifyTrialInformationAttributesError] == NO) {
-			LogToConsole(@"Failed to modify attributes of trial information file: %@", [modifyTrialInformationAttributesError localizedDescription]);
+			LogToConsoleError("Failed to modify attributes of trial information file: %{public}@", [modifyTrialInformationAttributesError localizedDescription])
 			
 			return 0; // Cannot continue function...
 		}
@@ -202,7 +202,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 		NSError *lockTrialInformationFileError = nil;
 
 		if ([RZFileManager() lockItemAtPath:[trialInformationFilePath path] error:&lockTrialInformationFileError] == NO) {
-			LogToConsole(@"Failed to lock the trial information file: %@", lockTrialInformationFileError);
+			LogToConsoleError("Failed to lock the trial information file: %{public}@", lockTrialInformationFileError)
 
 			return 0; // Cannot continue function...
 		}
@@ -214,7 +214,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	NSData *trialInformationData = [NSData dataWithContentsOfURL:trialInformationFilePath options:0 error:&trialInformationDataReadError];
 
 	if (trialInformationData == nil) {
-		LogToConsole(@"Failed to read contents of trial information file: %@", [trialInformationDataReadError localizedDescription]);
+		LogToConsoleError("Failed to read contents of trial information file: %{public}@", [trialInformationDataReadError localizedDescription])
 
 		return 0; // Cannot continue function...
 	}
@@ -228,7 +228,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 												error:&trialInformationPropertyListError];
 
 	if (trialInformation == nil) {
-		LogToConsole(@"Failed to convert property list to NSDictionary: %@", [trialInformationPropertyListError localizedDescription]);
+		LogToConsoleError("Failed to convert property list to NSDictionary: %{public}@", [trialInformationPropertyListError localizedDescription])
 
 		return 0; // Cannot continue function...
 	}
@@ -237,7 +237,7 @@ NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void)
 	NSDate *trialPeriodStartDate = trialInformation[@"trialPeriodStartDate"];
 
 	if (trialPeriodStartDate == nil || [trialPeriodStartDate isKindOfClass:[NSDate class]] == NO) {
-		LogToConsole(@"The value of 'trialPeriodStartDate' is nil or not of kind 'NSDate'");
+		LogToConsoleError("The value of 'trialPeriodStartDate' is nil or not of kind 'NSDate'")
 
 		return 0; // Cannot continue function...
 	}
@@ -320,7 +320,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 
 	/* Perform basic validation */
 	if (TLOLicenseManagerLicenseDictionaryIsValid(licenseDictionary) == NO) {
-		LogToConsole(@"Reading license dictionary failed. Returned nil result.");
+		LogToConsoleError("Reading license dictionary failed. Returned nil result.")
 
 		return NO;
 	}
@@ -329,7 +329,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	NSData *licenseSignature = licenseDictionary[TLOLicenseManagerLicenseDictionaryLicenseSignatureKey];
 
 	if (licenseSignature == nil) {
-		LogToConsole(@"Missing license signature in license dictionary");
+		LogToConsoleError("Missing license signature in license dictionary")
 
 		return NO;
 	}
@@ -364,7 +364,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	};
 
 	if ([combinedLicenseData length] <= 0) {
-		LogToConsole(@"Legnth of combinedLicenseData is below or equal to zero (0)");
+		LogToConsoleError("Legnth of combinedLicenseData is below or equal to zero (0)")
 
 		return NO;
 	}
@@ -375,7 +375,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	SecTransformRef verifyFunction = SecVerifyTransformCreate(TLOLicenseManagerPublicKey, cfLicenseSignature, NULL);
 
 	if (verifyFunction == NULL) {
-		LogToConsole(@"Failed to create transform using SecVerifyTransformCreate()");
+		LogToConsoleError("Failed to create transform using SecVerifyTransformCreate()")
 
 		return NO;
 	}
@@ -387,7 +387,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 	{
 		CFRelease(verifyFunction);
 
-		LogToConsole(@"Failed to modify transform attributes using SecTransformSetAttribute()");
+		LogToConsoleError("Failed to modify transform attributes using SecTransformSetAttribute()")
 
 		return NO;
 	}
@@ -402,7 +402,7 @@ BOOL TLOLicenseManagerVerifyLicenseSignatureWithDictionary(NSDictionary *license
 			return YES;
 		}
 	} else {
-		LogToConsole(@"SecTransformExecute() returned a result that is not of type: CFBooleanRef");
+		LogToConsoleError("SecTransformExecute() returned a result that is not of type: CFBooleanRef")
 	}
 
 	return NO;
@@ -439,7 +439,7 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 		NSDictionary *ls_licenseDictionary = TLOLicenseManagerLicenseDictionaryWithData(newContents);
 
 		if (TLOLicenseManagerVerifyLicenseSignatureWithDictionary(ls_licenseDictionary) == NO) {
-			LogToConsole(@"Verify for new license file contents failed");
+			LogToConsoleError("Verify for new license file contents failed")
 
 			return NO;
 		} else {
@@ -451,7 +451,7 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 		NSError *deleteError = nil;
 
 		if ([RZFileManager() removeItemAtURL:licenseFilePath error:&deleteError] == NO) {
-			LogToConsole(@"Failed to delete user license file with error: %@", [deleteError localizedDescription]);
+			LogToConsoleError("Failed to delete user license file with error: %{public}@", [deleteError localizedDescription])
 
 			return NO;
 		}
@@ -466,7 +466,7 @@ BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents)
 	NSError *writeFileError = nil;
 
 	if ([newContents writeToURL:licenseFilePath options:NSDataWritingAtomic error:&writeFileError] == NO) {
-		LogToConsole(@"Failed to write user license file with error: %@", [writeFileError localizedDescription]);
+		LogToConsoleError("Failed to write user license file with error: %{public}@", [writeFileError localizedDescription])
 
 		return NO;
 	} else {
@@ -496,7 +496,7 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 	NSURL *licenseFilePath = TLOLicenseManagerUserLicenseFilePath();
 
 	if (licenseFilePath == nil) {
-		LogToConsole(@"Unable to determine the path to retrieve license information from.");
+		LogToConsoleError("Unable to determine the path to retrieve license information from.")
 
 		return nil;
 	}
@@ -509,7 +509,7 @@ NSData *TLOLicenseManagerUserLicenseFileContents(void)
 		NSData *licenseContents = [NSData dataWithContentsOfURL:licenseFilePath options:0 error:&readError];
 
 		if (licenseContents == nil) {
-			LogToConsole(@"Unable to read user license file. Error: %@", [readError localizedDescription]);
+			LogToConsoleError("Unable to read user license file. Error: %{public}@", [readError localizedDescription])
 
 			return nil;
 		} else {
@@ -535,7 +535,7 @@ NSDictionary *TLOLicenseManagerLicenseDictionary(void)
 			 This console message can be potentially helpful in diagnosing problems for the end user
 			 which means this is the solution instead of removing it. */
 			if ([TPCApplicationInfo timeIntervalSinceApplicationLaunch] > 5) {
-				LogToConsole(@"Cannot load license dictionary because it did not pass validation");
+				LogToConsoleError("Cannot load license dictionary because it did not pass validation")
 			}
 
 			return nil;
@@ -564,7 +564,7 @@ NSDictionary *TLOLicenseManagerLicenseDictionaryWithData(NSData *licenseContents
 
 		if (licenseDictionary == nil || [licenseDictionary isKindOfClass:[NSDictionary class]] == NO) {
 			if (readError) {
-				LogToConsole(@"Failed to convert contents of user license into dictionary. Error: %@", [readError localizedDescription]);
+				LogToConsoleError("Failed to convert contents of user license into dictionary. Error: %{public}@", [readError localizedDescription])
 			}
 
 			return nil;
@@ -583,7 +583,7 @@ NSData *TLOLicenseManagerPublicKeyContents(void)
 	NSURL *publicKeyPath = [RZMainBundle() URLForResource:@"RemoteLicenseSystemPublicKey" withExtension:@"pub"];
 
 	if (publicKeyPath == nil) {
-		LogToConsole(@"Unable to find the public key used for verifying signatures.");
+		LogToConsoleError("Unable to find the public key used for verifying signatures.")
 
 		return nil;
 	}
@@ -594,7 +594,7 @@ NSData *TLOLicenseManagerPublicKeyContents(void)
 	NSData *publicKeyContents = [NSData dataWithContentsOfURL:publicKeyPath options:0 error:&readError];
 
 	if (publicKeyContents == nil) {
-		LogToConsole(@"Unable to read contents of the public key used for verifying signatures. Error: %@", [readError localizedDescription]);
+		LogToConsoleError("Unable to read contents of the public key used for verifying signatures. Error: %{public}@", [readError localizedDescription])
 
 		return nil;
 	}
@@ -664,7 +664,7 @@ BOOL TLOLicenseManagerPopulatePublicKeyRef(void)
 
 		return YES;
 	} else {
-		LogToConsole(@"SecItemImport() failed to import public key with status code: %i", operationStatus);
+		LogToConsoleError("SecItemImport() failed to import public key with status code: %{public}i", operationStatus)
 
 		return NO;
 	}
@@ -708,7 +708,7 @@ BOOL TLOLicenseManagerGenerateNewKeyPair(void)
 
 		return YES;
 	} else {
-		LogToConsole(@"SecKeyGeneratePair() failed to generate key pair with status code: %i", operationStatus);
+		LogToConsoleError("SecKeyGeneratePair() failed to generate key pair with status code: %{public}i", operationStatus)
 
 		return NO;
 	}
@@ -755,7 +755,7 @@ CFDataRef TLOLicenseManagerExportContentsOfKeyRef(SecKeyRef theKeyRef, BOOL isPu
 	if (operationStatus == noErr) {
 		return pkdata;
 	} else {
-		LogToConsole(@"SecItemExport() failed to export key contents with status code: %i", operationStatus);
+		LogToConsoleError("SecItemExport() failed to export key contents with status code: %{public}i", operationStatus)
 
 		return NULL;
 	}

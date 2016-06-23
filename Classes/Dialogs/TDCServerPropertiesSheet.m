@@ -1268,7 +1268,7 @@
 			CFDataRef certData;
 			
 			if (identity == NULL) {
-				LogToConsole(@"We have no identity."); // Does that even make sense? What did they select?
+				LogToConsoleError("We have no identity") // Does that even make sense? What did they select?
 			} else {
 				SecCertificateRef identityCert;
 				
@@ -1294,7 +1294,7 @@
 			}
 		}
 	} else {
-		LogToConsole(@"Failed to build list of identities from keychain.");
+		LogToConsoleError("Failed to build list of identities from keychain.")
 	}
 
 	if (identities) {

@@ -942,7 +942,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	if (s == nil) {
-		DebugLogToConsole(@"NSData encode failure. (%@)", data);
+		LogToConsoleError("NSData encode failure (%@)", data);
 		LogToConsoleCurrentStackTrace
 	}
 
@@ -962,7 +962,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	}
 
 	if (s == nil) {
-		DebugLogToConsole(@"NSData decode failure. (%@)", data);
+		LogToConsoleError("NSData decode failure (%@)", data);
 		LogToConsoleCurrentStackTrace
 	}
 
@@ -2813,13 +2813,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				[self printDebugInformation:TXTLS(@"IRC[1092]")];
 
-				LogToConsole(@"%@", TXTLS(@"IRC[1094]"));
+				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1094]"))
 			} else if ([uncutInput isEqualIgnoringCase:@"raw off"]) {
 				self.rawModeEnabled = NO;
 
 				[self printDebugInformation:TXTLS(@"IRC[1091]")];
 
-				LogToConsole(@"%@", TXTLS(@"IRC[1093]"));
+				LogToConsoleInfo("%{public}@", TXTLS(@"IRC[1093]"))
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode on"]) {
 				[TPCPreferences setDeveloperModeEnabled:YES];
 			} else if ([uncutInput isEqualIgnoringCase:@"devmode off"]) {
@@ -2965,7 +2965,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				NSString *serverAddress = [s getTokenAsString];
 
 				if ([serverAddress isValidInternetAddress] == NO) {
-					LogToConsole(@"Silently ignoring bad server address");
+					LogToConsoleInfo("Silently ignoring bad server address")
 
 					return;
 				}
@@ -3430,7 +3430,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			/* Perform script or plugin. */
 			if (pluginFound && scriptFound) {
-				LogToConsole(@"%@", TXTLS(@"IRC[1001]", uppercaseCommand))
+				LogToConsoleError("%{public}@", TXTLS(@"IRC[1001]", uppercaseCommand))
 			} else {
 				if (pluginFound) {
 					[self processBundlesUserMessage:uncutInput command:lowercaseCommand];
@@ -4220,7 +4220,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 						if ([@"irc.znc.in" isEqualToString:[m senderNickname]]) {
 							self.isZNCBouncerConnection = YES;
 
-							DebugLogToConsole(@"ZNC based connection detected...");
+							LogToConsoleInfo("ZNC based connection detected...");
 						}
 					}
 				}
@@ -4265,14 +4265,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (void)logToConsoleOutgoingTraffic:(NSString *)line
 {
 	if (self.rawModeEnabled) {
-		LogToConsole(@"OUTGOING [\"%@\"]: << %@", [self altNetworkName], line);
+		LogToConsoleInfo("OUTGOING [\"%{public}@\"]: << %{public}@", [self altNetworkName], line)
 	}
 }
 
 - (void)logToConsoleIncomingTraffic:(NSString *)line
 {
 	if (self.rawModeEnabled) {
-		LogToConsole(@"INCOMING [\"%@\"]: >> %@", [self altNetworkName], line);
+		LogToConsoleInfo("INCOMING [\"%{public}@\"]: >> %{public}@", [self altNetworkName], line)
 	}
 }
 
@@ -5705,7 +5705,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSString *batchToken = [m paramAt:0];
 
 	if ([batchToken length] <= 1) {
-		LogToConsole(@"Cannot process BATCH command because [batchToken length] <= 1");
+		LogToConsoleError("Cannot process BATCH command because [batchToken length] <= 1")
 
 		return; // Cancel operation...
 	}
@@ -5723,13 +5723,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		isBatchOpening = NO;
 	} else {
-		LogToConsole(@"Cannot process BATCH command because there was no open or close token");
+		LogToConsoleError("Cannot process BATCH command because there was no open or close token")
 
 		return; // Cancel operation...
 	}
 
 	if ([batchToken length] < 4 && [batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters] == NO) {
-		LogToConsole(@"Cannot process BATCH command because the batch token contains illegal characters");
+		LogToConsoleError("Cannot process BATCH command because the batch token contains illegal characters")
 
 		return; // Cancel operation...
 	}
@@ -5740,7 +5740,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		IRCMessageBatchMessage *thisBatchMessage = [self.batchMessages queuedEntryWithBatchToken:batchToken];
 
 		if (thisBatchMessage == nil) {
-			LogToConsole(@"Cannot process BATCH command because -queuedEntryWithBatchToken: returned nil");
+			LogToConsoleError("Cannot process BATCH command because -queuedEntryWithBatchToken: returned nil")
 
 			return; // Cancel operation...
 		}
@@ -7994,7 +7994,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	for (IRCChannel *c in channels) {
 		if ([c status] != IRCChannelStatusParted) {
-			LogToConsole(@"Refusing to join %@ because of status: %ld", [c name], [c status]);
+			LogToConsoleDebug("Refusing to join %@ because of status: %{public}ld", [c name], [c status])
 
 			continue;
 		}
@@ -8272,7 +8272,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	[self printDebugInformation:TXTLS(@"IRC[1003]", script, scriptInput, errord)];
 
-	LogToConsole(@"%@", TXTLS(@"IRC[1002]", errorb))
+	LogToConsoleError("%{public}@", TXTLS(@"IRC[1002]", errorb))
 }
 
 - (void)postTextualCmdScriptResult:(NSString *)resultString to:(NSString *)destination
@@ -9035,7 +9035,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSAssertReturn([filesize longLongValue] > 0);
 
 	if ([transferToken length] > 0 && [transferToken isNumericOnly] == NO) {
-		LogToConsole(@"Fatal error: Received transfer token that is not a number");
+		LogToConsoleError("Fatal error: Received transfer token that is not a number")
 
 		goto present_error;
 	}
@@ -9043,11 +9043,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSInteger hostPortInt = [hostPort integerValue];
 
 	if (hostPortInt == 0 && transferToken == nil) {
-		LogToConsole(@"Fatal error: Port cannot be zero without a transfer token");
+		LogToConsoleError("Fatal error: Port cannot be zero without a transfer token")
 
 		goto present_error;
 	} else if (hostPortInt < 0 || hostPortInt > TXMaximumTCPPort) {
-		LogToConsole(@"Fatal error: Port cannot be less than zero or greater than 65535");
+		LogToConsoleError("Fatal error: Port cannot be less than zero or greater than 65535")
 
 		goto present_error;
 	}
@@ -9055,7 +9055,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	NSInteger filesizeInt = [filesize integerValue];
 
 	if (filesizeInt <= 0 || filesizeInt > 1000000000000000) { // 1 PB
-		LogToConsole(@"Fatal error: Filesize is silly");
+		LogToConsoleError("Fatal error: Filesize is silly")
 
 		goto present_error;
 	}
@@ -9080,7 +9080,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 					return;
 				} else {
-					LogToConsole(@"Fatal error: Received reverse DCC request with token '%@' but the token already exists.", transferToken);
+					LogToConsoleError("Fatal error: Received reverse DCC request with token '%{public}@' but the token already exists.", transferToken)
 
 					goto present_error;
 				}
@@ -9088,7 +9088,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			else if (e)
 			{
 				if ([e transferStatus] != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) {
-					LogToConsole(@"Fatal error: Unexpected request to begin transfer");
+					LogToConsoleError("Fatal error: Unexpected request to begin transfer")
 
 					goto present_error;
 				} else {
@@ -9126,7 +9126,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 
 		if (e == nil) {
-			LogToConsole(@"Fatal error: Could not locate file transfer that matches resume request");
+			LogToConsoleError("Fatal error: Could not locate file transfer that matches resume request")
 
 			goto present_error;
 		}
@@ -9134,7 +9134,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		if ((isResumeRequest && [e transferStatus] != TDCFileTransferDialogTransferWaitingForReceiverToAcceptStatus) ||
 			(isAcceptRequest && [e transferStatus] != TDCFileTransferDialogTransferWaitingForResumeAcceptStatus))
 		{
-			LogToConsole(@"Fatal error: Bad transfer status");
+			LogToConsoleError("Fatal error: Bad transfer status")
 
 			goto present_error;
 		}

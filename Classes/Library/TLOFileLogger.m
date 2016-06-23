@@ -138,7 +138,7 @@ NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"
 		[RZFileManager() createDirectoryAtURL:folder withIntermediateDirectories:YES attributes:nil error:&fmerr];
 
 		if (fmerr) {
-			DebugLogToConsole(@"Error Creating Folder: %@", [fmerr localizedDescription]);
+			LogToConsoleError("Error Creating Folder: %{public}@", [fmerr localizedDescription]);
 
 			[self close]; // We couldn't create the folder. Destroy everything.
 
@@ -153,7 +153,7 @@ NSString * const TLOFileLoggerISOStandardClockFormat		= @"[%Y-%m-%dT%H:%M:%S%z]"
 		[NSStringEmptyPlaceholder writeToURL:self.filename atomically:NO encoding:NSUTF8StringEncoding error:&fcerr];
 
 		if (fcerr) {
-			DebugLogToConsole(@"Error Creating File: %@", [fcerr localizedDescription]);
+			LogToConsoleError("Error Creating File: %{public}@", [fcerr localizedDescription]);
 
 			[self close]; // We couldn't create the file. Destroy everything.
 

@@ -151,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (loadError) {
-		LogToConsole(@"Failed to load template '%@' with error: '%@'",
+		LogToConsoleError("Failed to load template '%{public}@' with error: '%{public}@'",
 			templateName, [loadError localizedDescription])
 		LogToConsoleCurrentStackTrace
 	}

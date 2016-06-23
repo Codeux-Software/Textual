@@ -119,7 +119,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 		if ([self socksProxyPopulateSystemSocksProxy:&proxyPopulateError] == NO) {
 			if (proxyPopulateError) {
-				LogToConsole(@"%@", proxyPopulateError);
+				LogToConsoleError("%{public}@", proxyPopulateError)
 			}
 		} else {
 			connectedUsingProxy = YES;
@@ -242,12 +242,12 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 
 				CFRelease(identity);
 			} else {
-				LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#2)", status);
+				LogToConsoleError("User supplied client-side certificate produced an error trying to read it: %{public}i (#2)", status)
 			}
 
 			CFRelease(cert);
 		} else {
-			LogToConsole(@"User supplied client-side certificate produced an error trying to read it: %i (#1)", status);
+			LogToConsoleError("User supplied client-side certificate produced an error trying to read it: %{public}i (#1)", status)
 		}
 	}
 
