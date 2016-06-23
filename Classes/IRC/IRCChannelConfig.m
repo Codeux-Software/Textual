@@ -181,11 +181,6 @@
 
 - (void)populateDictionaryValues:(NSDictionary *)dic
 {
-	/* Load legacy keys (if they exist) */
-	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
-
-	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
-
 	/* Load the newest set of keys. */
 	[dic assignUnsignedIntegerTo:&_type			forKey:@"channelType"];
 
@@ -202,6 +197,11 @@
 
 	[dic assignStringTo:&_defaultModes	forKey:@"defaultMode"];
 	[dic assignStringTo:&_defaultTopic	forKey:@"defaultTopic"];
+
+	/* Load legacy keys (if they exist) */
+	[dic assignBoolTo:&_ignoreInlineImages			forKey:@"disableInlineMedia"];
+
+	[dic assignBoolTo:&_ignoreGeneralEventMessages	forKey:@"ignoreJPQActivity"];
 }
 
 - (BOOL)isEqualToChannelConfiguration:(IRCChannelConfig *)seed

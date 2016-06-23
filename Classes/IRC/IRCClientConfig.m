@@ -420,86 +420,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 
 - (void)populateDictionaryValue:(NSDictionary *)dic ignorePrivateMessages:(BOOL)ignorePMs
 {
-	/* Load legacy keys (if they exist) */
-	[dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
-
-	[dic assignStringTo:&_nickname		forKey:@"identityNickname"];
-	[dic assignStringTo:&_awayNickname	forKey:@"identityAwayNickname"];
-
-	[dic assignArrayTo:&_alternateNicknames forKey:@"identityAlternateNicknames"];
-
-	[dic assignStringTo:&_realName	forKey:@"identityRealname"];
-	[dic assignStringTo:&_username	forKey:@"identityUsername"];
-
-	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"IdentitySSLCertificate"];
-
-	[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
-
-	[dic assignBoolTo:&_autoConnect					forKey:@"connectOnLaunch"];
-	[dic assignBoolTo:&_autoReconnect				forKey:@"connectOnDisconnect"];
-	[dic assignBoolTo:&_autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
-
-	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"connectUsingSSL"];
-	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
-
-	[dic assignBoolTo:&_validateServerCertificateChain	forKey:@"validateServerSideSSLCertificate"];
-
-	[dic assignBoolTo:&_setInvisibleModeOnConnect	forKey:@"setInvisibleOnConnect"];
-
-	[dic assignUnsignedIntegerTo:&_proxyType		forKey:@"proxyServerType"];
-	[dic assignIntegerTo:&_proxyPort		forKey:@"proxyServerPort"];
-	[dic assignStringTo:&_proxyAddress		forKey:@"proxyServerAddress"];
-	[dic assignStringTo:&_proxyUsername		forKey:@"proxyServerUsername"];
-
-	[dic assignIntegerTo:&_primaryEncoding		forKey:@"characterEncodingDefault"];
-	[dic assignIntegerTo:&_fallbackEncoding		forKey:@"characterEncodingFallback"];
-
-	[dic assignStringTo:&_normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
-	[dic assignStringTo:&_sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
-
-	/* Flood control. */
-	/* This is here to migrate to the new properties. Saving these values
-	 in this dictionary key is no longer preferred. */
-	BOOL floodControlSetToDisabled = NO;
-
-	NSDictionary *floodControlDict = [dic dictionaryForKey:@"floodControl"];
-
-	if (floodControlDict) {
-		NSNumber *serviceEnabled = [floodControlDict objectForKey:@"serviceEnabled"];
-
-		if (serviceEnabled && [serviceEnabled boolValue] == NO) {
-			floodControlSetToDisabled = YES;
-		}
-
-		[floodControlDict assignIntegerTo:&_floodControlMaximumMessages	forKey:@"maximumMessageCount"];
-		[floodControlDict assignIntegerTo:&_floodControlDelayTimerInterval forKey:@"delayTimerInterval"];
-	}
-
-	if (floodControlSetToDisabled == NO) {
-		NSNumber *floodControlEnabled = [dic objectForKey:@"isOutgoingFloodControlEnabled"];
-
-		if (floodControlEnabled && [floodControlEnabled boolValue] == NO) {
-			floodControlSetToDisabled = YES;
-		}
-	}
-
-	/* An option to disable flood control no longer exists.
-	 If the user had flood control disabled when the option did exist,
-	 then set the the current values to appear disabled. */
-	if (floodControlSetToDisabled) {
-		self.floodControlMaximumMessages = IRCClientConfigFloodControlMaximumMessageCount;
-		self.floodControlDelayTimerInterval = IRCClientConfigFloodControlMinimumDelayTimer;
-	}
-
-	/* Migrate to keychain. */
-	NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
-
-	if (proxyPassword) {
-		[self setProxyPassword:proxyPassword];
-
-		[self writeProxyPasswordKeychainItemToDisk];
-	}
-
 	/* Load the newest set of keys. */
 	[dic assignBoolTo:&_autoConnect								forKey:@"autoConnect"];
 	[dic assignBoolTo:&_autoReconnect							forKey:@"autoReconnect"];
@@ -601,6 +521,86 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	}
 
 	self.highlightList = highlightList;
+
+	/* Load legacy keys (if they exist) */
+	[dic assignBoolTo:&_sidebarItemExpanded forKey:@"serverListItemIsExpanded"];
+
+	[dic assignStringTo:&_nickname		forKey:@"identityNickname"];
+	[dic assignStringTo:&_awayNickname	forKey:@"identityAwayNickname"];
+
+	[dic assignArrayTo:&_alternateNicknames forKey:@"identityAlternateNicknames"];
+
+	[dic assignStringTo:&_realName	forKey:@"identityRealname"];
+	[dic assignStringTo:&_username	forKey:@"identityUsername"];
+
+	[dic assignObjectTo:&_identityClientSideCertificate forKey:@"IdentitySSLCertificate"];
+
+	[dic assignBoolTo:&_autojoinWaitsForNickServ forKey:@"autojoinWaitsForNickServIdentification"];
+
+	[dic assignBoolTo:&_autoConnect					forKey:@"connectOnLaunch"];
+	[dic assignBoolTo:&_autoReconnect				forKey:@"connectOnDisconnect"];
+	[dic assignBoolTo:&_autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
+
+	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"connectUsingSSL"];
+	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
+
+	[dic assignBoolTo:&_validateServerCertificateChain	forKey:@"validateServerSideSSLCertificate"];
+
+	[dic assignBoolTo:&_setInvisibleModeOnConnect	forKey:@"setInvisibleOnConnect"];
+
+	[dic assignUnsignedIntegerTo:&_proxyType		forKey:@"proxyServerType"];
+	[dic assignIntegerTo:&_proxyPort		forKey:@"proxyServerPort"];
+	[dic assignStringTo:&_proxyAddress		forKey:@"proxyServerAddress"];
+	[dic assignStringTo:&_proxyUsername		forKey:@"proxyServerUsername"];
+
+	[dic assignIntegerTo:&_primaryEncoding		forKey:@"characterEncodingDefault"];
+	[dic assignIntegerTo:&_fallbackEncoding		forKey:@"characterEncodingFallback"];
+
+	[dic assignStringTo:&_normalLeavingComment		forKey:@"connectionDisconnectDefaultMessage"];
+	[dic assignStringTo:&_sleepModeLeavingComment	forKey:@"connectionDisconnectSleepModeMessage"];
+
+	/* Flood control. */
+	/* This is here to migrate to the new properties. Saving these values
+	 in this dictionary key is no longer preferred. */
+	BOOL floodControlSetToDisabled = NO;
+
+	NSDictionary *floodControlDict = [dic dictionaryForKey:@"floodControl"];
+
+	if (floodControlDict) {
+		NSNumber *serviceEnabled = [floodControlDict objectForKey:@"serviceEnabled"];
+
+		if (serviceEnabled && [serviceEnabled boolValue] == NO) {
+			floodControlSetToDisabled = YES;
+		}
+
+		[floodControlDict assignIntegerTo:&_floodControlMaximumMessages	forKey:@"maximumMessageCount"];
+		[floodControlDict assignIntegerTo:&_floodControlDelayTimerInterval forKey:@"delayTimerInterval"];
+	}
+
+	if (floodControlSetToDisabled == NO) {
+		NSNumber *floodControlEnabled = [dic objectForKey:@"isOutgoingFloodControlEnabled"];
+
+		if (floodControlEnabled && [floodControlEnabled boolValue] == NO) {
+			floodControlSetToDisabled = YES;
+		}
+	}
+
+	/* An option to disable flood control no longer exists.
+	 If the user had flood control disabled when the option did exist,
+	 then set the the current values to appear disabled. */
+	if (floodControlSetToDisabled) {
+		self.floodControlMaximumMessages = IRCClientConfigFloodControlMaximumMessageCount;
+		self.floodControlDelayTimerInterval = IRCClientConfigFloodControlMinimumDelayTimer;
+	}
+
+	/* Migrate to keychain. */
+	NSString *proxyPassword = [dic stringForKey:@"proxyServerPassword"];
+
+	if (proxyPassword) {
+		[self setProxyPassword:proxyPassword];
+
+		[self writeProxyPasswordKeychainItemToDisk];
+	}
 
 	/* Additional logic */
 	[self maybeFudgeFloodControlDefaults];
