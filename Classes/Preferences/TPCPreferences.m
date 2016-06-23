@@ -428,6 +428,19 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 }
 
 #pragma mark -
+#pragma mark App Nap 
+
++ (BOOL)appNapEnabled
+{
+	return ([[NSUserDefaults standardUserDefaults] boolForKey:@"NSAppSleepDisabled"] == NO);
+}
+
++ (void)setAppNapEnabled:(BOOL)appNapEnabled
+{
+	[[NSUserDefaults standardUserDefaults] setBool:(appNapEnabled == NO) forKey:@"NSAppSleepDisabled"];
+}
+
+#pragma mark -
 #pragma mark Updates
 
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1

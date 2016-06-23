@@ -106,6 +106,8 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 };
 
 @interface TPCPreferences : NSObject
++ (BOOL)appNapEnabled;
+
 + (BOOL)developerModeEnabled;
 
 + (nullable NSString *)masqueradeCTCPVersion;

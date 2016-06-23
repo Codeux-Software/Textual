@@ -628,6 +628,17 @@
 		}
 #endif
 
+		case 928: // Enable App Nap
+		{
+			if ([TPCPreferences appNapEnabled]) {
+				[item setState:NSOnState];
+			} else {
+				[item setState:NSOffState];
+			}
+
+			return YES;
+		}
+
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 		case TLOEncryptionManagerMenuItemTagAuthenticateChatPartner:
 		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
