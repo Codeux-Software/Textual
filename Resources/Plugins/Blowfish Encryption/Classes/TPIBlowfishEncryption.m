@@ -32,6 +32,8 @@
 
 #import "TPIBlowfishEncryption.h"
 
+#import "TVCLogControllerPrivate.h"
+
 #define TXExchangeRequestPrefix				@"DH1080_INIT "
 #define TXExchangeResponsePrefix			@"DH1080_FINISH "
 
@@ -320,7 +322,7 @@
 							   forUsername:nil
 							   serviceName:serviceName];
 
-			[[channel viewController] setViewIsEncrypted:NO];
+			[[channel viewController] setEncrypted:NO];
 		} else {
 			[XRKeychain modifyOrAddKeychainItem:@"Textual (Blowfish Encryption)"
 								   withItemKind:@"application password"
@@ -328,7 +330,7 @@
 								withNewPassword:encryptionKey
 									serviceName:serviceName];
 
-			[[channel viewController] setViewIsEncrypted:YES];
+			[[channel viewController] setEncrypted:YES];
 		}
 	}
 }
