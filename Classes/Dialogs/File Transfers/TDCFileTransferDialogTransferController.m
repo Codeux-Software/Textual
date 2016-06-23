@@ -263,7 +263,7 @@
 	{
 		/* Log error to console. */
 		if (connError) {
-			LogToConsole(@"DCC Connect Error: %@", [connError localizedDescription]);
+			LogToConsoleError("DCC Connect Error: %{public}@", [connError localizedDescription])
 		}
 
 		/* Could not establish base connection, error. */
@@ -389,9 +389,9 @@
 	if ([self.portMapping isMapped]) {
 		[self requestLocalIPAddress];
 
-		LogToConsole(@"Successful port mapping on port %i", self.transferPort);
+		LogToConsoleInfo("Successful port mapping on port %{public}ld", self.transferPort)
 	} else {
-		LogToConsole(@"Port mapping failed with error code: %i", [self.portMapping error]);
+		LogToConsoleError("Port mapping failed with error code: %{public}i", [self.portMapping error])
 
 		if ([self isReversed]) {
 			[self postErrorWithErrorMessage:@"TDCFileTransferDialog[1018]"];
@@ -824,7 +824,7 @@
 	
 	/* Log any errors to console. */
 	if (err) {
-		LogToConsole(@"DCC Transfer Error: %@", [err localizedDescription]);
+		LogToConsoleError("DCC Transfer Error: %{public}@", [err localizedDescription])
 	}
 	
 	/* Normal operations. */

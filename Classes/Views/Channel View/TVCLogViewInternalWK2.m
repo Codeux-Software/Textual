@@ -305,7 +305,7 @@ create_normal_pool:
 
 	[self evaluateJavaScript:code completionHandler:^(id result, NSError *error) {
 		if (error) {
-			LogToConsole(@"Error: %@", error.localizedDescription)
+			LogToConsoleError("Error: %{public}@", error.localizedDescription)
 		}
 
 		if (result) {

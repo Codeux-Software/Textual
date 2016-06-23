@@ -125,17 +125,17 @@ NS_ASSUME_NONNULL_BEGIN
 		NSMethodSignature *actionSignature = [self.target methodSignatureForSelector:self.action];
 
 		if (actionSignature == nil) {
-			LogToConsole(@"Selector '%@' is not declared by '%@'",
+			LogToConsoleError("Selector '%@' is not declared by '%{public}@'",
 				NSStringFromSelector(self.action), [self.target description])
 
 			return;
 		} else if (strcmp(actionSignature.methodReturnType, @encode(void)) != 0) {
-			LogToConsole(@"Selector '%@' should not return a value",
+			LogToConsoleError("Selector '%{public}@' should not return a value",
 				NSStringFromSelector(self.action))
 
 			return;
 		} else if (actionSignature.numberOfArguments != 3) {
-			LogToConsole(@"Selector '%@' should take only one argument",
+			LogToConsoleError("Selector '%{public}@' should take only one argument",
 				NSStringFromSelector(self.action))
 			
 			return;

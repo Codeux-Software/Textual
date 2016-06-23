@@ -174,7 +174,7 @@
 			if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
 				matchedCopy = applicationURL;
 
-				LogToConsole(@"Automatically detected Mac App Store Textual 5 at the following path: %@", [matchedCopy path]);
+				LogToConsoleInfo("Automatically detected Mac App Store Textual 5 at the following path: %{public}@", [matchedCopy path])
 
 				break;
 			}
@@ -270,7 +270,7 @@
 	NSData *receiptData = [NSData dataWithContentsOfURL:receiptFileURL options:0 error:&receiptDataReadError];
 
 	if (receiptData == nil) {
-		LogToConsole(@"Failed to read the contents of the receipt file: %@", [receiptDataReadError localizedDescription]);
+		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@", [receiptDataReadError localizedDescription])
 
 		return nil;
 	} else {

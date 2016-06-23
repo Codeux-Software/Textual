@@ -132,7 +132,7 @@ ClassWithDesignatedInitializerInitMethod
 	@catch (NSException *exception) {
 		self.fileHandle = nil;
 
-		LogToConsole(@"Caught exception: %@", exception.reason)
+		LogToConsoleError("Caught exception: %{public}@", exception.reason)
 		LogToConsoleCurrentStackTrace
 	}
 }
@@ -167,7 +167,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSError *createDirectoryError = nil;
 
 		if ([RZFileManager() createDirectoryAtPath:pathLeading withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
-			LogToConsole(@"Error Creating Folder: %@",
+			LogToConsoleError("Error Creating Folder: %{public}@",
 				createDirectoryError.localizedDescription)
 
 			return NO;
@@ -178,7 +178,7 @@ ClassWithDesignatedInitializerInitMethod
 		NSError *writeFileError = nil;
 
 		if ([NSStringEmptyPlaceholder writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:&writeFileError] == NO) {
-			LogToConsole(@"Error Creating File: %@",
+			LogToConsoleError("Error Creating File: %{public}@",
 				writeFileError.localizedDescription)
 
 			return NO;
@@ -193,7 +193,7 @@ ClassWithDesignatedInitializerInitMethod
 		return YES;
 	}
 
-	LogToConsole(@"Failed to open file handle at path '%@'", path)
+	LogToConsoleError("Failed to open file handle at path '%{public}@'", path)
 
 	return NO;
 }
@@ -251,8 +251,6 @@ ClassWithDesignatedInitializerInitMethod
 	 then place those bytes back in the file, save the file. */
 	XRPerformBlockAsynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
 		if ([self _reopenFileHandleIfNeeded] == NO) {
-			LogToConsole(@"Failed to open file handle")
-
 			return;
 		}
 
@@ -292,8 +290,6 @@ ClassWithDesignatedInitializerInitMethod
 
 	XRPerformBlockSynchronouslyOnQueue([TVCLogControllerHistoricLogFile dispatchQueue], ^{
 		if ([self _reopenFileHandleIfNeeded] == NO) {
-			LogToConsole(@"Failed to open file handle")
-
 			return;
 		}
 

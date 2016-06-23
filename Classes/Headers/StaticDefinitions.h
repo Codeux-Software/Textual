@@ -96,16 +96,6 @@ typedef void (^TXEmtpyBlockDataType)(void);
 /* Include Off-the-Record Messaging (OTR) support */
 #define TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION 1
 
-/* Standard out logging */
-/* It is recommended to always use these calls above plain-ol' NSLog. */
-#ifdef DEBUG
-	#define DebugLogToConsole(fmt, ...)			LogToConsole(fmt, ##__VA_ARGS__);
-#else
-	#define DebugLogToConsole(fmt, ...)			if ([masterController() debugModeIsOn]) {			\
-													LogToConsole(fmt, ##__VA_ARGS__);				\
-												}
-#endif
-
 /* Deprecation and symbol visibility. */
 #define TEXTUAL_EXTERN							extern
 

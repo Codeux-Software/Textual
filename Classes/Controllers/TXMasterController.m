@@ -60,14 +60,16 @@
 		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
 			self.ghostModeIsOn = YES;
 			
-			LogToConsole(@"Launching without autoconnecting to the configured servers.");
+			LogToConsoleInfo("Launching without autoconnecting to the configured servers")
 		}
 #endif
 	
 		if ([NSEvent modifierFlags] & NSControlKeyMask) {
 			self.debugModeIsOn = YES;
 
-			LogToConsole(@"Launching in debug mode.");
+			LogToConsoleDebugLoggingEnabled = YES;
+
+			LogToConsoleInfo("Launching in debug mode.")
 		}
     }
 

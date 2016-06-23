@@ -245,7 +245,7 @@ static NSCache *_internalCache = nil;
 {
 	[self cleanupConnectionRequest];
 
-	LogToConsole(@"Failed to complete connection request with error: %@",
+	LogToConsoleError("Failed to complete connection request with error: %{public}@",
 			error.localizedDescription)
 }
 
@@ -260,7 +260,7 @@ static NSCache *_internalCache = nil;
 	/* If the Content-Length header was not available, then we
 	 still go ahead and check the downloaded data length here. */
 	if (self.requestResponseData.length > [TPCPreferences inlineImagesMaxFilesize]) {
-		LogToConsole(@"Inline image exceeds maximum file length")
+		LogToConsoleInfo("Inline image exceeds maximum file length")
 		
 		[self cleanupConnectionRequest];
 	}

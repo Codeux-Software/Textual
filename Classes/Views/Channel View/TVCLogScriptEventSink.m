@@ -592,7 +592,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *message = [TVCLogScriptEventSink objectValueToCommon:arguments[0]];
 
-	LogToConsole(@"JavaScript: %@", message);
+	LogToConsoleInfo("JavaScript: %{public}@", message)
 }
 - (id)_networkName:(TVCLogScriptEventSinkContext *)context
 {

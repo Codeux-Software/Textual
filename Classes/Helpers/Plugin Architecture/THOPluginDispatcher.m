@@ -244,7 +244,7 @@ NSString * const THOPluginProtocolDidReceiveServerInputMessageSequenceAttribute 
 			returnedValueURL.host == nil ||
 			returnedValueURL.path == nil)
 		{
-			LogToConsole(@"Value '%@' returned which is not a URL", returnedValue);
+			LogToConsoleDebug("Value '%{public}@' returned which is not a URL", returnedValue)
 
 			continue;
 		}

@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *createDirectoryError = nil;
 
 	if ([RZFileManager() createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&createDirectoryError] == NO) {
-		LogToConsole(@"Failed to create directory at path: '%@' - %@",
+		LogToConsoleError("Failed to create directory at path: '%{public}@' - %{public}@",
 			path, [createDirectoryError localizedDescription])
 	}
 }
@@ -409,7 +409,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	}
 
 	if (resolvedBookmark == nil) {
-		LogToConsole(@"Error creating bookmark for URL: %@",
+		LogToConsoleError("Error creating bookmark for URL: %{public}@",
 			[resolvedBookmarkError localizedDescription])
 
 		return;
@@ -418,7 +418,7 @@ static NSURL * _Nullable _transcriptFolderURL = nil;
 	_transcriptFolderURL = resolvedBookmark;
 		
 	if ([_transcriptFolderURL startAccessingSecurityScopedResource] == NO) {
-		LogToConsole(@"Failed to access bookmark")
+		LogToConsoleError("Failed to access bookmark")
 	}
 }
 

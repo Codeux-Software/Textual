@@ -79,7 +79,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&serializeError];
 
 	if (jsonDictionary == nil) {
-		LogToConsole(@"An error occured converting data into a JSON object: %@",
+		LogToConsoleError("An error occured converting data into a JSON object: %{public}@",
 				serializeError.localizedDescription)
 
 		return nil; // Failed to init

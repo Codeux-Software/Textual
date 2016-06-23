@@ -1968,7 +1968,7 @@
 		if (itemIndexNew >= 0) {
 			[selectedRowsNew addIndex:itemIndexNew];
 		} else {
-			LogToConsole(@"Tried to shift selection to an item not in the server list");
+			LogToConsoleDebug("Tried to shift selection to an item not in the server list")
 
 			return;
 		}

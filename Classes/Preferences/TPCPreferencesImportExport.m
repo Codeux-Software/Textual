@@ -113,7 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Perform actual import if we have the dictionary. */
 	if (propertyList == nil) {
 		if (parseError) {
-			LogToConsole(@"Import failed: %@", [parseError localizedDescription]);
+			LogToConsoleError("Import failed: %{public}@", parseError.localizedDescription)
 		}
 
 		return;
@@ -381,7 +381,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (propertyList == nil) {
 		if (parseError) {
-			LogToConsole(@"Error Creating Property List: %@", [parseError localizedDescription])
+			LogToConsoleError("Error Creating Property List: %{public}@", [parseError localizedDescription])
 		}
 
 		return NO;
@@ -390,7 +390,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL writeResult = [propertyList writeToURL:pathURL atomically:YES];
 
 	if (writeResult == NO) {
-		LogToConsole(@"Write failed");
+		LogToConsoleError("Write failed")
 
 		return NO;
 	}

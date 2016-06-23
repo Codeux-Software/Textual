@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* The object is useless if it is a function */
 	if (JSObjectIsFunction(jsContextRef, jsObjectRef)) {
-		LogToConsole(@"Ignoring a JSObject that is a function")
+		LogToConsoleDebug("Ignoring a JSObject that is a function")
 
 		return nil;
 	}
