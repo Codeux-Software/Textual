@@ -27,8 +27,6 @@
 
 #import <Foundation/Foundation.h>
 
-#warning TODO: Investigate why reachability may be broken
-
 NS_ASSUME_NONNULL_BEGIN
 
 @class OELReachability;
