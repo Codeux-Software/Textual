@@ -618,7 +618,7 @@
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
 		case 926: // Download Beta Updates
 		{
-			if ([TPCPreferences receiveBetaUpdates] == YES) {
+			if ([TPCPreferences receiveBetaUpdates]) {
 				[item setState:NSOnState];
 			} else {
 				[item setState:NSOffState];
@@ -2897,15 +2897,12 @@
 
 - (void)toggleDeveloperMode:(id)sender
 {
-    if ([sender state] == NSOnState) {
-		[TPCPreferences setDeveloperModeEnabled:NO];
-        
-        [sender setState:NSOffState];
-	} else {
-		[TPCPreferences setDeveloperModeEnabled:YES];
+	[TPCPreferences setDeveloperModeEnabled:([TPCPreferences developerModeEnabled] == NO)];
+}
 
-        [sender setState:NSOnState];
-    }
+- (void)toggleAppNap:(id)sender
+{
+	[TPCPreferences setAppNapEnabled:([TPCPreferences appNapEnabled] == NO)];
 }
 
 - (void)resetDoNotAskMePopupWarnings:(id)sender
@@ -3157,15 +3154,7 @@
 - (void)toggleBetaUpdates:(id)sender
 {
 #if TEXTUAL_BUILT_WITH_SPARKLE_ENABLED == 1
-	if ([sender state] == NSOnState) {
-		[TPCPreferences setReceiveBetaUpdates:NO];
-
-		[sender setState:NSOffState];
-	} else {
-		[TPCPreferences setReceiveBetaUpdates:YES];
-
-		[sender setState:NSOnState];
-	}
+	[TPCPreferences setReceiveBetaUpdates:([TPCPreferences receiveBetaUpdates] == NO)];
 
 	[TPCPreferences performReloadAction:TPCPreferencesReloadSparkleFrameworkFeedURLAction];
 
