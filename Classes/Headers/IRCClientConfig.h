@@ -63,7 +63,6 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, assign) BOOL excludedFromCloudSyncing;
 #endif
 
-@property (nonatomic, assign) BOOL hideNetworkUnavailabilityNotices;
 @property (nonatomic, assign) BOOL performDisconnectOnPongTimer;
 @property (nonatomic, assign) BOOL performDisconnectOnReachabilityChange;
 @property (nonatomic, assign) BOOL performPongTimer;

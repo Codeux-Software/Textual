@@ -55,8 +55,7 @@
 "IRC[1009]" = "1d Shunned";
 
 /* Network not available messages */
-"IRC[1010]" = "Delaying auto connect for %ld seconds because the Internet is not available.";
-"IRC[1011]" = "Delaying reconnect for %ld seconds because the Internet is not available.";
+"IRC[1010]" = "Delaying auto connect for %ld seconds";
 
 /* /defaults/ command */
 "IRC[1012]" = "Invalid Syntax. Type “/defaults help” for more information.";

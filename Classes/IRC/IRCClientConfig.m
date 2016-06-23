@@ -89,7 +89,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 			 @"performDisconnectOnPongTimer" : @(NO),
 			 @"performDisconnectOnReachabilityChange" : @(YES),
 
-			 @"hideNetworkUnavailabilityNotices" : @(NO),
 			 @"saslAuthenticationUsesExternalMechanism" : @(NO),
 			 @"sendAuthenticationRequestsToUserServ" : @(NO),
 			 @"sendWhoCommandRequestsToChannels" : @(YES),
@@ -182,7 +181,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.performDisconnectOnPongTimer			= [defaults boolForKey:@"performDisconnectOnPongTimer"];
 	self.performDisconnectOnReachabilityChange	= [defaults boolForKey:@"performDisconnectOnReachabilityChange"];
 
-	self.hideNetworkUnavailabilityNotices			= [defaults boolForKey:@"hideNetworkUnavailabilityNotices"];
 	self.saslAuthenticationUsesExternalMechanism	= [defaults boolForKey:@"saslAuthenticationUsesExternalMechanism"];
 	self.sendAuthenticationRequestsToUserServ		= [defaults boolForKey:@"sendAuthenticationRequestsToUserServ"];
 	self.sendWhoCommandRequestsToChannels			= [defaults boolForKey:@"sendWhoCommandRequestsToChannels"];
@@ -517,7 +515,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignBoolTo:&_performDisconnectOnReachabilityChange	forKey:@"performDisconnectOnReachabilityChange"];
 	[dic assignBoolTo:&_performPongTimer						forKey:@"performPongTimer"];
 
-	[dic assignBoolTo:&_hideNetworkUnavailabilityNotices		forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic assignBoolTo:&_saslAuthenticationUsesExternalMechanism forKey:@"saslAuthenticationUsesExternalMechanism"];
 	[dic assignBoolTo:&_sendAuthenticationRequestsToUserServ	forKey:@"sendAuthenticationRequestsToUserServ"];
 	[dic assignBoolTo:&_sendWhoCommandRequestsToChannels		forKey:@"sendWhoCommandRequestsToChannels"];
@@ -649,7 +646,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setBool:self.performDisconnectOnReachabilityChange		forKey:@"performDisconnectOnReachabilityChange"];
 	[dic setBool:self.performPongTimer							forKey:@"performPongTimer"];
 
-	[dic setBool:self.hideNetworkUnavailabilityNotices			forKey:@"hideNetworkUnavailabilityNotices"];
 	[dic setBool:self.saslAuthenticationUsesExternalMechanism	forKey:@"saslAuthenticationUsesExternalMechanism"];
 	[dic setBool:self.sendAuthenticationRequestsToUserServ		forKey:@"sendAuthenticationRequestsToUserServ"];
 	[dic setBool:self.sendWhoCommandRequestsToChannels			forKey:@"sendWhoCommandRequestsToChannels"];
