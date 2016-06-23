@@ -746,11 +746,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 #pragma mark -
 #pragma mark Reachability
 
-- (BOOL)isHostReachable
-{
-	return [[TXSharedApplication sharedNetworkReachabilityNotifier] isReachable];
-}
-
 - (void)reachabilityChanged:(BOOL)reachable
 {
 	if (reachable == NO) {
@@ -3277,7 +3272,6 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSDictionary *providedKeys = @{
 				@"Ignore Notifications by Private ZNC Users"			: @"setZncIgnoreUserNotifications:",
 				@"Send Authentication Requests to UserServ"				: @"setSendAuthenticationRequestsToUserServ:",
-				@"Hide Network Unavailability Notices on Reconnect"		: @"setHideNetworkUnavailabilityNotices:",
 				@"SASL Authentication Uses External Mechanism"			: @"setSaslAuthenticationUsesExternalMechanism:",
 				@"Send WHO Command Requests to Channels"				: @"setSendWhoCommandRequestsToChannels:",
 			};
@@ -8165,14 +8159,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)onReconnectTimer:(id)sender
 {
-	if ([self isHostReachable] == NO) {
-		if (self.config.hideNetworkUnavailabilityNotices == NO) {
-			[self printDebugInformationToConsole:TXTLS(@"IRC[1011]", _reconnectInterval)];
-		}
-	} else {
-		if (self.isConnected == NO) {
-			[self connect:IRCClientConnectReconnectMode];
-		}
+	if (self.isConnecting == NO && self.isConnected == NO) {
+		[self connect:IRCClientConnectReconnectMode];
 	}
 }
 
@@ -8611,7 +8599,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	self.reconnectEnabledBecauseOfSleepMode = YES;
 
-	if (self.connectDelay <= 0 || [self isHostReachable]) {
+	if (self.connectDelay <= 0) {
 		[self connect:IRCClientConnectReconnectMode];
 	} else {
 		[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", self.connectDelay)];
