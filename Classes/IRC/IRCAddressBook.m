@@ -156,19 +156,6 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 
 - (void)populateDictionaryValues:(NSDictionary *)dic
 {
-	/* First try to assign legacy keys. If these keys do not exist in the
-	 dictionary, then there is no sadness in losing them. The new key names
-	 will be used in -dictionaryValue after the first pass. */
-	[dic assignBoolTo:&_trackUserActivity				forKey:@"notifyJoins"];
-
-	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreCTCP"];
-	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreJPQE"];
-	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNotices"];
-	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePMHighlights"];
-	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
-	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
-	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
-
 	/* With the old keys populated, try to fill in the new ones. */
 	[dic assignBoolTo:&_trackUserActivity				forKey:@"trackUserActivity"];
 
@@ -184,6 +171,19 @@ NSString * const IRCAddressBookDictionaryValueTrackUserActivityKey				= @"trackU
 	[dic assignStringTo:&_itemUUID						forKey:@"uniqueIdentifier"];
 
 	[dic assignUnsignedIntegerTo:&_entryType			forKey:@"entryType"];
+
+	/* First try to assign legacy keys. If these keys do not exist in the
+	 dictionary, then there is no sadness in losing them. The new key names
+	 will be used in -dictionaryValue after the first pass. */
+	[dic assignBoolTo:&_trackUserActivity				forKey:@"notifyJoins"];
+
+	[dic assignBoolTo:&_ignoreClientToClientProtocol	forKey:@"ignoreCTCP"];
+	[dic assignBoolTo:&_ignoreGeneralEventMessages		forKey:@"ignoreJPQE"];
+	[dic assignBoolTo:&_ignoreNoticeMessages			forKey:@"ignoreNotices"];
+	[dic assignBoolTo:&_ignorePrivateMessageHighlights	forKey:@"ignorePMHighlights"];
+	[dic assignBoolTo:&_ignorePrivateMessages			forKey:@"ignorePrivateMsg"];
+	[dic assignBoolTo:&_ignorePublicMessageHighlights	forKey:@"ignoreHighlights"];
+	[dic assignBoolTo:&_ignorePublicMessages			forKey:@"ignorePublicMsg"];
 
 	/* Cannot use assign* on self.hostmask because it uses a custom setter. */
 	self.hostmask = [dic objectForKey:@"hostmask" orUseDefault:nil];
