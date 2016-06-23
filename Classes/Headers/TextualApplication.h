@@ -129,14 +129,10 @@
 	@class TVCBasicTableView;
 	@class TVCDockIcon;
 	@class TVCImageURLParser;
-	@class TVCImageURLoader;
 	@class TVCInputPromptDialog;
 	@class TVCLogController;
-	@class TVCLogControllerHistoricLogFile;
 	@class TVCLogLine;
-	@class TVCLogPolicy;
 	@class TVCLogRenderer;
-	@class TVCLogScriptEventSink;
 	@class TVCLogView;
 	@class TVCMainWindow;
 	@class TVCMainWindowChannelView;
