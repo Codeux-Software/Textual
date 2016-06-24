@@ -139,9 +139,6 @@
 	@class TVCMainWindowLoadingScreenView;
 	@class TVCMainWindowSegmentedController;
 	@class TVCMainWindowSegmentedControllerCell;
-	@class TVCMainWindowSidebarMavericksSmoothTextField;
-	@class TVCMainWindowSidebarYosemiteSmoothTextField;
-	@class TVCMainWindowSidebarYosemtieSmoothTextFieldCell;
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
@@ -355,7 +352,6 @@
 	#import "TVCMainWindowChannelView.h"
 	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
-	#import "TVCMainWindowSidebarSmoothTextField.h"
 	#import "TVCMainWindowSplitView.h"
 	#import "TVCMainWindowTextViewMavericksUserInterace.h"
 	#import "TVCMainWindowTextViewYosemiteUserInterace.h"

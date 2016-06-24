@@ -78,6 +78,7 @@
 #import "TVCLogViewInternalWK2.h"
 #import "TVCLogViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
+#import "TVCMainWindowSidebarSmoothTextFieldPrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListMavericksUserInterfacePrivate.h"
 #import "TVCServerListPrivate.h"
