@@ -745,7 +745,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateGroupDisclosureTriangle:(NSButton *)theButtonParent isSelected:(BOOL)isSelected setNeedsDisplay:(BOOL)setNeedsDisplay
 {
-	id interfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = self.mainWindow.serverList.userInterfaceObjects;
 
 	NSButtonCell *theButton = theButtonParent.cell;
 
@@ -755,8 +755,13 @@ NS_ASSUME_NONNULL_BEGIN
 	NSImage *primaryImage = [interfaceObjects disclosureTriangleInContext:YES selected:isSelected];
 	NSImage *alternateImage = [interfaceObjects disclosureTriangleInContext:NO selected:isSelected];
 
+	// If the images are not nullified before setting the new,
+	// then NSImageView has some weird behavior on OS X Mountain Lion and
+	// OS X Mavericks that causes the images not to draw as intended.
+	theButton.image = nil;
 	theButton.image = primaryImage;
 
+	theButton.alternateImage = nil;
 	theButton.alternateImage = alternateImage;
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {

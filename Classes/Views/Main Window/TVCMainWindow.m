@@ -2486,7 +2486,7 @@
 	return YES;
 }
 
-- (void)memberListViewKeyDown:(NSEvent *)e
+- (void)memberListKeyDown:(NSEvent *)e
 {
 	[self redirectKeyDown:e];
 }
