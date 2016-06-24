@@ -51,6 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
+- (void)viewWillMoveToWindow:(nullable NSWindow *)newWindow
+{
+	((TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer *)self.layer).t_mainWindow = newWindow;
+}
+
 - (NSViewLayerContentsRedrawPolicy)layerContentsRedrawPolicy
 {
 	return NSViewLayerContentsRedrawBeforeViewResize;
@@ -58,12 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (CALayer *)makeBackingLayer
 {
-	 TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer *newLayer =
-	[TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer layer];
-
-	newLayer.t_mainWindow = self.mainWindow;
-
-	return newLayer;
+	return [TVCMainWindowSidebarMavericksSmoothTextFieldBackingLayer layer];
 }
 
 @end
