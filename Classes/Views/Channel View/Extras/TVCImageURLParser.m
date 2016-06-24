@@ -319,9 +319,9 @@ NS_ASSUME_NONNULL_BEGIN
 		if ([urlHost isEqualToString:@"youtu.be"]) {
 			videoId = [urlPath substringFromIndex:1];
 		} else {
-			NSDictionary *queryItems = [urlQuery URLQueryItems];
+			NSDictionary *queryItems = urlQuery.URLQueryItems;
 
-			videoId = [queryItems objectForKey:@"v"];
+			videoId = queryItems[@"v"];
 		}
 
 		if (videoId.length < 11) {

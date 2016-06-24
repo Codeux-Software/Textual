@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, TVCLogLineMemberType) {
 #pragma mark -
 #pragma mark Immutable Object
 
-@interface TVCLogLine : NSObject <NSCopying>
+@interface TVCLogLine : NSObject <NSCopying, NSMutableCopying>
 @property (readonly) BOOL isEncrypted;
 @property (readonly) BOOL isHistoric; /* Identifies a line restored from previous session */
 @property (readonly, copy) NSDate *receivedAt;
