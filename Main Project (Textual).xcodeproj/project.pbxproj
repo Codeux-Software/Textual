@@ -48,6 +48,9 @@
 		4C035B5B1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C035B5C1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C035B5D1D12E5AF00761CC8 /* TPCPreferencesReload.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C038F531D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */; };
+		4C038F541D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */; };
+		4C038F551D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */; };
 		4C0444F616F1603B00EBB665 /* TXGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF510158E99520026668C /* TXGlobalModels.m */; };
 		4C0444F716F1603B00EBB665 /* TXMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF511158E99520026668C /* TXMasterController.m */; };
 		4C0444F816F1603B00EBB665 /* TXMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF512158E99520026668C /* TXMenuController.m */; };
@@ -584,7 +587,6 @@
 		4C7B03891D1210A100295E82 /* TVCMainWindowChannelView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C645F671CA7FD66005842E2 /* TVCMainWindowChannelView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B038A1D1210A100295E82 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B038B1D1210A100295E82 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B038C1D1210A100295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBEACE71BC8B517007F343E /* TVCMainWindowSidebarSmoothTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B038D1D1210A100295E82 /* TVCMainWindowSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B038E1D1210A100295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B038F1D1210A100295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -700,7 +702,6 @@
 		4C7B040A1D1210A800295E82 /* TVCMainWindowChannelView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C645F671CA7FD66005842E2 /* TVCMainWindowChannelView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B040B1D1210A800295E82 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B040C1D1210A800295E82 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B040D1D1210A800295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBEACE71BC8B517007F343E /* TVCMainWindowSidebarSmoothTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B040E1D1210A800295E82 /* TVCMainWindowSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B040F1D1210A800295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04101D1210A800295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -816,7 +817,6 @@
 		4C7B048B1D1210B000295E82 /* TVCMainWindowChannelView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C645F671CA7FD66005842E2 /* TVCMainWindowChannelView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B048C1D1210B000295E82 /* TVCMainWindowLoadingScreen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B048D1D1210B000295E82 /* TVCMainWindowSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B048E1D1210B000295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBEACE71BC8B517007F343E /* TVCMainWindowSidebarSmoothTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B048F1D1210B000295E82 /* TVCMainWindowSplitView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04901D1210B000295E82 /* TVCMainWindowTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF583158E99520026668C /* TVCMainWindowTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04911D1210B000295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1732,6 +1732,7 @@
 		4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXSharedApplication.m; path = Controllers/TXSharedApplication.m; sourceTree = "<group>"; };
 		4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXSharedApplication.h; path = Headers/TXSharedApplication.h; sourceTree = "<group>"; };
 		4C035B5A1D12E5AF00761CC8 /* TPCPreferencesReload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCPreferencesReload.h; path = Headers/TPCPreferencesReload.h; sourceTree = "<group>"; };
+		4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowSidebarSmoothTextFieldPrivate.h; path = Headers/Private/TVCMainWindowSidebarSmoothTextFieldPrivate.h; sourceTree = "<group>"; };
 		4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialog.m; path = "Dialogs/File Transfers/TDCFileTransferDialog.m"; sourceTree = "<group>"; };
 		4C0879C8187061BF0034F5EB /* TDCFileTransferDialogTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogTableCell.m; path = "Dialogs/File Transfers/TDCFileTransferDialogTableCell.m"; sourceTree = "<group>"; };
 		4C0BA6D91990798800857343 /* Textual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Textual.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2120,8 +2121,7 @@
 		4CBC76AC1CC72B5100484A13 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Language Files/English.lproj/TVCMainWindow.strings"; sourceTree = SOURCE_ROOT; };
 		4CBE64C61743720600831D69 /* TDCHighlightEntrySheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = TDCHighlightEntrySheet.m; path = Dialogs/TDCHighlightEntrySheet.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CBE64C91743722100831D69 /* TDCHighlightEntrySheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCHighlightEntrySheet.h; sourceTree = "<group>"; };
-		4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCMainWindowSidebarSmoothTextField.m; sourceTree = "<group>"; };
-		4CBEACE71BC8B517007F343E /* TVCMainWindowSidebarSmoothTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSidebarSmoothTextField.h; sourceTree = "<group>"; };
+		4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCMainWindowSidebarSmoothTextField.m; path = "Views/Main Window/TVCMainWindowSidebarSmoothTextField.m"; sourceTree = "<group>"; };
 		4CBFB2E11979AF9C005BB6B5 /* TVCMemberListMavericksUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListMavericksUserInterface.h; sourceTree = "<group>"; };
 		4CBFB2E41979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListYosemiteUserInterface.h; sourceTree = "<group>"; };
 		4CBFB2E71979AFBC005BB6B5 /* TVCMemberListSharedUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListSharedUserInterface.h; sourceTree = "<group>"; };
@@ -2340,6 +2340,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C038F4C1D1D768B00134FDB /* Main Window */ = {
+			isa = PBXGroup;
+			children = (
+				4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */,
+			);
+			name = "Main Window";
+			sourceTree = "<group>";
+		};
 		4C0879C4187061920034F5EB /* File Transfers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2675,6 +2683,7 @@
 		4C5C08FA1D177F1200EB6340 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C038F4C1D1D768B00134FDB /* Main Window */,
 				4CF40DB11AC1A4AC00A26BE0 /* Channel View */,
 				4CF40DCC1AC1A4AC00A26BE0 /* Server List */,
 			);
@@ -2720,6 +2729,7 @@
 				4C7B48F31D131A2A008D7926 /* TVCLogViewInternalWK2.h */,
 				4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */,
 				4C673EE31D10FB5000979B60 /* TVCMainWindowPrivate.h */,
+				4C038F521D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h */,
 				4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */,
 				4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */,
 				4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */,
@@ -2992,7 +3002,6 @@
 				4C645F671CA7FD66005842E2 /* TVCMainWindowChannelView.h */,
 				4C8EE97B16C64A9300D5B1F4 /* TVCMainWindowLoadingScreen.h */,
 				4C6ED7F215901579001AD200 /* TVCMainWindowSegmentedControl.h */,
-				4CBEACE71BC8B517007F343E /* TVCMainWindowSidebarSmoothTextField.h */,
 				4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */,
 				4C8AF583158E99520026668C /* TVCMainWindowTextView.h */,
 				4C5FB0F9197D3580009C6760 /* TVCMainWindowTextViewMavericksUserInterace.h */,
@@ -3603,7 +3612,6 @@
 				4C645F5E1CA7FD51005842E2 /* TVCMainWindowChannelView.m */,
 				4CF40DC71AC1A4AC00A26BE0 /* TVCMainWindowLoadingScreen.m */,
 				4CF40DC81AC1A4AC00A26BE0 /* TVCMainWindowSegmentedControl.m */,
-				4CBEACDE1BC8B501007F343E /* TVCMainWindowSidebarSmoothTextField.m */,
 				4CF40DC91AC1A4AC00A26BE0 /* TVCMainWindowSplitView.m */,
 				4CF40DCA1AC1A4AC00A26BE0 /* TVCMainWindowTextView.m */,
 				4CF40DCB1AC1A4AC00A26BE0 /* TVCMainWindowTitlebarAccessoryView.m */,
@@ -3687,6 +3695,7 @@
 				4C7B03251D12107500295E82 /* TPCThemeController.h in Headers */,
 				4C4A1AFA1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C4A1AF71D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
+				4C038F531D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C7B03261D12107500295E82 /* TPCThemeSettings.h in Headers */,
 				4C7B03271D1210A100295E82 /* GCDAsyncSocket.h in Headers */,
 				4C7B032A1D1210A100295E82 /* GTMEncodeHTML.h in Headers */,
@@ -3796,7 +3805,6 @@
 				4C7B03891D1210A100295E82 /* TVCMainWindowChannelView.h in Headers */,
 				4C7B038A1D1210A100295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B038B1D1210A100295E82 /* TVCMainWindowSegmentedControl.h in Headers */,
-				4C7B038C1D1210A100295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */,
 				4C7B038D1D1210A100295E82 /* TVCMainWindowSplitView.h in Headers */,
 				4C7B038E1D1210A100295E82 /* TVCMainWindowTextView.h in Headers */,
 				4C7B038F1D1210A100295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
@@ -3917,6 +3925,7 @@
 				4C7B03CC1D1210A800295E82 /* IRCSendingMessage.h in Headers */,
 				4C7B03CD1D1210A800295E82 /* IRCTreeItem.h in Headers */,
 				4C7B03CE1D1210A800295E82 /* IRCUser.h in Headers */,
+				4C038F541D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C4A1AFB1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C7B03CF1D1210A800295E82 /* IRCWorld.h in Headers */,
 				4C7B03D01D1210A800295E82 /* TDCAboutDialog.h in Headers */,
@@ -3983,7 +3992,6 @@
 				4C7B05111D12168C00295E82 /* THOPluginProtocolPrivate.h in Headers */,
 				4C7B040B1D1210A800295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B040C1D1210A800295E82 /* TVCMainWindowSegmentedControl.h in Headers */,
-				4C7B040D1D1210A800295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */,
 				4C7B040E1D1210A800295E82 /* TVCMainWindowSplitView.h in Headers */,
 				4C2D6AC81D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B040F1D1210A800295E82 /* TVCMainWindowTextView.h in Headers */,
@@ -4111,6 +4119,7 @@
 				4C7B044D1D1210B000295E82 /* IRCSendingMessage.h in Headers */,
 				4C7B044E1D1210B000295E82 /* IRCTreeItem.h in Headers */,
 				4C7B044F1D1210B000295E82 /* IRCUser.h in Headers */,
+				4C038F551D1D76C500134FDB /* TVCMainWindowSidebarSmoothTextFieldPrivate.h in Headers */,
 				4C4A1AFC1D122707004FBF12 /* GCDAsyncSocketExtensions.h in Headers */,
 				4C7B04501D1210B000295E82 /* IRCWorld.h in Headers */,
 				4C7B04511D1210B000295E82 /* TDCAboutDialog.h in Headers */,
@@ -4177,7 +4186,6 @@
 				4C7B05121D12168C00295E82 /* THOPluginProtocolPrivate.h in Headers */,
 				4C7B048C1D1210B000295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B048D1D1210B000295E82 /* TVCMainWindowSegmentedControl.h in Headers */,
-				4C7B048E1D1210B000295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */,
 				4C7B048F1D1210B000295E82 /* TVCMainWindowSplitView.h in Headers */,
 				4C2D6AC91D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B04901D1210B000295E82 /* TVCMainWindowTextView.h in Headers */,
