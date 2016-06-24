@@ -49,9 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Additions/Removal
 
-- (void)addItemToList:(NSUInteger)index inParent:(nullable id)parent
+- (void)addItemToList:(NSUInteger)rowIndex inParent:(nullable id)parent
 {
-	[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]
+	[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
 					  inParent:parent
 				 withAnimation:(NSTableViewAnimationEffectFade | NSTableViewAnimationSlideRight)];
 
@@ -204,13 +204,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)reloadUserInterfaceObjects
 {
-	Class newObjects = nil;
+	Class newObjects = NULL;
 	
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 	{
-		NSString *currentAppearance = self.visualEffectView.appearance.name;
-
-		if ([currentAppearance isEqualToString:NSAppearanceNameVibrantDark]) {
+		if ([TPCPreferences invertSidebarColors]) {
 			newObjects = [TVCServerListDarkYosemiteUserInterface class];
 		} else {
 			newObjects = [TVCServerListLightYosemiteUserInterface class];
@@ -292,7 +290,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)windowDidChangeKeyState
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (self.backgroundView) {
 		self.backgroundView.needsDisplay = YES;
 	}
 

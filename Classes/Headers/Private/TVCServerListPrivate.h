@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)leftMouseIsDownInView;
 
-- (void)addItemToList:(NSUInteger)index inParent:(nullable id)parent;
+- (void)addItemToList:(NSUInteger)rowIndex inParent:(nullable id)parent;
 
 - (void)removeItemFromList:(id)object;
 

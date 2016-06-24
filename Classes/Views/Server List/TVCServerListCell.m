@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
 @property (readonly) TVCServerList *serverList;
 @property (readonly) __kindof TVCServerListRowCell *rowCell;
-@property (readonly) NSDictionary<NSString *, id> *drawingContext;
+@property (readonly, copy) NSDictionary<NSString *, id> *drawingContext;
 @end
 
 @implementation TVCServerListCell
