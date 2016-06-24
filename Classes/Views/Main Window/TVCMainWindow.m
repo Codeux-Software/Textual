@@ -61,7 +61,7 @@
 #endif
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:style backing:bufferingType defer:flag])) {
-		self.keyEventHandler = [TLOKeyEventHandler new];
+		self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
 	}
 	
 	return self;
@@ -387,7 +387,7 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[self.keyEventHandler setTarget:target];
+	[self.keyEventHandler setKeyHandlerTarget:target];
 }
 
 - (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
@@ -846,12 +846,12 @@
 
 - (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
 {
-	[self.inputTextField registerKeyHandler:sel key:keyCode modifiers:mods];
+	[self.inputTextField registerSelector:sel key:keyCode modifiers:mods];
 }
 
 - (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
 {
-	[self.inputTextField registerKeyHandler:sel character:c modifiers:mods];
+	[self.inputTextField registerSelector:sel character:c modifiers:mods];
 }
 
 - (void)registerKeyHandlers

@@ -37,19 +37,19 @@
 
 #import "TextualApplication.h"
 
-/* NSComboBox is actually a subclass of NSTextField, but because there is
- no way to have TVCTextFieldWithValueValidation as our superclass without
- reimplementing all the dynamics of NSComboBox, we have to redeclare the
- entire API of TVCTextFieldWithValueValidation. */
-@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox <NSComboBoxDelegate>
-@property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
+#import "TVCTextFieldWithValueValidation.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox
+@property (nonatomic, copy, nullable) TVCTextFieldWithValueValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
 @property (nonatomic, assign) BOOL stringValueIsTrimmed; // -stringValueUsesOnlyFirstToken returns a trimmed value of newlines and spaces. However, if you want mroe than first token, then specify this.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, assign) BOOL performValidationWhenEmpty;
-@property (nonatomic, weak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
-@property (nonatomic, copy) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
+@property (nonatomic, weak, nullable) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
+@property (nonatomic, copy, nullable) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
 
 @property (readonly, copy) NSString *value; /* The current value. */
 @property (readonly, copy) NSString *lowercaseValue;
@@ -58,8 +58,10 @@
 @property (readonly) BOOL valueIsEmpty;
 @property (readonly) BOOL valueIsValid;
 
-- (void)performValidation; /* Force the text field to clear cache and validate value. */
+- (void)performValidation; /* Force the text field to clear cache and validate value */
 @end
 
 @interface TVCTextFieldComboBoxWithValueValidationCell : NSComboBoxCell
 @end
+
+NS_ASSUME_NONNULL_END

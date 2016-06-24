@@ -35,21 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCAutoExpandingTextField
 
 - (NSSize)intrinsicContentSize
 {
-	if ([[self cell] wraps] == NO) {
-		return [super intrinsicContentSize];
+	if (self.cell.wraps == NO) {
+		return super.intrinsicContentSize;
 	}
 
-	NSRect originalFrame = [self frame];
+	NSRect originalFrame = self.frame;
 
 	originalFrame.size.height = CGFLOAT_MAX;
 
-	NSSize newFrameSize = [[self cell] cellSizeForBounds:originalFrame];
+	NSSize newFrameSize = [self.cell cellSizeForBounds:originalFrame];
 
 	return newFrameSize;
 }
@@ -62,3 +62,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

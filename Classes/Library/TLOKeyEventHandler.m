@@ -36,72 +36,90 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <objc/objc-runtime.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TLOKeyEventHandler ()
+@property (nonatomic, unsafe_unretained) id target;
 @property (nonatomic, strong) NSMutableDictionary *codeHandlerMap;
 @property (nonatomic, strong) NSMutableDictionary *characterHandlerMap;
 @end
 
 @implementation TLOKeyEventHandler
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithTarget:(id)target
 {
+	NSParameterAssert(target != nil);
+
 	if ((self = [super init])) {
-		self.codeHandlerMap = [NSMutableDictionary new];
-		self.characterHandlerMap = [NSMutableDictionary new];
+		self.target = target;
+
+		[self prepareInitialState];
 	}
 	
 	return self;
 }
 
-- (void)registerSelector:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
+- (void)prepareInitialState
 {
-	NSNumber *modsKey = @(mods);
-	
-	NSMutableDictionary *map = self.codeHandlerMap[modsKey];
-	
-	if (NSObjectIsEmpty(map)) {
-		map = [NSMutableDictionary dictionary];
-		
-		self.codeHandlerMap[modsKey] = map;
-	}
-	
-	map[@(code)] = NSStringFromSelector(selector);
+	self.characterHandlerMap = [NSMutableDictionary new];
+
+	self.codeHandlerMap = [NSMutableDictionary new];
 }
 
-- (void)registerSelector:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
+- (void)setKeyHandlerTarget:(id)target
 {
-	NSNumber *modsKey = @(mods);
-	
-	NSMutableDictionary *map = self.characterHandlerMap[modsKey];
-	
-	if (NSObjectIsEmpty(map)) {
-		map = [NSMutableDictionary dictionary];
-		
-		self.characterHandlerMap[modsKey] = map;
-	}
-	
-	map[@(c)] = NSStringFromSelector(selector);
+	self.target = target;
 }
 
-- (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)mods
+- (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
 {
-	NSNumber *modsKey = @(mods);
+	NSNumber *modifierKeys = @(modifiers);
 	
-	NSMutableDictionary *map = self.characterHandlerMap[modsKey];
+	NSMutableDictionary *map = self.codeHandlerMap[modifierKeys];
 	
-	if (NSObjectIsEmpty(map)) {
+	if (map == nil) {
 		map = [NSMutableDictionary dictionary];
 		
-		self.characterHandlerMap[modsKey] = map;
+		self.codeHandlerMap[modifierKeys] = map;
 	}
 	
-	NSInteger from = characterRange.location;
+	map[@(keyCode)] = NSStringFromSelector(selector);
+}
+
+- (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
+{
+	NSNumber *modifierKeys = @(modifiers);
 	
-	NSInteger to = NSMaxRange(characterRange);
+	NSMutableDictionary *map = self.characterHandlerMap[modifierKeys];
+	
+	if (map == nil) {
+		map = [NSMutableDictionary dictionary];
+		
+		self.characterHandlerMap[modifierKeys] = map;
+	}
+	
+	map[@(character)] = NSStringFromSelector(selector);
+}
+
+- (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)modifiers
+{
+	NSNumber *modifierKeys = @(modifiers);
+	
+	NSMutableDictionary *map = self.characterHandlerMap[modifierKeys];
+	
+	if (map == nil) {
+		map = [NSMutableDictionary dictionary];
+		
+		self.characterHandlerMap[modifierKeys] = map;
+	}
+	
+	NSUInteger from = characterRange.location;
+	
+	NSUInteger to = NSMaxRange(characterRange);
 	
 	for (NSInteger i = from; i < to; ++i) {
 		map[@(i)] = NSStringFromSelector(selector);
@@ -110,20 +128,20 @@
 
 - (BOOL)processKeyEvent:(NSEvent *)e
 {
-	NSTextInputContext *im = [NSTextInputContext currentInputContext];
+	NSTextInputContext *inputContext = [NSTextInputContext currentInputContext];
 
-	if (im && [[im client] markedRange].length > 0) {
+	if (inputContext && [inputContext.client markedRange].length > 0) {
 		return NO;
 	}
 	
-	NSUInteger m = ([e modifierFlags] & (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask));
+	NSUInteger modifiers = (e.modifierFlags & (NSShiftKeyMask | NSControlKeyMask | NSAlternateKeyMask | NSCommandKeyMask));
 	
-	NSNumber *modsKey = @(m);
+	NSNumber *modifierKeys = @(modifiers);
 	
-	NSMutableDictionary *codeMap = self.codeHandlerMap[modsKey];
+	NSMutableDictionary *codeMap = self.codeHandlerMap[modifierKeys];
 	
 	if (codeMap) {
-		NSString *selectorName = codeMap[@([e keyCode])];
+		NSString *selectorName = codeMap[@(e.keyCode)];
 
 		if (selectorName) {
 			objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
@@ -132,13 +150,13 @@
 		}
 	}
 	
-	NSMutableDictionary *characterMap = self.characterHandlerMap[modsKey];
+	NSMutableDictionary *characterMap = self.characterHandlerMap[modifierKeys];
 	
 	if (characterMap) {
-		NSString *str = [[e charactersIgnoringModifiers] lowercaseString];
+		NSString *characterString = e.charactersIgnoringModifiers.lowercaseString;
 		
-		if (NSObjectIsNotEmpty(str)) {
-			NSString *selectorName = characterMap[@([str characterAtIndex:0])];
+		if (NSObjectIsNotEmpty(characterString)) {
+			NSString *selectorName = characterMap[@([characterString characterAtIndex:0])];
 			
 			if (selectorName) {
 				objc_msgSend(self.target, NSSelectorFromString(selectorName), e);
@@ -152,3 +170,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

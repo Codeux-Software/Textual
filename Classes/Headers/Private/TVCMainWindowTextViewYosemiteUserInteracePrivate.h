@@ -35,35 +35,31 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define TVCTextViewIRCFormattingMenuFormatterMenuTag			53037
+@interface TVCMainWindowTextViewYosemiteUserInterace : NSObject
++ (NSColor *)blackInputTextFieldPlaceholderTextColor;
++ (NSColor *)whiteInputTextFieldPlaceholderTextColor;
 
-@interface TVCTextViewIRCFormattingMenu : NSObject <NSMenuDelegate>
-@property (nonatomic, weak) IBOutlet NSMenuItem *formatterMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *foregroundColorMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *backgroundColorMenu;
++ (NSColor *)blackInputTextFieldPrimaryTextColor;
++ (NSColor *)whiteInputTextFieldPrimaryTextColor;
 
-@property (readonly) BOOL firstResponderSupportsFormatting;
++ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor;
 
-@property (readonly) BOOL textIsBold;
-@property (readonly) BOOL textIsItalicized;
-@property (readonly) BOOL textIsStruckthrough;
-@property (readonly) BOOL textIsUnderlined;
-@property (readonly) BOOL textHasForegroundColor;
-@property (readonly) BOOL textHasBackgroundColor;
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina;
++ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
 
-- (IBAction)insertBoldCharIntoTextBox:(id)sender;
-- (IBAction)insertItalicCharIntoTextBox:(id)sender;
-- (IBAction)insertStrikethroughCharIntoTextBox:(id)sender;
-- (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
-- (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
-- (IBAction)insertBackgroundColorCharIntoTextBox:(id)sender;
++ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder;
 
-- (IBAction)removeBoldCharFromTextBox:(id)sender;
-- (IBAction)removeItalicCharFromTextBox:(id)sender;
-- (IBAction)removeStrikethroughCharFromTextBox:(id)sender;
-- (IBAction)removeUnderlineCharFromTextBox:(id)sender;
-- (IBAction)removeForegroundColorCharFromTextBox:(id)sender;
-- (IBAction)removeBackgroundColorCharFromTextBox:(id)sender;
++ (NSGradient *)whiteInputTextFieldInsideWhiteGradient;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina;
++ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
+
++ (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
+
++ (NSColor *)writersProTextFieldCursorPinkColor;
++ (NSColor *)writersProTextFieldCursorBlueColor;
 @end
+
+NS_ASSUME_NONNULL_END

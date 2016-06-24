@@ -43,7 +43,6 @@
 #import "TextualApplication.h"
 
 #import "BuildConfig.h"
-
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "IRCConnectionPrivate.h"
@@ -82,6 +81,8 @@
 #import "TVCLogViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSidebarSmoothTextFieldPrivate.h"
+#import "TVCMainWindowTextViewMavericksUserInteracePrivate.h"
+#import "TVCMainWindowTextViewYosemiteUserInteracePrivate.h"
 #import "TVCMemberListCellPrivate.h"
 #import "TVCMemberListMavericksUserInterfacePrivate.h"
 #import "TVCMemberListPrivate.h"
@@ -93,6 +94,8 @@
 #import "TVCServerListPrivate.h"
 #import "TVCServerListSharedUserInterfacePrivate.h"
 #import "TVCServerListYosemiteUserInterfacePrivate.h"
+#import "TVCTextFormatterMenuPrivate.h"
+#import "TVCTextViewWithIRCFormatterPrivate.h"
 #import "TXGlobalModelsPrivate.h"
 #import "TXSharedApplicationPrivate.h"
 #import "TextualApplication.h"

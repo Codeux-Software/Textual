@@ -5,7 +5,6 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -36,39 +35,50 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-#define TXKeyReturnCode			0x24
-#define TXKeyTabCode			0x30
-#define TXKeySpacebarCode		0x31
-#define TXKeyBackspaceCode		0x33
-#define TXKeyEscapeCode			0x35
-#define TXKeyEnterCode			0x4C
-#define TXKeyHomeCode			0x73
-#define TXKeyPageUpCode			0x74
-#define TXKeyDeleteCode			0x75
-#define TXKeyEndCode			0x77
-#define TXKeyPageDownCode		0x79
-#define TXKeyLeftArrowCode		0x7B
-#define TXKeyRightArrowCode		0x7C
-#define TXKeyDownArrowCode		0x7D
-#define TXKeyUpArrowCode		0x7E
+@implementation TVCMainWindowTextViewMavericksUserInterace
 
-@protocol TLOKeyEventHandlerPrototype <NSObject>
-@optional
-- (void)setKeyHandlerTarget:(id)target;
++ (NSColor *)inputTextFieldPlaceholderTextColor
+{
+	return [NSColor grayColor];
+}
 
-- (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers;
-- (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers;
-- (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)modifiers;
-@end
++ (NSColor *)inputTextFieldPrimaryTextColor
+{
+	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
+}
 
-@interface TLOKeyEventHandler : NSObject <TLOKeyEventHandlerPrototype>
-- (instancetype)initWithTarget:(id)target NS_DESIGNATED_INITIALIZER;
++ (NSColor *)inputTextFieldOutlineColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.42];
+}
 
-- (BOOL)processKeyEvent:(NSEvent *)event;
++ (NSColor *)inputTextFieldOutlineColorForInactiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
+}
+
++ (NSColor *)inputTextFieldBackgroundColor
+{
+	return [NSColor whiteColor];
+}
+
++ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow
+{
+	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
+}
+
++ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow
+{
+	return [NSColor clearColor];
+}
+
++ (NSColor *)inputTextFieldOutsideShadowColor
+{
+	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.70];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

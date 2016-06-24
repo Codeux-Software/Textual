@@ -37,37 +37,29 @@
 
 #import "TextualApplication.h"
 
-@interface TVCTextViewWithIRCFormatter : NSTextView <NSTextViewDelegate>
-@property (nonatomic, copy) NSFont *preferredFont;
-@property (nonatomic, copy) NSColor *preferredFontColor;
-@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+#import "TLOKeyEventHandler.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TVCTextViewWithIRCFormatter : NSTextView <NSTextDelegate, TLOKeyEventHandlerPrototype>
 @property (getter=isAtTopOfView, readonly) BOOL atTopOfView;
 @property (getter=isAtBottomOfView, readonly) BOOL atBottomOfView;
 
-@property (readonly) NSInteger selectedLineNumber;
-@property (readonly) NSInteger numberOfLines;
+@property (readonly) NSUInteger selectedLineNumber;
+@property (readonly) NSUInteger numberOfLines;
 
-- (NSInteger)highestHeightBelowHeight:(NSInteger)maximumHeight withPadding:(NSInteger)valuePadding;
+- (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding;
 
-- (void)keyDownToSuper:(NSEvent *)e;
+@property (nonatomic, copy) NSString *stringValue;
+@property (nonatomic, copy) NSString *stringValueWithIRCFormatting;
 
-- (void)setKeyHandlerTarget:(id)target;
+@property (nonatomic, copy) NSAttributedString *attributedStringValue;
 
-- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods;
-- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods;
-
-@property (copy) NSAttributedString *attributedStringValue;
-
-@property (copy) NSString *stringValue;
-
-- (void)resetTextColorInRange:(NSRange)range;
-- (void)resetTypeSetterAttributes;
-
-- (void)updateAllFontSizesToMatchTheDefaultFont;
-
-- (void)textDidChange:(NSNotification *)aNotification;
-
-- (NSString *)stringValueWithIRCFormatting;
 - (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue;
+
+- (void)resetFontColorInRange:(NSRange)range;
+
+- (void)resetTypeSetterAttributes;
 @end
+
+NS_ASSUME_NONNULL_END

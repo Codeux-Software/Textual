@@ -143,8 +143,6 @@
 	@class TVCMainWindowTextView;
 	@class TVCMainWindowTextViewBackground;
 	@class TVCMainWindowTextViewContentView;
-	@class TVCMainWindowTextViewMavericksUserInterace;
-	@class TVCMainWindowTextViewYosemiteUserInterace;
 	@class TVCMainWindowTitlebarAccessoryView;
 	@class TVCMainWindowTitlebarAccessoryViewController;
 	@class TVCMainWindowTitlebarAccessoryViewLockButton;
@@ -342,8 +340,6 @@
 	#import "TVCMainWindowLoadingScreen.h"
 	#import "TVCMainWindowSegmentedControl.h"
 	#import "TVCMainWindowSplitView.h"
-	#import "TVCMainWindowTextViewMavericksUserInterace.h"
-	#import "TVCMainWindowTextViewYosemiteUserInterace.h"
 	#import "TVCMainWindowTitlebarAccessoryView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
@@ -352,7 +348,6 @@
 	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextFieldComboBoxWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
-	#import "TVCTextFormatterMenu.h"
 
 	/* Master Controllers — Root */
 	#import "TXGlobalModels.h"
