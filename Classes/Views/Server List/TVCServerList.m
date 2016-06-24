@@ -35,11 +35,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCMainWindowPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerList ()
+@property (nonatomic, strong, readwrite) id userInterfaceObjects;
+@property (nonatomic, weak, readwrite, nullable) IBOutlet NSVisualEffectView *visualEffectView;
+@property (nonatomic, weak, readwrite, nullable) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
 @property (nonatomic, assign, readwrite) BOOL leftMouseIsDownInView;
 @end
 
@@ -48,10 +49,8 @@
 #pragma mark -
 #pragma mark Additions/Removal
 
-- (void)addItemToList:(NSInteger)index inParent:(id)parent
+- (void)addItemToList:(NSUInteger)index inParent:(nullable id)parent
 {
-	NSAssertReturn(index >= 0);
-
 	[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]
 					  inParent:parent
 				 withAnimation:(NSTableViewAnimationEffectFade | NSTableViewAnimationSlideRight)];
@@ -61,29 +60,27 @@
 	}
 }
 
-- (void)removeItemFromList:(id)oldObject
+- (void)removeItemFromList:(id)object
 {
-	/* Get the row. */
-	NSInteger rowIndex = [self rowForItem:oldObject];
+	NSParameterAssert(object != nil);
 
-	NSAssertReturn(rowIndex >= 0);
+	NSInteger rowIndex = [self rowForItem:object];
 
-	/* Do we have a parent? */
-	id parentItem = [self parentForItem:oldObject];
+	NSAssert((rowIndex > 0),
+		@"Object does not exist on outline view");
 
-	if ([parentItem isKindOfClass:[IRCClient class]]) {
-		/* We have a parent, get the index of the child. */
+	id parentItem = [self parentForItem:object];
+
+	if (parentItem) {
 		NSArray *childrenItems = [self itemsFromParentGroup:parentItem];
 
-		rowIndex = [childrenItems indexOfObject:oldObject];
+		rowIndex = [childrenItems indexOfObject:object];
 	} else {
-		/* We are the parent. Get our own index. */
-		NSArray *groupItems = [self groupItems];
+		NSArray *groupItems = self.groupItems;
 		
-		rowIndex = [groupItems indexOfObject:oldObject];
+		rowIndex = [groupItems indexOfObject:object];
 	}
 
-	/* Remove object. */
 	NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:rowIndex];
 
 	[self removeItemsAtIndexes:indexSet
@@ -130,72 +127,73 @@
 
 - (void)reloadAllDrawings:(BOOL)skipOcclusionCheck
 {
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
 		[self updateDrawingForRow:i skipOcclusionCheck:skipOcclusionCheck];
 	}
 }
 
 - (void)reloadAllUnreadMessageCountBadges:(BOOL)skipOcclusionCheck
 {
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
 		[self updateMessageCountForRow:i skipOcclusionCheck:skipOcclusionCheck];
 	}
 }
 
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
-	PointerIsEmptyAssert(cellItem);
+	NSParameterAssert(cellItem != nil);
 	
 	NSInteger rowIndex = [self rowForItem:cellItem];
-	
-	NSAssertReturn(rowIndex >= 0);
-	
+
 	[self updateDrawingForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
 }
 
 - (void)updateMessageCountForItem:(IRCTreeItem *)cellItem skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
-	PointerIsEmptyAssert(cellItem);
+	NSParameterAssert(cellItem != nil);
 	
 	NSInteger rowIndex = [self rowForItem:cellItem];
-	
-	NSAssertReturn(rowIndex >= 0);
-	
+
 	[self updateMessageCountForRow:rowIndex skipOcclusionCheck:skipOcclusionCheck];
 }
 
 - (void)updateMessageCountForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
-	NSAssertReturn(rowIndex >= 0);
-	
-	if (skipOcclusionCheck || (skipOcclusionCheck == NO && [mainWindow() isOccluded] == NO)) {
-		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
+	if (rowIndex < 0) {
+		return;
+	}
+
+	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
+		return;
+	}
+
+	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 		
-		BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
+	BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
 		
-		if (isChildItem) {
-			[rowView populateMessageCountBadge];
-		}
+	if (isChildItem) {
+		[rowView populateMessageCountBadge];
 	}
 }
 
 - (void)updateDrawingForRow:(NSInteger)rowIndex skipOcclusionCheck:(BOOL)skipOcclusionCheck
 {
-	NSAssertReturn(rowIndex >= 0);
+	if (rowIndex < 0) {
+		return;
+	}
+
+	if (skipOcclusionCheck == NO && self.mainWindow.occluded) {
+		return;
+	}
+
+	__kindof TVCServerListCell *rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
 	
-	if (skipOcclusionCheck || (skipOcclusionCheck == NO && [mainWindow() isOccluded] == NO)) {
-		id rowView = [self viewAtColumn:0 row:rowIndex makeIfNecessary:NO];
-		
-		BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
-		BOOL isChildItem = [rowView isKindOfClass:[TVCServerListCellChildItem class]];
-		
-		if (isGroupItem || isChildItem) {
-			if (isGroupItem) {
-				[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
-			} else {
-				[rowView setNeedsDisplay:YES];
-			}
-		}
+	BOOL isGroupItem = [rowView isKindOfClass:[TVCServerListCellGroupItem class]];
+
+	if (isGroupItem) {
+		[rowView updateGroupDisclosureTriangle]; // Calls setNeedsDisplay: for item
+	} else {
+		rowView.needsDisplay = YES;
 	}
 }
 
@@ -204,21 +202,18 @@
 	return YES;
 }
 
-- (NSScrollView *)scrollView
-{
-	return [self enclosingScrollView];
-}
-
 - (void)reloadUserInterfaceObjects
 {
 	Class newObjects = nil;
 	
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater])
 	{
-		if ([TVCServerListSharedUserInterface yosemiteIsUsingVibrantDarkMode] == NO) {
-			newObjects = [TVCServerListLightYosemiteUserInterface class];
-		} else {
+		NSString *currentAppearance = self.visualEffectView.appearance.name;
+
+		if ([currentAppearance isEqualToString:NSAppearanceNameVibrantDark]) {
 			newObjects = [TVCServerListDarkYosemiteUserInterface class];
+		} else {
+			newObjects = [TVCServerListLightYosemiteUserInterface class];
 		}
 	}
 	else
@@ -229,36 +224,30 @@
 			newObjects = [TVCServerListMavericksLightUserInterface class];
 		}
 	}
-	
-	self.userInterfaceObjects = nil;
-	self.userInterfaceObjects = [newObjects new];
+
+	self.userInterfaceObjects = [[newObjects alloc] initWithServerList:self];
 }
 
 - (void)updateVibrancy
 {
-	/* Build context. */
 	NSAppearance *appearance = nil;
-	
-	NSVisualEffectView *visaulEffectView = [self visualEffectView];
-	
-	/* Define appearance. */
+
 	if ([TPCPreferences invertSidebarColors]) {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
 	} else {
 		appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
 	}
-	
-	/* Set appearance of self to inherit menu color. */
-	[self setAppearance:appearance];
-	
-	/* Use the underlying visual effect view for real situations. */
-	[visaulEffectView setAppearance:appearance];
 
-	/* Update state of visual effect view */
+	self.appearance = appearance;
+
+	NSVisualEffectView *visaulEffectView = self.visualEffectView;
+
+	visaulEffectView.appearance = appearance;
+
 	if ([TPCPreferences disableSidebarTranslucency]) {
-		[visaulEffectView setState:NSVisualEffectStateInactive];
+		visaulEffectView.state = NSVisualEffectStateInactive;
 	} else {
-		[visaulEffectView setState:NSVisualEffectStateFollowsWindowActiveState];
+		visaulEffectView.state = NSVisualEffectStateFollowsWindowActiveState;
 	}
 }
 
@@ -268,11 +257,11 @@
 	 rows, change the appearance, and reselect them. If we don't do this, the
 	 drawing that NSOutlineView uses for drawling vibrant light rows will stick
 	 forever leaving blue on selected rows no matter how hard we try to draw. */
-	[mainWindow() setIgnoreOutlineViewSelectionChanges:YES];
+	self.mainWindow.ignoreOutlineViewSelectionChanges = YES;
+
+	self.allowsEmptySelection = YES;
 	
-	[self setAllowsEmptySelection:YES];
-	
-	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	NSIndexSet *selectedRows = self.selectedRowIndexes;
 	
 	[self deselectAll:nil];
 	
@@ -284,19 +273,19 @@
 	
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		if ([TPCPreferences invertSidebarColors]) {
-			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleLight];
+			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleLight;
 		} else {
-			[[self enclosingScrollView] setScrollerKnobStyle:NSScrollerKnobStyleDark];
+			self.enclosingScrollView.scrollerKnobStyle = NSScrollerKnobStyleDark;
 		}
 	}
-	
-	[self setNeedsDisplay:YES];
-	
+
+	self.needsDisplay = YES;
+
 	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
-	
-	[self setAllowsEmptySelection:NO];
-	
-	[mainWindow() setIgnoreOutlineViewSelectionChanges:NO];
+
+	self.allowsEmptySelection = NO;
+
+	self.mainWindow.ignoreOutlineViewSelectionChanges = NO;
 	
 	[self reloadAllDrawings:YES];
 }
@@ -304,7 +293,7 @@
 - (void)windowDidChangeKeyState
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
-		[[self backgroundView] setNeedsDisplay:YES];
+		self.backgroundView.needsDisplay = YES;
 	}
 
 	[self reloadAllDrawings:YES];
@@ -313,23 +302,19 @@
 #pragma mark -
 #pragma mark Events
 
-- (NSMenu *)menuForEvent:(NSEvent *)theEvent
+- (nullable NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
-	NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-
-	NSInteger rowUnderMouse = [self rowAtPoint:mouseLocation];
+	NSInteger rowUnderMouse = self.rowUnderMouse;
 
 	if (rowUnderMouse >= 0) {
-		if ([self numberOfSelectedRows] > 1 || rowUnderMouse != [self selectedRow]) {
+		if (rowUnderMouse != self.selectedRow || self.numberOfSelectedRows > 1) {
 			[self selectItemAtIndex:rowUnderMouse];
 		}
+	} else {
+		return menuController().addServerMenu;
 	}
 
-	if (rowUnderMouse == (-1)) {
-		return [menuController() addServerMenu];
-	}
-
-	return [self menu];
+	return self.menu;
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -346,34 +331,31 @@
 	[super mouseUp:theEvent];
 }
 
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-	[super rightMouseDown:theEvent];
-}
-
 - (void)keyDown:(NSEvent *)e
 {
-	if (self.keyDelegate) {
-		switch ([e keyCode]) {
-			case 125: // down arrow
-			case 126: // up arrow
-			case 123: // left arrow
-			case 124: // right arrow
-			case 116: // page up
-			case 121: // page down
-			{
-				break;
-			}
-			default:
-			{
-				if ([self.keyDelegate respondsToSelector:@selector(serverListKeyDown:)]) {
-					[self.keyDelegate serverListKeyDown:e];
-				}
-				
-				break;
-			}
+	if (self.keyDelegate == nil) {
+		return;
+	}
+
+	switch (e.keyCode) {
+		case 125: // down arrow
+		case 126: // up arrow
+		case 123: // left arrow
+		case 124: // right arrow
+		case 116: // page up
+		case 121: // page down
+		{
+			break;
+		}
+		default:
+		{
+			[self.keyDelegate serverListKeyDown:e];
+			
+			break;
 		}
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

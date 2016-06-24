@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCServerListMavericksDarkUserInterface
 
@@ -69,12 +69,12 @@
 	}
 }
 
-- (NSInteger)serverCellRowHeight
+- (CGFloat)serverCellRowHeight
 {
 	return 21.0;
 }
 
-- (NSInteger)channelCellRowHeight
+- (CGFloat)channelCellRowHeight
 {
 	return 20.0;
 }
@@ -99,22 +99,22 @@
 	return [RZFontManager() fontWithFamily:@"Lucida Grande" traits:0 weight:15 size:12.0];
 }
 
-- (NSInteger)messageCountBadgeHeight
+- (CGFloat)messageCountBadgeHeight
 {
 	return 14.0;
 }
 
-- (NSInteger)messageCountBadgeMinimumWidth
+- (CGFloat)messageCountBadgeMinimumWidth
 {
 	return 22.0;
 }
 
-- (NSInteger)messageCountBadgePadding
+- (CGFloat)messageCountBadgePadding
 {
 	return 6.0;
 }
 
-- (NSInteger)messageCountBadgeRightMargin
+- (CGFloat)messageCountBadgeRightMargin
 {
 	return 3.0;
 }
@@ -259,34 +259,36 @@
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.249 alpha:1.0];
 }
 
-- (NSImage *)channelRowSelectionImageForActiveWindow
+- (nullable NSImage *)channelRowSelectionImageForActiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
 
-- (NSImage *)channelRowSelectionImageForInactiveWindow
+- (nullable NSImage *)channelRowSelectionImageForInactiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
 
-- (NSImage *)serverRowSelectionImageForActiveWindow
+- (nullable NSImage *)serverRowSelectionImageForActiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
-- (NSImage *)serverRowSelectionImageForInactiveWindow
+- (nullable NSImage *)serverRowSelectionImageForInactiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkServerCellSelection"];
 }
 
-- (NSColor *)serverListBackgroundColorForActiveWindow
+- (nullable NSColor *)serverListBackgroundColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
-- (NSColor *)serverListBackgroundColorForInactiveWindow
+- (nullable NSColor *)serverListBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

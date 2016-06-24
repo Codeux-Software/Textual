@@ -35,24 +35,26 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "TVCServerListSharedUserInterfacePrivate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListMavericksUserInterface : TVCServerListSharedUserInterface
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)isActive selected:(BOOL)selected;
 
-@property (readonly) NSInteger serverCellRowHeight;
-@property (readonly) NSInteger channelCellRowHeight;
+@property (readonly) CGFloat serverCellRowHeight;
+@property (readonly) CGFloat channelCellRowHeight;
 
-@property (readonly, copy) NSColor *serverListBackgroundColorForActiveWindow;
-@property (readonly, copy) NSColor *serverListBackgroundColorForInactiveWindow;
+@property (readonly, copy, nullable) NSColor *serverListBackgroundColorForActiveWindow;
+@property (readonly, copy, nullable) NSColor *serverListBackgroundColorForInactiveWindow;
 
-@property (readonly, copy) NSImage *channelRowSelectionImageForActiveWindow;
-@property (readonly, copy) NSImage *channelRowSelectionImageForInactiveWindow;
+@property (readonly, copy, nullable) NSImage *channelRowSelectionImageForActiveWindow;
+@property (readonly, copy, nullable) NSImage *channelRowSelectionImageForInactiveWindow;
 
-@property (readonly, copy) NSImage *serverRowSelectionImageForActiveWindow;
-@property (readonly, copy) NSImage *serverRowSelectionImageForInactiveWindow;
+@property (readonly, copy, nullable) NSImage *serverRowSelectionImageForActiveWindow;
+@property (readonly, copy, nullable) NSImage *serverRowSelectionImageForInactiveWindow;
 
 @property (readonly, copy) NSFont *messageCountBadgeFont;
 
@@ -105,10 +107,10 @@
 
 @property (readonly, copy) NSColor *graphiteTextSelectionShadowColor;
 
-@property (readonly) NSInteger messageCountBadgeHeight;
-@property (readonly) NSInteger messageCountBadgeMinimumWidth;
-@property (readonly) NSInteger messageCountBadgePadding;
-@property (readonly) NSInteger messageCountBadgeRightMargin;
+@property (readonly) CGFloat messageCountBadgeHeight;
+@property (readonly) CGFloat messageCountBadgeMinimumWidth;
+@property (readonly) CGFloat messageCountBadgePadding;
+@property (readonly) CGFloat messageCountBadgeRightMargin;
 @end
 
 @interface TVCServerListMavericksLightUserInterface : TVCServerListMavericksUserInterface
@@ -116,3 +118,5 @@
 
 @interface TVCServerListMavericksDarkUserInterface : TVCServerListMavericksUserInterface
 @end
+
+NS_ASSUME_NONNULL_END

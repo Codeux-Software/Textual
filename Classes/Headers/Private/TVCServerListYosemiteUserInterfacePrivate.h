@@ -35,16 +35,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListYosemiteUserInterface : TVCServerListSharedUserInterface
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
-@property (readonly) NSInteger serverCellRowHeight;
-@property (readonly) NSInteger channelCellRowHeight;
+@property (readonly) CGFloat serverCellRowHeight;
+@property (readonly) CGFloat channelCellRowHeight;
 
-@property (readonly, copy) NSColor *rowSelectionColorForActiveWindow;
-@property (readonly, copy) NSColor *rowSelectionColorForInactiveWindow;
+@property (readonly, copy, nullable) NSColor *rowSelectionColorForActiveWindow;
+@property (readonly, copy, nullable) NSColor *rowSelectionColorForInactiveWindow;
 
 - (NSString *)privateMessageStatusIconFilename:(BOOL)isActive;
 
@@ -90,10 +90,10 @@
 
 @property (readonly, copy) NSFont *messageCountBadgeFont;
 
-@property (readonly) NSInteger messageCountBadgeHeight;
-@property (readonly) NSInteger messageCountBadgeMinimumWidth;
-@property (readonly) NSInteger messageCountBadgePadding;
-@property (readonly) NSInteger messageCountBadgeRightMargin;
+@property (readonly) CGFloat messageCountBadgeHeight;
+@property (readonly) CGFloat messageCountBadgeMinimumWidth;
+@property (readonly) CGFloat messageCountBadgePadding;
+@property (readonly) CGFloat messageCountBadgeRightMargin;
 @end
 
 @interface TVCServerListLightYosemiteUserInterface : TVCServerListYosemiteUserInterface
@@ -101,3 +101,5 @@
 
 @interface TVCServerListDarkYosemiteUserInterface : TVCServerListYosemiteUserInterface
 @end
+
+NS_ASSUME_NONNULL_END

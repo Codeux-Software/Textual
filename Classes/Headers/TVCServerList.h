@@ -37,43 +37,11 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCServerList : NSOutlineView
-@property (nonatomic, weak) id keyDelegate;
-@property (nonatomic, strong) id userInterfaceObjects;
-@property (nonatomic, weak) IBOutlet TVCServerListMavericksUserInterfaceBackground *backgroundView;
-@property (nonatomic, copy) NSImage *outlineViewDefaultDisclosureTriangle;
-@property (nonatomic, copy) NSImage *outlineViewAlternateDisclosureTriangle;
-@property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
-@property (readonly) BOOL leftMouseIsDownInView;
-
-/* addItemToList and removeItemFromList work two completely different ways.
- addItemToList expects that you have already added the item to the data source
- and that you are giving the list the index of the newly inserted item relative
- to the parent group. The list then manages that object. */
-- (void)addItemToList:(NSInteger)index inParent:(id)parent;
-
-/* removeItemFromList does not care about the index of an object as long as the
- object exists in the list. It will look for it anywhere. It checks if the item
- is a parent group or just a child and removes it based on that context. */
-- (void)removeItemFromList:(id)oldObject;
-
-/* Drawing. */
-- (void)reloadAllDrawings;
-- (void)reloadAllUnreadMessageCountBadges;
-
 - (void)updateDrawingForItem:(IRCTreeItem *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
-
-- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem;
-- (void)updateMessageCountForRow:(NSInteger)rowIndex;
-
-- (void)updateBackgroundColor; // Do not call.
-
-- (void)windowDidChangeKeyState;
 @end
 
-@protocol TVCServerListDelegate <NSObject>
-@required
-
-- (void)serverListKeyDown:(NSEvent *)e;
-@end
+NS_ASSUME_NONNULL_END

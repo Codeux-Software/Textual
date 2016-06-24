@@ -35,62 +35,64 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TVCServerListSharedUserInterface ()
+@property (nonatomic, strong, readwrite) TVCServerList *serverList;
+@end
+
+@interface TVCServerListMavericksUserInterfaceBackground ()
+@property (nonatomic, weak) IBOutlet TVCServerList *serverList;
+@end
 
 @implementation TVCServerListSharedUserInterface
 
-+ (BOOL)yosemiteIsUsingVibrantDarkMode
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithServerList:(TVCServerList *)serverList
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
-		return NO;
-	} else {
-		NSVisualEffectView *visualEffectView = [mainWindowServerList() visualEffectView];
-		
-		NSAppearance *currentDesign = [visualEffectView appearance];
-		
-		NSString *name = [currentDesign name];
-		
-		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-			return YES;
-		} else {
-			return NO;
-		}
+	NSParameterAssert(serverList != nil);
+
+	if ((self = [super init])) {
+		self.serverList = serverList;
+
+		return self;
 	}
+
+	return nil;
 }
 
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image
 {
-	id cachedObject = [mainWindowServerList() outlineViewDefaultDisclosureTriangle];
-	
-	if (cachedObject == nil) {
-		[mainWindowServerList() setOutlineViewDefaultDisclosureTriangle:image];
+	if (self.serverList.outlineViewDefaultDisclosureTriangle == nil) {
+		self.serverList.outlineViewDefaultDisclosureTriangle = image;
 	}
 }
 
 - (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image
 {
-	id cachedObject = [mainWindowServerList() outlineViewAlternateDisclosureTriangle];
-					   
-	if (cachedObject == nil) {
-		[mainWindowServerList() setOutlineViewAlternateDisclosureTriangle:image];
+	if (self.serverList.outlineViewAlternateDisclosureTriangle == nil) {
+		self.serverList.outlineViewAlternateDisclosureTriangle = image;
 	}
 }
 
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected
 {
 	if (up) {
-		return [mainWindowServerList() outlineViewDefaultDisclosureTriangle];
+		return self.serverList.outlineViewDefaultDisclosureTriangle;
 	} else {
-		return [mainWindowServerList() outlineViewAlternateDisclosureTriangle];
+		return self.serverList.outlineViewAlternateDisclosureTriangle;
 	}
 }
 
-- (NSColor *)userConfiguredMessageCountHighlightedBadgeBackgroundColor
+- (nullable NSColor *)userConfiguredMessageCountHighlightedBadgeBackgroundColor
 {
 	return [RZUserDefaults() colorForKey:@"Server List Unread Message Count Badge Colors -> Highlight"];
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCServerListMavericksUserInterfaceBackground
 
@@ -98,23 +100,22 @@
 {
 	/* The following is specialized drawing for the normal source list
 	 background when inside a backed layer view. */
-	
 	NSColor *backgroundColor = nil;
 	
-	if ([mainWindow() isActiveForDrawing]) {
-		backgroundColor = [[mainWindowServerList() userInterfaceObjects] serverListBackgroundColorForActiveWindow];
+	if (self.mainWindow.isActiveForDrawing) {
+		backgroundColor = [[self.serverList userInterfaceObjects] serverListBackgroundColorForActiveWindow];
 	} else {
-		backgroundColor = [[mainWindowServerList() userInterfaceObjects] serverListBackgroundColorForInactiveWindow];
+		backgroundColor = [[self.serverList userInterfaceObjects] serverListBackgroundColorForInactiveWindow];
 	}
 	
-	if (backgroundColor) {
+	if ( backgroundColor) {
 		[backgroundColor set];
 		
-		NSRectFill([self bounds]);
+		NSRectFill(self.bounds);
 	} else {
 		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
 		
-		[backgroundGradient drawInRect:[self bounds] angle:270.0];
+		[backgroundGradient drawInRect:self.bounds angle:270.0];
 	}
 }
 
@@ -125,6 +126,8 @@
 
 @end
 
+#pragma mark -
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TVCServerListMavericksUserInterface
@@ -133,3 +136,5 @@
 @implementation TVCServerListYosemiteUserInterface
 @end
 #pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_END

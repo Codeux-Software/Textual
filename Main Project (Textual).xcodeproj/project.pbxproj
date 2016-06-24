@@ -300,6 +300,21 @@
 		4C1ED4A316CEA0A9006DD0CA /* IRCConnectionSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ED4A216CEA0A9006DD0CA /* IRCConnectionSocket.m */; };
 		4C211D5715BF21BA00E218DA /* libmustache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C211D5615BF21BA00E218DA /* libmustache.a */; };
 		4C2B8A3015B3DADA000F91B5 /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */; };
+		4C2D6ABE1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
+		4C2D6ABF1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
+		4C2D6AC01D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */; };
+		4C2D6AC11D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */; };
+		4C2D6AC21D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */; };
+		4C2D6AC31D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */; };
+		4C2D6AC41D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */; };
+		4C2D6AC51D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */; };
+		4C2D6AC61D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */; };
+		4C2D6AC71D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */; };
+		4C2D6AC81D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */; };
+		4C2D6AC91D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */; };
+		4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
+		4C2D6ACB1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
+		4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */; };
 		4C2ECBF51B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
@@ -583,10 +598,6 @@
 		4C7B03971D1210A100295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBFB2E41979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03981D1210A100295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03991D1210A100295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039A1D1210A100295E82 /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039B1D1210A100295E82 /* TVCServerListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039C1D1210A100295E82 /* TVCServerListSharedUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B039D1D1210A100295E82 /* TVCServerListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B039E1D1210A100295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B039F1D1210A100295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03A01D1210A100295E82 /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -703,10 +714,6 @@
 		4C7B04181D1210A800295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBFB2E41979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04191D1210A800295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B041B1D1210A800295E82 /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B041C1D1210A800295E82 /* TVCServerListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B041D1D1210A800295E82 /* TVCServerListSharedUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B041E1D1210A800295E82 /* TVCServerListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B041F1D1210A800295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04201D1210A800295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04211D1210A800295E82 /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -823,10 +830,6 @@
 		4C7B04991D1210B000295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBFB2E41979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B049A1D1210B000295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF58F158E99520026668C /* TVCServerList.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B049C1D1210B000295E82 /* TVCServerListCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF590158E99520026668C /* TVCServerListCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B049D1D1210B000295E82 /* TVCServerListMavericksUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B049E1D1210B000295E82 /* TVCServerListSharedUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B049F1D1210B000295E82 /* TVCServerListYosemiteUserInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A01D1210B000295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C001C09197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A11D1210B000295E82 /* TVCTextFieldWithValueValidation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04A21D1210B000295E82 /* TVCTextFormatterMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1750,6 +1753,11 @@
 		4C24DC861A93CC340098D1BE /* Shared Debug Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Debug Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Debug Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C24DC871A93CC340098D1BE /* Shared Standard Release Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Shared Standard Release Configuration.xcconfig"; path = "Resources/Build Configurations/Shared Standard Release Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4C2B8A2F15B3DADA000F91B5 /* SecurityInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SecurityInterface.framework; path = ../../../../System/Library/Frameworks/SecurityInterface.framework; sourceTree = "<group>"; };
+		4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListCellPrivate.h; path = Headers/Private/TVCServerListCellPrivate.h; sourceTree = "<group>"; };
+		4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListMavericksUserInterfacePrivate.h; path = Headers/Private/TVCServerListMavericksUserInterfacePrivate.h; sourceTree = "<group>"; };
+		4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListPrivate.h; path = Headers/Private/TVCServerListPrivate.h; sourceTree = "<group>"; };
+		4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListSharedUserInterfacePrivate.h; path = Headers/Private/TVCServerListSharedUserInterfacePrivate.h; sourceTree = "<group>"; };
+		4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerListYosemiteUserInterfacePrivate.h; path = Headers/Private/TVCServerListYosemiteUserInterfacePrivate.h; sourceTree = "<group>"; };
 		4C2ECBF41B50893A00DC5276 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources/User Interface/English.lproj/TDCLicenseManagerDialog.xib"; sourceTree = SOURCE_ROOT; };
 		4C357E4F1679598F00D4C12A /* Spammer Paradise Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Spammer Paradise Extension.xcodeproj"; path = "Resources/Plugins/Spammer Paradise/Spammer Paradise Extension.xcodeproj"; sourceTree = "<group>"; };
 		4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFieldWithValueValidation.h; sourceTree = "<group>"; };
@@ -1838,9 +1846,6 @@
 		4C74FBBE1B557A8500DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerRecoverLostLicenseSheet.m; path = Dialogs/TDCLicenseManagerRecoverLostLicenseSheet.m; sourceTree = "<group>"; };
 		4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerRecoverLostLicenseSheet.h; sourceTree = "<group>"; };
 		4C74FBC41B557BAA00DD1615 /* TDCLicenseManagerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerDialog.m; path = Dialogs/TDCLicenseManagerDialog.m; sourceTree = "<group>"; };
-		4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListYosemiteUserInterface.h; sourceTree = "<group>"; };
-		4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListMavericksUserInterface.h; sourceTree = "<group>"; };
-		4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListSharedUserInterface.h; sourceTree = "<group>"; };
 		4C7766281978CECA00759774 /* MavericksDarkChannelCellSelection.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkChannelCellSelection.tif; sourceTree = "<group>"; };
 		4C7766291978CECA00759774 /* MavericksDarkChannelCellSelection@2x.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = "MavericksDarkChannelCellSelection@2x.tif"; sourceTree = "<group>"; };
 		4C77662A1978CECA00759774 /* MavericksDarkServerCellSelection.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = MavericksDarkServerCellSelection.tif; sourceTree = "<group>"; };
@@ -1983,8 +1988,7 @@
 		4C8AF58C158E99520026668C /* TVCMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindow.h; sourceTree = "<group>"; };
 		4C8AF58D158E99520026668C /* TVCMemberList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberList.h; sourceTree = "<group>"; };
 		4C8AF58E158E99520026668C /* TVCMemberListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMemberListCell.h; sourceTree = "<group>"; };
-		4C8AF58F158E99520026668C /* TVCServerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerList.h; sourceTree = "<group>"; };
-		4C8AF590158E99520026668C /* TVCServerListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCServerListCell.h; sourceTree = "<group>"; };
+		4C8AF58F158E99520026668C /* TVCServerList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCServerList.h; path = Headers/TVCServerList.h; sourceTree = "<group>"; };
 		4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextViewWithIRCFormatter.h; sourceTree = "<group>"; };
 		4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCTextFormatterMenu.h; sourceTree = "<group>"; };
 		4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TVCMainWindowSplitView.h; sourceTree = "<group>"; };
@@ -2672,6 +2676,7 @@
 			isa = PBXGroup;
 			children = (
 				4CF40DB11AC1A4AC00A26BE0 /* Channel View */,
+				4CF40DCC1AC1A4AC00A26BE0 /* Server List */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2715,6 +2720,11 @@
 				4C7B48F31D131A2A008D7926 /* TVCLogViewInternalWK2.h */,
 				4C7B48F41D131A2A008D7926 /* TVCLogViewPrivate.h */,
 				4C673EE31D10FB5000979B60 /* TVCMainWindowPrivate.h */,
+				4C2D6AB91D1D27C2004A0C2B /* TVCServerListCellPrivate.h */,
+				4C2D6ABA1D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h */,
+				4C2D6ABB1D1D27C2004A0C2B /* TVCServerListPrivate.h */,
+				4C2D6ABC1D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h */,
+				4C2D6ABD1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h */,
 				4C4A1AE61D12245B004FBF12 /* TXGlobalModelsPrivate.h */,
 				4C4A1AE71D12245B004FBF12 /* TXSharedApplicationPrivate.h */,
 				4C673EE41D10FB5000979B60 /* WKWebViewPrivate.h */,
@@ -2995,11 +3005,6 @@
 				4CBBD1A416E3570800D2FEFE /* TVCMemberListUserInfoPopover.h */,
 				4CBFB2E41979AFAF005BB6B5 /* TVCMemberListYosemiteUserInterface.h */,
 				4C9FFB9E19059C3A008C600C /* TVCQueuedCertificateTrustPanel.h */,
-				4C8AF58F158E99520026668C /* TVCServerList.h */,
-				4C8AF590158E99520026668C /* TVCServerListCell.h */,
-				4C77661E19789F9A00759774 /* TVCServerListMavericksUserInterface.h */,
-				4C7766241978A74D00759774 /* TVCServerListSharedUserInterface.h */,
-				4C77661B19789F8E00759774 /* TVCServerListYosemiteUserInterface.h */,
 				4C001C09197A10E80061C2C5 /* TVCTextFieldComboBoxWithValueValidation.h */,
 				4C36091918B4E89500243B3A /* TVCTextFieldWithValueValidation.h */,
 				4C8AF592158E99520026668C /* TVCTextFormatterMenu.h */,
@@ -3134,6 +3139,7 @@
 				4C8AF587158E99520026668C /* TVCLogLine.h */,
 				4C8AF589158E99520026668C /* TVCLogRenderer.h */,
 				4C8AF58B158E99520026668C /* TVCLogView.h */,
+				4C8AF58F158E99520026668C /* TVCServerList.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */,
 				4C9234B2195330E30009AAAE /* TXUserInterface.h */,
@@ -3537,7 +3543,6 @@
 			children = (
 				4CF40DBE1AC1A4AC00A26BE0 /* Input Text Field */,
 				4CF40DC51AC1A4AC00A26BE0 /* Main Window */,
-				4CF40DCC1AC1A4AC00A26BE0 /* Server List */,
 				4CF40DD91AC1A4AC00A26BE0 /* User List */,
 				4CF40DD41AC1A4AC00A26BE0 /* TVCAnimatedContentNavigationOutlineView.m */,
 				4CF40DD51AC1A4AC00A26BE0 /* TVCBasicTableView.m */,
@@ -3617,7 +3622,8 @@
 				4CF40DD21AC1A4AC00A26BE0 /* TVCServerListYosemiteDarkUserInterface.m */,
 				4CF40DD31AC1A4AC00A26BE0 /* TVCServerListYosemiteLightUserInterface.m */,
 			);
-			path = "Server List";
+			name = "Server List";
+			path = "Views/Server List";
 			sourceTree = "<group>";
 		};
 		4CF40DD91AC1A4AC00A26BE0 /* User List */ = {
@@ -3688,6 +3694,7 @@
 				4C7B032C1D1210A100295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C99A7301D12A8E0006A5EA9 /* IRCTreeItemPrivate.h in Headers */,
 				4C7B032D1D1210A100295E82 /* GRMustacheConfiguration.h in Headers */,
+				4C2D6AC11D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */,
 				4C7B032E1D1210A100295E82 /* GRMustacheContentType.h in Headers */,
 				4C7B032F1D1210A100295E82 /* GRMustacheContext.h in Headers */,
 				4C7B03301D1210A100295E82 /* GRMustacheError.h in Headers */,
@@ -3704,6 +3711,7 @@
 				4C7B03371D1210A100295E82 /* GRMustacheTemplate.h in Headers */,
 				4C7B03381D1210A100295E82 /* GRMustacheTemplateRepository.h in Headers */,
 				4C7B03391D1210A100295E82 /* GRMustacheVersion.h in Headers */,
+				4C2D6AC71D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B033A1D1210A100295E82 /* OELReachability.h in Headers */,
 				4C7B033B1D1210A100295E82 /* IRC.h in Headers */,
 				4C7B033C1D1210A100295E82 /* IRCAddressBook.h in Headers */,
@@ -3723,6 +3731,7 @@
 				4C7B034A1D1210A100295E82 /* IRCPrefix.h in Headers */,
 				4C7B034B1D1210A100295E82 /* IRCSendingMessage.h in Headers */,
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
+				4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B034D1D1210A100295E82 /* IRCUser.h in Headers */,
 				4C7B034E1D1210A100295E82 /* IRCWorld.h in Headers */,
 				4C7B034F1D1210A100295E82 /* TDCAboutDialog.h in Headers */,
@@ -3804,19 +3813,16 @@
 				4C7B03971D1210A100295E82 /* TVCMemberListYosemiteUserInterface.h in Headers */,
 				4C7B03981D1210A100295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7B03991D1210A100295E82 /* TVCServerList.h in Headers */,
-				4C7B039A1D1210A100295E82 /* TVCServerListCell.h in Headers */,
-				4C7B039B1D1210A100295E82 /* TVCServerListMavericksUserInterface.h in Headers */,
-				4C7B039C1D1210A100295E82 /* TVCServerListSharedUserInterface.h in Headers */,
 				4CB17EBF1D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
 				4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
 				4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C7B05071D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
-				4C7B039D1D1210A100295E82 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C7B039E1D1210A100295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4C7B039F1D1210A100295E82 /* TVCTextFieldWithValueValidation.h in Headers */,
 				4C7B03A01D1210A100295E82 /* TVCTextFormatterMenu.h in Headers */,
 				4C7B03A11D1210A100295E82 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C7B03A21D1210A100295E82 /* TXGlobalModels.h in Headers */,
+				4C2D6ABE1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4C7B03A31D1210A100295E82 /* TXMasterController.h in Headers */,
 				4C7B03A41D1210A100295E82 /* TXMenuController.h in Headers */,
 				4C7B03A51D1210A100295E82 /* TXSharedApplication.h in Headers */,
@@ -3831,6 +3837,7 @@
 				4C7B04EA1D1210E300295E82 /* NSObjectHelperPrivate.h in Headers */,
 				4C7B04EB1D1210E300295E82 /* NSTableVIewHelperPrivate.h in Headers */,
 				4C7B04EC1D1210E300295E82 /* NSViewHelperPrivate.h in Headers */,
+				4C2D6AC41D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B04ED1D1210E300295E82 /* TextualApplicationPrivate.h in Headers */,
 				4C7B04EE1D1210E300295E82 /* THOPluginProtocolPrivate.h in Headers */,
 				4C7B04EF1D1210E300295E82 /* TPCApplicationInfoPrivate.h in Headers */,
@@ -3861,6 +3868,7 @@
 				4C7B02FD1D12105D00295E82 /* TextualApplication.h in Headers */,
 				4C7B02FE1D12105D00295E82 /* TPCApplicationInfo.h in Headers */,
 				4C7B02FF1D12105D00295E82 /* TPCPathInfo.h in Headers */,
+				4C2D6ABF1D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4C7B03001D12105D00295E82 /* TPCPreferences.h in Headers */,
 				4C7B03031D12105D00295E82 /* TPCPreferencesImportExport.h in Headers */,
 				4C7B03041D12105D00295E82 /* TPCPreferencesUserDefaults.h in Headers */,
@@ -3971,11 +3979,13 @@
 				4C7B04081D1210A800295E82 /* TVCLogView.h in Headers */,
 				4C7B04091D1210A800295E82 /* TVCMainWindow.h in Headers */,
 				4C7B040A1D1210A800295E82 /* TVCMainWindowChannelView.h in Headers */,
+				4C2D6ACB1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B05111D12168C00295E82 /* THOPluginProtocolPrivate.h in Headers */,
 				4C7B040B1D1210A800295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B040C1D1210A800295E82 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C7B040D1D1210A800295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */,
 				4C7B040E1D1210A800295E82 /* TVCMainWindowSplitView.h in Headers */,
+				4C2D6AC81D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B040F1D1210A800295E82 /* TVCMainWindowTextView.h in Headers */,
 				4C7B04101D1210A800295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C7B04111D1210A800295E82 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
@@ -3991,10 +4001,6 @@
 				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B04191D1210A800295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
-				4C7B041B1D1210A800295E82 /* TVCServerListCell.h in Headers */,
-				4C7B041C1D1210A800295E82 /* TVCServerListMavericksUserInterface.h in Headers */,
-				4C7B041D1D1210A800295E82 /* TVCServerListSharedUserInterface.h in Headers */,
-				4C7B041E1D1210A800295E82 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C7B041F1D1210A800295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4CB17EBD1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4CB17EC01D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
@@ -4003,10 +4009,12 @@
 				4C7B04211D1210A800295E82 /* TVCTextFormatterMenu.h in Headers */,
 				4C7B04221D1210A800295E82 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C7B04231D1210A800295E82 /* TXGlobalModels.h in Headers */,
+				4C2D6AC21D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */,
 				4C7B04241D1210A800295E82 /* TXMasterController.h in Headers */,
 				4C7B04251D1210A800295E82 /* TXMenuController.h in Headers */,
 				4C7B04261D1210A800295E82 /* TXSharedApplication.h in Headers */,
 				4C7B04271D1210A800295E82 /* TXUserInterface.h in Headers */,
+				4C2D6AC51D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B04281D1210A800295E82 /* TXWindowController.h in Headers */,
 				4C7B48F91D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
 				4C7B05001D1210F300295E82 /* BuildConfig.h in Headers */,
@@ -4054,6 +4062,7 @@
 				4C7B030C1D12106300295E82 /* TextualApplication.h in Headers */,
 				4C7B030D1D12106300295E82 /* TPCApplicationInfo.h in Headers */,
 				4C7B030E1D12106300295E82 /* TPCPathInfo.h in Headers */,
+				4C2D6AC01D1D27C2004A0C2B /* TVCServerListCellPrivate.h in Headers */,
 				4C7B030F1D12106300295E82 /* TPCPreferences.h in Headers */,
 				4C7B03121D12106300295E82 /* TPCPreferencesImportExport.h in Headers */,
 				4C7B03131D12106300295E82 /* TPCPreferencesUserDefaults.h in Headers */,
@@ -4164,11 +4173,13 @@
 				4C7B04891D1210B000295E82 /* TVCLogView.h in Headers */,
 				4C7B048A1D1210B000295E82 /* TVCMainWindow.h in Headers */,
 				4C7B048B1D1210B000295E82 /* TVCMainWindowChannelView.h in Headers */,
+				4C2D6ACC1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C7B05121D12168C00295E82 /* THOPluginProtocolPrivate.h in Headers */,
 				4C7B048C1D1210B000295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
 				4C7B048D1D1210B000295E82 /* TVCMainWindowSegmentedControl.h in Headers */,
 				4C7B048E1D1210B000295E82 /* TVCMainWindowSidebarSmoothTextField.h in Headers */,
 				4C7B048F1D1210B000295E82 /* TVCMainWindowSplitView.h in Headers */,
+				4C2D6AC91D1D27C2004A0C2B /* TVCServerListSharedUserInterfacePrivate.h in Headers */,
 				4C7B04901D1210B000295E82 /* TVCMainWindowTextView.h in Headers */,
 				4C7B04911D1210B000295E82 /* TVCMainWindowTextViewMavericksUserInterace.h in Headers */,
 				4C7B04921D1210B000295E82 /* TVCMainWindowTextViewYosemiteUserInterace.h in Headers */,
@@ -4184,10 +4195,6 @@
 				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049A1D1210B000295E82 /* TVCQueuedCertificateTrustPanel.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
-				4C7B049C1D1210B000295E82 /* TVCServerListCell.h in Headers */,
-				4C7B049D1D1210B000295E82 /* TVCServerListMavericksUserInterface.h in Headers */,
-				4C7B049E1D1210B000295E82 /* TVCServerListSharedUserInterface.h in Headers */,
-				4C7B049F1D1210B000295E82 /* TVCServerListYosemiteUserInterface.h in Headers */,
 				4C7B04A01D1210B000295E82 /* TVCTextFieldComboBoxWithValueValidation.h in Headers */,
 				4CB17EBE1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4CB17EC11D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
@@ -4196,10 +4203,12 @@
 				4C7B04A21D1210B000295E82 /* TVCTextFormatterMenu.h in Headers */,
 				4C7B04A31D1210B000295E82 /* TVCTextViewWithIRCFormatter.h in Headers */,
 				4C7B04A41D1210B000295E82 /* TXGlobalModels.h in Headers */,
+				4C2D6AC31D1D27C2004A0C2B /* TVCServerListMavericksUserInterfacePrivate.h in Headers */,
 				4C7B04A51D1210B000295E82 /* TXMasterController.h in Headers */,
 				4C7B04A61D1210B000295E82 /* TXMenuController.h in Headers */,
 				4C7B04A71D1210B000295E82 /* TXSharedApplication.h in Headers */,
 				4C7B04A81D1210B000295E82 /* TXUserInterface.h in Headers */,
+				4C2D6AC61D1D27C2004A0C2B /* TVCServerListPrivate.h in Headers */,
 				4C7B04A91D1210B000295E82 /* TXWindowController.h in Headers */,
 				4C7B48FA1D131A2A008D7926 /* TVCLogControllerHistoricLogFilePrivate.h in Headers */,
 				4C7B05011D12110500295E82 /* BuildConfig.h in Headers */,

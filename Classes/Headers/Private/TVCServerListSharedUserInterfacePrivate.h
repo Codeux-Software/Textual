@@ -35,18 +35,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListSharedUserInterface : NSObject
+@property (readonly) TVCServerList *serverList;
+
+- (instancetype)initWithServerList:(TVCServerList *)serverList NS_DESIGNATED_INITIALIZER;
+
 - (void)setOutlineViewDefaultDisclosureTriangle:(NSImage *)image;
 - (void)setOutlineViewAlternateDisclosureTriangle:(NSImage *)image;
 
 - (NSImage *)disclosureTriangleInContext:(BOOL)up selected:(BOOL)selected;
 
-+ (BOOL)yosemiteIsUsingVibrantDarkMode;
-
-@property (readonly, copy) NSColor *userConfiguredMessageCountHighlightedBadgeBackgroundColor;
+@property (readonly, copy, nullable) NSColor *userConfiguredMessageCountHighlightedBadgeBackgroundColor;
 @end
 
 @interface TVCServerListMavericksUserInterfaceBackground : NSBox
 @end
+
+NS_ASSUME_NONNULL_END
