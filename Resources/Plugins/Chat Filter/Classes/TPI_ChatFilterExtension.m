@@ -258,7 +258,7 @@
 				if (((lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) &&
 					 [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
 
-					((lineType == TVCLogLineActionType || TVCLogLineActionNoHighlightType)
+					((lineType == TVCLogLineActionType || lineType == TVCLogLineActionNoHighlightType)
 					 && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
 
 					(lineType == TVCLogLineNoticeType && [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
