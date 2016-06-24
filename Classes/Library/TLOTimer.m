@@ -124,25 +124,10 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.actionValidated == NO) {
 		NSMethodSignature *actionSignature = [self.target methodSignatureForSelector:self.action];
 
-		if (actionSignature == nil) {
-			LogToConsoleError("Selector '%@' is not declared by '%{public}@'",
-				NSStringFromSelector(self.action), [self.target description])
-
-			return;
-		} else if (strcmp(actionSignature.methodReturnType, @encode(void)) != 0) {
-			LogToConsoleError("Selector '%{public}@' should not return a value",
-				NSStringFromSelector(self.action))
-
-			return;
-		} else if (actionSignature.numberOfArguments != 3) {
-			LogToConsoleError("Selector '%{public}@' should take only one argument",
-				NSStringFromSelector(self.action))
-			
+		if ([actionSignature validateMethodIsValidSenderDestination] == NO) {
 			return;
 		}
 
-		// Set after validation is performed so that if validation fails,
-		// the return statements will not allow this property to equal YES
 		self.actionValidated = YES;
 	}
 
