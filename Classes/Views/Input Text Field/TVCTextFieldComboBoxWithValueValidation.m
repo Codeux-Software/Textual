@@ -354,7 +354,11 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+#ifdef TXSystemIsOSXSierraOrLater
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(nullable id)anObject event:(nullable NSEvent *)theEvent
+#else
+- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(nullable id)anObject event:(NSEvent *)theEvent
+#endif
 {
 	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
 	
