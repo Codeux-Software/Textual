@@ -35,23 +35,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMemberListMavericksLightUserInterface
 
-- (NSInteger)cellRowHeight
+- (CGFloat)cellRowHeight
 {
 	return 20.0;
 }
 
-- (NSImage *)rowSelectionImageForActiveWindow
+- (nullable NSImage *)rowSelectionImageForActiveWindow
 {
-	return nil; // Use system default.
+	return nil; // Use system default
 }
 
-- (NSImage *)rowSelectionImageForInactiveWindow
+- (nullable NSImage *)rowSelectionImageForInactiveWindow
 {
-	return nil; // Use system default.
+	return nil; // Use system default
 }
 
 - (NSColor *)userMarkBadgeBackgroundColorForGraphite
@@ -129,14 +129,16 @@
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
 }
 
-- (NSColor *)memberListBackgroundColorForActiveWindow
+- (nullable NSColor *)memberListBackgroundColorForActiveWindow
 {
-	return nil; // Use system default.
+	return nil;
 }
 
-- (NSColor *)memberListBackgroundColorForInactiveWindow
+- (nullable NSColor *)memberListBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.901 green:0.901 blue:0.901 alpha:1.0];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

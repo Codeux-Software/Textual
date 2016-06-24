@@ -35,64 +35,68 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListSharedUserInterface ()
+@property (nonatomic, strong, readwrite) TVCMemberList *memberList;
 @property (nonatomic, strong) NSCache *cachedUserMarkBadges;
+@end
+
+@interface TVCMemberListMavericksUserInterfaceBackground ()
+@property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
 @end
 
 @implementation TVCMemberListSharedUserInterface
 
-+ (BOOL)yosemiteIsUsingVibrantDarkMode
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithMemberList:(TVCMemberList *)memberList
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
-		return NO;
-	} else {
-		NSVisualEffectView *visualEffectView = [mainWindowMemberList() visualEffectView];
-		
-		NSAppearance *currentDesign = [visualEffectView appearance];
-		
-		NSString *name = [currentDesign name];
-		
-		if ([name hasPrefix:NSAppearanceNameVibrantDark]) {
-			return YES;
-		} else {
-			return NO;
-		}
+	NSParameterAssert(memberList != nil);
+
+	if ((self = [super init])) {
+		self.memberList = memberList;
+
+		return self;
 	}
+
+	return nil;
 }
 
-- (NSString *)keyForRetrievingCachedUserMarkBadgeWithSymbol:(NSString *)mark rank:(IRCUserRank)rank
+- (NSString *)keyForRetrievingCachedUserMarkBadgeWithSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank
 {
-	if ([mark length] == 0) {
+	if (modeSymbol.length == 0) {
 		return [NSString stringWithFormat:@"%lu > (No Rank)", rank];
 	} else {
-		return [NSString stringWithFormat:@"%lu > %@", rank, mark];
+		return [NSString stringWithFormat:@"%lu > %@", rank, modeSymbol];
 	}
 }
 
-- (NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)mark rank:(IRCUserRank)rank
+- (nullable NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank
 {
+	NSParameterAssert(modeSymbol != nil);
+
 	if (self.cachedUserMarkBadges == nil) {
-		self.cachedUserMarkBadges = [NSCache new];
-		
 		return nil;
-	} else {
-		NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:mark rank:rank];
-		
-		return [self.cachedUserMarkBadges objectForKey:key];
 	}
+
+	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:modeSymbol rank:rank];
+		
+	return [self.cachedUserMarkBadges objectForKey:key];
 }
 
-- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)mark rank:(IRCUserRank)rank
+- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank
 {
+	NSParameterAssert(badgeImage != nil);
+	NSParameterAssert(modeSymbol != nil);
+
 	if (self.cachedUserMarkBadges == nil) {
 		self.cachedUserMarkBadges = [NSCache new];
 	}
 	
-	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:mark rank:rank];
+	NSString *key = [self keyForRetrievingCachedUserMarkBadgeWithSymbol:modeSymbol rank:rank];
 	
-	[self.cachedUserMarkBadges setObject:[badgeImage copy] forKey:key];
+	[self.cachedUserMarkBadges setObject:badgeImage forKey:key];
 }
 
 - (void)invalidateAllUserMarkBadgeCaches
@@ -102,12 +106,12 @@
 	}
 }
 
-- (NSColor *)memberListBackgroundColorForActiveWindow
+- (nullable NSColor *)memberListBackgroundColorForActiveWindow
 {
 	return nil;
 }
 
-- (NSColor *)memberListBackgroundColorForInactiveWindow
+- (nullable NSColor *)memberListBackgroundColorForInactiveWindow
 {
 	return nil;
 }
@@ -203,17 +207,19 @@
 	return [RZFontManager() fontWithFamily:@"Helvetica" traits:0 weight:15 size:12.0];
 }
 
-- (NSInteger)userMarkBadgeWidth
+- (CGFloat)userMarkBadgeWidth
 {
 	return 20.0;
 }
 
-- (NSInteger)userMarkBadgeHeight
+- (CGFloat)userMarkBadgeHeight
 {
 	return 16.0;
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCMemberListMavericksUserInterfaceBackground
 
@@ -221,23 +227,22 @@
 {
 	/* The following is specialized drawing for the normal source list
 	 background when inside a backed layer view. */
-	
 	NSColor *backgroundColor = nil;
 	
-	if ([mainWindow() isActiveForDrawing]) {
-		backgroundColor = [[mainWindowMemberList() userInterfaceObjects] memberListBackgroundColorForActiveWindow];
+	if (self.mainWindow.isActiveForDrawing) {
+		backgroundColor = [self.memberList.userInterfaceObjects memberListBackgroundColorForActiveWindow];
 	} else {
-		backgroundColor = [[mainWindowMemberList() userInterfaceObjects] memberListBackgroundColorForInactiveWindow];
+		backgroundColor = [self.memberList.userInterfaceObjects memberListBackgroundColorForInactiveWindow];
 	}
 	
-	if (backgroundColor) {
+	if ( backgroundColor) {
 		[backgroundColor set];
 		
-		NSRectFill([self bounds]);
+		NSRectFill(self.bounds);
 	} else {
 		NSGradient *backgroundGradient = [NSGradient sourceListBackgroundGradientColor];
 		
-		[backgroundGradient drawInRect:[self bounds] angle:270.0];
+		[backgroundGradient drawInRect:self.bounds angle:270.0];
 	}
 }
 
@@ -248,6 +253,8 @@
 
 @end
 
+#pragma mark -
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 @implementation TVCMemberListMavericksUserInterface
@@ -256,3 +263,5 @@
 @implementation TVCMemberListYosemiteUserInterface
 @end
 #pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_END

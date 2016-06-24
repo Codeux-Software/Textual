@@ -35,13 +35,15 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListMavericksUserInterface : TVCMemberListSharedUserInterface
-@property (readonly) NSInteger cellRowHeight;
+@property (readonly) CGFloat cellRowHeight;
 
-@property (readonly, copy) NSImage *rowSelectionImageForActiveWindow;
-@property (readonly, copy) NSImage *rowSelectionImageForInactiveWindow;
+@property (readonly, copy, nullable) NSImage *rowSelectionImageForActiveWindow;
+@property (readonly, copy, nullable) NSImage *rowSelectionImageForInactiveWindow;
 
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForAqua;
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColorForGraphite;
@@ -72,3 +74,5 @@
 
 @interface TVCMemberListMavericksDarkUserInterface : TVCMemberListMavericksUserInterface
 @end
+
+NS_ASSUME_NONNULL_END

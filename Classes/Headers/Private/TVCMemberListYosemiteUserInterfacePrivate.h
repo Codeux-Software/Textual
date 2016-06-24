@@ -37,73 +37,33 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TVCMemberListDarkYosemiteUserInterface
+@interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
+@property (readonly) CGFloat cellRowHeight;
 
-- (CGFloat)cellRowHeight
-{
-	return 20.0;
-}
+@property (readonly, copy) NSColor *normalCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *normalCellTextColorForInactiveWindow;
 
-- (NSColor *)userMarkBadgeBackgroundColor
-{
-	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-}
+@property (readonly, copy) NSColor *awayUserCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *awayUserCellTextColorForInactiveWindow;
 
-- (NSColor *)normalCellTextColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
-}
+@property (readonly, copy) NSColor *selectedCellTextColorForActiveWindow;
+@property (readonly, copy) NSColor *selectedCellTextColorForInactiveWindow;
 
-- (NSColor *)awayUserCellTextColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
-}
+@property (readonly, copy) NSColor *userMarkBadgeNormalTextColor;
 
-- (NSColor *)normalCellTextColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
-}
+@property (readonly, copy) NSColor *userMarkBadgeSelectedBackgroundColor;
+@property (readonly, copy) NSColor *userMarkBadgeSelectedTextColor;
 
-- (NSColor *)awayUserCellTextColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.4 alpha:1.0];
-}
+@property (readonly, copy, nullable) NSColor *rowSelectionColorForActiveWindow;
+@property (readonly, copy, nullable) NSColor *rowSelectionColorForInactiveWindow;
 
-- (NSColor *)selectedCellTextColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
-}
+@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor;
+@end
 
-- (NSColor *)selectedCellTextColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.7 alpha:1.0];
-}
+@interface TVCMemberListLightYosemiteUserInterface : TVCMemberListYosemiteUserInterface
+@end
 
-- (NSColor *)userMarkBadgeNormalTextColor
-{
-	return [NSColor whiteColor];
-}
-
-- (NSColor *)userMarkBadgeSelectedBackgroundColor
-{
-	return [NSColor whiteColor];
-}
-
-- (NSColor *)userMarkBadgeSelectedTextColor
-{
-	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
-}
-
-- (nullable NSColor *)rowSelectionColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-}
-
-- (nullable NSColor *)rowSelectionColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
-}
-
+@interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
 @end
 
 NS_ASSUME_NONNULL_END

@@ -35,11 +35,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMemberListLightYosemiteUserInterface
 
-- (NSInteger)cellRowHeight
+- (CGFloat)cellRowHeight
 {
 	return 20.0;
 }
@@ -94,14 +94,16 @@
 	return [NSColor colorWithCalibratedRed:0.232 green:0.232 blue:0.232 alpha:1.0];
 }
 
-- (NSColor *)rowSelectionColorForActiveWindow
+- (nullable NSColor *)rowSelectionColorForActiveWindow
 {
 	return nil;
 }
 
-- (NSColor *)rowSelectionColorForInactiveWindow
+- (nullable NSColor *)rowSelectionColorForInactiveWindow
 {
 	return nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,17 +35,33 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListCell : NSTableCellView
-@property (nonatomic, weak) IRCUser *memberPointer;
+@interface TVCMemberList ()
+@property (nonatomic, weak, nullable) id keyDelegate;
 
-@property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
+- (id)userInterfaceObjects;
+- (nullable NSVisualEffectView *)visualEffectView;
+- (nullable TVCMemberListMavericksUserInterfaceBackground *)backgroundView;
+- (TVCMemberListUserInfoPopover *)memberListUserInfoPopover;
 
-@property (readonly, copy) NSDictionary *drawingContext;
+- (void)addItemToList:(NSUInteger)rowIndex;
 
-- (void)drawWithExpansionFrame;
+- (void)removeItemFromList:(id)object;
+
+- (void)reloadAllDrawings;
+
+- (void)updateBackgroundColor;
+
+- (void)windowDidChangeKeyState;
+
+- (void)destroyUserInfoPopoverOnWindowKeyChange;
 @end
 
-@interface TVCMemberListRowCell : NSTableRowView
+@protocol TVCMemberListDelegate <NSObject>
+@required
+
+- (void)memberListKeyDown:(NSEvent *)e;
 @end
+
+NS_ASSUME_NONNULL_END

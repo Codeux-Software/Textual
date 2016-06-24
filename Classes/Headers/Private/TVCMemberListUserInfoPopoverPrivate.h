@@ -35,33 +35,15 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListYosemiteUserInterface : TVCMemberListSharedUserInterface
-@property (readonly) NSInteger cellRowHeight;
-
-@property (readonly, copy) NSColor *normalCellTextColorForActiveWindow;
-@property (readonly, copy) NSColor *normalCellTextColorForInactiveWindow;
-
-@property (readonly, copy) NSColor *awayUserCellTextColorForActiveWindow;
-@property (readonly, copy) NSColor *awayUserCellTextColorForInactiveWindow;
-
-@property (readonly, copy) NSColor *selectedCellTextColorForActiveWindow;
-@property (readonly, copy) NSColor *selectedCellTextColorForInactiveWindow;
-
-@property (readonly, copy) NSColor *userMarkBadgeNormalTextColor;
-
-@property (readonly, copy) NSColor *userMarkBadgeSelectedBackgroundColor;
-@property (readonly, copy) NSColor *userMarkBadgeSelectedTextColor;
-
-@property (readonly, copy) NSColor *rowSelectionColorForActiveWindow;
-@property (readonly, copy) NSColor *rowSelectionColorForInactiveWindow;
-
-@property (readonly, copy) NSColor *userMarkBadgeBackgroundColor;
+@interface TVCMemberListUserInfoPopover : NSPopover
+@property (readonly, weak) NSTextField *nicknameField;
+@property (readonly, weak) NSTextField *usernameField;
+@property (readonly, weak) NSTextField *addressField;
+@property (readonly, weak) NSTextField *realNameField;
+@property (readonly, weak) NSTextField *privilegesField;
+@property (readonly, weak) NSTextField *awayStatusField;
 @end
 
-@interface TVCMemberListLightYosemiteUserInterface : TVCMemberListYosemiteUserInterface
-@end
-
-@interface TVCMemberListDarkYosemiteUserInterface : TVCMemberListYosemiteUserInterface
-@end
+NS_ASSUME_NONNULL_END

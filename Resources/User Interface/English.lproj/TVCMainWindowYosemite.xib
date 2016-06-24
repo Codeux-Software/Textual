@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="101000" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -218,7 +218,7 @@
                                                     </tableColumns>
                                                     <accessibility description="Server List"/>
                                                     <connections>
-                                                        <outlet property="visualEffectView" destination="KgM-JY-9PC" id="lPH-Qx-Yg2"/>
+                                                        <outlet property="visualEffectView" destination="KgM-JY-9PC" id="qaq-vu-mgs"/>
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
@@ -322,7 +322,7 @@
                                                     <accessibility description="User List"/>
                                                     <connections>
                                                         <outlet property="memberListUserInfoPopover" destination="iYh-l7-KsB" id="tdZ-ZT-PaZ"/>
-                                                        <outlet property="visualEffectView" destination="2k7-ax-6YE" id="3ak-f9-liW"/>
+                                                        <outlet property="visualEffectView" destination="2k7-ax-6YE" id="CF5-T2-j0W"/>
                                                     </connections>
                                                 </outlineView>
                                             </subviews>
@@ -363,7 +363,7 @@
                     </splitView>
                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ub4-hV-1Sb" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
-                        <view key="contentView">
+                        <view key="contentView" id="9wH-wD-nA6">
                             <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -568,14 +568,14 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                             </subviews>
                         </view>
                         <constraints>
+                            <constraint firstItem="8hV-Px-fjE" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="1jT-iB-Y37"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="5Oe-gB-w7z"/>
+                            <constraint firstItem="Y3v-lS-079" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="96K-4y-BKK"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="B5x-mu-MgS"/>
-                            <constraint firstItem="Itg-Wv-Smb" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="SZf-lb-6sw"/>
-                            <constraint firstItem="8hV-Px-fjE" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="cq4-UG-43V"/>
-                            <constraint firstItem="Itg-Wv-Smb" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="dHH-jI-gMN"/>
-                            <constraint firstItem="Y3v-lS-079" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="gMb-0v-WTO"/>
-                            <constraint firstItem="8hV-Px-fjE" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="iHn-JV-Dw7"/>
-                            <constraint firstItem="Y3v-lS-079" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="okU-9L-zq6"/>
+                            <constraint firstItem="Y3v-lS-079" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="KyO-Hz-3Fz"/>
+                            <constraint firstItem="Itg-Wv-Smb" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="L2J-n1-aiT"/>
+                            <constraint firstItem="Itg-Wv-Smb" firstAttribute="centerY" secondItem="ub4-hV-1Sb" secondAttribute="centerY" id="Z6I-Nv-gh7"/>
+                            <constraint firstItem="8hV-Px-fjE" firstAttribute="centerX" secondItem="ub4-hV-1Sb" secondAttribute="centerX" id="oO6-8P-h1X"/>
                         </constraints>
                         <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -782,7 +782,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <outlet property="contentViewController" destination="hJd-My-gQw" id="6X4-yG-whE"/>
                 <outlet property="nicknameField" destination="2985" id="Zdx-zU-lTA"/>
                 <outlet property="privilegesField" destination="2991" id="oAe-fS-Ikc"/>
-                <outlet property="realnameField" destination="MUG-Yv-LiF" id="nlb-pK-Hzm"/>
+                <outlet property="realNameField" destination="MUG-Yv-LiF" id="bgm-wv-oOS"/>
                 <outlet property="usernameField" destination="2987" id="Q11-PO-Oa9"/>
             </connections>
         </popover>

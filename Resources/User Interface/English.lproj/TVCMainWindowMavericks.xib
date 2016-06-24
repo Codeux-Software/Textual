@@ -1503,6 +1503,9 @@
                                         </constraints>
                                         <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         <color key="fillColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="memberList" destination="uZZ-ie-yHv" id="9Xd-5T-mXa"/>
+                                        </connections>
                                     </box>
                                 </subviews>
                                 <constraints>
@@ -1799,7 +1802,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                 <outlet property="contentViewController" destination="nSS-3J-Dkv" id="g5K-iZ-J5D"/>
                 <outlet property="nicknameField" destination="Y1K-ql-5IW" id="wop-3R-Yiz"/>
                 <outlet property="privilegesField" destination="AD1-CZ-DVv" id="yUO-Wr-5KE"/>
-                <outlet property="realnameField" destination="j7n-34-pDc" id="5J0-Ka-Hhh"/>
+                <outlet property="realNameField" destination="j7n-34-pDc" id="rTz-YP-RQW"/>
                 <outlet property="usernameField" destination="z0r-s4-p97" id="Vro-fO-evu"/>
             </connections>
         </popover>
