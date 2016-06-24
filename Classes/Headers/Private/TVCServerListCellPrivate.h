@@ -35,17 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCServerListCell : NSTableCellView
 @property (nonatomic, weak) IRCTreeItem *cellItem;
-@property (nonatomic, weak) IBOutlet NSTextField *cellTextField;
-@property (nonatomic, weak) IBOutlet NSImageView *messageCountBadgeImageView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *messageCountBadgeTrailingConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *groupItemTextFieldLeadingConstraint;
-
-@property (readonly, copy) NSDictionary *drawingContext;
 
 - (void)populateMessageCountBadge;
 
@@ -59,5 +52,12 @@
 @end
 
 @interface TVCServerListRowCell : NSTableRowView
-@property (nonatomic, assign) BOOL isGroupItem;
 @end
+
+@interface TVCServerListGroupRowCell : TVCServerListRowCell
+@end
+
+@interface TVCServerListChildRowCell : TVCServerListRowCell
+@end
+
+NS_ASSUME_NONNULL_END

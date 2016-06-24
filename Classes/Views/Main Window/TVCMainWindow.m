@@ -2116,9 +2116,11 @@
 
 - (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
-	TVCServerListRowCell *rowView = [[TVCServerListRowCell alloc] initWithFrame:NSZeroRect];
-
-	return rowView;
+	if ([item isClient]) {
+		return [[TVCServerListGroupRowCell alloc] initWithFrame:NSZeroRect];
+	} else {
+		return [[TVCServerListChildRowCell alloc] initWithFrame:NSZeroRect];
+	}
 }
 
 - (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item

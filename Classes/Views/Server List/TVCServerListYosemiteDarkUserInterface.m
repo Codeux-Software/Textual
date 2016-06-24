@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCServerListDarkYosemiteUserInterface
 
@@ -57,12 +57,12 @@
 	}
 }
 
-- (NSInteger)serverCellRowHeight
+- (CGFloat)serverCellRowHeight
 {
 	return 22.0;
 }
 
-- (NSInteger)channelCellRowHeight
+- (CGFloat)channelCellRowHeight
 {
 	return 20.0;
 }
@@ -156,22 +156,22 @@
 	}
 }
 
-- (NSInteger)messageCountBadgeHeight
+- (CGFloat)messageCountBadgeHeight
 {
 	return 14.0;
 }
 
-- (NSInteger)messageCountBadgeMinimumWidth
+- (CGFloat)messageCountBadgeMinimumWidth
 {
 	return 22.0;
 }
 
-- (NSInteger)messageCountBadgePadding
+- (CGFloat)messageCountBadgePadding
 {
 	return 6.0;
 }
 
-- (NSInteger)messageCountBadgeRightMargin
+- (CGFloat)messageCountBadgeRightMargin
 {
 	return 3.0;
 }
@@ -231,14 +231,16 @@
 	return [NSColor colorWithCalibratedRed:0.0117 green:0.1562 blue:0.0 alpha:1.0];
 }
 
-- (NSColor *)rowSelectionColorForActiveWindow
+- (nullable NSColor *)rowSelectionColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
-- (NSColor *)rowSelectionColorForInactiveWindow
+- (nullable NSColor *)rowSelectionColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedWhite:0.2 alpha:1.0];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

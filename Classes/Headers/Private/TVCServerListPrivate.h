@@ -35,54 +35,38 @@
 
  *********************************************************************** */
 
-@class TVCLogControllerOperationQueue;
+NS_ASSUME_NONNULL_BEGIN
 
-#import "BuildConfig.h"
+@interface TVCServerList ()
+@property (nonatomic, weak, nullable) id keyDelegate;
+@property (nonatomic, copy, nullable) NSImage *outlineViewDefaultDisclosureTriangle;
+@property (nonatomic, copy, nullable) NSImage *outlineViewAlternateDisclosureTriangle;
 
-#import "TextualApplication.h"
+- (id)userInterfaceObjects;
+- (nullable NSVisualEffectView *)visualEffectView;
+- (nullable TVCServerListMavericksUserInterfaceBackground *)backgroundView;
 
-#import "GCDAsyncSocketCipherNames.h"
-#import "GCDAsyncSocketExtensions.h"
-#import "IRCConnectionPrivate.h"
-#import "IRCHighlightLogEntryPrivate.h"
-#import "IRCTreeItemPrivate.h"
-#import "IRCUserPrivate.h"
-#import "IRCWorldPrivate.h"
-#import "IRCWorldPrivateCloudExtension.h"
-#import "NSObjectHelperPrivate.h"
-#import "NSTableVIewHelperPrivate.h"
-#import "NSViewHelperPrivate.h"
-#import "THOPluginDispatcherPrivate.h"
-#import "THOPluginItemPrivate.h"
-#import "THOPluginManagerPrivate.h"
-#import "THOPluginProtocolPrivate.h"
-#import "TLOLicenseManager.h"
-#import "TPCApplicationInfoPrivate.h"
-#import "TPCPathInfoPrivate.h"
-#import "TPCPreferencesCloudSyncPrivate.h"
-#import "TPCPreferencesImportExportPrivate.h"
-#import "TPCPreferencesPrivate.h"
-#import "TPCPreferencesUserDefaultsMigratePrivate.h"
-#import "TPCPreferencesUserDefaultsPrivate.h"
-#import "TPCResourceManagerPrivate.h"
-#import "TPCThemeControllerPrivate.h"
-#import "TPCThemeSettingsPrivate.h"
-#import "TVCImageURLoaderPrivate.h"
-#import "TVCLogControllerHistoricLogFilePrivate.h"
-#import "TVCLogControllerOperationQueuePrivate.h"
-#import "TVCLogControllerPrivate.h"
-#import "TVCLogLinePrivate.h"
-#import "TVCLogPolicyPrivate.h"
-#import "TVCLogScriptEventSinkPrivate.h"
-#import "TVCLogViewInternalWK1.h"
-#import "TVCLogViewInternalWK2.h"
-#import "TVCLogViewPrivate.h"
-#import "TVCMainWindowPrivate.h"
-#import "TVCServerListCellPrivate.h"
-#import "TVCServerListMavericksUserInterfacePrivate.h"
-#import "TVCServerListPrivate.h"
-#import "TVCServerListSharedUserInterfacePrivate.h"
-#import "TVCServerListYosemiteUserInterfacePrivate.h"
-#import "TXGlobalModelsPrivate.h"
-#import "TXSharedApplicationPrivate.h"
-#import "WebScriptObjectHelperPrivate.h"
+- (BOOL)leftMouseIsDownInView;
+
+- (void)addItemToList:(NSUInteger)index inParent:(nullable id)parent;
+
+- (void)removeItemFromList:(id)object;
+
+- (void)reloadAllDrawings;
+- (void)reloadAllUnreadMessageCountBadges;
+
+- (void)updateMessageCountForItem:(IRCTreeItem *)cellItem;
+- (void)updateMessageCountForRow:(NSInteger)rowIndex;
+
+- (void)updateBackgroundColor;
+
+- (void)windowDidChangeKeyState;
+@end
+
+@protocol TVCServerListDelegate <NSObject>
+@required
+
+- (void)serverListKeyDown:(NSEvent *)e;
+@end
+
+NS_ASSUME_NONNULL_END

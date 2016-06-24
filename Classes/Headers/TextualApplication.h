@@ -165,18 +165,6 @@
 	@class TVCMemberListYosemiteUserInterface;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
-	@class TVCServerListCell;
-	@class TVCServerListCellChildItem;
-	@class TVCServerListCellGroupItem;
-	@class TVCServerListDarkYosemiteUserInterface;
-	@class TVCServerListLightYosemiteUserInterface;
-	@class TVCServerListMavericksDarkUserInterface;
-	@class TVCServerListMavericksLightUserInterface;
-	@class TVCServerListMavericksUserInterface;
-	@class TVCServerListMavericksUserInterfaceBackground;
-	@class TVCServerListRowCell;
-	@class TVCServerListSharedUserInterface;
-	@class TVCServerListYosemiteUserInterface;
 	@class TVCTextFieldComboBoxWithValueValidation;
 	@class TVCTextFieldComboBoxWithValueValidationCell;
 	@class TVCTextFieldWithValueValidation;
@@ -381,10 +369,6 @@
 	#import "TVCMemberListYosemiteUserInterface.h"
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
-	#import "TVCServerListCell.h"
-	#import "TVCServerListSharedUserInterface.h"
-	#import "TVCServerListMavericksUserInterface.h"
-	#import "TVCServerListYosemiteUserInterface.h"
 	#import "TVCTextFieldWithValueValidation.h"
 	#import "TVCTextFieldComboBoxWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"

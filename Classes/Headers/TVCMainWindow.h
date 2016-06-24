@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 #import "TVCMemberList.h" // @protocol
 #import "TVCServerList.h" // @protocol
 
-@interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCServerListDelegate, TVCMemberListDelegate>
+@interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate, TVCMemberListDelegate>
 @property (nonatomic, weak) IBOutlet TVCMainWindowChannelView *channelView;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewLockButton *titlebarAccessoryViewLockButton;
 @property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;

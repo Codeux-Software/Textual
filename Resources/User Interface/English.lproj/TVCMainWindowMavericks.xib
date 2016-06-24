@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TXMasterController">
@@ -1244,7 +1244,7 @@
                                 <subviews>
                                     <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2Vr-x4-oub" customClass="TVCServerListMavericksUserInterfaceBackground">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                        <view key="contentView">
+                                        <view key="contentView" id="xUB-ul-oXy">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1372,13 +1372,16 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="pRq-5j-Tbj" secondAttribute="bottom" id="2Wv-wO-ZOD"/>
-                                            <constraint firstItem="pRq-5j-Tbj" firstAttribute="leading" secondItem="2Vr-x4-oub" secondAttribute="leading" id="AhC-FD-kVW"/>
-                                            <constraint firstItem="pRq-5j-Tbj" firstAttribute="top" secondItem="2Vr-x4-oub" secondAttribute="top" id="CJ3-k8-NKm"/>
-                                            <constraint firstAttribute="trailing" secondItem="pRq-5j-Tbj" secondAttribute="trailing" id="III-fM-pGK"/>
+                                            <constraint firstItem="pRq-5j-Tbj" firstAttribute="top" secondItem="2Vr-x4-oub" secondAttribute="top" id="dtK-BG-L1T"/>
+                                            <constraint firstAttribute="trailing" secondItem="pRq-5j-Tbj" secondAttribute="trailing" id="eSB-gW-7XS"/>
+                                            <constraint firstItem="pRq-5j-Tbj" firstAttribute="leading" secondItem="2Vr-x4-oub" secondAttribute="leading" id="ez5-GZ-gyS"/>
+                                            <constraint firstAttribute="bottom" secondItem="pRq-5j-Tbj" secondAttribute="bottom" id="sPh-vt-jGK"/>
                                         </constraints>
                                         <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         <color key="fillColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="serverList" destination="bhZ-Cj-KBM" id="Bku-qn-S34"/>
+                                        </connections>
                                     </box>
                                 </subviews>
                                 <constraints>
@@ -1403,7 +1406,7 @@
                                 <subviews>
                                     <box autoresizesSubviews="NO" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="03i-f2-qEP" customClass="TVCMemberListMavericksUserInterfaceBackground">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
-                                        <view key="contentView">
+                                        <view key="contentView" id="HTR-d7-zSK">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="439"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1493,10 +1496,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Zg5-cz-li9" secondAttribute="trailing" id="Uev-9X-GEK"/>
-                                            <constraint firstItem="Zg5-cz-li9" firstAttribute="top" secondItem="03i-f2-qEP" secondAttribute="top" id="YSu-hf-AVZ"/>
-                                            <constraint firstItem="Zg5-cz-li9" firstAttribute="leading" secondItem="03i-f2-qEP" secondAttribute="leading" id="hEH-5i-AEg"/>
-                                            <constraint firstAttribute="bottom" secondItem="Zg5-cz-li9" secondAttribute="bottom" id="y9E-sh-IV8"/>
+                                            <constraint firstAttribute="bottom" secondItem="Zg5-cz-li9" secondAttribute="bottom" id="2Vo-04-X9M"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zg5-cz-li9" secondAttribute="trailing" id="USI-LO-DRK"/>
+                                            <constraint firstItem="Zg5-cz-li9" firstAttribute="top" secondItem="03i-f2-qEP" secondAttribute="top" id="bL7-od-6Bb"/>
+                                            <constraint firstItem="Zg5-cz-li9" firstAttribute="leading" secondItem="03i-f2-qEP" secondAttribute="leading" id="rQk-B7-QJR"/>
                                         </constraints>
                                         <color key="borderColor" white="1" alpha="0.0" colorSpace="deviceWhite"/>
                                         <color key="fillColor" red="0.16511158645153046" green="0.16511158645153046" blue="0.16511158645153046" alpha="1" colorSpace="calibratedRGB"/>
@@ -1527,7 +1530,7 @@
                     </splitView>
                     <box autoresizesSubviews="NO" title="Box" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fcA-DA-hcd" userLabel="Loading Screen" customClass="TVCMainWindowLoadingScreenView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>
-                        <view key="contentView">
+                        <view key="contentView" id="oLn-Od-ikw">
                             <rect key="frame" x="0.0" y="0.0" width="800" height="439"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -1732,14 +1735,14 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                             </subviews>
                         </view>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="x8f-Op-1pT" secondAttribute="centerY" constant="-0.5" id="0lT-8p-48v"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="3Bn-VB-mZR"/>
-                            <constraint firstAttribute="centerX" secondItem="x8f-Op-1pT" secondAttribute="centerX" id="OvG-I9-9Dt"/>
+                            <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="3sr-jV-Vjf"/>
+                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="Arm-Wt-ZN7"/>
+                            <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="TuW-Vn-6qA"/>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="WCF-du-2lE"/>
-                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="Ylp-OT-oOC"/>
-                            <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="aDP-0D-kmr"/>
-                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="fDx-Yq-mqi"/>
-                            <constraint firstAttribute="centerY" secondItem="x8f-Op-1pT" secondAttribute="centerY" constant="-0.5" id="mJY-dd-3jN"/>
-                            <constraint firstItem="wHu-Jd-5VZ" firstAttribute="centerX" secondItem="fcA-DA-hcd" secondAttribute="centerX" id="yYa-Ck-cOW"/>
+                            <constraint firstItem="qAL-J6-fow" firstAttribute="centerY" secondItem="fcA-DA-hcd" secondAttribute="centerY" id="j1Z-HU-wsO"/>
+                            <constraint firstAttribute="centerX" secondItem="x8f-Op-1pT" secondAttribute="centerX" id="xUS-9o-zS5"/>
                         </constraints>
                         <color key="borderColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="fillColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
