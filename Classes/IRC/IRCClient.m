@@ -3695,6 +3695,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
+	if (type == TVCLogLineActionNoHighlightType) {
+		type = TVCLogLineActionType;
+	} else if (type == TVCLogLinePrivateMessageNoHighlightType) {
+		type = TVCLogLinePrivateMessageType;
+	}
+
 	/* If client is not connected, we set our configured nickname when we have none. */
 	if (self.isLoggedIn == NO && NSObjectIsEmpty(nickname)) {
 		if (type == TVCLogLinePrivateMessageType ||

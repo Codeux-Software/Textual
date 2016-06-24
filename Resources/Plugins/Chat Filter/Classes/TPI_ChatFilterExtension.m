@@ -255,8 +255,12 @@
 
 		for (TPI_ChatFilter *filter in arrangedObjects) {
 			@autoreleasepool {
-				if ((lineType == TVCLogLinePrivateMessageType && [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
-					(lineType == TVCLogLineActionType && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
+				if (((lineType == TVCLogLinePrivateMessageType || lineType == TVCLogLinePrivateMessageNoHighlightType) &&
+					 [filter isEventTypeEnabled:TPI_ChatFilterPlainTextMessageEventType] == NO) ||
+
+					((lineType == TVCLogLineActionType || TVCLogLineActionNoHighlightType)
+					 && [filter isEventTypeEnabled:TPI_ChatFilterActionMessageEventType] == NO) ||
+
 					(lineType == TVCLogLineNoticeType && [filter isEventTypeEnabled:TPI_ChatFilterNoticeMessageEventType] == NO))
 				{
 					/* Continue to next filter. This filter is not interested
