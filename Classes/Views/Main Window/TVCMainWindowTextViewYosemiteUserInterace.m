@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMainWindowTextViewYosemiteUserInterace
 
@@ -91,8 +91,8 @@
 
 + (NSGradient *)whiteInputTextFieldInsideWhiteGradient
 {
-	return [NSGradient gradientWithStartingColor:[self whiteInputTextFieldInsideWhiteGradientStartColor]
-									 endingColor:[self whiteInputTextFieldInsideWhiteGradientEndColor]];
+	return [NSGradient gradientWithStartingColor:self.whiteInputTextFieldInsideWhiteGradientStartColor
+									 endingColor:self.whiteInputTextFieldInsideWhiteGradientEndColor];
 }
 
 + (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina
@@ -121,3 +121,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

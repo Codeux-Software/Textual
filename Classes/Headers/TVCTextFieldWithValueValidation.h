@@ -37,19 +37,21 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Keep the validation block as fast as possible as it is called every time 
  that the value of the text field is changed. */
 typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 
 @interface TVCTextFieldWithValueValidation : NSTextField
-@property (nonatomic, copy) TVCTextFieldWithValueValidationBlock validationBlock;
+@property (nonatomic, copy, nullable) TVCTextFieldWithValueValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
 @property (nonatomic, assign) BOOL stringValueIsTrimmed; // Returned value is trimmed of whitespaces and newlines when returned. The value is returned trimmed by -value. It is also sent to the validation block as trimmed.
 @property (nonatomic, assign) BOOL stringValueIsInvalidOnEmpty; // Is an empty string considered invalid?
 @property (nonatomic, assign) BOOL performValidationWhenEmpty;
-@property (nonatomic, weak) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
-@property (nonatomic, copy) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
+@property (nonatomic, weak, nullable) id textDidChangeCallback; // Calls method "-(void)validatedTextFieldTextDidChange:(id)sender" whereas "sender" is the text field.
+@property (nonatomic, copy, nullable) NSString *defualtValue; // A value to return from -value if the text field is empty. Only used if stringValueIsInvalidOnEmpty = NO
 
 @property (readonly, copy) NSString *value; /* The current value. */
 @property (readonly, copy) NSString *lowercaseValue;
@@ -58,8 +60,10 @@ typedef BOOL (^TVCTextFieldWithValueValidationBlock)(NSString *currentValue);
 @property (readonly) BOOL valueIsEmpty;
 @property (readonly) BOOL valueIsValid;
 
-- (void)performValidation; /* Force the text field to clear cache and validate value. */
+- (void)performValidation; /* Force the text field to clear cache and validate value */
 @end
 
 @interface TVCTextFieldWithValueValidationCell : NSTextFieldCell
 @end
+
+NS_ASSUME_NONNULL_END

@@ -2070,7 +2070,7 @@
 	/* Insert names. */
 	[textField replaceCharactersInRange:selectedRange withString:insertString];
 
-	[textField resetTextColorInRange:selectedRange];
+	[textField resetFontColorInRange:selectedRange];
 	
 	/* Close users. */
 	[self deselectMembers:sender];

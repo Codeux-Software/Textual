@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCTextFieldWithValueValidation ()
 /* Maintain cached value so that the drawing does not call
@@ -44,6 +44,13 @@
 @end
 
 @interface TVCTextFieldWithValueValidationCell ()
+@property (readonly) NSColor *erroneousValueBackgroundColor;
+@property (readonly) BOOL onlyShowStatusIfErrorOccurs;
+@property (readonly) BOOL parentValueIsEmpty;
+@property (readonly) BOOL parentValueIsValid;
+@property (readonly) NSRect parentViewFrame;
+@property (readonly) TVCTextFieldWithValueValidation *parentField;
+
 - (void)recalculatePositionOfClipView:(NSClipView *)clipView;
 @end
 
@@ -67,16 +74,16 @@
 	NSString *stringValue = nil;
 	
 	if (self.stringValueUsesOnlyFirstToken) {
-		stringValue = [self trimmedFirstTokenStringValue];
+		stringValue = self.trimmedFirstTokenStringValue;
 	} else {
-		stringValue = [self stringValue];
+		stringValue = self.stringValue;
 		
 		if (self.stringValueIsTrimmed) {
-			stringValue = [stringValue trim];
+			stringValue = stringValue.trim;
 		}
 	}
 
-	if ([stringValue length] == 0) {
+	if (stringValue.length == 0) {
 		if (       self.defualtValue && self.stringValueIsInvalidOnEmpty == NO) {
 			return self.defualtValue;
 		}
@@ -87,27 +94,27 @@
 
 - (NSString *)lowercaseValue
 {
-	return [[self value] lowercaseString];
+	return self.value.lowercaseString;
 }
 
 - (NSString *)uppercaseValue
 {
-	return [[self value] uppercaseString];
+	return self.value.uppercaseString;
 }
 
 - (NSInteger)integerValue
 {
-	return [[self value] integerValue];
+	return self.value.integerValue;
 }
 
 - (void)setIntegerValue:(NSInteger)integerValue
 {
-	[self setStringValue:[NSString stringWithInteger:integerValue]];
+	self.stringValue = [NSString stringWithInteger:integerValue];
 }
 
 - (BOOL)valueIsEmpty
 {
-	return NSObjectIsEmpty([self stringValue]);
+	return NSObjectIsEmpty(self.stringValue);
 }
 
 - (BOOL)valueIsValid
@@ -120,7 +127,6 @@
 
 - (void)textDidChange:(NSNotification *)notification
 {
-	/* Validate new value. */
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
@@ -128,12 +134,10 @@
 	[self recalculatePositionOfClipView];
 }
 
-- (void)setStringValue:(NSString *)aString
+- (void)setStringValue:(NSString *)stringValue
 {
-	/* Set string value. */
-	[super setStringValue:aString];
-	
-	/* Validate new value. */
+	super.stringValue = stringValue;
+
 	[self performValidation];
 	
 	[self informCallbackTextDidChange];
@@ -143,24 +147,26 @@
 
 - (void)informCallbackTextDidChange
 {
-	if (self.textDidChangeCallback) {
-		if ([self.textDidChangeCallback respondsToSelector:@selector(validatedTextFieldTextDidChange:)]) {
-			[self.textDidChangeCallback performSelector:@selector(validatedTextFieldTextDidChange:) withObject:self];
-		}
+	if (self.textDidChangeCallback == nil) {
+		return;
+	}
+
+	if ([self.textDidChangeCallback respondsToSelector:@selector(validatedTextFieldTextDidChange:)]) {
+		[self.textDidChangeCallback performSelector:@selector(validatedTextFieldTextDidChange:) withObject:self];
 	}
 }
 
 - (void)performValidation
 {
-	if (NSObjectIsEmpty([self value]) == NO) {
+	if (NSObjectIsEmpty(self.value) == NO) {
 		if (self.validationBlock) {
-			self.cachedValidValue = self.validationBlock([self stringValue]);
+			self.cachedValidValue = self.validationBlock(self.stringValue);
 		} else {
 			self.cachedValidValue = YES;
 		}
 	} else {
 		if (self.performValidationWhenEmpty) {
-			self.cachedValidValue = self.validationBlock([self stringValue]);
+			self.cachedValidValue = self.validationBlock(self.stringValue);
 		} else {
 			self.cachedValidValue = (self.stringValueIsInvalidOnEmpty == NO);
 		}
@@ -169,23 +175,21 @@
 
 - (void)recalculatePositionOfClipView
 {
-	NSArray *subviews = [self subviews];
-	
-	id internalClipView = nil;
-	
-	if ([subviews count] > 0) {
-		for (id object in subviews) {
-			if ([[object class] isSubclassOfClass:[NSClipView class]]) {
-				internalClipView = object;
-				
-				break;
-			}
+	NSClipView *clipView = nil;
+
+	for (NSView *subview in self.subviews) {
+		if ([subview isKindOfClass:[NSClipView class]]) {
+			clipView = (id)subview;
+			
+			break;
 		}
 	}
 	
-	if (internalClipView) {
-		[[self cell] recalculatePositionOfClipView:internalClipView];
+	if (clipView == nil) {
+		return;
 	}
+
+	[self.cell recalculatePositionOfClipView:clipView];
 }
 
 @end
@@ -197,35 +201,31 @@
 
 - (NSRect)correctedDrawingRect:(NSRect)aRect
 {
-	if ([self onlyShowStatusIfErrorOccurs]) {
-		if ([self parentValueIsValid]) {
+	if (self.onlyShowStatusIfErrorOccurs) {
+		if (self.parentValueIsValid) {
 			return aRect;
 		}
 	}
-	
-	/* Update size. */
+
 	aRect.size.width = [self correctedWidthForClipViewRect];
-	
-	/* Return frame. */
+
 	return aRect;
 }
 
 - (NSInteger)correctedWidthForClipViewRect
 {
-	NSRect parentRect = [self parentViewFrame];
-	
+	NSRect parentRect = self.parentViewFrame;
+
 	NSInteger parentWidth = NSWidth(parentRect);
-	
-	if ([self onlyShowStatusIfErrorOccurs]) {
-		if ([self parentValueIsValid]) {
-			return (parentWidth - 4.0);
+
+	if (self.onlyShowStatusIfErrorOccurs) {
+		if (self.parentValueIsValid) {
+			return (parentWidth - 24.0);
 		}
 	}
-	
-	/* Update size. */
-	parentWidth -= 28;
-	
-	/* Return frame. */
+
+	parentWidth -= 28.0;
+
 	return parentWidth;
 }
 
@@ -237,59 +237,52 @@
 - (NSRect)erroneousValueBadgeIconRectInParentRect:(NSRect)aRect
 {
 	/* Look at all those magic numbers... */
-	NSInteger rightEdge = (NSMaxX(aRect) - 21.0);
+	CGFloat rightEdge = (NSMaxX(aRect) - 21.0);
 	
 	return NSMakeRect(rightEdge, 4.0, 15.0, 15.0);
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	/* Draw a background color. */
-	if ([self parentValueIsValid] == NO) {
-		/* Define frame. */
+	if (self.parentValueIsValid == NO) {
 		NSRect backgroundFrame = cellFrame;
-		
+
 		backgroundFrame.origin.x += 1.0;
 		backgroundFrame.origin.y += 1.0;
-		
+
 		backgroundFrame.size.width -= 2.0;
 		backgroundFrame.size.height -= 2.0;
-		
-		/* Define color and fill it. */
-		NSColor *backgroundColor = [self erroneousValueBackgroundColor];
-		
+
+		NSColor *backgroundColor = self.erroneousValueBackgroundColor;
+
 		NSBezierPath *backgroundFill = [NSBezierPath bezierPathWithRect:backgroundFrame];
-		
+
 		[backgroundColor set];
-		
+
 		[backgroundFill fill];
 	}
-	
-	/* Draw rest of text field. */
+
 	[super drawInteriorWithFrame:cellFrame inView:controlView];
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	/* Draw to super. */
 	[super drawWithFrame:cellFrame inView:controlView];
-	
-	/* Maybe not draw icon. */
-	if ([self onlyShowStatusIfErrorOccurs]) {
-		if ([self parentValueIsValid]) {
+
+	/* Maybe not draw icon */
+	if (self.onlyShowStatusIfErrorOccurs) {
+		if (self.parentValueIsValid) {
 			return; // Do not continue, we have valid value.
 		}
 	}
-	
-	/* Draw status image badge. */
+
+	/* Draw status image badge */
 	NSImage *statusImage = nil;
-	
-	if ([self parentValueIsValid] == NO) {
+
+	if (self.parentValueIsEmpty == NO) {
+		statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
+	} else if (self.parentValueIsValid == NO) {
 		statusImage = [NSImage imageNamed:@"ErroneousTextFieldValueIndicator"];
-	} else {
-		if ([self parentValueIsEmpty] == NO) {
-			statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
-		}
 	}
 	
 	if (statusImage) {
@@ -304,14 +297,14 @@
 	}
 }
 
-- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
+- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(nullable id)anObject event:(nullable NSEvent *)theEvent
 {
 	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
 
 	[self recalculatePositionOfClipView];
 }
 
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
+- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(nullable id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
 	[super selectWithFrame:aRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 
@@ -327,43 +320,45 @@
 
 - (void)recalculatePositionOfClipView:(NSClipView *)clipView
 {
-	NSRect clipViewRect = [clipView frame];
+	NSRect clipViewRect = clipView.frame;
 	
 	clipViewRect.size.width = [self correctedWidthForClipViewRect];
 	
-	[clipView setFrame:clipViewRect];
+	clipView.frame = clipViewRect;
 	
-	[[self parentField] resetCursorRects];
+	[self.parentField resetCursorRects];
 }
 
 - (TVCTextFieldWithValueValidation *)parentField
 {
-	return (TVCTextFieldWithValueValidation *)[self controlView];
+	return (TVCTextFieldWithValueValidation *)self.controlView;
 }
 
 - (NSRect)parentViewFrame
 {
-	return [[self parentField] frame];
+	return self.parentField.frame;
 }
 
 - (void)recalculatePositionOfClipView
 {
-	[[self parentField] recalculatePositionOfClipView];
+	[self.parentField recalculatePositionOfClipView];
 }
 
 - (BOOL)parentValueIsEmpty
 {
-	return [[self parentField] valueIsEmpty];
+	return self.parentField.valueIsEmpty;
 }
 
 - (BOOL)parentValueIsValid
 {
-	return [[self parentField] valueIsValid];
+	return self.parentField.valueIsValid;
 }
 
 - (BOOL)onlyShowStatusIfErrorOccurs
 {
-	return [[self parentField] onlyShowStatusIfErrorOccurs];
+	return self.parentField.onlyShowStatusIfErrorOccurs;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

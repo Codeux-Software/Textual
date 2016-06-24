@@ -214,7 +214,7 @@
 				return;
 			}
 
-			[self resetTextColorInRange:effectiveRange];
+			[self resetFontColorInRange:effectiveRange];
 		}];
 
 	[[self textStorage] endEditing];

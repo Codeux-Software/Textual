@@ -37,5 +37,9 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCAutoExpandingTokenField : NSTokenField
 @end
+
+NS_ASSUME_NONNULL_END

@@ -35,44 +35,52 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #define TVCTextViewWithIRCFormatterWidthPadding		1.0
 #define TVCTextViewWithIRCFormatterHeightPadding	2.0
 
+@interface TVCTextViewWithIRCFormatter ()
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+@end
+
 @implementation TVCTextViewWithIRCFormatter
 
-- (instancetype)initWithCoder:(NSCoder *)coder
+- (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithCoder:coder];
+	if ((self = [super initWithCoder:coder])) {
+		[self prepareInitialState];
 
-	if (self) {
-		[self setDelegate:self];
-
-		if ([TPCPreferences rightToLeftFormatting]) {
-			[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
-		} else {
-            [self setBaseWritingDirection:NSWritingDirectionLeftToRight];
-		}
-
-		self.keyEventHandler = [TLOKeyEventHandler new];
-
-		[super setTextContainerInset:NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
-												TVCTextViewWithIRCFormatterHeightPadding)];
-
-		/* These are the default values. Any class using this one is expected
-		 to define their own values at some point. */
-		[self setPreferredFont:[self font]];
-		
-		[self setPreferredFontColor:[self textColor]];
+		return self;
     }
 	
-    return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.delegate = (id)self;
+
+	if ([TPCPreferences rightToLeftFormatting]) {
+		self.baseWritingDirection = NSWritingDirectionRightToLeft;
+	} else {
+		self.baseWritingDirection = NSWritingDirectionLeftToRight;
+	}
+
+	self.textContainerInset =
+	 NSMakeSize(TVCTextViewWithIRCFormatterWidthPadding,
+				TVCTextViewWithIRCFormatterHeightPadding);
+
+	self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
+
+	// The following serve as defaults and are supposed to be replaced
+	self.preferredFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+	self.preferredFontColor = [NSColor blackColor];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [[self window] makeFirstResponder:self];
+    [self.window makeFirstResponder:self];
 
     [super mouseDown:theEvent];
 }
@@ -82,17 +90,22 @@
 
 - (void)setKeyHandlerTarget:(id)target
 {
-	[self.keyEventHandler setTarget:target];
+	[self.keyEventHandler setKeyHandlerTarget:target];
 }
 
-- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
+- (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
 {
-	[self.keyEventHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyEventHandler registerSelector:selector key:keyCode modifiers:modifiers];
 }
 
-- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
+- (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
 {
-	[self.keyEventHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyEventHandler registerSelector:selector character:character modifiers:modifiers];
+}
+
+- (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)modifiers
+{
+	[self.keyEventHandler registerSelector:selector characters:characterRange modifiers:modifiers];
 }
 
 - (void)keyDown:(NSEvent *)e
@@ -101,7 +114,7 @@
 		return;
 	}
 
-	[self keyDownToSuper:e];
+	[super keyDown:e];
 }
 
 - (void)keyDownToSuper:(NSEvent *)e
@@ -122,53 +135,60 @@
 	return @[NSPasteboardTypeString, NSFilenamesPboardType];
 }
 
+- (NSString *)stringValue
+{
+	return [self.string copy];
+}
+
+- (NSString *)stringValueWithIRCFormatting
+{
+	return [self attributedString].attributedStringToASCIIFormatting;
+}
+
+- (void)setStringValue:(NSString *)stringValue
+{
+	NSParameterAssert(stringValue != nil);
+
+	[self.textStorage replaceCharactersInRange:self.range withString:stringValue];
+
+	[self didChangeText];
+}
+
 - (NSAttributedString *)attributedStringValue
 {
 	return [[self attributedString] copy];
 }
 
-- (NSString *)stringValue
+- (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
 {
-	return [[self string] copy];
-}
+	NSParameterAssert(attributedStringValue != nil);
 
-- (NSString *)stringValueWithIRCFormatting
-{
-	return [[self attributedString] attributedStringToASCIIFormatting];
+	[self.undoManager removeAllActions];
+
+	[self.textStorage replaceCharactersInRange:self.range withAttributedString:attributedStringValue];
+
+	[self didChangeText];
 }
 
 - (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue
 {
-	NSAttributedString *asvalue = [stringValue attributedStringWithIRCFormatting:self.preferredFont
-															  preferredFontColor:self.preferredFontColor
-													   honorFormattingPreference:NO];
+	NSParameterAssert(stringValue != nil);
 
-	if (asvalue) {
-		[self setAttributedStringValue:asvalue];
+	NSAttributedString *formattedValue =
+	[stringValue attributedStringWithIRCFormatting:self.preferredFont
+								preferredFontColor:self.preferredFontColor
+						 honorFormattingPreference:NO];
+
+	if (formattedValue) {
+		self.attributedStringValue = formattedValue;
 	}
-}
-
-- (void)setAttributedStringValue:(NSAttributedString *)string
-{
-	[[self undoManager] removeAllActions];
-
-	[[self textStorage] replaceCharactersInRange:[self range] withAttributedString:string];
-
-	[self didChangeText];
-}
-
-- (void)setStringValue:(NSString *)string
-{
-    [[self textStorage] replaceCharactersInRange:[self range] withString:string];
-
-	[self didChangeText];
 }
 
 #pragma mark -
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
-	if ([self stringLength] < 1) {
+	if (self.stringLength < 1) {
 		[self resetTypeSetterAttributes];
 	}
 
@@ -181,82 +201,83 @@
 
 - (void)updateAllFontSizesToMatchTheDefaultFont
 {
-	CGFloat newPointSize = [self.preferredFont pointSize];
+	CGFloat newPointSize = self.preferredFont.pointSize;
 
-    [[self textStorage] beginEditing];
+    [self.textStorage beginEditing];
 
-    [[self textStorage] enumerateAttribute:NSFontAttributeName
-								inRange:[self range]
-								options:0
-							usingBlock:^(id value, NSRange range, BOOL *stop)
+	[self.textStorage enumerateAttribute:NSFontAttributeName
+								 inRange:self.range
+								 options:0
+							  usingBlock:^(id value, NSRange range, BOOL *stop)
 	{
-		NSFont *oldfont = value;
+		if (fabs([value pointSize]) == fabs(newPointSize)) {
+			return;
+		}
 
-		if (fabs([oldfont pointSize]) == fabs(newPointSize)) {
-			;
-		} else {
-			NSFont *font = [RZFontManager() convertFont:value toSize:newPointSize];
+		NSFont *font = [RZFontManager() convertFont:value toSize:newPointSize];
 
-			if (font) {
-				[[self textStorage] removeAttribute:NSFontAttributeName range:range];
+		if (font) {
+			[self.textStorage removeAttribute:NSFontAttributeName range:range];
 
-				[[self textStorage] addAttribute:NSFontAttributeName value:font range:range];
-			}
+			[self.textStorage addAttribute:NSFontAttributeName value:font range:range];
 		}
 	}];
 
-    [[self textStorage] endEditing];
+    [self.textStorage endEditing];
 }
 
 - (void)setPreferredFont:(NSFont *)preferredFont
 {
-	if (NSObjectsAreEqual(_preferredFont, preferredFont)) {
-		;
-	} else {
-		_preferredFont = [preferredFont copy];
+	NSParameterAssert(preferredFont != nil);
 
-		[self modifyTypingAttributes:@{NSFontAttributeName : _preferredFont}];
+	if (self->_preferredFont != preferredFont) {
+		self->_preferredFont = [preferredFont copy];
+
+		[self modifyTypingAttributes:@{
+			NSFontAttributeName : self->_preferredFont
+		}];
 	}
 }
 
 - (void)setPreferredFontColor:(NSColor *)preferredFontColor
 {
-	if (NSObjectsAreEqual(_preferredFontColor, preferredFontColor)) {
-		;
-	} else {
-		_preferredFontColor = [preferredFontColor copy];
+	NSParameterAssert(preferredFontColor != nil);
 
-		[self modifyTypingAttributes:@{NSForegroundColorAttributeName : _preferredFontColor}];
+	if (self->_preferredFontColor != preferredFontColor) {
+		self->_preferredFontColor = [preferredFontColor copy];
 
-		[self setInsertionPointColor:_preferredFontColor];
+		[self modifyTypingAttributes:@{
+			NSForegroundColorAttributeName : self->_preferredFontColor
+		}];
+
+		self.insertionPointColor = self->_preferredFontColor;
 	}
 }
 
 - (void)resetTypeSetterAttributes
 {
-	[self setTypingAttributes:@{
+	self.typingAttributes = @{
 		NSFontAttributeName : self.preferredFont,
-
 		NSForegroundColorAttributeName : self.preferredFontColor
-	}];
+	};
 }
 
 - (void)modifyTypingAttributes:(NSDictionary *)typingAttributes
 {
-	NSMutableDictionary *existingAttributes = [[self typingAttributes] mutableCopy];
+	NSMutableDictionary *typingAttributesMutable = [self.typingAttributes mutableCopy];
 
-	[existingAttributes addEntriesFromDictionary:typingAttributes];
+	[typingAttributesMutable addEntriesFromDictionary:typingAttributes];
 
-	[self setTypingAttributes:existingAttributes];
+	self.typingAttributes = typingAttributesMutable;
 }
 
-- (void)resetTextColorInRange:(NSRange)range
+- (void)resetFontColorInRange:(NSRange)range
 {
 	NSDictionary *newAttributes = @{
 		NSForegroundColorAttributeName : self.preferredFontColor
 	};
 
-	[[self textStorage] addAttributes:newAttributes range:range];
+	[self.textStorage addAttributes:newAttributes range:range];
 }
 
 #pragma mark -
@@ -264,63 +285,60 @@
 
 - (BOOL)isAtBottomOfView
 {
-	return ([self selectedLineNumber] == [self numberOfLines]);
+	return (self.selectedLineNumber == self.numberOfLines);
 }
 
 - (BOOL)isAtTopOfView
 {
-	return ([self selectedLineNumber] == 1);
+	return (self.selectedLineNumber == 1);
 }
 
-- (NSInteger)selectedLineNumber
+- (NSUInteger)selectedLineNumber
 {
-	NSLayoutManager *layoutManager = [self layoutManager];
-	
-	/* Range of selected line. */
-	NSRange blr;
-	NSRange selr = [self selectedRange];
-	
-	if (selr.location <= [self stringLength]) {
-		[layoutManager lineFragmentRectForGlyphAtIndex:selr.location effectiveRange:&blr];
-	} else {
-		return -1;
-	}
+	NSLayoutManager *layoutManager = self.layoutManager;
+
+	NSRange selectionRange = self.selectedRange;
+
+	NSRange selectionLineRange;
+
+	(void)[layoutManager lineFragmentRectForGlyphAtIndex:selectionRange.location effectiveRange:&selectionLineRange];
 	
 	/* Loop through the range of each line in our text view using
 	 the same technique we use for counting our total number of
 	 lines. If a range matches our base while looping, then that
 	 is our selected line number. */
+	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
+
 	NSUInteger numberOfLines = 0;
-	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
-	
-	NSRange lineRange;
 	
 	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
-		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+		NSRange lineRange;
+
+		(void)[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 		
-		if (NSEqualRanges(blr, lineRange)) {
+		if (NSEqualRanges(selectionLineRange, lineRange)) {
 			return (numberOfLines + 1);
 		}
 		
 		i = NSMaxRange(lineRange);
 	}
 	
-	return [self numberOfLines];
+	return self.numberOfLines;
 }
 
-- (NSInteger)numberOfLines
+- (NSUInteger)numberOfLines
 {
-	/* Base line number count. */
-	NSLayoutManager *layoutManager = [self layoutManager];
-	
+	NSLayoutManager *layoutManager = self.layoutManager;
+
+	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
+
 	NSUInteger numberOfLines = 0;
-	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
-	
-	NSRange lineRange;
-	
+
 	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
-		[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
-		
+		NSRange lineRange;
+
+		(void)[layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+
 		i = NSMaxRange(lineRange);
 	}
 	
@@ -329,36 +347,36 @@
 	 the end of our field. Therefore, we must manually check if the
 	 last line of our input is a blank newline. If it is, then
 	 increase our count by one. */
-	NSInteger lastIndex = ([self stringLength] - 1);
+	NSInteger lastIndex = (self.stringLength - 1);
 	
-	UniChar lastChar = [[self stringValue] characterAtIndex:lastIndex];
+	UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
 	
-	if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
+	if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
 		numberOfLines += 1;
 	}
 	
 	return numberOfLines;
 }
 
-- (NSInteger)highestHeightBelowHeight:(NSInteger)maximumHeight withPadding:(NSInteger)valuePadding
+- (CGFloat)highestHeightBelowHeight:(CGFloat)maximumHeight withPadding:(CGFloat)valuePadding;
 {
-	/* Base line number count. */
-	NSLayoutManager *layoutManager = [self layoutManager];
-	
-	NSUInteger totalLineHeight = valuePadding;
-	
-	NSUInteger numberOfLines = 0;
-	NSUInteger numberOfGlyphs = [layoutManager numberOfGlyphs];
-	
+	NSLayoutManager *layoutManager = self.layoutManager;
+
 	BOOL skipNewlineSymbolCheck = NO;
-	
-	NSRange lineRange;
-	
+
+	NSUInteger numberOfGlyphs = layoutManager.numberOfGlyphs;
+
+	NSUInteger numberOfLines = 0;
+
+	NSUInteger totalLineHeight = valuePadding;
+
 	for (NSUInteger i = 0; i < numberOfGlyphs; numberOfLines++) {
-		NSRect r = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
+		NSRange lineRange;
+
+		NSRect rect = [layoutManager lineFragmentRectForGlyphAtIndex:i effectiveRange:&lineRange];
 		
-		if ((totalLineHeight +  r.size.height) <= maximumHeight) {
-			 totalLineHeight += r.size.height;
+		if ((totalLineHeight +  rect.size.height) <= maximumHeight) {
+			 totalLineHeight += rect.size.height;
 		} else {
 			skipNewlineSymbolCheck = YES;
 			
@@ -369,11 +387,11 @@
 	}
 	
 	if (skipNewlineSymbolCheck == NO) {
-		NSInteger lastIndex = ([self stringLength] - 1);
+		NSInteger lastIndex = (self.stringLength - 1);
 		
-		UniChar lastChar = [[self stringValue] characterAtIndex:lastIndex];
+		UniChar lastCharacter = [self.stringValue characterAtIndex:lastIndex];
 		
-		if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
+		if ([[NSCharacterSet newlineCharacterSet] characterIsMember:lastCharacter]) {
 			CGFloat defaultHeight = [layoutManager defaultLineHeightForFont:self.preferredFont];
 			
 			if ((totalLineHeight +  defaultHeight) <= maximumHeight) {
@@ -386,3 +404,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

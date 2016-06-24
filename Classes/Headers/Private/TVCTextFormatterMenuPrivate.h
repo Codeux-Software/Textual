@@ -35,48 +35,37 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@implementation TVCMainWindowTextViewMavericksUserInterace
+#define TVCTextViewIRCFormattingMenuFormatterMenuTag			53037
 
-+ (NSColor *)inputTextFieldPlaceholderTextColor
-{
-	return [NSColor grayColor];
-}
+@interface TVCTextViewIRCFormattingMenu : NSObject
+@property (readonly, weak) NSMenuItem *formatterMenu;
+@property (readonly, weak) NSMenu *foregroundColorMenu;
+@property (readonly, weak) NSMenu *backgroundColorMenu;
 
-+ (NSColor *)inputTextFieldPrimaryTextColor
-{
-	return [NSColor colorWithCalibratedWhite:0.15 alpha:1.0];
-}
+@property (readonly) BOOL firstResponderSupportsFormatting;
 
-+ (NSColor *)inputTextFieldOutlineColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.42];
-}
+@property (readonly) BOOL textIsBold;
+@property (readonly) BOOL textIsItalicized;
+@property (readonly) BOOL textIsStruckthrough;
+@property (readonly) BOOL textIsUnderlined;
+@property (readonly) BOOL textHasForegroundColor;
+@property (readonly) BOOL textHasBackgroundColor;
 
-+ (NSColor *)inputTextFieldOutlineColorForInactiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.23];
-}
+- (IBAction)insertBoldCharIntoTextBox:(id)sender;
+- (IBAction)insertItalicCharIntoTextBox:(id)sender;
+- (IBAction)insertStrikethroughCharIntoTextBox:(id)sender;
+- (IBAction)insertUnderlineCharIntoTextBox:(id)sender;
+- (IBAction)insertForegroundColorCharIntoTextBox:(id)sender;
+- (IBAction)insertBackgroundColorCharIntoTextBox:(id)sender;
 
-+ (NSColor *)inputTextFieldBackgroundColor
-{
-	return [NSColor whiteColor];
-}
-
-+ (NSColor *)inputTextFieldInsideShadowColorForActiveWindow
-{
-	return [NSColor colorWithCalibratedWhite:0.88 alpha:1.0];
-}
-
-+ (NSColor *)inputTextFieldInsideShadowColorForInactiveWindow
-{
-	return [NSColor clearColor];
-}
-
-+ (NSColor *)inputTextFieldOutsideShadowColor
-{
-	return [NSColor colorWithCalibratedWhite:1.0 alpha:0.70];
-}
-
+- (IBAction)removeBoldCharFromTextBox:(id)sender;
+- (IBAction)removeItalicCharFromTextBox:(id)sender;
+- (IBAction)removeStrikethroughCharFromTextBox:(id)sender;
+- (IBAction)removeUnderlineCharFromTextBox:(id)sender;
+- (IBAction)removeForegroundColorCharFromTextBox:(id)sender;
+- (IBAction)removeBackgroundColorCharFromTextBox:(id)sender;
 @end
+
+NS_ASSUME_NONNULL_END

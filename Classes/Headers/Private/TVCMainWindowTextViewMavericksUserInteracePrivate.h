@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowTextViewMavericksUserInterace : NSObject
 + (NSColor *)inputTextFieldPrimaryTextColor;
@@ -51,3 +51,5 @@
 
 + (NSColor *)inputTextFieldOutsideShadowColor;
 @end
+
+NS_ASSUME_NONNULL_END

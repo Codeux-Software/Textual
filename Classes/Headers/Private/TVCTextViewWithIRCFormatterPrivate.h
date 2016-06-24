@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,29 +35,15 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTextViewYosemiteUserInterace : NSObject
-+ (NSColor *)blackInputTextFieldPlaceholderTextColor;
-+ (NSColor *)whiteInputTextFieldPlaceholderTextColor;
+@interface TVCTextViewWithIRCFormatter ()
+@property (nonatomic, copy) NSFont *preferredFont;
+@property (nonatomic, copy) NSColor *preferredFontColor;
 
-+ (NSColor *)blackInputTextFieldPrimaryTextColor;
-+ (NSColor *)whiteInputTextFieldPrimaryTextColor;
+- (void)keyDownToSuper:(NSEvent *)e;
 
-+ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor;
-
-+ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina;
-+ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
-
-+ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder;
-
-+ (NSGradient *)whiteInputTextFieldInsideWhiteGradient;
-
-+ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina;
-+ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
-
-+ (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
-
-+ (NSColor *)writersProTextFieldCursorPinkColor;
-+ (NSColor *)writersProTextFieldCursorBlueColor;
+- (void)updateAllFontSizesToMatchTheDefaultFont;
 @end
+
+NS_ASSUME_NONNULL_END
