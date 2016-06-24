@@ -35,21 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCMemberListMavericksDarkUserInterface
 
-- (NSInteger)cellRowHeight
+- (CGFloat)cellRowHeight
 {
 	return 20.0;
 }
 
-- (NSImage *)rowSelectionImageForActiveWindow
+- (nullable NSImage *)rowSelectionImageForActiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
 
-- (NSImage *)rowSelectionImageForInactiveWindow
+- (nullable NSImage *)rowSelectionImageForInactiveWindow
 {
 	return [NSImage imageNamed:@"MavericksDarkChannelCellSelection"];
 }
@@ -129,14 +129,16 @@
 	return [NSColor colorWithCalibratedRed:0.066 green:0.285 blue:0.492 alpha:1.0];
 }
 
-- (NSColor *)memberListBackgroundColorForActiveWindow
+- (nullable NSColor *)memberListBackgroundColorForActiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
-- (NSColor *)memberListBackgroundColorForInactiveWindow
+- (nullable NSColor *)memberListBackgroundColorForInactiveWindow
 {
 	return [NSColor colorWithCalibratedRed:0.148 green:0.148 blue:0.148 alpha:1.0];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

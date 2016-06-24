@@ -36,10 +36,13 @@
  *********************************************************************** */
 
 @class TVCLogControllerOperationQueue;
-
-#import "BuildConfig.h"
+@class TVCMemberListMavericksDarkUserInterface;
+@class TVCMemberListMavericksLightUserInterface;
+@class TVCMemberListUserInfoPopover;
 
 #import "TextualApplication.h"
+
+#import "BuildConfig.h"
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
@@ -79,6 +82,12 @@
 #import "TVCLogViewPrivate.h"
 #import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSidebarSmoothTextFieldPrivate.h"
+#import "TVCMemberListCellPrivate.h"
+#import "TVCMemberListMavericksUserInterfacePrivate.h"
+#import "TVCMemberListPrivate.h"
+#import "TVCMemberListSharedUserInterfacePrivate.h"
+#import "TVCMemberListUserInfoPopoverPrivate.h"
+#import "TVCMemberListYosemiteUserInterfacePrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListMavericksUserInterfacePrivate.h"
 #import "TVCServerListPrivate.h"
@@ -86,4 +95,5 @@
 #import "TVCServerListYosemiteUserInterfacePrivate.h"
 #import "TXGlobalModelsPrivate.h"
 #import "TXSharedApplicationPrivate.h"
+#import "TextualApplication.h"
 #import "WebScriptObjectHelperPrivate.h"

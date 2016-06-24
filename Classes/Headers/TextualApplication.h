@@ -149,17 +149,6 @@
 	@class TVCMainWindowTitlebarAccessoryViewController;
 	@class TVCMainWindowTitlebarAccessoryViewLockButton;
 	@class TVCMemberList;
-	@class TVCMemberListCell;
-	@class TVCMemberListDarkYosemiteUserInterface;
-	@class TVCMemberListLightYosemiteUserInterface;
-	@class TVCMemberListMavericksDarkUserInterface;
-	@class TVCMemberListMavericksLightUserInterface;
-	@class TVCMemberListMavericksUserInterface;
-	@class TVCMemberListMavericksUserInterfaceBackground;
-	@class TVCMemberListRowCell;
-	@class TVCMemberListSharedUserInterface;
-	@class TVCMemberListUserInfoPopover;
-	@class TVCMemberListYosemiteUserInterface;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
 	@class TVCTextFieldComboBoxWithValueValidation;
@@ -358,11 +347,6 @@
 	#import "TVCMainWindowTitlebarAccessoryView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
-	#import "TVCMemberListCell.h"
-	#import "TVCMemberListUserInfoPopover.h"
-	#import "TVCMemberListSharedUserInterface.h"
-	#import "TVCMemberListMavericksUserInterface.h"
-	#import "TVCMemberListYosemiteUserInterface.h"
 	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCTextFieldWithValueValidation.h"

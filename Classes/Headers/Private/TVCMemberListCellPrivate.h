@@ -35,13 +35,15 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMemberListUserInfoPopover : NSPopover
-@property (nonatomic, weak) IBOutlet NSTextField *nicknameField;
-@property (nonatomic, weak) IBOutlet NSTextField *usernameField;
-@property (nonatomic, weak) IBOutlet NSTextField *addressField;
-@property (nonatomic, weak) IBOutlet NSTextField *realnameField;
-@property (nonatomic, weak) IBOutlet NSTextField *privilegesField;
-@property (nonatomic, weak) IBOutlet NSTextField *awayStatusField;
+@interface TVCMemberListCell : NSTableCellView
+@property (nonatomic, strong) IRCUser *cellItem;
+
+- (void)drawWithExpansionFrame;
 @end
+
+@interface TVCMemberListRowCell : NSTableRowView
+@end
+
+NS_ASSUME_NONNULL_END

@@ -891,7 +891,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	if ([newView isKindOfClass:[TVCMemberListCell class]]) {
 		TVCMemberListCell *groupItem = (TVCMemberListCell *)newView;
 
-		[groupItem setMemberPointer:item];
+		[groupItem setCellItem:item];
 	}
 
 	return newView;

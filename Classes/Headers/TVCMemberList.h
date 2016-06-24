@@ -37,40 +37,13 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCMemberList : NSOutlineView
-@property (nonatomic, weak) id keyDelegate;
 @property (nonatomic, assign) BOOL isHiddenByUser;
-@property (nonatomic, strong) id userInterfaceObjects;
-@property (nonatomic, strong) IBOutlet TVCMemberListUserInfoPopover *memberListUserInfoPopover;
-@property (nonatomic, weak) IBOutlet TVCMemberListMavericksUserInterfaceBackground *backgroundView;
-@property (nonatomic, weak) IBOutlet NSVisualEffectView *visualEffectView;
-
-/* Additions & Removals. */
-- (void)addItemToList:(NSInteger)index;
-
-- (void)removeItemFromList:(id)oldObject;
-
-/* Drawing. */
-- (void)beginGroupedUpdates;
-- (void)endGroupedUpdates;
-
-@property (readonly) BOOL updatesArePaging;
-
-- (void)reloadAllDrawings;
 
 - (void)updateDrawingForMember:(IRCUser *)cellItem;
 - (void)updateDrawingForRow:(NSInteger)rowIndex;
-
-- (void)updateBackgroundColor; // Do not call.
-
-- (void)windowDidChangeKeyState;
-
-/* Event monitor. */
-- (void)destroyUserInfoPopoverOnWindowKeyChange;
 @end
 
-@protocol TVCMemberListDelegate <NSObject>
-@required
-
-- (void)memberListViewKeyDown:(NSEvent *)e;
-@end
+NS_ASSUME_NONNULL_END

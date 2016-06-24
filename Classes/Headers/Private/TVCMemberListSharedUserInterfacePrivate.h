@@ -35,18 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMemberListSharedUserInterface : NSObject
-+ (BOOL)yosemiteIsUsingVibrantDarkMode;
+@property (readonly) TVCMemberList *memberList;
 
-- (NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)mark rank:(IRCUserRank)rank;
-- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)mark rank:(IRCUserRank)rank;
+- (instancetype)initWithMemberList:(TVCMemberList *)memberList NS_DESIGNATED_INITIALIZER;
+
+- (nullable NSImage *)cachedUserMarkBadgeForSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank;
+- (void)cacheUserMarkBadge:(NSImage *)badgeImage forSymbol:(NSString *)modeSymbol rank:(IRCUserRank)rank;
 
 - (void)invalidateAllUserMarkBadgeCaches;
 
-@property (readonly, copy) NSColor *memberListBackgroundColorForActiveWindow;
-@property (readonly, copy) NSColor *memberListBackgroundColorForInactiveWindow;
+@property (readonly, copy, nullable) NSColor *memberListBackgroundColorForActiveWindow;
+@property (readonly, copy, nullable) NSColor *memberListBackgroundColorForInactiveWindow;
 
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_Y;
 @property (readonly, copy) NSColor *userMarkBadgeBackgroundColor_A;
@@ -68,9 +70,11 @@
 @property (readonly, copy) NSFont *userMarkBadgeFontForRetina;
 @property (readonly, copy) NSFont *userMarkBadgeFontSelectedForRetina;
 
-@property (readonly) NSInteger userMarkBadgeHeight;
-@property (readonly) NSInteger userMarkBadgeWidth;
+@property (readonly) CGFloat userMarkBadgeHeight;
+@property (readonly) CGFloat userMarkBadgeWidth;
 @end
 
 @interface TVCMemberListMavericksUserInterfaceBackground : NSBox
 @end
+
+NS_ASSUME_NONNULL_END
