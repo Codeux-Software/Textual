@@ -159,7 +159,7 @@ static NSInteger _cachedMessageCount = (-1);
 	/* Load Drawing Images */
 	/* ////////////////////////////////////////////////////////// */
 
-	NSImage *appIcon = [TVCDockIcon applicationIcon];
+	NSImage *appIcon = [[TVCDockIcon applicationIcon] copy];
 
 	NSImage *redBadgeLeft = nil;
 	NSImage *redBadgeCenter = nil;
