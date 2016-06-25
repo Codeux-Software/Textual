@@ -569,7 +569,7 @@ NS_ASSUME_NONNULL_BEGIN
 	id activeFirstResponder = mainWindow.firstResponder;
 
     [userInfoPopover showRelativeToRect:cellFrame
-                                 ofView:mainWindowMemberList()
+                                 ofView:self.memberList
                           preferredEdge:NSMaxXEdge];
 
 	[mainWindow makeFirstResponder:activeFirstResponder];
