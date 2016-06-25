@@ -48,13 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.selectedRowIndexes.arrayFromIndexSet;
 }
 
-- (void)selectItemAtIndex:(NSUInteger)rowIndex
-{
-	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
-	
-	[self scrollRowToVisible:rowIndex];
-}
-
 - (void)selectRows:(NSArray<NSNumber *> *)indices
 {
 	[self selectRows:indices extendSelection:NO];

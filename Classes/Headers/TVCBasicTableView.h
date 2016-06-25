@@ -45,8 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy) NSArray<NSNumber *> *selectedRows;
 
-- (void)selectItemAtIndex:(NSUInteger)rowIndex;
-
 - (void)selectRows:(NSArray<NSNumber *> *)indices;
 - (void)selectRows:(NSArray<NSNumber *> *)indices extendSelection:(BOOL)extendSelection;
 @end
