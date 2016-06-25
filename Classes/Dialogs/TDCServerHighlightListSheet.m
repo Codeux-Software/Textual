@@ -67,7 +67,7 @@
 
 - (void)show
 {
-	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
+	IRCClient *currentNetwork = [worldController() findClientWithId:self.clientID];
 
 	NSString *unformattedHeaderTitle = [self.headerTitleTextField stringValue];
 
@@ -131,7 +131,7 @@
 {
 	[self.highlightListController setContent:nil];
 
-	IRCClient *currentNetwork = [worldController() findClientById:self.clientID];
+	IRCClient *currentNetwork = [worldController() findClientWithId:self.clientID];
 
 	[currentNetwork clearCachedHighlights];
 }

@@ -217,7 +217,7 @@
 
 - (IRCChannel *)channelObjectByProperties
 {
-	return [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	return [worldController() findChannelWithId:self.channelID onClientWithId:self.clientID];
 }
 
 - (void)underlyingConfigurationChanged:(NSNotification *)notification

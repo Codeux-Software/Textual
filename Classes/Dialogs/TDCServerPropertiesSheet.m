@@ -606,7 +606,7 @@
 
 - (IRCClient *)clientObjectByProperties
 {
-	return [worldController() findClientById:self.clientID];
+	return [worldController() findClientWithId:self.clientID];
 }
 
 - (void)addConfigurationDidChangeObserver

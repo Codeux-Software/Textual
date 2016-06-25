@@ -991,12 +991,12 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 
 + (nullable NSArray<NSDictionary *> *)clientList
 {
-	return [RZUserDefaults() objectForKey:IRCWorldControllerClientListDefaultsKey];
+	return [RZUserDefaults() objectForKey:IRCWorldClientListDefaultsKey];
 }
 
 + (void)setClientList:(nullable NSArray<NSDictionary *> *)clientList
 {
-	[RZUserDefaults() setObject:clientList forKey:IRCWorldControllerClientListDefaultsKey];
+	[RZUserDefaults() setObject:clientList forKey:IRCWorldClientListDefaultsKey];
 }
 
 + (void)_migrateWorldControllerToVersion600

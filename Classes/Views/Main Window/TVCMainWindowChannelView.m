@@ -112,7 +112,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 			subviews = [NSMutableDictionary dictionary];
 		}
 
-		[subviews setObject:subview forKey:uniqueIdentifier];
+		subviews[uniqueIdentifier] = subview;
 	}
 
 	/* Once selectedItems is processed, the value of subviewsUnclaimed will

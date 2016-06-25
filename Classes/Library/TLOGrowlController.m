@@ -442,9 +442,9 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 			NSObjectIsEmptyAssert(uid);
 			
 			if (cid) {
-				c = [worldController() findChannelByClientId:uid channelId:cid];
+				c = [worldController() findChannelWithId:cid onClientWithId:uid];
 			} else {
-				u = [worldController() findClientById:uid];
+				u = [worldController() findClientWithId:uid];
 			}
 			
 			if (changeFocus) {

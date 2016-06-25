@@ -946,7 +946,7 @@
 
 - (void)navigateToSpecificChannelInNavigationList:(NSMenuItem *)sender
 {
-	id treeItem = [worldController() findItemFromPasteboardString:[sender userInfo]];
+	id treeItem = [worldController() findItemWithPasteboardString:[sender userInfo]];
 
 	if (treeItem) {
 		[mainWindow() select:treeItem];
@@ -1468,7 +1468,7 @@
 
 - (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
 {
-	IRCClient *u = [worldController() findClientById:[sender clientID]];
+	IRCClient *u = [worldController() findClientWithId:[sender clientID]];
 	
 	if (_noClient || _connectionNotLoggedIn) {
 		return;
@@ -1551,7 +1551,7 @@
 		[channelConfig writeKeychainItemsToDisk];
 	}
 	
-	IRCClient *n = [worldController() createClient:config reload:YES];
+	IRCClient *n = [worldController() createClientWithConfig:config reload:YES];
 	
 	if ([_serverCurrentConfig sidebarItemExpanded]) { // Only expand new client if old was expanded already.
 		[mainWindow() expandClient:n];
@@ -1598,11 +1598,11 @@
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (deleteFromCloudCheckboxShown && suppressionResult == NO) {
-		[worldController() destroyClient:u bySkippingCloud:NO];
+		[worldController() destroyClient:u skipCloud:NO];
 	} else {
 #endif
 
-		[worldController() destroyClient:u bySkippingCloud:YES];
+		[worldController() destroyClient:u skipCloud:YES];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	}
@@ -1645,11 +1645,11 @@
 - (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender
 {
 	if ([sender clientID] == nil) {
-		[worldController() createClient:[sender config] reload:YES];
+		[worldController() createClientWithConfig:[sender config] reload:YES];
 		
 		[[sender config] writeKeychainItemsToDisk];
 	} else {
-		IRCClient *u = [worldController() findClientById:[sender clientID]];
+		IRCClient *u = [worldController() findClientWithId:[sender clientID]];
 		
 		if (_noClient) {
 			return;
@@ -1809,8 +1809,7 @@
 
 - (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic
 {
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
-												   channelId:[sender channelID]];
+	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
 	
 	IRCClient *u = [c associatedClient];
 	
@@ -1857,9 +1856,8 @@
 
 - (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender
 {
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID]
-												   channelId:[sender channelID]];
-	
+	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
+
 	IRCClient *u = [c associatedClient];
 	
 	if (_noClientOrChannel || _isClient || _isQuery) {
@@ -1968,7 +1966,7 @@
 - (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
 {
 	if ([sender newItem]) {
-		IRCClient *u = [worldController() findClientById:[sender clientID]];
+		IRCClient *u = [worldController() findClientWithId:[sender clientID]];
 		
 		if (_noClient) {
 			return;
@@ -1976,11 +1974,11 @@
 		
 		[mainWindow() expandClient:u];
 		
-		[worldController() createChannel:[sender config] client:u reload:YES adjust:YES];
+		[worldController() createChannelWithConfig:[sender config] onClient:u adjust:YES reload:YES];
 		
 		[[sender config] writeKeychainItemsToDisk];
 	} else {
-		IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
+		IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
 		
 		if (_noChannel) {
 			return;
@@ -2172,7 +2170,7 @@
 
 - (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
-	IRCClient *u = [worldController() findClientById:[sender clientID]];
+	IRCClient *u = [worldController() findClientWithId:[sender clientID]];
 
 	if (u) {
 		if ([channelName isChannelName]) {
@@ -2347,7 +2345,7 @@
 
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config
 {
-	IRCClient *u = [worldController() createClient:config reload:YES];
+	IRCClient *u = [worldController() createClientWithConfig:config reload:YES];
 	
 	[mainWindow() expandClient:u];
 	

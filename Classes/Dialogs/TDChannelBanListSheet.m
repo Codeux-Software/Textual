@@ -71,7 +71,7 @@
 
 - (void)show
 {
-	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	IRCChannel *c = [worldController() findChannelWithId:self.channelID onClientWithId:self.clientID];
 
 	NSString *headerTitle = nil;
 
@@ -140,7 +140,7 @@
 
 - (void)onRemoveEntry:(id)sender
 {
-	IRCClient *client = [worldController() findClientById:self.clientID];
+	IRCClient *client = [worldController() findClientWithId:self.clientID];
 
 	NSMutableArray *changeArray = [NSMutableArray array];
 

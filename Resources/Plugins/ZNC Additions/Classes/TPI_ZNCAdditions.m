@@ -37,7 +37,7 @@
 
 #import "TPI_ZNCAdditions.h"
 
-#import "TVCMainWindowPrivate.h"
+#import "TextualApplicationPrivate.h"
 
 @implementation TPI_ZNCAdditions
 

@@ -290,8 +290,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		/* If one of the values changed is our world controller, then we 
 		 intercept that key and replace it with a few special values. */
-		if ([changedValues containsKey:IRCWorldControllerClientListDefaultsKey]) {
-			[changedValues removeObjectForKey:IRCWorldControllerClientListDefaultsKey];
+		if ([changedValues containsKey:IRCWorldClientListDefaultsKey]) {
+			[changedValues removeObjectForKey:IRCWorldClientListDefaultsKey];
 
 			NSDictionary *clientDict = [worldController() cloud_clientConfigurations];
 
@@ -545,7 +545,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return ([key isEqualToString:@"World Controller"] ||
-			[key isEqualToString:IRCWorldControllerClientListDefaultsKey] ||
+			[key isEqualToString:IRCWorldClientListDefaultsKey] ||
 			[key isEqualToString:IRCWorldControllerCloudListOfDeletedClientsDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesCloudSyncServicesEnabledDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesCloudSyncServicesLimitedToServersDefaultsKey] ||
@@ -562,7 +562,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return ([key isEqualToString:@"World Controller"] ||
-			[key isEqualToString:IRCWorldControllerClientListDefaultsKey] ||
+			[key isEqualToString:IRCWorldClientListDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesCloudSyncServicesEnabledDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesCloudSyncServicesLimitedToServersDefaultsKey] ||
 			[key isEqualToString:TPCPreferencesThemeNameMissingLocallyDefaultsKey] ||

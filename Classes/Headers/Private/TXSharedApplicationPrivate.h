@@ -44,6 +44,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define sharedPluginManager()			[TXSharedApplication sharedPluginManager]
 #define sharedCloudManager()			[TXSharedApplication sharedCloudSyncManager]
 
+#define sharedApplicationCache()		[TXSharedApplication sharedApplicationCache]
+
 @class OELReachability;
 
 @interface TXSharedApplication ()

@@ -86,7 +86,7 @@
 
 - (void)show
 {
-	IRCClient *client = [worldController() findClientById:self.clientID];
+	IRCClient *client = [worldController() findClientWithId:self.clientID];
 
     [self.networkNameTextField setStringValue:TXTLS(@"TDCServerChannelListDialog[1000]", [client altNetworkName])];
 

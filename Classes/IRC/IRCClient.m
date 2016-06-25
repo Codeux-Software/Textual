@@ -375,7 +375,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				continue; // Do not allow duplicates.
 			} else {
-				cinl = [worldController() createChannel:i client:self reload:NO adjust:NO];
+				cinl = [worldController() createChannelWithConfig:i onClient:self adjust:NO reload:NO];
 
 				[newChannelList addObject:cinl];
 			}
@@ -1027,7 +1027,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 - (NSDictionary *)listOfNicknamesToDisallowEncryption
 {
 	/* Add entries as lowercase because thats how they are compared. */
-	NSDictionary *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+	NSDictionary *cachedValues = [sharedApplicationCache() objectForKey:
 								  @"IRCClient -> IRCClient List of Nicknames that Encryption Forbids"];
 
 	if (cachedValues == nil) {
@@ -1035,7 +1035,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		NSDictionary *_blockedNames = [staticValues dictionaryForKey:@"IRCClient List of Nicknames that Encryption Forbids"];
 
-		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		[sharedApplicationCache() setObject:_blockedNames forKey:
 		 @"IRCClient -> IRCClient List of Nicknames that Encryption Forbids"];
 
 		cachedValues = _blockedNames;
@@ -1657,13 +1657,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	if (c == nil) {
 		if (isPM) {
-			return [worldController() createPrivateMessage:name client:self];
+			return [worldController() createPrivateMessage:name onClient:self];
 		} else {
 			IRCChannelConfig *seed = [IRCChannelConfig new];
 
 			[seed setChannelName:name];
 
-			return [worldController() createChannel:seed client:self reload:YES adjust:YES];
+			return [worldController() createChannelWithConfig:seed onClient:self adjust:YES reload:YES];
 		}
 	}
 
@@ -2247,7 +2247,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				if (secretMessage == NO) {
 					if (channel == nil) {
 						if ([destinationChannelName isChannelNameOn:self] == NO) {
-							channel = [worldController() createPrivateMessage:destinationChannelName client:self];
+							channel = [worldController() createPrivateMessage:destinationChannelName onClient:self];
 						}
 					}
 
@@ -2836,6 +2836,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 					}
 				}
 			} else {
+				[mainWindow() markAllAsRead];
 			}
 
 			break;
@@ -4278,7 +4279,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (NSArray *)nickServSupportedNeedIdentificationTokens
 {
-	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+	NSArray *cachedValues = [sharedApplicationCache() objectForKey:
 							 @"IRCClient -> IRCClient List of NickServ Needs Identification Tokens"];
 
 	if (cachedValues == nil) {
@@ -4286,7 +4287,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Needs Identification Tokens"];
 
-		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		[sharedApplicationCache() setObject:_blockedNames forKey:
 		 @"IRCClient -> IRCClient List of NickServ Needs Identification Tokens"];
 
 		cachedValues = _blockedNames;
@@ -4297,7 +4298,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (NSArray *)nickServSupportedSuccessfulIdentificationTokens
 {
-	NSArray *cachedValues = [[masterController() sharedApplicationCacheObject] objectForKey:
+	NSArray *cachedValues = [sharedApplicationCache() objectForKey:
 							 @"IRCClient -> IRCClient List of NickServ Successfully Identified Tokens"];
 
 	if (cachedValues == nil) {
@@ -4305,7 +4306,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		NSArray *_blockedNames = [staticValues arrayForKey:@"IRCClient List of NickServ Successfully Identified Tokens"];
 
-		[[masterController() sharedApplicationCacheObject] setObject:_blockedNames forKey:
+		[sharedApplicationCache() setObject:_blockedNames forKey:
 		 @"IRCClient -> IRCClient List of NickServ Successfully Identified Tokens"];
 
 		cachedValues = _blockedNames;
@@ -4714,11 +4715,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			if (createNewWindow) {
 				if (isSelfMessage) {
 					if (NSObjectIsEmpty(target) == NO) {
-						c = [worldController() createPrivateMessage:target client:self];
+						c = [worldController() createPrivateMessage:target onClient:self];
 					}
 				} else {
 					if (NSObjectIsEmpty(sender) == NO) {
-						c = [worldController() createPrivateMessage:sender client:self];
+						c = [worldController() createPrivateMessage:sender onClient:self];
 					}
 				}
 			}
@@ -4764,11 +4765,11 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		if (c == nil) {
 			if (isSelfMessage) {
 				if (NSObjectIsEmpty(target) == NO) {
-					c = [worldController() createPrivateMessage:target client:self];
+					c = [worldController() createPrivateMessage:target onClient:self];
 				}
 			} else {
 				if (NSObjectIsEmpty(sender) == NO) {
-					c = [worldController() createPrivateMessage:sender client:self];
+					c = [worldController() createPrivateMessage:sender onClient:self];
 				}
 			}
 
@@ -8579,6 +8580,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self.socket open];
 }
 
+#warning TODO: Reconnect is broken
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp
 {
 	self.connectDelay = delay;
@@ -9272,7 +9274,7 @@ present_error:
 			if ([m timerInterval] <= now) {
 				NSString *target = nil;
 
-				IRCChannel *c = [worldController() findChannelByClientId:[self uniqueIdentifier] channelId:[m channelID]];
+				IRCChannel *c = [worldController() findChannelWithId:[m channelID] onClientWithId:[self uniqueIdentifier]];
 
 				if (c) {
 					target = [c name];
@@ -9695,7 +9697,7 @@ present_error:
 
 - (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
 {
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
+	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
 
 	if (c) {
 		NSString *modeSend = [NSString stringWithFormat:@"+%@", [sender mode]];
@@ -9706,7 +9708,7 @@ present_error:
 
 - (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender
 {
-	IRCChannel *c = [worldController() findChannelByClientId:[sender clientID] channelId:[sender channelID]];
+	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
 	
 	if (c) {
 		NSArray *changedModes = [sender changeModeList];
