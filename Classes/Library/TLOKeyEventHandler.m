@@ -52,10 +52,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithTarget:(id)target
 {
-	NSParameterAssert(target != nil);
-
 	if ((self = [super init])) {
-		self.target = target;
+		[self setKeyHandlerTarget:target];
 
 		[self prepareInitialState];
 	}
@@ -72,11 +70,15 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)setKeyHandlerTarget:(id)target
 {
+	NSParameterAssert(target != nil);
+
 	self.target = target;
 }
 
 - (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
 {
+	NSParameterAssert(selector != NULL);
+
 	NSNumber *modifierKeys = @(modifiers);
 	
 	NSMutableDictionary *map = self.codeHandlerMap[modifierKeys];
@@ -92,6 +94,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
 {
+	NSParameterAssert(selector != NULL);
+
 	NSNumber *modifierKeys = @(modifiers);
 	
 	NSMutableDictionary *map = self.characterHandlerMap[modifierKeys];
@@ -107,6 +111,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)registerSelector:(SEL)selector characters:(NSRange)characterRange modifiers:(NSUInteger)modifiers
 {
+	NSParameterAssert(selector != NULL);
+
 	NSNumber *modifierKeys = @(modifiers);
 	
 	NSMutableDictionary *map = self.characterHandlerMap[modifierKeys];
@@ -128,6 +134,8 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)processKeyEvent:(NSEvent *)e
 {
+	NSParameterAssert(e != nil);
+
 	NSTextInputContext *inputContext = [NSTextInputContext currentInputContext];
 
 	if (inputContext && [inputContext.client markedRange].length > 0) {
