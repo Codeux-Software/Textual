@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	/* Do not push the loading screen right away. Add a little delay to give everything
 	 a chance to settle down before presenting the changes to the user. */
-	[TPCPreferencesImportExport performSelector:@selector(_importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
+	[TPCPreferencesImportExport performSelector:@selector(importPostflightCleanup:) withObject:propertyList.allKeys afterDelay:2.0];
 }
 
 + (void)importContentsOfDictionary:(NSDictionary<NSString *, id> *)aDict
