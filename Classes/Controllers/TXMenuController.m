@@ -73,10 +73,19 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.currentSearchPhrase = NSStringEmptyPlaceholder;
+		[self prepareInitialState];
 	}
 	
 	return self;
+}
+
+- (void)prepareInitialState
+{
+	self.currentSearchPhrase = NSStringEmptyPlaceholder;
+
+	if ([TPCPreferences soundIsMuted]) {
+		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
+	}
 }
 
 - (void)setupOtherServices

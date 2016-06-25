@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TXWindowController ()
 @property (nonatomic, strong) NSMutableDictionary *windowObjects;
@@ -46,12 +46,17 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.windowObjects = [NSMutableDictionary dictionary];
+		[self prepareInitialState];
 
 		return self;
 	}
 
 	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.windowObjects = [NSMutableDictionary dictionary];
 }
 
 - (void)prepareForApplicationTermination
@@ -67,19 +72,17 @@
 	return [self windowDescriptionForWindow:window inRelationTo:nil];
 }
 
-+ (NSString *)windowDescriptionForWindow:(id)window inRelationTo:(id)relatedObject
++ (NSString *)windowDescriptionForWindow:(id)window inRelationTo:(nullable id)relatedObject
 {
-	if (window) {
-		NSString *windowClass = NSStringFromClass([window class]);
+	NSParameterAssert(window != nil);
 
-		if (relatedObject) {
-			return [NSString stringWithFormat:@"%@ -> %@", [relatedObject description], windowClass];
-		} else {
-			return windowClass;
-		}
+	NSString *windowClass = NSStringFromClass([window class]);
+
+	if (relatedObject == nil) {
+		return windowClass;
 	}
 
-	return nil;
+	return [NSString stringWithFormat:@"%@ -> %@", windowClass, [relatedObject description]];
 }
 
 - (void)addWindowToWindowList:(id)window
@@ -87,26 +90,19 @@
 	[self addWindowToWindowList:window inRelationTo:nil];
 }
 
-- (void)addWindowToWindowList:(id)window inRelationTo:(id)relatedObject
+- (void)addWindowToWindowList:(id)window inRelationTo:(nullable id)relatedObject
 {
 	NSString *windowDescription = [TXWindowController windowDescriptionForWindow:window inRelationTo:relatedObject];
-
-	if (windowDescription == nil) {
-		return; // Cannot continue...
-	}
 
 	[self addWindowToWindowList:window withDescription:windowDescription];
 }
 
 - (void)addWindowToWindowList:(id)window withDescription:(NSString *)windowDescription
 {
-	if (windowDescription == nil || [windowDescription length] <= 0) {
-		return; // Cannot continue...
-	}
+	NSParameterAssert(window != nil);
 
-	if (window == nil || [window respondsToSelector:@selector(window)] == NO) {
-		return; // Refuse to add "window"
-	}
+	NSAssert([window respondsToSelector:@selector(window)],
+		@"'window' does not respond to -window");
 
 	@synchronized(self.windowObjects) {
 		self.windowObjects[windowDescription] = window;
@@ -118,9 +114,11 @@
 	[self removeWindowFromWindowList:window inRelationTo:nil];
 }
 
-- (void)removeWindowFromWindowList:(id)window inRelationTo:(id)relatedObject
+- (void)removeWindowFromWindowList:(id)window inRelationTo:(nullable id)relatedObject
 {
-	if (window && [window isKindOfClass:[NSArray class]]) {
+	NSParameterAssert(window != nil);
+
+	if ([window isKindOfClass:[NSArray class]]) {
 		for (id object in window) {
 			[self removeWindowFromWindowList:object inRelationTo:relatedObject];
 		}
@@ -145,46 +143,28 @@
 	}
 
 	@synchronized(self.windowObjects) {
-		/* If the description does not exist, we scan our window list 
-		 for the exact object. */
 		if (self.windowObjects[windowDescription] == nil && windowWasString == NO) {
-			NSString *windowToRemove = nil;
+			windowDescription = [self.windowObjects firstKeyForObject:window];
+		}
 
-			for (NSString *windowDescription in self.windowObjects) {
-				id windowObject = self.windowObjects[windowDescription];
-
-				if ([windowObject isEqual:window]) {
-					windowToRemove = windowDescription;
-
-					break;
-				}
-			}
-
-			if (windowToRemove) {
-				[self.windowObjects removeObjectForKey:windowToRemove];
-			}
-		} else {
+		if (windowDescription) {
 			[self.windowObjects removeObjectForKey:windowDescription];
 		}
 	}
 }
 
-- (id)windowFromWindowList:(NSString *)windowDescription
+- (nullable id)windowFromWindowList:(NSString *)windowDescription
 {
-	if (windowDescription == nil) {
-		return nil;
-	}
+	NSParameterAssert(windowDescription != nil);
 
 	@synchronized(self.windowObjects) {
 		return self.windowObjects[windowDescription];
 	}
 }
 
-- (NSArray *)windowsFromWindowList:(NSArray *)windowDescriptions
+- (NSArray *)windowsFromWindowList:(NSArray<NSString *> *)windowDescriptions
 {
-	if (windowDescriptions == nil) {
-		return nil;
-	}
+	NSParameterAssert(windowDescriptions != nil);
 
 	@synchronized(self.windowObjects) {
 		NSMutableArray *returnedValues = [NSMutableArray array];
@@ -203,12 +183,12 @@
 
 		return [returnedValues copy];
 	}
-
-	return nil;
 }
 
 - (BOOL)maybeBringWindowForward:(NSString *)windowDescription
 {
+	NSParameterAssert(windowDescription != nil);
+
 	id windowObject = [self windowFromWindowList:windowDescription];
 
 	if (windowObject) {
@@ -224,28 +204,15 @@
 
 - (void)popMainWindowSheetIfExists
 {
-	/* Close any existing sheet by canceling the previous instance of it. */
-	NSWindow *attachedSheet = [mainWindow() attachedSheet];
+	NSWindow *attachedSheet = mainWindow().attachedSheet;
 
-	if (attachedSheet) {
-		@synchronized(self.windowObjects) {
-			for (NSString *windowDescription in self.windowObjects) {
-				id windowObject = self.windowObjects[windowDescription];
-
-				if ([[windowObject class] isSubclassOfClass:[TDCSheetBase class]]) {
-					NSWindow *ownedWindow = (id)[windowObject sheet];
-
-					if ([ownedWindow isEqual:attachedSheet]) {
-						[windowObject cancel:nil];
-
-						return; // No need to continue.
-					}
-				}
-			}
-		}
+	if (attachedSheet == nil) {
+		return;
 	}
 
 	[attachedSheet close];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

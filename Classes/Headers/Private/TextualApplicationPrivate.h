@@ -39,10 +39,16 @@
 @class TVCMemberListMavericksDarkUserInterface;
 @class TVCMemberListMavericksLightUserInterface;
 @class TVCMemberListUserInfoPopover;
+@class TVCMainWindowTitlebarAccessoryView;
+@class TVCMainWindowTitlebarAccessoryViewController;
+@class TVCMainWindowTitlebarAccessoryViewLockButton;
+@class TXWindowController;
 
 #import "TextualApplication.h"
 
+#if __has_include("BuildConfig.h")
 #import "BuildConfig.h"
+#endif
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
@@ -82,8 +88,8 @@
 #import "TVCLogViewInternalWK1.h"
 #import "TVCLogViewInternalWK2.h"
 #import "TVCLogViewPrivate.h"
-#import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowChannelViewPrivate.h"
+#import "TVCMainWindowPrivate.h"
 #import "TVCMainWindowSegmentedControlPrivate.h"
 #import "TVCMainWindowSidebarSmoothTextFieldPrivate.h"
 #import "TVCMainWindowSplitViewPrivate.h"
@@ -106,6 +112,7 @@
 #import "TVCTextFormatterMenuPrivate.h"
 #import "TVCTextViewWithIRCFormatterPrivate.h"
 #import "TXGlobalModelsPrivate.h"
+#import "TXMasterControllerPrivate.h"
 #import "TXSharedApplicationPrivate.h"
-#import "TextualApplication.h"
+#import "TXWindowControllerPrivate.h"
 #import "WebScriptObjectHelperPrivate.h"

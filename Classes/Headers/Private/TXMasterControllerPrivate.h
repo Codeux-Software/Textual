@@ -5,8 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,26 +35,15 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TXMasterController : NSObject
-@property (readonly) BOOL debugModeIsOn;
-@property (readonly) BOOL ghostModeIsOn;
+@interface TXMasterController ()
+@property (nonatomic, assign) NSUInteger terminatingClientCount;
 
-@property (readonly) BOOL applicationIsActive;
-@property (readonly) BOOL applicationIsChangingActiveState;
+- (void)performAwakeningBeforeMainWindowDidLoad;
+- (void)performAwakeningAfterMainWindowDidLoad;
 
-@property (readonly) BOOL applicationIsTerminating;
-
-@property (readonly) IRCWorld *world;
-
-@property (readonly) TVCMainWindow *mainWindow;
-
-@property (readonly, weak) TXMenuController *menuController;
-
-@property (nonatomic, assign) BOOL skipTerminateSave;
+- (void)prepareThirdPartyServiceSparkleFramework;
 @end
 
 NS_ASSUME_NONNULL_END

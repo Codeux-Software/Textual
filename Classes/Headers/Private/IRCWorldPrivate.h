@@ -35,9 +35,36 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface IRCWorld ()
+@property (nonatomic, assign, readwrite) NSUInteger messagesSent;
+@property (nonatomic, assign, readwrite) NSUInteger messagesReceived;
+@property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthIn;
+@property (nonatomic, assign, readwrite) TXUnsignedLongLong bandwidthOut;
 @property (nonatomic, assign) BOOL isImportingConfiguration;
-@property (nonatomic, strong) NSMutableArray *clients;
+
+- (void)setupConfiguration;
+
+- (nullable IRCTreeItem *)findItemWithPasteboardString:(NSString *)string;
+- (NSString *)pasteboardStringForItem:(IRCTreeItem *)item;
+
+- (void)autoConnectAfterWakeup:(BOOL)afterWakeUp;
+
+- (void)prepareForSleep;
+
+- (void)prepareForScreenSleep;
+- (void)wakeFomScreenSleep;
+
+- (void)noteReachabilityChanged:(BOOL)reachable;
+
+- (IRCClient *)createClientWithConfig:(IRCClientConfig *)config reload:(BOOL)reload;
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client adjust:(BOOL)adjust reload:(BOOL)reload;
+
+- (void)destroyClient:(IRCClient *)client skipCloud:(BOOL)skipCloud;
+
+- (void)destroyChannel:(IRCChannel *)channel reload:(BOOL)reload;
+- (void)destroyChannel:(IRCChannel *)channel reload:(BOOL)reload part:(BOOL)partChannel;
 @end
+
+NS_ASSUME_NONNULL_END

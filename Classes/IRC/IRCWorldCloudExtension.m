@@ -46,19 +46,17 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 - (NSDictionary<NSString *, id> *)cloud_clientConfigurations
 {
 	NSMutableDictionary<NSString *, id> *dic = [NSMutableDictionary dictionary];
-	
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			if (u.config.excludedFromCloudSyncing) {
-				continue;
-			}
 
-			NSDictionary *prefs = [u dictionaryValue:YES];
-			
-			NSString *prefKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:u.uniqueIdentifier];
-			
-			dic[prefKey] = prefs;
+	for (IRCClient *u in self.clientList) {
+		if (u.config.excludedFromCloudSyncing) {
+			continue;
 		}
+
+		NSDictionary *dictionaryValue = [u dictionaryValue:YES];
+		
+		NSString *dictionaryKey = [IRCWorldControllerCloudClientItemDefaultsKeyPrefix stringByAppendingString:u.uniqueIdentifier];
+		
+		dic[dictionaryKey] = dictionaryValue;
 	}
 	
 	return [dic copy];
@@ -148,10 +146,10 @@ NSString * const IRCWorldControllerCloudClientItemDefaultsKeyPrefix = @"World Co
 	}
 		
 	[deletedClients enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-		IRCClient *u = [self findClientById:object];
+		IRCClient *u = [self findClientWithId:object];
 
 		if (u && u.config.excludedFromCloudSyncing == NO) {
-			[self destroyClient:u bySkippingCloud:YES];
+			[self destroyClient:u skipCloud:YES];
 		}
 	}];
 }
