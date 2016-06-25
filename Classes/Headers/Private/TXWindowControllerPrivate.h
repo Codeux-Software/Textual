@@ -5,7 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,29 +35,26 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TXWindowController : NSObject
 /* By default only one instance of a particular class (window) may
- be maintained a reference to at any given time. Supply a related 
+ be maintained a reference to at any given time. Supply a related
  object in order to uniquely identify a window. */
-+ (NSString *)windowDescriptionForWindow:(id)window;
-+ (NSString *)windowDescriptionForWindow:(id)window inRelationTo:(id)relatedObject;
-
 - (void)addWindowToWindowList:(id)window;
-- (void)addWindowToWindowList:(id)window inRelationTo:(id)relatedObject;
+- (void)addWindowToWindowList:(id)window inRelationTo:(nullable id)relatedObject;
 - (void)addWindowToWindowList:(id)window withDescription:(NSString *)windowDescription;
 
 - (void)removeWindowFromWindowList:(id)window;
-- (void)removeWindowFromWindowList:(id)window inRelationTo:(id)relatedObject;
+- (void)removeWindowFromWindowList:(id)window inRelationTo:(nullable id)relatedObject;
 
-- (id)windowFromWindowList:(NSString *)windowDescription;
+- (nullable id)windowFromWindowList:(NSString *)windowDescription;
 
-- (NSArray *)windowsFromWindowList:(NSArray *)windowDescriptions;
+- (NSArray *)windowsFromWindowList:(NSArray<NSString *> *)windowDescriptions;
 
 - (BOOL)maybeBringWindowForward:(NSString *)windowDescription;
 
 - (void)popMainWindowSheetIfExists;
-
-- (void)prepareForApplicationTermination;
 @end
+
+NS_ASSUME_NONNULL_END

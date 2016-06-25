@@ -36,24 +36,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "IRCWorldPrivate.h"
-
-#import "TPCThemeControllerPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #define _autoConnectDelay				1
+
 #define _reconnectAfterWakeupDelay		8
 
 #define _savePeriodicallyThreshold		300
 
-NSString * const IRCWorldControllerClientListDefaultsKey = @"World Controller Client Configurations";
-
-NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
+NSString * const IRCWorldClientListDefaultsKey = @"World Controller Client Configurations";
 
 NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientListWasModifiedNotification";
 
+NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNotification";
+
 @interface IRCWorld ()
+@property (nonatomic, strong) NSMutableArray<IRCClient *> *clients;
 @property (nonatomic, assign) BOOL preferencesDidChangeTimerIsActive;
 @property (nonatomic, assign) CFAbsoluteTime savePeriodicallyLastSave;
 @end
@@ -66,16 +64,21 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.clients = [NSMutableArray new];
-		
-		self.textSizeMultiplier = 1.0;
+		[self prepareInitialState];
 
-		self.preferencesDidChangeTimerIsActive = NO;
-
-		self.savePeriodicallyLastSave = CFAbsoluteTimeGetCurrent();
+		return self;
 	}
-	
-	return self;
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	self.clients = [NSMutableArray new];
+
+	self.preferencesDidChangeTimerIsActive = NO;
+
+	self.savePeriodicallyLastSave = CFAbsoluteTimeGetCurrent();
 }
 
 - (void)dealloc
@@ -92,19 +95,19 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 	[mainWindowServerList() beginUpdates];
 
-	NSArray *config = [TPCPreferences clientList];
+	NSArray *clientList = [TPCPreferences clientList];
 
-	for (NSDictionary *e in config) {
-		[self createClient:e reload:YES];
+	for (NSDictionary *client in clientList) {
+		IRCClientConfig *e = [[IRCClientConfig alloc] initWithDictionary:client];
+
+		[self createClientWithConfig:e reload:YES];
 	}
 
 	[mainWindowServerList() endUpdates];
 
-	if ([TPCPreferences soundIsMuted]) {
-		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
-	}
-
 	self.isImportingConfiguration = NO;
+
+	[self setupOtherServices];
 }
 
 - (void)setupOtherServices
@@ -120,7 +123,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	NSMutableArray *ary = [NSMutableArray array];
 
-	for (IRCClient *u in [self clientList]) {
+	for (IRCClient *u in self.clientList) {
 		[ary addObject:[u dictionaryValue]];
 	}
 
@@ -129,7 +132,9 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)save
 {
-	[TPCPreferences setClientList:[self clientConfigurations]];
+	NSArray *clientList = [self clientConfigurations];
+
+	[TPCPreferences setClientList:clientList];
 }
 
 - (void)savePeriodically
@@ -147,16 +152,14 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	[RZNotificationCenter() removeObserver:self];
 
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			[c prepareForApplicationTermination];
-		}
+	for (IRCClient *u in self.clientList) {
+		[u prepareForApplicationTermination];
 	}
 }
 
 - (void)userDefaultsDidChange:(NSNotification *)notification
 {
-	if ([themeSettings() js_postPreferencesDidChangesNotifications] == NO) {
+	if (themeSettings().js_postPreferencesDidChangesNotifications == NO) {
 		return; // Cancel operation...
 	}
 
@@ -171,49 +174,35 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 {
 	self.preferencesDidChangeTimerIsActive = NO;
 
-	[self evaluateFunctionOnAllViews:@"preferencesDidChange" arguments:@[] onQueue:YES];
+	[self evaluateFunctionOnAllViews:@"preferencesDidChange" arguments:nil onQueue:YES];
 }
 
 #pragma mark -
 #pragma mark Properties
 
-- (NSArray *)clientList
+- (NSArray<IRCClient *> *)clientList
 {
-	__block NSArray *clientList = nil;
-	
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.clients) {
-			clientList = [NSArray arrayWithArray:self.clients];
-		}
-	});
-	
-	return clientList;
+	@synchronized(self.clients) {
+		return [NSArray arrayWithArray:self.clients];
+	}
 }
 
-- (void)setClientList:(NSArray *)clientList
+- (void)setClientList:(NSArray<IRCClient *> *)clientList
 {
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.clients) {
-			[self.clients removeAllObjects];
-			
-			[self.clients addObjectsFromArray:clientList];
+	@synchronized(self.clients) {
+		[self.clients removeAllObjects];
 
-			[self postClientListWasModifiedNotification];
-		}
-	});
+		[self.clients addObjectsFromArray:clientList];
+
+		[self postClientListWasModifiedNotification];
+	}
 }
 
-- (NSInteger)clientCount
+- (NSUInteger)clientCount
 {
-	__block NSInteger clientCount = 0;
-	
-	XRPerformBlockOnSharedMutableSynchronizationDispatchQueue(^{
-		@synchronized(self.clients) {
-			clientCount = [self.clients count];
-		}
-	});
-	
-	return clientCount;
+	@synchronized(self.clients) {
+		return self.clients.count;
+	}
 }
 
 #pragma mark -
@@ -226,153 +215,85 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 - (void)autoConnectAfterWakeup:(BOOL)afterWakeUp
 {
-	if ([masterController() ghostModeIsOn] && afterWakeUp == NO) {
+	if (masterController().ghostModeIsOn && afterWakeUp == NO) {
 		return;
 	}
-	
+
 	NSInteger delay = 0;
-	
+
 	if (afterWakeUp) {
 		delay += _reconnectAfterWakeupDelay;
 	}
-	
-#define _isWakingFromSleep		(afterWakeUp	   && c.config.autoSleepModeDisconnect && c.disconnectType == IRCClientDisconnectComputerSleepMode)
-#define _isAutoConnecting		(afterWakeUp == NO && c.config.autoConnect)
-	
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			if (_isWakingFromSleep || _isAutoConnecting) {
-				[c autoConnect:delay afterWakeUp:afterWakeUp];
-				
-				delay += _autoConnectDelay;
-			}
+
+#define _isAutoConnecting		(afterWakeUp == NO && u.config.autoConnect)
+#define _isWakingFromSleep		(afterWakeUp	   && u.config.autoSleepModeDisconnect && u.disconnectType == IRCClientDisconnectComputerSleepMode)
+
+	for (IRCClient *u in self.clientList) {
+		if (_isWakingFromSleep == NO && _isAutoConnecting == NO) {
+			continue;
 		}
+
+		[u autoConnect:delay afterWakeUp:afterWakeUp];
+
+		delay += _autoConnectDelay;
 	}
-	
+
 #undef _isWakingFromSleep
 #undef _isAutoConnecting
 }
 
 - (void)prepareForSleep
 {
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			if (c.config.autoSleepModeDisconnect) {
-				if (c.isLoggedIn) {
-					c.disconnectType = IRCClientDisconnectComputerSleepMode;
-			
-					[c quit:c.config.sleepModeLeavingComment];
-				}
-			}
+	for (IRCClient *u in self.clientList) {
+		if (u.config.autoSleepModeDisconnect == NO) {
+			continue;
 		}
+
+		if (u.isLoggedIn == NO) {
+			continue;
+		}
+
+		u.disconnectType = IRCClientDisconnectComputerSleepMode;
+
+		[u quit:u.config.sleepModeLeavingComment];
 	}
 }
 
 - (void)prepareForScreenSleep
 {
-    NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
-	
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			[c toggleAwayStatus:YES];
-		}
+	if ([TPCPreferences setAwayOnScreenSleep] == NO) {
+		return;
+	}
+
+	for (IRCClient *u in self.clientList) {
+		[u toggleAwayStatus:YES];
 	}
 }
 
-- (void)awakeFomScreenSleep
+- (void)wakeFomScreenSleep
 {
-    NSAssertReturn([TPCPreferences setAwayOnScreenSleep]);
-	
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			[c toggleAwayStatus:NO];
-		}
+	if ([TPCPreferences setAwayOnScreenSleep] == NO) {
+		return;
+	}
+
+	for (IRCClient *u in self.clientList) {
+		[u toggleAwayStatus:NO];
 	}
 }
 
-
-- (void)reachabilityChanged:(BOOL)reachable
+- (void)noteReachabilityChanged:(BOOL)reachable
 {
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u reachabilityChanged:reachable];
-		}
+	for (IRCClient *u in self.clientList) {
+		[u reachabilityChanged:reachable];
 	}
-}
-
-- (void)destroyAllEvidence
-{
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[self clearContentsOfClient:u];
-
-			for (IRCChannel *c in u.channelList) {
-				[self clearContentsOfChannel:c inClient:u];
-			}
-		}
-	}
-
-	[mainWindow() reloadTree];
-	
-	[self markAllAsRead];
-}
-
-- (void)markAllAsRead
-{
-	[self markAllAsRead:nil];
-}
-
-- (void)markAllAsRead:(IRCClient *)limitedClient
-{
-	BOOL markScrollback = [TPCPreferences autoAddScrollbackMark];
-	
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			if (limitedClient) {
-				if (NSDissimilarObjects(u, limitedClient)) {
-					continue;
-				}
-			}
-
-			if (markScrollback) {
-				[u.viewController mark];
-			}
-			
-			for (IRCChannel *c in u.channelList) {
-				[c resetState];
-
-				if (markScrollback) {
-					[c.viewController mark];
-				}
-			}
-		}
-	}
-
-	if (limitedClient) {
-		[mainWindow() reloadTreeGroup:limitedClient];
-	} else {
-		[mainWindow() reloadTree];
-	}
-
-	[TVCDockIcon updateDockIcon];
 }
 
 - (void)preferencesChanged
 {
 	[menuController() preferencesChanged];
-	
-	@synchronized(self.clients) {
-		for (IRCClient *c in self.clients) {
-			[c preferencesChanged];
-		}
-	}
 
-	if ([TPCPreferences displayDockBadge] == NO) {
-		[TVCDockIcon drawWithoutCount];
-	} else {
-		[TVCDockIcon resetCachedCount];
-
-		[TVCDockIcon updateDockIcon];
+	for (IRCClient *u in self.clientList) {
+		[u preferencesChanged];
 	}
 
 	[TVCImageURLoader invalidateInternalCache];
@@ -395,7 +316,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	/* All other values default to zero. */
 	NSDateComponents *futureDayComponents = [NSDateComponents new];
 
-	[futureDayComponents setDay:1];
+	futureDayComponents.day = 1;
 
 	/* With the current date and future components, calculate
 	 the date on which our midnight timer will land. */
@@ -405,15 +326,15 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	/* We set the tolerance for the timer to absolute zero so that
 	 we are confident that OS X will not reschedule it. */
 	NSTimer *midnightTimer = [[NSTimer alloc]
-							  initWithFireDate:nextMidnight
-							  interval:0.0
-							  target:self
-							  selector:@selector(dateChanged:)
-							  userInfo:nil
-							  repeats:NO];
+				initWithFireDate:nextMidnight
+						interval:0.0
+						  target:self
+						selector:@selector(dateChanged:)
+						userInfo:nil
+						 repeats:NO];
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		[midnightTimer setTolerance:0.0];
+		midnightTimer.tolerance = 0.0;
 	}
 
 	/* Schedule the timer on the run loop which will retain reference. */
@@ -424,17 +345,17 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 		[RZNotificationCenter() postNotificationName:IRCWorldDateHasChangedNotification object:nil userInfo:nil];
 
 		[self evaluateFunctionOnAllViews:@"Textual.dateChanged"
-							   arguments:@[@([currentDayComponents year]),
-										   @([currentDayComponents month]),
-										   @([currentDayComponents day])]
+							   arguments:@[@(currentDayComponents.year),
+										   @(currentDayComponents.month),
+										   @(currentDayComponents.day)]
 								 onQueue:NO];
 	}
 }
 
 - (void)dateChanged:(id)sender
 {
-	/* We call the notifications in the timer so we do not have to ask for the
-	 current day components two times. */
+	/* We call the notifications in the timer so we do not have to
+	 ask for the current day components two times. */
 
 	[self setupMidnightTimerWithNotification:YES];
 }
@@ -442,176 +363,68 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 #pragma mark -
 #pragma mark Tree Items
 
-- (IRCTreeItem *)findItemByTreeId:(NSString *)uid
+- (nullable IRCTreeItem *)findItemWithId:(NSString *)itemId
 {
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			if ([uid isEqualToString:[u uniqueIdentifier]]) {
-				return u;
-			}
+	NSParameterAssert(itemId != nil);
 
-			for (IRCChannel *c in u.channelList) {
-				if ([uid isEqualToString:[c uniqueIdentifier]]) {
-					return c;
-				}
-			}
+	for (IRCClient *u in self.clientList) {
+		if ([itemId isEqualToString:u.uniqueIdentifier]) {
+			return u;
 		}
-	}
 
-	return nil;
-}
-
-- (IRCClient *)findClientById:(NSString *)uid
-{
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			if ([uid isEqualToString:[u uniqueIdentifier]])
-			{
-				return u;
-			}
-		}
-	}
-	
-	return nil;
-}
-
-- (IRCChannel *)findChannelByClientId:(NSString *)uid channelId:(NSString *)cid
-{
-	IRCClient *u = [self findClientById:uid];
-	
-	if (u) {
 		for (IRCChannel *c in u.channelList) {
-			if ([cid isEqualToString:[c uniqueIdentifier]])
-			{
+			if ([itemId isEqualToString:c.uniqueIdentifier]) {
 				return c;
 			}
 		}
 	}
-	
+
 	return nil;
+}
+
+- (nullable IRCClient *)findClientWithId:(NSString *)clientId
+{
+	return (IRCClient *)[self findItemWithId:clientId];
+}
+
+- (nullable IRCChannel *)findChannelWithId:(NSString *)channelId onClientWithId:(NSString *)clientId
+{
+	return (IRCChannel *)[self findItemWithId:channelId];
+}
+
+- (nullable IRCTreeItem *)findItemWithPasteboardString:(NSString *)string
+{
+	return [self findItemWithId:string];
 }
 
 - (NSString *)pasteboardStringForItem:(IRCTreeItem *)item
 {
-	NSString *s = nil;
+	NSParameterAssert(item != nil);
 
-	if ([item isClient] == NO) {
-		s = [NSString stringWithFormat:@"%@ %@", [item uniqueIdentifier], [[item associatedClient] uniqueIdentifier]];
-	} else {
-		s = [NSString stringWithFormat:@"%@", [item uniqueIdentifier]];
-	}
-
-	return s;
-}
-
-- (IRCTreeItem *)findItemFromPasteboardString:(NSString *)s
-{
-	NSObjectIsEmptyAssertReturn(s, nil);
-
-	if ([s contains:NSStringWhitespacePlaceholder]) {
-		NSArray *ary = [s split:NSStringWhitespacePlaceholder];
-
-		NSString *uid = ary[1];
-		NSString *cid = ary[0];
-
-		return [self findChannelByClientId:uid channelId:cid];
-	} else {
-		return [self findClientById:s];
-	}
-}
-
-#pragma mark -
-#pragma mark Theme
-
-- (void)reloadTheme
-{
-	[self reloadTheme:YES];
-}
-
-- (void)reloadTheme:(BOOL)reloadUserInterface
-{
-	[themeController() reload];
-	
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u.viewController reloadTheme];
-
-			for (IRCChannel *c in u.channelList) {
-				[c.viewController reloadTheme];
-			}
-		}
-	}
-
-	if (reloadUserInterface) {
-		[mainWindow() updateBackgroundColor];
-		
-		[mainWindowTextField() reloadOriginPoints];
-	}
-}
-
-- (void)changeTextSize:(BOOL)bigger
-{
-	/* These defines are from WebKit herself. */
-#define MinimumZoomMultiplier       0.5
-#define MaximumZoomMultiplier       3.0
-#define ZoomMultiplierRatio         1.2
-	
-	double newMultiplier = self.textSizeMultiplier;
-	
-	if (bigger) {
-		newMultiplier *= ZoomMultiplierRatio;
-		
-		if (newMultiplier > MaximumZoomMultiplier) {
-			return; // Do not perform an action.
-		} else {
-			self.textSizeMultiplier = newMultiplier;
-		}
-	} else {
-		newMultiplier /= ZoomMultiplierRatio;
-		
-		if (newMultiplier < MinimumZoomMultiplier) {
-			return; // Do not perform an action.
-		} else {
-			self.textSizeMultiplier = newMultiplier;
-		}
-	}
-	
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u.viewController changeTextSize:bigger];
-			
-			for (IRCChannel *c in u.channelList) {
-				[c.viewController changeTextSize:bigger];
-			}
-		}
-	}
-	
-#undef MinimumZoomMultiplier
-#undef MaximumZoomMultiplier
-#undef ZoomMultiplierRatio
+	return item.uniqueIdentifier;
 }
 
 #pragma mark -
 #pragma mark JavaScript
 
-- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(nullable NSArray *)arguments
 {
 	[self evaluateFunctionOnAllViews:function arguments:arguments onQueue:YES];
 }
 
-- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(NSArray *)arguments onQueue:(BOOL)onQueue
+- (void)evaluateFunctionOnAllViews:(NSString *)function arguments:(nullable NSArray *)arguments onQueue:(BOOL)onQueue
 {
-	if ([masterController() applicationIsTerminating]) {
+	NSParameterAssert(function != nil);
+
+	if (masterController().applicationIsTerminating) {
 		return;
 	}
 
-	@synchronized(self.clients) {
-		for (IRCClient *u in self.clients) {
-			[u.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
+	for (IRCClient *u in self.clientList) {
+		[u.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
 
-			for (IRCChannel *c in u.channelList) {
-				[c.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
-			}
+		for (IRCChannel *c in u.channelList) {
+			[c.viewController evaluateFunction:function withArguments:arguments onQueue:onQueue];
 		}
 	}
 }
@@ -619,53 +432,38 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 #pragma mark -
 #pragma mark Factory
 
-- (void)clearContentsOfChannel:(IRCChannel *)c inClient:(IRCClient *)u
+- (IRCClient *)createClientWithConfig:(IRCClientConfig *)config
 {
-	[c resetState];
-
-	[c.viewController clear];
-
-	[mainWindow() reloadTreeItem:c];
+	return [self createClientWithConfig:config reload:YES];
 }
 
-- (void)clearContentsOfClient:(IRCClient *)u
+- (IRCClient *)createClientWithConfig:(IRCClientConfig *)config reload:(BOOL)reload
 {
-	[u resetState];
+	NSParameterAssert(config != nil);
 
-	[u.viewController clear];
+	IRCClient *client = [IRCClient new];
 
-	[mainWindow() reloadTreeItem:u];
-}
+	[client setup:config];
 
-- (IRCClient *)createClient:(id)seed reload:(BOOL)reload
-{
-	if (seed == nil) {
-		NSAssert(NO, @"nil configuration seed.");
-	}
+	client.viewController = [self createViewControllerWithClient:client channel:nil];
 
-	IRCClient *c = [IRCClient new];
+	client.printingQueue = [TVCLogControllerOperationQueue new];
 
-	[c setup:seed];
-
-	c.viewController = [self createLogWithClient:c channel:nil];
-
-	c.printingQueue = [TVCLogControllerOperationQueue new];
-
-	for (IRCChannelConfig *e in [[c config] channelList]) {
-		[self createChannel:e client:c reload:NO adjust:NO];
+	for (IRCChannelConfig *channel in client.config.channelList) {
+		[self createChannelWithConfig:channel onClient:client adjust:NO reload:NO];
 	}
 
 	@synchronized(self.clients) {
-		[self.clients addObject:c];
-	
+		[self.clients addObject:client];
+
 		if (reload) {
-			NSInteger index = [self.clients indexOfObject:c];
+			NSInteger index = [self.clients indexOfObject:client];
 
 			[mainWindowServerList() addItemToList:index inParent:nil];
 		}
 
-		if ([self.clients count] == 1) {
-			[mainWindow() select:c];
+		if (self.clients.count == 1) {
+			[mainWindow() select:client];
 		}
 	}
 
@@ -675,31 +473,31 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 	[self postClientListWasModifiedNotification];
 
-	return c;
+	return client;
 }
 
-- (IRCChannel *)createChannel:(IRCChannelConfig *)seed client:(IRCClient *)client reload:(BOOL)reload adjust:(BOOL)adjust
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client
 {
-	if (seed == nil) {
-		NSAssert(NO, @"nil configuration seed.");
-	}
-	
-	if (client == nil) {
-		NSAssert(NO, @"nil associated client.");
-	}
+	return [self createChannelWithConfig:config onClient:client adjust:YES reload:YES];
+}
 
-	IRCChannel *c = [IRCChannel new];
+- (IRCChannel *)createChannelWithConfig:(IRCChannelConfig *)config onClient:(IRCClient *)client adjust:(BOOL)adjust reload:(BOOL)reload
+{
+	NSParameterAssert(config != nil);
+	NSParameterAssert(client != nil);
 
-	[c setAssociatedClient:client];
+	IRCChannel *channel = [IRCChannel new];
 
-	[c setup:seed];
-	
-	c.viewController = [self createLogWithClient:client channel:c];
+	channel.associatedClient = client;
 
-	[client addChannel:c];
+	[channel setup:config];
+
+	channel.viewController = [self createViewControllerWithClient:client channel:channel];
+
+	[client addChannel:channel];
 
 	if (reload) {
-		NSInteger index = [client.channelList indexOfObject:c];
+		NSInteger index = [client.channelList indexOfObject:channel];
 
 		[mainWindowServerList() addItemToList:index inParent:client];
 	}
@@ -709,77 +507,96 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 
 		[menuController() populateNavgiationChannelList];
 	}
-	
-	return c;
+
+	return channel;
 }
 
-- (IRCChannel *)createPrivateMessage:(NSString *)nickname client:(IRCClient *)client
+- (IRCChannel *)createPrivateMessage:(NSString *)nickname onClient:(IRCClient *)client
 {
-	if (NSObjectIsEmpty(nickname)) {
-		NSAssert(NO, @"empty nickname value.");
-	}
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(client != nil);
 
 	IRCChannelConfig *seed = [IRCChannelConfig new];
 
-	[seed setChannelName:nickname];
-	[seed setType:IRCChannelPrivateMessageType];
+	seed.channelName = nickname;
 
-	IRCChannel *c = [self createChannel:seed client:client reload:YES adjust:YES];
+	seed.type = IRCChannelPrivateMessageType;
 
-	if ([client isLoggedIn]) {
-		[c activate];
+	IRCChannel *channel = [self createChannelWithConfig:seed onClient:client adjust:YES reload:YES];
+
+	if (client.isLoggedIn) {
+		[channel activate];
 	}
-	
-	return c;
+
+	return channel;
+}
+
+- (TVCLogController *)createViewControllerWithClient:(IRCClient *)client channel:(nullable IRCChannel *)channel
+{
+	NSParameterAssert(client != nil);
+
+	TVCLogController *viewController = nil;
+
+	if (channel == nil) {
+		viewController = [[TVCLogController alloc] initWithClient:client inWindow:mainWindow()];
+	} else {
+		viewController = [[TVCLogController alloc] initWithChannel:channel inWindow:mainWindow()];
+	}
+
+	return viewController;
 }
 
 - (void)selectOtherBeforeDestroy:(IRCTreeItem *)target
 {
-	if ([target isClient]) {
+	NSParameterAssert(target != nil);
+
+	if (target.isClient) {
 		[mainWindow() deselectGroup:target];
 	} else {
 		[mainWindow() deselect:target];
 	}
 }
 
-- (void)destroyClient:(IRCClient *)u
+- (void)destroyClient:(IRCClient *)client
 {
-	[self destroyClient:u bySkippingCloud:NO];
+	[self destroyClient:client skipCloud:NO];
 }
 
-- (void)destroyClient:(IRCClient *)u bySkippingCloud:(BOOL)skipCloud
+- (void)destroyClient:(IRCClient *)client skipCloud:(BOOL)skipCloud
 {
-	/* It is not safe to destroy the client while connected. Therefore,
-	 we set a block to be performed on disconnect. */
-	if ([u isConnecting] || [u isConnected]) {
+	NSParameterAssert(client != nil);
+
+	/* It is not safe to destroy the client while connected. */
+	if (client.isConnecting || client.isConnected) {
 		__weak IRCWorld *weakSelf = self;
-		__weak IRCClient *weakClient = u;
-		
-		[u setDisconnectCallback:^{
-			[weakSelf destroyClient:weakClient bySkippingCloud:skipCloud];
-		}];
-		
-		[u quit]; // Obviously we need to terminate it
-		
-		return; // Do not continue with operation. 
+
+		__weak IRCClient *weakClient = client;
+
+		client.disconnectCallback = ^{
+			[weakSelf destroyClient:weakClient skipCloud:skipCloud];
+		};
+
+		[client quit];
+
+		return;
 	}
 
-	[self selectOtherBeforeDestroy:u];
+	[self selectOtherBeforeDestroy:client];
 
-	[u prepareForPermanentDestruction];
+	[client prepareForPermanentDestruction];
 
-	[u setPrintingQueue:nil];
-	
+	client.printingQueue = nil;
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (skipCloud == NO) {
-		[self cloud_destroyClient:u];
+		[self cloud_destroyClient:client];
 	}
 #endif
 
-	[mainWindowServerList() removeItemFromList:u];
+	[mainWindowServerList() removeItemFromList:client];
 
 	@synchronized(self.clients) {
-		[self.clients removeObjectIdenticalTo:u];
+		[self.clients removeObjectIdenticalTo:client];
 	}
 
 	[self postClientListWasModifiedNotification];
@@ -789,58 +606,49 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	[menuController() populateNavgiationChannelList];
 }
 
-- (void)destroyChannel:(IRCChannel *)c
+- (void)destroyChannel:(IRCChannel *)channel
 {
-	[self destroyChannel:c reload:YES part:YES];
+	[self destroyChannel:channel reload:YES part:YES];
 }
 
-- (void)destroyChannel:(IRCChannel *)c reload:(BOOL)reload
+- (void)destroyChannel:(IRCChannel *)channel reload:(BOOL)reload
 {
-	[self destroyChannel:c reload:reload part:YES];
+	[self destroyChannel:channel reload:reload part:YES];
 }
 
-- (void)destroyChannel:(IRCChannel *)c reload:(BOOL)reload part:(BOOL)forcePart
+- (void)destroyChannel:(IRCChannel *)channel reload:(BOOL)reload part:(BOOL)partChannel
 {
-	IRCClient *u = [c associatedClient];
-	
-	if (forcePart) {
-		[u partChannel:c];
+	NSParameterAssert(channel != nil);
+
+	IRCClient *client = channel.associatedClient;
+
+	if (partChannel) {
+		[client partChannel:channel];
 	}
 
 	if (reload) {
-		[self selectOtherBeforeDestroy:c];
+		[self selectOtherBeforeDestroy:channel];
 	}
 
-	[u willDestroyChannel:c];
-    
-	[c prepareForPermanentDestruction];
-	
-	if (u.lastSelectedChannel == c) {
-		u.lastSelectedChannel = nil;
+	[client willDestroyChannel:channel];
+
+	[channel prepareForPermanentDestruction];
+
+	if (client.lastSelectedChannel == channel) {
+		client.lastSelectedChannel = nil;
 	}
 
 	if (reload) {
-		[mainWindowServerList() removeItemFromList:c];
+		[mainWindowServerList() removeItemFromList:channel];
 
-		[u removeChannel:c];
+		[client removeChannel:channel];
 
 		[mainWindow() adjustSelection];
-
+		
 		[menuController() populateNavgiationChannelList];
 	}
 }
 
-- (TVCLogController *)createLogWithClient:(IRCClient *)client channel:(IRCChannel *)channel
-{
-	TVCLogController *c = nil;
-
-	if (channel == nil) {
-		c = [[TVCLogController alloc] initWithClient:client inWindow:mainWindow()];
-	} else {
-		c = [[TVCLogController alloc] initWithChannel:channel inWindow:mainWindow()];
-	}
-
-	return c;
-}
-
 @end
+
+NS_ASSUME_NONNULL_END

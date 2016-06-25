@@ -36,44 +36,59 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#define KInternetEventClass		1196773964
-#define KAEGetURL				1196773964
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 #define _betaTesterMaxApplicationLifespan			5184000 // 60 days
 #endif
 
+@interface TXMasterController ()
+@property (nonatomic, strong, readwrite) IRCWorld *world;
+@property (nonatomic, assign, readwrite) BOOL debugModeIsOn;
+@property (nonatomic, assign, readwrite) BOOL ghostModeIsOn;
+@property (nonatomic, assign, readwrite) BOOL applicationIsActive;
+@property (nonatomic, assign, readwrite) BOOL applicationIsTerminating;
+@property (nonatomic, assign, readwrite) BOOL applicationIsChangingActiveState;
+@property (nonatomic, strong, readwrite) IBOutlet TVCMainWindow *mainWindow;
+@property (nonatomic, weak, readwrite) IBOutlet TXMenuController *menuController;
+@end
+
 @implementation TXMasterController
 
 - (instancetype)init
 {
-    if ((self = [super init])) {
+	if ((self = [super init])) {
 		[NSObject setGlobalMasterControllerClassReference:self];
 
-		self.sharedApplicationCacheObject = [NSCache new];
+		[self prepareInitialState];
 
-#if defined(DEBUG)
-		self.ghostModeIsOn = YES; // Do not use autoconnect during debug.
-#else
-		if ([NSEvent modifierFlags] & NSShiftKeyMask) {
-			self.ghostModeIsOn = YES;
-			
-			LogToConsoleInfo("Launching without autoconnecting to the configured servers")
-		}
-#endif
-	
-		if ([NSEvent modifierFlags] & NSControlKeyMask) {
-			self.debugModeIsOn = YES;
-
-			LogToConsoleDebugLoggingEnabled = YES;
-
-			LogToConsoleInfo("Launching in debug mode.")
-		}
+		return self;
     }
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
+
+	if ((keyboardKeys & NSControlKeyMask) == NSControlKeyMask) {
+		self.debugModeIsOn = YES;
+
+		LogToConsoleDebugLoggingEnabled = YES;
+
+		LogToConsoleInfo("Launching in debug mode")
+	}
+
+#if defined(DEBUG)
+	self.ghostModeIsOn = YES; // Do not use autoconnect during debug
+#else
+	if ((keyboardKeys & NSShiftKeyMask) == NSShiftKeyMask) {
+		self.ghostModeIsOn = YES;
+
+		LogToConsoleInfo("Launching without autoconnecting to the configured servers")
+	}
+#endif
 }
 
 - (void)awakeFromNib
@@ -83,35 +98,41 @@
 	if (_awakeFromNibCalled == NO) {
 		_awakeFromNibCalled = YES;
 
-		/* Register defaults. */
-		[TPCPreferences initPreferences];
-	
-		/* We wait until -awakeFromNib to wake the window so that the menu
-		 controller created by the main nib has time to load. */
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
-		} else {
-			[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
-		}
+		[self _awakeFromNib];
+	}
+}
+
+- (void)_awakeFromNib
+{
+	[TPCPreferences initPreferences];
+
+	/* We wait until -awakeFromNib to wake the window so that the menu
+	 controller created by the main nib has time to load. */
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[RZMainBundle() loadNibNamed:@"TVCMainWindowYosemite" owner:self topLevelObjects:nil];
+	} else {
+		[RZMainBundle() loadNibNamed:@"TVCMainWindowMavericks" owner:self topLevelObjects:nil];
 	}
 }
 
 - (void)performAwakeningBeforeMainWindowDidLoad
 {
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	/* Cloud files are synced regardless of user preference
-	 so we still have to initalize it at some point. */
-
-	[sharedCloudManager() prepareInitialState];
-#endif
-	
 	self.world = [IRCWorld new];
 }
 
 - (void)performAwakeningAfterMainWindowDidLoad
 {
 #ifndef DEBUG
+	/* This check can take a few cycles which means its performed
+	 after the main window has loaded so the user has that to
+	 stare at while its wound up. */
 	[self checkForOtherCopiesOfTextualRunning];
+#endif
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+	/* Cloud files are synced regardless of user preference
+	 so we still have to initalize it at some point. */
+	[sharedCloudManager() prepareInitialState];
 #endif
 
 	[IRCCommandIndex populateCommandIndex];
@@ -124,7 +145,7 @@
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenDidWake:) name:NSWorkspaceScreensDidWakeNotification object:nil];
 	[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(computerScreenWillSleep:) name:NSWorkspaceScreensDidSleepNotification object:nil];
 	
-	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:KInternetEventClass andEventID:KAEGetURL];
+	[RZAppleEventManager() setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
 
 	[NSColorPanel setPickerMask:(NSColorPanelRGBModeMask | NSColorPanelGrayModeMask | NSColorPanelColorListModeMask | NSColorPanelWheelModeMask | NSColorPanelCrayonModeMask)];
 
@@ -135,13 +156,11 @@
 	}];
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-	TLOLicenseManagerSetup();
-
-	[TDCLicenseManagerDialog applicationDidFinishLaunching];
+	[self prepareLicenseManager];
 #endif
 
 	[self prepareThirdPartyServices];
-	
+
 	[self applicationDidFinishLaunching];
 }
 
@@ -149,13 +168,13 @@
 {
 	BOOL foundOneMatchForSelf = NO;
 
-	for (NSRunningApplication *application in [RZWorkspace() runningApplications]) {
-		if ([[application bundleIdentifier] isEqualToString:@"com.codeux.apps.textual"] ||
-			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual"] ||
-			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5"] ||
-			[[application bundleIdentifier] isEqualToString:@"com.codeux.irc.textual5.trial"])
+	for (NSRunningApplication *application in RZWorkspace().runningApplications) {
+		if ([application.bundleIdentifier isEqualToString:@"com.codeux.apps.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5"] ||
+			[application.bundleIdentifier isEqualToString:@"com.codeux.irc.textual5.trial"])
 		{
-			if ([[application bundleIdentifier] isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
+			if ([application.bundleIdentifier isEqualToString:[TPCApplicationInfo applicationBundleIdentifier]]) {
 				if (foundOneMatchForSelf == NO) {
 					foundOneMatchForSelf = YES;
 
@@ -169,10 +188,7 @@
 														   alternateButton:TXTLS(@"Prompts[0002]")];
 
 			if (continueLaunch == NO) {
-				self.skipTerminateSave = YES;
-				self.applicationIsTerminating = YES;
-
-				[RZSharedApplication() terminate:nil];
+				[self forceTerminate];
 			}
 
 			break;
@@ -190,7 +206,8 @@
 
 	NSString *applicationIdentifier = hockeyAppData[@"Application Identifier"];
 
-	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:self];
+	[[BITHockeyManager sharedHockeyManager] configureWithIdentifier:applicationIdentifier delegate:(id)self];
+
 	[[BITHockeyManager sharedHockeyManager] startManager];
 #endif
 }
@@ -211,9 +228,9 @@
 	SUUpdater *updater = [SUUpdater sharedUpdater];
 
 	if (receiveBetaUpdates == NO) {
-		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval"]];
+		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval"];
 	} else {
-		[updater setUpdateCheckInterval:[sparkleData boolForKey:@"SUScheduledCheckInterval-beta"]];
+		updater.updateCheckInterval = [sparkleData boolForKey:@"SUScheduledCheckInterval-beta"];
 	}
 
 	[updater checkForUpdatesInBackground];
@@ -223,6 +240,7 @@
 - (void)prepareThirdPartyServices
 {
 	[self prepareThirdPartyServiceHockeyAppFramework];
+
 	[self prepareThirdPartyServiceSparkleFramework];
 }
 
@@ -230,26 +248,35 @@
 {
 	OELReachability *notifier = [TXSharedApplication sharedNetworkReachabilityNotifier];
 
-	[notifier setReachableBlock:^(OELReachability *reachability) {
-		[worldController() reachabilityChanged:YES];
-	}];
+	notifier.reachableBlock = ^(OELReachability *reachability) {
+		[worldController() noteReachabilityChanged:YES];
+	};
 
-	[notifier setUnreachableBlock:^(OELReachability *reachability) {
-		[worldController() reachabilityChanged:NO];
-	}];
+	notifier.unreachableBlock = ^(OELReachability *reachability) {
+		[worldController() noteReachabilityChanged:NO];
+	};
 
 	[notifier startNotifier];
 }
 
+#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
+- (void)prepareLicenseManager
+{
+	TLOLicenseManagerSetup();
+
+	[TDCLicenseManagerDialog applicationDidFinishLaunching];
+}
+#endif
+
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 - (void)presentBetaTesterDialog
 {
-	NSTimeInterval currentTime = [NSDate unixTime];
+	NSTimeInterval currentTime = [NSDate timeIntervalSince1970];
 
-	NSTimeInterval buildTime = [TXBundleBuildDate integerValue];
+	NSTimeInterval buildTime = [TXBundleBuildDate doubleValue];
 
 	NSTimeInterval timeSpent = (currentTime - buildTime);
-	NSTimeInterval timeleft = (_betaTesterMaxApplicationLifespan - timeSpent);
+	NSTimeInterval timeRemaining = (_betaTesterMaxApplicationLifespan - timeSpent);
 
 	if (timeSpent > _betaTesterMaxApplicationLifespan) {
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1120][2]")
@@ -257,10 +284,7 @@
 										 defaultButton:TXTLS(@"Prompts[0005]")
 									   alternateButton:nil];
 
-		self.skipTerminateSave = YES;
-		self.applicationIsTerminating = YES;
-
-		[RZSharedApplication() terminate:nil];
+		[self forceTerminate];
 	} else {
 		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
 
@@ -309,6 +333,11 @@
 	self.applicationIsChangingActiveState = NO;
 }
 
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender
+{
+	return menuController().dockMenu;
+}
+
 - (BOOL)queryTerminate
 {
 	if (self.applicationIsTerminating) {
@@ -340,28 +369,21 @@
 	}
 }
 
-- (NSMenu *)applicationDockMenu:(NSApplication *)sender
-{
-	return [menuController() dockMenu];
-}
-
 - (BOOL)isNotSafeToPerformApplicationTermination
 {
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (sharedCloudManager()) {
 		return (
-				/* Clients are still disconnecting. */
-				self.terminatingClientCount > 0 ||
+			/* Clients are still disconnecting */
+			self.terminatingClientCount > 0 ||
 
-				/* iCloud is syncing. */
-				[sharedCloudManager() isTerminated] == NO
+			/* iCloud is syncing */
+			[sharedCloudManager() isTerminated] == NO
 		);
-	} else {
-		return (self.terminatingClientCount > 0);
 	}
-#else
-	return (self.terminatingClientCount > 0);
 #endif
+
+	return (self.terminatingClientCount > 0);
 }
 
 - (void)performApplicationTerminationStepOne
@@ -376,10 +398,12 @@
 
 	[RZNotificationCenter() removeObserver:self];
 
-	[RZAppleEventManager() removeEventHandlerForEventClass:KInternetEventClass andEventID:KAEGetURL];
-	
+	[RZAppleEventManager() removeEventHandlerForEventClass:kInternetEventClass andEventID:kAEGetURL];
+
 	[[TXSharedApplication sharedNetworkReachabilityNotifier] stopNotifier];
-	
+
+	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
+
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	[sharedCloudManager() prepareForApplicationTermination];
 #endif
@@ -393,14 +417,17 @@
 	[TVCLogControllerHistoricLogFile prepareForPermanentDestruction];
 
 	if (self.skipTerminateSave == NO) {
-		self.terminatingClientCount = [worldController() clientCount];
+		self.terminatingClientCount = worldController().clientCount;
 
 		[worldController() prepareForApplicationTermination];
+
 		[worldController() save];
 
 		while ([self isNotSafeToPerformApplicationTermination])
 		{
-			[RZMainRunLoop() runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+			NSDate *nextPass = [NSDate dateWithTimeIntervalSinceNow:0.1];
+
+			[RZMainRunLoop() runUntilDate:nextPass];
 		}
 	}
 
@@ -414,16 +441,43 @@
 	
 	[TPCApplicationInfo saveTimeIntervalSinceApplicationInstall];
 
-	[self.sharedApplicationCacheObject removeAllObjects];
+	[sharedApplicationCache() removeAllObjects];
 	
 	[NSApp replyToApplicationShouldTerminate:YES];
 }
 
+- (void)forceTerminate
+{
+	self.applicationIsTerminating = YES;
+
+	[RZSharedApplication() terminate:nil];
+}
+
+- (void)forceTerminateWithoutSave
+{
+	self.skipTerminateSave = YES;
+
+	[self forceTerminate];
+}
+
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag
 {
-	if (self.applicationIsTerminating == NO) {
-		[self.mainWindow makeKeyAndOrderFront:nil];
+	if (self.applicationIsTerminating) {
+		return NO;
 	}
+
+	[mainWindow() makeKeyAndOrderFront:nil];
+
+	return YES;
+}
+
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+	if (self.applicationIsTerminating) {
+		return NO;
+	}
+
+	[mainWindow() makeKeyAndOrderFront:nil];
 
 	return YES;
 }
@@ -434,9 +488,11 @@
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event
 		withReplyEvent:(NSAppleEventDescriptor *)replyEvent
 {
-	NSAppleEventDescriptor *desc = [event descriptorAtIndex:1];
+	NSAppleEventDescriptor *description = [event descriptorAtIndex:1];
 
-	[IRCExtras parseIRCProtocolURI:[desc stringValue] withDescriptor:event];
+	NSString *stringValue = description.stringValue;
+
+	[IRCExtras parseIRCProtocolURI:stringValue withDescriptor:event];
 }
 
 - (void)computerScreenWillSleep:(NSNotification *)note
@@ -446,38 +502,29 @@
 
 - (void)computerScreenDidWake:(NSNotification *)note
 {
-	[worldController() awakeFomScreenSleep];
+	[worldController() wakeFomScreenSleep];
 }
 
 - (void)computerWillSleep:(NSNotification *)note
 {
-	[worldController() prepareForSleep]; // Tell world to prepare.
+	[worldController() prepareForSleep];
 
-	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES]; // Stop speaking during sleep.
-	[[TXSharedApplication sharedSpeechSynthesizer] clearQueue]; // Destroy pending spoken items.
+	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
+	[[TXSharedApplication sharedSpeechSynthesizer] clearQueue];
 }
 
 - (void)computerDidWakeUp:(NSNotification *)note
 {
-	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:NO]; // We can speak again!
+	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:NO];
 
-	[worldController() autoConnectAfterWakeup:YES]; // Wake clients up...
+	[worldController() autoConnectAfterWakeup:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note
 {
-	self.applicationIsTerminating = YES;
-	
-	[NSApp terminate:nil];
-}
-
-- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
-{
-	if (self.applicationIsTerminating == NO) {
-		[self.mainWindow makeKeyAndOrderFront:nil];
-	}
-	
-	return YES;
+	[self forceTerminate];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

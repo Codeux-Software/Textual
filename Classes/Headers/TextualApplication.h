@@ -137,15 +137,8 @@
 	@class TVCMainWindow;
 	@class TVCMainWindowChannelView;
 	@class TVCMainWindowLoadingScreenView;
-	@class TVCMainWindowSegmentedController;
-	@class TVCMainWindowSegmentedControllerCell;
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
-	@class TVCMainWindowTextViewBackground;
-	@class TVCMainWindowTextViewContentView;
-	@class TVCMainWindowTitlebarAccessoryView;
-	@class TVCMainWindowTitlebarAccessoryViewController;
-	@class TVCMainWindowTitlebarAccessoryViewLockButton;
 	@class TVCMemberList;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
@@ -160,7 +153,6 @@
 	@class TXMenuControllerMainWindowProxy;
 	@class TXSharedApplication;
 	@class TXUserInterface;
-	@class TXWindowController;
 
 	/* Static Defeinitions */
 	#import "StaticDefinitions.h"
@@ -349,7 +341,6 @@
 	#import "TXMenuController.h"
 	#import "TXSharedApplication.h"
 	#import "TXUserInterface.h"
-	#import "TXWindowController.h"
 #endif
 
 /* @end */
