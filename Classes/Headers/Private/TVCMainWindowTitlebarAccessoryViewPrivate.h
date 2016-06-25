@@ -37,29 +37,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTextViewYosemiteUserInterace : NSObject
-+ (NSColor *)blackInputTextFieldPlaceholderTextColor;
-+ (NSColor *)whiteInputTextFieldPlaceholderTextColor;
+@interface TVCMainWindowTitlebarAccessoryView : NSView
+@end
 
-+ (NSColor *)blackInputTextFieldPrimaryTextColor;
-+ (NSColor *)whiteInputTextFieldPrimaryTextColor;
+@interface TVCMainWindowTitlebarAccessoryViewController : NSTitlebarAccessoryViewController
+@end
 
-+ (NSColor *)blackInputTextFieldInsideBlackBackgroundColor;
+@interface TVCMainWindowTitlebarAccessoryViewLockButton : NSButton
+- (void)disableDrawingCustomBackgroundColor;
+- (void)enableDrawingCustomBackgroundColor;
 
-+ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithRetina;
-+ (NSColor *)blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina;
+- (void)positionImageOverContent;
+- (void)positionImageOnLeftSide;
 
-+ (NSColor *)whiteInputTextFieldOutsideTopsideWhiteBorder;
-
-+ (NSGradient *)whiteInputTextFieldInsideWhiteGradient;
-
-+ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina;
-+ (NSColor *)whiteInputTextFieldOutsideBottomSecondaryGrayShadowColorWithRetina;
-
-+ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithoutRetina;
-
-+ (NSColor *)writersProTextFieldCursorPinkColor;
-+ (NSColor *)writersProTextFieldCursorBlueColor;
+- (void)setIconAsLocked;
+- (void)setIconAsUnlocked;
 @end
 
 NS_ASSUME_NONNULL_END

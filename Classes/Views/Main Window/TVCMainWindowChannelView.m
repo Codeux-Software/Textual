@@ -35,33 +35,31 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TVCMainWindowPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowChannelViewSubview ()
-@property (nonatomic, assign) NSInteger itemIndex;
-@property (nonatomic, readwrite, assign) BOOL overlayVisible;
+@property (nonatomic, assign) NSUInteger itemIndex;
+@property (nonatomic, assign) BOOL overlayVisible;
 @property (nonatomic, copy) NSString *uniqueIdentifier;
-@property (nonatomic, weak) NSView *webView;
-@property (nonatomic, strong) TVCMainWindowChannelViewSubviewOverlayView *overlayView;
-
-- (void)resetSubviews;
+@property (nonatomic, weak, nullable) NSView *webView;
+@property (nonatomic, weak) TVCMainWindowChannelView *parentView;
+@property (nonatomic, strong, nullable) TVCMainWindowChannelViewSubviewOverlayView *overlayView;
 @end
 
 @interface TVCMainWindowChannelView ()
-@property (nonatomic, assign) BOOL isMovingDividers;
-@property (nonatomic, assign) NSInteger itemIndexSelected;
+@property (nonatomic, assign) NSUInteger itemIndexSelected;
 
-- (void)selectionChangeTo:(NSInteger)itemIndex;
+- (void)selectionChangeTo:(NSUInteger)itemIndex;
 @end
 
 @implementation TVCMainWindowChannelView
 
-NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
+NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
+								TVCMainWindowChannelViewSubview *secondView,
+								void *context)
 {
-	NSInteger itemIndex1 = [firstView itemIndex];
-	NSInteger itemIndex2 = [secondView itemIndex];
+	NSUInteger itemIndex1 = firstView.itemIndex;
+	NSUInteger itemIndex2 = secondView.itemIndex;
 
 	if (itemIndex1 < itemIndex2) {
 		return NSOrderedAscending;
@@ -74,12 +72,12 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 
 - (void)awakeFromNib
 {
-	[self setDelegate:self];
+	self.delegate = (id)self;
 }
 
 - (void)resetSubviews
 {
-	NSArray *subviews = [[self subviews] copy];
+	NSArray *subviews = [self.subviews copy];
 
 	for (NSView *subview in subviews) {
 		[subview removeFromSuperview];
@@ -89,9 +87,11 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 - (void)populateSubviews
 {
 	/* Get list of views selected by the user */
-	NSArray *selectedItems = [mainWindow() selectedItems];
+	TVCMainWindow *mainWindow = self.mainWindow;
 
-	NSInteger selectedItemsCount = [selectedItems count];
+	NSArray *selectedItems = mainWindow.selectedItems;
+
+	NSUInteger selectedItemsCount = selectedItems.count;
 
 	if (selectedItemsCount == 0) {
 		[self resetSubviews];
@@ -105,12 +105,14 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	 or removing views so that we do not have to destroy entire backing. */
 	NSMutableDictionary *subviews = nil;
 
-	for (TVCMainWindowChannelViewSubview *subview in [self subviews]) {
+	for (TVCMainWindowChannelViewSubview *subview in self.subviews) {
+		NSString *uniqueIdentifier = subview.uniqueIdentifier;
+
 		if (subviews == nil) {
 			subviews = [NSMutableDictionary dictionary];
 		}
 
-		[subviews setObject:subview forKey:[subview uniqueIdentifier]];
+		[subviews setObject:subview forKey:uniqueIdentifier];
 	}
 
 	/* Once selectedItems is processed, the value of subviewsUnclaimed will
@@ -118,28 +120,28 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	NSMutableDictionary *subviewsUnclaimed = nil;
 
 	if (subviews) {
-		subviewsUnclaimed = [subviews mutableCopy];
+		subviewsUnclaimed = subviews.mutableCopy;
 	}
 
 	/* Enumerate views that the user has selected */
-	IRCTreeItem *itemSelected = [mainWindow() selectedItem];
+	IRCTreeItem *itemSelected = mainWindow.selectedItem;
 
-	__block NSInteger itemIndexSelected = 0;
+	__block NSUInteger itemSelectedIndex = 0;
 
-	[selectedItems enumerateObjectsUsingBlock:^(id item, NSUInteger index, BOOL *stop) {
-		NSString *itemIdentifier = [item uniqueIdentifier];
+	[selectedItems enumerateObjectsUsingBlock:^(IRCTreeItem *item, NSUInteger index, BOOL *stop) {
+		NSString *uniqueIdentifier = item.uniqueIdentifier;
 
 		TVCMainWindowChannelViewSubview *subview = nil;
 
 		BOOL subviewIsNew = YES;
 
 		if (subviews) {
-			subview = subviews[itemIdentifier];
+			subview = subviews[uniqueIdentifier];
 
 			if (subview) {
 				subviewIsNew = NO;
 
-				[subviewsUnclaimed removeObjectForKey:itemIdentifier];
+				[subviewsUnclaimed removeObjectForKey:uniqueIdentifier];
 			}
 		}
 
@@ -149,26 +151,26 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 
 		NSView *webView = [self webViewForItem:item];
 
-		[subview setWebView:webView];
+		subview.itemIndex = index;
 
-		[subview setItemIndex:index];
+		if (itemSelected == item) {
+			itemSelectedIndex = index;
 
-		if (item == itemSelected) {
-			itemIndexSelected = index;
-
-			[subview setOverlayVisible:NO];
+			subview.overlayVisible = NO;
 		} else {
-			[subview setOverlayVisible:YES];
+			subview.overlayVisible = YES;
 		}
 
-		[subview setUniqueIdentifier:itemIdentifier];
+		subview.uniqueIdentifier = uniqueIdentifier;
+
+		subview.webView = webView;
 
 		if (subviewIsNew) {
 			[self addSubview:subview];
 		}
 	}];
 
-	self.itemIndexSelected = itemIndexSelected;
+	self.itemIndexSelected = itemSelectedIndex;
 
 	/* Remove subviews that are no longer selected */
 	if (subviewsUnclaimed) {
@@ -189,40 +191,40 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	}
 
 	/* Size views */
-	[self positionDividersProportionally];
+	[self adjustSubviews];
 }
 
-- (void)selectionChangeTo:(NSInteger)itemIndex
+- (void)selectionChangeTo:(NSUInteger)itemIndex
 {
-	NSArray *presentedViews = [mainWindow() selectedItems];
+	TVCMainWindow *mainWindow = self.mainWindow;
 
-	NSArray *subviews = [[self subviews] copy];
+	NSArray *selectedItems = mainWindow.selectedItems;
 
-	NSInteger itemIndexSelected = self.itemIndexSelected;
+	NSArray *subviews = self.subviews.copy;
 
-	IRCTreeItem *newItem = presentedViews[itemIndex];
+	NSUInteger itemIndexSelected = self.itemIndexSelected;
+
+	IRCTreeItem *newItem = selectedItems[itemIndex];
 
 	TVCMainWindowChannelViewSubview *newItemView = subviews[itemIndex];
 	TVCMainWindowChannelViewSubview *oldItemView = subviews[itemIndexSelected];
 
-	[newItemView setOverlayVisible:NO];
-	[oldItemView setOverlayVisible:YES];
+	newItemView.overlayVisible = NO;
+	oldItemView.overlayVisible = YES;
 
 	self.itemIndexSelected = itemIndex;
 
-	[mainWindow() channelViewSelectionChangeTo:newItem];
+	[mainWindow channelViewSelectionChangeTo:newItem];
 }
 
 - (NSView *)webViewForItem:(IRCTreeItem *)item
 {
-	TVCLogView *backingView = [[item viewController] backingView];
-
-	return [backingView webView];
+	return item.viewController.backingView.webView;
 }
 
 - (TVCMainWindowChannelViewSubview *)subviewForItem:(IRCTreeItem *)item
 {
-	NSRect splitViewFrame = [self frame];
+	NSRect splitViewFrame = self.frame;
 
 	splitViewFrame.origin.x = 0.0;
 	splitViewFrame.origin.y = 0.0;
@@ -230,43 +232,36 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	  TVCMainWindowChannelViewSubview *overlayView =
 	[[TVCMainWindowChannelViewSubview alloc] initWithFrame:splitViewFrame];
 
-	return overlayView;
-}
+	overlayView.parentView = self;
 
-- (void)positionDividersProportionally
-{
-	[self adjustSubviews];
+	return overlayView;
 }
 
 - (CGFloat)splitView:(NSSplitView *)splitView constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)dividerIndex
 {
-#define _minimumHeight		22.0
-
-	if (self.isMovingDividers) {
-		return proposedPosition;
-	}
+#define _minimumPosition		22.0
 
 	if (dividerIndex > 0) {
-		NSArray *subviews = [self subviews];
+		NSArray *subviews = self.subviews;
 
 		NSView *upperView = subviews[(dividerIndex - 1)];
 
-		NSRect upperViewFrame = [upperView frame];
+		NSRect upperViewFrame = upperView.frame;
 
-		CGFloat minCoordinate = (NSMaxY(upperViewFrame) + [self dividerThickness] + _minimumHeight);
+		CGFloat minimumPosition = (NSMaxY(upperViewFrame) + self.dividerThickness + _minimumPosition);
 
-		if (proposedPosition < minCoordinate) {
-			proposedPosition = minCoordinate;
+		if (proposedPosition < minimumPosition) {
+			proposedPosition = minimumPosition;
 		}
 	}
 
-	if (proposedPosition < _minimumHeight) {
-		return _minimumHeight;
+	if (proposedPosition < _minimumPosition) {
+		return _minimumPosition;
 	}
 
 	return proposedPosition;
 
-#undef _minimumHeight
+#undef _minimumPosition
 }
 
 - (NSLayoutPriority)holdingPriorityForSubviewAtIndex:(NSInteger)subviewIndex
@@ -289,7 +284,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
 	if ([TPCPreferences invertSidebarColors]) {
-		dividerColor = [dividerColor invertedColor];
+		dividerColor = dividerColor.invertedColor;
 	}
 
 	return dividerColor;
@@ -305,7 +300,7 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 - (instancetype)initWithFrame:(NSRect)frameRect
 {
 	if ((self = [super initWithFrame:frameRect])) {
-		[self setTranslatesAutoresizingMaskIntoConstraints:NO];
+		[self prepareInitialState];
 
 		return self;
 	}
@@ -313,42 +308,49 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	return nil;
 }
 
-- (void)resetSubviews
+- (void)prepareInitialState
 {
-	NSArray *subviews = [[self subviews] copy];
+	self.translatesAutoresizingMaskIntoConstraints = NO;
+}
 
-	for (NSView *subview in subviews) {
-		[subview removeFromSuperview];
+- (void)setWebView:(nullable NSView *)webView
+{
+	if (self->_webView != webView) {
+		self->_webView = webView;
+
+		[self setupWebView];
 	}
 }
 
-- (void)setWebView:(NSView *)webView
+- (void)setupWebView
 {
-	if (_webView != webView) {
-		_webView = webView;
+	NSView *webView = self.webView;
 
-		[self addSubview:webView];
-
-		[self addConstraints:
-		 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
-												 options:NSLayoutFormatDirectionLeadingToTrailing
-												 metrics:nil
-												   views:NSDictionaryOfVariableBindings(webView)]];
-
-		[self addConstraints:
-		 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=22)]-0-|"
-												 options:NSLayoutFormatDirectionLeadingToTrailing
-												 metrics:nil
-												   views:NSDictionaryOfVariableBindings(webView)]];
+	if (webView == nil) {
+		return;
 	}
+
+	[self addSubview:webView];
+
+	[self addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
+
+	[self addConstraints:
+	 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[webView(>=22)]-0-|"
+											 options:NSLayoutFormatDirectionLeadingToTrailing
+											 metrics:nil
+											   views:NSDictionaryOfVariableBindings(webView)]];
 }
 
 - (void)addOverlayView
 {
 	  TVCMainWindowChannelViewSubviewOverlayView *overlayView =
-	[[TVCMainWindowChannelViewSubviewOverlayView alloc] initWithFrame:[self frame]];
+	[[TVCMainWindowChannelViewSubviewOverlayView alloc] initWithFrame:self.frame];
 
-	[overlayView setTranslatesAutoresizingMaskIntoConstraints:NO];
+	overlayView.translatesAutoresizingMaskIntoConstraints = NO;
 
 	[self addSubview:overlayView];
 
@@ -367,83 +369,97 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 	self.overlayView = overlayView;
 }
 
-- (void)setOverlayVisible:(BOOL)overlayVisible
+- (void)toggleOverlayView
 {
-	if (_overlayVisible != overlayVisible) {
-		_overlayVisible = overlayVisible;
-
-		if (_overlayVisible == NO) {
-			if ( self.overlayView) {
-				[self.overlayView removeFromSuperview];
-			}
-		} else {
-			[self addOverlayView];
+	if (self.overlayVisible == NO) {
+		if ( self.overlayView) {
+			[self.overlayView removeFromSuperview];
+			 self.overlayView = nil;
 		}
+	} else {
+		[self addOverlayView];
 	}
 }
 
-- (void)mouseDown
+- (void)setOverlayVisible:(BOOL)overlayVisible
 {
-	[[mainWindow() channelView] selectionChangeTo:[self itemIndex]];
+	if (self->_overlayVisible != overlayVisible) {
+		self->_overlayVisible = overlayVisible;
+
+		[self toggleOverlayView];
+	}
+}
+
+- (void)mouseDownSelectionChange
+{
+	[self.parentView selectionChangeTo:self.itemIndex];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	if (self.overlayVisible) {
-		[self mouseDown];
-	} else {
-		[super mouseDown:theEvent];
+		[self mouseDownSelectionChange];
+
+		return;
 	}
+
+	[super mouseDown:theEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 	if (self.overlayVisible) {
-		[self mouseDown];
-	} else {
-		[super rightMouseDown:theEvent];
+		[self mouseDownSelectionChange];
+
+		return;
 	}
+
+	[super rightMouseDown:theEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
 	if (self.overlayVisible) {
-		[self mouseDown];
-	} else {
-		[super otherMouseDown:theEvent];
+		[self mouseDownSelectionChange];
+
+		return;
 	}
+
+	[super otherMouseDown:theEvent];
 }
 
-- (NSView *)hitTest:(NSPoint)aPoint
+- (nullable NSView *)hitTest:(NSPoint)aPoint
 {
-	if (NSPointInRect(aPoint, [self frame]) == NO) {
+	if (NSPointInRect(aPoint, self.frame) == NO) {
 		return nil;
 	}
 
 	if (self.overlayVisible) {
 		return self.overlayView;
-	} else {
-		return [super hitTest:aPoint];
 	}
+
+	return [super hitTest:aPoint];
 }
 
 @end
+
+#pragma mark -
 
 @implementation TVCMainWindowChannelViewSubviewOverlayView
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	[[self superview] mouseDown:theEvent];
+	[self.superview mouseDown:theEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	[[self superview] rightMouseDown:theEvent];
+	[self.superview rightMouseDown:theEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
-	[[self superview] otherMouseDown:theEvent];
+	[self.superview otherMouseDown:theEvent];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -452,18 +468,24 @@ NSComparisonResult sortSubviews(id firstView, id secondView, void *context)
 		return;
 	}
 
+	NSColor *backgroundColor = nil;
+
 	if ([TPCPreferences invertSidebarColors]) {
-		[[NSColor colorWithCalibratedWhite:0.0 alpha:0.4] set];
+		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.4];
 	} else {
-		[[NSColor colorWithCalibratedWhite:0.0 alpha:0.2] set];
+		backgroundColor = [NSColor colorWithCalibratedWhite:0.0 alpha:0.2];
 	}
+
+	[backgroundColor set];
 
 	[NSBezierPath fillRect:dirtyRect];
 }
 
-- (NSView *)hitTest:(NSPoint)aPoint
+- (nullable NSView *)hitTest:(NSPoint)aPoint
 {
 	return self;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

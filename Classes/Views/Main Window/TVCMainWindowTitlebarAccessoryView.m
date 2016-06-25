@@ -35,11 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /* This class is used by both Mavericks and Yosemite, but only the Yosemite
  version does any drawing. */
-
 @implementation TVCMainWindowTitlebarAccessoryView
 @end
 
@@ -47,10 +46,10 @@
 @end
 
 @interface TVCMainWindowTitlebarAccessoryViewLockButton ()
-@property (nonatomic, assign) BOOL drawCustomBackgroundColor;
+@property (nonatomic, assign) BOOL drawsCustomBackgroundColor;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonLeftMarginConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonRightMarginConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
+@property (nonatomic, weak, nullable) IBOutlet NSLayoutConstraint *lockButtonSuperviewWidthConstraint;
 @end
 
 @implementation TVCMainWindowTitlebarAccessoryViewLockButton
@@ -62,25 +61,28 @@
 	/* NSTitlebarAccessoryViewController is not very friendly when it comes
 	 to allowing us to specify an NSLayoutConstraint based width for our view
 	 and updating the width of its clip view based on changes to that. Lucky
-	 us that NSTitlebarAccessoryViewController at least monitors the frame 
+	 for us NSTitlebarAccessoryViewController at least monitors the frame
 	 value for its associated view which means if we manually specify the 
 	 width in its frame, then we can at least force a resize then. */
+	CGFloat buttonWidth = NSWidth(self.frame);
 
-	NSInteger buttonWidth = NSWidth([self frame]);
+	CGFloat buttonLeftMargin = self.lockButtonLeftMarginConstraint.constant;
+	CGFloat buttonRightMargin = self.lockButtonRightMarginConstraint.constant;
 
-	CGFloat buttonLeftMargin = [self.lockButtonLeftMarginConstraint constant];
-	CGFloat buttonRightMargin = [self.lockButtonRightMarginConstraint constant];
-
-	NSInteger totalViewWidth = (lrintf(buttonLeftMargin) + buttonWidth + lrintf(buttonRightMargin));
+	CGFloat totalViewWidth = (buttonLeftMargin + buttonWidth + buttonRightMargin);
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		NSRect superviewFrame = [[self superview] frame];
+		NSRect superviewFrame = self.superview.frame;
 
 		superviewFrame.size.width = totalViewWidth;
 
-		[[self superview] setFrame:superviewFrame];
-	} else {
-		[self.lockButtonSuperviewWidthConstraint setConstant:(CGFloat)totalViewWidth];
+		self.superview.frame = superviewFrame;
+
+		return;
+	}
+
+	if (self.lockButtonSuperviewWidthConstraint) {
+		self.lockButtonSuperviewWidthConstraint.constant = totalViewWidth;
 	}
 }
 
@@ -91,64 +93,79 @@
 
 - (void)positionImageOverContent
 {
-	[[self cell] setImagePosition:NSImageOverlaps];
+	[self.cell setImagePosition:NSImageOverlaps];
 }
 
 - (void)positionImageOnLeftSide
 {
-	[[self cell] setImagePosition:NSImageLeft];
+	[self.cell setImagePosition:NSImageLeft];
 }
 
 - (void)setIconAsLocked
 {
-	[self setImage:[NSImage imageNamed:@"NSLockLockedTemplate"]];
+	NSImage *iconImage = [NSImage imageNamed:@"NSLockLockedTemplate"];
+
+	self.image = iconImage;
 }
 
 - (void)setIconAsUnlocked
 {
-	[self setImage:[NSImage imageNamed:@"NSLockUnlockedTemplate"]];
+	NSImage *iconImage = [NSImage imageNamed:@"NSLockUnlockedTemplate"];
+
+	self.image = iconImage;
 }
 
 - (void)disableDrawingCustomBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		[[self cell] setBackgroundStyle:NSBackgroundStyleRaised];
-
-		[self setDrawCustomBackgroundColor:NO];
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return;
 	}
+
+	self.cell.backgroundStyle = NSBackgroundStyleRaised;
+
+	self.drawsCustomBackgroundColor = NO;
 }
 
 - (void)enableDrawingCustomBackgroundColor
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		[[self cell] setBackgroundStyle:NSBackgroundStyleLowered];
-
-		[self setDrawCustomBackgroundColor:YES];
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return;
 	}
+
+	self.cell.backgroundStyle = NSBackgroundStyleLowered;
+
+	self.drawsCustomBackgroundColor = YES;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		if ([self drawCustomBackgroundColor]) {
-			if ([mainWindow() isActiveForDrawing]) {
-				[self drawInteriorOnYosemite];
-			}
-		}
-
-		[super drawRect:dirtyRect];
+	if ([self needsToDrawRect:dirtyRect] == NO) {
+		return;
 	}
+
+	if (self.drawsCustomBackgroundColor) {
+		[self drawInteriorOnYosemite];
+	}
+
+	[super drawRect:dirtyRect];
 }
 
 - (void)drawInteriorOnYosemite
 {
-	/* On Yosemite we get the bounds of the object and tweak it just slighly to match
-	 what it actually is. After that, we draw our color in behind it to fake the background. */
-	NSRect controllerFrame = [self bounds];
+	if (self.mainWindow.isActiveForDrawing) {
+		[self drawInteriorForActiveWindowOnYosemite];
+	}
+}
 
-	controllerFrame.size.height -= 1;
+- (void)drawInteriorForActiveWindowOnYosemite
+{
+	/* On Yosemite, we get the bounds of the object and tweak it just slighly to match what
+	 it actually is. After that, we draw our color in behind it to fake the background. */
+	NSRect controllerFrame = self.bounds;
 
-	NSColor *controllerBackgroundColor = [self controlBackgroundColorForYosemite];
+	controllerFrame.size.height -= 1.0;
+
+	NSColor *controllerBackgroundColor = self.controlBackgroundColorActiveWindowOnYosemite;
 
 	NSBezierPath *drawingPath = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
 
@@ -157,9 +174,11 @@
 	[drawingPath fill];
 }
 
-- (NSColor *)controlBackgroundColorForYosemite
+- (NSColor *)controlBackgroundColorActiveWindowOnYosemite
 {
 	return [NSColor colorWithCalibratedRed:0.462 green:0.462 blue:0.462 alpha:1.0];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

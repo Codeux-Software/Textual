@@ -38,64 +38,37 @@
 
 #import "TextualApplication.h"
 
-#define TVCMainWindowDefaultFrameWidth		800
-#define TVCMainWindowDefaultFrameHeight		474
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationMovementType) {
-	TVCServerListNavigationMovementAllType,     // Move to next item.
-	TVCServerListNavigationMovementActiveType,  // Move to next active item.
-	TVCServerListNavigationMovementUnreadType,  // Move to next unread item.
+	TVCServerListNavigationMovementAllType = 0,	// Move to next item
+	TVCServerListNavigationMovementActiveType,  // Move to next active item
+	TVCServerListNavigationMovementUnreadType,  // Move to next unread item
 };
 
 typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
-	TVCServerListNavigationSelectionAnyType,		// Move to next item.
-	TVCServerListNavigationSelectionChannelType,	// Move to next channel item.
-	TVCServerListNavigationSelectionServerType,		// Move to next server item.
+	TVCServerListNavigationSelectionAnyType = 0,	// Move to next item
+	TVCServerListNavigationSelectionChannelType,	// Move to next channel item
+	TVCServerListNavigationSelectionServerType,		// Move to next server item
 };
 
-#import "TVCMemberList.h" // @protocol
-#import "TVCServerList.h" // @protocol
-
-@interface TVCMainWindow : NSWindow <NSWindowDelegate, NSOutlineViewDataSource, NSOutlineViewDelegate>
-@property (nonatomic, weak) IBOutlet TVCMainWindowChannelView *channelView;
-@property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewLockButton *titlebarAccessoryViewLockButton;
-@property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;
-@property (nonatomic, weak) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
-@property (nonatomic, strong) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
-@property (nonatomic, strong) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
-@property (nonatomic, unsafe_unretained) IBOutlet TVCMainWindowTextView *inputTextField;
-@property (nonatomic, weak) IBOutlet TVCMainWindowSplitView *contentSplitView;
-@property (nonatomic, weak) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
-@property (nonatomic, weak) IBOutlet TVCMemberList *memberList;
-@property (nonatomic, weak) IBOutlet TVCServerList *serverList;
-@property (nonatomic, assign) BOOL ignoreOutlineViewSelectionChanges;
-@property (nonatomic, assign) BOOL ignoreNextOutlineViewSelectionChange;
+@interface TVCMainWindow : NSWindow
+@property (readonly, weak) TVCMainWindowLoadingScreenView *loadingScreen;
+@property (readonly, weak) TVCMainWindowSplitView *contentSplitView;
+@property (readonly, unsafe_unretained) TVCMainWindowTextView *inputTextField;
+@property (readonly, weak) TVCMemberList *memberList;
+@property (readonly, weak) TVCServerList *serverList;
 
 @property (readonly) BOOL multipleItemsSelected;
+@property (readonly, nullable) IRCTreeItem *selectedItem;
+@property (readonly, copy) NSArray<IRCTreeItem *> *selectedItems;
+@property (readonly, nullable) IRCClient *selectedClient;
+@property (readonly, nullable) IRCChannel *selectedChannel;
+@property (readonly, nullable) TVCLogController *selectedViewController;
 
-@property (readonly) IRCTreeItem *previouslySelectedItem;
-@property (readonly) IRCTreeItem *selectedItem;
-@property (readonly, copy) NSArray *selectedItems;
-@property (readonly) IRCClient *selectedClient;
-@property (readonly) IRCChannel *selectedChannel;
-@property (readonly) TVCLogController *selectedViewController;
+@property (readonly, nullable) IRCTreeItem *previouslySelectedItem;
 
-- (void)prepareForApplicationTermination;
-
-- (void)setupTree;
-
-- (BOOL)reloadLoadingScreen;
-
-- (void)updateTitle;
-- (void)updateTitleFor:(IRCTreeItem *)item;
-
-- (void)reloadTree;
-- (void)reloadTreeItem:(IRCTreeItem *)item; // Can be either IRCClient or IRCChannel
-- (void)reloadTreeGroup:(IRCTreeItem *)item; // Will do not unless item is a IRCClient
-
-- (void)adjustSelection;
-
-- (void)select:(IRCTreeItem *)item;
+- (void)select:(nullable IRCTreeItem *)item;
 - (void)selectPreviousItem;
 - (void)deselect:(IRCTreeItem *)item;
 - (void)deselectGroup:(IRCTreeItem *)item;
@@ -106,29 +79,11 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 - (void)expandClient:(IRCClient *)client;
 
-- (IRCChannel *)selectedChannelOn:(IRCClient *)c;
+- (nullable IRCChannel *)selectedChannelOn:(IRCClient *)client;
 
-- (void)maybeToggleFullscreenAfterLaunch;
-
-- (void)updateAlphaValueToReflectPreferences;
-
-- (void)updateChannelViewBoxContentViewSelection;
-
-@property (getter=isOccluded, readonly) BOOL occluded;
-@property (getter=isInactive, readonly) BOOL inactive;
-@property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
-
-@property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO.
-
-- (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
+- (void)navigateChannelEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType;
 - (void)navigateToNextEntry:(BOOL)isMovingDown;
-
-- (void)updateBackgroundColor;
-
-- (void)textEntered;
-
-- (void)inputText:(id)str command:(NSString *)command; // Do not call this directly unless you must.
 
 - (void)selectNextServer:(NSEvent *)e;
 - (void)selectNextChannel:(NSEvent *)e;
@@ -144,10 +99,35 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 - (void)selectPreviousUnreadChannel:(NSEvent *)e;
 - (void)selectPreviousActiveChannel:(NSEvent *)e;
 
-- (void)redirectKeyDown:(NSEvent *)e;
+@property (getter=isOccluded, readonly) BOOL occluded;
+@property (getter=isInactive, readonly) BOOL inactive;
+@property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
+
+@property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO
+
+#if 0
+@property (readonly) double textSizeMultiplier;
+
+- (void)changeTextSize:(BOOL)bigger;
+
+- (void)markAllAsRead;
+- (void)markAllAsReadInGroup:(IRCTreeItem *)item;
+
+- (void)reloadTheme;
+- (void)reloadThemeAndUserInterface;
+
+- (void)clearContentsOfClient:(IRCClient *)client;
+- (void)clearContentsOfChannel:(IRCChannel *)channel onClient:(IRCClient *)client;
+
+- (void)clearAllViews;
+#endif
+
+- (void)textEntered;
 
 @property (getter=isMemberListVisible, readonly) BOOL memberListVisible;
 @property (getter=isServerListVisible, readonly) BOOL serverListVisible;
 
 - (NSRect)defaultWindowFrame;
 @end
+
+NS_ASSUME_NONNULL_END

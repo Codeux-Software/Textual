@@ -36,17 +36,32 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TLOLicenseManager.h"
-#endif
-
-#import "TVCMainWindowPrivate.h"
-
-#import "TPCThemeControllerPrivate.h"
+@interface TVCMainWindow ()
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowChannelView *channelView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryView *titlebarAccessoryView;
+@property (nonatomic, weak, readwrite, nullable) IBOutlet TVCMainWindowTitlebarAccessoryViewController *titlebarAccessoryViewController;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowTitlebarAccessoryViewLockButton *titlebarAccessoryViewLockButton;
+@property (nonatomic, strong, readwrite) IBOutlet TXMenuControllerMainWindowProxy *mainMenuProxy;
+@property (nonatomic, strong, readwrite) IBOutlet TVCTextViewIRCFormattingMenu *formattingMenu;
+@property (nonatomic, unsafe_unretained, readwrite) IBOutlet TVCMainWindowTextView *inputTextField;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowSplitView *contentSplitView;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
+@property (nonatomic, weak, readwrite) IBOutlet TVCMemberList *memberList;
+@property (nonatomic, weak, readwrite) IBOutlet TVCServerList *serverList;
+@property (nonatomic, readwrite, copy) NSArray *selectedItems;
+@property (nonatomic, readwrite, strong, nullable) IRCTreeItem *selectedItem;
+@property (nonatomic, copy, nullable) NSArray *previousSelectedItemsId;
+@property (nonatomic, copy, nullable) NSString *previousSelectedItemId;
+@property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
+@property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
+@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
+@property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
+@end
 
 #define _treeDragItemType		@"tree"
+
 #define _treeDragItemTypes		[NSArray arrayWithObject:_treeDragItemType]
 
 @implementation TVCMainWindow
@@ -61,99 +76,112 @@
 #endif
 {
 	if ((self = [super initWithContentRect:contentRect styleMask:style backing:bufferingType defer:flag])) {
-		self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
+		[self prepareInitialState];
 	}
 	
 	return self;
 }
 
+- (void)prepareInitialState
+{
+	self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
+
+	self.previousSelectedItemsId = @[];
+
+	self.selectedItems = @[];
+}
+
 - (void)awakeFromNib
 {
-	/* -awakeFromNib is called multiple times because of reloads. */
+	/* -awakeFromNib is called multiple times because of reloads */
 	static BOOL _awakeFromNibCalled = NO;
-	
+
 	if (_awakeFromNibCalled == NO) {
 		_awakeFromNibCalled = YES;
-		
-		[masterController() performAwakeningBeforeMainWindowDidLoad];
 
-		[self setDelegate:self];
-		
-		[self setAllowsConcurrentViewDrawing:NO];
-		
-		[self setAlphaValue:[TPCPreferences mainWindowTransparency]];
-		
-		[self.loadingScreen hideAll:NO];
-		[self.loadingScreen popLoadingConfigurationView];
-		
-		[self makeMainWindow];
-		[self makeKeyAndOrderFront:nil];
-		
-		[self loadWindowState];
-
-		[self addAccessoryViewsToTitlebar];
-		
-		[themeController() prepareInitialState];
-		
-		[menuController() setupOtherServices];
-		
-		[self.inputTextField redrawOriginPoints:YES];
-		[self.inputTextField updateTextDirection];
-		
-		[self.inputTextField setBackgroundColor:[NSColor clearColor]];
-		
-		[self registerKeyHandlers];
-
-		[worldController() setupConfiguration];
-		[worldController() setupOtherServices];
-		
-		[self.memberList setKeyDelegate:self];
-		[self.serverList setKeyDelegate:self];
-		
-		[self updateBackgroundColor];
-		
-		[self setupTree];
-		
-		[self.memberList setTarget:menuController()];
-		[self.memberList setDoubleAction:@selector(memberInMemberListDoubleClicked:)];
-
-		[masterController() performAwakeningAfterMainWindowDidLoad];
-
-		[self observeNotifications];
+		[self _awakeFromNib];
 	}
 }
 
-- (void)dealloc
+- (void)_awakeFromNib
 {
-	[self.memberList setKeyDelegate:nil];
+	[masterController() performAwakeningBeforeMainWindowDidLoad];
 
-	[self.serverList setDelegate:nil];
-	[self.serverList setDataSource:nil];
+	self.delegate = (id)self;
+
+	self.allowsConcurrentViewDrawing = NO;
 	
-	[self.serverList setKeyDelegate:nil];
+	self.alphaValue = [TPCPreferences mainWindowTransparency];
+	
+	[self.loadingScreen hideAll];
+
+	[self.loadingScreen showLoadingConfigurationView];
+	
+	[self makeMainWindow];
+
+	[self makeKeyAndOrderFront:nil];
+	
+	[self loadWindowState];
+
+	[self addAccessoryViewsToTitlebar];
+	
+	[themeController() prepareInitialState];
+	
+	[menuController() setupOtherServices];
+
+	self.inputTextField.backgroundColor = [NSColor clearColor];
+	
+	[self.inputTextField reloadOriginPointsAndRecalculateSize];
+
+	[self.inputTextField updateTextDirection];
+	
+	[self registerKeyHandlers];
+
+	[worldController() setupConfiguration];
+
+	[worldController() setupOtherServices];
+
+	[self updateBackgroundColor];
+	
+	[self setupTrees];
+
+	[TVCDockIcon drawWithoutCount];
+
+	[masterController() performAwakeningAfterMainWindowDidLoad];
+
+	[self observeNotifications];
 }
 
 - (void)observeNotifications
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		[RZWorkspaceNotificationCenter() addObserver:self selector:@selector(accessibilityDisplayOptionsDidChange:) name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification object:nil];
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return;
 	}
+
+	[RZWorkspaceNotificationCenter() addObserver:self
+										selector:@selector(accessibilityDisplayOptionsDidChange:)
+											name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification
+										  object:nil];
 }
 
 - (void)maybeToggleFullscreenAfterLaunch
 {
-	NSDictionary *dic = [RZUserDefaults() dictionaryForKey:@"Window -> Main Window Window State"];
-	
-	if ([dic boolForKey:@"fullscreen"]) {
-		[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
+	BOOL isFullscreen = [RZUserDefaults() boolForKey:@"Window -> Main Window Is Fullscreen'd"];
+
+	if (isFullscreen == NO) {
+		return;
 	}
+
+	[self performSelector:@selector(toggleFullscreenAfterLaunch) withObject:nil afterDelay:1.0];
 }
 
 - (void)toggleFullscreenAfterLaunch
 {
-	if ([self isInFullscreenMode] == NO) {
-		[self toggleFullScreen:nil];
+	if (self.inFullscreenMode) {
+		return;
 	}
+
+	[self toggleFullScreen:nil];
 }
 
 - (void)accessibilityDisplayOptionsDidChange:(NSNotification *)aNote
@@ -161,26 +189,32 @@
 	[self updateBackgroundColor];
 }
 
+- (void)updateBackgroundColorOnYosemite
+{
+	self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
+
+	if ([TPCPreferences invertSidebarColors]) {
+		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	} else {
+		self.channelView.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	}
+
+	self.contentSplitView.needsDisplay = YES;
+}
+
 - (void)updateBackgroundColor
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		self.usingVibrantDarkAppearance = [TPCPreferences invertSidebarColors];
-		
-		if ([TPCPreferences invertSidebarColors]) {
-			[self.channelView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-		} else {
-			[self.channelView setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-		}
-
-		[self.contentSplitView setNeedsDisplay:YES];
+		[self updateBackgroundColorOnYosemite];
 	}
-	
-	[self.memberList updateBackgroundColor];
-	[self.serverList updateBackgroundColor];
-	
+
 	[self.inputTextField updateBackgroundColor];
 
-	[self.contentView setNeedsDisplay:YES];
+	[self.memberList updateBackgroundColor];
+
+	[self.serverList updateBackgroundColor];
+
+	self.contentView.needsDisplay = YES;
 }
 
 - (void)updateAlphaValueToReflectPreferences
@@ -190,14 +224,16 @@
 
 - (void)updateAlphaValueToReflectPreferencesAnimiated:(BOOL)animate
 {
-	if ([self isInFullscreenMode] == NO) {
-		double alphaValue = [TPCPreferences mainWindowTransparency];
+	if (self.inFullscreenMode) {
+		return;
+	}
 
-		if (animate) {
-			[[self animator] setAlphaValue:alphaValue];
-		} else {
-			[self setAlphaValue:alphaValue];
-		}
+	double alphaValue = [TPCPreferences mainWindowTransparency];
+
+	if (animate) {
+		[self animator].alphaValue = alphaValue;
+	} else {
+		self.alphaValue = alphaValue;
 	}
 }
 
@@ -210,13 +246,9 @@
 
 - (void)saveWindowState
 {
-	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-	
-	[dic setBool:[self isInFullscreenMode] forKey:@"fullscreen"];
-	
+	[RZUserDefaults() setBool:self.isInFullscreenMode forKey:@"Window -> Main Window Is Fullscreen'd"];
+
 	[self saveWindowStateUsingKeyword:@"Main Window"];
-	
-	[RZUserDefaults() setObject:dic forKey:@"Window -> Main Window Window State"];
 
 	[self saveContentSplitViewState];
 }
@@ -227,7 +259,18 @@
 
 	[self saveWindowState];
 
-	[self setDelegate:nil];
+	self.memberList.dataSource = nil;
+	self.memberList.delegate = nil;
+	self.memberList.keyDelegate = nil;
+
+	self.serverList.dataSource = nil;
+	self.serverList.delegate = nil;
+	self.serverList.keyDelegate = nil;
+
+	self.delegate = (id)self;
+
+	self.selectedItems = nil;
+	self.selectedItem = nil;
 	
 	[self close];
 }
@@ -237,9 +280,12 @@
 
 - (void)reloadMainWindowFrameOnScreenChange
 {
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+	if (masterController().applicationIsTerminating) {
+		return;
+	}
 	
 	[TVCDockIcon resetCachedCount];
+
 	[TVCDockIcon updateDockIcon];
 	
 	[self updateBackgroundColor];
@@ -247,12 +293,14 @@
 
 - (void)resetSelectedItemState
 {
-	NSAssertReturn([masterController() applicationIsTerminating] == NO);
+	if (masterController().applicationIsTerminating) {
+		return;
+	}
 	
-	id sel = [self selectedItem];
+	id selectedItem = self.selectedItem;
 	
-	if (sel) {
-		[sel resetState];
+	if (selectedItem) {
+		[selectedItem resetState];
 	}
 	
 	[TVCDockIcon updateDockIcon];
@@ -261,10 +309,10 @@
 - (void)reloadSubviewDrawings
 {
 	[self.inputTextField windowDidChangeKeyState];
-	
-	[self.serverList windowDidChangeKeyState];
-	
+
 	[self.memberList windowDidChangeKeyState];
+
+	[self.serverList windowDidChangeKeyState];
 }
 
 #pragma mark -
@@ -277,19 +325,21 @@
 
 - (void)windowDidChangeOcclusionState:(NSNotification *)notification
 {
-	if ([self isOccluded] == NO) {
-		if (self.lastKeyWindowRedrawFailedBecauseOfOcclusion) {
+	if (self.occluded) {
+		return;
+	}
+
+	if (self.lastKeyWindowRedrawFailedBecauseOfOcclusion) {
+		self.lastKeyWindowRedrawFailedBecauseOfOcclusion = NO;
+
+		[self reloadSubviewDrawings];
+	} else {
+		/* We keep track of the last subview redraw so that we do
+		 not draw too often. Current maximum is 1.0 second. */
+		NSTimeInterval timeDifference = ([NSDate timeIntervalSince1970] - self.lastKeyWindowStateChange);
+		
+		if (timeDifference > 1.0) {
 			[self reloadSubviewDrawings];
-			
-			self.lastKeyWindowRedrawFailedBecauseOfOcclusion = NO;
-		} else {
-			/* We keep track of the last subview redraw so that we do
-			 not draw too often. Current maximum is 1.0 second. */
-			NSTimeInterval timeDifference = ([NSDate timeIntervalSince1970] - [self lastKeyWindowStateChange]);
-			
-			if (timeDifference > 1.0) {
-				[self reloadSubviewDrawings];
-			}
 		}
 	}
 }
@@ -300,11 +350,13 @@
 	
 	[self resetSelectedItemState];
 
-	if ([self isOccluded]) {
+	if (self.occluded) {
 		self.lastKeyWindowRedrawFailedBecauseOfOcclusion = YES;
-	} else {
-		[self reloadSubviewDrawings];
+
+		return;
 	}
+
+	[self reloadSubviewDrawings];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification
@@ -328,12 +380,12 @@
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	[self.inputTextField resetTextFieldCellSize:YES];
+	[self.inputTextField recalculateTextViewSize];
 }
 
 - (BOOL)windowShouldZoom:(NSWindow *)awindow toFrame:(NSRect)newFrame
 {
-	return ([self isInFullscreenMode] == NO);
+	return (self.inFullscreenMode == NO);
 }
 
 - (NSSize)window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
@@ -353,32 +405,29 @@
 
 - (void)windowWillEnterFullScreen:(NSNotification *)notification
 {
-	[[self animator] setAlphaValue:1.0];
+	[self animator].alphaValue = 1.0;
 }
 
 - (id)windowWillReturnFieldEditor:(NSWindow *)sender toObject:(id)client
 {
-	static BOOL formattingMenuSet;
-	
-	if (formattingMenuSet == NO) {
-		NSMenu *editorMenu = [self.inputTextField menu];
-		
-		NSMenuItem *formatMenu = [self.formattingMenu formatterMenu];
-		
-		if (formatMenu) {
-			NSInteger fmtrIndex = [editorMenu indexOfItemWithTitle:[formatMenu title]];
-			
-			if (fmtrIndex == -1) {
-				[editorMenu addItem:[NSMenuItem separatorItem]];
-				[editorMenu addItem:formatMenu];
-			}
-			
-			[self.inputTextField setMenu:editorMenu];
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		NSMenu *editorMenu = self.inputTextField.menu;
+
+		NSMenuItem *formatterMenu = self.formattingMenu.formatterMenu;
+
+		NSInteger formatterMenuIndex = [editorMenu indexOfItemWithTitle:formatterMenu.title];
+
+		if (formatterMenuIndex < 0) {
+			[editorMenu addItem:[NSMenuItem separatorItem]];
+
+			[editorMenu addItem:formatterMenu];
 		}
-		
-		formattingMenuSet = YES;
-	}
-	
+
+		self.inputTextField.menu = editorMenu;
+	});
+
 	return self.inputTextField;
 }
 
@@ -390,19 +439,29 @@
 	[self.keyEventHandler setKeyHandlerTarget:target];
 }
 
-- (void)registerKeyHandler:(SEL)selector key:(NSInteger)code modifiers:(NSUInteger)mods
+- (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
 {
-	[self.keyEventHandler registerSelector:selector key:code modifiers:mods];
+	[self.keyEventHandler registerSelector:selector key:keyCode modifiers:modifiers];
 }
 
-- (void)registerKeyHandler:(SEL)selector character:(UniChar)c modifiers:(NSUInteger)mods
+- (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
 {
-	[self.keyEventHandler registerSelector:selector character:c modifiers:mods];
+	[self.keyEventHandler registerSelector:selector character:character modifiers:modifiers];
+}
+
+- (void)registerInputSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
+{
+	[self.inputTextField registerSelector:selector key:keyCode modifiers:modifiers];
+}
+
+- (void)registerInputSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
+{
+	[self.inputTextField registerSelector:selector character:character modifiers:modifiers];
 }
 
 - (void)sendEvent:(NSEvent *)e
 {
-	if ([e type] == NSKeyDown) {
+	if (e.type == NSKeyDown) {
 		if ([self.keyEventHandler processKeyEvent:e]) {
 			return;
 		}
@@ -413,46 +472,89 @@
 
 - (void)redirectKeyDown:(NSEvent *)e
 {
-	[mainWindowTextField() focus];
+	[self.inputTextField focus];
 
-	if ([e keyCode] == TXKeyReturnCode ||
-		[e keyCode] == TXKeyEnterCode)
+	if (e.keyCode == TXKeyEnterCode ||
+		e.keyCode == TXKeyReturnCode)
 	{
 		return;
 	}
 
-	[mainWindowTextField() keyDown:e];
+	[self.inputTextField keyDown:e];
 }
 
-#pragma mark -
-#pragma mark Nick Completion
-
-- (void)completeNickname:(BOOL)forward
+- (void)memberListKeyDown:(NSEvent *)e
 {
-	[[TXSharedApplication sharedNicknameCompletionStatus] completeNickname:forward];
+	[self redirectKeyDown:e];
+}
+
+- (void)serverListKeyDown:(NSEvent *)e
+{
+	[self redirectKeyDown:e];
+}
+
+- (void)registerKeyHandlers
+{
+	[self.inputTextField setKeyHandlerTarget:self];
+
+	/* Window keyboard shortcuts */
+	[self registerSelector:@selector(exitFullscreenMode:) key:TXKeyEscapeCode modifiers:0];
+
+	[self registerSelector:@selector(tab:) key:TXKeyTabCode modifiers:0];
+	[self registerSelector:@selector(shiftTab:)	key:TXKeyTabCode modifiers:NSShiftKeyMask];
+
+	[self registerSelector:@selector(selectPreviousSelection:) key:TXKeyTabCode modifiers:NSAlternateKeyMask];
+
+	[self registerSelector:@selector(textFormattingBold:) character:'b' modifiers:NSCommandKeyMask];
+	[self registerSelector:@selector(textFormattingUnderline:) character:'u' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self registerSelector:@selector(textFormattingItalic:)	character:'i' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self registerSelector:@selector(textFormattingForegroundColor:) character:'c' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
+	[self registerSelector:@selector(textFormattingBackgroundColor:) character:'h' modifiers:(NSCommandKeyMask | NSAlternateKeyMask)];
+
+	[self registerSelector:@selector(speakPendingNotifications:) character:'.' modifiers:NSCommandKeyMask];
+
+	[self registerSelector:@selector(inputHistoryUp:) character:'p' modifiers:NSControlKeyMask];
+	[self registerSelector:@selector(inputHistoryDown:)	character:'n' modifiers:NSControlKeyMask];
+
+	/* Text field keyboard shortcuts */
+	[self registerInputSelector:@selector(sendControlEnterMessageMaybe:) key:TXKeyEnterCode modifiers:NSControlKeyMask];
+
+	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyReturnCode modifiers:NSCommandKeyMask];
+	[self registerInputSelector:@selector(sendMessageAsAction:) key:TXKeyEnterCode modifiers:NSCommandKeyMask];
+
+	[self registerInputSelector:@selector(focusWebview:) character:'l' modifiers:(NSAlternateKeyMask | NSCommandKeyMask)];
+
+	[self registerInputSelector:@selector(inputHistoryUpWithScrollCheck:) key:TXKeyUpArrowCode modifiers:0];
+	[self registerInputSelector:@selector(inputHistoryUpWithScrollCheck:) key:TXKeyUpArrowCode modifiers:NSAlternateKeyMask];
+
+	[self registerInputSelector:@selector(inputHistoryDownWithScrollCheck:) key:TXKeyDownArrowCode modifiers:0];
+	[self registerInputSelector:@selector(inputHistoryDownWithScrollCheck:) key:TXKeyDownArrowCode modifiers:NSAlternateKeyMask];
 }
 
 #pragma mark -
 #pragma mark Navigation
 
-- (void)navigateServerListEntries:(NSArray *)scannedRows
+- (void)navigateServerListEntries:(nullable NSArray<IRCTreeItem *> *)scannedRows
 					   entryCount:(NSInteger)entryCount
 					startingPoint:(NSInteger)startingPoint
 					 isMovingDown:(BOOL)isMovingDown
 				   navigationType:(TVCServerListNavigationMovementType)navigationType
 					selectionType:(TVCServerListNavigationSelectionType)selectionType
 {
+	NSParameterAssert(entryCount > 0);
+	NSParameterAssert(startingPoint >= 0);
+
 	NSInteger currentPosition = startingPoint;
 	
-	while (1 == 1) {
-		/* Move to next selection. */
+	while (1) {
+		/* Move to next selection */
 		if (isMovingDown) {
 			currentPosition += 1;
 		} else {
 			currentPosition -= 1;
 		}
 		
-		/* Make sure selection is within our bounds. */
+		/* Make sure selection is within our bounds */
 		if (currentPosition >= entryCount || currentPosition < 0) {
 			if (isMovingDown == NO && currentPosition < 0) {
 				currentPosition = (entryCount - 1);
@@ -460,57 +562,56 @@
 				currentPosition = 0;
 			}
 		}
-		
-		/* Once we scanned everything, break. */
+
 		if (currentPosition == startingPoint) {
 			break;
 		}
 		
-		/* Get next selection depending on data source. */
-		id i;
+		/* Get next selection depending on data source */
+		id item;
 		
-		if (scannedRows == nil) {
-			i = [self.serverList itemAtRow:currentPosition];
+		if (scannedRows) {
+			item = scannedRows[currentPosition];
 		} else {
-			i = scannedRows[currentPosition];
+			item = [self.serverList itemAtRow:currentPosition];
 		}
 		
-		/* Skip entries depending on navigation type. */
+		/* Skip entries depending on navigation type */
 		if (selectionType == TVCServerListNavigationSelectionChannelType)
 		{
-			if ([i isClient]) {
+			if ([item isChannel] == NO && [item isPrivateMessage] == NO) {
 				continue;
 			}
 		}
 		else if (selectionType == TVCServerListNavigationSelectionServerType)
 		{
-			if ([i isChannel]) {
+			if ([item isClient] == NO) {
 				continue;
 			}
 		}
 		
-		/* Select current item if it is matched by our condition. */
+		/* Select current item if it is matched by our condition */
 		if (navigationType == TVCServerListNavigationMovementAllType)
 		{
-			[self select:i];
+			[self select:item];
 			
 			break;
 		}
 		else if (navigationType == TVCServerListNavigationMovementActiveType)
 		{
-			if ([i isActive]) {
-				[self select:i];
-				
-				break;
+			if ([item isActive]) {
+				[self select:item];
 			}
+
+			break;
 		}
 		else if (navigationType == TVCServerListNavigationMovementUnreadType)
 		{
-			if ([i isUnread]) {
-				[self select:i];
-				
-				break;
+			if ([item isUnread]) {
+				[self select:item];
 			}
+
+			break;
 		}
 	}
 }
@@ -526,7 +627,7 @@
 
 - (void)navigateChannelEntriesOutsideServerScope:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
-	NSInteger entryCount = [self.serverList numberOfRows];
+	NSInteger entryCount = self.serverList.numberOfRows;
 	
 	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
 	
@@ -542,11 +643,11 @@
 {
 	NSArray *scannedRows = [self.serverList itemsFromParentGroup:self.selectedItem];
 	
-	/* We add selected server so navigation falls within its scope if its the selected item. */
+	/* We add selected server so navigation falls within its scope if its the selected item */
 	scannedRows = [scannedRows arrayByAddingObject:self.selectedClient];
 	
-	[self navigateServerListEntries: scannedRows
-						 entryCount:[scannedRows count]
+	[self navigateServerListEntries:scannedRows
+						 entryCount:scannedRows.count
 					  startingPoint:[scannedRows indexOfObject:self.selectedItem]
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
@@ -555,10 +656,10 @@
 
 - (void)navigateServerEntries:(BOOL)isMovingDown withNavigationType:(TVCServerListNavigationMovementType)navigationType
 {
-	NSArray *scannedRows = [self.serverList groupItems];
+	NSArray *scannedRows = self.serverList.groupItems;
 	
-	[self navigateServerListEntries: scannedRows
-						 entryCount:[scannedRows count]
+	[self navigateServerListEntries:scannedRows
+						 entryCount:scannedRows.count
 					  startingPoint:[scannedRows indexOfObject:self.selectedClient]
 					   isMovingDown:isMovingDown
 					 navigationType:navigationType
@@ -567,7 +668,7 @@
 
 - (void)navigateToNextEntry:(BOOL)isMovingDown
 {
-	NSInteger entryCount = [self.serverList numberOfRows];
+	NSInteger entryCount = self.serverList.numberOfRows;
 	
 	NSInteger startingPoint = [self.serverList rowForItem:self.selectedItem];
 	
@@ -647,6 +748,11 @@
 #pragma mark -
 #pragma mark Actions
 
+- (void)completeNickname:(BOOL)moveForward
+{
+	[[TXSharedApplication sharedNicknameCompletionStatus] completeNickname:moveForward];
+}
+
 - (void)tab:(NSEvent *)e
 {
 	TXTabKeyAction tabKeyAction = [TPCPreferences tabKeyAction];
@@ -673,31 +779,35 @@
 {
 	if ([TPCPreferences controlEnterSnedsMessage]) {
 		[self textEntered];
-	} else {
-		[self.inputTextField keyDownToSuper:e];
+
+		return;
 	}
+
+	[self.inputTextField keyDownToSuper:e];
 }
 
-- (void)sendMsgAction:(NSEvent *)e
+- (void)sendMessageAsAction:(NSEvent *)e
 {
 	if ([TPCPreferences commandReturnSendsMessageAsAction]) {
-		[self sendText:IRCPrivateCommandIndex("action")];
-	} else {
-		[self textEntered];
+		[self inputTextAsCommand:IRCPrivateCommandIndex("action")];
+
+		return;
 	}
+
+	[self textEntered];
 }
 
-- (void)moveInputHistory:(BOOL)up checkScroller:(BOOL)scroll event:(NSEvent *)event
+- (void)moveInputHistory:(BOOL)movingUp checkScroller:(BOOL)checkScroller event:(NSEvent *)event
 {
-	if (scroll) {
-		NSInteger nol = [self.inputTextField numberOfLines];
+	if (checkScroller) {
+		NSUInteger numberOfLines = self.inputTextField.numberOfLines;
 		
-		if (nol >= 2) {
-			BOOL atTop = [self.inputTextField isAtTopOfView];
-			BOOL atBottom = [self.inputTextField isAtBottomOfView];
+		if (numberOfLines >= 2) {
+			BOOL atTop = self.inputTextField.atTopOfView;
+			BOOL atBottom = self.inputTextField.atBottomOfView;
 			
-			if ((atTop			&& [event keyCode] == TXKeyDownArrowCode) ||
-				(atBottom		&& [event keyCode] == TXKeyUpArrowCode) ||
+			if ((atTop			&& event.keyCode == TXKeyDownArrowCode) ||
+				(atBottom		&& event.keyCode == TXKeyUpArrowCode) ||
 				(atTop == NO	&& atBottom == NO))
 			{
 				[self.inputTextField keyDownToSuper:event];
@@ -707,16 +817,17 @@
 		}
 	}
 	
-	NSAttributedString *s = [self.inputTextField attributedStringValue];
+	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
 	
-	if (up) {
-		s = [[TXSharedApplication sharedInputHistoryManager] up:s];
+	if (movingUp) {
+		stringValue = [[TXSharedApplication sharedInputHistoryManager] up:stringValue];
 	} else {
-		s = [[TXSharedApplication sharedInputHistoryManager] down:s];
+		stringValue = [[TXSharedApplication sharedInputHistoryManager] down:stringValue];
 	}
 	
-	if (s) {
-		[self.inputTextField setAttributedStringValue:s];
+	if (stringValue) {
+		self.inputTextField.attributedStringValue = stringValue;
+
 		[self.inputTextField focus];
 	}
 }
@@ -743,7 +854,7 @@
 
 - (void)textFormattingBold:(NSEvent *)e
 {
-	if ([self.formattingMenu textIsBold]) {
+	if (self.formattingMenu.textIsBold) {
 		[self.formattingMenu removeBoldCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertBoldCharIntoTextBox:nil];
@@ -752,7 +863,7 @@
 
 - (void)textFormattingItalic:(NSEvent *)e
 {
-	if ([self.formattingMenu textIsItalicized]) {
+	if (self.formattingMenu.textIsItalicized) {
 		[self.formattingMenu removeItalicCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertItalicCharIntoTextBox:nil];
@@ -761,7 +872,7 @@
 
 - (void)textFormattingStrikethrough:(NSEvent *)e
 {
-	if ([self.formattingMenu textIsStruckthrough]) {
+	if (self.formattingMenu.textIsStruckthrough) {
 		[self.formattingMenu removeStrikethroughCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertStrikethroughCharIntoTextBox:nil];
@@ -770,7 +881,7 @@
 
 - (void)textFormattingUnderline:(NSEvent *)e
 {
-	if ([self.formattingMenu textIsUnderlined]) {
+	if (self.formattingMenu.textIsUnderlined) {
 		[self.formattingMenu removeUnderlineCharFromTextBox:nil];
 	} else {
 		[self.formattingMenu insertUnderlineCharIntoTextBox:nil];
@@ -779,43 +890,49 @@
 
 - (void)textFormattingForegroundColor:(NSEvent *)e
 {
-	if ([self.formattingMenu textHasForegroundColor]) {
+	if (self.formattingMenu.textHasForegroundColor) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
-	} else {
-		NSRect fieldRect = [self.inputTextField frame];
-		
-		fieldRect.origin.y -= 200;
-		fieldRect.origin.x += 100;
-		
-		[[self.formattingMenu foregroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
+
+		return;
 	}
+
+	NSRect textFieldFrame = self.inputTextField.frame;
+		
+	textFieldFrame.origin.y -= 200;
+	textFieldFrame.origin.x += 100;
+		
+	[self.formattingMenu.foregroundColorMenu popUpMenuPositioningItem:nil atLocation:textFieldFrame.origin inView:self.inputTextField];
 }
 
 - (void)textFormattingBackgroundColor:(NSEvent *)e
 {
-	if ([self.formattingMenu textHasForegroundColor] == NO) {
+	if (self.formattingMenu.textHasForegroundColor == NO) {
 		return;
 	}
 
-	if ([self.formattingMenu textHasBackgroundColor]) {
+	if (self.formattingMenu.textHasBackgroundColor) {
 		[self.formattingMenu removeForegroundColorCharFromTextBox:nil];
-	} else {
-		NSRect fieldRect = [self.inputTextField frame];
-		
-		fieldRect.origin.y -= 200;
-		fieldRect.origin.x += 100;
-		
-		[[self.formattingMenu backgroundColorMenu] popUpMenuPositioningItem:nil atLocation:fieldRect.origin inView:self.inputTextField];
+
+		return;
 	}
+
+	NSRect textFieldFrame = self.inputTextField.frame;
+
+	textFieldFrame.origin.y -= 200;
+	textFieldFrame.origin.x += 100;
+
+	[self.formattingMenu.backgroundColorMenu popUpMenuPositioningItem:nil atLocation:textFieldFrame.origin inView:self.inputTextField];
 }
 
-- (void)exitFullscreenMode:(NSEvent *)e
+- (void)exitFullscreenMode:(NSEvent *)e // escape key
 {
-	if ([self isInFullscreenMode]) {
+	if (self.inFullscreenMode) {
 		[self toggleFullScreen:nil];
-	} else {
-		[self.inputTextField keyDown:e];
+
+		return;
 	}
+
+	[self.inputTextField keyDown:e];
 }
 
 - (void)speakPendingNotifications:(NSEvent *)e
@@ -823,107 +940,75 @@
 	[[TXSharedApplication sharedSpeechSynthesizer] stopSpeakingAndMoveForward];
 }
 
-- (void)focusWebview
+- (void)focusWebview:(NSEvent *)e
 {
-	if ([self attachedSheet] == nil) {
-		TVCLogController *viewController = self.selectedViewController;
-
-		NSView *webView = [[viewController backingView] webView];
-
-		[self makeFirstResponder:webView];
+	if (self.attachedSheet != nil) {
+		return;
 	}
-}
 
-- (void)handler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
-{
-	[self registerKeyHandler:sel key:keyCode modifiers:mods];
-}
+	TVCLogController *viewController = self.selectedViewController;
 
-- (void)handler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
-{
-	[self registerKeyHandler:sel character:c modifiers:mods];
-}
+	if (viewController == nil) {
+		return;
+	}
 
-- (void)inputHandler:(SEL)sel code:(NSInteger)keyCode mods:(NSUInteger)mods
-{
-	[self.inputTextField registerSelector:sel key:keyCode modifiers:mods];
-}
+	NSView *webView = viewController.backingView.webView;
 
-- (void)inputHandler:(SEL)sel char:(UniChar)c mods:(NSUInteger)mods
-{
-	[self.inputTextField registerSelector:sel character:c modifiers:mods];
-}
-
-- (void)registerKeyHandlers
-{
-	[self setKeyHandlerTarget:self];
-	
-	[self.inputTextField setKeyHandlerTarget:self];
-	
-	/* Window keyboard shortcuts. */
-	[self handler:@selector(exitFullscreenMode:)				code:TXKeyEscapeCode mods:0];
-	
-	[self handler:@selector(tab:)								code:TXKeyTabCode mods:0];
-	[self handler:@selector(shiftTab:)							code:TXKeyTabCode mods:NSShiftKeyMask];
-	
-	[self handler:@selector(selectPreviousSelection:)			code:TXKeyTabCode mods:NSAlternateKeyMask];
-	
-	[self handler:@selector(textFormattingBold:)				char:'b' mods: NSCommandKeyMask];
-	[self handler:@selector(textFormattingUnderline:)			char:'u' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self handler:@selector(textFormattingItalic:)				char:'i' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self handler:@selector(textFormattingForegroundColor:)		char:'c' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
-	[self handler:@selector(textFormattingBackgroundColor:)		char:'h' mods:(NSCommandKeyMask | NSAlternateKeyMask)];
-	
-	[self handler:@selector(speakPendingNotifications:)			char:'.' mods:NSCommandKeyMask];
-	
-	[self handler:@selector(inputHistoryUp:)					char:'p' mods:NSControlKeyMask];
-	[self handler:@selector(inputHistoryDown:)					char:'n' mods:NSControlKeyMask];
-	
-	/* Text field keyboard shortcuts. */
-	[self inputHandler:@selector(sendControlEnterMessageMaybe:) code:TXKeyEnterCode mods:NSControlKeyMask];
-	
-	[self inputHandler:@selector(sendMsgAction:) code:TXKeyReturnCode mods:NSCommandKeyMask];
-	[self inputHandler:@selector(sendMsgAction:) code:TXKeyEnterCode mods:NSCommandKeyMask];
-	
-	[self inputHandler:@selector(focusWebview) char:'l' mods:(NSAlternateKeyMask | NSCommandKeyMask)];
-	
-	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:0];
-	[self inputHandler:@selector(inputHistoryUpWithScrollCheck:) code:TXKeyUpArrowCode mods:NSAlternateKeyMask];
-	
-	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:0];
-	[self inputHandler:@selector(inputHistoryDownWithScrollCheck:) code:TXKeyDownArrowCode mods:NSAlternateKeyMask];
+	[self makeFirstResponder:webView];
 }
 
 #pragma mark -
 #pragma mark Utilities
 
-- (void)sendText:(NSString *)command
-{
-	NSAttributedString *as = [self.inputTextField attributedStringValue];
-	
-	[self.inputTextField setAttributedStringValue:[NSAttributedString attributedString]];
-	
-	if ([as length] > 0) {
-		[[TXSharedApplication sharedInputHistoryManager] add:as];
-		
-		[self inputText:as command:command];
-	}
-	
-	[[TXSharedApplication sharedNicknameCompletionStatus] clear];
-}
-
-- (void)inputText:(id)str command:(NSString *)command
-{
-	if (self.selectedItem) {
-		str = [THOPluginDispatcher interceptUserInput:str command:command];
-	
-		[self.selectedClient inputText:str command:command];
-	}
-}
-
 - (void)textEntered
 {
-	[self sendText:IRCPrivateCommandIndex("privmsg")];
+	[self inputTextAsCommand:IRCPrivateCommandIndex("privmsg")];
+}
+
+- (void)inputTextAsCommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+
+	[[TXSharedApplication sharedNicknameCompletionStatus] clear];
+
+	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
+
+	if (stringValue.length == 0) {
+		return;
+	}
+
+	self.inputTextField.attributedStringValue = [NSAttributedString attributedString];
+
+	[[TXSharedApplication sharedInputHistoryManager] add:stringValue];
+		
+	[self inputText:stringValue asCommand:command];
+}
+
+- (void)inputText:(id)string asCommand:(NSString *)command
+{
+	NSParameterAssert(string != nil);
+	NSParameterAssert(command != nil);
+
+	if ([string isKindOfClass:[NSString class]] == NO &&
+		[string isKindOfClass:[NSAttributedString class]] == NO)
+	{
+		NSAssert(NO, @"'string' must be NSString or NSAttributedString");
+	}
+
+	if ([command isEqualToString:IRCPrivateCommandIndex("privmsg")] == NO &&
+		[command isEqualToString:IRCPrivateCommandIndex("action")] == NO &&
+		[command isEqualToString:IRCPrivateCommandIndex("notice")] == NO)
+	{
+		NSAssert(NO, @"Bad 'command' value");
+	}
+
+	if (self.selectedItem == nil) {
+		return;
+	}
+
+	NSString *stringValue = [THOPluginDispatcher interceptUserInput:string command:command];
+	
+	[self.selectedClient inputText:stringValue command:command];
 }
 
 #pragma mark -
@@ -936,7 +1021,7 @@
  */
 - (void)swipeWithEvent:(NSEvent *)event
 {
-    CGFloat x = [event deltaX];
+    CGFloat x = event.deltaX;
 
 	BOOL invertedScrollingDirection = [RZUserDefaults() boolForKey:@"com.apple.swipescrolldirection"];
 	
@@ -953,62 +1038,68 @@
 
 - (void)beginGestureWithEvent:(NSEvent *)event
 {
-	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
-	
-	NSAssertReturn(TVCSwipeMinimumLength > 0);
+	CGFloat swipeMinimumLength = [TPCPreferences swipeMinimumLength];
+
+	if (swipeMinimumLength < 1.0) {
+		return;
+	}
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:nil];
-	
-	NSAssertReturn([touches count] == 2);
 
-	NSArray *touchArray = [touches allObjects];
+	if (touches.count != 2) {
+		return;
+	}
+
+	NSArray *touchArray = touches.allObjects;
 
 	self.cachedSwipeOriginPoint = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]];
 }
 
 - (NSValue *)touchesToPoint:(NSTouch *)fingerA fingerB:(NSTouch *)fingerB
 {
-	PointerIsEmptyAssertReturn(fingerA, nil);
-	PointerIsEmptyAssertReturn(fingerB, nil);
+	NSParameterAssert(fingerA != nil);
+	NSParameterAssert(fingerB != nil);
 	
-	NSSize deviceSize = [fingerA deviceSize];
+	NSSize deviceSize = fingerA.deviceSize;
 	
-	CGFloat x = (([fingerA normalizedPosition].x + [fingerB normalizedPosition].x) / 2 * deviceSize.width);
-	CGFloat y = (([fingerA normalizedPosition].y + [fingerB normalizedPosition].y) / 2 * deviceSize.height);
+	CGFloat x = ((fingerA.normalizedPosition.x + fingerB.normalizedPosition.x) / 2.0 * deviceSize.width);
+	CGFloat y = ((fingerA.normalizedPosition.y + fingerB.normalizedPosition.y) / 2.0 * deviceSize.height);
 	
 	return [NSValue valueWithPoint:NSMakePoint(x, y)];
 }
 
 - (void)endGestureWithEvent:(NSEvent *)event
 {
-	CGFloat TVCSwipeMinimumLength = [TPCPreferences swipeMinimumLength];
-	
-	NSAssertReturn(TVCSwipeMinimumLength > 0);
+	CGFloat swipeMinimumLength = [TPCPreferences swipeMinimumLength];
+
+	if (swipeMinimumLength < 1.0) {
+		return;
+	}
 
 	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseAny inView:nil];
 
-	if (self.cachedSwipeOriginPoint == nil || NSDissimilarObjects([touches count], 2)) {
+	if (self.cachedSwipeOriginPoint == nil || touches.count != 2) {
 		self.cachedSwipeOriginPoint = nil;
 
 		return;
 	}
 
-	NSArray *touchArray = [touches allObjects];
+	NSArray *touchArray = touches.allObjects;
 
-	NSPoint origin = [self.cachedSwipeOriginPoint pointValue];
+	NSPoint origin = self.cachedSwipeOriginPoint.pointValue;
 	
-	NSPoint dest = [[self touchesToPoint:touchArray[0] fingerB:touchArray[1]] pointValue];
+	NSPoint destination = [self touchesToPoint:touchArray[0] fingerB:touchArray[1]].pointValue;
 
 	self.cachedSwipeOriginPoint = nil;
 
-    NSPoint delta = NSMakePoint((origin.x - dest.x),
-								(origin.y - dest.y));
+    NSPoint delta = NSMakePoint((origin.x - destination.x),
+								(origin.y - destination.y));
 
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
 	}
 	
-	if (fabs(delta.x) < TVCSwipeMinimumLength) {
+	if (fabs(delta.x) < swipeMinimumLength) {
 		return;
 	}
 	
@@ -1028,9 +1119,9 @@
 }
 
 #pragma mark -
-#pragma mark Misc.
+#pragma mark Misc
 
-- (void)endEditingFor:(id)object
+- (void)endEditingFor:(nullable id)object
 {
 	/* WebHTMLView results in this method being called.
 	 *
@@ -1047,33 +1138,37 @@
 
 - (BOOL)isOccluded
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		return (([self occlusionState] & NSWindowOcclusionStateVisible) == 0);
-	} else {
+	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
 		return NO;
 	}
+
+	return ((self.occlusionState & NSWindowOcclusionStateVisible) == 0);
 }
 
 - (BOOL)isInactive
 {
-	return ([self isKeyWindow] == NO && [self isMainWindow] == NO);
+	return (self.keyWindow == NO && self.mainWindow == NO);
 }
 
 - (BOOL)isActiveForDrawing
 {
-	if ([self isInFullscreenMode]) {
+	if (self.inFullscreenMode) {
 		return YES;
-	} else {
-		BOOL isActive = [masterController() applicationIsActive];
-		
-		BOOL isVisible = [self isVisible];
-		BOOL isMainWindow = [self isMainWindow];
-		BOOL isOnActiveSpace = [self isOnActiveSpace];
-		
-		BOOL hasNoModal = ([NSApp modalWindow] == nil);
-		
-		return (isVisible && isActive && isMainWindow && isOnActiveSpace && hasNoModal);
 	}
+
+	BOOL applicationHasNoModal = ([NSApp modalWindow] == nil);
+
+	BOOL applicationIsActive = masterController().applicationIsActive;
+
+	BOOL windowIsMainWindow = self.mainWindow;
+	BOOL windowIsOnActiveSpace = self.onActiveSpace;
+	BOOL windowIsVisible = self.visible;
+
+	return (windowIsMainWindow &&
+			windowIsOnActiveSpace &&
+			windowIsVisible &&
+			applicationIsActive &&
+			applicationHasNoModal);
 }
 
 - (BOOL)canBecomeMainWindow
@@ -1083,7 +1178,7 @@
 
 - (NSRect)defaultWindowFrame
 {
-	NSRect windowFrame = [self frame];
+	NSRect windowFrame = self.frame;
 	
 	windowFrame.size.width = TVCMainWindowDefaultFrameWidth;
 	windowFrame.size.height = TVCMainWindowDefaultFrameHeight;
@@ -1096,7 +1191,7 @@
 
 - (BOOL)multipleItemsSelected
 {
-	return ([self.selectedItems count] > 1);
+	return (self.selectedItems.count > 1);
 }
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem
@@ -1111,17 +1206,29 @@
 
 - (BOOL)isItemVisible:(IRCTreeItem *)item
 {
+	if (item == nil) {
+		return NO;
+	}
+
 	return ([self isItemSelected:item] || [self isItemInSelectedGroup:item]);
 }
 
 - (BOOL)isItemSelected:(IRCTreeItem *)item
 {
+	if (item == nil) {
+		return NO;
+	}
+
 	return (self.selectedItem == item);
 }
 
 - (BOOL)isItemInSelectedGroup:(IRCTreeItem *)item
 {
-	return (self.selectedItems && [self.selectedItems containsObject:item]);
+	if (item == nil) {
+		return NO;
+	}
+
+	return ([self.selectedItems containsObject:item]);
 }
 
 - (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows
@@ -1129,35 +1236,24 @@
 	[self selectionDidChangeToRows:selectedRows selectedItem:nil];
 }
 
-- (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows selectedItem:(IRCTreeItem *)selectedItem
+- (void)selectionDidChangeToRows:(NSIndexSet *)selectedRows selectedItem:(nullable IRCTreeItem *)selectedItem
 {
-	/* Prepare next item */
-	NSInteger selectedRowsCount = [selectedRows count];
+	NSParameterAssert(selectedRows != nil);
 
 	/* Create list of selected items and notify those newly selected items
 	 that they are now visible + part of a stacked view */
-	NSMutableArray *selectedItems = nil;
+	NSArray *selectedItems = self.serverList.selectedObjects;
 
-	if (selectedRowsCount > 0) {
-		selectedItems = [NSMutableArray arrayWithCapacity:selectedRowsCount];
-
-		for (NSNumber *row in [selectedRows arrayFromIndexSet]) {
-			NSInteger rowInt = [row integerValue];
-
-			IRCTreeItem *rowObject = [mainWindowServerList() itemAtRow:rowInt];
-
-			[selectedItems addObject:rowObject];
+	/* Update selected item even if group hasn't changed */
+	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {/* Update selected item even if group hasn't changed */
+		if (selectedItem) {
+			[self selectItemInSelectedItems:selectedItem];
 		}
-	}
 
-	/* Check whether arrays match */
-	if (NSObjectsAreEqual(selectedItems, self.selectedItems)) {
-		/* Update selected item even if group hasn't changed */
-		[self selectItemInSelectedItems:selectedItem];
-
-		/* Do nothing else if they match */
 		return;
 	}
+
+	NSUInteger selectedItemsCount = selectedItems.count;
 
 	/* Store previous selection */
 	[self storePreviousSelection];
@@ -1169,21 +1265,21 @@
 		selectedItemsPrevious = [self.selectedItems copy];
 	}
 
-	if (selectedItems) {
+	if (selectedItemsCount > 0) {
 		self.selectedItems = selectedItems;
 
 		if (selectedItem == nil) {
 			selectedItem = self.selectedItem;
 		}
 
-		if ([self isItemInSelectedGroup:selectedItem]) {
+		if (selectedItem && [self isItemInSelectedGroup:selectedItem]) {
 			self.selectedItem = selectedItem;
 		} else {
-			self.selectedItem = [selectedItems objectAtIndex:(selectedRowsCount - 1)];
+			self.selectedItem = selectedItems[(selectedItemsCount - 1)];
 		}
 	} else {
 		self.selectedItem = nil;
-		self.selectedItems = nil;
+		self.selectedItems = @[];
 	}
 
 	/* Update split view */
@@ -1193,23 +1289,19 @@
 	 are now hidden. We wait until after -updateChannelViewBoxContentViewSelection
 	 is called to do this so that the views that are hidden are actually hidden
 	 before informing the views of this fact. */
-	if (selectedItemsPrevious) {
-		for (IRCTreeItem *item in selectedItemsPrevious) {
-			if (selectedItems == nil || [selectedItems containsObject:item] == NO) {
-				[[item viewController] notifyDidBecomeHidden];
-			}
+	for (IRCTreeItem *item in selectedItemsPrevious) {
+		if (selectedItems == nil || [selectedItems containsObject:item] == NO) {
+			[item.viewController notifyDidBecomeHidden];
 		}
 	}
 
 	/* Inform new views that they are visible now that they are visible. */
-	if (selectedItems) {
-		for (IRCTreeItem *item in selectedItems) {
-			if (selectedItemsPrevious == nil || [selectedItemsPrevious containsObject:item] == NO) {
-				[[item viewController] notifyDidBecomeVisible];
+	for (IRCTreeItem *item in selectedItems) {
+		if (selectedItemsPrevious == nil || [selectedItemsPrevious containsObject:item] == NO) {
+			[item.viewController notifyDidBecomeVisible];
 
-				if (item != self.selectedItem) {
-					[[item viewController] notifySelectionChanged];
-				}
+			if (item != self.selectedItem) {
+				[item.viewController notifySelectionChanged];
 			}
 		}
 	}
@@ -1233,21 +1325,21 @@
 	}
 
 	/* Reset state of selections */
-	if ( itemChangedFrom) {
+	if (itemChangedFrom) {
 		[itemChangedFrom resetState];
 	}
 
 	if (itemChangedTo) {
-		if ([self multipleItemsSelected]) {
+		if (self.multipleItemsSelected) {
 			[self.serverList updateMessageCountForItem:itemChangedTo];
 		}
 
 		[itemChangedTo resetState];
 	}
 
-	/* Notify WebKit its selection status has changed. */
-	if (  itemChangedFrom) {
-		[[itemChangedFrom viewController] notifySelectionChanged];
+	/* Notify WebKit its selection status has changed */
+	if (itemChangedFrom) {
+		[itemChangedFrom.viewController notifySelectionChanged];
 	}
 
 	/* Destroy any floating popup */
@@ -1260,42 +1352,41 @@
 
 		[self.memberList reloadData];
 
-		self.serverList.menu = [menuController() addServerMenu];
+		self.serverList.menu = nil;
 
 		[self updateTitle];
 
-		return; // Nothing more to do for empty selections.
+		return; // Nothing more to do for empty selections
 	}
 
 	/* Prepare the member list for the selection */
-	BOOL isClient = ([itemChangedTo isClient]);
+	BOOL isClient = itemChangedTo.isClient;
 
-	BOOL isPrivateMessage = ([itemChangedTo isPrivateMessage]);
+	BOOL isChannel = itemChangedTo.isChannel;
 
 	/* The right click menu follows selection so let's update
 	 the menu we will show depending on the selection. */
-	if (isClient) {
-		self.serverList.menu = [[menuController() serverMenuItem] submenu];
+	if (isClient == NO) {
+		self.serverList.menu = menuController().channelMenuItem.submenu;
 	} else {
-		self.serverList.menu = [[menuController() channelMenuItem] submenu];
+		self.serverList.menu = menuController().serverMenuItem.submenu;
 	}
 
 	/* Update table view data sources */
-	if (isClient || isPrivateMessage) {
-		/* Private messages and the client console
-		 do not have a member list. */
-		self.memberList.delegate = nil;
-		self.memberList.dataSource = nil;
-
-		[self.memberList reloadData];
-	} else {
+	if (isChannel) {
 		self.memberList.delegate = (id)itemChangedTo;
 		self.memberList.dataSource = (id)itemChangedTo;
 
 		[self.memberList deselectAll:nil];
+
 		[self.memberList scrollRowToVisible:0];
 
 		[(id)self.selectedItem reloadDataForTableView];
+	} else {
+		self.memberList.delegate = nil;
+		self.memberList.dataSource = nil;
+
+		[self.memberList reloadData];
 	}
 
 	/* Begin work on text field */
@@ -1312,29 +1403,29 @@
 	[[TXSharedApplication sharedInputHistoryManager] moveFocusTo:itemChangedTo];
 
 	/* Reset spelling for text field */
-	if ([self.inputTextField hasModifiedSpellingDictionary]) {
-		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:[self.inputTextField spellCheckerDocumentTag]];
+	if (self.inputTextField.hasModifiedSpellingDictionary) {
+		self.inputTextField.hasModifiedSpellingDictionary = NO;
+
+		[RZSpellChecker() setIgnoredWords:@[] inSpellDocumentWithTag:self.inputTextField.spellCheckerDocumentTag];
 	}
 
 	/* Update splitter view depending on selection */
-	if (isClient || isPrivateMessage) {
-		[self.contentSplitView collapseMemberList];
-	} else {
+	if (isChannel) {
 		if (self.memberList.isHiddenByUser == NO) {
 			[self.contentSplitView expandMemberList];
 		}
+	} else {
+		[self.contentSplitView collapseMemberList];
 	}
 
-	/* Notify WebKit its selection status has changed. */
-	[[itemChangedTo viewController] notifySelectionChanged];
-
-	/* Update client specific data */
-	[self storeLastSelectedChannel];
-
-	/* Dimiss notification center */
-	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
+	/* Notify WebKit its selection status has changed */
+	[itemChangedTo.viewController notifySelectionChanged];
 
 	/* Finish up */
+	[self storeLastSelectedChannel];
+
+	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
+
 	[menuController() mainWindowSelectionDidChange];
 
 	[TVCDockIcon updateDockIcon];
@@ -1347,10 +1438,10 @@
 
 - (void)saveContentSplitViewState
 {
-	[RZUserDefaults() setBool:[self isServerListVisible]
+	[RZUserDefaults() setBool:self.serverListVisible
 					   forKey:@"Window -> Main Window -> Server List is Visible"];
 
-	[RZUserDefaults() setBool:([self.memberList isHiddenByUser] == NO)
+	[RZUserDefaults() setBool:((self.memberList).isHiddenByUser == NO)
 					   forKey:@"Window -> Main Window -> Member List is Visible"];
 }
 
@@ -1360,29 +1451,29 @@
 	[self.contentSplitView restorePositions];
 
 	/* Collapse one or more items if they were collapsed when closing Textual. */
-	id makeServerListVisible = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Server List is Visible"];
-
 	id makeMemberListVisible = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Member List is Visible"];
+
+	if (makeMemberListVisible && [makeMemberListVisible boolValue] == NO) {
+		self.memberList.isHiddenByUser = YES;
+
+		[self.contentSplitView collapseMemberList];
+	}
+
+	id makeServerListVisible = [RZUserDefaults() objectForKey:@"Window -> Main Window -> Server List is Visible"];
 
 	if (makeServerListVisible && [makeServerListVisible boolValue] == NO) {
 		[self.contentSplitView collapseServerList];
-	}
-
-	if (makeMemberListVisible && [makeMemberListVisible boolValue] == NO) {
-		[self.memberList setIsHiddenByUser:YES];
-
-		[self.contentSplitView collapseMemberList];
 	}
 }
 
 - (BOOL)isMemberListVisible
 {
-	return ([self.contentSplitView isMemberListCollapsed] == NO);
+	return (self.contentSplitView.memberListCollapsed == NO);
 }
 
 - (BOOL)isServerListVisible
 {
-	return ([self.contentSplitView isServerListCollapsed] == NO);
+	return (self.contentSplitView.serverListCollapsed == NO);
 }
 
 #pragma mark -
@@ -1392,24 +1483,26 @@
 {
 	/* This method returns YES (success) if the loading screen is dismissed
 	 when called. NO indicates an error that resulted in it staying on screen. */
-
-	if ([worldController() isImportingConfiguration] == NO) {
+	if (worldController().isImportingConfiguration) {
+		return NO;
+	}
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-		if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
-			[self.loadingScreen hideAll:NO];
-			[self.loadingScreen popTrialExpiredView];
-		} else
+	if (TLOLicenseManagerTextualIsRegistered() == NO && TLOLicenseManagerIsTrialExpired()) {
+		[self.loadingScreen hideAll];
+
+		[self.loadingScreen showTrialExpiredView];
+	} else
 #endif
 
-		if ([worldController() clientCount] <= 0) {
-			[self.loadingScreen hideAll:NO];
-			[self.loadingScreen popWelcomeAddServerView];
-		} else {
-			[self.loadingScreen hideAll:YES];
+	if (worldController().clientCount <= 0) {
+		[self.loadingScreen hideAll];
 
-			return YES;
-		}
+		[self.loadingScreen showWelcomeAddServerView];
+	} else {
+		[self.loadingScreen hideAllAnimated];
+
+		return YES;
 	}
 
 	return NO;
@@ -1422,7 +1515,7 @@
 {
 	IRCClient *u = self.selectedClient;
 
-	if ( u) {
+	if (u) {
 		[u presentCertificateTrustInformation];
 	}
 }
@@ -1430,7 +1523,7 @@
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (void)titlebarAccessoryViewLockButtonClicked:(id)sender
 {
-	NSMenu *statusMenu = [menuController() encryptionManagerStatusMenu];
+	NSMenu *statusMenu = menuController().encryptionManagerStatusMenu;
 
 	[statusMenu popUpMenuPositioningItem:nil
 							  atLocation:self.titlebarAccessoryViewLockButton.frame.origin
@@ -1445,169 +1538,185 @@
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	IRCChannel *c = self.selectedChannel;
 
-	BOOL updateEncryption = ([c isPrivateMessage] && [u encryptionAllowedForNickname:[c name]]);
+	BOOL updateEncryption = (c.isPrivateMessage && [u encryptionAllowedForNickname:c.name]);
 
 	if (updateEncryption) {
-		[self.titlebarAccessoryViewLockButton setAction:@selector(titlebarAccessoryViewLockButtonClicked:)];
+		self.titlebarAccessoryViewLockButton.action = @selector(titlebarAccessoryViewLockButtonClicked:);
 
 		[self.titlebarAccessoryViewLockButton enableDrawingCustomBackgroundColor];
+
 		[self.titlebarAccessoryViewLockButton positionImageOnLeftSide];
 
 		[sharedEncryptionManager() updateLockIconButton:self.titlebarAccessoryViewLockButton
-											withStateOf:[u encryptionAccountNameForUser:[c name]]
+											withStateOf:[u encryptionAccountNameForUser:c.name]
 												   from:[u encryptionAccountNameForLocalUser]];
 
-		[self.titlebarAccessoryView setHidden:NO];
-	} else {
+		self.titlebarAccessoryView.hidden = NO;
+	}
+	else
+	{
 #endif
 
-		[self.titlebarAccessoryViewLockButton setAction:@selector(presentCertificateTrustInformation:)];
+		self.titlebarAccessoryViewLockButton.action = @selector(presentCertificateTrustInformation:);
 
 		[self.titlebarAccessoryViewLockButton disableDrawingCustomBackgroundColor];
+
 		[self.titlebarAccessoryViewLockButton positionImageOverContent];
 
-		[self.titlebarAccessoryViewLockButton setTitle:NSStringEmptyPlaceholder];
+		self.titlebarAccessoryViewLockButton.title = NSStringEmptyPlaceholder;
 
-		if ([u connectionIsSecured]) {
-			[self.titlebarAccessoryView setHidden:NO];
-
+		if (u.connectionIsSecured) {
 			[self.titlebarAccessoryViewLockButton setIconAsLocked];
+
+			self.titlebarAccessoryView.hidden = NO;
 		} else {
-			[self.titlebarAccessoryView setHidden:YES];
+			self.titlebarAccessoryView.hidden = YES;
 		}
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 	}
 #endif
 
-	if ([self.titlebarAccessoryView isHidden] == NO) {
+	if (self.titlebarAccessoryView.hidden == NO) {
 		[self.titlebarAccessoryViewLockButton sizeToFit];
 	}
 }
 
-- (void)addAccessoryViewsToTitlebar
+- (void)addAccessoryViewsToTitlebarOnMavericks
 {
-	NSThemeFrame *themeFrame = (NSThemeFrame *)[[self contentView] superview];
+	NSThemeFrame *themeFrame = (NSThemeFrame *)self.contentView.superview;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		[themeFrame setUsesCustomTitlebarTitlePositioning:YES];
+	NSView *accessoryView = self.titlebarAccessoryView;
 
-		NSTitlebarAccessoryViewController *accessoryView = [self titlebarAccessoryViewController];
+	[themeFrame addSubview:accessoryView];
 
-		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+	NSLayoutConstraint *topConstraint =
+	[NSLayoutConstraint constraintWithItem:accessoryView
+								 attribute:NSLayoutAttributeTop
+								 relatedBy:NSLayoutRelationEqual
+									toItem:themeFrame
+								 attribute:NSLayoutAttributeTop
+								multiplier:1
+								  constant:0];
+
+	NSLayoutConstraint *rightConstraint =
+	[NSLayoutConstraint constraintWithItem:accessoryView
+								 attribute:NSLayoutAttributeTrailing
+								 relatedBy:NSLayoutRelationEqual
+									toItem:themeFrame
+								 attribute:NSLayoutAttributeTrailing
+								multiplier:1
+								  constant:0];
+
+	[themeFrame addConstraints:@[topConstraint, rightConstraint]];
+}
+
+- (void)addAccessoryViewsToTitlebarOnYosemite
+{
+	NSThemeFrame *themeFrame = (NSThemeFrame *)self.contentView.superview;
+
+	themeFrame.usesCustomTitlebarTitlePositioning = YES;
+
+	NSTitlebarAccessoryViewController *accessoryView = self.titlebarAccessoryViewController;
+
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
 
 #ifdef TXSystemIsOSXSierraOrLater
-			[accessoryView setLayoutAttribute:NSLayoutAttributeTrailing];
+		accessoryView.layoutAttribute = NSLayoutAttributeTrailing;
 #else
-			[accessoryView setLayoutAttribute:NSLayoutAttributeLeft];
+		[accessoryView setLayoutAttribute:NSLayoutAttributeLeft];
 #endif
 
-		} else {
-			[accessoryView setLayoutAttribute:NSLayoutAttributeRight];
-		}
-
-		[self addTitlebarAccessoryViewController:accessoryView];
 	} else {
-		NSView *accessoryView = [self titlebarAccessoryView];
+		accessoryView.layoutAttribute = NSLayoutAttributeRight;
+	}
 
-		[themeFrame addSubview:accessoryView];
+	[self addTitlebarAccessoryViewController:accessoryView];
+}
 
-		NSLayoutConstraint *topConstraint =
-		[NSLayoutConstraint constraintWithItem:accessoryView
-									 attribute:NSLayoutAttributeTop
-									 relatedBy:NSLayoutRelationEqual
-										toItem:themeFrame
-									 attribute:NSLayoutAttributeTop
-									multiplier:1
-									  constant:0];
-
-		NSLayoutConstraint *rightConstraint =
-		[NSLayoutConstraint constraintWithItem:accessoryView
-									 attribute:NSLayoutAttributeTrailing
-									 relatedBy:NSLayoutRelationEqual
-										toItem:themeFrame
-									 attribute:NSLayoutAttributeTrailing
-									multiplier:1
-									  constant:0];
-
-		[themeFrame addConstraints:@[topConstraint, rightConstraint]];
+- (void)addAccessoryViewsToTitlebar
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[self addAccessoryViewsToTitlebarOnYosemite];
+	} else {
+		[self addAccessoryViewsToTitlebarOnMavericks];
 	}
 }
 
 - (void)updateTitleFor:(IRCTreeItem *)item
 {
-	if ([self isItemSelected:item]) {
-		[self updateTitle];
+	NSParameterAssert(item != nil);
+
+	if ([self isItemSelected:item] == NO) {
+		return;
 	}
+
+	[self updateTitle];
 }
 
 - (void)updateTitle
 {
-	/* Establish base pair. */
+	[self updateAccessoryViewLockButton];
+
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
 
-	/* Update accessory view. */
-	[self updateAccessoryViewLockButton];
-
-	/* Set default window title if there is none. */
 	if (u == nil && c == nil) {
-		[self setTitle:[TPCApplicationInfo applicationName]];
+		self.title = [TPCApplicationInfo applicationName];
 		
 		return;
 	}
-	
-	/* Begin building title. */
+
 	NSMutableString *title = [NSMutableString string];
-	
-	if (u && c == nil) { // = Client
-		/* Append basic info. */
-		[title appendString:TXTLS(@"TVCMainWindow[1015]", [u localNickname], [u altNetworkName])];
-		
+
+	[title appendString:TXTLS(@"TVCMainWindow[1015]", u.localNickname, u.altNetworkName)];
+
+	if (u && c == nil) // = Client
+	{
 		/* If we have the actual server that the client is connected
 		 to, then we we append that. Otherwise, we just leave it blank. */
-		NSString *networkAddress = [u networkAddress];
+		NSString *networkAddress = u.networkAddress;
 		
-		if (NSObjectIsNotEmpty(networkAddress)) {
-			[title appendString:TXTLS(@"TVCMainWindow[1012]")];
+		if (networkAddress) {
+			[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
+
 			[title appendString:networkAddress];
 		}
-	} else {
-		/* Append basic info. */
-		[title appendString:TXTLS(@"TVCMainWindow[1015]", [u localNickname], [u altNetworkName])];
-		[title appendString:TXTLS(@"TVCMainWindow[1012]")];
-		
-		if ([c isPrivateMessage]) {
+	}
+	else
+	{
+		[title appendString:TXTLS(@"TVCMainWindow[1012]")]; // divider
+
+		if (c.isChannel)
+		{
+			[title appendString:c.name];
+
+			NSString *userCount = TXFormattedNumber(c.numberOfMembers);
+
+			[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
+
+			NSString *modeSymbols = c.modeInfo.titleString;
+
+			if (modeSymbols.length > 1) {
+				[title appendString:TXTLS(@"TVCMainWindow[1013]", modeSymbols)];
+			}
+		}
+		else if (c.isPrivateMessage)
+		{
 			/* Textual defines the topic of a private message as the user host. */
 			/* If it is not defined yet, then we just use the channel name 
 			 which is equal to the nickname of the private message owner. */
-			NSString *hostmask = [c topic];
+			NSString *hostmask = c.topic;
 			
-			if ([hostmask isHostmask] == NO) {
-				[title appendString:[c name]];
-			} else {
+			if (hostmask.isHostmask) {
 				[title appendString:hostmask];
-			}
-		}
-		
-		if ([c isChannel]) {
-			/* We always want the channel name and user count. */
-			NSString *userCount = TXFormattedNumber([c numberOfMembers]);
-
-			[title appendString:[c name]];
-			[title appendString:TXTLS(@"TVCMainWindow[1014]", userCount)];
-			
-			/* If we are aware of the channel modes, then we append that. */
-			NSString *modes = [[c modeInfo] titleString];
-			
-			if ([modes length] > 1) {
-				[title appendString:TXTLS(@"TVCMainWindow[1013]", modes)];
+			} else {
+				[title appendString:c.name];
 			}
 		}
 	}
-	
-	/* Set final title. */
-	[self setTitle:title];
+
+	self.title = title;
 
 	[XRAccessibility setAccessibilityTitle:TXTLS(@"Accessibility[1004]") forObject:self];
 }
@@ -1615,22 +1724,28 @@
 #pragma mark -
 #pragma mark Server List
 
-- (void)setupTree
+- (void)setupTrees
 {
-	/* Set double click action. */
-	[self.serverList setDelegate:self];
-	[self.serverList setDataSource:self];
+	self.memberList.keyDelegate = self;
+
+	self.memberList.target = menuController();
+	self.memberList.doubleAction = @selector(memberInMemberListDoubleClicked:);
+
+	self.serverList.keyDelegate = self;
+
+	self.serverList.delegate = (id)self;
+	self.serverList.dataSource = (id)self;
 	
-	[self.serverList setTarget:self];
-	[self.serverList setDoubleAction:@selector(outlineViewDoubleClicked:)];
-	
-	/* Inform the table we want drag events. */
+	self.serverList.target = self;
+	self.serverList.doubleAction = @selector(outlineViewDoubleClicked:);
+
+	/* Inform the table we want drag events */
 	[self.serverList registerForDraggedTypes:_treeDragItemTypes];
 	
-	/* Prepare our first selection. */
+	/* Prepare our first selection */
 	IRCClient *firstSelection = nil;
 	
-	for (IRCClient *e in [worldController() clientList]) {
+	for (IRCClient *e in worldController().clientList) {
 		if (e.config.sidebarItemExpanded) {
 			[self expandClient:e];
 			
@@ -1642,12 +1757,12 @@
 		}
 	}
 	
-	/* Find firt selection and select it. */
+	/* Find firt selection and select it */
 	if (firstSelection) {
 		NSInteger n = [self.serverList rowForItem:firstSelection];
 		
-		if ([firstSelection channelCount] > 0) {
-			++n;
+		if (firstSelection.channelCount > 0) {
+			n++;
 		}
 		
 		[self.serverList selectItemAtIndex:n];
@@ -1655,18 +1770,14 @@
 		[self.serverList selectItemAtIndex:0];
 	}
 	
-	/* Fake the delegate call. */
+	/* Fake the delegate call */
 	[self outlineViewSelectionDidChange:nil];
 	
-	/* Draw default icon as soon as we setup... */
-	/* This is done to apply birthday icon as soon as we start. */
-	[TVCDockIcon drawWithoutCount];
-	
-	/* Populate navigation list. */
+	/* Populate navigation list */
 	[menuController() populateNavgiationChannelList];
 }
 
-- (IRCClient *)selectedClient
+- (nullable IRCClient *)selectedClient
 {
 	if (	   self.selectedItem) {
 		return self.selectedItem.associatedClient;
@@ -1675,10 +1786,10 @@
 	}
 }
 
-- (IRCChannel *)selectedChannel
+- (nullable IRCChannel *)selectedChannel
 {
-	if (	 self.selectedItem) {
-		if ([self.selectedItem isClient]) {
+	if (	self.selectedItem) {
+		if (self.selectedItem.isClient) {
 			return nil;
 		} else {
 			return (id)self.selectedItem;
@@ -1688,7 +1799,7 @@
 	}
 }
 
-- (IRCChannel *)selectedChannelOn:(IRCClient *)c
+- (nullable IRCChannel *)selectedChannelOn:(IRCClient *)c
 {
 	if (self.selectedClient == c) {
 		return self.selectedChannel;
@@ -1697,7 +1808,7 @@
 	}
 }
 
-- (TVCLogController *)selectedViewController
+- (nullable TVCLogController *)selectedViewController
 {
 	if (	   self.selectedChannel) {
 		return self.selectedChannel.viewController;
@@ -1710,18 +1821,22 @@
 
 - (void)reloadTreeItem:(IRCTreeItem *)item
 {
+	NSParameterAssert(item != nil);
+
 	[self.serverList updateDrawingForItem:item];
 }
 
 - (void)reloadTreeGroup:(IRCTreeItem *)item
 {
-	if ([item isClient] == NO) {
+	NSParameterAssert(item != nil);
+
+	if (item.isClient == NO) {
 		return;
 	}
 
 	[self reloadTreeItem:item];
 	
-	for (IRCChannel *channel in [(IRCClient *)item channelList]) {
+	for (IRCChannel *channel in ((IRCClient *)item).channelList) {
 		[self reloadTreeItem:channel];
 	}
 }
@@ -1741,14 +1856,16 @@
 	[self adjustSelectionWithItems:self.selectedItems selectedItem:self.selectedItem];
 }
 
-- (void)adjustSelectionWithItems:(NSArray<IRCTreeItem *> *)selectedItems selectedItem:(IRCTreeItem *)selectedItem
+- (void)adjustSelectionWithItems:(NSArray<IRCTreeItem *> *)selectedItems selectedItem:(nullable IRCTreeItem *)selectedItem
 {
+	NSParameterAssert(selectedItems != nil);
+
 	NSMutableIndexSet *itemRows = [NSMutableIndexSet indexSet];
 
 	for (IRCTreeItem *item in selectedItems) {
 		/* Expand the parent of the item if its not already expanded. */
-		if ([item isClient] == NO) {
-			IRCClient *itemClient = [item associatedClient];
+		if (item.isClient == NO) {
+			IRCClient *itemClient = item.associatedClient;
 
 			[self.serverList expandItem:itemClient];
 		}
@@ -1762,7 +1879,7 @@
 	}
 
 	/* If the selected rows have not changed, then only select the one item */
-	NSIndexSet *selectedRows = [self.serverList selectedRowIndexes];
+	NSIndexSet *selectedRows = self.serverList.selectedRowIndexes;
 
 	if ([selectedRows isEqual:itemRows] == NO) {
 		/* Selection updates are disabled and selection changes are faked so that
@@ -1778,21 +1895,17 @@
 
 - (void)storePreviousSelection
 {
-	self.previousSelectedItemId = [self.selectedItem uniqueIdentifier];
+	self.previousSelectedItemId = self.selectedItem.uniqueIdentifier;
 
 	[self storePreviousSelections];
 }
 
 - (void)storePreviousSelections
 {
-	NSMutableArray *previousSelectedItems = nil;
+	NSMutableArray *previousSelectedItems = [NSMutableArray array];
 
 	for (IRCTreeItem *item in self.selectedItems) {
-		if (previousSelectedItems == nil) {
-			previousSelectedItems = [NSMutableArray array];
-		}
-
-		[previousSelectedItems addObject:[item uniqueIdentifier]];
+		[previousSelectedItems addObject:item.uniqueIdentifier];
 	}
 
 	self.previousSelectedItemsId = previousSelectedItems;
@@ -1800,12 +1913,12 @@
 
 - (void)storeLastSelectedChannel
 {
-	if ( self.selectedClient) {
-		[self.selectedClient setLastSelectedChannel:self.selectedChannel];
+	if (self.selectedClient) {
+		self.selectedClient.lastSelectedChannel = self.selectedChannel;
 	}
 }
 
-- (IRCTreeItem *)previouslySelectedItem
+- (nullable IRCTreeItem *)previouslySelectedItem
 {
 	NSString *itemIdentifier = self.previousSelectedItemId;
 
@@ -1853,56 +1966,72 @@
 
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView
 {
+	NSParameterAssert(selectedItem != nil);
+
 	/* Do nothing if items are the same */
 	if ([self isItemSelected:selectedItem]) {
 		return;
 	}
 
 	/* Select item if its in the current group */
-	if ([self isItemInSelectedGroup:selectedItem]) {
-		[self storePreviousSelection];
-
-		self.selectedItem = selectedItem;
-
-		if (refreshChannelView) {
-			[self updateChannelViewBoxContentViewSelection];
-		}
-
-		[self selectionDidChangePostflight];
+	if ([self isItemInSelectedGroup:selectedItem] == NO) {
+		return;
 	}
+	
+	[self storePreviousSelection];
+
+	self.selectedItem = selectedItem;
+
+	if (refreshChannelView) {
+		[self updateChannelViewBoxContentViewSelection];
+	}
+
+	[self selectionDidChangePostflight];
 }
 
-- (void)select:(IRCTreeItem *)item
+- (void)select:(nullable IRCTreeItem *)item
 {
-	[self shiftSelection:self.selectedItem toItem:item options:(TVCMainWindowShiftSelectionMaintainGroupingFlag |
-																TVCMainWindowShiftSelectionPerformDeselectFlag)];
+	[self shiftSelection:self.selectedItem
+				  toItem:item
+				 options:(TVCMainWindowShiftSelectionMaintainGroupingFlag |
+						  TVCMainWindowShiftSelectionPerformDeselectFlag)];
 }
 
 - (void)deselect:(IRCTreeItem *)item
 {
-	[self shiftSelection:item toItem:nil options:(TVCMainWindowShiftSelectionPerformDeselectFlag)];
+	NSParameterAssert(item != nil);
+
+	[self shiftSelection:item
+				  toItem:nil
+				 options:TVCMainWindowShiftSelectionPerformDeselectFlag];
 }
 
 - (void)deselectGroup:(IRCTreeItem *)item
 {
-	if ([item isClient] == NO) {
+	NSParameterAssert(item != nil);
+
+	if (item.isClient == NO) {
 		return;
 	}
 
-	[self shiftSelection:item toItem:nil options:(TVCMainWindowShiftSelectionPerformDeselectFlag |
-												  TVCMainWindowShiftSelectionPerformDeselectChildrenFlag)];
+	[self shiftSelection:item
+				  toItem:nil
+				 options:(TVCMainWindowShiftSelectionPerformDeselectFlag |
+						  TVCMainWindowShiftSelectionPerformDeselectChildrenFlag)];
 }
 
-- (void)shiftSelection:(IRCTreeItem *)oldItem toItem:(IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions
+- (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
 {
-	NSAssertReturn(oldItem != newItem);
+	if (oldItem == newItem) {
+		return;
+	}
 
 	/* If the next item is a channel, then make sure the client
 	 it is associated with is expanded, or we can't switch to it. */
-	if (newItem && [newItem isClient] == NO) {
-		IRCClient *u = [newItem associatedClient];
+	if (newItem && newItem.isClient == NO) {
+		IRCClient *itemClient = newItem.associatedClient;
 
-		[self expandClient:u];
+		[self expandClient:itemClient];
 	}
 
 	/* Context */
@@ -1918,7 +2047,7 @@
 	NSInteger itemIndexOld = [self.serverList rowForItem:oldItem];
 	NSInteger itemIndexNew = [self.serverList rowForItem:newItem];
 
-	NSIndexSet *selectedRows = [self.serverList selectedRowIndexes];
+	NSIndexSet *selectedRows = self.serverList.selectedRowIndexes;
 
 	NSIndexSet *selectedRowsForbidden = nil;
 
@@ -1987,13 +2116,13 @@
 		/* If there is not an item in the current selection that can take over,
 		 then the first step is to try to find an item newer than the current. */
 		if (selectedRowsComplete == NO) {
-			NSInteger numberOfRows = [self.serverList numberOfRows];
+			NSInteger numberOfRows = self.serverList.numberOfRows;
 
 			NSInteger nextSelectionRow = (itemIndexOld + 1);
 
 			/* Next row is in forbidden range */
 			if (selectedRowsForbidden && [selectedRowsForbidden containsIndex:nextSelectionRow]) {
-				nextSelectionRow = ([selectedRowsForbidden lastIndex] + 1);
+				nextSelectionRow = (selectedRowsForbidden.lastIndex + 1);
 			}
 
 			/* Next row is above number of rows. Try to go one below instead. */
@@ -2003,7 +2132,7 @@
 
 			/* Previous row is in forbidden range */
 			if (selectedRowsForbidden && [selectedRowsForbidden containsIndex:nextSelectionRow]) {
-				nextSelectionRow = ([selectedRowsForbidden firstIndex] - 1);
+				nextSelectionRow = (selectedRowsForbidden.firstIndex - 1);
 			}
 
 			/* Previous row is less than zero. There is no where else to go. */
@@ -2019,16 +2148,18 @@
 	}
 
 	/* Save selection */
-	if ([selectedRowsNew count] == 0) {
+	if (selectedRowsNew.count == 0) {
 		[self storePreviousSelection];
 
 		self.selectedItem = nil;
-		self.selectedItems = nil;
+		self.selectedItems = @[];
 
 		[self selectionDidChangePostflight];
-	} else {
-		[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
+
+		return;
 	}
+
+	[self.serverList selectRowIndexes:selectedRowsNew byExtendingSelection:NO];
 }
 
 #pragma mark -
@@ -2036,121 +2167,118 @@
 
 - (void)outlineViewDoubleClicked:(id)sender
 {
-	PointerIsEmptyAssert(self.selectedItem);
-	
 	IRCClient *u = self.selectedClient;
 	IRCChannel *c = self.selectedChannel;
+
+	if (u == nil && c == nil) {
+		return;
+	}
 	
-	if (c == nil) {
-		if (u.isConnecting) {
+	if (u && c == nil)
+	{
+		if (u.isConnecting || u.isConnected)
+		{
 			if ([TPCPreferences disconnectOnDoubleclick]) {
-				[u disconnect]; // Forcefully breaks connection.
-				[u cancelReconnect];
+				[u quit];
 			}
-		} else if (u.isConnected || u.isLoggedIn) {
-			if ([TPCPreferences disconnectOnDoubleclick]) {
-				[u quit]; // Breaks connection with some grace.
-			}
-		} else if (u.isQuitting) {
-			; // Don't do anything under this condition
-		} else {
+		}
+		else if (u.isQuitting)
+		{
+			LogToConsole("Double click event ignored because client is quitting")
+		}
+		else
+		{
 			if ([TPCPreferences connectOnDoubleclick]) {
 				[u connect];
 			}
 		}
 		
 		[self expandClient:u];
-	} else {
-		if (u.isLoggedIn) {
-			if (c.isActive) {
-				if ([TPCPreferences leaveOnDoubleclick]) {
-					[u partChannel:c];
-				}
-			} else {
-				if ([TPCPreferences joinOnDoubleclick]) {
-					[u joinChannel:c];
-				}
+	}
+	else
+	{
+		if (u.isLoggedIn == NO) {
+			return;
+		}
+
+		if (c.isActive)
+		{
+			if ([TPCPreferences leaveOnDoubleclick]) {
+				[u partChannel:c];
+			}
+		}
+		else
+		{
+			if ([TPCPreferences joinOnDoubleclick]) {
+				[u joinChannel:c];
 			}
 		}
 	}
 }
 
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(nullable id)item
 {
 	if (item) {
 		return [item numberOfChildren];
-	} else {
-		return [worldController() clientCount];
 	}
+
+	return worldController().clientCount;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender isItemExpandable:(id)item
+- (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
 	return ([item numberOfChildren] > 0);
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
 {
 	if (item) {
 		return [item childAtIndex:index];
-	} else {
-		return [worldController() clientList][index];
 	}
+
+	return worldController().clientList[index];
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
 {
 	return [item label];
 }
 
 - (CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item
 {
-	id userInterfaceObjects = [mainWindowServerList() userInterfaceObjects];
+	id interfaceObjects = self.serverList.userInterfaceObjects;
 	
 	if (item == nil || [item isClient]) {
-		return [userInterfaceObjects serverCellRowHeight];
-	} else {
-		return [userInterfaceObjects channelCellRowHeight];
+		return [interfaceObjects serverCellRowHeight];
 	}
+
+	return [interfaceObjects channelCellRowHeight];
 }
 
-- (NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
+- (nullable NSTableRowView *)outlineView:(NSOutlineView *)outlineView rowViewForItem:(id)item
 {
-	if ([item isClient]) {
+	if (item == nil || [item isClient]) {
 		return [[TVCServerListGroupRowCell alloc] initWithFrame:NSZeroRect];
 	} else {
 		return [[TVCServerListChildRowCell alloc] initWithFrame:NSZeroRect];
 	}
 }
 
-- (NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (nullable NSView *)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
-	/* Ask our view controller what we are. */
-	if ([item isClient]) {
-		/* We are a group item. A client. */
-		NSView *newView = [outlineView makeViewWithIdentifier:@"GroupView" owner:self];
-		
-		if ([newView isKindOfClass:[TVCServerListCellGroupItem class]]) {
-			TVCServerListCellGroupItem *groupItem = (TVCServerListCellGroupItem *)newView;
-			
-			[groupItem setCellItem:item];
-		}
-		
-		return newView;
+	NSString *viewIdentifier = nil;
+
+	if (item == nil || [item isClient]) {
+		viewIdentifier = @"GroupView";
 	} else {
-		/* We are a child item. A channel. */
-		NSView *newView = [outlineView makeViewWithIdentifier:@"ChildView" owner:self];
-		
-		if ([newView isKindOfClass:[TVCServerListCellChildItem class]]) {
-			TVCServerListCellChildItem *childItem = (TVCServerListCellChildItem *)newView;
-			
-			[childItem setCellItem:item];
-		}
-		
-		return newView;
+		viewIdentifier = @"ChildView";
 	}
-	
-	return nil;
+
+	NSView *newView = [outlineView makeViewWithIdentifier:viewIdentifier owner:self];
+
+	((TVCServerListCell *)newView).cellItem = item;
+
+	return newView;
 }
 
 - (void)outlineView:(NSOutlineView *)outlineView didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row
@@ -2160,20 +2288,20 @@
 
 - (void)outlineViewItemDidCollapse:(NSNotification *)notification
 {
-	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
+	id itemBeingCollapsed = notification.userInfo[@"NSObject"];
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
-	
-	[[u config] setSidebarItemExpanded:NO];
+
+	u.config.sidebarItemExpanded = NO;
 }
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
-	id itemBeingCollapsed = [notification userInfo][@"NSObject"];
+	id itemBeingCollapsed = notification.userInfo[@"NSObject"];
 	
 	IRCClient *u = [itemBeingCollapsed associatedClient];
-	
-	[[u config] setSidebarItemExpanded:YES];
+
+	u.config.sidebarItemExpanded = YES;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldExpandItem:(id)item
@@ -2193,14 +2321,14 @@
 
 - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView
 {
-	/* If the server list does not have a mouse down event, allow change. */
-	if ([self.serverList leftMouseIsDownInView] == NO) {
-		return YES;
+	/* If the window is not focused, don't allow change. */
+	if (self.keyWindow == NO) {
+		return NO;
 	}
 
-	/* If the window is not focused, don't allow change. */
-	if ([self isKeyWindow] == NO) {
-		return NO;
+	/* If the server list does not have a mouse down event, allow change. */
+	if (self.serverList.leftMouseIsDownInView == NO) {
+		return YES;
 	}
 
 	/* If command or shift are held down, allow change. */
@@ -2213,7 +2341,7 @@
 	}
 
 	/* Find which row is beneath the mouse */
-	NSInteger rowUnderMouse = [outlineView rowUnderMouse];
+	NSInteger rowUnderMouse = outlineView.rowUnderMouse;
 
 	/* If a row is not beneath the mouse or the row that is, is not
 	 selected, then the selection is allowed to be changed. */
@@ -2230,7 +2358,7 @@
 	 view not to change the selection. That will be handled by us. */
 	IRCTreeItem *itemUnderMouse = [outlineView itemAtRow:rowUnderMouse];
 
-	[mainWindow() selectItemInSelectedItems:itemUnderMouse];
+	[self selectItemInSelectedItems:itemUnderMouse];
 
 	return NO;
 }
@@ -2239,33 +2367,33 @@
 {
 #define _maximumSelectedRows	6
 
-	if ([proposedSelectionIndexes count] > _maximumSelectedRows) {
-		/* If the user has already selected the maximum, then return the current index set.
-		 This prevents the user clicking one item up and having the entire selection shift
-		 because the following logic works from highest to lowest. */
-		if ([outlineView numberOfSelectedRows] == _maximumSelectedRows) {
-			return [outlineView selectedRowIndexes];
-		}
-
-		/* Pick first six rows to use as selection */
-		NSMutableIndexSet *limitedSelectionIndexes = [NSMutableIndexSet indexSet];
-
-		NSInteger indexCount = 0;
-
-		NSUInteger currentIndex = [proposedSelectionIndexes firstIndex];
-
-		while (indexCount < _maximumSelectedRows) {
-			[limitedSelectionIndexes addIndex:currentIndex];
-
-			currentIndex = [proposedSelectionIndexes indexGreaterThanIndex:currentIndex];
-
-			indexCount += 1;
-		}
-
-		return limitedSelectionIndexes;
+	if (proposedSelectionIndexes.count <= _maximumSelectedRows) {
+		return proposedSelectionIndexes;
 	}
 
-	return proposedSelectionIndexes;
+	/* If the user has already selected the maximum, then return the current index set.
+	 This prevents the user clicking one item up and having the entire selection shift
+	 because the following logic works from highest to lowest. */
+	if (outlineView.numberOfSelectedRows == _maximumSelectedRows) {
+		return outlineView.selectedRowIndexes;
+	}
+
+	/* Pick first six rows to use as selection */
+	NSMutableIndexSet *limitedSelectionIndexes = [NSMutableIndexSet indexSet];
+
+	__block NSUInteger indexCount = 0;
+
+	[proposedSelectionIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[limitedSelectionIndexes addIndex:index];
+
+		indexCount += 1;
+
+		if (indexCount >= _maximumSelectedRows) {
+			*stop = YES;
+		}
+	}];
+
+	return limitedSelectionIndexes;
 
 #undef _maximumSelectedRows
 }
@@ -2282,17 +2410,17 @@
 		return;
 	}
 
-	NSIndexSet *selectedRows = [mainWindowServerList() selectedRowIndexes];
+	NSIndexSet *selectedRows = self.serverList.selectedRowIndexes;
 
 	IRCTreeItem *selectedItem = nil;
 
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 	if (keyboardKeys == NSCommandKeyMask) {
-		NSInteger clickedRow = [self.serverList rowUnderMouse];
+		NSInteger rowUnderMouse = self.serverList.rowUnderMouse;
 
-		if (clickedRow >= 0 && [selectedRows containsIndex:clickedRow]) {
-			selectedItem = [self.serverList itemAtRow:clickedRow];
+		if (rowUnderMouse >= 0 && [selectedRows containsIndex:rowUnderMouse]) {
+			selectedItem = [self.serverList itemAtRow:rowUnderMouse];
 		}
 	}
 
@@ -2303,90 +2431,80 @@
 	}
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
+- (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard;
 {
-	NSObjectIsEmptyAssertReturn(items, NO);
-
 	/* TODO (March 27, 2016): Support dragging multiple items */
-	if ([items count] == 1) {
-		IRCTreeItem *i = items[0];
+	if (items.count == 1) {
+		NSString *itemToken = [worldController() pasteboardStringForItem:items[0]];
 		
-		NSString *s = [worldController() pasteboardStringForItem:i];
+		[pasteboard declareTypes:_treeDragItemTypes owner:self];
 		
-		[pboard declareTypes:_treeDragItemTypes owner:self];
-		
-		[pboard setPropertyList:s forType:_treeDragItemType];
+		[pasteboard setPropertyList:itemToken forType:_treeDragItemType];
 	}
-	
+
 	return YES;
 }
 
-- (NSDragOperation)outlineView:(NSOutlineView *)sender validateDrop:(id <NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index
+- (NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id <NSDraggingInfo>)info proposedItem:(nullable id)item proposedChildIndex:(NSInteger)index
 {
 	if (index < 0) {
 		return NSDragOperationNone;
 	}
 
-	NSPasteboard *pboard = [info draggingPasteboard];
+	NSPasteboard *pasteboard = [info draggingPasteboard];
 	
-	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
+	if ([pasteboard availableTypeFromArray:_treeDragItemTypes] == nil) {
 		return NSDragOperationNone;
 	}
 
-	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
+	NSString *draggedItemToken = [pasteboard propertyListForType:_treeDragItemType];
 	
-	if (infoStr == nil) {
+	if (draggedItemToken == nil) {
 		return NSDragOperationNone;
 	}
 
-	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
+	IRCTreeItem *draggedItem = [worldController() findItemFromPasteboardString:draggedItemToken];
 	
-	if (i == nil) {
+	if (draggedItem == nil) {
 		return NSDragOperationNone;
 	}
 	
-	if ([i isClient]) {
+	if (draggedItem.isClient)
+	{
 		if (item) {
 			return NSDragOperationNone;
 		}
-	} else {
-		if (item == nil) {
+	}
+	else
+	{
+		IRCChannel *channel = (IRCChannel *)draggedItem;
+
+		if (channel.associatedClient != item) {
 			return NSDragOperationNone;
 		}
 		
-		IRCChannel *c = (IRCChannel *)i;
+		IRCClient *client = (IRCClient *)item;
 
-		if (NSDissimilarObjects(item, [c associatedClient])) {
-			return NSDragOperationNone;
-		}
-		
-		IRCClient *toClient = (IRCClient *)item;
-		
-		NSArray *ary = [toClient channelList];
+		NSArray *channelList = client.channelList;
 
-		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
-		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
-
-		[low removeObjectIdenticalTo:c];
-		[high removeObjectIdenticalTo:c];
-
-		IRCChannel *nextItem = nil;
 		IRCChannel *previousItem = nil;
 
-		if ([low count] > 0) {
-			previousItem = [low lastObject];
+		if ((index - 1) >= 0) {
+			previousItem = channelList[(index - 1)];
 		}
 
-		if ([high count] > 0) {
-			nextItem = high[0];
+		IRCChannel *nextItem = nil;
+
+		if (index < channelList.count) {
+			nextItem = channelList[index];
 		}
 
-		if ([c isChannel]) {
-			if (previousItem && [previousItem isChannel] == NO) {
+		if (channel.isChannel) {
+			if (previousItem && previousItem.isChannel == NO) {
 				return NSDragOperationNone;
 			}
 		} else {
-			if ([nextItem isChannel]) {
+			if (nextItem.isChannel) {
 				return NSDragOperationNone;
 			}
 		}
@@ -2395,90 +2513,63 @@
 	return NSDragOperationGeneric;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)sender acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index
+- (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id <NSDraggingInfo>)info item:(nullable id)item childIndex:(NSInteger)index
 {
 	if (index < 0) {
 		return NSDragOperationNone;
 	}
 
-	NSPasteboard *pboard = [info draggingPasteboard];
-	
-	if ([pboard availableTypeFromArray:_treeDragItemTypes] == nil) {
+	NSPasteboard *pasteboard = [info draggingPasteboard];
+
+	if ([pasteboard availableTypeFromArray:_treeDragItemTypes] == nil) {
 		return NSDragOperationNone;
 	}
 
-	NSString *infoStr = [pboard propertyListForType:_treeDragItemType];
-	
-	if (infoStr == nil) {
+	NSString *draggedItemToken = [pasteboard propertyListForType:_treeDragItemType];
+
+	if (draggedItemToken == nil) {
 		return NSDragOperationNone;
 	}
 
-	IRCTreeItem *i = [worldController() findItemFromPasteboardString:infoStr];
-	
-	if (i == nil) {
+	IRCTreeItem *draggedItem = [worldController() findItemFromPasteboardString:draggedItemToken];
+
+	if (draggedItem == nil) {
 		return NSDragOperationNone;
 	}
 
-	if ([i isClient]) {
-		NSArray *ary = [worldController() clientList];
+	if (draggedItem.isClient)
+	{
+		NSArray *clientList = worldController().clientList;
 
-		NSMutableArray *mutary = [ary mutableCopy];
-		
-		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
-		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
+		NSMutableArray *clientListMutable = [clientList mutableCopy];
 
-		NSInteger originalIndex = [ary indexOfObject:i];
+		NSUInteger originalIndex = [clientList indexOfObjectIdenticalTo:draggedItem];
 
-		[low removeObjectIdenticalTo:i];
-		[high removeObjectIdenticalTo:i];
+		[clientListMutable moveObjectAtIndex:originalIndex toIndex:index];
 
-		[mutary removeAllObjects];
+		worldController().clientList = clientListMutable;
 
-		[mutary addObjectsFromArray:low];
-		[mutary addObject:i];
-		[mutary addObjectsFromArray:high];
-		
-		[worldController() setClientList:mutary];
-
-		if (originalIndex < index) {
-			[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex:(index - 1) inParent:nil];
-		} else {
-			[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex: index inParent:nil];
-		}
+		[self.serverList moveItemAtIndex:originalIndex inParent:nil toIndex:index inParent:nil];
 	}
 	else
 	{
-		if (item == nil || NSDissimilarObjects(item, [i associatedClient])) {
+		if (item == nil || item != draggedItem.associatedClient) {
 			return NO;
 		}
 
-		IRCClient *u = (IRCClient *)item;
+		IRCClient *client = (IRCClient *)item;
 
-		NSArray *ary = [u channelList];
-		
-		NSMutableArray *mutary = [ary mutableCopy];
+		NSArray *channelList = client.channelList;
 
-		NSMutableArray *low = [ary mutableSubarrayWithRange:NSMakeRange(0, index)];
-		NSMutableArray *high = [ary mutableSubarrayWithRange:NSMakeRange(index, ([ary count] - index))];
+		NSMutableArray *channelListMutable = [channelList mutableCopy];
 
-		NSInteger originalIndex = [ary indexOfObject:i];
+		NSUInteger originalIndex = [channelList indexOfObjectIdenticalTo:draggedItem];
 
-		[low removeObjectIdenticalTo:i];
-		[high removeObjectIdenticalTo:i];
+		[channelListMutable moveObjectAtIndex:originalIndex toIndex:index];
 
-		[mutary removeAllObjects];
-		
-		[mutary addObjectsFromArray:low];
-		[mutary addObject:i];
-		[mutary addObjectsFromArray:high];
-		
-		[u setChannelList:mutary];
+		client.channelList = channelListMutable;
 
-		if (originalIndex < index) {
-			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex:(index - 1) inParent:u];
-		} else {
-			[self.serverList moveItemAtIndex:originalIndex inParent:u toIndex: index inParent:u];
-		}
+		[self.serverList moveItemAtIndex:originalIndex inParent:client toIndex:index inParent:client];
 	}
 
 	[menuController() populateNavgiationChannelList];
@@ -2486,14 +2577,6 @@
 	return YES;
 }
 
-- (void)memberListKeyDown:(NSEvent *)e
-{
-	[self redirectKeyDown:e];
-}
-
-- (void)serverListKeyDown:(NSEvent *)e
-{
-	[self redirectKeyDown:e];
-}
-
 @end
+
+NS_ASSUME_NONNULL_END

@@ -48,6 +48,10 @@
                                     </connections>
                                 </segmentedCell>
                                 <accessibility description="Main Window Segmented Controller"/>
+                                <connections>
+                                    <outlet property="segmentedControllerLeadingConstraint" destination="BVS-64-Ck9" id="nLW-Ss-DV2"/>
+                                    <outlet property="segmentedControllerWidthConstraint" destination="1ir-ed-Ia3" id="dNR-4h-5xG"/>
+                                </connections>
                             </segmentedControl>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="nbK-l5-9k5" customClass="TVCMainWindowTextViewBackground">
                                 <rect key="frame" x="170" y="6" width="620" height="25"/>
@@ -73,9 +77,7 @@
                                                         <outlet property="contentView" destination="phB-0r-qij" id="q5a-XP-rcM"/>
                                                         <outlet property="segmentedController" destination="Q9x-Ny-Yn4" id="Wfb-bb-UFY"/>
                                                         <outlet property="segmentedControllerCell" destination="l5w-Kh-b34" id="bCl-8m-PYT"/>
-                                                        <outlet property="segmentedControllerLeadingConstraint" destination="BVS-64-Ck9" id="Uel-iy-yyf"/>
-                                                        <outlet property="segmentedControllerWidthConstraint" destination="1ir-ed-Ia3" id="XL1-Lc-1gy"/>
-                                                        <outlet property="textFieldHeightConstraint" destination="4wi-57-9OA" id="DZ4-Dq-r9n"/>
+                                                        <outlet property="textViewHeightConstraint" destination="4wi-57-9OA" id="WKH-Kh-F86"/>
                                                     </connections>
                                                 </textView>
                                             </subviews>
@@ -108,6 +110,9 @@
                             <constraint firstAttribute="bottom" secondItem="nbK-l5-9k5" secondAttribute="bottom" constant="6" id="hXg-Rj-6BH"/>
                             <constraint firstAttribute="bottom" secondItem="Q9x-Ny-Yn4" secondAttribute="bottom" constant="7" id="v8w-4Y-Bsd"/>
                         </constraints>
+                        <connections>
+                            <outlet property="segmentedController" destination="Q9x-Ny-Yn4" id="tS5-QF-8za"/>
+                        </connections>
                     </customView>
                     <splitView autosaveName="" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dVR-2U-X51" userLabel="Thin Split View" customClass="TVCMainWindowSplitView">
                         <rect key="frame" x="0.0" y="38" width="800" height="439"/>

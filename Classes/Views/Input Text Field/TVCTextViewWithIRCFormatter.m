@@ -191,10 +191,6 @@ NS_ASSUME_NONNULL_BEGIN
 	if (self.stringLength < 1) {
 		[self resetTypeSetterAttributes];
 	}
-
-	if ([self respondsToSelector:@selector(internalTextDidChange:)]) {
-		[self performSelector:@selector(internalTextDidChange:) withObject:aNotification];
-	}
 }
 
 #pragma mark -

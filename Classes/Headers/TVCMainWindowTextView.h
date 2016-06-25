@@ -37,42 +37,10 @@
 
 #import "TextualApplication.h"
 
-/* TVCMainWindowTextView is the scroll view and text view. */
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCMainWindowTextView : TVCTextViewWithIRCFormatter
-@property (nonatomic, copy) NSAttributedString *placeholderString;
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerWidthConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *segmentedControllerLeadingConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textFieldHeightConstraint;
-@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
-@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
-@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
-@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
-
-- (void)updateSegmentedController;
-- (void)reloadSegmentedControllerOrigin;
-
-- (void)updateTextDirection;
-- (void)updateTextBoxBasedOnPreferredFontSize;
-
-- (void)updateBackgroundColor;
-
-- (void)windowDidChangeKeyState;
-
-- (void)redrawOriginPoints;
-- (void)redrawOriginPoints:(BOOL)resetSize;
-
-- (void)resetTextFieldCellSize:(BOOL)force;
 @end
 
-@interface TVCMainWindowTextViewBackground : NSView
-@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewContentView *contentView;
-
-@property (readonly, copy) NSColor *systemSpecificTextFieldTextFontColor;
-@property (readonly, copy) NSColor *systemSpecificPlaceholderTextFontColor;
-
-- (NSFont *)systemSpecificTextFieldFontWithSize:(CGFloat)fontSize;
-@end
-
-@interface TVCMainWindowTextViewContentView : NSView
-@end
+NS_ASSUME_NONNULL_END

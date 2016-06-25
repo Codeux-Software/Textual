@@ -1175,9 +1175,7 @@
                                                         <outlet property="backgroundView" destination="Jl3-QW-y8e" id="qHs-h8-s9V"/>
                                                         <outlet property="segmentedController" destination="Ijw-SU-h2Z" id="L11-W6-6qN"/>
                                                         <outlet property="segmentedControllerCell" destination="pkk-4P-MNX" id="qdM-kk-0XX"/>
-                                                        <outlet property="segmentedControllerLeadingConstraint" destination="yuB-pq-Xnd" id="Wwd-Ky-Nm2"/>
-                                                        <outlet property="segmentedControllerWidthConstraint" destination="rAs-uE-LJj" id="9n0-32-EUp"/>
-                                                        <outlet property="textFieldHeightConstraint" destination="1Oz-Li-WCr" id="HWX-WN-83g"/>
+                                                        <outlet property="textViewHeightConstraint" destination="1Oz-Li-WCr" id="NpY-RD-bjx"/>
                                                     </connections>
                                                 </textView>
                                             </subviews>
@@ -1223,6 +1221,10 @@
                                     </connections>
                                 </segmentedCell>
                                 <accessibility description="Main Window Segmented Controller"/>
+                                <connections>
+                                    <outlet property="segmentedControllerLeadingConstraint" destination="yuB-pq-Xnd" id="fMX-1g-ijr"/>
+                                    <outlet property="segmentedControllerWidthConstraint" destination="rAs-uE-LJj" id="MCp-sD-5mW"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <constraints>

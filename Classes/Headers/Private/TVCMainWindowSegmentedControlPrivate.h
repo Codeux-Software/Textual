@@ -35,11 +35,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowSegmentedController : NSSegmentedControl
 - (IBAction)segmentedCellClicked:(id)sender;
+
+- (void)updateSegmentedController;
+- (void)updateSegmentedControllerOrigin;
 @end
 
 @interface TVCMainWindowSegmentedControllerCell : NSSegmentedCell
 @end
+
+NS_ASSUME_NONNULL_END

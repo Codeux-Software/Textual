@@ -78,6 +78,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)registerSelector:(SEL)selector key:(NSUInteger)keyCode modifiers:(NSUInteger)modifiers
 {
 	NSParameterAssert(selector != NULL);
+	NSParameterAssert(keyCode != 0);
 
 	NSNumber *modifierKeys = @(modifiers);
 	
@@ -95,6 +96,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)registerSelector:(SEL)selector character:(UniChar)character modifiers:(NSUInteger)modifiers
 {
 	NSParameterAssert(selector != NULL);
+	NSParameterAssert(character != 0);
 
 	NSNumber *modifierKeys = @(modifiers);
 	
