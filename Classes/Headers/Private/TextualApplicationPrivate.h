@@ -43,6 +43,7 @@
 #import "TextualApplication.h"
 
 #import "BuildConfig.h"
+
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
 #import "IRCConnectionPrivate.h"
@@ -69,6 +70,8 @@
 #import "TPCResourceManagerPrivate.h"
 #import "TPCThemeControllerPrivate.h"
 #import "TPCThemeSettingsPrivate.h"
+#import "TVCContentNavigationOutlineViewPrivate.h"
+#import "TVCDockIconPrivate.h"
 #import "TVCImageURLoaderPrivate.h"
 #import "TVCLogControllerHistoricLogFilePrivate.h"
 #import "TVCLogControllerOperationQueuePrivate.h"
@@ -89,6 +92,7 @@
 #import "TVCMemberListSharedUserInterfacePrivate.h"
 #import "TVCMemberListUserInfoPopoverPrivate.h"
 #import "TVCMemberListYosemiteUserInterfacePrivate.h"
+#import "TVCQueuedCertificateTrustPanelPrivate.h"
 #import "TVCServerListCellPrivate.h"
 #import "TVCServerListMavericksUserInterfacePrivate.h"
 #import "TVCServerListPrivate.h"

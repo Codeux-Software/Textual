@@ -37,25 +37,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCTextFieldComboBoxWithValueValidation ()
+@interface TVCComboBoxWithValueValidation ()
 /* Maintain cached value so that the drawing does not call
  the validaton block every time that it is called. */
 @property (nonatomic, assign) BOOL cachedValidValue;
 @property (nonatomic, assign) BOOL lastOperationWasPredefinedSelection;
 @end
 
-@interface TVCTextFieldComboBoxWithValueValidationCell ()
+@interface TVCComboBoxWithValueValidationCell ()
 @property (readonly) NSColor *erroneousValueBackgroundColor;
 @property (readonly) BOOL onlyShowStatusIfErrorOccurs;
 @property (readonly) BOOL parentValueIsEmpty;
 @property (readonly) BOOL parentValueIsValid;
 @property (readonly) NSRect parentViewFrame;
-@property (readonly) TVCTextFieldComboBoxWithValueValidation *parentField;
+@property (readonly) TVCComboBoxWithValueValidation *parentField;
 
 - (void)recalculatePositionOfClipView:(NSClipView *)clipView;
 @end
 
-@implementation TVCTextFieldComboBoxWithValueValidation
+@implementation TVCComboBoxWithValueValidation
 
 #pragma mark -
 #pragma mark Public API (Combo Box Text Field)
@@ -248,7 +248,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Text Field Cell
 
-@implementation TVCTextFieldComboBoxWithValueValidationCell
+@implementation TVCComboBoxWithValueValidationCell
 
 - (NSRect)correctedDrawingRect:(NSRect)aRect
 {
@@ -397,9 +397,9 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.parentField resetCursorRects];
 }
 
-- (TVCTextFieldComboBoxWithValueValidation *)parentField
+- (TVCComboBoxWithValueValidation *)parentField
 {
-	return (TVCTextFieldComboBoxWithValueValidation *)self.controlView;
+	return (TVCComboBoxWithValueValidation *)self.controlView;
 }
 
 - (NSRect)parentViewFrame

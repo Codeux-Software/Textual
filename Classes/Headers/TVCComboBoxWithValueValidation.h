@@ -41,7 +41,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCTextFieldComboBoxWithValueValidation : NSComboBox
+@interface TVCComboBoxWithValueValidation : NSComboBox
 @property (nonatomic, copy, nullable) TVCTextFieldWithValueValidationBlock validationBlock;
 @property (nonatomic, assign) BOOL onlyShowStatusIfErrorOccurs; // Only show color or symbol if value is erroneous.
 @property (nonatomic, assign) BOOL stringValueUsesOnlyFirstToken; // Only use everything before first space (" ") as value.
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performValidation; /* Force the text field to clear cache and validate value */
 @end
 
-@interface TVCTextFieldComboBoxWithValueValidationCell : NSComboBoxCell
+@interface TVCComboBoxWithValueValidationCell : NSComboBoxCell
 @end
 
 NS_ASSUME_NONNULL_END

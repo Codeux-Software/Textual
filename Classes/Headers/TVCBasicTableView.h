@@ -38,15 +38,17 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TVCBasicTableView : NSTableView
-@property (nonatomic, weak) id keyDelegate;
-@property (nonatomic, weak) id textEditingDelegate;
+@property (nonatomic, weak, nullable) id textEditingDelegate;
 
-@property (readonly, copy) NSArray *selectedRows;
-@property (readonly) NSInteger countSelectedRows;
+@property (readonly, copy) NSArray<NSNumber *> *selectedRows;
 
-- (void)selectItemAtIndex:(NSInteger)index;
+- (void)selectItemAtIndex:(NSUInteger)rowIndex;
 
-- (void)selectRows:(NSArray *)indices;
-- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend;
+- (void)selectRows:(NSArray<NSNumber *> *)indices;
+- (void)selectRows:(NSArray<NSNumber *> *)indices extendSelection:(BOOL)extendSelection;
 @end
+
+NS_ASSUME_NONNULL_END

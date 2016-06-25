@@ -36,63 +36,50 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TVCBasicTableView
 
 #pragma mark -
 #pragma mark Table View
 
-- (NSInteger)countSelectedRows
+- (NSArray<NSNumber *> *)selectedRows
 {
-	return [[self selectedRowIndexes] count];
+	return self.selectedRowIndexes.arrayFromIndexSet;
 }
 
-- (NSArray *)selectedRows
+- (void)selectItemAtIndex:(NSUInteger)rowIndex
 {
-    NSMutableArray *allRows = [NSMutableArray array];
-    
-    NSIndexSet *indexes = [self selectedRowIndexes];
+	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
 	
-	for (NSNumber *index in [indexes arrayFromIndexSet]) {
-		[allRows addObject:index];
-	}
-    
-    return allRows;
+	[self scrollRowToVisible:rowIndex];
 }
 
-- (void)selectItemAtIndex:(NSInteger)index
-{
-	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-	
-	[self scrollRowToVisible:index];
-}
-
-- (void)selectRows:(NSArray *)indices
+- (void)selectRows:(NSArray<NSNumber *> *)indices
 {
 	[self selectRows:indices extendSelection:NO];
 }
 
-- (void)selectRows:(NSArray *)indices extendSelection:(BOOL)extend
+- (void)selectRows:(NSArray<NSNumber *> *)indices extendSelection:(BOOL)extendSelection
 {
-	NSMutableIndexSet *set = [NSMutableIndexSet indexSet];
+	NSParameterAssert(indices != nil);
+
+	NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
 	
-	for (NSNumber *n in indices) {
-		[set addIndex:[n integerValue]];
+	for (NSNumber *index in indices) {
+		[indexSet addIndex:index.unsignedIntegerValue];
 	}
 	
-	[self selectRowIndexes:set byExtendingSelection:extend];
+	[self selectRowIndexes:indexSet byExtendingSelection:extendSelection];
 }
 
 - (void)rightMouseDown:(NSEvent *)e
 {
-	NSPoint p = [self convertPoint:[e locationInWindow] fromView:nil];
+	NSInteger rowUnderMouse = self.rowUnderMouse;
 	
-	NSInteger i = [self rowAtPoint:p];
-	
-	if (i >= 0) {
-		if ([[self selectedRowIndexes] containsIndex:i] == NO) {
-			[self selectItemAtIndex:i];
+	if (rowUnderMouse >= 0) {
+		if ([self.selectedRowIndexes containsIndex:rowUnderMouse] == NO) {
+			[self selectItemAtIndex:rowUnderMouse];
 		}
 	}
 	
@@ -103,9 +90,13 @@
 {
 	if ([self.textEditingDelegate respondsToSelector:@selector(textDidEndEditing:)]) {
 		[self.textEditingDelegate textDidEndEditing:note];
-	} else {
-		[super textDidEndEditing:note];
+
+		return;
 	}
+
+	[super textDidEndEditing:note];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

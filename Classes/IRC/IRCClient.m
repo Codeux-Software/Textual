@@ -2941,8 +2941,8 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				return;
 			}
 
-			[TVCDockIcon drawWithHilightCount:[data integerAtIndex:0]
-								 messageCount:[data integerAtIndex:1]];
+			[TVCDockIcon drawWithHighlightCount:[data integerAtIndex:0]
+								   messageCount:[data integerAtIndex:1]];
 
 			break;
 		}

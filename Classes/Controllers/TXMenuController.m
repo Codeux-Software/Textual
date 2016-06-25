@@ -1051,9 +1051,9 @@
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
 	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1106][1]")
+				  informativeText:TXTLS(@"Prompts[1106][2]")
 					defaultButton:TXTLS(@"Prompts[1106][3]")
 				  alternateButton:TXTLS(@"Prompts[0004]")
-				  informativeText:TXTLS(@"Prompts[1106][2]")
 				 defaultUserInput:self.currentSearchPhrase
 				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {
@@ -2686,9 +2686,9 @@
 	TVCInputPromptDialog *dialog = [TVCInputPromptDialog new];
 
 	[dialog alertWithMessageTitle:TXTLS(@"Prompts[1102][1]")
+				  informativeText:TXTLS(@"Prompts[1102][2]")
 					defaultButton:TXTLS(@"Prompts[0005]")
 				  alternateButton:TXTLS(@"Prompts[0004]")
-				  informativeText:TXTLS(@"Prompts[1102][2]")
 				 defaultUserInput:nil
 				  completionBlock:^(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString) {
 					  if (defaultButtonClicked) {

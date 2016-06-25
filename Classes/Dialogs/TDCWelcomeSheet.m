@@ -43,7 +43,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *addChannelButton;
 @property (nonatomic, weak) IBOutlet NSButton *deleteChannelButton;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
-@property (nonatomic, weak) IBOutlet TVCTextFieldComboBoxWithValueValidation *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, strong) NSMutableArray *channelList;
 @property (nonatomic, copy) NSDictionary *serverList;

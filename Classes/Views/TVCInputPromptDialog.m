@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCInputPromptDialog ()
 @property (nonatomic, weak) IBOutlet NSButton *defaultButton;
@@ -53,53 +53,59 @@
 @implementation TVCInputPromptDialog
 
 - (void)alertWithMessageTitle:(NSString *)messageTitle
-				defaultButton:(NSString *)defaultButtonTitle
-			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
-			 defaultUserInput:(NSString *)userInputText
-			  completionBlock:(TVCInputPromptDialogCompletionBlock)completionBlock
+				defaultButton:(NSString *)defaultButtonTitle
+			  alternateButton:(nullable NSString *)alternateButtonTitle
+			 defaultUserInput:(nullable NSString *)userInputText
+			  completionBlock:(nullable TVCInputPromptDialogCompletionBlock)completionBlock
 {
-	[RZMainBundle() loadNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
+	NSParameterAssert(messageTitle != nil);
+	NSParameterAssert(informativeText != nil);
+	NSParameterAssert(defaultButtonTitle != nil);
 
-	if (NSObjectIsNotEmpty(userInputText)) {
-		[self.informationalInput setStringValue:userInputText];
+	(void)[RZMainBundle() loadNibNamed:@"TVCInputPromptDialog" owner:self topLevelObjects:nil];
+
+	if (userInputText) {
+		self.informationalInput.stringValue = userInputText;
 	}
 	
-	[self.defaultButton	setTitle:defaultButtonTitle];
-	[self.defaultButton setAction:@selector(modalDidCloseWithDefaultButton:)];
-	[self.defaultButton setTarget:self];
+	self.defaultButton.title = defaultButtonTitle;
+	self.defaultButton.action = @selector(modalDidCloseWithDefaultButton:);
+	self.defaultButton.target = self;
 
-	[self.alternateButton setTitle:alternateButtonTitle];
-	[self.alternateButton setAction:@selector(modalDidCloseWithAlternateButton:)];
-	[self.alternateButton setTarget:self];
-	
-	[self.informationalText	setStringValue:informativeText];
-	[self.informationalTitle setStringValue:messageTitle];
+	self.alternateButton.title = alternateButtonTitle;
+	self.alternateButton.action = @selector(modalDidCloseWithAlternateButton:);
+	self.alternateButton.target = self;
+
+	self.informationalTitle.stringValue = messageTitle;
+	self.informationalText.stringValue = informativeText;
 
 	self.completionBlock = completionBlock;
 
-	[[self window] makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)modalDidCloseWithDefaultButton:(id)sender
 {
 	self.defaultButtonClicked = YES;
 
-	[[self window] close];
+	[self.window close];
 }
 
 - (void)modalDidCloseWithAlternateButton:(id)sender
 {
 	self.defaultButtonClicked = NO;
 
-	[[self window] close];
+	[self.window close];
 }
 
 - (void)windowWillClose:(NSNotification *)note
 {
 	if (self.completionBlock) {
-		self.completionBlock(self, self.defaultButtonClicked, [self.informationalInput stringValue]);
+		self.completionBlock(self, self.defaultButtonClicked, self.informationalInput.stringValue);
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
