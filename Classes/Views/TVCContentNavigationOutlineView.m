@@ -35,25 +35,28 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCAnimatedContentNavigationOutlineView ()
-@property (nonatomic, weak) id lastSelectionWeakRef;
+@interface TVCContentNavigationOutlineView ()
+@property (nonatomic, weak) IBOutlet NSView *contentView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
+@property (nonatomic, weak, nullable) id lastSelectionWeakRef;
+@property (readonly, nullable) id parentOfSelectedItem;
 @end
 
-/* This outline view used to be animated. See git history. */
-@implementation TVCAnimatedContentNavigationOutlineView
+@implementation TVCContentNavigationOutlineView
 
 #pragma mark -
 #pragma mark Basic Class
 
 - (void)awakeFromNib
 {
-	[self setDelegate:self];
-	[self setDataSource:self];
+	self.dataSource = (id)self;
+	self.delegate = (id)self;
 }
 
-- (void)startAtSelectionIndex:(NSInteger)startingSelection
+- (void)startAtSelectionIndex:(NSUInteger)startingSelection
 {
 	[self selectItemAtIndex:startingSelection];
 }
@@ -61,38 +64,36 @@
 #pragma mark -
 #pragma mark Collapse/Expand Logic
 
-- (id)parentOfSelectedItem
+- (nullable id)parentOfSelectedItem
 {
-	if (self.lastSelectionWeakRef) {
-		id parentItem = [self parentForItem:self.lastSelectionWeakRef];
-
-		if (parentItem) {
-			return parentItem;
-		}
+	if (self.lastSelectionWeakRef == nil) {
+		return nil;
 	}
 
-	return nil;
+	id parentItem = [self parentForItem:self.lastSelectionWeakRef];
+
+	return parentItem;
 }
 
 #pragma mark -
 #pragma mark NSOutlineViewDelegate Delegates
 
-- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(id)item
+- (NSInteger)outlineView:(NSOutlineView *)sender numberOfChildrenOfItem:(nullable id)item
 {
 	if (item) {
 		return [item[@"children"] count];
-	} else {
-		return [self.navigationTreeMatrix count];
 	}
+
+	return self.navigationTreeMatrix.count;
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
+- (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(nullable id)item
 {
 	if (item) {
 		return item[@"children"][index];
-	} else {
-		return self.navigationTreeMatrix[index];
 	}
+
+	return self.navigationTreeMatrix[index];
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldCollapseItem:(id)item
@@ -107,22 +108,26 @@
 
 - (void)outlineViewItemDidExpand:(NSNotification *)notification
 {
-	id itemCrushed = [notification userInfo][@"NSObject"];
+	id parentItem = self.parentOfSelectedItem;
 
-	id parentItem = [self parentOfSelectedItem];
+	id itemCrushed = notification.userInfo[@"NSObject"];
 
-	if (itemCrushed == parentItem) {
-		if ([self isItemExpanded:parentItem]) {
-			NSInteger childIndex = [self rowForItem:self.lastSelectionWeakRef];
+	if (itemCrushed != parentItem) {
+		return;
+	}
 
-			if (childIndex > -1) {
-				[self selectItemAtIndex:childIndex];
-			}
-		}
+	if ([self isItemExpanded:parentItem] == NO) {
+		return;
+	}
+
+	NSInteger childIndex = [self rowForItem:self.lastSelectionWeakRef];
+
+	if (childIndex >= 0) {
+		[self selectItemAtIndex:childIndex];
 	}
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
+- (nullable id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(nullable NSTableColumn *)tableColumn byItem:(nullable id)item
 {
 	return item[@"name"];
 }
@@ -132,31 +137,33 @@
 	return ([item containsKey:@"children"] == NO);
 }
 
-- (id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(NSTableColumn *)tableColumn item:(id)item
+- (nullable id)outlineView:(NSOutlineView *)outlineView viewForTableColumn:(nullable NSTableColumn *)tableColumn item:(id)item
 {
 	NSTableCellView *newView = [outlineView makeViewWithIdentifier:@"navEntry" owner:self];
 	
-	[[newView textField] setStringValue:item[@"name"]];
+	newView.textField.stringValue = item[@"name"];
 	
 	return newView;
 }
 
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-	NSInteger selectedRow = [self selectedRow];
+	NSInteger selectedRow = self.selectedRow;
 
-	NSAssertReturn(selectedRow > -1);
+	if (selectedRow < 0) {
+		return;
+	}
 
-	NSDictionary *navItem = [self itemAtRow:selectedRow];
+	NSDictionary *navigationItem = [self itemAtRow:selectedRow];
 
-	[self setLastSelectionWeakRef:navItem];
+	self.lastSelectionWeakRef = navigationItem;
 
-	[self presentView:navItem[@"view"]];
+	[self presentView:navigationItem[@"view"]];
 	
-	id firstResponder = navItem[@"firstResponder"];
+	id firstResponder = navigationItem[@"firstResponder"];
 	
 	if (firstResponder) {
-		[self.parentWindow makeFirstResponder:firstResponder];
+		[self.window makeFirstResponder:firstResponder];
 	}
 }
 
@@ -168,3 +175,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

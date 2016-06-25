@@ -93,11 +93,11 @@
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateCommonNameField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateMD5FingerprintField;
 @property (nonatomic, weak) IBOutlet NSTextField *clientCertificateSHA1FingerprintField;
-@property (nonatomic, weak) IBOutlet TVCAnimatedContentNavigationOutlineView *navigationOutlineview;
+@property (nonatomic, weak) IBOutlet TVCContentNavigationOutlineView *navigationOutlineview;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightsTable;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *ignoreTable;
-@property (nonatomic, weak) IBOutlet TVCTextFieldComboBoxWithValueValidation *serverAddressComboBox;
+@property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *awayNicknameTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *normalLeavingCommentTextField;

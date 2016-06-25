@@ -123,7 +123,7 @@
 	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
-	@class TVCAnimatedContentNavigationOutlineView;
+	@class TVCContentNavigationOutlineView;
 	@class TVCAutoExpandingTextField;
 	@class TVCAutoExpandingTokenField;
 	@class TVCBasicTableView;
@@ -149,8 +149,8 @@
 	@class TVCMemberList;
 	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
-	@class TVCTextFieldComboBoxWithValueValidation;
-	@class TVCTextFieldComboBoxWithValueValidationCell;
+	@class TVCComboBoxWithValueValidation;
+	@class TVCComboBoxWithValueValidationCell;
 	@class TVCTextFieldWithValueValidation;
 	@class TVCTextFieldWithValueValidationCell;
 	@class TVCTextViewIRCFormattingMenu;
@@ -323,10 +323,8 @@
 	#import "TPCThemeSettings.h"
 
 	/* View Controllers */
-	#import "TVCAnimatedContentNavigationOutlineView.h"
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
-	#import "TVCDockIcon.h"
 	#import "TVCImageURLParser.h"
 	#import "TVCInputPromptDialog.h"
 	#import "TVCMainWindowTextView.h"
@@ -343,10 +341,9 @@
 	#import "TVCMainWindowTitlebarAccessoryView.h"
 	#import "TDCProgressInformationSheet.h"
 	#import "TVCMemberList.h"
-	#import "TVCQueuedCertificateTrustPanel.h"
 	#import "TVCServerList.h"
 	#import "TVCTextFieldWithValueValidation.h"
-	#import "TVCTextFieldComboBoxWithValueValidation.h"
+	#import "TVCComboBoxWithValueValidation.h"
 	#import "TVCTextViewWithIRCFormatter.h"
 
 	/* Master Controllers — Root */

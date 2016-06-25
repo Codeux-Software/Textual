@@ -37,15 +37,19 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class TVCInputPromptDialog;
 
 typedef void (^TVCInputPromptDialogCompletionBlock)(TVCInputPromptDialog *sender, BOOL defaultButtonClicked, NSString *resultString);
 
 @interface TVCInputPromptDialog : NSWindowController
 - (void)alertWithMessageTitle:(NSString *)messageTitle
-				defaultButton:(NSString *)defaultButtonTitle
-			  alternateButton:(NSString *)alternateButtonTitle
 			  informativeText:(NSString *)informativeText
-			 defaultUserInput:(NSString *)userInputText
-			  completionBlock:(TVCInputPromptDialogCompletionBlock)completionBlock;
+				defaultButton:(NSString *)defaultButtonTitle
+			  alternateButton:(nullable NSString *)alternateButtonTitle
+			 defaultUserInput:(nullable NSString *)userInputText
+			  completionBlock:(nullable TVCInputPromptDialogCompletionBlock)completionBlock;
 @end
+
+NS_ASSUME_NONNULL_END

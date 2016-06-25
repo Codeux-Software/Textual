@@ -353,7 +353,7 @@
 	NSInteger tag = [item tag];
 	
 	/* What are we going to do with nothing selected? */
-	if ([self.fileTransferTable countSelectedRows] <= 0) {
+	if ([self.fileTransferTable numberOfSelectedRows] <= 0) {
 		return NO;
 	}
 	

@@ -35,13 +35,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCDockIcon : NSObject
-+ (void)updateDockIcon;
+@interface TVCContentNavigationOutlineView : NSOutlineView <NSOutlineViewDelegate, NSOutlineViewDataSource>
+@property (nonatomic, assign) NSUInteger contentViewPadding;
+@property (nonatomic, assign) NSUInteger contentViewPreferredWidth;
+@property (nonatomic, assign) NSUInteger contentViewPreferredHeight;
+@property (nonatomic, copy) NSArray *navigationTreeMatrix;
+@property (nonatomic, assign) BOOL updateWindowFrameWhileOffscreen;
 
-+ (void)resetCachedCount;
-
-+ (void)drawWithoutCount;
-+ (void)drawWithHilightCount:(NSInteger)highlightCount messageCount:(NSInteger)messageCount;
+- (void)startAtSelectionIndex:(NSUInteger)startingSelection;
 @end
+
+NS_ASSUME_NONNULL_END

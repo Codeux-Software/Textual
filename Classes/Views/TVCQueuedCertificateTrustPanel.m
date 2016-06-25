@@ -35,19 +35,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 #import <objc/message.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+@class TVCQueuedCertificateTrustPanelContext;
+
 @interface TVCQueuedCertificateTrustPanel ()
-@property (nonatomic, strong) NSMutableArray *queuedEntries;
-@property (nonatomic, strong) SFCertificateTrustPanel *currentPanel;
-@property (nonatomic, weak) id activeSocket; // The current, open sheet
+@property (nonatomic, strong) NSMutableArray<TVCQueuedCertificateTrustPanelContext *> *queuedEntries;
+@property (nonatomic, strong, nullable) SFCertificateTrustPanel *currentPanel;
+@property (nonatomic, weak, nullable) GCDAsyncSocket *currentSocket; // The current, open sheet
 @property (nonatomic, assign) BOOL doNotInvokeCompletionBlockNextPass;
 @end
 
-@interface TVCQueuedCertificateTrustPanelObject : NSObject
-@property (nonatomic, weak) id socketHandler;
+@interface TVCQueuedCertificateTrustPanelContext : NSObject
+@property (nonatomic, weak) GCDAsyncSocket *socket;
 @property (nonatomic, copy) TVCQueuedCertificateTrustPanelCompletionBlock completionBlock;
 @end
 
@@ -56,7 +58,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.queuedEntries = [NSMutableArray array];
+		[self prepareInitialState];
 		
 		return self;
 	}
@@ -64,52 +66,63 @@
 	return nil;
 }
 
-- (void)enqueue:(id)socket withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
+- (void)prepareInitialState
 {
-	TVCQueuedCertificateTrustPanelObject *newObject = [TVCQueuedCertificateTrustPanelObject new];
+	self.queuedEntries = [NSMutableArray array];
+}
 
-	[newObject setSocketHandler:socket];
+- (void)enqueue:(GCDAsyncSocket *)socket withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock
+{
+	NSParameterAssert(socket != nil);
+	NSParameterAssert(completionBlock != nil);
 
-	[newObject setCompletionBlock:completionBlock];
+	 TVCQueuedCertificateTrustPanelContext *context =
+	[TVCQueuedCertificateTrustPanelContext new];
+
+	context.completionBlock = completionBlock;
+
+	context.socket = socket;
 	
 	@synchronized(self.queuedEntries) {
-		[self.queuedEntries addObject:newObject];
+		[self.queuedEntries addObject:context];
 
-		if ([self.queuedEntries count] == 1) {
+		if (self.queuedEntries.count == 1) {
 			[self presentNextQueuedEntry];
 		}
 	}
 }
 
-- (void)dequeueEntryForSocket:(id)socket
+- (void)dequeueEntryForSocket:(GCDAsyncSocket *)socket
 {
-	if (self.activeSocket) {
-		if (self.activeSocket == socket) {
-			if (self.currentPanel) {
-				SEL selectorName = NSSelectorFromString(@"_dismissWithCode:");
+	NSParameterAssert(socket != nil);
 
-				if ([self.currentPanel respondsToSelector:selectorName]) {
-					[self setDoNotInvokeCompletionBlockNextPass:YES];
+	if (self.currentSocket == nil) {
+		return;
+	}
 
-					(void)objc_msgSend(self.currentPanel, selectorName, NSModalResponseCancel);
-				}
-			}
-		} else {
-			@synchronized(self.queuedEntries) {
-				__block NSInteger matchedIndex = -1;
+	/* If the given socket is the socket that's currently presented,
+	 then access private API to dismiss the open sheet. */
+	if (self.currentSocket == socket) {
+		SEL dismissSelector = NSSelectorFromString(@"_dismissWithCode:");
 
-				[self.queuedEntries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-					if ([obj socketHandler] == socket) {
-						matchedIndex = idx;
+		if ([self.currentPanel respondsToSelector:dismissSelector]) {
+			self.doNotInvokeCompletionBlockNextPass = YES;
 
-						*stop = YES;
-					}
-				}];
+			(void)objc_msgSend(self.currentPanel, dismissSelector, NSModalResponseCancel);
+		}
 
-				if (matchedIndex > -1) {
-					[self.queuedEntries removeObjectAtIndex:matchedIndex];
-				}
-			}
+		return;
+	}
+
+	/* Search queued entries for entry that matches socket */
+	@synchronized(self.queuedEntries) {
+		NSUInteger entryIndex =
+			[self.queuedEntries indexOfObjectPassingTest:^BOOL(TVCQueuedCertificateTrustPanelContext *object, NSUInteger index, BOOL *stop) {
+				return (object.socket == socket);
+			}];
+
+		if (entryIndex != NSNotFound) {
+			[self.queuedEntries removeObjectAtIndex:entryIndex];
 		}
 	}
 }
@@ -117,63 +130,61 @@
 - (void)presentNextQueuedEntry
 {
 	XRPerformBlockSynchronouslyOnMainQueue(^{
-		/* Gather information. */
-		/* The oldest entry will be at index 0. */
-		TVCQueuedCertificateTrustPanelObject *contextInfo = self.queuedEntries[0];
+		[self _presentNextQueuedEntry];
+	});
+}
 
-		self.activeSocket = [contextInfo socketHandler];
+- (void)_presentNextQueuedEntry
+{
+	TVCQueuedCertificateTrustPanelContext *contextInfo = self.queuedEntries[0];
 
-		/* Build panel. */
-		SecTrustRef trustInfo = [self.activeSocket sslCertificateTrustInformation];
+	self.currentSocket = contextInfo.socket;
 
-		NSString *certificateHost = [self.activeSocket sslCertificateTrustPolicyName];
+	SecTrustRef trustRef = self.currentSocket.sslCertificateTrustInformation;
 
-		NSString *description = TXTLS(@"Prompts[1131][2]", certificateHost);
+	NSString *policyName = self.currentSocket.sslCertificateTrustPolicyName;
 
-		 self.currentPanel = [SFCertificateTrustPanel new];
-		
-		[self.currentPanel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
-		
-		[self.currentPanel setInformativeText:description];
-		
-		/* Begin sheet. */
-		[self.currentPanel beginSheetForWindow:nil
+	NSString *description = TXTLS(@"Prompts[1131][2]", policyName);
+
+	self.currentPanel = [SFCertificateTrustPanel new];
+
+	[self.currentPanel setAlternateButtonTitle:TXTLS(@"Prompts[0004]")];
+
+	[self.currentPanel setInformativeText:description];
+
+	[self.currentPanel beginSheetForWindow:nil
 							 modalDelegate:self
 							didEndSelector:@selector(_certificateSheetDidEnd_stage1:returnCode:contextInfo:)
 							   contextInfo:(__bridge void *)(contextInfo)
-									 trust:trustInfo
-								   message:TXTLS(@"Prompts[1131][1]", certificateHost)];
-	});
+									 trust:trustRef
+								   message:TXTLS(@"Prompts[1131][1]", policyName)];
 }
 
 - (void)_certificateSheetDidEnd_stage1:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-	TVCQueuedCertificateTrustPanelObject *contextObject = (__bridge TVCQueuedCertificateTrustPanelObject *)contextInfo;
+	TVCQueuedCertificateTrustPanelContext *contextObject = (__bridge TVCQueuedCertificateTrustPanelContext *)contextInfo;
 
 	[self _certificateSheetDidEnd_stage2:sheet returnCode:returnCode contextInfo:contextObject];
 }
 
-- (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(TVCQueuedCertificateTrustPanelObject *)contextInfo
+- (void)_certificateSheetDidEnd_stage2:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(TVCQueuedCertificateTrustPanelContext *)contextInfo
 {
-	/* Inform callback of result. */
-	if (self.doNotInvokeCompletionBlockNextPass == NO) {
+	if (self.doNotInvokeCompletionBlockNextPass) {
+		self.doNotInvokeCompletionBlockNextPass = NO;
+	} else {
 		BOOL isTrusted = (returnCode == NSModalResponseOK);
 
-		[contextInfo completionBlock](isTrusted);
-	} else {
-		self.doNotInvokeCompletionBlockNextPass = NO;
+		contextInfo.completionBlock(isTrusted);
 	}
 
-	[self setCurrentPanel:nil];
+	self.currentPanel = nil;
 
-	[self setActiveSocket:nil];
-
-	[self setDoNotInvokeCompletionBlockNextPass:NO];
+	self.currentSocket = nil;
 
 	@synchronized(self.queuedEntries) {
 		[self.queuedEntries removeObjectAtIndex:0];
 
-		if ([self.queuedEntries count] > 0) {
+		if (self.queuedEntries.count > 0) {
 			[self presentNextQueuedEntry];
 		}
 	}
@@ -181,5 +192,9 @@
 
 @end
 
-@implementation TVCQueuedCertificateTrustPanelObject
+#pragma mark -
+
+@implementation TVCQueuedCertificateTrustPanelContext
 @end
+
+NS_ASSUME_NONNULL_END

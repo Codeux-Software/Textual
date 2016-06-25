@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="11129.15" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment version="1080" identifier="macosx"/>
-        <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11129.15"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerPropertiesSheet">
@@ -106,7 +106,7 @@
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9ke-X4-49Z" id="Uj0-Wm-eox" customClass="TVCAnimatedContentNavigationOutlineView">
+                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9ke-X4-49Z" id="Uj0-Wm-eox" customClass="TVCContentNavigationOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="2" height="3"/>
@@ -132,6 +132,7 @@
                                                     <subviews>
                                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L6D-B7-wWc">
                                                             <rect key="frame" x="0.0" y="-2" width="153" height="17"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="VCb-YR-fs2">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -150,7 +151,6 @@
                                         <outlet property="contentView" destination="3Sc-SW-qku" id="57S-Bg-oqm"/>
                                         <outlet property="contentViewHeightConstraint" destination="fSt-e3-gxU" id="0bg-sa-MbG"/>
                                         <outlet property="contentViewWidthConstraint" destination="RKp-aB-2ui" id="Qfd-5X-XMW"/>
-                                        <outlet property="parentWindow" destination="5" id="PaW-sC-U9T"/>
                                     </connections>
                                 </outlineView>
                             </subviews>
@@ -202,7 +202,7 @@ Gw
                     </button>
                     <box autoresizesSubviews="NO" borderType="line" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Uo7-GS-DCO">
                         <rect key="frame" x="171" y="37" width="529" height="313"/>
-                        <view key="contentView">
+                        <view key="contentView" id="xFq-35-m2l">
                             <rect key="frame" x="1" y="1" width="527" height="311"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -213,12 +213,12 @@ Gw
                             </subviews>
                         </view>
                         <constraints>
-                            <constraint firstItem="3Sc-SW-qku" firstAttribute="top" secondItem="Uo7-GS-DCO" secondAttribute="top" constant="2" id="1WH-Iz-uOU"/>
-                            <constraint firstItem="3Sc-SW-qku" firstAttribute="leading" secondItem="Uo7-GS-DCO" secondAttribute="leading" constant="2" id="8ie-X2-5s0"/>
+                            <constraint firstItem="3Sc-SW-qku" firstAttribute="leading" secondItem="Uo7-GS-DCO" secondAttribute="leading" constant="2" id="3ka-jr-2DF"/>
+                            <constraint firstItem="3Sc-SW-qku" firstAttribute="top" secondItem="Uo7-GS-DCO" secondAttribute="top" constant="2" id="Hq6-Rq-MAt"/>
                             <constraint firstAttribute="width" constant="523" id="RKp-aB-2ui"/>
-                            <constraint firstAttribute="trailing" secondItem="3Sc-SW-qku" secondAttribute="trailing" constant="2" id="brO-l1-VLr"/>
+                            <constraint firstAttribute="trailing" secondItem="3Sc-SW-qku" secondAttribute="trailing" constant="2" id="SwG-wZ-wvX"/>
                             <constraint firstAttribute="height" constant="307" id="fSt-e3-gxU"/>
-                            <constraint firstAttribute="bottom" secondItem="3Sc-SW-qku" secondAttribute="bottom" constant="1" id="oTs-CI-ENO"/>
+                            <constraint firstAttribute="bottom" secondItem="3Sc-SW-qku" secondAttribute="bottom" constant="1" id="gxu-Cx-8Wg"/>
                         </constraints>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -267,7 +267,7 @@ Gw
                 <outlet property="delegate" destination="-2" id="2302"/>
                 <outlet property="initialFirstResponder" destination="1456" id="1467"/>
             </connections>
-            <point key="canvasLocation" x="515.5" y="270"/>
+            <point key="canvasLocation" x="88" y="90"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1469" userLabel="General View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
@@ -332,12 +332,12 @@ Gw
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCTextFieldComboBoxWithValueValidation">
+                <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1548" customClass="TVCComboBoxWithValueValidation">
                     <rect key="frame" x="210" y="195" width="235" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="ZcH-CA-VrU"/>
                     </constraints>
-                    <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="1549" customClass="TVCTextFieldComboBoxWithValueValidationCell">
+                    <comboBoxCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="irc.example.com" usesSingleLineMode="YES" numberOfVisibleItems="5" id="1549" customClass="TVCComboBoxWithValueValidationCell">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -881,7 +881,7 @@ Gw
                     <rect key="frame" x="37" y="240" width="456" height="36"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Fx0-Yf-kbO">
                         <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="ujo-Zq-Cf1">
                                 <rect key="frame" x="0.0" y="0.0" width="456" height="36"/>
@@ -993,7 +993,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="LcR-Dy-bmD">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1802" id="1805" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1064,7 +1064,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1802">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Channel List"/>
@@ -1150,7 +1150,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="227"/>
                     <clipView key="contentView" id="txe-Gd-Uvj">
                         <rect key="frame" x="1" y="0.0" width="420" height="226"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="firstColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" headerView="2451" id="2454" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="203"/>
@@ -1222,7 +1222,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="2451">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Highlight Match Table"/>
@@ -1250,7 +1250,7 @@ Gw
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
                         <rect key="frame" x="1" y="0.0" width="420" height="202"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="1852" id="1851" customClass="TVCBasicTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="420" height="179"/>
@@ -1307,7 +1307,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="1852">
-                        <rect key="frame" x="0.0" y="0.0" width="420" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="420" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                     <accessibility description="Address Book List"/>
@@ -1409,7 +1409,7 @@ Gw
                     <rect key="frame" x="57" y="54" width="416" height="200"/>
                     <clipView key="contentView" id="rH8-fa-Y7i">
                         <rect key="frame" x="1" y="1" width="414" height="198"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView importsGraphics="NO" richText="NO" continuousSpellChecking="YES" allowsUndo="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="2310">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="198"/>
@@ -1701,7 +1701,7 @@ Gw
                     <rect key="frame" x="48" y="28" width="434" height="42"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Of6-s1-mF9">
                         <rect key="frame" x="0.0" y="0.0" width="434" height="42"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="hIR-WT-lAK">
                                 <rect key="frame" x="0.0" y="42" width="434" height="42"/>
@@ -1818,7 +1818,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O6l-eN-3Uc">
-                    <rect key="frame" x="47" y="98" width="418" height="25"/>
+                    <rect key="frame" x="47" y="100" width="418" height="24"/>
                     <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="2" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Suc-bU-9RU"/>
                     <connections>
                         <accessibilityConnection property="title" destination="Itb-Ee-5gX" id="1qV-pR-HOf"/>
@@ -1826,7 +1826,7 @@ Gw
                     </connections>
                 </slider>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Itb-Ee-5gX">
-                    <rect key="frame" x="37" y="129" width="127" height="17"/>
+                    <rect key="frame" x="37" y="130" width="127" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Number of seconds:" id="Jay-s8-9Xn">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1834,7 +1834,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1gq-lL-Ur6">
-                    <rect key="frame" x="110" y="30" width="311" height="14"/>
+                    <rect key="frame" x="110" y="32" width="311" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="The options presented above require a reconnect to apply." id="MJ0-IQ-dNi">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" red="0.16511158649999999" green="0.16511158649999999" blue="0.16511158649999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1842,7 +1842,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rXs-B6-ItZ">
-                    <rect key="frame" x="405" y="129" width="80" height="14"/>
+                    <rect key="frame" x="405" y="130" width="80" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="left" title="Current Value:" id="U5o-dB-jmW">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1872,7 +1872,7 @@ Gw
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9b4-kF-7N0">
-                    <rect key="frame" x="35" y="107" width="10" height="14"/>
+                    <rect key="frame" x="35" y="108" width="10" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="1" id="zP6-2E-iaW">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1880,7 +1880,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pDB-qm-dyE">
-                    <rect key="frame" x="469" y="107" width="19" height="14"/>
+                    <rect key="frame" x="469" y="108" width="19" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="60" id="9bE-uW-eqe">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1888,7 +1888,7 @@ Gw
                     </textFieldCell>
                 </textField>
                 <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RXW-HB-aEa">
-                    <rect key="frame" x="47" y="159" width="418" height="25"/>
+                    <rect key="frame" x="47" y="160" width="418" height="24"/>
                     <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="60" doubleValue="10" tickMarkPosition="below" numberOfTickMarks="60" allowsTickMarkValuesOnly="YES" sliderType="linear" id="nbd-xl-Ad6"/>
                     <connections>
                         <accessibilityConnection property="title" destination="0Af-cs-B5g" id="9rF-h2-yOy"/>

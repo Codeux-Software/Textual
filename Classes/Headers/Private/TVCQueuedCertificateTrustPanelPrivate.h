@@ -35,12 +35,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^TVCQueuedCertificateTrustPanelCompletionBlock)(BOOL isTrusted);
 
 @interface TVCQueuedCertificateTrustPanel : NSObject
-- (void)dequeueEntryForSocket:(id)socket;
+- (void)dequeueEntryForSocket:(GCDAsyncSocket *)socket;
 
-- (void)enqueue:(id)socket withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock;
+- (void)enqueue:(GCDAsyncSocket *)socket withCompletionBlock:(TVCQueuedCertificateTrustPanelCompletionBlock)completionBlock;
 @end
+
+NS_ASSUME_NONNULL_END
