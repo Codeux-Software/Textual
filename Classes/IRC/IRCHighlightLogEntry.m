@@ -118,6 +118,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setRenderedMessage:(NSAttributedString *)renderedMessage
 {
+	NSParameterAssert(renderedMessage != nil);
+
 	if (self->_renderedMessage != renderedMessage) {
 		self->_renderedMessage = [renderedMessage copy];
 	}
@@ -125,6 +127,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setClientId:(NSString *)clientId
 {
+	NSParameterAssert(clientId != nil);
+
 	if (self->_clientId != clientId) {
 		self->_clientId = [clientId copy];
 	}
@@ -132,6 +136,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setChannelId:(NSString *)channelId
 {
+	NSParameterAssert(channelId != nil);
+
 	if (self->_channelId != channelId) {
 		self->_channelId = [channelId copy];
 	}
@@ -139,6 +145,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setLineNumber:(NSString *)lineNumber
 {
+	NSParameterAssert(lineNumber != nil);
+
 	if (self->_lineNumber != lineNumber) {
 		self->_lineNumber = [lineNumber copy];
 	}
@@ -146,6 +154,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setTimeLogged:(NSDate *)timeLogged
 {
+	NSParameterAssert(timeLogged != nil);
+
 	if (self->_timeLogged != timeLogged) {
 		self->_timeLogged = [timeLogged copy];
 	}
