@@ -247,7 +247,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Main window segmented controller */
 	if ((reloadAction & TPCPreferencesReloadTextFieldSegmentedControllerOriginAction) == TPCPreferencesReloadTextFieldSegmentedControllerOriginAction) {
-		[mainWindowTextField() reloadSegmentedControllerOrigin];
+		[mainWindowTextField() reloadOriginPointsAndRecalculateSize];
 	}
 
 	/* Main window alpha level */
@@ -280,7 +280,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Text field font size */
 	if ((reloadAction & TPCPreferencesReloadTextFieldFontSizeAction) == TPCPreferencesReloadTextFieldFontSizeAction) {
-		[mainWindowTextField() updateTextBoxBasedOnPreferredFontSize];
+		[mainWindowTextField() updateTextBasedOnPreferredFontSize];
 	}
 
 	/* Input history scope */

@@ -35,7 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
+
+#define TVCMainWindowDefaultFrameWidth		800.0
+#define TVCMainWindowDefaultFrameHeight		474.0
 
 typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 	TVCMainWindowShiftSelectionMaintainGroupingFlag			= 1 << 0,
@@ -45,19 +48,45 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 };
 
 @interface TVCMainWindow ()
-@property (nonatomic, readwrite, copy) NSArray *selectedItems;
-@property (nonatomic, readwrite, strong) IRCTreeItem *selectedItem;
-@property (nonatomic, copy) NSArray *previousSelectedItemsId;
-@property (nonatomic, copy) NSString *previousSelectedItemId;
-@property (nonatomic, assign) NSTimeInterval lastKeyWindowStateChange;
-@property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
-@property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
-@property (nonatomic, copy) NSValue *cachedSwipeOriginPoint;
+@property (nonatomic, assign) BOOL ignoreOutlineViewSelectionChanges;
+@property (nonatomic, assign) BOOL ignoreNextOutlineViewSelectionChange;
+
+- (TVCMainWindowChannelView *)channelView;
+- (TVCMainWindowTitlebarAccessoryView *)titlebarAccessoryView;
+- (nullable TVCMainWindowTitlebarAccessoryViewController *)titlebarAccessoryViewController;
+- (TVCMainWindowTitlebarAccessoryViewLockButton *)titlebarAccessoryViewLockButton;
+- (TVCTextViewIRCFormattingMenu *)formattingMenu;
+- (TXMenuControllerMainWindowProxy *)mainMenuProxy;
+
+- (BOOL)reloadLoadingScreen;
+
+- (void)updateTitle;
+- (void)updateTitleFor:(IRCTreeItem *)item;
+
+- (void)reloadTree;
+- (void)reloadTreeItem:(IRCTreeItem *)item;
+- (void)reloadTreeGroup:(IRCTreeItem *)item;
+
+- (void)adjustSelection;
+
+- (void)maybeToggleFullscreenAfterLaunch;
+
+- (void)updateAlphaValueToReflectPreferences;
+
+- (void)updateChannelViewBoxContentViewSelection;
+
+- (void)updateBackgroundColor;
+
+- (void)redirectKeyDown:(NSEvent *)e;
+
+- (void)inputText:(id)string asCommand:(NSString *)command;
 
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem;
 - (void)selectItemInSelectedItems:(IRCTreeItem *)selectedItem refreshChannelView:(BOOL)refreshChannelView;
 
-- (void)shiftSelection:(IRCTreeItem *)oldItem toItem:(IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
+- (void)shiftSelection:(nullable IRCTreeItem *)oldItem toItem:(nullable IRCTreeItem *)newItem options:(TVCMainWindowShiftSelectionFlags)selectionOptions;
 
 - (void)channelViewSelectionChangeTo:(IRCTreeItem *)selectedItem;
 @end
+
+NS_ASSUME_NONNULL_END

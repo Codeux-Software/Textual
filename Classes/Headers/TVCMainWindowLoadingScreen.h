@@ -38,22 +38,27 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* Animation is disabled unless an animated method is invoked */
 @interface TVCMainWindowLoadingScreenView : NSBox
-- (void)popWelcomeAddServerView;
-- (void)popLoadingConfigurationView;
-- (void)popTrialExpiredView;
+- (void)showLoadingConfigurationView;
+- (void)showTrialExpiredView;
+- (void)showWelcomeAddServerView;
 
 @property (readonly) BOOL viewIsVisible;
 
 - (void)hideAll;
-- (void)hideAll:(BOOL)animate;
+- (void)hideAllAnimated;
 
 - (void)hideWelcomeAddServerView;
-- (void)hideWelcomeAddServerView:(BOOL)animate;
+- (void)hideWelcomeAddServerViewAnimated;
 
 - (void)hideLoadingConfigurationView;
-- (void)hideLoadingConfigurationView:(BOOL)animate;
+- (void)hideLoadingConfigurationViewAnimated;
 
 - (void)hideTrialExpiredView;
-- (void)hideTrialExpiredView:(BOOL)animate;
+- (void)hideTrialExpiredViewAnimated;
 @end
+
+NS_ASSUME_NONNULL_END

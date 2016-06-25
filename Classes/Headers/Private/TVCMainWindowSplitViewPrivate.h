@@ -39,11 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
 
-#define TVCMainWindowSplitViewMaximumDividerPosition			300
-#define TVCMainWindowSplitViewMinimumDividerPosition			120
+#define TVCMainWindowSplitViewMaximumDividerPosition			300.0
+#define TVCMainWindowSplitViewMinimumDividerPosition			120.0
 
-#define TVCMainWindowSplitViewServerListDefaultPosition			190
-#define TVCMainWindowSplitViewMemberListDefaultPosition			120
+#define TVCMainWindowSplitViewServerListDefaultPosition			190.0
+#define TVCMainWindowSplitViewMemberListDefaultPosition			120.0
 
 @interface TVCMainWindowSplitView ()
 - (void)restorePositions;

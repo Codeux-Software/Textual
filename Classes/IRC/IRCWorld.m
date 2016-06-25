@@ -545,7 +545,7 @@ NSString * const IRCWorldClientListWasModifiedNotification = @"IRCWorldClientLis
 	if (reloadUserInterface) {
 		[mainWindow() updateBackgroundColor];
 		
-		[mainWindowTextField() redrawOriginPoints];
+		[mainWindowTextField() reloadOriginPoints];
 	}
 }
 

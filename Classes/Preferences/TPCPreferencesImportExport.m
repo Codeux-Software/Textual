@@ -120,9 +120,9 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* The loading screen is a generic way to show something during import */
-	[mainWindowLoadingScreen() hideAll:NO];
+	[mainWindowLoadingScreen() hideAll];
 
-	[mainWindowLoadingScreen() popLoadingConfigurationView];
+	[mainWindowLoadingScreen() showLoadingConfigurationView];
 
 	[worldController() setIsImportingConfiguration:YES];
 

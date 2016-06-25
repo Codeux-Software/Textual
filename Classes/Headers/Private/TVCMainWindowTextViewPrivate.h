@@ -1,4 +1,4 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -35,15 +35,41 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowChannelView : NSSplitView <NSSplitViewDelegate>
-- (void)populateSubviews;
+@class TVCMainWindowTextViewContentView;
+
+@interface TVCMainWindowTextView ()
+- (TVCMainWindowSegmentedController *)segmentedController;
+- (TVCMainWindowSegmentedControllerCell *)segmentedControllerCell;
+
+- (void)updateTextDirection;
+
+- (void)updateTextBasedOnPreferredFontSize;
+
+- (void)updateSegmentedController;
+
+- (void)updateBackgroundColor;
+
+- (void)windowDidChangeKeyState;
+
+- (void)reloadOriginPoints;
+- (void)reloadOriginPointsAndRecalculateSize;
+
+- (void)recalculateTextViewSize;
+- (void)recalculateTextViewSizeForced;
 @end
 
-@interface TVCMainWindowChannelViewSubview : NSView
-@property (readonly) BOOL overlayVisible;
+@interface TVCMainWindowTextViewBackground : NSView
+@property (readonly, weak) TVCMainWindowTextViewContentView *contentView;
+
+@property (readonly, copy) NSColor *systemSpecificFontColor;
+@property (readonly, copy) NSColor *systemSpecificPlaceholderStringFontColor;
+
+- (NSFont *)systemSpecificFontWithSize:(CGFloat)fontSize;
 @end
 
-@interface TVCMainWindowChannelViewSubviewOverlayView : NSView
+@interface TVCMainWindowTextViewContentView : NSView
 @end
+
+NS_ASSUME_NONNULL_END

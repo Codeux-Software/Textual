@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCMainWindowLoadingScreenView ()
 @property (nonatomic, weak) IBOutlet NSView *welcomeAddServerNormalView;
@@ -45,7 +45,7 @@
 @property (nonatomic, weak) IBOutlet NSProgressIndicator *loadingConfigurationViewPI;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *loadingScreenMinimumHeightConstraint;
-@property (nonatomic, assign) BOOL stackLocked; // YES when animation is in progress.
+@property (nonatomic, assign) BOOL isAnimating; // YES when animation is in progress
 @end
 
 @implementation TVCMainWindowLoadingScreenView
@@ -53,28 +53,33 @@
 #pragma mark -
 #pragma mark Display View (Public)
 
-- (void)popWelcomeAddServerView
+- (void)showWelcomeAddServerView
 {
-	if (self.stackLocked == NO) {
-		[self displayView:self.welcomeAddServerNormalView];
+	if (self.isAnimating) {
+		return;
 	}
+
+	[self displayView:self.welcomeAddServerNormalView];
 }
 
-- (void)popLoadingConfigurationView
+- (void)showLoadingConfigurationView
 {
-	if (self.stackLocked == NO) {
-		[self displayView:self.loadingConfigurationView];
+	if (self.isAnimating) {
+		return;
+	}
 
-		[self.loadingConfigurationViewPI startAnimation:nil];
-		[self.loadingConfigurationViewPI setDisplayedWhenStopped:YES];
-	}	
+	[self displayView:self.loadingConfigurationView];
+
+	[self.loadingConfigurationViewPI startAnimation:nil];
 }
 
-- (void)popTrialExpiredView
+- (void)showTrialExpiredView
 {
-	if (self.stackLocked == NO) {
-		[self displayView:self.trialExpiredView];
+	if (self.isAnimating) {
+		return;
 	}
+
+	[self displayView:self.trialExpiredView];
 }
 
 #pragma mark -
@@ -82,84 +87,100 @@
 
 - (void)hideLoadingConfigurationView
 {
-	if (self.stackLocked == NO) {
+	if (self.isAnimating == NO) {
 		[self.loadingConfigurationViewPI stopAnimation:nil];
-		[self.loadingConfigurationViewPI setDisplayedWhenStopped:NO];
 	}
-	
-	[self hideAll:YES];
+
+	[self hideAllWithoutAnimation];
 }
 
-- (void)hideLoadingConfigurationView:(BOOL)animate
+- (void)hideLoadingConfigurationViewAnimated
 {
-	if (self.stackLocked == NO) {
+	if (self.isAnimating == NO) {
 		[self.loadingConfigurationViewPI stopAnimation:nil];
 	}
 
-	[self hideAll:animate];
+	[self hideAllWithAnimation];
 }
 
 #pragma mark -
 
 - (void)hideWelcomeAddServerView
 {
-	[self hideAll:YES];
+	[self hideAllWithoutAnimation];
 }
 
-- (void)hideWelcomeAddServerView:(BOOL)animate
+- (void)hideWelcomeAddServerViewAnimated
 {
-	[self hideAll:animate];
+	[self hideAllWithAnimation];
 }
 
 #pragma mark -
 
 - (void)hideTrialExpiredView
 {
-	[self hideAll:YES];
+	[self hideAllWithoutAnimation];
 }
 
-- (void)hideTrialExpiredView:(BOOL)animate
+- (void)hideTrialExpiredViewAnimated
 {
-	[self hideAll:animate];
+	[self hideAllWithAnimation];
 }
 
 #pragma mark -
 
 - (void)hideAll
 {
-	[self hideAll:YES];
+	[self hideAllAnimated:NO];
 }
 
-- (void)hideAll:(BOOL)animate
+- (void)hideAllAnimated
 {
-	if (self.stackLocked == NO) {
-		for (NSView *alv in [[self contentView] subviews]) {
-			if ([alv isHidden] == NO) {
-				[self hideView:alv animate:animate];
-			}
+	[self hideAllWithAnimation];
+}
+
+- (void)hideAllWithAnimation
+{
+	[self hideAllAnimated:YES];
+}
+
+- (void)hideAllWithoutAnimation
+{
+	[self hideAllAnimated:NO];
+}
+
+- (void)hideAllAnimated:(BOOL)animate
+{
+	if (self.isAnimating) {
+		return;
+	}
+
+	for (NSView *subview in self.contentView.subviews) {
+		if (subview.hidden) {
+			continue;
 		}
+
+		[self hideView:subview animate:animate];
 	}
 }
 
 #pragma mark -
-#pragma mark Display View (Private).
+#pragma mark Display View (Private)
 
 - (void)displayView:(NSView *)view
 {
 	[self disableBackgroundControlsStepOne];
 
-	NSRect viewFrame = [view frame];
+	NSRect viewFrame = view.frame;
 	
-	[self.loadingScreenMinimumWidthConstraint setConstant:viewFrame.size.width];
-	[self.loadingScreenMinimumHeightConstraint setConstant:viewFrame.size.height];
+	self.loadingScreenMinimumWidthConstraint.constant = viewFrame.size.width;
+	self.loadingScreenMinimumHeightConstraint.constant = viewFrame.size.height;
 
-	[view setHidden:NO];
+	view.hidden = NO;
 
-	[view setAlphaValue:1.0];
-	
-	[self setHidden:NO];
+	self.alphaValue = 1.0;
 
-	[self setAlphaValue:1.0];
+	self.hidden = NO;
 	
 	[self displayIfNeeded];
 
@@ -167,79 +188,90 @@
 }
 
 #pragma mark -
-#pragma mark Hide View (Private).
+#pragma mark Hide View (Private)
 
 - (void)hideView:(NSView *)view animate:(BOOL)animate
 {
-	/* The primary view and background view must be set to hidden instead of simply setting
-	 it to 0.0 alpha. If only the alpha is changed, then the underlying WebView will not be
-	 able to register mouse movements over elements because the views are invisible and on
-	 top of the WebView it_ */
-
 	[self enableBackgroundControlsStepOne];
 	
-	[self.loadingScreenMinimumWidthConstraint setConstant:0];
-	[self.loadingScreenMinimumHeightConstraint setConstant:0];
-	
-	if (animate == NO) {
-		[view setHidden:YES];
-	
-		[self setHidden:YES];
+	self.loadingScreenMinimumWidthConstraint.constant = 0.0;
+	self.loadingScreenMinimumHeightConstraint.constant = 0.0;
 
-		[self setAlphaValue:0.0];
+	/* ================================== */
+
+	TXEmtpyBlockDataType phaseTwoBlock = ^{
+		view.hidden = YES;
+
+		self.hidden = YES;
 
 		[self enableBackgroundControlsStepTwo];
-	} else {
-		[RZAnimationCurrentContext() setDuration:0.8];
+	};
 
-		[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-			self.stackLocked = animate;
+	/* ================================== */
 
-			[[self animator] setAlphaValue:0.0];
-		} completionHandler:^{
-			[view setHidden:YES];
+	if (animate == NO) {
+		self.alphaValue = 0.0;
 
-			[self setHidden:YES];
+		phaseTwoBlock();
 
-			self.stackLocked = NO;
-
-			[self enableBackgroundControlsStepTwo];
-		}];
+		return;
 	}
+
+	/* ================================== */
+
+	self.isAnimating = YES;
+
+	[RZAnimationCurrentContext() setDuration:1.0];
+
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+		[self animator].alphaValue = 0.0;
+	} completionHandler:^{
+		phaseTwoBlock();
+
+		self.isAnimating = NO;
+	}];
 }
 
 #pragma mark -
-#pragma mark Private Utilities.
+#pragma mark Private Utilities
 
 - (BOOL)viewIsVisible
 {
-	return ([self isHidden] == NO || self.stackLocked);
+	return (self.isAnimating && self.isHidden == NO);
 }
 
 - (void)disableBackgroundControlsStepOne
 {
-	[[mainWindow() contentSplitView] setHidden:YES];
+	self.mainWindow.contentSplitView.hidden = YES;
 }
 
 - (void)disableBackgroundControlsStepTwo
 {
-	[mainWindowTextField() setEditable:NO];
-	[mainWindowTextField() setSelectable:NO];
-	
-	[mainWindowTextField() updateSegmentedController];
+	TVCMainWindowTextView *textField = self.mainWindow.inputTextField;
+
+	textField.editable = NO;
+
+	textField.selectable = NO;
+
+	[textField updateSegmentedController];
 }
 
 - (void)enableBackgroundControlsStepOne
 {
-	[[mainWindow() contentSplitView] setHidden:NO];
+	self.mainWindow.contentSplitView.hidden = NO;
 }
 
 - (void)enableBackgroundControlsStepTwo
 {
-	[mainWindowTextField() setEditable:YES];
-	[mainWindowTextField() setSelectable:YES];
+	TVCMainWindowTextView *textField = self.mainWindow.inputTextField;
+
+	textField.editable = YES;
+
+	textField.selectable = YES;
 	
-	[mainWindowTextField() updateSegmentedController];
+	[textField updateSegmentedController];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

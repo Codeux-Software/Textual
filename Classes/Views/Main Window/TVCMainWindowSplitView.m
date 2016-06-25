@@ -36,16 +36,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define _minimumSplitViewWidth			120
+#define _minimumSplitViewWidth			120.0
 
 NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindowSplitView";
 
 @interface TVCMainWindowSplitView ()
 @property (nonatomic, assign) BOOL restoredPositions;
-@property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
 @property (nonatomic, assign) BOOL stopFrameUpdatesForServerList;
+@property (nonatomic, assign) BOOL stopFrameUpdatesForMemberList;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *serverListWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *memberListWidthConstraint;
 @end
@@ -57,7 +57,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	NSColor *dividerColor = TVCMainWindowSplitViewDividerColor;
 
 	if ([TPCPreferences invertSidebarColors]) {
-		dividerColor = [dividerColor invertedColor];
+		dividerColor = dividerColor.invertedColor;
 	}
 
 	return dividerColor;
@@ -65,15 +65,18 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)awakeFromNib
 {
-	[self setDelegate:self];
+	self.delegate = (id)self;
 }
 
 - (void)restorePositions
 {
 	if (self.restoredPositions == NO) {
 		[self expandServerList];
+
 		[self expandMemberList];
-		
+
+		// Set after expanding views so that -resizeWithOldSuperviewSize:
+		// does not save the views' frames prematurely
 		self.restoredPositions = YES;
 	}
 }
@@ -81,11 +84,11 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 - (NSRect)splitView:(NSSplitView *)splitView effectiveRect:(NSRect)proposedEffectiveRect forDrawnRect:(NSRect)drawnRect ofDividerAtIndex:(NSInteger)dividerIndex
 {
 	if (dividerIndex == 0) {
-		if ([self isServerListCollapsed]) {
+		if (self.serverListCollapsed) {
 			return NSZeroRect;
 		}
-	} else {
-		if ([self isMemberListCollapsed]) {
+	} else if (dividerIndex == 1) {
+		if (self.memberListCollapsed) {
 			return NSZeroRect;
 		}
 	}
@@ -100,34 +103,34 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)expandServerList
 {
-	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
+	NSScrollView *scrollView = self.mainWindow.serverList.enclosingScrollView;
+
+	scrollView.hasVerticalScroller = YES;
 	
-	[scrollView setHasVerticalScroller:YES];
-	
-	NSView *subview = [self subviews][0];
-	
-	[subview setHidden:NO];
+	NSView *subview = self.subviews[0];
+
+	subview.hidden = NO;
 	
 	[self setPosition:[self positionToRestoreServerListAt] ofDividerAtIndex:0];
-	
-	[self.serverListWidthConstraint setConstant:_minimumSplitViewWidth];
+
+	self.serverListWidthConstraint.constant = _minimumSplitViewWidth;
 
 	self.stopFrameUpdatesForServerList = NO;
 }
 
 - (void)expandMemberList
 {
-	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
+	NSScrollView *scrollView = self.mainWindow.memberList.enclosingScrollView;
+
+	scrollView.hasVerticalScroller = YES;
 	
-	[scrollView setHasVerticalScroller:YES];
-	
-	NSView *subview = [self subviews][2];
-	
-	[subview setHidden:NO];
+	NSView *subview = self.subviews[2];
+
+	subview.hidden = NO;
 	
 	[self setPosition:[self positionToRestoreMemberListAt] ofDividerAtIndex:1];
-	
-	[self.memberListWidthConstraint setConstant:_minimumSplitViewWidth];
+
+	self.memberListWidthConstraint.constant = _minimumSplitViewWidth;
 
 	self.stopFrameUpdatesForMemberList = NO;
 }
@@ -136,41 +139,43 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 {
 	self.stopFrameUpdatesForServerList = YES;
 
-	[self.serverListWidthConstraint setConstant:0.0];
+	self.serverListWidthConstraint.constant = 0.0;
+
+	NSScrollView *scrollView = self.mainWindow.serverList.enclosingScrollView;
+
+	scrollView.hasVerticalScroller = NO;
 	
-	NSScrollView *scrollView = [mainWindowServerList() enclosingScrollView];
-	
-	[scrollView setHasVerticalScroller:NO];
-	
-	NSView *subview = [self subviews][0];
+	NSView *subview = self.subviews[0];
 	
 	[self setPosition:0.0 ofDividerAtIndex:0];
-	
-	[subview setHidden:YES];
+
+	subview.hidden = YES;
 }
 
 - (void)collapseMemberList
 {
 	self.stopFrameUpdatesForMemberList = YES;
 	
-	[self.memberListWidthConstraint setConstant:0.0];
+	self.memberListWidthConstraint.constant = 0.0;
 	
-	NSView *subview = [self subviews][2];
+	NSView *subview = self.subviews[2];
+
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	NSScrollView *scrollView = mainWindow.memberList.enclosingScrollView;
+
+	scrollView.hasVerticalScroller = NO;
 	
-	NSScrollView *scrollView = [mainWindowMemberList() enclosingScrollView];
-	
-	[scrollView setHasVerticalScroller:NO];
-	
-	NSRect windowFrame = [mainWindow() frame];
+	NSRect windowFrame = mainWindow.frame;
 	
 	[self setPosition:NSWidth(windowFrame) ofDividerAtIndex:1];
-	
-	[subview setHidden:YES];
+
+	subview.hidden = YES;
 }
 
 - (void)toggleServerListVisbility
 {
-	if ([self isServerListCollapsed]) {
+	if (self.serverListCollapsed) {
 		[self expandServerList];
 	} else {
 		[self collapseServerList];
@@ -179,30 +184,26 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)toggleMemberListVisbility
 {
-	if ([self isMemberListCollapsed]) {
+	if (self.memberListCollapsed) {
 		[self expandMemberList];
 	} else {
 		[self collapseMemberList];
 	}
 }
 
-- (NSInteger)positionForDividerAtIndex:(NSInteger)idx
+- (CGFloat)positionForDividerAtIndex:(NSInteger)index
 {
-	NSRect subviewFrame = [[self subviews][idx] frame];
+	NSRect subviewFrame = self.subviews[index].frame;
 	
-	return (NSMaxX(subviewFrame) + ([self dividerThickness] * idx));
+	return (NSMaxX(subviewFrame) + (self.dividerThickness * index));
 }
 
-- (NSInteger)positionToRestoreServerListAt
+- (CGFloat)positionToRestoreServerListAt
 {
 	NSDictionary *frames = [self savedFrames];
 	
-	NSInteger position = 0;
-	
-	if ([frames containsKey:@"serverList"]) {
-		position = [frames integerForKey:@"serverList"];
-	}
-	
+	CGFloat position = [frames doubleForKey:@"serverList"];
+
 	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
 		position = TVCMainWindowSplitViewServerListDefaultPosition;
 	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
@@ -212,21 +213,17 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	return position;
 }
 
-- (NSInteger)positionToRestoreMemberListAt
+- (CGFloat)positionToRestoreMemberListAt
 {
 	return [self positionToRestoreMemberListAt:YES];
 }
 
-- (NSInteger)positionToRestoreMemberListAt:(BOOL)correctedFrame
+- (CGFloat)positionToRestoreMemberListAt:(BOOL)correctedFrame
 {
 	NSDictionary *frames = [self savedFrames];
 	
-	NSInteger position = 0;
-	
-	if ([frames containsKey:@"memberList"]) {
-		position = [frames integerForKey:@"memberList"];
-	}
-	
+	CGFloat position = [frames doubleForKey:@"memberList"];
+
 	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
 		position = TVCMainWindowSplitViewMemberListDefaultPosition;
 	} else if (position > TVCMainWindowSplitViewMaximumDividerPosition) {
@@ -234,17 +231,17 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	}
 	
 	if (correctedFrame) {
-		NSRect windowFrame = [mainWindow() frame];
+		NSRect windowFrame = self.mainWindow.frame;
 		
-		return ((NSWidth(windowFrame) - position) - [self dividerThickness]);
+		return ((NSWidth(windowFrame) - position) - self.dividerThickness);
 	}
 	
 	return position;
 }
 
-- (NSInteger)positionOfServerListForSaving
+- (CGFloat)positionOfServerListForSaving
 {
-	NSInteger position = [self positionForDividerAtIndex:0];
+	CGFloat position = [self positionForDividerAtIndex:0];
 	
 	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
 		position = TVCMainWindowSplitViewServerListDefaultPosition;
@@ -255,13 +252,13 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	return position;
 }
 
-- (NSInteger)positionOfMemberListForSaving
+- (CGFloat)positionOfMemberListForSaving
 {
-	NSInteger rawPosition = [self positionForDividerAtIndex:1];
+	CGFloat position = [self positionForDividerAtIndex:1];
 	
-	NSRect windowFrame = [mainWindow() frame];
+	NSRect windowFrame = self.mainWindow.frame;
 	
-	NSInteger position = ((rawPosition - NSWidth(windowFrame)) * (-1));
+	position = ((position - NSWidth(windowFrame)) * (-1));
 	
 	if (position < TVCMainWindowSplitViewMinimumDividerPosition) {
 		position = TVCMainWindowSplitViewMemberListDefaultPosition;
@@ -274,15 +271,16 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (void)updateSavedFrames
 {
-	NSInteger serverListPosition = 0;
-	NSInteger memberListPosition = 0;
-	
+	CGFloat serverListPosition = 0;
+
 	if (self.stopFrameUpdatesForServerList) {
 		serverListPosition = [self positionToRestoreServerListAt];
 	} else {
 		serverListPosition = [self positionOfServerListForSaving];
 	}
-	
+
+	CGFloat memberListPosition = 0;
+
 	if (self.stopFrameUpdatesForMemberList) {
 		memberListPosition = [self positionToRestoreMemberListAt:NO];
 	} else {
@@ -297,7 +295,7 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 	[RZUserDefaults() setObject:newFrames forKey:_userDefaultsKey];
 }
 
-- (NSDictionary *)savedFrames
+- (nullable NSDictionary<NSString *, NSNumber *> *)savedFrames
 {
 	return [RZUserDefaults() objectForKey:_userDefaultsKey];
 }
@@ -313,12 +311,14 @@ NSString * const _userDefaultsKey	  = @"NSSplitView Saved Frames -> TVCMainWindo
 
 - (BOOL)isServerListCollapsed
 {
-	return [self isSubviewCollapsed:[self subviews][0]];
+	return [self isSubviewCollapsed:self.subviews[0]];
 }
 
 - (BOOL)isMemberListCollapsed
 {
-	return [self isSubviewCollapsed:[self subviews][2]];
+	return [self isSubviewCollapsed:self.subviews[2]];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

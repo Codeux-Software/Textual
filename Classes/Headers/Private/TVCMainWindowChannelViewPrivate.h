@@ -1,11 +1,11 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,21 +35,16 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TVCMainWindowTitlebarAccessoryView : NSView
+@interface TVCMainWindowChannelView : NSSplitView
+- (void)populateSubviews;
 @end
 
-@interface TVCMainWindowTitlebarAccessoryViewController : NSTitlebarAccessoryViewController
+@interface TVCMainWindowChannelViewSubview : NSView
 @end
 
-@interface TVCMainWindowTitlebarAccessoryViewLockButton : NSButton
-- (void)disableDrawingCustomBackgroundColor;
-- (void)enableDrawingCustomBackgroundColor;
-
-- (void)positionImageOverContent;
-- (void)positionImageOnLeftSide;
-
-- (void)setIconAsLocked;
-- (void)setIconAsUnlocked;
+@interface TVCMainWindowChannelViewSubviewOverlayView : NSView
 @end
+
+NS_ASSUME_NONNULL_END

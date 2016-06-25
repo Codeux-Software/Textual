@@ -37,6 +37,8 @@
 
 #import "TPI_ZNCAdditions.h"
 
+#import "TVCMainWindowPrivate.h"
+
 @implementation TPI_ZNCAdditions
 
 #pragma mark -

@@ -38,17 +38,9 @@
 
 #import "TextualApplication.h"
 
-#define TVCMainWindowSplitViewDividerColor		[NSColor colorWithCalibratedWhite:0.65 alpha:1.0]
+NS_ASSUME_NONNULL_BEGIN
 
-#define TVCMainWindowSplitViewMaximumDividerPosition			300
-#define TVCMainWindowSplitViewMinimumDividerPosition			120
-
-#define TVCMainWindowSplitViewServerListDefaultPosition			190
-#define TVCMainWindowSplitViewMemberListDefaultPosition			120
-
-@interface TVCMainWindowSplitView : NSSplitView <NSSplitViewDelegate>
-- (void)restorePositions;
-
+@interface TVCMainWindowSplitView : NSSplitView
 - (void)expandServerList;
 - (void)collapseServerList;
 - (void)toggleServerListVisbility;
@@ -61,3 +53,5 @@
 
 @property (getter=isMemberListCollapsed, readonly) BOOL memberListCollapsed;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.06];
 }
 
-+ (NSColor *)whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina
++ (NSColor *)whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithoutRetina
 {
 	return [NSColor colorWithCalibratedWhite:0.0 alpha:0.10];
 }

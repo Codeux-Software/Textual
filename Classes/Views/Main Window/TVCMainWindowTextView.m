@@ -35,15 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define _WindowContentBorderTotalPaddingYosemite		23.0
 #define _WindowContentBorderTotalPaddingMavericks		23.0
-
-#define _WindowSegmentedControllerDefaultWidth			150.0
-
-#define _WindowSegmentedControllerLeadingVisibleEdge	10.0
-#define _WindowSegmentedControllerLeadingHiddenEdge		0.0
+#define _WindowContentBorderTotalPaddingYosemite		23.0
 
 #define _WindowContentViewMinimumHeightConstraint		35.0
 
@@ -58,7 +53,18 @@
 								@"TextFieldTextReplacement"]
 
 @interface TVCMainWindowTextView ()
+@property (readonly, copy) NSColor *placeholderStringFontColor;
 @property (nonatomic, assign) TVCMainWindowTextViewFontSize cachedFontSize;
+@property (nonatomic, copy) NSAttributedString *placeholderString;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *textViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet TVCMainWindowTextViewBackground *backgroundView;
+@property (nonatomic, weak, nullable) IBOutlet TVCMainWindowTextViewContentView *contentView;
+@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
+@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedControllerCell *segmentedControllerCell;
+@end
+
+@interface TVCMainWindowTextViewContentView ()
+@property (nonatomic, weak) IBOutlet TVCMainWindowSegmentedController *segmentedController;
 @end
 
 @implementation TVCMainWindowTextView
@@ -84,23 +90,26 @@
 	}
 }
 
+- (void)updateBackgroundColorOnYosemite
+{
+	if (self.mainWindow.usingVibrantDarkAppearance) {
+		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantDark];
+	} else {
+		self.segmentedController.appearance = [NSAppearance appearanceNamed:NSAppearanceNameVibrantLight];
+	}
+
+	self.backgroundView.needsDisplay = YES;
+
+	self.contentView.needsDisplay = YES;
+}
+
 - (void)updateBackgroundColor
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-		if ([mainWindow() isUsingVibrantDarkAppearance]) {
-			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantDark]];
-		} else {
-			[self.segmentedController setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameVibrantLight]];
-		}
-
-		[self.contentView setNeedsDisplay:YES];
-
-		[self.backgroundView setNeedsDisplay:YES];
+		[self updateBackgroundColorOnYosemite];
 	}
 
-	NSColor *preferredFontColor = [self.backgroundView systemSpecificTextFieldTextFontColor];
-	
-	[self setPreferredFontColor:preferredFontColor];
+	self.preferredFontColor = self.backgroundView.systemSpecificFontColor;
 
 	[self updateTextBoxCachedPreferredFontSize];
 
@@ -113,102 +122,38 @@
 }
 
 #pragma mark -
-#pragma mark Events
-
-- (void)rightMouseDown:(NSEvent *)theEvent
-{
-	[super rightMouseDown:theEvent];
-}
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-	if ([NSEvent modifierFlags] & NSControlKeyMask) {
-		[super rightMouseDown:theEvent];
-
-		return;
-	}
-
-	[super mouseDown:theEvent];
-}
-
-#pragma mark -
 #pragma mark Segmented Controller
 
-- (void)redrawOriginPoints
+- (void)reloadOriginPointsAndRecalculateSize
 {
-	[self redrawOriginPoints:NO];
-}
+	[self reloadOriginPoints];
 
-- (void)redrawOriginPoints:(BOOL)resetSize
-{
-	/* Discussion: With Auto Layout, the frame of a view is still retained even if the view
-	 itself is hidden from view. The solution is to maintain a constraint for the view height
-	 and update it using a pre-defined width or set it to zero when disabled. A constraint
-	 is also maintained for the leading of the segmented controller to allow that spacing to 
-	 be removed when it is hidden from view. */
-	if ([TPCPreferences hideMainWindowSegmentedController]) {
-		[self.segmentedControllerWidthConstraint setConstant:0];
-		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingHiddenEdge];
-	} else {
-		[self.segmentedControllerWidthConstraint setConstant:_WindowSegmentedControllerDefaultWidth];
-		[self.segmentedControllerLeadingConstraint setConstant:_WindowSegmentedControllerLeadingVisibleEdge];
-	}
-	
-	/* There seems to be a slight delay while the constraints are updated
-	 so we set a very small timer to resize the text field. */
+	/* Reload size on next go aroudn to allow constraint layout to occur before so */
 	XRPerformBlockAsynchronouslyOnMainQueue(^{
-		[self resetTextFieldCellSize:YES];
+		[self recalculateTextViewSizeForced];
 	});
 }
 
-- (void)reloadSegmentedControllerOrigin
+- (void)reloadOriginPoints
 {
-	[self redrawOriginPoints:YES];
+	[self.segmentedController updateSegmentedControllerOrigin];
 }
 
 - (void)updateSegmentedController
 {
-	if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-		/* Enable controller? */
-		BOOL condition1 = ([worldController() clientCount] > 0);
-		
-		BOOL condition2 = ([mainWindowLoadingScreen() viewIsVisible] == NO);
-		
-		[self.segmentedController setEnabled:(condition1 && condition2)];
-		
-		/* Selection Settings. */
-		IRCClient *u = [mainWindow() selectedClient];
-		IRCChannel *c = [mainWindow() selectedChannel];
-
-		/* Segment 0 menu. */
-		[self.segmentedController setMenu:[menuController() segmentedControllerMenu] forSegment:0];
-		
-		/* Set menu for segment 1. */
-		NSMenuItem *segmentOneMenuItem = nil;
-		
-		if (c == nil) {
-			segmentOneMenuItem = [menuController() serverMenuItem];
-		} else {
-			segmentOneMenuItem = [menuController() channelMenuItem];
-		}
-		
-		[self.segmentedController setMenu:[segmentOneMenuItem submenu] forSegment:1];
-		
-		/* Open Address Book. */
-		[self.segmentedController setEnabled:(u && [u isConnected]) forSegment:2];
-	}
+	[self.segmentedController updateSegmentedController];
 }
 
 #pragma mark -
-#pragma mark Everything Else
+#pragma mark Utilities
 
 - (void)updateAllFontColorsToMatchTheDefaultFont
 {
-	[[self textStorage] beginEditing];
+	[self.textStorage beginEditing];
 
-	[[self textStorage] enumerateAttributesInRange:[self range]
-										   options:0
-										usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
+	[self.textStorage enumerateAttributesInRange:self.range
+										 options:0
+									  usingBlock:^(NSDictionary *attributes, NSRange effectiveRange, BOOL *stop)
 		{
 			if ([attributes containsKey:IRCTextFormatterForegroundColorAttributeName]) {
 				return;
@@ -217,12 +162,12 @@
 			[self resetFontColorInRange:effectiveRange];
 		}];
 
-	[[self textStorage] endEditing];
+	[self.textStorage endEditing];
 }
 
 - (void)setAttributedStringValue:(NSAttributedString *)attributedStringValue
 {
-	[super setAttributedStringValue:attributedStringValue];
+	super.attributedStringValue = attributedStringValue;
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[self updateAllFontColorsToMatchTheDefaultFont];
@@ -232,56 +177,55 @@
 - (void)updateTextDirection
 {
 	if ([TPCPreferences rightToLeftFormatting]) {
-		[self setBaseWritingDirection:NSWritingDirectionRightToLeft];
+		self.baseWritingDirection = NSWritingDirectionRightToLeft;
 	} else {
-		[self setBaseWritingDirection:NSWritingDirectionLeftToRight];
+		self.baseWritingDirection = NSWritingDirectionLeftToRight;
 	}
 }
 
-- (void)internalTextDidChange:(NSNotification *)aNotification
+- (void)textDidChange:(NSNotification *)aNotification
 {
-	[self resetTextFieldCellSize:NO];
+	[super textDidChange:aNotification];
+
+	[self recalculateTextViewSize];
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		NSString *value = [self stringValue];
-		
-		if ([value length] == 0) {
-			if ([self baseWritingDirection] == NSWritingDirectionLeftToRight) {
-				if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
-				} else {
-					[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
-				}
-			}
-		} else {
-			[super drawRect:dirtyRect];
-		}
+	if ([self needsToDrawRect:dirtyRect] == NO) {
+		return;
 	}
+
+	NSString *stringValue = self.stringValue;
+	
+	if (stringValue.length == 0) {
+		/* The place holder string is not drawn for right to left users */
+		if (self.baseWritingDirection == NSWritingDirectionLeftToRight) {
+			if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+				[self.placeholderString drawAtPoint:NSMakePoint(6, 2)];
+			} else {
+				[self.placeholderString drawAtPoint:NSMakePoint(6, 1)];
+			}
+		}
+
+		return;
+	}
+
+	[super drawRect:dirtyRect];
 }
 
-- (void)paste:(id)sender
+- (void)paste:(nullable id)sender
 {
     [super paste:self];
-    
-    [self resetTextFieldCellSize:NO];
+
+	[self recalculateTextViewSize];
 }
 
 - (BOOL)textView:(NSTextView *)aTextView doCommandBySelector:(SEL)aSelector
 {
     if (aSelector == @selector(insertNewline:)) {
-		/* -textEntered takes the current value of the text field,
-		 copies it into a variable, sends that value off to IRCWorld,
-		 then nullifies the text field itsef. */
-		[mainWindow() textEntered];
-		
-		/* -textEntered sets the length of text fied to 0 so we must
-		 update the text field size to reflect this fact. */
-        [self resetTextFieldCellSize:NO];
-		
-		/* Let delegate know we handled this event. */
+		[self.mainWindow textEntered];
+
         return YES;
     }
     
@@ -291,79 +235,78 @@
 #pragma mark -
 #pragma mark Multi-line Text Box Drawing
 
-- (NSColor *)placeholderTextFontColor
+- (NSColor *)placeholderStringFontColor
 {
-	return [self.backgroundView systemSpecificPlaceholderTextFontColor];
+	return self.backgroundView.systemSpecificPlaceholderStringFontColor;
 }
 
 - (void)updateTextBoxCachedPreferredFontSize
 {
-	/* Update the font. */
 	TVCMainWindowTextViewFontSize newFontSize = [TPCPreferences mainTextViewFontSize];
 
-	if (NSDissimilarObjects(self.cachedFontSize, newFontSize)) {
+	if (self.cachedFontSize != newFontSize) {
 		self.cachedFontSize = newFontSize;
-
-		if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
-			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:12.0]];
-		} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
-			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:14.0]];
-		} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
-			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:16.0]];
-		} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
-			[self setPreferredFont:[self.backgroundView systemSpecificTextFieldFontWithSize:24.0]];
-		}
-
-		/* Update the placeholder string. */
-		NSDictionary *attrs = @{
-			NSFontAttributeName				: [self preferredFont],
-
-			NSForegroundColorAttributeName	: [self placeholderTextFontColor]
-		};
-		
-		self.placeholderString = nil;
-		self.placeholderString = [NSAttributedString attributedStringWithString:TXTLS(@"TVCMainWindow[1011]") attributes:attrs];
-
-		/* Prepare draw. */
-		[self setNeedsDisplay:YES];
+	} else {
+		return;
 	}
+
+	if (self.cachedFontSize == TVCMainWindowTextViewFontNormalSize) {
+		self.preferredFont = [self.backgroundView systemSpecificFontWithSize:12.0];
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontLargeSize) {
+		self.preferredFont = [self.backgroundView systemSpecificFontWithSize:14.0];
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontExtraLargeSize) {
+		self.preferredFont = [self.backgroundView systemSpecificFontWithSize:16.0];
+	} else if (self.cachedFontSize == TVCMainWindowTextViewFontHumongousSize) {
+		self.preferredFont = [self.backgroundView systemSpecificFontWithSize:24.0];
+	}
+
+	/* Update the placeholder string */
+	NSDictionary *placeholderStringAttributes = @{
+		NSFontAttributeName	: self.preferredFont,
+		NSForegroundColorAttributeName : self.placeholderStringFontColor
+	};
+
+	self.placeholderString =
+	[NSAttributedString attributedStringWithString:TXTLS(@"TVCMainWindow[1011]") attributes:placeholderStringAttributes];
+
+	self.needsDisplay = YES;
 }
 
-- (void)updateTextBoxBasedOnPreferredFontSize
+- (void)updateTextBasedOnPreferredFontSize
 {
 	TVCMainWindowTextViewFontSize cachedFontSize = self.cachedFontSize;
 
 	[self updateTextBoxCachedPreferredFontSize];
 
-	if (NSDissimilarObjects(cachedFontSize, self.cachedFontSize)) {
+	if (self.cachedFontSize != cachedFontSize) {
 		[self updateAllFontSizesToMatchTheDefaultFont];
 	}
 
-	[self resetTextFieldCellSize:YES];
+	[self recalculateTextViewSizeForced];
 }
 
-- (NSInteger)backgroundViewDefaultHeight
+- (CGFloat)backgroundViewDefaultHeight
 {
-	return [[self layoutManager] defaultLineHeightForFont:self.preferredFont];
+	return [self.layoutManager defaultLineHeightForFont:self.preferredFont];
 }
 
-/* Do actual size math. */
-- (void)resetTextFieldCellSize:(BOOL)force
+- (void)recalculateTextViewSize
 {
-	/* Get window data. */
-	NSWindow *mainWindow = mainWindow();
+	[self recalculateTextViewSizeForced:NO];
+}
+
+- (void)recalculateTextViewSizeForced
+{
+	[self recalculateTextViewSizeForced:YES];
+}
+
+- (void)recalculateTextViewSizeForced:(BOOL)forceRecalculate
+{
+	NSWindow *window = self.window;
 	
-	NSRect windowFrame = [mainWindow frame];
-	
-	/* Get scroller data. */
-	NSScrollView *scrollView = [self enclosingScrollView];
-	
-	id scrollViewDocumentView = [scrollView contentView];
-	
-	NSRect documentViewBounds = [scrollViewDocumentView bounds];
-	
-	/* Content border padding. */
-	NSInteger contentBorderPadding = 0;
+	NSRect windowFrame = window.frame;
+
+	CGFloat contentBorderPadding = 0;
 	
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		contentBorderPadding = _WindowContentBorderTotalPaddingYosemite;
@@ -371,126 +314,128 @@
 		contentBorderPadding = _WindowContentBorderTotalPaddingMavericks;
 	}
 
-	/* Set defaults. */
-	NSInteger backgroundHeight = 0;
+	CGFloat backgroundHeight = 0;
 	
-	NSInteger backgroundDefaultHeight = [self backgroundViewDefaultHeight];
+	CGFloat backgroundHeightDefault = [self backgroundViewDefaultHeight];
 
-	/* Begin works... */
-	if ([self stringLength] < 1) {
-		backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
+	if (self.stringLength < 1) {
+		backgroundHeight = (backgroundHeightDefault + contentBorderPadding);
 	} else {
-		NSInteger backgroundViewMaxHeight = (NSHeight(windowFrame) - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
+		CGFloat backgroundHeightMaximum = (NSHeight(windowFrame) - (_WindowContentViewMinimumHeightConstraint + contentBorderPadding));
 		
-		backgroundHeight = [self highestHeightBelowHeight:backgroundViewMaxHeight withPadding:contentBorderPadding];
+		backgroundHeight = [self highestHeightBelowHeight:backgroundHeightMaximum withPadding:contentBorderPadding];
 		
-		if ((backgroundHeight - contentBorderPadding) < backgroundDefaultHeight) {
-			 backgroundHeight = (backgroundDefaultHeight + contentBorderPadding);
+		if ((backgroundHeight - contentBorderPadding) < backgroundHeightDefault) {
+			backgroundHeight = (backgroundHeightDefault + contentBorderPadding);
 		}
 	}
-	
-	[self.textFieldHeightConstraint setConstant:backgroundHeight];
+
+	self.textViewHeightConstraint.constant = backgroundHeight;
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
-		[mainWindow setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
+		[window setContentBorderThickness:backgroundHeight forEdge:NSMinYEdge];
 	}
 
-	if (documentViewBounds.origin.x > 0) {
-		documentViewBounds.origin.x = 0;
+	id scrollViewContentView = self.enclosingScrollView.contentView;
+
+	NSRect contentViewBounds = [scrollViewContentView bounds];
+
+	if (contentViewBounds.origin.x > 0) {
+		contentViewBounds.origin.x = 0;
 		
-		[scrollViewDocumentView scrollToPoint:documentViewBounds.origin];
+		[scrollViewContentView scrollToPoint:contentViewBounds.origin];
 	}
 }
 
 #pragma mark -
 #pragma mark NSTextView Context Menu Preferences
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath ofObject:(nullable id)object change:(nullable NSDictionary *)change context:(nullable void *)context
 {
 	if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCheck"]) {
-		[self setContinuousSpellCheckingEnabled:[TPCPreferences textFieldAutomaticSpellCheck]];
+		self.continuousSpellCheckingEnabled = [TPCPreferences textFieldAutomaticSpellCheck];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticGrammarCheck"]) {
-		[self setGrammarCheckingEnabled:[TPCPreferences textFieldAutomaticGrammarCheck]];
+		self.grammarCheckingEnabled = [TPCPreferences textFieldAutomaticGrammarCheck];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldAutomaticSpellCorrection"]) {
-		[self setAutomaticSpellingCorrectionEnabled:[TPCPreferences textFieldAutomaticSpellCorrection]];
+		self.automaticSpellingCorrectionEnabled = [TPCPreferences textFieldAutomaticSpellCorrection];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartCopyPaste"]) {
-		[self setSmartInsertDeleteEnabled:[TPCPreferences textFieldSmartCopyPaste]];
+		self.smartInsertDeleteEnabled = [TPCPreferences textFieldSmartCopyPaste];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartQuotes"]) {
-		[self setAutomaticQuoteSubstitutionEnabled:[TPCPreferences textFieldSmartQuotes]];
+		self.automaticQuoteSubstitutionEnabled = [TPCPreferences textFieldSmartQuotes];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartDashes"]) {
-		[self setAutomaticDashSubstitutionEnabled:[TPCPreferences textFieldSmartDashes]];
+		self.automaticDashSubstitutionEnabled = [TPCPreferences textFieldSmartDashes];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldSmartLinks"]) {
-		[self setAutomaticLinkDetectionEnabled:[TPCPreferences textFieldSmartLinks]];
+		self.automaticLinkDetectionEnabled = [TPCPreferences textFieldSmartLinks];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldDataDetectors"]) {
-		[self setAutomaticDataDetectionEnabled:[TPCPreferences textFieldDataDetectors]];
+		self.automaticDataDetectionEnabled = [TPCPreferences textFieldDataDetectors];
 	} else if ([keyPath isEqualIgnoringCase:@"TextFieldTextReplacement"]) {
-		[self setAutomaticTextReplacementEnabled:[TPCPreferences textFieldTextReplacement]];
+		self.automaticTextReplacementEnabled = [TPCPreferences textFieldTextReplacement];
 	} else if ([super respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
 
-- (void)setContinuousSpellCheckingEnabled:(BOOL)flag
+- (void)setContinuousSpellCheckingEnabled:(BOOL)continuousSpellCheckingEnabled
 {
-	[TPCPreferences setTextFieldAutomaticSpellCheck:flag];
+	[TPCPreferences setTextFieldAutomaticSpellCheck:continuousSpellCheckingEnabled];
 	
-	[super setContinuousSpellCheckingEnabled:flag];
+	super.continuousSpellCheckingEnabled = continuousSpellCheckingEnabled;
 }
 
-- (void)setGrammarCheckingEnabled:(BOOL)flag
+- (void)setGrammarCheckingEnabled:(BOOL)grammarCheckingEnabled
 {
-	[TPCPreferences setTextFieldAutomaticGrammarCheck:flag];
+	[TPCPreferences setTextFieldAutomaticGrammarCheck:grammarCheckingEnabled];
 	
-	[super setGrammarCheckingEnabled:flag];
+	super.grammarCheckingEnabled = grammarCheckingEnabled;
 }
 
-- (void)setAutomaticSpellingCorrectionEnabled:(BOOL)flag
+- (void)setAutomaticSpellingCorrectionEnabled:(BOOL)automaticSpellingCorrectionEnabled
 {
-	[TPCPreferences setTextFieldAutomaticSpellCorrection:flag];
+	[TPCPreferences setTextFieldAutomaticSpellCorrection:automaticSpellingCorrectionEnabled];
 	
-	[super setAutomaticSpellingCorrectionEnabled:flag];
+	super.automaticSpellingCorrectionEnabled = automaticSpellingCorrectionEnabled;
 }
 
-- (void)setSmartInsertDeleteEnabled:(BOOL)flag
+- (void)setSmartInsertDeleteEnabled:(BOOL)smartInsertDeleteEnabled
 {
-	[TPCPreferences setTextFieldSmartCopyPaste:flag];
+	[TPCPreferences setTextFieldSmartCopyPaste:smartInsertDeleteEnabled];
 	
-	[super setSmartInsertDeleteEnabled:flag];
+	super.smartInsertDeleteEnabled = smartInsertDeleteEnabled;
 }
 
-- (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)flag
+- (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)automaticQuoteSubstitutionEnabled
 {
-	[TPCPreferences setTextFieldSmartQuotes:flag];
+	[TPCPreferences setTextFieldSmartQuotes:automaticQuoteSubstitutionEnabled];
 	
-	[super setAutomaticQuoteSubstitutionEnabled:flag];
+	super.automaticQuoteSubstitutionEnabled = automaticQuoteSubstitutionEnabled;
 }
 
-- (void)setAutomaticDashSubstitutionEnabled:(BOOL)flag
+- (void)setAutomaticDashSubstitutionEnabled:(BOOL)automaticDashSubstitutionEnabled
 {
-	[TPCPreferences setTextFieldSmartDashes:flag];
+	[TPCPreferences setTextFieldSmartDashes:automaticDashSubstitutionEnabled];
 	
-	[super setAutomaticDashSubstitutionEnabled:flag];
+	super.automaticDashSubstitutionEnabled = automaticDashSubstitutionEnabled;
 }
 
-- (void)setAutomaticLinkDetectionEnabled:(BOOL)flag
+- (void)setAutomaticLinkDetectionEnabled:(BOOL)automaticLinkDetectionEnabled
 {
-	[TPCPreferences setTextFieldSmartLinks:flag];
+	[TPCPreferences setTextFieldSmartLinks:automaticLinkDetectionEnabled];
 	
-	[super setAutomaticLinkDetectionEnabled:flag];
+	super.automaticLinkDetectionEnabled = automaticLinkDetectionEnabled;
 }
 
-- (void)setAutomaticDataDetectionEnabled:(BOOL)flag
+- (void)setAutomaticDataDetectionEnabled:(BOOL)automaticDataDetectionEnabled
 {
-	[TPCPreferences setTextFieldDataDetectors:flag];
+	[TPCPreferences setTextFieldDataDetectors:automaticDataDetectionEnabled];
 	
-	[super setAutomaticDataDetectionEnabled:flag];
+	super.automaticDataDetectionEnabled = automaticDataDetectionEnabled;
 }
 
-- (void)setAutomaticTextReplacementEnabled:(BOOL)flag
+- (void)setAutomaticTextReplacementEnabled:(BOOL)automaticTextReplacementEnabled
 {
-	[TPCPreferences setTextFieldTextReplacement:flag];
+	[TPCPreferences setTextFieldTextReplacement:automaticTextReplacementEnabled];
 	
-	[super setAutomaticTextReplacementEnabled:flag];
+	super.automaticTextReplacementEnabled = automaticTextReplacementEnabled;
 }
 
 @end
@@ -505,25 +450,23 @@
 
 - (void)drawControllerForMavericks
 {
-	/* General Declarations. */
-	NSRect cellBounds = [self frame];
+	NSRect cellBounds = self.frame;
 	
-	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
+	CGContextRef context = RZGraphicsCurrentContext().graphicsPort;
 	
 	NSRect backgroundFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												   (cellBounds.size.height - 1.0));
 	
 	NSRect foregroundFrame = NSMakeRect(1.0, 2.0,  (cellBounds.size.width - 2.0),
 												   (cellBounds.size.height - 3.0));
+
+	NSColor *backgroundColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldBackgroundColor];
+	NSColor *outerShadowColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutsideShadowColor];
+
+	NSColor *backgroundBorderColor = nil;
+	NSColor *innerShadowColor = nil;
 	
-	/* Color values. */
-	NSColor *backgroundColor		= [TVCMainWindowTextViewMavericksUserInterace inputTextFieldBackgroundColor];
-	NSColor *outerShadowColor		= [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutsideShadowColor];
-	
-	NSColor *innerShadowColor		= nil;
-	NSColor *backgroundBorderColor	= nil;
-	
-	if ([mainWindow() isActiveForDrawing]) {
+	if (self.mainWindow.activeForDrawing) {
 		backgroundBorderColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldOutlineColorForActiveWindow];
 		
 		innerShadowColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldInsideShadowColorForActiveWindow];
@@ -533,18 +476,18 @@
 		innerShadowColor = [TVCMainWindowTextViewMavericksUserInterace inputTextFieldInsideShadowColorForInactiveWindow];
 	}
 
-	/* Shadow values. */
+	/* Shadow values */
 	NSShadow *outterShadow = [NSShadow new];
 	
-	[outterShadow setShadowColor:outerShadowColor];
-	[outterShadow setShadowOffset:NSMakeSize(0.0, -1.0)];
-	[outterShadow setShadowBlurRadius:0.0];
+	outterShadow.shadowColor = outerShadowColor;
+	outterShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
+	outterShadow.shadowBlurRadius = 0.0;
 	
 	NSShadow *innerShadow = [NSShadow new];
 	
-	[innerShadow setShadowColor:innerShadowColor];
-	[innerShadow setShadowOffset:NSMakeSize(0.0, -1.0)];
-	[innerShadow setShadowBlurRadius:0.0];
+	innerShadow.shadowColor = innerShadowColor;
+	innerShadow.shadowOffset = NSMakeSize(0.0, (-1.0));
+	innerShadow.shadowBlurRadius = 0.0;
 	
 	/* Draw the background rectangle which will act as the stroke of
 	 the foreground rectangle. It will also host the bottom shadow. */
@@ -560,37 +503,38 @@
 	
 	[NSGraphicsContext restoreGraphicsState];
 	
-	/* Draw the foreground rectangle. */
+	/* Draw the foreground rectangle */
 	NSBezierPath *rectangle2Path = [NSBezierPath bezierPathWithRoundedRect:foregroundFrame xRadius:3.5 yRadius:3.5];
 
 	[backgroundColor setFill];
 	
 	[rectangle2Path fill];
 	
-	/* Draw the inside shadow of the foreground rectangle. */
+	/* Draw the inside shadow of the foreground rectangle */
 	[NSGraphicsContext saveGraphicsState];
 	
-	NSRectClip([rectangle2Path bounds]);
+	NSRectClip(rectangle2Path.bounds);
 	
-	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+	CGContextSetShadowWithColor(context, CGSizeZero, 0.0, NULL);
 	
-	CGContextSetAlpha(context, [innerShadowColor alphaComponent]);
+	CGContextSetAlpha(context, innerShadowColor.alphaComponent);
 	
 	CGContextBeginTransparencyLayer(context, NULL);
+
 	{
-		/* Inside shadow drawing. */
+		/* Inside shadow drawing */
 		[innerShadow set];
 		
 		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
 		
 		CGContextBeginTransparencyLayer(context, NULL);
 		
-		/* Fill shadow. */
+		/* Fill shadow */
 		[innerShadowColor setFill];
 		
 		[rectangle2Path fill];
 		
-		/* Complete drawing. */
+		/* Complete drawing */
 		CGContextEndTransparencyLayer(context);
 	}
 	
@@ -613,119 +557,115 @@
 
 - (void)drawBlackControllerForYosemiteInFocusedWindow
 {
-	/* General Declarations. */
-	NSRect cellBounds = [self frame];
+	NSRect cellBounds = self.frame;
 	
-	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
+	BOOL inHighresMode = self.mainWindow.runningInHighResolutionMode;
 	
 	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
 	
-	/* Inner background color. */
+	/* Inner background color */
 	NSColor *background = [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldInsideBlackBackgroundColor];
 	
-	/* Shadow colors. */
+	/* Shadow colors */
 	NSShadow *shadow4 = [NSShadow new];
 	
 	if (inHighresMode) {
-		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace  blackInputTextFieldOutsideBottomGrayShadowColorWithRetina]];
+		shadow4.shadowColor = [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldOutsideBottomGrayShadowColorWithRetina];
 	} else {
-		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina]];
+		shadow4.shadowColor = [TVCMainWindowTextViewYosemiteUserInterace blackInputTextFieldOutsideBottomGrayShadowColorWithoutRetina];
 	}
 	
-	[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
-	[shadow4 setShadowBlurRadius:0.0];
+	shadow4.shadowOffset = NSMakeSize(0.0, (-1.0));
+	shadow4.shadowBlurRadius = 0.0;
 	
-	/* Rectangle drawing. */
+	/* Rectangle drawing */
 	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.0 yRadius:3.0];
 	
 	[NSGraphicsContext saveGraphicsState];
-	
-	/* Draw shadow. */
+
 	[shadow4 set];
-	
-	/* Draw background. */
+
 	[background setFill];
-	
-	/* Draw rectangle. */
+
 	[rectanglePath fill];
-	
-	/* Finish up. */
+
 	[NSGraphicsContext restoreGraphicsState];
 }
 
 - (void)drawWhiteControllerForYosemiteInFocusedWindow
 {
-	/* General Declarations. */
-	NSRect cellBounds = [self frame];
+	NSRect cellBounds = self.frame;
 	
-	CGContextRef context = [RZGraphicsCurrentContext() graphicsPort];
+	CGContextRef context = RZGraphicsCurrentContext().graphicsPort;
 	
-	BOOL inHighresMode = [mainWindow() runningInHighResolutionMode];
+	BOOL inHighresMode = self.mainWindow.runningInHighResolutionMode;
 	
 	NSRect controlFrame = NSMakeRect(0.0, 1.0,   cellBounds.size.width,
 												(cellBounds.size.height - 2.0));
 	
-	/* Inner gradient color. */
+	/* Inner gradient color */
 	NSGradient *gradient = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldInsideWhiteGradient];
 	
-	/* Shadow colors. */
+	/* Shadow colors */
 	NSShadow *shadow3 = [NSShadow new];
-	NSShadow *shadow4 = [NSShadow new];
 	
 	NSColor *shadow3Color = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideTopsideWhiteBorder];
 	
-	[shadow3 setShadowColor:shadow3Color];
-	[shadow3 setShadowOffset:NSMakeSize(0.0, -1.0)];
-	[shadow3 setShadowBlurRadius:0.0];
-	
+	shadow3.shadowColor = shadow3Color;
+	shadow3.shadowOffset = NSMakeSize(0.0, (-1.0));
+	shadow3.shadowBlurRadius = 0.0;
+
+	NSShadow *shadow4 = [NSShadow new];
+
 	if (inHighresMode) {
-		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina]];
-		[shadow4 setShadowOffset:NSMakeSize(0.0, -(0.5))];
-		[shadow4 setShadowBlurRadius:0.0];
+		shadow4.shadowColor = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithRetina];
+		shadow4.shadowOffset = NSMakeSize(0.0, (-0.5));
+		shadow4.shadowBlurRadius = 0.0;
 	} else {
-		[shadow4 setShadowColor:[TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomGrayShadowColorWithoutRetina]];
-		[shadow4 setShadowOffset:NSMakeSize(0.0, -(1.0))];
-		[shadow4 setShadowBlurRadius:0.0];
+		shadow4.shadowColor = [TVCMainWindowTextViewYosemiteUserInterace whiteInputTextFieldOutsideBottomPrimaryGrayShadowColorWithoutRetina];
+		shadow4.shadowOffset = NSMakeSize(0.0, (-1.0));
+		shadow4.shadowBlurRadius = 0.0;
 	}
 	
-	/* Rectangle drawing. */
+	/* Rectangle drawing */
 	NSBezierPath *rectanglePath = [NSBezierPath bezierPathWithRoundedRect:controlFrame xRadius:3.0 yRadius:3.0];
 	
 	[shadow4 set];
 	
 	CGContextBeginTransparencyLayer(context, NULL);
 	
-	[gradient drawInBezierPath:rectanglePath angle:-(90)];
+	[gradient drawInBezierPath:rectanglePath angle:(-90)];
 	
 	CGContextEndTransparencyLayer(context);
 	
-	/* Prepare drawing for inside shadow. */
+	/* Prepare drawing for inside shadow */
 	CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
 	
-	CGContextSetAlpha(context, [shadow3Color alphaComponent]);
+	CGContextSetAlpha(context, shadow3Color.alphaComponent);
 	
 	CGContextBeginTransparencyLayer(context, NULL);
+
 	{
-		/* Inside shadow drawing. */
+		/* Inside shadow drawing */
 		[shadow3 set];
 		
 		CGContextSetBlendMode(context, kCGBlendModeSourceOut);
 		
 		CGContextBeginTransparencyLayer(context, NULL);
 		
-		/* Fill shadow. */
+		/* Fill shadow */
 		[shadow3Color setFill];
 		
 		[rectanglePath fill];
-		
-		/* Complete drawing. */
+
+		/* Complete drawing */
 		CGContextEndTransparencyLayer(context);
 	}
 	
 	CGContextEndTransparencyLayer(context);
 	
-	/* On retina, we fake a second shadow under the bottommost one. */
+	/* On retina, we fake a second shadow under the bottommost one */
 	if (inHighresMode) {
 		NSPoint linePoint1 = NSMakePoint(4.0, 0.0);
 		NSPoint linePoint2 = NSMakePoint((cellBounds.size.width - 4.0), 0.0);
@@ -741,7 +681,7 @@
 #pragma mark -
 #pragma mark Drawing Factory
 
-- (NSFont *)systemSpecificTextFieldFontWithSize:(CGFloat)fontSize
+- (NSFont *)systemSpecificFontWithSize:(CGFloat)fontSize
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		return [NSFont systemFontOfSize:fontSize];
@@ -750,7 +690,7 @@
 	}
 }
 
-- (NSColor *)systemSpecificTextFieldTextFontColor
+- (NSColor *)systemSpecificFontColor
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
@@ -763,7 +703,7 @@
 	}
 }
 
-- (NSColor *)systemSpecificPlaceholderTextFontColor
+- (NSColor *)systemSpecificPlaceholderStringFontColor
 {
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		if ([self yosemiteIsUsingVibrantDarkMode]) {
@@ -778,22 +718,24 @@
 
 - (BOOL)yosemiteIsUsingVibrantDarkMode
 {
-	return [mainWindow() isUsingVibrantDarkAppearance];
+	return self.mainWindow.usingVibrantDarkAppearance;
 }
 
 - (BOOL)windowIsActive
 {
-	return [mainWindow() isActiveForDrawing];
+	return self.mainWindow.activeForDrawing;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
-			[self drawControllerForYosemite];
-		} else {
-			[self drawControllerForMavericks];
-		}
+	if ([self needsToDrawRect:dirtyRect] == NO) {
+		return;
+	}
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[self drawControllerForYosemite];
+	} else {
+		[self drawControllerForMavericks];
 	}
 }
 
@@ -805,70 +747,76 @@
 /* The content view layer only exists on Yosemite and later. 
  Textual on Mavericks and earlier uses the content border of
  the window in place of this layer for the content view. */
-
 @implementation TVCMainWindowTextViewContentView
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	if ([self needsToDrawRect:dirtyRect]) {
-		/* Draw background color. */
-		NSColor *drawColor = [self backgroundColor];
-		
-		[drawColor set];
-		
-		NSRectFill(dirtyRect);
-		
-		/* Draw divider. */
-		NSRect contentViewFrame = [self frame];
-		
-		contentViewFrame.origin.x = 0;
-		contentViewFrame.origin.y = (NSMaxY(contentViewFrame) - 1);
-		
-		contentViewFrame.size.height = 1;
-		
-		NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:contentViewFrame];
-		
-		drawColor = [self dividerColor];
-		
-		[drawColor set];
-		
-		[dividerPath fill];
-		
-		/* Discussion: On Yosemite, when a segmented controller is set as vibrant dark,
-		 it inherits whatever color is behind it in a translucent manor. To allow for
-		 a darker controller in Textual, we set the background of ours to black. To
-		 achive this, we create a bezier path that replicate the frame of segmented
-		 controller. This is a very ugly hack and can break easily in an OS update. */
-		if ([TPCPreferences hideMainWindowSegmentedController] == NO) {
-			if ([mainWindow() isUsingVibrantDarkAppearance]) {
-				/* Get controller and controller frame. */
-				TVCMainWindowSegmentedController *controller = [mainWindowTextField() segmentedController];
-				
-				NSRect controllerFrame = [controller frame];
-				
-				/* Update frame with some magic numbers. */
-				controllerFrame.size.width -= 4;
-				controllerFrame.size.height -= 3;
-				
-				controllerFrame.origin.y += 2;
-				
-				/* Define new path and color. */
-				dividerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
-				
-				drawColor = [NSColor blackColor];
-				
-				/* Complete draw. */
-				[drawColor set];
-				
-				[dividerPath fill];
-			}
-		}
+	if ([self needsToDrawRect:dirtyRect] == NO) {
+		return;
+	}
+
+	TVCMainWindow *mainWindow = self.mainWindow;
+
+	/* Draw background color */
+	NSColor *backgroundColor = self.backgroundColor;
+
+	[backgroundColor set];
+
+	NSRectFill(dirtyRect);
+
+	/* Draw divider */
+	NSRect contentViewFrame = self.frame;
+
+	contentViewFrame.origin.x = 0.0;
+	contentViewFrame.origin.y = (NSMaxY(contentViewFrame) - 1.0);
+
+	contentViewFrame.size.height = 1.0;
+
+	NSBezierPath *dividerPath = [NSBezierPath bezierPathWithRect:contentViewFrame];
+
+	NSColor *dividierColor = self.dividerColor;
+
+	[dividierColor set];
+
+	[dividerPath fill];
+
+	/* Discussion: On Yosemite, when a segmented controller is set as vibrant dark,
+	 it inherits whatever color is behind it in a translucent manor. To allow for
+	 a darker controller in Textual, we set the background of ours to black. To
+	 achive this, we create a bezier path that replicate the frame of segmented
+	 controller. This is a very ugly hack and can break easily in an OS update. */
+	if ([TPCPreferences hideMainWindowSegmentedController]) {
+		return;
+	}
+
+	if (mainWindow.isUsingVibrantDarkAppearance == NO) {
+		return;
+	}
+
+	/* Get controller and controller frame */
+	{
+		TVCMainWindowSegmentedController *controller = self.segmentedController;
+
+		NSRect controllerFrame = controller.frame;
+
+		controllerFrame.size.width -= 4.0;
+		controllerFrame.size.height -= 3.0;
+
+		controllerFrame.origin.y += 2.0;
+
+		NSBezierPath *controllerPath  = [NSBezierPath bezierPathWithRoundedRect:controllerFrame xRadius:4.0 yRadius:4.0];
+
+		NSColor *controllerColor = [NSColor blackColor];
+
+		[controllerColor set];
+
+		[controllerPath fill];
 	}
 }
 
 - (NSColor *)backgroundColor
 {
-	if ([mainWindow() isUsingVibrantDarkAppearance]) {
+	if (self.mainWindow.usingVibrantDarkAppearance) {
 		return [self vibrantDarkBackgroundColor];
 	} else {
 		return [self vibrantLightBackgroundColor];
@@ -877,7 +825,7 @@
 
 - (NSColor *)dividerColor
 {
-	if ([mainWindow() isUsingVibrantDarkAppearance]) {
+	if (self.mainWindow.usingVibrantDarkAppearance) {
 		return [self vibrantDarkDividerColor];
 	} else {
 		return [self vibrantLightDividerColor];
@@ -915,3 +863,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
