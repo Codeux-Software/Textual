@@ -177,7 +177,7 @@
 {
 	NSString *clientIdentifier = [[OTRKit sharedInstance] rightPortionOfAccountName:accountName];
 
-	return [worldController() findClientById:clientIdentifier];
+	return [worldController() findClientWithId:clientIdentifier];
 }
 
 #pragma mark -

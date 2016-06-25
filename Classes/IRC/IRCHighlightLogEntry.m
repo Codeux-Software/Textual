@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable IRCChannel *)channel
 {
-	IRCChannel *channel = [worldController() findChannelByClientId:self.clientId channelId:self.channelId];
+	IRCChannel *channel = [worldController() findChannelWithId:self.channelId onClientWithId:self.clientId];
 
 	return channel;
 }

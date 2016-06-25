@@ -56,7 +56,7 @@
 
 - (void)start:(NSString *)topic
 {
-	IRCChannel *c = [worldController() findChannelByClientId:self.clientID channelId:self.channelID];
+	IRCChannel *c = [worldController() findChannelWithId:self.channelID onClientWithId:self.clientID];
 
 	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], [c name]];
 

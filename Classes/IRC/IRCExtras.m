@@ -504,7 +504,7 @@
 			[baseConfig writeServerPasswordKeychainItemToDisk];
 		}
 
-		IRCClient *client = [worldController() createClient:baseConfig reload:YES];
+		IRCClient *client = [worldController() createClientWithConfig:baseConfig reload:YES];
 
 		[worldController() save];
 

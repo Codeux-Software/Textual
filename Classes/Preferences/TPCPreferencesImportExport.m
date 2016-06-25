@@ -174,7 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 		
 		[TPCPreferences setThemeChannelViewFontNameWithExistenceCheck:object];
 	}
-	else if ([key isEqual:IRCWorldControllerClientListDefaultsKey])
+	else if ([key isEqual:IRCWorldClientListDefaultsKey])
 	{
 		if ([object isKindOfClass:[NSArray class]] == NO) {
 			return;
@@ -193,7 +193,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSArray<NSDictionary *> *clientList = [object arrayForKey:@"clients"];
 
 		if (clientList) {
-			[TPCPreferencesImportExport import:clientList withKey:IRCWorldControllerClientListDefaultsKey];
+			[TPCPreferencesImportExport import:clientList withKey:IRCWorldClientListDefaultsKey];
 		}
 	}
 
@@ -217,7 +217,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	IRCClientConfig *clientConfig = [[IRCClientConfig alloc] initWithDictionary:config];
 
-	IRCClient *client = [worldController() findClientById:clientConfig.itemUUID];
+	IRCClient *client = [worldController() findClientWithId:clientConfig.itemUUID];
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	if (isImportedFromCloud) {
@@ -234,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[client updateConfig:clientConfig];
 		}
 	} else {
-		(void)[worldController() createClient:clientConfig reload:YES];
+		(void)[worldController() createClientWithConfig:clientConfig reload:YES];
 	}
 }
 

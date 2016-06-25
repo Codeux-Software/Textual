@@ -142,8 +142,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[worldController() setupConfiguration];
 
-	[worldController() setupOtherServices];
-
 	[self updateBackgroundColor];
 	
 	[self setupTrees];
@@ -2075,7 +2073,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSString *itemIdentifier = self.previousSelectedItemId;
 
 	if (itemIdentifier) {
-		return [worldController() findItemByTreeId:itemIdentifier];
+		return [worldController() findItemWithId:itemIdentifier];
 	}
 
 	return nil;
@@ -2101,7 +2099,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMutableArray *itemsPrevious = [NSMutableArray array];
 
 	for (NSString *itemIdentifier in self.previousSelectedItemsId) {
-		IRCTreeItem *item = [worldController() findItemByTreeId:itemIdentifier];
+		IRCTreeItem *item = [worldController() findItemWithId:itemIdentifier];
 
 		if ( item) {
 			[itemsPrevious addObject:item];
@@ -2615,7 +2613,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NSDragOperationNone;
 	}
 
-	IRCTreeItem *draggedItem = [worldController() findItemFromPasteboardString:draggedItemToken];
+	IRCTreeItem *draggedItem = [worldController() findItemWithPasteboardString:draggedItemToken];
 	
 	if (draggedItem == nil) {
 		return NSDragOperationNone;
@@ -2683,7 +2681,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NSDragOperationNone;
 	}
 
-	IRCTreeItem *draggedItem = [worldController() findItemFromPasteboardString:draggedItemToken];
+	IRCTreeItem *draggedItem = [worldController() findItemWithPasteboardString:draggedItemToken];
 
 	if (draggedItem == nil) {
 		return NSDragOperationNone;

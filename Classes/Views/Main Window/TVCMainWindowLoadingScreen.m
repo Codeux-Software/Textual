@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.isAnimating = YES;
 
-	[RZAnimationCurrentContext() setDuration:1.0];
+	RZAnimationCurrentContext().duration = 1.0;
 
 	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
 		[self animator].alphaValue = 0.0;
