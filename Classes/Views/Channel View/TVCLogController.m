@@ -196,7 +196,7 @@ ClassWithDesignatedInitializerInitMethod
 	[self buildBackingView];
 
 	if (self.visible) {
-		[mainWindow() updateChannelViewBoxContentViewSelection];
+		[self.attachedWindow updateChannelViewBoxContentViewSelection];
 	}
 }
 
@@ -326,15 +326,15 @@ ClassWithDesignatedInitializerInitMethod
 
 - (BOOL)viewIsSelected
 {
-	return (mainWindow().selectedViewController == self);
+	return (self.attachedWindow.selectedViewController == self);
 }
 
 - (BOOL)viewIsVisible
 {
 	if (self.associatedChannel) {
-		return [mainWindow() isItemVisible:self.associatedChannel];
+		return [self.attachedWindow isItemVisible:self.associatedChannel];
 	} else {
-		return [mainWindow() isItemVisible:self.associatedClient];
+		return [self.attachedWindow isItemVisible:self.associatedClient];
 	}
 }
 
@@ -1385,7 +1385,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)logViewWebViewKeyDown:(NSEvent *)e
 {
-	[mainWindow() redirectKeyDown:e];
+	[self.attachedWindow redirectKeyDown:e];
 }
 
 - (void)logViewWebViewRecievedDropWithFile:(NSString *)filename
