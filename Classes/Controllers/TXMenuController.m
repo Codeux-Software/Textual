@@ -1183,7 +1183,7 @@
 
 - (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
 {
-	[worldController() preferencesChanged];
+	[TPCPreferences performReloadAction:TPCPreferencesReloadPreferencesChangedAction];
 
 	[windowController() removeWindowFromWindowList:sender];
 }
@@ -1354,26 +1354,26 @@
 	
     if (u) {
         if (c) {
-            [worldController() clearContentsOfChannel:c inClient:u];
+			[mainWindow() clearContentsOfChannel:c];
         } else {
-            [worldController() clearContentsOfClient:u];
+            [mainWindow() clearContentsOfClient:u];
         }
     }
 }
 
 - (void)increaseLogFontSize:(id)sender
 {
-	[worldController() changeTextSize:YES];
+	[mainWindow() changeTextSize:YES];
 }
 
 - (void)decreaseLogFontSize:(id)sender
 {
-	[worldController() changeTextSize:NO];
+	[mainWindow() changeTextSize:NO];
 }
 
 - (void)markAllAsRead:(id)sender
 {
-	[worldController() markAllAsRead];
+	[mainWindow() markAllAsRead];
 }
 
 - (void)connect:(id)sender
@@ -1652,7 +1652,7 @@
 		[u updateConfig:[sender config]];
 
 		if (samencoding == NO) {
-			[worldController() reloadTheme];
+			[mainWindow() reloadTheme];
 		}
 		
 		[mainWindow() reloadTreeGroup:u];
@@ -1763,7 +1763,7 @@
 
 - (void)nicknameColorSheetOnOK:(TDCNicknameColorSheet *)sneder
 {
-	[worldController() reloadTheme:NO];
+	[mainWindow() reloadTheme];
 }
 
 - (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender
@@ -2844,7 +2844,7 @@
 
 - (void)forceReloadTheme:(id)sender
 {
-	[worldController() reloadTheme];
+	[mainWindow() reloadTheme];
 }
 
 - (void)toggleChannelModerationMode:(id)sender

@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL lastKeyWindowRedrawFailedBecauseOfOcclusion;
 @property (nonatomic, strong) TLOKeyEventHandler *keyEventHandler;
 @property (nonatomic, copy, nullable) NSValue *cachedSwipeOriginPoint;
+@property (nonatomic, assign, readwrite) double textSizeMultiplier;
 @end
 
 #define _treeDragItemType		@"tree"
@@ -89,6 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 	self.previousSelectedItemsId = @[];
 
 	self.selectedItems = @[];
+
+	self.textSizeMultiplier = 1.0;
 }
 
 - (void)awakeFromNib
@@ -746,6 +749,144 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
+#pragma mark View Controls
+
+- (void)changeTextSize:(BOOL)bigger
+{
+#define MinimumZoomMultiplier       0.5
+#define MaximumZoomMultiplier       3.0
+
+#define ZoomMultiplierRatio         1.2
+
+	double textSizeMultiplier = self.textSizeMultiplier;
+
+	if (bigger) {
+		textSizeMultiplier *= ZoomMultiplierRatio;
+
+		if (textSizeMultiplier > MaximumZoomMultiplier) {
+			return;
+		}
+
+		self.textSizeMultiplier = textSizeMultiplier;
+	} else {
+		textSizeMultiplier /= ZoomMultiplierRatio;
+
+		if (textSizeMultiplier < MinimumZoomMultiplier) {
+			return;
+		}
+
+		self.textSizeMultiplier = textSizeMultiplier;
+	}
+
+	for (IRCClient *u in worldController().clientList) {
+		[u.viewController changeTextSize:bigger];
+
+		for (IRCChannel *c in u.channelList) {
+			[c.viewController changeTextSize:bigger];
+		}
+	}
+
+#undef MinimumZoomMultiplier
+#undef MaximumZoomMultiplier
+
+#undef ZoomMultiplierRatio
+}
+
+- (void)markAllAsRead
+{
+	[self markAllAsReadInGroup:nil];
+}
+
+- (void)markAllAsReadInGroup:(nullable IRCTreeItem *)item
+{
+	BOOL markScrollback = [TPCPreferences autoAddScrollbackMark];
+
+	for (IRCClient *u in worldController().clientList) {
+		if (markScrollback) {
+			[u.viewController mark];
+		}
+
+		for (IRCChannel *c in u.channelList) {
+			if (markScrollback) {
+				[c.viewController mark];
+			}
+
+			[c resetState];
+		}
+	}
+
+	[TVCDockIcon updateDockIcon];
+
+	if (item) {
+		[self reloadTreeGroup:item];
+	} else {
+		[self reloadTree];
+	}
+}
+
+- (void)reloadTheme
+{
+	[self reloadThemeAndUserInterface:NO];
+}
+
+- (void)reloadThemeAndUserInterface
+{
+	[self reloadThemeAndUserInterface:YES];
+}
+
+- (void)reloadThemeAndUserInterface:(BOOL)reloadUserInterface
+{
+	[themeController() reload];
+
+	for (IRCClient *u in worldController().clientList) {
+		[u.viewController reloadTheme];
+
+		for (IRCChannel *c in u.channelList) {
+			[c.viewController reloadTheme];
+		}
+	}
+
+	if (reloadUserInterface) {
+		[self updateBackgroundColor];
+	}
+}
+
+- (void)clearContentsOfClient:(IRCClient *)client
+{
+	NSParameterAssert(client != nil);
+
+	[client resetState];
+
+	[client.viewController clear];
+
+	[self reloadTreeItem:client];
+}
+
+- (void)clearContentsOfChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	[channel resetState];
+
+	[channel.viewController clear];
+
+	[self reloadTreeItem:channel];
+}
+
+- (void)clearAllViews
+{
+	for (IRCClient *u in worldController().clientList) {
+		[self clearContentsOfClient:u];
+
+		for (IRCChannel *c in u.channelList) {
+			[self clearContentsOfChannel:c];
+		}
+	}
+
+	[self markAllAsRead];
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)completeNickname:(BOOL)moveForward
@@ -1120,6 +1261,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Misc
+
+- (void)preferencesChanged
+{
+	if ([TPCPreferences displayDockBadge] == NO) {
+		[TVCDockIcon drawWithoutCount];
+	} else {
+		[TVCDockIcon resetCachedCount];
+
+		[TVCDockIcon updateDockIcon];
+	}
+}
 
 - (void)endEditingFor:(nullable id)object
 {

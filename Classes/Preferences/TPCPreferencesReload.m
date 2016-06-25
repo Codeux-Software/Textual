@@ -183,16 +183,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Active style */
 	if ((reloadAction & TPCPreferencesReloadStyleAction) == TPCPreferencesReloadStyleAction) {
-		[worldController() reloadTheme:NO];
+		[mainWindow() reloadTheme];
 
 		didReloadActiveStyle = YES;
 	} else if ((reloadAction & TPCPreferencesReloadStyleWithTableViewsAction) == TPCPreferencesReloadStyleWithTableViewsAction) {
 		if (didReloadUserInterface == NO) {
 			didReloadUserInterface = YES;
 
-			[worldController() reloadTheme:YES];
+			[mainWindow() reloadThemeAndUserInterface];
 		} else {
-			[worldController() reloadTheme:NO];
+			[mainWindow() reloadTheme];
 		}
 
 		didReloadActiveStyle = YES;
@@ -274,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
 		[mainWindowTextField() updateTextDirection];
 
 		if (didReloadActiveStyle == NO) {
-			[worldController() reloadTheme:NO];
+			[mainWindow() reloadTheme];
 		}
 	}
 
@@ -303,6 +303,8 @@ NS_ASSUME_NONNULL_BEGIN
 	/* World controller preferences changed call */
 	if ((reloadAction & TPCPreferencesReloadPreferencesChangedAction) == TPCPreferencesReloadPreferencesChangedAction) {
 		[worldController() preferencesChanged];
+
+		[mainWindow() preferencesChanged];
 	}
 }
 

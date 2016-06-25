@@ -2612,9 +2612,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5010: // Command: CLEAR
 		{
 			if (selChannel) {
-				[worldController() clearContentsOfChannel:selChannel inClient:self];
+				[mainWindow() clearContentsOfChannel:selChannel];
 			} else if (u) {
-				[worldController() clearContentsOfClient:u];
+				[mainWindow() clearContentsOfClient:u];
 			}
 
 			break;
@@ -2828,17 +2828,14 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 5011: // Command: CLEARALL
 		{
 			if ([TPCPreferences clearAllOnlyOnActiveServer]) {
-				[worldController() clearContentsOfClient:self];
+				[mainWindow() clearContentsOfClient:self];
 
 				@synchronized(self.channels) {
 					for (IRCChannel *channel in self.channels) {
-						[worldController() clearContentsOfChannel:channel inClient:self];
+						[mainWindow() clearContentsOfChannel:channel];
 					}
 				}
-
-				[worldController() markAllAsRead:self];
 			} else {
-				[worldController() destroyAllEvidence];
 			}
 
 			break;
