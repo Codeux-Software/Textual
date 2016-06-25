@@ -669,7 +669,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)changeTextSize:(BOOL)bigger
 {
-	double sizeMultiplier = worldController().textSizeMultiplier;
+	double sizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
 	[self _evaluateFunction:@"Textual.changeTextSizeMultiplier" withArguments:@[@(sizeMultiplier)]];
 
@@ -1363,7 +1363,7 @@ ClassWithDesignatedInitializerInitMethod
 		 NSDictionaryNilValue(self.associatedChannel.name)
 	]];
 
-	double textSizeMultiplier = worldController().textSizeMultiplier;
+	double textSizeMultiplier = self.attachedWindow.textSizeMultiplier;
 
 	[self _evaluateFunction:@"Textual.viewFinishedLoadingInt"
 					  withArguments:@[@(self.selected),

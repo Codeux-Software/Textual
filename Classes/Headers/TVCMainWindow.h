@@ -105,22 +105,20 @@ typedef NS_ENUM(NSUInteger, TVCServerListNavigationSelectionType) {
 
 @property (getter=isUsingVibrantDarkAppearance) BOOL usingVibrantDarkAppearance; // On Mavericks and earlier, this is always NO
 
-#if 0
 @property (readonly) double textSizeMultiplier;
 
 - (void)changeTextSize:(BOOL)bigger;
 
 - (void)markAllAsRead;
-- (void)markAllAsReadInGroup:(IRCTreeItem *)item;
+- (void)markAllAsReadInGroup:(nullable IRCTreeItem *)item;
 
 - (void)reloadTheme;
 - (void)reloadThemeAndUserInterface;
 
 - (void)clearContentsOfClient:(IRCClient *)client;
-- (void)clearContentsOfChannel:(IRCChannel *)channel onClient:(IRCClient *)client;
+- (void)clearContentsOfChannel:(IRCChannel *)channel;
 
 - (void)clearAllViews;
-#endif
 
 - (void)textEntered;
 
