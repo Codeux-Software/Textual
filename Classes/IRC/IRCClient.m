@@ -8580,13 +8580,18 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	[self.socket open];
 }
 
-#warning TODO: Reconnect is broken
 - (void)autoConnect:(NSInteger)delay afterWakeUp:(BOOL)afterWakeUp
 {
 	self.connectDelay = delay;
 
 	if (afterWakeUp) {
-		[self autoConnectAfterWakeUp];
+		if (self.connectDelay <= 0) {
+			[self autoConnectAfterWakeUp];
+		} else {
+			[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", self.connectDelay)];
+
+			[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
+		}
 	} else {
 		if (self.connectDelay <= 0) {
 			[self connect];
@@ -8604,13 +8609,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 	self.reconnectEnabledBecauseOfSleepMode = YES;
 
-	if (self.connectDelay <= 0) {
-		[self connect:IRCClientConnectReconnectMode];
-	} else {
-		[self printDebugInformationToConsole:TXTLS(@"IRC[1010]", self.connectDelay)];
-
-		[self performSelector:@selector(autoConnectAfterWakeUp) withObject:nil afterDelay:self.connectDelay];
-	}
+	[self connect:IRCClientConnectReconnectMode];
 }
 
 - (void)disconnect
