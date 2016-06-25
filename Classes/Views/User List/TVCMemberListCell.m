@@ -580,7 +580,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.mainWindow.memberList;
 }
 
-- (NSUInteger)rowIndex
+- (NSInteger)rowIndex
 {
 	return [self.memberList rowForItem:self.cellItem];
 }
@@ -591,7 +591,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	TVCMemberList *memberList = mainWindow.memberList;
 
-	NSUInteger rowIndex = self.rowIndex;
+	NSInteger rowIndex = self.rowIndex;
 	
 	return @{
 		 @"isActiveWindow"		: @(mainWindow.isActiveForDrawing),

@@ -521,8 +521,8 @@ NS_ASSUME_NONNULL_BEGIN
 							(isSelectedFrontmost == NO && isSelected && multipleRowsSelected) ||
 							(isActiveWindow == NO && isSelected));
 	
-	NSInteger treeUnreadCount = associatedChannel.treeUnreadCount;
-	NSInteger nicknameHighlightCount = associatedChannel.nicknameHighlightCount;
+	NSUInteger treeUnreadCount = associatedChannel.treeUnreadCount;
+	NSUInteger nicknameHighlightCount = associatedChannel.nicknameHighlightCount;
 	
 	BOOL isHighlight = (nicknameHighlightCount > 0);
 	
@@ -597,12 +597,12 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	id interfaceObjects = self.serverList.userInterfaceObjects;
 	
-	NSInteger messageCountWidth = (stringToDraw.size.width + ([interfaceObjects messageCountBadgePadding] * 2.0));
+	CGFloat messageCountWidth = (stringToDraw.size.width + ([interfaceObjects messageCountBadgePadding] * 2.0));
 	
 	NSRect badgeFrame = NSMakeRect(0.0, 0.0, messageCountWidth, [interfaceObjects messageCountBadgeHeight]);
 	
 	if (badgeFrame.size.width < [interfaceObjects messageCountBadgeMinimumWidth]) {
-		NSInteger widthDiff  = ([interfaceObjects messageCountBadgeMinimumWidth] - badgeFrame.size.width);
+		CGFloat widthDiff  = ([interfaceObjects messageCountBadgeMinimumWidth] - badgeFrame.size.width);
 		
 		badgeFrame.size.width += widthDiff;
 		

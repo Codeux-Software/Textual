@@ -1316,9 +1316,9 @@ ClassWithDesignatedInitializerInitMethod
 
 	// ---- //
 
-	NSInteger indentOffset = themeSettings().indentationOffset;
+	double indentOffset = themeSettings().indentationOffset;
 
-	if (indentOffset == TPCThemeSettingsDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
+	if (fabs(indentOffset) == TPCThemeSettingsDisabledIndentationOffset || [TPCPreferences rightToLeftFormatting]) {
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);

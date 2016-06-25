@@ -125,12 +125,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Value Management
 
-- (NSArray *)readablePasteboardTypes
+- (NSArray<NSString *> *)readablePasteboardTypes
 {
 	return @[NSPasteboardTypeString, NSFilenamesPboardType];
 }
 
-- (NSArray *)acceptableDragTypes
+- (NSArray<NSString *> *)acceptableDragTypes
 {
 	return @[NSPasteboardTypeString, NSFilenamesPboardType];
 }
@@ -262,7 +262,7 @@ NS_ASSUME_NONNULL_BEGIN
 	};
 }
 
-- (void)modifyTypingAttributes:(NSDictionary *)typingAttributes
+- (void)modifyTypingAttributes:(NSDictionary<NSString *, id> *)typingAttributes
 {
 	NSMutableDictionary *typingAttributesMutable = [self.typingAttributes mutableCopy];
 

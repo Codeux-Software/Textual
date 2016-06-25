@@ -212,11 +212,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return aRect;
 }
 
-- (NSInteger)correctedWidthForClipViewRect
+- (CGFloat)correctedWidthForClipViewRect
 {
 	NSRect parentRect = self.parentViewFrame;
 
-	NSInteger parentWidth = NSWidth(parentRect);
+	CGFloat parentWidth = NSWidth(parentRect);
 
 	if (self.onlyShowStatusIfErrorOccurs) {
 		if (self.parentValueIsValid) {
