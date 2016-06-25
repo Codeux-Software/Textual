@@ -231,7 +231,7 @@ ClassWithDesignatedInitializerInitMethod
 #pragma mark -
 #pragma mark WebKit Delegate
 
-- (NSArray *)webView:(WebView *)webView contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
+- (NSArray<NSMenuItem *> *)webView:(WebView *)webView contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
 	return [self constructContextMenuInWebView:self.webView defaultMenuItems:defaultMenuItems];
 }

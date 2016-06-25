@@ -267,7 +267,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSRect parentRect = self.parentViewFrame;
 	
-	NSInteger parentWidth = NSWidth(parentRect);
+	CGFloat parentWidth = NSWidth(parentRect);
 	
 	if (self.onlyShowStatusIfErrorOccurs) {
 		if (self.parentValueIsValid) {

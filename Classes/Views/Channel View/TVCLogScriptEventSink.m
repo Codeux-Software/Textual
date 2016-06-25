@@ -170,7 +170,7 @@ ClassWithDesignatedInitializerInitMethod
 - (void)processInputData:(id)inputData
 			   inWebView:(id)webView
 			 forSelector:(SEL)selector
-   minimumArgumentCount:(NSInteger)minimumArgumentCount
+   minimumArgumentCount:(NSUInteger)minimumArgumentCount
 		  withValidation:(BOOL (^ _Nullable)(NSUInteger argumentIndex, id argument))validateArgumentBlock
 {
 	TVCLogView *intWebView = nil;
