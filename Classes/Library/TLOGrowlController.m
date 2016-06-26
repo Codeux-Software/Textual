@@ -67,9 +67,9 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 
 - (void)prepareInitialState
 {
-	RZUserNotificationCenter().delegate = self;
+	RZUserNotificationCenter().delegate = (id)self;
 
-	[GrowlApplicationBridge setGrowlDelegate:self];
+	[GrowlApplicationBridge setGrowlDelegate:(id)self];
 }
 
 - (NSString *)titleForEvent:(TXNotificationType)event
