@@ -52,6 +52,7 @@
 
 #import "GCDAsyncSocketCipherNames.h"
 #import "GCDAsyncSocketExtensions.h"
+#import "IRCColorFormatPrivate.h"
 #import "IRCConnectionPrivate.h"
 #import "IRCHighlightLogEntryPrivate.h"
 #import "IRCTreeItemPrivate.h"

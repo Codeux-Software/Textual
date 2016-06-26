@@ -1093,7 +1093,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (NSInteger)lengthOfEncryptedMessageDirectedAt:(NSString *)messageTo thatFitsWithinBounds:(NSInteger)maximumLength
 {
-	return (-1);
+	return 0;
 }
 
 - (void)encryptMessage:(NSString *)messageBody directedAt:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
@@ -1816,7 +1816,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 		while ([strc length] > 0)
 		{
-			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strc withClient:self channel:channel lineType:type];
+			NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strc inChannel:channel onClient:self withLineType:type];
 
 			TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 				[self print:channel
@@ -2262,7 +2262,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 				while ([strCopy length] > 0)
 				{
-					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strCopy withClient:self channel:channel lineType:type];
+					NSString *unencryptedMessage = [NSAttributedString attributedStringToASCIIFormatting:&strCopy inChannel:channel onClient:self withLineType:type];
 
 					TLOEncryptionManagerEncodingDecodingCallbackBlock encryptionBlock = ^(NSString *originalString, BOOL wasEncrypted) {
 						if (channel) {

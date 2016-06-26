@@ -36,9 +36,14 @@
 
  *********************************************************************** */
 
-#import "TVCTextViewWithIRCFormatter.h" // superclass
+#import "TextualApplication.h"
+
+#import "TVCLogLine.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IRCTextFormatterEffectType) {
+	IRCTextFormatterNoEffect = 0, // does nothing, unimplemented
 	IRCTextFormatterBoldEffect,
 	IRCTextFormatterItalicEffect,
 	IRCTextFormatterStrikethroughEffect,
@@ -62,26 +67,15 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; //
 #define IRCTextFormatterUnderlineEffectCharacter		0x1F
 #define IRCTextFormatterTerminatingCharacter			0x0F
 
-#define IRCTextFormatterMaximumRainbowTextFormattingLength   300
-
 @interface NSAttributedString (IRCTextFormatter)
 /* Returns an NSString with appropriate formatting characters. */
 @property (readonly, copy) NSString *attributedStringToASCIIFormatting;
 
-/* Given contextual information (client, channel, lineType), the original attributed
- string is converted to use appropriate formatting characters, but this method does
- not allow the result to exceed TXMaximumIRCBodyLength. If the result exceeds this
- length, then it returns the remaining buffer in textToFormat for later processing. */
-/* The only valid lineType value is PRIVMSG, ACTION, or NOTICE. Any other will proxy
- to the -attributedStringToASCIIFormatting method defined above. */
-+ (NSString *)attributedStringToASCIIFormatting:(NSMutableAttributedString **)textToFormatt
-									 withClient:(IRCClient *)client
-										channel:(IRCChannel *)channel
-									   lineType:(TVCLogLineType)lineType;
-
 - (BOOL)IRCFormatterAttributeSetInRange:(IRCTextFormatterEffectType)effect
                                   range:(NSRange)limitRange;
 @end
+
+#pragma mark -
 
 @interface NSMutableAttributedString (IRCTextFormatter)
 - (void)setIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
@@ -91,3 +85,5 @@ TEXTUAL_EXTERN NSString * const IRCTextFormatterBackgroundColorAttributeName; //
 - (void)removeIRCFormatterAttribute:(IRCTextFormatterEffectType)effect 
                               range:(NSRange)limitRange;
 @end
+
+NS_ASSUME_NONNULL_END
