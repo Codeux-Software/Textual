@@ -602,17 +602,17 @@ NS_ASSUME_NONNULL_BEGIN
 		{
 			if ([item isActive]) {
 				[self select:item];
-			}
 
-			break;
+				break;
+			}
 		}
 		else if (navigationType == TVCServerListNavigationMovementUnreadType)
 		{
 			if ([item isUnread]) {
 				[self select:item];
-			}
 
-			break;
+				break;
+			}
 		}
 	}
 }
