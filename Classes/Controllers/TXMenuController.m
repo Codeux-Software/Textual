@@ -84,7 +84,8 @@
 	self.currentSearchPhrase = NSStringEmptyPlaceholder;
 
 	if ([TPCPreferences soundIsMuted]) {
-		[menuController() toggleMuteOnNotificationSoundsShortcut:NSOnState];
+		[self.muteNotificationsSoundsDockMenuItem setState:NSOnState];
+		[self.muteNotificationsSoundsFileMenuItem setState:NSOnState];
 	}
 }
 
@@ -3048,9 +3049,9 @@
 - (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state
 {
 	if (state == NSOnState) {
-		[sharedGrowlController() setAreNotificationSoundsDisabled:YES];
+		[TPCPreferences setSoundIsMuted:YES];
 	} else {
-		[sharedGrowlController() setAreNotificationSoundsDisabled:NO];
+		[TPCPreferences setSoundIsMuted:NO];
 	}
 	
 	[self.muteNotificationsSoundsDockMenuItem setState:state];
@@ -3059,7 +3060,7 @@
 
 - (void)toggleMuteOnNotificationSounds:(id)sender
 {
-    if ([sharedGrowlController() areNotificationSoundsDisabled]) {
+    if ([TPCPreferences soundIsMuted]) {
 		[self toggleMuteOnNotificationSoundsShortcut:NSOffState];
     } else {
 		[self toggleMuteOnNotificationSoundsShortcut:NSOnState];

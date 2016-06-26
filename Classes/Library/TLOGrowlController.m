@@ -36,11 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TLOLicenseManager.h"
-#endif
+NS_ASSUME_NONNULL_BEGIN
 
 #define _clickInterval			2
 
@@ -52,7 +48,7 @@ NSString * const TXNotificationHighlightLogStandardMessageFormat		= @"%@ %@";
 NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %@ %@";
 
 @interface TLOGrowlController ()
-@property (nonatomic, copy) NSDictionary *lastClickedContext;
+@property (nonatomic, copy, nullable) NSDictionary<NSString *, id> *lastClickedContext;
 @property (nonatomic, assign) NSTimeInterval lastClickedTime;
 @end
 
@@ -61,14 +57,19 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZUserNotificationCenter() setDelegate:self];
-		
-		[GrowlApplicationBridge setGrowlDelegate:self];
+		[self prepareInitialState];
 
 		return self;
 	}
-	
+
 	return self;
+}
+
+- (void)prepareInitialState
+{
+	RZUserNotificationCenter().delegate = self;
+
+	[GrowlApplicationBridge setGrowlDelegate:self];
 }
 
 - (NSString *)titleForEvent:(TXNotificationType)event
@@ -76,22 +77,22 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 #define _df(key, num)			case (key): { return TXTLS((num)); }
 
 	switch (event) {
-		_df(TXNotificationAddressBookMatchType, @"Notifications[1045]")
-		_df(TXNotificationChannelMessageType, @"Notifications[1046]")
-		_df(TXNotificationChannelNoticeType, @"Notifications[1047]")
-		_df(TXNotificationConnectType, @"Notifications[1048]")
-		_df(TXNotificationDisconnectType, @"Notifications[1049]")
-		_df(TXNotificationInviteType, @"Notifications[1051]")
-		_df(TXNotificationKickType, @"Notifications[1052]")
-		_df(TXNotificationNewPrivateMessageType, @"Notifications[1053]")
-		_df(TXNotificationPrivateMessageType, @"Notifications[1054]")
-		_df(TXNotificationPrivateNoticeType, @"Notifications[1055]")
-		_df(TXNotificationHighlightType, @"Notifications[1050]")
-		_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1056]")
-		_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1057]")
-		_df(TXNotificationFileTransferSendFailedType, @"Notifications[1058]")
-		_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[1059]")
-		_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1060]")
+			_df(TXNotificationAddressBookMatchType, @"Notifications[1045]")
+			_df(TXNotificationChannelMessageType, @"Notifications[1046]")
+			_df(TXNotificationChannelNoticeType, @"Notifications[1047]")
+			_df(TXNotificationConnectType, @"Notifications[1048]")
+			_df(TXNotificationDisconnectType, @"Notifications[1049]")
+			_df(TXNotificationInviteType, @"Notifications[1051]")
+			_df(TXNotificationKickType, @"Notifications[1052]")
+			_df(TXNotificationNewPrivateMessageType, @"Notifications[1053]")
+			_df(TXNotificationPrivateMessageType, @"Notifications[1054]")
+			_df(TXNotificationPrivateNoticeType, @"Notifications[1055]")
+			_df(TXNotificationHighlightType, @"Notifications[1050]")
+			_df(TXNotificationFileTransferSendSuccessfulType, @"Notifications[1056]")
+			_df(TXNotificationFileTransferReceiveSuccessfulType, @"Notifications[1057]")
+			_df(TXNotificationFileTransferSendFailedType, @"Notifications[1058]")
+			_df(TXNotificationFileTransferReceiveFailedType, @"Notifications[1059]")
+			_df(TXNotificationFileTransferReceiveRequestedType, @"Notifications[1060]")
 	}
 
 #undef _df
@@ -99,132 +100,132 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	return nil;
 }
 
-- (void)notify:(TXNotificationType)eventType title:(NSString *)eventTitle description:(NSString *)eventDescription userInfo:(NSDictionary *)eventContext
+- (void)notify:(TXNotificationType)eventType title:(nullable NSString *)eventTitle description:(nullable NSString *)eventDescription userInfo:(nullable NSDictionary<NSString *,id> *)eventContext
 {
 	if ([TPCPreferences growlEnabledForEvent:eventType] == NO) {
-		return; // This event is disabled by the user.
+		return; // This event is disabled by the user
 	}
 
-	/* titleForEvent: invokes TXTLS for the event type. */
-	NSString *eventKind = [self titleForEvent:eventType];
-	
-	NSInteger eventPriority = 0;
-	
+	NSUInteger eventPriority = 0;
+
 	switch (eventType) {
 		case TXNotificationHighlightType:
 		{
 			eventPriority = 1;
+
 			eventTitle = TXTLS(@"Notifications[1021]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationNewPrivateMessageType:
 		{
 			eventPriority = 1;
+
 			eventTitle = TXTLS(@"Notifications[1024]");
-			
+
 			break;
 		}
 		case TXNotificationChannelMessageType:
 		{
 			eventTitle = TXTLS(@"Notifications[1017]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationChannelNoticeType:
 		{
 			eventTitle = TXTLS(@"Notifications[1018]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationPrivateMessageType:
 		{
 			eventTitle = TXTLS(@"Notifications[1025]");
-			
+
 			break;
 		}
 		case TXNotificationPrivateNoticeType:
 		{
 			eventTitle = TXTLS(@"Notifications[1026]");
-			
+
 			break;
 		}
 		case TXNotificationKickType:
 		{
 			eventTitle = TXTLS(@"Notifications[1023]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationInviteType:
 		{
 			eventTitle = TXTLS(@"Notifications[1022]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationConnectType:
 		{
 			eventTitle = TXTLS(@"Notifications[1019]", eventTitle);
+
 			eventDescription = TXTLS(@"Notifications[1032]");
-			
+
 			break;
 		}
 		case TXNotificationDisconnectType:
 		{
 			eventTitle = TXTLS(@"Notifications[1020]", eventTitle);
+
 			eventDescription = TXTLS(@"Notifications[1033]");
-			
+
 			break;
 		}
-		case TXNotificationAddressBookMatchType: 
+		case TXNotificationAddressBookMatchType:
 		{
 			eventTitle = TXTLS(@"Notifications[1016]");
-			
+
 			break;
 		}
 		case TXNotificationFileTransferSendSuccessfulType:
 		{
 			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationFileTransferReceiveSuccessfulType:
 		{
 			eventTitle = TXTLS(@"Notifications[1027]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationFileTransferSendFailedType:
 		{
 			eventTitle = TXTLS(@"Notifications[1029]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationFileTransferReceiveFailedType:
 		{
 			eventTitle = TXTLS(@"Notifications[1030]", eventTitle);
-			
+
 			break;
 		}
 		case TXNotificationFileTransferReceiveRequestedType:
 		{
 			eventTitle = TXTLS(@"Notifications[1031]", eventTitle);
-			
+
 			break;
 		}
 	}
 
 	if ([TPCPreferences removeAllFormatting] == NO) {
-		eventDescription = [eventDescription stripIRCEffects];
+		eventDescription = eventDescription.stripIRCEffects;
 	}
 
-	/* Send to notification center? */
 	if ([GrowlApplicationBridge isGrowlRunning] == NO) {
 		NSUserNotification *notification = [NSUserNotification new];
-		
-		[notification setTitle:eventTitle];
-		[notification setInformativeText:eventDescription];
-		[notification setDeliveryDate:[NSDate date]];
-		[notification setUserInfo:eventContext];
+
+		notification.deliveryDate = [NSDate date];
+		notification.informativeText = eventDescription;
+		notification.title = eventTitle;
+		notification.userInfo = eventContext;
 
 		if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 			/* These private APIs are not available on Mountain Lion */
@@ -232,16 +233,16 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 				/* sshhhh... you didn't see nothing. */
 				[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-				[notification setActionButtonTitle:TXTLS(@"Prompts[0009]")];
+				notification.actionButtonTitle = TXTLS(@"Prompts[0009]");
 			}
 
-			/* These are the only event types we want to support for now. */
+			/* These are the only event types we want to support for now */
 			if (eventType == TXNotificationNewPrivateMessageType ||
 				eventType == TXNotificationPrivateMessageType)
 			{
-				[notification setHasReplyButton:YES];
+				notification.hasReplyButton = YES;
 
-				[notification setResponsePlaceholder:TXTLS(@"Notifications[1044]")];
+				notification.responsePlaceholder = TXTLS(@"Notifications[1044]");
 			}
 		}
 
@@ -250,12 +251,13 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 		return; // Do not continue to Growl...
 	}
 
-	/* Nope, let Growl handle. */
+	NSString *eventKind = [self titleForEvent:eventType];
+
 	[GrowlApplicationBridge notifyWithTitle:eventTitle
 								description:eventDescription
 						   notificationName:eventKind
 								   iconData:nil
-								   priority:(int)eventPriority
+								   priority:(signed int)eventPriority
 								   isSticky:NO
 							   clickContext:eventContext];
 }
@@ -275,34 +277,34 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	[RZUserNotificationCenter() removeDeliveredNotification:notification];
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		if ([notification activationType] == NSUserNotificationActivationTypeReplied) {
-			NSString *replyMessage = [[notification response] string]; // It is attributed string, we only want string.
+		if (notification.activationType == NSUserNotificationActivationTypeReplied) {
+			NSString *replyMessage = notification.response.string; // It is attributed string, we only want string.
 
-			[self notificationWasClicked:[notification userInfo]
-						  activationType:[notification activationType]
+			[self notificationWasClicked:notification.userInfo
+						  activationType:notification.activationType
 						withReplyMessage:replyMessage];
 
 			return; // Do not continue this method.
 		}
 	}
 
-	[self notificationWasClicked:[notification userInfo]
-				  activationType:[notification activationType]
+	[self notificationWasClicked:notification.userInfo
+				  activationType:notification.activationType
 				withReplyMessage:nil];
 }
 
-- (void)dismissNotificationsInNotificationCenterForClient:(IRCClient *)client channel:(IRCChannel *)channel
+- (void)dismissNotificationCenterNotificationsForChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
-	NSArray *notifications = [RZUserNotificationCenter() deliveredNotifications];
-	
+	NSArray *notifications = RZUserNotificationCenter().deliveredNotifications;
+
 	for (NSUserNotification *note in notifications) {
-		NSDictionary *context = [note userInfo];
-		
-		NSString *uid = context[@"client"];
-		NSString *cid = context[@"channel"];
-		
-		if (NSObjectsAreEqual(uid, [client uniqueIdentifier]) &&
-			NSObjectsAreEqual(cid, [channel uniqueIdentifier]))
+		NSDictionary *context = note.userInfo;
+
+		NSString *clientId = context[@"client"];
+		NSString *channelId = context[@"channel"];
+
+		if (NSObjectsAreEqual(clientId, client.uniqueIdentifier) &&
+			NSObjectsAreEqual(channelId, channel.uniqueIdentifier))
 		{
 			[RZUserNotificationCenter() removeDeliveredNotification:note];
 		}
@@ -317,30 +319,30 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	return [TPCApplicationInfo applicationName];
 }
 
-- (NSDictionary *)registrationDictionaryForGrowl
+- (NSDictionary<NSString *, NSString *> *)registrationDictionaryForGrowl
 {
 	NSArray *allNotifications = @[
-		TXTLS(@"Notifications[1045]"),
-		TXTLS(@"Notifications[1046]"),
-		TXTLS(@"Notifications[1047]"),
-		TXTLS(@"Notifications[1048]"),
-		TXTLS(@"Notifications[1049]"),
-		TXTLS(@"Notifications[1050]"),
-		TXTLS(@"Notifications[1051]"),
-		TXTLS(@"Notifications[1052]"),
-		TXTLS(@"Notifications[1053]"),
-		TXTLS(@"Notifications[1054]"),
-		TXTLS(@"Notifications[1055]"),
-		TXTLS(@"Notifications[1056]"),
-		TXTLS(@"Notifications[1057]"),
-		TXTLS(@"Notifications[1058]"),
-		TXTLS(@"Notifications[1059]"),
-		TXTLS(@"Notifications[1060]"),
+	  TXTLS(@"Notifications[1045]"),
+	  TXTLS(@"Notifications[1046]"),
+	  TXTLS(@"Notifications[1047]"),
+	  TXTLS(@"Notifications[1048]"),
+	  TXTLS(@"Notifications[1049]"),
+	  TXTLS(@"Notifications[1050]"),
+	  TXTLS(@"Notifications[1051]"),
+	  TXTLS(@"Notifications[1052]"),
+	  TXTLS(@"Notifications[1053]"),
+	  TXTLS(@"Notifications[1054]"),
+	  TXTLS(@"Notifications[1055]"),
+	  TXTLS(@"Notifications[1056]"),
+	  TXTLS(@"Notifications[1057]"),
+	  TXTLS(@"Notifications[1058]"),
+	  TXTLS(@"Notifications[1059]"),
+	  TXTLS(@"Notifications[1060]"),
 	];
-	
+
 	return @{
-		GROWL_NOTIFICATIONS_ALL			: allNotifications,
-		GROWL_NOTIFICATIONS_DEFAULT		: allNotifications
+		GROWL_NOTIFICATIONS_ALL	: allNotifications,
+		GROWL_NOTIFICATIONS_DEFAULT	: allNotifications
 	};
 }
 
@@ -349,126 +351,140 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	[self notificationWasClicked:context activationType:0 withReplyMessage:nil];
 }
 
-- (BOOL)hasNetworkClientEntitlement 
+- (BOOL)hasNetworkClientEntitlement
 {
-    return YES;
+	return YES;
 }
 
 #pragma mark -
 #pragma mark Notification Callback
 
-- (void)notificationWasClicked:(NSDictionary *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(NSString *)message
+- (void)notificationWasClicked:(NSDictionary<NSString *, id> *)context activationType:(NSUserNotificationActivationType)activationType withReplyMessage:(nullable NSString *)message
 {
+	NSParameterAssert(context != nil);
+
 	NSTimeInterval now = [NSDate timeIntervalSince1970];
-	
+
 	if ((now - self.lastClickedTime) < _clickInterval) {
-		if (   self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
+		if (self.lastClickedContext && [self.lastClickedContext isEqual:context]) {
 			return;
 		}
 	}
-	
-	self.lastClickedTime = now;
+
 	self.lastClickedContext = context;
 
-	BOOL changeFocus = NO;
-	
-	if (NSDissimilarObjects(activationType, NSUserNotificationActivationTypeReplied) &&
-		NSDissimilarObjects(activationType, NSUserNotificationActivationTypeActionButtonClicked))
-	{
-		changeFocus = YES;
-	}
-	
+	self.lastClickedTime = now;
+
+	BOOL changeFocus =
+		(activationType != NSUserNotificationActivationTypeReplied &&
+		 activationType != NSUserNotificationActivationTypeActionButtonClicked);
+
 	if (changeFocus) {
 		[mainWindow() makeKeyAndOrderFront:nil];
-		
+
 		[NSApp activateIgnoringOtherApps:YES];
 	}
 
-	if ([context isKindOfClass:[NSDictionary class]]) {
+	if ([context isKindOfClass:[NSDictionary class]] == NO) {
+		return;
+	}
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-		/* Handle a notification that was clicked related to a warnings about
-		 the trial of Textual preparing to expire. */
-		if ([context boolForKey:@"isLicenseManagerTimeRemainingInTrialNotification"])
-		{
-			if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
-			{
-				[menuController() manageLicense:nil];
-			}
+	/* Handle a notification that was clicked related to a warnings about
+	 the trial of Textual preparing to expire. */
+	if ([context boolForKey:@"isLicenseManagerTimeRemainingInTrialNotification"])
+	{
+		if (activationType != NSUserNotificationActivationTypeActionButtonClicked) {
+			return;
 		}
-		else
+
+		[menuController() manageLicense:nil];
+	}
+	else
 #endif
 
-		/* Handle file transfer notifications allowing the user to start a 
-		 file transfer directly through the notification's action button. */
-		if ([context boolForKey:@"isFileTransferNotification"])
-		{
-			NSInteger alertType = [context integerForKey:@"fileTransferNotificationType"];
-			
-			if (alertType == TXNotificationFileTransferReceiveRequestedType)
-			{
-				if (activationType == NSUserNotificationActivationTypeActionButtonClicked)
-				{
-					NSString *uniqueIdentifier = context[@"fileTransferUniqeIdentifier"];
-					
-					TDCFileTransferDialogTransferController *transfer = [[menuController() fileTransferController] fileTransferFromUniqueIdentifier:uniqueIdentifier];
-					
-					if (transfer) {
-						TDCFileTransferDialogTransferStatus transferStatus = [transfer transferStatus];
-					
-						if (transferStatus == TDCFileTransferDialogTransferStoppedStatus) {
-							if ([transfer path] == nil) {
-								[transfer setPath:[TPCPathInfo userDownloadsFolderPath]];
-							}
-							
-							[transfer open];
-						}
-					}
-				}
-			}
-			
-			[[menuController() fileTransferController] show:YES restorePosition:NO];
+	/* Handle file transfer notifications allowing the user to start a
+	 file transfer directly through the notification's action button. */
+	if ([context boolForKey:@"isFileTransferNotification"])
+	{
+		NSInteger alertType = [context integerForKey:@"fileTransferNotificationType"];
+
+		if (activationType != NSUserNotificationActivationTypeActionButtonClicked) {
+			return;
 		}
 
-		/* Handle all other IRC related notifications. */
-		else
-		{
-			NSString *uid = context[@"client"];
-			NSString *cid = context[@"channel"];
-			
-			IRCClient *u = nil;
-			IRCChannel *c = nil;
-			
-			NSObjectIsEmptyAssert(uid);
-			
-			if (cid) {
-				c = [worldController() findChannelWithId:cid onClientWithId:uid];
-			} else {
-				u = [worldController() findClientWithId:uid];
+		if (alertType != TXNotificationFileTransferReceiveRequestedType) {
+			return;
+		}
+
+		NSString *uniqueIdentifier = context[@"fileTransferUniqeIdentifier"];
+
+		TDCFileTransferDialogTransferController *transfer = [menuController().fileTransferController fileTransferFromUniqueIdentifier:uniqueIdentifier];
+
+		if (transfer == nil) {
+			return;
+		}
+
+		TDCFileTransferDialogTransferStatus transferStatus = transfer.transferStatus;
+
+		if (transferStatus != TDCFileTransferDialogTransferStoppedStatus) {
+			return;
+		}
+
+		if (transfer.path == nil) {
+			transfer.path = [TPCPathInfo userDownloadsFolderPath];
+		}
+
+		[transfer open];
+
+		[menuController().fileTransferController show:YES restorePosition:NO];
+	}
+
+	/* Handle all other IRC related notifications. */
+	else
+	{
+		NSString *clientId = context[@"client"];
+		NSString *channelId = context[@"channel"];
+
+		if (clientId == nil && channelId == nil) {
+			return;
+		}
+
+		IRCClient *client = nil;
+		IRCChannel *channel = nil;
+
+		if (channelId) {
+			channel = [worldController() findChannelWithId:channelId onClientWithId:clientId];
+		} else {
+			client = [worldController() findClientWithId:channelId];
+		}
+
+		if (changeFocus) {
+			if (channel) {
+				[mainWindow() select:channel];
+			} else if (client) {
+				[mainWindow() select:client];
 			}
+		}
+
+		if (channel == nil) {
+			return;
+		}
+
+		if (message.length == 0) {
+			return;
+		}
+
+		if (message.length > 1 && [message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO) {
+			message = [message substringFromIndex:1];
 			
-			if (changeFocus) {
-				if (c) {
-					[mainWindow() select:c];
-				} else if (u) {
-					[mainWindow() select:u];
-				}
-			}
-			
-			NSObjectIsEmptyAssert(message);
-			
-			if (c) { // We want both a client and channel.
-				/* A user may want to do an action... */
-				if ([message hasPrefix:@"/"] && [message hasPrefix:@"//"] == NO && [message length] > 1) {
-					message = [message substringFromIndex:1];
-					
-					[[c associatedClient] sendCommand:message completeTarget:YES target:[c name]];
-				} else {
-					[[c associatedClient] sendPrivmsg:message toChannel:c];
-				}
-			}
+			[channel.associatedClient sendCommand:message completeTarget:YES target:channel.name];
+		} else {
+			[channel.associatedClient sendPrivmsg:message toChannel:channel];
 		}
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
