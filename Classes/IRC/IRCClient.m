@@ -2773,16 +2773,16 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			NSObjectIsEmptyAssert(s);
 
 			if (interval > 0) {
-				TLOTimerCommand *cmd = [TLOTimerCommand new];
+				IRCTimerCommandContext *cmd = [IRCTimerCommandContext new];
 
 				if ([[s string] hasPrefix:@"/"]) {
 					[s deleteCharactersInRange:NSMakeRange(0, 1)];
 				}
 
 				if (selChannel) {
-					[cmd setChannelID:[selChannel uniqueIdentifier]];
+					[cmd setChannelId:[selChannel uniqueIdentifier]];
 				} else {
-					[cmd setChannelID:nil];
+					[cmd setChannelId:nil];
 				}
 				
 				[cmd setRawInput:[s string]];
@@ -9266,12 +9266,12 @@ present_error:
 
 	@synchronized(self.commandQueue) {
 		while ([self.commandQueue count]) {
-			TLOTimerCommand *m = self.commandQueue[0];
+			IRCTimerCommandContext *m = self.commandQueue[0];
 
 			if ([m timerInterval] <= now) {
 				NSString *target = nil;
 
-				IRCChannel *c = [worldController() findChannelWithId:[m channelID] onClientWithId:[self uniqueIdentifier]];
+				IRCChannel *c = [worldController() findChannelWithId:[m channelId] onClientWithId:[self uniqueIdentifier]];
 
 				if (c) {
 					target = [c name];
@@ -9286,7 +9286,7 @@ present_error:
 		}
 
 		if ([self.commandQueue count]) {
-			TLOTimerCommand *m = self.commandQueue[0];
+			IRCTimerCommandContext *m = self.commandQueue[0];
 
 			NSTimeInterval delta = ([m timerInterval] - [NSDate timeIntervalSince1970]);
 
@@ -9297,14 +9297,14 @@ present_error:
 	}
 }
 
-- (void)addCommandToCommandQueue:(TLOTimerCommand *)m
+- (void)addCommandToCommandQueue:(IRCTimerCommandContext *)m
 {
 	BOOL added = NO;
 
 	NSInteger i = 0;
 
 	@synchronized(self.commandQueue) {
-		for (TLOTimerCommand *c in self.commandQueue) {
+		for (IRCTimerCommandContext *c in self.commandQueue) {
 			if ([m timerInterval] < [c timerInterval]) {
 				added = YES;
 
