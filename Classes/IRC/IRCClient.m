@@ -3480,12 +3480,10 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
 		if (self.logFile == nil) {
-			self.logFile = [TLOFileLogger new];
-			
-			self.logFile.client = self;
+			self.logFile = [[TLOFileLogger alloc] initWithClient:self];
 		}
 
-		[self.logFile writeLine:line];
+		[self.logFile writeLogLine:line];
 	}
 }
 
