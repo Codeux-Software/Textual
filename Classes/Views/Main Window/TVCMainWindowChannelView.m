@@ -242,6 +242,10 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 {
 	NSUInteger subviewCount = self.subviews.count;
 
+	if (subviewCount < 2) {
+		return;
+	}
+
 	NSRect splitViewFrame = self.frame;
 
 	CGFloat dividerThickness = self.dividerThickness;
