@@ -55,6 +55,7 @@
 #import "IRCColorFormatPrivate.h"
 #import "IRCConnectionPrivate.h"
 #import "IRCHighlightLogEntryPrivate.h"
+#import "IRCTimerCommandPrivate.h"
 #import "IRCTreeItemPrivate.h"
 #import "IRCUserPrivate.h"
 #import "IRCWorldPrivate.h"

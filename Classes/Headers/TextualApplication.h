@@ -109,7 +109,6 @@
 	@class TLOSoundPlayer;
 	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
-	@class TLOTimerCommand;
 	@class TLOpenLink;
 	@class TPCApplicationInfo;
 	@class TPCPathInfo;
@@ -290,7 +289,6 @@
 	#import "TLOSoundPlayer.h"
 	#import "TLOSpeechSynthesizer.h"
 	#import "TLOTimer.h"
-	#import "TLOTimerCommand.h"
 	#import "TLOpenLink.h"
 
 	/* Preferences */

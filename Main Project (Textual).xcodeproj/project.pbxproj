@@ -102,7 +102,7 @@
 		4C0445BA16F1603C00EBB665 /* TLOPopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */; };
 		4C0445BC16F1603C00EBB665 /* TLOSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */; };
 		4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
-		4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
+		4C0445BE16F1603C00EBB665 /* IRCTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* IRCTimerCommand.m */; };
 		4C0445BF16F1603C00EBB665 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
 		4C0445C116F1603C00EBB665 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
 		4C0445C216F1603C00EBB665 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
@@ -284,7 +284,7 @@
 		4C0BA69C1990798800857343 /* TLOSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */; };
 		4C0BA69E1990798800857343 /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
 		4C0BA69F1990798800857343 /* TDCFileTransferDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0879C6187061BF0034F5EB /* TDCFileTransferDialog.m */; };
-		4C0BA6A01990798800857343 /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
+		4C0BA6A01990798800857343 /* IRCTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* IRCTimerCommand.m */; };
 		4C0BA6A11990798800857343 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
 		4C0BA6A21990798800857343 /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C0BA6A31990798800857343 /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
@@ -1026,7 +1026,7 @@
 		4C8AF6C8158E99520026668C /* TLOPopupPrompts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */; };
 		4C8AF6CB158E99520026668C /* TLOSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */; };
 		4C8AF6CC158E99520026668C /* TLOTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E5158E99520026668C /* TLOTimer.m */; };
-		4C8AF6CD158E99520026668C /* TLOTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* TLOTimerCommand.m */; };
+		4C8AF6CD158E99520026668C /* IRCTimerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E6158E99520026668C /* IRCTimerCommand.m */; };
 		4C8AF6CE158E99520026668C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5E8158E99520026668C /* main.m */; };
 		4C8AF6D0158E99520026668C /* TPCThemeSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5EC158E99520026668C /* TPCThemeSettings.m */; };
 		4C8AF6D1158E99520026668C /* TPCThemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8AF5ED158E99520026668C /* TPCThemeController.m */; };
@@ -1329,6 +1329,9 @@
 		4CEA29C41D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */; };
 		4CEA29C51D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */; };
 		4CEA29C61D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */; };
+		4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
+		4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
+		4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
@@ -2059,7 +2062,7 @@
 		4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOPopupPrompts.m; path = Library/TLOPopupPrompts.m; sourceTree = "<group>"; };
 		4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSoundPlayer.m; path = Library/TLOSoundPlayer.m; sourceTree = "<group>"; };
 		4C8AF5E5158E99520026668C /* TLOTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOTimer.m; path = Library/TLOTimer.m; sourceTree = "<group>"; };
-		4C8AF5E6158E99520026668C /* TLOTimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOTimerCommand.m; path = Library/TLOTimerCommand.m; sourceTree = "<group>"; };
+		4C8AF5E6158E99520026668C /* IRCTimerCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IRCTimerCommand.m; path = Library/IRCTimerCommand.m; sourceTree = "<group>"; };
 		4C8AF5E8158E99520026668C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4C8AF5EC158E99520026668C /* TPCThemeSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCThemeSettings.m; sourceTree = "<group>"; };
 		4C8AF5ED158E99520026668C /* TPCThemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCThemeController.m; sourceTree = "<group>"; };
@@ -2203,6 +2206,7 @@
 		4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLONicknameCompletionStatusPrivate.h; path = Headers/Private/TLONicknameCompletionStatusPrivate.h; sourceTree = "<group>"; };
 		4CEA29BF1D2091F200AADC69 /* IRCColorFormatPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormatPrivate.h; path = Headers/Private/IRCColorFormatPrivate.h; sourceTree = "<group>"; };
 		4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOGrowlControllerPrivate.h; path = Headers/Private/TLOGrowlControllerPrivate.h; sourceTree = "<group>"; };
+		4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTimerCommandPrivate.h; path = Headers/Private/IRCTimerCommandPrivate.h; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
@@ -2434,6 +2438,7 @@
 				4CB17ECF1D125E0100FAEAD4 /* IRCHighlightLogEntry.m */,
 				4CB17ED01D125E0100FAEAD4 /* IRCHighlightMatchCondition.m */,
 				4C8AF5C1158E99520026668C /* IRCSendingMessage.m */,
+				4C8AF5E6158E99520026668C /* IRCTimerCommand.m */,
 				4C8AF5C2158E99520026668C /* IRCTreeItem.m */,
 				4C8AF5C4158E99520026668C /* IRCWorld.m */,
 				4CFC40E11969B5A0004C6EF4 /* IRCWorldCloudExtension.m */,
@@ -2742,6 +2747,7 @@
 				4CEA29BF1D2091F200AADC69 /* IRCColorFormatPrivate.h */,
 				4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */,
 				4CB17ED71D12603300FAEAD4 /* IRCHighlightLogEntryPrivate.h */,
+				4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */,
 				4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */,
 				4C673ED51D10FB5000979B60 /* IRCUserPrivate.h */,
 				4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */,
@@ -3262,7 +3268,6 @@
 				4C80A4E01B46BFD100F9891B /* License Manager */,
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
-				4C8AF5E6158E99520026668C /* TLOTimerCommand.m */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -3829,6 +3834,7 @@
 				4C7B037A1D1210A100295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4C7B037B1D1210A100295E82 /* TVCBasicTableView.h in Headers */,
 				4C7B037E1D1210A100295E82 /* TVCImageURLParser.h in Headers */,
+				4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4C7B037F1D1210A100295E82 /* TVCInputPromptDialog.h in Headers */,
 				4CB17EC51D125BBA00FAEAD4 /* IRCHighlightLogEntryInternal.h in Headers */,
 				4C7B03801D1210A100295E82 /* TVCLogController.h in Headers */,
@@ -4037,6 +4043,7 @@
 				4CDDF24F1D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B041A1D1210A800295E82 /* TVCServerList.h in Headers */,
 				4C7B041F1D1210A800295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
+				4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4CB17EBD1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C5DD5231D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4CB17EC01D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
@@ -4238,6 +4245,7 @@
 				4CDDF2501D1B1D0C0095D031 /* NSViewHelper.h in Headers */,
 				4C7B049B1D1210B000295E82 /* TVCServerList.h in Headers */,
 				4C7B04A01D1210B000295E82 /* TVCComboBoxWithValueValidation.h in Headers */,
+				4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */,
 				4CB17EBE1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C5DD5241D1E1CB700F2E1AE /* TVCMainWindowTitlebarAccessoryViewPrivate.h in Headers */,
 				4CB17EC11D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
@@ -5162,7 +5170,7 @@
 				4C645F601CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */,
 				4C0445BC16F1603C00EBB665 /* TLOSoundPlayer.m in Sources */,
 				4C0445BD16F1603C00EBB665 /* TLOTimer.m in Sources */,
-				4C0445BE16F1603C00EBB665 /* TLOTimerCommand.m in Sources */,
+				4C0445BE16F1603C00EBB665 /* IRCTimerCommand.m in Sources */,
 				4CF40E631AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
 				4C673F1A1D10FB6500979B60 /* TPCPreferencesReload.m in Sources */,
 				4CF40E1B1AC1A4AC00A26BE0 /* TVCTextFieldWithValueValidation.m in Sources */,
@@ -5309,7 +5317,7 @@
 				4C0BA69E1990798800857343 /* TLOTimer.m in Sources */,
 				4CF40E761AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m in Sources */,
 				4C0BA69F1990798800857343 /* TDCFileTransferDialog.m in Sources */,
-				4C0BA6A01990798800857343 /* TLOTimerCommand.m in Sources */,
+				4C0BA6A01990798800857343 /* IRCTimerCommand.m in Sources */,
 				4C0BA6A11990798800857343 /* main.m in Sources */,
 				4C0BA6A21990798800857343 /* TPCThemeSettings.m in Sources */,
 				4CF40E621AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,
@@ -5456,7 +5464,7 @@
 				4CF40E781AC1A4AC00A26BE0 /* TVCMemberListDarkMavericksUserInterface.m in Sources */,
 				4C0879CF187061BF0034F5EB /* TDCFileTransferDialog.m in Sources */,
 				4C645F611CA7FD51005842E2 /* TVCMainWindowChannelView.m in Sources */,
-				4C8AF6CD158E99520026668C /* TLOTimerCommand.m in Sources */,
+				4C8AF6CD158E99520026668C /* IRCTimerCommand.m in Sources */,
 				4C8AF6CE158E99520026668C /* main.m in Sources */,
 				4C8AF6D0158E99520026668C /* TPCThemeSettings.m in Sources */,
 				4CF40E641AC1A4AC00A26BE0 /* TVCDockIcon.m in Sources */,

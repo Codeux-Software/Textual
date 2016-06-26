@@ -36,7 +36,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@implementation TLOTimerCommand
+@interface IRCTimerCommandContext : NSObject
+@property (nonatomic, copy, nullable) NSString *channelId;
+@property (nonatomic, copy, nullable) NSString *rawInput;
+@property (nonatomic, assign) NSTimeInterval timerInterval;
 @end
+
+NS_ASSUME_NONNULL_END
