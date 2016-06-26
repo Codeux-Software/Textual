@@ -4769,7 +4769,6 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="VVX-vp-kAl" id="Qah-6s-7Er"/>
-                                            <action selector="onChangedStyle:" target="-2" id="Oys-UB-HES"/>
                                             <binding destination="-2" name="value" keyPath="maxLogLines" id="lMB-NA-QnD">
                                                 <dictionary key="options">
                                                     <bool key="NSValidatesImmediately" value="YES"/>
