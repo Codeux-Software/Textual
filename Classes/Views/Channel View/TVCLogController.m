@@ -1318,7 +1318,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	double indentOffset = themeSettings().indentationOffset;
 
-	if (fabs(indentOffset) < 0.0 || [TPCPreferences rightToLeftFormatting]) {
+	if (round(indentOffset) < 0.0 || [TPCPreferences rightToLeftFormatting]) {
 		templateTokens[@"nicknameIndentationAvailable"] = @(NO);
 	} else {
 		templateTokens[@"nicknameIndentationAvailable"] = @(YES);
