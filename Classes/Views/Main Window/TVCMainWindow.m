@@ -1591,7 +1591,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[RZUserDefaults() setBool:self.serverListVisible
 					   forKey:@"Window -> Main Window -> Server List is Visible"];
 
-	[RZUserDefaults() setBool:((self.memberList).isHiddenByUser == NO)
+	[RZUserDefaults() setBool:(self.memberList.isHiddenByUser == NO)
 					   forKey:@"Window -> Main Window -> Member List is Visible"];
 }
 

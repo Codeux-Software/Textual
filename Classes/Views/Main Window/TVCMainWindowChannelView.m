@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface TVCMainWindowChannelView ()
+@property (nonatomic, assign) BOOL isMovingDividers;
 @property (nonatomic, assign) NSUInteger itemIndexSelected;
 
 - (void)selectionChangeTo:(NSUInteger)itemIndex;
@@ -191,7 +192,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	}
 
 	/* Size views */
-	[self adjustSubviews];
+	[self positionDividersProportionally];
 }
 
 - (void)selectionChangeTo:(NSUInteger)itemIndex
@@ -237,9 +238,35 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	return overlayView;
 }
 
+- (void)positionDividersProportionally
+{
+	NSUInteger subviewCount = self.subviews.count;
+
+	NSRect splitViewFrame = self.frame;
+
+	CGFloat dividerThickness = self.dividerThickness;
+
+	CGFloat subviewHeight = ((splitViewFrame.size.height / subviewCount) -
+							  (dividerThickness * (subviewCount - 1)));
+
+	self.isMovingDividers = YES;
+
+	for (NSInteger i = (subviewCount - 1); i >= 0; i--) {
+		CGFloat currentPosition = (subviewHeight * (i + 1));
+
+		[self setPosition:currentPosition ofDividerAtIndex:i];
+	}
+
+	self.isMovingDividers = NO;
+}
+
 - (CGFloat)splitView:(NSSplitView *)splitView constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)dividerIndex
 {
 #define _minimumPosition		22.0
+
+	if (self.isMovingDividers) {
+		return proposedPosition;
+	}
 
 	if (dividerIndex > 0) {
 		NSArray *subviews = self.subviews;
@@ -330,7 +357,11 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 		return;
 	}
 
-	[self addSubview:webView];
+	if (self.overlayVisible) {
+		[self addSubview:webView positioned:NSWindowBelow relativeTo:self.overlayView];
+	} else {
+		[self addSubview:webView];
+	}
 
 	[self addConstraints:
 	 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[webView]-0-|"
@@ -345,12 +376,23 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 											   views:NSDictionaryOfVariableBindings(webView)]];
 }
 
-- (void)addOverlayView
+- (void)constructOverlayView
 {
 	  TVCMainWindowChannelViewSubviewOverlayView *overlayView =
 	[[TVCMainWindowChannelViewSubviewOverlayView alloc] initWithFrame:self.frame];
 
 	overlayView.translatesAutoresizingMaskIntoConstraints = NO;
+
+	self.overlayView = overlayView;
+}
+
+- (void)addOverlayView
+{
+	if (self.overlayView == nil) {
+		[self constructOverlayView];
+	}
+
+	TVCMainWindowChannelViewSubviewOverlayView *overlayView = self.overlayView;
 
 	[self addSubview:overlayView];
 
@@ -365,8 +407,6 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 											 options:NSLayoutFormatDirectionLeadingToTrailing
 											 metrics:nil
 											   views:NSDictionaryOfVariableBindings(overlayView)]];
-
-	self.overlayView = overlayView;
 }
 
 - (void)toggleOverlayView
@@ -374,7 +414,6 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	if (self.overlayVisible == NO) {
 		if ( self.overlayView) {
 			[self.overlayView removeFromSuperview];
-			 self.overlayView = nil;
 		}
 	} else {
 		[self addOverlayView];
