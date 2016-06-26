@@ -67,6 +67,7 @@
 #import "THOPluginProtocolPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOLicenseManager.h"
+#import "TLONicknameCompletionStatusPrivate.h"
 #import "TPCApplicationInfoPrivate.h"
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"

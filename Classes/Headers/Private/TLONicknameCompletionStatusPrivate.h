@@ -36,10 +36,14 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TLONicknameCompletionStatus : NSObject
+- (instancetype)initWithWindow:(TVCMainWindow *)mainWindow NS_DESIGNATED_INITIALIZER;
+
 - (void)completeNickname:(BOOL)movingForward;
 
 - (void)clear;
 @end
+
+NS_ASSUME_NONNULL_END

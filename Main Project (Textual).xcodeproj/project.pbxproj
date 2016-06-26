@@ -624,7 +624,6 @@
 		4C7B036E1D1210A100295E82 /* TLOKeyEventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF572158E99520026668C /* TLOKeyEventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B036F1D1210A100295E82 /* TLOLanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF573158E99520026668C /* TLOLanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03701D1210A100295E82 /* TLOLinkParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF574158E99520026668C /* TLOLinkParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03711D1210A100295E82 /* TLONicknameCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03741D1210A100295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -723,7 +722,6 @@
 		4C7B03EF1D1210A800295E82 /* TLOKeyEventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF572158E99520026668C /* TLOKeyEventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F01D1210A800295E82 /* TLOLanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF573158E99520026668C /* TLOLanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F11D1210A800295E82 /* TLOLinkParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF574158E99520026668C /* TLOLinkParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03F21D1210A800295E82 /* TLONicknameCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F51D1210A800295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -822,7 +820,6 @@
 		4C7B04701D1210B000295E82 /* TLOKeyEventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF572158E99520026668C /* TLOKeyEventHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04711D1210B000295E82 /* TLOLanguagePreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF573158E99520026668C /* TLOLanguagePreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04721D1210B000295E82 /* TLOLinkParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF574158E99520026668C /* TLOLinkParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04731D1210B000295E82 /* TLONicknameCompletionStatus.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04761D1210B000295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1323,6 +1320,9 @@
 		4CEA29B31D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */; };
 		4CEA29B41D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */; };
 		4CEA29B51D20824600AADC69 /* TLOFileLoggerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */; };
+		4CEA29BC1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */; };
+		4CEA29BD1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */; };
+		4CEA29BE1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
@@ -1997,7 +1997,6 @@
 		4C8AF572158E99520026668C /* TLOKeyEventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOKeyEventHandler.h; path = Headers/TLOKeyEventHandler.h; sourceTree = "<group>"; };
 		4C8AF573158E99520026668C /* TLOLanguagePreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLanguagePreferences.h; path = Headers/TLOLanguagePreferences.h; sourceTree = "<group>"; };
 		4C8AF574158E99520026668C /* TLOLinkParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLinkParser.h; path = Headers/TLOLinkParser.h; sourceTree = "<group>"; };
-		4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLONicknameCompletionStatus.h; sourceTree = "<group>"; };
 		4C8AF576158E99520026668C /* TLOpenLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOpenLink.h; path = Headers/TLOpenLink.h; sourceTree = "<group>"; };
 		4C8AF577158E99520026668C /* TLOPopupPrompts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOPopupPrompts.h; path = Headers/TLOPopupPrompts.h; sourceTree = "<group>"; };
 		4C8AF57A158E99520026668C /* TLOSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSoundPlayer.h; path = Headers/TLOSoundPlayer.h; sourceTree = "<group>"; };
@@ -2195,6 +2194,7 @@
 		4CEA09BD1875A588005D6184 /* TDCFileTransferDialogRemoteAddressLookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCFileTransferDialogRemoteAddressLookup.h; sourceTree = "<group>"; };
 		4CEA09C31875A5E6005D6184 /* TDCFileTransferDialogRemoteAddressLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCFileTransferDialogRemoteAddressLookup.m; path = "Dialogs/File Transfers/TDCFileTransferDialogRemoteAddressLookup.m"; sourceTree = "<group>"; };
 		4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOFileLoggerPrivate.h; path = Classes/Headers/Private/TLOFileLoggerPrivate.h; sourceTree = SOURCE_ROOT; };
+		4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLONicknameCompletionStatusPrivate.h; path = Headers/Private/TLONicknameCompletionStatusPrivate.h; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
@@ -2746,6 +2746,7 @@
 				4C7B05051D12168C00295E82 /* THOPluginManagerPrivate.h */,
 				4C7B05061D12168C00295E82 /* THOPluginProtocolPrivate.h */,
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
+				4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */,
 				4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */,
 				4C673ED91D10FB5000979B60 /* TPCPathInfoPrivate.h */,
 				4C673EDA1D10FB5000979B60 /* TPCPreferencesCloudSyncPrivate.h */,
@@ -2936,6 +2937,7 @@
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
+				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C8AF5E0158E99520026668C /* TLOpenLink.m */,
 				4C8AF5E1158E99520026668C /* TLOPopupPrompts.m */,
 				4C8AF5E4158E99520026668C /* TLOSoundPlayer.m */,
@@ -3060,7 +3062,6 @@
 				4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */,
 				4C8AF570158E99520026668C /* TLOGrowlController.h */,
 				4C8AF571158E99520026668C /* TLOInputHistory.h */,
-				4C8AF575158E99520026668C /* TLONicknameCompletionStatus.h */,
 				4C8AF57C158E99520026668C /* TLOTimerCommand.h */,
 				4C8AF597158E99520026668C /* TXMenuController.h */,
 			);
@@ -3251,7 +3252,6 @@
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
-				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C8AF5E6158E99520026668C /* TLOTimerCommand.m */,
 			);
 			name = Library;
@@ -3758,6 +3758,7 @@
 				4C7B034B1D1210A100295E82 /* IRCSendingMessage.h in Headers */,
 				4C5DD50A1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
+				4CEA29BC1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C056F231D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h in Headers */,
 				4C7B034D1D1210A100295E82 /* IRCUser.h in Headers */,
@@ -3806,7 +3807,6 @@
 				4C7B03701D1210A100295E82 /* TLOLinkParser.h in Headers */,
 				4C7B48FB1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
 				4CB17EC81D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
-				4C7B03711D1210A100295E82 /* TLONicknameCompletionStatus.h in Headers */,
 				4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */,
 				4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */,
 				4C7B03741D1210A100295E82 /* TLOSoundPlayer.h in Headers */,
@@ -3909,6 +3909,7 @@
 				4C7B03AD1D1210A800295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7B03AE1D1210A800295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B03AF1D1210A800295E82 /* GRMustacheContentType.h in Headers */,
+				4CEA29BD1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C7B03B01D1210A800295E82 /* GRMustacheContext.h in Headers */,
 				4C7B03B11D1210A800295E82 /* GRMustacheError.h in Headers */,
 				4C7B03B21D1210A800295E82 /* GRMustacheFilter.h in Headers */,
@@ -3983,7 +3984,6 @@
 				4C7B03EF1D1210A800295E82 /* TLOKeyEventHandler.h in Headers */,
 				4C7B03F01D1210A800295E82 /* TLOLanguagePreferences.h in Headers */,
 				4C7B03F11D1210A800295E82 /* TLOLinkParser.h in Headers */,
-				4C7B03F21D1210A800295E82 /* TLONicknameCompletionStatus.h in Headers */,
 				4C5DD5271D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */,
 				4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */,
@@ -4108,6 +4108,7 @@
 				4C7B042E1D1210B000295E82 /* GRMustacheAvailabilityMacros.h in Headers */,
 				4C7B042F1D1210B000295E82 /* GRMustacheConfiguration.h in Headers */,
 				4C7B04301D1210B000295E82 /* GRMustacheContentType.h in Headers */,
+				4CEA29BE1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C7B04311D1210B000295E82 /* GRMustacheContext.h in Headers */,
 				4C7B04321D1210B000295E82 /* GRMustacheError.h in Headers */,
 				4C7B04331D1210B000295E82 /* GRMustacheFilter.h in Headers */,
@@ -4182,7 +4183,6 @@
 				4C7B04701D1210B000295E82 /* TLOKeyEventHandler.h in Headers */,
 				4C7B04711D1210B000295E82 /* TLOLanguagePreferences.h in Headers */,
 				4C7B04721D1210B000295E82 /* TLOLinkParser.h in Headers */,
-				4C7B04731D1210B000295E82 /* TLONicknameCompletionStatus.h in Headers */,
 				4C5DD5281D1E202700F2E1AE /* TVCMainWindowChannelViewPrivate.h in Headers */,
 				4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */,
 				4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */,
