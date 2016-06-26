@@ -291,6 +291,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return [channel.associatedClient formatNickname:self.nickname inChannel:channel withFormat:format];
 }
 
+- (NSString *)renderedBodyForTranscriptLog
+{
+	return [self renderedBodyForTranscriptLogInChannel:nil];
+}
+
 - (NSString *)renderedBodyForTranscriptLogInChannel:(nullable IRCChannel *)channel
 {
 	NSMutableString *s = [NSMutableString string];

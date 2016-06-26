@@ -38,6 +38,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TVCLogLine ()
+- (NSString *)renderedBodyForTranscriptLog;
 - (NSString *)renderedBodyForTranscriptLogInChannel:(nullable IRCChannel *)channel;
 @end
 

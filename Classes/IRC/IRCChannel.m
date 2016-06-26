@@ -181,7 +181,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (NSURL *)logFilePath
 {
 	if (self.logFile) {
-		return [self.logFile buildPath];
+		return [NSURL URLWithString:[self.logFile writePath]];
 	} else {
 		return nil;
 	}
@@ -390,13 +390,10 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 {
 	if ([TPCPreferences logToDiskIsEnabled]) {
 		if (self.logFile == nil) {
-			self.logFile = [TLOFileLogger new];
-
-			[self.logFile setClient:self.associatedClient];
-			[self.logFile setChannel:self];
+			self.logFile = [[TLOFileLogger alloc] initWithChannel:self];
 		}
 
-		[self.logFile writeLine:line];
+		[self.logFile writeLogLine:line];
 	}
 }
 

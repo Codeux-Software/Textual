@@ -36,9 +36,8 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-/* This is the class used for logging to text in Textual... */
 TEXTUAL_EXTERN NSString * const TLOFileLoggerConsoleDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerChannelDirectoryName;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerPrivateMessageDirectoryName;
@@ -50,16 +49,19 @@ TEXTUAL_EXTERN NSString * const TLOFileLoggerNoticeNicknameFormat;
 TEXTUAL_EXTERN NSString * const TLOFileLoggerISOStandardClockFormat;
 
 @interface TLOFileLogger : NSObject
-@property (nonatomic, weak) IRCClient *client;
-@property (nonatomic, weak) IRCChannel *channel;
+- (instancetype)initWithClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
 - (void)open;
-- (void)close;
-- (void)reset;
 - (void)reopenIfNeeded;
+- (void)close;
 
-@property (readonly, copy) NSURL *buildPath;
+- (void)reset;
 
-- (void)writeLine:(TVCLogLine *)logLine;
-- (void)writePlainTextLine:(NSString *)s;
+@property (readonly, copy, nullable) NSString *writePath;
+
+- (void)writeLogLine:(TVCLogLine *)logLine;
+- (void)writePlainText:(NSString *)string;
 @end
+
+NS_ASSUME_NONNULL_END
