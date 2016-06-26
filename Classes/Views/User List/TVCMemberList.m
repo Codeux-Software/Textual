@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSInteger rowIndex = [self rowForItem:object];
 
-	NSAssert((rowIndex > 0),
+	NSAssert((rowIndex >= 0),
 		@"Object does not exist on outline view");
 
 	[self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
