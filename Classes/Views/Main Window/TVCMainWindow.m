@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, weak, readwrite) IBOutlet TVCServerList *serverList;
+@property (nonatomic, strong) TLONicknameCompletionStatus *nicknameCompletionStatus;
 @property (nonatomic, readwrite, copy) NSArray *selectedItems;
 @property (nonatomic, readwrite, strong, nullable) IRCTreeItem *selectedItem;
 @property (nonatomic, copy, nullable) NSArray *previousSelectedItemsId;
@@ -86,6 +87,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)prepareInitialState
 {
 	self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
+
+	self.nicknameCompletionStatus = [[TLONicknameCompletionStatus alloc] initWithWindow:self];
 
 	self.previousSelectedItemsId = @[];
 
@@ -887,9 +890,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 #pragma mark Actions
 
-- (void)completeNickname:(BOOL)moveForward
+- (void)completeNickname:(BOOL)movingForward
 {
-	[[TXSharedApplication sharedNicknameCompletionStatus] completeNickname:moveForward];
+	[self.nicknameCompletionStatus completeNickname:movingForward];
 }
 
 - (void)tab:(NSEvent *)e
@@ -1108,7 +1111,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(command != nil);
 
-	[[TXSharedApplication sharedNicknameCompletionStatus] clear];
+	[self.nicknameCompletionStatus clear];
 
 	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
 

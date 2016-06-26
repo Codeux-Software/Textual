@@ -62,7 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (TLOGrowlController *)sharedGrowlController;
 + (TLOInputHistory *)sharedInputHistoryManager;
 + (OELReachability *)sharedNetworkReachabilityNotifier;
-+ (TLONicknameCompletionStatus *)sharedNicknameCompletionStatus;
 + (THOPluginManager *)sharedPluginManager;
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;
 + (TLOSpeechSynthesizer *)sharedSpeechSynthesizer;

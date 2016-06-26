@@ -105,7 +105,6 @@
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
-	@class TLONicknameCompletionStatus;
 	@class TLOPopupPrompts;
 	@class TLOSoundPlayer;
 	@class TLOSpeechSynthesizer;
@@ -287,7 +286,6 @@
 	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"
-	#import "TLONicknameCompletionStatus.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLOSoundPlayer.h"
 	#import "TLOSpeechSynthesizer.h"
