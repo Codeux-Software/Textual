@@ -107,7 +107,6 @@
 	@class TLOLinkParser;
 	@class TLOPopupPrompts;
 	@class TLOSoundPlayer;
-	@class TLOSpeechSynthesizer;
 	@class TLOTimer;
 	@class TLOpenLink;
 	@class TPCApplicationInfo;
@@ -287,7 +286,6 @@
 	#import "TLOLinkParser.h"
 	#import "TLOPopupPrompts.h"
 	#import "TLOSoundPlayer.h"
-	#import "TLOSpeechSynthesizer.h"
 	#import "TLOTimer.h"
 	#import "TLOpenLink.h"
 

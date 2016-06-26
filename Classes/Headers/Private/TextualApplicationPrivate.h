@@ -71,6 +71,7 @@
 #import "TLOGrowlControllerPrivate.h"
 #import "TLOLicenseManager.h"
 #import "TLONicknameCompletionStatusPrivate.h"
+#import "TLOSpeechSynthesizerPrivate.h"
 #import "TPCApplicationInfoPrivate.h"
 #import "TPCPathInfoPrivate.h"
 #import "TPCPreferencesCloudSyncPrivate.h"

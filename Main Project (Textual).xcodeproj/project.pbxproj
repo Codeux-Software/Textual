@@ -627,7 +627,6 @@
 		4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03741D1210A100295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03751D1210A100295E82 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03761D1210A100295E82 /* TLOTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57B158E99520026668C /* TLOTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03771D1210A100295E82 /* TLOTimerCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57C158E99520026668C /* TLOTimerCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03791D1210A100295E82 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -725,7 +724,6 @@
 		4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F51D1210A800295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B03F61D1210A800295E82 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F71D1210A800295E82 /* TLOTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57B158E99520026668C /* TLOTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03F81D1210A800295E82 /* TLOTimerCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57C158E99520026668C /* TLOTimerCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B03FA1D1210A800295E82 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -823,7 +821,6 @@
 		4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF576158E99520026668C /* TLOpenLink.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF577158E99520026668C /* TLOPopupPrompts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04761D1210B000295E82 /* TLOSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57A158E99520026668C /* TLOSoundPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7B04771D1210B000295E82 /* TLOSpeechSynthesizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04781D1210B000295E82 /* TLOTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57B158E99520026668C /* TLOTimer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B04791D1210B000295E82 /* TLOTimerCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C8AF57C158E99520026668C /* TLOTimerCommand.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7B047B1D1210B000295E82 /* TVCAutoExpandingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1332,6 +1329,9 @@
 		4CEA29C81D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
 		4CEA29C91D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
 		4CEA29CA1D20967700AADC69 /* IRCTimerCommandPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */; };
+		4CEA29CC1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
+		4CEA29CD1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
+		4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
@@ -2075,7 +2075,6 @@
 		4C9234B2195330E30009AAAE /* TXUserInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXUserInterface.h; path = Headers/TXUserInterface.h; sourceTree = "<group>"; };
 		4C92FECA17A8C8F2003888F4 /* TPCResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TPCResourceManager.h; path = Headers/TPCResourceManager.h; sourceTree = "<group>"; };
 		4C937BD4170618940050CEF3 /* TLOSpeechSynthesizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOSpeechSynthesizer.m; path = Library/TLOSpeechSynthesizer.m; sourceTree = "<group>"; };
-		4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSpeechSynthesizer.h; path = Headers/TLOSpeechSynthesizer.h; sourceTree = "<group>"; };
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
@@ -2207,6 +2206,7 @@
 		4CEA29BF1D2091F200AADC69 /* IRCColorFormatPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCColorFormatPrivate.h; path = Headers/Private/IRCColorFormatPrivate.h; sourceTree = "<group>"; };
 		4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOGrowlControllerPrivate.h; path = Headers/Private/TLOGrowlControllerPrivate.h; sourceTree = "<group>"; };
 		4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTimerCommandPrivate.h; path = Headers/Private/IRCTimerCommandPrivate.h; sourceTree = "<group>"; };
+		4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSpeechSynthesizerPrivate.h; path = Headers/Private/TLOSpeechSynthesizerPrivate.h; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
@@ -2763,6 +2763,7 @@
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
 				4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */,
+				4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */,
 				4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */,
 				4C673ED91D10FB5000979B60 /* TPCPathInfoPrivate.h */,
 				4C673EDA1D10FB5000979B60 /* TPCPreferencesCloudSyncPrivate.h */,
@@ -3192,7 +3193,6 @@
 				4C8AF576158E99520026668C /* TLOpenLink.h */,
 				4C8AF577158E99520026668C /* TLOPopupPrompts.h */,
 				4C8AF57A158E99520026668C /* TLOSoundPlayer.h */,
-				4C937BDA170618A80050CEF3 /* TLOSpeechSynthesizer.h */,
 				4C8AF57B158E99520026668C /* TLOTimer.h */,
 				4C0095A11952AA0F008A81C7 /* TPCApplicationInfo.h */,
 				4C00959B1952A9E7008A81C7 /* TPCPathInfo.h */,
@@ -3827,7 +3827,6 @@
 				4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */,
 				4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */,
 				4C7B03741D1210A100295E82 /* TLOSoundPlayer.h in Headers */,
-				4C7B03751D1210A100295E82 /* TLOSpeechSynthesizer.h in Headers */,
 				4C7B03761D1210A100295E82 /* TLOTimer.h in Headers */,
 				4C7B03771D1210A100295E82 /* TLOTimerCommand.h in Headers */,
 				4C7B03791D1210A100295E82 /* TVCAutoExpandingTextField.h in Headers */,
@@ -3855,6 +3854,7 @@
 				4C7B03991D1210A100295E82 /* TVCServerList.h in Headers */,
 				4CB17EBF1D125B3700FAEAD4 /* IRCHighlightMatchCondition.h in Headers */,
 				4C76CC961D1DC6ED005CDDA9 /* TVCTextFormatterMenuPrivate.h in Headers */,
+				4CEA29CC1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C7B49171D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
 				4CB17EBC1D125B3700FAEAD4 /* IRCHighlightLogEntry.h in Headers */,
 				4C7B05071D12168C00295E82 /* THOPluginDispatcherPrivate.h in Headers */,
@@ -3976,6 +3976,7 @@
 				4C7B03D41D1210A800295E82 /* TDCFileTransferDialogTableCell.h in Headers */,
 				4C7B03D51D1210A800295E82 /* TDCFileTransferDialogTransferController.h in Headers */,
 				4C7B03D61D1210A800295E82 /* TDChannelBanListSheet.h in Headers */,
+				4CEA29CD1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C7B03D71D1210A800295E82 /* TDChannelInviteSheet.h in Headers */,
 				4C7B03D81D1210A800295E82 /* TDChannelModifyModesSheet.h in Headers */,
 				4C7B49181D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
@@ -4007,7 +4008,6 @@
 				4C7B03F31D1210A800295E82 /* TLOpenLink.h in Headers */,
 				4C7B03F41D1210A800295E82 /* TLOPopupPrompts.h in Headers */,
 				4C7B03F51D1210A800295E82 /* TLOSoundPlayer.h in Headers */,
-				4C7B03F61D1210A800295E82 /* TLOSpeechSynthesizer.h in Headers */,
 				4C4A1AEC1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B03F71D1210A800295E82 /* TLOTimer.h in Headers */,
 				4C7B03F81D1210A800295E82 /* TLOTimerCommand.h in Headers */,
@@ -4178,6 +4178,7 @@
 				4C7B04551D1210B000295E82 /* TDCFileTransferDialogTableCell.h in Headers */,
 				4C7B04561D1210B000295E82 /* TDCFileTransferDialogTransferController.h in Headers */,
 				4C7B04571D1210B000295E82 /* TDChannelBanListSheet.h in Headers */,
+				4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */,
 				4C7B04581D1210B000295E82 /* TDChannelInviteSheet.h in Headers */,
 				4C7B04591D1210B000295E82 /* TDChannelModifyModesSheet.h in Headers */,
 				4C7B49191D131A7B008D7926 /* TVCLogLineInternal.h in Headers */,
@@ -4209,7 +4210,6 @@
 				4C7B04741D1210B000295E82 /* TLOpenLink.h in Headers */,
 				4C7B04751D1210B000295E82 /* TLOPopupPrompts.h in Headers */,
 				4C7B04761D1210B000295E82 /* TLOSoundPlayer.h in Headers */,
-				4C7B04771D1210B000295E82 /* TLOSpeechSynthesizer.h in Headers */,
 				4C4A1AED1D12245B004FBF12 /* TXSharedApplicationPrivate.h in Headers */,
 				4C7B04781D1210B000295E82 /* TLOTimer.h in Headers */,
 				4C7B04791D1210B000295E82 /* TLOTimerCommand.h in Headers */,
