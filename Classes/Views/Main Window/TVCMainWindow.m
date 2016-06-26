@@ -1577,7 +1577,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Finish up */
 	[self storeLastSelectedChannel];
 
-	[sharedGrowlController() dismissNotificationsInNotificationCenterForClient:self.selectedClient channel:self.selectedChannel];
+	[sharedGrowlController() dismissNotificationCenterNotificationsForChannel:self.selectedChannel onClient:self.selectedClient];
 
 	[menuController() mainWindowSelectionDidChange];
 

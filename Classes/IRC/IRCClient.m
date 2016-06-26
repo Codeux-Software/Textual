@@ -1323,7 +1323,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 	
-	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
+	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
 			NSString *soundName = [TPCPreferences soundForEvent:type];
 
@@ -1414,7 +1414,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 	
-	if ([sharedGrowlController() areNotificationSoundsDisabled] == NO) {
+	if ([TPCPreferences soundIsMuted] == NO) {
 		if (onlySpeakEvent == NO) {
 			NSString *soundName = [TPCPreferences soundForEvent:type];
 
@@ -3009,7 +3009,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5044: // Command: MUTE
 		{
-			if ([sharedGrowlController() areNotificationSoundsDisabled]) {
+			if ([TPCPreferences soundIsMuted]) {
 				[self printDebugInformation:TXTLS(@"IRC[1097]")];
 			} else {
 				[self printDebugInformation:TXTLS(@"IRC[1100]")];
@@ -3021,7 +3021,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 		case 5075: // Command: UNMUTE
 		{
-			if ([sharedGrowlController() areNotificationSoundsDisabled]) {
+			if ([TPCPreferences soundIsMuted]) {
 				[self printDebugInformation:TXTLS(@"IRC[1098]")];
 				
 				[menuController() toggleMuteOnNotificationSoundsShortcut:NSOffState];

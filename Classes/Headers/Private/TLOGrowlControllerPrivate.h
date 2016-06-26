@@ -6,7 +6,7 @@
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
  Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
- Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -36,33 +36,24 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import <Growl/Growl.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TXNotificationType) {
-	TXNotificationHighlightType							= 1000,
-	TXNotificationNewPrivateMessageType					= 1001,
-	TXNotificationChannelMessageType					= 1002,
-	TXNotificationChannelNoticeType						= 1003,
-	TXNotificationPrivateMessageType					= 1004,
-	TXNotificationPrivateNoticeType						= 1005,
-	TXNotificationKickType								= 1006,
-	TXNotificationInviteType							= 1007,
-	TXNotificationConnectType							= 1008,
-	TXNotificationDisconnectType						= 1009,
-	TXNotificationAddressBookMatchType					= 1010,
-	TXNotificationFileTransferSendSuccessfulType		= 1011,
-	TXNotificationFileTransferReceiveSuccessfulType		= 1012,
-	TXNotificationFileTransferSendFailedType			= 1013,
-	TXNotificationFileTransferReceiveFailedType			= 1014,
-	TXNotificationFileTransferReceiveRequestedType		= 1015,
-};
+TEXTUAL_EXTERN NSString * const TXNotificationDialogStandardNicknameFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationDialogActionNicknameFormat;
 
-@interface TLOGrowlController : NSObject
-@property (nonatomic, assign) BOOL areNotificationsDisabled;
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardActionFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogStandardMessageFormat;
+TEXTUAL_EXTERN NSString * const TXNotificationHighlightLogAlternativeActionFormat;
 
-- (NSString *)titleForEvent:(TXNotificationType)event;
+@interface TLOGrowlController ()
+- (void)notify:(TXNotificationType)eventType
+		 title:(nullable NSString *)eventTitle
+   description:(nullable NSString *)eventDescription
+	  userInfo:(nullable NSDictionary<NSString *, id> *)eventContext;
+
+- (void)dismissNotificationCenterNotificationsForChannel:(IRCChannel *)channel onClient:(IRCClient *)client;
 @end
 
 NS_ASSUME_NONNULL_END
