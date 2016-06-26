@@ -249,11 +249,11 @@ NS_ASSUME_NONNULL_BEGIN
 	OELReachability *notifier = [TXSharedApplication sharedNetworkReachabilityNotifier];
 
 	notifier.reachableBlock = ^(OELReachability *reachability) {
-		[worldController() noteReachabilityChanged:YES];
+		[self.world noteReachabilityChanged:YES];
 	};
 
 	notifier.unreachableBlock = ^(OELReachability *reachability) {
-		[worldController() noteReachabilityChanged:NO];
+		[self.world noteReachabilityChanged:NO];
 	};
 
 	[notifier startNotifier];
@@ -301,14 +301,14 @@ NS_ASSUME_NONNULL_BEGIN
 #if TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN == 1
 	[self presentBetaTesterDialog];
 
-	[mainWindow() makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 #endif
 
-	if ([mainWindow() reloadLoadingScreen]) {
-		[worldController() autoConnectAfterWakeup:NO];
+	if ([self.mainWindow reloadLoadingScreen]) {
+		[self.world autoConnectAfterWakeup:NO];
 	}
 
-	[mainWindow() maybeToggleFullscreenAfterLaunch];
+	[self.mainWindow maybeToggleFullscreenAfterLaunch];
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification
@@ -335,7 +335,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSMenu *)applicationDockMenu:(NSApplication *)sender
 {
-	return menuController().dockMenu;
+	return self.menuController.dockMenu;
 }
 
 - (BOOL)queryTerminate
@@ -388,9 +388,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performApplicationTerminationStepOne
 {
-	[self setApplicationIsTerminating:YES];
+	self.applicationIsTerminating = YES;
 
-	[mainWindow() prepareForApplicationTermination];
+	[self.mainWindow prepareForApplicationTermination];
 	
 	[[NSApplication sharedApplication] setDelegate:nil];
 	
@@ -412,16 +412,16 @@ NS_ASSUME_NONNULL_BEGIN
 	[sharedEncryptionManager() prepareForApplicationTermination];
 #endif
 
-	[menuController() prepareForApplicationTermination];
+	[self.menuController prepareForApplicationTermination];
 
 	[TVCLogControllerHistoricLogFile prepareForPermanentDestruction];
 
 	if (self.skipTerminateSave == NO) {
 		self.terminatingClientCount = worldController().clientCount;
 
-		[worldController() prepareForApplicationTermination];
+		[self.world prepareForApplicationTermination];
 
-		[worldController() save];
+		[self.world save];
 
 		while ([self isNotSafeToPerformApplicationTermination])
 		{
@@ -466,7 +466,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-	[mainWindow() makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 
 	return YES;
 }
@@ -477,7 +477,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-	[mainWindow() makeKeyAndOrderFront:nil];
+	[self.mainWindow makeKeyAndOrderFront:nil];
 
 	return YES;
 }
@@ -497,17 +497,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)computerScreenWillSleep:(NSNotification *)note
 {
-	[worldController() prepareForScreenSleep];
+	[self.world prepareForScreenSleep];
 }
 
 - (void)computerScreenDidWake:(NSNotification *)note
 {
-	[worldController() wakeFomScreenSleep];
+	[self.world wakeFomScreenSleep];
 }
 
 - (void)computerWillSleep:(NSNotification *)note
 {
-	[worldController() prepareForSleep];
+	[self.world prepareForSleep];
 
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:YES];
 	[[TXSharedApplication sharedSpeechSynthesizer] clearQueue];
@@ -517,7 +517,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[[TXSharedApplication sharedSpeechSynthesizer] setIsStopped:NO];
 
-	[worldController() autoConnectAfterWakeup:YES];
+	[self.world autoConnectAfterWakeup:YES];
 }
 
 - (void)computerWillPowerOff:(NSNotification *)note
