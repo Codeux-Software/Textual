@@ -1317,7 +1317,7 @@
 	self.highlightSheet.delegate = self;
 	self.highlightSheet.window = self.sheet;
 
-	self.highlightSheet.config = [IRCHighlightMatchCondition new];
+	self.highlightSheet.config = [IRCHighlightMatchConditionMutable new];
 
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
 }
