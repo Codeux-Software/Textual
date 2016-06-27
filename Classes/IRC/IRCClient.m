@@ -4472,7 +4472,20 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			}
 
 			[self print:nil type:type nickname:nil messageBody:text receivedAt:[referenceMessage receivedAt] command:[referenceMessage command]];
-		} else {
+
+			/* Disconnect and reconnect if message is believed to be from an irssi proxy */
+			if ([sender hasSuffix:@".proxy"] && [text isEqualToString:@"Connected to server"]) {
+				__weak IRCClient *weakSelf = self;
+
+				self.disconnectCallback = ^{
+					[weakSelf printDebugInformationToConsole:TXTLS(@"IRC[1114]")];
+
+					[weakSelf connect:IRCClientConnectReconnectMode];
+				};
+
+				[self disconnect];
+			}
+		} else { // -senderIsServer
 			if ([ignoreChecks ignorePrivateMessages]) {
 				return;
 			}
