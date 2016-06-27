@@ -118,7 +118,6 @@
 	@class TPCResourceManager;
 	@class TPCThemeController;
 	@class TPCThemeSettings;
-	@class TVCContentNavigationOutlineView;
 	@class TVCAutoExpandingTextField;
 	@class TVCAutoExpandingTokenField;
 	@class TVCBasicTableView;
@@ -135,7 +134,6 @@
 	@class TVCMainWindowSplitView;
 	@class TVCMainWindowTextView;
 	@class TVCMemberList;
-	@class TVCQueuedCertificateTrustPanel;
 	@class TVCServerList;
 	@class TVCComboBoxWithValueValidation;
 	@class TVCComboBoxWithValueValidationCell;
