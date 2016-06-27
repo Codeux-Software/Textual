@@ -1434,7 +1434,7 @@
 {
 	IRCChannelConfig *config = [sender config];
 	
-	BOOL emptyName = ([config.channelName length] < 2); // For the # in front.
+	BOOL emptyName = ([config.channelName length] < 1); // For the # in front.
 	
 	if ([sender newItem]) {
 		if (emptyName == NO) {
