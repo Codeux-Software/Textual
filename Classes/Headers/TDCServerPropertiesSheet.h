@@ -45,7 +45,7 @@ typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
 	TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
 };
 
-@interface TDCServerPropertiesSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDCHighlightEntrySheetDelegate, TDChannelPropertiesSheetDelegate>
+@interface TDCServerPropertiesSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDChannelPropertiesSheetDelegate>
 @property (nonatomic, copy) NSString *clientID;
 @property (nonatomic, copy) IRCClientConfig *config;
 

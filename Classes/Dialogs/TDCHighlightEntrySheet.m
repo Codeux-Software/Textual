@@ -36,10 +36,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCHighlightEntrySheet ()
-@property (nonatomic, copy) NSArray *channelList;
+@property (nonatomic, copy, nullable) IRCHighlightMatchCondition *config;
+@property (nonatomic, copy) NSArray<IRCChannelConfig *> *channelList;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *matchTypePopupButton;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *matchChannelPopupButton;
@@ -47,41 +48,68 @@
 
 @implementation TDCHighlightEntrySheet
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithConfig:(nullable IRCHighlightMatchCondition *)config
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
-	
-		[self.matchKeywordTextField setOnlyShowStatusIfErrorOccurs:YES];
-		[self.matchKeywordTextField setStringValueUsesOnlyFirstToken:NO];
-		[self.matchKeywordTextField setStringValueIsInvalidOnEmpty:YES];
-		[self.matchKeywordTextField setStringValueIsTrimmed:YES];
-		
-		[self.matchKeywordTextField setTextDidChangeCallback:self];
+		self.config = config;
+
+		[self prepareInitialState];
+
+		[self loadConfig];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)startWithChannels:(NSArray *)channels
+- (void)prepareInitialState
 {
-	self.channelList = channels;
+	(void)[RZMainBundle() loadNibNamed:@"TDCHighlightEntrySheet" owner:self topLevelObjects:nil];
 
-	[self.matchKeywordTextField setStringValue:[self.config matchKeyword]];
+	self.matchKeywordTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	if ([self.config matchIsExcluded]) {
-		[self.matchTypePopupButton selectItemWithTag:2];
-	} else {
-		[self.matchTypePopupButton selectItemWithTag:1];
+	self.matchKeywordTextField.stringValueUsesOnlyFirstToken = NO;
+	self.matchKeywordTextField.stringValueIsInvalidOnEmpty = YES;
+	self.matchKeywordTextField.stringValueIsTrimmed = YES;
+
+	self.matchKeywordTextField.textDidChangeCallback = self;
+}
+
+- (void)loadConfig
+{
+	if (self.config == nil) {
+		return;
 	}
 
-	NSInteger channelCount = 0;
+	self.matchKeywordTextField.stringValue = self.config.matchKeyword;
+
+	if (self.config.matchIsExcluded == NO) {
+		[self.matchTypePopupButton selectItemWithTag:1];
+	} else {
+		[self.matchTypePopupButton selectItemWithTag:2];
+	}
+}
+
+- (void)startWithChannels:(NSArray<IRCChannelConfig *> *)channels
+{
+	NSParameterAssert(channels != nil);
+
+	self.channelList = channels;
+
+	NSString *matchChannelId = self.config.matchChannelId;
+
+	NSUInteger channelCount = 0;
 	
 	for (IRCChannelConfig *channel in self.channelList) {
-		[self.matchChannelPopupButton addItemWithTitle:[channel channelName]];
+		NSString *channelName = channel.channelName;
 
-		if (NSObjectsAreEqual([channel itemUUID], [self.config matchChannelId])) {
-			[self.matchChannelPopupButton selectItemWithTitle:[channel channelName]];
+		[self.matchChannelPopupButton addItemWithTitle:channelName];
+
+		if (NSObjectsAreEqual(channel.itemUUID, matchChannelId)) {
+			[self.matchChannelPopupButton selectItemWithTitle:channelName];
 		}
 
 		channelCount += 1;
@@ -92,48 +120,43 @@
 	}
 
 	[self startSheet];
-	[self updateSaveButton];
 
 	[self.sheet makeFirstResponder:self.matchKeywordTextField];
 }
 
 - (void)ok:(id)sender
 {
-	IRCHighlightMatchConditionMutable *config = [self.config mutableCopy];
+	IRCHighlightMatchConditionMutable *config = nil;
 
-	NSInteger selectedChannelItem = [self.matchChannelPopupButton indexOfSelectedItem];
-
-	NSString *selectedChannelTitle = [self.matchChannelPopupButton titleOfSelectedItem];
-
-	if (selectedChannelItem == 0) { // 0 = ALL CHANNELS
-		[config setMatchChannelId:nil];
+	if (self.config != nil) {
+		config = [self.config mutableCopy];
 	} else {
+		config = [IRCHighlightMatchConditionMutable new];
+	}
+
+	config.matchIsExcluded = (self.matchTypePopupButton.selectedTag == 2);
+
+	config.matchKeyword = self.matchKeywordTextField.value;
+
+	NSInteger selectedChannelIndex = self.matchChannelPopupButton.indexOfSelectedItem;
+
+	if (selectedChannelIndex > 0) {
+		NSString *selectedChannelName = self.matchChannelPopupButton.titleOfSelectedItem;
+
 		IRCChannelConfig *channel = nil;
 		
 		for (IRCChannelConfig *c in self.channelList) {
-			if ([[c channelName] isEqualToString:selectedChannelTitle]) {
-				channel = c;
+			if (NSObjectsAreEqual(c.channelName, selectedChannelName)) {
+				config.matchChannelId = channel.itemUUID;
+
+				break;
 			}
 		}
-		
-		if (channel) {
-			[config setMatchChannelId:[channel itemUUID]];
-		} else {
-			[config setMatchChannelId:nil];
-		}
 	}
 
-	[config setMatchIsExcluded:([self.matchTypePopupButton selectedTag] == 2)];
-
-	[config setMatchKeyword:[self.matchKeywordTextField value]];
-
-	self.config = config;
-
-	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetOnOK:)]) {
-		[self.delegate highlightEntrySheetOnOK:self];
-	}
+	[self.delegate highlightEntrySheet:self onOk:config.copy];
 	
-	[super ok:nil];
+	[super ok:sender];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
@@ -143,7 +166,7 @@
 
 - (void)updateSaveButton
 {
-	[self.okButton setEnabled:[self.matchKeywordTextField valueIsValid]];
+	self.okButton.enabled = self.matchKeywordTextField.valueIsValid;
 }
 
 #pragma mark -
@@ -151,9 +174,9 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(highlightEntrySheetWillClose:)]) {
-		[self.delegate highlightEntrySheetWillClose:self];
-	}
+	[self.delegate highlightEntrySheetWillClose:self];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

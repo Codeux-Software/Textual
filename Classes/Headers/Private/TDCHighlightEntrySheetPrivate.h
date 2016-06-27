@@ -35,14 +35,19 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-/* TDCHighlightEntrySheet handles management of highlights inside TDCServerPropertiesSheet. */
-/* It should not be mistaken for TDCServerHighlightListSheet which shows the actual list 
- of highlights for a server by using Command+5 or the actual Windows menu bar item. */
 @interface TDCHighlightEntrySheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) IRCHighlightMatchCondition *config;
+- (instancetype)initWithConfig:(nullable IRCHighlightMatchCondition *)config NS_DESIGNATED_INITIALIZER;
 
-- (void)startWithChannels:(NSArray *)channels;
+- (void)startWithChannels:(NSArray<IRCChannelConfig *> *)channels;
 @end
+
+@protocol TDCHighlightEntrySheetDelegate <NSObject>
+@required
+
+- (void)highlightEntrySheet:(TDCHighlightEntrySheet *)sender onOk:(IRCHighlightMatchCondition *)config;
+- (void)highlightEntrySheetWillClose:(TDCHighlightEntrySheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

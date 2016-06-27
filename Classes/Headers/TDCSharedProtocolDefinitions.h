@@ -72,15 +72,6 @@
 
 #pragma mark -
 
-@protocol TDCHighlightEntrySheetDelegate <NSObject>
-@required
-
-- (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender;
-- (void)highlightEntrySheetWillClose:(TDCHighlightEntrySheet *)sender;
-@end
-
-#pragma mark -
-
 @protocol TDCServerHighlightListSheetDelegate <NSObject>
 @required
 
