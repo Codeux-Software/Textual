@@ -6538,24 +6538,27 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 			self.disconnectType = IRCClientDisconnectServerRedirectMode;
 
-			[self disconnect]; // No worry about gracefully disconnecting by using quit: since it is just a redirect.
-
 			/* If the address is thought to be invalid, then we still
 			 perform the disconnected suggested by the redirect, but
 			 we do not go any further than that. */
 			if ([address isValidInternetAddress] == NO) {
+				[self disconnect];
+
 				return;
 			}
+
+			/* Perform reconnect to specified locations */
+			__weak IRCClient *weakSelf = self;
+
+			self.disconnectCallback = ^{
+				[weakSelf connect];
+			};
+
+			[self disconnect];
 
 			/* -disconnect would destroy this so we set them after... */
 			self.serverRedirectAddressTemporaryStore = address;
 			self.serverRedirectPortTemporaryStore = [portraw integerValue];
-			
-			__weak IRCClient *weakSelf = self;
-			
-			self.disconnectCallback = ^{
-				[weakSelf connect];
-			};
 			
 			break;
 		}
