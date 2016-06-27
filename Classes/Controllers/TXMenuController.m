@@ -2651,8 +2651,8 @@
 	if ([RZFileManager() fileExistsAtPath:[path path]]) {
 		[RZWorkspace() openURL:path];
 	} else {
-		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[0005][2]")
-										   title:TXTLS(@"Prompts[0005][1]")
+		[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1104][2]")
+										   title:TXTLS(@"Prompts[1104][1]")
 								   defaultButton:TXTLS(@"Prompts[0005]")
 								 alternateButton:nil
 								  suppressionKey:nil
