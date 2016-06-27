@@ -1627,7 +1627,7 @@
 		if ([columnId isEqualToString:@"name"]) {
 			return [c channelName];
 		} else if ([columnId isEqualToString:@"pass"]) {
-			NSString *secretKeyValue = [c secretKey];
+			NSString *secretKeyValue = [c secretKeyValue];
 			
 			if (NSObjectIsNotEmpty(secretKeyValue)) {
 				return secretKeyValue;
