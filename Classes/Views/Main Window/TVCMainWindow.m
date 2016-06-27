@@ -2477,6 +2477,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)selectionShouldChangeInOutlineView:(NSOutlineView *)outlineView
 {
+	/* Allow rows to be deselected during redrawing */
+	/* See logic in -updateBackgroundColor in TVCServerList */
+	if (outlineView.allowsEmptySelection) {
+		return YES;
+	}
+
 	/* If the window is not focused, don't allow change. */
 	if (self.keyWindow == NO) {
 		return NO;
