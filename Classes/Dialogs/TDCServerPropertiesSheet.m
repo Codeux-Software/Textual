@@ -1310,14 +1310,11 @@
 - (void)addHighlight:(id)sender
 {
 	self.highlightSheet = nil;
-	self.highlightSheet = [TDCHighlightEntrySheet new];
-
-	self.highlightSheet.newItem = YES;
+	self.highlightSheet = [[TDCHighlightEntrySheet alloc] initWithConfig:nil];
 
 	self.highlightSheet.delegate = self;
-	self.highlightSheet.window = self.sheet;
 
-	self.highlightSheet.config = [IRCHighlightMatchConditionMutable new];
+	self.highlightSheet.window = self.sheet;
 
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
 }
@@ -1327,48 +1324,34 @@
 	NSInteger sel = [self.highlightsTable selectedRow];
 	
 	NSAssertReturn(sel > -1);
+
+	IRCHighlightMatchCondition *config = self.mutableHighlightList[sel];
 	
 	self.highlightSheet = nil;
-	self.highlightSheet = [TDCHighlightEntrySheet new];
-	
-	self.highlightSheet.newItem = NO;
+	self.highlightSheet = [[TDCHighlightEntrySheet alloc] initWithConfig:config];
 
 	self.highlightSheet.delegate = self;
-	self.highlightSheet.window = self.sheet;
 
-	self.highlightSheet.config = self.mutableHighlightList[sel];
+	self.highlightSheet.window = self.sheet;
 	
 	[self.highlightSheet startWithChannels:self.mutableChannelList];
 }
 
-- (void)highlightEntrySheetOnOK:(TDCHighlightEntrySheet *)sender
+- (void)highlightEntrySheet:(TDCHighlightEntrySheet *)sender onOk:(IRCHighlightMatchCondition *)config
 {
-	IRCHighlightMatchCondition *match = [sender config];
-	
-	BOOL emptyKeyword = NSObjectIsEmpty([match matchKeyword]);
-	
-	if ([sender newItem]) {
-		if (emptyKeyword == NO) {
-			[self.mutableHighlightList addObject:match];
+	NSUInteger entryIndex =
+	[self.mutableHighlightList indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
+		if ([[object uniqueIdentifier] isEqualToString:[config uniqueIdentifier]]) {
+			return YES;
+		} else {
+			return NO;
 		}
+	}];
+
+	if (entryIndex == NSNotFound) {
+		[self.mutableHighlightList addObject:config];
 	} else {
-		__block NSInteger matchedIndex = -1;
-
-		[self.mutableHighlightList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			if ([[obj uniqueIdentifier] isEqualToString:[match uniqueIdentifier]]) {
-				matchedIndex = idx;
-
-				*stop = YES;
-			}
-		}];
-
-		if (matchedIndex > -1) {
-			if (emptyKeyword) {
-				[self.mutableHighlightList removeObjectAtIndex:matchedIndex];
-			} else {
-				(self.mutableHighlightList)[matchedIndex] = match;
-			}
-		}
+		self.mutableHighlightList[entryIndex] = config;
 	}
 	
 	[self reloadHighlightsTable];
