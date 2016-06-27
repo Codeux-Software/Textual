@@ -336,10 +336,10 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Draw status image badge */
 	NSImage *statusImage = nil;
 
-	if (self.parentValueIsEmpty == NO) {
-		statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
-	} else if (self.parentValueIsValid == NO) {
+	if (self.parentValueIsValid == NO) {
 		statusImage = [NSImage imageNamed:@"ErroneousTextFieldValueIndicator"];
+	} else if (self.parentValueIsEmpty == NO) {
+		statusImage = [NSImage imageNamed:@"ProperlyFormattedTextFieldValueIndicator"];
 	}
 	
 	if (statusImage) {
