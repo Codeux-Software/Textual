@@ -608,12 +608,12 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (NSString *)encryptionAccountNameForLocalUser
 {
-	return [sharedEncryptionManager() accountNameWithUser:[self localNickname] onClient:self];
+	return [sharedEncryptionManager() accountNameForUser:[self localNickname] onClient:self];
 }
 
 - (NSString *)encryptionAccountNameForUser:(NSString *)nickname
 {
-	return [sharedEncryptionManager() accountNameWithUser:nickname onClient:self];
+	return [sharedEncryptionManager() accountNameForUser:nickname onClient:self];
 }
 #endif
 

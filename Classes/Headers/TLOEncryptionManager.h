@@ -37,67 +37,6 @@
 
 #import "TextualApplication.h"
 
-/* TLOEncryptionManager class is a beast that should be avoided by
- plugins. Please use higher up APIs in IRCClient and elsewhere for 
- sending encrypted messages to one or more users. */
-
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-#define sharedEncryptionManager()			[TXSharedApplication sharedEncryptionManager]
-
-#define TLOEncryptionManagerMenuItemTagStartPrivateConversation			1401 // "Start Private Conversation"
-#define TLOEncryptionManagerMenuItemTagRefreshPrivateConversation		1402 // "Refresh Private Conversation"
-#define TLOEncryptionManagerMenuItemTagEndPrivateConversation			1403 // "End Private Conversation"
-#define TLOEncryptionManagerMenuItemTagAuthenticateChatPartner			1404 // "Authenticate Chat Partner"
-#define TLOEncryptionManagerMenuItemTagViewListOfFingerprints			1405 // "View List of Fingerprints"
-#endif
-
-typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
 typedef void (^TLOEncryptionManagerEncodingDecodingCallbackBlock)(NSString *originalString, BOOL wasEncrypted);
 
-#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-@interface TLOEncryptionManager : NSObject <OTRKitDelegate, OTRKitFingerprintManagerDialogDelegate>
-/* Returns unique "account name" used for messageFrom and messageTo parameters. */
-- (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client;
-
-/* Converts the "account name" into its individual components. */
-- (NSString *)nicknameFromAccountName:(NSString *)accountName;
-- (IRCClient *)connectionFromAccountName:(NSString *)accountName;
-
-/* Begin and end an encrypted conversation with a user. */
-- (void)beginConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
-- (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
-- (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom;
-
-/* Socialist Millionaire Problem <http://en.wikipedia.org/wiki/Socialist_millionaire> */
-- (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom;
-
-/* Open dialog containing list of fingerprints. */
-- (void)presentListOfFingerprints;
-
-/* State information */
-- (OTRKitMessageState)messageStateFor:(NSString *)messageTo from:(NSString *)messageFrom;
-
-- (void)prepareForApplicationTermination;
-
-- (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom;
-
-- (BOOL)safeToTransferFile:(NSString *)filename to:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer;
-
-/* Define configuration options */
-- (void)updatePolicy;
-
-/* Encryption/Decryption */
-- (void)encryptMessage:(NSString *)messageBody
-				  from:(NSString *)messageFrom
-					to:(NSString *)messageTo
-	  encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback
-	 injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback;
-
-- (void)decryptMessage:(NSString *)messageBody
-				  from:(NSString *)messageFrom
-					to:(NSString *)messageTo
-	  decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback;
-@end
-#endif
+typedef void (^TLOEncryptionManagerInjectCallbackBlock)(NSString *encodedString);
