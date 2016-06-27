@@ -74,6 +74,8 @@ ClassWithDesignatedInitializerInitMethod
 	NSParameterAssert(mainWindow != nil);
 
 	if ((self = [super init])) {
+		self.window = mainWindow;
+
 		[self prepareInitialState];
 
 		return self;
