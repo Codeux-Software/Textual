@@ -1336,6 +1336,9 @@
 		4CEFCB8A1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
 		4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
 		4CEFCB8C1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
+		4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
+		4CF1F4D41D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
+		4CF1F4D51D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */; };
 		4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */; };
@@ -2078,7 +2081,7 @@
 		4C956893194A8862003D97FD /* SmileyConverter.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SmileyConverter.bundle; path = ".tmp/SharedBuildProducts-Extensions/SmileyConverter.bundle"; sourceTree = SOURCE_ROOT; };
 		4C956899194A887D003D97FD /* Smiley Converter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Smiley Converter Extension.xcodeproj"; path = "Resources/Plugins/Smiley Converter/Smiley Converter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOEncryptionManager.m; path = Library/TLOEncryptionManager.m; sourceTree = "<group>"; };
-		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOEncryptionManager.h; sourceTree = "<group>"; };
+		4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManager.h; path = Headers/TLOEncryptionManager.h; sourceTree = "<group>"; };
 		4C99A72F1D12A8E0006A5EA9 /* IRCTreeItemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTreeItemPrivate.h; path = Headers/Private/IRCTreeItemPrivate.h; sourceTree = "<group>"; };
 		4C9A1D911836E6A100C14835 /* BragSpam.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = BragSpam.bundle; path = ".tmp/SharedBuildProducts-Extensions/BragSpam.bundle"; sourceTree = SOURCE_ROOT; };
 		4C9A1D921836E6A100C14835 /* SpammerParadise.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SpammerParadise.bundle; path = ".tmp/SharedBuildProducts-Extensions/SpammerParadise.bundle"; sourceTree = SOURCE_ROOT; };
@@ -2210,6 +2213,7 @@
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
 		4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerDownloaderPrivate.h; path = Headers/Private/TLOLicenseManagerDownloaderPrivate.h; sourceTree = "<group>"; };
 		4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerPrivate.h; path = Headers/Private/TLOLicenseManagerPrivate.h; sourceTree = "<group>"; };
+		4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOEncryptionManagerPrivate.h; path = Headers/Private/TLOEncryptionManagerPrivate.h; sourceTree = "<group>"; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
 		4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCAutoExpandingTextField.h; path = Headers/TVCAutoExpandingTextField.h; sourceTree = "<group>"; };
@@ -2762,6 +2766,7 @@
 				4C7B05041D12168C00295E82 /* THOPluginItemPrivate.h */,
 				4C7B05051D12168C00295E82 /* THOPluginManagerPrivate.h */,
 				4C7B05061D12168C00295E82 /* THOPluginProtocolPrivate.h */,
+				4CF1F4D21D21805C00720CFC /* TLOEncryptionManagerPrivate.h */,
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
 				4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */,
@@ -2953,6 +2958,7 @@
 			children = (
 				4C8AF5C7158E99520026668C /* Color Formatting */,
 				4C8AF5C9158E99520026668C /* External Libraries */,
+				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5D8158E99520026668C /* TLOFileLogger.m */,
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
@@ -3072,7 +3078,6 @@
 				4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */,
 				4C8AF567158E99520026668C /* TDCSheetBase.h */,
 				4C8AF569158E99520026668C /* TDCWelcomeSheet.h */,
-				4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */,
 				4C8AF571158E99520026668C /* TLOInputHistory.h */,
 				4C8AF57C158E99520026668C /* TLOTimerCommand.h */,
 				4C8AF597158E99520026668C /* TXMenuController.h */,
@@ -3181,6 +3186,7 @@
 				4C8AF56A158E99520026668C /* TextualApplication.h */,
 				4C8AF56C158E99520026668C /* THOPluginProtocol.h */,
 				4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */,
+				4C992DD21AB513A90072AB0B /* TLOEncryptionManager.h */,
 				4C8AF570158E99520026668C /* TLOGrowlController.h */,
 				4C8AF572158E99520026668C /* TLOKeyEventHandler.h */,
 				4C8AF573158E99520026668C /* TLOLanguagePreferences.h */,
@@ -3260,7 +3266,6 @@
 		4C950BFD16D68DD700A93D8D /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
 			);
 			name = Library;
@@ -3769,6 +3774,7 @@
 				4C7B034B1D1210A100295E82 /* IRCSendingMessage.h in Headers */,
 				4C5DD50A1D1E098600F2E1AE /* TVCDockIconPrivate.h in Headers */,
 				4C7B034C1D1210A100295E82 /* IRCTreeItem.h in Headers */,
+				4CF1F4D31D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
 				4CEA29BC1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h in Headers */,
 				4C2D6ACA1D1D27C2004A0C2B /* TVCServerListYosemiteUserInterfacePrivate.h in Headers */,
 				4C056F231D1D89A100D85CEA /* TVCMemberListUserInfoPopoverPrivate.h in Headers */,
@@ -3929,6 +3935,7 @@
 				4C7B03B21D1210A800295E82 /* GRMustacheFilter.h in Headers */,
 				4C7B03B31D1210A800295E82 /* GRMustacheLocalizer.h in Headers */,
 				4C7B03B41D1210A800295E82 /* GRMustacheRendering.h in Headers */,
+				4CF1F4D41D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
 				4C7B03B51D1210A800295E82 /* GRMustacheSafeKeyAccess.h in Headers */,
 				4C7B03B61D1210A800295E82 /* GRMustacheTag.h in Headers */,
 				4C7B03B71D1210A800295E82 /* GRMustacheTagDelegate.h in Headers */,
@@ -4131,6 +4138,7 @@
 				4C7B04331D1210B000295E82 /* GRMustacheFilter.h in Headers */,
 				4C7B04341D1210B000295E82 /* GRMustacheLocalizer.h in Headers */,
 				4C7B04351D1210B000295E82 /* GRMustacheRendering.h in Headers */,
+				4CF1F4D51D21805C00720CFC /* TLOEncryptionManagerPrivate.h in Headers */,
 				4C7B04361D1210B000295E82 /* GRMustacheSafeKeyAccess.h in Headers */,
 				4C7B04371D1210B000295E82 /* GRMustacheTag.h in Headers */,
 				4C7B04381D1210B000295E82 /* GRMustacheTagDelegate.h in Headers */,

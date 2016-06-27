@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 @interface TLOEncryptionManager ()
@@ -44,8 +44,8 @@
 
 @interface TLOEncryptionManagerEncodingDecodingObject : NSObject
 // Properties that should be manipulated to provide context information
-@property (nonatomic, copy) TLOEncryptionManagerEncodingDecodingCallbackBlock encodingCallback;
-@property (nonatomic, copy) TLOEncryptionManagerInjectCallbackBlock injectionCallback;
+@property (nonatomic, copy, nullable) TLOEncryptionManagerEncodingDecodingCallbackBlock encodingCallback;
+@property (nonatomic, copy, nullable) TLOEncryptionManagerInjectCallbackBlock injectionCallback;
 @property (nonatomic, copy) NSString *messageFrom;
 @property (nonatomic, copy) NSString *messageTo;
 @property (nonatomic, copy) NSString *messageBody; // unencrypted value
@@ -59,7 +59,7 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[self setupEncryptionManager];
+		[self prepareInitialState];
 
 		return self;
 	}
@@ -67,43 +67,47 @@
 	return nil;
 }
 
-- (NSString *)pathToStoreEncryptionSecrets
+- (void)prepareInitialState
 {
-	NSString *cachesFolder = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
+	[self setupEncryptionManager];
+}
 
-	if (cachesFolder == nil) {
+- (nullable NSString *)pathToStoreEncryptionSecrets
+{
+	NSString *sourcePath = [TPCPathInfo applicationSupportFolderPathInGroupContainer];
+
+	if (sourcePath == nil) {
 		return nil;
 	}
 
-	NSString *dest = [cachesFolder stringByAppendingPathComponent:@"/Encryption Components/"];
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Encryption Components/"];
 
-	if ([RZFileManager() fileExistsAtPath:dest] == NO) {
-		[RZFileManager() createDirectoryAtPath:dest withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
 
-	return dest;
+	return basePath;
 }
 
 - (void)setupEncryptionManager
 {
 	OTRKit *otrKit = [OTRKit sharedInstance];
 
-	[otrKit setDelegate:self];
+	otrKit.accountNameSeparator = @"@";
 
-	[otrKit setAccountNameSeparator:@"@"];
+	otrKit.delegate = (id)self;
 
 	[otrKit setupWithDataPath:[self pathToStoreEncryptionSecrets]];
 
-	[self prepareEncryptionComponentPath:[otrKit privateKeyPath]];
-	[self prepareEncryptionComponentPath:[otrKit fingerprintsPath]];
-	[self prepareEncryptionComponentPath:[otrKit instanceTagsPath]];
+	[self prepareEncryptionComponentPath:otrKit.fingerprintsPath];
+	[self prepareEncryptionComponentPath:otrKit.instanceTagsPath];
+	[self prepareEncryptionComponentPath:otrKit.privateKeyPath];
 
-	NSURL *componentPathURL = [NSURL fileURLWithPath:[self pathToStoreEncryptionSecrets] isDirectory:YES];
+	NSURL *componentPathURL = [NSURL fileURLWithPath:otrKit.dataPath isDirectory:YES];
 
 	NSError *attributesChangeError = nil;
 
 	if ([componentPathURL setResourceValue:@(YES) forKey:NSURLIsHiddenKey error:&attributesChangeError] == NO) {
-		LogToConsoleError("Failed to hide the folder at the path '%{public}@': %{public}@", componentPathURL, [attributesChangeError localizedDescription])
+		LogToConsoleError("Failed to hide the folder at the path '%{public}@': %{public}@",
+				componentPathURL, attributesChangeError.localizedDescription)
 	}
 
 	[otrKit setMaximumProtocolSize:[self otrKitProtocolMaximumMessageSize]
@@ -114,12 +118,15 @@
 
 - (void)prepareEncryptionComponentPath:(NSString *)path
 {
+	NSParameterAssert(path != nil);
+
 	/* Create the path if it does not already exist. */
 	if ([RZFileManager() fileExistsAtPath:path] == NO) {
 		NSError *writeError = nil;
 
 		if ([NSStringEmptyPlaceholder writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&writeError] == NO) {
-			LogToConsoleError("Failed to create base file for encryption component at path: %@", [writeError localizedDescription])
+			LogToConsoleError("Failed to create base file for encryption component at path: %@",
+					writeError.localizedDescription)
 		}
 	}
 
@@ -130,7 +137,8 @@
 	NSError *attributesChangeError = nil;
 
 	if ([pathURL setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:&attributesChangeError] == NO) {
-		LogToConsoleError("Failed to exclude the files at the path '%{public}@' from backup: %{public}@", pathURL, [attributesChangeError localizedDescription])
+		LogToConsoleError("Failed to exclude the files at the path '%{public}@' from backup: %{public}@",
+				pathURL, attributesChangeError.localizedDescription)
 	}
 }
 
@@ -144,37 +152,41 @@
 
 - (void)presentListOfFingerprints
 {
-	if ([self fingerprintManagerDialog] == nil) {
+	if (self.fingerprintManagerDialog == nil) {
 		OTRKitFingerprintManagerDialog *dialog = [OTRKitFingerprintManagerDialog new];
 
-		[dialog setDelegate:self];
+		dialog.delegate = (id)self;
 
-		[self setFingerprintManagerDialog:dialog];
+		self.fingerprintManagerDialog = dialog;
 	}
 
-	[[self fingerprintManagerDialog] open:mainWindow()];
+	[self.fingerprintManagerDialog open:mainWindow()];
 }
 
 #pragma mark -
 #pragma mark Account Name Information
 
-- (NSString *)accountNameWithUser:(NSString *)nickname onClient:(IRCClient *)client
+- (NSString *)accountNameForUser:(NSString *)nickname onClient:(IRCClient *)client
 {
-	PointerIsEmptyAssertReturn(nickname, nil)
-	PointerIsEmptyAssertReturn(client, nil)
+	NSParameterAssert(nickname != nil);
+	NSParameterAssert(client != nil);
 
-	return [NSString stringWithFormat:@"%@%@%@", nickname, [[OTRKit sharedInstance] accountNameSeparator], [client uniqueIdentifier]];
+	return [NSString stringWithFormat:@"%@%@%@", nickname, [OTRKit sharedInstance].accountNameSeparator, client.uniqueIdentifier];
 }
 
-- (NSString *)nicknameFromAccountName:(NSString *)accountName
+- (nullable NSString *)nicknameFromAccountName:(NSString *)accountName
 {
+	NSParameterAssert(accountName != nil);
+
 	NSString *nickname = [[OTRKit sharedInstance] leftPortionOfAccountName:accountName];
 
 	return nickname;
 }
 
-- (IRCClient *)connectionFromAccountName:(NSString *)accountName
+- (nullable IRCClient *)connectionFromAccountName:(NSString *)accountName
 {
+	NSParameterAssert(accountName != nil);
+
 	NSString *clientIdentifier = [[OTRKit sharedInstance] rightPortionOfAccountName:accountName];
 
 	return [worldController() findClientWithId:clientIdentifier];
@@ -190,8 +202,8 @@
 
 - (void)endConversationWith:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -213,8 +225,9 @@
 
 - (void)refreshConversationWith:(NSString *)messageTo from:(NSString *)messageFrom presentMessage:(NSString *)message
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(message != nil);
 
 	[self presentMessage:message withAccountName:messageTo];
 
@@ -238,8 +251,8 @@
 
 - (void)authenticateUser:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -257,19 +270,20 @@
 #pragma mark -
 #pragma mark Encryption & Decryption
 
-- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo decodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
+- (void)decryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo decodingCallback:(nullable TLOEncryptionManagerEncodingDecodingCallbackBlock)decodingCallback
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
-	PointerIsEmptyAssert(messageBody)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(messageBody != nil);
 
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+	messageObject.messageTo = messageTo;
+	messageObject.messageFrom = messageFrom;
 
-	[messageObject setEncodingCallback:decodingCallback];
+	messageObject.messageBody = messageBody;
+
+	messageObject.encodingCallback = decodingCallback;
 
 	[[OTRKit sharedInstance] decodeMessage:messageBody
 								  username:messageFrom
@@ -278,11 +292,11 @@
 									   tag:messageObject];
 }
 
-- (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(TLOEncryptionManagerInjectCallbackBlock)injectionCallback
+- (void)encryptMessage:(NSString *)messageBody from:(NSString *)messageFrom to:(NSString *)messageTo encodingCallback:(nullable TLOEncryptionManagerEncodingDecodingCallbackBlock)encodingCallback injectionCallback:(nullable TLOEncryptionManagerInjectCallbackBlock)injectionCallback
 {
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
-	PointerIsEmptyAssert(messageBody)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
+	NSParameterAssert(messageBody != nil);
 
 	/*
 	 If we are not performing encryption automatically and we are not in an encrypted
@@ -294,14 +308,14 @@
 	 If it was, then we manually send the message because OTR will refuse to once it has
 	 been rejected. 
 	 */
-	BOOL isManualPolicy = ([[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyManual ||
-						   [[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyNever);
+	BOOL isManualPolicy = ([OTRKit sharedInstance].otrPolicy == OTRKitPolicyManual ||
+						   [OTRKit sharedInstance].otrPolicy == OTRKitPolicyNever);
 
 	BOOL isRejectedOffer = ([[OTRKit sharedInstance] offerStateForUsername:messageTo
 															   accountName:messageFrom
 																  protocol:[self otrKitProtocol]] == OTRKitOfferStateRejected &&
 
-							[[OTRKit sharedInstance] otrPolicy] == OTRKitPolicyOpportunistic);
+							[OTRKit sharedInstance].otrPolicy == OTRKitPolicyOpportunistic);
 
 	if (isRejectedOffer || isManualPolicy)
 	{
@@ -325,12 +339,14 @@
 	/* Pass message off to OTRKit */
 	TLOEncryptionManagerEncodingDecodingObject *messageObject = [TLOEncryptionManagerEncodingDecodingObject new];
 
-	[messageObject setMessageTo:messageTo];
-	[messageObject setMessageFrom:messageFrom];
-	[messageObject setMessageBody:messageBody];
+	messageObject.messageTo = messageTo;
+	messageObject.messageFrom = messageFrom;
 
-	[messageObject setEncodingCallback:encodingCallback];
-	[messageObject setInjectionCallback:injectionCallback];
+	messageObject.messageBody = messageBody;
+
+	messageObject.encodingCallback = encodingCallback;
+
+	messageObject.injectionCallback = injectionCallback;
 
 	[[OTRKit sharedInstance] encodeMessage:messageBody
 									  tlvs:nil
@@ -345,8 +361,8 @@
 
 - (OTRKitMessageState)messageStateFor:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssertReturn(messageTo, OTRKitMessageStatePlaintext);
-	PointerIsEmptyAssertReturn(messageFrom, OTRKitMessageStatePlaintext);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	OTRKitMessageState currentState =
 		[[OTRKit sharedInstance] messageStateForUsername:messageTo
@@ -358,8 +374,8 @@
 
 - (BOOL)safeToTransferFile:(NSString *)filename to:(NSString *)messageTo from:(NSString *)messageFrom isIncomingFileTransfer:(BOOL)isIncomingFileTransfer
 {
-	PointerIsEmptyAssertReturn(messageTo, NO)
-	PointerIsEmptyAssertReturn(messageFrom, NO)
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -373,7 +389,9 @@
 													   alternateButton:TXTLS(@"Prompts[1132][3]")];
 
 			return (continueop == NO);
-		} else {
+		}
+		else
+		{
 			NSString *nickname = [self nicknameFromAccountName:messageTo];
 
 			BOOL continueop = [TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1133][2]")
@@ -388,11 +406,11 @@
 	return YES;
 }
 
-- (void)updateLockIconButton:(id)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
+- (void)updateLockIconButton:(TVCMainWindowTitlebarAccessoryViewLockButton *)button withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssert(button)
-	PointerIsEmptyAssert(messageTo)
-	PointerIsEmptyAssert(messageFrom)
+	NSParameterAssert(button != nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
 	OTRKitMessageState currentState = [[OTRKit sharedInstance] messageStateForUsername:messageTo
 																		   accountName:messageFrom
@@ -404,18 +422,18 @@
 																					 protocol:[self otrKitProtocol]];
 
 		if (hasVerifiedKey) {
-			[button setTitle:TXTLS(@"OffTheRecord[1011][3]")];
+			button.title = TXTLS(@"OffTheRecord[1011][3]");
 
 			[button setIconAsLocked];
 		} else {
-			[button setTitle:TXTLS(@"OffTheRecord[1011][2]")];
+			button.title = TXTLS(@"OffTheRecord[1011][2]");
 
 			/* Even though we are encrypted, our icon is still set to unlocked because
 			 the identity of messageTo still has not been authenticated. */
 			[button setIconAsUnlocked];
 		}
 	} else {
-		[button setTitle:TXTLS(@"OffTheRecord[1011][1]")];
+		button.title = TXTLS(@"OffTheRecord[1011][1]");
 
 		[button setIconAsUnlocked];
 	}
@@ -428,17 +446,16 @@
 
 		IRCClient *client = [self connectionFromAccountName:accountName];
 
-		if (client == nil) {
-			LogToConsoleError("-connectionFromAccountName: returned a nil value, failing")
-		} else {
-			IRCChannel *channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
+		NSAssert((client != nil),
+			@"-connectionFromAccountName: returned a nil value, failing");
 
-			block(nickname, client, channel);
-		}
+		IRCChannel *channel = [client findChannelOrCreate:nickname isPrivateMessage:YES];
+
+		block(nickname, client, channel);
 	}];
 }
 
-- (NSString *)localizedStringForEvent:(OTRKitMessageEvent)event
+- (nullable NSString *)localizedStringForEvent:(OTRKitMessageEvent)event
 {
 	NSString *localeKey = nil;
 
@@ -471,13 +488,11 @@
 
 	if (localeKey) {
 		localeKey = [NSString stringWithFormat:@"OffTheRecord[1007][%@]", localeKey];
+
+		return TXTLS(localeKey);
 	}
 
-	if (localeKey) {
-		return TXTLS(localeKey);
-	} else {
-		return nil;
-	}
+	return nil;
 }
 
 - (BOOL)eventIsErrornous:(OTRKitMessageEvent)event
@@ -502,6 +517,10 @@
 
 - (void)printMessage:(NSString *)message inChannel:(IRCChannel *)channel onClient:(IRCClient *)client
 {
+	NSParameterAssert(message != nil);
+	NSParameterAssert(channel != nil);
+	NSParameterAssert(client != nil);
+
 	[client print:channel
 			 type:TVCLogLineOffTheRecordEncryptionStatusType
 		 nickname:nil
@@ -540,12 +559,12 @@
 - (void)updatePolicy
 {
 	if ([TPCPreferences textEncryptionIsRequired]) {
-		[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyAlways];
+		[OTRKit sharedInstance].otrPolicy = OTRKitPolicyAlways;
 	} else {
 		if ([TPCPreferences textEncryptionIsOpportunistic]) {
-			[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyOpportunistic];
+			[OTRKit sharedInstance].otrPolicy = OTRKitPolicyOpportunistic;
 		} else {
-			[[OTRKit sharedInstance] setOtrPolicy:OTRKitPolicyManual];
+			[OTRKit sharedInstance].otrPolicy = OTRKitPolicyManual;
 		}
 	}
 }
@@ -575,55 +594,63 @@
 		boundryRegex = [NSRegularExpression regularExpressionWithPattern:boundryMatch options:0 error:NULL];
 	}
 
-	NSUInteger numMatches = [boundryRegex numberOfMatchesInString:message options:0 range:[message range]];
+	NSUInteger numberOfMatches = [boundryRegex numberOfMatchesInString:message options:0 range:message.range];
 
-	if (numMatches == 1) {
+	if (numberOfMatches == 1) {
 		NSArray *messageComponents = [message componentsSeparatedByString:NSStringNewlinePlaceholder];
 
 		return [NSString stringWithFormat:@"%@ %@", messageComponents[0], TXTLS(@"OffTheRecord[1010]")];
-	} else {
-		return message;
 	}
+
+	return message;
 }
 
-- (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
+- (void)otrKit:(OTRKit *)otrKit injectMessage:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag
 {
 	message = [self maybeInsertProperNegotationMessge:message];
 
 	if (tag && [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
 		TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
 
-		if ([messageObject injectionCallback]) {
-			[messageObject injectionCallback](message);
+		if (messageObject.injectionCallback) {
+			messageObject.injectionCallback(message);
 
 			return; // Do not continue after callback block...
 		}
 	}
 
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		[client send:IRCPrivateCommandIndex("privmsg"), [channel name], message, nil];
+		[client send:IRCPrivateCommandIndex("privmsg"), channel.name, message, nil];
 	}];
 }
 
-- (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
+- (void)otrKit:(OTRKit *)otrKit encodedMessage:(NSString *)encodedMessage wasEncrypted:(BOOL)wasEncrypted username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(NSError *)error
 {
-	if (tag && [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-		TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+	if (tag == nil || [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]] == NO) {
+		return;
+	}
 
-		if ([tag encodingCallback]) {
-			[tag encodingCallback]([messageObject messageBody], wasEncrypted);
-		}
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+	if (messageObject.encodingCallback) {
+		messageObject.encodingCallback(messageObject.messageBody, wasEncrypted);
 	}
 }
 
-- (void)otrKit:(OTRKit *)otrKit decodedMessage:(NSString *)decodedMessage wasEncrypted:(BOOL)wasEncrypted tlvs:(NSArray *)tlvs username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag
+- (void)otrKit:(OTRKit *)otrKit decodedMessage:(nullable NSString *)decodedMessage wasEncrypted:(BOOL)wasEncrypted tlvs:(NSArray<OTRTLV *> *)tlvs username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag
 {
-	if (tag && [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]]) {
-		TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+	if (decodedMessage == nil) {
+		return;
+	}
 
-		if ([messageObject encodingCallback]) {
-			[messageObject encodingCallback](decodedMessage, wasEncrypted);
-		}
+	if (tag == nil || [tag isKindOfClass:[TLOEncryptionManagerEncodingDecodingObject class]] == NO) {
+		return;
+	}
+
+	TLOEncryptionManagerEncodingDecodingObject *messageObject = tag;
+
+	if (messageObject.encodingCallback) {
+		messageObject.encodingCallback(decodedMessage, wasEncrypted);
 	}
 }
 
@@ -655,7 +682,7 @@
 	__block BOOL userIsActive = NO;
 
 	[self performBlockInRelationToAccountName:username block:^(NSString *nickname, IRCClient *client, IRCChannel *channel) {
-		userIsActive = [channel isActive];
+		userIsActive = channel.isActive;
 	}];
 
 	return userIsActive;
@@ -666,19 +693,23 @@
 	[OTRKitAuthenticationDialog showFingerprintConfirmation:mainWindow() username:username accountName:accountName protocol:protocol];
 }
 
-- (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
+- (void)otrKit:(OTRKit *)otrKit handleSMPEvent:(OTRKitSMPEvent)event progress:(double)progress question:(nullable NSString *)question username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol
 {
 	[OTRKitAuthenticationDialog handleAuthenticationRequest:event progress:progress question:question username:username accountName:accountName protocol:protocol];
 }
 
-- (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(id)tag error:(NSError *)error
+- (void)otrKit:(OTRKit *)otrKit handleMessageEvent:(OTRKitMessageEvent)event message:(NSString *)message username:(NSString *)username accountName:(NSString *)accountName protocol:(NSString *)protocol tag:(nullable id)tag error:(NSError *)error
 {
 	if (event == OTRKitMessageEventReceivedMessageUnencrypted) {
 		[self otrKit:otrKit decodedMessage:message wasEncrypted:NO tlvs:nil username:username accountName:accountName protocol:protocol tag:tag];
-	} else {
-		if ([self eventIsErrornous:event]) {
-			[self presentErrorMessage:[self localizedStringForEvent:event] withAccountName:username];
-		}
+
+		return;
+	}
+
+	if ([self eventIsErrornous:event]) {
+		NSString *errorMessage = [self localizedStringForEvent:event];
+
+		[self presentErrorMessage:errorMessage withAccountName:username];
 	}
 }
 
@@ -692,7 +723,7 @@
 	;
 }
 
-- (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(NSError *)error
+- (void)otrKit:(OTRKit *)otrKit didFinishGeneratingPrivateKeyForAccountName:(NSString *)accountName protocol:(NSString *)protocol error:(nullable NSError *)error
 {
 	;
 }
@@ -704,7 +735,7 @@
 
 - (void)otrKitFingerprintManagerDialogDidClose:(OTRKitFingerprintManagerDialog *)otrkitFingerprintManager
 {
-	[self setFingerprintManagerDialog:nil];
+	self.fingerprintManagerDialog = nil;
 }
 
 #pragma mark -
@@ -712,11 +743,11 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem withStateOf:(NSString *)messageTo from:(NSString *)messageFrom
 {
-	PointerIsEmptyAssertReturn(menuItem, NO)
-	PointerIsEmptyAssertReturn(messageTo, NO)
-	PointerIsEmptyAssertReturn(messageFrom, NO)
+	NSParameterAssert(menuItem != nil);
+	NSParameterAssert(messageTo != nil);
+	NSParameterAssert(messageFrom != nil);
 
-	NSInteger menuItemTag = [menuItem tag];
+	NSUInteger menuItemTag = menuItem.tag;
 
 	if (menuItemTag == TLOEncryptionManagerMenuItemTagViewListOfFingerprints) {
 		return YES;
@@ -731,13 +762,13 @@
 	switch (menuItemTag) {
 		case TLOEncryptionManagerMenuItemTagStartPrivateConversation:
 		{
-			[menuItem setHidden:messageStateEncrypted];
+			menuItem.hidden = messageStateEncrypted;
 
 			return YES;
 		}
 		case TLOEncryptionManagerMenuItemTagRefreshPrivateConversation:
 		{
-			[menuItem setHidden:(messageStateEncrypted == NO)];
+			menuItem.hidden = (messageStateEncrypted == NO);
 
 			return YES;
 		}
@@ -762,3 +793,5 @@
 @implementation TLOEncryptionManagerEncodingDecodingObject
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

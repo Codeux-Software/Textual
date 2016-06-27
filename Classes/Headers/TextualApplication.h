@@ -99,7 +99,6 @@
 	@class TDChannelModifyTopicSheet;
 	@class TDChannelPropertiesSheet;
 	@class THOUnicodeHelper;
-	@class TLOEncryptionManager;
 	@class TLOGrowlController;
 	@class TLOInputHistory;
 	@class TLOKeyEventHandler;
