@@ -365,7 +365,9 @@ NSString * const IRCWorldDateHasChangedNotification = @"IRCWorldDateHasChangedNo
 
 - (nullable IRCTreeItem *)findItemWithId:(NSString *)itemId
 {
-	NSParameterAssert(itemId != nil);
+	if (itemId == nil) {
+		return nil;
+	}
 
 	for (IRCClient *u in self.clientList) {
 		if ([itemId isEqualToString:u.uniqueIdentifier]) {
