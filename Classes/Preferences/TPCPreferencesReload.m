@@ -285,7 +285,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Input history scope */
 	if ((reloadAction & TPCPreferencesReloadInputHistoryScopeAction) == TPCPreferencesReloadInputHistoryScopeAction) {
-		[[TXSharedApplication sharedInputHistoryManager] inputHistoryObjectScopeDidChange];
+		[mainWindow().inputHistoryManager noteInputHistoryObjectScopeDidChange];
 	}
 
 	/* Sparkle framework update feed URL */

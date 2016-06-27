@@ -51,6 +51,7 @@ typedef NS_OPTIONS(NSUInteger, TVCMainWindowShiftSelectionFlags) {
 @property (nonatomic, assign) BOOL ignoreOutlineViewSelectionChanges;
 @property (nonatomic, assign) BOOL ignoreNextOutlineViewSelectionChange;
 
+- (TLOInputHistory *)inputHistoryManager;
 - (TVCMainWindowChannelView *)channelView;
 - (TVCMainWindowTitlebarAccessoryView *)titlebarAccessoryView;
 - (nullable TVCMainWindowTitlebarAccessoryViewController *)titlebarAccessoryViewController;

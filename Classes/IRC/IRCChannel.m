@@ -344,7 +344,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 		}
 	}
 
-	[[TXSharedApplication sharedInputHistoryManager] destroy:self];
+	[[mainWindow() inputHistoryManager] destroy:self];
 	
 	[[self viewController] prepareForPermanentDestruction];
 }

@@ -71,6 +71,7 @@
 #import "TLOEncryptionManagerPrivate.h"
 #import "TLOFileLoggerPrivate.h"
 #import "TLOGrowlControllerPrivate.h"
+#import "TLOInputHistoryPrivate.h"
 #import "TLOLicenseManagerDownloaderPrivate.h"
 #import "TLOLicenseManagerPrivate.h"
 #import "TLONicknameCompletionStatusPrivate.h"
