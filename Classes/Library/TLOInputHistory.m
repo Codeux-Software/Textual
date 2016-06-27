@@ -281,11 +281,9 @@ ClassWithDesignatedInitializerInitMethod
 	@synchronized(self.historyBuffer) {
 		NSAttributedString *lastEntry = self.historyBuffer.lastObject;
 
-		if (NSObjectsAreEqual(lastEntry.string, string.string)) {
-			return;
+		if (NSObjectsAreEqual(lastEntry.string, string.string) == NO) {
+			[self addToBuffer:string];
 		}
-
-		[self addToBuffer:string];
 
 		self.historyBufferPosition = self.historyBuffer.count;
 	}
