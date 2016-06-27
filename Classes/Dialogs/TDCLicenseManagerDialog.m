@@ -37,9 +37,6 @@
 
 #import "TextualApplication.h"
 
-#import "TLOLicenseManager.h"
-#import "TLOLicenseManagerDownloader.h"
-
 #import "TDCLicenseManagerDialog.h"
 
 #import "TDCLicenseManagerMigrateAppStoreSheet.h"
