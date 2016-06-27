@@ -849,13 +849,9 @@
 		4C7B04AA1D1210C900295E82 /* TDCLicenseManagerDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */; };
 		4C7B04AB1D1210C900295E82 /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */; };
 		4C7B04AC1D1210C900295E82 /* TDCLicenseManagerRecoverLostLicenseSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */; };
-		4C7B04AD1D1210C900295E82 /* TLOLicenseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */; };
-		4C7B04AE1D1210C900295E82 /* TLOLicenseManagerDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C80832C1B43914100746327 /* TLOLicenseManagerDownloader.h */; };
 		4C7B04AF1D1210CC00295E82 /* TDCLicenseManagerDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */; };
 		4C7B04B01D1210CC00295E82 /* TDCLicenseManagerMigrateAppStoreSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */; };
 		4C7B04B11D1210CC00295E82 /* TDCLicenseManagerRecoverLostLicenseSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */; };
-		4C7B04B21D1210CC00295E82 /* TLOLicenseManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */; };
-		4C7B04B31D1210CC00295E82 /* TLOLicenseManagerDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C80832C1B43914100746327 /* TLOLicenseManagerDownloader.h */; };
 		4C7B04B41D1210DA00295E82 /* IRCConnectionPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673ED41D10FB5000979B60 /* IRCConnectionPrivate.h */; };
 		4C7B04B51D1210DA00295E82 /* IRCUserPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673ED51D10FB5000979B60 /* IRCUserPrivate.h */; };
 		4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C673ED61D10FB5000979B60 /* IRCWorldPrivate.h */; };
@@ -1334,6 +1330,12 @@
 		4CEA29CE1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */; };
 		4CEE91701B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
 		4CEE91711B65C5C500DB4A5E /* Textual-Extras.pkg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */; };
+		4CEFCB871D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
+		4CEFCB881D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
+		4CEFCB891D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */; };
+		4CEFCB8A1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
+		4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
+		4CEFCB8C1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */; };
 		4CF2D17516C4D98800B996F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCC11580469E00846B64 /* SystemConfiguration.framework */; };
 		4CF304D61CCD343F0005EA64 /* TVCAutoExpandingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */; };
 		4CF304DD1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */; };
@@ -1874,7 +1876,6 @@
 		4C673F2A1D10FE8800979B60 /* NSTableVIewHelperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSTableVIewHelperPrivate.h; path = Headers/Private/NSTableVIewHelperPrivate.h; sourceTree = "<group>"; };
 		4C673F2B1D10FE8800979B60 /* NSViewHelperPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSViewHelperPrivate.h; path = Headers/Private/NSViewHelperPrivate.h; sourceTree = "<group>"; };
 		4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLicenseManager.m; path = Library/TLOLicenseManager.m; sourceTree = "<group>"; };
-		4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOLicenseManager.h; sourceTree = "<group>"; };
 		4C699C6F1B1FB082001CD1C3 /* RemoteLicenseSystemPublicKey.pub */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = RemoteLicenseSystemPublicKey.pub; path = "Resources/License Manager/RemoteLicenseSystemPublicKey.pub"; sourceTree = SOURCE_ROOT; };
 		4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCLicenseManagerDialog.h; sourceTree = "<group>"; };
 		4C741C411C8CAD450090970C /* TVCLogViewInternalWK2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TVCLogViewInternalWK2.m; sourceTree = "<group>"; };
@@ -1940,7 +1941,6 @@
 		4C7E0F9719AC25900084173D /* GRMustacheTemplateRepository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheTemplateRepository.h; sourceTree = "<group>"; };
 		4C7E0F9819AC25900084173D /* GRMustacheVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRMustacheVersion.h; sourceTree = "<group>"; };
 		4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TLOLicenseManagerDownloader.m; path = Library/TLOLicenseManagerDownloader.m; sourceTree = "<group>"; };
-		4C80832C1B43914100746327 /* TLOLicenseManagerDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TLOLicenseManagerDownloader.h; sourceTree = "<group>"; };
 		4C8223711B1F9974000F619C /* 3rdPartyStaticStoreHockeyAppFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreHockeyAppFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreHockeyAppFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C8223751B1F997C000F619C /* 3rdPartyStaticStoreSparkleFramework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 3rdPartyStaticStoreSparkleFramework.plist; path = "Resources/Property Lists/3rdPartyStaticStoreSparkleFramework.plist"; sourceTree = SOURCE_ROOT; };
 		4C83B9051BA9BE4200BD7718 /* Chat Filter Extension.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Chat Filter Extension.xcodeproj"; path = "Resources/Plugins/Chat Filter/Chat Filter Extension.xcodeproj"; sourceTree = SOURCE_ROOT; };
@@ -2208,6 +2208,8 @@
 		4CEA29C71D20967700AADC69 /* IRCTimerCommandPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCTimerCommandPrivate.h; path = Headers/Private/IRCTimerCommandPrivate.h; sourceTree = "<group>"; };
 		4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOSpeechSynthesizerPrivate.h; path = Headers/Private/TLOSpeechSynthesizerPrivate.h; sourceTree = "<group>"; };
 		4CEE916E1B65C5C500DB4A5E /* Textual-Extras.pkg */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Textual-Extras.pkg"; path = "Resources/All Scripts/Sandbox Exceptions/Installers/Standalone Version/Textual-Extras.pkg"; sourceTree = SOURCE_ROOT; };
+		4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerDownloaderPrivate.h; path = Headers/Private/TLOLicenseManagerDownloaderPrivate.h; sourceTree = "<group>"; };
+		4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TLOLicenseManagerPrivate.h; path = Headers/Private/TLOLicenseManagerPrivate.h; sourceTree = "<group>"; };
 		4CF304D51CCD343F0005EA64 /* TVCAutoExpandingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTextField.m; path = "Views/Input Text Field/TVCAutoExpandingTextField.m"; sourceTree = "<group>"; };
 		4CF304DC1CCD344D0005EA64 /* TVCAutoExpandingTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TVCAutoExpandingTokenField.m; path = "Views/Input Text Field/TVCAutoExpandingTokenField.m"; sourceTree = "<group>"; };
 		4CF304DE1CCD345E0005EA64 /* TVCAutoExpandingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCAutoExpandingTextField.h; path = Headers/TVCAutoExpandingTextField.h; sourceTree = "<group>"; };
@@ -2762,6 +2764,8 @@
 				4C7B05061D12168C00295E82 /* THOPluginProtocolPrivate.h */,
 				4CEA29B21D20824600AADC69 /* TLOFileLoggerPrivate.h */,
 				4CEA29C31D20933000AADC69 /* TLOGrowlControllerPrivate.h */,
+				4CEFCB851D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h */,
+				4CEFCB861D216EDD008EE493 /* TLOLicenseManagerPrivate.h */,
 				4CEA29BB1D2088BF00AADC69 /* TLONicknameCompletionStatusPrivate.h */,
 				4CEA29CB1D2097EC00AADC69 /* TLOSpeechSynthesizerPrivate.h */,
 				4C673ED81D10FB5000979B60 /* TPCApplicationInfoPrivate.h */,
@@ -2940,8 +2944,6 @@
 				4C7079081B536659001002F3 /* TDCLicenseManagerDialog.h */,
 				4C361B1B1B61DE03007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.h */,
 				4C74FBC11B557AA100DD1615 /* TDCLicenseManagerRecoverLostLicenseSheet.h */,
-				4C699C651B1FAF42001CD1C3 /* TLOLicenseManager.h */,
-				4C80832C1B43914100746327 /* TLOLicenseManagerDownloader.h */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -2955,6 +2957,8 @@
 				4C8AF5DA158E99520026668C /* TLOGrowlController.m */,
 				4C8AF5DC158E99520026668C /* TLOKeyEventHandler.m */,
 				4C8AF5DD158E99520026668C /* TLOLanguagePreferences.m */,
+				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
+				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
 				4C8AF5DE158E99520026668C /* TLOLinkParser.m */,
 				4C8AF5DF158E99520026668C /* TLONicknameCompletionStatus.m */,
 				4C8AF5E0158E99520026668C /* TLOpenLink.m */,
@@ -2964,15 +2968,6 @@
 				4C8AF5E5158E99520026668C /* TLOTimer.m */,
 			);
 			name = Library;
-			sourceTree = "<group>";
-		};
-		4C80A4E01B46BFD100F9891B /* License Manager */ = {
-			isa = PBXGroup;
-			children = (
-				4C699C621B1FAF38001CD1C3 /* TLOLicenseManager.m */,
-				4C8083251B43911100746327 /* TLOLicenseManagerDownloader.m */,
-			);
-			name = "License Manager";
 			sourceTree = "<group>";
 		};
 		4C81C3671B7785810086D613 /* Primary Dialogs */ = {
@@ -3265,7 +3260,6 @@
 		4C950BFD16D68DD700A93D8D /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				4C80A4E01B46BFD100F9891B /* License Manager */,
 				4C992DC81AB5138A0072AB0B /* TLOEncryptionManager.m */,
 				4C8AF5DB158E99520026668C /* TLOInputHistory.m */,
 			);
@@ -3824,6 +3818,7 @@
 				4C7B03701D1210A100295E82 /* TLOLinkParser.h in Headers */,
 				4C7B48FB1D131A2A008D7926 /* TVCLogControllerOperationQueuePrivate.h in Headers */,
 				4CB17EC81D125BBA00FAEAD4 /* IRCHighlightMatchConditionInternal.h in Headers */,
+				4CEFCB871D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */,
 				4C7B03721D1210A100295E82 /* TLOpenLink.h in Headers */,
 				4C7B03731D1210A100295E82 /* TLOPopupPrompts.h in Headers */,
 				4C7B03741D1210A100295E82 /* TLOSoundPlayer.h in Headers */,
@@ -3844,6 +3839,7 @@
 				4C7B03871D1210A100295E82 /* TVCLogView.h in Headers */,
 				4C7B03881D1210A100295E82 /* TVCMainWindow.h in Headers */,
 				4C7B038A1D1210A100295E82 /* TVCMainWindowLoadingScreen.h in Headers */,
+				4CEFCB8A1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C7B038D1D1210A100295E82 /* TVCMainWindowSplitView.h in Headers */,
 				4C7B038E1D1210A100295E82 /* TVCMainWindowTextView.h in Headers */,
 				4C7B49101D131A2A008D7926 /* TVCLogViewInternalWK2.h in Headers */,
@@ -3991,6 +3987,7 @@
 				4C7B03E11D1210A800295E82 /* TDCServerChannelListDialog.h in Headers */,
 				4C7B03E21D1210A800295E82 /* TDCServerHighlightListSheet.h in Headers */,
 				4C7B03E31D1210A800295E82 /* TDCServerPropertiesSheet.h in Headers */,
+				4CEFCB881D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */,
 				4C7B03E41D1210A800295E82 /* TDCSharedProtocolDefinitions.h in Headers */,
 				4C7B03E51D1210A800295E82 /* TDCSheetBase.h in Headers */,
 				4C7B03E61D1210A800295E82 /* TDCWelcomeSheet.h in Headers */,
@@ -3999,6 +3996,7 @@
 				4C7B03EB1D1210A800295E82 /* TLOEncryptionManager.h in Headers */,
 				4C7B49111D131A2A008D7926 /* TVCLogViewInternalWK2.h in Headers */,
 				4C7B03ED1D1210A800295E82 /* TLOGrowlController.h in Headers */,
+				4CEFCB8B1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C7B03EE1D1210A800295E82 /* TLOInputHistory.h in Headers */,
 				4CD1C4CA1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
 				4C7B03EF1D1210A800295E82 /* TLOKeyEventHandler.h in Headers */,
@@ -4067,8 +4065,6 @@
 				4C7B04B11D1210CC00295E82 /* TDCLicenseManagerRecoverLostLicenseSheet.h in Headers */,
 				4CEA29C51D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51A1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
-				4C7B04B21D1210CC00295E82 /* TLOLicenseManager.h in Headers */,
-				4C7B04B31D1210CC00295E82 /* TLOLicenseManagerDownloader.h in Headers */,
 				4C7B04B41D1210DA00295E82 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04B51D1210DA00295E82 /* IRCUserPrivate.h in Headers */,
 				4C7B04B61D1210DA00295E82 /* IRCWorldPrivate.h in Headers */,
@@ -4193,6 +4189,7 @@
 				4C7B04621D1210B000295E82 /* TDCServerChannelListDialog.h in Headers */,
 				4C7B04631D1210B000295E82 /* TDCServerHighlightListSheet.h in Headers */,
 				4C7B04641D1210B000295E82 /* TDCServerPropertiesSheet.h in Headers */,
+				4CEFCB891D216EDD008EE493 /* TLOLicenseManagerDownloaderPrivate.h in Headers */,
 				4C7B04651D1210B000295E82 /* TDCSharedProtocolDefinitions.h in Headers */,
 				4C7B04661D1210B000295E82 /* TDCSheetBase.h in Headers */,
 				4C7B04671D1210B000295E82 /* TDCWelcomeSheet.h in Headers */,
@@ -4201,6 +4198,7 @@
 				4C7B046C1D1210B000295E82 /* TLOEncryptionManager.h in Headers */,
 				4C7B49121D131A2A008D7926 /* TVCLogViewInternalWK2.h in Headers */,
 				4C7B046E1D1210B000295E82 /* TLOGrowlController.h in Headers */,
+				4CEFCB8C1D216EDD008EE493 /* TLOLicenseManagerPrivate.h in Headers */,
 				4C7B046F1D1210B000295E82 /* TLOInputHistory.h in Headers */,
 				4CD1C4CB1D1F18A50034F6A1 /* TXWindowControllerPrivate.h in Headers */,
 				4C7B04701D1210B000295E82 /* TLOKeyEventHandler.h in Headers */,
@@ -4269,8 +4267,6 @@
 				4C7B04AC1D1210C900295E82 /* TDCLicenseManagerRecoverLostLicenseSheet.h in Headers */,
 				4CEA29C61D20933000AADC69 /* TLOGrowlControllerPrivate.h in Headers */,
 				4C5DD51B1D1E1CB700F2E1AE /* TVCMainWindowSegmentedControlPrivate.h in Headers */,
-				4C7B04AD1D1210C900295E82 /* TLOLicenseManager.h in Headers */,
-				4C7B04AE1D1210C900295E82 /* TLOLicenseManagerDownloader.h in Headers */,
 				4C7B04CD1D1210E000295E82 /* IRCConnectionPrivate.h in Headers */,
 				4C7B04CE1D1210E000295E82 /* IRCUserPrivate.h in Headers */,
 				4C7B04CF1D1210E000295E82 /* IRCWorldPrivate.h in Headers */,

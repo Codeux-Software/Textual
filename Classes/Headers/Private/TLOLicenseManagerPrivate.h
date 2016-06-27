@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 TEXTUAL_EXTERN NSString * const TLOLicenseManagerLicenseDictionaryLicenseCreationDateKey;
@@ -53,14 +53,15 @@ TEXTUAL_EXTERN BOOL TLOLicenseManagerIsTrialExpired(void);
 TEXTUAL_EXTERN NSTimeInterval TLOLicenseManagerTimeReaminingInTrial(void);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerDeleteUserLicenseFile(void);
-TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData *newContents);
+TEXTUAL_EXTERN BOOL TLOLicenseManagerUserLicenseWriteFileContents(NSData * _Nullable newContents);
 
 TEXTUAL_EXTERN BOOL TLOLicenseManagerLicenseKeyIsValid(NSString *licenseKey);
 
-TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseCreationDate(void);
-TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseCreationDateFormatted(void);
-TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseKey(void);
-TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerContactAddress(void);
-TEXTUAL_EXTERN NSString *TLOLicenseManagerLicenseOwnerName(void);
-
+TEXTUAL_EXTERN NSString * _Nullable TLOLicenseManagerLicenseCreationDate(void);
+TEXTUAL_EXTERN NSString * _Nullable TLOLicenseManagerLicenseCreationDateFormatted(void);
+TEXTUAL_EXTERN NSString * _Nullable TLOLicenseManagerLicenseKey(void);
+TEXTUAL_EXTERN NSString * _Nullable TLOLicenseManagerLicenseOwnerContactAddress(void);
+TEXTUAL_EXTERN NSString * _Nullable TLOLicenseManagerLicenseOwnerName(void);
 #endif
+
+NS_ASSUME_NONNULL_END

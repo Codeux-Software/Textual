@@ -38,10 +38,6 @@
 
 #import "TextualApplication.h"
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TLOLicenseManager.h"
-#endif
-
 #define _activate					(c && [c isActive])
 #define _notActive					(c && [c isActive] == NO)
 #define _connected					(u && [u isConnected])
