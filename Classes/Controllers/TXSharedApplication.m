@@ -64,7 +64,6 @@ _defineSharedInstance(sharedEncryptionManager, TLOEncryptionManager, new)
 #endif
 
 _defineSharedInstance(sharedGrowlController, TLOGrowlController, new)
-_defineSharedInstance(sharedInputHistoryManager, TLOInputHistory, new)
 _defineSharedInstance(sharedNetworkReachabilityNotifier, OELReachability, reachabilityForInternetConnection)
 _defineSharedInstance(sharedPluginManager, THOPluginManager, new)
 _defineSharedInstance(sharedQueuedCertificateTrustPanel, TVCQueuedCertificateTrustPanel, new)

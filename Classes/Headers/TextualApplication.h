@@ -99,7 +99,6 @@
 	@class TDChannelPropertiesSheet;
 	@class THOUnicodeHelper;
 	@class TLOGrowlController;
-	@class TLOInputHistory;
 	@class TLOKeyEventHandler;
 	@class TLOLanguagePreferences;
 	@class TLOLinkParser;
@@ -275,7 +274,6 @@
 	/* Library */
 	#import "TLOEncryptionManager.h"
 	#import "TLOGrowlController.h"
-	#import "TLOInputHistory.h"
 	#import "TLOKeyEventHandler.h"
 	#import "TLOLanguagePreferences.h"
 	#import "TLOLinkParser.h"

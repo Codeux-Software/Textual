@@ -502,7 +502,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		}
 	}
 
-	[[TXSharedApplication sharedInputHistoryManager] destroy:self];
+	[[mainWindow() inputHistoryManager] destroy:self];
 	
 	[self.viewController prepareForPermanentDestruction];
 }

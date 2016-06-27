@@ -60,7 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 #endif
 
 + (TLOGrowlController *)sharedGrowlController;
-+ (TLOInputHistory *)sharedInputHistoryManager;
 + (OELReachability *)sharedNetworkReachabilityNotifier;
 + (THOPluginManager *)sharedPluginManager;
 + (TVCQueuedCertificateTrustPanel *)sharedQueuedCertificateTrustPanel;

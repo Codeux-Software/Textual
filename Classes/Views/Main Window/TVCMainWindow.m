@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readwrite) IBOutlet TVCMainWindowLoadingScreenView *loadingScreen;
 @property (nonatomic, weak, readwrite) IBOutlet TVCMemberList *memberList;
 @property (nonatomic, weak, readwrite) IBOutlet TVCServerList *serverList;
+@property (nonatomic, strong) TLOInputHistory *inputHistoryManager;
 @property (nonatomic, strong) TLONicknameCompletionStatus *nicknameCompletionStatus;
 @property (nonatomic, readwrite, copy) NSArray *selectedItems;
 @property (nonatomic, readwrite, strong, nullable) IRCTreeItem *selectedItem;
@@ -86,6 +87,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)prepareInitialState
 {
+	self.inputHistoryManager = [[TLOInputHistory alloc] initWithWindow:self];
+
 	self.keyEventHandler = [[TLOKeyEventHandler alloc] initWithTarget:self];
 
 	self.nicknameCompletionStatus = [[TLONicknameCompletionStatus alloc] initWithWindow:self];
@@ -962,9 +965,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSAttributedString *stringValue = self.inputTextField.attributedStringValue;
 	
 	if (movingUp) {
-		stringValue = [[TXSharedApplication sharedInputHistoryManager] up:stringValue];
+		stringValue = [self.inputHistoryManager up:stringValue];
 	} else {
-		stringValue = [[TXSharedApplication sharedInputHistoryManager] down:stringValue];
+		stringValue = [self.inputHistoryManager down:stringValue];
 	}
 	
 	if (stringValue) {
@@ -1121,7 +1124,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.inputTextField.attributedStringValue = [NSAttributedString attributedString];
 
-	[[TXSharedApplication sharedInputHistoryManager] add:stringValue];
+	[self.inputHistoryManager add:stringValue];
 		
 	[self inputText:stringValue asCommand:command];
 }
@@ -1553,7 +1556,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Setup text field value with history item when we have
 	 history setup to be channel specific. */
-	[[TXSharedApplication sharedInputHistoryManager] moveFocusTo:itemChangedTo];
+	[self.inputHistoryManager moveFocusTo:itemChangedTo];
 
 	/* Reset spelling for text field */
 	if (self.inputTextField.hasModifiedSpellingDictionary) {

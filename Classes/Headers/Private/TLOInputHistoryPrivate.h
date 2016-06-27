@@ -36,17 +36,21 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TLOInputHistory : NSObject
-- (void)moveFocusTo:(id)treeItem;
+- (instancetype)initWithWindow:(TVCMainWindow *)mainWindow NS_DESIGNATED_INITIALIZER;
 
-- (void)destroy:(id)treeItem;
+- (void)moveFocusTo:(IRCTreeItem *)treeItem;
 
-- (void)inputHistoryObjectScopeDidChange;
+- (void)destroy:(IRCTreeItem *)treeItem;
 
-- (void)add:(NSAttributedString *)s;
+- (void)noteInputHistoryObjectScopeDidChange;
 
-- (NSAttributedString *)up:(NSAttributedString *)s;
-- (NSAttributedString *)down:(NSAttributedString *)s;
+- (void)add:(NSAttributedString *)string;
+
+- (nullable NSAttributedString *)up:(NSAttributedString *)string;
+- (nullable NSAttributedString *)down:(NSAttributedString *)string;
 @end
+
+NS_ASSUME_NONNULL_END
