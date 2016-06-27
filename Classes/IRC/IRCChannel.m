@@ -181,7 +181,9 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 - (NSURL *)logFilePath
 {
 	if (self.logFile) {
-		return [NSURL URLWithString:[self.logFile writePath]];
+		NSString *writePath = [[self.logFile writePath] stringByDeletingLastPathComponent];
+
+		return [NSURL fileURLWithPath:writePath];
 	} else {
 		return nil;
 	}
