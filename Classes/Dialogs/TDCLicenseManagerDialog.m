@@ -35,12 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TDCLicenseManagerDialog.h"
-
-#import "TDCLicenseManagerMigrateAppStoreSheet.h"
-#import "TDCLicenseManagerRecoverLostLicenseSheet.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @interface TDCLicenseManagerDialog ()
@@ -65,11 +60,11 @@
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
 @property (nonatomic, assign) BOOL textualIsRegistered;
 
-- (IBAction)unregisteredViewCancel:(id)sender;
 - (IBAction)unregisteredViewActivateTextual:(id)sender;
+- (IBAction)unregisteredViewCancel:(id)sender;
+- (IBAction)unregisteredViewMigrateMacAppStorePurchase:(id)sender;
 - (IBAction)unregisteredViewPurchaseTextual:(id)sender;
 - (IBAction)unregisteredViewRecoveryLostLicense:(id)sender;
-- (IBAction)unregisteredViewMigrateMacAppStorePurchase:(id)sender;
 
 - (IBAction)registeredViewDeactivateTextual:(id)sender;
 @end
@@ -82,15 +77,22 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
+		[self prepareInitialState];
+
+		return self;
 	}
 
 	return self;
 }
 
+- (void)prepareInitialState
+{
+	[RZMainBundle() loadNibNamed:@"TDCLicenseManagerDialog" owner:self topLevelObjects:nil];
+}
+
 - (void)show
 {
-	[[self window] makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 
 	[self populateMacAppStoreIconImageView];
 
@@ -108,43 +110,56 @@
 	 that we do not have to update it if Apple does. */
 	NSBundle *appStoreApplication = [NSBundle bundleWithPath:@"/Applications/App Store.app"];
 
-	if (appStoreApplication) {
-		NSString *appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];
-
-		if (appStoreIconPath) {
-			NSImage *appStoreIconImage = [[NSImage alloc] initWithContentsOfFile:appStoreIconPath];
-
-			[self.unregisteredViewMacAppStoreIconImageView setImage:appStoreIconImage];
-		}
+	if (appStoreApplication == nil) {
+		return;
 	}
+
+	NSString *appStoreIconPath = nil;
+
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		appStoreIconPath = [appStoreApplication pathForResource:@"AppIcon" ofType:@"icns"];
+	} else {
+		appStoreIconPath = [appStoreApplication pathForResource:@"appStore" ofType:@"icns"];
+	}
+
+	if (appStoreIconPath == nil) {
+		return;
+	}
+
+	NSImage *appStoreIconImage = [[NSImage alloc] initWithContentsOfFile:appStoreIconPath];
+
+	self.unregisteredViewMacAppStoreIconImageView.image = appStoreIconImage;
 }
 
 - (void)updateSelectedPane
 {
 	NSView *contentView = nil;
 
-		self.textualIsRegistered = TLOLicenseManagerTextualIsRegistered();
+	self.textualIsRegistered = TLOLicenseManagerTextualIsRegistered();
 
-	if (self.textualIsRegistered) {
+	if (self.textualIsRegistered)
+	{
 		NSString *licenseKey = TLOLicenseManagerLicenseKey();
 
 		NSString *licenseKeyOwner = TLOLicenseManagerLicenseOwnerName();
 
 		NSString *licenseKeyCreationDate = TLOLicenseManagerLicenseCreationDateFormatted();
 
-		[self.registeredViewLicenseKeyTextField setStringValue:licenseKey];
+		self.registeredViewLicenseKeyTextField.stringValue = licenseKey;
 
-		[self.registeredViewLicenseOwnerTextField setStringValue:licenseKeyOwner];
+		self.registeredViewLicenseOwnerTextField.stringValue = licenseKeyOwner;
 
-		[self.registeredViewLicensePurchaseDateTextField setStringValue:licenseKeyCreationDate];
+		self.registeredViewLicensePurchaseDateTextField.stringValue = licenseKeyCreationDate;
 
 		contentView = self.contentViewRegisteredTextualView;
-	} else {
+	}
+	else // textualIsRegistered
+	{
 		contentView = self.contentViewUnregisteredTextualView;
 
 		NSString *formattedTrialInformation = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
 
-		[self.unregisteredViewTrialInformationTextField setStringValue:formattedTrialInformation];
+		self.unregisteredViewTrialInformationTextField.stringValue = formattedTrialInformation;
 	}
 
 	[self.contentView attachSubview:contentView
@@ -162,7 +177,7 @@
 
 - (void)unregisteredViewCancel:(id)sender
 {
-	[[self window] close];
+	[self.window close];
 }
 
 - (void)updateUnregisteredViewActivationButton
@@ -171,18 +186,18 @@
 		return; // Cancel operation...
 	}
 
-	NSString *licenseKeyValue = [self.unregisteredViewLicenseKeyTextField stringValue];
+	NSString *licenseKeyValue = self.unregisteredViewLicenseKeyTextField.stringValue;
 
 	if (TLOLicenseManagerLicenseKeyIsValid(licenseKeyValue)) {
-		[self.unregisteredViewActivateTextualButton setEnabled:YES];
+		self.unregisteredViewActivateTextualButton.enabled = YES;
 	} else {
-		[self.unregisteredViewActivateTextualButton setEnabled:NO];
+		self.unregisteredViewActivateTextualButton.enabled = NO;
 	}
 }
 
 - (void)unregisteredViewActivateTextual:(id)sender
 {
-	NSString *licenseKeyValue = [self.unregisteredViewLicenseKeyTextField stringValue];
+	NSString *licenseKeyValue = self.unregisteredViewLicenseKeyTextField.stringValue;
 
 	[self attemptToActivateLicenseKey:licenseKeyValue];
 }
@@ -206,9 +221,10 @@
 
 - (void)activateLicenseKey:(NSString *)licenseKey
 {
+	NSParameterAssert(licenseKey != nil);
+
 	/* This method is allowed to be invoked by another class in order
 	 to activate a license. It is not invoked by this class on its own. */
-
 	if (TLOLicenseManagerLicenseKeyIsValid(licenseKey)) {
 		[self attemptToActivateLicenseKey:licenseKey];
 	}
@@ -216,23 +232,25 @@
 
 - (void)attemptToActivateLicenseKey:(NSString *)licenseKey
 {
+	NSParameterAssert(licenseKey != nil);
+
 	[self beginProgressIndicator];
 
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
-
-	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		if (operationSuccessful) {
-			[[weakSelf unregisteredViewLicenseKeyTextField] setStringValue:NSStringEmptyPlaceholder];
+			weakSelf.unregisteredViewLicenseKeyTextField.stringValue = NSStringEmptyPlaceholder;
 
 			[weakSelf reloadMainWindowLoadingScreen];
 		}
-	}];
+	};
+
+	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
 	[self.licenseManagerDownloader activateLicense:licenseKey];
 }
@@ -242,11 +260,9 @@
 
 - (void)unregisteredViewRecoveryLostLicense:(id)sender
 {
-	 self.recoverLostLicenseSheet = [TDCLicenseManagerRecoverLostLicenseSheet new];
+	self.recoverLostLicenseSheet = [[TDCLicenseManagerRecoverLostLicenseSheet alloc] initWithWindow:self.window];
 
-	[self.recoverLostLicenseSheet setWindow:[self window]];
-
-	[self.recoverLostLicenseSheet setDelegate:self];
+	self.recoverLostLicenseSheet.delegate = self;
 
 	[self.recoverLostLicenseSheet start];
 }
@@ -255,13 +271,13 @@
 {
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
-
-	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
-	}];
+	};
+
+	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
 	[self.licenseManagerDownloader requestLostLicenseKeyForContactAddress:contactAddress];
 }
@@ -294,15 +310,15 @@
 	 on the hard drive which is typically instant. */
 	__weak TDCLicenseManagerDialog *weakSelf = self;
 
-	 self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
+	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
-
-	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
 
 		[weakSelf reloadMainWindowLoadingScreen];
-	}];
+	};
+
+	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
 	[self.licenseManagerDownloader deactivateLicense];
 }
@@ -312,11 +328,9 @@
 
 - (void)unregisteredViewMigrateMacAppStorePurchase:(id)sender
 {
-	 self.migrateAppStoreSheet = [TDCLicenseManagerMigrateAppStoreSheet new];
+	self.migrateAppStoreSheet = [[TDCLicenseManagerMigrateAppStoreSheet alloc] initWithWindow:self.window];
 
-	[self.migrateAppStoreSheet setWindow:[self window]];
-
-	[self.migrateAppStoreSheet setDelegate:self];
+	self.migrateAppStoreSheet.delegate = self;
 
 	[self.migrateAppStoreSheet start];
 }
@@ -330,11 +344,11 @@
 
 	self.licenseManagerDownloader = [TLOLicenseManagerDownloader new];
 
-	[self.licenseManagerDownloader setIsSilentOnSuccess:self.isSilentOnSuccess];
-
-	[self.licenseManagerDownloader setCompletionBlock:^(BOOL operationSuccessful) {
+	self.licenseManagerDownloader.completionBlock = ^(BOOL operationSuccessful) {
 		[weakSelf licenseManagerDownloaderCompletionBlock];
-	}];
+	};
+
+	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
 	[self.licenseManagerDownloader migrateMacAppStorePurcahse:receiptData
 											 licenseOwnerName:licenseOwnerName
@@ -355,7 +369,7 @@
 
 - (void)controlTextDidChange:(NSNotification *)obj
 {
-	if ([obj object] == self.unregisteredViewLicenseKeyTextField) {
+	if (obj.object == self.unregisteredViewLicenseKeyTextField) {
 		[self updateUnregisteredViewActivationButton];
 	}
 }
@@ -384,18 +398,20 @@
 
 - (void)beginProgressIndicator
 {
-	self.progressIndicator = [[TDCProgressIndicatorSheet alloc] initWithWindow:[self window]];
+	self.progressIndicator = [[TDCProgressIndicatorSheet alloc] initWithWindow:self.window];
 
 	[self.progressIndicator start];
 }
 
 - (void)endProgressIndicator
 {
-	if ( self.progressIndicator) {
-		[self.progressIndicator stop];
-
-		 self.progressIndicator = nil;
+	if (self.progressIndicator == nil) {
+		return;
 	}
+
+	[self.progressIndicator stop];
+
+	self.progressIndicator = nil;
 }
 
 #pragma mark -
@@ -407,11 +423,11 @@
 
 	if (timeLeft >= 0) {
 		return TXTLS(@"TLOLicenseManager[1016]");
-	} else {
-		NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
-
-		return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
 	}
+
+	NSString *formattedTimeRemainingString = TXHumanReadableTimeInterval(timeLeft, YES, NSCalendarUnitDay);
+
+	return TXTLS(@"TLOLicenseManager[1015]", formattedTimeRemainingString);
 }
 
 + (void)scheduleTimeRemainingInTrialNotification
@@ -420,22 +436,20 @@
 		return; // Do not schedule notification...
 	}
 
-	NSString *formattedNotificationTitle = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
-
 	NSUserNotification *notification = [NSUserNotification new];
 
-	[notification setTitle:formattedNotificationTitle];
+	notification.deliveryDate = [NSDate date];
 
-	[notification setInformativeText:TXTLS(@"TLOLicenseManager[1017][2]")];
+	notification.informativeText = TXTLS(@"TLOLicenseManager[1017][2]");
 
-	[notification setDeliveryDate:[NSDate date]];
+	notification.title = [TDCLicenseManagerDialog timeRemainingInTrialFormattedMessage];
 
-	[notification setUserInfo:@{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)}];
+	notification.userInfo = @{@"isLicenseManagerTimeRemainingInTrialNotification" : @(YES)};
 
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		[notification setValue:@(YES) forKey:@"_showsButtons"];
 
-		[notification setActionButtonTitle:TXTLS(@"TLOLicenseManager[1017][3]")];
+		notification.actionButtonTitle = TXTLS(@"TLOLicenseManager[1017][3]");
 	}
 
 	[RZUserNotificationCenter() scheduleNotification:notification];
@@ -446,10 +460,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerDialogWillClose:)]) {
-		[self.delegate licenseManagerDialogWillClose:self];
-	}
+	[self.delegate licenseManagerDialogWillClose:self];
 }
 
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

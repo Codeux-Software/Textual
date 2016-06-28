@@ -35,23 +35,19 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-@interface TDCLicenseManagerDialog : NSWindowController
-@property (nonatomic, weak) id delegate;
-@property (nonatomic, assign) BOOL isSilentOnSuccess;
-
-- (void)show;
-
-- (void)activateLicenseKey:(NSString *)licenseKey;
-
-+ (void)applicationDidFinishLaunching;
+@interface TDCLicenseManagerRecoverLostLicenseSheet : TDCSheetBase
+- (void)start;
 @end
 
-@protocol TDCLicenseManagerDialogDelegate <NSObject>
+@protocol TDCLicenseManagerRecoverLostLicenseSheet <NSObject>
 @required
 
-- (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender;
+- (void)licenseManagerRecoverLostLicenseSheet:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress;
+- (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender;
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

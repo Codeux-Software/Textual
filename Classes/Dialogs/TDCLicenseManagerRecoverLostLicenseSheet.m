@@ -35,9 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "TDCLicenseManagerRecoverLostLicenseSheet.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
 @interface TDCLicenseManagerRecoverLostLicenseSheet ()
@@ -49,38 +47,43 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCLicenseManagerRecoverLostLicenseSheet" owner:self topLevelObjects:nil];
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[RZMainBundle() loadNibNamed:@"TDCLicenseManagerRecoverLostLicenseSheet" owner:self topLevelObjects:nil];
 }
 
 - (void)start
 {
-	[self.contactAddressTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.contactAddressTextField setStringValueUsesOnlyFirstToken:YES];
+	self.contactAddressTextField.stringValueIsInvalidOnEmpty = YES;
+	self.contactAddressTextField.stringValueUsesOnlyFirstToken = YES;
 
-	[self.contactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
+	self.contactAddressTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	[self.contactAddressTextField setTextDidChangeCallback:self];
+	self.contactAddressTextField.textDidChangeCallback = self;
 
-	[self.contactAddressTextField setStringValue:[XRAddressBook myEmailAddress]];
+	self.contactAddressTextField.stringValue = [XRAddressBook myEmailAddress];
 
 	[self startSheet];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self.okButton setEnabled:[self.contactAddressTextField valueIsValid]];
+	self.okButton.enabled = self.contactAddressTextField.valueIsValid;
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicenseSheet:onOk:)]) {
-		NSString *contactAddress = [self.contactAddressTextField value];
+	NSString *contactAddress = self.contactAddressTextField.value;
 
-		[self.delegate licenseManagerRecoverLostLicenseSheet:self onOk:contactAddress];
-	}
+	[self.delegate licenseManagerRecoverLostLicenseSheet:self onOk:contactAddress];
 
 	[super ok:sender];
 }
@@ -90,10 +93,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerRecoverLostLicenseSheetWillClose:)]) {
-		[self.delegate licenseManagerRecoverLostLicenseSheetWillClose:self];
-	}
+	[self.delegate licenseManagerRecoverLostLicenseSheetWillClose:self];
 }
 
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

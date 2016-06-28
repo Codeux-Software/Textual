@@ -36,19 +36,32 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCSheetBase
+
+- (instancetype)initWithWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	if ((self = [self init])) {
+		self.window = window;
+
+		return self;
+	}
+
+	return nil;
+}
 
 - (void)startSheet
 {
 	[self startSheetWithWindow:self.window];
 }
 
-- (void)startSheetWithWindow:(NSWindow *)awindow
+- (void)startSheetWithWindow:(NSWindow *)window
 {
 	[NSApp beginSheet:self.sheet
-	   modalForWindow:awindow
+	   modalForWindow:window
 		modalDelegate:self
 	   didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:nil];
@@ -80,3 +93,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -36,20 +36,18 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#define TDCSheetBaseDeclared		1
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCSheetBase : NSObject
-@property (nonatomic, weak) id delegate;
-@property (nonatomic, weak) NSWindow *window; // Window being attached to.
-@property (nonatomic, strong) IBOutlet NSWindow *sheet; // Window being attached.
+@property (nonatomic, weak, nullable) id delegate;
+@property (nonatomic, weak) NSWindow *window;
+@property (nonatomic, strong) IBOutlet NSWindow *sheet; // Window being attached
 @property (nonatomic, weak) IBOutlet NSButton *okButton;
 @property (nonatomic, weak) IBOutlet NSButton *cancelButton;
 
-- (void)startSheet;
-- (void)startSheetWithWindow:(NSWindow *)awindow;
+- (instancetype)initWithWindow:(NSWindow *)window;
 
+- (void)startSheet;
 - (void)endSheet;
 
 - (IBAction)ok:(id)sender;
@@ -57,3 +55,5 @@
 
 - (void)close;
 @end
+
+NS_ASSUME_NONNULL_END

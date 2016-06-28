@@ -35,9 +35,9 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import <CoreServices/CoreServices.h>
 
-#import "TDCLicenseManagerMigrateAppStoreSheet.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /* 
  * TDCLicenseManagerMigrateAppStoreSheet presents an open dialog to
@@ -46,8 +46,6 @@
  */
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import <CoreServices/CoreServices.h>
-
 #define _licenseOwnerNameMaximumLength						125
 #define _licenseOwnerContactAddressMaximumLength			125
 
@@ -65,41 +63,48 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCLicenseManagerMigrateAppStoreSheet" owner:self topLevelObjects:nil];
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[RZMainBundle() loadNibNamed:@"TDCLicenseManagerMigrateAppStoreSheet" owner:self topLevelObjects:nil];
 }
 
 - (void)startContactAddressSheet
 {
-	/* E-mail address text field configuration. */
-	[self.licenseOwnerContactAddressTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.licenseOwnerContactAddressTextField setStringValueUsesOnlyFirstToken:YES];
+	/* E-mail address text field configuration */
+	self.licenseOwnerContactAddressTextField.stringValueIsInvalidOnEmpty = YES;
+	self.licenseOwnerContactAddressTextField.stringValueUsesOnlyFirstToken = YES;
 
-	[self.licenseOwnerContactAddressTextField setOnlyShowStatusIfErrorOccurs:YES];
+	self.licenseOwnerContactAddressTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	[self.licenseOwnerContactAddressTextField setTextDidChangeCallback:self];
+	self.licenseOwnerContactAddressTextField.textDidChangeCallback = self;
 
-	[self.licenseOwnerContactAddressTextField setStringValue:[XRAddressBook myEmailAddress]];
+	self.licenseOwnerContactAddressTextField.stringValue = [XRAddressBook myEmailAddress];
 
-	[self.licenseOwnerContactAddressTextField setValidationBlock:^BOOL(NSString *currentValue) {
-		return ([currentValue length] < _licenseOwnerContactAddressMaximumLength);
-	}];
+	self.licenseOwnerContactAddressTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		return (currentValue.length < _licenseOwnerContactAddressMaximumLength);
+	};
 
-	/* First & last name text field configuration. */
-	[self.licenseOwnerNameTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.licenseOwnerNameTextField setStringValueUsesOnlyFirstToken:NO];
+	/* First & last name text field configuration */
+	self.licenseOwnerNameTextField.stringValueIsInvalidOnEmpty = YES;
+	self.licenseOwnerNameTextField.stringValueUsesOnlyFirstToken = NO;
 
-	[self.licenseOwnerNameTextField setOnlyShowStatusIfErrorOccurs:YES];
+	self.licenseOwnerNameTextField.onlyShowStatusIfErrorOccurs = YES;
 
-	[self.licenseOwnerNameTextField setTextDidChangeCallback:self];
+	self.licenseOwnerNameTextField.textDidChangeCallback = self;
 
-	[self.licenseOwnerNameTextField setStringValue:[XRAddressBook myName]];
+	self.licenseOwnerNameTextField.stringValue = [XRAddressBook myName];
 
-	[self.licenseOwnerNameTextField setValidationBlock:^BOOL(NSString *currentValue) {
-		return ([currentValue length] < _licenseOwnerNameMaximumLength);
-	}];
+	self.licenseOwnerNameTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		return (currentValue.length < _licenseOwnerNameMaximumLength);
+	};
 
 	/* Begin sheet... */
 	[self startSheet];
@@ -107,25 +112,27 @@
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self.okButton setEnabled:
-		([self.licenseOwnerNameTextField valueIsValid] &&
-		 [self.licenseOwnerContactAddressTextField valueIsValid])];
+	self.okButton.enabled = (self.licenseOwnerNameTextField.valueIsValid &&
+							 self.licenseOwnerContactAddressTextField.valueIsValid);
+}
+
+- (void)start
+{
+	[self findTextualUsingLaucnhServices];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerMigrateAppStoreSheet:convertReceipt:licenseOwnerName:licenseOwnerContactAddress:)]) {
-		NSString *receiptData = self.cachedReceiptData;
+	NSString *receiptData = self.cachedReceiptData;
 
-		NSString *licenseOwnerName = [self.licenseOwnerNameTextField value];
+	NSString *licenseOwnerName = self.licenseOwnerNameTextField.value;
 
-		NSString *licenseOwnerContactAddress = [self.licenseOwnerContactAddressTextField value];
+	NSString *licenseOwnerContactAddress = self.licenseOwnerContactAddressTextField.value;
 
-		[self.delegate licenseManagerMigrateAppStoreSheet:self
-										   convertReceipt:receiptData
-										 licenseOwnerName:licenseOwnerName
-							   licenseOwnerContactAddress:licenseOwnerContactAddress];
-	}
+	[self.delegate licenseManagerMigrateAppStoreSheet:self
+									   convertReceipt:receiptData
+									 licenseOwnerName:licenseOwnerName
+						   licenseOwnerContactAddress:licenseOwnerContactAddress];
 
 	[super ok:sender];
 }
@@ -133,7 +140,7 @@
 #pragma mark -
 #pragma mark Open Dialog
 
-- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError *__autoreleasing *)outError
+- (BOOL)panel:(id)sender validateURL:(NSURL *)url error:(NSError **)outError
 {
 	NSString *applicationName = nil;
 
@@ -141,24 +148,19 @@
 		if (outError) {
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 
-			[userInfo setObject:url forKey:NSURLErrorKey];
+			userInfo[NSURLErrorKey] = url;
 			
-			[userInfo setObject:TXTLS(@"TLOLicenseManager[1009][1]", applicationName) forKey:NSLocalizedDescriptionKey];
+			userInfo[NSLocalizedDescriptionKey] = TXTLS(@"TLOLicenseManager[1009][1]", applicationName);
 
-			[userInfo setObject:TXTLS(@"TLOLicenseManager[1009][2]") forKey:NSLocalizedRecoverySuggestionErrorKey];
+			userInfo[NSLocalizedRecoverySuggestionErrorKey] = TXTLS(@"TLOLicenseManager[1009][2]");
 
 			*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:27984 userInfo:userInfo];
 		}
 
 		return NO;
-	} else {
-		return YES;
 	}
-}
 
-- (void)start
-{
-	[self findTextualUsingLaucnhServices];
+	return YES;
 }
 
 - (void)findTextualUsingLaucnhServices
@@ -167,24 +169,23 @@
 
 	NSArray *matchedApplications = (__bridge_transfer NSArray *)LSCopyApplicationURLsForURL(searchScopeURL, kLSRolesViewer);
 
-	NSURL *matchedCopy = nil;
+	NSURL *matchedApplication = nil;
 
-	if (matchedApplications) {
-		for (NSURL *applicationURL in matchedApplications) {
-			if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
-				matchedCopy = applicationURL;
+	for (NSURL *applicationURL in matchedApplications) {
+		if ([self canUseApplicationAtURL:applicationURL applicationName:NULL]) {
+			matchedApplication = applicationURL;
 
-				LogToConsoleInfo("Automatically detected Mac App Store Textual 5 at the following path: %{public}@", [matchedCopy path])
+			LogToConsoleInfo("Automatically detected Mac App Store Textual 5 at the following path: %{public}@",
+					matchedApplication.path)
 
-				break;
-			}
+			break;
 		}
 	}
 
-	if (matchedCopy == nil) {
-		[self presentOpenDialog];
+	if (matchedApplication) {
+		[self haveApplicationAtURL:matchedApplication];
 	} else {
-		[self haveApplicationAtURL:matchedCopy];
+		[self presentOpenDialog];
 	}
 }
 
@@ -192,42 +193,40 @@
 {
 	NSOpenPanel *d = [NSOpenPanel openPanel];
 
-	NSURL *folderRep = [self systemApplicationFolderPath];
+	NSURL *applicationsPath = [self systemApplicationFolderPath];
 
-	if (folderRep) {
-		[d setDirectoryURL:folderRep];
+	if (applicationsPath) {
+		d.directoryURL = applicationsPath;
 	}
 
-	[d setDelegate:(id)self];
+	d.allowedFileTypes = @[@"app"];
 
-	[d setCanChooseFiles:YES];
-	[d setResolvesAliases:YES];
-	[d setCanChooseDirectories:NO];
-	[d setCanCreateDirectories:NO];
-	[d setAllowsMultipleSelection:NO];
+	d.delegate = (id)self;
 
-	[d setAllowedFileTypes:@[@"app"]];
+	d.allowsMultipleSelection = NO;
+	d.canChooseDirectories = NO;
+	d.canChooseFiles = YES;
+	d.canCreateDirectories = NO;
+	d.resolvesAliases = YES;
 
-	[d setPrompt:TXTLS(@"Prompts[0006]")];
+	d.message = TXTLS(@"TLOLicenseManager[1008]");
 
-	[d setMessage:TXTLS(@"TLOLicenseManager[1008]")];
+	d.prompt = TXTLS(@"Prompts[0006]");
 
-	[d beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+	[d beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 		if (result == NSModalResponseOK) {
-			[self haveApplicationAtURL:[d URL]];
+			[self haveApplicationAtURL:d.URL];
 		} else {
-			[self haveApplicationAtURL:nil];
+			[self cancel:nil];
 		}
 	}];
 }
 
 - (void)haveApplicationAtURL:(NSURL *)applicationURL
 {
-	NSString *receiptData = nil;
+	NSParameterAssert(applicationURL != nil);
 
-	if (applicationURL) {
-		receiptData = [self receiptDataForApplicationAtURL:applicationURL];
-	}
+	NSString *receiptData = [self receiptDataForApplicationAtURL:applicationURL];
 
 	if (receiptData) {
 		self.cachedReceiptData = receiptData;
@@ -235,16 +234,20 @@
 		XRPerformBlockAsynchronouslyOnMainQueue(^{
 			[self startContactAddressSheet];
 		});
-	} else {
-		[self windowWillClose:nil];
+
+		return;
 	}
+
+	[self cancel:nil];
 }
 
 #pragma mark -
 #pragma mark Helper Methods
 
-- (NSString *)receiptDataForApplicationAtURL:(NSURL *)applicationURL
+- (nullable NSString *)receiptDataForApplicationAtURL:(NSURL *)applicationURL
 {
+	NSParameterAssert(applicationURL != nil);
+
 	/* Locate application bundle and determine whether the receipt
 	 file is even contained within it. */
 	NSBundle *applicationBundle = [NSBundle bundleWithURL:applicationURL];
@@ -253,13 +256,13 @@
 		return nil;
 	}
 
-	NSURL *receiptFileURL = [applicationBundle appStoreReceiptURL];
+	NSURL *receiptFileURL = applicationBundle.appStoreReceiptURL;
 
 	if (receiptFileURL == nil) {
 		return nil;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:[receiptFileURL path]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:receiptFileURL.path] == NO) {
 		return nil;
 	}
 
@@ -270,15 +273,16 @@
 	NSData *receiptData = [NSData dataWithContentsOfURL:receiptFileURL options:0 error:&receiptDataReadError];
 
 	if (receiptData == nil) {
-		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@", [receiptDataReadError localizedDescription])
+		LogToConsoleError("Failed to read the contents of the receipt file: %{public}@",
+				receiptDataReadError.localizedDescription)
 
 		return nil;
-	} else {
-		return [XRBase64Encoding encodeData:receiptData];
 	}
+
+	return [XRBase64Encoding encodeData:receiptData];
 }
 
-- (BOOL)canUseApplicationAtURL:(NSURL *)applicationURL applicationName:(NSString **)applicationName
+- (BOOL)canUseApplicationAtURL:(NSURL *)applicationURL applicationName:(NSString * _Nullable * _Nullable)applicationName
 {
 	/* The license API performs validation of the uploaded receipt which
 	 means that the the only thing we need to know at this point is that
@@ -291,8 +295,8 @@
 	}
 
 	/* Pass to caller the application name of the bundle. */
-	if (applicationName) {
-		*applicationName = [applicationBundle displayName];
+	if ( applicationName) {
+		*applicationName = applicationBundle.displayName;
 	}
 
 	/* Compare bundle identifier. */
@@ -306,29 +310,29 @@
 	}
 
 	/* Determine whether a receipt file exists. */
-	NSURL *receiptFileURL = [applicationBundle appStoreReceiptURL];
+	NSURL *receiptFileURL = applicationBundle.appStoreReceiptURL;
 
 	if (receiptFileURL == nil) {
 		return NO;
 	}
 
-	if ([RZFileManager() fileExistsAtPath:[receiptFileURL path]] == NO) {
+	if ([RZFileManager() fileExistsAtPath:receiptFileURL.path] == NO) {
 		return NO;
 	}
 
-	/* Return successful result. */
+	/* Return successful result */
 	return YES;
 }
 
-- (NSURL *)systemApplicationFolderPath
+- (nullable NSURL *)systemApplicationFolderPath
 {
 	NSArray *searchArray = NSSearchPathForDirectoriesInDomains(NSApplicationDirectory, NSSystemDomainMask, YES);
 
-	if ([searchArray count] > 0) {
-		return [NSURL fileURLWithPath:searchArray[0] isDirectory:YES];
-	} else {
+	if (searchArray.count == 0) {
 		return nil;
 	}
+
+	return [NSURL fileURLWithPath:searchArray[0] isDirectory:YES];
 }
 
 #pragma mark -
@@ -336,10 +340,10 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(licenseManagerMigrateAppStoreSheetWillClose:)]) {
-		[self.delegate licenseManagerMigrateAppStoreSheetWillClose:self];
-	}
+	[self.delegate licenseManagerMigrateAppStoreSheetWillClose:self];
 }
 
 @end
 #endif
+
+NS_ASSUME_NONNULL_END
