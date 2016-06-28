@@ -41,11 +41,11 @@
                 <outlet property="excludeKeywordsTable" destination="Vqz-0J-ajG" id="Zh5-qx-YFn"/>
                 <outlet property="fileTransferDownloadDestinationButton" destination="dor-Ua-UHj" id="HB1-lp-iad"/>
                 <outlet property="fileTransferManuallyEnteredIPAddressTextField" destination="gsf-QD-Vkr" id="d3X-Uo-t0B"/>
+                <outlet property="highlightKeywordsArrayController" destination="4310" id="Wre-n3-NQF"/>
+                <outlet property="highlightKeywordsTable" destination="nIO-jH-FEm" id="rwr-Mr-P5g"/>
                 <outlet property="highlightNicknameButton" destination="IVv-zw-dDv" id="5mn-VV-cM3"/>
                 <outlet property="installedAddonsMenu" destination="mgV-ad-4kQ" id="ysw-NY-ZxI"/>
                 <outlet property="installedScriptsTable" destination="rGf-Ih-C97" id="v8k-0K-zxF"/>
-                <outlet property="keywordsTable" destination="nIO-jH-FEm" id="Kk5-Be-I9z"/>
-                <outlet property="matchKeywordsArrayController" destination="4310" id="7392"/>
                 <outlet property="mountainLionDeprecationWarningView" destination="e8H-uo-073" id="C2e-iz-pUP"/>
                 <outlet property="navigationToolbar" destination="T7o-OY-4Q7" id="4u5-Ls-XuU"/>
                 <outlet property="shareDataBetweenDevicesView" destination="fbu-cf-Xto" id="zFa-fT-wqw"/>
@@ -423,7 +423,7 @@
                             </buttonCell>
                             <accessibility description="Manage iCloud"/>
                             <connections>
-                                <action selector="onManageiCloudButtonClicked:" target="-2" id="Sq6-WR-zOm"/>
+                                <action selector="onManageICloudButtonClicked:" target="-2" id="Z2y-4S-8ng"/>
                                 <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.System -&gt; Built with iCloud Support" id="GyO-Rq-W7e"/>
                             </connections>
                         </button>
@@ -640,7 +640,7 @@
                     <rect key="frame" x="38" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="QyB-ni-plT">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="nIO-jH-FEm">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
@@ -699,7 +699,7 @@
                     <rect key="frame" x="301" y="56" width="250" height="160"/>
                     <clipView key="contentView" id="73A-Qg-29i">
                         <rect key="frame" x="1" y="1" width="248" height="158"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" id="Vqz-0J-ajG">
                                 <rect key="frame" x="0.0" y="0.0" width="248" height="19"/>
@@ -815,7 +815,7 @@
                     </buttonCell>
                     <accessibility description="Add Highlight Keyword"/>
                     <connections>
-                        <action selector="onAddKeyword:" target="-2" id="cS0-Fw-6bd"/>
+                        <action selector="onAddHighlightKeyword:" target="-2" id="MzR-Ve-Olm"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qcU-SW-8KI">
@@ -852,16 +852,6 @@
                         <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="E0J-R4-TJF"/>
                     </connections>
                 </textField>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="IVv-zw-dDv">
-                    <rect key="frame" x="301" y="270" width="175" height="18"/>
-                    <buttonCell key="cell" type="check" title="Highlight current nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9of-Kp-Asv">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="titleBar" size="12"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.TrackNicknameHighlightsOfLocalUser" id="7TX-Na-5NF"/>
-                    </connections>
-                </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8oP-r2-z2R">
                     <rect key="frame" x="71" y="277" width="185" height="22"/>
                     <constraints>
@@ -893,6 +883,16 @@
                     <connections>
                         <action selector="onChangedHighlightLogging:" target="-2" id="ojZ-Hz-fZH"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.LogHighlights" id="b05-J5-F0K"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="IVv-zw-dDv">
+                    <rect key="frame" x="301" y="270" width="175" height="18"/>
+                    <buttonCell key="cell" type="check" title="Highlight current nickname" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="9of-Kp-Asv">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="titleBar" size="12"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="-2" name="value" keyPath="highlightCurrentNickname" id="fvG-8d-rnu"/>
                     </connections>
                 </button>
             </subviews>
@@ -928,7 +928,7 @@
                 <constraint firstAttribute="trailing" secondItem="jN5-O0-8cZ" secondAttribute="trailing" constant="201" id="x6x-vF-3M6"/>
                 <constraint firstItem="dtR-hL-16n" firstAttribute="top" secondItem="dIx-e4-L5V" secondAttribute="top" id="zbi-jI-J8x"/>
             </constraints>
-            <point key="canvasLocation" x="646.5" y="-667"/>
+            <point key="canvasLocation" x="10" y="-648"/>
         </customView>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="09H-hp-iIC" userLabel="Alerts">
             <rect key="frame" x="0.0" y="0.0" width="589" height="380"/>
@@ -1095,7 +1095,7 @@
                     <rect key="frame" x="132" y="219" width="320" height="17"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="aR8-Ov-hTp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" spellingCorrection="YES" id="v9S-yX-kbj">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -1756,7 +1756,7 @@
                     <rect key="frame" x="94" y="141" width="371" height="31"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="Dog-4X-w01">
                         <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" spellingCorrection="YES" id="Ncp-xZ-uCx">
                                 <rect key="frame" x="0.0" y="0.0" width="371" height="31"/>
@@ -1828,7 +1828,7 @@
                         <font key="font" metaFont="titleBar" size="12"/>
                     </buttonCell>
                     <connections>
-                        <action selector="onChangedStyle:" target="-2" id="cU2-r8-zN0"/>
+                        <action selector="onChangedTheme:" target="-2" id="1W2-8L-tKi"/>
                         <binding destination="G2Q-fc-ddg" name="value" keyPath="values.NicknameColorHashingComputesRGBValue" id="fnP-ep-WBT"/>
                     </connections>
                 </button>
@@ -2315,7 +2315,7 @@
                                         </popUpButtonCell>
                                         <accessibility description="Main Text Field Text Size"/>
                                         <connections>
-                                            <action selector="onChangedMainInputTextFieldFontSize:" target="-2" id="qEr-YF-hyd"/>
+                                            <action selector="onChangedMainInputTextViewFontSize:" target="-2" id="NHv-SK-fmf"/>
                                             <binding destination="G2Q-fc-ddg" name="selectedTag" keyPath="values.Main Input Text Field -&gt; Font Size" id="BAj-Y5-IIX"/>
                                         </connections>
                                     </popUpButton>
@@ -3729,7 +3729,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="offRecordMessagingPolicyChanged:" target="-2" id="dHa-Df-hCq"/>
-                        <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Off-the-Record Messaging -&gt; Automatically Enable Service" id="FBY-3K-6HH"/>
+                        <binding destination="-2" name="value" keyPath="textEncryptionIsOpportunistic" id="r8C-6r-14Z"/>
                         <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Off-the-Record Messaging -&gt; Require Encryption" id="SCm-cO-76g">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSNegateBoolean</string>
@@ -3849,7 +3849,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </popUpButtonCell>
                                         <accessibility description="Current Style"/>
                                         <connections>
-                                            <action selector="onChangedTheme:" target="-2" id="kdC-TU-kR6"/>
+                                            <action selector="onChangedThemeSelection:" target="-2" id="Fsz-Xr-4Ro"/>
                                         </connections>
                                     </popUpButton>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="inL-ss-ERr">
@@ -3972,7 +3972,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </buttonCell>
                                         <accessibility description="View files associated with the current style"/>
                                         <connections>
-                                            <action selector="onOpenPathToThemes:" target="-2" id="ltk-wa-6fV"/>
+                                            <action selector="onOpenPathToTheme:" target="-2" id="Fa3-dM-vjS"/>
                                         </connections>
                                     </button>
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psh-bY-eeR">
@@ -4465,7 +4465,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedStyle:" target="-2" id="rzl-dS-5A6"/>
+                                            <action selector="onChangedTheme:" target="-2" id="mIO-4b-U2w"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.RightToLeftTextFormatting" id="NNU-ze-rrL"/>
                                         </connections>
                                     </button>
@@ -4476,7 +4476,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                             <font key="font" metaFont="titleBar" size="12"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="onChangedStyle:" target="-2" id="lnN-ma-w8T"/>
+                                            <action selector="onChangedTheme:" target="-2" id="D8n-gD-L43"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.DisableRemoteNicknameColorHashing" id="pZd-hj-Y5l"/>
                                         </connections>
                                     </button>
@@ -4509,7 +4509,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="87" y="28" width="356" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="crJ-r5-VO3">
                                             <rect key="frame" x="0.0" y="0.0" width="356" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="Fjg-k0-aT5">
                                                     <rect key="frame" x="0.0" y="107" width="356" height="17"/>
@@ -4581,7 +4581,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="ram-Ya-z5o" id="pjv-FT-Twg"/>
-                                            <action selector="onChangedStyle:" target="-2" id="3Ez-bw-H4s"/>
+                                            <action selector="onChangedTheme:" target="-2" id="oYR-CR-4rF"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Timestamp Format" id="rdn-oH-aHO"/>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Timestamp Format Preference Enabled" id="iNL-m0-JXI">
                                                 <dictionary key="options">
@@ -4602,7 +4602,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="156" y="264" width="296" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="mPp-b5-RuW">
                                             <rect key="frame" x="0.0" y="0.0" width="296" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="HFC-Nn-zVf">
                                                     <rect key="frame" x="0.0" y="107" width="296" height="17"/>
@@ -4659,7 +4659,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         <rect key="frame" x="107" y="212" width="340" height="17"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="hYd-WC-meI">
                                             <rect key="frame" x="0.0" y="0.0" width="340" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" drawsBackground="NO" importsGraphics="NO" findStyle="panel" verticallyResizable="YES" id="bjI-Oj-ZU6">
                                                     <rect key="frame" x="0.0" y="107" width="340" height="17"/>
@@ -4726,7 +4726,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="VxK-V6-0nX" id="p50-3O-uug"/>
-                                            <action selector="onChangedStyle:" target="-2" id="CbX-gX-MM9"/>
+                                            <action selector="onChangedTheme:" target="-2" id="Ajj-YO-qAZ"/>
                                             <binding destination="G2Q-fc-ddg" name="value" keyPath="values.Theme -&gt; Nickname Format" id="quV-wg-zM4"/>
                                             <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.Theme -&gt; Nickname Format Preference Enabled" id="I79-xs-TVI">
                                                 <dictionary key="options">
@@ -4769,7 +4769,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                                         </comboBoxCell>
                                         <connections>
                                             <accessibilityConnection property="title" destination="VVX-vp-kAl" id="Qah-6s-7Er"/>
-                                            <binding destination="-2" name="value" keyPath="maxLogLines" id="lMB-NA-QnD">
+                                            <binding destination="-2" name="value" keyPath="scrollbackLimit" id="xp1-Qc-nvM">
                                                 <dictionary key="options">
                                                     <bool key="NSValidatesImmediately" value="YES"/>
                                                 </dictionary>
@@ -4820,7 +4820,7 @@ Any Mac that runs OS X Mountain Lion is fully compatible with OS X Mavericks whi
                 <constraint firstAttribute="trailing" secondItem="lpz-77-UDw" secondAttribute="trailing" constant="20" id="e3z-AQ-9NZ"/>
                 <constraint firstAttribute="bottom" secondItem="lpz-77-UDw" secondAttribute="bottom" constant="20" symbolic="YES" id="rVc-XZ-WD8"/>
             </constraints>
-            <point key="canvasLocation" x="557" y="-881.5"/>
+            <point key="canvasLocation" x="172" y="-947"/>
         </customView>
     </objects>
     <resources>

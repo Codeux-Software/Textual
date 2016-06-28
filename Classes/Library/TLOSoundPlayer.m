@@ -170,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(name != nil);
 	
-	if ([name isEqualToString:TXEmptySoundAlertPreferenceValue]) {
+	if ([name isEqualToString:TXEmptyAlertSoundPreferenceValue]) {
 		return;
 	}
 

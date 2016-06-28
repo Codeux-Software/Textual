@@ -244,7 +244,7 @@
 - (void)onChangedInlineMediaOption:(id)sender
 {
 	if ([self.enableInlineImagesCheck state] == NSOnState) {
-		[TDCPreferencesController presentTorAnonymityNetworkInlineMediaWarning];
+		[TDCPreferencesController showTorAnonymityNetworkInlineMediaWarning];
 	}
 }
 

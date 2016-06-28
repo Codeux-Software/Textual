@@ -83,8 +83,6 @@
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
 	@class TDCNicknameColorSheet;
-	@class TDCPreferencesController;
-	@class TDCPreferencesSoundWrapper;
 	@class TDCProgressInformationSheet;
 	@class TDCServerChangeNicknameSheet;
 	@class TDCServerChannelListDialog;
@@ -254,8 +252,6 @@
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
 	#import "TDCNicknameColorSheet.h"
-	#import "TDCPreferencesController.h"
-	#import "TDCPreferencesSoundWrapper.h"
 	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerChannelListDialog.h"
 	#import "TDCServerHighlightListSheet.h"

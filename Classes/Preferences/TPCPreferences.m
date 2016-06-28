@@ -165,6 +165,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 }
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
++ (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic
+{
+	[RZUserDefaults() setBool:textEncryptionIsOpportunistic forKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
+}
+
 + (BOOL)textEncryptionIsOpportunistic
 {
 	return [RZUserDefaults() boolForKey:@"Off-the-Record Messaging -> Automatically Enable Service"];
@@ -367,6 +372,11 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	return [RZUserDefaults() boolForKey:@"DisplayPublicMessageCountInDockBadge"];
 }
 
++ (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname
+{
+	[RZUserDefaults() setBool:highlightCurrentNickname forKey:@"TrackNicknameHighlightsOfLocalUser"];
+}
+
 + (BOOL)highlightCurrentNickname
 {
 	return [RZUserDefaults() boolForKey:@"TrackNicknameHighlightsOfLocalUser"];
@@ -555,12 +565,12 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	}
 }
 
-+ (double)themeChannelViewFontSize
++ (CGFloat)themeChannelViewFontSize
 {
 	return [RZUserDefaults() doubleForKey:@"Theme -> Font Size"];
 }
 
-+ (void)setThemeChannelViewFontSize:(double)value
++ (void)setThemeChannelViewFontSize:(CGFloat)value
 {
 	[RZUserDefaults() setDouble:value forKey:@"Theme -> Font Size"];
 }
@@ -621,7 +631,7 @@ NSUInteger const TPCPreferencesDictionaryVersion = 600;
 	[RZUserDefaults() setBool:themeTimestampFormatPreferenceUserConfigurable forKey:@"Theme -> Timestamp Format Preference Enabled"];
 }
 
-+ (double)mainWindowTransparency
++ (CGFloat)mainWindowTransparency
 {
 	return [RZUserDefaults() doubleForKey:@"MainWindowTransparencyLevel"];
 }

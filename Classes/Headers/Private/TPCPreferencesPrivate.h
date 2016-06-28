@@ -48,6 +48,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
 #endif
 
++ (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
+
++ (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
+
 + (void)setInvertSidebarColors:(BOOL)invertSidebarColors;
 + (void)setInvertSidebarColorsPreferenceUserConfigurable:(BOOL)invertSidebarColorsPreferenceUserConfigurable;
 
@@ -60,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setThemeChannelViewFontName:(NSString *)value;
 + (void)setThemeChannelViewFontNameWithExistenceCheck:(NSString *)value;
 
-+ (void)setThemeChannelViewFontSize:(double)value;
++ (void)setThemeChannelViewFontSize:(CGFloat)value;
 
 + (void)setThemeNicknameFormatPreferenceUserConfigurable:(BOOL)themeNicknameFormatPreferenceUserConfigurable;
 + (void)setThemeTimestampFormatPreferenceUserConfigurable:(BOOL)themeTimestampFormatPreferenceUserConfigurable;
