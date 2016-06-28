@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	[themeController() prepareInitialState];
 	
-	[menuController() setupOtherServices];
+	[menuController() prepareInitialState];
 
 	self.inputTextField.backgroundColor = [NSColor clearColor];
 	
