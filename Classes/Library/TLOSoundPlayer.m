@@ -191,6 +191,35 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (NSArray<NSString *> *)uniqueListOfSounds
+{
+	NSMutableArray<NSString *> *sounds = [NSMutableArray array];
+
+	[sounds addObject:@"Beep"]; // For NSBeep()
+
+	for (NSString *sound in [TLOSoundPlayer systemAlertSoundFiles]) {
+		if ([sounds containsObject:sound] == NO) {
+			[sounds addObject:sound];
+		}
+	}
+
+	for (NSString *sound in [TLOSoundPlayer systemLibrarySoundFiles]) {
+		if ([sounds containsObject:sound] == NO) {
+			[sounds addObject:sound];
+		}
+	}
+
+	for (NSString *sound in [TLOSoundPlayer userLibrarySoundFiles]) {
+		if ([sounds containsObject:sound] == NO) {
+			[sounds addObject:sound];
+		}
+	}
+
+	[sounds sortUsingSelector:@selector(caseInsensitiveCompare:)];
+
+	return [sounds copy];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
