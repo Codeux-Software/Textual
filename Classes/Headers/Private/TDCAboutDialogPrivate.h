@@ -35,10 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol TDCAboutDialogDelegate;
 
 @interface TDCAboutDialog : NSWindowController
-@property (nonatomic, weak) id delegate;
+@property (nonatomic, weak, nullable) id <TDCAboutDialogDelegate> delegate;
 
 - (void)show;
 @end
+
+@protocol TDCAboutDialogDelegate <NSObject>
+@required
+
+- (void)aboutDialogWillClose:(TDCAboutDialog *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

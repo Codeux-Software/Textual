@@ -35,7 +35,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCAboutDialog ()
 @property (nonatomic, weak) IBOutlet NSTextField *versionInfoTextField;
@@ -48,21 +48,28 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCAboutDialog" owner:self topLevelObjects:nil];
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[RZMainBundle() loadNibNamed:@"TDCAboutDialog" owner:self topLevelObjects:nil];
+
+	NSString *bundleVersion = [TPCApplicationInfo applicationVersionShort];
+
+	self.versionInfoTextField.stringValue = TXTLS(@"TDCAboutDialog[1000]", bundleVersion);
 }
 
 - (void)show
 {
-	NSString *bundleVersion = [TPCApplicationInfo applicationVersionShort];
+	[self.window restoreWindowStateForClass:self.class];
 	
-	[self.versionInfoTextField setStringValue:TXTLS(@"TDCAboutDialog[1000]", bundleVersion)];
-
-	[[self window] restoreWindowStateForClass:[self class]];
-	
-	[[self window] makeKeyAndOrderFront:nil];
+	[self.window makeKeyAndOrderFront:nil];
 }
 
 - (void)displayAcknowledgments:(id)sender
@@ -74,7 +81,7 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[[self window] saveWindowStateForClass:[self class]];
+	[self.window saveWindowStateForClass:self.class];
 	
 	if ([self.delegate respondsToSelector:@selector(aboutDialogWillClose:)]) {
 		[self.delegate aboutDialogWillClose:self];
@@ -82,3 +89,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

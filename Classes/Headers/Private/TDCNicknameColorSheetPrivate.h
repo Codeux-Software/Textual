@@ -35,10 +35,19 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCNicknameColorSheet : TDCSheetBase
-@property (nonatomic, copy) NSString *nickname;
+- (instancetype)initWithNickname:(NSString *)nickname NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 @end
+
+@protocol TDCNicknameColorSheetDelegate <NSObject>
+@required
+
+- (void)nicknameColorSheetOnOk:(TDCNicknameColorSheet *)sneder;
+- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

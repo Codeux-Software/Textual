@@ -76,13 +76,11 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TDCAboutDialog;
 	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCNicknameColorSheet;
 	@class TDCServerChangeNicknameSheet;
 	@class TDCServerChannelListDialog;
 	@class TDCServerHighlightListSheet;
@@ -244,13 +242,11 @@
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
-	#import "TDCAboutDialog.h"
 	#import "TDCAddressBookSheet.h"
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
-	#import "TDCNicknameColorSheet.h"
 	#import "TDCServerChangeNicknameSheet.h"
 	#import "TDCServerChannelListDialog.h"
 	#import "TDCServerHighlightListSheet.h"

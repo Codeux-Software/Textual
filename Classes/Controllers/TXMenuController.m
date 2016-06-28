@@ -1748,19 +1748,17 @@
 		return;
 	}
 
-	TDCNicknameColorSheet *t = [TDCNicknameColorSheet new];
+	TDCNicknameColorSheet *t = [[TDCNicknameColorSheet alloc] initWithNickname:nickname];
 
-	[t setDelegate:self];
+	[t setDelegate:(id)self];
 	[t setWindow:mainWindow()];
-
-	[t setNickname:nickname];
 
 	[t start];
 
 	[windowController() addWindowToWindowList:t];
 }
 
-- (void)nicknameColorSheetOnOK:(TDCNicknameColorSheet *)sneder
+- (void)nicknameColorSheetOnOk:(TDCNicknameColorSheet *)sneder
 {
 	[mainWindow() reloadTheme];
 }
@@ -2360,7 +2358,7 @@
 	
 	TDCAboutDialog *aboutPanel = [TDCAboutDialog new];
 
-	[aboutPanel setDelegate:self];
+	[aboutPanel setDelegate:(id)self];
 
 	[aboutPanel show];
 

@@ -37,14 +37,6 @@
 
 #import "TextualApplication.h"
 
-@protocol TDCAboutDialogDelegate <NSObject>
-@required
-
-- (void)aboutDialogWillClose:(TDCAboutDialog *)sender;
-@end
-
-#pragma mark -
-
 @protocol TDCAddressBookSheetDelegate <NSObject>
 @required
 
@@ -144,13 +136,4 @@
 
 - (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
 - (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDCNicknameColorSheetDelegate <NSObject>
-@required
-
-- (void)nicknameColorSheetOnOK:(TDCNicknameColorSheet *)sneder;
-- (void)nicknameColorSheetWillClose:(TDCNicknameColorSheet *)sender;
 @end

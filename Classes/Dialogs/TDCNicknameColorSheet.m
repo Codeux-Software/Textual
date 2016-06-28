@@ -35,11 +35,10 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
-#import "IRCUserPrivate.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCNicknameColorSheet ()
+@property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, weak) IBOutlet NSColorWell *nicknameColorWell;
 
 - (IBAction)resetNicknameColor:(id)sender;
@@ -47,17 +46,25 @@
 
 @implementation TDCNicknameColorSheet
 
-- (instancetype)init
+- (instancetype)initWithNickname:(NSString *)nickname
 {
+	NSParameterAssert(nickname != nil);
+
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCNicknameColorSheet" owner:self topLevelObjects:nil];
+		self.nickname = nickname;
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)start
+- (void)prepareInitialState
 {
+	[RZMainBundle() loadNibNamed:@"TDCNicknameColorSheet" owner:self topLevelObjects:nil];
+
 	NSColor *nicknameColor =
 	[IRCUserNicknameColorStyleGenerator nicknameColorStyleOverrideForKey:self.nickname];
 
@@ -65,14 +72,17 @@
 		nicknameColor = [NSColor whiteColor];
 	}
 
-	[self.nicknameColorWell setColor:nicknameColor];
+	self.nicknameColorWell.color = nicknameColor;
+}
 
+- (void)start
+{
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	NSColor *nicknameColor = [self.nicknameColorWell color];
+	NSColor *nicknameColor = self.nicknameColorWell.color;
 
 	if ([nicknameColor isEqual:[NSColor whiteColor]]) {
 		 nicknameColor = nil;
@@ -80,8 +90,8 @@
 
 	[IRCUserNicknameColorStyleGenerator setNicknameColorStyleOverride:nicknameColor forKey:self.nickname];
 
-	if ([self.delegate respondsToSelector:@selector(nicknameColorSheetOnOK:)]) {
-		[self.delegate nicknameColorSheetOnOK:self];
+	if ([self.delegate respondsToSelector:@selector(nicknameColorSheetOnOk:)]) {
+		[self.delegate nicknameColorSheetOnOk:self];
 	}
 
 	[super ok:nil];
@@ -93,7 +103,7 @@
 		[[NSColorPanel sharedColorPanel] close];
 	}
 
-	[self.nicknameColorWell setColor:[NSColor whiteColor]];
+	self.nicknameColorWell.color = [NSColor whiteColor];
 }
 
 #pragma mark -
@@ -107,3 +117,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
