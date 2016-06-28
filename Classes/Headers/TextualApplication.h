@@ -83,7 +83,6 @@
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
 	@class TDCNicknameColorSheet;
-	@class TDCProgressInformationSheet;
 	@class TDCServerChangeNicknameSheet;
 	@class TDCServerChannelListDialog;
 	@class TDCServerHighlightListSheet;
@@ -296,7 +295,6 @@
 	#import "TPCThemeSettings.h"
 
 	/* View Controllers */
-	#import "TDCProgressInformationSheet.h"
 	#import "TVCAutoExpandingTextField.h"
 	#import "TVCAutoExpandingTokenField.h"
 	#import "TVCBasicTableView.h"

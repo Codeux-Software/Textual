@@ -35,11 +35,50 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCProgressInformationSheet : TDCSheetBase
-- (void)startWithWindow:(NSWindow *)window;
-- (void)stop;
-
-- (void)performWork:(void (^)(void))workBlock attachedToWindow:(NSWindow *)window;
+@interface TDCProgressIndicatorSheet ()
+@property (nonatomic, weak) IBOutlet NSProgressIndicator *progressIndicator;
 @end
+
+@implementation TDCProgressIndicatorSheet
+
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	if ((self = [super init])) {
+		self.window = window;
+
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	(void)[RZMainBundle() loadNibNamed:@"TDCProgressIndicatorSheet" owner:self topLevelObjects:nil];
+}
+
+- (void)start
+{
+	[self.progressIndicator startAnimation:nil];
+
+	[self startSheet];
+}
+
+- (void)stop
+{
+	[self.progressIndicator stopAnimation:nil];
+
+	[self close];
+}
+
+@end
+
+NS_ASSUME_NONNULL_END
