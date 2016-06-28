@@ -59,7 +59,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewCancelButton;
 @property (nonatomic, weak) IBOutlet NSButton *unregisteredViewRecoveryLostLicenseButton;
 @property (nonatomic, weak) IBOutlet NSImageView *unregisteredViewMacAppStoreIconImageView;
-@property (nonatomic, strong) TDCProgressInformationSheet *progressSheet;
+@property (nonatomic, strong) TDCProgressIndicatorSheet *progressIndicator;
 @property (nonatomic, strong) TLOLicenseManagerDownloader *licenseManagerDownloader;
 @property (nonatomic, strong) TDCLicenseManagerMigrateAppStoreSheet *migrateAppStoreSheet;
 @property (nonatomic, strong) TDCLicenseManagerRecoverLostLicenseSheet *recoverLostLicenseSheet;
@@ -384,17 +384,17 @@
 
 - (void)beginProgressIndicator
 {
-	 self.progressSheet = [TDCProgressInformationSheet new];
+	self.progressIndicator = [[TDCProgressIndicatorSheet alloc] initWithWindow:[self window]];
 
-	[self.progressSheet startWithWindow:[self window]];
+	[self.progressIndicator start];
 }
 
 - (void)endProgressIndicator
 {
-	if ( self.progressSheet) {
-		[self.progressSheet stop];
+	if ( self.progressIndicator) {
+		[self.progressIndicator stop];
 
-		 self.progressSheet = nil;
+		 self.progressIndicator = nil;
 	}
 }
 

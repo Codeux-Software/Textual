@@ -66,6 +66,7 @@
 #import "TDCHighlightEntrySheetPrivate.h"
 #import "TDCPreferencesControllerPrivate.h"
 #import "TDCPreferencesSoundWrapperPrivate.h"
+#import "TDCProgressIndicatorSheetPrivate.h"
 #import "THOPluginDispatcherPrivate.h"
 #import "THOPluginItemPrivate.h"
 #import "THOPluginManagerPrivate.h"

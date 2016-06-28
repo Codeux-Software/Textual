@@ -59,7 +59,7 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 @property (nonatomic, assign) TPCThemeControllerStorageLocation destinationLocation;
 @property (nonatomic, assign) BOOL reloadThemeWhenCopied; // If YES, setThemeName: is called when copy completes. Otherwise, files are copied and nothing happens.
 @property (nonatomic, assign) BOOL openThemeWhenCopied;
-@property (nonatomic, strong) TDCProgressInformationSheet *progressInformation;
+@property (nonatomic, strong) TDCProgressIndicatorSheet *progressIndicator;
 
 - (void)beginOperation;
 @end
@@ -789,11 +789,12 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 - (void)beginOperation
 {
 	/* Setup progress indicator. */
-	TDCProgressInformationSheet *progressInformation = [TDCProgressInformationSheet new];
-	
-	[progressInformation startWithWindow:[NSApp keyWindow]];
+	  TDCProgressIndicatorSheet *progressIndicator =
+	[[TDCProgressIndicatorSheet alloc] initWithWindow:[NSApp keyWindow]];
 
-	self.progressInformation = progressInformation;
+	self.progressIndicator = progressIndicator;
+
+	[self.progressIndicator start];
 	
 	/* All work is done in a background thread. */
 	/* Once started, the operation cannot be cancelled. It will occur
@@ -963,8 +964,8 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 
 - (void)invalidateOperation
 {
-	[self.progressInformation stop];
-	 self.progressInformation = nil;
+	[self.progressIndicator stop];
+	 self.progressIndicator = nil;
 	
 	[self.themeController copyActiveThemeOperationCompleted];
 }
