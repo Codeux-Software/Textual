@@ -66,15 +66,6 @@
 
 @implementation TXMenuController
 
-- (instancetype)init
-{
-	if ((self = [super init])) {
-		[self prepareInitialState];
-	}
-	
-	return self;
-}
-
 - (void)prepareInitialState
 {
 	self.currentSearchPhrase = NSStringEmptyPlaceholder;
@@ -83,6 +74,8 @@
 		[self.muteNotificationsSoundsDockMenuItem setState:NSOnState];
 		[self.muteNotificationsSoundsFileMenuItem setState:NSOnState];
 	}
+
+	[self setupOtherServices];
 }
 
 - (void)setupOtherServices
