@@ -238,12 +238,12 @@ typedef NS_ENUM(NSUInteger, TXFileTransferIPAddressDetectionMethod) {
 + (NSString *)themeTimestampFormat;
 + (NSString *)themeTimestampFormatDefault;
 
-+ (double)mainWindowTransparency;
++ (CGFloat)mainWindowTransparency;
 
 + (nullable NSFont *)themeChannelViewFont;
 + (NSString *)themeChannelViewFontName;
 + (NSString *)themeChannelViewFontNameDefault;
-+ (double)themeChannelViewFontSize;
++ (CGFloat)themeChannelViewFontSize;
 
 + (BOOL)themeNicknameFormatPreferenceUserConfigurable;
 + (BOOL)themeTimestampFormatPreferenceUserConfigurable;

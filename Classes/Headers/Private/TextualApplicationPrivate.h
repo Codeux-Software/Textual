@@ -64,6 +64,8 @@
 #import "NSTableVIewHelperPrivate.h"
 #import "NSViewHelperPrivate.h"
 #import "TDCHighlightEntrySheetPrivate.h"
+#import "TDCPreferencesControllerPrivate.h"
+#import "TDCPreferencesSoundWrapperPrivate.h"
 #import "THOPluginDispatcherPrivate.h"
 #import "THOPluginItemPrivate.h"
 #import "THOPluginManagerPrivate.h"

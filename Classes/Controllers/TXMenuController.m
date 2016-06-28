@@ -1173,7 +1173,7 @@
 	
 	TDCPreferencesController *pc = [TDCPreferencesController new];
 	
-	pc.delegate = self;
+	pc.delegate = (id)self;
 	
 	[pc show];
 
@@ -1182,7 +1182,7 @@
 
 - (void)preferencesDialogWillClose:(TDCPreferencesController *)sender
 {
-	[TPCPreferences performReloadAction:TPCPreferencesReloadPreferencesChangedAction];
+	[TPCPreferences performReloadAction:(TPCPreferencesReloadHighlightKeywordsAction | TPCPreferencesReloadPreferencesChangedAction)];
 
 	[windowController() removeWindowFromWindowList:sender];
 }

@@ -36,11 +36,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-NSString * const TXEmptySoundAlertPreferenceValue = @"None";
+NSString * const TXEmptyAlertSoundPreferenceValue = @"None";
+
+@interface TDCPreferencesSoundWrapper ()
+@property (nonatomic, assign, readwrite) TXNotificationType eventType;
+@end
 
 @implementation TDCPreferencesSoundWrapper
+
+ClassWithDesignatedInitializerInitMethod
 
 - (instancetype)initWithEventType:(TXNotificationType)aEventType
 {
@@ -53,14 +59,14 @@ NSString * const TXEmptySoundAlertPreferenceValue = @"None";
 	return nil;
 }
 
-+ (NSString *)localizedEmptySoundSelectionLabel
-{
-	return TXTLS(@"TDCPreferencesController[1011]");
-}
-
 + (TDCPreferencesSoundWrapper *)soundWrapperWithEventType:(TXNotificationType)eventType
 {
 	return [[TDCPreferencesSoundWrapper alloc] initWithEventType:eventType];
+}
+
++ (NSString *)localizedAlertEmptySoundTitle
+{
+	return TXTLS(@"TDCPreferencesController[1011]");
 }
 
 - (NSString *)displayName
@@ -70,22 +76,22 @@ NSString * const TXEmptySoundAlertPreferenceValue = @"None";
 
 - (NSString *)alertSound
 {
-	NSString *soundd = [TPCPreferences soundForEvent:self.eventType];
+	NSString *sound = [TPCPreferences soundForEvent:self.eventType];
 
-	if (NSObjectIsEmpty(soundd)) {
-		return [TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel];
+	if (sound) {
+		return [TDCPreferencesSoundWrapper localizedAlertEmptySoundTitle];
 	}
 
-	return soundd;
+	return sound;
 }
 
 - (void)setAlertSound:(NSString *)value
 {
-	if ([value isEqualToString:[TDCPreferencesSoundWrapper localizedEmptySoundSelectionLabel]]) { // Do not set the default, none label
-		value = TXEmptySoundAlertPreferenceValue;
+	if ([value isEqualToString:[TDCPreferencesSoundWrapper localizedAlertEmptySoundTitle]]) { // Do not set the default, none label
+		value = TXEmptyAlertSoundPreferenceValue;
 	}
 	
-	if (NSObjectIsNotEmpty(value)) {
+	if (value) {
 		[TLOSoundPlayer playAlertSound:value];
 	}
 	
@@ -143,3 +149,5 @@ NSString * const TXEmptySoundAlertPreferenceValue = @"None";
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

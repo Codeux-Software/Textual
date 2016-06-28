@@ -117,14 +117,6 @@
 
 #pragma mark -
 
-@protocol TDCPreferencesControllerDelegate <NSObject>
-@required
-
-- (void)preferencesDialogWillClose:(TDCPreferencesController *)sender;
-@end
-
-#pragma mark -
-
 @protocol TDCServerPropertiesSheetDelegate <NSObject>
 @required
 
