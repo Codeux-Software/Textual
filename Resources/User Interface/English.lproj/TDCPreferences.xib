@@ -772,11 +772,6 @@
                     <accessibility description="Add Excluded Keyword"/>
                     <connections>
                         <action selector="onAddExcludeKeyword:" target="-2" id="grA-d2-jxL"/>
-                        <binding destination="G2Q-fc-ddg" name="enabled" keyPath="values.NicknameHighlightMatchingType" id="wq6-zN-RSs">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSNegateBoolean</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </button>
                 <box appearanceType="aqua" verticalHuggingPriority="750" alphaValue="0.5" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="faY-0p-PJo">
