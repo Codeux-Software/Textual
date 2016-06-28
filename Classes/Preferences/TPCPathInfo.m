@@ -306,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)applicationUbiquitousContainerPath
 {
-	return [sharedCloudManager() ubiquitousContainerPath];
+	return sharedCloudManager().ubiquitousContainerPath;
 }
 
 + (nullable NSString *)cloudCustomThemeFolderPath
@@ -328,8 +328,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(path != nil);
 
-	if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
 		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
+	if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
 										  body:TXTLS(@"Prompts[1105][2]")
 										 title:TXTLS(@"Prompts[1105][1]")
 								 defaultButton:TXTLS(@"Prompts[1040]")

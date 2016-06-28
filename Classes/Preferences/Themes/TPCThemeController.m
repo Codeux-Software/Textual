@@ -708,7 +708,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	NSArray<NSString *> *pathsToWatch = nil;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
+	if (sharedCloudManager().ubiquitousContainerIsAvailable) {
 		pathsToWatch = @[[TPCPathInfo customThemeFolderPath], [TPCPathInfo cloudCustomThemeFolderPath]];
 	} else {
 #endif
@@ -822,7 +822,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 	{
 		/* When copying to iCloud, we copy the style to a temporary folder then 
 		 have OS X handle the transfer of said folder to iCloud on our behalf. */
-		if ([RZFileManager() fileExistsAtPath:[destinationURL path]]) {
+		if ([RZFileManager() fileExistsAtPath:destinationURL.path]) {
 			NSError *trashItemError = nil;
 
 			if ([RZFileManager() trashItemAtURL:destinationURL resultingItemURL:NULL error:&trashItemError]) {
@@ -902,7 +902,7 @@ void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
 		/* If the destination was set for the cloud, but the cloud is not available,
 		 then we update our destinationLocation property so that the theme controller
 		 actually will know where to look for the new theme. */
-		if ([sharedCloudManager() ubiquitousContainerIsAvailable] == NO) {
+		if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
 			self.destinationLocation = TPCThemeControllerStorageCustomLocation;
 
 			destinationPath = [TPCPathInfo customThemeFolderPath];

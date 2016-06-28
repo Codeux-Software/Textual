@@ -60,10 +60,10 @@ NSString * const TPCResourceManagerScriptDocumentTypeExtensionWithoutPeriod		= @
 	
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 	/* Add a system link for the iCloud folder if the iCloud folder exists. */
-	if ([sharedCloudManager() ubiquitousContainerIsAvailable]) {
+	if (sharedCloudManager().ubiquitousContainerIsAvailable) {
 		destinationPath = [[TPCPathInfo applicationSupportFolderPathInGroupContainer] stringByAppendingPathComponent:@"/iCloud Resources/"];
 		
-		sourcePath = [sharedCloudManager() ubiquitousContainerPath];
+		sourcePath = sharedCloudManager().ubiquitousContainerPath;
 		
 		if ([RZFileManager() fileExistsAtPath:destinationPath] == NO) {
 			[RZFileManager() createSymbolicLinkAtPath:destinationPath withDestinationPath:sourcePath error:NULL];
