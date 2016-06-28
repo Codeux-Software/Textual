@@ -99,7 +99,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	@synchronized(self.historyObjects) {
 		if (treeItem.isClient) {
-			for (IRCChannel *treeItemChild in [(IRCClient *)treeItem channelList]) {
+			for (IRCChannel *treeItemChild in ((IRCClient *)treeItem).channelList) {
 				[self destroy:treeItemChild];
 			}
 		}
