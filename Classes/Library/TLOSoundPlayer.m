@@ -191,7 +191,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (NSArray<NSString *> *)uniqueListOfSounds
++ (NSArray<NSString *> *)uniqueListOfSounds
 {
 	NSMutableArray<NSString *> *sounds = [NSMutableArray array];
 
