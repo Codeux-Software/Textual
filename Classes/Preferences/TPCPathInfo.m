@@ -328,8 +328,8 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(path != nil);
 
-		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 	if (sharedCloudManager().ubiquitousContainerIsAvailable == NO) {
+		[TLOPopupPrompts sheetWindowWithWindow:[NSApp keyWindow]
 										  body:TXTLS(@"Prompts[1105][2]")
 										 title:TXTLS(@"Prompts[1105][1]")
 								 defaultButton:TXTLS(@"Prompts[1040]")
