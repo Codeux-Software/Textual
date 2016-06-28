@@ -1126,6 +1126,18 @@ static NSArray<NSString *> *_matchKeywords = nil;
 	return [[NSUserDefaults standardUserDefaults] volatileDomainForName:NSRegistrationDomain];
 }
 
++ (void)registerDynamicDefaults
+{
+	[self _populateDefaultNickname];
+
+	if ([TPCPreferences webKit2Enabled]) {
+		NSUInteger scrollbackLineCount =
+		[[TPCPreferences defaultPreferences] unsignedIntegerForKey:@"ScrollbackMaximumLineCountForWebKit2"];
+
+		[RZUserDefaults() registerDefaults:@{@"ScrollbackMaximumLineCount" : @(scrollbackLineCount)}];
+	}
+}
+
 + (void)initPreferences
 {
 	[TPCApplicationInfo incrementApplicationRunCount];
@@ -1143,7 +1155,7 @@ static NSArray<NSString *> *_matchKeywords = nil;
 
 	[TPCPreferences _migrateWorldControllerToVersion600];
 
-	[TPCPreferences _populateDefaultNickname];
+	[TPCPreferences registerDynamicDefaults];
 
 	[TPCPathInfo startUsingTranscriptFolderURL];
 

@@ -223,6 +223,8 @@
 	<false/>
 	<key>ScrollbackMaximumLineCount</key>
 	<integer>300</integer>
+	<key>ScrollbackMaximumLineCountForWebKit2</key>
+	<integer>2000</integer>
 	<key>Socket -&gt; Secured Connection -&gt; Enforce Allowed Cipher Suites</key>
 	<false/>
 	<key>SwipeMinimumLength</key>
