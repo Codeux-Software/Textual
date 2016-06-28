@@ -35,21 +35,27 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-@interface TDCLicenseManagerMigrateAppStoreSheet : TDCSheetBase
-- (void)start;
+@protocol TDCLicenseManagerDialogDelegate;
+
+@interface TDCLicenseManagerDialog : NSWindowController
+@property (nonatomic, weak, nullable) id <TDCLicenseManagerDialogDelegate> delegate;
+@property (nonatomic, assign) BOOL isSilentOnSuccess;
+
+- (void)show;
+
+- (void)activateLicenseKey:(NSString *)licenseKey;
+
++ (void)applicationDidFinishLaunching;
 @end
 
-@protocol TDCLicenseManagerMigrateAppStoreSheetDelegate <NSObject>
+@protocol TDCLicenseManagerDialogDelegate <NSObject>
 @required
 
-- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
-							convertReceipt:(NSString *)receiptData
-						  licenseOwnerName:(NSString *)licenseOwnerName
-				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
-
-- (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender;
+- (void)licenseManagerDialogWillClose:(TDCLicenseManagerDialog *)sender;
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

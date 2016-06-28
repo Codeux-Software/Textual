@@ -35,17 +35,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 #if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-@interface TDCLicenseManagerRecoverLostLicenseSheet : TDCSheetBase
+@interface TDCLicenseManagerMigrateAppStoreSheet : TDCSheetBase
 - (void)start;
 @end
 
-@protocol TDCLicenseManagerRecoverLostLicenseSheet <NSObject>
+@protocol TDCLicenseManagerMigrateAppStoreSheetDelegate <NSObject>
 @required
 
-- (void)licenseManagerRecoverLostLicenseSheet:(TDCLicenseManagerRecoverLostLicenseSheet *)sender onOk:(NSString *)contactAddress;
-- (void)licenseManagerRecoverLostLicenseSheetWillClose:(TDCLicenseManagerRecoverLostLicenseSheet *)sender;
+- (void)licenseManagerMigrateAppStoreSheet:(TDCLicenseManagerMigrateAppStoreSheet *)sender
+							convertReceipt:(NSString *)receiptData
+						  licenseOwnerName:(NSString *)licenseOwnerName
+				licenseOwnerContactAddress:(NSString *)licenseOwnerContactAddress;
+
+- (void)licenseManagerMigrateAppStoreSheetWillClose:(TDCLicenseManagerMigrateAppStoreSheet *)sender;
 @end
 #endif
+
+NS_ASSUME_NONNULL_END

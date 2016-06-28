@@ -3114,7 +3114,7 @@
 
 	TDCLicenseManagerDialog *licensePanel = [TDCLicenseManagerDialog new];
 
-	[licensePanel setDelegate:self];
+	[licensePanel setDelegate:(id)self];
 
 	[licensePanel show];
 

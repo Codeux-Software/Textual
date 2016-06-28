@@ -266,13 +266,7 @@
 	1701: "Disable All Notification Sounds"
  */
 
-#if TEXTUAL_BUILT_WITH_LICENSE_MANAGER == 1
-#import "TDCLicenseManagerDialog.h"
-
-@interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCNicknameColorSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate, TDCLicenseManagerDialogDelegate>
-#else
 @interface TXMenuController : NSObject <TDCAboutDialogDelegate, TDChannelPropertiesSheetDelegate, TDCNicknameColorSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
-#endif
 
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
