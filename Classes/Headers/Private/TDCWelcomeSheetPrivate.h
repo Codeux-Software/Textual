@@ -36,10 +36,17 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCServerChangeNicknameSheet : TDCSheetBase
-@property (nonatomic, copy) NSString *clientID;
-
-- (void)start:(NSString *)nickname;
+@interface TDCWelcomeSheet : TDCSheetBase
+- (void)start;
 @end
+
+@protocol TDCWelcomeSheetDelegate <NSObject>
+@required
+
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOk:(IRCClientConfig *)config;
+- (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

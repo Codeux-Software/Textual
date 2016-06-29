@@ -36,45 +36,60 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDChannelInviteSheet ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *nicknames;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
 @end
 
 @implementation TDChannelInviteSheet
 
-- (instancetype)init
+- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client
 {
+	NSParameterAssert(nicknames != nil);
+	NSParameterAssert(client != nil);
+
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDChannelInviteSheet" owner:self topLevelObjects:nil];
+		self.nicknames = nicknames;
+
+		self.client = client;
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)startWithChannels:(NSArray *)channels
+- (void)prepareInitialState
 {
-	NSString *target = nil;
-	
-	NSInteger nicknameCount = [self.nicknames count];
-	
+	[RZMainBundle() loadNibNamed:@"TDChannelInviteSheet" owner:self topLevelObjects:nil];
+
+	NSUInteger nicknameCount = self.nicknames.count;
+
+	NSString *headerTitle = nil;
+
 	if (nicknameCount == 1) {
-		target = self.nicknames[0];
+		headerTitle = self.nicknames[0];
 	} else if (nicknameCount == 2) {
-		NSString *firstn = self.nicknames[0];
-		NSString *second = self.nicknames[1];
-		
-		target = TXTLS(@"TDChannelInviteSheet[1002]", firstn, second);
+		headerTitle = TXTLS(@"TDChannelInviteSheet[1002]", self.nicknames[0], self.nicknames[1]);
 	} else {
-		target = TXTLS(@"TDChannelInviteSheet[1000]", nicknameCount);
+		headerTitle = TXTLS(@"TDChannelInviteSheet[1000]", nicknameCount);
 	}
-	
-	[self.headerTitleTextField setStringValue:TXTLS(@"TDChannelInviteSheet[1001]", target)];
-	
-	for (NSString *s in channels) {
-		[self.channelListPopup addItemWithTitle:s];
+
+	self.headerTitleTextField.stringValue = TXTLS(@"TDChannelInviteSheet[1001]", headerTitle);
+}
+
+- (void)startWithChannels:(NSArray<NSString *> *)channels
+{
+	NSParameterAssert(channels != nil);
+
+	for (NSString *channel in channels) {
+		[self.channelListPopup addItemWithTitle:channel];
 	}
 	
 	[self startSheet];
@@ -82,13 +97,18 @@
 
 - (void)ok:(id)sender
 {
-	NSString *channelName = [self.channelListPopup titleOfSelectedItem];
-	
 	if ([self.delegate respondsToSelector:@selector(channelInviteSheet:onSelectChannel:)]) {
+		NSString *channelName = self.channelListPopup.titleOfSelectedItem;
+
 		[self.delegate channelInviteSheet:self onSelectChannel:channelName];
 	}
 
 	[super ok:nil];
+}
+
+- (NSString *)clientId
+{
+	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -
@@ -102,3 +122,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

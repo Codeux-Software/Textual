@@ -35,12 +35,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerHighlightListSheet : TDCSheetBase
-@property (nonatomic, copy) NSString *clientID;
+@property (readonly, strong) IRCClient *client;
+@property (readonly, copy) NSString *clientId;
 
-- (void)show;
+- (instancetype)initWithClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
+
+- (void)start;
 
 - (void)addEntry:(id)newEntry;
 @end
+
+@protocol TDCServerHighlightListSheetDelegate <NSObject>
+@required
+
+- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

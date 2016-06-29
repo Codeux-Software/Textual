@@ -36,12 +36,22 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelModifyModesSheet : TDCSheetBase
-@property (nonatomic, copy) IRCChannelMode *mode;
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) NSString *channelID;
+@interface TDCServerChangeNicknameSheet : TDCSheetBase
+@property (readonly, strong) IRCClient *client;
+@property (readonly, copy) NSString *clientId;
+
+- (instancetype)initWithClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 @end
+
+@protocol TDCServerChangeNicknameSheetDelegate <NSObject>
+@required
+
+- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname;
+- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

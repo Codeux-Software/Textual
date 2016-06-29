@@ -36,11 +36,24 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelInviteSheet : TDCSheetBase
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) NSArray *nicknames;
+@interface TDChannelModifyModesSheet : TDCSheetBase
+@property (readonly, strong) IRCClient *client;
+@property (readonly, strong) IRCChannel *channel;
+@property (readonly, copy) NSString *clientId;
+@property (readonly, copy) NSString *channelId;
 
-- (void)startWithChannels:(NSArray *)channels;
+- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+
+- (void)start;
 @end
+
+@protocol TDChannelModifyModesSheetDelegate <NSObject>
+@required
+
+- (void)channelModifyModesSheet:(TDChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes;
+- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

@@ -9693,27 +9693,22 @@ present_error:
     PointerIsEmptyAssert(u);
     PointerIsEmptyAssert(c);
 
-	TDChannelBanListSheet *listSheet = [TDChannelBanListSheet new];
+	TDChannelBanListSheet *listSheet = [[TDChannelBanListSheet alloc] initWithEntryType:entryType inChannel:c];
 
-	[listSheet setEntryType:entryType];
-
-	[listSheet setDelegate:self];
+	[listSheet setDelegate:(id)self];
 	[listSheet setWindow:mainWindow()];
-	
-	[listSheet setClientID:[u uniqueIdentifier]];
-	[listSheet setChannelID:[c uniqueIdentifier]];
 
-	[listSheet show];
+	[listSheet start];
 
 	[windowController() addWindowToWindowList:listSheet];
 }
 
 - (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
 {
-	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
+	IRCChannel *c = [sender channel];
 
 	if (c) {
-		NSString *modeSend = [NSString stringWithFormat:@"+%@", [sender mode]];
+		NSString *modeSend = [NSString stringWithFormat:@"+%@", [sender modeSymbol]];
 
 		[self send:IRCPrivateCommandIndex("mode"), [c name], modeSend, nil];
 	}
@@ -9721,10 +9716,10 @@ present_error:
 
 - (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender
 {
-	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
+	IRCChannel *c = [sender channel];
 	
 	if (c) {
-		NSArray *changedModes = [sender changeModeList];
+		NSArray *changedModes = [sender listOfChanges];
 		
 		for (NSString *mode in changedModes) {
 			[self sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), [c name], mode]];
@@ -9753,13 +9748,11 @@ present_error:
 		return; // The window was brought forward already.
 	}
 
-    TDCServerChannelListDialog *channelListDialog = [TDCServerChannelListDialog new];
+	TDCServerChannelListDialog *channelListDialog = [[TDCServerChannelListDialog alloc] initWithClient:self];
 
-	[channelListDialog setClientID:[self uniqueIdentifier]];
-	
-	[channelListDialog setDelegate:self];
+	[channelListDialog setDelegate:(id)self];
     
-    [channelListDialog start];
+    [channelListDialog show];
 
 	[windowController() addWindowToWindowList:channelListDialog withDescription:[self listDialogWindowKey]];
 }
@@ -9769,7 +9762,7 @@ present_error:
 	[self sendLine:IRCPrivateCommandIndex("list")];
 }
 
-- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel
+- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannel:(NSString *)channel
 {
 	[self enableInUserInvokedCommandProperty:&_inUserInvokedJoinRequest];
 	

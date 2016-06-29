@@ -36,17 +36,32 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
+
+@protocol TDCServerChannelListDialogDelegate;
 
 @interface TDCServerChannelListDialog : NSWindowController
-@property (nonatomic, weak) id delegate;
-@property (nonatomic, copy) NSString *clientID;
+@property (readonly, strong) IRCClient *client;
+@property (readonly, copy) NSString *clientId;
+@property (nonatomic, weak, nullable) id <TDCServerChannelListDialogDelegate> delegate;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
 
-- (void)start;
+- (instancetype)initWithClient:(IRCClient *)client;
+
 - (void)show;
 - (void)close;
+
 - (void)clear;
 
-- (void)addChannel:(NSString *)channel count:(NSInteger)count topic:(NSString *)topic;
+- (void)addChannel:(NSString *)channel count:(NSUInteger)count topic:(nullable NSString *)topic;
 @end
+
+@protocol TDCServerChannelListDialogDelegate <NSObject>
+@required
+
+- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
+- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannel:(NSString *)channel;
+- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

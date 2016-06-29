@@ -36,7 +36,7 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCWelcomeSheet ()
 @property (nonatomic, weak) IBOutlet NSButton *autoConnectCheck;
@@ -45,8 +45,8 @@
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *nicknameTextField;
 @property (nonatomic, weak) IBOutlet TVCComboBoxWithValueValidation *serverAddressComboBox;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *channelTable;
-@property (nonatomic, strong) NSMutableArray *channelList;
-@property (nonatomic, copy) NSDictionary *serverList;
+@property (nonatomic, strong) NSMutableArray<NSString *> *channelList;
+@property (nonatomic, copy) NSDictionary<NSString *, NSString *> *serverList;
 
 - (IBAction)onAddChannel:(id)sender;
 - (IBAction)onDeleteChannel:(id)sender;
@@ -60,83 +60,72 @@
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];
-		
-		self.channelList = [NSMutableArray new];
+		[self prepareInitialState];
 
-		/* Load the list of available IRC networks. */
-		self.serverList = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCNetworks"];
-
-		/* Populate the server address field with the IRC network list. */
-		NSArray *unsortedServerListKeys = [self.serverList allKeys];
-
-		/* We are sorting keys. They are NSString values. */
-		/* Sort without case so that "freenode" is under servers with a capital F. */
-		NSArray *sortedServerListKeys = [unsortedServerListKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			return [obj1 compare:obj2 options:NSCaseInsensitiveSearch];
-		}];
-		
-		for (NSString *key in sortedServerListKeys) {
-			[self.serverAddressComboBox addItemWithObjectValue:key];
-		}
-
-		/* Nickname. */
-		[self.nicknameTextField setTextDidChangeCallback:self];
-
-		[self.nicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
-
-		[self.nicknameTextField setStringValueIsInvalidOnEmpty:YES];
-		[self.nicknameTextField setStringValueIsTrimmed:YES];
-		[self.nicknameTextField setStringValueUsesOnlyFirstToken:YES];
-
-		[self.nicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
-			return [currentValue isHostmaskNickname];
-		}];
-
-		/* Server address. */
-		[self.serverAddressComboBox setTextDidChangeCallback:self];
-
-		[self.serverAddressComboBox setOnlyShowStatusIfErrorOccurs:YES];
-
-		[self.serverAddressComboBox setStringValueIsInvalidOnEmpty:YES];
-		[self.serverAddressComboBox setStringValueIsTrimmed:YES];
-		[self.serverAddressComboBox setStringValueUsesOnlyFirstToken:YES];
-
-		[self.serverAddressComboBox setValidationBlock:^BOOL(NSString *currentValue) {
-			return [currentValue isValidInternetAddress];
-		}];
+		return self;
 	}
 	
-	return self;
+	return nil;
 }
 
-#pragma mark -
-#pragma mark Server List Factory
-
-- (NSString *)nameMatchesServerInList:(NSString *)name
+- (void)prepareInitialState
 {
-	for (NSString *key in self.serverList) {
-		if ([name isEqualIgnoringCase:key]) {
-			return key;
-		}
+	(void)[RZMainBundle() loadNibNamed:@"TDCWelcomeSheet" owner:self topLevelObjects:nil];
+
+	/* Populate server list combo box */
+	self.serverList = [TPCResourceManager loadContentsOfPropertyListInResources:@"IRCNetworks"];
+
+	NSArray *serverListKeysUnsorted = self.serverList.allKeys;
+
+	NSArray *serverListKeysSorted = [serverListKeysUnsorted sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+
+	for (NSString *server in serverListKeysSorted) {
+		[self.serverAddressComboBox addItemWithObjectValue:server];
 	}
 
-	return nil;
+	/* Nickname */
+	self.nicknameTextField.textDidChangeCallback = self;
+
+	self.nicknameTextField.onlyShowStatusIfErrorOccurs = YES;
+
+	self.nicknameTextField.stringValueIsInvalidOnEmpty = YES;
+	self.nicknameTextField.stringValueIsTrimmed = YES;
+	self.nicknameTextField.stringValueUsesOnlyFirstToken = YES;
+
+	self.nicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		return currentValue.isHostmaskNickname;
+	};
+
+	/* Server address */
+	self.serverAddressComboBox.textDidChangeCallback = self;
+
+	self.serverAddressComboBox.onlyShowStatusIfErrorOccurs = YES;
+
+	self.serverAddressComboBox.stringValueIsInvalidOnEmpty = YES;
+	self.serverAddressComboBox.stringValueIsTrimmed = YES;
+	self.serverAddressComboBox.stringValueUsesOnlyFirstToken = YES;
+
+	self.serverAddressComboBox.validationBlock = ^BOOL(NSString *currentValue) {
+		return currentValue.isValidInternetAddress;
+	};
+
+	/* Setup others */
+	self.channelList = [NSMutableArray new];
+
+	self.channelTable.textEditingDelegate = self;
+
+	[self updateDeleteChannelButton];
+
+	[self updateOkButton];
+
+	self.nicknameTextField.stringValue = [TPCPreferences defaultNickname];
 }
 
 #pragma mark -
 #pragma mark Controls
 
-- (void)show
+- (void)start
 {
-	[self tableViewSelectionIsChanging:nil];
-
-	[self updateOKButton];
-
-	[self.channelTable setTextEditingDelegate:self];
-	
-	[self.nicknameTextField setStringValue:[TPCPreferences defaultNickname]];
-	
 	[self startSheet];
 }
 
@@ -145,67 +134,61 @@
 	[super cancel:nil];
 }
 
-- (void)releaseTableViewDataSourceBeforeSheetClosure
-{
-	[self.channelTable setDelegate:nil];
-	[self.channelTable setDataSource:nil];
-}
-
 - (void)ok:(id)sender
 {
-	IRCClientConfig *newConfig = [IRCClientConfig new];
-	
-	/* Get actaul server. */
-	NSString *userServAddress = [self.serverAddressComboBox value];
-	
-	NSString *translatedServerAddress = [self nameMatchesServerInList:userServAddress];
-	
-	if (translatedServerAddress == nil) {
-		translatedServerAddress = [userServAddress lowercaseString];
+	NSString *serverAddress = self.serverAddressComboBox.value;
+
+	NSString *serverName = [self.serverList keyIgnoringCase:serverAddress];
+
+	if (serverName) {
+		serverAddress = self.serverList[serverName];
 	} else {
-		translatedServerAddress = self.serverList[translatedServerAddress];
+		serverAddress = serverAddress.lowercaseString;
 	}
+
+	BOOL autoConnect = (self.autoConnectCheck.state == NSOnState);
 	
-	/* Complete basic information. */
-	BOOL autoConnect = [self.autoConnectCheck state];
+	NSString *nickname = self.nicknameTextField.value;
+
+	IRCClientConfig *config = [IRCClientConfig new];
+
+	config.autoConnect = autoConnect;
+
+	config.nickname = nickname;
 	
-	NSString *nickname = [self.nicknameTextField value];
+	config.connectionName = serverAddress;
+	config.serverAddress = serverAddress;
 
-	[newConfig setConnectionName:userServAddress];
-	[newConfig setServerAddress:translatedServerAddress];
-	[newConfig setAutoConnect:autoConnect];
-	[newConfig setNickname:nickname];
+	NSMutableArray<IRCChannelConfig *> *channelList = [NSMutableArray array];
+
+	NSMutableArray<NSString *> *channelsAdded = [NSMutableArray array];
 	
-	/* Populate channels. */
-	NSMutableArray *channelList = [NSMutableArray array];
+	for (NSString *channel in self.channelList) {
+		NSString *channelName = channel.trim;
 
-	NSMutableArray *channelsAdded = [NSMutableArray array];
-	
-	for (NSString *s in self.channelList) {
-		NSString *t = [s trim];
-		
-		if ([t length] > 0) {
-			if ([t isChannelName] == NO) {
-				 t = [@"#" stringByAppendingString:s];
-			}
-
-			if ([channelsAdded containsObject:t] == NO) {
-				IRCChannelConfig *cc = [IRCChannelConfig seedWithName:t];
-
-				[channelList addObject:cc];
-
-				[channelsAdded addObject:t];
-			}
+		if (channelName.length == 0) {
+			continue;
 		}
+
+		if ([channelsAdded containsObject:channelName] == NO) {
+			[channelsAdded addObject:channelName];
+		} else {
+			continue;
+		}
+
+		if ([channelName isChannelName] == NO) {
+			channelName = [@"#" stringByAppendingString:channelName];
+		}
+
+		IRCChannelConfig *channelConfig = [IRCChannelConfig seedWithName:channelName];
+
+		[channelList addObject:channelConfig];
 	}
 
-	channelsAdded = nil;
-	
-	[newConfig setChannelList:channelList];
+	config.channelList = channelList;
 
-	/* Inform delegate and finish. */
-	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOK:)]) {
-		[self.delegate welcomeSheet:self onOK:newConfig];
+	if ([self.delegate respondsToSelector:@selector(welcomeSheet:onOk:)]) {
+		[self.delegate welcomeSheet:self onOk:[config copy]];
 	}
 
 	[super ok:nil];
@@ -217,60 +200,52 @@
 	
 	[self.channelTable reloadData];
 	
-	NSInteger row = ([self.channelList count] - 1);
+	NSInteger rowToEdit = (self.channelList.count - 1);
 	
-	[self.channelTable selectItemAtIndex:row];
+	[self.channelTable selectItemAtIndex:rowToEdit];
 	
-	[self.channelTable editColumn:0 row:row withEvent:nil select:YES];
+	[self.channelTable editColumn:0 row:rowToEdit withEvent:nil select:YES];
 }
 
 - (void)onDeleteChannel:(id)sender
 {
-	NSInteger n = [self.channelTable selectedRow];
-	
-	if (n > -1) {
-		[self.channelList removeObjectAtIndex:n];
+	NSInteger selectedRow = [self.channelTable selectedRow];
 
-		[self.channelTable reloadData];
-		
-		NSInteger count = [self.channelList count];
-		
-		if (count <= n) {
-			n = (count - 1);
-		}
-		
-		if (n >= 0) {
-			[self.channelTable selectItemAtIndex:n];
-		}
-		
-		[self tableViewSelectionIsChanging:nil];
+	if (selectedRow < 0) {
+		return;
 	}
+
+	[self.channelList removeObjectAtIndex:selectedRow];
+
+	[self.channelTable reloadData];
+		
+	NSInteger channelListCount = self.channelList.count;
+
+	if (selectedRow > channelListCount) {
+		selectedRow = (channelListCount - 1);
+	}
+
+	if (channelListCount >= 0) {
+		[self.channelTable selectItemAtIndex:selectedRow];
+	}
+
+	[self updateDeleteChannelButton];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self updateOKButton];
+	[self updateOkButton];
 }
 
-- (void)updateOKButton
+- (void)updateOkButton
 {
-	BOOL enabled = ([self.serverAddressComboBox valueIsValid] && [self.nicknameTextField valueIsValid]);
-
-	[self.okButton setEnabled:enabled];
+	self.okButton.enabled = (self.nicknameTextField.valueIsValid &&
+							 self.serverAddressComboBox.valueIsValid);
 }
 
-#pragma mark -
-#pragma mark NSTextView Delegate (for support channel link)
-
-- (BOOL)textView:(NSTextView *)textView clickedOnLink:(id)link atIndex:(NSUInteger)charIndex
+- (void)updateDeleteChannelButton
 {
-	if ([[link absoluteString] hasPrefix:@"textual://"]) {
-		[self cancel:nil];
-
-		return NO; // Tell delegate we did not handle it.
-	}
-
-	return YES;
+	self.deleteChannelButton.enabled = (self.channelTable.numberOfSelectedRows > 0);
 }
 
 #pragma mark -
@@ -278,23 +253,26 @@
 
 - (void)textDidEndEditing:(NSNotification *)note
 {
-	NSInteger n = [self.channelTable editedRow];
-	
-	if (n > -1) {
-		NSString *s = [[[[note object] textStorage] string] copy];
-		
-		self.channelList[n] = s;
-		
-		[self.channelTable reloadData];
-		[self.channelTable selectItemAtIndex:n];
-		
-		[self tableViewSelectionIsChanging:nil];
+	NSInteger editedRow = self.channelTable.editedRow;
+
+	if (editedRow < 0) {
+		return;
 	}
+
+	NSString *editedString = [note.object textStorage].string;
+
+	self.channelList[editedRow] = [editedString copy];
+	
+	[self.channelTable reloadData];
+
+	[self.channelTable selectItemAtIndex:editedRow];
+
+	[self updateDeleteChannelButton];
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)sender
 {
-	return [self.channelList count];
+	return self.channelList.count;
 }
 
 - (id)tableView:(NSTableView *)sender objectValueForTableColumn:(NSTableColumn *)column row:(NSInteger)row
@@ -304,7 +282,7 @@
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)note
 {
-	[self.deleteChannelButton setEnabled:([self.channelTable selectedRow] > -1)];
+	[self updateDeleteChannelButton];
 }
 
 #pragma mark -
@@ -312,7 +290,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self releaseTableViewDataSourceBeforeSheetClosure];
+	self.channelTable.dataSource = nil;
+	self.channelTable.delegate = nil;
 
 	if ([self.delegate respondsToSelector:@selector(welcomeSheetWillClose:)]) {
 		[self.delegate welcomeSheetWillClose:self];
@@ -320,3 +299,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

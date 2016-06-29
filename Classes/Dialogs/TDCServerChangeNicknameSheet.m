@@ -36,60 +36,81 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChangeNicknameSheet ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *toldNicknameTextField;
 @end
 
 @implementation TDCServerChangeNicknameSheet
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithClient:(IRCClient *)client
 {
+	NSParameterAssert(client != nil);
+
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCServerChangeNicknameSheet" owner:self topLevelObjects:nil];
+		self.client = client;
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)start:(NSString *)nickname
+- (void)prepareInitialState
 {
-	/* Define nickname field for user tracking. */
-	[self.tnewNicknameTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.tnewNicknameTextField setStringValueUsesOnlyFirstToken:YES];
-	
-	[self.tnewNicknameTextField setOnlyShowStatusIfErrorOccurs:YES];
-	
-	[self.tnewNicknameTextField setTextDidChangeCallback:self];
-	
-	[self.tnewNicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
-		return [currentValue isHostmaskNickname];
-	}];
-	
-	[self.tnewNicknameTextField setStringValue:nickname];
-	[self.toldNicknameTextField setStringValue:nickname];
+	[RZMainBundle() loadNibNamed:@"TDCServerChangeNicknameSheet" owner:self topLevelObjects:nil];
+
+	self.tnewNicknameTextField.stringValueIsInvalidOnEmpty = YES;
+	self.tnewNicknameTextField.stringValueUsesOnlyFirstToken = YES;
+
+	self.tnewNicknameTextField.onlyShowStatusIfErrorOccurs = YES;
+
+	self.tnewNicknameTextField.textDidChangeCallback = self;
+
+	self.tnewNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		return currentValue.isHostmaskNickname;
+	};
+
+	NSString *nickname = self.client.localNickname;
+
+	self.tnewNicknameTextField.stringValue = nickname;
+
+	self.toldNicknameTextField.stringValue = nickname;
+}
+
+- (void)start
+{
+	[self startSheet];
 
 	[self.sheet makeFirstResponder:self.tnewNicknameTextField];
-	
-	[self startSheet];
 }
 
 - (void)validatedTextFieldTextDidChange:(id)sender
 {
-	[self.okButton setEnabled:[self.tnewNicknameTextField valueIsValid]];
+	self.okButton.enabled = self.tnewNicknameTextField.valueIsValid;
 }
 
 - (void)ok:(id)sender
 {
 	if ([self.delegate respondsToSelector:@selector(serverChangeNicknameSheet:didInputNickname:)]) {
-		NSString *newNickname = [self.tnewNicknameTextField value];
+		NSString *newNickname = self.tnewNicknameTextField.value;
 
 		[self.delegate serverChangeNicknameSheet:self didInputNickname:newNickname];
 	}
 	
 	[super ok:sender];
+}
+
+- (NSString *)clientId
+{
+	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -
@@ -103,3 +124,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

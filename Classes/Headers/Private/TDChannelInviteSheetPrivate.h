@@ -5,6 +5,7 @@
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
+ Copyright (c) 2008 - 2010 Satoshi Nakagawa <psychs AT limechat DOT net>
  Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
@@ -35,24 +36,23 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TDChannelBanListSheetEntryType) {
-	TDChannelBanListSheetBanEntryType,
-	TDChannelBanListSheetBanExceptionEntryType,
-	TDChannelBanListSheetInviteExceptionEntryType
-};
+@interface TDChannelInviteSheet : TDCSheetBase
+@property (readonly, strong) IRCClient *client;
+@property (readonly, copy) NSString *clientId;
+@property (readonly, copy) NSArray<NSString *> *nicknames;
 
-@interface TDChannelBanListSheet : TDCSheetBase
-@property (nonatomic, assign) TDChannelBanListSheetEntryType entryType;
-@property (readonly, copy) NSArray *changeModeList;
-@property (readonly, copy) NSString *mode;
-@property (nonatomic, assign) BOOL contentAlreadyReceived;
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) NSString *channelID;
+- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
-- (void)show;
-- (void)clear;
-
-- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSDate *)entryCreationDate;
+- (void)startWithChannels:(NSArray<NSString *> *)channels;
 @end
+
+@protocol TDChannelInviteSheetDelegate <NSObject>
+@required
+
+- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
+- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END

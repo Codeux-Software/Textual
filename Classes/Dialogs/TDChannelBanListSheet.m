@@ -35,17 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDChannelBanListSheetEntry : NSObject
 @property (nonatomic, copy) NSString *entryMask;
 @property (nonatomic, copy) NSString *entryAuthor;
 @property (readonly, copy) NSString *entryCreationDateString;
-@property (nonatomic, copy) NSDate *entryCreationDate;
+@property (nonatomic, copy, nullable) NSDate *entryCreationDate;
 @end
 
 @interface TDChannelBanListSheet ()
-@property (nonatomic, copy, readwrite) NSArray *changeModeList;
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, strong, readwrite) IRCChannel *channel;
+@property (nonatomic, assign, readwrite) TDChannelBanListSheetEntryType entryType;
+@property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *listOfChanges;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *entryTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *entryTableController;
@@ -56,50 +59,70 @@
 
 @implementation TDChannelBanListSheet
 
-- (instancetype)init
-{
-    if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDChannelBanListSheet" owner:self topLevelObjects:nil];
+ClassWithDesignatedInitializerInitMethod
 
-		[self.entryTable setSortDescriptors:@[
-			[NSSortDescriptor sortDescriptorWithKey:@"entryCreationDate" ascending:NO selector:@selector(compare:)]
-		]];
+- (instancetype)initWithEntryType:(TDChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel
+{
+	NSParameterAssert(channel != nil);
+
+	if ((self = [super init])) {
+		self.entryType = entryType;
+		
+		self.client = channel.associatedClient;
+		self.channel = channel;
+
+		[self prepareInitialState];
+
+		return self;
     }
     
-    return self;
+	return nil;
 }
 
-- (void)show
+- (void)prepareInitialState
 {
-	IRCChannel *c = [worldController() findChannelWithId:self.channelID onClientWithId:self.clientID];
+	[RZMainBundle() loadNibNamed:@"TDChannelBanListSheet" owner:self topLevelObjects:nil];
+
+	self.entryTable.sortDescriptors = @[
+		[NSSortDescriptor sortDescriptorWithKey:@"entryCreationDate" ascending:NO selector:@selector(compare:)]
+	];
 
 	NSString *headerTitle = nil;
 
 	if (self.entryType == TDChannelBanListSheetBanEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1000]", [c name]);
+		headerTitle = TXTLS(@"TDChannelBanListSheet[1000]", self.channel.name);
 	} else if (self.entryType == TDChannelBanListSheetBanExceptionEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1001]", [c name]);
+		headerTitle = TXTLS(@"TDChannelBanListSheet[1001]", self.channel.name);
 	} else if (self.entryType == TDChannelBanListSheetInviteExceptionEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1002]", [c name]);
+		headerTitle = TXTLS(@"TDChannelBanListSheet[1002]", self.channel.name);
 	}
 
-	[self.headerTitleTextField setStringValue:headerTitle];
+	self.headerTitleTextField.stringValue = headerTitle;
+}
 
+- (void)start
+{
 	[self startSheet];
 }
 
 - (void)clear
 {
-	[self.entryTableController setContent:nil];
+	self.entryTableController.content = nil;
 }
 
-- (void)addEntry:(NSString *)entryMask setBy:(NSString *)entryAuthor creationDate:(NSDate *)entryCreationDate
+- (void)addEntry:(NSString *)entryMask setBy:(nullable NSString *)entryAuthor creationDate:(nullable NSDate *)entryCreationDate
 {
+	NSParameterAssert(entryMask != nil);
+
+	if (entryAuthor == nil) {
+		entryAuthor = TXTLS(@"BasicLanguage[1002]"); // "Unknown"
+	}
+
 	TDChannelBanListSheetEntry *newEntry = [TDChannelBanListSheetEntry new];
 
-	[newEntry setEntryMask:entryMask];
-	[newEntry setEntryAuthor:entryAuthor];
-	[newEntry setEntryCreationDate:entryCreationDate];
+	newEntry.entryMask = entryMask;
+	newEntry.entryAuthor = entryAuthor;
+	newEntry.entryCreationDate = entryCreationDate;
 
 	[self willChangeValueForKey:@"entryCount"];
 
@@ -108,7 +131,7 @@
 	[self didChangeValueForKey:@"entryCount"];
 }
 
-- (NSString *)mode
+- (NSString *)modeSymbol
 {
 	if (self.entryType == TDChannelBanListSheetBanEntryType) {
 		return @"b";
@@ -123,7 +146,17 @@
 
 - (NSNumber *)entryCount
 {
-	return @([[self.entryTableController arrangedObjects] count]);
+	return @([self.entryTableController.arrangedObjects count]);
+}
+
+- (NSString *)clientId
+{
+	return self.client.uniqueIdentifier;
+}
+
+- (NSString *)channelId
+{
+	return self.channel.uniqueIdentifier;
 }
 
 #pragma mark -
@@ -140,51 +173,49 @@
 
 - (void)onRemoveEntry:(id)sender
 {
-	IRCClient *client = [worldController() findClientWithId:self.clientID];
-
-	NSMutableArray *changeArray = [NSMutableArray array];
+	NSString *modeSymbol = self.modeSymbol;
+	
+	NSMutableArray<NSString *> *listOfChanges = [NSMutableArray array];
 
 	NSMutableString *modeSetString = [NSMutableString string];
 	NSMutableString *modeParamString = [NSMutableString string];
 
-	NSInteger currentIndex = 0;
+	NSIndexSet *selectedRows = self.entryTable.selectedRowIndexes;
 
-	NSArray *selectedRows = [self.entryTable selectedRows];
+	__block NSUInteger numberOfEntries = 0;
 
-	for (NSNumber *indexNumber in selectedRows) {
-		NSInteger index = [indexNumber unsignedIntegerValue];
+	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		TDChannelBanListSheetEntry *entryItem = self.entryTableController.arrangedObjects[index];
 
-		TDChannelBanListSheetEntry *item = [self.entryTableController arrangedObjects][index];
-
-		if (currentIndex == 0) {
-			[modeSetString appendFormat:@"-%@", [self mode]];
+		if (modeSetString.length == 0) {
+			[modeSetString appendFormat:@"-%@", modeSymbol];
 		} else {
-			[modeSetString appendString:[self mode]];
+			[modeSetString appendString:modeSymbol];
 		}
 
-		[modeParamString appendFormat:@" %@", [item entryMask]];
+		[modeParamString appendFormat:@" %@", entryItem.entryMask];
 
-		currentIndex += 1;
+		numberOfEntries += 1;
 
-		if (currentIndex == [[client supportInfo] modesCount]) {
-			NSString *combinedModeSet = [modeSetString stringByAppendingString:modeParamString];
+		if (numberOfEntries == self.client.supportInfo.modesCount) {
+			numberOfEntries = 0;
+			
+			NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
 
-			[changeArray addObject:combinedModeSet];
+			[listOfChanges addObject:modeSetCombined];
 
 			[modeSetString setString:NSStringEmptyPlaceholder];
 			[modeParamString setString:NSStringEmptyPlaceholder];
-
-			currentIndex = 0;
 		}
+	}];
+
+	if (modeSetString.length > 0 && modeParamString.length > 0) {
+		NSString *modeSetCombined = [modeSetString stringByAppendingString:modeParamString];
+
+		[listOfChanges addObject:modeSetCombined];
 	}
 
-	if (NSObjectIsEmpty(modeSetString) == NO && NSObjectIsEmpty(modeParamString) == NO) {
-		NSString *combinedModeSet = [modeSetString stringByAppendingString:modeParamString];
-
-		[changeArray addObject:combinedModeSet];
-	}
-
-	self.changeModeList = changeArray;
+	self.listOfChanges = listOfChanges;
 
 	[super cancel:nil];
 }
@@ -207,11 +238,15 @@
 
 - (NSString *)entryCreationDateString
 {
-	if (self.entryCreationDate == nil) {
+	NSDate *entryCreationDate = self.entryCreationDate;
+
+	if (entryCreationDate == nil) {
 		return TXTLS(@"BasicLanguage[1002]"); // "Unknown"
-	} else {
-		return TXFormatDateTimeStringToCommonFormat(self.entryCreationDate, NO);
 	}
+
+	return TXFormatDateTimeStringToCommonFormat(entryCreationDate, NO);
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
