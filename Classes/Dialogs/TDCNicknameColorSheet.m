@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TDCNicknameColorSheet
 
+ClassWithDesignatedInitializerInitMethod
+
 - (instancetype)initWithNickname:(NSString *)nickname
 {
 	NSParameterAssert(nickname != nil);
