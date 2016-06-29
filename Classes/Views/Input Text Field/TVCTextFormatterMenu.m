@@ -212,7 +212,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (NSMutableAttributedString *)mutableStringAtRange:(NSRange)limitRange
+- (nullable NSMutableAttributedString *)mutableStringAtRange:(NSRange)limitRange
 {
 	if (limitRange.location == NSNotFound || limitRange.length == 0) {
 		return nil;

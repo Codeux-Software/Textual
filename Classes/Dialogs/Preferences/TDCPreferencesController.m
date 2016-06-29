@@ -929,7 +929,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSDictionary *themes = [TPCThemeController dictionaryOfAllThemes];
 
-	NSArray *themeNamesSorted = [themes sortedDictionaryKeys];
+	NSArray *themeNamesSorted = themes.sortedDictionaryKeys;
 
 	for (NSString *themeName in themeNamesSorted) {
 		NSString *themeSource = themes[themeName];
