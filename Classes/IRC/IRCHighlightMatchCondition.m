@@ -81,7 +81,9 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 {
 	NSParameterAssert(dic != nil);
 
-	ObjectIsAlreadyInitializedAssert
+	if ([self isMutable] == NO) {
+		ObjectIsAlreadyInitializedAssert
+	}
 
 	[dic assignBoolTo:&self->_matchIsExcluded forKey:@"matchIsExcluded"];
 
