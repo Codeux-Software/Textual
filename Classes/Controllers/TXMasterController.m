@@ -286,7 +286,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		[self forceTerminate];
 	} else {
-		NSString *formattedTime = TXHumanReadableTimeInterval(timeleft, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
+		NSString *formattedTime = TXHumanReadableTimeInterval(timeRemaining, YES, (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit));
 
 		(void)[TLOPopupPrompts dialogWindowWithMessage:TXTLS(@"Prompts[1119][2]", formattedTime)
 												 title:TXTLS(@"Prompts[1119][1]")

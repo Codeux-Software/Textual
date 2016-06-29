@@ -48,7 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setReceiveBetaUpdates:(BOOL)receiveBetaUpdates;
 #endif
 
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 + (void)setTextEncryptionIsOpportunistic:(BOOL)textEncryptionIsOpportunistic;
+#endif
 
 + (void)setHighlightCurrentNickname:(BOOL)highlightCurrentNickname;
 
