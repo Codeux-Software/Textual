@@ -143,11 +143,9 @@ ClassWithDesignatedInitializerInitMethod
 	if (selectedChannelIndex > 0) {
 		NSString *selectedChannelName = self.matchChannelPopupButton.titleOfSelectedItem;
 
-		IRCChannelConfig *channel = nil;
-		
 		for (IRCChannelConfig *c in self.channelList) {
 			if (NSObjectsAreEqual(c.channelName, selectedChannelName)) {
-				config.matchChannelId = channel.itemUUID;
+				config.matchChannelId = c.itemUUID;
 
 				break;
 			}
