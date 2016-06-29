@@ -926,16 +926,20 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateThemeSelection
 {
 	[self.themeSelectionButton removeAllItems];
-	
+
 	NSDictionary *themes = [TPCThemeController dictionaryOfAllThemes];
 
-	[themes enumerateKeysAndObjectsUsingBlock:^(NSString *themeName, NSString *themeSource, BOOL *stop) {
+	NSArray *themeNamesSorted = [themes sortedDictionaryKeys];
+
+	for (NSString *themeName in themeNamesSorted) {
+		NSString *themeSource = themes[themeName];
+
 		NSMenuItem *item = [NSMenuItem menuItemWithTitle:themeName target:nil action:nil];
 
 		item.userInfo = themeSource;
 
 		[self.themeSelectionButton.menu addItem:item];
-	}];
+	}
 
 	[self.themeSelectionButton selectItemWithTitle:themeController().name];
 }
