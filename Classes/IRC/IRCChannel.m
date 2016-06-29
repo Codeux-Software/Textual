@@ -608,32 +608,32 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 
 		NSInteger rankOfNewMode = [supportInfo rankForUserPrefixWithMode:mode];
 
-		NSMutableString *newModeValues = [NSMutableString string];
+		NSArray *existingModes = [existingModeValues characterStringBuffer];
 
-		for (NSInteger i = 0; i < [existingModeValues length]; i++) {
-			NSString *cc = [existingModeValues stringCharacterAtIndex:i];
+		NSMutableArray *existingModesMutable = [existingModes mutableCopy];
 
-			if (value == NO) {
-				/* If we are unsetting a mode value, then all we have to 
-				 do is skip over the existing mode, if it exists at all. */
+		if (value == NO) {
+			[existingModesMutable removeObject:mode];
+		} else {
+			NSUInteger lowerRankedMode =
+			[existingModes indexOfObjectPassingTest:^BOOL(NSString *existingMode, NSUInteger index, BOOL *stop) {
+				NSInteger rankOfExistingMode = [supportInfo rankForUserPrefixWithMode:existingMode];
 
-				if (NSObjectsAreEqual(cc, mode)) {
-					continue;
+				if (rankOfExistingMode < rankOfNewMode) {
+					return YES;
 				} else {
-					[newModeValues appendString:cc];
+					return NO;
 				}
+			}];
+
+			if (lowerRankedMode != NSNotFound) {
+				[existingModesMutable insertObject:mode atIndex:lowerRankedMode];
 			} else {
-				/* When setting a mode, we have to insert it into our
-				 string into its correct rank. */
-				NSInteger rankOfCurrentMode = [supportInfo rankForUserPrefixWithMode:cc];
-
-				if (rankOfNewMode > rankOfCurrentMode) {
-					[newModeValues appendString:mode];
-				}
-
-				[newModeValues appendString:cc];
+				[existingModesMutable addObject:mode];
 			}
 		}
+
+		NSString *newModeValues = [existingModesMutable componentsJoinedByString:NSStringEmptyPlaceholder];
 
 		if ([newModeValues length] == 0) {
 			[newUser setModes:nil]; // Do not set a string of zero length
