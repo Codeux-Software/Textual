@@ -510,6 +510,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[TPCPreferences setFileTransferPortRangeEnd:value.integerValue];
 }
 
+#if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (BOOL)textEncryptionIsOpportunistic
 {
 	if ([TPCPreferences textEncryptionIsRequired]) {
@@ -523,6 +524,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	[TPCPreferences setTextEncryptionIsOpportunistic:value];
 }
+#endif
 
 - (BOOL)highlightCurrentNickname
 {
