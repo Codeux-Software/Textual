@@ -78,7 +78,7 @@ ClassWithDesignatedInitializerInitMethod
 {
 	NSString *sound = [TPCPreferences soundForEvent:self.eventType];
 
-	if (sound) {
+	if (sound == nil) {
 		return [TDCPreferencesSoundWrapper localizedAlertEmptySoundTitle];
 	}
 
