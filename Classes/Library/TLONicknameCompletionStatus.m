@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TLONicknameCompletionStatus ()
 @property (nonatomic, weak) TVCMainWindow *window;
 @property (nonatomic, copy) NSString *completedValue;
-@property (nonatomic, copy) NSString *completedValueCompletionSuffix;
+@property (nonatomic, copy, nullable) NSString *completedValueCompletionSuffix;
 @property (nonatomic, copy) NSString *currentTextViewStringValue;
 @property (nonatomic, copy) NSString *cachedSearchPattern;
 @property (nonatomic, copy) NSString *cachedSearchPatternPrefixCharacter;
@@ -511,7 +511,7 @@ ClassWithDesignatedInitializerInitMethod
 	return textView.stringLength;
 }
 
-- (NSString *)trimNickname:(NSString *)nickname usingCharacterSet:(NSCharacterSet *)charset
+- (nullable NSString *)trimNickname:(NSString *)nickname usingCharacterSet:(NSCharacterSet *)charset
 {
 	for (NSUInteger i = 0; i < nickname.length; i++) {
 		UniChar c = [nickname characterAtIndex:i];

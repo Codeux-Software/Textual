@@ -154,7 +154,7 @@ ClassWithDesignatedInitializerInitMethod
 		}
 	}
 
-	[self.delegate highlightEntrySheet:self onOk:config.copy];
+	[self.delegate highlightEntrySheet:self onOk:[config copy]];
 	
 	[super ok:sender];
 }

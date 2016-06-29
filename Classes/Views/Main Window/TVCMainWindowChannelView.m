@@ -121,7 +121,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 	NSMutableDictionary *subviewsUnclaimed = nil;
 
 	if (subviews) {
-		subviewsUnclaimed = subviews.mutableCopy;
+		subviewsUnclaimed = [subviews mutableCopy];
 	}
 
 	/* Enumerate views that the user has selected */
@@ -201,7 +201,7 @@ NSComparisonResult sortSubviews(TVCMainWindowChannelViewSubview *firstView,
 
 	NSArray *selectedItems = mainWindow.selectedItems;
 
-	NSArray *subviews = self.subviews.copy;
+	NSArray *subviews = [self.subviews copy];
 
 	NSUInteger itemIndexSelected = self.itemIndexSelected;
 

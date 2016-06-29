@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 static SecKeyRef TLOLicenseManagerPublicKey = NULL;
 static BOOL TLOLicenseManagerPublicKeyIsGenuineResult = YES;
 
-static NSDictionary<NSString *, id> *TLOLicenseManagerCachedLicenseDictionary = nil;
+static NSDictionary<NSString *, id> * _Nullable TLOLicenseManagerCachedLicenseDictionary = nil;
 
 NSString * const TLOLicenseManagerHashOfGenuinePublicKey = @"9d9a02f1f861a203aa761230c1ee02040002314502d75826a97a948bcf4bb1d6";
 
