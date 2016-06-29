@@ -266,7 +266,7 @@
 	1701: "Disable All Notification Sounds"
  */
 
-@interface TXMenuController : NSObject <TDChannelPropertiesSheetDelegate, TDCServerHighlightListSheetDelegate, TDChannelInviteSheetDelegate, TDChannelModifyModesSheetDelegate, TDCServerChangeNicknameSheetDelegate, TDCServerPropertiesSheetDelegate, TDChannelModifyTopicSheetDelegate, TDCWelcomeSheetDelegate, NSMenuDelegate>
+@interface TXMenuController : NSObject <TDChannelPropertiesSheetDelegate, TDCServerPropertiesSheetDelegate, NSMenuDelegate>
 
 @property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
 @property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;

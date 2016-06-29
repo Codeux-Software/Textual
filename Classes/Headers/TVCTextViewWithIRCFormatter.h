@@ -55,8 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSAttributedString *attributedStringValue;
 
-- (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue;
-
 - (void)resetFontColorInRange:(NSRange)range;
 
 - (void)resetTypeSetterAttributes;

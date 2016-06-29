@@ -46,65 +46,11 @@
 
 #pragma mark -
 
-@protocol TDChannelBanListSheetDelegate <NSObject>
-@required
-
-- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender;
-- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender;
-@end
-
-#pragma mark -
-
 @protocol TDChannelPropertiesSheetDelegate <NSObject>
 @required
 
 - (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender;
 - (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDCServerHighlightListSheetDelegate <NSObject>
-@required
-
-- (void)serverHighlightListSheetWillClose:(TDCServerHighlightListSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDChannelInviteSheetDelegate <NSObject>
-@required
-
-- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
-- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDCServerChannelListDialogDelegate <NSObject>
-@required
-
-- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
-- (void)serverChannelListDialogOnJoin:(TDCServerChannelListDialog *)sender channel:(NSString *)channel;
-- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDChannelModifyModesSheetDelegate <NSObject>
-@required
-
-- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender;
-- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDCServerChangeNicknameSheetDelegate <NSObject>
-@required
-
-- (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname;
-- (void)serverChangeNicknameSheetWillClose:(TDCServerChangeNicknameSheet *)sender;
 @end
 
 #pragma mark -
@@ -118,22 +64,4 @@
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
 - (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender;
 #endif
-@end
-
-#pragma mark -
-
-@protocol TDChannelModifyTopicSheetDelegate <NSObject>
-@required
-
-- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic;
-- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender;
-@end
-
-#pragma mark -
-
-@protocol TDCWelcomeSheetDelegate <NSObject>
-@required
-
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config;
-- (void)welcomeSheetWillClose:(TDCWelcomeSheet *)sender;
 @end

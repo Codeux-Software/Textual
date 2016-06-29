@@ -35,11 +35,12 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-#define _renderedMessageTextFieldLeftRightPadding		2
+#define _renderedMessageTextFieldLeftRightPadding		2.0
 
 @interface TDCServerHighlightListSheet ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *highlightListController;
@@ -49,78 +50,95 @@
 
 @implementation TDCServerHighlightListSheet
 
-- (instancetype)init
+- (instancetype)initWithClient:(IRCClient *)client
 {
-    if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCServerHighlightListSheet" owner:self topLevelObjects:nil];
+	NSParameterAssert(client != nil);
 
-		[self.highlightListTable setDoubleAction:@selector(highlightDoubleClicked:)];
+	if ((self = [super init])) {
+		self.client = client;
 
-		[self.highlightListTable setSortDescriptors:@[
-			[NSSortDescriptor sortDescriptorWithKey:@"timeLogged" ascending:NO selector:@selector(compare:)],
-			[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
-		]];
+		[self prepareInitialState];
+
+		return self;
 	}
-    
-    return self;
+
+	return nil;
 }
 
-- (void)show
+- (void)prepareInitialState
 {
-	IRCClient *currentNetwork = [worldController() findClientWithId:self.clientID];
+	[RZMainBundle() loadNibNamed:@"TDCServerHighlightListSheet" owner:self topLevelObjects:nil];
 
-	NSString *unformattedHeaderTitle = [self.headerTitleTextField stringValue];
+	self.highlightListTable.doubleAction = @selector(highlightDoubleClicked:);
 
-	NSString *headerTitle = [NSString stringWithFormat:unformattedHeaderTitle, [currentNetwork altNetworkName]];
+	self.highlightListTable.sortDescriptors = @[
+		[NSSortDescriptor sortDescriptorWithKey:@"timeLogged" ascending:NO selector:@selector(compare:)],
+		[NSSortDescriptor sortDescriptorWithKey:@"channelName" ascending:NO selector:@selector(caseInsensitiveCompare:)]
+	];
 
-	[self.headerTitleTextField setStringValue:headerTitle];
+	NSString *headerTitle = [NSString stringWithFormat:self.headerTitleTextField.stringValue, self.client.altNetworkName];
 
+	self.headerTitleTextField.stringValue = headerTitle;
+
+	NSArray *cachedHighlights = self.client.cachedHighlights;
+
+	if (cachedHighlights) {
+		[self addEntry:cachedHighlights];
+	}
+}
+
+- (void)start
+{
     [self startSheet];
-
-	[self addEntry:[currentNetwork cachedHighlights]]; // Populate current cache...
 }
 
 - (void)addEntry:(id)newEntry
 {
-	if (newEntry && [newEntry isKindOfClass:[NSArray class]])
+	NSParameterAssert(newEntry != nil);
+
+	if ([newEntry isKindOfClass:[NSArray class]])
 	{
-		for (id arrayObject in newEntry) {
-			[self addEntry:arrayObject];
+		for (id entry in newEntry) {
+			[self addEntry:entry];
 		}
 	}
-	else if (newEntry && [newEntry isKindOfClass:[IRCHighlightLogEntry class]])
+	else if ([newEntry isKindOfClass:[IRCHighlightLogEntry class]])
 	{
+		if ([newEntry isKindOfClass:[IRCHighlightLogEntryMutable class]]) {
+			newEntry = [newEntry copy];
+		}
+
 		[self.highlightListController addObject:newEntry];
 	}
 }
 
-- (void)lazilyDefineHeightForRow:(NSInteger)row
+- (void)lazilyDefineHeightForRow:(NSUInteger)row
 {
-	NSTableView *aTableView = [self highlightListTable];
+	NSTableView *tableView = self.highlightListTable;
 
-	NSTableColumn *tableColumn = [aTableView tableColumnWithIdentifier:@"renderedMessage"];
+	NSTableColumn *tableColumn = [tableView tableColumnWithIdentifier:@"renderedMessage"];
 
-	NSTableCellView *cellView = (id)[self tableView:aTableView viewForTableColumn:tableColumn row:row];
+	NSTableCellView *cellView = (id)[self tableView:tableView viewForTableColumn:tableColumn row:row];
 
-	NSRect textFieldFrame = [[cellView textField] frame];
+	NSRect textFieldFrame = cellView.textField.frame;
 
 	[self performBlockOnGlobalQueue:^{
-		IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
+		IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
 
-		CGFloat calculatedTextHeight = [[entryItem renderedMessage] pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2))];
+		CGFloat textHeight = [entryItem.renderedMessage pixelHeightInWidth:(NSWidth(textFieldFrame) - (_renderedMessageTextFieldLeftRightPadding * 2.0))];
 
-		CGFloat finalRowHeight = (ceil(calculatedTextHeight / [aTableView rowHeight]) * [aTableView rowHeight]);
+		CGFloat finalRowHeight = (ceil(textHeight / tableView.rowHeight) * tableView.rowHeight);
 
-		[entryItem setRowHeight:finalRowHeight];
+		entryItem.rowHeight = finalRowHeight;
 
 		[self performBlockOnMainThread:^{
 			NSIndexSet *rowIndexSet = [NSIndexSet indexSetWithIndex:row];
 
 			[NSAnimationContext beginGrouping];
 
-			[RZAnimationCurrentContext() setDuration:0.0];
+			RZAnimationCurrentContext().duration = 0.0;
 
-			[aTableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
+			[tableView noteHeightOfRowsWithIndexesChanged:rowIndexSet];
 
 			[NSAnimationContext endGrouping];
 		}];
@@ -129,34 +147,41 @@
 
 - (void)onClearList:(id)sender
 {
-	[self.highlightListController setContent:nil];
+	self.highlightListController.content = nil;
 
-	IRCClient *currentNetwork = [worldController() findClientWithId:self.clientID];
-
-	[currentNetwork clearCachedHighlights];
+	[self.client clearCachedHighlights];
 }
 
 - (void)highlightDoubleClicked:(id)sender
 {
-	NSInteger row = [self.highlightListTable clickedRow];
+	NSInteger row = self.highlightListTable.clickedRow;
 
-	if (row >= 0) {
-		IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
-
-		IRCChannel *channel = [entryItem channel];
-
-		PointerIsEmptyAssert(channel);
-
-		TVCLogController *viewController = [channel viewController];
-
-		[viewController jumpToLine:[entryItem lineNumber] completionHandler:^(BOOL result) {
-			if (result) {
-				[mainWindow() select:channel];
-
-				[self cancel:nil];
-			}
-		}];
+	if (row < 0) {
+		return;
 	}
+
+	IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
+
+	IRCChannel *channel = entryItem.channel;
+
+	if (channel == nil) {
+		return;
+	}
+
+	TVCLogController *viewController = channel.viewController;
+
+	[viewController jumpToLine:entryItem.lineNumber completionHandler:^(BOOL result) {
+		if (result) {
+			[mainWindow() select:channel];
+
+			[self cancel:nil];
+		}
+	}];
+}
+
+- (NSString *)clientId
+{
+	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -
@@ -164,18 +189,18 @@
 
 - (CGFloat)tableView:(NSTableView *)aTableView heightOfRow:(NSInteger)row
 {
-	IRCHighlightLogEntry *entryItem = [self.highlightListController arrangedObjects][row];
+	IRCHighlightLogEntry *entryItem = self.highlightListController.arrangedObjects[row];
 
-	if ([entryItem rowHeight] > 0) {
-		return [entryItem rowHeight];
-	} else {
-		return [aTableView rowHeight];
+	if (entryItem.rowHeight > 0) {
+		return entryItem.rowHeight;
 	}
+
+	return aTableView.rowHeight;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-	NSTableCellView *result = [tableView makeViewWithIdentifier:[tableColumn identifier] owner:self];
+	NSTableCellView *result = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
 
 	return result;
 }
@@ -190,8 +215,8 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	[self.highlightListTable setDelegate:nil];
-	[self.highlightListTable setDataSource:nil];
+	self.highlightListTable.dataSource = nil;
+	self.highlightListTable.delegate = nil;
 
 	if ([self.delegate respondsToSelector:@selector(serverHighlightListSheetWillClose:)]) {
 		[self.delegate serverHighlightListSheetWillClose:self];
@@ -199,3 +224,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

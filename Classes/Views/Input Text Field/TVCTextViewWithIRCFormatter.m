@@ -170,14 +170,14 @@ NS_ASSUME_NONNULL_BEGIN
 	[self didChangeText];
 }
 
-- (void)setAttributedStringValueWithStringContainingIRCFormatting:(NSString *)stringValue
+- (void)setStringValueWithIRCFormatting:(NSString *)stringValueWithIRCFormatting
 {
-	NSParameterAssert(stringValue != nil);
+	NSParameterAssert(stringValueWithIRCFormatting != nil);
 
 	NSAttributedString *formattedValue =
-	[stringValue attributedStringWithIRCFormatting:self.preferredFont
-								preferredFontColor:self.preferredFontColor
-						 honorFormattingPreference:NO];
+	[stringValueWithIRCFormatting attributedStringWithIRCFormatting:self.preferredFont
+												 preferredFontColor:self.preferredFontColor
+										  honorFormattingPreference:NO];
 
 	if (formattedValue) {
 		self.attributedStringValue = formattedValue;

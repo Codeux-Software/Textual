@@ -36,37 +36,55 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDChannelModifyTopicSheet ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, strong, readwrite) IRCChannel *channel;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
 
 @implementation TDChannelModifyTopicSheet
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithChannel:(IRCChannel *)channel
 {
+	NSParameterAssert(channel != nil);
+
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDChannelModifyTopicSheet" owner:self topLevelObjects:nil];
+		self.client = channel.associatedClient;
+		self.channel = channel;
+
+		[self prepareInitialState];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)start:(NSString *)topic
+- (void)prepareInitialState
 {
-	IRCChannel *c = [worldController() findChannelWithId:self.channelID onClientWithId:self.clientID];
+	[RZMainBundle() loadNibNamed:@"TDChannelModifyTopicSheet" owner:self topLevelObjects:nil];
 
-	NSString *headerTitle = [NSString stringWithFormat:[self.headerTitleTextField stringValue], [c name]];
+	NSString *headerTitle = [NSString stringWithFormat:self.headerTitleTextField.stringValue, self.channel.name];
 
-	[self.headerTitleTextField setStringValue:headerTitle];
+	self.headerTitleTextField.stringValue = headerTitle;
 
-	[self.topicValueTextField setPreferredFont:[NSFont systemFontOfSize:13.0]];
-	[self.topicValueTextField setPreferredFontColor:[NSColor blackColor]];
+	self.topicValueTextField.preferredFont = [NSFont systemFontOfSize:13.0];
+	self.topicValueTextField.preferredFontColor = [NSColor blackColor];
 
-	[self.topicValueTextField setAttributedStringValueWithStringContainingIRCFormatting:topic];
+	NSString *topic = self.channel.topic;
 
+	if (topic) {
+		self.topicValueTextField.stringValueWithIRCFormatting = topic;
+	}
+}
+
+- (void)start
+{
 	[self startSheet];
 }
 
@@ -92,16 +110,26 @@
 
 - (void)ok:(id)sender
 {
-	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheet:onOK:)]) {
-		NSString *formattedTopic = [self.topicValueTextField stringValueWithIRCFormatting];
+	if ([self.delegate respondsToSelector:@selector(channelModifyTopicSheet:onOk:)]) {
+		NSString *formattedTopic = self.topicValueTextField.stringValueWithIRCFormatting;
 
 		NSString *topicWithoutNewlines = [formattedTopic stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder
 																				   withString:NSStringWhitespacePlaceholder];
 
-		[self.delegate channelModifyTopicSheet:self onOK:topicWithoutNewlines];
+		[self.delegate channelModifyTopicSheet:self onOk:topicWithoutNewlines];
 	}
 	
 	[super ok:nil];
+}
+
+- (NSString *)clientId
+{
+	return self.client.uniqueIdentifier;
+}
+
+- (NSString *)channelId
+{
+	return self.channel.uniqueIdentifier;
 }
 
 #pragma mark -
@@ -115,3 +143,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

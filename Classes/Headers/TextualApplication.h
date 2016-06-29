@@ -81,16 +81,8 @@
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCServerChangeNicknameSheet;
-	@class TDCServerChannelListDialog;
-	@class TDCServerHighlightListSheet;
 	@class TDCServerPropertiesSheet;
 	@class TDCSheetBase;
-	@class TDCWelcomeSheet;
-	@class TDChannelBanListSheet;
-	@class TDChannelInviteSheet;
-	@class TDChannelModifyModesSheet;
-	@class TDChannelModifyTopicSheet;
 	@class TDChannelPropertiesSheet;
 	@class THOUnicodeHelper;
 	@class TLOGrowlController;
@@ -247,15 +239,7 @@
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
-	#import "TDCServerChangeNicknameSheet.h"
-	#import "TDCServerChannelListDialog.h"
-	#import "TDCServerHighlightListSheet.h"
 	#import "TDCServerPropertiesSheet.h"
-	#import "TDCWelcomeSheet.h"
-	#import "TDChannelBanListSheet.h"
-	#import "TDChannelInviteSheet.h"
-	#import "TDChannelModifyModesSheet.h"
-	#import "TDChannelModifyTopicSheet.h"
 	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers */

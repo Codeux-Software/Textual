@@ -1444,21 +1444,19 @@
 		return;
 	}
 
-	TDCServerChangeNicknameSheet *nickSheet = [TDCServerChangeNicknameSheet new];
+	TDCServerChangeNicknameSheet *nickSheet = [[TDCServerChangeNicknameSheet alloc] initWithClient:u];
 
-	[nickSheet setDelegate:self];
+	[nickSheet setDelegate:(id)self];
 	[nickSheet setWindow:mainWindow()];
 
-	[nickSheet setClientID:[u uniqueIdentifier]];
-
-	[nickSheet start:[u localNickname]];
+	[nickSheet start];
 
 	[windowController() addWindowToWindowList:nickSheet];
 }
 
 - (void)serverChangeNicknameSheet:(TDCServerChangeNicknameSheet *)sender didInputNickname:(NSString *)nickname
 {
-	IRCClient *u = [worldController() findClientWithId:[sender clientID]];
+	IRCClient *u = [sender client];
 	
 	if (_noClient || _connectionNotLoggedIn) {
 		return;
@@ -1718,14 +1716,12 @@
 		return;
 	}
 	
-	TDCServerHighlightListSheet *d = [TDCServerHighlightListSheet new];
+	TDCServerHighlightListSheet *d = [[TDCServerHighlightListSheet alloc] initWithClient:u];
 	
-	[d setDelegate:self];
+	[d setDelegate:(id)self];
 	[d setWindow:mainWindow()];
-	
-	[d setClientID:[u uniqueIdentifier]];
-	
-	[d show];
+
+	[d start];
 
 	[windowController() addWindowToWindowList:d];
 }
@@ -1782,24 +1778,21 @@
 		return;
 	}
 
-	TDChannelModifyTopicSheet *t = [TDChannelModifyTopicSheet new];
+	TDChannelModifyTopicSheet *t = [[TDChannelModifyTopicSheet alloc] initWithChannel:c];
 
-	[t setDelegate:self];
+	[t setDelegate:(id)self];
 	[t setWindow:mainWindow()];
-	
-	[t setClientID:[u uniqueIdentifier]];
-	[t setChannelID:[c uniqueIdentifier]];
 
-	[t start:[c topic]];
+	[t start];
 
 	[windowController() addWindowToWindowList:t];
 }
 
-- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOK:(NSString *)topic
+- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOk:(NSString *)topic
 {
-	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
+	IRCChannel *c = [sender channel];
 	
-	IRCClient *u = [c associatedClient];
+	IRCClient *u = [sender client];
 	
 	if (_noClientOrChannel || _isClient || _isQuery) {
 		return;
@@ -1827,32 +1820,27 @@
 		return;
 	}
 	
-	TDChannelModifyModesSheet *m = [TDChannelModifyModesSheet new];
+	TDChannelModifyModesSheet *m = [[TDChannelModifyModesSheet alloc] initWithChannel:c];
 	
-	[m setDelegate:self];
+	[m setDelegate:(id)self];
 	[m setWindow:mainWindow()];
-	
-	[m setClientID:[u uniqueIdentifier]];
-	[m setChannelID:[c uniqueIdentifier]];
-	
-	[m setMode:[c modeInfo]];
 
 	[m start];
 
 	[windowController() addWindowToWindowList:m];
 }
 
-- (void)channelModifyModesSheetOnOK:(TDChannelModifyModesSheet *)sender
+- (void)channelModifyModesSheet:(TDChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes
 {
-	IRCChannel *c = [worldController() findChannelWithId:[sender channelID] onClientWithId:[sender clientID]];
+	IRCChannel *c = [sender channel];
 
-	IRCClient *u = [c associatedClient];
+	IRCClient *u = [sender client];
 	
 	if (_noClientOrChannel || _isClient || _isQuery) {
 		return;
 	}
 	
-	NSString *changeStr = [[c modeInfo] getChangeCommand:[sender mode]];
+	NSString *changeStr = [[c modeInfo] getChangeCommand:modes];
 
 	NSObjectIsEmptyAssert(changeStr);
 
@@ -2143,13 +2131,10 @@
 	NSObjectIsEmptyAssert(channels);
 	NSObjectIsEmptyAssert(nicknames);
 
-	TDChannelInviteSheet *inviteSheet = [TDChannelInviteSheet new];
+	TDChannelInviteSheet *inviteSheet = [[TDChannelInviteSheet alloc] initWithNicknames:nicknames onClient:u];
 	
-	[inviteSheet setDelegate:self];
+	[inviteSheet setDelegate:(id)self];
 	[inviteSheet setWindow:mainWindow()];
-	
-	[inviteSheet setNicknames:nicknames];
-	[inviteSheet setClientID:[u uniqueIdentifier]];
 
 	[inviteSheet startWithChannels:channels];
 
@@ -2158,7 +2143,7 @@
 
 - (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
-	IRCClient *u = [worldController() findClientWithId:[sender clientID]];
+	IRCClient *u = [sender client];
 
 	if (u) {
 		if ([channelName isChannelName]) {
@@ -2323,15 +2308,15 @@
 	
 	TDCWelcomeSheet *welcomeSheet = [TDCWelcomeSheet new];
 	
-	[welcomeSheet setDelegate:self];
+	[welcomeSheet setDelegate:(id)self];
 	[welcomeSheet setWindow:mainWindow()];
 	
-	[welcomeSheet show];
+	[welcomeSheet start];
 
 	[windowController() addWindowToWindowList:welcomeSheet];
 }
 
-- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOK:(IRCClientConfig *)config
+- (void)welcomeSheet:(TDCWelcomeSheet *)sender onOk:(IRCClientConfig *)config
 {
 	IRCClient *u = [worldController() createClientWithConfig:config reload:YES];
 	
