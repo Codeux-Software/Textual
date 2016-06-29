@@ -147,6 +147,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 @dynamic matchIsExcluded;
 @dynamic matchKeyword;
 
+- (void)populateDictionaryValues:(NSDictionary<NSString *, id> *)dic
+{
+	[super populateDictionaryValues:dic];
+}
+
 - (BOOL)isMutable
 {
 	return YES;
