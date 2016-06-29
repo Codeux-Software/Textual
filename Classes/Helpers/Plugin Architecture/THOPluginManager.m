@@ -66,8 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)_loadPlugins
 {
-	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
-
 	NSMutableArray<THOPluginItem *> *loadedPlugins = [NSMutableArray array];
 
 	NSMutableArray<NSString *> *loadedBundles = [NSMutableArray array];
