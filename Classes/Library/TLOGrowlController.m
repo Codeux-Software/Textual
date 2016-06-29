@@ -394,10 +394,6 @@ NSString * const TXNotificationHighlightLogAlternativeActionFormat		= @"\u2022 %
 	 the trial of Textual preparing to expire. */
 	if ([context boolForKey:@"isLicenseManagerTimeRemainingInTrialNotification"])
 	{
-		if (activationType != NSUserNotificationActivationTypeActionButtonClicked) {
-			return;
-		}
-
 		[menuController() manageLicense:nil];
 	}
 	else
