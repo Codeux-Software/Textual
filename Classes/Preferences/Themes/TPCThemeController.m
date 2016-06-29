@@ -573,8 +573,8 @@ NSString * const TPCThemeControllerThemeListDidChangeNotification		= @"TPCThemeC
 	
 	checkPath([TPCPathInfo customThemeFolderPath], TPCThemeControllerCustomThemeNameCompletePrefix);
 	checkPath([TPCPathInfo bundledThemeFolderPath], TPCThemeControllerBundledThemeNameCompletePrefix);
-	
-	return themeList;
+
+	return [themeList copy];
 }
 
 void activeThemePathMonitorCallback(ConstFSEventStreamRef streamRef,
