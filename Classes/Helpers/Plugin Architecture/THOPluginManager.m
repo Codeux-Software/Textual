@@ -68,8 +68,6 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSDictionary *staticValues = [TPCResourceManager loadContentsOfPropertyListInResources:@"StaticStore"];
 
-	NSArray<NSString *> *whitelistedBundles = [staticValues arrayForKey:@"THOPluginManager Version 6.0.0 Extension Whitelist"];
-
 	NSMutableArray<THOPluginItem *> *loadedPlugins = [NSMutableArray array];
 
 	NSMutableArray<NSString *> *loadedBundles = [NSMutableArray array];
@@ -138,11 +136,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 			continue;
 		} else {
-			NSComparisonResult comparisonResult = NSOrderedSame;
-
-			if ([whitelistedBundles containsObject:bundleIdentifier] == NO) {
-				comparisonResult = [comparisonVersion compare:THOPluginProtocolCompatibilityMinimumVersion options:NSNumericSearch];
-			}
+			NSComparisonResult comparisonResult =
+			[comparisonVersion compare:THOPluginProtocolCompatibilityMinimumVersion options:NSNumericSearch];
 
 			if (comparisonResult == NSOrderedAscending) {
 				NSLog(@" ---------------------------- ERROR ---------------------------- ");
