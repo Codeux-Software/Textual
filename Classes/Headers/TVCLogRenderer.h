@@ -54,6 +54,7 @@ TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationAttributedStringPrefe
 TEXTUAL_EXTERN NSString * const TVCLogRendererConfigurationAttributedStringPreferredFontColorAttribute; // NSColor
 
 /* Properties that are returned in the outputDictionary of a render */
+/* The output dictionary is not guaranteed to contain any key. */
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfLinksInBodyAttribute; // NSArray<AHHyperlinkScannerResult *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsListOfLinksMappedInBodyAttribute; // NSDictionary<NSString *, NSString *>
 TEXTUAL_EXTERN NSString * const TVCLogRendererResultsKeywordMatchFoundAttribute; // BOOL
