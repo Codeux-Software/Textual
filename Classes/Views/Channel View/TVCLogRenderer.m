@@ -586,6 +586,12 @@ static NSUInteger getNextAttributeRange(attr_t *attrBuf, NSUInteger start, NSUIn
 
 	NSUInteger bodyLength = body.length;
 
+	if (bodyLength == 0) {
+		self->_outputDictionary[TVCLogRendererResultsListOfUsersFoundAttribute] = [NSSet set];
+
+		return;
+	}
+
 	IRCChannel *channel = self->_viewController.associatedChannel;
 
 	NSArray<IRCUser *> *users = channel.memberListSortedByNicknameLength;
