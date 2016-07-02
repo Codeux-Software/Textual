@@ -64,6 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSURL *urlUrl = url.URLUsingWebKitPasteboard;
 
+	if (urlUrl == nil) {
+		return nil;
+	}
+
 	NSString *pluginResult = [THOPluginDispatcher processInlineMediaContentURL:urlUrl.absoluteString];
 
 	if (pluginResult) {
