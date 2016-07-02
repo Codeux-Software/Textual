@@ -186,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return; // Cancel operation...
 	}
 
-	NSString *licenseKeyValue = self.unregisteredViewLicenseKeyTextField.stringValue;
+	NSString *licenseKeyValue = self.unregisteredViewLicenseKeyTextField.stringValue.trim;
 
 	if (TLOLicenseManagerLicenseKeyIsValid(licenseKeyValue)) {
 		self.unregisteredViewActivateTextualButton.enabled = YES;
@@ -252,7 +252,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	self.licenseManagerDownloader.isSilentOnSuccess = self.isSilentOnSuccess;
 
-	[self.licenseManagerDownloader activateLicense:licenseKey];
+	[self.licenseManagerDownloader activateLicense:licenseKey.trim];
 }
 
 #pragma mark -
