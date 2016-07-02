@@ -83,6 +83,21 @@ NS_ASSUME_NONNULL_BEGIN
 	return basePath;
 }
 
++ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath
+{
+	NSString *sourcePath = [TPCPathInfo applicationGroupContainerPath];
+
+	if (sourcePath == nil) {
+		return nil;
+	}
+
+	NSString *basePath = [sourcePath stringByAppendingPathComponent:@"/Library/Caches/"];
+
+	[TPCPathInfo _createDirectoryOrOutputError:basePath];
+
+	return basePath;
+}
+
 + (nullable NSString *)applicationGroupContainerPath
 {
 #if TEXTUAL_BUILT_INSIDE_SANDBOX == 1

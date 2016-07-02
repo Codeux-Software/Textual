@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TPCPathInfo : NSObject
 + (NSString *)applicationBundlePath;
 + (nullable NSString *)applicationCachesFolderPath;
++ (nullable NSString *)applicationCachesFolderInsideGroupContainerPath;
 + (nullable NSString *)applicationGroupContainerPath;
 + (nullable NSString *)applicationLogsFolderPath;
 + (NSString *)applicationResourcesFolderPath;
