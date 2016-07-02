@@ -72,9 +72,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addItemToList:(NSUInteger)rowIndex
 {
-	[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
-					  inParent:nil
-				 withAnimation:NSTableViewAnimationEffectNone];
+	@try {
+		[self insertItemsAtIndexes:[NSIndexSet indexSetWithIndex:rowIndex]
+						  inParent:nil
+					 withAnimation:NSTableViewAnimationEffectNone];
+	} @catch (NSException *exception) {
+		LogToConsoleError("Caught exception: %{public}@", exception.reason)
+		LogToConsoleCurrentStackTrace
+	}
 }
 
 - (void)removeItemFromList:(id)object
