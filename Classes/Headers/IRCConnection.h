@@ -48,7 +48,7 @@
 @property (readonly) BOOL isSending;
 @property (readonly) BOOL isSecured;
 @property (readonly) BOOL isConnectedWithClientSideCertificate;
-@property (nonatomic, assign) BOOL connectionPrefersIPv6;
+@property (nonatomic, assign) BOOL connectionPrefersIPv4;
 @property (nonatomic, assign) BOOL connectionPrefersModernCiphers;
 @property (nonatomic, assign) BOOL connectionPrefersSecuredConnection;
 @property (nonatomic, assign) BOOL connectionShouldValidateCertificateChain;

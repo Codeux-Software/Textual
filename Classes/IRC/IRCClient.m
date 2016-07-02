@@ -8494,15 +8494,15 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 
 - (void)connect
 {
-	[self connect:IRCClientConnectNormalMode preferringIPv6:self.config.connectionPrefersIPv6];
+	[self connect:IRCClientConnectNormalMode];
 }
 
 - (void)connect:(IRCClientConnectMode)mode
 {
-	[self connect:mode preferringIPv6:self.config.connectionPrefersIPv6];
+	[self connect:mode preferringIPv4:self.config.connectionPrefersIPv4];
 }
 
-- (void)connect:(IRCClientConnectMode)mode preferringIPv6:(BOOL)preferIPv6
+- (void)connect:(IRCClientConnectMode)mode preferringIPv4:(BOOL)preferIPv4
 {
 	/* Why would we try and connect now? */
 	if (self.isQuitting) {
@@ -8564,7 +8564,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 	self.socket.serverAddress = socketAddress;
 	self.socket.serverPort = socketPort;
 
-	self.socket.connectionPrefersIPv6 = preferIPv6;
+	self.socket.connectionPrefersIPv4 = preferIPv4;
 
 	self.socket.connectionPrefersSecuredConnection = self.config.prefersSecuredConnection;
 	self.socket.connectionPrefersModernCiphers = self.config.connectionPrefersModernCiphers;

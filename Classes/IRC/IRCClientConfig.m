@@ -79,7 +79,7 @@ TEXTUAL_IGNORE_DEPRECATION_BEGIN
 			 @"autojoinWaitsForNickServ" : @([TPCPreferences autojoinWaitsForNickServ]),
 TEXTUAL_IGNORE_DEPRECATION_END
 
-			 @"connectionPrefersIPv6" : @(NO),
+			 @"connectionPrefersIPv4" : @(NO),
 			 @"connectionPrefersModernCiphers" : @(YES),
 			 @"prefersSecuredConnection" : @(NO),
 
@@ -166,7 +166,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	self.autojoinWaitsForNickServ	= [defaults boolForKey:@"autojoinWaitsForNickServ"];
 #pragma clang diagnostic pop
 
-	self.connectionPrefersIPv6				= [defaults boolForKey:@"connectionPrefersIPv6"];
+	self.connectionPrefersIPv4				= [defaults boolForKey:@"connectionPrefersIPv4"];
 	self.connectionPrefersModernCiphers		= [defaults boolForKey:@"connectionPrefersModernCiphers"];
 	self.prefersSecuredConnection			= [defaults boolForKey:@"prefersSecuredConnection"];
 
@@ -471,7 +471,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignIntegerTo:&_serverPort					forKey:@"serverPort"];
 	[dic assignBoolTo:&_prefersSecuredConnection		forKey:@"prefersSecuredConnection"];
 	[dic assignBoolTo:&_connectionPrefersModernCiphers	forKey:@"connectionPrefersModernCiphers"];
-	[dic assignBoolTo:&_connectionPrefersIPv6			forKey:@"connectionPrefersIPv6"];
+	[dic assignBoolTo:&_connectionPrefersIPv4			forKey:@"connectionPrefersIPv4"];
 
 	[dic assignUnsignedIntegerTo:&_proxyType				forKey:@"proxyType"];
 	[dic assignStringTo:&_proxyAddress				forKey:@"proxyAddress"];
@@ -542,7 +542,6 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic assignBoolTo:&_autoSleepModeDisconnect		forKey:@"disconnectOnSleepMode"];
 
 	[dic assignBoolTo:&_prefersSecuredConnection	forKey:@"connectUsingSSL"];
-	[dic assignBoolTo:&_connectionPrefersIPv6		forKey:@"DNSResolverPrefersIPv6"];
 
 	[dic assignBoolTo:&_validateServerCertificateChain	forKey:@"validateServerSideSSLCertificate"];
 
@@ -686,7 +685,7 @@ TEXTUAL_IGNORE_DEPRECATION_END
 	[dic setInteger:self.serverPort						forKey:@"serverPort"];
 	[dic setBool:self.prefersSecuredConnection			forKey:@"prefersSecuredConnection"];
 	[dic setBool:self.connectionPrefersModernCiphers	forKey:@"connectionPrefersModernCiphers"];
-	[dic setBool:self.connectionPrefersIPv6				forKey:@"connectionPrefersIPv6"];
+	[dic setBool:self.connectionPrefersIPv4				forKey:@"connectionPrefersIPv4"];
 
 	[dic setInteger:self.proxyType						forKey:@"proxyType"];
 	[dic maybeSetObject:self.proxyAddress				forKey:@"proxyAddress"];

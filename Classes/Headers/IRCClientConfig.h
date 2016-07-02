@@ -56,7 +56,7 @@ typedef NS_ENUM(NSUInteger, IRCConnectionSocketProxyType) {
 @property (nonatomic, assign) BOOL autoReconnect;
 @property (nonatomic, assign) BOOL autoSleepModeDisconnect;
 @property (nonatomic, assign) BOOL autojoinWaitsForNickServ;
-@property (nonatomic, assign) BOOL connectionPrefersIPv6;
+@property (nonatomic, assign) BOOL connectionPrefersIPv4;
 @property (nonatomic, assign) BOOL connectionPrefersModernCiphers;
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1

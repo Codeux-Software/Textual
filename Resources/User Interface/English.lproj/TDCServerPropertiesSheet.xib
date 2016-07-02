@@ -104,7 +104,7 @@
                         <rect key="frame" x="8" y="8" width="159" height="340"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="c7A-uX-FoM">
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9ke-X4-49Z" id="Uj0-Wm-eox" customClass="TVCContentNavigationOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="0.0"/>
@@ -1953,80 +1953,62 @@ Gw
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="2488" userLabel="Networking View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="2530">
-                    <rect key="frame" x="34" y="237" width="140" height="18"/>
-                    <buttonCell key="cell" type="check" title="Connect using IPv6" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNB-ZO-I8w">
-                    <rect key="frame" x="53" y="172" width="444" height="59"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="59" id="gdd-Jt-8ye"/>
-                    </constraints>
-                    <textFieldCell key="cell" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" id="bcO-Pj-laa">
-                        <font key="font" metaFont="smallSystem"/>
-                        <string key="title">• If a DNS lookup returns an IPv4 address, then Textual uses IPv4.
-• If a DNS lookup returns an IPv6 address, then Textual uses IPv6.
-• If a DNS lookup returns both, then this option will dictate if IPv6 is used. 
-   When enabled, IPv4 is not used as a fallback for failed IPv6 connections.</string>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
-                    <rect key="frame" x="34" y="148" width="339" height="18"/>
-                    <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="2536">
-                    <rect key="frame" x="34" y="128" width="355" height="18"/>
+                    <rect key="frame" x="34" y="161" width="355" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when no PING response is received" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2537">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="7Re-Oa-iNx">
-                    <rect key="frame" x="34" y="80" width="303" height="18"/>
+                    <rect key="frame" x="34" y="113" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Validate the certificate chain when connecting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dz6-nj-V0I">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="w5K-aH-URS">
-                    <rect key="frame" x="34" y="108" width="303" height="18"/>
+                    <rect key="frame" x="34" y="141" width="303" height="18"/>
                     <buttonCell key="cell" type="check" title="Force a disconnect when reachability changes" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mLI-Vm-l2s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="VLy-2l-FGP">
-                    <rect key="frame" x="34" y="52" width="235" height="18"/>
+                    <rect key="frame" x="34" y="85" width="235" height="18"/>
                     <buttonCell key="cell" type="check" title="Prefer Textual's list of cipher suites" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="PVf-DV-Q7i">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2531">
+                    <rect key="frame" x="34" y="181" width="339" height="18"/>
+                    <buttonCell key="cell" type="check" title="Periodically PING the server to verify the connection" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2532">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2530">
+                    <rect key="frame" x="34" y="209" width="90" height="18"/>
+                    <buttonCell key="cell" type="check" title="Prefer IPv4" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2533">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
             </subviews>
             <constraints>
-                <constraint firstItem="2531" firstAttribute="top" secondItem="eNB-ZO-I8w" secondAttribute="bottom" constant="8" symbolic="YES" id="1CH-uo-48Z"/>
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="top" secondItem="w5K-aH-URS" secondAttribute="bottom" constant="14" id="1te-Bt-Za4"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="top" secondItem="2536" secondAttribute="bottom" constant="6" symbolic="YES" id="6Ix-p9-Rd7"/>
                 <constraint firstItem="2536" firstAttribute="leading" secondItem="w5K-aH-URS" secondAttribute="leading" id="EA6-QO-79Q"/>
-                <constraint firstAttribute="trailing" secondItem="eNB-ZO-I8w" secondAttribute="trailing" constant="35" id="IT4-Fr-UPt"/>
                 <constraint firstItem="w5K-aH-URS" firstAttribute="leading" secondItem="7Re-Oa-iNx" secondAttribute="leading" id="KVr-tH-94d"/>
-                <constraint firstItem="eNB-ZO-I8w" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="55" id="PeD-6X-dMu"/>
                 <constraint firstItem="7Re-Oa-iNx" firstAttribute="leading" secondItem="VLy-2l-FGP" secondAttribute="leading" id="Q1u-bQ-oPe"/>
-                <constraint firstItem="eNB-ZO-I8w" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="8" symbolic="YES" id="Rnu-vE-BZC"/>
                 <constraint firstItem="2536" firstAttribute="top" secondItem="2531" secondAttribute="bottom" constant="6" symbolic="YES" id="V1d-cP-qJf"/>
                 <constraint firstItem="2531" firstAttribute="leading" secondItem="2536" secondAttribute="leading" id="cGt-cj-hzU"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2488" secondAttribute="leading" constant="36" id="f8b-Hh-PW6"/>
-                <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="54" id="fXG-vu-hfB"/>
                 <constraint firstItem="2530" firstAttribute="leading" secondItem="2531" secondAttribute="leading" id="fbV-dI-oEE"/>
                 <constraint firstItem="VLy-2l-FGP" firstAttribute="top" secondItem="7Re-Oa-iNx" secondAttribute="bottom" constant="14" id="oeQ-C4-kD7"/>
+                <constraint firstItem="2531" firstAttribute="top" secondItem="2530" secondAttribute="bottom" constant="14" id="w1S-6W-u5R"/>
+                <constraint firstItem="2530" firstAttribute="top" secondItem="2488" secondAttribute="top" constant="82" id="w64-4H-lvT"/>
             </constraints>
             <point key="canvasLocation" x="521" y="113.5"/>
         </customView>

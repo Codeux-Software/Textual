@@ -69,7 +69,7 @@
 @property (nonatomic, weak) IBOutlet NSButton *setInvisibleModeOnConnectCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pongTimerCheck;
 @property (nonatomic, weak) IBOutlet NSButton *performDisconnectOnPongTimerCheck;
-@property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv6heck;
+@property (nonatomic, weak) IBOutlet NSButton *connectionPrefersIPv4Check;
 @property (nonatomic, weak) IBOutlet NSButton *connectionPrefersModernCiphersCheck;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateChangeCertificateButton;
 @property (nonatomic, weak) IBOutlet NSButton *clientCertificateMD5FingerprintCopyButton;
@@ -699,7 +699,7 @@
 	[self.zncIgnorePlaybackNotificationsCheck setState:self.config.zncIgnorePlaybackNotifications];
 
 	/* Network Socket */
-	[self.connectionPrefersIPv6heck setState:self.config.connectionPrefersIPv6];
+	[self.connectionPrefersIPv4Check setState:self.config.connectionPrefersIPv4];
 
 	[self.pongTimerCheck setState:self.config.performPongTimer];
 	[self.performDisconnectOnPongTimerCheck setState:self.config.performDisconnectOnPongTimer];
@@ -821,7 +821,7 @@
 	self.config.zncIgnorePlaybackNotifications = [self.zncIgnorePlaybackNotificationsCheck state];
 	
 	/* Network Socket */
-	self.config.connectionPrefersIPv6 = [self.connectionPrefersIPv6heck state];
+	self.config.connectionPrefersIPv4 = [self.connectionPrefersIPv4Check state];
 
 	self.config.performPongTimer = [self.pongTimerCheck state];
 	self.config.performDisconnectOnPongTimer = [self.performDisconnectOnPongTimerCheck state];

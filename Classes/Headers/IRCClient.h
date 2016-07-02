@@ -217,7 +217,7 @@ TEXTUAL_EXTERN NSString * const IRCClientChannelListWasModifiedNotification;
 
 - (void)connect;
 - (void)connect:(IRCClientConnectMode)mode;
-- (void)connect:(IRCClientConnectMode)mode preferringIPv6:(BOOL)preferIPv6;
+- (void)connect:(IRCClientConnectMode)mode preferringIPv4:(BOOL)preferIPv4;
 
 - (void)disconnect;
 - (void)quit;
