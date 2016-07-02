@@ -198,30 +198,48 @@ Textual.documentHTML = function()
 
 Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 {
-	var documentBody = Textual.documentBodyElement();
-
-	var childNodes = documentBody.childNodes;
-
-	if (countOfLinesToRemove > childNodes.length) {
-		countOfLinesToRemove = childNodes.length;
-	}
-
 	var removedChildren = [];
 
-	for (var i = (countOfLinesToRemove - 1); i >= 0; i--) {
-		var childNode = childNodes[i];
+	var documentBody = Textual.documentBodyElement();
 
-		var childNodeID = childNode.id;
+	var historicMessages = document.getElementById("historic_messages")
 
-		if (childNodeID && childNodeID.indexOf("line-") === 0) {
+	var historicRemoveCount = 0;
+	
+	if (historicMessages.children.length < countOfLinesToRemove) {
+		historicRemoveCount = historicMessages.children.length;
+	} else {
+		historicRemoveCount = countOfLinesToRemove;
+	}
+
+	while (historicRemoveCount > 0) {
+		var childNode = historicElements.firstChild;
+		
+		var childNodeId = childNode.id;
+
+		if (childNodeId && childNodeId.indexOf("line-") === 0) {
 			removedChildren.push(childNodeID);
 
 			documentBody.removeChild(childNode);
 		}
 
-		if (removedChildren.length == countOfLinesToRemove) {
-			break;
+		historicRemoveCount -= 1
+	}
+
+	countOfLinesToRemove -= removedChildren.length;
+
+	while (countOfLinesToRemove > 0) {
+		var childNode = documentBody.firstChild;
+		
+		var childNodeId = childNode.id;
+
+		if (childNodeId && childNodeId.indexOf("line-") === 0) {
+			removedChildren.push(childNodeID);
+
+			documentBody.removeChild(childNode);
 		}
+
+		countOfLinesToRemove -= 1;
 	}
 
 	return removedChildren;
