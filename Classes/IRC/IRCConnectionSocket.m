@@ -109,7 +109,7 @@ NSInteger const IRCConnectionSocketTorBrowserTypeProxyPort = 9150;
 												 delegateQueue:self.dispatchQueue
 												   socketQueue:self.socketQueue];
 
-	[self.socketConnection setIPv4PreferredOverIPv6:(self.connectionPrefersIPv6 == NO)];
+	[self.socketConnection setIPv4PreferredOverIPv6:self.connectionPrefersIPv4];
 
 	/* Attempt to connect using a configured proxy */
 	BOOL connectedUsingProxy = NO;

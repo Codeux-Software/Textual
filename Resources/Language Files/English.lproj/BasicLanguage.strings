@@ -57,7 +57,6 @@
 
 "BasicLanguage[1014][1]" = "Connect";
 "BasicLanguage[1014][2]" = "Connect using IPv4";
-"BasicLanguage[1014][3]" = "Connect using IPv6";
 
 "BasicLanguage[1015]" = "Copy Log as HTML";
 "BasicLanguage[1016]" = "Force Reload Style";

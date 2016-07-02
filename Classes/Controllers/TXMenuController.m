@@ -404,28 +404,24 @@
 			
 			[item setHidden:condition];
 
-			BOOL prefersIPv6 = [_serverCurrentConfig connectionPrefersIPv6];
+			BOOL prefersIPv4 = [_serverCurrentConfig connectionPrefersIPv4];
 
 			NSUInteger flags = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 			if (flags == NSAlternateKeyMask) {
-				if (prefersIPv6) {
-					prefersIPv6 = NO;
+				if (prefersIPv4 == NO) {
+					prefersIPv4 = YES;
 
 					[item setTitle:TXTLS(@"BasicLanguage[1014][2]")];
-				} else {
-					prefersIPv6 = YES;
-
-					[item setTitle:TXTLS(@"BasicLanguage[1014][3]")];
 				}
 			} else {
 				[item setTitle:TXTLS(@"BasicLanguage[1014][1]")];
 			}
 
-			if (prefersIPv6) {
-				[item setAction:@selector(connectPreferringIPv6:)];
-			} else {
+			if (prefersIPv4) {
 				[item setAction:@selector(connectPreferringIPv4:)];
+			} else {
+				[item setAction:@selector(connectPreferringIPv6:)];
 			}
 
 			return (condition == NO && [u isQuitting] == NO);
@@ -1391,7 +1387,7 @@
 		return;
 	}
 	
-	[u connect:IRCClientConnectNormalMode preferringIPv6:YES];
+	[u connect:IRCClientConnectNormalMode preferringIPv4:NO];
 
 	[mainWindow() expandClient:u]; // Expand client on user opreated connect.
 }
@@ -1404,7 +1400,7 @@
 		return;
 	}
 
-	[u connect:IRCClientConnectNormalMode preferringIPv6:NO];
+	[u connect:IRCClientConnectNormalMode preferringIPv4:YES];
 
 	[mainWindow() expandClient:u]; // Expand client on user opreated connect.
 }
