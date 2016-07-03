@@ -218,7 +218,7 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 		var childNodeId = childNode.id;
 
 		if (childNodeId && childNodeId.indexOf("line-") === 0) {
-			removedChildren.push(childNodeID);
+			removedChildren.push(childNodeId);
 
 			documentBody.removeChild(childNode);
 		}
@@ -234,7 +234,7 @@ Textual.reduceNumberOfLines = function(countOfLinesToRemove)
 		var childNodeId = childNode.id;
 
 		if (childNodeId && childNodeId.indexOf("line-") === 0) {
-			removedChildren.push(childNodeID);
+			removedChildren.push(childNodeId);
 
 			documentBody.removeChild(childNode);
 		}
