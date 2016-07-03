@@ -517,6 +517,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			return condition;
 		}
+		case 508: // "Add Channel…"
 		case 603: // "Add Channel…"
 		{
 			menuItem.hidden = _isQuery;
