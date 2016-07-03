@@ -290,7 +290,7 @@ NS_ASSUME_NONNULL_BEGIN
 	/* Look at all those magic numbers... */
 	CGFloat rightEdge = (NSMaxX(aRect) - 40.0);
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater] && self.mainWindow.runningInHighResolutionMode) {
 		return NSMakeRect(rightEdge, 5.0, 14.0, 14.0);
 	} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		return NSMakeRect(rightEdge, 6.0, 14.0, 14.0);
