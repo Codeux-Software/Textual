@@ -128,7 +128,6 @@
 	@class TVCTextViewWithIRCFormatter;
 	@class TXMasterController;
 	@class TXMenuController;
-	@class TXMenuControllerMainWindowProxy;
 	@class TXSharedApplication;
 	@class TXUserInterface;
 

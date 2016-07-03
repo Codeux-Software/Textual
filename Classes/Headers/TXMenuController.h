@@ -38,6 +38,8 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
 	Tag Reference:
  
@@ -266,170 +268,165 @@
 	1701: "Disable All Notification Sounds"
  */
 
-@interface TXMenuController : NSObject <TDChannelPropertiesSheetDelegate, TDCServerPropertiesSheetDelegate, NSMenuDelegate>
+@interface TXMenuController : NSObject
+@property (readonly, weak) NSMenu *channelViewChannelNameMenu;
+@property (readonly, weak) NSMenu *channelViewDefaultMenu;
+@property (readonly, weak) NSMenu *channelViewURLMenu;
 
-@property (nonatomic, copy) NSString *pointedNickname; // Takes priority if sender of an action returns nil userInfo value
-@property (nonatomic, strong) TDCFileTransferDialog *fileTransferController;
-@property (nonatomic, weak) IBOutlet NSMenu *navigationChannelList;
-@property (nonatomic, weak) IBOutlet NSMenu *addServerMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *channelViewMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *dockMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *joinChannelMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *segmentedControllerMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *tcopyURLMenu;
-@property (nonatomic, weak) IBOutlet NSMenu *userControlMenu;
+@property (readonly, weak) NSMenu *dockMenu;
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
-@property (nonatomic, weak) IBOutlet NSMenu *encryptionManagerStatusMenu;
+@property (readonly, weak) NSMenu *encryptionManagerStatusMenu;
 #endif
 
-@property (nonatomic, weak) IBOutlet NSMenuItem *closeWindowMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *channelMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *serverMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsFileMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsDockMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsSoundsFileMenuItem;
-@property (nonatomic, weak) IBOutlet NSMenuItem *muteNotificationsSoundsDockMenuItem;
+@property (readonly, weak) NSMenu *mainMenuNavigationChannelListMenu;
+@property (readonly, weak) NSMenuItem *mainMenuCloseWindowMenuItem;
+@property (readonly, weak) NSMenuItem *mainMenuChannelMenuItem;
+@property (readonly, weak) NSMenuItem *mainMenuServerMenuItem;
 
-- (void)setupOtherServices;
+@property (readonly, weak) NSMenu *mainWindowSegmentedControllerCell0Menu;
 
-- (void)preferencesChanged;
+@property (readonly, weak) NSMenu *serverListNoSelectionMenu;
 
-- (void)prepareForApplicationTermination;
+@property (readonly, weak) NSMenu *userControlMenu;
 
-- (NSArray *)selectedMembers:(id)sender;
-- (BOOL)checkSelectedMembers:(id)item; // Returns whether a user is selected on user list
+@property (readonly, weak) NSMenuItem *muteNotificationsDockMenuItem;
+@property (readonly, weak) NSMenuItem *muteNotificationsFileMenuItem;
+@property (readonly, weak) NSMenuItem *muteNotificationsSoundsDockMenuItem;
+@property (readonly, weak) NSMenuItem *muteNotificationsSoundsFileMenuItem;
+
+@property (readonly, weak, nullable) IRCClient *selectedClient;
+@property (readonly, weak, nullable) IRCChannel *selectedChannel;
+
+- (NSArray<IRCUser *> *)selectedMembers:(id)sender;
+- (NSArray<NSString *> *)selectedMembersNicknames:(id)sender;
 - (void)deselectMembers:(id)sender;
-
-- (BOOL)validateMenuItem:(NSMenuItem *)item;
-- (BOOL)validateMenuItemTag:(NSInteger)tag forItem:(NSMenuItem *)item;
-
-- (IBAction)showPreferencesDialog:(id)sender;
 
 - (IBAction)copy:(id)sender;
 - (IBAction)paste:(id)sender;
+
 - (IBAction)print:(id)sender;
 
-- (IBAction)searchGoogle:(id)sender;
+- (IBAction)closeWindow:(id)sender;
 
-- (void)closeWindow:(id)sender;
-- (void)copyLogAsHtml:(id)sender;
+- (IBAction)addChannel:(id)sender;
+- (IBAction)deleteChannel:(id)sender;
 
-- (void)mainWindowSelectionDidChange;
-- (void)populateNavgiationChannelList;
+- (IBAction)addServer:(id)sender;
+- (IBAction)duplicateServer:(id)sender;
+- (IBAction)deleteServer:(id)sender;
 
-- (IBAction)toggleMainWindowAppearance:(id)sender;
-
-- (IBAction)toggleDeveloperMode:(id)sender;
-- (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
-
-- (IBAction)toggleAppNap:(id)sender;
-
-- (IBAction)showHighlightSheet:(id)sender;
-
-- (IBAction)showFileTransfersDialog:(id)sender;
-
-- (IBAction)openWelcomeSheet:(id)sender;
-
-- (void)showServerPropertyDialog:(IRCClient *)u withDefaultView:(TDCServerPropertiesSheetNavigationSelection)viewType andContext:(NSString *)context;
-
-- (IBAction)markScrollback:(id)sender;
-- (IBAction)clearScrollback:(id)sender;
-- (IBAction)gotoScrollbackMarker:(id)sender;
-- (IBAction)markAllAsRead:(id)sender;
-- (IBAction)increaseLogFontSize:(id)sender;
-- (IBAction)decreaseLogFontSize:(id)sender;
+- (IBAction)joinChannel:(id)sender;
+- (IBAction)leaveChannel:(id)sender;
 
 - (IBAction)connect:(id)sender;
+
+- (IBAction)connectToTextualHelpChannel:(id)sender;
+- (IBAction)connectToTextualTestingChannel:(id)sender;
+
 - (IBAction)disconnect:(id)sender;
 - (IBAction)cancelReconnection:(id)sender;
-- (IBAction)showNicknameChangeDialog:(id)sender;
-- (IBAction)showServerChannelList:(id)sender;
-- (IBAction)addServer:(id)sender;
-- (IBAction)copyServer:(id)sender;
-- (IBAction)deleteServer:(id)sender;
-- (IBAction)showServerPropertiesDialog:(id)sender;
+
+- (IBAction)clearScrollback:(id)sender;
+
+- (IBAction)markAllAsRead:(id)sender;
+
+- (IBAction)decreaseLogFontSize:(id)sender;
+- (IBAction)increaseLogFontSize:(id)sender;
+
+- (IBAction)gotoScrollbackMarker:(id)sender;
+- (IBAction)markScrollback:(id)sender;
+
+- (IBAction)exportPreferences:(id)sender;
+- (IBAction)importPreferences:(id)sender;
+
+- (IBAction)memberBanFromChannel:(id)sender;
+- (IBAction)memberKickFromChannel:(id)sender;
+- (IBAction)memberKickbanFromChannel:(id)sender;
+
+- (IBAction)memberModeGiveHalfop:(id)sender;
+- (IBAction)memberModeGiveOp:(id)sender;
+- (IBAction)memberModeGiveVoice:(id)sender;
+- (IBAction)memberModeTakeHalfop:(id)sender;
+- (IBAction)memberModeTakeOp:(id)sender;
+- (IBAction)memberModeTakeVoice:(id)sender;
+
+- (IBAction)memberSendCTCPClientInfo:(id)sender;
+- (IBAction)memberSendCTCPFinger:(id)sender;
+- (IBAction)memberSendCTCPPing:(id)sender;
+- (IBAction)memberSendCTCPTime:(id)sender;
+- (IBAction)memberSendCTCPUserinfo:(id)sender;
+- (IBAction)memberSendCTCPVersion:(id)sender;
+
+- (IBAction)memberSendFileRequest:(id)sender;
+
+- (IBAction)memberSendInvite:(id)sender;
+- (IBAction)memberSendWhois:(id)sender;
+
+- (IBAction)memberBanFromServer:(id)sender;
+- (IBAction)memberKillFromServer:(id)sender;
+- (IBAction)memberShunOnServer:(id)sender;
+
+- (IBAction)memberStartPrivateMessage:(id)sender;
 
 - (IBAction)onNextHighlight:(id)sender;
 - (IBAction)onPreviousHighlight:(id)sender;
 
-- (IBAction)joinChannel:(id)sender;
-- (IBAction)leaveChannel:(id)sender;
-- (IBAction)showChannelTopicDialog:(id)sender;
-- (IBAction)showChannelModeDialog:(id)sender;
-- (IBAction)addChannel:(id)sender;
-- (IBAction)deleteChannel:(id)sender;
-- (IBAction)showChannelPropertiesDialog:(id)sender;
+- (IBAction)openFastSpringStoreWebpage:(id)sender;
+- (IBAction)openMacAppStoreWebpage:(id)sender;
 
-- (void)memberInMemberListDoubleClicked:(id)sender;
-- (void)memberInChannelViewDoubleClicked:(id)sender;
+- (IBAction)openChannelLogs:(id)sender;
+- (IBAction)openLogLocation:(id)sender;
 
-- (IBAction)memberSendWhois:(id)sender;
-- (IBAction)memberStartPrivateMessage:(id)sender;
-- (IBAction)memberSendInvite:(id)sender;
-- (IBAction)memberSendCTCPPing:(id)sender;
-- (IBAction)memberSendCTCPTime:(id)sender;
-- (IBAction)memberSendCTCPVersion:(id)sender;
-- (IBAction)memberSendCTCPUserinfo:(id)sender;
-- (IBAction)memberSendCTCPClientInfo:(id)sender;
-- (IBAction)memberSendCTCPFinger:(id)sender;
-- (IBAction)memberSendFileRequest:(id)sender;
-- (IBAction)memberModeChangeOp:(id)sender;
-- (IBAction)memberModeChangeDeop:(id)sender;
-- (IBAction)memberModeChangeHalfop:(id)sender;
-- (IBAction)memberModeChangeDehalfop:(id)sender;
-- (IBAction)memberModeChangeVoice:(id)sender;
-- (IBAction)memberModeChangeDevoice:(id)sender;
-- (IBAction)memberKickFromChannel:(id)sender;
-- (IBAction)memberBanFromServer:(id)sender;
-- (IBAction)memberKickbanFromChannel:(id)sender;
-- (IBAction)memberKillFromServer:(id)sender;
-- (IBAction)memberGlineFromServer:(id)sender;
-- (IBAction)memberShunFromServer:(id)sender;
+- (IBAction)centerMainWindow:(id)sender;
+- (IBAction)resetMainWindowFrame:(id)sender;
 
-- (void)memberChangeColor:(NSString *)nickname;
+- (IBAction)showAcknowledgments:(id)sender;
+- (IBAction)showScriptingDocumentation:(id)sender;
 
-- (void)memberSendDroppedFiles:(NSArray *)files row:(NSNumber *)row;
-- (void)memberSendDroppedFilesToSelectedChannel:(NSArray *)files; // Only works if selectedChannel is a private message
-
-- (IBAction)copyUrl:(id)sender;
-
-- (IBAction)joinClickedChannel:(id)sender;
-
-- (IBAction)toggleChannelModerationMode:(id)sender;
-- (IBAction)toggleChannelInviteMode:(id)sender;
+- (IBAction)showAboutWindow:(id)sender;
+- (IBAction)showAddressBook:(id)sender;
+- (IBAction)showChannelBanExceptionList:(id)sender;
+- (IBAction)showChannelBanList:(id)sender;
+- (IBAction)showChannelInviteExceptionList:(id)sender;
+- (IBAction)showChannelModifyModesSheet:(id)sender;
+- (IBAction)showChannelModifyTopicSheet:(id)sender;
+- (IBAction)showChannelPropertiesSheet:(id)sender;
+- (IBAction)showFileTransfersWindow:(id)sender;
+- (IBAction)showFindPrompt:(id)sender;
+- (IBAction)showIgnoreList:(id)sender;
+- (IBAction)showMainWindow:(id)sender;
+- (IBAction)showPreferencesWindow:(id)sender;
+- (IBAction)showServerChangeNicknameSheet:(id)sender;
+- (IBAction)showServerChannelList:(id)sender;
+- (IBAction)showServerHighlightList:(id)sender;
+- (IBAction)showServerPropertiesSheet:(id)sender;
+- (IBAction)showSetVhostPrompt:(id)sender;
+- (IBAction)showWelcomeSheet:(id)sender;
 
 - (IBAction)sortChannelListNames:(id)sender;
-- (IBAction)resetWindowSize:(id)sender;
-- (IBAction)showMainWindow:(id)sender;
-- (IBAction)showChannelIgnoreList:(id)sender;
-- (IBAction)showAboutWindow:(id)sender;
-- (IBAction)openLogLocation:(id)sender;
-- (IBAction)openChannelLogs:(id)sender;
-- (IBAction)connectToTextualHelpChannel:(id)sender;
-- (IBAction)connectToTextualTestingChannel:(id)sender;
-- (IBAction)showSetVhostPrompt:(id)sender;
-- (IBAction)showFindPanel:(id)sender;
-- (IBAction)showChannelBanList:(id)sender;
-- (IBAction)showChannelBanExceptionList:(id)sender;
-- (IBAction)showChannelInviteExceptionList:(id)sender;
 
-- (IBAction)openFastSpringStoreWebpage:(id)sender;
-- (IBAction)openMacAppStoreDownloadPage:(id)sender;
+- (IBAction)toggleChannelInviteMode:(id)sender;
+- (IBAction)toggleChannelModerationMode:(id)sender;
 
 - (IBAction)toggleFullscreen:(id)sender;
 
-- (IBAction)commandWShortcutUsed:(id)sender;
-- (IBAction)openHelpMenuLinkItem:(id)sender;
-- (IBAction)showAcknowledgments:(id)sender;
-- (IBAction)showScriptingDocumentation:(id)sender;
-- (IBAction)processNavigationItem:(id)sender;
-- (IBAction)centerMainWindow:(id)sender;
+- (IBAction)toggleMainWindowAppearance:(id)sender;
 
-- (void)forceReloadTheme:(id)sender;
+- (IBAction)toggleAppNap:(id)sender;
+- (IBAction)toggleDeveloperMode:(id)sender;
 
-- (IBAction)importPreferences:(id)sender;
-- (IBAction)exportPreferences:(id)sender;
+- (IBAction)toggleServerListVisibility:(id)sender;
+- (IBAction)toggleMemberListVisibility:(id)sender;
+
+- (IBAction)toggleMuteOnNotifications:(id)sender;
+- (IBAction)toggleMuteOnNotificationSounds:(id)sender;
+
+- (IBAction)manageLicense:(id)sender;
+
+#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
+- (IBAction)simulateCrash:(id)sender;
+#endif
 
 #if TEXTUAL_BUILT_WITH_ADVANCED_ENCRYPTION == 1
 - (IBAction)encryptionWhatIsThisInformation:(id)sender;
@@ -440,37 +437,18 @@
 - (IBAction)encryptionListFingerprints:(id)sender;
 #endif
 
-- (IBAction)toggleServerListVisibility:(id)sender;
-- (IBAction)toggleMemberListVisibility:(id)sender;
+- (IBAction)copyUrl:(id)sender;
 
-- (IBAction)toggleMuteOnNotificationSounds:(id)sender;
-- (IBAction)toggleMuteOnAllNotifcations:(id)sender;
-
-- (IBAction)manageLicense:(id)sender;
-- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey;
-- (void)manageLicense:(id)sender activateLicenseKey:(NSString *)licenseKey licenseKeyPassedByArgument:(BOOL)licenseKeyPassedByArgument;
-
-- (void)toggleMuteOnAllNotifcationsShortcut:(NSInteger)state;
-- (void)toggleMuteOnNotificationSoundsShortcut:(NSInteger)state;
-
-#if TEXTUAL_BUILT_WITH_HOCKEYAPP_SDK_ENABLED == 1
-- (IBAction)simulateCrash:(id)sender;
-#endif
-
-- (IBAction)openWebInspector:(id)sender;
 - (IBAction)lookUpInDictionary:(id)sender;
+- (IBAction)searchGoogle:(id)sender;
+- (IBAction)copyLogAsHtml:(id)sender;
+- (IBAction)forceReloadTheme:(id)sender;
+- (IBAction)openWebInspector:(id)sender;
 
 - (IBAction)toggleBetaUpdates:(id)sender;
 - (IBAction)checkForUpdates:(id)sender;
 
-- (IBAction)emptyAction:(id)sender TEXTUAL_DEPRECATED("Do not target this method");
+- (IBAction)resetDoNotAskMePopupWarnings:(id)sender;
 @end
 
-@interface TXMenuControllerMainWindowProxy : NSObject
-- (IBAction)openWelcomeSheet:(id)sender;
-
-- (IBAction)manageLicense:(id)sender;
-
-- (IBAction)openFastSpringStoreWebpage:(id)sender;
-- (IBAction)openMacAppStoreWebpage:(id)sender;
-@end
+NS_ASSUME_NONNULL_END

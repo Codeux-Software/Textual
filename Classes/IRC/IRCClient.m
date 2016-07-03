@@ -2661,9 +2661,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 			
 			if (NSObjectIsEmpty(uncutInput) || PointerIsEmpty(selChannel)) {
 				if (isIgnoreCommand) {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nil];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:nil];
 				} else {
-					[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
+					[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
 				}
 			} else {
 				NSString *nickname = [s getTokenAsString];
@@ -2672,9 +2672,9 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				
 				if (user == nil) {
 					if (isIgnoreCommand) {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection andContext:nickname];
+						[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection context:nickname];
 					} else {
-						[menuController() showServerPropertyDialog:self withDefaultView:TDCServerPropertiesSheetAddressBookNavigationSelection andContext:nil];
+						[menuController() showServerPropertiesSheetForClient:self withSelection:TDCServerPropertiesSheetAddressBookNavigationSelection context:nil];
 					}
 					
 					return;

@@ -1523,9 +1523,9 @@ NS_ASSUME_NONNULL_BEGIN
 	/* The right click menu follows selection so let's update
 	 the menu we will show depending on the selection. */
 	if (isClient == NO) {
-		self.serverList.menu = menuController().channelMenuItem.submenu;
+		self.serverList.menu = menuController().mainMenuChannelMenuItem.submenu;
 	} else {
-		self.serverList.menu = menuController().serverMenuItem.submenu;
+		self.serverList.menu = menuController().mainMenuServerMenuItem.submenu;
 	}
 
 	/* Update table view data sources */
