@@ -237,7 +237,7 @@ ClassWithDesignatedInitializerInitMethod
 /* onJoin: is a legacy method. It handles join on double click. */
 - (void)onJoin:(id)sender
 {
-	NSIndexSet *selectedRows = self.channelListTable.selectedColumnIndexes;
+	NSIndexSet *selectedRows = self.channelListTable.selectedRowIndexes;
 
 	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
 		TDCServerChannelListDialogEntry *channelEntry = self.channelListController.arrangedObjects[index];
