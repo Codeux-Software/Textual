@@ -132,7 +132,7 @@
 		}
 		else if ([serverAddress isEqualToString:@"appstore-page"])
 		{
-			[menuController() openMacAppStoreDownloadPage:nil];
+			[menuController() openMacAppStoreWebpage:nil];
 		}
 		else if ([serverAddress isEqualToString:@"contributors"])
 		{

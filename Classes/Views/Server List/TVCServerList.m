@@ -318,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 			[self selectItemAtIndex:rowUnderMouse];
 		}
 	} else {
-		return menuController().addServerMenu;
+		return menuController().serverListNoSelectionMenu;
 	}
 
 	return self.menu;

@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger selectedSegment = self.selectedSegment;
 
 	if (selectedSegment == 2) {
-		[menuController() showChannelIgnoreList:sender];
+		[menuController() showAddressBook:sender];
 	}
 }
 
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 				mainWindow.loadingScreen.viewIsVisible == NO);
 
 	// Cell 0
-	NSMenu *cell0Menu = menuController().segmentedControllerMenu;
+	NSMenu *cell0Menu = menuController().mainWindowSegmentedControllerCell0Menu;
 
 	[self setMenu:cell0Menu forSegment:0];
 
@@ -94,9 +94,9 @@ NS_ASSUME_NONNULL_BEGIN
 	NSMenuItem *cell1MenuItem = nil;
 
 	if (selectedChannel == nil) {
-		cell1MenuItem = menuController().serverMenuItem;
+		cell1MenuItem = menuController().mainMenuServerMenuItem;
 	} else {
-		cell1MenuItem = menuController().channelMenuItem;
+		cell1MenuItem = menuController().mainMenuChannelMenuItem;
 	}
 
 	[self setMenu:cell1MenuItem.submenu forSegment:1];

@@ -283,7 +283,7 @@ NS_ASSUME_NONNULL_BEGIN
         NSInteger row = [self draggedRow:sender];
 
         if (row >= 0) {
-			[menuController() memberSendDroppedFiles:files row:@(row)];
+			[menuController() memberSendDroppedFiles:files row:row];
 
             return YES;
         }

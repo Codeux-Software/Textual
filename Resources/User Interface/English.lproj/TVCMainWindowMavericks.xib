@@ -1669,7 +1669,7 @@ Textual can be purchased for the low price of 4.99 USD by clicking the button pr
                                             </buttonCell>
                                             <accessibility description="Begin Setup"/>
                                             <connections>
-                                                <action selector="openWelcomeSheet:" target="oRw-Te-R5j" id="wpE-fh-Njz"/>
+                                                <action selector="showWelcomeSheet:" target="oRw-Te-R5j" id="6VA-Nn-SNm"/>
                                             </connections>
                                         </button>
                                     </subviews>

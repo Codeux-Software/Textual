@@ -42,6 +42,7 @@
 @class TVCMainWindowTitlebarAccessoryView;
 @class TVCMainWindowTitlebarAccessoryViewController;
 @class TVCMainWindowTitlebarAccessoryViewLockButton;
+@class TXMenuControllerMainWindowProxy;
 @class TXWindowController;
 
 #import "TextualApplication.h"
@@ -139,6 +140,7 @@
 #import "TVCTextViewWithIRCFormatterPrivate.h"
 #import "TXGlobalModelsPrivate.h"
 #import "TXMasterControllerPrivate.h"
+#import "TXMenuControllerPrivate.h"
 #import "TXSharedApplicationPrivate.h"
 #import "TXWindowControllerPrivate.h"
 #import "WebScriptObjectHelperPrivate.h"

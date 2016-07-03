@@ -358,6 +358,9 @@
 		4C2ECBF61B50893A00DC5276 /* TDCLicenseManagerDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C2ECBF31B50893A00DC5276 /* TDCLicenseManagerDialog.xib */; };
 		4C361B151B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
 		4C361B161B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */; };
+		4C3D4A651D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
+		4C3D4A661D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
+		4C3D4A671D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */; };
 		4C46CCC41580469E00846B64 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBB1580469E00846B64 /* AppKit.framework */; };
 		4C46CCC51580469E00846B64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBC1580469E00846B64 /* Cocoa.framework */; };
 		4C46CCC71580469E00846B64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C46CCBE1580469E00846B64 /* Foundation.framework */; };
@@ -1805,6 +1808,7 @@
 		4C361B141B61DDEA007CDD8C /* TDCLicenseManagerMigrateAppStoreSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCLicenseManagerMigrateAppStoreSheet.m; path = Dialogs/TDCLicenseManagerMigrateAppStoreSheet.m; sourceTree = "<group>"; };
 		4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDCSharedProtocolDefinitions.h; sourceTree = "<group>"; };
 		4C3A25771D11096F009CA859 /* IRCWorldPrivateCloudExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IRCWorldPrivateCloudExtension.h; path = Headers/Private/IRCWorldPrivateCloudExtension.h; sourceTree = "<group>"; };
+		4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXMenuControllerPrivate.h; path = Headers/Private/TXMenuControllerPrivate.h; sourceTree = "<group>"; };
 		4C3E729617C39DD7008F2B08 /* THOUnicodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = THOUnicodeHelper.h; path = Headers/THOUnicodeHelper.h; sourceTree = "<group>"; };
 		4C46CCBB1580469E00846B64 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		4C46CCBC1580469E00846B64 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -1956,7 +1960,7 @@
 		4C83B9101BA9BEB800BD7718 /* ChatFilterExtension.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ChatFilterExtension.bundle; path = ".tmp/SharedBuildProducts-Extensions/ChatFilterExtension.bundle"; sourceTree = SOURCE_ROOT; };
 		4C8AF510158E99520026668C /* TXGlobalModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXGlobalModels.m; path = Controllers/TXGlobalModels.m; sourceTree = "<group>"; };
 		4C8AF511158E99520026668C /* TXMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXMasterController.m; path = Controllers/TXMasterController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMenuController.m; sourceTree = "<group>"; };
+		4C8AF512158E99520026668C /* TXMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TXMenuController.m; path = Controllers/TXMenuController.m; sourceTree = "<group>"; };
 		4C8AF515158E99520026668C /* TDCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesController.m; sourceTree = "<group>"; };
 		4C8AF517158E99520026668C /* TDCPreferencesSoundWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDCPreferencesSoundWrapper.m; sourceTree = "<group>"; };
 		4C8AF518158E99520026668C /* TDCAboutDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDCAboutDialog.m; path = Dialogs/TDCAboutDialog.m; sourceTree = "<group>"; };
@@ -2025,7 +2029,7 @@
 		4C8AF593158E99520026668C /* TVCMainWindowSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVCMainWindowSplitView.h; path = Headers/TVCMainWindowSplitView.h; sourceTree = "<group>"; };
 		4C8AF595158E99520026668C /* TXGlobalModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXGlobalModels.h; path = Headers/TXGlobalModels.h; sourceTree = "<group>"; };
 		4C8AF596158E99520026668C /* TXMasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXMasterController.h; path = Headers/TXMasterController.h; sourceTree = "<group>"; };
-		4C8AF597158E99520026668C /* TXMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXMenuController.h; sourceTree = "<group>"; };
+		4C8AF597158E99520026668C /* TXMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TXMenuController.h; path = Headers/TXMenuController.h; sourceTree = "<group>"; };
 		4C8AF59C158E99520026668C /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
 		4C8AF5A6158E99520026668C /* NSStringHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringHelper.m; sourceTree = "<group>"; };
 		4C8AF5AC158E99520026668C /* GTMEncodeHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMEncodeHTML.m; sourceTree = "<group>"; };
@@ -2849,6 +2853,7 @@
 				4C76CC8F1D1DC6ED005CDDA9 /* TVCTextViewWithIRCFormatterPrivate.h */,
 				4C4A1AE61D12245B004FBF12 /* TXGlobalModelsPrivate.h */,
 				4CD1C4C41D1F18A50034F6A1 /* TXMasterControllerPrivate.h */,
+				4C3D4A641D2958CA00AB58F0 /* TXMenuControllerPrivate.h */,
 				4C4A1AE71D12245B004FBF12 /* TXSharedApplicationPrivate.h */,
 				4CD1C4C51D1F18A50034F6A1 /* TXWindowControllerPrivate.h */,
 				4C673EE41D10FB5000979B60 /* WKWebViewPrivate.h */,
@@ -2896,6 +2901,7 @@
 			children = (
 				4C8AF510158E99520026668C /* TXGlobalModels.m */,
 				4C8AF511158E99520026668C /* TXMasterController.m */,
+				4C8AF512158E99520026668C /* TXMenuController.m */,
 				4C0095AA1952AB88008A81C7 /* TXSharedApplication.m */,
 				4C9234AA195330D30009AAAE /* TXUserInterface.m */,
 				4C790FCC1B82725C00EB318C /* TXWindowController.m */,
@@ -3016,14 +3022,6 @@
 			name = Entitlements;
 			sourceTree = "<group>";
 		};
-		4C8AF50F158E99520026668C /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				4C8AF512158E99520026668C /* TXMenuController.m */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		4C8AF514158E99520026668C /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
@@ -3060,7 +3058,6 @@
 				4C8AF55D158E99520026668C /* TDChannelPropertiesSheet.h */,
 				4C8AF566158E99520026668C /* TDCServerPropertiesSheet.h */,
 				4C38526119721E9100A6845C /* TDCSharedProtocolDefinitions.h */,
-				4C8AF597158E99520026668C /* TXMenuController.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -3208,6 +3205,7 @@
 				4C8AF591158E99520026668C /* TVCTextViewWithIRCFormatter.h */,
 				4C8AF595158E99520026668C /* TXGlobalModels.h */,
 				4C8AF596158E99520026668C /* TXMasterController.h */,
+				4C8AF597158E99520026668C /* TXMenuController.h */,
 				4C0095AD1952AB9C008A81C7 /* TXSharedApplication.h */,
 				4C9234B2195330E30009AAAE /* TXUserInterface.h */,
 			);
@@ -3283,7 +3281,6 @@
 		4CA8AD25195B475600B99BFB /* Textual 5 */ = {
 			isa = PBXGroup;
 			children = (
-				4C8AF50F158E99520026668C /* Controllers */,
 				4CA8AD2C195B476700B99BFB /* Dialogs */,
 				4C8AF527158E99520026668C /* Headers */,
 				4CA8AD2D195B47D400B99BFB /* IRC */,
@@ -3809,6 +3806,7 @@
 				4C7B03A51D1210A100295E82 /* TXSharedApplication.h in Headers */,
 				4C7B490D1D131A2A008D7926 /* TVCLogViewInternalWK1.h in Headers */,
 				4C7B03A61D1210A100295E82 /* TXUserInterface.h in Headers */,
+				4C3D4A651D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
 				4C76CC901D1DC6ED005CDDA9 /* TVCMainWindowTextViewMavericksUserInteracePrivate.h in Headers */,
 				4C7B04FF1D1210EC00295E82 /* BuildConfig.h in Headers */,
 				4C7B04E61D1210E300295E82 /* IRCConnectionPrivate.h in Headers */,
@@ -3951,6 +3949,7 @@
 				4C7B03FA1D1210A800295E82 /* TVCAutoExpandingTextField.h in Headers */,
 				4C7B03FB1D1210A800295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4C7B48F61D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
+				4C3D4A661D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
 				4C7B03FC1D1210A800295E82 /* TVCBasicTableView.h in Headers */,
 				4C4A1AF81D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C7B03FF1D1210A800295E82 /* TVCImageURLParser.h in Headers */,
@@ -4153,6 +4152,7 @@
 				4C7B047B1D1210B000295E82 /* TVCAutoExpandingTextField.h in Headers */,
 				4C7B047C1D1210B000295E82 /* TVCAutoExpandingTokenField.h in Headers */,
 				4C7B48F71D131A2A008D7926 /* TVCImageURLoaderPrivate.h in Headers */,
+				4C3D4A671D2958CA00AB58F0 /* TXMenuControllerPrivate.h in Headers */,
 				4C7B047D1D1210B000295E82 /* TVCBasicTableView.h in Headers */,
 				4C4A1AF91D122707004FBF12 /* GCDAsyncSocketCipherNames.h in Headers */,
 				4C7B04801D1210B000295E82 /* TVCImageURLParser.h in Headers */,

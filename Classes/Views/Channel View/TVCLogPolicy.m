@@ -92,7 +92,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if (self.anchorURL)
 	{
-		NSMenu *urlMenu = menuController().tcopyURLMenu;
+		NSMenu *urlMenu = menuController().channelViewURLMenu;
 
 		for (NSMenuItem *item in urlMenu.itemArray) {
 			NSMenuItem *newItem = [item copy];
@@ -120,7 +120,7 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	else if (self.channelName)
 	{
-		NSMenu *chanMenu = menuController().joinChannelMenu;
+		NSMenu *chanMenu = menuController().channelViewChannelNameMenu;
 
 		for (NSMenuItem *item in chanMenu.itemArray) {
 			NSMenuItem *newItem = [item copy];
@@ -134,10 +134,10 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	else
 	{
-		NSMenu *menu = menuController().channelViewMenu;
+		NSMenu *menu = menuController().channelViewDefaultMenu;
 
-		NSMenuItem *inspectElementItem		= nil;
-		NSMenuItem *lookupInDictionaryItem	= nil;
+		NSMenuItem *inspectElementItem = nil;
+		NSMenuItem *lookupInDictionaryItem = nil;
 
 		if (isWebKit2 == NO) {
 			for (NSMenuItem *item in defaultMenuItems) {
@@ -301,7 +301,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)channelNameDoubleClicked
 {
-	[menuController() joinClickedChannel:self.channelName];
+	[menuController() joinChannelClicked:self.channelName];
 
 	self.channelName = nil;
 }
@@ -317,7 +317,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)topicBarDoubleClicked
 {
-	[menuController() showChannelTopicDialog:nil];
+	[menuController() showChannelModifyTopicSheet:nil];
 }
 
 - (void)openWebpage:(NSURL *)webpageURL
