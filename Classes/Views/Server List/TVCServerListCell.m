@@ -525,7 +525,11 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger nicknameHighlightCount = associatedChannel.nicknameHighlightCount;
 	
 	BOOL isHighlight = (nicknameHighlightCount > 0);
-	
+
+	if (associatedChannel.config.ignoreHighlights) {
+		isHighlight = NO;
+	}
+
 	if (associatedChannel.config.showTreeBadgeCount == NO) {
 		if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			drawMessageBadge = NO; /* On Yosemite we colorize the channel name itself. */
