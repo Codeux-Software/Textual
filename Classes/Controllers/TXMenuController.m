@@ -1156,9 +1156,6 @@ NS_ASSUME_NONNULL_BEGIN
 			if ([self.currentSearchPhrase isEqualToString:resultString] == NO) {
 				self.currentSearchPhrase = resultString;
 
-#warning TODO: Test whether WebView throws exception \
-for string with zero length
-
 				[self performBlockOnMainThread:^{
 					TVCLogView *webView = self.selectedViewControllerBackingView;
 
