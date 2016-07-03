@@ -37,9 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#warning TODO: Set _compileDebugCode to 0 before version 6.0.0 is complete
-
-#define _compileDebugCode			1
+#define _compileDebugCode			0
 
 #pragma mark -
 #pragma mark Define Private Header
