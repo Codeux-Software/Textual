@@ -178,10 +178,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithClient:(nullable IRCClient *)client
 {
 	if ((self = [super init])) {
-		self.client = client;
-		self.clientId = client.uniqueIdentifier;
+		if (client) {
+			self.client = client;
+			self.clientId = client.uniqueIdentifier;
 
-		self.config = client.copyOfStoredConfig;
+			self.config = client.copyOfStoredConfig;
+		} else {
+			self.config = [IRCClientConfig new];
+		}
 
 		[self prepareInitialState];
 
