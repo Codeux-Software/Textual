@@ -311,11 +311,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
-	NSInteger rowUnderMouse = self.rowUnderMouse;
+	NSInteger rowBeneathMouse = self.rowBeneathMouse;
 
-	if (rowUnderMouse >= 0) {
-		if (rowUnderMouse != self.selectedRow || self.numberOfSelectedRows > 1) {
-			[self selectItemAtIndex:rowUnderMouse];
+	if (rowBeneathMouse >= 0) {
+		if (rowBeneathMouse != self.selectedRow || self.numberOfSelectedRows > 1) {
+			[self selectItemAtIndex:rowBeneathMouse];
 		}
 	} else {
 		return menuController().serverListNoSelectionMenu;
