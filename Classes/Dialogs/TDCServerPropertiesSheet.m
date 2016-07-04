@@ -672,12 +672,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *serverAddress = self.config.serverAddress;
 
-	NSString *serverName = [self.serverList firstKeyForObject:serverAddress];
+	if (serverAddress) {
+		NSString *serverName = [self.serverList firstKeyForObject:serverAddress];
 
-	if (serverName) {
-		self.serverAddressComboBox.stringValue = serverName;
-	} else {
-		self.serverAddressComboBox.stringValue = serverAddress;
+		if (serverName) {
+			self.serverAddressComboBox.stringValue = serverName;
+		} else {
+			self.serverAddressComboBox.stringValue = serverAddress;
+		}
 	}
 
 	self.serverPortTextField.integerValue = self.config.serverPort;
