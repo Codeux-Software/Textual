@@ -36,18 +36,32 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, TDCServerPropertiesSheetNavigationSelection) {
-	TDCServerPropertiesSheetDefaultNavigationSelection	= 0,
+	TDCServerPropertiesSheetDefaultNavigationSelection = 0,
 	TDCServerPropertiesSheetAddressBookNavigationSelection,
 	TDCServerPropertiesSheetFloodControlNavigationSelection,
 	TDCServerPropertiesSheetNewIgnoreEntryNavigationSelection
 };
 
-@interface TDCServerPropertiesSheet : TDCSheetBase <NSOutlineViewDataSource, NSOutlineViewDelegate, TDCAddressBookSheetDelegate, TDChannelPropertiesSheetDelegate>
-@property (nonatomic, copy) NSString *clientID;
-@property (nonatomic, copy) IRCClientConfig *config;
+@protocol TDCServerPropertiesSheetDelegate;
 
-- (void)start:(TDCServerPropertiesSheetNavigationSelection)viewToken withContext:(NSString *)context;
+@interface TDCServerPropertiesSheet : TDCSheetBase <TDCClientPrototype>
+- (instancetype)initWithClient:(nullable IRCClient *)client NS_DESIGNATED_INITIALIZER;
+
+- (void)startWithSelection:(TDCServerPropertiesSheetNavigationSelection)selection context:(nullable NSString *)context;
 @end
+
+@protocol TDCServerPropertiesSheetDelegate <NSObject>
+@required
+
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender onOk:(IRCClientConfig *)config;
+- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender;
+
+#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender removeClientFromCloud:(NSString *)clientId;
+#endif
+@end
+
+NS_ASSUME_NONNULL_END

@@ -35,33 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@protocol TDCAddressBookSheetDelegate <NSObject>
+@protocol TDCClientPrototype <NSObject>
 @required
 
-- (void)ignoreItemSheetOnOK:(TDCAddressBookSheet *)sender;
-- (void)ignoreItemSheetWillClose:(TDCAddressBookSheet *)sender;
+@property (readonly, strong, nullable) IRCClient *client;
+@property (readonly, copy, nullable) NSString *clientId;
 @end
 
-#pragma mark -
-
-@protocol TDChannelPropertiesSheetDelegate <NSObject>
+@protocol TDCChannelPrototype <NSObject, TDCClientPrototype>
 @required
 
-- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender;
-- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender;
+@property (readonly, strong, nullable) IRCChannel *channel;
+@property (readonly, copy, nullable) NSString *channelId;
 @end
 
-#pragma mark -
-
-@protocol TDCServerPropertiesSheetDelegate <NSObject>
-@required
-
-- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender;
-- (void)serverPropertiesSheetWillClose:(TDCServerPropertiesSheet *)sender;
-
-#if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender;
-#endif
-@end
+NS_ASSUME_NONNULL_END

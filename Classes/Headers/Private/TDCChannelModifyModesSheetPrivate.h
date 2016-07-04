@@ -38,21 +38,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelInviteSheet : TDCSheetBase
-@property (readonly, strong) IRCClient *client;
-@property (readonly, copy) NSString *clientId;
-@property (readonly, copy) NSArray<NSString *> *nicknames;
+@interface TDCChannelModifyModesSheet : TDCSheetBase <TDCChannelPrototype>
+- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
-
-- (void)startWithChannels:(NSArray<NSString *> *)channels;
+- (void)start;
 @end
 
-@protocol TDChannelInviteSheetDelegate <NSObject>
+@protocol TDCChannelModifyModesSheetDelegate <NSObject>
 @required
 
-- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
-- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender;
+- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes;
+- (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender;
 @end
 
 NS_ASSUME_NONNULL_END

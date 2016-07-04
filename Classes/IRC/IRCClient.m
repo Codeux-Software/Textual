@@ -515,13 +515,13 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		[listDialog close];
 	}
 	
-	NSArray *openWindows = [windowController() windowsFromWindowList:@[@"TDChannelInviteSheet",
+	NSArray *openWindows = [windowController() windowsFromWindowList:@[@"TDCChannelInviteSheet",
 																	   @"TDCServerChangeNicknameSheet",
 																	   @"TDCServerHighlightListSheet",
 																	   @"TDCServerPropertiesSheet"]];
 
-	for (id windowObject in openWindows) {
-		if (NSObjectsAreEqual([windowObject clientID], [self uniqueIdentifier])) {
+	for (TDCSheetBase <TDCClientPrototype> *windowObject in openWindows) {
+		if (NSObjectsAreEqual([windowObject clientId], [self uniqueIdentifier])) {
 			[windowObject cancel:nil];
 		}
 	}
@@ -7471,7 +7471,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 				entryAuthor = [[m paramAt:3] nicknameFromHostmask];
 			}
 
-			TDChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDChannelBanListSheet"];
+			TDCChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDCChannelBanListSheet"];
 
             if (listSheet) {
 				if ([listSheet contentAlreadyReceived]) {
@@ -7524,7 +7524,7 @@ NSString * const IRCClientChannelListWasModifiedNotification = @"IRCClientChanne
 		case 347: // RPL_ENDOFINVITELIST
 		case 349: // RPL_ENDOFEXCEPTLIST
 		{
-			TDChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDChannelBanListSheet"];
+			TDCChannelBanListSheet *listSheet = [windowController() windowFromWindowList:@"TDCChannelBanListSheet"];
 
 			if ( listSheet) {
 				[listSheet setContentAlreadyReceived:YES];
@@ -9670,20 +9670,20 @@ present_error:
 
 - (void)createChannelInviteExceptionListSheet
 {
-	[self createChannelBanListSheet:TDChannelBanListSheetInviteExceptionEntryType];
+	[self createChannelBanListSheet:TDCChannelBanListSheetInviteExceptionEntryType];
 }
 
 - (void)createChannelBanExceptionListSheet
 {
-	[self createChannelBanListSheet:TDChannelBanListSheetBanExceptionEntryType];
+	[self createChannelBanListSheet:TDCChannelBanListSheetBanExceptionEntryType];
 }
 
 - (void)createChannelBanListSheet
 {
-	[self createChannelBanListSheet:TDChannelBanListSheetBanEntryType];
+	[self createChannelBanListSheet:TDCChannelBanListSheetBanEntryType];
 }
 
-- (void)createChannelBanListSheet:(TDChannelBanListSheetEntryType)entryType
+- (void)createChannelBanListSheet:(TDCChannelBanListSheetEntryType)entryType
 {
 	[windowController() popMainWindowSheetIfExists];
 
@@ -9693,7 +9693,7 @@ present_error:
     PointerIsEmptyAssert(u);
     PointerIsEmptyAssert(c);
 
-	TDChannelBanListSheet *listSheet = [[TDChannelBanListSheet alloc] initWithEntryType:entryType inChannel:c];
+	TDCChannelBanListSheet *listSheet = [[TDCChannelBanListSheet alloc] initWithEntryType:entryType inChannel:c];
 
 	[listSheet setDelegate:(id)self];
 	[listSheet setWindow:mainWindow()];
@@ -9703,7 +9703,7 @@ present_error:
 	[windowController() addWindowToWindowList:listSheet];
 }
 
-- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender
+- (void)channelBanListSheetOnUpdate:(TDCChannelBanListSheet *)sender
 {
 	IRCChannel *c = [sender channel];
 
@@ -9714,7 +9714,7 @@ present_error:
 	}
 }
 
-- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender
+- (void)channelBanListSheetWillClose:(TDCChannelBanListSheet *)sender
 {
 	IRCChannel *c = [sender channel];
 	

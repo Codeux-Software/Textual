@@ -1614,15 +1614,13 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() popMainWindowSheetIfExists];
 	
 	TDCServerPropertiesSheet *sheet =
-	[TDCServerPropertiesSheet new];
-
-	sheet.config = [IRCClientConfig new];
+	[[TDCServerPropertiesSheet alloc] initWithClient:nil];
 
 	sheet.delegate = self;
 
 	sheet.window = mainWindow();
 
-	[sheet start:TDCServerPropertiesSheetDefaultNavigationSelection withContext:nil];
+	[sheet startWithSelection:TDCServerPropertiesSheetDefaultNavigationSelection context:nil];
 
 	[windowController() addWindowToWindowList:sheet];
 }
@@ -1732,17 +1730,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 	[windowController() popMainWindowSheetIfExists];
 	
-	TDCServerPropertiesSheet *sheet = [TDCServerPropertiesSheet new];
-
-	sheet.clientID = client.uniqueIdentifier;
-
-	sheet.config = client.copyOfStoredConfig;
+	TDCServerPropertiesSheet *sheet = [[TDCServerPropertiesSheet alloc] initWithClient:client];
 
 	sheet.delegate = self;
 
 	sheet.window = mainWindow();
 
-	[sheet start:selection withContext:context];
+	[sheet startWithSelection:selection context:context];
 
 	[windowController() addWindowToWindowList:sheet];
 }
@@ -1760,38 +1754,35 @@ NS_ASSUME_NONNULL_BEGIN
 									 context:nil];
 }
 
-- (void)serverPropertiesSheetOnOK:(TDCServerPropertiesSheet *)sender
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender onOk:(IRCClientConfig *)config
 {
-	if (sender.clientID == nil) {
-		[worldController() createClientWithConfig:sender.config reload:YES];
-		
-		[sender.config writeKeychainItemsToDisk];
-	} else {
-		IRCClient *u = [worldController() findClientWithId:sender.clientID];
-		
-		if (_noClient) {
-			return;
-		}
+	IRCClient *u = sender.client;
 
-		BOOL sameEncoding = (sender.config.primaryEncoding ==
-							     u.config.primaryEncoding);
-
-		[u updateConfig:sender.config];
-
-		if (sameEncoding == NO) {
-			[mainWindow() reloadTheme];
-		}
+	if (u == nil) {
+		u = [worldController() createClientWithConfig:config reload:YES];
 		
-		[mainWindow() reloadTreeGroup:u];
+		[u.config writeKeychainItemsToDisk];
+
+		return;
 	}
+
+	BOOL sameEncoding = (config.primaryEncoding == u.config.primaryEncoding);
+
+	[u updateConfig:config];
+
+	if (sameEncoding == NO) {
+		[mainWindow() reloadTheme];
+	}
+	
+	[mainWindow() reloadTreeGroup:u];
 	
 	[worldController() save];
 }
 
 #if TEXTUAL_BUILT_WITH_ICLOUD_SUPPORT == 1
-- (void)serverPropertiesSheetRequestedCloudExclusionByDeletion:(TDCServerPropertiesSheet *)sender
+- (void)serverPropertiesSheet:(TDCServerPropertiesSheet *)sender removeClientFromCloud:(NSString *)clientId
 {
-	[worldController() cloud_addClientToListOfDeletedClients:sender.config.itemUUID];
+	[worldController() cloud_addClientToListOfDeletedClients:clientId];
 }
 #endif
 
@@ -1916,8 +1907,8 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	TDChannelModifyTopicSheet *sheet =
-	[[TDChannelModifyTopicSheet alloc] initWithChannel:c];
+	TDCChannelModifyTopicSheet *sheet =
+	[[TDCChannelModifyTopicSheet alloc] initWithChannel:c];
 
 	sheet.delegate = (id)self;
 
@@ -1928,7 +1919,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOk:(NSString *)topic
+- (void)channelModifyTopicSheet:(TDCChannelModifyTopicSheet *)sender onOk:(NSString *)topic
 {
 	IRCClient *u = sender.client;
 	IRCChannel *c = sender.channel;
@@ -1940,7 +1931,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[u send:IRCPrivateCommandIndex("topic"), c.name, topic, nil];
 }
 
-- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender
+- (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }
@@ -1959,8 +1950,8 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	TDChannelModifyModesSheet *sheet =
-	[[TDChannelModifyModesSheet alloc] initWithChannel:c];
+	TDCChannelModifyModesSheet *sheet =
+	[[TDCChannelModifyModesSheet alloc] initWithChannel:c];
 	
 	sheet.delegate = (id)self;
 
@@ -1971,7 +1962,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)channelModifyModesSheet:(TDChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes
+- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes
 {
 	IRCClient *u = sender.client;
 	IRCChannel *c = sender.channel;
@@ -1989,7 +1980,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[u sendLine:[NSString stringWithFormat:@"%@ %@ %@", IRCPrivateCommandIndex("mode"), c.name, changeString]];
 }
 
-- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender
+- (void)channelModifyModesSheetWillClose:(TDCChannelModifyModesSheet *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }
@@ -2007,16 +1998,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	TDChannelPropertiesSheet *sheet =
-	[TDChannelPropertiesSheet new];
-
-	sheet.clientID = u.uniqueIdentifier;
-
-	sheet.config = [IRCChannelConfig new];
+	TDCChannelPropertiesSheet *sheet =
+	[[TDCChannelPropertiesSheet alloc] initWithClient:u];
 
 	sheet.delegate = self;
-
-	sheet.newItem = YES;
 
 	sheet.window = mainWindow();
 
@@ -2065,18 +2050,10 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 	
-	TDChannelPropertiesSheet *sheet = [TDChannelPropertiesSheet new];
-
-	sheet.clientID = u.uniqueIdentifier;
-	sheet.channelID = c.uniqueIdentifier;
-
-	sheet.config = c.config;
+	TDCChannelPropertiesSheet *sheet =
+	[[TDCChannelPropertiesSheet alloc] initWithChannel:c];
 
 	sheet.delegate = self;
-
-	sheet.newItem = NO;
-
-	sheet.observeChanges = YES;
 
 	sheet.window = mainWindow();
 
@@ -2085,34 +2062,32 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)channelPropertiesSheetOnOK:(TDChannelPropertiesSheet *)sender
+- (void)channelPropertiesSheet:(TDCChannelPropertiesSheet *)sender onOk:(IRCChannelConfig *)config
 {
-	if (sender.newItem) {
-		IRCClient *u = [worldController() findClientWithId:sender.clientID];
-		
-		if (_noClient) {
-			return;
-		}
-		
-		[mainWindow() expandClient:u];
-		
-		[worldController() createChannelWithConfig:sender.config onClient:u adjust:YES reload:YES];
-		
-		[sender.config writeKeychainItemsToDisk];
-	} else {
-		IRCChannel *c = [worldController() findChannelWithId:sender.channelID onClientWithId:sender.clientID];
-		
-		if (_noChannel) {
-			return;
-		}
+	IRCClient *u = sender.client;
 
-		[c updateConfig:sender.config];
+	if (_noClient) {
+		return;
 	}
+
+	IRCChannel *c = sender.channel;
+
+	if (c == nil) {
+		c = [worldController() createChannelWithConfig:config onClient:u adjust:YES reload:YES];
+
+		[c.config writeKeychainItemsToDisk];
+
+		[mainWindow() expandClient:u];
+
+		return;
+	}
+
+	[c updateConfig:config];
 	
 	[worldController() save];
 }
 
-- (void)channelPropertiesSheetWillClose:(TDChannelPropertiesSheet *)sender
+- (void)channelPropertiesSheetWillClose:(TDCChannelPropertiesSheet *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }
@@ -2273,8 +2248,8 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
-	TDChannelInviteSheet *sheet =
-	[[TDChannelInviteSheet alloc] initWithNicknames:nicknames onClient:u];
+	TDCChannelInviteSheet *sheet =
+	[[TDCChannelInviteSheet alloc] initWithNicknames:nicknames onClient:u];
 	
 	sheet.delegate = (id)self;
 
@@ -2285,7 +2260,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)channelInviteSheet:(TDChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
+- (void)channelInviteSheet:(TDCChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName
 {
 	IRCClient *u = sender.client;
 
@@ -2298,7 +2273,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)channelInviteSheetWillClose:(TDChannelInviteSheet *)sender
+- (void)channelInviteSheetWillClose:(TDCChannelInviteSheet *)sender
 {
 	[windowController() removeWindowFromWindowList:sender];
 }

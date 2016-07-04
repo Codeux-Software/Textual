@@ -1,4 +1,4 @@
-/* ********************************************************************* 
+/* *********************************************************************
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -38,22 +38,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelModifyModesSheet : TDCSheetBase
-@property (readonly, strong) IRCClient *client;
-@property (readonly, strong) IRCChannel *channel;
-@property (readonly, copy) NSString *clientId;
-@property (readonly, copy) NSString *channelId;
+@protocol TDCAddressBookSheetDelegate;
 
-- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+@interface TDCAddressBookSheet : TDCSheetBase
+- (instancetype)initWithEntryType:(IRCAddressBookEntryType)entryType NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithConfig:(IRCAddressBookEntry *)config NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 @end
 
-@protocol TDChannelModifyModesSheetDelegate <NSObject>
+@protocol TDCAddressBookSheetDelegate <NSObject>
 @required
 
-- (void)channelModifyModesSheet:(TDChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes;
-- (void)channelModifyModesSheetWillClose:(TDChannelModifyModesSheet *)sender;
+- (void)addressBookSheet:(TDCAddressBookSheet *)sender onOk:(IRCAddressBookEntry *)config;
+- (void)addressBookSheetWillClose:(TDCAddressBookSheet *)sender;
 @end
 
 NS_ASSUME_NONNULL_END

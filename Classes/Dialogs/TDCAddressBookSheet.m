@@ -35,9 +35,11 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCAddressBookSheet ()
+@property (nonatomic, strong) IRCAddressBookEntry *config;
+@property (nonatomic, assign) IRCAddressBookEntryType entryType;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreClientToClientProtocolCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreFileTransferRequestsCheck;
 @property (nonatomic, weak) IBOutlet NSButton *ignoreGeneralEventMessagesCheck;
@@ -57,110 +59,153 @@
 
 @implementation TDCAddressBookSheet
 
-- (instancetype)init
+ClassWithDesignatedInitializerInitMethod
+
+- (instancetype)initWithEntryType:(IRCAddressBookEntryType)entryType
 {
 	if ((self = [super init])) {
-		[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
+		if (entryType == IRCAddressBookIgnoreEntryType) {
+			self.config = [IRCAddressBookEntry newIgnoreEntry];
+		} else if (entryType == IRCAddressBookUserTrackingEntryType) {
+			self.config = [IRCAddressBookEntry newUserTrackingEntry];
+		}
 
-		[self buildTextFieldValidationBlocks];
+		self.entryType = entryType;
+
+		[self prepareInitialState];
+
+		[self loadConfig];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (void)buildTextFieldValidationBlocks
+- (instancetype)initWithConfig:(IRCAddressBookEntry *)config
 {
-	/* Define host field for ignore entries. */
-	[self.ignoreEntryHostmaskTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.ignoreEntryHostmaskTextField setStringValueUsesOnlyFirstToken:YES];
-	
-	[self.ignoreEntryHostmaskTextField setTextDidChangeCallback:self];
+	NSParameterAssert(config != nil);
 
-	[self.ignoreEntryHostmaskTextField setValidationBlock:^BOOL(NSString *currentValue) {
+	if ((self = [super init])) {
+		self.config = [config copy];
+
+		self.entryType = config.entryType;
+
+		[self prepareInitialState];
+
+		[self loadConfig];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	(void)[RZMainBundle() loadNibNamed:@"TDCAddressBookSheet" owner:self topLevelObjects:nil];
+
+	self.ignoreEntryHostmaskTextField.stringValueIsInvalidOnEmpty = YES;
+	self.ignoreEntryHostmaskTextField.stringValueUsesOnlyFirstToken = YES;
+
+	self.ignoreEntryHostmaskTextField.textDidChangeCallback = self;
+
+	self.ignoreEntryHostmaskTextField.validationBlock = ^BOOL(NSString *currentValue) {
 		NSString *valueWithoutWildcard = [currentValue stringByReplacingOccurrencesOfString:@"*" withString:@"-"];
 
-		return [valueWithoutWildcard isHostmask];
-	}];
+		return valueWithoutWildcard.isHostmask;
+	};
 
-	/* Define nickname field for user tracking. */
-	[self.userTrackingEntryNicknameTextField setStringValueIsInvalidOnEmpty:YES];
-	[self.userTrackingEntryNicknameTextField setStringValueUsesOnlyFirstToken:YES];
-	
-	[self.userTrackingEntryNicknameTextField setTextDidChangeCallback:self];
+	self.userTrackingEntryNicknameTextField.stringValueIsInvalidOnEmpty = YES;
+	self.userTrackingEntryNicknameTextField.stringValueUsesOnlyFirstToken = YES;
 
-	[self.userTrackingEntryNicknameTextField setValidationBlock:^BOOL(NSString *currentValue) {
-		return [currentValue isHostmaskNickname];
-	}];
+	self.userTrackingEntryNicknameTextField.textDidChangeCallback = self;
+
+	self.userTrackingEntryNicknameTextField.validationBlock = ^BOOL(NSString *currentValue) {
+		return currentValue.isHostmaskNickname;
+	};
 }
 
-- (void)validatedTextFieldTextDidChange:(id)sender
+- (void)loadConfig
 {
-	/* Enable or disable OK button based on validation. */
-	if ([self.ignore entryType] == IRCAddressBookIgnoreEntryType) {
-		[self.ignoreEntrySaveButton setEnabled:[self.ignoreEntryHostmaskTextField valueIsValid]];
-	} else {
-		[self.userTrackingEntrySaveButton setEnabled:[self.userTrackingEntryNicknameTextField valueIsValid]];
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
+		self.ignoreEntryHostmaskTextField.stringValue = self.config.hostmask;
+
+		self.ignoreClientToClientProtocolCheck.state = self.config.ignoreClientToClientProtocol;
+		self.ignoreGeneralEventMessagesCheck.state = self.config.ignoreGeneralEventMessages;
+		self.ignoreFileTransferRequestsCheck.state = self.config.ignoreFileTransferRequests;
+		self.ignoreNoticeMessagesCheck.state = self.config.ignoreNoticeMessages;
+		self.ignorePrivateMessageHighlightsCheck.state = self.config.ignorePrivateMessageHighlights;
+		self.ignorePrivateMessagesCheck.state = self.config.ignorePrivateMessages;
+		self.ignorePublicMessageHighlightsCheck.state = self.config.ignorePublicMessageHighlights;
+		self.ignorePublicMessagesCheck.state = self.config.ignorePublicMessages;
+	}
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		self.userTrackingEntryNicknameTextField.stringValue = self.config.hostmask;
+
+		self.trackUserActivityCheck.state = self.config.trackUserActivity;
 	}
 }
 
 - (void)start
 {
-	if ([self.ignore entryType] == IRCAddressBookIgnoreEntryType) {
-		[self setSheet:self.ignoreEntryView];
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
+		self.sheet = self.ignoreEntryView;
 
-		if ([self.ignore hostmask]) {
-			[self.ignoreEntryHostmaskTextField setStringValue:[self.ignore hostmask]];
-		}
-
-		[[self sheet] makeFirstResponder:self.ignoreEntryHostmaskTextField];
-	} else {
-		[self setSheet:self.userTrackingEntryView];
-
-		if ([self.ignore hostmask]) {
-			[self.userTrackingEntryNicknameTextField setStringValue:[self.ignore hostmask]];
-		}
+		[self.sheet makeFirstResponder:self.ignoreEntryHostmaskTextField];
+	}
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		self.sheet = self.userTrackingEntryView;
 
 		[self.sheet makeFirstResponder:self.userTrackingEntryNicknameTextField];
 	}
 
-	[self.trackUserActivityCheck				setState:[self.ignore trackUserActivity]];
-	
-	[self.ignoreClientToClientProtocolCheck		setState:[self.ignore ignoreClientToClientProtocol]];
-	[self.ignoreGeneralEventMessagesCheck		setState:[self.ignore ignoreGeneralEventMessages]];
-	[self.ignoreFileTransferRequestsCheck		setState:[self.ignore ignoreFileTransferRequests]];
-	[self.ignoreNoticeMessagesCheck				setState:[self.ignore ignoreNoticeMessages]];
-	[self.ignorePrivateMessageHighlightsCheck	setState:[self.ignore ignorePrivateMessageHighlights]];
-	[self.ignorePrivateMessagesCheck			setState:[self.ignore ignorePrivateMessages]];
-	[self.ignorePublicMessageHighlightsCheck	setState:[self.ignore ignorePublicMessageHighlights]];
-	[self.ignorePublicMessagesCheck				setState:[self.ignore ignorePublicMessages]];
-	
 	[self startSheet];
 }
 
 - (void)ok:(id)sender
 {
-	if ([self.ignore entryType] == IRCAddressBookIgnoreEntryType) {
-		[self.ignore setHostmask:[self.ignoreEntryHostmaskTextField value]];
-	} else {
-		[self.ignore setHostmask:[self.userTrackingEntryNicknameTextField value]];
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
+		self.config.hostmask = self.ignoreEntryHostmaskTextField.value;
+
+		self.config.ignoreClientToClientProtocol = (self.ignoreClientToClientProtocolCheck.state == NSOnState);
+		self.config.ignoreFileTransferRequests = (self.ignoreFileTransferRequestsCheck.state == NSOnState);
+		self.config.ignoreGeneralEventMessages = (self.ignoreGeneralEventMessagesCheck.state == NSOnState);
+		self.config.ignoreNoticeMessages = (self.ignoreNoticeMessagesCheck.state == NSOnState);
+		self.config.ignorePrivateMessageHighlights = (self.ignorePrivateMessageHighlightsCheck.state == NSOnState);
+		self.config.ignorePrivateMessages = (self.ignorePrivateMessagesCheck.state == NSOnState);
+		self.config.ignorePublicMessageHighlights = (self.ignorePublicMessageHighlightsCheck.state == NSOnState);
+		self.config.ignorePublicMessages = (self.ignorePublicMessagesCheck.state == NSOnState);
 	}
-	
-	[self.ignore setTrackUserActivity:					[self.trackUserActivityCheck state]];
-	
-	[self.ignore setIgnoreClientToClientProtocol:		[self.ignoreClientToClientProtocolCheck state]];
-	[self.ignore setIgnoreFileTransferRequests:			[self.ignoreFileTransferRequestsCheck state]];
-	[self.ignore setIgnoreGeneralEventMessages:			[self.ignoreGeneralEventMessagesCheck state]];
-	[self.ignore setIgnoreNoticeMessages:				[self.ignoreNoticeMessagesCheck state]];
-	[self.ignore setIgnorePrivateMessageHighlights:		[self.ignorePrivateMessageHighlightsCheck state]];
-	[self.ignore setIgnorePrivateMessages:				[self.ignorePrivateMessagesCheck state]];
-	[self.ignore setIgnorePublicMessageHighlights:		[self.ignorePublicMessageHighlightsCheck state]];
-	[self.ignore setIgnorePublicMessages:				[self.ignorePublicMessagesCheck state]];
-	
-	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetOnOK:)]) {
-		[self.delegate ignoreItemSheetOnOK:self];
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		self.config.hostmask = self.userTrackingEntryNicknameTextField.value;
+
+		self.config.trackUserActivity = (self.trackUserActivityCheck.state == NSOnState);
+	}
+
+	if ([self.delegate respondsToSelector:@selector(addressBookSheet:onOk:)]) {
+		[self.delegate addressBookSheet:self onOk:[self.config copy]];
 	}
 	
 	[super ok:nil];
+}
+
+- (void)validatedTextFieldTextDidChange:(id)sender
+{
+	if (self.entryType == IRCAddressBookIgnoreEntryType)
+	{
+		self.ignoreEntrySaveButton.enabled = self.ignoreEntryHostmaskTextField.valueIsValid;
+	}
+	else if (self.entryType == IRCAddressBookUserTrackingEntryType)
+	{
+		self.userTrackingEntrySaveButton.enabled = self.userTrackingEntryNicknameTextField.valueIsValid;
+	}
 }
 
 #pragma mark -
@@ -168,9 +213,11 @@
 
 - (void)windowWillClose:(NSNotification *)note
 {
-	if ([self.delegate respondsToSelector:@selector(ignoreItemSheetWillClose:)]) {
-		[self.delegate ignoreItemSheetWillClose:self];
+	if ([self.delegate respondsToSelector:@selector(addressBookSheetWillClose:)]) {
+		[self.delegate addressBookSheetWillClose:self];
 	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

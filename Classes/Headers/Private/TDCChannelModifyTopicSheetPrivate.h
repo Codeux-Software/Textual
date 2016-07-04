@@ -1,4 +1,4 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
@@ -36,11 +36,19 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCAddressBookSheet : TDCSheetBase
-@property (nonatomic, assign) BOOL newItem;
-@property (nonatomic, copy) IRCAddressBookEntry *ignore;
+@interface TDCChannelModifyTopicSheet : TDCSheetBase <TDCChannelPrototype>
+- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 @end
+
+@protocol TDCChannelModifyTopicSheetDelegate <NSObject>
+@required
+
+- (void)channelModifyTopicSheet:(TDCChannelModifyTopicSheet *)sender onOk:(NSString *)topic;
+- (void)channelModifyTopicSheetWillClose:(TDCChannelModifyTopicSheet *)sender;
+@end
+
+NS_ASSUME_NONNULL_END
