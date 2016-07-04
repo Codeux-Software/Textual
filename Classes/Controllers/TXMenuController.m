@@ -2097,9 +2097,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)memberInMemberListDoubleClicked:(id)sender
 {
-	NSInteger rowUnderMouse = mainWindowMemberList().rowUnderMouse;
+	NSInteger rowBeneathMouse = mainWindowMemberList().rowBeneathMouse;
 
-	if (rowUnderMouse < 0) {
+	if (rowBeneathMouse < 0) {
 		return;
 	}
 

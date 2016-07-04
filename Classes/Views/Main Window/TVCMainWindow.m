@@ -2503,22 +2503,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Find which row is beneath the mouse */
-	NSInteger rowUnderMouse = outlineView.rowUnderMouse;
+	NSInteger rowBeneathMouse = outlineView.rowBeneathMouse;
 
 	/* If a row is not beneath the mouse or the row that is, is not
 	 selected, then the selection is allowed to be changed. */
-	if (rowUnderMouse < 0) {
+	if (rowBeneathMouse < 0) {
 		return YES;
 	}
 
-	if ([outlineView isRowSelected:rowUnderMouse] == NO) {
+	if ([outlineView isRowSelected:rowBeneathMouse] == NO) {
 		return YES;
 	}
 
 	/* If the item beneath the mouse is already selected and we did not 
 	 try to unselect it by holding command or shift, then tell the table
 	 view not to change the selection. That will be handled by us. */
-	IRCTreeItem *itemUnderMouse = [outlineView itemAtRow:rowUnderMouse];
+	IRCTreeItem *itemUnderMouse = [outlineView itemAtRow:rowBeneathMouse];
 
 	[self selectItemInSelectedItems:itemUnderMouse];
 
@@ -2579,10 +2579,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSUInteger keyboardKeys = ([NSEvent modifierFlags] & NSDeviceIndependentModifierFlagsMask);
 
 	if (keyboardKeys == NSCommandKeyMask) {
-		NSInteger rowUnderMouse = self.serverList.rowUnderMouse;
+		NSInteger rowBeneathMouse = self.serverList.rowBeneathMouse;
 
-		if (rowUnderMouse >= 0 && [selectedRows containsIndex:rowUnderMouse]) {
-			selectedItem = [self.serverList itemAtRow:rowUnderMouse];
+		if (rowBeneathMouse >= 0 && [selectedRows containsIndex:rowBeneathMouse]) {
+			selectedItem = [self.serverList itemAtRow:rowBeneathMouse];
 		}
 	}
 
