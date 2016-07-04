@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDChannelModifyModesSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
+@property (nonatomic, copy, readwrite) NSString *clientId;
+@property (nonatomic, copy, readwrite) NSString *channelId;
 @property (nonatomic, copy) IRCChannelMode *modes;
 @property (nonatomic, weak) IBOutlet NSButton *sCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pCheck;
@@ -67,7 +69,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super init])) {
 		self.client = channel.associatedClient;
+		self.clientId = channel.associatedClient.uniqueIdentifier;
+
 		self.channel = channel;
+		self.channelId = channel.uniqueIdentifier;
 
 		self.modes = channel.modeInfo;
 

@@ -47,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChannelListDialog ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, assign) BOOL isWaitingForWrites;
 @property (nonatomic, strong) NSMutableArray<TDCServerChannelListDialogEntry *> *queuedWrites;
 @property (nonatomic, weak) IBOutlet NSButton *updateButton;
@@ -71,6 +72,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super initWithWindow:nil])) {
 		self.client = client;
+		self.clientId = client.uniqueIdentifier;
 		
 		[self prepareInitialState];
 
@@ -204,11 +206,6 @@ ClassWithDesignatedInitializerInitMethod
 	NSString *arrangedObjectsCount = TXFormattedNumber([arrangedObjects count]);
 
 	self.window.title = TXTLS(@"TDCServerChannelListDialog[1001]", arrangedObjectsCount);
-}
-
-- (NSString *)clientId
-{
-	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -
