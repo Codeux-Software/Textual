@@ -44,15 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSFont systemFontOfSize:13.0];
 }
 
-- (NSInteger)rowUnderMouse
-{
-	NSPoint ml = self.window.mouseLocationOutsideOfEventStream;
-
-	NSPoint pt = [self convertPoint:ml fromView:nil];
-
-	return [self rowAtPoint:pt];
-}
-
 @end
 
 NS_ASSUME_NONNULL_END

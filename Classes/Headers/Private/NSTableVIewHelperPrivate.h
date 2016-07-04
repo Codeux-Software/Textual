@@ -38,8 +38,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSTableView (TXTableViewHelper)
-@property (readonly) NSInteger rowUnderMouse;
-
 + (NSFont *)preferredGlobalTableViewFont;
 @end
 
