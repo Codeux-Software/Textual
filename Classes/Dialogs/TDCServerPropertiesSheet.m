@@ -580,6 +580,8 @@ NS_ASSUME_NONNULL_BEGIN
 	[self.navigationOutlineview startAtSelectionIndex:viewIndex];
 
 	[self startSheet];
+
+	[self.sheet recalculateKeyViewLoop];
 }
 
 - (void)closeChildSheets
