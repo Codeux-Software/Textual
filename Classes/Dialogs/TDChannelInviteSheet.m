@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TDChannelInviteSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSArray<NSString *> *nicknames;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 		self.nicknames = nicknames;
 
 		self.client = client;
+		self.clientId = client.uniqueIdentifier;
 
 		[self prepareInitialState];
 
@@ -104,11 +106,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	[super ok:nil];
-}
-
-- (NSString *)clientId
-{
-	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -

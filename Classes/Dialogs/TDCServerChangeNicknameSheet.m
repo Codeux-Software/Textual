@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerChangeNicknameSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *tnewNicknameTextField;
 @property (nonatomic, weak) IBOutlet NSTextField *toldNicknameTextField;
 @end
@@ -54,6 +55,7 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super init])) {
 		self.client = client;
+		self.clientId = client.uniqueIdentifier;
 
 		[self prepareInitialState];
 
@@ -106,11 +108,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	
 	[super ok:sender];
-}
-
-- (NSString *)clientId
-{
-	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -

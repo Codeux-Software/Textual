@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCServerHighlightListSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *highlightListTable;
 @property (nonatomic, strong) IBOutlet NSArrayController *highlightListController;
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ((self = [super init])) {
 		self.client = client;
+		self.clientId = client.uniqueIdentifier;
 
 		[self prepareInitialState];
 
@@ -177,11 +179,6 @@ NS_ASSUME_NONNULL_BEGIN
 			[self cancel:nil];
 		}
 	}];
-}
-
-- (NSString *)clientId
-{
-	return self.client.uniqueIdentifier;
 }
 
 #pragma mark -

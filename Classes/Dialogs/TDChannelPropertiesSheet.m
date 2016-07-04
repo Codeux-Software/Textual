@@ -59,6 +59,9 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidthConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeightConstraint;
 
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, strong, readwrite) IRCChannel *channel;
+
 - (IBAction)onMenuBarItemChanged:(id)sender;
 
 - (IBAction)onChangedInlineMediaOption:(id)sender;

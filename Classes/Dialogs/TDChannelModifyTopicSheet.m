@@ -41,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TDChannelModifyTopicSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
+@property (nonatomic, copy, readwrite) NSString *clientId;
+@property (nonatomic, copy, readwrite) NSString *channelId;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
@@ -55,7 +57,10 @@ ClassWithDesignatedInitializerInitMethod
 
 	if ((self = [super init])) {
 		self.client = channel.associatedClient;
+		self.clientId = channel.associatedClient.uniqueIdentifier;
+
 		self.channel = channel;
+		self.channelId = channel.uniqueIdentifier;
 
 		[self prepareInitialState];
 
@@ -120,16 +125,6 @@ ClassWithDesignatedInitializerInitMethod
 	}
 	
 	[super ok:nil];
-}
-
-- (NSString *)clientId
-{
-	return self.client.uniqueIdentifier;
-}
-
-- (NSString *)channelId
-{
-	return self.channel.uniqueIdentifier;
 }
 
 #pragma mark -
