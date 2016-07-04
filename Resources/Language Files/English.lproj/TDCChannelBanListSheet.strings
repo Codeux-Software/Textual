@@ -37,6 +37,6 @@
 
 /* Next unusued key: 1003 */
 
-"TDChannelBanListSheet[1000]" = "Bans for %@";
-"TDChannelBanListSheet[1001]" = "Ban Exceptions for %@";
-"TDChannelBanListSheet[1002]" = "Invite Exceptions for %@";
+"TDCChannelBanListSheet[1000]" = "Bans for %@";
+"TDCChannelBanListSheet[1001]" = "Ban Exceptions for %@";
+"TDCChannelBanListSheet[1002]" = "Invite Exceptions for %@";

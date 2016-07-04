@@ -38,7 +38,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelModifyTopicSheet ()
+@interface TDCChannelModifyTopicSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) NSString *clientId;
@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, unsafe_unretained) IBOutlet TVCTextViewWithIRCFormatter *topicValueTextField;
 @end
 
-@implementation TDChannelModifyTopicSheet
+@implementation TDCChannelModifyTopicSheet
 
 ClassWithDesignatedInitializerInitMethod
 
@@ -72,7 +72,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	[RZMainBundle() loadNibNamed:@"TDChannelModifyTopicSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCChannelModifyTopicSheet" owner:self topLevelObjects:nil];
 
 	NSString *headerTitle = [NSString stringWithFormat:self.headerTitleTextField.stringValue, self.channel.name];
 

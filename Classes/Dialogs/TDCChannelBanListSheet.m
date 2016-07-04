@@ -37,19 +37,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelBanListSheetEntry : NSObject
+@interface TDCChannelBanListSheetEntry : NSObject
 @property (nonatomic, copy) NSString *entryMask;
 @property (nonatomic, copy) NSString *entryAuthor;
 @property (readonly, copy) NSString *entryCreationDateString;
 @property (nonatomic, copy, nullable) NSDate *entryCreationDate;
 @end
 
-@interface TDChannelBanListSheet ()
+@interface TDCChannelBanListSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSString *channelId;
-@property (nonatomic, assign, readwrite) TDChannelBanListSheetEntryType entryType;
+@property (nonatomic, assign, readwrite) TDCChannelBanListSheetEntryType entryType;
 @property (nonatomic, copy, readwrite, nullable) NSArray<NSString *> *listOfChanges;
 @property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
 @property (nonatomic, weak) IBOutlet TVCBasicTableView *entryTable;
@@ -59,11 +59,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onRemoveEntry:(id)sender;
 @end
 
-@implementation TDChannelBanListSheet
+@implementation TDCChannelBanListSheet
 
 ClassWithDesignatedInitializerInitMethod
 
-- (instancetype)initWithEntryType:(TDChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel
+- (instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel
 {
 	NSParameterAssert(channel != nil);
 
@@ -86,7 +86,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	[RZMainBundle() loadNibNamed:@"TDChannelBanListSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCChannelBanListSheet" owner:self topLevelObjects:nil];
 
 	self.entryTable.sortDescriptors = @[
 		[NSSortDescriptor sortDescriptorWithKey:@"entryCreationDate" ascending:NO selector:@selector(compare:)]
@@ -94,12 +94,12 @@ ClassWithDesignatedInitializerInitMethod
 
 	NSString *headerTitle = nil;
 
-	if (self.entryType == TDChannelBanListSheetBanEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1000]", self.channel.name);
-	} else if (self.entryType == TDChannelBanListSheetBanExceptionEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1001]", self.channel.name);
-	} else if (self.entryType == TDChannelBanListSheetInviteExceptionEntryType) {
-		headerTitle = TXTLS(@"TDChannelBanListSheet[1002]", self.channel.name);
+	if (self.entryType == TDCChannelBanListSheetBanEntryType) {
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[1000]", self.channel.name);
+	} else if (self.entryType == TDCChannelBanListSheetBanExceptionEntryType) {
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[1001]", self.channel.name);
+	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
+		headerTitle = TXTLS(@"TDCChannelBanListSheet[1002]", self.channel.name);
 	}
 
 	self.headerTitleTextField.stringValue = headerTitle;
@@ -123,7 +123,7 @@ ClassWithDesignatedInitializerInitMethod
 		entryAuthor = TXTLS(@"BasicLanguage[1002]"); // "Unknown"
 	}
 
-	TDChannelBanListSheetEntry *newEntry = [TDChannelBanListSheetEntry new];
+	TDCChannelBanListSheetEntry *newEntry = [TDCChannelBanListSheetEntry new];
 
 	newEntry.entryMask = entryMask;
 	newEntry.entryAuthor = entryAuthor;
@@ -138,11 +138,11 @@ ClassWithDesignatedInitializerInitMethod
 
 - (NSString *)modeSymbol
 {
-	if (self.entryType == TDChannelBanListSheetBanEntryType) {
+	if (self.entryType == TDCChannelBanListSheetBanEntryType) {
 		return @"b";
-	} else if (self.entryType == TDChannelBanListSheetBanExceptionEntryType) {
+	} else if (self.entryType == TDCChannelBanListSheetBanExceptionEntryType) {
 		return @"e";
-	} else if (self.entryType == TDChannelBanListSheetInviteExceptionEntryType) {
+	} else if (self.entryType == TDCChannelBanListSheetInviteExceptionEntryType) {
 		return @"I";
 	}
 
@@ -180,7 +180,7 @@ ClassWithDesignatedInitializerInitMethod
 	__block NSUInteger numberOfEntries = 0;
 
 	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-		TDChannelBanListSheetEntry *entryItem = self.entryTableController.arrangedObjects[index];
+		TDCChannelBanListSheetEntry *entryItem = self.entryTableController.arrangedObjects[index];
 
 		if (modeSetString.length == 0) {
 			[modeSetString appendFormat:@"-%@", modeSymbol];
@@ -229,7 +229,7 @@ ClassWithDesignatedInitializerInitMethod
 
 #pragma mark -
 
-@implementation TDChannelBanListSheetEntry
+@implementation TDCChannelBanListSheetEntry
 
 - (NSString *)entryCreationDateString
 {

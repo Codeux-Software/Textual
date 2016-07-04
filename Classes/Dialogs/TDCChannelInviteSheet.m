@@ -38,28 +38,86 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol TDCServerChannelListDialogDelegate;
-
-@interface TDCServerChannelListDialog : NSWindowController <TDCClientPrototype>
-@property (nonatomic, weak, nullable) id <TDCServerChannelListDialogDelegate> delegate;
-@property (nonatomic, assign) BOOL contentAlreadyReceived;
-
-- (instancetype)initWithClient:(IRCClient *)client;
-
-- (void)show;
-- (void)close;
-
-- (void)clear;
-
-- (void)addChannel:(NSString *)channel count:(NSUInteger)count topic:(nullable NSString *)topic;
+@interface TDCChannelInviteSheet ()
+@property (nonatomic, strong, readwrite) IRCClient *client;
+@property (nonatomic, copy, readwrite) NSString *clientId;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *nicknames;
+@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
+@property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
 @end
 
-@protocol TDCServerChannelListDialogDelegate <NSObject>
-@required
+@implementation TDCChannelInviteSheet
 
-- (void)serverChannelListDialogOnUpdate:(TDCServerChannelListDialog *)sender;
-- (void)serverChannelListDialog:(TDCServerChannelListDialog *)sender joinChannel:(NSString *)channel;
-- (void)serverChannelDialogWillClose:(TDCServerChannelListDialog *)sender;
+- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client
+{
+	NSParameterAssert(nicknames != nil);
+	NSParameterAssert(client != nil);
+
+	if ((self = [super init])) {
+		self.nicknames = nicknames;
+
+		self.client = client;
+		self.clientId = client.uniqueIdentifier;
+
+		[self prepareInitialState];
+
+		return self;
+	}
+
+	return nil;
+}
+
+- (void)prepareInitialState
+{
+	[RZMainBundle() loadNibNamed:@"TDCChannelInviteSheet" owner:self topLevelObjects:nil];
+
+	NSUInteger nicknameCount = self.nicknames.count;
+
+	NSString *headerTitle = nil;
+
+	if (nicknameCount == 1) {
+		headerTitle = self.nicknames[0];
+	} else if (nicknameCount == 2) {
+		headerTitle = TXTLS(@"TDCChannelInviteSheet[1002]", self.nicknames[0], self.nicknames[1]);
+	} else {
+		headerTitle = TXTLS(@"TDCChannelInviteSheet[1000]", nicknameCount);
+	}
+
+	self.headerTitleTextField.stringValue = TXTLS(@"TDCChannelInviteSheet[1001]", headerTitle);
+}
+
+- (void)startWithChannels:(NSArray<NSString *> *)channels
+{
+	NSParameterAssert(channels != nil);
+
+	for (NSString *channel in channels) {
+		[self.channelListPopup addItemWithTitle:channel];
+	}
+	
+	[self startSheet];
+}
+
+- (void)ok:(id)sender
+{
+	if ([self.delegate respondsToSelector:@selector(channelInviteSheet:onSelectChannel:)]) {
+		NSString *channelName = self.channelListPopup.titleOfSelectedItem;
+
+		[self.delegate channelInviteSheet:self onSelectChannel:channelName];
+	}
+
+	[super ok:nil];
+}
+
+#pragma mark -
+#pragma mark NSWindow Delegate
+
+- (void)windowWillClose:(NSNotification *)note
+{
+	if ([self.delegate respondsToSelector:@selector(channelInviteSheetWillClose:)]) {
+		[self.delegate channelInviteSheetWillClose:self];
+	}
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

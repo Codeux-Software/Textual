@@ -8,10 +8,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TDCServerPropertiesSheet">
             <connections>
+                <outlet property="addAddressBookEntryButton" destination="1843" id="Yfy-Fb-eH2"/>
+                <outlet property="addAddressBookEntryMenu" destination="yYJ-qd-Dm2" id="cVa-bu-jqf"/>
                 <outlet property="addChannelButton" destination="1794" id="1947"/>
                 <outlet property="addHighlightButton" destination="2449" id="2478"/>
-                <outlet property="addIgnoreButton" destination="1843" id="1951"/>
-                <outlet property="addIgnoreMenu" destination="yYJ-qd-Dm2" id="O5r-JF-JJs"/>
+                <outlet property="addressBookTable" destination="1851" id="wZ4-il-0gh"/>
                 <outlet property="alternateNicknamesTextField" destination="1602" id="vN7-KA-LFN"/>
                 <outlet property="autoConnectCheck" destination="1531" id="1935"/>
                 <outlet property="autoDisconnectOnSleepCheck" destination="2250" id="2253"/>
@@ -19,7 +20,7 @@
                 <outlet property="autojoinWaitsForNickServCheck" destination="B1u-e0-30u" id="44s-dS-Pu5"/>
                 <outlet property="awayNicknameTextField" destination="2335" id="eE8-0s-KKE"/>
                 <outlet property="cancelButton" destination="1456" id="1463"/>
-                <outlet property="channelTable" destination="1805" id="1952"/>
+                <outlet property="channelListTable" destination="1805" id="ex0-5N-btj"/>
                 <outlet property="clientCertificateChangeCertificateButton" destination="l36-PJ-JBU" id="vUq-tL-9aS"/>
                 <outlet property="clientCertificateCommonNameField" destination="nly-3d-FIq" id="OGc-7I-cMH"/>
                 <outlet property="clientCertificateMD5FingerprintCopyButton" destination="f9F-WF-ubf" id="Ehp-ZT-eKh"/>
@@ -29,7 +30,7 @@
                 <outlet property="clientCertificateSHA1FingerprintField" destination="2ie-9H-xb2" id="gKW-fl-oQa"/>
                 <outlet property="connectCommandsField" destination="2310" id="2Ht-9D-ef5"/>
                 <outlet property="connectionNameTextField" destination="1539" id="f2G-5T-09V"/>
-                <outlet property="connectionPrefersIPv6heck" destination="2530" id="Ri4-7R-JRA"/>
+                <outlet property="connectionPrefersIPv4Check" destination="2530" id="HQX-yt-KqL"/>
                 <outlet property="connectionPrefersModernCiphersCheck" destination="VLy-2l-FGP" id="D8g-jX-Usc"/>
                 <outlet property="contentViewAddressBook" destination="1817" id="d5R-wV-sv5"/>
                 <outlet property="contentViewAutojoin" destination="1738" id="GdW-S9-Mmc"/>
@@ -47,13 +48,13 @@
                 <outlet property="contentViewProxyServerSystemSocksView" destination="GFp-Qd-4ck" id="i2R-4V-oBi"/>
                 <outlet property="contentViewProxyServerTorBrowserView" destination="yql-kd-PP5" id="uIe-fo-kbw"/>
                 <outlet property="contentViewZncBouncer" destination="2542" id="qzo-1Y-6rw"/>
+                <outlet property="deleteAddressBookEntryButton" destination="1845" id="YMJ-qA-DaM"/>
                 <outlet property="deleteChannelButton" destination="1796" id="1948"/>
                 <outlet property="deleteHighlightButton" destination="2447" id="2477"/>
-                <outlet property="deleteIgnoreButton" destination="1845" id="1953"/>
                 <outlet property="disconnectOnReachabilityChangeCheck" destination="w5K-aH-URS" id="8N7-xY-lax"/>
+                <outlet property="editAddressBookEntryButton" destination="1844" id="LTq-3U-HnM"/>
                 <outlet property="editChannelButton" destination="1795" id="1949"/>
                 <outlet property="editHighlightButton" destination="2448" id="2476"/>
-                <outlet property="editIgnoreButton" destination="1844" id="1954"/>
                 <outlet property="erroneousInputErrorImageView" destination="cgQ-5Q-jmX" id="cfp-42-zXz"/>
                 <outlet property="erroneousInputErrorTextField" destination="xwo-kI-GUK" id="B1Q-1d-aFP"/>
                 <outlet property="excludedFromCloudSyncingCheck" destination="dLD-ut-ncd" id="aCB-R6-pq3"/>
@@ -61,7 +62,6 @@
                 <outlet property="floodControlDelayTimerSlider" destination="O6l-eN-3Uc" id="l2j-Kb-PsN"/>
                 <outlet property="floodControlMessageCountSlider" destination="RXW-HB-aEa" id="whf-jb-XgS"/>
                 <outlet property="highlightsTable" destination="2454" id="2474"/>
-                <outlet property="ignoreTable" destination="1851" id="1950"/>
                 <outlet property="navigationOutlineview" destination="Uj0-Wm-eox" id="1KT-DU-Q7e"/>
                 <outlet property="nicknamePasswordTextField" destination="1601" id="i9R-Eg-aTO"/>
                 <outlet property="nicknameTextField" destination="1595" id="BL9-gX-P5G"/>
@@ -104,7 +104,7 @@
                         <rect key="frame" x="8" y="8" width="159" height="340"/>
                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="c7A-uX-FoM">
                             <rect key="frame" x="1" y="17" width="238" height="117"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" viewBased="YES" indentationPerLevel="16" outlineTableColumn="9ke-X4-49Z" id="Uj0-Wm-eox" customClass="TVCContentNavigationOutlineView">
                                     <rect key="frame" x="0.0" y="0.0" width="155" height="0.0"/>
@@ -267,7 +267,7 @@ Gw
                 <outlet property="delegate" destination="-2" id="2302"/>
                 <outlet property="initialFirstResponder" destination="1456" id="1467"/>
             </connections>
-            <point key="canvasLocation" x="88" y="90"/>
+            <point key="canvasLocation" x="358" y="78"/>
         </window>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1469" userLabel="General View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
@@ -1246,6 +1246,57 @@ Gw
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="1817" userLabel="Ignores View">
             <rect key="frame" x="0.0" y="0.0" width="530" height="307"/>
             <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2358">
+                    <rect key="frame" x="52" y="265" width="223" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1843">
+                    <rect key="frame" x="54" y="24" width="30" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="QlP-6J-LHr"/>
+                        <constraint firstAttribute="height" constant="21" id="vQi-Ge-Mbr"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1848">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Add Address Book Entry"/>
+                    <connections>
+                        <action selector="showAddAddressBookEntryMenu:" target="-2" id="88b-Ti-Qfj"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1844">
+                    <rect key="frame" x="426" y="24" width="50" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="kRT-kW-RSl"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1847">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Edit Selected Address Book Entry"/>
+                    <connections>
+                        <action selector="editAddressBookEntry:" target="-2" id="IB0-cr-GDM"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1845">
+                    <rect key="frame" x="84" y="24" width="30" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="KNr-DJ-KBv"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1846">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <accessibility description="Remove Selected Address Book Entry"/>
+                    <connections>
+                        <action selector="deleteAddressBookEntry:" target="-2" id="xzf-1d-ibA"/>
+                    </connections>
+                </button>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" allowsMagnification="YES" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1842">
                     <rect key="frame" x="54" y="54" width="422" height="203"/>
                     <clipView key="contentView" id="wXW-Pe-W5j">
@@ -1312,57 +1363,6 @@ Gw
                     </tableHeaderView>
                     <accessibility description="Address Book List"/>
                 </scrollView>
-                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2358">
-                    <rect key="frame" x="52" y="265" width="223" height="17"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" sendsActionOnEndEditing="YES" title="Ignore or track the following people:" id="2359">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1843">
-                    <rect key="frame" x="54" y="24" width="30" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="QlP-6J-LHr"/>
-                        <constraint firstAttribute="height" constant="21" id="vQi-Ge-Mbr"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1848">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Add Address Book Entry"/>
-                    <connections>
-                        <action selector="showAddIgnoreMenu:" target="-2" id="1999"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1844">
-                    <rect key="frame" x="426" y="24" width="50" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="kRT-kW-RSl"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1847">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Edit Selected Address Book Entry"/>
-                    <connections>
-                        <action selector="editIgnore:" target="-2" id="1857"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1845">
-                    <rect key="frame" x="84" y="24" width="30" height="23"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="KNr-DJ-KBv"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1846">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <accessibility description="Remove Selected Address Book Entry"/>
-                    <connections>
-                        <action selector="deleteIgnore:" target="-2" id="1855"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="2358" firstAttribute="leading" secondItem="1817" secondAttribute="leading" constant="54" id="5bF-9i-gSz"/>
@@ -2173,13 +2173,13 @@ Gw
                 <menuItem title="Add User Ignore Entry" tag="3" id="Mxd-76-s9L">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="addIgnore:" target="-2" id="L1L-D4-U4B"/>
+                        <action selector="addAddressBookEntry:" target="-2" id="5e0-v6-i7r"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Add User Tracking Entry" tag="4" id="Ju6-ey-oG4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="addIgnore:" target="-2" id="7HS-cN-zgs"/>
+                        <action selector="addAddressBookEntry:" target="-2" id="4Ht-2r-Dp6"/>
                     </connections>
                 </menuItem>
             </items>

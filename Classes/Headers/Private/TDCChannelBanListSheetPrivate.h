@@ -37,23 +37,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, TDChannelBanListSheetEntryType) {
-	TDChannelBanListSheetBanEntryType,
-	TDChannelBanListSheetBanExceptionEntryType,
-	TDChannelBanListSheetInviteExceptionEntryType
+typedef NS_ENUM(NSUInteger, TDCChannelBanListSheetEntryType) {
+	TDCChannelBanListSheetBanEntryType,
+	TDCChannelBanListSheetBanExceptionEntryType,
+	TDCChannelBanListSheetInviteExceptionEntryType
 };
 
-@interface TDChannelBanListSheet : TDCSheetBase
-@property (readonly, strong) IRCClient *client;
-@property (readonly, strong) IRCChannel *channel;
-@property (readonly, copy) NSString *clientId;
-@property (readonly, copy) NSString *channelId;
-@property (readonly) TDChannelBanListSheetEntryType entryType;
+@interface TDCChannelBanListSheet : TDCSheetBase <TDCChannelPrototype>
+@property (readonly) TDCChannelBanListSheetEntryType entryType;
 @property (readonly, copy) NSString *modeSymbol;
 @property (readonly, copy, nullable) NSArray<NSString *> *listOfChanges;
 @property (nonatomic, assign) BOOL contentAlreadyReceived;
 
-- (instancetype)initWithEntryType:(TDChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithEntryType:(TDCChannelBanListSheetEntryType)entryType inChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 
@@ -62,11 +58,11 @@ typedef NS_ENUM(NSUInteger, TDChannelBanListSheetEntryType) {
 - (void)addEntry:(NSString *)entryMask setBy:(nullable NSString *)entryAuthor creationDate:(nullable NSDate *)entryCreationDate;
 @end
 
-@protocol TDChannelBanListSheetDelegate <NSObject>
+@protocol TDCChannelBanListSheetDelegate <NSObject>
 @required
 
-- (void)channelBanListSheetOnUpdate:(TDChannelBanListSheet *)sender;
-- (void)channelBanListSheetWillClose:(TDChannelBanListSheet *)sender;
+- (void)channelBanListSheetOnUpdate:(TDCChannelBanListSheet *)sender;
+- (void)channelBanListSheetWillClose:(TDCChannelBanListSheet *)sender;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -37,10 +37,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDCServerHighlightListSheet : TDCSheetBase
-@property (readonly, strong) IRCClient *client;
-@property (readonly, copy) NSString *clientId;
-
+@interface TDCServerHighlightListSheet : TDCSheetBase <TDCClientPrototype>
 - (instancetype)initWithClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
 - (void)start;

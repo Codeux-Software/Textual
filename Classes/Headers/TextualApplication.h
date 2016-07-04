@@ -76,14 +76,11 @@
 	@class IRCTreeItem;
 	@class IRCUser;
 	@class IRCWorld;
-	@class TDCAddressBookSheet;
 	@class TDCFileTransferDialog;
 	@class TDCFileTransferDialogRemoteAddressLookup;
 	@class TDCFileTransferDialogTableCell;
 	@class TDCFileTransferDialogTransferController;
-	@class TDCServerPropertiesSheet;
 	@class TDCSheetBase;
-	@class TDChannelPropertiesSheet;
 	@class THOUnicodeHelper;
 	@class TLOGrowlController;
 	@class TLOKeyEventHandler;
@@ -179,9 +176,6 @@
 		#define TEXTUAL_BUILT_WITH_FORCED_BETA_LIFESPAN 0
 	#endif
 
-	/* Protocol defenitions (see file) */
-	#import "TDCSharedProtocolDefinitions.h"
-
 	/* 3rd-party Extensions */
 	#import "GCDAsyncSocket.h"
 	#import "GRMustacheAvailabilityMacros.h"
@@ -233,13 +227,10 @@
 
 	/* Dialogs */
 	#import "TDCSheetBase.h"
-	#import "TDCAddressBookSheet.h"
 	#import "TDCFileTransferDialog.h"
 	#import "TDCFileTransferDialogRemoteAddressLookup.h"
 	#import "TDCFileTransferDialogTableCell.h"
 	#import "TDCFileTransferDialogTransferController.h"
-	#import "TDCServerPropertiesSheet.h"
-	#import "TDChannelPropertiesSheet.h"
 
 	/* Helpers */
 	#import "THOPluginProtocol.h"

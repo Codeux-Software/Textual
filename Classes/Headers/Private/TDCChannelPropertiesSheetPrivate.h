@@ -38,22 +38,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelModifyTopicSheet : TDCSheetBase
-@property (readonly, strong) IRCClient *client;
-@property (readonly, strong) IRCChannel *channel;
-@property (readonly, copy) NSString *clientId;
-@property (readonly, copy) NSString *channelId;
+@protocol TDCChannelPropertiesSheetDelegate;
 
-- (instancetype)initWithChannel:(IRCChannel *)channel NS_DESIGNATED_INITIALIZER;
+@interface TDCChannelPropertiesSheet : TDCSheetBase <TDCChannelPrototype>
+- (instancetype)initWithChannel:(IRCChannel *)channel;
+
+- (instancetype)initWithClient:(IRCClient *)client;
+- (instancetype)initWithClientId:(NSString *)clientId;
+
+- (instancetype)initWithConfig:(nullable IRCChannelConfig *)config;
+- (instancetype)initWithConfig:(nullable IRCChannelConfig *)config onClient:(nullable IRCClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConfig:(nullable IRCChannelConfig *)config onClientWithId:(nullable NSString *)clientId NS_DESIGNATED_INITIALIZER;
 
 - (void)start;
 @end
 
-@protocol TDChannelModifyTopicSheetDelegate <NSObject>
+@protocol TDCChannelPropertiesSheetDelegate <NSObject>
 @required
 
-- (void)channelModifyTopicSheet:(TDChannelModifyTopicSheet *)sender onOk:(NSString *)topic;
-- (void)channelModifyTopicSheetWillClose:(TDChannelModifyTopicSheet *)sender;
+- (void)channelPropertiesSheet:(TDCChannelPropertiesSheet *)sender onOk:(IRCChannelConfig *)config;
+- (void)channelPropertiesSheetWillClose:(TDCChannelPropertiesSheet *)sender;
 @end
 
 NS_ASSUME_NONNULL_END

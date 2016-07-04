@@ -39,7 +39,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDCHighlightEntrySheet ()
-@property (nonatomic, copy, nullable) IRCHighlightMatchCondition *config;
+@property (nonatomic, strong) IRCHighlightMatchConditionMutable *config;
 @property (nonatomic, copy) NSArray<IRCChannelConfig *> *channelList;
 @property (nonatomic, weak) IBOutlet TVCTextFieldWithValueValidation *matchKeywordTextField;
 @property (nonatomic, weak) IBOutlet NSPopUpButton *matchTypePopupButton;
@@ -53,7 +53,11 @@ ClassWithDesignatedInitializerInitMethod
 - (instancetype)initWithConfig:(nullable IRCHighlightMatchCondition *)config
 {
 	if ((self = [super init])) {
-		self.config = config;
+		if (config) {
+			self.config = [config mutableCopy];
+		} else {
+			self.config = [IRCHighlightMatchConditionMutable new];
+		}
 
 		[self prepareInitialState];
 
@@ -80,10 +84,6 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)loadConfig
 {
-	if (self.config == nil) {
-		return;
-	}
-
 	self.matchKeywordTextField.stringValue = self.config.matchKeyword;
 
 	if (self.config.matchIsExcluded == NO) {
@@ -126,17 +126,9 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)ok:(id)sender
 {
-	IRCHighlightMatchConditionMutable *config = nil;
+	self.config.matchIsExcluded = (self.matchTypePopupButton.selectedTag == 2);
 
-	if (self.config != nil) {
-		config = [self.config mutableCopy];
-	} else {
-		config = [IRCHighlightMatchConditionMutable new];
-	}
-
-	config.matchIsExcluded = (self.matchTypePopupButton.selectedTag == 2);
-
-	config.matchKeyword = self.matchKeywordTextField.value;
+	self.config.matchKeyword = self.matchKeywordTextField.value;
 
 	NSInteger selectedChannelIndex = self.matchChannelPopupButton.indexOfSelectedItem;
 
@@ -145,14 +137,14 @@ ClassWithDesignatedInitializerInitMethod
 
 		for (IRCChannelConfig *c in self.channelList) {
 			if (NSObjectsAreEqual(c.channelName, selectedChannelName)) {
-				config.matchChannelId = c.itemUUID;
+				self.config.matchChannelId = c.itemUUID;
 
 				break;
 			}
 		}
 	}
 
-	[self.delegate highlightEntrySheet:self onOk:[config copy]];
+	[self.delegate highlightEntrySheet:self onOk:[self.config copy]];
 	
 	[super ok:sender];
 }

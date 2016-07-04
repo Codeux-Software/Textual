@@ -37,6 +37,6 @@
 
 /* Next unusued key: 1002 */
 
-"TDChannelInviteSheet[1000]" = "%ld users";
-"TDChannelInviteSheet[1001]" = "Invite %@ to:";
-"TDChannelInviteSheet[1002]" = "%1$@ and %2$@";
+"TDCChannelInviteSheet[1000]" = "%ld users";
+"TDCChannelInviteSheet[1001]" = "Invite %@ to:";
+"TDCChannelInviteSheet[1002]" = "%1$@ and %2$@";

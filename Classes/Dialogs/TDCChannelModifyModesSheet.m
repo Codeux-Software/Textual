@@ -38,12 +38,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelModifyModesSheet ()
+@interface TDCChannelModifyModesSheet ()
 @property (nonatomic, strong, readwrite) IRCClient *client;
 @property (nonatomic, strong, readwrite) IRCChannel *channel;
 @property (nonatomic, copy, readwrite) NSString *clientId;
 @property (nonatomic, copy, readwrite) NSString *channelId;
-@property (nonatomic, copy) IRCChannelMode *modes;
+@property (nonatomic, strong) IRCChannelMode *modes;
 @property (nonatomic, weak) IBOutlet NSButton *sCheck;
 @property (nonatomic, weak) IBOutlet NSButton *pCheck;
 @property (nonatomic, weak) IBOutlet NSButton *nCheck;
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (IBAction)onChangeCheck:(id)sender;
 @end
 
-@implementation TDChannelModifyModesSheet
+@implementation TDCChannelModifyModesSheet
 
 ClassWithDesignatedInitializerInitMethod
 
@@ -74,7 +74,7 @@ ClassWithDesignatedInitializerInitMethod
 		self.channel = channel;
 		self.channelId = channel.uniqueIdentifier;
 
-		self.modes = channel.modeInfo;
+		self.modes = [channel.modeInfo copy];
 
 		[self prepareInitialState];
 
@@ -88,7 +88,7 @@ ClassWithDesignatedInitializerInitMethod
 
 - (void)prepareInitialState
 {
-	[RZMainBundle() loadNibNamed:@"TDChannelModifyModesSheet" owner:self topLevelObjects:nil];
+	[RZMainBundle() loadNibNamed:@"TDCChannelModifyModesSheet" owner:self topLevelObjects:nil];
 }
 
 - (void)loadConfig

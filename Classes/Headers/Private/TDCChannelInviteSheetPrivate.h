@@ -38,86 +38,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TDChannelInviteSheet ()
-@property (nonatomic, strong, readwrite) IRCClient *client;
-@property (nonatomic, copy, readwrite) NSString *clientId;
-@property (nonatomic, copy, readwrite) NSArray<NSString *> *nicknames;
-@property (nonatomic, weak) IBOutlet NSTextField *headerTitleTextField;
-@property (nonatomic, weak) IBOutlet NSPopUpButton *channelListPopup;
+@interface TDCChannelInviteSheet : TDCSheetBase <TDCClientPrototype>
+@property (readonly, copy) NSArray<NSString *> *nicknames;
+
+- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
+
+- (void)startWithChannels:(NSArray<NSString *> *)channels;
 @end
 
-@implementation TDChannelInviteSheet
+@protocol TDCChannelInviteSheetDelegate <NSObject>
+@required
 
-- (instancetype)initWithNicknames:(NSArray<NSString *> *)nicknames onClient:(IRCClient *)client
-{
-	NSParameterAssert(nicknames != nil);
-	NSParameterAssert(client != nil);
-
-	if ((self = [super init])) {
-		self.nicknames = nicknames;
-
-		self.client = client;
-		self.clientId = client.uniqueIdentifier;
-
-		[self prepareInitialState];
-
-		return self;
-	}
-
-	return nil;
-}
-
-- (void)prepareInitialState
-{
-	[RZMainBundle() loadNibNamed:@"TDChannelInviteSheet" owner:self topLevelObjects:nil];
-
-	NSUInteger nicknameCount = self.nicknames.count;
-
-	NSString *headerTitle = nil;
-
-	if (nicknameCount == 1) {
-		headerTitle = self.nicknames[0];
-	} else if (nicknameCount == 2) {
-		headerTitle = TXTLS(@"TDChannelInviteSheet[1002]", self.nicknames[0], self.nicknames[1]);
-	} else {
-		headerTitle = TXTLS(@"TDChannelInviteSheet[1000]", nicknameCount);
-	}
-
-	self.headerTitleTextField.stringValue = TXTLS(@"TDChannelInviteSheet[1001]", headerTitle);
-}
-
-- (void)startWithChannels:(NSArray<NSString *> *)channels
-{
-	NSParameterAssert(channels != nil);
-
-	for (NSString *channel in channels) {
-		[self.channelListPopup addItemWithTitle:channel];
-	}
-	
-	[self startSheet];
-}
-
-- (void)ok:(id)sender
-{
-	if ([self.delegate respondsToSelector:@selector(channelInviteSheet:onSelectChannel:)]) {
-		NSString *channelName = self.channelListPopup.titleOfSelectedItem;
-
-		[self.delegate channelInviteSheet:self onSelectChannel:channelName];
-	}
-
-	[super ok:nil];
-}
-
-#pragma mark -
-#pragma mark NSWindow Delegate
-
-- (void)windowWillClose:(NSNotification *)note
-{
-	if ([self.delegate respondsToSelector:@selector(channelInviteSheetWillClose:)]) {
-		[self.delegate channelInviteSheetWillClose:self];
-	}
-}
-
+- (void)channelInviteSheet:(TDCChannelInviteSheet *)sender onSelectChannel:(NSString *)channelName;
+- (void)channelInviteSheetWillClose:(TDCChannelInviteSheet *)sender;
 @end
 
 NS_ASSUME_NONNULL_END
