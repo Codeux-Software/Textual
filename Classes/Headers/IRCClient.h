@@ -52,8 +52,7 @@
 typedef NS_ENUM(NSUInteger, IRCClientConnectMode) {
 	IRCClientConnectNormalMode,
 	IRCClientConnectRetryMode,
-	IRCClientConnectReconnectMode,
-	IRCClientConnectBadSSLCertificateMode,
+	IRCClientConnectReconnectMode
 };
 
 typedef NS_ENUM(NSUInteger, IRCClientDisconnectMode) {
