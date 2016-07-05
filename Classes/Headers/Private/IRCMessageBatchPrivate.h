@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,24 +35,35 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey);
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey);
+/* Each IRCClient is assigned a single instance of
+ IRCMessageBatchMessageContainer which acts as a container for
+ all BATCH command events that the client may receive. */
+@interface IRCMessageBatchMessageContainer : NSObject
+@property (readonly, copy) NSDictionary *queuedEntries;
 
-/* Controlling class */
-@interface IRCCommandIndex : NSObject
-+ (NSArray<NSString *> *)publicIRCCommandList;
+- (void)queueEntry:(id)entry;
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command;
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch;
+- (void)dequeueEntry:(id)entry;
+- (void)dequeueEntryWithBatchToken:(NSString *)batchToken;
 
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex;
+- (id)queuedEntryWithBatchToken:(NSString *)batchToken;
 
-+ (NSUInteger)colonIndexForCommand:(NSString *)command;
+- (void)clearQueue;
+@end
+
+/* IRCMessageBatchMessage represents a single BATCH event based
+ on its token value. Queued entries can either be an IRCMessage
+ instance or IRCMessageBatchMessage (for nested batch events). */
+@interface IRCMessageBatchMessage : NSObject
+@property (nonatomic, assign) BOOL batchIsOpen;
+@property (nonatomic, copy) NSString *batchToken;
+@property (nonatomic, copy, nullable) NSString *batchType;
+@property (readonly, copy) NSArray *queuedEntries;
+@property (nonatomic, weak, nullable) IRCMessageBatchMessage *parentBatchMessage;
+
+- (void)queueEntry:(id)entry;
 @end
 
 NS_ASSUME_NONNULL_END

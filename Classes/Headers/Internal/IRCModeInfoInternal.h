@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,24 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey);
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey);
+@interface IRCModeInfo ()
+{
+@protected
+	BOOL _modeIsSet;
+	NSString *_modeSymbol;
+	NSString *_modeParamater;
 
-/* Controlling class */
-@interface IRCCommandIndex : NSObject
-+ (NSArray<NSString *> *)publicIRCCommandList;
+@private
+	BOOL _objectInitialized;
+}
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command;
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch;
-
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex;
-
-+ (NSUInteger)colonIndexForCommand:(NSString *)command;
+- (BOOL)isMutable;
 @end
 
 NS_ASSUME_NONNULL_END

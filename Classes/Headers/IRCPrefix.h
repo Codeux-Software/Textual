@@ -38,10 +38,32 @@
 
 #import "TextualApplication.h"
 
-@interface IRCPrefix : NSObject <NSCopying>
-@property (nonatomic, copy) NSString *hostmask;
-@property (nonatomic, copy) NSString *nickname;
-@property (nonatomic, copy) NSString *username;
-@property (nonatomic, copy) NSString *address;
-@property (nonatomic, assign) BOOL isServer;
+NS_ASSUME_NONNULL_BEGIN
+
+/* It is possible (though very rare) that -nickname is nil. */
+/* Most content with a nil nickname is ignored. The PING command 
+ is pretty much the only exception. */
+
+#pragma mark -
+#pragma mark Immutable Object
+
+@interface IRCPrefix : NSObject <NSCopying, NSMutableCopying>
+@property (readonly) BOOL isServer;
+@property (readonly, copy, nullable) NSString *nickname;
+@property (readonly, copy, nullable) NSString *username;
+@property (readonly, copy, nullable) NSString *address;
+@property (readonly, copy, nullable) NSString *hostmask;
 @end
+
+#pragma mark -
+#pragma mark Mutable Object
+
+@interface IRCPrefixMutable : IRCPrefix
+@property (nonatomic, assign, readwrite) BOOL isServer;
+@property (nonatomic, copy, readwrite, nullable) NSString *nickname;
+@property (nonatomic, copy, readwrite, nullable) NSString *username;
+@property (nonatomic, copy, readwrite, nullable) NSString *address;
+@property (nonatomic, copy, readwrite, nullable) NSString *hostmask;
+@end
+
+NS_ASSUME_NONNULL_END

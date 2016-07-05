@@ -38,31 +38,34 @@
 
 #import "TextualApplication.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+#define IRCISupportInfoHighestUserPrefixRank			100
+
+#define IRCISupportUserModeSymbolsSymbolsKey			@"modeSymbols"
+#define IRCISupportUserModeSymbolsCharactersKey			@"characters"
+
 @interface IRCISupportInfo : NSObject
-@property (nonatomic, copy) NSDictionary *channelModes;
-@property (nonatomic, assign) NSInteger nicknameLength;
-@property (nonatomic, assign) NSInteger modesCount;
-@property (nonatomic, copy) NSString *channelNamePrefixes;
-@property (nonatomic, copy) NSString *networkAddress;
-@property (nonatomic, copy) NSString *networkName;
-@property (nonatomic, copy) NSString *networkNameFormatted;
-@property (nonatomic, copy) NSArray *userModePrefixes;
-@property (nonatomic, copy) NSArray *cachedConfiguration;
-@property (nonatomic, copy) NSString *privateMessageNicknamePrefix;
+@property (readonly) NSUInteger maximumNicknameLength;
+@property (readonly) NSUInteger maximumModeCount;
+@property (readonly, copy) NSArray<NSString *> *channelNamePrefixes;
+@property (readonly, copy) NSDictionary<NSString *, NSNumber *> *channelModes;
+@property (readonly, copy) NSDictionary<NSString *, NSArray *> *userModeSymbols;
+@property (readonly, copy, nullable) NSString *networkAddress;
+@property (readonly, copy, nullable) NSString *networkName;
+@property (readonly, copy, nullable) NSString *networkNameFormatted;
+@property (readonly, copy, nullable) NSString *privateMessageNicknamePrefix;
 
-- (void)reset;
+- (nullable NSString *)modeSymbolForUserPrefix:(NSString *)character;
+- (nullable NSString *)userPrefixForModeSymbol:(NSString *)modeSymbol;
 
-- (void)update:(NSString *)configData client:(IRCClient *)client;
+- (BOOL)characterIsUserPrefix:(NSString *)character;
+- (BOOL)modeSymbolIsUserPrefix:(NSString *)modeSymbol;
 
-- (NSString *)buildConfigurationRepresentationForLastEntry;
-- (NSString *)buildConfigurationRepresentationForEntry:(NSDictionary *)entries;
+- (NSUInteger)rankForUserPrefixWithMode:(NSString *)modeSymbol; // Starts at 100; 100 = highest rank
 
-- (NSString *)modeCharacterFromUserPrefixSymbol:(NSString *)symbol;
-- (NSString *)userModePrefixSymbolWithMode:(NSString *)mode;
-- (BOOL)modeIsSupportedUserPrefix:(NSString *)mode;
-- (BOOL)symbolIsUserPrefixCharacter:(NSString *)symbol;
-- (NSInteger)rankForUserPrefixWithMode:(NSString *)mode; // Starts at 100; 100 = highest rank
-
-- (NSArray *)parseMode:(NSString *)modeString;
-- (IRCModeInfo *)createMode:(NSString *)mode;
+- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol;
+- (IRCModeInfo *)createModeWithSymbol:(NSString *)modeSymbol modeIsSet:(BOOL)modeIsSet modeParamater:(nullable NSString *)modeParamater;
 @end
+
+NS_ASSUME_NONNULL_END

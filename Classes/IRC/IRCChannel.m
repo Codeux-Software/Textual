@@ -297,8 +297,7 @@ NSString * const IRCChannelConfigurationWasUpdatedNotification = @"IRCChannelCon
 	if ([self isChannel]) {
 		[self.associatedClient postEventToViewController:@"channelJoined" forChannel:self];
 
-	     self.modeInfo = [IRCChannelMode new];
-		[self.modeInfo setSupportInfo:[self.associatedClient supportInfo]];
+		self.modeInfo = [[IRCChannelMode alloc] initWithChannel:self];
     }
 
 	if ([self isPrivateMessage]) {

@@ -36,273 +36,125 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCMessageInternal.h"
 
-@interface IRCMessageBatchMessageContainer ()
-@property (nonatomic, strong) NSMutableDictionary *internalBatchEntries;
-@end
-
-@interface IRCMessageBatchMessage ()
-@property (nonatomic, strong) NSMutableArray *internalBatchEntries;
-@end
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCMessage
 
-- (instancetype)initWithLine:(NSString *)line
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+- (instancetype)init
 {
+	ObjectIsAlreadyInitializedAssert
+
 	if ((self = [super init])) {
-		[self parseLine:line];
+		[self populateDefaultsPostflight];
+
+		return self;
 	}
-	
-	return self;
+
+	return nil;
 }
 
-- (void)parseLine:(NSString *)line
+- (nullable instancetype)initWithLine:(NSString *)line
 {
-	[self parseLine:line forClient:nil];
+	return [self initWithLine:line onClient:nil];
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
+
+- (nullable instancetype)initWithLine:(NSString *)line onClient:(IRCClient *)client
+{
+	ObjectIsAlreadyInitializedAssert
+
+	if ((self = [super init])) {
+		BOOL parseResult = [self parseLine:line forClient:client];
+
+		if (parseResult == NO) {
+			return nil;
+		}
+
+		[self populateDefaultsPostflight];
+
+		return self;
+	}
+
+	return nil;
 }
 
-- (void)parseLine:(NSString *)line forClient:(IRCClient *)client
+- (void)populateDefaultsPostflight
 {
-	/* Establish base pair. */
-	self.command = nil;
-
-	self.isHistoric = NO;
-
-	IRCPrefix *sender = [IRCPrefix new];
-	
-	NSMutableArray *params = [NSMutableArray new];
-	
-	/* Begin parsing. */
-	NSMutableString *s = [line mutableCopy];
-
-	// ---- //
-
-    /* Get extensions from in front of input string. See ircv3.net for
-     more information regarding extensions in the IRC protocol. */
-	if ([s hasPrefix:@"@"]) {
-		/* Get leading string up to first space. */
-		NSString *extensionInfo = [s getToken];
-		
-		/* Check for malformed message. */
-		if ([extensionInfo length] <= 1) {
-			return; // Do not continue as message is malformed.
-		}
-		
-		/* Remove the leading at sign from the string. */
-		extensionInfo = [extensionInfo substringFromIndex:1];
-		
-		/* Chop the tags up using ; as a divider as defined by the syntax
-		 located at: <http://ircv3.net/specs/core/message-tags-3.2.html> */
-		/* An example grouping would look like the following:
-				@aaa=bbb;ccc;example.com/ddd=eee */
-		/* The specification does not specify what is to happen if the value
-		 of an extension will contain a semicolon so at this point we will
-		 assume that they will not exist and only be there as a divider. */
-		NSArray *values = [extensionInfo componentsSeparatedByString:@";"];
-
-		NSMutableDictionary *valueMatrix = [NSMutableDictionary dictionary];
-		
-		/* We now go through each tag using an equal sign as a divider and
-		 placing each into a dictionary. */
-		for (NSString *comp in values) {
-			NSArray *info = [comp componentsSeparatedByString:@"="];
-
-			NSAssertReturnLoopContinue([info count] == 2);
-
-			NSString *extKey = info[0];
-			NSString *extVal = info[1];
-			
-			valueMatrix[extKey] = extVal;
-		}
-		
-		/* Now that we have values, we can check against our capacities. */
-		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
-			/* We support two time extensions. The time= value is the date and
-			 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
-			/* The t= value is a legacy value in a epoch time. We always favor
-			 the new time= format over the old. */
-			NSString *timeObject = valueMatrix[@"time"];
-
-			if (timeObject == nil) {
-				timeObject = valueMatrix[@"t"];
-			}
-
-			NSDate *date = nil;
-
-			if ([timeObject onlyContainsCharacters:@"0123456789."]) {
-				date = [NSDate dateWithTimeIntervalSince1970:[timeObject doubleValue]];
-			} else {
-				date = [TXSharedISOStandardDateFormatter() dateFromString:timeObject];
-			}
-			
-			/* If we have a time, we are done. */
-			if (date) {
-				self.receivedAt = date;
-				
-				self.isHistoric = YES;
-			}
-		}
-
-		/* Process batch token if available. */
-		if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityBatch]) {
-			NSString *batchToken = valueMatrix[@"batch"];
-
-			if (batchToken) {
-				if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {
-					self.batchToken = batchToken;
-				}
-			}
-		}
-
-        self.messageTags = valueMatrix;
-	}
-
-    /* Initialize messageTags if it isn't already set. */
-    if (self.messageTags == nil) {
-        self.messageTags = [NSDictionary dictionary];
-    }
-
-	/* Set a date if there is none already set. */
-	if (self.receivedAt == nil) {
-		self.receivedAt = [NSDate date];
-	}
-
-	// ---- //
-
-    /* Begin the parsing of the actual input string. */
-    /* First thing to do is get the sender information from in 
-     front of the message. */
-	/* Under certain cirumstances, the user may not exist 
-	 at all. For example, some IRCds may send a complete input
-	 string that looks like "PING :daRYdkOuVL" — as seen, the
-	 input string begins with the command and that is it. */
-	if ([s hasPrefix:@":"]) {
-		/* Get user info section. */
-		NSString *userInfo = [s getToken];
-		
-		/* Check that the input is valid. */
-		if ([userInfo length] <= 1) {
-			return; // Current input is malformed, do nothing with it.
-		}
-		
-		NSString *t = [userInfo substringFromIndex:1];
-
-		NSString *nicknameInt = nil;
-		NSString *usernameInt = nil;
-		NSString *addressInt = nil;
-
-		[sender setHostmask:t]; // Declare entire section as host.
-		
-		[sender setIsServer:NO]; // Do not set as server until host is parsed...
-		
-		/* Parse the user info into their appropriate sections or return NO if we can't. */
-		if ([t hostmaskComponents:&nicknameInt username:&usernameInt address:&addressInt onClient:client]) {
-			[sender setNickname:nicknameInt];
-			[sender setUsername:usernameInt];
-			[sender setAddress:addressInt];
-        } else {
-			[sender setNickname:t];
-			
-			[sender setIsServer:YES];
-		}
-	}
-	
-	self.sender = sender;
-
-    /* Now that we have the sender information... continue to the
-     actual command being used. */
-	NSString *foundCommand = [s getToken];
-	
-	/* Check that the input is valid. */
-	if ([foundCommand length] <= 1) {
-		return; // Current input is malformed, do nothing with it.
-	}
-	
-	/* Set command and numeric value. */
-	self.command = [foundCommand uppercaseString];
-
-	if ([self.command isNumericOnly]) {
-		self.commandNumeric = [foundCommand integerValue];
-	} else {
-		self.commandNumeric = 0;
-	}
-
-    /* After the sender information and command information is extracted,
-     there is not much left to the parse. Just searching for the beginning
-     of a message segment or getting the next token. */
-	while ([s length] > 0) {
-		if ([s hasPrefix:@":"]) {
-			[params addObject:[s substringFromIndex:1]];
-			
-			break;
-		} else {
-			[params addObject:[s getToken]];
-		}
-	}
-	
-	/* Finish up. */
-	self.params = params;
-	
-	params = nil;
+	SetVariableIfNilCopy(self->_command, NSStringEmptyPlaceholder)
+	SetVariableIfNilCopy(self->_messageTags, @{})
+	SetVariableIfNilCopy(self->_params, @[])
+	SetVariableIfNilCopy(self->_receivedAt, [NSDate date])
+	SetVariableIfNilCopy(self->_sender, [IRCPrefix new])
 }
 
-- (NSInteger)paramsCount
+- (NSUInteger)paramsCount
 {
-	return [self.params count];
+	return self.params.count;
 }
 
-- (NSString *)paramAt:(NSInteger)index
+- (NSString *)paramAt:(NSUInteger)index
 {
-	if (index < [self paramsCount]) {
+	if (index < self.params.count) {
 		return self.params[index];
-	} else {
-		return NSStringEmptyPlaceholder;
 	}
+
+	return NSStringEmptyPlaceholder;
 }
 
 - (NSString *)sequence
 {
-	if ([self paramsCount] < 2) {
+	if (self.params.count < 2) {
 		return [self sequence:0];
 	} else {
 		return [self sequence:1];
 	}
 }
 
-- (NSString *)sequence:(NSInteger)index
+- (NSString *)sequence:(NSUInteger)index
 {
-	NSMutableString *s = [NSMutableString string];
-	
-	for (NSInteger i = index; i < [self paramsCount]; i++) {
-		NSString *e = self.params[i];
+	NSMutableString *sequence = [NSMutableString string];
+
+	NSArray *params = self.params;
+
+	NSUInteger paramsCount = params.count;
+
+	for (NSUInteger i = index; i < paramsCount; i++) {
+		NSString *param = params[i];
 		
-		if (NSDissimilarObjects(i, index)) {
-			[s appendString:NSStringWhitespacePlaceholder];
+		if (i != index) {
+			[sequence appendString:NSStringWhitespacePlaceholder];
 		}
 		
-		[s appendString:e];
+		[sequence appendString:param];
 	}
 	
-	return s;
+	return [sequence copy];
 }
 
-- (NSString *)senderNickname
+- (void)markAsNotHistoric
+{
+	self->_isHistoric = NO;
+}
+
+- (nullable NSString *)senderNickname
 {
 	return self.sender.nickname;
 }
 
-- (NSString *)senderUsername
+- (nullable NSString *)senderUsername
 {
 	return self.sender.username;
 }
 
-- (NSString *)senderAddress
+- (nullable NSString *)senderAddress
 {
 	return self.sender.address;
 }
 
-- (NSString *)senderHostmask
+- (nullable NSString *)senderHostmask
 {
 	return self.sender.hostmask;
 }
@@ -312,130 +164,358 @@
 	return self.sender.isServer;
 }
 
-@end
-
-#pragma mark -
-
-@implementation IRCMessageBatchMessageContainer
-
-- (NSDictionary *)queuedEntries
+- (id)copyWithZone:(nullable NSZone *)zone
 {
-	@synchronized(self.internalBatchEntries) {
-		return [NSDictionary dictionaryWithDictionary:self.internalBatchEntries];
-	}
+	IRCMessage *object = [[IRCMessage allocWithZone:zone] init];
+
+	object->_batchToken = [self.batchToken copyWithZone:zone];
+	object->_command = [self.command copyWithZone:zone];
+	object->_commandNumeric = self.commandNumeric;
+	object->_isHistoric = self.isHistoric;
+	object->_isEventOnlyMessage = self.isEventOnlyMessage;
+	object->_isPrintOnlyMessage = self.isPrintOnlyMessage;
+	object->_messageTags = [self.messageTags copyWithZone:zone];
+	object->_params = [self.params copyWithZone:zone];
+	object->_receivedAt = [self.receivedAt copyWithZone:zone];
+	object->_sender = [self.sender copyWithZone:zone];
+
+	return object;
 }
 
-- (void)clearQueue
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
 {
-	@synchronized(self.internalBatchEntries) {
-		if (self.internalBatchEntries == nil) {
-			return;
-		}
+	IRCMessageMutable *object = [[IRCMessageMutable allocWithZone:zone] init];
 
-		[self.internalBatchEntries removeAllObjects];
-	}
+	object.batchToken = self.batchToken;
+	object.command = self.command;
+	object.commandNumeric = self.commandNumeric;
+	object.isHistoric = self.isHistoric;
+	object.isEventOnlyMessage = self.isEventOnlyMessage;
+	object.isPrintOnlyMessage = self.isPrintOnlyMessage;
+	object.messageTags = self.messageTags;
+	object.params = self.params;
+	object.receivedAt = self.receivedAt;
+	object.sender = self.sender;
+
+	return object;
 }
 
-- (void)dequeueEntry:(id)entry
+- (BOOL)isMutable
 {
-	if (entry == nil) {
-		return;
-	}
-
-	if ([entry isKindOfClass:[IRCMessageBatchMessage class]]) {
-		[self dequeueEntryWithBatchToken:[entry batchToken]];
-	} else if ([entry isKindOfClass:[NSString class]]) {
-		[self dequeueEntryWithBatchToken:entry];
-	}
-}
-
-- (void)dequeueEntryWithBatchToken:(NSString *)batchToken
-{
-	if (NSObjectIsEmpty(batchToken)) {
-		return;
-	}
-
-	@synchronized(self.internalBatchEntries) {
-		if (self.internalBatchEntries == nil) {
-			return;
-		}
-
-		[self.internalBatchEntries removeObjectForKey:batchToken];
-	}
-}
-
-- (void)queueEntry:(id)entry
-{
-	if (entry == nil) {
-		return;
-	}
-
-	if ([entry isKindOfClass:[IRCMessageBatchMessage class]] == NO) {
-		return;
-	}
-
-	NSString *batchToken = [entry batchToken];
-
-	if (NSObjectIsEmpty(batchToken)) {
-		return;
-	}
-
-	@synchronized(self.internalBatchEntries) {
-		if (self.internalBatchEntries == nil) {
-			self.internalBatchEntries = [NSMutableDictionary dictionary];
-		}
-
-		[self.internalBatchEntries setObject:entry forKey:batchToken];
-	}
-}
-
-- (id)queuedEntryWithBatchToken:(NSString *)batchToken
-{
-	if (NSObjectIsEmpty(batchToken)) {
-		return nil;
-	}
-
-	@synchronized(self.internalBatchEntries) {
-		if (self.internalBatchEntries == nil) {
-			return nil;
-		}
-
-		return [self.internalBatchEntries objectForKey:batchToken];
-	}
+	return NO;
 }
 
 @end
 
 #pragma mark -
 
-@implementation IRCMessageBatchMessage
+@implementation IRCMessage (IRCMessageLineParser)
 
-- (NSArray *)queuedEntries
+- (BOOL)parseLine:(NSString *)line forClient:(nullable IRCClient *)client
 {
-	@synchronized(self.internalBatchEntries) {
-		return [NSArray arrayWithArray:self.internalBatchEntries];
+	NSParameterAssert(line != nil);
+
+	ObjectIsAlreadyInitializedAssert
+
+	NSMutableString *lineMutable = [line mutableCopy];
+
+	/* Parse extension information (if present) */
+	if ([lineMutable hasPrefix:@"@"]) {
+		NSString *extensionInfo = [lineMutable getToken];
+
+		if (extensionInfo.length <= 1) {
+			return NO;
+		}
+
+		extensionInfo = [extensionInfo substringFromIndex:1];
+
+		[self parseExtensions:extensionInfo forClient:client];
+	}
+
+	/* Parse sender information (if present) */
+	if ([lineMutable hasPrefix:@":"]) {
+		NSString *senderInfo = [lineMutable getToken];
+
+		if (senderInfo.length <= 1) {
+			return NO;
+		}
+
+		senderInfo = [senderInfo substringFromIndex:1];
+
+		[self parseSender:senderInfo forClient:client];
+	}
+
+	/* Parse command */
+	NSString *command = [lineMutable getToken];
+
+	if (command.length < 1) {
+		return NO;
+	}
+
+	if (command.isNumericOnly) {
+		self->_command = [command copy];
+
+		self->_commandNumeric = command.integerValue;
+	} else {
+		self->_command = [command.lowercaseString copy];
+
+		self->_commandNumeric = 0;
+	}
+
+	/* Parse remaining data */
+	NSMutableArray<NSString *> *paramaters = [NSMutableArray new];
+
+	while ([lineMutable length] > 0) {
+		if ([lineMutable hasPrefix:@":"])
+		{
+			NSString *sequence = [lineMutable substringFromIndex:1];
+
+			[paramaters addObject:sequence];
+
+			break;
+		}
+		else
+		{
+			NSString *sequence = [lineMutable getToken];
+
+			[paramaters addObject:sequence];
+		}
+	}
+
+	self->_params = [paramaters copy];
+
+	/* Return success */
+	return YES;
+}
+
+- (void)parseExtensions:(NSString *)extensionInfo forClient:(nullable IRCClient *)client
+{
+	NSParameterAssert(extensionInfo != nil);
+
+	ObjectIsAlreadyInitializedAssert
+
+	/* Chop the tags up using ; as a divider as defined by the syntax
+	 located at: <http://ircv3.net/specs/core/message-tags-3.2.html> */
+	/* An example grouping would look like the following:
+	 @aaa=bbb;ccc;example.com/ddd=eee */
+	/* The specification does not specify what is to happen if the value
+	 of an extension will contain a semicolon so at this point we will
+	 assume that they will not exist and only be there as a divider. */
+	NSArray<NSString *> *extensionsIn = [extensionInfo componentsSeparatedByString:@";"];
+
+	NSMutableDictionary<NSString *, NSString *> *extensionsOut =
+	[NSMutableDictionary dictionaryWithCapacity:extensionsIn.count];
+
+	/* We now go through each tag using an equal sign as a divider and
+	 placing each into a dictionary. */
+	[extensionsIn enumerateObjectsUsingBlock:^(NSString *extension, NSUInteger index, BOOL *stop) {
+		NSInteger equalSignPosition = [extension stringPosition:@"="];
+
+		if (equalSignPosition <= 0) {
+			return;
+		}
+
+		NSString *extensionKey = [extension substringToIndex:equalSignPosition];
+
+		NSString *extensionValue = [extension substringAfterIndex:equalSignPosition];
+
+		extensionsOut[extensionKey] = extensionValue.percentDecodedString;
+	}];
+
+	self->_messageTags = [extensionsOut copy];
+
+	/* If there is no client, then further processing is not possible */
+	if (client == nil) {
+		return;
+	}
+
+	/* Check for known capacities */
+	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+		/* We support two time extensions. The time= value is the date and
+		 time in the format as defined by ISO 8601:2004(E) 4.3.2. */
+		/* The t= value is a legacy value in a epoch time. We always favor
+		 the new time= format over the old. */
+		NSString *dateString = extensionsOut[@"time"];
+
+		if (dateString == nil) {
+			dateString = extensionsOut[@"t"];
+		}
+
+		if (dateString) {
+			NSDate *dateObject = nil;
+
+			if ([dateString onlyContainsCharacters:@"0123456789."]) {
+				dateObject = [NSDate dateWithTimeIntervalSince1970:dateString.doubleValue];
+			} else {
+				dateObject = [TXSharedISOStandardDateFormatter() dateFromString:dateString];
+			}
+
+			if (dateObject) {
+				self->_receivedAt = [dateObject copy];
+
+				self->_isHistoric = YES;
+			}
+		}
+	}
+
+	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityBatch]) {
+		NSString *batchToken = extensionsOut[@"batch"];
+
+		if ([batchToken onlyContainsCharacters:CS_AtoZUnderscoreDashCharacters]) {
+			self->_batchToken = [batchToken copy];
+		}
 	}
 }
 
-- (void)queueEntry:(id)entry
+- (void)parseSender:(NSString *)senderInfo forClient:(nullable IRCClient *)client
 {
-	if (entry == nil) {
-		return;
+	NSParameterAssert(senderInfo != nil);
+
+	ObjectIsAlreadyInitializedAssert
+
+	IRCPrefixMutable *sender = [IRCPrefixMutable new];
+
+	NSString *senderNickname = nil;
+	NSString *senderUsername = nil;
+	NSString *senderAddress = nil;
+
+	sender.hostmask = senderInfo;// Declare entire section as host
+
+	/* Parse the user info into their appropriate sections or return NO if we can't. */
+	if ([senderInfo hostmaskComponents:&senderNickname username:&senderUsername address:&senderAddress onClient:client]) {
+		sender.nickname = senderNickname;
+		sender.username = senderUsername;
+		sender.address = senderAddress;
+	} else {
+		sender.nickname = senderInfo;
+
+		sender.isServer = YES;
 	}
 
-	if ([entry isKindOfClass:[IRCMessage class]] == NO &&
-		[entry isKindOfClass:[IRCMessageBatchMessage class]] == NO)
-	{
-		return;
-	}
+	self->_sender = [sender copy];
+}
 
-	@synchronized(self.internalBatchEntries) {
-		if (self.internalBatchEntries == nil) {
-			self.internalBatchEntries = [NSMutableArray array];
+- (void)performCorrectionsForClient:(IRCClient *)client
+{
+	if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityServerTime]) {
+		if (self.isHistoric) {
+			NSTimeInterval serverTime = self.receivedAt.timeIntervalSince1970;
+
+			if (serverTime > client.lastMessageServerTime) {
+				/* If znc playback module is in use, then all messages are
+				 set as historic so we set any lines above our current reference
+				 date as not historic to avoid collisions. */
+				if ([client isCapacityEnabled:ClientIRCv3SupportedCapacityZNCPlaybackModule]) {
+					self->_isHistoric = NO;
+				}
+
+				/* Update last server time flag. */
+				client.lastMessageServerTime = serverTime;
+			}
 		}
-
-		[self.internalBatchEntries addObject:entry];
 	}
 }
 
 @end
+
+#pragma mark -
+
+@implementation IRCMessageMutable
+
+@dynamic batchToken;
+@dynamic command;
+@dynamic commandNumeric;
+@dynamic isHistoric;
+@dynamic isEventOnlyMessage;
+@dynamic isPrintOnlyMessage;
+@dynamic messageTags;
+@dynamic params;
+@dynamic receivedAt;
+@dynamic sender;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setBatchToken:(nullable NSString *)batchToken
+{
+	if (self->_batchToken != batchToken) {
+		self->_batchToken = [batchToken copy];
+	}
+}
+
+- (void)setCommand:(NSString *)command
+{
+	NSParameterAssert(command != nil);
+
+	if (self->_command != command) {
+		self->_command = [command copy];
+	}
+}
+
+- (void)setCommandNumeric:(NSUInteger)commandNumeric
+{
+	if (self->_commandNumeric != commandNumeric) {
+		self->_commandNumeric = commandNumeric;
+	}
+}
+
+- (void)setIsHistoric:(BOOL)isHistoric
+{
+	if (self->_isHistoric != isHistoric) {
+		self->_isHistoric = isHistoric;
+	}
+}
+
+- (void)setIsEventOnlyMessage:(BOOL)isEventOnlyMessage
+{
+	if (self->_isEventOnlyMessage != isEventOnlyMessage) {
+		self->_isEventOnlyMessage = isEventOnlyMessage;
+	}
+}
+
+- (void)setIsPrintOnlyMessage:(BOOL)isPrintOnlyMessage
+{
+	if (self->_isPrintOnlyMessage != isPrintOnlyMessage) {
+		self->_isPrintOnlyMessage = isPrintOnlyMessage;
+	}
+}
+
+- (void)setMessageTags:(nullable NSDictionary<NSString *, NSString *> *)messageTags
+{
+	if (self->_messageTags != messageTags) {
+		self->_messageTags = [messageTags copy];
+	}
+}
+
+- (void)setParams:(NSArray<NSString *> *)params
+{
+	NSParameterAssert(params != nil);
+
+	if (self->_params != params) {
+		self->_params = [params copy];
+	}
+}
+
+- (void)setReceivedAt:(NSDate *)receivedAt
+{
+	NSParameterAssert(receivedAt != nil);
+
+	if (self->_receivedAt != receivedAt) {
+		self->_receivedAt = [receivedAt copy];
+	}
+}
+
+- (void)setSender:(IRCPrefix *)sender
+{
+	NSParameterAssert(sender != nil);
+
+	if (self->_sender != sender) {
+		self->_sender = [sender copy];
+	}
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

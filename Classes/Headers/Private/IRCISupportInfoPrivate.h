@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,24 +35,20 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey);
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey);
+@interface IRCISupportInfo ()
+@property (nonatomic, copy, readwrite, nullable) NSString *networkAddress;
 
-/* Controlling class */
-@interface IRCCommandIndex : NSObject
-+ (NSArray<NSString *> *)publicIRCCommandList;
+@property (readonly, copy, nullable) NSString *stringValueForLastUpdate;
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command;
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch;
+- (instancetype)initWithClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
 
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex;
+- (void)processConfigurationData:(NSString *)configurationData;
 
-+ (NSUInteger)colonIndexForCommand:(NSString *)command;
+- (NSArray<IRCModeInfo *> *)parseModes:(NSString *)modeString;
+
+- (void)reset;
 @end
 
 NS_ASSUME_NONNULL_END

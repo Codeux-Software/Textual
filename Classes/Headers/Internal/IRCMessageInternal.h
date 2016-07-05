@@ -1,11 +1,11 @@
-/* *********************************************************************
+/* ********************************************************************* 
                   _____         _               _
                  |_   _|____  _| |_ _   _  __ _| |
                    | |/ _ \ \/ / __| | | |/ _` | |
                    | |  __/>  <| |_| |_| | (_| | |
                    |_|\___/_/\_\\__|\__,_|\__,_|_|
 
- Copyright (c) 2010 - 2015 Codeux Software, LLC & respective contributors.
+ Copyright (c) 2010 - 2016 Codeux Software, LLC & respective contributors.
         Please see Acknowledgements.pdf for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -35,24 +35,33 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
-/* Command index */
-TEXTUAL_EXTERN NSString * _Nullable IRCPrivateCommandIndex(const char *indexKey);
-TEXTUAL_EXTERN NSString * _Nullable IRCPublicCommandIndex(const char *indexKey);
+@interface IRCMessage ()
+{
+@protected
+	BOOL _isHistoric;
+	BOOL _isEventOnlyMessage;
+	BOOL _isPrintOnlyMessage;
+	IRCPrefix *_sender;
+	NSArray<NSString *> *_params;
+	NSDate *_receivedAt;
+	NSDictionary<NSString *, NSString *> *_messageTags;
+	NSString *_batchToken;
+	NSString *_command;
+	NSUInteger _commandNumeric;
 
-/* Controlling class */
-@interface IRCCommandIndex : NSObject
-+ (NSArray<NSString *> *)publicIRCCommandList;
+@private
+	BOOL _objectInitialized;
+}
 
-+ (NSUInteger)indexOfIRCommand:(NSString *)command;
-+ (NSUInteger)indexOfIRCommand:(NSString *)command publicSearch:(BOOL)publicSearch;
+- (BOOL)isMutable;
+@end
 
-+ (NSDictionary<NSString *, NSDictionary *> *)IRCCommandIndex:(BOOL)publicIndex;
-
-+ (NSUInteger)colonIndexForCommand:(NSString *)command;
+@interface IRCMessage (IRCMessageLineParser)
+- (BOOL)parseLine:(NSString *)line forClient:(nullable IRCClient *)client;
+- (void)parseExtensions:(NSString *)extensionInfo forClient:(nullable IRCClient *)client;
+- (void)parseSender:(NSString *)senderInfo forClient:(nullable IRCClient *)client;
 @end
 
 NS_ASSUME_NONNULL_END

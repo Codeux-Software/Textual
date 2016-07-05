@@ -782,7 +782,7 @@ NS_ASSUME_NONNULL_BEGIN
 				_ui(_userControlsMenuTakeModeOMenuTag, (UserHasModeO == NO))
 				_ui(_userControlsMenuTakeModeVMenuTag, (UserHasModeV == NO))
 
-				BOOL halfOpModeSupported = [u.supportInfo modeIsSupportedUserPrefix:@"h"];
+				BOOL halfOpModeSupported = [u.supportInfo modeSymbolIsUserPrefix:@"h"];
 
 				if (halfOpModeSupported == NO) {
 					_ui(_userControlsMenuGiveModeHMenuTag, YES)
@@ -1962,7 +1962,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[windowController() addWindowToWindowList:sheet];
 }
 
-- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelMode *)modes
+- (void)channelModifyModesSheet:(TDCChannelModifyModesSheet *)sender onOk:(IRCChannelModeContainer *)modes
 {
 	IRCClient *u = sender.client;
 	IRCChannel *c = sender.channel;
@@ -2512,7 +2512,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		modeChangesCount += 1;
 
-		if (modeChangesCount == u.supportInfo.modesCount) {
+		if (modeChangesCount == u.supportInfo.maximumModeCount) {
 			modeChangesCount = 0;
 
 			NSString *command = [NSString stringWithFormat:@"%@ %@", modeCommand, modeChanges];
@@ -3066,6 +3066,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)toggleDeveloperMode:(id)sender
 {
 	[TPCPreferences setDeveloperModeEnabled:([TPCPreferences developerModeEnabled] == NO)];
+
+	[TPCPreferences performReloadAction:TPCPreferencesReloadIRCCommandCacheAction];
 }
 
 - (void)toggleAppNap:(id)sender

@@ -38,63 +38,55 @@
 
 #import "TextualApplication.h"
 
-@interface IRCMessage : NSObject
-@property (nonatomic, copy) IRCPrefix *sender;
-@property (nonatomic, copy) NSString *command;
-@property (nonatomic, assign) NSInteger commandNumeric;
-@property (nonatomic, copy) NSArray *params;
-@property (nonatomic, copy) NSDictionary *messageTags; /* IRCv3 message tags. See ircv3.net for more information regarding extensions in the IRC protocol. */
-@property (nonatomic, copy) NSDate *receivedAt;
-@property (nonatomic, copy) NSString *batchToken;
-@property (nonatomic, assign) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. */
-@property (nonatomic, assign) BOOL isEventOnlyMessage; /* The message should be parsed and special actions performed such as adding/removing user but the result is never passsed to print: */
-@property (nonatomic, assign) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
+NS_ASSUME_NONNULL_BEGIN
 
-- (instancetype)initWithLine:(NSString *)line;
+#pragma mark -
+#pragma mark Immutable Object
 
-- (void)parseLine:(NSString *)line;
-- (void)parseLine:(NSString *)line forClient:(IRCClient *)client;
+@interface IRCMessage : NSObject <NSCopying, NSMutableCopying>
+@property (readonly, copy) IRCPrefix *sender;
+@property (readonly, copy) NSString *command;
+@property (readonly) NSUInteger commandNumeric;
+@property (readonly, copy) NSArray<NSString *> *params;
+@property (readonly, copy) NSDate *receivedAt;
+@property (readonly) BOOL isHistoric; // Whether a custom @time= was supplied during parsing.
+@property (readonly) BOOL isEventOnlyMessage; /* The message should be parsed and special actions performed such as adding/removing user but the result is never passsed to print: */
+@property (readonly) BOOL isPrintOnlyMessage; /* The message should be parsed and passed to print: but special actions such as adding/removing user from member list should be ignored. (currently unused) */
+@property (readonly, copy, nullable) NSString *batchToken;
+@property (readonly, copy, nullable) NSDictionary<NSString *, NSString *> *messageTags; /* IRCv3 message tags. See ircv3.net for more information regarding extensions in the IRC protocol. */
 
-@property (readonly, copy) NSString *senderNickname;
-@property (readonly, copy) NSString *senderUsername;
-@property (readonly, copy) NSString *senderAddress;
-@property (readonly, copy) NSString *senderHostmask;
+- (nullable instancetype)initWithLine:(NSString *)line NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithLine:(NSString *)line onClient:(IRCClient *)client NS_DESIGNATED_INITIALIZER;
+
+@property (readonly, copy, nullable) NSString *senderNickname;
+@property (readonly, copy, nullable) NSString *senderUsername;
+@property (readonly, copy, nullable) NSString *senderAddress;
+@property (readonly, copy, nullable) NSString *senderHostmask;
 
 @property (readonly) BOOL senderIsServer;
 
-@property (readonly) NSInteger paramsCount;
+@property (readonly) NSUInteger paramsCount;
 
-- (NSString *)paramAt:(NSInteger)index;
+- (NSString *)paramAt:(NSUInteger)index;
 
 @property (readonly, copy) NSString *sequence;
-- (NSString *)sequence:(NSInteger)index;
+- (NSString *)sequence:(NSUInteger)index;
 @end
 
-/* Each IRCClient is assigned a single instance of 
- IRCMessageBatchMessageContainer which acts as a container for
- all BATCH command events that the client may receive. */
-@interface IRCMessageBatchMessageContainer : NSObject
-@property (readonly, copy) NSDictionary *queuedEntries;
+#pragma mark -
+#pragma mark Mutable Object
 
-- (void)queueEntry:(id)entry;
-
-- (void)dequeueEntry:(id)entry;
-- (void)dequeueEntryWithBatchToken:(NSString *)batchToken;
-
-- (id)queuedEntryWithBatchToken:(NSString *)batchToken;
-
-- (void)clearQueue;
+@interface IRCMessageMutable : IRCMessage
+@property (nonatomic, copy, readwrite) IRCPrefix *sender;
+@property (nonatomic, copy, readwrite) NSString *command;
+@property (nonatomic, assign, readwrite) NSUInteger commandNumeric;
+@property (nonatomic, copy, readwrite) NSArray<NSString *> *params;
+@property (nonatomic, copy, readwrite) NSDate *receivedAt;
+@property (nonatomic, assign, readwrite) BOOL isHistoric;
+@property (nonatomic, assign, readwrite) BOOL isEventOnlyMessage;
+@property (nonatomic, assign, readwrite) BOOL isPrintOnlyMessage;
+@property (nonatomic, copy, readwrite, nullable) NSString *batchToken;
+@property (nonatomic, copy, readwrite, nullable) NSDictionary<NSString *, NSString *> *messageTags;
 @end
 
-/* IRCMessageBatchMessage represents a single BATCH event based 
- on its token value. Queued entries can either be an IRCMessage
- instance or IRCMessageBatchMessage (for nested batch events). */
-@interface IRCMessageBatchMessage : NSObject
-@property (nonatomic, assign) BOOL batchIsOpen;
-@property (nonatomic, copy) NSString *batchToken;
-@property (nonatomic, copy) NSString *batchType;
-@property (readonly, copy) NSArray *queuedEntries;
-@property (nonatomic, assign) IRCMessageBatchMessage *parentBatchMessage;
-
-- (void)queueEntry:(id)entry;
-@end
+NS_ASSUME_NONNULL_END

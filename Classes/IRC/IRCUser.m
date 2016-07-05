@@ -166,7 +166,7 @@
 	NSString *highestRank = [self highestRankedUserMode];
 
 	if (highestRank) {
-		return [self.supportInfo userModePrefixSymbolWithMode:highestRank];
+		return [self.supportInfo userPrefixForModeSymbol:highestRank];
 	} else {
 		return NSStringEmptyPlaceholder;
 	}

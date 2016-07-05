@@ -36,36 +36,134 @@
 
  *********************************************************************** */
 
-#import "TextualApplication.h"
+#import "IRCPrefixInternal.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation IRCPrefix
 
 - (instancetype)init
 {
 	if ((self = [super init])) {
-		self.hostmask	= NSStringEmptyPlaceholder;
-		self.nickname	= NSStringEmptyPlaceholder;
-		self.username	= NSStringEmptyPlaceholder;
-		self.address	= NSStringEmptyPlaceholder;
-		
-		self.isServer	= NO;
+		[self populateDefaultsPostflight];
+
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (void)populateDefaultsPostflight
 {
-	IRCPrefix *newPrefix = [IRCPrefix new];
-	
-	[newPrefix setHostmask:self.hostmask];
-	[newPrefix setNickname:self.nickname];
-	[newPrefix setUsername:self.username];
-	[newPrefix setAddress:self.address];
-	
-	[newPrefix setIsServer:self.isServer];
-	
-	return newPrefix;
+	;
+}
+
+- (id)copyWithZone:(nullable NSZone *)zone
+{
+	IRCPrefix *object = [[IRCPrefix allocWithZone:zone] init];
+
+	object->_isServer = self.isServer;
+	object->_nickname = [self.nickname copyWithZone:zone];
+	object->_username = [self.username copyWithZone:zone];
+	object->_address = [self.address copyWithZone:zone];
+	object->_hostmask = [self.hostmask copyWithZone:zone];
+
+	return object;
+}
+
+- (id)mutableCopyWithZone:(nullable NSZone *)zone
+{
+	IRCPrefixMutable *object = [[IRCPrefixMutable allocWithZone:zone] init];
+
+	object.isServer = self.isServer;
+	object.nickname = self.nickname;
+	object.username = self.username;
+	object.address = self.address;
+	object.hostmask = self.hostmask;
+
+	return object;
+}
+
+- (BOOL)isEqual:(id)object
+{
+	if (object == nil) {
+		return NO;
+	}
+
+	if (object == self) {
+		return YES;
+	}
+
+	if ([object isKindOfClass:[IRCPrefix class]] == NO) {
+		return NO;
+	}
+
+	IRCPrefix *objectCast = (IRCPrefix *)object;
+
+	return (self.isServer == objectCast.isServer &&
+			NSObjectsAreEqual(self.nickname, objectCast.nickname) &&
+			NSObjectsAreEqual(self.username, objectCast.username) &&
+			NSObjectsAreEqual(self.address, objectCast.address) &&
+			NSObjectsAreEqual(self.hostmask, objectCast.hostmask));
+}
+
+- (BOOL)isMutable
+{
+	return NO;
 }
 
 @end
+
+#pragma mark -
+
+@implementation IRCPrefixMutable
+
+@dynamic isServer;
+@dynamic nickname;
+@dynamic username;
+@dynamic address;
+@dynamic hostmask;
+
+- (BOOL)isMutable
+{
+	return YES;
+}
+
+- (void)setIsServer:(BOOL)isServer
+{
+	if (self->_isServer != isServer) {
+		self->_isServer = isServer;
+	}
+}
+
+- (void)setNickname:(nullable NSString *)nickname
+{
+	if (self->_nickname != nickname) {
+		self->_nickname = [nickname copy];
+	}
+}
+
+- (void)setUsername:(nullable NSString *)username
+{
+	if (self->_username != username) {
+		self->_username = [username copy];
+	}
+}
+
+- (void)setAddress:(nullable NSString *)address
+{
+	if (self->_address != address) {
+		self->_address = [address copy];
+	}
+}
+
+- (void)setHostmask:(nullable NSString *)hostmask
+{
+	if (self->_hostmask != hostmask) {
+		self->_hostmask = [hostmask copy];
+	}
+}
+
+@end
+
+NS_ASSUME_NONNULL_END

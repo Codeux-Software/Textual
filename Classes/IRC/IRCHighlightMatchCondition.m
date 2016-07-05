@@ -47,10 +47,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	ObjectIsAlreadyInitializedAssert
 
 	if ((self = [super init])) {
-		if ([self isMutable] == NO) {
-			DESIGNATED_INITIALIZER_EXCEPTION
-		}
-
 		[self populateDefaultsPostflight];
 
 		return self;
